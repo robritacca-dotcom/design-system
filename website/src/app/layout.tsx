@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "@design-system/tokens/tokens.css";
-import "@design-system/fonts/material-symbols.css";
+import "./material-symbols.css";
+import "./button.css";
 import { Nunito_Sans } from "next/font/google";
 import "./globals.css";
 
