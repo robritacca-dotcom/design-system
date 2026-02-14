@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import '../tokens/tokens.css';
 
 const meta = {
   title: 'Design System/Tokens',
