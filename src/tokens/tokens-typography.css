@@ -20,35 +20,35 @@
   --font-mega-1-size: 132px;
   --font-mega-1-weight: 300;
   --font-mega-1-line-height: 0.85;
-  --font-mega-1-letter-spacing: 2px;
+  --font-mega-1-letter-spacing: 0.02em; /* 2% */
 
   /* Mega 2 */
   --font-mega-2-family: var(--font-family-primary);
   --font-mega-2-size: 116px;
   --font-mega-2-weight: 300;
   --font-mega-2-line-height: 0.85;
-  --font-mega-2-letter-spacing: 2px;
+  --font-mega-2-letter-spacing: 0.02em; /* 2% */
 
   /* Display 1 */
   --font-display-1-family: var(--font-family-primary);
   --font-display-1-size: 96px;
   --font-display-1-weight: 300;
   --font-display-1-line-height: 1;
-  --font-display-1-letter-spacing: 2px;
+  --font-display-1-letter-spacing: 0.02em; /* 2% */
 
   /* Display 2 */
   --font-display-2-family: var(--font-family-primary);
   --font-display-2-size: 64px;
   --font-display-2-weight: 300;
   --font-display-2-line-height: 1;
-  --font-display-2-letter-spacing: 1.5px;
+  --font-display-2-letter-spacing: 0.015em; /* 1.5% */
 
   /* Sub Display */
   --font-sub-display-family: var(--font-family-primary);
   --font-sub-display-size: 30px;
   --font-sub-display-weight: 300;
   --font-sub-display-line-height: 44px;
-  --font-sub-display-letter-spacing: 1.5px;
+  --font-sub-display-letter-spacing: 0.015em; /* 1.5% */
 
   /* ============================================
      HEADING STYLES
@@ -59,21 +59,21 @@
   --font-heading-1-size: 30px;
   --font-heading-1-weight: 600;
   --font-heading-1-line-height: 44px;
-  --font-heading-1-letter-spacing: 1.5px;
+  --font-heading-1-letter-spacing: 0.015em; /* 1.5% */
 
   /* Heading 2 */
   --font-heading-2-family: var(--font-family-primary);
   --font-heading-2-size: 26px;
   --font-heading-2-weight: 600;
   --font-heading-2-line-height: 32px;
-  --font-heading-2-letter-spacing: 1.5px;
+  --font-heading-2-letter-spacing: 0.015em; /* 1.5% */
 
   /* Heading 3 */
   --font-heading-3-family: var(--font-family-primary);
   --font-heading-3-size: 22px;
   --font-heading-3-weight: 600;
   --font-heading-3-line-height: 28px;
-  --font-heading-3-letter-spacing: 1.5px;
+  --font-heading-3-letter-spacing: 0.015em; /* 1.5% */
 
   /* ============================================
      BODY TEXT STYLES
@@ -84,12 +84,12 @@
   --font-title-body-size: 16px;
   --font-title-body-weight: 600;
   --font-title-body-line-height: 24px;
-  --font-title-body-letter-spacing: -1px;
+  --font-title-body-letter-spacing: -0.01em; /* -1% */
 
   /* Paragraph */
   --font-paragraph-family: var(--font-family-primary);
   --font-paragraph-size: 16px;
   --font-paragraph-weight: 400;
   --font-paragraph-line-height: 24px;
-  --font-paragraph-letter-spacing: 0px;
+  --font-paragraph-letter-spacing: 0;
 }
