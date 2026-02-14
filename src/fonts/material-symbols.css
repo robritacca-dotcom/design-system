@@ -99,7 +99,7 @@
 .material-symbols-sharp {
   font-variation-settings:
     'FILL' var(--material-symbols-fill, 0),
-    'wght' var(--material-symbols-weight, 400),
+    'wght' var(--material-symbols-weight, 200),
     'GRAD' var(--material-symbols-grade, 0),
     'opsz' var(--material-symbols-size, 24);
 }
