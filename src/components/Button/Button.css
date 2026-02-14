@@ -134,7 +134,7 @@
 }
 
 .ds-button--secondary .ds-button__icon {
-  color: var(--color-action-passive-text);
+  color: var(--color-icon-primary);
 }
 
 /* ============================================

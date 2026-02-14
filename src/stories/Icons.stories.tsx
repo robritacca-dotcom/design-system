@@ -48,7 +48,7 @@ const IconGallery = ({ iconStyle, icons }: IconGalleryProps) => {
             className={iconStyleClass}
             style={{
               fontSize: '32px',
-              color: '#118ab2',
+              color: 'var(--color-icon-primary)',
             }}
           >
             {iconName}
@@ -252,7 +252,7 @@ const IconComparison = () => {
                     className={`material-symbols-${style}`}
                     style={{
                       fontSize: '32px',
-                      color: '#118ab2',
+                      color: 'var(--color-icon-primary)',
                     }}
                   >
                     {icon}
