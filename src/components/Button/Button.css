@@ -125,7 +125,7 @@
 }
 
 .ds-button--primary .ds-button__icon {
-  color: var(--color-action-primary-text-tertiary);
+  color: var(--color-icon-primary);
 }
 
 .ds-button--primary.ds-button--active .ds-button__icon,
@@ -157,6 +157,10 @@
   color: var(--color-action-primary-text);
 }
 
+.ds-button--primary:not(.ds-button--disabled):hover .ds-button__icon {
+  color: var(--color-action-icon);
+}
+
 .ds-button--secondary:not(.ds-button--disabled):hover {
   background-color: var(--color-action-passive-bg-hover);
 }
@@ -171,6 +175,10 @@
 
 .ds-button--primary:not(.ds-button--disabled):active .ds-button__text {
   color: var(--color-action-primary-text);
+}
+
+.ds-button--primary:not(.ds-button--disabled):active .ds-button__icon {
+  color: var(--color-action-icon);
 }
 
 .ds-button--secondary:not(.ds-button--disabled):active {
