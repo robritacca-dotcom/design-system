@@ -1,6 +1,18 @@
 import '../src/tokens/tokens.css';
 import type { Preview } from '@storybook/react-vite';
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
+import React from 'react';
+
+// Decorator to apply background color using design tokens
+const withBackground = (Story: any) => (
+  <div style={{
+    backgroundColor: 'var(--color-bg-page-primary)',
+    minHeight: '100vh',
+    padding: '1rem'
+  }}>
+    <Story />
+  </div>
+);
 
 const preview: Preview = {
   parameters: {
@@ -9,6 +21,10 @@ const preview: Preview = {
        color: /(background|color)$/i,
        date: /Date$/i,
       },
+    },
+
+    backgrounds: {
+      disable: true, // Disable Storybook's built-in backgrounds
     },
 
     a11y: {
@@ -28,6 +44,7 @@ const preview: Preview = {
       defaultTheme: 'light',
       attributeName: 'data-theme',
     }),
+    withBackground,
   ],
 };
 
