@@ -11,7 +11,7 @@
   --color-text-inverse: #303030;
 
   /* Icon */
-  --color-icon-primary: #BCBCBC;
+  --color-icon-primary: #D6D6D6;
   --color-icon-secondary: #A2A2A2;
 
   /* Background - Page */
@@ -42,27 +42,41 @@
   /* Action - Passive (Secondary button) */
   --color-action-passive-text: #F1F1F1;
   --color-action-passive-bg: rgba(14, 14, 14, 0.01);
-  --color-action-passive-bg-hover: #303030;
-  --color-action-passive-bg-active: #232323;
+  --color-action-passive-bg-hover: #232323;
+  --color-action-passive-bg-active: #303030;
 
-  /* Status colours stay consistent across themes */
-  --color-status-positive-bg: #ECFCF7;
+  /* Status - Positive */
+  --color-status-positive-bg: #024336;
   --color-status-positive-border: #06D6A0;
-  --color-status-positive-text: #024336;
+  --color-status-positive-text: #ECFCF7;
 
-  --color-status-warning-bg: #FFF3EC;
+  /* Status - Warning */
+  --color-status-warning-bg: #552716;
   --color-status-warning-border: #EF8247;
-  --color-status-warning-text: #552716;
+  --color-status-warning-text: #FFF3EC;
 
-  --color-status-error-bg: #FDEFF3;
+  /* Status - Error */
+  --color-status-error-bg: #571727;
   --color-status-error-border: #EF476F;
-  --color-status-error-text: #571727;
+  --color-status-error-text: #FDEFF3;
 
-  --color-status-info-bg: #EEF3FD;
+  /* Status - Info */
+  --color-status-info-bg: #081633;
   --color-status-info-border: #1E47B0;
-  --color-status-info-text: #081633;
+  --color-status-info-text: #EEF3FD;
 
-  --color-status-neutral-bg: #303030;
-  --color-status-neutral-border: #BCBCBC;
+  /* Status - Neutral */
+  --color-status-neutral-bg: #232323;
+  --color-status-neutral-border: #6D6D6D;
   --color-status-neutral-text: #F1F1F1;
+
+  /* Core colours */
+  --color-core-ui-primary: #118AB2;
+  --color-core-ui-secondary: #0A4E66;
+  --color-core-accent-red: #EF476F;
+  --color-core-accent-purple: #9E47EF;
+  --color-core-accent-blue: #1E47B0;
+  --color-core-accent-orange: #EF8247;
+  --color-core-accent-yellow: #FFD166;
+  --color-core-accent-green: #06D6A0;
 }
