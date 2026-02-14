@@ -5,8 +5,10 @@ import '../../fonts/material-symbols.css';
 export interface ButtonProps {
   /** Button text content */
   label?: string;
-  /** Material Symbol icon name (e.g., 'menu', 'home', 'settings') */
-  icon?: string;
+  /** Material Symbol icon name for left side (e.g., 'menu', 'home', 'settings') */
+  iconLeft?: string;
+  /** Material Symbol icon name for right side (e.g., 'arrow_forward', 'chevron_right') */
+  iconRight?: string;
   /** Icon style variant */
   iconStyle?: 'outlined' | 'rounded' | 'sharp';
   /** Button priority/variant */
@@ -19,21 +21,26 @@ export interface ButtonProps {
   onClick?: () => void;
   /** Additional CSS classes */
   className?: string;
+  /** @deprecated Use iconLeft instead */
+  icon?: string;
 }
 
 /**
  * Button component from Figma design system
  * Supports primary and secondary variants with multiple states
+ * Icons can be placed on the left and/or right side of the text
  */
 export const Button = ({
   label = 'Button',
-  icon,
+  iconLeft,
+  iconRight = 'arrow_forward',
   iconStyle = 'sharp',
   priority = 'primary',
   state = 'default',
   text = true,
   onClick,
   className = '',
+  icon, // deprecated, maps to iconLeft for backwards compatibility
 }: ButtonProps) => {
   const baseClass = 'ds-button';
   const variantClass = `${baseClass}--${priority}`;
@@ -46,6 +53,9 @@ export const Button = ({
   // Map iconStyle to Material Symbols class
   const iconStyleClass = `material-symbols-${iconStyle}`;
 
+  // Backwards compatibility: icon prop maps to iconLeft
+  const leftIcon = iconLeft || icon;
+
   return (
     <button
       type="button"
@@ -53,12 +63,17 @@ export const Button = ({
       onClick={onClick}
       disabled={isDisabled}
     >
-      {icon && (
+      {leftIcon && (
         <span className={`${baseClass}__icon ${iconStyleClass}`} aria-hidden="true">
-          {icon}
+          {leftIcon}
         </span>
       )}
       {text && <span className={`${baseClass}__text`}>{label}</span>}
+      {iconRight && (
+        <span className={`${baseClass}__icon ${iconStyleClass}`} aria-hidden="true">
+          {iconRight}
+        </span>
+      )}
     </button>
   );
 };
