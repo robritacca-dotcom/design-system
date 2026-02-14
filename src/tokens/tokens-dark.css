@@ -1,0 +1,68 @@
+/* ============================================
+   SEMANTIC TOKENS — DARK THEME
+   Applied when data-theme="dark" is set
+   ============================================ */
+
+[data-theme="dark"] {
+  /* Text */
+  --color-text-primary: #F1F1F1;
+  --color-text-secondary: #BCBCBC;
+  --color-text-tertiary: #A2A2A2;
+  --color-text-inverse: #303030;
+
+  /* Icon */
+  --color-icon-primary: #BCBCBC;
+  --color-icon-secondary: #A2A2A2;
+
+  /* Background - Page */
+  --color-bg-page-primary: #050505;
+  --color-bg-page-inverse: #F1F1F1;
+
+  /* Background - Container */
+  --color-bg-container-primary: #0E0E0E;
+  --color-bg-container-primary-transparent: rgba(14, 14, 14, 0.01);
+  --color-bg-container-primary-semi: rgba(14, 14, 14, 0.6);
+  --color-bg-container-secondary: #303030;
+  --color-bg-container-tertiary: #232323;
+  --color-bg-container-inverse: #F1F1F1;
+  --color-bg-container-border: #232323;
+
+  /* Action - Primary */
+  --color-action-primary-bg: #118AB2;
+  --color-action-primary-bg-hover: #0E6E8F;
+  --color-action-primary-bg-active: #0A4E66;
+  --color-action-primary-text: #CFEAF3;
+  --color-action-primary-text-secondary: #052F3E;
+  --color-action-primary-text-tertiary: #118AB2;
+  --color-action-primary-border: #0A4E66;
+  --color-action-primary-border-secondary: #2C9AB9;
+  --color-action-primary-border-tertiary: #6DBCD6;
+  --color-action-icon: #CFEAF3;
+
+  /* Action - Passive (Secondary button) */
+  --color-action-passive-text: #F1F1F1;
+  --color-action-passive-bg: rgba(14, 14, 14, 0.01);
+  --color-action-passive-bg-hover: #303030;
+  --color-action-passive-bg-active: #232323;
+
+  /* Status colours stay consistent across themes */
+  --color-status-positive-bg: #ECFCF7;
+  --color-status-positive-border: #06D6A0;
+  --color-status-positive-text: #024336;
+
+  --color-status-warning-bg: #FFF3EC;
+  --color-status-warning-border: #EF8247;
+  --color-status-warning-text: #552716;
+
+  --color-status-error-bg: #FDEFF3;
+  --color-status-error-border: #EF476F;
+  --color-status-error-text: #571727;
+
+  --color-status-info-bg: #EEF3FD;
+  --color-status-info-border: #1E47B0;
+  --color-status-info-text: #081633;
+
+  --color-status-neutral-bg: #303030;
+  --color-status-neutral-border: #BCBCBC;
+  --color-status-neutral-text: #F1F1F1;
+}

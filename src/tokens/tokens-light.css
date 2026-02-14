@@ -1,0 +1,109 @@
+/* ============================================
+   SEMANTIC TOKENS — LIGHT THEME
+   These are what components use
+   Always reference these, never primitives
+   ============================================ */
+
+[data-theme="light"], :root {
+  /* Text */
+  --color-text-primary: #050505;
+  --color-text-secondary: #303030;
+  --color-text-tertiary: #6D6D6D;
+  --color-text-inverse: #A2A2A2;
+
+  /* Icon */
+  --color-icon-primary: #303030;
+  --color-icon-secondary: #6D6D6D;
+
+  /* Background - Page */
+  --color-bg-page-primary: #FFFFFF;
+  --color-bg-page-inverse: #050505;
+
+  /* Background - Container */
+  --color-bg-container-primary: #F1F1F1;
+  --color-bg-container-primary-transparent: rgba(241, 241, 241, 0.01);
+  --color-bg-container-primary-semi: rgba(241, 241, 241, 0.6);
+  --color-bg-container-secondary: #D6D6D6;
+  --color-bg-container-tertiary: #BCBCBC;
+  --color-bg-container-inverse: #0E0E0E;
+  --color-bg-container-border: #D6D6D6;
+
+  /* Action - Primary */
+  --color-action-primary-bg: #118AB2;
+  --color-action-primary-bg-hover: #0E6E8F;
+  --color-action-primary-bg-active: #0A4E66;
+  --color-action-primary-text: #CFEAF3;
+  --color-action-primary-text-secondary: #052F3E;
+  --color-action-primary-text-tertiary: #118AB2;
+  --color-action-primary-border: #0A4E66;
+  --color-action-primary-border-secondary: #2C9AB9;
+  --color-action-primary-border-tertiary: #6DBCD6;
+  --color-action-icon: #CFEAF3;
+
+  /* Action - Passive (Secondary button) */
+  --color-action-passive-text: #050505;
+  --color-action-passive-bg: rgba(241, 241, 241, 0.01);
+  --color-action-passive-bg-hover: #D6D6D6;
+  --color-action-passive-bg-active: #BCBCBC;
+
+  /* Core colours */
+  --color-core-ui-primary: #118AB2;
+  --color-core-ui-secondary: #052F3E;
+  --color-core-accent-red: #EF476F;
+  --color-core-accent-purple: #9E47EF;
+  --color-core-accent-blue: #1E47B0;
+  --color-core-accent-orange: #EF8247;
+  --color-core-accent-yellow: #FFD166;
+  --color-core-accent-green: #06D6A0;
+
+  /* Status - Positive */
+  --color-status-positive-bg: #ECFCF7;
+  --color-status-positive-border: #06D6A0;
+  --color-status-positive-text: #024336;
+
+  /* Status - Warning */
+  --color-status-warning-bg: #FFF3EC;
+  --color-status-warning-border: #EF8247;
+  --color-status-warning-text: #552716;
+
+  /* Status - Error */
+  --color-status-error-bg: #FDEFF3;
+  --color-status-error-border: #EF476F;
+  --color-status-error-text: #571727;
+
+  /* Status - Info */
+  --color-status-info-bg: #EEF3FD;
+  --color-status-info-border: #1E47B0;
+  --color-status-info-text: #081633;
+
+  /* Status - Neutral */
+  --color-status-neutral-bg: #D6D6D6;
+  --color-status-neutral-border: #303030;
+  --color-status-neutral-text: #232323;
+
+  /* Spacing (from primitives) */
+  --radius-xxs: var(--primitive-radius-xxs);
+  --radius-xs: var(--primitive-radius-xs);
+  --radius-sm: var(--primitive-radius-sm);
+  --radius-md: var(--primitive-radius-md);
+  --radius-lg: var(--primitive-radius-lg);
+  --radius-xl: var(--primitive-radius-xl);
+  --radius-xxl: var(--primitive-radius-xxl);
+  --radius-full: var(--primitive-radius-full);
+
+  --padding-xxs: var(--primitive-padding-xxs);
+  --padding-xs: var(--primitive-padding-xs);
+  --padding-sm: var(--primitive-padding-sm);
+  --padding-md: var(--primitive-padding-md);
+  --padding-lg: var(--primitive-padding-lg);
+  --padding-xl: var(--primitive-padding-xl);
+
+  --border-xs: var(--primitive-border-xs);
+  --border-md: var(--primitive-border-md);
+
+  --gap-xs: var(--primitive-gap-xs);
+  --gap-sm: var(--primitive-gap-sm);
+  --gap-md: var(--primitive-gap-md);
+  --gap-lg: var(--primitive-gap-lg);
+  --gap-xl: var(--primitive-gap-xl);
+}
