@@ -5,8 +5,8 @@
 }
 
 .header {
-  padding: var(--spacing-xl) var(--spacing-xxl);
-  border-bottom: 1px solid var(--color-border-secondary);
+  padding: var(--primitive-padding-lg) var(--primitive-padding-xl);
+  border-bottom: 1px solid var(--color-border-primary);
 }
 
 .nav {
@@ -19,7 +19,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-xxl);
+  padding: var(--primitive-padding-xxl);
 }
 
 .hero {
@@ -28,48 +28,50 @@
 }
 
 .hero h1 {
-  font-family: var(--font-family-display);
-  font-size: var(--font-size-display-lg);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-display);
+  font-family: var(--font-display-1-family);
+  font-size: var(--font-display-2-size);
+  font-weight: var(--font-display-2-weight);
+  line-height: var(--font-display-2-line-height);
+  letter-spacing: var(--font-display-2-letter-spacing);
   color: var(--color-text-primary);
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--primitive-padding-md);
 }
 
 .subtitle {
-  font-family: var(--font-family-base);
-  font-size: var(--font-size-body-lg);
-  line-height: var(--line-height-body);
+  font-family: var(--font-paragraph-family);
+  font-size: var(--font-paragraph-size);
+  line-height: var(--font-paragraph-line-height);
+  letter-spacing: var(--font-paragraph-letter-spacing);
   color: var(--color-text-secondary);
-  margin-bottom: var(--spacing-xxl);
+  margin-bottom: var(--primitive-padding-xl);
 }
 
 .ctas {
   display: flex;
-  gap: var(--gap-lg);
+  gap: var(--primitive-gap-lg);
   justify-content: center;
   align-items: center;
 }
 
 .footer {
-  padding: var(--spacing-xl);
+  padding: var(--primitive-padding-lg);
   text-align: center;
-  border-top: 1px solid var(--color-border-secondary);
-  font-size: var(--font-size-body-sm);
+  border-top: 1px solid var(--color-border-primary);
+  font-size: var(--font-paragraph-size);
   color: var(--color-text-tertiary);
 }
 
 @media (max-width: 768px) {
   .header {
-    padding: var(--spacing-lg) var(--spacing-xl);
+    padding: var(--primitive-padding-md) var(--primitive-padding-lg);
   }
 
   .main {
-    padding: var(--spacing-xl);
+    padding: var(--primitive-padding-lg);
   }
 
   .hero h1 {
-    font-size: var(--font-size-display-md);
+    font-size: var(--font-sub-display-size);
   }
 
   .ctas {

@@ -11,8 +11,12 @@ body {
   overflow-x: hidden;
 }
 
+:root {
+  --font-family-primary: var(--font-nunito-sans);
+}
+
 body {
-  font-family: var(--font-family-base);
+  font-family: var(--font-nunito-sans), 'Nunito Sans', sans-serif;
   color: var(--color-text-primary);
   background: var(--color-background-primary);
   -webkit-font-smoothing: antialiased;

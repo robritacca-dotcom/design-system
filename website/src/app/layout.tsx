@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
 import "@design-system/tokens/tokens.css";
-import "@design-system/fonts/roboto-flex.css";
 import "@design-system/fonts/material-symbols.css";
+import { Nunito_Sans } from "next/font/google";
 import "./globals.css";
+
+const nunitoSans = Nunito_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "600", "700"],
+  variable: "--font-nunito-sans",
+});
 
 export const metadata: Metadata = {
   title: "Rob Ritacca - Personal Website",
@@ -16,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className={nunitoSans.variable}>
         {children}
       </body>
     </html>
