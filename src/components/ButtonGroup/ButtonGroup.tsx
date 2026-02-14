@@ -6,11 +6,7 @@ export interface ButtonGroupProps {
   /** Orientation of the button group */
   orientation?: 'horizontal' | 'vertical';
   /** Array of button configurations */
-  buttons: Array<{
-    label: string;
-    icon?: string;
-    onClick?: () => void;
-  } & Omit<ButtonProps, 'children'>>;
+  buttons: Array<ButtonProps>;
   /** Additional CSS class */
   className?: string;
 }
@@ -28,15 +24,13 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
       {buttons.map((button, index) => (
         <Button
           key={index}
-          variant={button.variant || 'secondary'}
+          priority={button.priority || 'secondary'}
           state={button.state || 'default'}
+          label={button.label}
+          icon={button.icon}
+          iconStyle={button.iconStyle}
           onClick={button.onClick}
-        >
-          {button.icon && (
-            <span className="material-symbols-rounded">{button.icon}</span>
-          )}
-          {button.label}
-        </Button>
+        />
       ))}
     </div>
   );
