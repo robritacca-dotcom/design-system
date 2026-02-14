@@ -214,6 +214,99 @@ export const Primitives: Story = {
         components — use semantic tokens instead.
       </p>
 
+      <TokenSection title="Neutral Scale">
+        <ColorToken name="00 (White)" value="--primitive-neutral-00" />
+        <ColorToken name="01" value="--primitive-neutral-01" />
+        <ColorToken name="02" value="--primitive-neutral-02" />
+        <ColorToken name="03" value="--primitive-neutral-03" />
+        <ColorToken name="04" value="--primitive-neutral-04" />
+        <ColorToken name="05" value="--primitive-neutral-05" />
+        <ColorToken name="06" value="--primitive-neutral-06" />
+        <ColorToken name="07" value="--primitive-neutral-07" />
+        <ColorToken name="08" value="--primitive-neutral-08" />
+        <ColorToken name="09" value="--primitive-neutral-09" />
+        <ColorToken name="10" value="--primitive-neutral-10" />
+        <ColorToken name="11 (Black)" value="--primitive-neutral-11" />
+      </TokenSection>
+
+      <TokenSection title="Red Scale">
+        <ColorToken name="01 (Lightest)" value="--primitive-red-01" />
+        <ColorToken name="02" value="--primitive-red-02" />
+        <ColorToken name="03" value="--primitive-red-03" />
+        <ColorToken name="04" value="--primitive-red-04" />
+        <ColorToken name="05" value="--primitive-red-05" />
+        <ColorToken name="06" value="--primitive-red-06" />
+        <ColorToken name="07" value="--primitive-red-07" />
+        <ColorToken name="08" value="--primitive-red-08" />
+        <ColorToken name="09" value="--primitive-red-09" />
+        <ColorToken name="10 (Darkest)" value="--primitive-red-10" />
+      </TokenSection>
+
+      <TokenSection title="Yellow Scale">
+        <ColorToken name="01 (Lightest)" value="--primitive-yellow-01" />
+        <ColorToken name="02" value="--primitive-yellow-02" />
+        <ColorToken name="03" value="--primitive-yellow-03" />
+        <ColorToken name="04" value="--primitive-yellow-04" />
+        <ColorToken name="05" value="--primitive-yellow-05" />
+        <ColorToken name="06" value="--primitive-yellow-06" />
+        <ColorToken name="07" value="--primitive-yellow-07" />
+        <ColorToken name="08" value="--primitive-yellow-08" />
+        <ColorToken name="09" value="--primitive-yellow-09" />
+        <ColorToken name="10 (Darkest)" value="--primitive-yellow-10" />
+      </TokenSection>
+
+      <TokenSection title="Green Scale">
+        <ColorToken name="01 (Lightest)" value="--primitive-green-01" />
+        <ColorToken name="02" value="--primitive-green-02" />
+        <ColorToken name="03" value="--primitive-green-03" />
+        <ColorToken name="04" value="--primitive-green-04" />
+        <ColorToken name="05" value="--primitive-green-05" />
+        <ColorToken name="06" value="--primitive-green-06" />
+        <ColorToken name="07" value="--primitive-green-07" />
+        <ColorToken name="08" value="--primitive-green-08" />
+        <ColorToken name="09" value="--primitive-green-09" />
+        <ColorToken name="10 (Darkest)" value="--primitive-green-10" />
+      </TokenSection>
+
+      <TokenSection title="Teal Scale">
+        <ColorToken name="01 (Lightest)" value="--primitive-teal-01" />
+        <ColorToken name="02" value="--primitive-teal-02" />
+        <ColorToken name="03" value="--primitive-teal-03" />
+        <ColorToken name="04" value="--primitive-teal-04" />
+        <ColorToken name="05" value="--primitive-teal-05" />
+        <ColorToken name="06" value="--primitive-teal-06" />
+        <ColorToken name="07" value="--primitive-teal-07" />
+        <ColorToken name="08" value="--primitive-teal-08" />
+        <ColorToken name="09" value="--primitive-teal-09" />
+        <ColorToken name="10 (Darkest)" value="--primitive-teal-10" />
+      </TokenSection>
+
+      <TokenSection title="Blue Scale">
+        <ColorToken name="01 (Lightest)" value="--primitive-blue-01" />
+        <ColorToken name="02" value="--primitive-blue-02" />
+        <ColorToken name="03" value="--primitive-blue-03" />
+        <ColorToken name="04" value="--primitive-blue-04" />
+        <ColorToken name="05" value="--primitive-blue-05" />
+        <ColorToken name="06" value="--primitive-blue-06" />
+        <ColorToken name="07" value="--primitive-blue-07" />
+        <ColorToken name="08" value="--primitive-blue-08" />
+        <ColorToken name="09" value="--primitive-blue-09" />
+        <ColorToken name="10 (Darkest)" value="--primitive-blue-10" />
+      </TokenSection>
+
+      <TokenSection title="Purple Scale">
+        <ColorToken name="01 (Lightest)" value="--primitive-purple-01" />
+        <ColorToken name="02" value="--primitive-purple-02" />
+        <ColorToken name="03" value="--primitive-purple-03" />
+        <ColorToken name="04" value="--primitive-purple-04" />
+        <ColorToken name="05" value="--primitive-purple-05" />
+        <ColorToken name="06" value="--primitive-purple-06" />
+        <ColorToken name="07" value="--primitive-purple-07" />
+        <ColorToken name="08" value="--primitive-purple-08" />
+        <ColorToken name="09" value="--primitive-purple-09" />
+        <ColorToken name="10 (Darkest)" value="--primitive-purple-10" />
+      </TokenSection>
+
       <TokenSection title="Border Radius">
         <RadiusToken name="XXS" value="--primitive-radius-xxs" />
         <RadiusToken name="XS" value="--primitive-radius-xs" />

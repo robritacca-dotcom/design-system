@@ -5,6 +5,103 @@
    ============================================ */
 
 :root {
+  /* ============================================
+     COLOR PRIMITIVES
+     ============================================ */
+
+  /* Neutral Scale */
+  --primitive-neutral-00: #FFFFFF;
+  --primitive-neutral-01: #F1F1F1;
+  --primitive-neutral-02: #D6D6D6;
+  --primitive-neutral-03: #BCBCBC;
+  --primitive-neutral-04: #A2A2A2;
+  --primitive-neutral-05: #888888;
+  --primitive-neutral-06: #6D6D6D;
+  --primitive-neutral-07: #303030;
+  --primitive-neutral-08: #232323;
+  --primitive-neutral-09: #0E0E0E;
+  --primitive-neutral-10: #050505;
+  --primitive-neutral-11: #000000;
+
+  /* Red Scale */
+  --primitive-red-01: #FDEFF3;
+  --primitive-red-02: #FAD3DD;
+  --primitive-red-03: #F8B7C7;
+  --primitive-red-04: #F69BB1;
+  --primitive-red-05: #F37F9B;
+  --primitive-red-06: #F16385;
+  --primitive-red-07: #EF476F;
+  --primitive-red-08: #C93A5C;
+  --primitive-red-09: #8E2641;
+  --primitive-red-10: #571727;
+
+  /* Yellow Scale */
+  --primitive-yellow-01: #FFF9EA;
+  --primitive-yellow-02: #FFF0C9;
+  --primitive-yellow-03: #FFE5A3;
+  --primitive-yellow-04: #FFD97F;
+  --primitive-yellow-05: #F2C55E;
+  --primitive-yellow-06: #E0B654;
+  --primitive-yellow-07: #FFD166;
+  --primitive-yellow-08: #C49A3E;
+  --primitive-yellow-09: #8A6B2A;
+  --primitive-yellow-10: #544016;
+
+  /* Green Scale */
+  --primitive-green-01: #ECFCF7;
+  --primitive-green-02: #CEF6E8;
+  --primitive-green-03: #9DEBD4;
+  --primitive-green-04: #6DE0C0;
+  --primitive-green-05: #3ED4AA;
+  --primitive-green-06: #1FCB9A;
+  --primitive-green-07: #06D6A0;
+  --primitive-green-08: #05A67C;
+  --primitive-green-09: #03765A;
+  --primitive-green-10: #024336;
+
+  /* Teal Scale */
+  --primitive-teal-01: #ECF7FB;
+  --primitive-teal-02: #CFEAF3;
+  --primitive-teal-03: #9ED4E5;
+  --primitive-teal-04: #6DBCD6;
+  --primitive-teal-05: #3CA5C6;
+  --primitive-teal-06: #2C9AB9;
+  --primitive-teal-07: #118AB2;
+  --primitive-teal-08: #0E6E8F;
+  --primitive-teal-09: #0A4E66;
+  --primitive-teal-10: #052F3E;
+
+  /* Blue Scale */
+  --primitive-blue-01: #EEF3FD;
+  --primitive-blue-02: #D3DDF8;
+  --primitive-blue-03: #AABCEF;
+  --primitive-blue-04: #7F99E3;
+  --primitive-blue-05: #5475D4;
+  --primitive-blue-06: #345AC4;
+  --primitive-blue-07: #1E47B0;
+  --primitive-blue-08: #163789;
+  --primitive-blue-09: #0F265E;
+  --primitive-blue-10: #081633;
+
+  /* Purple Scale */
+  --primitive-purple-01: #F7F0FE;
+  --primitive-purple-02: #E6D2FB;
+  --primitive-purple-03: #CFABF7;
+  --primitive-purple-04: #B785F0;
+  --primitive-purple-05: #A86AE8;
+  --primitive-purple-06: #9754DC;
+  --primitive-purple-07: #9E47EF;
+  --primitive-purple-08: #7434B3;
+  --primitive-purple-09: #52247D;
+  --primitive-purple-10: #31164A;
+
+  /* True Black */
+  --primitive-true-black: #000000;
+
+  /* ============================================
+     SPACING PRIMITIVES
+     ============================================ */
+
   /* Spacing / Radius */
   --primitive-radius-xxs: 2px;
   --primitive-radius-xs: 4px;
