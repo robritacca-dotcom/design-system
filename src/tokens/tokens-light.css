@@ -33,12 +33,16 @@
   --color-action-primary-bg-hover: #0E6E8F;
   --color-action-primary-bg-active: #0A4E66;
   --color-action-primary-text: #CFEAF3;
+  --color-action-primary-text-active: #CFEAF3;
   --color-action-primary-text-secondary: #052F3E;
   --color-action-primary-text-tertiary: #118AB2;
   --color-action-primary-border: #0A4E66;
   --color-action-primary-border-secondary: #2C9AB9;
   --color-action-primary-border-tertiary: #6DBCD6;
-  --color-action-icon: #CFEAF3;
+
+  /* Action - Icon */
+  --color-action-icon-default: #050505;
+  --color-action-icon-active: #CFEAF3;
 
   /* Action - Passive (Secondary button) */
   --color-action-passive-text: #050505;

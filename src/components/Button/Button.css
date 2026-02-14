@@ -125,12 +125,12 @@
 }
 
 .ds-button--primary .ds-button__icon {
-  color: var(--color-icon-primary);
+  color: var(--color-action-icon-default);
 }
 
 .ds-button--primary.ds-button--active .ds-button__icon,
 .ds-button--primary.ds-button--hover .ds-button__icon {
-  color: var(--color-action-icon);
+  color: var(--color-action-icon-active);
 }
 
 .ds-button--secondary .ds-button__icon {
@@ -158,7 +158,7 @@
 }
 
 .ds-button--primary:not(.ds-button--disabled):hover .ds-button__icon {
-  color: var(--color-action-icon);
+  color: var(--color-action-icon-active);
 }
 
 .ds-button--secondary:not(.ds-button--disabled):hover {
@@ -174,11 +174,11 @@
 }
 
 .ds-button--primary:not(.ds-button--disabled):active .ds-button__text {
-  color: var(--color-action-primary-text);
+  color: var(--color-action-primary-text-active);
 }
 
 .ds-button--primary:not(.ds-button--disabled):active .ds-button__icon {
-  color: var(--color-action-icon);
+  color: var(--color-action-icon-active);
 }
 
 .ds-button--secondary:not(.ds-button--disabled):active {
