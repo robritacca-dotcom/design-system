@@ -29,8 +29,13 @@ const meta = {
       description: 'Show text label',
     },
     icon: {
-      control: 'boolean',
-      description: 'Show icon before text',
+      control: 'text',
+      description: 'Material Symbol icon name (e.g., "menu", "home", "settings")',
+    },
+    iconStyle: {
+      control: 'select',
+      options: ['outlined', 'rounded', 'sharp'],
+      description: 'Icon style variant',
     },
   },
   args: {
@@ -124,24 +129,72 @@ export const SecondaryDisabled: Story = {
   },
 };
 
-// With Icon
-export const PrimaryWithIcon: Story = {
+// With Icon - Sharp (Default)
+export const PrimaryWithIconSharp: Story = {
   args: {
     priority: 'primary',
     state: 'default',
-    label: 'Button',
+    label: 'Menu',
     text: true,
-    icon: true,
+    icon: 'menu',
+    iconStyle: 'sharp',
   },
 };
 
-export const SecondaryWithIcon: Story = {
+export const SecondaryWithIconSharp: Story = {
   args: {
     priority: 'secondary',
     state: 'default',
-    label: 'Button',
+    label: 'Home',
     text: true,
-    icon: true,
+    icon: 'home',
+    iconStyle: 'sharp',
+  },
+};
+
+// With Icon - Rounded
+export const PrimaryWithIconRounded: Story = {
+  args: {
+    priority: 'primary',
+    state: 'default',
+    label: 'Settings',
+    text: true,
+    icon: 'settings',
+    iconStyle: 'rounded',
+  },
+};
+
+export const SecondaryWithIconRounded: Story = {
+  args: {
+    priority: 'secondary',
+    state: 'default',
+    label: 'Search',
+    text: true,
+    icon: 'search',
+    iconStyle: 'rounded',
+  },
+};
+
+// With Icon - Outlined
+export const PrimaryWithIconOutlined: Story = {
+  args: {
+    priority: 'primary',
+    state: 'default',
+    label: 'Favorite',
+    text: true,
+    icon: 'favorite',
+    iconStyle: 'outlined',
+  },
+};
+
+export const SecondaryWithIconOutlined: Story = {
+  args: {
+    priority: 'secondary',
+    state: 'default',
+    label: 'Star',
+    text: true,
+    icon: 'star',
+    iconStyle: 'outlined',
   },
 };
 
@@ -151,7 +204,8 @@ export const PrimaryIconOnly: Story = {
     priority: 'primary',
     state: 'default',
     text: false,
-    icon: true,
+    icon: 'add',
+    iconStyle: 'sharp',
   },
 };
 
@@ -160,6 +214,7 @@ export const SecondaryIconOnly: Story = {
     priority: 'secondary',
     state: 'default',
     text: false,
-    icon: true,
+    icon: 'close',
+    iconStyle: 'sharp',
   },
 };

@@ -1,11 +1,14 @@
 import React from 'react';
 import './Button.css';
+import '../../fonts/material-symbols.css';
 
 export interface ButtonProps {
   /** Button text content */
   label?: string;
-  /** Show icon before text */
-  icon?: boolean;
+  /** Material Symbol icon name (e.g., 'menu', 'home', 'settings') */
+  icon?: string;
+  /** Icon style variant */
+  iconStyle?: 'outlined' | 'rounded' | 'sharp';
   /** Button priority/variant */
   priority?: 'primary' | 'secondary';
   /** Button state */
@@ -24,7 +27,8 @@ export interface ButtonProps {
  */
 export const Button = ({
   label = 'Button',
-  icon = false,
+  icon,
+  iconStyle = 'sharp',
   priority = 'primary',
   state = 'default',
   text = true,
@@ -39,6 +43,9 @@ export const Button = ({
 
   const isDisabled = state === 'disabled';
 
+  // Map iconStyle to Material Symbols class
+  const iconStyleClass = `material-symbols-${iconStyle}`;
+
   return (
     <button
       type="button"
@@ -47,14 +54,9 @@ export const Button = ({
       disabled={isDisabled}
     >
       {icon && (
-        <div className={`${baseClass}__icon`} aria-hidden="true">
-          {/* Icon placeholder - replace with actual icon component */}
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <rect x="4" y="7" width="16" height="2" fill="currentColor" />
-            <rect x="4" y="11" width="16" height="2" fill="currentColor" />
-            <rect x="4" y="15" width="16" height="2" fill="currentColor" />
-          </svg>
-        </div>
+        <span className={`${baseClass}__icon ${iconStyleClass}`} aria-hidden="true">
+          {icon}
+        </span>
       )}
       {text && <span className={`${baseClass}__text`}>{label}</span>}
     </button>
