@@ -18,9 +18,9 @@
 
   /* Typography */
   font-family: 'Nunito Sans', sans-serif;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 16px;
-  line-height: normal;
+  line-height: 24px;
   text-align: center;
 
   /* Transitions */
@@ -37,8 +37,8 @@
    ============================================ */
 
 .ds-button--primary {
-  /* Figma: --action/primary/border/primary (#0a4e66) */
-  border: var(--border-md) solid var(--color-action-primary-border);
+  /* Figma: --action/primary/border/primary (#0a4e66) - 1px border */
+  border: var(--border-xs) solid var(--color-action-primary-border);
   background-color: transparent;
 }
 
@@ -48,13 +48,13 @@
 }
 
 .ds-button--primary.ds-button--default {
-  border: var(--border-md) solid var(--color-action-primary-border);
+  border: var(--border-xs) solid var(--color-action-primary-border);
   background-color: transparent;
 }
 
 .ds-button--primary.ds-button--hover {
-  /* Figma: hover state - uses same border, could add hover background */
-  border: var(--border-md) solid var(--color-action-primary-border);
+  /* Figma: hover state - 1px border */
+  border: var(--border-xs) solid var(--color-action-primary-border);
   background-color: var(--color-action-primary-bg-hover);
 }
 
@@ -63,7 +63,7 @@
 }
 
 .ds-button--primary.ds-button--active {
-  /* Figma: --action/primary/background/active (#0a4e66) */
+  /* Figma: --action/primary/background/active (#0a4e66) - 1px border */
   background-color: var(--color-action-primary-bg-active);
   border: var(--border-xs) solid var(--color-action-primary-border);
 }
@@ -73,7 +73,7 @@
 }
 
 .ds-button--primary.ds-button--disabled {
-  border: var(--border-md) solid var(--color-action-primary-border);
+  border: var(--border-xs) solid var(--color-action-primary-border);
   background-color: transparent;
   opacity: 0.4;
   cursor: not-allowed;
