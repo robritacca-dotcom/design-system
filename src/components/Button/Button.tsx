@@ -33,7 +33,7 @@ export interface ButtonProps {
 export const Button = ({
   label = 'Button',
   iconLeft,
-  iconRight = 'arrow_forward',
+  iconRight,
   iconStyle = 'sharp',
   priority = 'primary',
   state = 'default',
