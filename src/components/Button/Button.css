@@ -16,11 +16,12 @@
   /* Border radius */
   border-radius: var(--radius-full); /* Figma: --radius/full (999px) */
 
-  /* Typography */
-  font-family: 'Nunito Sans', sans-serif;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: normal;
+  /* Typography - Using paragraph style tokens */
+  font-family: var(--font-paragraph-family);
+  font-weight: var(--font-paragraph-weight);
+  font-size: var(--font-paragraph-size);
+  line-height: var(--font-paragraph-line-height);
+  letter-spacing: var(--font-paragraph-letter-spacing);
   text-align: center;
 
   /* Transitions */
@@ -37,43 +38,43 @@
    ============================================ */
 
 .ds-button--primary {
-  /* Figma: --action/primary/border/primary (#0a4e66) */
-  border: var(--border-md) solid var(--color-action-primary-border);
+  /* Figma: --action/primary/border/primary (#0a4e66) - 1px border */
+  border: var(--border-xs) solid var(--color-action-primary-border);
   background-color: transparent;
 }
 
 .ds-button--primary .ds-button__text {
-  /* Figma: --action/primary/text/tertiary (#118ab2) */
-  color: var(--color-action-primary-text-tertiary);
+  /* Figma: --text/primary */
+  color: var(--color-text-primary);
 }
 
 .ds-button--primary.ds-button--default {
-  border: var(--border-md) solid var(--color-action-primary-border);
+  border: var(--border-xs) solid var(--color-action-primary-border);
   background-color: transparent;
 }
 
 .ds-button--primary.ds-button--hover {
-  /* Figma: hover state - uses same border, could add hover background */
-  border: var(--border-md) solid var(--color-action-primary-border);
+  /* Figma: hover state - 1px border */
+  border: var(--border-xs) solid var(--color-action-primary-border);
   background-color: var(--color-action-primary-bg-hover);
 }
 
 .ds-button--primary.ds-button--hover .ds-button__text {
-  color: var(--color-action-primary-text);
+  color: var(--color-action-primary-text-active);
 }
 
 .ds-button--primary.ds-button--active {
-  /* Figma: --action/primary/background/active (#0a4e66) */
+  /* Figma: --action/primary/background/active (#0a4e66) - 1px border */
   background-color: var(--color-action-primary-bg-active);
   border: var(--border-xs) solid var(--color-action-primary-border);
 }
 
 .ds-button--primary.ds-button--active .ds-button__text {
-  color: var(--color-action-primary-text);
+  color: var(--color-action-primary-text-active);
 }
 
 .ds-button--primary.ds-button--disabled {
-  border: var(--border-md) solid var(--color-action-primary-border);
+  border: var(--border-xs) solid var(--color-action-primary-border);
   background-color: transparent;
   opacity: 0.4;
   cursor: not-allowed;
@@ -119,25 +120,22 @@
    ============================================ */
 
 .ds-button__icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
   flex-shrink: 0;
+  font-size: 24px;
+  line-height: 1;
 }
 
 .ds-button--primary .ds-button__icon {
-  color: var(--color-action-primary-text-tertiary);
+  color: var(--color-action-icon-default);
 }
 
 .ds-button--primary.ds-button--active .ds-button__icon,
 .ds-button--primary.ds-button--hover .ds-button__icon {
-  color: var(--color-action-icon);
+  color: var(--color-action-icon-active);
 }
 
 .ds-button--secondary .ds-button__icon {
-  color: var(--color-action-passive-text);
+  color: var(--color-icon-primary);
 }
 
 /* ============================================
@@ -157,7 +155,11 @@
 }
 
 .ds-button--primary:not(.ds-button--disabled):hover .ds-button__text {
-  color: var(--color-action-primary-text);
+  color: var(--color-action-primary-text-active);
+}
+
+.ds-button--primary:not(.ds-button--disabled):hover .ds-button__icon {
+  color: var(--color-action-icon-active);
 }
 
 .ds-button--secondary:not(.ds-button--disabled):hover {
@@ -173,7 +175,11 @@
 }
 
 .ds-button--primary:not(.ds-button--disabled):active .ds-button__text {
-  color: var(--color-action-primary-text);
+  color: var(--color-action-primary-text-active);
+}
+
+.ds-button--primary:not(.ds-button--disabled):active .ds-button__icon {
+  color: var(--color-action-icon-active);
 }
 
 .ds-button--secondary:not(.ds-button--disabled):active {
