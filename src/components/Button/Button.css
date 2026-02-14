@@ -43,8 +43,8 @@
 }
 
 .ds-button--primary .ds-button__text {
-  /* Figma: --action/primary/text/tertiary (#118ab2) */
-  color: var(--color-action-primary-text-tertiary);
+  /* Figma: --text/primary */
+  color: var(--color-text-primary);
 }
 
 .ds-button--primary.ds-button--default {
@@ -59,7 +59,7 @@
 }
 
 .ds-button--primary.ds-button--hover .ds-button__text {
-  color: var(--color-action-primary-text);
+  color: var(--color-action-primary-text-active);
 }
 
 .ds-button--primary.ds-button--active {
@@ -69,7 +69,7 @@
 }
 
 .ds-button--primary.ds-button--active .ds-button__text {
-  color: var(--color-action-primary-text);
+  color: var(--color-action-primary-text-active);
 }
 
 .ds-button--primary.ds-button--disabled {
@@ -154,7 +154,7 @@
 }
 
 .ds-button--primary:not(.ds-button--disabled):hover .ds-button__text {
-  color: var(--color-action-primary-text);
+  color: var(--color-action-primary-text-active);
 }
 
 .ds-button--primary:not(.ds-button--disabled):hover .ds-button__icon {
