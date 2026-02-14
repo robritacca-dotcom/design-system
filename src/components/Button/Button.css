@@ -16,11 +16,12 @@
   /* Border radius */
   border-radius: var(--radius-full); /* Figma: --radius/full (999px) */
 
-  /* Typography */
-  font-family: 'Nunito Sans', sans-serif;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
+  /* Typography - Using paragraph style tokens */
+  font-family: var(--font-paragraph-family);
+  font-weight: var(--font-paragraph-weight);
+  font-size: var(--font-paragraph-size);
+  line-height: var(--font-paragraph-line-height);
+  letter-spacing: var(--font-paragraph-letter-spacing);
   text-align: center;
 
   /* Transitions */
