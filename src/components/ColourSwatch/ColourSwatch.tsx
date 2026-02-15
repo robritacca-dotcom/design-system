@@ -2,8 +2,8 @@ import React from 'react';
 import './ColourSwatch.css';
 
 export interface ColourSwatchValues {
-  /** The primitive token name this colour maps to (e.g. "--teal--07--") */
-  primitive: string;
+  /** The primitive token name this colour maps to (e.g. "--teal--07--") — omit to hide the row */
+  primitive?: string;
   /** The hex value (e.g. "#118AB2") or rgba string */
   hex: string;
   /** The RGB breakdown (e.g. "17 / 138 / 178") */
@@ -60,10 +60,12 @@ export const ColourSwatch = ({
     <div className={classes} style={style}>
       <h3 className={`${baseClass}__title`}>{label}</h3>
       <div className={`${baseClass}__values`}>
-        <div className={`${baseClass}__row`}>
-          <span className={`${baseClass}__label`}>Primitive</span>
-          <span className={`${baseClass}__data`}>{values.primitive}</span>
-        </div>
+        {values.primitive && (
+          <div className={`${baseClass}__row`}>
+            <span className={`${baseClass}__label`}>Primitive</span>
+            <span className={`${baseClass}__data`}>{values.primitive}</span>
+          </div>
+        )}
         <div className={`${baseClass}__row`}>
           <span className={`${baseClass}__label`}>Hex</span>
           <span className={`${baseClass}__data`}>{values.hex}</span>

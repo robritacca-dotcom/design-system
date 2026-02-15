@@ -102,6 +102,16 @@ export const StatusError: Story = {
   },
 };
 
+/** Primitive swatch — no Primitive row, only Hex and RGB */
+export const PrimitiveSwatch: Story = {
+  args: {
+    label: 'Teal 07',
+    cssVar: '--primitive-teal-07',
+    theme: 'dark',
+    dark: { hex: '#118AB2', rgb: '17 / 138 / 178' },
+  },
+};
+
 /** Grid of swatches — how they appear on the page */
 export const SwatchGrid: Story = {
   args: {
