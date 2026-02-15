@@ -17,12 +17,12 @@ const navLinks = [
 
 const sidebarLinks = [
   { href: "/foundations", label: "About", active: true },
-  { href: "/foundations/colour-mode", label: "Semantic colours" },
-  { href: "/foundations/colour-primitives", label: "Primative colours" },
-  { href: "/foundations/spatial", label: "Semantic spacing" },
-  { href: "/foundations/typography", label: "Typography" },
   { href: "/foundations/icons", label: "Icons" },
   { href: "/foundations/logos", label: "Logos" },
+  { href: "/foundations/colour-primitives", label: "Primative colours" },
+  { href: "/foundations/colour-mode", label: "Semantic colours" },
+  { href: "/foundations/spatial", label: "Semantic spacing" },
+  { href: "/foundations/typography", label: "Typography" },
 ];
 
 const subnavLinks = sidebarLinks.map((l) => ({
@@ -49,14 +49,15 @@ export default function FoundationsPage() {
           {/* Page Title */}
           <h1 className={`${styles.pageTitle} animate-in`}>Foundations</h1>
 
-          {/* Page Description */}
-          <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Tokens are the underlying values the site runs on. They are used
-            everywhere layout, color, and type appear. Instead of styling
-            elements directly, everything references these shared variables so
-            changes propagate consistently. The same token structure exists in
-            Figma and in code.
-          </p>
+          {/* Intro */}
+          <div className={`${styles.introSection} animate-in animate-delay-1`}>
+            <p className={styles.subDisplay}>
+              The core building blocks: tokens, colors, spacing, and typography
+            </p>
+            <p className={styles.introBody}>
+              Tokens are the underlying values the site runs on. They are used everywhere layout, color, and type appear. Instead of styling elements directly, everything references these shared variables so changes propagate consistently. The same token structure exists in Figma and in code, allowing updates to flow through without reinterpreting intent.
+            </p>
+          </div>
 
           <div className={`${styles.tocGrid} animate-in animate-delay-2`}>
             {/* Semantic Colours */}
