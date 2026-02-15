@@ -198,127 +198,50 @@
 }
 
 /* ============================================
-   STORY SECTION
+   CARD PREVIEW (mini card inside circle)
    ============================================ */
-.storyLayout {
-  display: flex;
-  gap: var(--primitive-gap-xl);
-  align-items: flex-start;
-  width: 100%;
-}
-
-.storyContent {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: var(--primitive-gap-xl);
-}
-
-.contentSection {
-  display: flex;
-  flex-direction: column;
-  gap: var(--primitive-gap-xl);
-  width: 100%;
-}
-
-.contentSectionHeader {
-  padding-bottom: var(--primitive-padding-xl);
-  border-bottom: 1px solid var(--color-bg-container-border);
-}
-
-.contentSectionTitle {
-  font-size: var(--font-heading-2-size);
-  font-weight: var(--font-heading-2-weight);
-  line-height: var(--font-heading-2-line-height);
-  letter-spacing: var(--font-heading-2-letter-spacing);
-  color: var(--color-text-secondary);
-  margin: 0;
-}
-
-.contentSectionBody {
-  font-size: var(--font-paragraph-size);
-  font-weight: var(--font-paragraph-weight);
-  line-height: var(--font-paragraph-line-height);
-  color: var(--color-text-primary);
-}
-
-.contentSectionBody p {
-  margin: 0 0 var(--primitive-gap-md) 0;
-}
-
-.contentSectionBody p:last-child {
-  margin-bottom: 0;
+.cardPreview {
+  width: 90px;
+  height: 90px;
+  background: var(--color-bg-container-primary);
+  border: 1px solid var(--color-bg-container-border);
+  border-radius: var(--primitive-radius-xl);
+  box-shadow: 0px 0px 20.9px 0px rgba(0, 0, 0, 0.25);
 }
 
 /* ============================================
-   TOOLS SIDEBAR
+   TOGGLE PREVIEW (mini toggle inside circle)
    ============================================ */
-.storySidebar {
-  width: 319px;
-  flex-shrink: 0;
+.togglePreview {
   display: flex;
-  flex-direction: column;
-  gap: var(--primitive-gap-xl);
+  align-items: center;
+  justify-content: center;
 }
 
-.storySidebarTitle {
-  font-size: var(--font-heading-2-size);
-  font-weight: var(--font-heading-2-weight);
-  line-height: var(--font-heading-2-line-height);
-  letter-spacing: var(--font-heading-2-letter-spacing);
-  color: var(--color-text-secondary);
-  padding-bottom: var(--primitive-padding-xl);
-  border-bottom: 1px solid var(--color-bg-container-border);
+.toggleSocket {
+  width: 42px;
+  height: 24px;
+  border-radius: 42px;
+  background: var(--color-action-primary-bg);
+  position: relative;
 }
 
-.toolsList {
+.toggleThumb {
+  position: absolute;
+  top: 4.17%;
+  bottom: 4.17%;
+  right: 2.38%;
+  width: 52.38%;
+  border-radius: 50%;
   display: flex;
-  flex-direction: column;
-  gap: var(--primitive-gap-xl);
-}
-
-.toolItem {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--primitive-gap-md);
-}
-
-.toolLogo {
-  width: 28px;
-  height: 28px;
-  flex-shrink: 0;
-}
-
-.toolDetails {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.toolName {
-  font-size: var(--font-title-body-size);
-  font-weight: var(--font-title-body-weight);
-  color: var(--color-text-primary);
-  line-height: var(--font-title-body-line-height);
-}
-
-.toolDesc {
-  font-size: var(--font-paragraph-size);
-  font-weight: var(--font-paragraph-weight);
-  color: var(--color-text-secondary);
-  line-height: var(--font-paragraph-line-height);
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
 /* ============================================
    RESPONSIVE
    ============================================ */
-
-/* Tablet - story sidebar shrinks */
-@media (max-width: 1280px) {
-  .storySidebar {
-    width: 250px;
-  }
-}
 
 /* Mobile */
 @media (max-width: 959px) {
@@ -330,15 +253,6 @@
   .dsContent {
     max-width: 100%;
     min-width: 0;
-  }
-
-  .storyLayout {
-    flex-direction: column;
-    gap: var(--primitive-gap-xl);
-  }
-
-  .storySidebar {
-    width: 100%;
   }
 
   .subDisplay {
