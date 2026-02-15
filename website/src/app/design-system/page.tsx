@@ -6,6 +6,7 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import Footer from "../../components/Footer/Footer";
 import TocCard from "../../components/TocCard/TocCard";
+import { Button } from "@design-system/components/Button/Button";
 import styles from "./page.module.css";
 
 const navLinks = [
@@ -119,15 +120,9 @@ export default function DesignSystemPage() {
               {/* Buttons */}
               <TocCard href="/design-system/buttons" title="Buttons">
                 <div className={`${styles.circlePreview} ${styles.circleDashed}`} style={{ flexDirection: "column", gap: "10px" }}>
-                  <span className={styles.btnPreview} style={{ border: `2px solid var(--color-core-ui-secondary)` }}>
-                    Button
-                  </span>
-                  <span className={styles.btnPreview} style={{ background: "var(--color-action-primary-bg-hover)", border: `1px solid var(--color-core-ui-secondary)` }}>
-                    Button
-                  </span>
-                  <span className={styles.btnPreview} style={{ border: `2px solid var(--color-core-ui-secondary)`, opacity: 0.4 }}>
-                    Button
-                  </span>
+                  <Button label="Button" priority="primary" state="default" />
+                  <Button label="Button" priority="primary" state="hover" />
+                  <Button label="Button" priority="primary" state="disabled" />
                 </div>
               </TocCard>
 
