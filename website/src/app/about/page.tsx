@@ -15,8 +15,8 @@ const navLinks = [
 ];
 
 const sidebarLinks = [
-  { href: "/about", label: "Resume", active: true },
-  { href: "#", label: "Personal" },
+  { href: "/about", label: "About robr0 DS", active: true },
+  { href: "/about/me", label: "About me" },
 ];
 
 const subnavLinks = sidebarLinks.map((l) => ({
@@ -25,7 +25,7 @@ const subnavLinks = sidebarLinks.map((l) => ({
   active: l.active,
 }));
 
-export default function AboutPage() {
+export default function AboutDsPage() {
   return (
     <>
       <a href="#main-content" className="skip-link">
@@ -41,190 +41,157 @@ export default function AboutPage() {
 
         <main className={styles.dsContent} id="main-content">
           {/* Page Title */}
-          <h1 className={`${styles.pageTitle} animate-in`}>About</h1>
+          <h1 className={`${styles.pageTitle} animate-in`}>About robr0 DS</h1>
 
-          {/* Page Description */}
-          <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            I work at the intersection of AI, interaction design, and platform
-            architecture, building foundations that support complex products and
-            teams.
-          </p>
+          {/* Intro */}
+          <div className={`${styles.introSection} animate-in animate-delay-1`}>
+            <p className={styles.subDisplay}>
+              Design system infrastructure powered by AI tooling
+            </p>
+            <p className={styles.introBody}>
+              I built a design-to-code pipeline that keeps design and development perfectly in sync. Everything starts in Figma where I define design tokens as variables and build components. Claude Code connects to Figma via MCP, reads the design data directly, and generates production-ready React components with token-based CSS and Storybook documentation. When I push changes to GitHub, Vercel automatically deploys both the component library (Storybook) and this website within 60 seconds. Design changes flow straight to production with zero manual translation or deployment steps. It&apos;s infrastructure that lets one person maintain design system quality that normally requires a full team.
+            </p>
+          </div>
 
-          {/* Resume Two-Column Layout */}
+          {/* Pipeline + Tools two-column layout */}
           <div className={styles.resumeLayout}>
-            {/* Work Experience Column (Left) */}
+            {/* Pipeline Column (Left — 2/3 width) */}
             <div className={styles.resumeMain}>
               <div className={styles.resumeSection}>
                 <div className={styles.resumeSectionHeader}>
-                  <h2 className={styles.resumeSectionTitle}>Work experience</h2>
+                  <h2 className={styles.resumeSectionTitle}>Pipeline</h2>
                 </div>
 
                 <div className={styles.resumeCompanies}>
-                  {/* Intuit */}
+                  {/* Figma */}
                   <div className={`${styles.resumeCompany} animate-in animate-delay-2`}>
                     <div className={styles.companyHeader}>
-                      <Image src="/logos/Intuit.svg" alt="Intuit" width={32} height={32} className={styles.companyLogo} />
-                      <span className={styles.companyName}>Intuit</span>
+                      <Image src="/logos/Figma.svg" alt="Figma" width={28} height={28} className={styles.companyLogo} />
+                      <span className={styles.companyName}>Product name</span>
                     </div>
                     <div className={styles.companyRoles}>
                       <div className={styles.timelineBar} />
                       <div className={styles.rolesContent}>
                         <div className={styles.role}>
                           <div className={styles.roleHeader}>
-                            <h3 className={styles.roleTitle}>Principal Product Designer</h3>
-                            <span className={styles.roleDates}>May 2024 – <span className={styles.present}>Present</span></span>
+                            <h3 className={styles.roleTitle}>Design source of truth</h3>
                           </div>
                           <p className={styles.roleDescription}>
-                            GenUX is Intuit&apos;s foundational platform for AI powered conversational experiences. As the Principal lead individual contributor, I own the vision, system design, and execution that define how agentic and conversational interfaces are built and scaled across the company.
+                            All design decisions live in Figma. I design the robr0 DS system here — not mockups, but the actual source that generates code.
                           </p>
                           <ul className={styles.roleBullets}>
-                            <li>Led the 0 to 1 creation of Intuit&apos;s foundational conversational interface, establishing the core patterns, interaction models, and system primitives used across AI experiences</li>
-                            <li>Enabled adoption by 150 plus product teams across multiple business units through scalable design systems, tooling, and clear usage guidance</li>
-                            <li>Established GenUX as the canonical foundation for conversational UX at Intuit, aligning teams around a shared interface model and design standards</li>
-                            <li>Partnered closely with QuickBooks to drive adoption of Intuit Intelligence, contributing to general availability for more than 100 million customers</li>
-                            <li>Defined reusable components and interaction frameworks that allow teams to build domain specific agent experiences while maintaining consistency at scale</li>
+                            <li>Build design tokens as variables: 7 color ramps + spatial tokens (gap, padding, radius, border)</li>
+                            <li>Design components with variants and map semantics for light/dark modes</li>
+                            <li>Export JSON and expose via MCP for direct code generation</li>
                           </ul>
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  {/* Augmenta */}
+                  {/* Claude Code */}
                   <div className={`${styles.resumeCompany} animate-in animate-delay-3`}>
                     <div className={styles.timelineSpacer} />
                     <div className={styles.companyHeader}>
-                      <Image src="/logos/Augmenta.svg" alt="Augmenta" width={32} height={32} className={styles.companyLogo} />
-                      <span className={styles.companyName}>Augmenta</span>
+                      <Image src="/logos/Claude.svg" alt="Claude" width={28} height={28} className={styles.companyLogo} />
+                      <span className={styles.companyName}>Claude Code</span>
                     </div>
                     <div className={styles.companyRoles}>
                       <div className={styles.timelineBar} />
                       <div className={styles.rolesContent}>
                         <div className={styles.role}>
                           <div className={styles.roleHeader}>
-                            <h3 className={styles.roleTitle}>Principal Product Designer</h3>
-                            <span className={styles.roleDates}>Aug 2023 – May 2024</span>
+                            <h3 className={styles.roleTitle}>AI component generator</h3>
                           </div>
                           <p className={styles.roleDescription}>
-                            Led end-to-end UX for a 0 to 1 Generative AI tool enabling engineers to create constructible, code-compliant electrical raceway designs, as the sole designer supporting 30+ engineers.
+                            Reads my Figma file via MCP and writes production React code directly from design data.
                           </p>
                           <ul className={styles.roleBullets}>
-                            <li>Drove continuous product improvement through user research, testing, and iterative design — shaping workflows and building new capabilities like 4x expanded signal visibility across 3D and tabular views</li>
-                            <li>Reduced the time-to-value metric from 14 to 5 days by streamlining generation workflows and cutting required cycles from 12 to 5 through clearer feedback and improved anomaly detection</li>
-                            <li>Improved solution quality by reducing anomalies per output by 60% and cutting engineering intervention from 13+ to ~1 per project through better tooling, visualization, and in-product guidance</li>
+                            <li>Converts token JSON to layered CSS variables (primitives → semantics → components)</li>
+                            <li>Generates React components matching Figma variants with TypeScript and token-based CSS</li>
+                            <li>Builds Storybook documentation automatically for every component</li>
                           </ul>
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  {/* Meta */}
-                  <div className={`${styles.resumeCompany} animate-in animate-delay-4`}>
+                  {/* Storybook */}
+                  <div className={`${styles.resumeCompany} animate-in animate-delay-3`}>
                     <div className={styles.timelineSpacer} />
                     <div className={styles.companyHeader}>
-                      <Image src="/logos/meta.svg" alt="Meta" width={32} height={32} className={styles.companyLogo} />
-                      <span className={styles.companyName}>Meta</span>
+                      <Image src="/logos/storybook.svg" alt="Storybook" width={28} height={28} className={styles.companyLogo} />
+                      <span className={styles.companyName}>Storybook</span>
                     </div>
                     <div className={styles.companyRoles}>
                       <div className={styles.timelineBar} />
                       <div className={styles.rolesContent}>
                         <div className={styles.role}>
                           <div className={styles.roleHeader}>
-                            <h3 className={styles.roleTitle}>Staff Product Designer</h3>
-                            <span className={styles.roleDates}>Sep 2021 – Jul 2023</span>
+                            <h3 className={styles.roleTitle}>Live documentation site</h3>
                           </div>
                           <p className={styles.roleDescription}>
-                            Directed and executed on design initiatives rooted in evidence across a horizontal portfolio of Recruiting Products, supporting Meta in the mission to discover, develop and hire the best talent in the world.
+                            Interactive component library at design-system-iota-one.vercel.app showing every piece of robr0 DS.
                           </p>
                           <ul className={styles.roleBullets}>
-                            <li>Redesigned the Job Offer tool within Meta&apos;s Applicant Tracking System, improving offer extension velocity by over 10%, compensation approval velocity by 25%, and volume of data points by 50%</li>
-                            <li>Redesigned the Internal Mobility transfer and eligibility tool, resulting in a 58% increase in data accuracy and a 33% reduction in processing time to earn an estimated savings of 2000 hours/year of productivity</li>
-                            <li>Led design direction for a mixed-reality initiative of 40+ people across 6 organizations, including Recruiting Products and an external XR development shop</li>
+                            <li>Component playground with live controls for all props and states</li>
+                            <li>Token docs (colors, spacing, typography), icon gallery, logo library</li>
+                            <li>Auto-deploys on every code push</li>
                           </ul>
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  {/* Cognizant */}
+                  {/* GitHub */}
                   <div className={`${styles.resumeCompany} animate-in animate-delay-4`}>
                     <div className={styles.timelineSpacer} />
                     <div className={styles.companyHeader}>
-                      <Image src="/logos/Cognizant.svg" alt="Cognizant" width={32} height={32} className={styles.companyLogo} />
-                      <span className={styles.companyName}>Cognizant (Previously known as Devbridge)</span>
+                      <Image src="/logos/Git.svg" alt="GitHub" width={28} height={28} className={styles.companyLogo} />
+                      <span className={styles.companyName}>GitHub</span>
                     </div>
                     <div className={styles.companyRoles}>
                       <div className={styles.timelineBar} />
                       <div className={styles.rolesContent}>
                         <div className={styles.role}>
                           <div className={styles.roleHeader}>
-                            <h3 className={styles.roleTitle}>Product Design Manager</h3>
-                            <span className={styles.roleDates}>Sep 2018 – Sep 2021</span>
+                            <h3 className={styles.roleTitle}>Version control</h3>
                           </div>
                           <p className={styles.roleDescription}>
-                            Managed the performance, career development, and utilization of a team of 4 Product Designers within the Toronto business unit. Directed all design phases across a broad portfolio of multi-product/multi-phase delivery engagements worth $25m over 4 years.
+                            Public repository storing the entire codebase with full commit history.
                           </p>
                           <ul className={styles.roleBullets}>
-                            <li>Led design for mySCP, a cross-platform healthcare application suite used by 8,000+ clinicians across desktop, iOS, and Android</li>
-                            <li>Led design for multiple CIBC banking products, including First Caribbean and Smart Banking for Business, spanning desktop, iOS, and Android</li>
+                            <li>Tracks all changes to design system and website (monorepo)</li>
+                            <li>Triggers Vercel deployment on every push to main</li>
+                            <li>Portfolio visibility at github.com/robritacca-dotcom/design-system</li>
                           </ul>
                         </div>
-                        <div className={styles.role}>
-                          <div className={styles.roleHeader}>
-                            <h3 className={styles.roleTitle}>Senior Product Designer</h3>
-                            <span className={styles.roleDates}>Sep 2017 – Sep 2018</span>
-                          </div>
-                        </div>
                       </div>
                     </div>
                   </div>
 
-                  {/* Instacart */}
+                  {/* Vercel */}
                   <div className={`${styles.resumeCompany} animate-in animate-delay-4`}>
                     <div className={styles.timelineSpacer} />
                     <div className={styles.companyHeader}>
-                      <Image src="/logos/Instacart.svg" alt="Instacart" width={32} height={32} className={styles.companyLogo} />
-                      <span className={styles.companyName}>Instacart (Previously known as Unata)</span>
+                      <Image src="/vercel.svg" alt="Vercel" width={28} height={28} className={styles.companyLogo} />
+                      <span className={styles.companyName}>Vercel</span>
                     </div>
                     <div className={styles.companyRoles}>
                       <div className={styles.timelineBar} />
                       <div className={styles.rolesContent}>
                         <div className={styles.role}>
                           <div className={styles.roleHeader}>
-                            <h3 className={styles.roleTitle}>Senior Product Designer</h3>
-                            <span className={styles.roleDates}>Jan 2017 – Sep 2017</span>
+                            <h3 className={styles.roleTitle}>Auto-deployment</h3>
                           </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* AdParlor */}
-                  <div className={`${styles.resumeCompany} animate-in animate-delay-4`}>
-                    <div className={styles.timelineSpacer} />
-                    <div className={styles.companyHeader}>
-                      <Image src="/logos/AdParlor.svg" alt="AdParlor" width={32} height={32} className={styles.companyLogo} />
-                      <span className={styles.companyName}>AdParlor</span>
-                    </div>
-                    <div className={styles.companyRoles}>
-                      <div className={styles.timelineBar} />
-                      <div className={styles.rolesContent}>
-                        <div className={styles.role}>
-                          <div className={styles.roleHeader}>
-                            <h3 className={styles.roleTitle}>Senior Product Designer</h3>
-                            <span className={styles.roleDates}>Dec 2015 – Jan 2017</span>
-                          </div>
-                        </div>
-                        <div className={styles.role}>
-                          <div className={styles.roleHeader}>
-                            <h3 className={styles.roleTitle}>Product Designer</h3>
-                            <span className={styles.roleDates}>Dec 2013 – Dec 2015</span>
-                          </div>
-                        </div>
-                        <div className={styles.role}>
-                          <div className={styles.roleHeader}>
-                            <h3 className={styles.roleTitle}>Graphic Designer</h3>
-                            <span className={styles.roleDates}>Dec 2011 – Dec 2014</span>
-                          </div>
+                          <p className={styles.roleDescription}>
+                            Watches GitHub and deploys both sites automatically on every push.
+                          </p>
+                          <ul className={styles.roleBullets}>
+                            <li>Builds and deploys Storybook → design-system-iota-one.vercel.app</li>
+                            <li>Builds and deploys website → robr0-ds.vercel.app</li>
+                            <li>Live in under 60 seconds with SSL and global CDN</li>
+                          </ul>
                         </div>
                       </div>
                     </div>
@@ -233,107 +200,82 @@ export default function AboutPage() {
               </div>
             </div>
 
-            {/* Right Rail */}
+            {/* Tools Rail (Right — 1/3 width) */}
             <aside className={styles.resumeSidebar}>
-              {/* Skills Section */}
               <div className={`${styles.resumeSection} animate-in animate-delay-2`}>
                 <div className={styles.resumeSectionHeader}>
-                  <h2 className={styles.resumeSectionTitle}>Skills</h2>
+                  <h2 className={styles.resumeSectionTitle}>Tools</h2>
                 </div>
 
-                <div className={styles.skillsGroup}>
-                  <h4 className={styles.skillsCategory}>AI and agentic design</h4>
-                  <ul className={styles.skillsList}>
-                    <li>Agentic and conversational UX</li>
-                    <li>Multi turn interaction design</li>
-                    <li>Human in the loop workflows</li>
-                    <li>Dynamic UI from model output</li>
-                  </ul>
-                </div>
-
-                <div className={styles.skillsGroup}>
-                  <h4 className={styles.skillsCategory}>Product and delivery</h4>
-                  <ul className={styles.skillsList}>
-                    <li>0 to 1 product development</li>
-                    <li>Shipping and iteration ownership</li>
-                    <li>Product domain definition</li>
-                    <li>Cross functional execution</li>
-                  </ul>
-                </div>
-
-                <div className={styles.skillsGroup}>
-                  <h4 className={styles.skillsCategory}>Systems and platforms</h4>
-                  <ul className={styles.skillsList}>
-                    <li>Design system architecture</li>
-                    <li>Token based theming</li>
-                    <li>Reusable primitives and patterns</li>
-                    <li>Platform scale design</li>
-                  </ul>
-                </div>
-
-                <div className={styles.skillsGroup}>
-                  <h4 className={styles.skillsCategory}>Tooling and execution</h4>
-                  <ul className={styles.skillsList}>
-                    <li>Advanced Figma systems</li>
-                    <li>MCP and Cursor workflows</li>
-                    <li>Design to engineering handoff</li>
-                    <li>System level prototyping</li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* Education Section */}
-              <div className={`${styles.resumeSection} animate-in animate-delay-3`}>
-                <div className={styles.resumeSectionHeader}>
-                  <h2 className={styles.resumeSectionTitle}>Education</h2>
-                </div>
-
-                <div className={styles.educationList}>
-                  <div className={styles.educationItem}>
-                    <Image src="/logos/uoft.svg" alt="University of Toronto" width={32} height={32} className={styles.educationLogo} />
-                    <div className={styles.educationDetails}>
-                      <span className={styles.educationDegree}>
-                        <a href="https://visualculture.utoronto.ca/" target="_blank" rel="noopener noreferrer">HBA, Visual Culture &amp; Communication</a>
-                      </span>
-                      <span className={styles.educationSchool}>University of Toronto</span>
-                    </div>
-                  </div>
-                  <div className={styles.educationItem}>
-                    <Image src="/logos/sheridan.svg" alt="Sheridan College" width={32} height={32} className={styles.educationLogo} />
-                    <div className={styles.educationDetails}>
-                      <span className={styles.educationDegree}>
-                        <a href="https://www.sheridancollege.ca/programs/digital-communication-certificate" target="_blank" rel="noopener noreferrer">Certificate, Digital Communication</a>
-                      </span>
-                      <span className={styles.educationSchool}>Sheridan College</span>
-                    </div>
+                <div className={styles.toolItem}>
+                  <Image src="/logos/Figma.svg" alt="Figma" width={28} height={28} />
+                  <div className={styles.toolDetails}>
+                    <span className={styles.toolName}>Figma</span>
+                    <span className={styles.toolDesc}>robr0 DS design file, variables, MCP server</span>
                   </div>
                 </div>
-              </div>
 
-              {/* Certificates Section */}
-              <div className={`${styles.resumeSection} animate-in animate-delay-4`}>
-                <div className={styles.resumeSectionHeader}>
-                  <h2 className={styles.resumeSectionTitle}>Certificates</h2>
+                <div className={styles.toolItem}>
+                  <Image src="/logos/Claude.svg" alt="Claude" width={28} height={28} />
+                  <div className={styles.toolDetails}>
+                    <span className={styles.toolName}>Claude Code + Opus 4.6</span>
+                    <span className={styles.toolDesc}>AI component generation from Figma</span>
+                  </div>
                 </div>
 
-                <div className={styles.educationList}>
-                  <div className={styles.educationItem}>
-                    <Image src="/logos/slii.svg" alt="Ken Blanchard" width={32} height={32} className={styles.educationLogo} />
-                    <div className={styles.educationDetails}>
-                      <span className={styles.educationDegree}>
-                        <a href="https://www.kenblanchard.com/situationalleadership/" target="_blank" rel="noopener noreferrer">Situational Leadership (SLII)</a>
-                      </span>
-                      <span className={styles.educationSchool}>Ken Blanchard</span>
-                    </div>
+                <div className={styles.toolItem}>
+                  <Image src="/logos/cursor.svg" alt="Cursor" width={28} height={28} />
+                  <div className={styles.toolDetails}>
+                    <span className={styles.toolName}>Cursor</span>
+                    <span className={styles.toolDesc}>AI code editor and file inspection</span>
                   </div>
-                  <div className={styles.educationItem}>
-                    <Image src="/logos/Deque.svg" alt="Deque University" width={32} height={32} className={styles.educationLogo} />
-                    <div className={styles.educationDetails}>
-                      <span className={styles.educationDegree}>
-                        <a href="https://www.deque.com/certification/accessibility-for-designers/" target="_blank" rel="noopener noreferrer">Accessibility for Designers</a>
-                      </span>
-                      <span className={styles.educationSchool}>Deque University</span>
-                    </div>
+                </div>
+
+                <div className={styles.toolItem}>
+                  <Image src="/logos/storybook.svg" alt="Storybook" width={28} height={28} />
+                  <div className={styles.toolDetails}>
+                    <span className={styles.toolName}>Storybook</span>
+                    <span className={styles.toolDesc}>Component documentation site</span>
+                  </div>
+                </div>
+
+                <div className={styles.toolItem}>
+                  <Image src="/logos/Git.svg" alt="GitHub" width={28} height={28} />
+                  <div className={styles.toolDetails}>
+                    <span className={styles.toolName}>Github</span>
+                    <span className={styles.toolDesc}>Version Control</span>
+                  </div>
+                </div>
+
+                <div className={styles.toolItem}>
+                  <Image src="/logos/ChatGPT.svg" alt="ChatGPT" width={28} height={28} />
+                  <div className={styles.toolDetails}>
+                    <span className={styles.toolName}>ChatGPT</span>
+                    <span className={styles.toolDesc}>Content writing</span>
+                  </div>
+                </div>
+
+                <div className={styles.toolItem}>
+                  <Image src="/vercel.svg" alt="Vercel" width={28} height={28} />
+                  <div className={styles.toolDetails}>
+                    <span className={styles.toolName}>Vercel</span>
+                    <span className={styles.toolDesc}>Auto-deploy platform</span>
+                  </div>
+                </div>
+
+                <div className={styles.toolItem}>
+                  <Image src="/logos/material.svg" alt="Material 3" width={28} height={28} />
+                  <div className={styles.toolDetails}>
+                    <span className={styles.toolName}>Material 3</span>
+                    <span className={styles.toolDesc}>Icon and typography system</span>
+                  </div>
+                </div>
+
+                <div className={styles.toolItem}>
+                  <Image src="/logos/GoDaddy.svg" alt="GoDaddy" width={28} height={28} />
+                  <div className={styles.toolDetails}>
+                    <span className={styles.toolName}>GoDaddy</span>
+                    <span className={styles.toolDesc}>Domain</span>
                   </div>
                 </div>
               </div>
