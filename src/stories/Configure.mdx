@@ -1,363 +1,361 @@
+{/* robr0 Design System overview page */}
 import { Meta } from "@storybook/addon-docs/blocks";
 
-import Github from "./assets/github.svg";
-import Discord from "./assets/discord.svg";
-import Youtube from "./assets/youtube.svg";
-import Tutorials from "./assets/tutorials.svg";
-import Styling from "./assets/styling.png";
-import Context from "./assets/context.png";
-import Assets from "./assets/assets.png";
-import Docs from "./assets/docs.png";
-import Share from "./assets/share.png";
-import FigmaPlugin from "./assets/figma-plugin.png";
-import Testing from "./assets/testing.png";
-import Accessibility from "./assets/accessibility.png";
-import Theming from "./assets/theming.png";
-import AddonLibrary from "./assets/addon-library.png";
+<Meta title="robr0 DS" />
 
-export const RightArrow = () => <svg 
-    viewBox="0 0 14 14" 
-    width="8px" 
-    height="14px" 
-    style={{ 
-      marginLeft: '4px',
-      display: 'inline-block',
-      shapeRendering: 'inherit',
-      verticalAlign: 'middle',
-      fill: 'currentColor',
-      'path fill': 'currentColor'
-    }}
->
-  <path d="m11.1 7.35-5.5 5.5a.5.5 0 0 1-.7-.7L10.04 7 4.9 1.85a.5.5 0 1 1 .7-.7l5.5 5.5c.2.2.2.5 0 .7Z" />
-</svg>
+<div className="ds-intro">
 
-<Meta title="Configure your project" />
+# robr0 Design System
 
-<div className="sb-container">
-  <div className='sb-section-title'>
-    # Configure your project
+A token-driven design system built from Figma variables, shipped as CSS custom properties with React components. Everything flows from a single source of truth: **Figma &rarr; Primitives &rarr; Semantic Tokens &rarr; Components &rarr; Website**.
 
-    Because Storybook works separately from your app, you'll need to configure it for your specific stack and setup. Below, explore guides for configuring Storybook with popular frameworks and tools. If you get stuck, learn how you can ask for help from our community.
-  </div>
-  <div className="sb-section">
-    <div className="sb-section-item">
-      <img
-        src={Styling}
-        alt="A wall of logos representing different styling technologies"
-      />
-      <h4 className="sb-section-item-heading">Add styling and CSS</h4>
-      <p className="sb-section-item-paragraph">Like with web applications, there are many ways to include CSS within Storybook. Learn more about setting up styling within Storybook.</p>
-      <a
-        href="https://storybook.js.org/docs/configure/styling-and-css/?renderer=react&ref=configure"
-        target="_blank"
-      >Learn more<RightArrow /></a>
-    </div>
-    <div className="sb-section-item">
-      <img
-        src={Context}
-        alt="An abstraction representing the composition of data for a component"
-      />
-      <h4 className="sb-section-item-heading">Provide context and mocking</h4>
-      <p className="sb-section-item-paragraph">Often when a story doesn't render, it's because your component is expecting a specific environment or context (like a theme provider) to be available.</p>
-      <a
-        href="https://storybook.js.org/docs/writing-stories/decorators/?renderer=react&ref=configure#context-for-mocking"
-        target="_blank"
-      >Learn more<RightArrow /></a>
-    </div>
-    <div className="sb-section-item">
-      <img src={Assets} alt="A representation of typography and image assets" />
-      <div>
-        <h4 className="sb-section-item-heading">Load assets and resources</h4>
-        <p className="sb-section-item-paragraph">To link static files (like fonts) to your projects and stories, use the
-        `staticDirs` configuration option to specify folders to load when
-        starting Storybook.</p>
-        <a
-          href="https://storybook.js.org/docs/configure/images-and-assets/?renderer=react&ref=configure"
-          target="_blank"
-        >Learn more<RightArrow /></a>
-      </div>
-    </div>
-  </div>
 </div>
-<div className="sb-container">
-  <div className='sb-section-title'>
-    # Do more with Storybook
 
-    Now that you know the basics, let's explore other parts of Storybook that will improve your experience. This list is just to get you started. You can customise Storybook in many ways to fit your needs.
-  </div>
+<div className="ds-section">
 
-  <div className="sb-section">
-    <div className="sb-features-grid">
-      <div className="sb-grid-item">
-        <img src={Docs} alt="A screenshot showing the autodocs tag being set, pointing a docs page being generated" />
-        <h4 className="sb-section-item-heading">Autodocs</h4>
-        <p className="sb-section-item-paragraph">Auto-generate living,
-          interactive reference documentation from your components and stories.</p>
-        <a
-          href="https://storybook.js.org/docs/writing-docs/autodocs/?renderer=react&ref=configure"
-          target="_blank"
-        >Learn more<RightArrow /></a>
-      </div>
-      <div className="sb-grid-item">
-        <img src={Share} alt="A browser window showing a Storybook being published to a chromatic.com URL" />
-        <h4 className="sb-section-item-heading">Publish to Chromatic</h4>
-        <p className="sb-section-item-paragraph">Publish your Storybook to review and collaborate with your entire team.</p>
-        <a
-          href="https://storybook.js.org/docs/sharing/publish-storybook/?renderer=react&ref=configure#publish-storybook-with-chromatic"
-          target="_blank"
-        >Learn more<RightArrow /></a>
-      </div>
-      <div className="sb-grid-item">
-        <img src={FigmaPlugin} alt="Windows showing the Storybook plugin in Figma" />
-        <h4 className="sb-section-item-heading">Figma Plugin</h4>
-        <p className="sb-section-item-paragraph">Embed your stories into Figma to cross-reference the design and live
-          implementation in one place.</p>
-        <a
-          href="https://storybook.js.org/docs/sharing/design-integrations/?renderer=react&ref=configure#embed-storybook-in-figma-with-the-plugin"
-          target="_blank"
-        >Learn more<RightArrow /></a>
-      </div>
-      <div className="sb-grid-item">
-        <img src={Testing} alt="Screenshot of tests passing and failing" />
-        <h4 className="sb-section-item-heading">Testing</h4>
-        <p className="sb-section-item-paragraph">Use stories to test a component in all its variations, no matter how
-          complex.</p>
-        <a
-          href="https://storybook.js.org/docs/writing-tests/?renderer=react&ref=configure"
-          target="_blank"
-        >Learn more<RightArrow /></a>
-      </div>
-      <div className="sb-grid-item">
-        <img src={Accessibility} alt="Screenshot of accessibility tests passing and failing" />
-        <h4 className="sb-section-item-heading">Accessibility</h4>
-        <p className="sb-section-item-paragraph">Automatically test your components for a11y issues as you develop.</p>
-        <a
-          href="https://storybook.js.org/docs/writing-tests/accessibility-testing/?renderer=react&ref=configure"
-          target="_blank"
-        >Learn more<RightArrow /></a>
-      </div>
-      <div className="sb-grid-item">
-        <img src={Theming} alt="Screenshot of Storybook in light and dark mode" />
-        <h4 className="sb-section-item-heading">Theming</h4>
-        <p className="sb-section-item-paragraph">Theme Storybook's UI to personalize it to your project.</p>
-        <a
-          href="https://storybook.js.org/docs/configure/theming/?renderer=react&ref=configure"
-          target="_blank"
-        >Learn more<RightArrow /></a>
-      </div>
-    </div>
+## Architecture
+
+<div className="ds-arch-grid">
+  <div className="ds-arch-card">
+    <div className="ds-arch-number">1</div>
+    <h4>Figma Variables</h4>
+    <p>Colour, Mode, and Spatial collections defined in Figma. Primitives are raw hex/rgba values. Mode tokens map primitives to light and dark themes.</p>
   </div>
-</div>
-<div className='sb-addon'>
-  <div className='sb-addon-text'>
-    <h4>Addons</h4>
-    <p className="sb-section-item-paragraph">Integrate your tools with Storybook to connect workflows.</p>
-    <a
-        href="https://storybook.js.org/addons/?ref=configure"
-        target="_blank"
-      >Discover all addons<RightArrow /></a>
+  <div className="ds-arch-card">
+    <div className="ds-arch-number">2</div>
+    <h4>CSS Primitives</h4>
+    <p>tokens-primitives.css — the raw scale. Neutral 00–11, plus Red, Orange, Yellow, Green, Teal, Blue, Purple. Semi-transparent variants for glass effects. Never used directly in components.</p>
   </div>
-  <div className='sb-addon-img'>
-    <img src={AddonLibrary} alt="Integrate your tools with Storybook to connect workflows." />
+  <div className="ds-arch-card">
+    <div className="ds-arch-number">3</div>
+    <h4>Semantic Tokens</h4>
+    <p>tokens-light.css and tokens-dark.css map primitives to purpose: text, icon, background, action, and status colours. Components only reference these.</p>
+  </div>
+  <div className="ds-arch-card">
+    <div className="ds-arch-number">4</div>
+    <h4>Components</h4>
+    <p>{"React components consume semantic tokens via var(--token). Button, ButtonGroup, Card, Nav, ToggleSwitch — all theme-aware out of the box."}</p>
+  </div>
+  <div className="ds-arch-card">
+    <div className="ds-arch-number">5</div>
+    <h4>Website</h4>
+    <p>{"Next.js site imports tokens.css once in the layout. Components are used directly. Theme switching via data-theme attribute on the root element."}</p>
   </div>
 </div>
 
-<div className="sb-section sb-socials">
-    <div className="sb-section-item">
-      <img src={Github} alt="Github logo" className="sb-explore-image"/>
-      Join our contributors building the future of UI development.
+</div>
 
-      <a
-        href="https://github.com/storybookjs/storybook"
-        target="_blank"
-      >Star on GitHub<RightArrow /></a>
-    </div>
-    <div className="sb-section-item">
-      <img src={Discord} alt="Discord logo" className="sb-explore-image"/>
-      <div>
-        Get support and chat with frontend developers.
+<div className="ds-section">
 
-        <a
-          href="https://discord.gg/storybook"
-          target="_blank"
-        >Join Discord server<RightArrow /></a>
-      </div>
-    </div>
-    <div className="sb-section-item">
-      <img src={Youtube} alt="Youtube logo" className="sb-explore-image"/>
-      <div>
-        Watch tutorials, feature previews and interviews.
+## Token Layers
 
-        <a
-          href="https://www.youtube.com/@chromaticui"
-          target="_blank"
-        >Watch on YouTube<RightArrow /></a>
-      </div>
-    </div>
-    <div className="sb-section-item">
-      <img src={Tutorials} alt="A book" className="sb-explore-image"/>
-      <p>Follow guided walkthroughs on for key workflows.</p>
+<div className="ds-token-flow">
+  <div className="ds-flow-step">
+    <strong>tokens-primitives.css</strong>
+    <span>{"Raw values on :root"}</span>
+  </div>
+  <div className="ds-flow-arrow">&rarr;</div>
+  <div className="ds-flow-step">
+    <strong>tokens-typography.css</strong>
+    <span>Font families, sizes, weights</span>
+  </div>
+  <div className="ds-flow-arrow">&rarr;</div>
+  <div className="ds-flow-step">
+    <strong>tokens-light.css</strong>
+    <span>{"[data-theme=\"light\"], :root"}</span>
+  </div>
+  <div className="ds-flow-arrow">&rarr;</div>
+  <div className="ds-flow-step">
+    <strong>tokens-dark.css</strong>
+    <span>{"[data-theme=\"dark\"] overrides"}</span>
+  </div>
+</div>
 
-      <a
-          href="https://storybook.js.org/tutorials/?ref=configure"
-          target="_blank"
-        >Discover tutorials<RightArrow /></a>
-    </div>
+Import order matters. The single entry point is **tokens.css** which imports all four files in the correct cascade.
+
+</div>
+
+<div className="ds-section">
+
+## Theming
+
+The system uses a **data-theme** attribute on the document root. Storybook mirrors this with the theme switcher in the toolbar.
+
+<div className="ds-theme-grid">
+  <div className="ds-theme-card ds-theme-light">
+    <h4>Light</h4>
+    <div className="ds-theme-swatch" style={{ background: '#FFFFFF' }}><span>#FFFFFF</span></div>
+    <div className="ds-theme-swatch" style={{ background: '#F1F1F1' }}><span>#F1F1F1</span></div>
+    <div className="ds-theme-swatch" style={{ background: '#050505', color: '#F1F1F1' }}><span>#050505</span></div>
+  </div>
+  <div className="ds-theme-card ds-theme-dark">
+    <h4>Dark</h4>
+    <div className="ds-theme-swatch" style={{ background: '#050505', color: '#F1F1F1' }}><span>#050505</span></div>
+    <div className="ds-theme-swatch" style={{ background: '#0E0E0E', color: '#F1F1F1' }}><span>#0E0E0E</span></div>
+    <div className="ds-theme-swatch" style={{ background: '#F1F1F1' }}><span>#F1F1F1</span></div>
+  </div>
+</div>
+
+Passive/action tokens use **semi-transparent rgba values** so components like Button and Card get natural glass-like effects when layered over backgrounds with backdrop blur.
+
+</div>
+
+<div className="ds-section">
+
+## Components
+
+<div className="ds-components-grid">
+  <div className="ds-component-card">
+    <h4>Button</h4>
+    <p>{"Primary — bordered, transparent bg, fills on hover/active. Secondary (Passive) — borderless, semi-transparent bg states. Supports left/right icons (Material Symbols), disabled state."}</p>
+  </div>
+  <div className="ds-component-card">
+    <h4>ButtonGroup</h4>
+    <p>Horizontal or vertical layout of Buttons. Used for navigation, tabs, and mobile menus. Manages active state across children.</p>
+  </div>
+  <div className="ds-component-card">
+    <h4>Card</h4>
+    <p>{"Container with semi-transparent background, border radius, and padding. Uses --color-bg-container-primary-semi for layered glass effects."}</p>
+  </div>
+  <div className="ds-component-card">
+    <h4>Nav</h4>
+    <p>Top-level navigation bar. Combines brand text with a horizontal ButtonGroup. Accepts trailing content like ToggleSwitch.</p>
+  </div>
+  <div className="ds-component-card">
+    <h4>ToggleSwitch</h4>
+    <p>Accessible toggle with optional label. Used for theme switching on the website. Animated thumb with icon transition.</p>
+  </div>
+</div>
+
+</div>
+
+<div className="ds-section">
+
+## How It Ships
+
+<div className="ds-ship-list">
+  <div className="ds-ship-item">
+    <strong>{"Design System (this repo)"}</strong>
+    <span>{"src/tokens/ and src/components/ are the source of truth. Storybook documents and tests everything."}</span>
+  </div>
+  <div className="ds-ship-item">
+    <strong>Website</strong>
+    <span>{"website/ is a Next.js app that imports tokens and components via path alias @design-system/* pointing to ../src/*."}</span>
+  </div>
+  <div className="ds-ship-item">
+    <strong>Fonts</strong>
+    <span>{"Material Symbols (Sharp, Rounded, Outlined) and Nunito Sans are loaded locally from src/fonts/. No external CDN dependencies."}</span>
+  </div>
+  <div className="ds-ship-item">
+    <strong>{"Icons & Logos"}</strong>
+    <span>{"215+ Material Symbols icons available as font ligatures. 43 company/product SVG logos in public/logos/."}</span>
+  </div>
+</div>
+
 </div>
 
 <style>
   {`
-  .sb-container {
+  .ds-intro {
+    max-width: 720px;
+    margin-bottom: 40px;
+  }
+
+  .ds-intro p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #6D6D6D;
+  }
+
+  .ds-section {
     margin-bottom: 48px;
+    max-width: 900px;
   }
 
-  .sb-section {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
+  .ds-section h2 {
+    margin-bottom: 16px;
   }
 
-  img {
-    object-fit: cover;
+  .ds-arch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
   }
 
-  .sb-section-title {
-    margin-bottom: 32px;
+  .ds-arch-card {
+    border: 1px solid rgba(128, 128, 128, 0.2);
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
   }
 
-  .sb-section a:not(h1 a, h2 a, h3 a) {
-    font-size: 14px;
+  .ds-arch-card h4 {
+    margin: 0 0 8px 0;
+    padding: 0;
   }
 
-  .sb-section-item, .sb-grid-item {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .sb-section-item-heading {
-    padding-top: 20px !important;
-    padding-bottom: 5px !important;
-    margin: 0 !important;
-  }
-  .sb-section-item-paragraph {
+  .ds-arch-card p {
     margin: 0;
-    padding-bottom: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #6D6D6D;
   }
 
-  .sb-chevron {
-    margin-left: 5px;
-  }
-
-  .sb-features-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 32px 20px;
-  }
-
-  .sb-socials {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  .sb-socials p {
-    margin-bottom: 10px;
-  }
-
-  .sb-explore-image {
-    max-height: 32px;
-    align-self: flex-start;
-  }
-
-  .sb-addon {
-    width: 100%;
+  .ds-arch-number {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #118AB2;
+    color: #FFFFFF;
     display: flex;
     align-items: center;
-    position: relative;
-    background-color: #EEF3F8;
-    border-radius: 5px;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    background: #EEF3F8;
-    height: 180px;
-    margin-bottom: 48px;
-    overflow: hidden;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 12px;
   }
 
-  .sb-addon-text {
-    padding-left: 48px;
-    max-width: 240px;
+  .ds-token-flow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 16px 0;
   }
 
-  .sb-addon-text h4 {
-    padding-top: 0px;
+  .ds-flow-step {
+    border: 1px solid rgba(128, 128, 128, 0.2);
+    border-radius: 8px;
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
   }
 
-  .sb-addon-img {
-    position: absolute;
-    left: 345px;
-    top: 0;
-    height: 100%;
-    width: 200%;
-    overflow: hidden;
+  .ds-flow-step strong {
+    font-size: 13px;
   }
 
-  .sb-addon-img img {
-    width: 650px;
-    transform: rotate(-15deg);
-    margin-left: 40px;
-    margin-top: -72px;
-    box-shadow: 0 0 1px rgba(255, 255, 255, 0);
-    backface-visibility: hidden;
+  .ds-flow-step span {
+    font-size: 12px;
+    color: #6D6D6D;
   }
 
-  @media screen and (max-width: 800px) {
-    .sb-addon-img {
-      left: 300px;
-    }
+  .ds-flow-arrow {
+    font-size: 20px;
+    color: #888888;
+  }
+
+  .ds-theme-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 16px 0;
+  }
+
+  .ds-theme-card {
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .ds-theme-card h4 {
+    margin: 0;
+    padding: 0;
+  }
+
+  .ds-theme-light {
+    background: #F1F1F1;
+    color: #050505;
+  }
+
+  .ds-theme-dark {
+    background: #232323;
+    color: #F1F1F1;
+  }
+
+  .ds-theme-swatch {
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-family: monospace;
+    border: 1px solid rgba(128, 128, 128, 0.15);
+  }
+
+  .ds-theme-swatch span {
+    opacity: 0.8;
+  }
+
+  .ds-components-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .ds-component-card {
+    border: 1px solid rgba(128, 128, 128, 0.2);
+    border-radius: 12px;
+    padding: 20px;
+  }
+
+  .ds-component-card h4 {
+    margin: 0 0 8px 0;
+    padding: 0;
+  }
+
+  .ds-component-card p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #6D6D6D;
+  }
+
+  .ds-ship-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .ds-ship-item {
+    border-left: 3px solid #118AB2;
+    padding: 12px 16px;
+    font-size: 14px;
+    line-height: 1.5;
+    background: rgba(128, 128, 128, 0.05);
+    border-radius: 0 8px 8px 0;
+  }
+
+  .ds-ship-item strong {
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .ds-ship-item span {
+    color: #6D6D6D;
   }
 
   @media screen and (max-width: 600px) {
-    .sb-section {
+    .ds-arch-grid,
+    .ds-components-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .ds-theme-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .ds-token-flow {
       flex-direction: column;
-    }
-
-    .sb-features-grid {
-      grid-template-columns: repeat(1, 1fr);
-    }
-
-    .sb-socials {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    .sb-addon {
-      height: 280px;
       align-items: flex-start;
-      padding-top: 32px;
-      overflow: hidden;
     }
 
-    .sb-addon-text {
-      padding-left: 24px;
-    }
-
-    .sb-addon-img {
-      right: 0;
-      left: 0;
-      top: 130px;
-      bottom: 0;
-      overflow: hidden;
-      height: auto;
-      width: 124%;
-    }
-
-    .sb-addon-img img {
-      width: 1200px;
-      transform: rotate(-12deg);
-      margin-left: 0;
-      margin-top: 48px;
-      margin-bottom: -40px;
-      margin-left: -24px;
+    .ds-flow-arrow {
+      transform: rotate(90deg);
     }
   }
   `}
