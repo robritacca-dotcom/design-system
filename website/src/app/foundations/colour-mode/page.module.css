@@ -103,72 +103,6 @@
 }
 
 /* ============================================
-   INDIVIDUAL SWATCH CARD
-   Matches Figma: 360px tall, rounded, bg is
-   the live CSS variable, values box at bottom.
-   ============================================ */
-.colourSwatch {
-  flex: 1 1 0;
-  min-width: 250px;
-  height: 360px;
-  border-radius: var(--primitive-radius-xl);
-  padding: var(--primitive-padding-lg);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  overflow: hidden;
-  position: relative;
-}
-
-/* Status swatches get a left accent border */
-.statusSwatch {
-  border-left: 3px solid;
-}
-
-/* ============================================
-   SWATCH TITLE
-   ============================================ */
-.swatchTitle {
-  font-size: var(--font-heading-3-size);
-  font-weight: var(--font-heading-3-weight);
-  line-height: var(--font-heading-3-line-height);
-  letter-spacing: var(--font-heading-3-letter-spacing);
-  color: var(--color-text-primary);
-}
-
-/* ============================================
-   VALUES BOX — semi-transparent container
-   with Primitive / Hex / RGB rows
-   ============================================ */
-.swatchValues {
-  background: var(--color-bg-container-primary-semi);
-  border-radius: var(--primitive-radius-xs);
-  padding: var(--primitive-padding-sm) var(--primitive-padding-md);
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.swatchRow {
-  display: flex;
-  gap: var(--primitive-gap-md);
-  font-size: var(--font-paragraph-size);
-  font-weight: var(--font-paragraph-weight);
-  line-height: var(--font-paragraph-line-height);
-  color: var(--color-text-primary);
-}
-
-.swatchLabel {
-  flex-shrink: 0;
-  min-width: 70px;
-  color: var(--color-text-tertiary);
-}
-
-.swatchValue {
-  word-break: break-word;
-}
-
-/* ============================================
    RESPONSIVE
    ============================================ */
 @media (max-width: 959px) {
@@ -185,17 +119,5 @@
   .subDisplay {
     font-size: 24px;
     line-height: 36px;
-  }
-
-  .colourSwatch {
-    min-width: 200px;
-    height: 300px;
-  }
-}
-
-@media (max-width: 600px) {
-  .colourSwatch {
-    min-width: 100%;
-    height: 260px;
   }
 }
