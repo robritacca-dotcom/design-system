@@ -18,8 +18,11 @@ const navLinks = [
 
 const sidebarLinks = [
   { href: "/components", label: "About", active: true },
-  { href: "/components/buttons", label: "Buttons" },
-  { href: "/components/navigation", label: "Navigation" },
+  { href: "/components/button", label: "Button" },
+  { href: "/components/button-group", label: "Button group" },
+  { href: "/components/card", label: "Card" },
+  { href: "/components/nav", label: "Nav" },
+  { href: "/components/toggle-switch", label: "Toggle switch" },
 ];
 
 const subnavLinks = sidebarLinks.map((l) => ({
@@ -46,25 +49,26 @@ export default function ComponentsPage() {
           {/* Page Title */}
           <h1 className={`${styles.pageTitle} animate-in`}>Components</h1>
 
-          {/* Page Description */}
-          <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Components are assembled from tokens and shared layout structures.
-            When a pattern appears more than once, it becomes a reusable
-            component instead of a custom layout. Each component reflects how
-            it is actually implemented, including structure, constraints, and
-            states.
-          </p>
+          {/* Intro */}
+          <div className={`${styles.introSection} animate-in animate-delay-1`}>
+            <p className={styles.subDisplay}>
+              Reusable UI elements built from design tokens
+            </p>
+            <p className={styles.introBody}>
+              Components are assembled from tokens and shared layout structures. When a pattern appears more than once, it becomes a reusable component instead of a custom layout. Each component reflects how it is actually implemented, including structure, constraints, and states. Layout primitives handle structure, while components handle interaction and composition.
+            </p>
+          </div>
 
           <div className={`${styles.tocGrid} animate-in animate-delay-2`}>
             {/* Button */}
-            <TocCard href="/components/buttons" title="Button">
+            <TocCard href="/components/button" title="Button">
               <div className={`${styles.circlePreview} ${styles.circleDashed}`}>
                 <Button label="Button" priority="primary" state="default" />
               </div>
             </TocCard>
 
             {/* Button group */}
-            <TocCard href="/components/buttons" title="Button group">
+            <TocCard href="/components/button-group" title="Button group">
               <div className={`${styles.circlePreview} ${styles.circleDashed}`} style={{ gap: "10px" }}>
                 <Button label="Active" priority="secondary" state="active" />
                 <Button label="Inactive" priority="secondary" state="default" />
@@ -72,14 +76,14 @@ export default function ComponentsPage() {
             </TocCard>
 
             {/* Card */}
-            <TocCard href="/components/navigation" title="Card">
+            <TocCard href="/components/card" title="Card">
               <div className={`${styles.circlePreview} ${styles.circleDashed}`}>
                 <div className={styles.cardPreview} />
               </div>
             </TocCard>
 
             {/* Nav */}
-            <TocCard href="/components/navigation" title="Nav">
+            <TocCard href="/components/nav" title="Nav">
               <div className={`${styles.circlePreview} ${styles.circleDashed}`} style={{ gap: "20px" }}>
                 <Image src="/rr.svg" alt="robr0" width={24} height={24} />
                 <span style={{ fontSize: "16px", fontWeight: 600, color: "var(--color-text-primary)", letterSpacing: "-0.16px" }}>
@@ -89,7 +93,7 @@ export default function ComponentsPage() {
             </TocCard>
 
             {/* Toggle switch */}
-            <TocCard href="/components/buttons" title="Toggle switch">
+            <TocCard href="/components/toggle-switch" title="Toggle switch">
               <div className={`${styles.circlePreview} ${styles.circleDashed}`}>
                 <div className={styles.togglePreview}>
                   <div className={styles.toggleSocket}>

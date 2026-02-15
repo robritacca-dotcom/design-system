@@ -40,6 +40,22 @@
 }
 
 /* ============================================
+   INTRO SECTION
+   ============================================ */
+.introSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-xl);
+}
+
+.introBody {
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  color: var(--color-text-primary);
+}
+
+/* ============================================
    TOC GRID - 4 column
    ============================================ */
 .tocGrid {
