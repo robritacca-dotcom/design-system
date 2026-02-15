@@ -1,0 +1,56 @@
+.themeToggle {
+  display: flex;
+  align-items: center;
+  gap: var(--primitive-gap-sm);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-primary);
+}
+
+.toggleSwitch {
+  position: relative;
+  width: 42px;
+  height: 24px;
+}
+
+.toggleTrack {
+  position: absolute;
+  inset: 0;
+  background: var(--color-action-primary-bg);
+  border-radius: 42px;
+  transition: background-color 0.3s ease;
+}
+
+:global([data-theme="light"]) .toggleTrack {
+  background: var(--color-text-secondary);
+}
+
+.toggleThumb {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+:global([data-theme="light"]) .toggleThumb {
+  transform: translateX(-18px);
+}
+
+.toggleLabel {
+  font-size: var(--font-title-body-size);
+  font-weight: var(--font-title-body-weight);
+  line-height: var(--font-title-body-line-height);
+  letter-spacing: var(--font-title-body-letter-spacing);
+  min-width: 95px;
+}
