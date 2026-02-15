@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 
 const meta = {
-  title: 'Design System/Logos',
+  title: 'Foundations/Logos',
   parameters: {
     layout: 'padded',
   },

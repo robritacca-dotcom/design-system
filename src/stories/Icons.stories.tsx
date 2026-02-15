@@ -215,7 +215,7 @@ const allIcons = [
 ];
 
 const meta = {
-  title: 'Design System/Icons',
+  title: 'Foundations/Icons',
   component: IconGallery,
   parameters: {
     layout: 'fullscreen',
