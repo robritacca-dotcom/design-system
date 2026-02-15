@@ -307,15 +307,15 @@ export default function SemanticColoursPage() {
             Maps semantic color roles to different primitive values per mode, enabling light and dark themes without changing component logic.
           </p>
 
-          {/* Reference callouts */}
-          <div className={`${styles.referenceRow} animate-in animate-delay-1`}>
-            <div className={styles.referenceCard}>
-              <Image src="/logos/Figma.svg" alt="Figma" width={20} height={20} />
-              <span className={styles.referenceText}>Figma: Colour mode variables collection</span>
+          {/* Example images */}
+          <div className={`${styles.exampleRow} animate-in animate-delay-2`}>
+            <div className={styles.exampleItem}>
+              <Image src="/images/figma variables.png" alt="Figma mode variables" width={500} height={300} className={styles.exampleImage} />
+              <p className={styles.exampleCaption}>Figma: Colour mode variables collection</p>
             </div>
-            <div className={styles.referenceCard}>
-              <span className={`material-symbols-outlined ${styles.referenceIcon}`}>code</span>
-              <span className={styles.referenceText}>Code: tokens-light.css / tokens-dark.css</span>
+            <div className={styles.exampleItem}>
+              <Image src="/images/coded semantic tokens.png" alt="Coded semantic tokens" width={500} height={300} className={styles.exampleImage} />
+              <p className={styles.exampleCaption}>Code: tokens-mode.css</p>
             </div>
           </div>
 

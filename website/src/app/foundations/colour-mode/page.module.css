@@ -40,33 +40,34 @@
 }
 
 /* ============================================
-   REFERENCE CALLOUTS
+   EXAMPLE IMAGES
    ============================================ */
-.referenceRow {
+.exampleRow {
   display: flex;
   flex-wrap: wrap;
   gap: var(--primitive-gap-lg);
 }
 
-.referenceCard {
+.exampleItem {
+  flex: 1 1 0;
+  min-width: 280px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: var(--primitive-gap-sm);
-  background: var(--color-bg-container-primary-semi);
+}
+
+.exampleImage {
+  width: 100%;
+  height: auto;
   border-radius: var(--primitive-radius-md);
-  padding: var(--primitive-padding-sm) var(--primitive-padding-md);
+  object-fit: cover;
 }
 
-.referenceIcon {
-  font-size: 20px;
-  color: var(--color-text-tertiary);
-}
-
-.referenceText {
+.exampleCaption {
   font-size: var(--font-paragraph-size);
   font-weight: var(--font-paragraph-weight);
   line-height: var(--font-paragraph-line-height);
-  color: var(--color-text-secondary);
+  color: var(--color-text-tertiary);
 }
 
 /* ============================================
