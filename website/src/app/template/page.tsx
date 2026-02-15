@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import Image from 'next/image';
-import styles from './template.module.css';
+import './template-global.css';
 
 export default function Template() {
   useEffect(() => {
