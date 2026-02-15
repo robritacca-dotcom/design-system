@@ -14,7 +14,8 @@
       "mcp__figma__get_screenshot",
       "Bash(npm run dev:*)",
       "Bash(powershell -Command:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(ls:*)"
     ]
   }
 }
