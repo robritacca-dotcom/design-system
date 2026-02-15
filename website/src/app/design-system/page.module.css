@@ -197,19 +197,6 @@
   letter-spacing: var(--font-display-1-letter-spacing);
 }
 
-/* Button preview in cards */
-.btnPreview {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--font-title-body-size);
-  font-weight: var(--font-title-body-weight);
-  padding: var(--primitive-padding-sm) var(--primitive-padding-md);
-  border-radius: var(--primitive-radius-full);
-  color: var(--color-text-primary);
-  background: transparent;
-}
-
 /* ============================================
    STORY SECTION
    ============================================ */
