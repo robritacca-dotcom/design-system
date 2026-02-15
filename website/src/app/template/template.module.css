@@ -63,83 +63,98 @@
 }
 
 .blurYellow {
-  width: 33%;
-  aspect-ratio: 1;
-  left: 33.54%;
+  width: 45vw;
+  height: 45vw;
+  left: 50%;
   top: 50%;
-  transform: translateY(-50%);
-  background: radial-gradient(circle, var(--primitive-yellow-07) 0%, transparent 70%);
-  animation-delay: 0s;
+  margin-left: -5%;
+  margin-top: -10%;
+  background: var(--primitive-yellow-07);
+  animation-duration: 18s;
 }
 
 .blurGreen {
-  width: 41%;
-  aspect-ratio: 1;
-  left: 29.76%;
-  top: calc(50% + 93.7px);
-  transform: translateY(-50%);
-  background: radial-gradient(circle, var(--primitive-green-07) 0%, transparent 70%);
-  animation-delay: 2s;
+  width: 55vw;
+  height: 55vw;
+  left: 50%;
+  top: 50%;
+  margin-left: -15%;
+  margin-top: 5%;
+  background: var(--primitive-green-07);
+  animation-duration: 16s;
+  animation-delay: 1s;
 }
 
 .blurPurple {
-  width: 68%;
-  aspect-ratio: 1;
-  left: 31.8%;
-  top: calc(50% + 383.7px);
-  transform: translateY(-50%);
-  background: radial-gradient(circle, var(--primitive-purple-07) 0%, transparent 70%);
-  animation-delay: 4s;
-}
-
-.blurBlue {
-  width: 42%;
-  aspect-ratio: 1;
-  left: 7.8%;
-  top: calc(50% + 636.2px);
-  transform: translateY(-50%);
-  background: radial-gradient(circle, var(--primitive-blue-07) 0%, transparent 70%);
-  animation-delay: 6s;
-}
-
-.blurRed {
-  width: 35%;
-  aspect-ratio: 1;
-  left: 48.69%;
-  top: calc(50% - 372.3px);
-  transform: translateY(-50%);
-  background: radial-gradient(circle, var(--primitive-red-07) 0%, transparent 70%);
-  animation-delay: 8s;
-}
-
-.blurOrange {
-  width: 21%;
-  aspect-ratio: 1;
-  left: 46.78%;
-  top: calc(50% + 286.19px);
-  transform: translateY(-50%);
-  background: radial-gradient(circle, #FFD166 0%, transparent 70%);
-  animation-delay: 10s;
-}
-
-.blurTeal {
-  width: 59%;
-  aspect-ratio: 1;
-  left: 1.04%;
-  top: calc(50% - 87.8px);
-  transform: translateY(-50%);
-  background: radial-gradient(circle, var(--primitive-teal-07) 0%, transparent 70%);
-  animation-delay: 12s;
+  width: 90vw;
+  height: 90vw;
+  left: 50%;
+  top: 50%;
+  margin-left: -10%;
+  margin-top: 15%;
+  background: var(--primitive-purple-07);
+  animation-duration: 22s;
+  animation-delay: 0.5s;
 }
 
 .blurNeutral {
-  width: 45%;
-  aspect-ratio: 1;
+  width: 55vw;
+  height: 55vw;
   left: 50%;
-  top: 20%;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(circle, var(--primitive-neutral-07) 0%, transparent 70%);
-  animation-delay: 14s;
+  top: 50%;
+  margin-left: -25%;
+  margin-top: -15%;
+  background: var(--primitive-neutral-07);
+  animation-duration: 14s;
+  animation-delay: 1.5s;
+}
+
+.blurBlue {
+  width: 55vw;
+  height: 55vw;
+  left: 50%;
+  top: 50%;
+  margin-left: -40%;
+  margin-top: 20%;
+  background: var(--primitive-blue-07);
+  animation-duration: 17s;
+  animation-delay: 0.8s;
+}
+
+.blurRed {
+  width: 48vw;
+  height: 48vw;
+  left: 50%;
+  top: 50%;
+  margin-left: 15%;
+  margin-top: -25%;
+  background: var(--primitive-red-07);
+  animation-duration: 19s;
+  animation-delay: 0.3s;
+}
+
+.blurOrange {
+  width: 30vw;
+  height: 30vw;
+  left: 50%;
+  top: 50%;
+  margin-left: 20%;
+  margin-top: 10%;
+  background: var(--primitive-orange-07);
+  animation-duration: 15s;
+  animation-delay: 1.2s;
+}
+
+.blurTeal {
+  width: 75vw;
+  height: 75vw;
+  left: 50%;
+  top: 50%;
+  margin-left: -50%;
+  margin-top: -5%;
+  background: var(--primitive-teal-07);
+  animation-duration: 20s;
+  animation-delay: 0.6s;
 }
 
 /* ============================================
