@@ -5,7 +5,8 @@
 
 .ds-button-group {
   /* Layout */
-  display: flex;
+  display: inline-flex; /* Hug content instead of stretch */
+  width: auto; /* Don't stretch to full width */
   overflow: hidden;
 }
 
@@ -28,10 +29,11 @@
 .ds-button-group--vertical {
   flex-direction: column;
   gap: var(--radius-xxs); /* Figma: --radius/xxs (2px) */
-  align-items: stretch;
+  align-items: flex-start; /* Left-aligned, hug content */
 }
 
-/* Vertical buttons should stretch to full width */
+/* Vertical buttons hug their content by default */
 .ds-button-group--vertical .ds-button {
-  width: 100%;
+  width: auto; /* Hug content instead of stretch */
+  display: inline-flex; /* Hug content */
 }

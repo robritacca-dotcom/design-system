@@ -4,116 +4,180 @@
   flex-direction: column;
   background: var(--primitive-neutral-10);
   position: relative;
-  gap: var(--primitive-gap-xxxxl);
-  padding: var(--primitive-padding-lg) var(--primitive-padding-xl);
+  gap: var(--primitive-gap-xl);
+  padding: var(--primitive-padding-lg);
 }
 
-/* Gradient Background with Blurred Circles */
-.gradientBackground {
-  position: absolute;
+/* ============================================
+   BLUR CONTAINER - Gradient Background
+   ============================================ */
+.blurContainer {
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: 66.94%;
+  height: 100vh;
   overflow: hidden;
   pointer-events: none;
   z-index: 0;
 }
 
-.blurYellow {
+.blurEllipse {
   position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.15;
+  animation: floatCloud 16s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes floatCloud {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(150px, -100px) scale(1.1);
+  }
+  50% {
+    transform: translate(-130px, 90px) scale(0.9);
+  }
+  75% {
+    transform: translate(100px, 140px) scale(1.05);
+  }
+}
+
+.blurYellow {
   width: 33%;
   aspect-ratio: 1;
   left: 33.54%;
   top: 50%;
   transform: translateY(-50%);
   background: radial-gradient(circle, var(--primitive-yellow-07) 0%, transparent 70%);
-  filter: blur(120px);
-  opacity: 0.6;
+  animation-delay: 0s;
 }
 
 .blurGreen {
-  position: absolute;
   width: 41%;
   aspect-ratio: 1;
   left: 29.76%;
   top: calc(50% + 93.7px);
   transform: translateY(-50%);
   background: radial-gradient(circle, var(--primitive-green-07) 0%, transparent 70%);
-  filter: blur(140px);
-  opacity: 0.5;
+  animation-delay: 2s;
 }
 
 .blurPurple {
-  position: absolute;
   width: 68%;
   aspect-ratio: 1;
   left: 31.8%;
   top: calc(50% + 383.7px);
   transform: translateY(-50%);
   background: radial-gradient(circle, var(--primitive-purple-07) 0%, transparent 70%);
-  filter: blur(180px);
-  opacity: 0.4;
+  animation-delay: 4s;
 }
 
 .blurBlue {
-  position: absolute;
   width: 42%;
   aspect-ratio: 1;
   left: 7.8%;
   top: calc(50% + 636.2px);
   transform: translateY(-50%);
   background: radial-gradient(circle, var(--primitive-blue-07) 0%, transparent 70%);
-  filter: blur(150px);
-  opacity: 0.4;
+  animation-delay: 6s;
 }
 
 .blurRed {
-  position: absolute;
   width: 35%;
   aspect-ratio: 1;
   left: 48.69%;
   top: calc(50% - 372.3px);
   transform: translateY(-50%);
   background: radial-gradient(circle, var(--primitive-red-07) 0%, transparent 70%);
-  filter: blur(130px);
-  opacity: 0.5;
+  animation-delay: 8s;
 }
 
 .blurOrange {
-  position: absolute;
   width: 21%;
   aspect-ratio: 1;
   left: 46.78%;
   top: calc(50% + 286.19px);
   transform: translateY(-50%);
   background: radial-gradient(circle, #FFD166 0%, transparent 70%);
-  filter: blur(100px);
-  opacity: 0.6;
+  animation-delay: 10s;
 }
 
 .blurTeal {
-  position: absolute;
   width: 59%;
   aspect-ratio: 1;
   left: 1.04%;
   top: calc(50% - 87.8px);
   transform: translateY(-50%);
   background: radial-gradient(circle, var(--primitive-teal-07) 0%, transparent 70%);
-  filter: blur(170px);
-  opacity: 0.4;
+  animation-delay: 12s;
 }
 
-.gradientFade {
-  position: absolute;
-  bottom: 0;
+.blurNeutral {
+  width: 45%;
+  aspect-ratio: 1;
+  left: 50%;
+  top: 20%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, var(--primitive-neutral-07) 0%, transparent 70%);
+  animation-delay: 14s;
+}
+
+/* ============================================
+   STICKY HEADER - Appears on scroll
+   ============================================ */
+.stickyHeader {
+  position: fixed;
+  top: 0;
   left: 0;
   right: 0;
-  height: 705px;
-  background: linear-gradient(to top, var(--primitive-neutral-10) 0%, rgba(5,5,5,0.01) 100%);
+  z-index: 1000;
+  padding: var(--primitive-padding-lg);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-100%);
+  transition: all 0.3s ease;
 }
 
-/* Header */
+.stickyHeader.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  background: linear-gradient(
+    to bottom,
+    rgba(5, 5, 5, 0.95) 0%,
+    rgba(5, 5, 5, 0.85) 30%,
+    rgba(5, 5, 5, 0.5) 60%,
+    rgba(5, 5, 5, 0) 100%
+  );
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+[data-theme="light"] .stickyHeader.visible {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0.85) 30%,
+    rgba(255, 255, 255, 0.5) 60%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+.stickyHeader .navContainer {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ============================================
+   HEADER - Main Navigation
+   ============================================ */
 .header {
   position: relative;
   z-index: 10;
@@ -146,6 +210,11 @@
   display: flex;
   align-items: center;
   gap: var(--primitive-gap-xl);
+}
+
+.navMenu {
+  display: flex;
+  align-items: center;
 }
 
 .themeToggle {
@@ -187,8 +256,10 @@
   letter-spacing: var(--font-title-body-letter-spacing);
 }
 
-/* Main Content */
-.mainContent {
+/* ============================================
+   DS LAYOUT - Sidebar + Content
+   ============================================ */
+.dsLayout {
   position: relative;
   z-index: 10;
   max-width: 1440px;
@@ -198,18 +269,28 @@
   gap: var(--primitive-gap-xxl);
 }
 
-.subnav {
-  width: 315px;
+.dsSidebar {
+  width: 291px;
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--primitive-gap-xxs);
+  position: sticky;
+  top: calc(78px + var(--primitive-padding-lg) * 2 + var(--primitive-gap-xl));
+  height: fit-content;
 }
 
-.content {
+.dsContent {
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: var(--primitive-gap-xxxl);
 }
 
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
 .title {
   font-family: var(--font-display-2-family);
   font-size: var(--font-display-2-size);
@@ -228,6 +309,17 @@
   color: var(--color-text-primary);
 }
 
+.paragraph {
+  font-family: var(--font-paragraph-family);
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  color: var(--color-text-primary);
+}
+
+/* ============================================
+   SECTIONS
+   ============================================ */
 .section {
   display: flex;
   flex-direction: column;
@@ -247,14 +339,6 @@
   line-height: var(--font-heading-2-line-height);
   letter-spacing: var(--font-heading-2-letter-spacing);
   color: var(--color-text-secondary);
-}
-
-.paragraph {
-  font-family: var(--font-paragraph-family);
-  font-size: var(--font-paragraph-size);
-  font-weight: var(--font-paragraph-weight);
-  line-height: var(--font-paragraph-line-height);
-  color: var(--color-text-primary);
 }
 
 .cards {
@@ -283,7 +367,10 @@
   color: var(--color-text-primary);
 }
 
-.storySection {
+/* ============================================
+   STORY LAYOUT - Content + Right Rail
+   ============================================ */
+.storyLayout {
   display: grid;
   grid-template-columns: 3fr 1fr;
   gap: var(--primitive-gap-xl);
@@ -315,6 +402,9 @@
   color: var(--color-text-primary);
 }
 
+/* ============================================
+   RIGHT RAIL - Tools Section
+   ============================================ */
 .rightRail {
   display: flex;
   flex-direction: column;
@@ -354,7 +444,9 @@
   color: var(--color-text-secondary);
 }
 
-/* Footer */
+/* ============================================
+   FOOTER
+   ============================================ */
 .footer {
   position: relative;
   z-index: 10;
@@ -371,16 +463,36 @@
   color: var(--color-text-tertiary);
 }
 
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 1280px) {
+  .dsSidebar {
+    width: 170px;
+  }
+}
+
 @media (max-width: 1024px) {
-  .mainContent {
+  .dsLayout {
     flex-direction: column;
   }
 
-  .subnav {
+  .dsSidebar {
     width: 100%;
+    position: static;
   }
 
-  .storySection {
+  .storyLayout {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 960px) {
+  .navMenu {
+    display: none;
+  }
+
+  .page {
+    padding: var(--primitive-padding-md);
   }
 }
