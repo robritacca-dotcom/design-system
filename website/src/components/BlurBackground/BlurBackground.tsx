@@ -1,6 +1,10 @@
-export default function BlurBackground() {
+interface BlurBackgroundProps {
+  fullHeight?: boolean;
+}
+
+export default function BlurBackground({ fullHeight }: BlurBackgroundProps) {
   return (
-    <div className="blur-container">
+    <div className={`blur-container${fullHeight ? " blur-container-full" : ""}`}>
       <div className="blur-ellipse blur-yellow" />
       <div className="blur-ellipse blur-green" />
       <div className="blur-ellipse blur-purple" />

@@ -66,6 +66,14 @@ a {
   z-index: -1;
 }
 
+.blur-container-full {
+  height: 100vh;
+}
+
+.blur-container-full::after {
+  display: none;
+}
+
 .blur-container::after {
   content: '';
   position: absolute;

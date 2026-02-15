@@ -1,0 +1,153 @@
+/* ============================================
+   COMPONENTS PAGE LAYOUT
+   ============================================ */
+.dsLayout {
+  display: flex;
+  gap: var(--primitive-gap-xxl);
+  width: 100%;
+  max-width: 1440px;
+  padding-top: var(--primitive-gap-xl);
+}
+
+.dsContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-xxxl);
+}
+
+/* ============================================
+   PAGE TITLE - Display 2
+   ============================================ */
+.pageTitle {
+  font-size: var(--font-display-2-size);
+  font-weight: var(--font-display-2-weight);
+  line-height: var(--font-display-2-line-height);
+  letter-spacing: var(--font-display-2-letter-spacing);
+  color: var(--color-text-primary);
+  width: 100%;
+}
+
+/* Sub Display */
+.subDisplay {
+  font-family: var(--font-sub-display-family);
+  font-size: var(--font-sub-display-size);
+  font-weight: var(--font-sub-display-weight);
+  line-height: var(--font-sub-display-line-height);
+  letter-spacing: var(--font-sub-display-letter-spacing);
+  color: var(--color-text-primary);
+  margin-bottom: 0;
+}
+
+/* ============================================
+   TOC GRID - 4 column
+   ============================================ */
+.tocGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--primitive-gap-lg);
+  width: 100%;
+}
+
+/* ============================================
+   CIRCLE PREVIEWS
+   ============================================ */
+.circlePreview {
+  width: 184px;
+  height: 184px;
+  min-width: 184px;
+  min-height: 184px;
+  aspect-ratio: 1 / 1;
+  flex-shrink: 0;
+  border-radius: 999px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  gap: 10px;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+.circleDashed {
+  border: 2px dashed var(--color-core-accent-purple);
+}
+
+/* ============================================
+   CARD PREVIEW (mini card inside circle)
+   ============================================ */
+.cardPreview {
+  width: 90px;
+  height: 90px;
+  background: var(--color-bg-container-primary);
+  border: 1px solid var(--color-bg-container-border);
+  border-radius: var(--primitive-radius-xl);
+  box-shadow: 0px 0px 20.9px 0px rgba(0, 0, 0, 0.25);
+}
+
+/* ============================================
+   TOGGLE PREVIEW (mini toggle inside circle)
+   ============================================ */
+.togglePreview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggleSocket {
+  width: 42px;
+  height: 24px;
+  border-radius: 42px;
+  background: var(--color-action-primary-bg);
+  position: relative;
+}
+
+.toggleThumb {
+  position: absolute;
+  top: 4.17%;
+  bottom: 4.17%;
+  right: 2.38%;
+  width: 52.38%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 959px) {
+  .dsLayout {
+    padding-left: 0;
+    min-width: 0;
+  }
+
+  .dsContent {
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .subDisplay {
+    font-size: 24px;
+    line-height: 36px;
+  }
+
+  .circlePreview {
+    width: 150px;
+    height: 150px;
+    min-width: 150px;
+    min-height: 150px;
+  }
+}
+
+@media (max-width: 600px) {
+  .circlePreview {
+    width: 120px;
+    height: 120px;
+    min-width: 120px;
+    min-height: 120px;
+  }
+}
