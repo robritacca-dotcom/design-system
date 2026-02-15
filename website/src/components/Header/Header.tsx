@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { ButtonGroup } from "@design-system/components/ButtonGroup/ButtonGroup";
+import type { ButtonProps } from "@design-system/components/Button/Button";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
 import styles from "./Header.module.css";
 
@@ -24,10 +26,34 @@ interface HeaderProps {
   subnavLinks?: SubnavLink[];
 }
 
+function toButtonProps(links: NavLink[]): ButtonProps[] {
+  return links.map((link) => ({
+    label: link.label,
+    href: link.disabled ? undefined : link.href,
+    state: link.disabled
+      ? ("disabled" as const)
+      : link.active
+        ? ("active" as const)
+        : ("default" as const),
+    priority: "secondary" as const,
+  }));
+}
+
+function toSubnavButtonProps(links: SubnavLink[]): ButtonProps[] {
+  return links.map((link) => ({
+    label: link.label,
+    href: link.href,
+    state: link.active ? ("active" as const) : ("default" as const),
+    priority: "secondary" as const,
+  }));
+}
+
 export default function Header({ navLinks, subnavLinks }: HeaderProps) {
   const [stickyVisible, setStickyVisible] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
+
+  const navButtonProps = useMemo(() => toButtonProps(navLinks), [navLinks]);
 
   useEffect(() => {
     let ticking = false;
@@ -87,17 +113,11 @@ export default function Header({ navLinks, subnavLinks }: HeaderProps) {
             <span className={styles.navLogoText}>robr0</span>
           </Link>
           <div className={styles.navRight}>
-            <div className={styles.navMenu}>
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href + link.label}
-                  href={link.disabled ? "#" : link.href}
-                  className={`${styles.navLink} ${link.active ? styles.active : ""} ${link.disabled ? styles.disabled : ""}`}
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
+            <ButtonGroup
+              orientation="horizontal"
+              buttons={navButtonProps}
+              className={styles.navMenu}
+            />
             <ThemeToggle className={styles.desktopThemeToggle} />
           </div>
         </div>
@@ -117,17 +137,11 @@ export default function Header({ navLinks, subnavLinks }: HeaderProps) {
             <span className={styles.navLogoText}>robr0</span>
           </Link>
           <div className={styles.navRight}>
-            <div className={styles.navMenu}>
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href + link.label}
-                  href={link.disabled ? "#" : link.href}
-                  className={`${styles.navLink} ${link.active ? styles.active : ""} ${link.disabled ? styles.disabled : ""}`}
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
+            <ButtonGroup
+              orientation="horizontal"
+              buttons={navButtonProps}
+              className={styles.navMenu}
+            />
             <ThemeToggle className={styles.desktopThemeToggle} />
           </div>
         </div>
@@ -155,28 +169,16 @@ export default function Header({ navLinks, subnavLinks }: HeaderProps) {
       >
         <div className={styles.mobileMenu}>
           <div className={styles.mobileMenuLinks}>
-            {navLinks.map((link) => (
-              <Link
-                key={link.href + link.label}
-                href={link.disabled ? "#" : link.href}
-                className={`${styles.mobileMenuLink} ${link.active ? styles.active : ""} ${link.disabled ? styles.disabled : ""}`}
-                onClick={closeMobileMenu}
-              >
-                {link.label}
-              </Link>
-            ))}
+            <ButtonGroup
+              orientation="vertical"
+              buttons={navButtonProps}
+            />
             {subnavLinks && (
               <div className={styles.mobileSubnav}>
-                {subnavLinks.map((link) => (
-                  <Link
-                    key={link.href + link.label}
-                    href={link.href}
-                    className={`${styles.mobileSubnavLink} ${link.active ? styles.active : ""}`}
-                    onClick={closeMobileMenu}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
+                <ButtonGroup
+                  orientation="vertical"
+                  buttons={toSubnavButtonProps(subnavLinks)}
+                />
               </div>
             )}
           </div>

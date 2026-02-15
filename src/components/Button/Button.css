@@ -31,6 +31,8 @@
   cursor: pointer;
   border: none;
   overflow: hidden;
+  text-decoration: none;
+  color: inherit;
 }
 
 /* ============================================
