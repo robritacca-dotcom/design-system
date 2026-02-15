@@ -1,9 +1,11 @@
 "use client";
 
+import React from "react";
 import Header from "../../../components/Header/Header";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
+import { TypographySwatch } from "@design-system/components/TypographySwatch/TypographySwatch";
 import styles from "./page.module.css";
 
 const navLinks = [
@@ -31,113 +33,168 @@ const subnavLinks = sidebarLinks.map((l) => ({
 
 /* ============================================
    TYPOGRAPHY DATA
-   Real values from tokens-typography.css
+   Real values from tokens-typography.css.
+   previewStyle uses CSS vars for live rendering.
    ============================================ */
 
-interface TypeStyle {
-  /** Display name rendered in the actual font style */
+interface TypeStyleData {
   name: string;
-  /** CSS class for the preview text */
-  previewClass: string;
-  /** Font weight label (e.g. "Light", "SemiBold") */
   weight: string;
-  /** Font size in px */
   size: string;
-  /** Line height (percentage or px) */
   lineHeight: string;
-  /** Letter spacing (percentage or 0) */
   letterSpacing: string;
+  previewStyle: React.CSSProperties;
 }
 
-const megaStyles: TypeStyle[] = [
+const megaStyles: TypeStyleData[] = [
   {
     name: "Mega 1",
-    previewClass: "typeMega1",
     weight: "Light",
     size: "132",
     lineHeight: "85%",
     letterSpacing: "2%",
+    previewStyle: {
+      fontFamily: "var(--font-mega-1-family)",
+      fontSize: "var(--font-mega-1-size)",
+      fontWeight: "var(--font-mega-1-weight)" as unknown as number,
+      lineHeight: "var(--font-mega-1-line-height)",
+      letterSpacing: "var(--font-mega-1-letter-spacing)",
+    },
   },
   {
     name: "Mega 2",
-    previewClass: "typeMega2",
     weight: "Light",
     size: "116",
     lineHeight: "85%",
     letterSpacing: "2%",
+    previewStyle: {
+      fontFamily: "var(--font-mega-2-family)",
+      fontSize: "var(--font-mega-2-size)",
+      fontWeight: "var(--font-mega-2-weight)" as unknown as number,
+      lineHeight: "var(--font-mega-2-line-height)",
+      letterSpacing: "var(--font-mega-2-letter-spacing)",
+    },
   },
 ];
 
-const displayStyles: TypeStyle[] = [
+const displayStyles: TypeStyleData[] = [
   {
     name: "Display 1",
-    previewClass: "typeDisplay1",
     weight: "Light",
     size: "96",
     lineHeight: "100%",
     letterSpacing: "2%",
+    previewStyle: {
+      fontFamily: "var(--font-display-1-family)",
+      fontSize: "var(--font-display-1-size)",
+      fontWeight: "var(--font-display-1-weight)" as unknown as number,
+      lineHeight: "var(--font-display-1-line-height)",
+      letterSpacing: "var(--font-display-1-letter-spacing)",
+    },
   },
   {
     name: "Display 2",
-    previewClass: "typeDisplay2",
     weight: "Light",
     size: "64",
     lineHeight: "100%",
     letterSpacing: "1.5%",
+    previewStyle: {
+      fontFamily: "var(--font-display-2-family)",
+      fontSize: "var(--font-display-2-size)",
+      fontWeight: "var(--font-display-2-weight)" as unknown as number,
+      lineHeight: "var(--font-display-2-line-height)",
+      letterSpacing: "var(--font-display-2-letter-spacing)",
+    },
   },
   {
     name: "Sub display",
-    previewClass: "typeSubDisplay",
     weight: "Light",
     size: "30",
     lineHeight: "44px",
     letterSpacing: "1.5%",
+    previewStyle: {
+      fontFamily: "var(--font-sub-display-family)",
+      fontSize: "var(--font-sub-display-size)",
+      fontWeight: "var(--font-sub-display-weight)" as unknown as number,
+      lineHeight: "var(--font-sub-display-line-height)",
+      letterSpacing: "var(--font-sub-display-letter-spacing)",
+    },
   },
 ];
 
-const headingStyles: TypeStyle[] = [
+const headingStyles: TypeStyleData[] = [
   {
     name: "Heading 1",
-    previewClass: "typeHeading1",
     weight: "SemiBold",
     size: "30",
     lineHeight: "44px",
     letterSpacing: "1.5%",
+    previewStyle: {
+      fontFamily: "var(--font-heading-1-family)",
+      fontSize: "var(--font-heading-1-size)",
+      fontWeight: "var(--font-heading-1-weight)" as unknown as number,
+      lineHeight: "var(--font-heading-1-line-height)",
+      letterSpacing: "var(--font-heading-1-letter-spacing)",
+    },
   },
   {
     name: "Heading 2",
-    previewClass: "typeHeading2",
     weight: "SemiBold",
     size: "26",
     lineHeight: "32px",
     letterSpacing: "1.5%",
+    previewStyle: {
+      fontFamily: "var(--font-heading-2-family)",
+      fontSize: "var(--font-heading-2-size)",
+      fontWeight: "var(--font-heading-2-weight)" as unknown as number,
+      lineHeight: "var(--font-heading-2-line-height)",
+      letterSpacing: "var(--font-heading-2-letter-spacing)",
+    },
   },
   {
     name: "Heading 3",
-    previewClass: "typeHeading3",
     weight: "SemiBold",
     size: "22",
     lineHeight: "28px",
     letterSpacing: "1.5%",
+    previewStyle: {
+      fontFamily: "var(--font-heading-3-family)",
+      fontSize: "var(--font-heading-3-size)",
+      fontWeight: "var(--font-heading-3-weight)" as unknown as number,
+      lineHeight: "var(--font-heading-3-line-height)",
+      letterSpacing: "var(--font-heading-3-letter-spacing)",
+    },
   },
 ];
 
-const bodyStyles: TypeStyle[] = [
+const bodyStyles: TypeStyleData[] = [
   {
     name: "Title",
-    previewClass: "typeTitleBody",
     weight: "SemiBold",
     size: "16",
     lineHeight: "24px",
     letterSpacing: "-1%",
+    previewStyle: {
+      fontFamily: "var(--font-title-body-family)",
+      fontSize: "var(--font-title-body-size)",
+      fontWeight: "var(--font-title-body-weight)" as unknown as number,
+      lineHeight: "var(--font-title-body-line-height)",
+      letterSpacing: "var(--font-title-body-letter-spacing)",
+    },
   },
   {
     name: "Paragraph",
-    previewClass: "typeParagraph",
     weight: "Regular",
     size: "16",
     lineHeight: "24px",
     letterSpacing: "0",
+    previewStyle: {
+      fontFamily: "var(--font-paragraph-family)",
+      fontSize: "var(--font-paragraph-size)",
+      fontWeight: "var(--font-paragraph-weight)" as unknown as number,
+      lineHeight: "var(--font-paragraph-line-height)",
+      letterSpacing: "var(--font-paragraph-letter-spacing)",
+    },
   },
 ];
 
@@ -187,30 +244,15 @@ export default function TypographyPage() {
 
               <div className={styles.typeStyles}>
                 {section.styles.map((t) => (
-                  <div key={t.name} className={styles.typeRow}>
-                    {/* Preview text rendered in actual font style */}
-                    <span className={styles[t.previewClass]}>{t.name}</span>
-
-                    {/* Values row */}
-                    <div className={styles.typeValues}>
-                      <div className={styles.typeValueItem}>
-                        <span className={styles.typeValueNumber}>{t.weight}</span>
-                        <span className={styles.typeValueLabel}>Font weight</span>
-                      </div>
-                      <div className={styles.typeValueItem}>
-                        <span className={styles.typeValueNumber}>{t.size}</span>
-                        <span className={styles.typeValueLabel}>Font size</span>
-                      </div>
-                      <div className={styles.typeValueItem}>
-                        <span className={styles.typeValueNumber}>{t.lineHeight}</span>
-                        <span className={styles.typeValueLabel}>Line height</span>
-                      </div>
-                      <div className={styles.typeValueItem}>
-                        <span className={styles.typeValueNumber}>{t.letterSpacing}</span>
-                        <span className={styles.typeValueLabel}>Letter spacing</span>
-                      </div>
-                    </div>
-                  </div>
+                  <TypographySwatch
+                    key={t.name}
+                    name={t.name}
+                    weight={t.weight}
+                    size={t.size}
+                    lineHeight={t.lineHeight}
+                    letterSpacing={t.letterSpacing}
+                    previewStyle={t.previewStyle}
+                  />
                 ))}
               </div>
             </section>

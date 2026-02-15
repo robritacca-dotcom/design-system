@@ -63,159 +63,13 @@
 }
 
 /* ============================================
-   TYPE STYLES — Stack of type rows
+   TYPE STYLES — Stack of cards
    ============================================ */
 .typeStyles {
   display: flex;
   flex-direction: column;
-  gap: var(--primitive-gap-xl);
+  gap: var(--primitive-gap-lg);
   width: 100%;
-}
-
-/* ============================================
-   TYPE ROW — Preview text + values
-   ============================================ */
-.typeRow {
-  display: flex;
-  flex-direction: column;
-  gap: var(--primitive-gap-xl);
-  width: 100%;
-}
-
-/* ============================================
-   VALUES ROW — Four columns of metrics
-   ============================================ */
-.typeValues {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  width: 100%;
-}
-
-.typeValueItem {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.typeValueNumber {
-  font-size: var(--font-title-body-size);
-  font-weight: var(--font-title-body-weight);
-  line-height: var(--font-title-body-line-height);
-  letter-spacing: var(--font-title-body-letter-spacing);
-  color: var(--color-text-primary);
-}
-
-.typeValueLabel {
-  font-size: var(--font-paragraph-size);
-  font-weight: var(--font-paragraph-weight);
-  line-height: var(--font-paragraph-line-height);
-  color: var(--color-text-secondary);
-}
-
-/* ============================================
-   TYPE PREVIEW STYLES
-   Each class renders the text at its real size,
-   weight, line-height, and letter-spacing.
-   ============================================ */
-
-/* --- Mega --- */
-.typeMega1 {
-  font-family: var(--font-mega-1-family);
-  font-size: var(--font-mega-1-size);
-  font-weight: var(--font-mega-1-weight);
-  line-height: var(--font-mega-1-line-height);
-  letter-spacing: var(--font-mega-1-letter-spacing);
-  color: var(--color-text-primary);
-  word-break: break-word;
-}
-
-.typeMega2 {
-  font-family: var(--font-mega-2-family);
-  font-size: var(--font-mega-2-size);
-  font-weight: var(--font-mega-2-weight);
-  line-height: var(--font-mega-2-line-height);
-  letter-spacing: var(--font-mega-2-letter-spacing);
-  color: var(--color-text-primary);
-  word-break: break-word;
-}
-
-/* --- Display --- */
-.typeDisplay1 {
-  font-family: var(--font-display-1-family);
-  font-size: var(--font-display-1-size);
-  font-weight: var(--font-display-1-weight);
-  line-height: var(--font-display-1-line-height);
-  letter-spacing: var(--font-display-1-letter-spacing);
-  color: var(--color-text-primary);
-  word-break: break-word;
-}
-
-.typeDisplay2 {
-  font-family: var(--font-display-2-family);
-  font-size: var(--font-display-2-size);
-  font-weight: var(--font-display-2-weight);
-  line-height: var(--font-display-2-line-height);
-  letter-spacing: var(--font-display-2-letter-spacing);
-  color: var(--color-text-primary);
-}
-
-.typeSubDisplay {
-  font-family: var(--font-sub-display-family);
-  font-size: var(--font-sub-display-size);
-  font-weight: var(--font-sub-display-weight);
-  line-height: var(--font-sub-display-line-height);
-  letter-spacing: var(--font-sub-display-letter-spacing);
-  color: var(--color-text-primary);
-}
-
-/* --- Heading --- */
-.typeHeading1 {
-  font-family: var(--font-heading-1-family);
-  font-size: var(--font-heading-1-size);
-  font-weight: var(--font-heading-1-weight);
-  line-height: var(--font-heading-1-line-height);
-  letter-spacing: var(--font-heading-1-letter-spacing);
-  color: var(--color-text-primary);
-}
-
-.typeHeading2 {
-  font-family: var(--font-heading-2-family);
-  font-size: var(--font-heading-2-size);
-  font-weight: var(--font-heading-2-weight);
-  line-height: var(--font-heading-2-line-height);
-  letter-spacing: var(--font-heading-2-letter-spacing);
-  color: var(--color-text-primary);
-}
-
-.typeHeading3 {
-  font-family: var(--font-heading-3-family);
-  font-size: var(--font-heading-3-size);
-  font-weight: var(--font-heading-3-weight);
-  line-height: var(--font-heading-3-line-height);
-  letter-spacing: var(--font-heading-3-letter-spacing);
-  color: var(--color-text-primary);
-}
-
-/* --- Body --- */
-.typeTitleBody {
-  font-family: var(--font-title-body-family);
-  font-size: var(--font-title-body-size);
-  font-weight: var(--font-title-body-weight);
-  line-height: var(--font-title-body-line-height);
-  letter-spacing: var(--font-title-body-letter-spacing);
-  color: var(--color-text-primary);
-}
-
-.typeParagraph {
-  font-family: var(--font-paragraph-family);
-  font-size: var(--font-paragraph-size);
-  font-weight: var(--font-paragraph-weight);
-  line-height: var(--font-paragraph-line-height);
-  letter-spacing: var(--font-paragraph-letter-spacing);
-  color: var(--color-text-primary);
 }
 
 /* ============================================
@@ -235,21 +89,5 @@
   .subDisplay {
     font-size: 24px;
     line-height: 36px;
-  }
-
-  .typeMega1 {
-    font-size: 64px;
-  }
-
-  .typeMega2 {
-    font-size: 56px;
-  }
-
-  .typeDisplay1 {
-    font-size: 48px;
-  }
-
-  .typeDisplay2 {
-    font-size: 36px;
   }
 }
