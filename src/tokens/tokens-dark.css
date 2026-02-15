@@ -19,7 +19,7 @@
   --color-bg-page-inverse: #F1F1F1;
 
   /* Background - Container */
-  --color-bg-container-primary: #0E0E0E;
+  --color-bg-container-primary: rgba(14, 14, 14, 0.8);
   --color-bg-container-primary-transparent: rgba(14, 14, 14, 0.01);
   --color-bg-container-primary-semi: rgba(14, 14, 14, 0.6);
   --color-bg-container-secondary: #303030;
@@ -46,8 +46,8 @@
   /* Action - Passive (Secondary button) */
   --color-action-passive-text: #F1F1F1;
   --color-action-passive-bg: rgba(14, 14, 14, 0.01);
-  --color-action-passive-bg-hover: #232323;
-  --color-action-passive-bg-active: #303030;
+  --color-action-passive-bg-hover: rgba(35, 35, 35, 0.8);
+  --color-action-passive-bg-active: rgba(48, 48, 48, 0.8);
 
   /* Status - Positive */
   --color-status-positive-bg: #024336;

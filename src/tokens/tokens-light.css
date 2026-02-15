@@ -47,8 +47,8 @@
   /* Action - Passive (Secondary button) */
   --color-action-passive-text: #050505;
   --color-action-passive-bg: rgba(241, 241, 241, 0.01);
-  --color-action-passive-bg-hover: #D6D6D6;
-  --color-action-passive-bg-active: #BCBCBC;
+  --color-action-passive-bg-hover: rgba(214, 214, 214, 0.8);
+  --color-action-passive-bg-active: rgba(188, 188, 188, 0.8);
 
   /* Core colours */
   --color-core-ui-primary: #118AB2;

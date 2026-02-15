@@ -12,15 +12,26 @@
   /* Neutral Scale */
   --primitive-neutral-00: #FFFFFF;
   --primitive-neutral-01: #F1F1F1;
+  --primitive-neutral-01-transparent: rgba(241, 241, 241, 0.01);
+  --primitive-neutral-01-semi: rgba(241, 241, 241, 0.6);
   --primitive-neutral-02: #D6D6D6;
+  --primitive-neutral-02-semi: rgba(214, 214, 214, 0.8);
   --primitive-neutral-03: #BCBCBC;
+  --primitive-neutral-03-semi: rgba(188, 188, 188, 0.8);
   --primitive-neutral-04: #A2A2A2;
   --primitive-neutral-05: #888888;
   --primitive-neutral-06: #6D6D6D;
   --primitive-neutral-07: #303030;
+  --primitive-neutral-07-semi: rgba(48, 48, 48, 0.8);
   --primitive-neutral-08: #232323;
+  --primitive-neutral-08-semi: rgba(35, 35, 35, 0.8);
   --primitive-neutral-09: #0E0E0E;
+  --primitive-neutral-09-transparent: rgba(14, 14, 14, 0.01);
+  --primitive-neutral-09-semi: rgba(14, 14, 14, 0.8);
+  --primitive-neutral-09-semi-transparent: rgba(14, 14, 14, 0.6);
   --primitive-neutral-10: #050505;
+  --primitive-neutral-10-semi: rgba(5, 5, 5, 0.6);
+  --primitive-neutral-10-subtle: rgba(5, 5, 5, 0.01);
   --primitive-neutral-11: #000000;
 
   /* Red Scale */
