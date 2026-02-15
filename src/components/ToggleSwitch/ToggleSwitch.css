@@ -1,0 +1,88 @@
+/* ============================================
+   TOGGLE SWITCH COMPONENT
+   Dark/Light mode toggle with check icon
+   ============================================ */
+
+.ds-toggle-switch {
+  /* Layout */
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-sm); /* 8px */
+
+  /* Reset */
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: var(--color-text-primary);
+  font-family: var(--font-paragraph-family);
+}
+
+/* ============================================
+   TRACK
+   ============================================ */
+
+.ds-toggle-switch__track {
+  position: relative;
+  width: 42px;
+  height: 24px;
+  border-radius: 42px;
+  background: var(--color-action-primary-bg);
+  transition: background-color 0.3s ease;
+  flex-shrink: 0;
+}
+
+/* ============================================
+   THUMB
+   ============================================ */
+
+.ds-toggle-switch__thumb {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.ds-toggle-switch__thumb-icon {
+  font-size: 14px;
+  color: var(--color-action-primary-bg);
+}
+
+/* ============================================
+   LABEL
+   ============================================ */
+
+.ds-toggle-switch__label {
+  font-family: var(--font-paragraph-family);
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  min-width: 95px;
+}
+
+/* ============================================
+   STATES
+   ============================================ */
+
+/* Off / Unchecked state — thumb moves to the left */
+.ds-toggle-switch--off .ds-toggle-switch__track {
+  background: var(--color-text-secondary);
+}
+
+.ds-toggle-switch--off .ds-toggle-switch__thumb {
+  transform: translateX(-18px);
+}
+
+/* Disabled */
+.ds-toggle-switch--disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

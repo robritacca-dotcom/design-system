@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { ButtonGroup } from "@design-system/components/ButtonGroup/ButtonGroup";
+import type { ButtonProps } from "@design-system/components/Button/Button";
 import styles from "./Sidebar.module.css";
 
 interface SidebarLink {
@@ -12,17 +13,16 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ links }: SidebarProps) {
+  const buttons: ButtonProps[] = links.map((link) => ({
+    label: link.label,
+    href: link.href,
+    state: link.active ? ("active" as const) : ("default" as const),
+    priority: "secondary" as const,
+  }));
+
   return (
     <aside className={styles.sidebar}>
-      {links.map((link) => (
-        <Link
-          key={link.href + link.label}
-          href={link.href}
-          className={`${styles.sidebarLink} ${link.active ? styles.active : ""}`}
-        >
-          {link.label}
-        </Link>
-      ))}
+      <ButtonGroup orientation="vertical" buttons={buttons} />
     </aside>
   );
 }

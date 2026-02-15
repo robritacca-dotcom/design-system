@@ -19,6 +19,8 @@ export interface ButtonProps {
   text?: boolean;
   /** Optional click handler */
   onClick?: () => void;
+  /** Optional href — renders as <a> instead of <button> */
+  href?: string;
   /** Additional CSS classes */
   className?: string;
   /** @deprecated Use iconLeft instead */
@@ -39,6 +41,7 @@ export const Button = ({
   state = 'default',
   text = true,
   onClick,
+  href,
   className = '',
   icon, // deprecated, maps to iconLeft for backwards compatibility
 }: ButtonProps) => {
@@ -56,13 +59,8 @@ export const Button = ({
   // Backwards compatibility: icon prop maps to iconLeft
   const leftIcon = iconLeft || icon;
 
-  return (
-    <button
-      type="button"
-      className={classes}
-      onClick={onClick}
-      disabled={isDisabled}
-    >
+  const children = (
+    <>
       {leftIcon && (
         <span className={`${baseClass}__icon ${iconStyleClass}`} aria-hidden="true">
           {leftIcon}
@@ -74,6 +72,29 @@ export const Button = ({
           {iconRight}
         </span>
       )}
+    </>
+  );
+
+  if (href && !isDisabled) {
+    return (
+      <a
+        className={classes}
+        href={href}
+        onClick={onClick}
+      >
+        {children}
+      </a>
+    );
+  }
+
+  return (
+    <button
+      type="button"
+      className={classes}
+      onClick={onClick}
+      disabled={isDisabled}
+    >
+      {children}
     </button>
   );
 };
