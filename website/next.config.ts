@@ -1,14 +1,20 @@
 import type { NextConfig } from "next";
 import path from "path";
 
+const worktreeRoot = path.resolve(__dirname, '..');
+const designSystemPath = path.resolve(worktreeRoot, 'src');
+
 const nextConfig: NextConfig = {
-  // Turbopack configuration for Next.js 16+
-  turbopack: {},
+  turbopack: {
+    root: worktreeRoot,
+    resolveAlias: {
+      '@design-system': designSystemPath,
+    },
+  },
   webpack: (config) => {
-    // Allow importing from design system
     config.resolve.alias = {
       ...config.resolve.alias,
-      '@design-system': path.resolve(__dirname, '../src'),
+      '@design-system': designSystemPath,
     };
     return config;
   },

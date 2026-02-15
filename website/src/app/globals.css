@@ -1,14 +1,22 @@
-/* Reset and base styles */
+/* ============================================
+   GLOBAL STYLES
+   ============================================ */
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
 }
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
+html {
+  scroll-behavior: smooth;
+}
+
+html:not(.theme-ready) {
+  visibility: hidden;
+}
+
+html.theme-ready {
+  visibility: visible;
 }
 
 :root {
@@ -26,7 +34,15 @@ html[data-theme="light"] {
 body {
   font-family: var(--font-nunito-sans), 'Nunito Sans', sans-serif;
   color: var(--color-text-primary);
-  background: var(--color-background-primary);
+  background: var(--color-bg-page-primary);
+  min-height: 100vh;
+  min-width: 440px;
+  padding: var(--primitive-padding-lg) var(--primitive-padding-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-xxxl);
+  align-items: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -34,4 +50,234 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+/* ============================================
+   BLUR BACKGROUND EFFECTS
+   ============================================ */
+.blur-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 450px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.blur-container::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 450px;
+  background: linear-gradient(to bottom,
+    transparent 0%,
+    var(--color-bg-page-primary) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.blur-ellipse {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.15;
+  animation: floatCloud 16s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes floatCloud {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(150px, -100px) scale(1.1); }
+  50% { transform: translate(-130px, 90px) scale(0.9); }
+  75% { transform: translate(100px, 140px) scale(1.05); }
+}
+
+.blur-yellow {
+  width: 45vw; height: 45vw;
+  left: 50%; top: 50%;
+  margin-left: -5%; margin-top: -10%;
+  background: var(--color-core-accent-yellow);
+  animation-duration: 18s;
+}
+
+.blur-green {
+  width: 55vw; height: 55vw;
+  left: 50%; top: 50%;
+  margin-left: -15%; margin-top: -15%;
+  background: var(--color-core-accent-green);
+  animation-duration: 16s;
+  animation-delay: 1s;
+}
+
+.blur-purple {
+  width: 90vw; height: 90vw;
+  left: 50%; top: 50%;
+  margin-left: -10%; margin-top: -20%;
+  background: var(--color-core-accent-purple);
+  animation-duration: 22s;
+  animation-delay: 0.5s;
+}
+
+.blur-neutral {
+  width: 55vw; height: 55vw;
+  left: 50%; top: 50%;
+  margin-left: -25%; margin-top: -20%;
+  background: var(--color-bg-container-secondary);
+  animation-duration: 14s;
+  animation-delay: 1.5s;
+}
+
+.blur-blue {
+  width: 55vw; height: 55vw;
+  left: 50%; top: 50%;
+  margin-left: -40%; margin-top: 20%;
+  background: var(--color-core-accent-blue);
+  animation-duration: 17s;
+  animation-delay: 0.8s;
+}
+
+.blur-red {
+  width: 48vw; height: 48vw;
+  left: 50%; top: 50%;
+  margin-left: 15%; margin-top: -50%;
+  background: var(--color-core-accent-red);
+  animation-duration: 19s;
+  animation-delay: 0.3s;
+}
+
+.blur-orange {
+  width: 30vw; height: 30vw;
+  left: 50%; top: 50%;
+  margin-left: 20%; margin-top: 15%;
+  background: var(--color-core-accent-orange);
+  animation-duration: 15s;
+  animation-delay: 1.2s;
+}
+
+.blur-teal {
+  width: 75vw; height: 75vw;
+  left: 50%; top: 50%;
+  margin-left: -50%; margin-top: -40%;
+  background: var(--color-core-ui-secondary);
+  animation-duration: 20s;
+  animation-delay: 0.7s;
+}
+
+/* ============================================
+   ENTRANCE ANIMATIONS
+   ============================================ */
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-in {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fadeSlideIn 0.6s ease-out both;
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.animate-delay-1 { animation-delay: 0.1s; }
+.animate-delay-2 { animation-delay: 0.2s; }
+.animate-delay-3 { animation-delay: 0.3s; }
+.animate-delay-4 { animation-delay: 0.4s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-in {
+    opacity: 1;
+    animation: none;
+    transform: none;
+  }
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.footer {
+  width: 100%;
+  max-width: 1440px;
+  border-radius: var(--primitive-radius-md);
+  padding: var(--primitive-radius-md) var(--primitive-radius-lg);
+  display: flex;
+  align-items: center;
+  margin-top: auto;
+}
+
+.footer-inner {
+  max-width: 1400px;
+  flex: 1;
+}
+
+.footer-text {
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  color: var(--color-text-tertiary);
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-action-primary-bg);
+  color: var(--color-action-primary-text);
+  padding: var(--primitive-padding-sm) var(--primitive-padding-lg);
+  border-radius: var(--primitive-radius-full);
+  font-weight: 600;
+  text-decoration: none;
+  z-index: 10000;
+  transition: top 0.3s ease;
+}
+
+.skip-link:focus {
+  top: var(--primitive-padding-lg);
+  outline: 2px solid var(--color-action-primary-border);
+  outline-offset: 2px;
+}
+
+/* ============================================
+   MATERIAL SYMBOLS (from Google Fonts CDN)
+   ============================================ */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined', sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+  color: var(--color-text-primary);
+}
+
+.icon-filled {
+  font-variation-settings: 'FILL' 1, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+}
+
+/* ============================================
+   RESPONSIVE - Mobile (< 960px)
+   ============================================ */
+@media (max-width: 959px) {
+  body {
+    padding: var(--primitive-padding-lg);
+  }
 }
