@@ -28,8 +28,18 @@
 }
 
 /* ============================================
-   TITLE
+   TITLE BOX
+   Semi-transparent container at card top,
+   matching the values box treatment for
+   readability on any swatch colour.
    ============================================ */
+
+.ds-colour-swatch__title-box {
+  background: var(--color-bg-container-primary-semi);
+  border-radius: var(--radius-xs); /* 4px */
+  padding: var(--padding-sm) var(--padding-md); /* 8px 16px */
+  align-self: flex-start;
+}
 
 .ds-colour-swatch__title {
   font-family: var(--font-paragraph-family);

@@ -58,7 +58,9 @@ export const ColourSwatch = ({
 
   return (
     <div className={classes} style={style}>
-      <h3 className={`${baseClass}__title`}>{label}</h3>
+      <div className={`${baseClass}__title-box`}>
+        <h3 className={`${baseClass}__title`}>{label}</h3>
+      </div>
       <div className={`${baseClass}__values`}>
         {values.primitive && (
           <div className={`${baseClass}__row`}>
