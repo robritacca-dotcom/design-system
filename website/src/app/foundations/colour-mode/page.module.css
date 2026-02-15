@@ -40,15 +40,6 @@
 }
 
 /* ============================================
-   INTRO SECTION
-   ============================================ */
-.introSection {
-  display: flex;
-  flex-direction: column;
-  gap: var(--primitive-gap-xl);
-}
-
-/* ============================================
    REFERENCE CALLOUTS
    ============================================ */
 .referenceRow {
@@ -79,20 +70,21 @@
 }
 
 /* ============================================
-   SECTION
+   COLOUR GROUP — Section per category
    ============================================ */
-.section {
+.colourGroup {
   display: flex;
   flex-direction: column;
   gap: var(--primitive-gap-xl);
+  width: 100%;
 }
 
-.sectionHeader {
-  padding-bottom: var(--primitive-padding-lg);
+.colourGroupTitle {
   border-bottom: 1px solid var(--color-bg-container-border);
+  padding-bottom: var(--primitive-padding-xl);
 }
 
-.sectionTitle {
+.colourGroupTitle h2 {
   font-size: var(--font-heading-2-size);
   font-weight: var(--font-heading-2-weight);
   line-height: var(--font-heading-2-line-height);
@@ -103,7 +95,7 @@
 /* ============================================
    SWATCH GRID
    ============================================ */
-.swatchGrid {
+.colourSwatches {
   display: flex;
   flex-wrap: wrap;
   gap: var(--primitive-gap-lg);
@@ -111,12 +103,14 @@
 }
 
 /* ============================================
-   COLOUR CARD
+   INDIVIDUAL SWATCH CARD
+   Matches Figma: 360px tall, rounded, bg is
+   the live CSS variable, values box at bottom.
    ============================================ */
-.colourCard {
+.colourSwatch {
   flex: 1 1 0;
-  min-width: 200px;
-  height: 200px;
+  min-width: 250px;
+  height: 360px;
   border-radius: var(--primitive-radius-xl);
   padding: var(--primitive-padding-lg);
   display: flex;
@@ -126,62 +120,52 @@
   position: relative;
 }
 
-.colourLabel {
-  font-size: var(--font-title-body-size);
-  font-weight: var(--font-title-body-weight);
-  line-height: var(--font-title-body-line-height);
-  color: #fff;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+/* Status swatches get a left accent border */
+.statusSwatch {
+  border-left: 3px solid;
 }
 
-.statusLabel {
-  font-size: var(--font-title-body-size);
-  font-weight: var(--font-title-body-weight);
-  line-height: var(--font-title-body-line-height);
+/* ============================================
+   SWATCH TITLE
+   ============================================ */
+.swatchTitle {
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  letter-spacing: var(--font-heading-3-letter-spacing);
   color: var(--color-text-primary);
 }
 
-.colourValues {
+/* ============================================
+   VALUES BOX — semi-transparent container
+   with Primitive / Hex / RGB rows
+   ============================================ */
+.swatchValues {
+  background: var(--color-bg-container-primary-semi);
+  border-radius: var(--primitive-radius-xs);
+  padding: var(--primitive-padding-sm) var(--primitive-padding-md);
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
-.colourPrimitive {
+.swatchRow {
   display: flex;
-  gap: var(--primitive-gap-sm);
-  align-items: baseline;
+  gap: var(--primitive-gap-md);
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  color: var(--color-text-primary);
 }
 
-.colourValueRow {
-  display: flex;
-  gap: var(--primitive-gap-sm);
-  align-items: baseline;
-}
-
-.colourValueLabel {
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: rgba(255, 255, 255, 0.6);
-  min-width: 52px;
-}
-
-.colourValueData {
-  font-size: 12px;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.85);
-  font-family: monospace;
-}
-
-/* Status cards use theme-aware text colours */
-.statusLabel ~ .colourValues .colourValueLabel {
+.swatchLabel {
+  flex-shrink: 0;
+  min-width: 70px;
   color: var(--color-text-tertiary);
 }
 
-.statusLabel ~ .colourValues .colourValueData {
-  color: var(--color-text-secondary);
+.swatchValue {
+  word-break: break-word;
 }
 
 /* ============================================
@@ -203,15 +187,15 @@
     line-height: 36px;
   }
 
-  .colourCard {
-    min-width: 160px;
-    height: 180px;
+  .colourSwatch {
+    min-width: 200px;
+    height: 300px;
   }
 }
 
 @media (max-width: 600px) {
-  .colourCard {
+  .colourSwatch {
     min-width: 100%;
-    height: 160px;
+    height: 260px;
   }
 }
