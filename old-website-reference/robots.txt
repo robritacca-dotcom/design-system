@@ -1,0 +1,11 @@
+# robots.txt for robertritacca.com/robr0-experiments
+# https://robertritacca.com/robr0-experiments/
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://robertritacca.com/robr0-experiments/sitemap.xml
+
+# Disallow backup folders
+Disallow: /robr0-experiments/00/

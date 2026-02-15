@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primitive Colours | robr0 Design System</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="robr0 Design System Primitive Colours - Core colour palette with neutral, teal, green, yellow, orange, red, purple, and blue ramps.">
+    <meta name="author" content="Robert Ritacca">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://robertritacca.com/robr0-experiments/colour-primitives.html">
+    
+    <!-- Open Graph (LinkedIn, Facebook, Slack) -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Robert Ritacca">
+    <meta property="og:title" content="Primitive Colours | robr0 Design System">
+    <meta property="og:description" content="Core colour palette with neutral, teal, green, yellow, orange, red, purple, and blue ramps.">
+    <meta property="og:image" content="https://robertritacca.com/robr0-experiments/Images/robr0 img.png">
+    <meta property="og:url" content="https://robertritacca.com/robr0-experiments/colour-primitives.html">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Primitive Colours | robr0 Design System">
+    <meta name="twitter:description" content="Core colour palette with neutral, teal, green, yellow, orange, red, purple, and blue ramps.">
+    <meta name="twitter:image" content="https://robertritacca.com/robr0-experiments/Images/robr0 img.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="/Images/logo.svg">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#050505" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="tokens.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Hide page until theme is ready */
+        html:not(.theme-ready) { visibility: hidden; }
+        html.theme-ready { visibility: visible; }
+        /* Hide toggle label until correct text is set */
+        html:not(.labels-ready) .theme-toggle-label { visibility: hidden; }
+    </style>
+    <script>
+        // Apply saved theme immediately to prevent flash
+        (function() {
+            var savedTheme = localStorage.getItem('theme');
+            var systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            // Use saved preference, or fall back to system preference
+            var isLight = savedTheme === 'light' || (savedTheme === null && !systemPrefersDark);
+            if (isLight) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+            // Show page now that theme is set
+            document.documentElement.classList.add('theme-ready');
+            
+            // Update toggle labels as soon as DOM is ready
+            function updateLabels() {
+                var labels = document.querySelectorAll('.theme-toggle-label');
+                if (labels.length > 0) {
+                    labels.forEach(function(label) {
+                        label.textContent = isLight ? 'Light Mode' : 'Dark Mode';
+                    });
+                    document.documentElement.classList.add('labels-ready');
+                } else {
+                    requestAnimationFrame(updateLabels);
+                }
+            }
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', updateLabels);
+            } else {
+                updateLabels();
+            }
+            
+            // Detect when Material Symbols font is loaded
+            if (document.fonts && document.fonts.ready) {
+                document.fonts.ready.then(function() {
+                    document.documentElement.classList.add('fonts-loaded');
+                });
+            } else {
+                setTimeout(function() {
+                    document.documentElement.classList.add('fonts-loaded');
+                }, 100);
+            }
+        })();
+    </script>
+</head>
+<body>
+    <!-- Skip to main content (Accessibility) -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Sticky Header (appears on scroll) -->
+    <header class="sticky-header" id="stickyHeader">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="Images/logo.svg" alt="robr0" class="nav-logo-icon">
+                <span class="nav-logo-text">robr0</span>
+            </a>
+            <div class="nav-right">
+                <div class="nav-menu">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="#" class="nav-link disabled">Work</a>
+                    <a href="design-system.html" class="nav-link active">robr0 DS</a>
+                </div>
+                <button class="theme-toggle" aria-label="Toggle dark/light mode">
+                    <div class="toggle-switch">
+                        <div class="toggle-switch-track"></div>
+                        <div class="toggle-switch-thumb">
+                            <span class="material-symbols-outlined" style="font-size: 14px; color: var(--action-bg-default);">check</span>
+                        </div>
+                    </div>
+                    <span class="theme-toggle-label">Dark Mode</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Blur Background -->
+    <div class="blur-container">
+        <div class="blur-ellipse blur-yellow"></div>
+        <div class="blur-ellipse blur-green"></div>
+        <div class="blur-ellipse blur-purple"></div>
+        <div class="blur-ellipse blur-neutral"></div>
+        <div class="blur-ellipse blur-blue"></div>
+        <div class="blur-ellipse blur-red"></div>
+        <div class="blur-ellipse blur-orange"></div>
+        <div class="blur-ellipse blur-teal"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="Images/logo.svg" alt="robr0" class="nav-logo-icon">
+                <span class="nav-logo-text">robr0</span>
+            </a>
+            <div class="nav-right">
+                <div class="nav-menu">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="#" class="nav-link disabled">Work</a>
+                    <a href="design-system.html" class="nav-link active">robr0 DS</a>
+                </div>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
+                    <div class="toggle-switch">
+                        <div class="toggle-switch-track"></div>
+                        <div class="toggle-switch-thumb">
+                            <span class="material-symbols-outlined" style="font-size: 14px; color: var(--action-bg-default);">check</span>
+                        </div>
+                    </div>
+                    <span class="theme-toggle-label">Dark Mode</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+        <span class="material-symbols-outlined menu-icon">menu</span>
+        <span class="material-symbols-outlined close-icon">close</span>
+    </button>
+    
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+        <div class="mobile-menu">
+            <div class="mobile-menu-links">
+                <a href="index.html" class="mobile-menu-link">Home</a>
+                <a href="about.html" class="mobile-menu-link">About</a>
+                <a href="#" class="mobile-menu-link disabled">Work</a>
+                <a href="design-system.html" class="mobile-menu-link active">robr0 DS</a>
+                <div class="mobile-subnav">
+                    <a href="design-system.html" class="mobile-subnav-link">About</a>
+                    <a href="buttons.html" class="mobile-subnav-link">Buttons</a>
+                    <a href="icons.html" class="mobile-subnav-link">Icons</a>
+                    <a href="logos.html" class="mobile-subnav-link">Logos</a>
+                    <a href="navigation.html" class="mobile-subnav-link">Navigation</a>
+                    <a href="colour-primitives.html" class="mobile-subnav-link active">Primitive Colours</a>
+                    <a href="colour-mode.html" class="mobile-subnav-link">Semantic Colours</a>
+                    <a href="spatial.html" class="mobile-subnav-link">Semantic Spacing</a>
+                    <a href="typography.html" class="mobile-subnav-link">Typography</a>
+                </div>
+            </div>
+            <button class="theme-toggle mobile-theme-toggle" aria-label="Toggle dark/light mode">
+                <div class="toggle-switch">
+                    <div class="toggle-switch-track"></div>
+                    <div class="toggle-switch-thumb">
+                        <span class="material-symbols-outlined" style="font-size: 14px; color: var(--action-bg-default);">check</span>
+                    </div>
+                </div>
+                <span class="theme-toggle-label">Dark Mode</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="ds-layout" id="main-content">
+        <!-- Sidebar -->
+        <aside class="ds-sidebar">
+            <a href="design-system.html" class="ds-sidebar-link">About</a>
+            <a href="buttons.html" class="ds-sidebar-link">Buttons</a>
+            <a href="icons.html" class="ds-sidebar-link">Icons</a>
+            <a href="logos.html" class="ds-sidebar-link">Logos</a>
+            <a href="navigation.html" class="ds-sidebar-link">Navigation</a>
+            <a href="colour-primitives.html" class="ds-sidebar-link active">Primitive Colours</a>
+            <a href="colour-mode.html" class="ds-sidebar-link">Semantic Colours</a>
+            <a href="spatial.html" class="ds-sidebar-link">Semantic Spacing</a>
+            <a href="typography.html" class="ds-sidebar-link">Typography</a>
+        </aside>
+
+        <!-- Content -->
+        <div class="ds-content">
+            <h1 class="page-title animate-in">Primitive Colours</h1>
+            
+            <!-- Page Description -->
+            <p class="type-sub-display animate-in animate-delay-1">Base color values with no semantic meaning that serve as the source of truth for all higher level color tokens.</p>
+
+            <!-- Example -->
+            <div class="example-container animate-in animate-delay-2">
+                <div class="example-item">
+                    <img src="Images/figma primative variables.png" alt="Figma primitive variables" class="example-image">
+                    <p class="example-caption">Figma: Colour primitive variable collection</p>
+                </div>
+                <div class="example-item">
+                    <img src="Images/primative tokens code.png" alt="Coded primitive tokens" class="example-image">
+                    <p class="example-caption">Code: tokens-primitives.css</p>
+                </div>
+            </div>
+
+            <!-- Neutral -->
+            <section class="colour-group animate-in animate-delay-2">
+                <div class="colour-group-title">
+                    <h2>Neutral</h2>
+                </div>
+                <div class="colour-swatches">
+                    <div class="colour-swatch" style="background-color: #FFFFFF;">
+                        <h3 class="swatch-title" style="color: #050505;">00</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#FFFFFF</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">255 / 255 / 255</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #F1F1F1;">
+                        <h3 class="swatch-title" style="color: #050505;">01</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#F1F1F1</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">241 / 241 / 241</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #D6D6D6;">
+                        <h3 class="swatch-title" style="color: #050505;">02</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#D6D6D6</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">214 / 214 / 214</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #BCBCBC;">
+                        <h3 class="swatch-title" style="color: #050505;">03</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#BCBCBC</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">188 / 188 / 188</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #A2A2A2;">
+                        <h3 class="swatch-title" style="color: #050505;">04</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#A2A2A2</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">162 / 162 / 162</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #888888;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">05</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#888888</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">136 / 136 / 136</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #6D6D6D;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">06</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#6D6D6D</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">109 / 109 / 109</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #303030;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">07</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#303030</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">48 / 48 / 48</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #232323;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">08</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#232323</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">35 / 35 / 35</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #0E0E0E;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">09</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#0E0E0E</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">14 / 14 / 14</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #050505;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">10</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#050505</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">5 / 5 / 5</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Red -->
+            <section class="colour-group">
+                <div class="colour-group-title">
+                    <h2>Red</h2>
+                </div>
+                <div class="colour-swatches">
+                    <div class="colour-swatch" style="background-color: #FDEFF3;">
+                        <h3 class="swatch-title" style="color: #050505;">01</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#FDEFF3</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">253 / 239 / 243</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #FAD3DD;">
+                        <h3 class="swatch-title" style="color: #050505;">02</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#FAD3DD</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">250 / 211 / 221</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #F8B7C7;">
+                        <h3 class="swatch-title" style="color: #050505;">03</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#F8B7C7</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">248 / 183 / 199</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #F69BB1;">
+                        <h3 class="swatch-title" style="color: #050505;">04</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#F69BB1</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">246 / 155 / 177</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #F37F9B;">
+                        <h3 class="swatch-title" style="color: #050505;">05</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#F37F9B</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">243 / 127 / 155</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #F16385;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">06</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#F16385</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">241 / 99 / 133</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #EF476F;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">07</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#EF476F</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">239 / 71 / 111</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #C93A5C;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">08</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#C93A5C</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">201 / 58 / 92</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #8E2641;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">09</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#8E2641</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">142 / 38 / 65</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #571727;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">10</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#571727</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">87 / 23 / 39</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Orange -->
+            <section class="colour-group">
+                <div class="colour-group-title">
+                    <h2>Orange</h2>
+                </div>
+                <div class="colour-swatches">
+                    <div class="colour-swatch" style="background-color: #FFF3EC;">
+                        <h3 class="swatch-title" style="color: #050505;">01</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#FFF3EC</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">255 / 243 / 236</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #FFDCCA;">
+                        <h3 class="swatch-title" style="color: #050505;">02</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#FFDCCA</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">255 / 220 / 202</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #FFC3A3;">
+                        <h3 class="swatch-title" style="color: #050505;">03</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#FFC3A3</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">255 / 195 / 163</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #FFAB7F;">
+                        <h3 class="swatch-title" style="color: #050505;">04</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#FFAB7F</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">255 / 171 / 127</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #EF8247;">
+                        <h3 class="swatch-title" style="color: #050505;">05</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#EF8247</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">239 / 130 / 71</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #D96F38;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">06</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#D96F38</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">217 / 111 / 56</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #C35C29;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">07</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#C35C29</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">195 / 92 / 41</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #8C421E;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">08</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#8C421E</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">140 / 66 / 30</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #552716;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">09</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#552716</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">85 / 39 / 22</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #331709;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">10</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#331709</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">51 / 23 / 9</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Yellow -->
+            <section class="colour-group">
+                <div class="colour-group-title">
+                    <h2>Yellow</h2>
+                </div>
+                <div class="colour-swatches">
+                    <div class="colour-swatch" style="background-color: #FFF9EA;">
+                        <h3 class="swatch-title" style="color: #050505;">01</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#FFF9EA</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">255 / 249 / 234</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #FFF0C9;">
+                        <h3 class="swatch-title" style="color: #050505;">02</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#FFF0C9</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">255 / 240 / 201</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #FFE5A3;">
+                        <h3 class="swatch-title" style="color: #050505;">03</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#FFE5A3</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">255 / 229 / 163</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #FFD97F;">
+                        <h3 class="swatch-title" style="color: #050505;">04</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#FFD97F</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">255 / 217 / 127</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #F2C55E;">
+                        <h3 class="swatch-title" style="color: #050505;">05</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#F2C55E</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">242 / 197 / 94</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #E0B654;">
+                        <h3 class="swatch-title" style="color: #050505;">06</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#E0B654</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">224 / 182 / 84</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #FFD166;">
+                        <h3 class="swatch-title" style="color: #050505;">07</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#FFD166</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">255 / 209 / 102</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #C49A3E;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">08</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#C49A3E</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">196 / 154 / 62</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #8A6B2A;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">09</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#8A6B2A</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">138 / 107 / 42</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #544016;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">10</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#544016</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">84 / 64 / 22</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Green -->
+            <section class="colour-group">
+                <div class="colour-group-title">
+                    <h2>Green</h2>
+                </div>
+                <div class="colour-swatches">
+                    <div class="colour-swatch" style="background-color: #ECFCF7;">
+                        <h3 class="swatch-title" style="color: #050505;">01</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#ECFCF7</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">236 / 252 / 247</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #CEF6E8;">
+                        <h3 class="swatch-title" style="color: #050505;">02</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#CEF6E8</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">206 / 246 / 232</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #9DEBD4;">
+                        <h3 class="swatch-title" style="color: #050505;">03</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#9DEBD4</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">157 / 235 / 212</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #6DE0C0;">
+                        <h3 class="swatch-title" style="color: #050505;">04</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#6DE0C0</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">109 / 224 / 192</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #3ED4AA;">
+                        <h3 class="swatch-title" style="color: #050505;">05</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#3ED4AA</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">62 / 212 / 170</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #1FCB9A;">
+                        <h3 class="swatch-title" style="color: #050505;">06</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#1FCB9A</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">31 / 203 / 154</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #06D6A0;">
+                        <h3 class="swatch-title" style="color: #050505;">07</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#06D6A0</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">6 / 214 / 160</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #05A67C;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">08</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#05A67C</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">5 / 166 / 124</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #03765A;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">09</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#03765A</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">3 / 118 / 90</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #024336;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">10</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#024336</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">2 / 67 / 54</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Teal -->
+            <section class="colour-group">
+                <div class="colour-group-title">
+                    <h2>Teal</h2>
+                </div>
+                <div class="colour-swatches">
+                    <div class="colour-swatch" style="background-color: #ECF7FB;">
+                        <h3 class="swatch-title" style="color: #050505;">01</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#ECF7FB</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">236 / 247 / 251</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #CFEAF3;">
+                        <h3 class="swatch-title" style="color: #050505;">02</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#CFEAF3</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">207 / 234 / 243</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #9ED4E5;">
+                        <h3 class="swatch-title" style="color: #050505;">03</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#9ED4E5</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">158 / 212 / 229</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #6DBCD6;">
+                        <h3 class="swatch-title" style="color: #050505;">04</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#6DBCD6</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">109 / 188 / 214</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #3CA5C6;">
+                        <h3 class="swatch-title" style="color: #050505;">05</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#3CA5C6</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">60 / 165 / 198</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #2C9AB9;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">06</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#2C9AB9</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">44 / 154 / 185</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #118AB2;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">07</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#118AB2</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">17 / 138 / 178</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #0E6E8F;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">08</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#0E6E8F</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">14 / 110 / 143</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #0A4E66;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">09</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#0A4E66</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">10 / 78 / 102</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #052F3E;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">10</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#052F3E</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">5 / 47 / 62</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Blue -->
+            <section class="colour-group">
+                <div class="colour-group-title">
+                    <h2>Blue</h2>
+                </div>
+                <div class="colour-swatches">
+                    <div class="colour-swatch" style="background-color: #EEF3FD;">
+                        <h3 class="swatch-title" style="color: #050505;">01</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#EEF3FD</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">238 / 243 / 253</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #D3DDF8;">
+                        <h3 class="swatch-title" style="color: #050505;">02</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#D3DDF8</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">211 / 221 / 248</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #AABCEF;">
+                        <h3 class="swatch-title" style="color: #050505;">03</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#AABCEF</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">170 / 188 / 239</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #7F99E3;">
+                        <h3 class="swatch-title" style="color: #050505;">04</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#7F99E3</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">127 / 153 / 227</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #5475D4;">
+                        <h3 class="swatch-title" style="color: #050505;">05</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#5475D4</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">84 / 117 / 212</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #345AC4;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">06</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#345AC4</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">52 / 90 / 196</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #1E47B0;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">07</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#1E47B0</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">30 / 71 / 176</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #163789;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">08</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#163789</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">22 / 55 / 137</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #0F265E;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">09</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#0F265E</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">15 / 38 / 94</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #081633;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">10</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#081633</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">8 / 22 / 51</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Purple -->
+            <section class="colour-group">
+                <div class="colour-group-title">
+                    <h2>Purple</h2>
+                </div>
+                <div class="colour-swatches">
+                    <div class="colour-swatch" style="background-color: #F7F0FE;">
+                        <h3 class="swatch-title" style="color: #050505;">01</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#F7F0FE</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">247 / 240 / 254</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #E6D2FB;">
+                        <h3 class="swatch-title" style="color: #050505;">02</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#E6D2FB</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">230 / 210 / 251</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #CFABF7;">
+                        <h3 class="swatch-title" style="color: #050505;">03</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#CFABF7</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">207 / 171 / 247</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #B785F0;">
+                        <h3 class="swatch-title" style="color: #050505;">04</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#B785F0</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">183 / 133 / 240</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #A86AE8;">
+                        <h3 class="swatch-title" style="color: #050505;">05</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#A86AE8</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">168 / 106 / 232</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #9754DC;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">06</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#9754DC</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">151 / 84 / 220</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #9E47EF;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">07</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#9E47EF</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">158 / 71 / 239</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #7434B3;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">08</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#7434B3</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">116 / 52 / 179</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #52247D;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">09</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#52247D</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">82 / 36 / 125</span></div>
+                        </div>
+                    </div>
+                    <div class="colour-swatch" style="background-color: #31164A;">
+                        <h3 class="swatch-title" style="color: #FFFFFF;">10</h3>
+                        <div class="swatch-values">
+                            <div class="swatch-row"><span class="swatch-label">Hex</span><span class="swatch-value">#31164A</span></div>
+                            <div class="swatch-row"><span class="swatch-label">RGB</span><span class="swatch-value">49 / 22 / 74</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <span class="footer-text">© 2026 Robert Ritacca.</span>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

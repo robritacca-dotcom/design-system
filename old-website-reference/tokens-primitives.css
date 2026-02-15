@@ -1,0 +1,133 @@
+/* ============================================
+   COLOUR COLLECTION - Primitives
+   
+   Core colour values - the foundation of the design system
+   These are raw values organized by colour family with full
+   scales from 00-10. These primitives are referenced by
+   semantic tokens in the Mode collection.
+   
+   Matches Figma: Variables > Colour > Primitives
+   ============================================ */
+
+:root {
+    /* ============================================
+       Primitives / Neutral
+       Full scale from lightest (00) to darkest (10)
+       ============================================ */
+    --color-neutral-00: #FFFFFF;
+    --color-neutral-01: #F1F1F1;
+    --color-neutral-02: #D6D6D6;
+    --color-neutral-03: #BCBCBC;
+    --color-neutral-04: #A2A2A2;
+    --color-neutral-05: #888888;
+    --color-neutral-06: #6D6D6D;
+    --color-neutral-07: #303030;
+    --color-neutral-08: #232323;
+    --color-neutral-09: #0E0E0E;
+    --color-neutral-10: #050505;
+    
+    /* Primitives / Neutral - Transparent variants */
+    --color-neutral-01-transparent: rgba(241, 241, 241, 0.01);
+    --color-neutral-01-semi: rgba(241, 241, 241, 0.6);
+    --color-neutral-02-semi: rgba(214, 214, 214, 0.5); /* Subtle grey for light mode cards */
+    --color-neutral-09-transparent: rgba(14, 14, 14, 0.01);
+    --color-neutral-09-semi: rgba(14, 14, 14, 0.6);
+    
+    /* ============================================
+       Primitives / Red
+       ============================================ */
+    --color-red-01: #FDEFF3;
+    --color-red-02: #FAD3DD;
+    --color-red-03: #F8B7C7;
+    --color-red-04: #F69BB1;
+    --color-red-05: #F37F9B;
+    --color-red-06: #F16385;
+    --color-red-07: #EF476F;
+    --color-red-08: #C93A5C;
+    --color-red-09: #8E2641;
+    --color-red-10: #571727;
+    
+    /* ============================================
+       Primitives / Orange
+       ============================================ */
+    --color-orange-01: #FFF3EC;
+    --color-orange-02: #FFDBC5;
+    --color-orange-03: #F9BC97;
+    --color-orange-04: #F49E69;
+    --color-orange-05: #EF8247;
+    --color-orange-06: #C26939;
+    --color-orange-07: #944E2A;
+    --color-orange-08: #733E21;
+    --color-orange-09: #552716;
+    --color-orange-10: #3B1B0F;
+    
+    /* ============================================
+       Primitives / Yellow
+       ============================================ */
+    --color-yellow-01: #FFF9EA;
+    --color-yellow-02: #FFF0C9;
+    --color-yellow-03: #FFE5A3;
+    --color-yellow-04: #FFD97F;
+    --color-yellow-05: #F2C55E;
+    --color-yellow-06: #E0B654;
+    --color-yellow-07: #FFD166;
+    --color-yellow-08: #C49A3E;
+    --color-yellow-09: #8A6B2A;
+    --color-yellow-10: #544016;
+    
+    /* ============================================
+       Primitives / Green
+       ============================================ */
+    --color-green-01: #ECFCF7;
+    --color-green-02: #CEF6E8;
+    --color-green-03: #9DEBD4;
+    --color-green-04: #6DE0C0;
+    --color-green-05: #3ED4AA;
+    --color-green-06: #1FCB9A;
+    --color-green-07: #06D6A0;
+    --color-green-08: #05A67C;
+    --color-green-09: #03765A;
+    --color-green-10: #024336;
+    
+    /* ============================================
+       Primitives / Teal
+       ============================================ */
+    --color-teal-01: #ECF7FB;
+    --color-teal-02: #CFEAF3;
+    --color-teal-03: #9ED4E5;
+    --color-teal-04: #6DBCD6;
+    --color-teal-05: #3CA5C6;
+    --color-teal-06: #2C9AB9;
+    --color-teal-07: #118AB2;
+    --color-teal-08: #0E6E8F;
+    --color-teal-09: #0A4E66;
+    --color-teal-10: #052F3E;
+    
+    /* ============================================
+       Primitives / Blue
+       ============================================ */
+    --color-blue-01: #EEF3FD;
+    --color-blue-02: #D3DDF8;
+    --color-blue-03: #AABCEF;
+    --color-blue-04: #7F99E3;
+    --color-blue-05: #5475D4;
+    --color-blue-06: #345AC4;
+    --color-blue-07: #1E47B0;
+    --color-blue-08: #163789;
+    --color-blue-09: #0F265E;
+    --color-blue-10: #081633;
+    
+    /* ============================================
+       Primitives / Purple
+       ============================================ */
+    --color-purple-01: #F7F0FE;
+    --color-purple-02: #E6D2FB;
+    --color-purple-03: #CFABF7;
+    --color-purple-04: #B785F0;
+    --color-purple-05: #A86AE8;
+    --color-purple-06: #9754DC;
+    --color-purple-07: #9E47EF;
+    --color-purple-08: #7434B3;
+    --color-purple-09: #52247D;
+    --color-purple-10: #31164A;
+}

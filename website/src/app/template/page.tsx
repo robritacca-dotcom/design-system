@@ -1,233 +1,347 @@
 'use client';
 
-import { Button } from '@design-system/components/Button/Button';
-import { ButtonGroup } from '@design-system/components/ButtonGroup/ButtonGroup';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import Image from 'next/image';
 import styles from './template.module.css';
 
 export default function Template() {
-  const [isDark, setIsDark] = useState(true);
-  const [stickyVisible, setStickyVisible] = useState(false);
-
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
-  }, [isDark]);
+    // Theme toggle functionality
+    function updateAllThemeLabels(themeName: string) {
+      document.querySelectorAll('.theme-toggle-label').forEach((label) => {
+        label.textContent = themeName === 'light' ? 'Light Mode' : 'Dark Mode';
+      });
+    }
 
-  useEffect(() => {
-    const handleScroll = () => {
-      // Show sticky header after scrolling down 100px
-      setStickyVisible(window.scrollY > 100);
-    };
+    function toggleTheme() {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+      if (currentTheme === 'light') {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'dark');
+        updateAllThemeLabels('dark');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light');
+        updateAllThemeLabels('light');
+      }
+    }
+
+    // Check for saved theme preference or default to dark
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+
+    // Apply saved theme on load
+    if (savedTheme === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+      updateAllThemeLabels('light');
+    } else {
+      updateAllThemeLabels('dark');
+    }
+
+    // Attach click handlers to all theme toggles
+    document.querySelectorAll('.theme-toggle').forEach((toggle) => {
+      toggle.addEventListener('click', toggleTheme);
+    });
+
+    // Sticky header functionality
+    const stickyHeader = document.getElementById('stickyHeader');
+    const nav = document.querySelector('.nav');
+
+    if (stickyHeader && nav) {
+      function checkStickyVisibility() {
+        const navBottom = nav.getBoundingClientRect().bottom;
+
+        if (navBottom <= 0) {
+          stickyHeader.classList.add('visible');
+        } else {
+          stickyHeader.classList.remove('visible');
+        }
+      }
+
+      checkStickyVisibility();
+
+      let ticking = false;
+      const handleScroll = () => {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            checkStickyVisibility();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      };
+
+      window.addEventListener('scroll', handleScroll);
+      return () => window.removeEventListener('scroll', handleScroll);
+    }
   }, []);
 
   return (
-    <div className={styles.page}>
-      {/* Gradient Background with Blurred Circles */}
-      <div className={styles.blurContainer}>
-        <div className={`${styles.blurEllipse} ${styles.blurYellow}`} />
-        <div className={`${styles.blurEllipse} ${styles.blurGreen}`} />
-        <div className={`${styles.blurEllipse} ${styles.blurPurple}`} />
-        <div className={`${styles.blurEllipse} ${styles.blurBlue}`} />
-        <div className={`${styles.blurEllipse} ${styles.blurRed}`} />
-        <div className={`${styles.blurEllipse} ${styles.blurOrange}`} />
-        <div className={`${styles.blurEllipse} ${styles.blurTeal}`} />
-        <div className={`${styles.blurEllipse} ${styles.blurNeutral}`} />
+    <div>
+      {/* Skip to main content */}
+      <a href="#main-content" className="skip-link">Skip to main content</a>
+
+      {/* Sticky Header */}
+      <header className="sticky-header" id="stickyHeader">
+        <div className="nav-container">
+          <a href="/" className="nav-logo">
+            <Image src="/rr.svg" alt="robr0" width={24} height={24} className="nav-logo-icon" />
+            <span className="nav-logo-text">robr0</span>
+          </a>
+          <div className="nav-right">
+            <div className="nav-menu">
+              <a href="/" className="nav-link">Home</a>
+              <a href="/about" className="nav-link">About</a>
+              <a href="#" className="nav-link disabled">Work</a>
+              <a href="/template" className="nav-link active">robr0 DS</a>
+            </div>
+            <button className="theme-toggle" aria-label="Toggle dark/light mode">
+              <div className="toggle-switch">
+                <div className="toggle-switch-track"></div>
+                <div className="toggle-switch-thumb">
+                  <span className="material-symbols-outlined" style={{fontSize: '14px', color: 'var(--action-bg-default)'}}>check</span>
+                </div>
+              </div>
+              <span className="theme-toggle-label">Dark Mode</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Blur Background */}
+      <div className="blur-container">
+        <div className="blur-ellipse blur-yellow"></div>
+        <div className="blur-ellipse blur-green"></div>
+        <div className="blur-ellipse blur-purple"></div>
+        <div className="blur-ellipse blur-neutral"></div>
+        <div className="blur-ellipse blur-blue"></div>
+        <div className="blur-ellipse blur-red"></div>
+        <div className="blur-ellipse blur-orange"></div>
+        <div className="blur-ellipse blur-teal"></div>
       </div>
 
-      {/* Sticky Header - appears on scroll */}
-      <header className={`${styles.stickyHeader} ${stickyVisible ? styles.visible : ''}`}>
-        <nav className={styles.navContainer}>
-          <div className={styles.logo}>
-            <Image src="/rr.svg" alt="RR" width={24} height={24} />
-            <span className={styles.logoText}>robr0</span>
-          </div>
-
-          <div className={styles.navRight}>
-            <div className={styles.navMenu}>
-              <ButtonGroup
-                orientation="horizontal"
-                buttons={[
-                  { label: 'Home', priority: 'secondary' },
-                  { label: 'About', priority: 'secondary' },
-                  { label: 'Work', priority: 'secondary', state: 'disabled' },
-                  { label: 'robr0 DS', priority: 'secondary', state: 'active' },
-                ]}
-              />
-            </div>
-
-            <button
-              className={styles.themeToggle}
-              onClick={() => setIsDark(!isDark)}
-            >
-              <div className={styles.toggleSwitch}>
-                <div className={styles.toggleSocket}>
-                  <span className="material-symbols-sharp">check</span>
-                </div>
-              </div>
-              <span className={styles.toggleLabel}>{isDark ? 'Dark Mode' : 'Light Mode'}</span>
-            </button>
-          </div>
-        </nav>
-      </header>
-
       {/* Main Navigation */}
-      <header className={styles.header}>
-        <nav className={styles.nav}>
-          <div className={styles.logo}>
-            <Image src="/rr.svg" alt="RR" width={24} height={24} />
-            <span className={styles.logoText}>robr0</span>
-          </div>
+      <nav className="nav">
+        <div className="nav-container">
+          <a href="/" className="nav-logo">
+            <Image src="/rr.svg" alt="robr0" width={24} height={24} className="nav-logo-icon" />
+            <span className="nav-logo-text">robr0</span>
+          </a>
 
-          <div className={styles.navRight}>
-            <div className={styles.navMenu}>
-              <ButtonGroup
-                orientation="horizontal"
-                buttons={[
-                  { label: 'Home', priority: 'secondary' },
-                  { label: 'About', priority: 'secondary' },
-                  { label: 'Work', priority: 'secondary', state: 'disabled' },
-                  { label: 'robr0 DS', priority: 'secondary', state: 'active' },
-                ]}
-              />
+          <div className="nav-right">
+            <div className="nav-menu">
+              <a href="/" className="nav-link">Home</a>
+              <a href="/about" className="nav-link">About</a>
+              <a href="#" className="nav-link disabled">Work</a>
+              <a href="/template" className="nav-link active">robr0 DS</a>
             </div>
 
-            <button
-              className={styles.themeToggle}
-              onClick={() => setIsDark(!isDark)}
-            >
-              <div className={styles.toggleSwitch}>
-                <div className={styles.toggleSocket}>
-                  <span className="material-symbols-sharp">check</span>
+            <button className="theme-toggle" aria-label="Toggle dark/light mode">
+              <div className="toggle-switch">
+                <div className="toggle-switch-track"></div>
+                <div className="toggle-switch-thumb">
+                  <span className="material-symbols-outlined" style={{fontSize: '14px', color: 'var(--action-bg-default)'}}>check</span>
                 </div>
               </div>
-              <span className={styles.toggleLabel}>{isDark ? 'Dark Mode' : 'Light Mode'}</span>
+              <span className="theme-toggle-label">Dark Mode</span>
             </button>
           </div>
-        </nav>
-      </header>
+        </div>
+      </nav>
 
-      {/* DS Layout - Main Content */}
-      <div className={styles.dsLayout}>
-        {/* Sidebar Navigation */}
-        <aside className={styles.dsSidebar}>
-          <ButtonGroup
-            orientation="vertical"
-            buttons={[
-              { label: 'Active nav item', priority: 'secondary', state: 'active' },
-              { label: 'Inactive nav item', priority: 'secondary' },
-              { label: 'Another button', priority: 'secondary' },
-              { label: 'Last button', priority: 'secondary' },
-            ]}
-          />
+      {/* DS Layout with Sidebar */}
+      <div className="ds-layout">
+        {/* Sidebar - Subnav */}
+        <aside className="ds-sidebar">
+          <a href="/template" className="ds-sidebar-link active">About</a>
+          <a href="#" className="ds-sidebar-link">Buttons</a>
+          <a href="#" className="ds-sidebar-link">Icons</a>
+          <a href="#" className="ds-sidebar-link">Logos</a>
+          <a href="#" className="ds-sidebar-link">Navigation</a>
+          <a href="#" className="ds-sidebar-link">Primitive Colours</a>
+          <a href="#" className="ds-sidebar-link">Semantic Colours</a>
+          <a href="#" className="ds-sidebar-link">Semantic Spacing</a>
+          <a href="#" className="ds-sidebar-link">Typography</a>
         </aside>
 
-        {/* Content Area */}
-        <main className={styles.dsContent}>
-          <h1 className={styles.title}>Title</h1>
-          <p className={styles.subtitle}>Subtitle</p>
+        {/* Main Content */}
+        <main className="ds-content" id="main-content">
+          {/* Page Title */}
+          <h1 className="page-title animate-in">robr0DS</h1>
 
-          {/* Section 1 */}
-          <section className={styles.section}>
-            <div className={styles.divider}>
-              <h2>Divider page title</h2>
+          {/* Page Description */}
+          <p className="type-sub-display animate-in animate-delay-1">
+            This site is rendered directly from its own design system, exposing the tokens and structure used to build the UI itself.
+          </p>
+
+          {/* Tokens Section */}
+          <section className="section animate-in animate-delay-2">
+            <div className="section-header">
+              <h2 className="section-title">Tokens</h2>
             </div>
-            <p className={styles.paragraph}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas euismod elit orci, vitae efficitur ex fringilla et. Quisque tempor lectus a ultrices dictum. Sed sapien ligula, commodo eu lectus sed, varius placerat ex.
+            <p className="section-description">
+              Tokens are the underlying values the site runs on. They are used everywhere layout, color, and type appear.
+              Instead of styling elements directly, everything references these shared variables so changes propagate consistently.
+              The same token structure exists in Figma and in code, allowing updates to flow through without reinterpreting intent.
             </p>
-            <div className={styles.cards}>
-              <div className={styles.card}>
-                <h3>Box</h3>
+
+            <div className="toc-grid toc-grid-4">
+              <a href="#" className="toc-card">
+                <div className="toc-card-preview">
+                  <div className="colour-wheel colour-wheel-mode"></div>
+                </div>
+                <h3 className="toc-card-title">Semantic Colours</h3>
+              </a>
+
+              <a href="#" className="toc-card">
+                <div className="toc-card-preview">
+                  <div className="colour-wheel"></div>
+                </div>
+                <h3 className="toc-card-title">Primitive Colours</h3>
+              </a>
+
+              <a href="#" className="toc-card">
+                <div className="toc-card-preview">
+                  <div className="toc-circle-preview toc-circle-green">
+                    <div style={{width: '60px', height: '50px', borderLeft: '1px solid var(--status-positive-border)', borderRight: '1px solid var(--status-positive-border)', borderRadius: '2px'}}></div>
+                    <span style={{fontSize: '16px', fontWeight: 600, color: 'var(--text-primary)'}}>XXL</span>
+                    <span style={{fontSize: '16px', fontWeight: 400, color: 'var(--text-tertiary)'}}>60px</span>
+                  </div>
+                </div>
+                <h3 className="toc-card-title">Semantic Spacing</h3>
+              </a>
+
+              <a href="#" className="toc-card">
+                <div className="toc-card-preview">
+                  <div className="toc-circle-preview toc-circle-blue">
+                    <span style={{fontSize: '64px', fontWeight: 300, color: 'var(--text-primary)', letterSpacing: '0.96px'}}>A</span>
+                    <span style={{fontSize: '96px', fontWeight: 600, color: 'var(--text-primary)', letterSpacing: '1.92px'}}>A</span>
+                  </div>
+                </div>
+                <h3 className="toc-card-title">Typography</h3>
+              </a>
+            </div>
+          </section>
+
+          {/* Components Section */}
+          <section className="section animate-in animate-delay-3">
+            <div className="section-header">
+              <h2 className="section-title">Components</h2>
+            </div>
+            <p className="section-description">
+              Components are assembled from tokens and shared layout structures. When a pattern appears more than once,
+              it becomes a reusable component instead of a custom layout. Each component reflects how it is actually implemented,
+              including structure, constraints, and states.
+            </p>
+
+            <div className="toc-grid toc-grid-4">
+              <a href="#" className="toc-card">
+                <div className="toc-card-preview">
+                  <div className="toc-circle-preview toc-circle-dashed" style={{flexDirection: 'column', gap: '10px'}}>
+                    <span className="btn btn-primary" style={{fontSize: '16px', padding: '8px 16px', border: '2px solid var(--ui-secondary)'}}>Button</span>
+                    <span className="btn btn-primary" style={{fontSize: '16px', padding: '8px 16px', background: 'var(--action-bg-hover)', border: '1px solid var(--ui-secondary)'}}>Button</span>
+                    <span className="btn btn-primary" style={{fontSize: '16px', padding: '8px 16px', border: '2px solid var(--ui-secondary)', opacity: 0.4}}>Button</span>
+                  </div>
+                </div>
+                <h3 className="toc-card-title">Buttons</h3>
+              </a>
+
+              <a href="#" className="toc-card">
+                <div className="toc-card-preview">
+                  <div className="toc-circle-preview toc-circle-dashed" style={{gap: '20px'}}>
+                    <Image src="/rr.svg" alt="robr0" width={24} height={24} />
+                    <span style={{fontSize: '16px', fontWeight: 600, color: 'var(--text-primary)', letterSpacing: '-0.16px'}}>robr0</span>
+                  </div>
+                </div>
+                <h3 className="toc-card-title">Navigation</h3>
+              </a>
+
+              <a href="#" className="toc-card">
+                <div className="toc-card-preview">
+                  <div className="toc-circle-preview toc-circle-dashed" style={{gap: '10px'}}>
+                    <span className="material-symbols-outlined" style={{fontSize: '48px', color: 'var(--text-secondary)'}}>home</span>
+                    <span className="material-symbols-outlined icon-filled" style={{fontSize: '48px', color: 'var(--text-secondary)'}}>home</span>
+                  </div>
+                </div>
+                <h3 className="toc-card-title">Icons</h3>
+              </a>
+
+              <a href="#" className="toc-card">
+                <div className="toc-card-preview">
+                  <div className="toc-circle-preview toc-circle-dashed" style={{gap: '10px'}}>
+                    <Image src="/rr.svg" alt="robr0 Logo" width={48} height={48} />
+                    <Image src="/rr.svg" alt="robr0 Logo" width={72} height={72} />
+                  </div>
+                </div>
+                <h3 className="toc-card-title">Logos</h3>
+              </a>
+            </div>
+          </section>
+
+          {/* Story Section */}
+          <section className="section animate-in animate-delay-4">
+            <div className="ds-story-layout">
+              {/* Story Content */}
+              <div className="ds-story-content">
+                <div className="content-section">
+                  <div className="content-section-header">
+                    <h3 className="content-section-title">Design to Code Workflow</h3>
+                  </div>
+                  <div className="content-section-body">
+                    <p>Design work flows directly into implementation. Layout structure, spacing, and variables are read from the design source and used to construct the UI without reinterpretation. Tokens become CSS custom properties. Components map to shared class structures. Layout behavior follows the same hierarchy defined in design. This keeps the rendered site aligned with the system it documents.</p>
+                  </div>
+                </div>
+
+                <div className="content-section">
+                  <div className="content-section-header">
+                    <h3 className="content-section-title">Outcome</h3>
+                  </div>
+                  <div className="content-section-body">
+                    <p>This system is both the subject and the output. The site is built using the same tokens, components, and structures it documents, so the implementation reflects the decisions being described.</p>
+                    <p>What this shows is how I approach system design in practice: defining clear layers, separating intent from implementation, and using constraints to make change predictable. Rather than treating design artifacts as static documentation, I treat them as inputs to a working system.</p>
+                    <p>The goal is not polish or completeness, but clarity. To make the structure visible. To show how decisions connect across design and code. And to demonstrate how a small, well defined set of primitives can support real interfaces without becoming rigid or over abstracted.</p>
+                  </div>
+                </div>
               </div>
-              <div className={styles.card}>
-                <h3>Box</h3>
-              </div>
-              <div className={styles.card}>
-                <h3>Box</h3>
-              </div>
-              <div className={styles.card}>
-                <h3>Box</h3>
+
+              {/* Tools Used Sidebar */}
+              <div className="ds-story-sidebar">
+                <h3 className="sidebar-title">Tools used</h3>
+                <div className="tools-list">
+                  <div className="tool-item">
+                    <Image src="/logos/Figma.svg" alt="Figma" width={28} height={28} className="tool-logo" />
+                    <div className="tool-details">
+                      <span className="tool-name">Figma</span>
+                      <span className="tool-desc">Design source of truth, MCP server and tokens (variable collections)</span>
+                    </div>
+                  </div>
+                  <div className="tool-item">
+                    <Image src="/logos/Claude.svg" alt="Claude Code" width={28} height={28} className="tool-logo" />
+                    <div className="tool-details">
+                      <span className="tool-name">Claude Code</span>
+                      <span className="tool-desc">AI Agent and core development tool</span>
+                    </div>
+                  </div>
+                  <div className="tool-item">
+                    <Image src="/logos/Git.svg" alt="GitHub" width={28} height={28} className="tool-logo" />
+                    <div className="tool-details">
+                      <span className="tool-name">GitHub</span>
+                      <span className="tool-desc">Version control and repository</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </section>
 
-          {/* Section 2 */}
-          <section className={styles.section}>
-            <div className={styles.divider}>
-              <h2>Divider page title</h2>
-            </div>
-            <p className={styles.paragraph}>
-              Nullam eu lectus cursus, fringilla orci id, aliquam orci. Curabitur quis erat egestas, posuere dolor quis, luctus ipsum.
-            </p>
-            <div className={styles.cards}>
-              <div className={styles.card}>
-                <h3>Box</h3>
-              </div>
-              <div className={styles.card}>
-                <h3>Box</h3>
-              </div>
-              <div className={styles.card}>
-                <h3>Box</h3>
-              </div>
-              <div className={styles.card}>
-                <h3>Box</h3>
-              </div>
-            </div>
-          </section>
-
-          {/* Story Section with Right Rail */}
-          <div className={styles.storyLayout}>
-            <div className={styles.storyContent}>
-              <div className={styles.storyPart}>
-                <div className={styles.divider}>
-                  <h2>Divider page title</h2>
-                </div>
-                <div className={styles.multiParagraph}>
-                  <p>Content goes here. Multiple paragraphs of text describing the story and process.</p>
-                  <p>Second paragraph with more details about the implementation and decisions made.</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Rail - Tools */}
-            <aside className={styles.rightRail}>
-              <div className={styles.divider}>
-                <h2>Tools</h2>
-              </div>
-              <div className={styles.toolsList}>
-                <div className={styles.tool}>
-                  <Image src="/logos/Figma.svg" alt="Figma" width={28} height={28} />
-                  <div className={styles.toolText}>
-                    <h4>Figma</h4>
-                    <p>Design source of truth</p>
-                  </div>
-                </div>
-                <div className={styles.tool}>
-                  <Image src="/logos/Claude.svg" alt="Claude" width={28} height={28} />
-                  <div className={styles.toolText}>
-                    <h4>Claude Code</h4>
-                    <p>Main dev agent</p>
-                  </div>
-                </div>
-                <div className={styles.tool}>
-                  <Image src="/logos/Git.svg" alt="GitHub" width={28} height={28} />
-                  <div className={styles.toolText}>
-                    <h4>GitHub</h4>
-                    <p>Repo</p>
-                  </div>
-                </div>
-              </div>
-            </aside>
-          </div>
         </main>
       </div>
 
       {/* Footer */}
-      <footer className={styles.footer}>
-        <p>© 2026 Robert Ritacca.</p>
+      <footer className="footer">
+        <div className="footer-inner">
+          <p className="footer-text">© 2026 Robert Ritacca.</p>
+        </div>
       </footer>
     </div>
   );

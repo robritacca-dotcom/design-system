@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 | Page Not Found</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Page not found - Return to Robert Ritacca's portfolio.">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#050505" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="tokens.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Hide page until theme is ready */
+        html:not(.theme-ready) { visibility: hidden; }
+        html.theme-ready { visibility: visible; }
+        
+        .error-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: var(--padding-xl);
+            gap: var(--gap-xl);
+        }
+        
+        .error-code {
+            font-size: 120px;
+            font-weight: 300;
+            line-height: 1;
+            letter-spacing: 2.4px;
+            color: var(--text-primary);
+            opacity: 0.3;
+        }
+        
+        .error-message {
+            font-size: 30px;
+            font-weight: 300;
+            line-height: 44px;
+            letter-spacing: 0.45px;
+            color: var(--text-primary);
+        }
+        
+        .error-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--action-text-tertiary);
+            text-decoration: none;
+            border: 2px solid var(--action-border-primary);
+            transition: all 0.2s ease;
+        }
+        
+        .error-link:hover {
+            background: var(--action-bg-hover);
+            color: var(--action-text-primary);
+            border-color: var(--action-bg-hover);
+        }
+    </style>
+    <script>
+        (function() {
+            var savedTheme = localStorage.getItem('theme');
+            var systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            var isLight = savedTheme === 'light' || (savedTheme === null && !systemPrefersDark);
+            if (isLight) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+            document.documentElement.classList.add('theme-ready');
+        })();
+    </script>
+</head>
+<body>
+    <!-- Blur Background -->
+    <div class="blur-bg">
+        <div class="blur-ellipse blur-yellow"></div>
+        <div class="blur-ellipse blur-green"></div>
+        <div class="blur-ellipse blur-purple"></div>
+        <div class="blur-ellipse blur-neutral"></div>
+        <div class="blur-ellipse blur-blue"></div>
+        <div class="blur-ellipse blur-red"></div>
+        <div class="blur-ellipse blur-orange"></div>
+        <div class="blur-ellipse blur-teal"></div>
+    </div>
+    
+    <main class="error-container">
+        <span class="error-code">404</span>
+        <p class="error-message">This page doesn't exist.</p>
+        <a href="index.html" class="error-link">Go Home</a>
+    </main>
+</body>
+</html>
+

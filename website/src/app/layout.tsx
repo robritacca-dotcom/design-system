@@ -4,6 +4,7 @@ import "./material-symbols.css";
 import "./button.css";
 import { Nunito_Sans } from "next/font/google";
 import "./globals.css";
+import "../../../public/reference-styles.css";
 
 const nunitoSans = Nunito_Sans({
   subsets: ["latin"],

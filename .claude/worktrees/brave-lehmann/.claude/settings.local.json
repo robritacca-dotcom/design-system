@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git checkout:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git stash:*)",
+      "Bash(timeout 10 npm run dev:*)",
+      "Bash(git reset:*)",
+      "Bash(git rm:*)",
+      "Bash(npm install:*)",
+      "mcp__figma__get_design_context",
+      "mcp__figma__get_screenshot"
+    ]
+  }
+}

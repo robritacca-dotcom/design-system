@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Icons | robr0 Design System</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="robr0 Design System Icons - Material Symbols icon library with outlined, rounded, and sharp variants for consistent iconography.">
+    <meta name="author" content="Robert Ritacca">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://robertritacca.com/robr0-experiments/icons.html">
+    
+    <!-- Open Graph (LinkedIn, Facebook, Slack) -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Robert Ritacca">
+    <meta property="og:title" content="Icons | robr0 Design System">
+    <meta property="og:description" content="Material Symbols icon library with outlined, rounded, and sharp variants for consistent iconography.">
+    <meta property="og:image" content="https://robertritacca.com/robr0-experiments/Images/robr0 img.png">
+    <meta property="og:url" content="https://robertritacca.com/robr0-experiments/icons.html">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Icons | robr0 Design System">
+    <meta name="twitter:description" content="Material Symbols icon library with outlined, rounded, and sharp variants for consistent iconography.">
+    <meta name="twitter:image" content="https://robertritacca.com/robr0-experiments/Images/robr0 img.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="/Images/logo.svg">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#050505" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="tokens.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Hide page until theme is ready */
+        html:not(.theme-ready) { visibility: hidden; }
+        html.theme-ready { visibility: visible; }
+        /* Hide toggle label until correct text is set */
+        html:not(.labels-ready) .theme-toggle-label { visibility: hidden; }
+    </style>
+    <script>
+        // Apply saved theme immediately to prevent flash
+        (function() {
+            var savedTheme = localStorage.getItem('theme');
+            var systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            // Use saved preference, or fall back to system preference
+            var isLight = savedTheme === 'light' || (savedTheme === null && !systemPrefersDark);
+            if (isLight) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+            // Show page now that theme is set
+            document.documentElement.classList.add('theme-ready');
+            
+            // Update toggle labels as soon as DOM is ready
+            function updateLabels() {
+                var labels = document.querySelectorAll('.theme-toggle-label');
+                if (labels.length > 0) {
+                    labels.forEach(function(label) {
+                        label.textContent = isLight ? 'Light Mode' : 'Dark Mode';
+                    });
+                    document.documentElement.classList.add('labels-ready');
+                } else {
+                    requestAnimationFrame(updateLabels);
+                }
+            }
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', updateLabels);
+            } else {
+                updateLabels();
+            }
+            
+            // Detect when Material Symbols font is loaded
+            if (document.fonts && document.fonts.ready) {
+                document.fonts.ready.then(function() {
+                    document.documentElement.classList.add('fonts-loaded');
+                });
+            } else {
+                setTimeout(function() {
+                    document.documentElement.classList.add('fonts-loaded');
+                }, 100);
+            }
+        })();
+    </script>
+</head>
+<body>
+    <!-- Skip to main content (Accessibility) -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Sticky Header (appears on scroll) -->
+    <header class="sticky-header" id="stickyHeader">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="Images/logo.svg" alt="robr0" class="nav-logo-icon">
+                <span class="nav-logo-text">robr0</span>
+            </a>
+            <div class="nav-right">
+                <div class="nav-menu">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="#" class="nav-link disabled">Work</a>
+                    <a href="design-system.html" class="nav-link active">robr0 DS</a>
+                </div>
+                <button class="theme-toggle" aria-label="Toggle dark/light mode">
+                    <div class="toggle-switch">
+                        <div class="toggle-switch-track"></div>
+                        <div class="toggle-switch-thumb">
+                            <span class="material-symbols-outlined" style="font-size: 14px; color: var(--action-bg-default);">check</span>
+                        </div>
+                    </div>
+                    <span class="theme-toggle-label">Dark Mode</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Blur Background -->
+    <div class="blur-container">
+        <div class="blur-ellipse blur-yellow"></div>
+        <div class="blur-ellipse blur-green"></div>
+        <div class="blur-ellipse blur-purple"></div>
+        <div class="blur-ellipse blur-neutral"></div>
+        <div class="blur-ellipse blur-blue"></div>
+        <div class="blur-ellipse blur-red"></div>
+        <div class="blur-ellipse blur-orange"></div>
+        <div class="blur-ellipse blur-teal"></div>
+    </div>
+
+    <!-- Navigation - Exact Figma structure -->
+    <nav class="nav">
+        <div class="nav-container">
+            <!-- Logo -->
+            <a href="index.html" class="nav-logo">
+                <img src="Images/logo.svg" alt="robr0" class="nav-logo-icon">
+                <span class="nav-logo-text">robr0</span>
+            </a>
+            
+            <!-- Right Section -->
+            <div class="nav-right">
+                <!-- Menu -->
+                <div class="nav-menu">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="#" class="nav-link disabled">Work</a>
+                    <a href="design-system.html" class="nav-link active">robr0 DS</a>
+                </div>
+                
+                <!-- Theme Toggle -->
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
+                    <div class="toggle-switch">
+                        <div class="toggle-switch-track"></div>
+                        <div class="toggle-switch-thumb">
+                            <span class="material-symbols-outlined" style="font-size: 14px; color: var(--action-bg-default);">check</span>
+                        </div>
+                    </div>
+                    <span class="theme-toggle-label">Dark Mode</span>
+                </button>
+                
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Button (visible < 960px) - Outside nav for z-index -->
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+        <span class="material-symbols-outlined menu-icon">menu</span>
+        <span class="material-symbols-outlined close-icon">close</span>
+    </button>
+    
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+        <div class="mobile-menu">
+            <div class="mobile-menu-links">
+                <a href="index.html" class="mobile-menu-link">Home</a>
+                <a href="about.html" class="mobile-menu-link">About</a>
+                <a href="#" class="mobile-menu-link disabled">Work</a>
+                <a href="design-system.html" class="mobile-menu-link active">robr0 DS</a>
+                <div class="mobile-subnav">
+                    <a href="design-system.html" class="mobile-subnav-link">About</a>
+                    <a href="buttons.html" class="mobile-subnav-link">Buttons</a>
+                    <a href="icons.html" class="mobile-subnav-link active">Icons</a>
+                    <a href="logos.html" class="mobile-subnav-link">Logos</a>
+                    <a href="navigation.html" class="mobile-subnav-link">Navigation</a>
+                    <a href="colour-primitives.html" class="mobile-subnav-link">Primitive Colours</a>
+                    <a href="colour-mode.html" class="mobile-subnav-link">Semantic Colours</a>
+                    <a href="spatial.html" class="mobile-subnav-link">Semantic Spacing</a>
+                    <a href="typography.html" class="mobile-subnav-link">Typography</a>
+                </div>
+            </div>
+            <button class="theme-toggle mobile-theme-toggle" aria-label="Toggle dark/light mode">
+                <div class="toggle-switch">
+                    <div class="toggle-switch-track"></div>
+                    <div class="toggle-switch-thumb">
+                        <span class="material-symbols-outlined" style="font-size: 14px; color: var(--action-bg-default);">check</span>
+                    </div>
+                </div>
+                <span class="theme-toggle-label">Dark Mode</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- DS Layout with Sidebar -->
+    <div class="ds-layout">
+        <!-- Sidebar -->
+        <aside class="ds-sidebar">
+            <a href="design-system.html" class="ds-sidebar-link">About</a>
+            <a href="buttons.html" class="ds-sidebar-link">Buttons</a>
+            <a href="icons.html" class="ds-sidebar-link active">Icons</a>
+            <a href="logos.html" class="ds-sidebar-link">Logos</a>
+            <a href="navigation.html" class="ds-sidebar-link">Navigation</a>
+            <a href="colour-primitives.html" class="ds-sidebar-link">Primitive Colours</a>
+            <a href="colour-mode.html" class="ds-sidebar-link">Semantic Colours</a>
+            <a href="spatial.html" class="ds-sidebar-link">Semantic Spacing</a>
+            <a href="typography.html" class="ds-sidebar-link">Typography</a>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="ds-content" id="main-content">
+            <!-- Header -->
+            <h1 class="page-title animate-in">Icons</h1>
+            
+            <!-- Page Description -->
+            <p class="type-sub-display animate-in animate-delay-1">Material 3 symbols used consistently at 200 weight with sharp styling for clear, predictable iconography.</p>
+            
+            <section class="section animate-in animate-delay-2">
+                <div class="section-header">
+                    <h2 class="section-title">Icon Library</h2>
+                </div>
+                <p style="color: var(--text-secondary); margin-bottom: var(--gap-lg);">Click any icon to copy its name. Use with <code style="background: var(--background-container-secondary); padding: 2px 6px; border-radius: 4px;">material-symbols-outlined</code>, <code style="background: var(--background-container-secondary); padding: 2px 6px; border-radius: 4px;">material-symbols-rounded</code>, or <code style="background: var(--background-container-secondary); padding: 2px 6px; border-radius: 4px;">material-symbols-sharp</code></p>
+            </section>
+
+            <!-- Controls -->
+            <div class="icons-controls">
+                <label>
+                    Style:
+                    <select id="iconStyle">
+                        <option value="material-symbols-outlined">Outlined</option>
+                        <option value="material-symbols-rounded">Rounded</option>
+                        <option value="material-symbols-sharp">Sharp</option>
+                    </select>
+                </label>
+                <label>
+                    <input type="checkbox" id="iconFilled"> Filled
+                </label>
+            </div>
+
+            <!-- Actions -->
+            <section class="icons-section">
+                <h2 class="icons-section-title">Actions</h2>
+                <div class="icons-grid">
+                    <div class="icon-card" data-icon="search"><span class="material-symbols-outlined">search</span><span class="icon-card-name">search</span></div>
+                    <div class="icon-card" data-icon="home"><span class="material-symbols-outlined">home</span><span class="icon-card-name">home</span></div>
+                    <div class="icon-card" data-icon="menu"><span class="material-symbols-outlined">menu</span><span class="icon-card-name">menu</span></div>
+                    <div class="icon-card" data-icon="close"><span class="material-symbols-outlined">close</span><span class="icon-card-name">close</span></div>
+                    <div class="icon-card" data-icon="settings"><span class="material-symbols-outlined">settings</span><span class="icon-card-name">settings</span></div>
+                    <div class="icon-card" data-icon="done"><span class="material-symbols-outlined">done</span><span class="icon-card-name">done</span></div>
+                    <div class="icon-card" data-icon="check_circle"><span class="material-symbols-outlined">check_circle</span><span class="icon-card-name">check_circle</span></div>
+                    <div class="icon-card" data-icon="add"><span class="material-symbols-outlined">add</span><span class="icon-card-name">add</span></div>
+                    <div class="icon-card" data-icon="remove"><span class="material-symbols-outlined">remove</span><span class="icon-card-name">remove</span></div>
+                    <div class="icon-card" data-icon="delete"><span class="material-symbols-outlined">delete</span><span class="icon-card-name">delete</span></div>
+                    <div class="icon-card" data-icon="edit"><span class="material-symbols-outlined">edit</span><span class="icon-card-name">edit</span></div>
+                    <div class="icon-card" data-icon="refresh"><span class="material-symbols-outlined">refresh</span><span class="icon-card-name">refresh</span></div>
+                    <div class="icon-card" data-icon="more_vert"><span class="material-symbols-outlined">more_vert</span><span class="icon-card-name">more_vert</span></div>
+                    <div class="icon-card" data-icon="more_horiz"><span class="material-symbols-outlined">more_horiz</span><span class="icon-card-name">more_horiz</span></div>
+                    <div class="icon-card" data-icon="download"><span class="material-symbols-outlined">download</span><span class="icon-card-name">download</span></div>
+                    <div class="icon-card" data-icon="upload"><span class="material-symbols-outlined">upload</span><span class="icon-card-name">upload</span></div>
+                    <div class="icon-card" data-icon="share"><span class="material-symbols-outlined">share</span><span class="icon-card-name">share</span></div>
+                    <div class="icon-card" data-icon="content_copy"><span class="material-symbols-outlined">content_copy</span><span class="icon-card-name">content_copy</span></div>
+                    <div class="icon-card" data-icon="save"><span class="material-symbols-outlined">save</span><span class="icon-card-name">save</span></div>
+                    <div class="icon-card" data-icon="print"><span class="material-symbols-outlined">print</span><span class="icon-card-name">print</span></div>
+                </div>
+            </section>
+
+            <!-- Navigation -->
+            <section class="icons-section">
+                <h2 class="icons-section-title">Navigation</h2>
+                <div class="icons-grid">
+                    <div class="icon-card" data-icon="arrow_back"><span class="material-symbols-outlined">arrow_back</span><span class="icon-card-name">arrow_back</span></div>
+                    <div class="icon-card" data-icon="arrow_forward"><span class="material-symbols-outlined">arrow_forward</span><span class="icon-card-name">arrow_forward</span></div>
+                    <div class="icon-card" data-icon="arrow_upward"><span class="material-symbols-outlined">arrow_upward</span><span class="icon-card-name">arrow_upward</span></div>
+                    <div class="icon-card" data-icon="arrow_downward"><span class="material-symbols-outlined">arrow_downward</span><span class="icon-card-name">arrow_downward</span></div>
+                    <div class="icon-card" data-icon="chevron_left"><span class="material-symbols-outlined">chevron_left</span><span class="icon-card-name">chevron_left</span></div>
+                    <div class="icon-card" data-icon="chevron_right"><span class="material-symbols-outlined">chevron_right</span><span class="icon-card-name">chevron_right</span></div>
+                    <div class="icon-card" data-icon="expand_more"><span class="material-symbols-outlined">expand_more</span><span class="icon-card-name">expand_more</span></div>
+                    <div class="icon-card" data-icon="expand_less"><span class="material-symbols-outlined">expand_less</span><span class="icon-card-name">expand_less</span></div>
+                </div>
+            </section>
+
+            <!-- Communication -->
+            <section class="icons-section">
+                <h2 class="icons-section-title">Communication</h2>
+                <div class="icons-grid">
+                    <div class="icon-card" data-icon="mail"><span class="material-symbols-outlined">mail</span><span class="icon-card-name">mail</span></div>
+                    <div class="icon-card" data-icon="inbox"><span class="material-symbols-outlined">inbox</span><span class="icon-card-name">inbox</span></div>
+                    <div class="icon-card" data-icon="send"><span class="material-symbols-outlined">send</span><span class="icon-card-name">send</span></div>
+                    <div class="icon-card" data-icon="chat"><span class="material-symbols-outlined">chat</span><span class="icon-card-name">chat</span></div>
+                    <div class="icon-card" data-icon="notifications"><span class="material-symbols-outlined">notifications</span><span class="icon-card-name">notifications</span></div>
+                    <div class="icon-card" data-icon="phone"><span class="material-symbols-outlined">phone</span><span class="icon-card-name">phone</span></div>
+                    <div class="icon-card" data-icon="videocam"><span class="material-symbols-outlined">videocam</span><span class="icon-card-name">videocam</span></div>
+                </div>
+            </section>
+
+            <!-- Social -->
+            <section class="icons-section">
+                <h2 class="icons-section-title">Social</h2>
+                <div class="icons-grid">
+                    <div class="icon-card" data-icon="person"><span class="material-symbols-outlined">person</span><span class="icon-card-name">person</span></div>
+                    <div class="icon-card" data-icon="people"><span class="material-symbols-outlined">people</span><span class="icon-card-name">people</span></div>
+                    <div class="icon-card" data-icon="group"><span class="material-symbols-outlined">group</span><span class="icon-card-name">group</span></div>
+                    <div class="icon-card" data-icon="account_circle"><span class="material-symbols-outlined">account_circle</span><span class="icon-card-name">account_circle</span></div>
+                    <div class="icon-card" data-icon="thumb_up"><span class="material-symbols-outlined">thumb_up</span><span class="icon-card-name">thumb_up</span></div>
+                    <div class="icon-card" data-icon="thumb_down"><span class="material-symbols-outlined">thumb_down</span><span class="icon-card-name">thumb_down</span></div>
+                    <div class="icon-card" data-icon="favorite"><span class="material-symbols-outlined">favorite</span><span class="icon-card-name">favorite</span></div>
+                    <div class="icon-card" data-icon="star"><span class="material-symbols-outlined">star</span><span class="icon-card-name">star</span></div>
+                </div>
+            </section>
+
+            <!-- Status -->
+            <section class="icons-section">
+                <h2 class="icons-section-title">Status & Alerts</h2>
+                <div class="icons-grid">
+                    <div class="icon-card" data-icon="info"><span class="material-symbols-outlined">info</span><span class="icon-card-name">info</span></div>
+                    <div class="icon-card" data-icon="warning"><span class="material-symbols-outlined">warning</span><span class="icon-card-name">warning</span></div>
+                    <div class="icon-card" data-icon="error"><span class="material-symbols-outlined">error</span><span class="icon-card-name">error</span></div>
+                    <div class="icon-card" data-icon="help"><span class="material-symbols-outlined">help</span><span class="icon-card-name">help</span></div>
+                    <div class="icon-card" data-icon="check_circle"><span class="material-symbols-outlined">check_circle</span><span class="icon-card-name">check_circle</span></div>
+                    <div class="icon-card" data-icon="cancel"><span class="material-symbols-outlined">cancel</span><span class="icon-card-name">cancel</span></div>
+                </div>
+            </section>
+
+            <!-- Toggle & Form -->
+            <section class="icons-section">
+                <h2 class="icons-section-title">Toggle & Form</h2>
+                <div class="icons-grid">
+                    <div class="icon-card" data-icon="check_box"><span class="material-symbols-outlined">check_box</span><span class="icon-card-name">check_box</span></div>
+                    <div class="icon-card" data-icon="check_box_outline_blank"><span class="material-symbols-outlined">check_box_outline_blank</span><span class="icon-card-name">check_box_outline_blank</span></div>
+                    <div class="icon-card" data-icon="radio_button_checked"><span class="material-symbols-outlined">radio_button_checked</span><span class="icon-card-name">radio_button_checked</span></div>
+                    <div class="icon-card" data-icon="toggle_on"><span class="material-symbols-outlined">toggle_on</span><span class="icon-card-name">toggle_on</span></div>
+                    <div class="icon-card" data-icon="toggle_off"><span class="material-symbols-outlined">toggle_off</span><span class="icon-card-name">toggle_off</span></div>
+                    <div class="icon-card" data-icon="visibility"><span class="material-symbols-outlined">visibility</span><span class="icon-card-name">visibility</span></div>
+                    <div class="icon-card" data-icon="visibility_off"><span class="material-symbols-outlined">visibility_off</span><span class="icon-card-name">visibility_off</span></div>
+                    <div class="icon-card" data-icon="lock"><span class="material-symbols-outlined">lock</span><span class="icon-card-name">lock</span></div>
+                    <div class="icon-card" data-icon="login"><span class="material-symbols-outlined">login</span><span class="icon-card-name">login</span></div>
+                    <div class="icon-card" data-icon="logout"><span class="material-symbols-outlined">logout</span><span class="icon-card-name">logout</span></div>
+                </div>
+            </section>
+
+            <!-- Theme & Display -->
+            <section class="icons-section">
+                <h2 class="icons-section-title">Theme & Display</h2>
+                <div class="icons-grid">
+                    <div class="icon-card" data-icon="light_mode"><span class="material-symbols-outlined">light_mode</span><span class="icon-card-name">light_mode</span></div>
+                    <div class="icon-card" data-icon="dark_mode"><span class="material-symbols-outlined">dark_mode</span><span class="icon-card-name">dark_mode</span></div>
+                    <div class="icon-card" data-icon="palette"><span class="material-symbols-outlined">palette</span><span class="icon-card-name">palette</span></div>
+                    <div class="icon-card" data-icon="grid_view"><span class="material-symbols-outlined">grid_view</span><span class="icon-card-name">grid_view</span></div>
+                    <div class="icon-card" data-icon="view_list"><span class="material-symbols-outlined">view_list</span><span class="icon-card-name">view_list</span></div>
+                    <div class="icon-card" data-icon="dashboard"><span class="material-symbols-outlined">dashboard</span><span class="icon-card-name">dashboard</span></div>
+                </div>
+            </section>
+
+            <!-- Miscellaneous -->
+            <section class="icons-section">
+                <h2 class="icons-section-title">Miscellaneous</h2>
+                <div class="icons-grid">
+                    <div class="icon-card" data-icon="bolt"><span class="material-symbols-outlined">bolt</span><span class="icon-card-name">bolt</span></div>
+                    <div class="icon-card" data-icon="auto_awesome"><span class="material-symbols-outlined">auto_awesome</span><span class="icon-card-name">auto_awesome</span></div>
+                    <div class="icon-card" data-icon="rocket_launch"><span class="material-symbols-outlined">rocket_launch</span><span class="icon-card-name">rocket_launch</span></div>
+                    <div class="icon-card" data-icon="code"><span class="material-symbols-outlined">code</span><span class="icon-card-name">code</span></div>
+                    <div class="icon-card" data-icon="terminal"><span class="material-symbols-outlined">terminal</span><span class="icon-card-name">terminal</span></div>
+                    <div class="icon-card" data-icon="bug_report"><span class="material-symbols-outlined">bug_report</span><span class="icon-card-name">bug_report</span></div>
+                    <div class="icon-card" data-icon="build"><span class="material-symbols-outlined">build</span><span class="icon-card-name">build</span></div>
+                    <div class="icon-card" data-icon="language"><span class="material-symbols-outlined">language</span><span class="icon-card-name">language</span></div>
+                    <div class="icon-card" data-icon="location_on"><span class="material-symbols-outlined">location_on</span><span class="icon-card-name">location_on</span></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Copy Toast -->
+    <div class="copy-toast" id="copyToast">Copied!</div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <p class="footer-text">© 2026 Robert Ritacca.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Icon style switcher
+        const styleSelect = document.getElementById('iconStyle');
+        const filledCheckbox = document.getElementById('iconFilled');
+        const iconCards = document.querySelectorAll('.icon-card');
+        const copyToast = document.getElementById('copyToast');
+        
+        function updateIcons() {
+            const style = styleSelect.value;
+            const filled = filledCheckbox.checked;
+            
+            iconCards.forEach(card => {
+                const iconSpan = card.querySelector('span:first-child');
+                const iconName = card.dataset.icon;
+                
+                // Update class
+                iconSpan.className = style;
+                if (filled) {
+                    iconSpan.classList.add('icon-filled');
+                }
+                
+                // Update content
+                iconSpan.textContent = iconName;
+            });
+        }
+        
+        styleSelect.addEventListener('change', updateIcons);
+        filledCheckbox.addEventListener('change', updateIcons);
+        
+        // Copy icon name on click
+        iconCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const iconName = card.dataset.icon;
+                navigator.clipboard.writeText(iconName).then(() => {
+                    // Show feedback
+                    card.classList.add('copied');
+                    copyToast.textContent = `Copied "${iconName}"`;
+                    copyToast.classList.add('show');
+                    
+                    setTimeout(() => {
+                        card.classList.remove('copied');
+                        copyToast.classList.remove('show');
+                    }, 1500);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
