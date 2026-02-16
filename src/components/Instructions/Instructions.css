@@ -70,7 +70,7 @@
 }
 
 .ds-instructions__badge .material-symbols-rounded {
-  font-size: 18px;
+  font-size: 24px;
   color: var(--color-action-primary-bg);
 }
 
@@ -182,7 +182,7 @@
 }
 
 .ds-instructions--compact .ds-instructions__badge .material-symbols-rounded {
-  font-size: 14px;
+  font-size: 20px;
 }
 
 .ds-instructions--compact .ds-instructions__number {

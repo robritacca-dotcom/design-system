@@ -78,9 +78,9 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 20px;
-  width: 20px;
-  height: 20px;
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
   color: var(--color-icon-primary);
   pointer-events: none;
 }
@@ -94,11 +94,11 @@
 }
 
 .ds-input--has-icon-left .ds-input__field {
-  padding-left: calc(var(--padding-sm) + 20px + var(--gap-sm)); /* icon offset */
+  padding-left: calc(var(--padding-sm) + 24px + var(--gap-sm)); /* icon offset */
 }
 
 .ds-input--has-icon-right .ds-input__field {
-  padding-right: calc(var(--padding-sm) + 20px + var(--gap-sm)); /* icon offset */
+  padding-right: calc(var(--padding-sm) + 24px + var(--gap-sm)); /* icon offset */
 }
 
 /* ============================================
