@@ -5,6 +5,7 @@ import Header from "../../../components/Header/Header";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
+import PageLinks from "../../../components/PageLinks/PageLinks";
 import { getNavLinks, getSidebarLinks, aboutSidebarLinks } from "@/config/navigation";
 import styles from "../page.module.css";
 
@@ -24,7 +25,12 @@ export default function AboutMePage() {
 
         <main className={styles.dsContent} id="main-content">
           {/* Page Title */}
-          <h1 className={`${styles.pageTitle} animate-in`}>Robert Ritacca</h1>
+          <div className={`${styles.pageHeader} animate-in`}>
+            <h1 className={styles.pageTitle}>Robert Ritacca</h1>
+            <PageLinks
+              figmaUrl="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26?node-id=246-6397"
+            />
+          </div>
 
           {/* Page Description */}
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>

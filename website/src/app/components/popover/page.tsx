@@ -27,7 +27,6 @@ export default function PopoverPage() {
           <div className={`${styles.pageHeader} animate-in`}>
             <h1 className={styles.pageTitle}>Popover</h1>
             <PageLinks
-              figmaUrl="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26"
               storybookPath="/?path=/docs/components-popover--docs"
             />
           </div>
