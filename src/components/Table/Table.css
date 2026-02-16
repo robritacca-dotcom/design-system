@@ -60,6 +60,7 @@
 
 .ds-table__header-cell {
   padding: var(--padding-sm) var(--padding-md); /* 8px 16px */
+  vertical-align: middle;
 
   /* paragraph-em (500 weight / label style) */
   font-family: var(--font-paragraph-em-family);
@@ -79,6 +80,13 @@
   padding: var(--padding-sm) var(--padding-md); /* 8px 16px */
   vertical-align: middle;
   color: var(--color-text-primary);
+}
+
+/* Inner wrapper ensures all cell content is perfectly vertically centred */
+.ds-table__cell-content {
+  display: flex;
+  align-items: center;
+  min-height: 0;
 }
 
 /* ============================================
