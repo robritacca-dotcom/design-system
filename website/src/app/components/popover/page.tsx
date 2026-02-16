@@ -31,9 +31,14 @@ export default function PopoverPage() {
             />
           </div>
 
-          <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            A small panel that appears next to a trigger element, positioned above, below, left, or right. Can open on click or on hover for tooltip-like behaviour. Closes on outside click or pressing escape.
-          </p>
+          <div className={`${styles.introSection} animate-in animate-delay-1`}>
+            <p className={styles.subDisplay}>
+              A small panel next to a trigger element
+            </p>
+            <p className={styles.introBody}>
+              Positioned above, below, left, or right. Can open on click or on hover for tooltip-like behaviour. Closes on outside click or pressing escape.
+            </p>
+          </div>
 
           {/* Click trigger */}
           <section className={styles.section}>

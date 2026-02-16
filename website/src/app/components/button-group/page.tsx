@@ -77,9 +77,14 @@ export default function ButtonGroupPage() {
           </div>
 
           {/* Intro */}
-          <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Groups related buttons together in a row or column. Used for nav menus, toolbars, and action sets where buttons need consistent spacing and alignment without wiring it up manually each time.
-          </p>
+          <div className={`${styles.introSection} animate-in animate-delay-1`}>
+            <p className={styles.subDisplay}>
+              Groups related buttons in a row or column
+            </p>
+            <p className={styles.introBody}>
+              Used for nav menus, toolbars, and action sets where buttons need consistent spacing and alignment without wiring it up manually each time.
+            </p>
+          </div>
 
           {/* Horizontal */}
           <section className={styles.section}>

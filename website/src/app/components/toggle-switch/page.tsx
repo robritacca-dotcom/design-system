@@ -38,9 +38,14 @@ export default function ToggleSwitchPage() {
           </div>
 
           {/* Intro */}
-          <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            An on/off switch for settings that take effect immediately, like enabling dark mode or toggling a notification. The sliding thumb and check icon give clear visual feedback. Use Checkbox instead for options that need to be saved or submitted as part of a form.
-          </p>
+          <div className={`${styles.introSection} animate-in animate-delay-1`}>
+            <p className={styles.subDisplay}>
+              An on/off switch for immediate settings
+            </p>
+            <p className={styles.introBody}>
+              For settings that take effect right away, like enabling dark mode or toggling a notification. The sliding thumb and check icon give clear visual feedback. Use Checkbox instead for options that need to be saved or submitted as part of a form.
+            </p>
+          </div>
 
           {/* Default */}
           <section className={styles.section}>

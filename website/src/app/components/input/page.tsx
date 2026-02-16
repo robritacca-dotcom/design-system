@@ -30,9 +30,14 @@ export default function InputPage() {
             />
           </div>
 
-          <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Single-line text field for things like names, emails, and search queries. Supports labels, placeholders, left/right icons, helper text, and error states. Use Textarea instead when the content needs more than one line.
-          </p>
+          <div className={`${styles.introSection} animate-in animate-delay-1`}>
+            <p className={styles.subDisplay}>
+              Single-line text field for names, emails, and search queries
+            </p>
+            <p className={styles.introBody}>
+              Supports labels, placeholders, left/right icons, helper text, and error states. Use Textarea instead when the content needs more than one line.
+            </p>
+          </div>
 
           {/* Default */}
           <section className={styles.section}>

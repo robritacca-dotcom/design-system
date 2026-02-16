@@ -30,9 +30,14 @@ export default function TextareaPage() {
             />
           </div>
 
-          <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Multi-line text field for longer content like descriptions, comments, and messages. Includes an optional character counter and resize handle. Use Input instead when the value fits on a single line.
-          </p>
+          <div className={`${styles.introSection} animate-in animate-delay-1`}>
+            <p className={styles.subDisplay}>
+              Multi-line text field for longer content
+            </p>
+            <p className={styles.introBody}>
+              For descriptions, comments, and messages. Includes an optional character counter and resize handle. Use Input instead when the value fits on a single line.
+            </p>
+          </div>
 
           {/* Default */}
           <section className={styles.section}>

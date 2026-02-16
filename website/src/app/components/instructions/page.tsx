@@ -30,9 +30,14 @@ export default function InstructionsPage() {
             />
           </div>
 
-          <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            For walking users through a process in order. Each step gets a numbered badge and an optional connecting line to the next. Can run vertically for detailed walkthroughs or horizontally for compact progress indicators.
-          </p>
+          <div className={`${styles.introSection} animate-in animate-delay-1`}>
+            <p className={styles.subDisplay}>
+              Walk users through a process in order
+            </p>
+            <p className={styles.introBody}>
+              Each step gets a numbered badge and an optional connecting line to the next. Can run vertically for detailed walkthroughs or horizontally for compact progress indicators.
+            </p>
+          </div>
 
           {/* Numbered */}
           <section className={styles.section}>

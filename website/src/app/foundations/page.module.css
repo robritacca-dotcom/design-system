@@ -52,7 +52,7 @@
 .introSection {
   display: flex;
   flex-direction: column;
-  gap: var(--primitive-gap-xl);
+  gap: var(--primitive-gap-lg);
 }
 
 .introBody {

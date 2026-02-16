@@ -30,9 +30,14 @@ export default function TabsPage() {
             />
           </div>
 
-          <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            For switching between different views or sections within the same page. The active tab gets an underline and a colour change. Supports optional icons and a full-width mode that stretches tabs to fill the container. Use Segmented Control instead when the options represent filters or modes rather than separate content areas.
-          </p>
+          <div className={`${styles.introSection} animate-in animate-delay-1`}>
+            <p className={styles.subDisplay}>
+              Switch between views or sections within the same page
+            </p>
+            <p className={styles.introBody}>
+              The active tab gets an underline and a colour change. Supports optional icons and a full-width mode that stretches tabs to fill the container. Use Segmented Control instead when the options represent filters or modes rather than separate content areas.
+            </p>
+          </div>
 
           {/* Default */}
           <section className={styles.section}>

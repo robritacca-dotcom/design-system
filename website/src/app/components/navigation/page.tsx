@@ -71,9 +71,14 @@ export default function NavigationPage() {
           </div>
 
           {/* Intro */}
-          <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            The top-level nav bar used across the site. On desktop it shows the brand, page links, and trailing content like a theme toggle. On mobile it collapses to a hamburger that opens a slide-out drawer with nested subnav links.
-          </p>
+          <div className={`${styles.introSection} animate-in animate-delay-1`}>
+            <p className={styles.subDisplay}>
+              The top-level nav bar used across the site
+            </p>
+            <p className={styles.introBody}>
+              On desktop it shows the brand, page links, and trailing content like a theme toggle. On mobile it collapses to a hamburger that opens a slide-out drawer with nested subnav links.
+            </p>
+          </div>
 
           {/* Desktop Nav */}
           <section className={styles.section}>

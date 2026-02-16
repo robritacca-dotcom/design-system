@@ -288,9 +288,14 @@ export default function SemanticColoursPage() {
           </div>
 
           {/* Intro */}
-          <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Each colour here has a role, like "page background" or "error border", and maps to a different primitive value depending on whether the UI is in light or dark mode. Components only reference these roles, so switching themes is just swapping which primitives each role points to. Toggle the mode above to see the values change.
-          </p>
+          <div className={`${styles.introSection} animate-in animate-delay-1`}>
+            <p className={styles.subDisplay}>
+              Semantic roles that map to primitives per mode
+            </p>
+            <p className={styles.introBody}>
+              Each colour here has a role, like "page background" or "error border", and maps to a different primitive value depending on whether the UI is in light or dark mode. Components only reference these roles, so switching themes is just swapping which primitives each role points to. Toggle the mode above to see the values change.
+            </p>
+          </div>
 
           {/* Example images */}
           <div className={`${styles.exampleRow} animate-in animate-delay-2`}>

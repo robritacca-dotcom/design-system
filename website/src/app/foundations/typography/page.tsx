@@ -255,9 +255,14 @@ export default function TypographyPage() {
           </div>
 
           {/* Intro */}
-          <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Everything is set in Nunito Sans. Mega and Display styles are for hero moments and landing pages. Headings structure sections. Title is for bold labels. Paragraph Em is the default for buttons and interactive controls. Paragraph is body copy. The SM variants scale each of those down for compact components and secondary text.
-          </p>
+          <div className={`${styles.introSection} animate-in animate-delay-1`}>
+            <p className={styles.subDisplay}>
+              Everything is set in Nunito Sans
+            </p>
+            <p className={styles.introBody}>
+              Mega and Display styles are for hero moments and landing pages. Headings structure sections. Title is for bold labels. Paragraph Em is the default for buttons and interactive controls. Paragraph is body copy. The SM variants scale each of those down for compact components and secondary text.
+            </p>
+          </div>
 
           {/* Type Sections */}
           {typeSections.map((section, idx) => (

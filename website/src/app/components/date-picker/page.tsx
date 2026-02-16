@@ -30,9 +30,14 @@ export default function DatePickerPage() {
             />
           </div>
 
-          <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            A full calendar grid that sits inline on the page. Highlights today, supports min/max date limits, and lets users pick a date by clicking a cell. Use this when the date context matters and users benefit from seeing the full month. Use Date Input instead for a lighter-weight form field.
-          </p>
+          <div className={`${styles.introSection} animate-in animate-delay-1`}>
+            <p className={styles.subDisplay}>
+              A full calendar grid that sits inline on the page
+            </p>
+            <p className={styles.introBody}>
+              Highlights today, supports min/max date limits, and lets users pick a date by clicking a cell. Use this when the date context matters and users benefit from seeing the full month. Use Date Input instead for a lighter-weight form field.
+            </p>
+          </div>
 
           {/* Default */}
           <section className={styles.section}>

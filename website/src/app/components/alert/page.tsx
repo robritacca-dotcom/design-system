@@ -30,9 +30,14 @@ export default function AlertPage() {
             />
           </div>
 
-          <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            For surfacing feedback, confirmations, warnings, and errors. Each variant maps to a status colour (positive, warning, error, info, neutral) so the meaning is immediately clear. Can be dismissed with an optional close button.
-          </p>
+          <div className={`${styles.introSection} animate-in animate-delay-1`}>
+            <p className={styles.subDisplay}>
+              Feedback, confirmations, warnings, and errors
+            </p>
+            <p className={styles.introBody}>
+              Each variant maps to a status colour (positive, warning, error, info, neutral) so the meaning is immediately clear. Can be dismissed with an optional close button.
+            </p>
+          </div>
 
           {/* Default */}
           <section className={styles.section}>

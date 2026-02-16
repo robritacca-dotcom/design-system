@@ -30,9 +30,14 @@ export default function RadioButtonPage() {
             />
           </div>
 
-          <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            For choosing exactly one option from a small set. Can be used individually or grouped in vertical and horizontal layouts. Use Checkbox instead when users can select more than one, or Dropdown when the list of options is long.
-          </p>
+          <div className={`${styles.introSection} animate-in animate-delay-1`}>
+            <p className={styles.subDisplay}>
+              Choose exactly one option from a small set
+            </p>
+            <p className={styles.introBody}>
+              Can be used individually or grouped in vertical and horizontal layouts. Use Checkbox instead when users can select more than one, or Dropdown when the list of options is long.
+            </p>
+          </div>
 
           {/* Single states */}
           <section className={styles.section}>
