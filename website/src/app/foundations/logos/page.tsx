@@ -59,6 +59,7 @@ const logoCategories: LogoCategory[] = [
   {
     title: "Development & Infrastructure",
     logos: [
+      { label: "React", file: "React.svg" },
       { label: "nextjs black", file: "nextjs black.svg" },
       { label: "nextjs white", file: "nextjs white.svg" },
       { label: "vite", file: "vite.svg" },

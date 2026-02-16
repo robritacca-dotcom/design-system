@@ -229,6 +229,14 @@ export default function AboutDsPage() {
                 </div>
 
                 <div className={styles.toolItem}>
+                  <Image src="/logos/React.svg" alt="React" width={28} height={28} />
+                  <div className={styles.toolDetails}>
+                    <span className={styles.toolName}>React</span>
+                    <span className={styles.toolDesc}>Component framework</span>
+                  </div>
+                </div>
+
+                <div className={styles.toolItem}>
                   <Image src="/logos/Git.svg" alt="GitHub" width={28} height={28} />
                   <div className={styles.toolDetails}>
                     <span className={styles.toolName}>Github</span>
