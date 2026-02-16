@@ -20,6 +20,8 @@ export interface DropdownProps {
   value?: string;
   /** Available options */
   options: DropdownOption[];
+  /** Component size */
+  size?: 'default' | 'compact';
   /** Whether the dropdown is disabled */
   disabled?: boolean;
   /** Whether the dropdown is required */
@@ -45,6 +47,7 @@ export const Dropdown = ({
   placeholder = 'Select an option',
   value,
   options,
+  size = 'default',
   disabled = false,
   required = false,
   error = false,
@@ -61,11 +64,12 @@ export const Dropdown = ({
   const listRef = useRef<HTMLUListElement>(null);
 
   const baseClass = 'ds-dropdown';
+  const sizeClass = size === 'compact' ? `${baseClass}--compact` : '';
   const openClass = isOpen ? `${baseClass}--open` : '';
   const errorClass = error ? `${baseClass}--error` : '';
   const disabledClass = disabled ? `${baseClass}--disabled` : '';
 
-  const classes = [baseClass, openClass, errorClass, disabledClass, className]
+  const classes = [baseClass, sizeClass, openClass, errorClass, disabledClass, className]
     .filter(Boolean)
     .join(' ');
 

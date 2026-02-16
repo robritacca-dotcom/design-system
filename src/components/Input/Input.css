@@ -6,7 +6,7 @@
 .ds-input {
   display: flex;
   flex-direction: column;
-  gap: var(--gap-xs); /* 2px */
+  gap: var(--gap-sm); /* 8px */
   width: 100%;
 }
 
@@ -142,4 +142,42 @@
 
 .ds-input--disabled .ds-input__field {
   cursor: not-allowed;
+}
+
+/* ============================================
+   SIZE — COMPACT
+   ============================================ */
+
+.ds-input--compact .ds-input__field {
+  padding: var(--padding-xs) var(--padding-sm-md); /* 4px 12px */
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+}
+
+.ds-input--compact .ds-input__icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.ds-input--compact .ds-input__icon--left {
+  left: var(--padding-xs); /* 4px */
+}
+
+.ds-input--compact .ds-input__icon--right {
+  right: var(--padding-xs); /* 4px */
+}
+
+.ds-input--compact.ds-input--has-icon-left .ds-input__field {
+  padding-left: calc(var(--padding-xs) + 20px + var(--gap-sm)); /* compact icon offset */
+}
+
+.ds-input--compact.ds-input--has-icon-right .ds-input__field {
+  padding-right: calc(var(--padding-xs) + 20px + var(--gap-sm)); /* compact icon offset */
+}
+
+.ds-input--compact .ds-input__label {
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
 }
