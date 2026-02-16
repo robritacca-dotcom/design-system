@@ -54,6 +54,18 @@
   letter-spacing: var(--font-paragraph-sm-letter-spacing);
 }
 
+.ds-button--compact .ds-button__icon {
+  font-size: 20px;  /* Figma: compact icons are 20px (vs 24px default) */
+  width: 20px;
+  height: 20px;
+}
+
+/* Scale any child SVG to fit the compact icon slot */
+.ds-button--compact .ds-button__icon svg {
+  width: 20px;
+  height: 20px;
+}
+
 /* ============================================
    PRIMARY BUTTON
    ============================================ */
@@ -142,8 +154,16 @@
 
 .ds-button__icon {
   flex-shrink: 0;
-  font-size: 24px;
+  font-size: 24px;  /* Figma: default icons are 24px */
+  width: 24px;
+  height: 24px;
   line-height: 1;
+}
+
+/* Scale any child SVG to fit the icon slot */
+.ds-button__icon svg {
+  width: 24px;
+  height: 24px;
 }
 
 .ds-button--primary .ds-button__icon {
