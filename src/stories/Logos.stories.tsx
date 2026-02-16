@@ -52,6 +52,7 @@ const logos = [
   'nextjs white.svg',
   'premiere.svg',
   'quickbooks.svg',
+  'React.svg',
   'redgiant.svg',
   'rr.svg',
   'sheridan.svg',
