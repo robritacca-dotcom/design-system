@@ -118,7 +118,7 @@
    ============================================ */
 
 .ds-segmented-control--compact .ds-segmented-control__segment {
-  padding: var(--padding-xs) var(--radius-md); /* 4px 12px */
+  padding: var(--padding-xs) var(--padding-sm-md); /* 4px 12px */
 }
 
 .ds-segmented-control--compact .ds-segmented-control__label {
