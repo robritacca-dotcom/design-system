@@ -284,7 +284,7 @@ export default function SemanticColoursPage() {
             <h1 className={styles.pageTitle}>Semantic colours</h1>
             <PageLinks
               figmaUrl="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26"
-              storybookPath="/?path=/docs/components-colourswatch--docs"
+              storybookPath="/?path=/docs/foundations-tokens--docs"
             />
           </div>
 
