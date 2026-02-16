@@ -62,7 +62,7 @@
   font-weight: var(--font-paragraph-sm-weight);
   line-height: var(--font-paragraph-sm-line-height);
   letter-spacing: var(--font-paragraph-sm-letter-spacing);
-  color: var(--color-text-primary);
+  color: var(--color-text-tertiary);
   text-align: center;
   word-break: break-word;
 }

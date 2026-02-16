@@ -21,7 +21,7 @@ const sidebarLinks = [
   { href: "/components/button", label: "Button" },
   { href: "/components/button-group", label: "Button group" },
   { href: "/components/card", label: "Card" },
-  { href: "/components/nav", label: "Nav" },
+  { href: "/components/navigation", label: "Navigation" },
   { href: "/components/toggle-switch", label: "Toggle switch" },
 ];
 
@@ -82,8 +82,8 @@ export default function ComponentsPage() {
               </div>
             </TocCard>
 
-            {/* Nav */}
-            <TocCard href="/components/nav" title="Nav">
+            {/* Navigation */}
+            <TocCard href="/components/navigation" title="Navigation">
               <div className={`${styles.circlePreview} ${styles.circleDashed}`} style={{ gap: "20px" }}>
                 <Image src="/rr.svg" alt="robr0" width={24} height={24} />
                 <span style={{ fontSize: "16px", fontWeight: 600, color: "var(--color-text-primary)", letterSpacing: "-0.16px" }}>
