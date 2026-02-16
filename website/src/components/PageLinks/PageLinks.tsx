@@ -2,6 +2,8 @@ import React from "react";
 import { Button } from "@design-system/components/Button/Button";
 import styles from "./PageLinks.module.css";
 
+const STORYBOOK_BASE = "https://design-system-iota-one.vercel.app";
+
 interface PageLinksProps {
   /** Figma file URL */
   figmaUrl: string;
@@ -57,7 +59,7 @@ export default function PageLinks({ figmaUrl, storybookPath }: PageLinksProps) {
           size="compact"
           iconLeft={<StorybookIcon />}
           iconRight="open_in_new"
-          href={storybookPath}
+          href={`${STORYBOOK_BASE}${storybookPath}`}
           target="_blank"
           rel="noopener noreferrer"
         />
