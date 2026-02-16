@@ -6,6 +6,7 @@ import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
 import { EntityCard } from "@design-system/components/EntityCard/EntityCard";
+import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
 import { getNavLinks, getSidebarLinks, foundationsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
