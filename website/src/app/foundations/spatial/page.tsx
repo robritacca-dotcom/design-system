@@ -93,7 +93,7 @@ export default function SemanticSpacingPage() {
             <h1 className={styles.pageTitle}>Semantic spacing</h1>
             <PageLinks
               figmaUrl="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26"
-              storybookPath="/?path=/docs/components-spacingswatch--docs"
+              storybookPath="/?path=/docs/foundations-tokens--docs"
             />
           </div>
 
