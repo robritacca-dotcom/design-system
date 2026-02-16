@@ -98,7 +98,7 @@
 .buttonGrid {
   display: grid;
   grid-template-columns: auto repeat(4, 1fr);
-  gap: var(--primitive-gap-sm) var(--primitive-gap-md);
+  gap: var(--primitive-gap-md) var(--primitive-gap-md);
   align-items: center;
   width: 100%;
 }
