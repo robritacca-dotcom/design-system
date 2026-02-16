@@ -81,11 +81,11 @@
 }
 
 .ds-alert__title {
-  font-family: var(--font-title-body-family);
-  font-size: var(--font-title-body-size);
-  font-weight: var(--font-title-body-weight);
-  line-height: var(--font-title-body-line-height);
-  letter-spacing: var(--font-title-body-letter-spacing);
+  font-family: var(--font-paragraph-em-family);
+  font-size: var(--font-paragraph-em-size);
+  font-weight: var(--font-paragraph-em-weight);
+  line-height: var(--font-paragraph-em-line-height);
+  letter-spacing: var(--font-paragraph-em-letter-spacing);
   margin: 0;
 }
 
