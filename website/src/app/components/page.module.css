@@ -73,28 +73,20 @@
 }
 
 /* ============================================
-   CIRCLE PREVIEWS
+   PREVIEW LAYOUT HELPERS
    ============================================ */
-.circlePreview {
-  width: 184px;
-  height: 184px;
-  min-width: 184px;
-  min-height: 184px;
-  aspect-ratio: 1 / 1;
-  flex-shrink: 0;
-  border-radius: 999px;
+.previewRow {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  align-content: center;
-  gap: 10px;
-  padding: 0 24px;
-  box-sizing: border-box;
+  flex-wrap: wrap;
 }
 
-.circleDashed {
-  border: none;
+.previewColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 /* ============================================
@@ -269,21 +261,5 @@
   .subDisplay {
     font-size: 24px;
     line-height: 36px;
-  }
-
-  .circlePreview {
-    width: 150px;
-    height: 150px;
-    min-width: 150px;
-    min-height: 150px;
-  }
-}
-
-@media (max-width: 600px) {
-  .circlePreview {
-    width: 120px;
-    height: 120px;
-    min-width: 120px;
-    min-height: 120px;
   }
 }

@@ -53,21 +53,17 @@ export default function ComponentsPage() {
           <div className={`${styles.tocGrid} animate-in animate-delay-2`}>
             {/* Alert */}
             <TocCard href="/components/alert" title="Alert">
-              <div className={`${styles.circlePreview} ${styles.circleDashed}`}>
-                <Alert variant="info" title="Heads up" size="compact" />
-              </div>
+              <Alert variant="info" title="Heads up" size="compact" />
             </TocCard>
 
             {/* Button */}
             <TocCard href="/components/button" title="Button">
-              <div className={`${styles.circlePreview} ${styles.circleDashed}`}>
-                <Button label="Button" priority="primary" state="default" />
-              </div>
+              <Button label="Button" priority="primary" state="default" />
             </TocCard>
 
             {/* Button group */}
             <TocCard href="/components/button-group" title="Button group">
-              <div className={`${styles.circlePreview} ${styles.circleDashed}`} style={{ gap: "10px" }}>
+              <div className={styles.previewRow} style={{ gap: "10px" }}>
                 <Button label="Active" priority="secondary" state="active" />
                 <Button label="Inactive" priority="secondary" state="default" />
               </div>
@@ -75,14 +71,12 @@ export default function ComponentsPage() {
 
             {/* Card */}
             <TocCard href="/components/card" title="Card">
-              <div className={`${styles.circlePreview} ${styles.circleDashed}`}>
-                <div className={styles.cardPreview} />
-              </div>
+              <div className={styles.cardPreview} />
             </TocCard>
 
             {/* Checkbox */}
             <TocCard href="/components/checkbox" title="Checkbox">
-              <div className={`${styles.circlePreview} ${styles.circleDashed}`} style={{ gap: "16px" }}>
+              <div className={styles.previewRow} style={{ gap: "16px" }}>
                 <Checkbox checked={true} ariaLabel="Checked" onChange={() => {}} />
                 <Checkbox checked={false} ariaLabel="Unchecked" onChange={() => {}} />
               </div>
@@ -90,7 +84,7 @@ export default function ComponentsPage() {
 
             {/* Circular button */}
             <TocCard href="/components/circular-button" title="Circular button">
-              <div className={`${styles.circlePreview} ${styles.circleDashed}`} style={{ gap: "12px" }}>
+              <div className={styles.previewRow} style={{ gap: "12px" }}>
                 <CircularButton icon="search" ariaLabel="Search" priority="primary" />
                 <CircularButton icon="settings" ariaLabel="Settings" priority="secondary" />
               </div>
@@ -98,50 +92,42 @@ export default function ComponentsPage() {
 
             {/* Date input */}
             <TocCard href="/components/date-input" title="Date input">
-              <div className={`${styles.circlePreview} ${styles.circleDashed}`}>
-                <div className={styles.inputPreview}>
-                  <span style={{ color: "var(--color-text-tertiary)", fontSize: "14px" }}>
-                    dd/mm/yyyy
-                  </span>
-                </div>
+              <div className={styles.inputPreview}>
+                <span style={{ color: "var(--color-text-tertiary)", fontSize: "14px" }}>
+                  dd/mm/yyyy
+                </span>
               </div>
             </TocCard>
 
             {/* Date picker */}
             <TocCard href="/components/date-picker" title="Date picker">
-              <div className={`${styles.circlePreview} ${styles.circleDashed}`}>
-                <span className="material-symbols-rounded" style={{ fontSize: "36px", color: "var(--color-icon-primary)" }}>
-                  calendar_month
-                </span>
-              </div>
+              <span className="material-symbols-rounded" style={{ fontSize: "36px", color: "var(--color-icon-primary)" }}>
+                calendar_month
+              </span>
             </TocCard>
 
             {/* Dropdown */}
             <TocCard href="/components/dropdown" title="Dropdown">
-              <div className={`${styles.circlePreview} ${styles.circleDashed}`}>
-                <div className={styles.dropdownPreview}>
-                  <span className={styles.dropdownPreviewText}>Select</span>
-                  <span className="material-symbols-rounded" style={{ fontSize: "20px", color: "var(--color-icon-primary)" }}>
-                    expand_more
-                  </span>
-                </div>
+              <div className={styles.dropdownPreview}>
+                <span className={styles.dropdownPreviewText}>Select</span>
+                <span className="material-symbols-rounded" style={{ fontSize: "20px", color: "var(--color-icon-primary)" }}>
+                  expand_more
+                </span>
               </div>
             </TocCard>
 
             {/* Input */}
             <TocCard href="/components/input" title="Input">
-              <div className={`${styles.circlePreview} ${styles.circleDashed}`}>
-                <div className={styles.inputPreview}>
-                  <span style={{ color: "var(--color-text-tertiary)", fontSize: "14px" }}>
-                    Enter text...
-                  </span>
-                </div>
+              <div className={styles.inputPreview}>
+                <span style={{ color: "var(--color-text-tertiary)", fontSize: "14px" }}>
+                  Enter text...
+                </span>
               </div>
             </TocCard>
 
             {/* Instructions */}
             <TocCard href="/components/instructions" title="Instructions">
-              <div className={`${styles.circlePreview} ${styles.circleDashed}`} style={{ gap: "6px", flexDirection: "column" }}>
+              <div className={styles.previewColumn} style={{ gap: "6px" }}>
                 <div className={styles.instructionStep}>
                   <span className={styles.instructionBadge}>1</span>
                   <span className={styles.instructionLabel}>First</span>
@@ -155,7 +141,7 @@ export default function ComponentsPage() {
 
             {/* Navigation */}
             <TocCard href="/components/navigation" title="Navigation">
-              <div className={`${styles.circlePreview} ${styles.circleDashed}`} style={{ gap: "20px" }}>
+              <div className={styles.previewRow} style={{ gap: "20px" }}>
                 <Image src="/rr.svg" alt="robr0" width={24} height={24} />
                 <span style={{ fontSize: "16px", fontWeight: 600, color: "var(--color-text-primary)", letterSpacing: "-0.16px" }}>
                   robr0
@@ -165,19 +151,17 @@ export default function ComponentsPage() {
 
             {/* Popover */}
             <TocCard href="/components/popover" title="Popover">
-              <div className={`${styles.circlePreview} ${styles.circleDashed}`}>
-                <div className={styles.popoverPreview}>
-                  <span style={{ fontSize: "12px", color: "var(--color-text-primary)" }}>
-                    Popover
-                  </span>
-                  <div className={styles.popoverArrow} />
-                </div>
+              <div className={styles.popoverPreview}>
+                <span style={{ fontSize: "12px", color: "var(--color-text-primary)" }}>
+                  Popover
+                </span>
+                <div className={styles.popoverArrow} />
               </div>
             </TocCard>
 
             {/* Radio button */}
             <TocCard href="/components/radio-button" title="Radio button">
-              <div className={`${styles.circlePreview} ${styles.circleDashed}`} style={{ gap: "16px", flexDirection: "column" }}>
+              <div className={styles.previewColumn} style={{ gap: "16px" }}>
                 <RadioButton label="Option A" checked={true} onChange={() => {}} />
                 <RadioButton label="Option B" checked={false} onChange={() => {}} />
               </div>
@@ -185,66 +169,56 @@ export default function ComponentsPage() {
 
             {/* Segmented control */}
             <TocCard href="/components/segmented-control" title="Segmented control">
-              <div className={`${styles.circlePreview} ${styles.circleDashed}`}>
-                <SegmentedControl
-                  segments={[
-                    { label: "A", value: "a" },
-                    { label: "B", value: "b" },
-                  ]}
-                  activeSegment="a"
-                  size="compact"
-                />
-              </div>
+              <SegmentedControl
+                segments={[
+                  { label: "A", value: "a" },
+                  { label: "B", value: "b" },
+                ]}
+                activeSegment="a"
+                size="compact"
+              />
             </TocCard>
 
             {/* Table */}
             <TocCard href="/components/table" title="Table">
-              <div className={`${styles.circlePreview} ${styles.circleDashed}`}>
-                <div className={styles.tablePreview}>
-                  <div className={`${styles.tablePreviewRow} ${styles.tablePreviewRowHeader}`} />
-                  <div className={styles.tablePreviewRow} />
-                  <div className={styles.tablePreviewRow} />
-                  <div className={styles.tablePreviewRow} />
-                </div>
+              <div className={styles.tablePreview}>
+                <div className={`${styles.tablePreviewRow} ${styles.tablePreviewRowHeader}`} />
+                <div className={styles.tablePreviewRow} />
+                <div className={styles.tablePreviewRow} />
+                <div className={styles.tablePreviewRow} />
               </div>
             </TocCard>
 
             {/* Tabs */}
             <TocCard href="/components/tabs" title="Tabs">
-              <div className={`${styles.circlePreview} ${styles.circleDashed}`}>
-                <Tabs
-                  tabs={[
-                    { label: "One", value: "one" },
-                    { label: "Two", value: "two" },
-                  ]}
-                  activeTab="one"
-                  size="compact"
-                  onTabChange={() => {}}
-                />
-              </div>
+              <Tabs
+                tabs={[
+                  { label: "One", value: "one" },
+                  { label: "Two", value: "two" },
+                ]}
+                activeTab="one"
+                size="compact"
+                onTabChange={() => {}}
+              />
             </TocCard>
 
             {/* Textarea */}
             <TocCard href="/components/textarea" title="Textarea">
-              <div className={`${styles.circlePreview} ${styles.circleDashed}`}>
-                <div className={styles.textareaPreview}>
-                  <span style={{ color: "var(--color-text-tertiary)", fontSize: "14px" }}>
-                    Enter text...
-                  </span>
-                </div>
+              <div className={styles.textareaPreview}>
+                <span style={{ color: "var(--color-text-tertiary)", fontSize: "14px" }}>
+                  Enter text...
+                </span>
               </div>
             </TocCard>
 
             {/* Toggle switch */}
             <TocCard href="/components/toggle-switch" title="Toggle switch">
-              <div className={`${styles.circlePreview} ${styles.circleDashed}`}>
-                <div className={styles.togglePreview}>
-                  <div className={styles.toggleSocket}>
-                    <div className={styles.toggleThumb}>
-                      <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-action-primary-bg)" }}>
-                        check
-                      </span>
-                    </div>
+              <div className={styles.togglePreview}>
+                <div className={styles.toggleSocket}>
+                  <div className={styles.toggleThumb}>
+                    <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-action-primary-bg)" }}>
+                      check
+                    </span>
                   </div>
                 </div>
               </div>
