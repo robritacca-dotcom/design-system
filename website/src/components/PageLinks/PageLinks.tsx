@@ -44,6 +44,7 @@ export default function PageLinks({ figmaUrl, storybookPath }: PageLinksProps) {
         priority="secondary"
         size="compact"
         iconLeft={<FigmaIcon />}
+        iconRight="open_in_new"
         href={figmaUrl}
         target="_blank"
         rel="noopener noreferrer"
@@ -55,6 +56,7 @@ export default function PageLinks({ figmaUrl, storybookPath }: PageLinksProps) {
           priority="secondary"
           size="compact"
           iconLeft={<StorybookIcon />}
+          iconRight="open_in_new"
           href={storybookPath}
           target="_blank"
           rel="noopener noreferrer"
