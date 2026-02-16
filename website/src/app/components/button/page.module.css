@@ -14,6 +14,8 @@
   display: flex;
   flex-direction: column;
   gap: var(--primitive-gap-xxxl);
+  min-width: 0;
+  overflow: hidden;
 }
 
 /* ============================================
@@ -73,42 +75,37 @@
 }
 
 /* ============================================
-   BUTTON VARIANT GROUPS
-   Two columns: Primary and Secondary
+   BUTTON GRID — 7-column table layout
+   col 1: state label
+   cols 2–4: Primary (no icon / icon left / icon right)
+   cols 5–7: Secondary (no icon / icon left / icon right)
    ============================================ */
-.variantGroups {
+.buttonGrid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--primitive-gap-xl);
+  grid-template-columns: auto repeat(6, 1fr);
+  gap: var(--primitive-gap-md) var(--primitive-gap-md);
+  align-items: center;
   width: 100%;
 }
 
-/* ============================================
-   VARIANT GROUP — Primary or Secondary
-   ============================================ */
-.variantGroup {
-  display: flex;
-  flex-direction: column;
-  gap: var(--primitive-gap-lg);
+/* Empty corner cells (top-left of headers) */
+.gridCorner {
+  /* Intentionally empty */
 }
 
-.variantGroupTitle {
+/* Group headers (Primary / Secondary) — span 3 cols each */
+.gridGroupHeader {
+  grid-column: span 3;
+  text-align: center;
   font-size: var(--font-paragraph-size);
   font-weight: var(--font-paragraph-weight);
   line-height: var(--font-paragraph-line-height);
   color: var(--color-text-primary);
 }
 
-/* ============================================
-   STATE ROW — one state (e.g. Default)
-   ============================================ */
-.stateRow {
-  display: flex;
-  flex-direction: column;
-  gap: var(--primitive-gap-sm);
-}
-
-.stateLabel {
+/* Sub-column headers (No icon / Icon, left / Icon, right) */
+.gridColHeader {
+  text-align: center;
   font-size: var(--font-paragraph-sm-size);
   font-weight: var(--font-paragraph-sm-weight);
   line-height: var(--font-paragraph-sm-line-height);
@@ -116,11 +113,34 @@
   color: var(--color-text-tertiary);
 }
 
-.stateButtons {
+/* Row header (state label) */
+.gridRowHeader {
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  color: var(--color-text-tertiary);
+  text-align: right;
+  padding-right: var(--primitive-padding-sm);
+  white-space: nowrap;
+}
+
+/* Button cell */
+.gridCell {
   display: flex;
-  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
-  gap: var(--primitive-gap-md);
+}
+
+/* Scale buttons down so the grid fits */
+.gridCell :global(.ds-button) {
+  font-size: 13px;
+  padding: 6px 12px;
+  gap: 4px;
+}
+
+.gridCell :global(.ds-button__icon) {
+  font-size: 18px;
 }
 
 /* ============================================
@@ -142,7 +162,9 @@
     line-height: 36px;
   }
 
-  .variantGroups {
-    grid-template-columns: 1fr;
+  /* On mobile, the 7-col grid is too wide — scroll horizontally */
+  .buttonGrid {
+    overflow-x: auto;
+    min-width: 600px;
   }
 }

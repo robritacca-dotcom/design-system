@@ -32,7 +32,7 @@ const subnavLinks = sidebarLinks.map((l) => ({
 }));
 
 /* ============================================
-   BUTTON STATES
+   BUTTON STATES & VARIANTS
    ============================================ */
 
 const states = [
@@ -41,6 +41,8 @@ const states = [
   { label: "Hover", value: "hover" as const },
   { label: "Active", value: "active" as const },
 ];
+
+const priorities = ["primary", "secondary"] as const;
 
 /* ============================================
    PAGE
@@ -81,38 +83,45 @@ export default function ButtonPage() {
               <h2>Components</h2>
             </div>
 
-            <div className={styles.variantGroups}>
-              {/* Primary */}
-              <div className={styles.variantGroup}>
-                <span className={styles.variantGroupTitle}>Primary</span>
+            {/* Grid Table */}
+            <div className={styles.buttonGrid}>
+              {/* Column group headers */}
+              <div className={styles.gridCorner} />
+              {priorities.map((p) => (
+                <div key={p} className={styles.gridGroupHeader}>
+                  <span>{p === "primary" ? "Primary" : "Secondary"}</span>
+                </div>
+              ))}
 
-                {states.map((st) => (
-                  <div key={`p-${st.value}`} className={styles.stateRow}>
-                    <span className={styles.stateLabel}>{st.label}</span>
-                    <div className={styles.stateButtons}>
-                      <Button label="Button" priority="primary" state={st.value} />
-                      <Button label="Button" priority="primary" state={st.value} iconLeft="grid_view" />
-                      <Button label="Button" priority="primary" state={st.value} iconRight="arrow_forward" />
-                    </div>
-                  </div>
-                ))}
-              </div>
+              {/* Sub-column headers */}
+              <div className={styles.gridCorner} />
+              {priorities.map((p) => (
+                <React.Fragment key={`sub-${p}`}>
+                  <span className={styles.gridColHeader}>No icon</span>
+                  <span className={styles.gridColHeader}>Icon, left</span>
+                  <span className={styles.gridColHeader}>Icon, right</span>
+                </React.Fragment>
+              ))}
 
-              {/* Secondary */}
-              <div className={styles.variantGroup}>
-                <span className={styles.variantGroupTitle}>Secondary</span>
-
-                {states.map((st) => (
-                  <div key={`s-${st.value}`} className={styles.stateRow}>
-                    <span className={styles.stateLabel}>{st.label}</span>
-                    <div className={styles.stateButtons}>
-                      <Button label="Button" priority="secondary" state={st.value} />
-                      <Button label="Button" priority="secondary" state={st.value} iconLeft="grid_view" />
-                      <Button label="Button" priority="secondary" state={st.value} iconRight="arrow_forward" />
-                    </div>
-                  </div>
-                ))}
-              </div>
+              {/* State rows */}
+              {states.map((st) => (
+                <React.Fragment key={st.value}>
+                  <span className={styles.gridRowHeader}>{st.label}</span>
+                  {priorities.map((p) => (
+                    <React.Fragment key={`${p}-${st.value}`}>
+                      <div className={styles.gridCell}>
+                        <Button label="Button" priority={p} state={st.value} />
+                      </div>
+                      <div className={styles.gridCell}>
+                        <Button label="Button" priority={p} state={st.value} iconLeft="grid_view" />
+                      </div>
+                      <div className={styles.gridCell}>
+                        <Button label="Button" priority={p} state={st.value} iconRight="arrow_forward" />
+                      </div>
+                    </React.Fragment>
+                  ))}
+                </React.Fragment>
+              ))}
             </div>
           </section>
         </main>
