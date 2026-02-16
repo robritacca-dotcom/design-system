@@ -41,6 +41,7 @@ export const TypographySwatch = ({
       <span className={`${baseClass}__preview`} style={previewStyle}>
         {name}
       </span>
+      <hr className={`${baseClass}__divider`} />
       <div className={`${baseClass}__values`}>
         <div className={`${baseClass}__value-item`}>
           <span className={`${baseClass}__value-number`}>{weight}</span>
