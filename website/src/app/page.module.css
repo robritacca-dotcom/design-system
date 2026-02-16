@@ -13,14 +13,21 @@
 }
 
 /* ============================================
-   HEADING — centred title + subtitle
+   HEADING — centred title + subtitle + links
    ============================================ */
 .homeHeading {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--primitive-gap-xl);
+  gap: var(--primitive-gap-xxxl);
   text-align: center;
+}
+
+.homeNameTitle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--primitive-gap-xl);
 }
 
 .homeTitle {
@@ -47,36 +54,18 @@
 .homeLinks {
   display: flex;
   align-items: center;
-  gap: var(--primitive-gap-lg);
-  margin-top: var(--padding-sm);
-}
-
-.homeLink {
-  display: flex;
-  align-items: center;
-  gap: var(--gap-sm);
-  font-family: var(--font-paragraph-family);
-  font-size: var(--font-paragraph-size);
-  font-weight: var(--font-paragraph-weight);
-  line-height: var(--font-paragraph-line-height);
-  letter-spacing: var(--font-paragraph-letter-spacing);
-  color: var(--color-text-secondary);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.homeLink:hover {
-  color: var(--color-text-primary);
-}
-
-.homeLink svg {
-  flex-shrink: 0;
+  justify-content: center;
+  gap: var(--primitive-gap-xl);
 }
 
 /* ============================================
    RESPONSIVE
    ============================================ */
 @media (max-width: 959px) {
+  .homeHeading {
+    gap: var(--primitive-gap-xxl);
+  }
+
   .homeTitle {
     font-size: 64px;
     line-height: 1;
@@ -89,6 +78,10 @@
 }
 
 @media (max-width: 600px) {
+  .homeHeading {
+    gap: var(--primitive-gap-xl);
+  }
+
   .homeTitle {
     font-size: 40px;
     line-height: 1;
@@ -101,10 +94,5 @@
 
   .homeLinks {
     gap: var(--primitive-gap-md);
-  }
-
-  .homeLink {
-    font-size: var(--font-paragraph-sm-size);
-    line-height: var(--font-paragraph-sm-line-height);
   }
 }
