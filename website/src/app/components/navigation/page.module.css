@@ -14,6 +14,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--primitive-gap-xxxl);
+  min-width: 0;
 }
 
 /* ============================================
@@ -178,7 +179,7 @@
 
 .hamburgerMenu {
   width: 341px;
-  min-height: 500px;
+  min-height: 660px;
   flex-shrink: 0;
   background: var(--color-bg-container-primary);
   box-shadow: 5px 0px 30px 0px rgba(0, 0, 0, 0.15);
