@@ -58,7 +58,7 @@ function ButtonGrid({
 
   return (
     <section className={styles.variantBlock}>
-      <SectionTitle title="{heading}" />
+      <SectionTitle title={heading} />
 
       <div className={styles.buttonGrid}>
         {/* Column headers */}
