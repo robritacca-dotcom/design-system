@@ -17,7 +17,7 @@ const navLinks = [
 ];
 
 const sidebarLinks = [
-  { href: "/components", label: "About" },
+  { href: "/components", label: "Contents" },
   { href: "/components/button", label: "Button", active: true },
   { href: "/components/button-group", label: "Button group" },
   { href: "/components/card", label: "Card" },
