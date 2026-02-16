@@ -15,9 +15,6 @@ const navLinks = [
 export default function HomePage() {
   return (
     <>
-      <a href="#main-content" className="skip-link">
-        Skip to main content
-      </a>
 
       <BlurBackground fullHeight />
 

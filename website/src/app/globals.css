@@ -232,30 +232,6 @@ a {
 }
 
 /* ============================================
-   ACCESSIBILITY
-   ============================================ */
-.skip-link {
-  position: absolute;
-  top: -100px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--color-action-primary-bg);
-  color: var(--color-action-primary-text);
-  padding: var(--primitive-padding-sm) var(--primitive-padding-lg);
-  border-radius: var(--primitive-radius-full);
-  font-weight: 600;
-  text-decoration: none;
-  z-index: 10000;
-  transition: top 0.3s ease;
-}
-
-.skip-link:focus {
-  top: var(--primitive-padding-lg);
-  outline: 2px solid var(--color-action-primary-border);
-  outline-offset: 2px;
-}
-
-/* ============================================
    MATERIAL SYMBOLS - Rounded only
    ============================================ */
 @font-face {
