@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Cards",
+  title: "Card",
   description:
     "Card components for previews, navigation, and token documentation — from content cards to colour swatches and typography specimens.",
 };

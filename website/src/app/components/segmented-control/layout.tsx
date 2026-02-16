@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "SegmentedControl",
+  title: "Segmented Control",
   description:
     "Pill-style toggle between related views with keyboard navigation and icon support.",
 };

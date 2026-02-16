@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Section title",
+  title: "Section Title",
   description:
     "Heading with a divider line and optional trailing content for organising page sections.",
 };

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Semantic Spacing",
+  title: "Spatial System",
   description:
     "Spacing tokens for padding, gap, radius, and border — consistent spatial relationships across all components.",
 };
