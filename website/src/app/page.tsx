@@ -53,13 +53,14 @@ export default function HomePage() {
               The codified design system for all of my upcoming personal projects
             </p>
           </div>
+          <div className={styles.homeDivider} />
           <div className={styles.homeLinks}>
             <Button
               label="Figma"
               priority="secondary"
               iconLeft={<FigmaIcon />}
               iconRight="open_in_new"
-              href="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26?node-id=113-4830&t=cGHLTnH8IF8dvxNO-1"
+              href="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26?node-id=113-7533"
               target="_blank"
               rel="noopener noreferrer"
             />
