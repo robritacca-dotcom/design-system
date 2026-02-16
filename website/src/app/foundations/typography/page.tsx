@@ -270,9 +270,7 @@ export default function TypographyPage() {
               key={section.title}
               className={`${styles.typeSection}${idx < 2 ? " animate-in animate-delay-2" : ""}`}
             >
-              <div className={styles.typeSectionTitle}>
-                <h2>{section.title}</h2>
-              </div>
+              <SectionTitle title={section.title} />
 
               <div className={styles.typeStyles}>
                 {section.styles.map((t) => (

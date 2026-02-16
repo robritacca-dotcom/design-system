@@ -1,5 +1,5 @@
 /* ============================================
-   RADIO BUTTON PAGE LAYOUT
+   SECTION TITLE PAGE LAYOUT
    ============================================ */
 .dsLayout {
   display: flex;
@@ -17,6 +17,9 @@
   min-width: 0;
 }
 
+/* ============================================
+   PAGE TITLE - Display 2
+   ============================================ */
 .pageHeader {
   display: flex;
   align-items: baseline;
@@ -33,6 +36,7 @@
   color: var(--color-text-primary);
 }
 
+/* Sub Display */
 .subDisplay {
   font-family: var(--font-sub-display-family);
   font-size: var(--font-sub-display-size);
@@ -59,6 +63,9 @@
   color: var(--color-text-primary);
 }
 
+/* ============================================
+   SECTION
+   ============================================ */
 .section {
   display: flex;
   flex-direction: column;
@@ -66,57 +73,32 @@
   width: 100%;
 }
 
-
-
-.stateGrid {
-  display: grid;
-  grid-template-columns: auto 1fr 1fr;
-  gap: var(--primitive-gap-md) var(--primitive-gap-md);
-  align-items: center;
+/* ============================================
+   VARIANT STACK — vertical list of examples
+   ============================================ */
+.variantStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-xl);
   width: 100%;
 }
 
-.gridCorner { }
-
-.gridColHeader {
-  text-align: center;
-  font-size: var(--font-paragraph-sm-size);
-  font-weight: var(--font-paragraph-sm-weight);
-  line-height: var(--font-paragraph-sm-line-height);
-  letter-spacing: var(--font-paragraph-sm-letter-spacing);
-  color: var(--color-text-tertiary);
-}
-
-.gridRowHeader {
-  font-size: var(--font-paragraph-sm-size);
-  font-weight: var(--font-paragraph-sm-weight);
-  line-height: var(--font-paragraph-sm-line-height);
-  letter-spacing: var(--font-paragraph-sm-letter-spacing);
-  color: var(--color-text-tertiary);
-  text-align: right;
-  padding-right: var(--primitive-padding-sm);
-  white-space: nowrap;
-}
-
-.gridCell {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.variantRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--primitive-gap-xl);
-  align-items: flex-start;
-}
-
-.variantItem {
-  flex-shrink: 0;
-}
-
+/* ============================================
+   RESPONSIVE
+   ============================================ */
 @media (max-width: 959px) {
-  .dsLayout { padding-left: 0; min-width: 0; }
-  .dsContent { max-width: 100%; min-width: 0; }
-  .subDisplay { font-size: 24px; line-height: 36px; }
+  .dsLayout {
+    padding-left: 0;
+    min-width: 0;
+  }
+
+  .dsContent {
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .subDisplay {
+    font-size: 24px;
+    line-height: 36px;
+  }
 }

@@ -27,6 +27,9 @@
   --color-bg-container-inverse: #F1F1F1;
   --color-bg-container-border: #232323;
 
+  /* Divider */
+  --color-divider: var(--primitive-neutral-08-semi);
+
   /* Action - Primary */
   --color-action-primary-bg: #118AB2;
   --color-action-primary-bg-hover: #0E6E8F;

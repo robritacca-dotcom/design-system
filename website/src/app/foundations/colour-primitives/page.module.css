@@ -103,19 +103,6 @@
   width: 100%;
 }
 
-.colourGroupTitle {
-  border-bottom: 1px solid var(--color-bg-container-border);
-  padding-bottom: var(--primitive-padding-xl);
-}
-
-.colourGroupTitle h2 {
-  font-size: var(--font-heading-2-size);
-  font-weight: var(--font-heading-2-weight);
-  line-height: var(--font-heading-2-line-height);
-  letter-spacing: var(--font-heading-2-letter-spacing);
-  color: var(--color-text-secondary);
-}
-
 /* ============================================
    SWATCH GRID
    ============================================ */

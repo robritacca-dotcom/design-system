@@ -6,6 +6,7 @@ import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
 import { Dropdown } from "@design-system/components/Dropdown/Dropdown";
+import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
 import { getNavLinks, getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
@@ -49,9 +50,7 @@ export default function DropdownPage() {
 
           {/* Default */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Default</h2>
-            </div>
+            <SectionTitle title="Default" />
             <div className={styles.variantRow}>
               <div className={styles.variantItem}>
                 <Dropdown label="Placeholder" placeholder="Select a colour" options={colourOptions} onChange={() => {}} />
@@ -67,9 +66,7 @@ export default function DropdownPage() {
 
           {/* Compact */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Compact</h2>
-            </div>
+            <SectionTitle title="Compact" />
             <div className={styles.variantRow}>
               <div className={styles.variantItem}>
                 <Dropdown label="Placeholder" placeholder="Select a colour" size="compact" options={colourOptions} onChange={() => {}} />
@@ -85,9 +82,7 @@ export default function DropdownPage() {
 
           {/* States */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>States</h2>
-            </div>
+            <SectionTitle title="States" />
             <div className={styles.variantRow}>
               <div className={styles.variantItem}>
                 <Dropdown label="Helper text" placeholder="Choose..." helperText="This sets the primary colour" options={colourOptions} onChange={() => {}} />

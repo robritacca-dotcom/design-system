@@ -13,6 +13,7 @@ import { CircularButton } from "@design-system/components/CircularButton/Circula
 import { Dropdown } from "@design-system/components/Dropdown/Dropdown";
 import { Input } from "@design-system/components/Input/Input";
 import { RadioButton } from "@design-system/components/RadioButton/RadioButton";
+import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
 import { SegmentedControl } from "@design-system/components/SegmentedControl/SegmentedControl";
 import { Tabs } from "@design-system/components/Tabs/Tabs";
 import { Textarea } from "@design-system/components/Textarea/Textarea";
@@ -164,6 +165,14 @@ export default function ComponentsPage() {
               <div className={styles.previewColumn} style={{ gap: "16px" }}>
                 <RadioButton label="Option A" checked={true} onChange={() => {}} />
                 <RadioButton label="Option B" checked={false} onChange={() => {}} />
+              </div>
+            </TocCard>
+
+            {/* Section title */}
+            <TocCard href="/components/section-title" title="Section title">
+              <div className={styles.sectionTitlePreview}>
+                <span className={styles.sectionTitlePreviewText}>Section</span>
+                <div className={styles.sectionTitlePreviewDivider} />
               </div>
             </TocCard>
 

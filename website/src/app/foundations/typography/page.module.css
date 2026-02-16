@@ -72,19 +72,6 @@
   width: 100%;
 }
 
-.typeSectionTitle {
-  border-bottom: 1px solid var(--color-bg-container-border);
-  padding-bottom: var(--primitive-padding-xl);
-}
-
-.typeSectionTitle h2 {
-  font-size: var(--font-heading-2-size);
-  font-weight: var(--font-heading-2-weight);
-  line-height: var(--font-heading-2-line-height);
-  letter-spacing: var(--font-heading-2-letter-spacing);
-  color: var(--color-text-secondary);
-}
-
 /* ============================================
    TYPE STYLES — Stack of cards
    ============================================ */

@@ -190,10 +190,7 @@ export default function LogosPage() {
               key={category.title}
               className={`${styles.logoSection}${idx < 2 ? " animate-in animate-delay-2" : ""}`}
             >
-              <div className={styles.logoSectionTitle}>
-                <h2>{category.title}</h2>
-                <span className={styles.logoCount}>{category.logos.length}</span>
-              </div>
+              <SectionTitle title={category.title} trailing={category.logos.length} />
 
               <div className={styles.logoGrid}>
                 {category.logos.map((logo) => (

@@ -7,6 +7,7 @@ import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
 import { ButtonGroup } from "@design-system/components/ButtonGroup/ButtonGroup";
 import type { ButtonProps } from "@design-system/components/Button/Button";
+import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
 import { getNavLinks, getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
@@ -88,9 +89,7 @@ export default function ButtonGroupPage() {
 
           {/* Horizontal */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Horizontal</h2>
-            </div>
+            <SectionTitle title="Horizontal" />
             <div className={styles.showcase}>
               <span className={styles.showcaseLabel}>Default</span>
               <div className={styles.previewBox}>
@@ -111,9 +110,7 @@ export default function ButtonGroupPage() {
 
           {/* Vertical */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Vertical</h2>
-            </div>
+            <SectionTitle title="Vertical" />
             <div className={styles.showcase}>
               <span className={styles.showcaseLabel}>Default</span>
               <div className={styles.previewBox}>

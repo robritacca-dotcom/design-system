@@ -5,8 +5,8 @@ import Header from "../../../components/Header/Header";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
-import { Popover } from "@design-system/components/Popover/Popover";
-import { Button } from "@design-system/components/Button/Button";
+nullimport { Button } from "@design-system/components/Button/Button";
+import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
 import { getNavLinks, getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
@@ -42,9 +42,7 @@ export default function PopoverPage() {
 
           {/* Click trigger */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Click trigger</h2>
-            </div>
+            <SectionTitle title="Click trigger" />
             <div className={styles.variantRow}>
               <Popover
                 trigger="click"
@@ -63,9 +61,7 @@ export default function PopoverPage() {
 
           {/* Hover trigger */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Hover trigger</h2>
-            </div>
+            <SectionTitle title="Hover trigger" />
             <div className={styles.variantRow}>
               <Popover
                 trigger="hover"
@@ -79,9 +75,7 @@ export default function PopoverPage() {
 
           {/* Positions */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Positions</h2>
-            </div>
+            <SectionTitle title="Positions" />
             <div className={styles.variantRow} style={{ gap: "80px", padding: "60px 0" }}>
               <Popover trigger="click" position="bottom" open content={<p style={{ margin: 0 }}>Bottom</p>}>
                 <Button label="Bottom" priority="secondary" size="compact" />
@@ -97,9 +91,7 @@ export default function PopoverPage() {
 
           {/* Compact */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Compact</h2>
-            </div>
+            <SectionTitle title="Compact" />
             <div className={styles.variantRow}>
               <Popover
                 trigger="click"

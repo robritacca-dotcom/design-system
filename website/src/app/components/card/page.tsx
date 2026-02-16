@@ -12,6 +12,7 @@ import { TypographySwatch } from "@design-system/components/TypographySwatch/Typ
 import { SpacingSwatch } from "@design-system/components/SpacingSwatch/SpacingSwatch";
 import { Button } from "@design-system/components/Button/Button";
 import { ToggleSwitch } from "@design-system/components/ToggleSwitch/ToggleSwitch";
+import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
 import { getNavLinks, getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
@@ -57,9 +58,7 @@ export default function CardPage() {
               CARD — base preview / navigation card
               ---------------------------------------- */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Card</h2>
-            </div>
+            <SectionTitle title="Card" />
             <div className={styles.cardRow}>
               <Card title="Button">
                 <Button
@@ -85,9 +84,7 @@ export default function CardPage() {
               ENTITY CARD — compact icon / logo card
               ---------------------------------------- */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Entity card</h2>
-            </div>
+            <SectionTitle title="Entity card" />
             <div className={styles.entityRow}>
               <EntityCard label="home" icon="home" />
               <EntityCard label="settings" icon="settings" />
@@ -102,9 +99,7 @@ export default function CardPage() {
               COLOUR SWATCH — colour token card
               ---------------------------------------- */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Colour swatch</h2>
-            </div>
+            <SectionTitle title="Colour swatch" />
             <div className={styles.swatchRow}>
               <ColourSwatch
                 label="Primary"
@@ -128,9 +123,7 @@ export default function CardPage() {
               TYPOGRAPHY SWATCH — type specimen card
               ---------------------------------------- */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Typography swatch</h2>
-            </div>
+            <SectionTitle title="Typography swatch" />
             <div className={styles.typographyColumn}>
               <TypographySwatch
                 name="Heading 1"
@@ -165,9 +158,7 @@ export default function CardPage() {
               SPACING SWATCH — spatial token card
               ---------------------------------------- */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Spacing swatch</h2>
-            </div>
+            <SectionTitle title="Spacing swatch" />
             <div className={styles.spacingRow}>
               <SpacingSwatch label="SM" value="8px" px={8} variant="gap" />
               <SpacingSwatch label="MD" value="12px" px={12} variant="radius" />
