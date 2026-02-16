@@ -9,6 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/about/me",
     "/components",
     "/components/alert",
+    "/components/badge",
     "/components/button",
     "/components/button-group",
     "/components/card",
