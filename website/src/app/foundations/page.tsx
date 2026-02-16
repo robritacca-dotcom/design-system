@@ -20,7 +20,7 @@ const sidebarLinks = [
   { href: "/foundations", label: "Contents", active: true },
   { href: "/foundations/icons", label: "Icons" },
   { href: "/foundations/logos", label: "Logos" },
-  { href: "/foundations/colour-primitives", label: "Primative colours" },
+  { href: "/foundations/colour-primitives", label: "Primitive colours" },
   { href: "/foundations/colour-mode", label: "Semantic colours" },
   { href: "/foundations/spatial", label: "Semantic spacing" },
   { href: "/foundations/typography", label: "Typography" },
@@ -81,8 +81,8 @@ export default function FoundationsPage() {
               </div>
             </TocCard>
 
-            {/* Primative Colours */}
-            <TocCard href="/foundations/colour-primitives" title="Primative colours">
+            {/* Primitive Colours */}
+            <TocCard href="/foundations/colour-primitives" title="Primitive colours">
               <div className={styles.colourWheel} />
             </TocCard>
 

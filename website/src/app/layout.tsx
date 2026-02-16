@@ -10,9 +10,27 @@ const nunitoSans = Nunito_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "robr0 Design System | Robert Ritacca",
+  title: {
+    default: "robr0 Design System | Robert Ritacca",
+    template: "%s | robr0 DS",
+  },
   description:
     "A token-based design system with primitive colours, semantic tokens, typography, spacing, and reusable components.",
+  metadataBase: new URL("https://robr0-ds.vercel.app"),
+  openGraph: {
+    title: "robr0 Design System",
+    description:
+      "A token-based design system with primitive colours, semantic tokens, typography, spacing, and reusable components.",
+    siteName: "robr0 DS",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "robr0 Design System",
+    description:
+      "A token-based design system with primitive colours, semantic tokens, typography, spacing, and reusable components.",
+  },
 };
 
 const themeScript = `
@@ -37,6 +55,19 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="dark" suppressHydrationWarning>
       <head>
+        <link
+          rel="preconnect"
+          href="https://fonts.googleapis.com"
+        />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block"
+          rel="stylesheet"
+        />
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className={nunitoSans.variable}>{children}</body>
