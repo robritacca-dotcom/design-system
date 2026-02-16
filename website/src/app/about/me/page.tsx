@@ -5,25 +5,11 @@ import Header from "../../../components/Header/Header";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
+import { getNavLinks, getSidebarLinks, aboutSidebarLinks } from "@/config/navigation";
 import styles from "../page.module.css";
 
-const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About", active: true },
-  { href: "/components", label: "Components" },
-  { href: "/foundations", label: "Foundations" },
-];
-
-const sidebarLinks = [
-  { href: "/about", label: "About robr0 DS" },
-  { href: "/about/me", label: "About me", active: true },
-];
-
-const subnavLinks = sidebarLinks.map((l) => ({
-  href: l.href,
-  label: l.label,
-  active: l.active,
-}));
+const navLinks = getNavLinks("About");
+const { sidebarLinks, subnavLinks } = getSidebarLinks(aboutSidebarLinks, "/about/me");
 
 export default function AboutMePage() {
   return (

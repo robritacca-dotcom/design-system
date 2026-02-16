@@ -4,14 +4,10 @@ import Header from "../components/Header/Header";
 import BlurBackground from "../components/BlurBackground/BlurBackground";
 import Footer from "../components/Footer/Footer";
 import { Button } from "@design-system/components/Button/Button";
+import { getNavLinks } from "@/config/navigation";
 import styles from "./not-found.module.css";
 
-const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/components", label: "Components" },
-  { href: "/foundations", label: "Foundations" },
-];
+const navLinks = getNavLinks("");
 
 export default function NotFound() {
   return (

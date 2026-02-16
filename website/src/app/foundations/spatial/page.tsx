@@ -7,30 +7,11 @@ import Footer from "../../../components/Footer/Footer";
 import { SpacingSwatch } from "@design-system/components/SpacingSwatch/SpacingSwatch";
 import type { SpacingSwatchVariant } from "@design-system/components/SpacingSwatch/SpacingSwatch";
 import PageLinks from "../../../components/PageLinks/PageLinks";
+import { getNavLinks, getSidebarLinks, foundationsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
-const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/components", label: "Components" },
-  { href: "/foundations", label: "Foundations", active: true },
-];
-
-const sidebarLinks = [
-  { href: "/foundations", label: "Contents" },
-  { href: "/foundations/icons", label: "Icons" },
-  { href: "/foundations/logos", label: "Logos" },
-  { href: "/foundations/colour-primitives", label: "Primitive colours" },
-  { href: "/foundations/colour-mode", label: "Semantic colours" },
-  { href: "/foundations/spatial", label: "Semantic spacing", active: true },
-  { href: "/foundations/typography", label: "Typography" },
-];
-
-const subnavLinks = sidebarLinks.map((l) => ({
-  href: l.href,
-  label: l.label,
-  active: l.active,
-}));
+const navLinks = getNavLinks("Foundations");
+const { sidebarLinks, subnavLinks } = getSidebarLinks(foundationsSidebarLinks, "/foundations/spatial");
 
 /* ============================================
    SPACING DATA

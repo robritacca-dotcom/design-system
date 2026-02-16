@@ -1,0 +1,90 @@
+/* ============================================
+   SHARED NAVIGATION CONFIG
+   Single source of truth for all nav, sidebar,
+   and subnav links across the site.
+   ============================================ */
+
+export interface NavLink {
+  href: string;
+  label: string;
+  active?: boolean;
+}
+
+/* ============================================
+   TOP NAV — shared across every page
+   ============================================ */
+
+export const navLinks: NavLink[] = [
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
+  { href: "/components", label: "Components" },
+  { href: "/foundations", label: "Foundations" },
+];
+
+/* ============================================
+   SECTION SIDEBAR LINKS
+   ============================================ */
+
+export const componentsSidebarLinks: NavLink[] = [
+  { href: "/components", label: "Contents" },
+  { href: "/components/button", label: "Button" },
+  { href: "/components/button-group", label: "Button group" },
+  { href: "/components/card", label: "Card" },
+  { href: "/components/checkbox", label: "Checkbox" },
+  { href: "/components/dropdown", label: "Dropdown" },
+  { href: "/components/input", label: "Input" },
+  { href: "/components/navigation", label: "Navigation" },
+  { href: "/components/radio-button", label: "Radio button" },
+  { href: "/components/tabs", label: "Tabs" },
+  { href: "/components/textarea", label: "Textarea" },
+  { href: "/components/toggle-switch", label: "Toggle switch" },
+];
+
+export const foundationsSidebarLinks: NavLink[] = [
+  { href: "/foundations", label: "Contents" },
+  { href: "/foundations/icons", label: "Icons" },
+  { href: "/foundations/logos", label: "Logos" },
+  { href: "/foundations/colour-primitives", label: "Primitive colours" },
+  { href: "/foundations/colour-mode", label: "Semantic colours" },
+  { href: "/foundations/spatial", label: "Semantic spacing" },
+  { href: "/foundations/typography", label: "Typography" },
+];
+
+export const aboutSidebarLinks: NavLink[] = [
+  { href: "/about", label: "About robr0 DS" },
+  { href: "/about/me", label: "About me" },
+];
+
+/* ============================================
+   HELPERS
+   ============================================ */
+
+/**
+ * Returns navLinks with the correct section marked active.
+ * @param section — "Home" | "About" | "Components" | "Foundations"
+ */
+export function getNavLinks(section: string): NavLink[] {
+  return navLinks.map((link) => ({
+    ...link,
+    active: link.label === section ? true : undefined,
+  }));
+}
+
+/**
+ * Returns sidebar links with the matching href marked active,
+ * plus derives subnavLinks for the Header component.
+ */
+export function getSidebarLinks(links: NavLink[], activeHref: string) {
+  const sidebarLinks = links.map((link) => ({
+    ...link,
+    active: link.href === activeHref ? true : undefined,
+  }));
+
+  const subnavLinks = sidebarLinks.map((l) => ({
+    href: l.href,
+    label: l.label,
+    active: l.active,
+  }));
+
+  return { sidebarLinks, subnavLinks };
+}

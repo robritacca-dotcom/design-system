@@ -4,14 +4,10 @@ import Header from "../components/Header/Header";
 import BlurBackground from "../components/BlurBackground/BlurBackground";
 import Footer from "../components/Footer/Footer";
 import { Button } from "@design-system/components/Button/Button";
+import { getNavLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
-const navLinks = [
-  { href: "/", label: "Home", active: true },
-  { href: "/about", label: "About" },
-  { href: "/components", label: "Components" },
-  { href: "/foundations", label: "Foundations" },
-];
+const navLinks = getNavLinks("Home");
 
 const FigmaIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
