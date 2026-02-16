@@ -97,15 +97,15 @@ export default function NavigationPage() {
             Core navigation components that define top level and secondary menus, designed to adapt across desktop breakpoints and mobile layouts.
           </p>
 
-          {/* Top level section */}
-          <section className={`${styles.section} animate-in animate-delay-2`}>
+          {/* Desktop Nav */}
+          <section className={styles.section}>
             <div className={styles.sectionTitle}>
-              <h2>Top level</h2>
+              <h2>Desktop</h2>
             </div>
-
             <div className={styles.showcase}>
-              {/* Desktop Nav */}
-              <span className={styles.showcaseLabel}>Desktop</span>
+              <span className={styles.showcaseLabel}>
+                Full-width top navigation with brand, links, and trailing content
+              </span>
               <div className={styles.navPreview}>
                 <Nav
                   brandText="robr0"
@@ -122,9 +122,18 @@ export default function NavigationPage() {
                   }
                 />
               </div>
+            </div>
+          </section>
 
-              {/* Mobile Nav Bar */}
-              <span className={styles.showcaseLabel}>Mobile</span>
+          {/* Mobile Nav Bar */}
+          <section className={styles.section}>
+            <div className={styles.sectionTitle}>
+              <h2>Mobile bar</h2>
+            </div>
+            <div className={styles.showcase}>
+              <span className={styles.showcaseLabel}>
+                Collapsed navigation bar with brand and hamburger trigger
+              </span>
               <div className={styles.mobileNavPreview}>
                 <div className={styles.mobileNavInner}>
                   <div className={styles.mobileNavBrand}>
@@ -138,9 +147,18 @@ export default function NavigationPage() {
                   </div>
                 </div>
               </div>
+            </div>
+          </section>
 
-              {/* Hamburger Menu */}
-              <span className={styles.showcaseLabel}>Hamburger menu</span>
+          {/* Hamburger Menu */}
+          <section className={styles.section}>
+            <div className={styles.sectionTitle}>
+              <h2>Hamburger menu</h2>
+            </div>
+            <div className={styles.showcase}>
+              <span className={styles.showcaseLabel}>
+                Slide-out drawer with top-level links, nested subnav, and theme toggle
+              </span>
               <div className={styles.hamburgerPreview}>
                 <div className={styles.hamburgerOverlay}>
                   <div className={styles.hamburgerMenu}>
