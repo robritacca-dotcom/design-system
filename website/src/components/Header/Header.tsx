@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { ButtonGroup } from "@design-system/components/ButtonGroup/ButtonGroup";
 import type { ButtonProps } from "@design-system/components/Button/Button";
@@ -103,7 +102,7 @@ export default function Header({ navLinks, subnavLinks }: HeaderProps) {
       >
         <div className={styles.navContainer}>
           <Link href="/" className={styles.navLogo}>
-            <Image
+            <img
               src="/rr.svg"
               alt="robr0"
               width={24}
@@ -129,7 +128,7 @@ export default function Header({ navLinks, subnavLinks }: HeaderProps) {
       <nav ref={navRef} className={styles.nav}>
         <div className={styles.navContainer}>
           <Link href="/" className={styles.navLogo}>
-            <Image
+            <img
               src="/rr.svg"
               alt="robr0"
               width={24}
