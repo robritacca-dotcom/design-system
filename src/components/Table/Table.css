@@ -1,0 +1,128 @@
+/* ============================================
+   TABLE COMPONENT
+   Data table with flexible cell content
+   ============================================ */
+
+.ds-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+
+  /* Typography */
+  font-family: var(--font-paragraph-family);
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  letter-spacing: var(--font-paragraph-letter-spacing);
+  color: var(--color-text-primary);
+}
+
+/* ============================================
+   CAPTION
+   ============================================ */
+
+.ds-table__caption {
+  font-family: var(--font-paragraph-em-family);
+  font-size: var(--font-paragraph-em-size);
+  font-weight: var(--font-paragraph-em-weight);
+  line-height: var(--font-paragraph-em-line-height);
+  letter-spacing: var(--font-paragraph-em-letter-spacing);
+  color: var(--color-text-secondary);
+  text-align: left;
+  caption-side: top;
+  padding-bottom: var(--padding-sm); /* 8px */
+}
+
+.ds-table__caption--hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ============================================
+   ROW
+   ============================================ */
+
+.ds-table__row {
+  border-bottom: var(--border-xs) solid var(--color-bg-container-border);
+  transition: background-color 0.15s ease;
+}
+
+/* ============================================
+   HEADER CELL
+   ============================================ */
+
+.ds-table__header-cell {
+  padding: var(--padding-sm) var(--padding-md); /* 8px 16px */
+
+  /* paragraph-em (500 weight / label style) */
+  font-family: var(--font-paragraph-em-family);
+  font-size: var(--font-paragraph-em-size);
+  font-weight: var(--font-paragraph-em-weight);
+  line-height: var(--font-paragraph-em-line-height);
+  letter-spacing: var(--font-paragraph-em-letter-spacing);
+  color: var(--color-text-secondary);
+  text-align: left;
+}
+
+/* ============================================
+   DATA CELL
+   ============================================ */
+
+.ds-table__cell {
+  padding: var(--padding-sm) var(--padding-md); /* 8px 16px */
+  vertical-align: middle;
+  color: var(--color-text-primary);
+}
+
+/* ============================================
+   ROW HOVER (body rows only)
+   ============================================ */
+
+.ds-table__body .ds-table__row:hover {
+  background-color: var(--color-bg-container-primary-semi);
+}
+
+/* ============================================
+   STRIPED ROWS
+   ============================================ */
+
+.ds-table--striped .ds-table__body .ds-table__row:nth-child(even) {
+  background-color: var(--color-bg-container-primary-semi);
+}
+
+.ds-table--striped .ds-table__body .ds-table__row:nth-child(even):hover {
+  background-color: var(--color-action-passive-bg-hover);
+}
+
+/* ============================================
+   SIZE — DEFAULT (base styles apply)
+   ============================================ */
+
+.ds-table--default {
+  /* Base padding & typography inherited from .ds-table */
+}
+
+/* ============================================
+   SIZE — COMPACT
+   ============================================ */
+
+.ds-table--compact .ds-table__header-cell {
+  padding: var(--padding-xs) var(--radius-md); /* 4px 12px */
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+}
+
+.ds-table--compact .ds-table__cell {
+  padding: var(--padding-xs) var(--radius-md); /* 4px 12px */
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+}
