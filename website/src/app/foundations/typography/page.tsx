@@ -196,6 +196,20 @@ const bodyStyles: TypeStyleData[] = [
       letterSpacing: "var(--font-paragraph-letter-spacing)",
     },
   },
+  {
+    name: "Paragraph SM",
+    weight: "Regular",
+    size: "14",
+    lineHeight: "20px",
+    letterSpacing: "0",
+    previewStyle: {
+      fontFamily: "var(--font-paragraph-sm-family)",
+      fontSize: "var(--font-paragraph-sm-size)",
+      fontWeight: "var(--font-paragraph-sm-weight)" as unknown as number,
+      lineHeight: "var(--font-paragraph-sm-line-height)",
+      letterSpacing: "var(--font-paragraph-sm-letter-spacing)",
+    },
+  },
 ];
 
 const typeSections = [

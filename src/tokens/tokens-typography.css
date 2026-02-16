@@ -92,4 +92,11 @@
   --font-paragraph-weight: 400;
   --font-paragraph-line-height: 24px;
   --font-paragraph-letter-spacing: 0;
+
+  /* Paragraph SM */
+  --font-paragraph-sm-family: var(--font-family-primary);
+  --font-paragraph-sm-size: 14px;
+  --font-paragraph-sm-weight: 400;
+  --font-paragraph-sm-line-height: 20px;
+  --font-paragraph-sm-letter-spacing: 0;
 }

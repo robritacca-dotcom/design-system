@@ -57,10 +57,11 @@
    ============================================ */
 
 .ds-entity-card__label {
-  font-family: var(--font-paragraph-family);
-  font-size: 13px;
-  font-weight: var(--font-title-body-weight);
-  line-height: var(--font-paragraph-line-height);
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
   color: var(--color-text-primary);
   text-align: center;
   word-break: break-word;
