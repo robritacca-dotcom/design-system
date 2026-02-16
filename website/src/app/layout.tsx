@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "@design-system/tokens/tokens.css";
 import { Nunito_Sans } from "next/font/google";
 import "./globals.css";
+
+const GA_ID = "G-RCSFYMD51K";
 
 const nunitoSans = Nunito_Sans({
   subsets: ["latin"],
@@ -86,6 +89,18 @@ export default function RootLayout({
           rel="stylesheet"
         />
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_ID}');
+          `}
+        </Script>
       </head>
       <body className={nunitoSans.variable}>{children}</body>
     </html>
