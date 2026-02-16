@@ -77,7 +77,7 @@
 .ds-date-picker__grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: var(--gap-xs); /* 2px */
+  gap: var(--gap-xxs); /* 2px */
 }
 
 /* ============================================
@@ -164,7 +164,7 @@
 
 .ds-date-picker--compact {
   padding: var(--padding-sm); /* 8px */
-  gap: var(--gap-xs); /* 2px */
+  gap: var(--gap-xxs); /* 2px */
 }
 
 .ds-date-picker--compact .ds-date-picker__month-year {

@@ -323,6 +323,7 @@ export const Primitives: Story = {
         <SpacingToken name="XS" value="--primitive-padding-xs" />
         <SpacingToken name="SM2" value="--primitive-padding-sm2" />
         <SpacingToken name="SM" value="--primitive-padding-sm" />
+        <SpacingToken name="SM-MD" value="--primitive-padding-sm-md" />
         <SpacingToken name="MD" value="--primitive-padding-md" />
         <SpacingToken name="LG" value="--primitive-padding-lg" />
         <SpacingToken name="XL" value="--primitive-padding-xl" />
@@ -335,8 +336,10 @@ export const Primitives: Story = {
       </TokenSection>
 
       <TokenSection title="Gap">
+        <SpacingToken name="XXS" value="--primitive-gap-xxs" />
         <SpacingToken name="XS" value="--primitive-gap-xs" />
         <SpacingToken name="SM" value="--primitive-gap-sm" />
+        <SpacingToken name="SM-MD" value="--primitive-gap-sm-md" />
         <SpacingToken name="MD" value="--primitive-gap-md" />
         <SpacingToken name="LG" value="--primitive-gap-lg" />
         <SpacingToken name="XL" value="--primitive-gap-xl" />
@@ -565,6 +568,7 @@ export const SemanticSpacing: Story = {
         <SpacingToken name="XXS" value="--padding-xxs" />
         <SpacingToken name="XS" value="--padding-xs" />
         <SpacingToken name="SM" value="--padding-sm" />
+        <SpacingToken name="SM-MD" value="--padding-sm-md" />
         <SpacingToken name="MD" value="--padding-md" />
         <SpacingToken name="LG" value="--padding-lg" />
         <SpacingToken name="XL" value="--padding-xl" />
@@ -576,8 +580,10 @@ export const SemanticSpacing: Story = {
       </TokenSection>
 
       <TokenSection title="Gap">
+        <SpacingToken name="XXS" value="--gap-xxs" />
         <SpacingToken name="XS" value="--gap-xs" />
         <SpacingToken name="SM" value="--gap-sm" />
+        <SpacingToken name="SM-MD" value="--gap-sm-md" />
         <SpacingToken name="MD" value="--gap-md" />
         <SpacingToken name="LG" value="--gap-lg" />
         <SpacingToken name="XL" value="--gap-xl" />
