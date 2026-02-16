@@ -34,10 +34,10 @@ export default function AlertPage() {
             Contextual feedback with status variants, optional dismiss button, and compact sizing for inline notifications.
           </p>
 
-          {/* Variants */}
+          {/* Default */}
           <section className={styles.section}>
             <div className={styles.sectionTitle}>
-              <h2>Variants</h2>
+              <h2>Default</h2>
             </div>
             <div className={styles.variantStack}>
               <Alert variant="info" title="Information" description="This is an informational message with helpful context." />
@@ -48,28 +48,6 @@ export default function AlertPage() {
             </div>
           </section>
 
-          {/* Dismissible */}
-          <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Dismissible</h2>
-            </div>
-            <div className={styles.variantStack}>
-              <Alert variant="info" title="Dismissible alert" description="Click the close button to dismiss." dismissible onDismiss={() => {}} />
-              <Alert variant="error" title="Error" description="Something went wrong." dismissible onDismiss={() => {}} />
-            </div>
-          </section>
-
-          {/* Title only / Description only */}
-          <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Content variations</h2>
-            </div>
-            <div className={styles.variantStack}>
-              <Alert variant="positive" title="Changes saved" />
-              <Alert variant="warning" description="Your session will expire in 5 minutes." />
-            </div>
-          </section>
-
           {/* Compact */}
           <section className={styles.section}>
             <div className={styles.sectionTitle}>
@@ -77,8 +55,23 @@ export default function AlertPage() {
             </div>
             <div className={styles.variantStack}>
               <Alert variant="info" size="compact" title="Information" description="Compact informational message." />
-              <Alert variant="positive" size="compact" title="Saved" />
-              <Alert variant="error" size="compact" title="Error" description="Something went wrong." dismissible onDismiss={() => {}} />
+              <Alert variant="positive" size="compact" title="Success" description="Your changes have been saved." />
+              <Alert variant="warning" size="compact" title="Warning" description="This action may have consequences." />
+              <Alert variant="error" size="compact" title="Error" description="Something went wrong." />
+              <Alert variant="neutral" size="compact" title="Note" description="General purpose notification." />
+            </div>
+          </section>
+
+          {/* States */}
+          <section className={styles.section}>
+            <div className={styles.sectionTitle}>
+              <h2>States</h2>
+            </div>
+            <div className={styles.variantStack}>
+              <Alert variant="info" title="Dismissible" description="Click the close button to dismiss this alert." dismissible onDismiss={() => {}} />
+              <Alert variant="positive" title="Title only" />
+              <Alert variant="warning" description="Description only — your session will expire in 5 minutes." />
+              <Alert variant="error" title="Dismissible compact" description="Something went wrong." size="compact" dismissible onDismiss={() => {}} />
             </div>
           </section>
         </main>

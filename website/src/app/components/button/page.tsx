@@ -114,7 +114,7 @@ export default function ButtonPage() {
         <main className={styles.dsContent} id="main-content">
           {/* Page Title */}
           <div className={`${styles.pageHeader} animate-in`}>
-            <h1 className={styles.pageTitle}>Buttons</h1>
+            <h1 className={styles.pageTitle}>Button</h1>
             <PageLinks
               figmaUrl="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26"
               storybookPath="/?path=/docs/components-button--docs"

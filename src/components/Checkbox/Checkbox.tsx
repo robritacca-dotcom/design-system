@@ -10,6 +10,8 @@ export interface CheckboxProps {
   indeterminate?: boolean;
   /** Whether the checkbox is disabled */
   disabled?: boolean;
+  /** Component size */
+  size?: 'default' | 'compact';
   /** Callback when toggled */
   onChange?: (checked: boolean) => void;
   /** Additional CSS classes */
@@ -66,6 +68,7 @@ export const Checkbox = ({
   checked = false,
   indeterminate = false,
   disabled = false,
+  size = 'default',
   onChange,
   className = '',
   ariaLabel,
@@ -76,8 +79,9 @@ export const Checkbox = ({
   const checkedClass = checked ? `${baseClass}--checked` : '';
   const indeterminateClass = indeterminate && !checked ? `${baseClass}--indeterminate` : '';
   const disabledClass = disabled ? `${baseClass}--disabled` : '';
+  const sizeClass = size === 'compact' ? `${baseClass}--compact` : '';
 
-  const classes = [baseClass, checkedClass, indeterminateClass, disabledClass, className]
+  const classes = [baseClass, sizeClass, checkedClass, indeterminateClass, disabledClass, className]
     .filter(Boolean)
     .join(' ');
 

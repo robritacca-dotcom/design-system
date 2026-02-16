@@ -28,7 +28,7 @@
 
 .ds-button-group--vertical {
   flex-direction: column;
-  gap: var(--radius-xxs); /* Figma: --radius/xxs (2px) */
+  gap: var(--gap-xxs); /* 2px */
   align-items: flex-start; /* Left-aligned, hug content */
 }
 

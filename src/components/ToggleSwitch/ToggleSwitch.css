@@ -28,7 +28,7 @@
   height: 24px;
   border-radius: 42px;
   background: var(--color-action-primary-bg);
-  transition: background-color 0.3s ease;
+  transition: background-color 0.2s ease;
   flex-shrink: 0;
 }
 
@@ -48,7 +48,7 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  transition: transform 0.3s ease;
+  transition: transform 0.2s ease;
 }
 
 .ds-toggle-switch__thumb-icon {
@@ -81,8 +81,49 @@
   transform: translateX(-18px);
 }
 
-/* Disabled */
+/* ============================================
+   FOCUS
+   ============================================ */
+
+.ds-toggle-switch:focus-visible {
+  outline: 2px solid var(--color-action-primary-bg);
+  outline-offset: 2px;
+}
+
+/* ============================================
+   DISABLED STATE
+   ============================================ */
+
 .ds-toggle-switch--disabled {
   opacity: 0.4;
   cursor: not-allowed;
+}
+
+/* ============================================
+   SIZE — COMPACT
+   ============================================ */
+
+.ds-toggle-switch--compact .ds-toggle-switch__track {
+  width: 34px;
+  height: 20px;
+}
+
+.ds-toggle-switch--compact .ds-toggle-switch__thumb {
+  width: 16px;
+  height: 16px;
+}
+
+.ds-toggle-switch--compact .ds-toggle-switch__thumb-icon {
+  font-size: 12px;
+}
+
+.ds-toggle-switch--compact .ds-toggle-switch__label {
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  min-width: 80px;
+}
+
+.ds-toggle-switch--compact.ds-toggle-switch--off .ds-toggle-switch__thumb {
+  transform: translateX(-14px);
 }

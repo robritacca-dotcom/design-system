@@ -11,6 +11,8 @@ export interface ToggleSwitchProps {
   showLabel?: boolean;
   /** Whether the toggle is disabled */
   disabled?: boolean;
+  /** Component size */
+  size?: 'default' | 'compact';
   /** Callback when toggled */
   onChange?: (checked: boolean) => void;
   /** Additional CSS classes */
@@ -28,6 +30,7 @@ export const ToggleSwitch = ({
   label = 'Toggle',
   showLabel = true,
   disabled = false,
+  size = 'default',
   onChange,
   className = '',
   ariaLabel,
@@ -35,8 +38,9 @@ export const ToggleSwitch = ({
   const baseClass = 'ds-toggle-switch';
   const stateClass = checked ? '' : `${baseClass}--off`;
   const disabledClass = disabled ? `${baseClass}--disabled` : '';
+  const sizeClass = size === 'compact' ? `${baseClass}--compact` : '';
 
-  const classes = [baseClass, stateClass, disabledClass, className].filter(Boolean).join(' ');
+  const classes = [baseClass, sizeClass, stateClass, disabledClass, className].filter(Boolean).join(' ');
 
   const handleClick = () => {
     if (!disabled && onChange) {
