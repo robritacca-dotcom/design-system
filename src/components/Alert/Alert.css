@@ -53,7 +53,7 @@
 }
 
 .ds-alert--compact .ds-alert__dismiss .material-symbols-rounded {
-  font-size: 18px;
+  font-size: 20px;
 }
 
 /* ============================================
@@ -118,7 +118,7 @@
 }
 
 .ds-alert__dismiss .material-symbols-rounded {
-  font-size: 20px;
+  font-size: 24px;
 }
 
 .ds-alert__dismiss:hover {

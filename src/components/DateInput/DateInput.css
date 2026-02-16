@@ -46,9 +46,9 @@
   left: var(--padding-sm); /* 8px */
   top: 50%;
   transform: translateY(-50%);
-  font-size: 20px;
-  width: 20px;
-  height: 20px;
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
   color: var(--color-icon-primary);
   pointer-events: none;
 }
@@ -60,7 +60,7 @@
 .ds-date-input__field {
   width: 100%;
   padding: var(--padding-sm) var(--padding-md); /* 8px 16px */
-  padding-left: calc(var(--padding-sm) + 20px + var(--gap-sm)); /* icon offset */
+  padding-left: calc(var(--padding-sm) + 24px + var(--gap-sm)); /* icon offset */
   border: var(--border-xs) solid var(--color-bg-container-border);
   border-radius: var(--radius-sm); /* 8px */
   background-color: var(--color-bg-container-primary-transparent);
@@ -95,7 +95,7 @@
 
 .ds-date-input--compact .ds-date-input__field {
   padding: var(--padding-xs) var(--radius-md); /* 4px 12px */
-  padding-left: calc(var(--padding-xs) + 20px + var(--gap-sm));
+  padding-left: calc(var(--padding-xs) + 20px + var(--gap-sm)); /* compact icon offset */
   font-size: var(--font-paragraph-sm-size);
   line-height: var(--font-paragraph-sm-line-height);
   letter-spacing: var(--font-paragraph-sm-letter-spacing);
@@ -103,9 +103,9 @@
 
 .ds-date-input--compact .ds-date-input__icon {
   left: var(--padding-xs); /* 4px */
-  font-size: 18px;
-  width: 18px;
-  height: 18px;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
 }
 
 .ds-date-input--compact .ds-date-input__label {
