@@ -1,0 +1,99 @@
+/* ============================================
+   POPOVER COMPONENT
+   Contextual overlay panel
+   ============================================ */
+
+.ds-popover {
+  position: relative;
+  display: inline-flex;
+}
+
+/* ============================================
+   TRIGGER
+   ============================================ */
+
+.ds-popover__trigger {
+  display: inline-flex;
+  cursor: pointer;
+}
+
+/* ============================================
+   PANEL
+   ============================================ */
+
+.ds-popover__panel {
+  position: absolute;
+  z-index: 10;
+  min-width: 200px;
+  padding: var(--padding-md); /* 16px */
+  border: var(--border-xs) solid var(--color-bg-container-border);
+  border-radius: var(--radius-sm); /* 8px */
+  background-color: var(--color-bg-container-primary);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+
+  /* Hidden by default */
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.96);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.ds-popover__panel--open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+/* ============================================
+   POSITION — BOTTOM (default)
+   ============================================ */
+
+.ds-popover__panel--bottom {
+  top: 100%;
+  left: 0;
+  margin-top: var(--gap-xs); /* 2px */
+}
+
+/* ============================================
+   POSITION — TOP
+   ============================================ */
+
+.ds-popover__panel--top {
+  bottom: 100%;
+  left: 0;
+  margin-bottom: var(--gap-xs); /* 2px */
+}
+
+/* ============================================
+   POSITION — LEFT
+   ============================================ */
+
+.ds-popover__panel--left {
+  right: 100%;
+  top: 0;
+  margin-right: var(--gap-xs); /* 2px */
+}
+
+/* ============================================
+   POSITION — RIGHT
+   ============================================ */
+
+.ds-popover__panel--right {
+  left: 100%;
+  top: 0;
+  margin-left: var(--gap-xs); /* 2px */
+}
+
+/* ============================================
+   SIZE — COMPACT
+   ============================================ */
+
+.ds-popover--compact {
+  padding: var(--padding-sm); /* 8px */
+  min-width: 160px;
+}
+
+.ds-popover--compact .ds-popover__panel {
+  padding: var(--padding-sm);
+  min-width: 160px;
+}

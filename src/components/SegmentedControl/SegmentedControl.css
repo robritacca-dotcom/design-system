@@ -1,0 +1,134 @@
+/* ============================================
+   SEGMENTED CONTROL COMPONENT
+   Pill-style toggle between related views
+   ============================================ */
+
+.ds-segmented-control {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-xs); /* 2px */
+  padding: var(--padding-xxs); /* 2px */
+  border-radius: var(--radius-sm); /* 8px */
+  background-color: var(--color-bg-container-primary);
+  border: var(--border-xs) solid var(--color-bg-container-border);
+}
+
+/* ============================================
+   FULL WIDTH
+   ============================================ */
+
+.ds-segmented-control--full-width {
+  width: 100%;
+}
+
+.ds-segmented-control--full-width .ds-segmented-control__segment {
+  flex: 1;
+}
+
+/* ============================================
+   SEGMENT BUTTON
+   ============================================ */
+
+.ds-segmented-control__segment {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-sm); /* 8px */
+  padding: var(--padding-sm) var(--padding-md); /* 8px 16px */
+  border: none;
+  border-radius: var(--radius-xs); /* 4px */
+  background-color: transparent;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+  position: relative;
+}
+
+/* Typography */
+.ds-segmented-control__label {
+  font-family: var(--font-paragraph-family);
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  letter-spacing: var(--font-paragraph-letter-spacing);
+  color: var(--color-text-secondary);
+  transition: color 0.2s ease, font-weight 0.2s ease;
+}
+
+/* Icon */
+.ds-segmented-control__icon {
+  flex-shrink: 0;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  line-height: 1;
+  color: var(--color-icon-secondary);
+  transition: color 0.2s ease;
+}
+
+/* ============================================
+   HOVER STATE
+   ============================================ */
+
+.ds-segmented-control__segment:not(.ds-segmented-control__segment--active):not(.ds-segmented-control__segment--disabled):hover {
+  background-color: var(--color-action-passive-bg-hover);
+}
+
+/* ============================================
+   ACTIVE STATE
+   ============================================ */
+
+.ds-segmented-control__segment--active {
+  background-color: var(--color-action-primary-bg);
+}
+
+.ds-segmented-control__segment--active .ds-segmented-control__label {
+  color: var(--color-action-primary-text);
+  font-weight: var(--font-title-body-weight); /* 600 */
+}
+
+.ds-segmented-control__segment--active .ds-segmented-control__icon {
+  color: var(--color-action-primary-text);
+}
+
+.ds-segmented-control__segment--active:hover {
+  background-color: var(--color-action-primary-bg-hover);
+}
+
+/* ============================================
+   DISABLED STATE
+   ============================================ */
+
+.ds-segmented-control__segment--disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ============================================
+   FOCUS
+   ============================================ */
+
+.ds-segmented-control__segment:focus-visible {
+  outline: 2px solid var(--color-action-primary-bg);
+  outline-offset: 2px;
+}
+
+/* ============================================
+   SIZE — COMPACT
+   ============================================ */
+
+.ds-segmented-control--compact .ds-segmented-control__segment {
+  padding: var(--padding-xs) var(--radius-md); /* 4px 12px */
+}
+
+.ds-segmented-control--compact .ds-segmented-control__label {
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+}
+
+.ds-segmented-control--compact .ds-segmented-control__icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}

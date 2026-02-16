@@ -1,0 +1,112 @@
+"use client";
+
+import React from "react";
+import Header from "../../../components/Header/Header";
+import Sidebar from "../../../components/Sidebar/Sidebar";
+import BlurBackground from "../../../components/BlurBackground/BlurBackground";
+import Footer from "../../../components/Footer/Footer";
+import { CircularButton } from "@design-system/components/CircularButton/CircularButton";
+import PageLinks from "../../../components/PageLinks/PageLinks";
+import { getNavLinks, getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
+import styles from "./page.module.css";
+const navLinks = getNavLinks("Components");
+const { sidebarLinks, subnavLinks } = getSidebarLinks(componentsSidebarLinks, "/components/circular-button");
+
+const states = [
+  { label: "Default", value: "default" },
+  { label: "Hover", value: "hover" },
+  { label: "Active", value: "active" },
+  { label: "Disabled", value: "disabled" },
+] as const;
+
+const icons = ["add", "close", "edit", "delete"];
+
+export default function CircularButtonPage() {
+  return (
+    <>
+      <BlurBackground />
+      <Header navLinks={navLinks} subnavLinks={subnavLinks} />
+
+      <div className={styles.dsLayout}>
+        <Sidebar links={sidebarLinks} />
+
+        <main className={styles.dsContent} id="main-content">
+          <div className={`${styles.pageHeader} animate-in`}>
+            <h1 className={styles.pageTitle}>Circular button</h1>
+            <PageLinks
+              figmaUrl="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26"
+              storybookPath="/?path=/docs/components-circularbutton--docs"
+            />
+          </div>
+
+          <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
+            Round icon button with primary and secondary variants, available in default and compact sizes for icon-only actions.
+          </p>
+
+          {/* Primary states */}
+          <section className={styles.section}>
+            <div className={styles.sectionTitle}>
+              <h2>Primary</h2>
+            </div>
+            <div className={styles.stateGrid}>
+              <div className={styles.gridCorner} />
+              {states.map((s) => (
+                <span key={s.value} className={styles.gridColHeader}>{s.label}</span>
+              ))}
+              {icons.map((icon) => (
+                <React.Fragment key={icon}>
+                  <span className={styles.gridRowHeader}>{icon}</span>
+                  {states.map((s) => (
+                    <div key={s.value} className={styles.gridCell}>
+                      <CircularButton icon={icon} priority="primary" state={s.value} ariaLabel={icon} />
+                    </div>
+                  ))}
+                </React.Fragment>
+              ))}
+            </div>
+          </section>
+
+          {/* Secondary states */}
+          <section className={styles.section}>
+            <div className={styles.sectionTitle}>
+              <h2>Secondary</h2>
+            </div>
+            <div className={styles.stateGrid}>
+              <div className={styles.gridCorner} />
+              {states.map((s) => (
+                <span key={s.value} className={styles.gridColHeader}>{s.label}</span>
+              ))}
+              {icons.map((icon) => (
+                <React.Fragment key={icon}>
+                  <span className={styles.gridRowHeader}>{icon}</span>
+                  {states.map((s) => (
+                    <div key={s.value} className={styles.gridCell}>
+                      <CircularButton icon={icon} priority="secondary" state={s.value} ariaLabel={icon} />
+                    </div>
+                  ))}
+                </React.Fragment>
+              ))}
+            </div>
+          </section>
+
+          {/* Compact */}
+          <section className={styles.section}>
+            <div className={styles.sectionTitle}>
+              <h2>Compact</h2>
+            </div>
+            <div className={styles.variantRow}>
+              <CircularButton icon="add" priority="primary" size="compact" ariaLabel="Add" />
+              <CircularButton icon="close" priority="primary" size="compact" ariaLabel="Close" />
+              <CircularButton icon="edit" priority="secondary" size="compact" ariaLabel="Edit" />
+              <CircularButton icon="more_vert" priority="secondary" size="compact" ariaLabel="More" />
+              <CircularButton icon="search" priority="secondary" size="compact" ariaLabel="Search" />
+              <CircularButton icon="settings" priority="secondary" size="compact" ariaLabel="Settings" />
+            </div>
+          </section>
+        </main>
+      </div>
+
+      <Footer />
+    </>
+  );
+}

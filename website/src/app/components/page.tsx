@@ -6,11 +6,14 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import Footer from "../../components/Footer/Footer";
 import TocCard from "../../components/TocCard/TocCard";
+import { Alert } from "@design-system/components/Alert/Alert";
 import { Button } from "@design-system/components/Button/Button";
 import { Checkbox } from "@design-system/components/Checkbox/Checkbox";
+import { CircularButton } from "@design-system/components/CircularButton/CircularButton";
 import { Dropdown } from "@design-system/components/Dropdown/Dropdown";
 import { Input } from "@design-system/components/Input/Input";
 import { RadioButton } from "@design-system/components/RadioButton/RadioButton";
+import { SegmentedControl } from "@design-system/components/SegmentedControl/SegmentedControl";
 import { Tabs } from "@design-system/components/Tabs/Tabs";
 import { Textarea } from "@design-system/components/Textarea/Textarea";
 import PageLinks from "../../components/PageLinks/PageLinks";
@@ -48,6 +51,13 @@ export default function ComponentsPage() {
           </div>
 
           <div className={`${styles.tocGrid} animate-in animate-delay-2`}>
+            {/* Alert */}
+            <TocCard href="/components/alert" title="Alert">
+              <div className={`${styles.circlePreview} ${styles.circleDashed}`}>
+                <Alert variant="info" title="Heads up" size="compact" />
+              </div>
+            </TocCard>
+
             {/* Button */}
             <TocCard href="/components/button" title="Button">
               <div className={`${styles.circlePreview} ${styles.circleDashed}`}>
@@ -78,6 +88,34 @@ export default function ComponentsPage() {
               </div>
             </TocCard>
 
+            {/* Circular button */}
+            <TocCard href="/components/circular-button" title="Circular button">
+              <div className={`${styles.circlePreview} ${styles.circleDashed}`} style={{ gap: "12px" }}>
+                <CircularButton icon="search" ariaLabel="Search" priority="primary" />
+                <CircularButton icon="settings" ariaLabel="Settings" priority="secondary" />
+              </div>
+            </TocCard>
+
+            {/* Date input */}
+            <TocCard href="/components/date-input" title="Date input">
+              <div className={`${styles.circlePreview} ${styles.circleDashed}`}>
+                <div className={styles.inputPreview}>
+                  <span style={{ color: "var(--color-text-tertiary)", fontSize: "14px" }}>
+                    dd/mm/yyyy
+                  </span>
+                </div>
+              </div>
+            </TocCard>
+
+            {/* Date picker */}
+            <TocCard href="/components/date-picker" title="Date picker">
+              <div className={`${styles.circlePreview} ${styles.circleDashed}`}>
+                <span className="material-symbols-rounded" style={{ fontSize: "36px", color: "var(--color-icon-primary)" }}>
+                  calendar_month
+                </span>
+              </div>
+            </TocCard>
+
             {/* Dropdown */}
             <TocCard href="/components/dropdown" title="Dropdown">
               <div className={`${styles.circlePreview} ${styles.circleDashed}`}>
@@ -101,6 +139,20 @@ export default function ComponentsPage() {
               </div>
             </TocCard>
 
+            {/* Instructions */}
+            <TocCard href="/components/instructions" title="Instructions">
+              <div className={`${styles.circlePreview} ${styles.circleDashed}`} style={{ gap: "6px", flexDirection: "column" }}>
+                <div className={styles.instructionStep}>
+                  <span className={styles.instructionBadge}>1</span>
+                  <span className={styles.instructionLabel}>First</span>
+                </div>
+                <div className={styles.instructionStep}>
+                  <span className={styles.instructionBadge}>2</span>
+                  <span className={styles.instructionLabel}>Second</span>
+                </div>
+              </div>
+            </TocCard>
+
             {/* Navigation */}
             <TocCard href="/components/navigation" title="Navigation">
               <div className={`${styles.circlePreview} ${styles.circleDashed}`} style={{ gap: "20px" }}>
@@ -111,11 +163,37 @@ export default function ComponentsPage() {
               </div>
             </TocCard>
 
+            {/* Popover */}
+            <TocCard href="/components/popover" title="Popover">
+              <div className={`${styles.circlePreview} ${styles.circleDashed}`}>
+                <div className={styles.popoverPreview}>
+                  <span style={{ fontSize: "12px", color: "var(--color-text-primary)" }}>
+                    Popover
+                  </span>
+                  <div className={styles.popoverArrow} />
+                </div>
+              </div>
+            </TocCard>
+
             {/* Radio button */}
             <TocCard href="/components/radio-button" title="Radio button">
               <div className={`${styles.circlePreview} ${styles.circleDashed}`} style={{ gap: "16px", flexDirection: "column" }}>
                 <RadioButton label="Option A" checked={true} onChange={() => {}} />
                 <RadioButton label="Option B" checked={false} onChange={() => {}} />
+              </div>
+            </TocCard>
+
+            {/* Segmented control */}
+            <TocCard href="/components/segmented-control" title="Segmented control">
+              <div className={`${styles.circlePreview} ${styles.circleDashed}`}>
+                <SegmentedControl
+                  segments={[
+                    { label: "A", value: "a" },
+                    { label: "B", value: "b" },
+                  ]}
+                  activeSegment="a"
+                  size="compact"
+                />
               </div>
             </TocCard>
 

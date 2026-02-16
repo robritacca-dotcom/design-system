@@ -1,0 +1,157 @@
+/* ============================================
+   DATE INPUT COMPONENT
+   Date input with calendar icon and label
+   ============================================ */
+
+.ds-date-input {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs); /* 2px */
+  width: 100%;
+}
+
+/* ============================================
+   LABEL
+   ============================================ */
+
+.ds-date-input__label {
+  font-family: var(--font-title-body-family);
+  font-size: var(--font-title-body-size);
+  font-weight: var(--font-title-body-weight);
+  line-height: var(--font-title-body-line-height);
+  letter-spacing: var(--font-title-body-letter-spacing);
+  color: var(--color-text-primary);
+}
+
+.ds-date-input__required {
+  color: var(--color-core-accent-red);
+}
+
+/* ============================================
+   FIELD WRAPPER
+   ============================================ */
+
+.ds-date-input__field-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* ============================================
+   ICON
+   ============================================ */
+
+.ds-date-input__icon {
+  position: absolute;
+  left: var(--padding-sm); /* 8px */
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  color: var(--color-icon-primary);
+  pointer-events: none;
+}
+
+/* ============================================
+   FIELD
+   ============================================ */
+
+.ds-date-input__field {
+  width: 100%;
+  padding: var(--padding-sm) var(--padding-md); /* 8px 16px */
+  padding-left: calc(var(--padding-sm) + 20px + var(--gap-sm)); /* icon offset */
+  border: var(--border-xs) solid var(--color-bg-container-border);
+  border-radius: var(--radius-sm); /* 8px */
+  background-color: var(--color-bg-container-primary-transparent);
+
+  /* Typography */
+  font-family: var(--font-paragraph-family);
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  letter-spacing: var(--font-paragraph-letter-spacing);
+  color: var(--color-text-primary);
+
+  /* Transitions */
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+  outline: none;
+}
+
+/* Hide the default calendar icon in WebKit browsers */
+.ds-date-input__field::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  cursor: pointer;
+}
+
+.ds-date-input__field:focus {
+  border-color: var(--color-action-primary-bg);
+  background-color: var(--color-bg-container-primary-transparent);
+}
+
+/* ============================================
+   SIZE — COMPACT
+   ============================================ */
+
+.ds-date-input--compact .ds-date-input__field {
+  padding: var(--padding-xs) var(--radius-md); /* 4px 12px */
+  padding-left: calc(var(--padding-xs) + 20px + var(--gap-sm));
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+}
+
+.ds-date-input--compact .ds-date-input__icon {
+  left: var(--padding-xs); /* 4px */
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.ds-date-input--compact .ds-date-input__label {
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+}
+
+/* ============================================
+   HELPER TEXT
+   ============================================ */
+
+.ds-date-input__helper {
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  color: var(--color-text-tertiary);
+  margin: 0;
+}
+
+/* ============================================
+   ERROR STATE
+   ============================================ */
+
+.ds-date-input--error .ds-date-input__field {
+  border-color: var(--color-status-error-border);
+}
+
+.ds-date-input--error .ds-date-input__field:focus {
+  border-color: var(--color-status-error-border);
+}
+
+.ds-date-input--error .ds-date-input__helper {
+  color: var(--color-status-error-border);
+}
+
+/* ============================================
+   DISABLED STATE
+   ============================================ */
+
+.ds-date-input--disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.ds-date-input--disabled .ds-date-input__field {
+  cursor: not-allowed;
+}
