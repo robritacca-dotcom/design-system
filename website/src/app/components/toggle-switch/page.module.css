@@ -74,6 +74,20 @@
 }
 
 /* ============================================
+   VARIANT ROW
+   ============================================ */
+.variantRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--primitive-gap-xl);
+  align-items: flex-start;
+}
+
+.variantItem {
+  flex-shrink: 0;
+}
+
+/* ============================================
    STATE GRID — 3-column table layout
    col 1: state label
    cols 2–3: with label / without label
