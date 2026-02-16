@@ -1,0 +1,204 @@
+/* ============================================
+   DROPDOWN COMPONENT
+   Custom select with menu, keyboard navigation
+   ============================================ */
+
+.ds-dropdown {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs); /* 2px */
+  width: 100%;
+  position: relative;
+}
+
+/* ============================================
+   LABEL
+   ============================================ */
+
+.ds-dropdown__label {
+  font-family: var(--font-title-body-family);
+  font-size: var(--font-title-body-size);
+  font-weight: var(--font-title-body-weight);
+  line-height: var(--font-title-body-line-height);
+  letter-spacing: var(--font-title-body-letter-spacing);
+  color: var(--color-text-primary);
+}
+
+.ds-dropdown__required {
+  color: var(--color-core-accent-red);
+}
+
+/* ============================================
+   TRIGGER
+   ============================================ */
+
+.ds-dropdown__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-sm); /* 8px */
+  padding: var(--padding-sm) var(--padding-md); /* 8px 16px */
+  border: var(--border-xs) solid var(--color-bg-container-border);
+  border-radius: var(--radius-sm); /* 8px */
+  background-color: var(--color-bg-container-primary-transparent);
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+  outline: none;
+}
+
+.ds-dropdown__trigger:focus-visible {
+  border-color: var(--color-action-primary-bg);
+}
+
+.ds-dropdown--open .ds-dropdown__trigger {
+  border-color: var(--color-action-primary-bg);
+}
+
+/* ============================================
+   VALUE / PLACEHOLDER
+   ============================================ */
+
+.ds-dropdown__value {
+  font-family: var(--font-paragraph-family);
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  letter-spacing: var(--font-paragraph-letter-spacing);
+  color: var(--color-text-primary);
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ds-dropdown__value--placeholder {
+  color: var(--color-text-tertiary);
+}
+
+/* ============================================
+   CHEVRON
+   ============================================ */
+
+.ds-dropdown__chevron {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  color: var(--color-icon-primary);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.ds-dropdown--open .ds-dropdown__chevron {
+  transform: rotate(180deg);
+}
+
+/* ============================================
+   MENU
+   ============================================ */
+
+.ds-dropdown__menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: var(--gap-xs); /* 2px */
+  padding: var(--padding-xs) 0; /* 4px 0 */
+  border: var(--border-xs) solid var(--color-bg-container-border);
+  border-radius: var(--radius-sm); /* 8px */
+  background-color: var(--color-bg-page-primary);
+  list-style: none;
+  max-height: 240px;
+  overflow-y: auto;
+  z-index: 10;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* ============================================
+   OPTION
+   ============================================ */
+
+.ds-dropdown__option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--padding-sm) var(--padding-md); /* 8px 16px */
+  font-family: var(--font-paragraph-family);
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  letter-spacing: var(--font-paragraph-letter-spacing);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.ds-dropdown__option:hover {
+  background-color: var(--color-action-passive-bg-hover);
+}
+
+.ds-dropdown__option--focused {
+  background-color: var(--color-action-passive-bg-hover);
+}
+
+.ds-dropdown__option--selected {
+  color: var(--color-action-primary-text-tertiary);
+  font-weight: var(--font-title-body-weight);
+}
+
+.ds-dropdown__option--disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.ds-dropdown__option--disabled:hover {
+  background-color: transparent;
+}
+
+/* ============================================
+   CHECK ICON
+   ============================================ */
+
+.ds-dropdown__check {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  color: var(--color-action-primary-bg);
+}
+
+/* ============================================
+   HELPER TEXT
+   ============================================ */
+
+.ds-dropdown__helper {
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  color: var(--color-text-tertiary);
+  margin: 0;
+}
+
+/* ============================================
+   ERROR STATE
+   ============================================ */
+
+.ds-dropdown--error .ds-dropdown__trigger {
+  border-color: var(--color-status-error-border);
+}
+
+.ds-dropdown--error .ds-dropdown__helper {
+  color: var(--color-status-error-border);
+}
+
+/* ============================================
+   DISABLED STATE
+   ============================================ */
+
+.ds-dropdown--disabled {
+  opacity: 0.4;
+}
+
+.ds-dropdown--disabled .ds-dropdown__trigger {
+  cursor: not-allowed;
+}
