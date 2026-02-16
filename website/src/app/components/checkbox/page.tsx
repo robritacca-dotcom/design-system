@@ -5,7 +5,7 @@ import Header from "../../../components/Header/Header";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
-import { ToggleSwitch } from "@design-system/components/ToggleSwitch/ToggleSwitch";
+import { Checkbox } from "@design-system/components/Checkbox/Checkbox";
 import PageLinks from "../../../components/PageLinks/PageLinks";
 import styles from "./page.module.css";
 
@@ -21,14 +21,14 @@ const sidebarLinks = [
   { href: "/components/button", label: "Button" },
   { href: "/components/button-group", label: "Button group" },
   { href: "/components/card", label: "Card" },
-  { href: "/components/checkbox", label: "Checkbox" },
+  { href: "/components/checkbox", label: "Checkbox", active: true },
   { href: "/components/dropdown", label: "Dropdown" },
   { href: "/components/input", label: "Input" },
   { href: "/components/navigation", label: "Navigation" },
   { href: "/components/radio-button", label: "Radio button" },
   { href: "/components/tabs", label: "Tabs" },
   { href: "/components/textarea", label: "Textarea" },
-  { href: "/components/toggle-switch", label: "Toggle switch", active: true },
+  { href: "/components/toggle-switch", label: "Toggle switch" },
 ];
 
 const subnavLinks = sidebarLinks.map((l) => ({
@@ -37,34 +37,26 @@ const subnavLinks = sidebarLinks.map((l) => ({
   active: l.active,
 }));
 
-/* ============================================
-   PAGE
-   ============================================ */
-
-export default function ToggleSwitchPage() {
+export default function CheckboxPage() {
   return (
     <>
-
       <BlurBackground />
-
       <Header navLinks={navLinks} subnavLinks={subnavLinks} />
 
       <div className={styles.dsLayout}>
         <Sidebar links={sidebarLinks} />
 
         <main className={styles.dsContent} id="main-content">
-          {/* Page Title */}
           <div className={`${styles.pageHeader} animate-in`}>
-            <h1 className={styles.pageTitle}>Toggle switch</h1>
+            <h1 className={styles.pageTitle}>Checkbox</h1>
             <PageLinks
               figmaUrl="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26"
-              storybookPath="/?path=/docs/components-toggleswitch--docs"
+              storybookPath="/?path=/docs/components-checkbox--docs"
             />
           </div>
 
-          {/* Intro */}
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Binary on/off control with a sliding thumb and check indicator, used for settings like theme switching.
+            Selection control for binary or indeterminate choices, with animated check and minus indicators.
           </p>
 
           {/* States */}
@@ -73,45 +65,48 @@ export default function ToggleSwitchPage() {
               <h2>States</h2>
             </div>
             <div className={styles.stateGrid}>
-              {/* Column headers */}
               <div className={styles.gridCorner} />
               <span className={styles.gridColHeader}>With label</span>
               <span className={styles.gridColHeader}>Without label</span>
 
-              {/* On */}
-              <span className={styles.gridRowHeader}>On</span>
+              <span className={styles.gridRowHeader}>Unchecked</span>
               <div className={styles.gridCell}>
-                <ToggleSwitch checked={true} label="Dark Mode" onChange={() => {}} />
+                <Checkbox label="Accept terms" checked={false} onChange={() => {}} />
               </div>
               <div className={styles.gridCell}>
-                <ToggleSwitch checked={true} showLabel={false} label="Toggle" onChange={() => {}} />
-              </div>
-
-              {/* Off */}
-              <span className={styles.gridRowHeader}>Off</span>
-              <div className={styles.gridCell}>
-                <ToggleSwitch checked={false} label="Dark Mode" onChange={() => {}} />
-              </div>
-              <div className={styles.gridCell}>
-                <ToggleSwitch checked={false} showLabel={false} label="Toggle" onChange={() => {}} />
+                <Checkbox checked={false} ariaLabel="Unchecked" onChange={() => {}} />
               </div>
 
-              {/* Disabled On */}
-              <span className={styles.gridRowHeader}>Disabled, on</span>
+              <span className={styles.gridRowHeader}>Checked</span>
               <div className={styles.gridCell}>
-                <ToggleSwitch checked={true} disabled label="Dark Mode" onChange={() => {}} />
+                <Checkbox label="Accept terms" checked={true} onChange={() => {}} />
               </div>
               <div className={styles.gridCell}>
-                <ToggleSwitch checked={true} disabled showLabel={false} label="Toggle" onChange={() => {}} />
+                <Checkbox checked={true} ariaLabel="Checked" onChange={() => {}} />
               </div>
 
-              {/* Disabled Off */}
-              <span className={styles.gridRowHeader}>Disabled, off</span>
+              <span className={styles.gridRowHeader}>Indeterminate</span>
               <div className={styles.gridCell}>
-                <ToggleSwitch checked={false} disabled label="Dark Mode" onChange={() => {}} />
+                <Checkbox label="Select all" indeterminate={true} checked={false} onChange={() => {}} />
               </div>
               <div className={styles.gridCell}>
-                <ToggleSwitch checked={false} disabled showLabel={false} label="Toggle" onChange={() => {}} />
+                <Checkbox indeterminate={true} checked={false} ariaLabel="Indeterminate" onChange={() => {}} />
+              </div>
+
+              <span className={styles.gridRowHeader}>Disabled, unchecked</span>
+              <div className={styles.gridCell}>
+                <Checkbox label="Disabled" checked={false} disabled onChange={() => {}} />
+              </div>
+              <div className={styles.gridCell}>
+                <Checkbox checked={false} disabled ariaLabel="Disabled unchecked" onChange={() => {}} />
+              </div>
+
+              <span className={styles.gridRowHeader}>Disabled, checked</span>
+              <div className={styles.gridCell}>
+                <Checkbox label="Disabled" checked={true} disabled onChange={() => {}} />
+              </div>
+              <div className={styles.gridCell}>
+                <Checkbox checked={true} disabled ariaLabel="Disabled checked" onChange={() => {}} />
               </div>
             </div>
           </section>

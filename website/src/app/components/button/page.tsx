@@ -21,7 +21,13 @@ const sidebarLinks = [
   { href: "/components/button", label: "Button", active: true },
   { href: "/components/button-group", label: "Button group" },
   { href: "/components/card", label: "Card" },
+  { href: "/components/checkbox", label: "Checkbox" },
+  { href: "/components/dropdown", label: "Dropdown" },
+  { href: "/components/input", label: "Input" },
   { href: "/components/navigation", label: "Navigation" },
+  { href: "/components/radio-button", label: "Radio button" },
+  { href: "/components/tabs", label: "Tabs" },
+  { href: "/components/textarea", label: "Textarea" },
   { href: "/components/toggle-switch", label: "Toggle switch" },
 ];
 
