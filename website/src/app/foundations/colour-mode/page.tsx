@@ -7,6 +7,7 @@ import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
 import { ColourSwatch } from "@design-system/components/ColourSwatch/ColourSwatch";
+import PageLinks from "../../../components/PageLinks/PageLinks";
 import styles from "./page.module.css";
 
 const navLinks = [
@@ -300,7 +301,13 @@ export default function SemanticColoursPage() {
 
         <main className={styles.dsContent} id="main-content">
           {/* Page Title */}
-          <h1 className={`${styles.pageTitle} animate-in`}>Semantic colours</h1>
+          <div className={`${styles.pageHeader} animate-in`}>
+            <h1 className={styles.pageTitle}>Semantic colours</h1>
+            <PageLinks
+              figmaUrl="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26"
+              storybookPath="/?path=/docs/components-colourswatch--docs"
+            />
+          </div>
 
           {/* Intro */}
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>

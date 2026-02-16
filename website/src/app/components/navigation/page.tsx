@@ -10,6 +10,7 @@ import { Nav } from "@design-system/components/Nav/Nav";
 import { ToggleSwitch } from "@design-system/components/ToggleSwitch/ToggleSwitch";
 import { ButtonGroup } from "@design-system/components/ButtonGroup/ButtonGroup";
 import type { ButtonProps } from "@design-system/components/Button/Button";
+import PageLinks from "../../../components/PageLinks/PageLinks";
 import styles from "./page.module.css";
 
 const navLinks = [
@@ -83,7 +84,13 @@ export default function NavigationPage() {
 
         <main className={styles.dsContent} id="main-content">
           {/* Page Title */}
-          <h1 className={`${styles.pageTitle} animate-in`}>Navigation</h1>
+          <div className={`${styles.pageHeader} animate-in`}>
+            <h1 className={styles.pageTitle}>Navigation</h1>
+            <PageLinks
+              figmaUrl="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26"
+              storybookPath="/?path=/docs/components-nav--docs"
+            />
+          </div>
 
           {/* Intro */}
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>

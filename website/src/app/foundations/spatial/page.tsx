@@ -6,6 +6,7 @@ import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
 import { SpacingSwatch } from "@design-system/components/SpacingSwatch/SpacingSwatch";
 import type { SpacingSwatchVariant } from "@design-system/components/SpacingSwatch/SpacingSwatch";
+import PageLinks from "../../../components/PageLinks/PageLinks";
 import styles from "./page.module.css";
 
 const navLinks = [
@@ -109,7 +110,13 @@ export default function SemanticSpacingPage() {
 
         <main className={styles.dsContent} id="main-content">
           {/* Page Title */}
-          <h1 className={`${styles.pageTitle} animate-in`}>Semantic spacing</h1>
+          <div className={`${styles.pageHeader} animate-in`}>
+            <h1 className={styles.pageTitle}>Semantic spacing</h1>
+            <PageLinks
+              figmaUrl="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26"
+              storybookPath="/?path=/docs/components-spacingswatch--docs"
+            />
+          </div>
 
           {/* Intro */}
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>

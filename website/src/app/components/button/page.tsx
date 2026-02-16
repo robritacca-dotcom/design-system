@@ -6,6 +6,7 @@ import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
 import { Button } from "@design-system/components/Button/Button";
+import PageLinks from "../../../components/PageLinks/PageLinks";
 import styles from "./page.module.css";
 
 const navLinks = [
@@ -61,7 +62,13 @@ export default function ButtonPage() {
 
         <main className={styles.dsContent} id="main-content">
           {/* Page Title */}
-          <h1 className={`${styles.pageTitle} animate-in`}>Buttons</h1>
+          <div className={`${styles.pageHeader} animate-in`}>
+            <h1 className={styles.pageTitle}>Buttons</h1>
+            <PageLinks
+              figmaUrl="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26"
+              storybookPath="/?path=/docs/components-button--docs"
+            />
+          </div>
 
           {/* Intro */}
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>

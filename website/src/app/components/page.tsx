@@ -7,6 +7,7 @@ import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import Footer from "../../components/Footer/Footer";
 import TocCard from "../../components/TocCard/TocCard";
 import { Button } from "@design-system/components/Button/Button";
+import PageLinks from "../../components/PageLinks/PageLinks";
 import styles from "./page.module.css";
 
 const navLinks = [
@@ -47,7 +48,10 @@ export default function ComponentsPage() {
 
         <main className={styles.dsContent} id="main-content">
           {/* Page Title */}
-          <h1 className={`${styles.pageTitle} animate-in`}>Components</h1>
+          <div className={`${styles.pageHeader} animate-in`}>
+            <h1 className={styles.pageTitle}>Components</h1>
+            <PageLinks figmaUrl="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26" />
+          </div>
 
           {/* Intro */}
           <div className={`${styles.introSection} animate-in animate-delay-1`}>
