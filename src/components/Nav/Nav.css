@@ -32,10 +32,10 @@
 }
 
 .ds-nav__brand-text {
-  font-family: var(--font-paragraph-family);
-  font-size: var(--font-paragraph-size);
-  font-weight: var(--font-paragraph-weight);
-  line-height: var(--font-paragraph-line-height);
+  font-family: var(--font-paragraph-em-family);
+  font-size: var(--font-paragraph-em-size);
+  font-weight: var(--font-paragraph-em-weight);
+  line-height: var(--font-paragraph-em-line-height);
 }
 
 /* ============================================
