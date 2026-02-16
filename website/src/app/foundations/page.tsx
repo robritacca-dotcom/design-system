@@ -64,33 +64,6 @@ export default function FoundationsPage() {
           </div>
 
           <div className={`${styles.tocGrid} animate-in animate-delay-2`}>
-            {/* Semantic Colours */}
-            <TocCard href="/foundations/colour-mode" title="Semantic colours">
-              <div className={`${styles.colourWheel} ${styles.colourWheelMode}`} />
-            </TocCard>
-
-            {/* Primative Colours */}
-            <TocCard href="/foundations/colour-primitives" title="Primative colours">
-              <div className={styles.colourWheel} />
-            </TocCard>
-
-            {/* Semantic Spacing */}
-            <TocCard href="/foundations/spatial" title="Semantic spacing">
-              <div className={`${styles.circlePreview} ${styles.circleGreen}`}>
-                <div className={styles.spatialBox} />
-                <span className={styles.spatialLabel}>XXL</span>
-                <span className={styles.spatialValue}>60px</span>
-              </div>
-            </TocCard>
-
-            {/* Typography */}
-            <TocCard href="/foundations/typography" title="Typography">
-              <div className={`${styles.circlePreview} ${styles.circleBlue}`}>
-                <span className={styles.typographyLightA}>A</span>
-                <span className={styles.typographyBoldA}>A</span>
-              </div>
-            </TocCard>
-
             {/* Icons */}
             <TocCard href="/foundations/icons" title="Icons">
               <div className={`${styles.circlePreview} ${styles.circleDashed}`} style={{ gap: "10px" }}>
@@ -108,6 +81,33 @@ export default function FoundationsPage() {
               <div className={`${styles.circlePreview} ${styles.circleDashed}`} style={{ gap: "10px" }}>
                 <Image src="/rr.svg" alt="robr0 Logo" width={48} height={48} />
                 <Image src="/rr.svg" alt="robr0 Logo" width={72} height={72} />
+              </div>
+            </TocCard>
+
+            {/* Primative Colours */}
+            <TocCard href="/foundations/colour-primitives" title="Primative colours">
+              <div className={styles.colourWheel} />
+            </TocCard>
+
+            {/* Semantic Colours */}
+            <TocCard href="/foundations/colour-mode" title="Semantic colours">
+              <div className={`${styles.colourWheel} ${styles.colourWheelMode}`} />
+            </TocCard>
+
+            {/* Semantic Spacing */}
+            <TocCard href="/foundations/spatial" title="Semantic spacing">
+              <div className={`${styles.circlePreview} ${styles.circleGreen}`}>
+                <div className={styles.spatialBox} />
+                <span className={styles.spatialLabel}>XXL</span>
+                <span className={styles.spatialValue}>60px</span>
+              </div>
+            </TocCard>
+
+            {/* Typography */}
+            <TocCard href="/foundations/typography" title="Typography">
+              <div className={`${styles.circlePreview} ${styles.circleBlue}`}>
+                <span className={styles.typographyLightA}>A</span>
+                <span className={styles.typographyBoldA}>A</span>
               </div>
             </TocCard>
           </div>
