@@ -74,21 +74,47 @@
 }
 
 /* ============================================
-   CARD GRID
+   CARD ROWS — flexible wrapping grids
    ============================================ */
-.cardGrid {
+
+/* Base Card (preview cards) */
+.cardRow {
   display: flex;
   gap: var(--primitive-gap-lg);
   width: 100%;
   flex-wrap: wrap;
 }
 
-.cardPlaceholder {
-  font-size: var(--font-paragraph-sm-size);
-  font-weight: var(--font-paragraph-sm-weight);
-  line-height: var(--font-paragraph-sm-line-height);
-  letter-spacing: var(--font-paragraph-sm-letter-spacing);
-  color: var(--color-text-tertiary);
+/* Entity Card (compact icon cards) */
+.entityRow {
+  display: flex;
+  gap: var(--primitive-gap-md);
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+/* Colour Swatch */
+.swatchRow {
+  display: flex;
+  gap: var(--primitive-gap-lg);
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+/* Typography Swatch (full-width, stacked) */
+.typographyColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-lg);
+  width: 100%;
+}
+
+/* Spacing Swatch */
+.spacingRow {
+  display: flex;
+  gap: var(--primitive-gap-lg);
+  width: 100%;
+  flex-wrap: wrap;
 }
 
 /* ============================================
@@ -112,7 +138,9 @@
 }
 
 @media (max-width: 599px) {
-  .cardGrid {
+  .cardRow,
+  .swatchRow,
+  .spacingRow {
     flex-direction: column;
   }
 }
