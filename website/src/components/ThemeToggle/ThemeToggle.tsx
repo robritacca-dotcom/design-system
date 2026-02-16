@@ -1,46 +1,36 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { SegmentedControl } from "@design-system/components/SegmentedControl/SegmentedControl";
 import styles from "./ThemeToggle.module.css";
 
+const themeSegments = [
+  { value: "light", label: "Light", icon: "light_mode" },
+  { value: "dark", label: "Dark", icon: "dark_mode" },
+];
+
 export default function ThemeToggle({ className }: { className?: string }) {
-  const [isDark, setIsDark] = useState(true);
+  const [theme, setTheme] = useState("dark");
 
   useEffect(() => {
     const current = document.documentElement.getAttribute("data-theme");
-    setIsDark(current !== "light");
+    setTheme(current === "light" ? "light" : "dark");
   }, []);
 
-  const toggle = useCallback(() => {
-    const next = isDark ? "light" : "dark";
-    document.documentElement.setAttribute("data-theme", next);
-    localStorage.setItem("theme", next);
-    setIsDark(!isDark);
-  }, [isDark]);
+  const handleChange = useCallback((value: string) => {
+    document.documentElement.setAttribute("data-theme", value);
+    localStorage.setItem("theme", value);
+    setTheme(value);
+  }, []);
 
   return (
-    <button
-      className={`${styles.themeToggle} ${className || ""}`}
-      onClick={toggle}
-      aria-label="Toggle dark/light mode"
-    >
-      <div className={styles.toggleSwitch}>
-        <div className={styles.toggleTrack} />
-        <div className={styles.toggleThumb}>
-          <span
-            className="material-symbols-rounded"
-            style={{
-              fontSize: "14px",
-              color: "var(--color-action-primary-bg)",
-            }}
-          >
-            check
-          </span>
-        </div>
-      </div>
-      <span className={styles.toggleLabel}>
-        {isDark ? "Dark Mode" : "Light Mode"}
-      </span>
-    </button>
+    <div className={`${styles.themeToggle} ${className || ""}`}>
+      <SegmentedControl
+        segments={themeSegments}
+        activeSegment={theme}
+        onSegmentChange={handleChange}
+        size="compact"
+      />
+    </div>
   );
 }
