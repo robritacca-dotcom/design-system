@@ -7,6 +7,7 @@ import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import Footer from "../../components/Footer/Footer";
 import TocCard from "../../components/TocCard/TocCard";
 import { Alert } from "@design-system/components/Alert/Alert";
+import { Badge } from "@design-system/components/Badge/Badge";
 import { Button } from "@design-system/components/Button/Button";
 import { Checkbox } from "@design-system/components/Checkbox/Checkbox";
 import { CircularButton } from "@design-system/components/CircularButton/CircularButton";
@@ -55,6 +56,15 @@ export default function ComponentsPage() {
             {/* Alert */}
             <TocCard href="/components/alert" title="Alert">
               <Alert variant="info" title="Heads up" size="compact" />
+            </TocCard>
+
+            {/* Badge */}
+            <TocCard href="/components/badge" title="Badge">
+              <div className={styles.previewRow} style={{ gap: "8px" }}>
+                <Badge variant="info" label="Info" />
+                <Badge variant="positive" label="Success" />
+                <Badge variant="error" label="Error" />
+              </div>
             </TocCard>
 
             {/* Button */}
