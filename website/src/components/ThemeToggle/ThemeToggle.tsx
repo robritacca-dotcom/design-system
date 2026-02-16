@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { SegmentedControl } from "@design-system/components/SegmentedControl/SegmentedControl";
 import styles from "./ThemeToggle.module.css";
 
@@ -9,13 +9,15 @@ const themeSegments = [
   { value: "dark", label: "Dark", icon: "dark_mode" },
 ];
 
-export default function ThemeToggle({ className }: { className?: string }) {
-  const [theme, setTheme] = useState("dark");
+function getInitialTheme(): string {
+  if (typeof window !== "undefined") {
+    return localStorage.getItem("theme") || "dark";
+  }
+  return "dark";
+}
 
-  useEffect(() => {
-    const current = document.documentElement.getAttribute("data-theme");
-    setTheme(current === "light" ? "light" : "dark");
-  }, []);
+export default function ThemeToggle({ className }: { className?: string }) {
+  const [theme, setTheme] = useState(getInitialTheme);
 
   const handleChange = useCallback((value: string) => {
     document.documentElement.setAttribute("data-theme", value);
