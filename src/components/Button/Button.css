@@ -226,3 +226,12 @@
 .ds-button--secondary:not(.ds-button--disabled):active {
   background-color: var(--color-action-passive-bg-active);
 }
+
+/* ============================================
+   FOCUS
+   ============================================ */
+
+.ds-button:focus-visible {
+  outline: 2px solid var(--color-action-primary-bg);
+  outline-offset: 2px;
+}

@@ -42,51 +42,53 @@ export default function ToggleSwitchPage() {
             Binary on/off control with a sliding thumb and check indicator, used for settings like theme switching.
           </p>
 
+          {/* Default */}
+          <section className={styles.section}>
+            <div className={styles.sectionTitle}>
+              <h2>Default</h2>
+            </div>
+            <div className={styles.variantRow}>
+              <div className={styles.variantItem}>
+                <ToggleSwitch checked={true} label="On" onChange={() => {}} />
+              </div>
+              <div className={styles.variantItem}>
+                <ToggleSwitch checked={false} label="Off" onChange={() => {}} />
+              </div>
+              <div className={styles.variantItem}>
+                <ToggleSwitch checked={true} showLabel={false} ariaLabel="No label" onChange={() => {}} />
+              </div>
+            </div>
+          </section>
+
+          {/* Compact */}
+          <section className={styles.section}>
+            <div className={styles.sectionTitle}>
+              <h2>Compact</h2>
+            </div>
+            <div className={styles.variantRow}>
+              <div className={styles.variantItem}>
+                <ToggleSwitch checked={true} label="On" size="compact" onChange={() => {}} />
+              </div>
+              <div className={styles.variantItem}>
+                <ToggleSwitch checked={false} label="Off" size="compact" onChange={() => {}} />
+              </div>
+              <div className={styles.variantItem}>
+                <ToggleSwitch checked={true} showLabel={false} size="compact" ariaLabel="No label" onChange={() => {}} />
+              </div>
+            </div>
+          </section>
+
           {/* States */}
           <section className={styles.section}>
             <div className={styles.sectionTitle}>
               <h2>States</h2>
             </div>
-            <div className={styles.stateGrid}>
-              {/* Column headers */}
-              <div className={styles.gridCorner} />
-              <span className={styles.gridColHeader}>With label</span>
-              <span className={styles.gridColHeader}>Without label</span>
-
-              {/* On */}
-              <span className={styles.gridRowHeader}>On</span>
-              <div className={styles.gridCell}>
-                <ToggleSwitch checked={true} label="Dark Mode" onChange={() => {}} />
+            <div className={styles.variantRow}>
+              <div className={styles.variantItem}>
+                <ToggleSwitch checked={true} disabled label="Disabled, on" onChange={() => {}} />
               </div>
-              <div className={styles.gridCell}>
-                <ToggleSwitch checked={true} showLabel={false} label="Toggle" onChange={() => {}} />
-              </div>
-
-              {/* Off */}
-              <span className={styles.gridRowHeader}>Off</span>
-              <div className={styles.gridCell}>
-                <ToggleSwitch checked={false} label="Dark Mode" onChange={() => {}} />
-              </div>
-              <div className={styles.gridCell}>
-                <ToggleSwitch checked={false} showLabel={false} label="Toggle" onChange={() => {}} />
-              </div>
-
-              {/* Disabled On */}
-              <span className={styles.gridRowHeader}>Disabled, on</span>
-              <div className={styles.gridCell}>
-                <ToggleSwitch checked={true} disabled label="Dark Mode" onChange={() => {}} />
-              </div>
-              <div className={styles.gridCell}>
-                <ToggleSwitch checked={true} disabled showLabel={false} label="Toggle" onChange={() => {}} />
-              </div>
-
-              {/* Disabled Off */}
-              <span className={styles.gridRowHeader}>Disabled, off</span>
-              <div className={styles.gridCell}>
-                <ToggleSwitch checked={false} disabled label="Dark Mode" onChange={() => {}} />
-              </div>
-              <div className={styles.gridCell}>
-                <ToggleSwitch checked={false} disabled showLabel={false} label="Toggle" onChange={() => {}} />
+              <div className={styles.variantItem}>
+                <ToggleSwitch checked={false} disabled label="Disabled, off" onChange={() => {}} />
               </div>
             </div>
           </section>

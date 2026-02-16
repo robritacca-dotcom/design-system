@@ -129,7 +129,7 @@
   letter-spacing: var(--font-paragraph-letter-spacing);
   color: var(--color-text-primary);
   cursor: pointer;
-  transition: background-color 0.15s ease;
+  transition: background-color 0.2s ease;
 }
 
 .ds-dropdown__option:hover {

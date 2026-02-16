@@ -34,54 +34,62 @@ export default function CheckboxPage() {
             Selection control for binary or indeterminate choices, with animated check and minus indicators.
           </p>
 
+          {/* Default */}
+          <section className={styles.section}>
+            <div className={styles.sectionTitle}>
+              <h2>Default</h2>
+            </div>
+            <div className={styles.variantRow}>
+              <div className={styles.variantItem}>
+                <Checkbox label="Unchecked" checked={false} onChange={() => {}} />
+              </div>
+              <div className={styles.variantItem}>
+                <Checkbox label="Checked" checked={true} onChange={() => {}} />
+              </div>
+              <div className={styles.variantItem}>
+                <Checkbox label="Indeterminate" indeterminate={true} checked={false} onChange={() => {}} />
+              </div>
+              <div className={styles.variantItem}>
+                <Checkbox checked={true} ariaLabel="No label" onChange={() => {}} />
+              </div>
+            </div>
+          </section>
+
+          {/* Compact */}
+          <section className={styles.section}>
+            <div className={styles.sectionTitle}>
+              <h2>Compact</h2>
+            </div>
+            <div className={styles.variantRow}>
+              <div className={styles.variantItem}>
+                <Checkbox label="Unchecked" checked={false} size="compact" onChange={() => {}} />
+              </div>
+              <div className={styles.variantItem}>
+                <Checkbox label="Checked" checked={true} size="compact" onChange={() => {}} />
+              </div>
+              <div className={styles.variantItem}>
+                <Checkbox label="Indeterminate" indeterminate={true} checked={false} size="compact" onChange={() => {}} />
+              </div>
+              <div className={styles.variantItem}>
+                <Checkbox checked={true} size="compact" ariaLabel="No label" onChange={() => {}} />
+              </div>
+            </div>
+          </section>
+
           {/* States */}
           <section className={styles.section}>
             <div className={styles.sectionTitle}>
               <h2>States</h2>
             </div>
-            <div className={styles.stateGrid}>
-              <div className={styles.gridCorner} />
-              <span className={styles.gridColHeader}>With label</span>
-              <span className={styles.gridColHeader}>Without label</span>
-
-              <span className={styles.gridRowHeader}>Unchecked</span>
-              <div className={styles.gridCell}>
-                <Checkbox label="Accept terms" checked={false} onChange={() => {}} />
+            <div className={styles.variantRow}>
+              <div className={styles.variantItem}>
+                <Checkbox label="Disabled, unchecked" checked={false} disabled onChange={() => {}} />
               </div>
-              <div className={styles.gridCell}>
-                <Checkbox checked={false} ariaLabel="Unchecked" onChange={() => {}} />
+              <div className={styles.variantItem}>
+                <Checkbox label="Disabled, checked" checked={true} disabled onChange={() => {}} />
               </div>
-
-              <span className={styles.gridRowHeader}>Checked</span>
-              <div className={styles.gridCell}>
-                <Checkbox label="Accept terms" checked={true} onChange={() => {}} />
-              </div>
-              <div className={styles.gridCell}>
-                <Checkbox checked={true} ariaLabel="Checked" onChange={() => {}} />
-              </div>
-
-              <span className={styles.gridRowHeader}>Indeterminate</span>
-              <div className={styles.gridCell}>
-                <Checkbox label="Select all" indeterminate={true} checked={false} onChange={() => {}} />
-              </div>
-              <div className={styles.gridCell}>
-                <Checkbox indeterminate={true} checked={false} ariaLabel="Indeterminate" onChange={() => {}} />
-              </div>
-
-              <span className={styles.gridRowHeader}>Disabled, unchecked</span>
-              <div className={styles.gridCell}>
-                <Checkbox label="Disabled" checked={false} disabled onChange={() => {}} />
-              </div>
-              <div className={styles.gridCell}>
-                <Checkbox checked={false} disabled ariaLabel="Disabled unchecked" onChange={() => {}} />
-              </div>
-
-              <span className={styles.gridRowHeader}>Disabled, checked</span>
-              <div className={styles.gridCell}>
-                <Checkbox label="Disabled" checked={true} disabled onChange={() => {}} />
-              </div>
-              <div className={styles.gridCell}>
-                <Checkbox checked={true} disabled ariaLabel="Disabled checked" onChange={() => {}} />
+              <div className={styles.variantItem}>
+                <Checkbox label="Disabled, indeterminate" indeterminate={true} checked={false} disabled onChange={() => {}} />
               </div>
             </div>
           </section>

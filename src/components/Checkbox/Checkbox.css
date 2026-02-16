@@ -100,7 +100,7 @@
    ============================================ */
 
 .ds-checkbox:focus-visible .ds-checkbox__box {
-  outline: var(--border-md) solid var(--color-action-primary-border-tertiary);
+  outline: 2px solid var(--color-action-primary-bg);
   outline-offset: 2px;
 }
 
@@ -111,4 +111,24 @@
 .ds-checkbox--disabled {
   opacity: 0.4;
   cursor: not-allowed;
+}
+
+/* ============================================
+   SIZE — COMPACT
+   ============================================ */
+
+.ds-checkbox--compact .ds-checkbox__box {
+  width: 20px;
+  height: 20px;
+}
+
+.ds-checkbox--compact .ds-checkbox__icon {
+  width: 12px;
+  height: 12px;
+}
+
+.ds-checkbox--compact .ds-checkbox__label {
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
 }
