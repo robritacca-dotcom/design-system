@@ -130,7 +130,7 @@
    ============================================ */
 
 .ds-textarea--compact .ds-textarea__field {
-  padding: var(--padding-xs) var(--padding-sm-md); /* 4px 12px */
+  padding: var(--padding-xs) var(--padding-sm-md); /* 6px 12px */
   font-size: var(--font-paragraph-sm-size);
   line-height: var(--font-paragraph-sm-line-height);
   letter-spacing: var(--font-paragraph-sm-letter-spacing);

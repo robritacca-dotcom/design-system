@@ -104,7 +104,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--gap-xxs); /* 2px */
-  padding-top: var(--padding-xs); /* 4px — align text with badge center */
+  padding-top: var(--padding-xxs); /* 4px — align text with badge center */
   padding-bottom: var(--padding-md); /* 16px — space before next step */
   min-width: 0;
 }
@@ -207,7 +207,7 @@
 }
 
 .ds-instructions--compact .ds-instructions__content {
-  padding-top: var(--padding-xxs); /* 2px */
+  padding-top: var(--padding-xxxs); /* 2px */
   padding-bottom: var(--padding-sm); /* 8px */
 }
 
