@@ -15,12 +15,25 @@ export const metadata: Metadata = {
     template: "%s | robr0 DS",
   },
   description:
-    "A token-based design system with primitive colours, semantic tokens, typography, spacing, and reusable components.",
+    "A token-based design system with primitive colours, semantic tokens, typography, spacing, and reusable components built with React and CSS.",
   metadataBase: new URL("https://robr0-ds.vercel.app"),
+  keywords: [
+    "design system",
+    "React components",
+    "design tokens",
+    "UI library",
+    "typography",
+    "colour primitives",
+    "semantic tokens",
+    "Robert Ritacca",
+    "robr0",
+  ],
+  authors: [{ name: "Robert Ritacca" }],
+  creator: "Robert Ritacca",
   openGraph: {
     title: "robr0 Design System",
     description:
-      "A token-based design system with primitive colours, semantic tokens, typography, spacing, and reusable components.",
+      "A token-based design system with primitive colours, semantic tokens, typography, spacing, and reusable components built with React and CSS.",
     siteName: "robr0 DS",
     locale: "en_US",
     type: "website",
@@ -29,7 +42,11 @@ export const metadata: Metadata = {
     card: "summary",
     title: "robr0 Design System",
     description:
-      "A token-based design system with primitive colours, semantic tokens, typography, spacing, and reusable components.",
+      "A token-based design system with primitive colours, semantic tokens, typography, spacing, and reusable components built with React and CSS.",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 

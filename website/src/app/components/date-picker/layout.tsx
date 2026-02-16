@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "DatePicker",
+  title: "Date Picker",
   description:
     "Inline calendar with month navigation, day selection, and today indicator.",
 };

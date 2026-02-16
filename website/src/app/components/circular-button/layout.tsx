@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "CircularButton",
+  title: "Circular Button",
   description:
     "Round icon button with primary and secondary variants, default and compact sizes.",
 };
