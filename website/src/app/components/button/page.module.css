@@ -15,7 +15,6 @@
   flex-direction: column;
   gap: var(--primitive-gap-xxxl);
   min-width: 0;
-  overflow: hidden;
 }
 
 /* ============================================
@@ -75,35 +74,41 @@
 }
 
 /* ============================================
-   BUTTON GRID — 9-column table layout
+   VARIANT BLOCK — one per priority × size
+   ============================================ */
+.variantBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-md);
+}
+
+.variantLabel {
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  letter-spacing: var(--font-heading-3-letter-spacing);
+  color: var(--color-text-tertiary);
+}
+
+/* ============================================
+   BUTTON GRID — 5-column table layout
    col 1: state label
-   cols 2–5: Primary (no icon / icon left / icon right / both)
-   cols 6–9: Secondary (no icon / icon left / icon right / both)
+   cols 2–5: No icon / Icon left / Icon right / Both
    ============================================ */
 .buttonGrid {
   display: grid;
-  grid-template-columns: auto repeat(8, 1fr);
-  gap: var(--primitive-gap-md) var(--primitive-gap-md);
+  grid-template-columns: auto repeat(4, 1fr);
+  gap: var(--primitive-gap-sm) var(--primitive-gap-md);
   align-items: center;
   width: 100%;
 }
 
-/* Empty corner cells (top-left of headers) */
+/* Empty corner cell (top-left of headers) */
 .gridCorner {
   /* Intentionally empty */
 }
 
-/* Group headers (Primary / Secondary) — span 4 cols each */
-.gridGroupHeader {
-  grid-column: span 4;
-  text-align: center;
-  font-size: var(--font-paragraph-size);
-  font-weight: var(--font-paragraph-weight);
-  line-height: var(--font-paragraph-line-height);
-  color: var(--color-text-primary);
-}
-
-/* Sub-column headers (No icon / Icon, left / Icon, right) */
+/* Column headers */
 .gridColHeader {
   text-align: center;
   font-size: var(--font-paragraph-sm-size);
@@ -133,41 +138,6 @@
 }
 
 /* ============================================
-   SIZE BLOCK — groups each size variant
-   ============================================ */
-.sizeBlock {
-  display: flex;
-  flex-direction: column;
-  gap: var(--primitive-gap-lg);
-}
-
-.sizeLabel {
-  font-size: var(--font-heading-3-size);
-  font-weight: var(--font-heading-3-weight);
-  line-height: var(--font-heading-3-line-height);
-  letter-spacing: var(--font-heading-3-letter-spacing);
-  color: var(--color-text-tertiary);
-}
-
-/* Scale default buttons down so the grid fits */
-.gridCell :global(.ds-button--default) {
-  font-size: 13px;
-  padding: 6px 12px;
-  gap: 4px;
-}
-
-/* Scale compact buttons down proportionally */
-.gridCell :global(.ds-button--compact) {
-  font-size: 11px;
-  padding: 3px 9px;
-  gap: 4px;
-}
-
-.gridCell :global(.ds-button__icon) {
-  font-size: 18px;
-}
-
-/* ============================================
    RESPONSIVE
    ============================================ */
 @media (max-width: 959px) {
@@ -185,10 +155,12 @@
     font-size: 24px;
     line-height: 36px;
   }
+}
 
-  /* On mobile, the 7-col grid is too wide — scroll horizontally */
+@media (max-width: 599px) {
+  /* On very small screens, let the grid scroll */
   .buttonGrid {
     overflow-x: auto;
-    min-width: 600px;
+    min-width: 480px;
   }
 }

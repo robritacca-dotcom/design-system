@@ -56,58 +56,59 @@ const iconVariants = [
   { label: "Both icons", iconLeft: "grid_view", iconRight: "arrow_forward" },
 ] as const;
 
+const priorityLabels: Record<string, string> = {
+  primary: "Primary",
+  secondary: "Secondary",
+};
+
 /* ============================================
-   BUTTON GRID — reusable for each size
-   5-column layout: state | primary variants x4 icon combos… wait
-   Actually: 9-column layout:
+   BUTTON GRID — 5-column layout per variant
    col 1: state label
-   cols 2–5: Primary (no icon / icon left / icon right / both)
-   cols 6–9: Secondary (no icon / icon left / icon right / both)
+   cols 2–5: icon variants (no icon / left / right / both)
+   One grid per priority × size combination, stacked vertically.
    ============================================ */
 
-function ButtonGrid({ size }: { size: "default" | "compact" }) {
+function ButtonGrid({
+  priority,
+  size,
+}: {
+  priority: "primary" | "secondary";
+  size: "default" | "compact";
+}) {
   return (
-    <div className={styles.buttonGrid}>
-      {/* Column group headers */}
-      <div className={styles.gridCorner} />
-      {priorities.map((p) => (
-        <div key={p} className={styles.gridGroupHeader}>
-          <span>{p === "primary" ? "Primary" : "Secondary"}</span>
-        </div>
-      ))}
+    <div className={styles.variantBlock}>
+      <span className={styles.variantLabel}>
+        {priorityLabels[priority]}{size === "compact" ? ", compact" : ""}
+      </span>
 
-      {/* Sub-column headers */}
-      <div className={styles.gridCorner} />
-      {priorities.map((p) => (
-        <React.Fragment key={`sub-${p}`}>
-          {iconVariants.map((iv) => (
-            <span key={`${p}-${iv.label}`} className={styles.gridColHeader}>{iv.label}</span>
-          ))}
-        </React.Fragment>
-      ))}
+      <div className={styles.buttonGrid}>
+        {/* Column headers */}
+        <div className={styles.gridCorner} />
+        {iconVariants.map((iv) => (
+          <span key={iv.label} className={styles.gridColHeader}>
+            {iv.label}
+          </span>
+        ))}
 
-      {/* State rows */}
-      {states.map((st) => (
-        <React.Fragment key={st.value}>
-          <span className={styles.gridRowHeader}>{st.label}</span>
-          {priorities.map((p) => (
-            <React.Fragment key={`${p}-${st.value}`}>
-              {iconVariants.map((iv) => (
-                <div key={`${p}-${st.value}-${iv.label}`} className={styles.gridCell}>
-                  <Button
-                    label="Button"
-                    priority={p}
-                    state={st.value}
-                    size={size}
-                    iconLeft={iv.iconLeft}
-                    iconRight={iv.iconRight}
-                  />
-                </div>
-              ))}
-            </React.Fragment>
-          ))}
-        </React.Fragment>
-      ))}
+        {/* State rows */}
+        {states.map((st) => (
+          <React.Fragment key={st.value}>
+            <span className={styles.gridRowHeader}>{st.label}</span>
+            {iconVariants.map((iv) => (
+              <div key={`${st.value}-${iv.label}`} className={styles.gridCell}>
+                <Button
+                  label="Button"
+                  priority={priority}
+                  state={st.value}
+                  size={size}
+                  iconLeft={iv.iconLeft}
+                  iconRight={iv.iconRight}
+                />
+              </div>
+            ))}
+          </React.Fragment>
+        ))}
+      </div>
     </div>
   );
 }
@@ -151,12 +152,11 @@ export default function ButtonPage() {
               <h2>Components</h2>
             </div>
 
-            {sizes.map((sz) => (
-              <div key={sz.value} className={styles.sizeBlock}>
-                <h3 className={styles.sizeLabel}>{sz.label}</h3>
-                <ButtonGrid size={sz.value} />
-              </div>
-            ))}
+            {sizes.map((sz) =>
+              priorities.map((p) => (
+                <ButtonGrid key={`${p}-${sz.value}`} priority={p} size={sz.value} />
+              ))
+            )}
           </section>
         </main>
       </div>
