@@ -72,8 +72,21 @@
    ============================================ */
 
 .ds-tabs__label {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
   color: var(--color-text-tertiary);
   transition: color 0.2s ease;
+}
+
+/* Hidden bold text reserves width so tabs don't shift on weight change */
+.ds-tabs__label::after {
+  content: attr(data-text);
+  font-weight: var(--font-title-body-weight); /* 600 — matches active weight */
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 /* ============================================

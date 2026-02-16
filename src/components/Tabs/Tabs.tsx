@@ -111,7 +111,7 @@ export const Tabs = ({
                 {tab.icon}
               </span>
             )}
-            <span className={`${baseClass}__label`}>{tab.label}</span>
+            <span className={`${baseClass}__label`} data-text={tab.label}>{tab.label}</span>
           </button>
         );
       })}
