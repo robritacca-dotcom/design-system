@@ -7,8 +7,8 @@
   display: inline-flex;
   align-items: center;
   gap: var(--gap-xs); /* 2px */
-  padding: var(--padding-xxs); /* 2px */
-  border-radius: var(--radius-sm); /* 8px */
+  padding: var(--padding-xs); /* 4px */
+  border-radius: var(--radius-full); /* pill shape */
   background-color: var(--color-bg-container-primary);
   border: var(--border-xs) solid var(--color-bg-container-border);
 }
@@ -36,7 +36,7 @@
   gap: var(--gap-sm); /* 8px */
   padding: var(--padding-sm) var(--padding-md); /* 8px 16px */
   border: none;
-  border-radius: var(--radius-xs); /* 4px */
+  border-radius: var(--radius-full); /* pill shape */
   background-color: transparent;
   cursor: pointer;
   transition: background-color 0.2s ease, color 0.2s ease;
