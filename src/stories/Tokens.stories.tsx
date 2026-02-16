@@ -319,9 +319,9 @@ export const Primitives: Story = {
       </TokenSection>
 
       <TokenSection title="Padding">
+        <SpacingToken name="XXXS" value="--primitive-padding-xxxs" />
         <SpacingToken name="XXS" value="--primitive-padding-xxs" />
         <SpacingToken name="XS" value="--primitive-padding-xs" />
-        <SpacingToken name="SM2" value="--primitive-padding-sm2" />
         <SpacingToken name="SM" value="--primitive-padding-sm" />
         <SpacingToken name="SM-MD" value="--primitive-padding-sm-md" />
         <SpacingToken name="MD" value="--primitive-padding-md" />
@@ -565,6 +565,7 @@ export const SemanticSpacing: Story = {
       </TokenSection>
 
       <TokenSection title="Padding">
+        <SpacingToken name="XXXS" value="--padding-xxxs" />
         <SpacingToken name="XXS" value="--padding-xxs" />
         <SpacingToken name="XS" value="--padding-xs" />
         <SpacingToken name="SM" value="--padding-sm" />

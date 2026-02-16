@@ -7,7 +7,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--gap-xxs); /* 2px */
-  padding: var(--padding-xs); /* 4px */
+  padding: var(--padding-xxs); /* 4px */
   border-radius: var(--radius-full); /* pill shape */
   background-color: var(--color-bg-container-primary);
   border: none;
@@ -118,7 +118,7 @@
    ============================================ */
 
 .ds-segmented-control--compact .ds-segmented-control__segment {
-  padding: var(--padding-xs) var(--padding-sm-md); /* 4px 12px */
+  padding: var(--padding-xs) var(--padding-sm-md); /* 6px 12px */
 }
 
 .ds-segmented-control--compact .ds-segmented-control__label {

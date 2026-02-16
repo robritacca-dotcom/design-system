@@ -149,7 +149,7 @@
    ============================================ */
 
 .ds-input--compact .ds-input__field {
-  padding: var(--padding-xs) var(--padding-sm-md); /* 4px 12px */
+  padding: var(--padding-xs) var(--padding-sm-md); /* 6px 12px */
   font-size: var(--font-paragraph-sm-size);
   line-height: var(--font-paragraph-sm-line-height);
   letter-spacing: var(--font-paragraph-sm-letter-spacing);
@@ -162,11 +162,11 @@
 }
 
 .ds-input--compact .ds-input__icon--left {
-  left: var(--padding-xs); /* 4px */
+  left: var(--padding-xs); /* 6px */
 }
 
 .ds-input--compact .ds-input__icon--right {
-  right: var(--padding-xs); /* 4px */
+  right: var(--padding-xs); /* 6px */
 }
 
 .ds-input--compact.ds-input--has-icon-left .ds-input__field {

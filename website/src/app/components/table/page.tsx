@@ -237,21 +237,21 @@ export default function TablePage() {
                     id: "1",
                     cells: {
                       setting: "Display name",
-                      value: <Input placeholder="Enter name" value="Alice Chen" />,
+                      value: <Input placeholder="Enter name" value="Alice Chen" size="compact" />,
                     },
                   },
                   {
                     id: "2",
                     cells: {
                       setting: "Email address",
-                      value: <Input placeholder="Enter email" value="alice@example.com" type="email" />,
+                      value: <Input placeholder="Enter email" value="alice@example.com" type="email" size="compact" />,
                     },
                   },
                   {
                     id: "3",
                     cells: {
                       setting: "Location",
-                      value: <Input placeholder="Enter city" />,
+                      value: <Input placeholder="Enter city" size="compact" />,
                     },
                   },
                 ]}

@@ -34,30 +34,15 @@ export default function InputPage() {
             Single-line text field with label, placeholder, icon support, and validation states for form data entry.
           </p>
 
-          {/* Default variants */}
+          {/* Default */}
           <section className={styles.section}>
             <div className={styles.sectionTitle}>
-              <h2>Variants</h2>
+              <h2>Default</h2>
             </div>
             <div className={styles.variantRow}>
               <div className={styles.variantItem}>
-                <Input label="Default" placeholder="Enter text..." onChange={() => {}} />
+                <Input label="No icon" placeholder="Enter text..." onChange={() => {}} />
               </div>
-              <div className={styles.variantItem}>
-                <Input label="With value" value="rob@example.com" onChange={() => {}} />
-              </div>
-              <div className={styles.variantItem}>
-                <Input label="Required" placeholder="Enter name" required onChange={() => {}} />
-              </div>
-            </div>
-          </section>
-
-          {/* With icons */}
-          <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>With icons</h2>
-            </div>
-            <div className={styles.variantRow}>
               <div className={styles.variantItem}>
                 <Input label="Icon left" placeholder="Search..." iconLeft="search" onChange={() => {}} />
               </div>
@@ -70,12 +55,39 @@ export default function InputPage() {
             </div>
           </section>
 
+          {/* Compact */}
+          <section className={styles.section}>
+            <div className={styles.sectionTitle}>
+              <h2>Compact</h2>
+            </div>
+            <div className={styles.variantRow}>
+              <div className={styles.variantItem}>
+                <Input label="No icon" placeholder="Enter text..." size="compact" onChange={() => {}} />
+              </div>
+              <div className={styles.variantItem}>
+                <Input label="Icon left" placeholder="Search..." iconLeft="search" size="compact" onChange={() => {}} />
+              </div>
+              <div className={styles.variantItem}>
+                <Input label="Icon right" placeholder="Email" iconRight="mail" size="compact" onChange={() => {}} />
+              </div>
+              <div className={styles.variantItem}>
+                <Input label="Both icons" placeholder="Search..." iconLeft="search" iconRight="tune" size="compact" onChange={() => {}} />
+              </div>
+            </div>
+          </section>
+
           {/* States */}
           <section className={styles.section}>
             <div className={styles.sectionTitle}>
               <h2>States</h2>
             </div>
             <div className={styles.variantRow}>
+              <div className={styles.variantItem}>
+                <Input label="With value" value="rob@example.com" onChange={() => {}} />
+              </div>
+              <div className={styles.variantItem}>
+                <Input label="Required" placeholder="Enter name" required onChange={() => {}} />
+              </div>
               <div className={styles.variantItem}>
                 <Input label="Helper text" placeholder="Enter password" helperText="Must be at least 8 characters" onChange={() => {}} />
               </div>

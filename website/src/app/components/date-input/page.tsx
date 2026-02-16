@@ -34,20 +34,38 @@ export default function DateInputPage() {
             Date input with native browser picker, calendar icon, label, and validation states.
           </p>
 
-          {/* Variants */}
+          {/* Default */}
           <section className={styles.section}>
             <div className={styles.sectionTitle}>
-              <h2>Variants</h2>
+              <h2>Default</h2>
             </div>
             <div className={styles.variantRow}>
               <div className={styles.variantItem}>
-                <DateInput label="Default" onChange={() => {}} />
+                <DateInput label="Placeholder" onChange={() => {}} />
               </div>
               <div className={styles.variantItem}>
                 <DateInput label="With value" value="2026-06-15" onChange={() => {}} />
               </div>
               <div className={styles.variantItem}>
                 <DateInput label="Required" required onChange={() => {}} />
+              </div>
+            </div>
+          </section>
+
+          {/* Compact */}
+          <section className={styles.section}>
+            <div className={styles.sectionTitle}>
+              <h2>Compact</h2>
+            </div>
+            <div className={styles.variantRow}>
+              <div className={styles.variantItem}>
+                <DateInput label="Placeholder" size="compact" onChange={() => {}} />
+              </div>
+              <div className={styles.variantItem}>
+                <DateInput label="With value" size="compact" value="2026-06-15" onChange={() => {}} />
+              </div>
+              <div className={styles.variantItem}>
+                <DateInput label="Required" size="compact" required onChange={() => {}} />
               </div>
             </div>
           </section>
@@ -66,24 +84,6 @@ export default function DateInputPage() {
               </div>
               <div className={styles.variantItem}>
                 <DateInput label="Disabled" value="2026-03-15" disabled onChange={() => {}} />
-              </div>
-            </div>
-          </section>
-
-          {/* Compact */}
-          <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Compact</h2>
-            </div>
-            <div className={styles.variantRow}>
-              <div className={styles.variantItem}>
-                <DateInput label="Date" size="compact" onChange={() => {}} />
-              </div>
-              <div className={styles.variantItem}>
-                <DateInput label="With value" size="compact" value="2026-06-15" onChange={() => {}} />
-              </div>
-              <div className={styles.variantItem}>
-                <DateInput label="Error" size="compact" error helperText="Invalid date" value="2020-01-01" onChange={() => {}} />
               </div>
             </div>
           </section>
