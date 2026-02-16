@@ -1,0 +1,136 @@
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { fn } from 'storybook/test';
+import { Dropdown } from './Dropdown';
+
+const sampleOptions = [
+  { label: 'Red', value: 'red' },
+  { label: 'Teal', value: 'teal' },
+  { label: 'Purple', value: 'purple' },
+  { label: 'Yellow', value: 'yellow' },
+  { label: 'Green', value: 'green' },
+];
+
+const meta = {
+  title: 'Components/Dropdown',
+  component: Dropdown,
+  parameters: {
+    layout: 'centered',
+  },
+  tags: ['autodocs'],
+  argTypes: {
+    label: { control: 'text', description: 'Dropdown label text' },
+    placeholder: { control: 'text', description: 'Placeholder text' },
+    value: { control: 'text', description: 'Currently selected value' },
+    disabled: { control: 'boolean', description: 'Whether the dropdown is disabled' },
+    required: { control: 'boolean', description: 'Whether the dropdown is required' },
+    error: { control: 'boolean', description: 'Error state' },
+    helperText: { control: 'text', description: 'Helper or error message' },
+  },
+  args: {
+    onChange: fn(),
+    options: sampleOptions,
+  },
+  decorators: [
+    (Story) => (
+      <div style={{ width: '320px', minHeight: '300px' }}>
+        <Story />
+      </div>
+    ),
+  ],
+} satisfies Meta<typeof Dropdown>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+  args: {
+    label: 'Colour',
+    placeholder: 'Select a colour',
+  },
+};
+
+export const WithValue: Story = {
+  args: {
+    label: 'Colour',
+    value: 'teal',
+  },
+};
+
+export const WithHelperText: Story = {
+  args: {
+    label: 'Theme',
+    placeholder: 'Choose a theme',
+    helperText: 'This sets the primary colour',
+  },
+};
+
+export const Required: Story = {
+  args: {
+    label: 'Country',
+    placeholder: 'Select your country',
+    required: true,
+    options: [
+      { label: 'Canada', value: 'ca' },
+      { label: 'United States', value: 'us' },
+      { label: 'United Kingdom', value: 'uk' },
+      { label: 'Australia', value: 'au' },
+    ],
+  },
+};
+
+export const Error: Story = {
+  args: {
+    label: 'Priority',
+    placeholder: 'Select priority',
+    error: true,
+    helperText: 'Please select a priority level',
+  },
+};
+
+export const WithDisabledOption: Story = {
+  args: {
+    label: 'Plan',
+    value: 'pro',
+    options: [
+      { label: 'Free', value: 'free' },
+      { label: 'Pro', value: 'pro' },
+      { label: 'Enterprise (coming soon)', value: 'enterprise', disabled: true },
+    ],
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    label: 'Colour',
+    value: 'teal',
+    disabled: true,
+  },
+};
+
+export const ManyOptions: Story = {
+  args: {
+    label: 'Icon',
+    placeholder: 'Choose an icon',
+    options: [
+      { label: 'Home', value: 'home' },
+      { label: 'Search', value: 'search' },
+      { label: 'Settings', value: 'settings' },
+      { label: 'Account', value: 'account_circle' },
+      { label: 'Notifications', value: 'notifications' },
+      { label: 'Mail', value: 'mail' },
+      { label: 'Chat', value: 'chat' },
+      { label: 'Calendar', value: 'calendar_today' },
+      { label: 'Star', value: 'star' },
+      { label: 'Bookmark', value: 'bookmark' },
+      { label: 'Download', value: 'download' },
+      { label: 'Upload', value: 'upload' },
+    ],
+  },
+};
+
+export const NoLabel: Story = {
+  args: {
+    placeholder: 'Filter by...',
+    ariaLabel: 'Filter options',
+  },
+};

@@ -1,0 +1,145 @@
+/* ============================================
+   TABS COMPONENT
+   Horizontal tab navigation with underline
+   ============================================ */
+
+.ds-tabs {
+  display: inline-flex;
+  align-items: stretch;
+  gap: 0;
+  border-bottom: var(--border-xs) solid var(--color-bg-container-border);
+}
+
+/* ============================================
+   FULL WIDTH
+   ============================================ */
+
+.ds-tabs--full-width {
+  display: flex;
+  width: 100%;
+}
+
+.ds-tabs--full-width .ds-tabs__tab {
+  flex: 1;
+}
+
+/* ============================================
+   TAB BUTTON
+   ============================================ */
+
+.ds-tabs__tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-sm); /* 8px */
+  padding: var(--padding-sm) var(--padding-md); /* 8px 16px */
+  border: none;
+  border-bottom: var(--border-md) solid transparent;
+  margin-bottom: calc(var(--border-xs) * -1); /* Overlap the container border */
+  background: none;
+  cursor: pointer;
+  position: relative;
+
+  /* Typography */
+  font-family: var(--font-paragraph-family);
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  letter-spacing: var(--font-paragraph-letter-spacing);
+
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+/* ============================================
+   SIZE — COMPACT
+   ============================================ */
+
+.ds-tabs--compact .ds-tabs__tab {
+  padding: var(--padding-xs) var(--radius-md); /* 4px 12px */
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+}
+
+.ds-tabs--compact .ds-tabs__icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+/* ============================================
+   LABEL
+   ============================================ */
+
+.ds-tabs__label {
+  color: var(--color-text-tertiary);
+  transition: color 0.2s ease;
+}
+
+/* ============================================
+   ICON
+   ============================================ */
+
+.ds-tabs__icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  color: var(--color-icon-secondary);
+  transition: color 0.2s ease;
+}
+
+/* ============================================
+   DEFAULT (inactive) TAB
+   ============================================ */
+
+.ds-tabs__tab:not(.ds-tabs__tab--disabled):hover .ds-tabs__label {
+  color: var(--color-text-primary);
+}
+
+.ds-tabs__tab:not(.ds-tabs__tab--disabled):hover .ds-tabs__icon {
+  color: var(--color-icon-primary);
+}
+
+.ds-tabs__tab:not(.ds-tabs__tab--disabled):hover {
+  border-bottom-color: var(--color-bg-container-secondary);
+}
+
+/* ============================================
+   ACTIVE TAB
+   ============================================ */
+
+.ds-tabs__tab--active {
+  border-bottom-color: var(--color-action-primary-bg);
+}
+
+.ds-tabs__tab--active .ds-tabs__label {
+  color: var(--color-text-primary);
+  font-weight: var(--font-title-body-weight);
+}
+
+.ds-tabs__tab--active .ds-tabs__icon {
+  color: var(--color-action-primary-bg);
+}
+
+.ds-tabs__tab--active:not(.ds-tabs__tab--disabled):hover {
+  border-bottom-color: var(--color-action-primary-bg);
+}
+
+/* ============================================
+   FOCUS STATE
+   ============================================ */
+
+.ds-tabs__tab:focus-visible {
+  outline: var(--border-md) solid var(--color-action-primary-border-tertiary);
+  outline-offset: -2px;
+  border-radius: var(--radius-xs);
+}
+
+/* ============================================
+   DISABLED STATE
+   ============================================ */
+
+.ds-tabs__tab--disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

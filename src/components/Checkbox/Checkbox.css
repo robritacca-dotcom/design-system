@@ -1,0 +1,113 @@
+/* ============================================
+   CHECKBOX COMPONENT
+   Custom checkbox with check / indeterminate icon
+   ============================================ */
+
+.ds-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-sm); /* 8px */
+  cursor: pointer;
+  user-select: none;
+}
+
+/* ============================================
+   BOX
+   ============================================ */
+
+.ds-checkbox__box {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  border: var(--border-md) solid var(--color-bg-container-border);
+  border-radius: var(--radius-xs); /* 4px */
+  background-color: var(--color-bg-container-primary-transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* ============================================
+   ICON
+   ============================================ */
+
+.ds-checkbox__icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  color: var(--color-action-primary-text-active);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+/* ============================================
+   LABEL
+   ============================================ */
+
+.ds-checkbox__label {
+  font-family: var(--font-paragraph-family);
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  letter-spacing: var(--font-paragraph-letter-spacing);
+  color: var(--color-text-primary);
+}
+
+/* ============================================
+   CHECKED STATE
+   ============================================ */
+
+.ds-checkbox--checked .ds-checkbox__box {
+  background-color: var(--color-action-primary-bg);
+  border-color: var(--color-action-primary-bg);
+}
+
+.ds-checkbox--checked .ds-checkbox__icon {
+  opacity: 1;
+}
+
+/* ============================================
+   INDETERMINATE STATE
+   ============================================ */
+
+.ds-checkbox--indeterminate .ds-checkbox__box {
+  background-color: var(--color-action-primary-bg);
+  border-color: var(--color-action-primary-bg);
+}
+
+.ds-checkbox--indeterminate .ds-checkbox__icon {
+  opacity: 1;
+}
+
+/* ============================================
+   HOVER STATE
+   ============================================ */
+
+.ds-checkbox:not(.ds-checkbox--disabled):hover .ds-checkbox__box {
+  border-color: var(--color-action-primary-bg);
+}
+
+.ds-checkbox--checked:not(.ds-checkbox--disabled):hover .ds-checkbox__box {
+  background-color: var(--color-action-primary-bg-hover);
+  border-color: var(--color-action-primary-bg-hover);
+}
+
+/* ============================================
+   FOCUS STATE
+   ============================================ */
+
+.ds-checkbox:focus-visible .ds-checkbox__box {
+  outline: var(--border-md) solid var(--color-action-primary-border-tertiary);
+  outline-offset: 2px;
+}
+
+/* ============================================
+   DISABLED STATE
+   ============================================ */
+
+.ds-checkbox--disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

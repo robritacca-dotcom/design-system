@@ -1,0 +1,126 @@
+/* ============================================
+   TEXTAREA COMPONENT
+   Multi-line text input with label and counter
+   ============================================ */
+
+.ds-textarea {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs); /* 2px */
+  width: 100%;
+}
+
+/* ============================================
+   LABEL
+   ============================================ */
+
+.ds-textarea__label {
+  font-family: var(--font-title-body-family);
+  font-size: var(--font-title-body-size);
+  font-weight: var(--font-title-body-weight);
+  line-height: var(--font-title-body-line-height);
+  letter-spacing: var(--font-title-body-letter-spacing);
+  color: var(--color-text-primary);
+}
+
+.ds-textarea__required {
+  color: var(--color-core-accent-red);
+}
+
+/* ============================================
+   FIELD
+   ============================================ */
+
+.ds-textarea__field {
+  width: 100%;
+  padding: var(--padding-sm) var(--padding-md); /* 8px 16px */
+  border: var(--border-xs) solid var(--color-bg-container-border);
+  border-radius: var(--radius-sm); /* 8px */
+  background-color: var(--color-bg-container-primary-transparent);
+
+  /* Typography */
+  font-family: var(--font-paragraph-family);
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  letter-spacing: var(--font-paragraph-letter-spacing);
+  color: var(--color-text-primary);
+
+  /* Transitions */
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.ds-textarea__field::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.ds-textarea__field:focus {
+  border-color: var(--color-action-primary-bg);
+  background-color: var(--color-bg-container-primary-transparent);
+}
+
+/* ============================================
+   FOOTER (helper + counter)
+   ============================================ */
+
+.ds-textarea__footer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--gap-sm);
+}
+
+.ds-textarea__helper {
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  color: var(--color-text-tertiary);
+  margin: 0;
+  flex: 1;
+}
+
+.ds-textarea__counter {
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+  flex-shrink: 0;
+}
+
+/* ============================================
+   ERROR STATE
+   ============================================ */
+
+.ds-textarea--error .ds-textarea__field {
+  border-color: var(--color-status-error-border);
+}
+
+.ds-textarea--error .ds-textarea__field:focus {
+  border-color: var(--color-status-error-border);
+}
+
+.ds-textarea--error .ds-textarea__helper {
+  color: var(--color-status-error-border);
+}
+
+.ds-textarea--error .ds-textarea__counter {
+  color: var(--color-status-error-border);
+}
+
+/* ============================================
+   DISABLED STATE
+   ============================================ */
+
+.ds-textarea--disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.ds-textarea--disabled .ds-textarea__field {
+  cursor: not-allowed;
+}
