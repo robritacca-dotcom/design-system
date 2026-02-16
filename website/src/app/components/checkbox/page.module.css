@@ -73,7 +73,19 @@
   width: 100%;
 }
 
+/* ============================================
+   VARIANT ROW
+   ============================================ */
+.variantRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--primitive-gap-xl);
+  align-items: flex-start;
+}
 
+.variantItem {
+  flex-shrink: 0;
+}
 
 /* ============================================
    STATE GRID
