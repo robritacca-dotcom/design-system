@@ -21,7 +21,7 @@ const sidebarLinks = [
   { href: "/foundations", label: "Contents" },
   { href: "/foundations/icons", label: "Icons" },
   { href: "/foundations/logos", label: "Logos" },
-  { href: "/foundations/colour-primitives", label: "Primative colours", active: true },
+  { href: "/foundations/colour-primitives", label: "Primitive colours", active: true },
   { href: "/foundations/colour-mode", label: "Semantic colours" },
   { href: "/foundations/spatial", label: "Semantic spacing" },
   { href: "/foundations/typography", label: "Typography" },
@@ -200,7 +200,7 @@ export default function PrimitiveColoursPage() {
         <main className={styles.dsContent} id="main-content">
           {/* Page Title */}
           <div className={`${styles.pageHeader} animate-in`}>
-            <h1 className={styles.pageTitle}>Primative colours</h1>
+            <h1 className={styles.pageTitle}>Primitive colours</h1>
             <PageLinks
               figmaUrl="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26"
               storybookPath="/?path=/docs/components-colourswatch--docs"
@@ -215,11 +215,11 @@ export default function PrimitiveColoursPage() {
           {/* Example images */}
           <div className={`${styles.exampleRow} animate-in animate-delay-2`}>
             <div className={styles.exampleItem}>
-              <Image src="/images/figma primative variables.png" alt="Figma primitive variables" width={500} height={300} className={styles.exampleImage} />
-              <p className={styles.exampleCaption}>Figma: Primative colour variables collection</p>
+              <Image src="/images/figma primitive variables.png" alt="Figma primitive variables" width={500} height={300} className={styles.exampleImage} />
+              <p className={styles.exampleCaption}>Figma: Primitive colour variables collection</p>
             </div>
             <div className={styles.exampleItem}>
-              <Image src="/images/primative tokens code.png" alt="Primitive tokens code" width={500} height={300} className={styles.exampleImage} />
+              <Image src="/images/primitive tokens code.png" alt="Primitive tokens code" width={500} height={300} className={styles.exampleImage} />
               <p className={styles.exampleCaption}>Code: tokens-primitives.css</p>
             </div>
           </div>

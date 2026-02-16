@@ -20,7 +20,7 @@ const sidebarLinks = [
   { href: "/foundations", label: "Contents" },
   { href: "/foundations/icons", label: "Icons" },
   { href: "/foundations/logos", label: "Logos", active: true },
-  { href: "/foundations/colour-primitives", label: "Primative colours" },
+  { href: "/foundations/colour-primitives", label: "Primitive colours" },
   { href: "/foundations/colour-mode", label: "Semantic colours" },
   { href: "/foundations/spatial", label: "Semantic spacing" },
   { href: "/foundations/typography", label: "Typography" },

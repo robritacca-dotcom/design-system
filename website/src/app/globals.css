@@ -232,15 +232,8 @@ a {
 }
 
 /* ============================================
-   MATERIAL SYMBOLS - Rounded only
+   MATERIAL SYMBOLS - Rounded only (Google Fonts CDN)
    ============================================ */
-@font-face {
-  font-family: 'Material Symbols Rounded';
-  font-style: normal;
-  font-weight: 100 700;
-  src: url('/MaterialSymbolsRounded-VariableFont_FILL,GRAD,opsz,wght.ttf') format('truetype');
-  font-display: block;
-}
 
 .material-symbols-rounded {
   font-family: 'Material Symbols Rounded';
