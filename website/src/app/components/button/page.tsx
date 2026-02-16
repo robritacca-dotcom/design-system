@@ -75,11 +75,13 @@ function ButtonGrid({
   priority: "primary" | "secondary";
   size: "default" | "compact";
 }) {
+  const heading = `${priorityLabels[priority]}${size === "compact" ? ", compact" : ""}`;
+
   return (
-    <div className={styles.variantBlock}>
-      <span className={styles.variantLabel}>
-        {priorityLabels[priority]}{size === "compact" ? ", compact" : ""}
-      </span>
+    <section className={styles.variantBlock}>
+      <div className={styles.sectionTitle}>
+        <h2>{heading}</h2>
+      </div>
 
       <div className={styles.buttonGrid}>
         {/* Column headers */}
@@ -109,7 +111,7 @@ function ButtonGrid({
           </React.Fragment>
         ))}
       </div>
-    </div>
+    </section>
   );
 }
 
@@ -146,18 +148,12 @@ export default function ButtonPage() {
             Standardized button components that power all interactive actions, from primary CTAs to top level and sub navigation.
           </p>
 
-          {/* Components section */}
-          <section className={`${styles.section} animate-in animate-delay-2`}>
-            <div className={styles.sectionTitle}>
-              <h2>Components</h2>
-            </div>
-
-            {sizes.map((sz) =>
-              priorities.map((p) => (
-                <ButtonGrid key={`${p}-${sz.value}`} priority={p} size={sz.value} />
-              ))
-            )}
-          </section>
+          {/* Variant grids — one per priority × size */}
+          {sizes.map((sz) =>
+            priorities.map((p) => (
+              <ButtonGrid key={`${p}-${sz.value}`} priority={p} size={sz.value} />
+            ))
+          )}
         </main>
       </div>
 

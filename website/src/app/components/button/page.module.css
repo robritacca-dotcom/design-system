@@ -48,13 +48,13 @@
 }
 
 /* ============================================
-   SECTION
+   VARIANT BLOCK — one per priority × size
+   heading + divider + grid
    ============================================ */
-.section {
+.variantBlock {
   display: flex;
   flex-direction: column;
   gap: var(--primitive-gap-xl);
-  width: 100%;
 }
 
 .sectionTitle {
@@ -71,23 +71,6 @@
   line-height: var(--font-heading-2-line-height);
   letter-spacing: var(--font-heading-2-letter-spacing);
   color: var(--color-text-secondary);
-}
-
-/* ============================================
-   VARIANT BLOCK — one per priority × size
-   ============================================ */
-.variantBlock {
-  display: flex;
-  flex-direction: column;
-  gap: var(--primitive-gap-md);
-}
-
-.variantLabel {
-  font-size: var(--font-heading-3-size);
-  font-weight: var(--font-heading-3-weight);
-  line-height: var(--font-heading-3-line-height);
-  letter-spacing: var(--font-heading-3-letter-spacing);
-  color: var(--color-text-tertiary);
 }
 
 /* ============================================
