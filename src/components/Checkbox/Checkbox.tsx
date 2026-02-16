@@ -1,6 +1,5 @@
 import React from 'react';
 import './Checkbox.css';
-import '../../fonts/material-symbols.css';
 
 export interface CheckboxProps {
   /** Label text */
@@ -22,6 +21,45 @@ export interface CheckboxProps {
   /** HTML id attribute */
   id?: string;
 }
+
+/** Custom SVG check icon — pixel-perfect centering without font metrics */
+const CheckIcon = () => (
+  <svg
+    className="ds-checkbox__icon"
+    width="14"
+    height="14"
+    viewBox="0 0 14 14"
+    fill="none"
+    aria-hidden="true"
+  >
+    <path
+      d="M2 7.5L5.5 11L12 3"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+/** Custom SVG minus icon for indeterminate state */
+const MinusIcon = () => (
+  <svg
+    className="ds-checkbox__icon"
+    width="14"
+    height="14"
+    viewBox="0 0 14 14"
+    fill="none"
+    aria-hidden="true"
+  >
+    <path
+      d="M2 7H12"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+  </svg>
+);
 
 export const Checkbox = ({
   label,
@@ -56,10 +94,6 @@ export const Checkbox = ({
     }
   };
 
-  const inputId = id || name || label?.toLowerCase().replace(/\s+/g, '-');
-
-  const icon = indeterminate && !checked ? 'remove' : 'check';
-
   return (
     <div
       className={classes}
@@ -72,9 +106,7 @@ export const Checkbox = ({
       tabIndex={disabled ? -1 : 0}
     >
       <div className={`${baseClass}__box`}>
-        <span className={`${baseClass}__icon material-symbols-rounded`} aria-hidden="true">
-          {icon}
-        </span>
+        {indeterminate && !checked ? <MinusIcon /> : <CheckIcon />}
       </div>
       {label && (
         <span className={`${baseClass}__label`}>{label}</span>
