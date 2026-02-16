@@ -7,39 +7,14 @@ import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
 import { ToggleSwitch } from "@design-system/components/ToggleSwitch/ToggleSwitch";
 import PageLinks from "../../../components/PageLinks/PageLinks";
+import { getNavLinks, getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
-
-const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/components", label: "Components", active: true },
-  { href: "/foundations", label: "Foundations" },
-];
-
-const sidebarLinks = [
-  { href: "/components", label: "Contents" },
-  { href: "/components/button", label: "Button" },
-  { href: "/components/button-group", label: "Button group" },
-  { href: "/components/card", label: "Card" },
-  { href: "/components/checkbox", label: "Checkbox" },
-  { href: "/components/dropdown", label: "Dropdown" },
-  { href: "/components/input", label: "Input" },
-  { href: "/components/navigation", label: "Navigation" },
-  { href: "/components/radio-button", label: "Radio button" },
-  { href: "/components/tabs", label: "Tabs" },
-  { href: "/components/textarea", label: "Textarea" },
-  { href: "/components/toggle-switch", label: "Toggle switch", active: true },
-];
-
-const subnavLinks = sidebarLinks.map((l) => ({
-  href: l.href,
-  label: l.label,
-  active: l.active,
-}));
-
 /* ============================================
    PAGE
    ============================================ */
+
+const navLinks = getNavLinks("Components");
+const { sidebarLinks, subnavLinks } = getSidebarLinks(componentsSidebarLinks, "/components/toggle-switch");
 
 export default function ToggleSwitchPage() {
   return (
