@@ -36,7 +36,7 @@
 
 .ds-colour-swatch__title-box {
   background: var(--color-bg-container-primary-semi);
-  border-radius: var(--radius-xs); /* 4px */
+  border-radius: var(--radius-md); /* 12px */
   padding: var(--padding-sm) var(--padding-md); /* 8px 16px */
   align-self: flex-start;
 }
@@ -57,7 +57,7 @@
 
 .ds-colour-swatch__values {
   background: var(--color-bg-container-primary-semi);
-  border-radius: var(--radius-xs); /* 4px */
+  border-radius: var(--radius-md); /* 12px */
   padding: var(--padding-sm) var(--padding-md); /* 8px 16px */
   display: flex;
   flex-direction: column;
