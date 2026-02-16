@@ -63,6 +63,7 @@ export default function HomePage() {
               priority="secondary"
               size="compact"
               iconLeft={<FigmaIcon />}
+              iconRight="open_in_new"
               href="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26?node-id=113-4830&t=cGHLTnH8IF8dvxNO-1"
               target="_blank"
               rel="noopener noreferrer"
@@ -72,6 +73,7 @@ export default function HomePage() {
               priority="secondary"
               size="compact"
               iconLeft={<StorybookIcon />}
+              iconRight="open_in_new"
               href="https://design-system-iota-one.vercel.app"
               target="_blank"
               rel="noopener noreferrer"
@@ -81,6 +83,7 @@ export default function HomePage() {
               priority="secondary"
               size="compact"
               iconLeft={<GitHubIcon />}
+              iconRight="open_in_new"
               href="https://github.com/robritacca-dotcom/design-system"
               target="_blank"
               rel="noopener noreferrer"
