@@ -5,10 +5,10 @@ import '../../fonts/material-symbols.css';
 export interface ButtonProps {
   /** Button text content */
   label?: string;
-  /** Material Symbol icon name for left side (e.g., 'menu', 'home', 'settings') */
-  iconLeft?: string;
-  /** Material Symbol icon name for right side (e.g., 'arrow_forward', 'chevron_right') */
-  iconRight?: string;
+  /** Icon for left side — Material Symbol name (string) or custom element (ReactNode) */
+  iconLeft?: string | React.ReactNode;
+  /** Icon for right side — Material Symbol name (string) or custom element (ReactNode) */
+  iconRight?: string | React.ReactNode;
   /** Button priority/variant */
   priority?: 'primary' | 'secondary';
   /** Button state */
@@ -21,6 +21,10 @@ export interface ButtonProps {
   onClick?: () => void;
   /** Optional href — renders as <a> instead of <button> */
   href?: string;
+  /** Optional target attribute for links */
+  target?: string;
+  /** Optional rel attribute for links */
+  rel?: string;
   /** Additional CSS classes */
   className?: string;
   /** @deprecated Use iconLeft instead */
@@ -42,6 +46,8 @@ export const Button = ({
   text = true,
   onClick,
   href,
+  target,
+  rel,
   className = '',
   icon, // deprecated, maps to iconLeft for backwards compatibility
 }: ButtonProps) => {
@@ -60,19 +66,27 @@ export const Button = ({
   // Backwards compatibility: icon prop maps to iconLeft
   const leftIcon = iconLeft || icon;
 
+  /** Render an icon slot — string → Material Symbol, ReactNode → custom element */
+  const renderIcon = (iconProp: string | React.ReactNode) => {
+    if (typeof iconProp === 'string') {
+      return (
+        <span className={`${baseClass}__icon ${iconClass}`} aria-hidden="true">
+          {iconProp}
+        </span>
+      );
+    }
+    return (
+      <span className={`${baseClass}__icon`} aria-hidden="true">
+        {iconProp}
+      </span>
+    );
+  };
+
   const children = (
     <>
-      {leftIcon && (
-        <span className={`${baseClass}__icon ${iconClass}`} aria-hidden="true">
-          {leftIcon}
-        </span>
-      )}
+      {leftIcon && renderIcon(leftIcon)}
       {text && <span className={`${baseClass}__text`}>{label}</span>}
-      {iconRight && (
-        <span className={`${baseClass}__icon ${iconClass}`} aria-hidden="true">
-          {iconRight}
-        </span>
-      )}
+      {iconRight && renderIcon(iconRight)}
     </>
   );
 
@@ -81,6 +95,8 @@ export const Button = ({
       <a
         className={classes}
         href={href}
+        target={target}
+        rel={rel}
         onClick={onClick}
       >
         {children}
