@@ -124,7 +124,7 @@ export const SegmentedControl = ({
                 {segment.icon}
               </span>
             )}
-            <span className={`${baseClass}__label`}>{segment.label}</span>
+            <span className={`${baseClass}__label`} data-text={segment.label}>{segment.label}</span>
           </button>
         );
       })}

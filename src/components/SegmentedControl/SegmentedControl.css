@@ -46,6 +46,9 @@
 
 /* Typography */
 .ds-segmented-control__label {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
   font-family: var(--font-paragraph-family);
   font-size: var(--font-paragraph-size);
   font-weight: var(--font-paragraph-weight);
@@ -53,6 +56,16 @@
   letter-spacing: var(--font-paragraph-letter-spacing);
   color: var(--color-text-secondary);
   transition: color 0.2s ease, font-weight 0.2s ease;
+}
+
+/* Hidden bold text reserves width so buttons don't shift on weight change */
+.ds-segmented-control__label::after {
+  content: attr(data-text);
+  font-weight: var(--font-title-body-weight); /* 600 — matches active weight */
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 /* Icon */
