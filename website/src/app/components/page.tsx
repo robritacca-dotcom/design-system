@@ -43,10 +43,10 @@ export default function ComponentsPage() {
           {/* Intro */}
           <div className={`${styles.introSection} animate-in animate-delay-1`}>
             <p className={styles.subDisplay}>
-              Reusable UI elements built from design tokens
+              Every building block in one place
             </p>
             <p className={styles.introBody}>
-              Components are assembled from tokens and shared layout structures. When a pattern appears more than once, it becomes a reusable component instead of a custom layout. Each component reflects how it is actually implemented, including structure, constraints, and states. Layout primitives handle structure, while components handle interaction and composition.
+              Each component is built on the colour, spacing, and typography tokens from the foundations pages. They all share the same padding rules, focus styles, and sizing conventions so they feel consistent when combined. Click into any component to see its variants, states, and sizing options.
             </p>
           </div>
 

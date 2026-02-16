@@ -31,7 +31,7 @@ export default function TextareaPage() {
           </div>
 
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Multi-line text input with optional character counter, resize control, and validation states.
+            Multi-line text field for longer content like descriptions, comments, and messages. Includes an optional character counter and resize handle. Use Input instead when the value fits on a single line.
           </p>
 
           {/* Default */}

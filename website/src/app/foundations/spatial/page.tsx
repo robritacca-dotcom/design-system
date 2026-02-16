@@ -98,7 +98,7 @@ export default function SemanticSpacingPage() {
 
           {/* Intro */}
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Semantic spacing tokens that define all layout, sizing, and dimensional rules used throughout the interface.
+            Four categories of spacing tokens, all defined as Figma variables. Border controls stroke thickness. Radius sets corner rounding, from subtle (4px) to full pill shapes. Gap is the space between sibling elements like buttons in a group or items in a list. Padding is the breathing room inside a container, like the space between a card edge and its content.
           </p>
 
           {/* Sections */}

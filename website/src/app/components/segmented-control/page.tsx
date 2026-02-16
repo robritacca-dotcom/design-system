@@ -31,7 +31,7 @@ export default function SegmentedControlPage() {
           </div>
 
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Pill-style toggle between related views with keyboard navigation, icon support, and compact sizing.
+            For toggling between a small set of related options, like view modes or filters. The active segment fills with the primary colour. Works well for 2 to 4 choices. Use Tabs instead when the options represent distinct content sections with their own panels.
           </p>
 
           {/* Default */}

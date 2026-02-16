@@ -31,7 +31,7 @@ export default function InstructionsPage() {
           </div>
 
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Step-by-step guidance with numbered badges, connecting lines, and support for icons, descriptions, and horizontal layout.
+            For walking users through a process in order. Each step gets a numbered badge and an optional connecting line to the next. Can run vertically for detailed walkthroughs or horizontally for compact progress indicators.
           </p>
 
           {/* Numbered */}

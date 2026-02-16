@@ -31,7 +31,7 @@ export default function InputPage() {
           </div>
 
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Single-line text field with label, placeholder, icon support, and validation states for form data entry.
+            Single-line text field for things like names, emails, and search queries. Supports labels, placeholders, left/right icons, helper text, and error states. Use Textarea instead when the content needs more than one line.
           </p>
 
           {/* Default */}

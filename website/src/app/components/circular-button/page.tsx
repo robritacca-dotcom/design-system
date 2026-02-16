@@ -40,7 +40,7 @@ export default function CircularButtonPage() {
           </div>
 
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Round icon button with primary and secondary variants, available in default and compact sizes for icon-only actions.
+            An icon-only button for actions where a label is not needed, like close, menu, or navigation arrows. Uses the same primary and secondary styles as Button but in a circular shape. Good for toolbars and compact UI where space is tight.
           </p>
 
           {/* Primary states */}

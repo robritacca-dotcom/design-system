@@ -39,7 +39,7 @@ export default function DropdownPage() {
           </div>
 
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Custom select control with keyboard navigation, chevron indicator, and support for disabled options.
+            A select menu for choosing one option from a list. Opens a styled dropdown panel with keyboard navigation and a check mark on the selected item. Use this instead of a native select when you need consistent styling across browsers.
           </p>
 
           {/* Default */}

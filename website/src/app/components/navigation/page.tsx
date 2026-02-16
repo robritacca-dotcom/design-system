@@ -72,7 +72,7 @@ export default function NavigationPage() {
 
           {/* Intro */}
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Core navigation components that define top level and secondary menus, designed to adapt across desktop breakpoints and mobile layouts.
+            The top-level nav bar used across the site. On desktop it shows the brand, page links, and trailing content like a theme toggle. On mobile it collapses to a hamburger that opens a slide-out drawer with nested subnav links.
           </p>
 
           {/* Desktop Nav */}

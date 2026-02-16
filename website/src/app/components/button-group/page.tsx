@@ -78,7 +78,7 @@ export default function ButtonGroupPage() {
 
           {/* Intro */}
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Composable button containers for navigation menus, toolbars, and action sets — horizontal or vertical, adapting to context.
+            Groups related buttons together in a row or column. Used for nav menus, toolbars, and action sets where buttons need consistent spacing and alignment without wiring it up manually each time.
           </p>
 
           {/* Horizontal */}
