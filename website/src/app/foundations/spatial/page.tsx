@@ -97,9 +97,14 @@ export default function SemanticSpacingPage() {
           </div>
 
           {/* Intro */}
-          <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Four categories of spacing tokens, all defined as Figma variables. Border controls stroke thickness. Radius sets corner rounding, from subtle (4px) to full pill shapes. Gap is the space between sibling elements like buttons in a group or items in a list. Padding is the breathing room inside a container, like the space between a card edge and its content.
-          </p>
+          <div className={`${styles.introSection} animate-in animate-delay-1`}>
+            <p className={styles.subDisplay}>
+              Four categories of spacing tokens from Figma variables
+            </p>
+            <p className={styles.introBody}>
+              Border controls stroke thickness. Radius sets corner rounding, from subtle (4px) to full pill shapes. Gap is the space between sibling elements like buttons in a group or items in a list. Padding is the breathing room inside a container, like the space between a card edge and its content.
+            </p>
+          </div>
 
           {/* Sections */}
           {spacingSections.map((section, idx) => (

@@ -39,9 +39,14 @@ export default function CircularButtonPage() {
             />
           </div>
 
-          <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            An icon-only button for actions where a label is not needed, like close, menu, or navigation arrows. Uses the same primary and secondary styles as Button but in a circular shape. Good for toolbars and compact UI where space is tight.
-          </p>
+          <div className={`${styles.introSection} animate-in animate-delay-1`}>
+            <p className={styles.subDisplay}>
+              An icon-only button in a circular shape
+            </p>
+            <p className={styles.introBody}>
+              For actions where a label is not needed, like close, menu, or navigation arrows. Uses the same primary and secondary styles as Button. Good for toolbars and compact UI where space is tight.
+            </p>
+          </div>
 
           {/* Primary states */}
           <section className={styles.section}>

@@ -175,9 +175,14 @@ export default function LogosPage() {
           </div>
 
           {/* Intro */}
-          <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            SVG logos for brands, tools, and clients referenced across the portfolio. Each is sized and exported from a single Figma frame to keep alignment and proportions consistent when used inside cards and layouts.
-          </p>
+          <div className={`${styles.introSection} animate-in animate-delay-1`}>
+            <p className={styles.subDisplay}>
+              SVG logos for brands, tools, and clients
+            </p>
+            <p className={styles.introBody}>
+              Each is sized and exported from a single Figma frame to keep alignment and proportions consistent when used inside cards and layouts.
+            </p>
+          </div>
 
           {/* Logo Categories */}
           {logoCategories.map((category, idx) => (

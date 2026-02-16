@@ -51,9 +51,14 @@ export default function TablePage() {
             />
           </div>
 
-          <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            For displaying structured data in rows and columns. Cells are flexible and can hold text, icons, form inputs, or action buttons. Supports striped rows for readability and a compact size for denser layouts.
-          </p>
+          <div className={`${styles.introSection} animate-in animate-delay-1`}>
+            <p className={styles.subDisplay}>
+              Structured data in rows and columns
+            </p>
+            <p className={styles.introBody}>
+              Cells are flexible and can hold text, icons, form inputs, or action buttons. Supports striped rows for readability and a compact size for denser layouts.
+            </p>
+          </div>
 
           {/* Default */}
           <section className={styles.section}>

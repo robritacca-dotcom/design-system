@@ -305,9 +305,14 @@ export default function IconsPage() {
           </div>
 
           {/* Intro */}
-          <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            {totalIcons} icons from Material Symbols 3, all using the rounded variant. Only one weight and one optical size across the entire set so they stay visually consistent next to text and inside components.
-          </p>
+          <div className={`${styles.introSection} animate-in animate-delay-1`}>
+            <p className={styles.subDisplay}>
+              Material Symbols 3, rounded variant only
+            </p>
+            <p className={styles.introBody}>
+              One weight and one optical size across the entire set so they stay visually consistent next to text and inside components. 389 icons are included.
+            </p>
+          </div>
 
           {/* Icon Categories */}
           {iconCategories.map((category, idx) => (

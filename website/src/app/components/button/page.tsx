@@ -122,9 +122,14 @@ export default function ButtonPage() {
           </div>
 
           {/* Intro */}
-          <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            The main action element. Primary buttons have a border and fill on hover for high-emphasis actions. Secondary buttons are transparent and blend into the surface for lower-priority options. Both come in default and compact sizes.
-          </p>
+          <div className={`${styles.introSection} animate-in animate-delay-1`}>
+            <p className={styles.subDisplay}>
+              The main action element
+            </p>
+            <p className={styles.introBody}>
+              Primary buttons have a border and fill on hover for high-emphasis actions. Secondary buttons are transparent and blend into the surface for lower-priority options. Both come in default and compact sizes.
+            </p>
+          </div>
 
           {/* Variant grids — one per priority × size */}
           {sizes.map((sz) =>

@@ -44,9 +44,14 @@ export default function CardPage() {
           </div>
 
           {/* Intro */}
-          <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            A family of card components used throughout the system. The base card handles previews and navigation links. Specialized variants like colour swatches, spacing swatches, and typography specimens are purpose-built for documenting tokens on the foundations pages.
-          </p>
+          <div className={`${styles.introSection} animate-in animate-delay-1`}>
+            <p className={styles.subDisplay}>
+              A family of card components used throughout the system
+            </p>
+            <p className={styles.introBody}>
+              The base card handles previews and navigation links. Specialized variants like colour swatches, spacing swatches, and typography specimens are purpose-built for documenting tokens on the foundations pages.
+            </p>
+          </div>
 
           {/* ----------------------------------------
               CARD — base preview / navigation card

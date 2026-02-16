@@ -30,9 +30,14 @@ export default function SegmentedControlPage() {
             />
           </div>
 
-          <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            For toggling between a small set of related options, like view modes or filters. The active segment fills with the primary colour. Works well for 2 to 4 choices. Use Tabs instead when the options represent distinct content sections with their own panels.
-          </p>
+          <div className={`${styles.introSection} animate-in animate-delay-1`}>
+            <p className={styles.subDisplay}>
+              Toggle between a small set of related options
+            </p>
+            <p className={styles.introBody}>
+              For view modes or filters where the active segment fills with the primary colour. Works well for 2 to 4 choices. Use Tabs instead when the options represent distinct content sections with their own panels.
+            </p>
+          </div>
 
           {/* Default */}
           <section className={styles.section}>

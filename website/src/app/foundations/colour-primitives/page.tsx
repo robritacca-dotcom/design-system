@@ -189,9 +189,14 @@ export default function PrimitiveColoursPage() {
           </div>
 
           {/* Intro */}
-          <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Seven colour ramps built from a single palette in Figma. These raw values never get used directly in components. Instead, they feed into the semantic layer where each value gets assigned a role like "page background" or "primary text". Keeping them separate means the palette can evolve without touching any component styles.
-          </p>
+          <div className={`${styles.introSection} animate-in animate-delay-1`}>
+            <p className={styles.subDisplay}>
+              Seven colour ramps built from a single palette in Figma
+            </p>
+            <p className={styles.introBody}>
+              These raw values never get used directly in components. Instead, they feed into the semantic layer where each value gets assigned a role like "page background" or "primary text". Keeping them separate means the palette can evolve without touching any component styles.
+            </p>
+          </div>
 
           {/* Example images */}
           <div className={`${styles.exampleRow} animate-in animate-delay-2`}>

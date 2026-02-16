@@ -38,9 +38,14 @@ export default function DropdownPage() {
             />
           </div>
 
-          <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            A select menu for choosing one option from a list. Opens a styled dropdown panel with keyboard navigation and a check mark on the selected item. Use this instead of a native select when you need consistent styling across browsers.
-          </p>
+          <div className={`${styles.introSection} animate-in animate-delay-1`}>
+            <p className={styles.subDisplay}>
+              A select menu for choosing one option from a list
+            </p>
+            <p className={styles.introBody}>
+              Opens a styled dropdown panel with keyboard navigation and a check mark on the selected item. Use this instead of a native select when you need consistent styling across browsers.
+            </p>
+          </div>
 
           {/* Default */}
           <section className={styles.section}>
