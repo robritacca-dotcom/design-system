@@ -7,6 +7,12 @@ import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import Footer from "../../components/Footer/Footer";
 import TocCard from "../../components/TocCard/TocCard";
 import { Button } from "@design-system/components/Button/Button";
+import { Checkbox } from "@design-system/components/Checkbox/Checkbox";
+import { Dropdown } from "@design-system/components/Dropdown/Dropdown";
+import { Input } from "@design-system/components/Input/Input";
+import { RadioButton } from "@design-system/components/RadioButton/RadioButton";
+import { Tabs } from "@design-system/components/Tabs/Tabs";
+import { Textarea } from "@design-system/components/Textarea/Textarea";
 import PageLinks from "../../components/PageLinks/PageLinks";
 import styles from "./page.module.css";
 
@@ -22,7 +28,13 @@ const sidebarLinks = [
   { href: "/components/button", label: "Button" },
   { href: "/components/button-group", label: "Button group" },
   { href: "/components/card", label: "Card" },
+  { href: "/components/checkbox", label: "Checkbox" },
+  { href: "/components/dropdown", label: "Dropdown" },
+  { href: "/components/input", label: "Input" },
   { href: "/components/navigation", label: "Navigation" },
+  { href: "/components/radio-button", label: "Radio button" },
+  { href: "/components/tabs", label: "Tabs" },
+  { href: "/components/textarea", label: "Textarea" },
   { href: "/components/toggle-switch", label: "Toggle switch" },
 ];
 
@@ -83,6 +95,37 @@ export default function ComponentsPage() {
               </div>
             </TocCard>
 
+            {/* Checkbox */}
+            <TocCard href="/components/checkbox" title="Checkbox">
+              <div className={`${styles.circlePreview} ${styles.circleDashed}`} style={{ gap: "16px" }}>
+                <Checkbox checked={true} ariaLabel="Checked" onChange={() => {}} />
+                <Checkbox checked={false} ariaLabel="Unchecked" onChange={() => {}} />
+              </div>
+            </TocCard>
+
+            {/* Dropdown */}
+            <TocCard href="/components/dropdown" title="Dropdown">
+              <div className={`${styles.circlePreview} ${styles.circleDashed}`}>
+                <div className={styles.dropdownPreview}>
+                  <span className={styles.dropdownPreviewText}>Select</span>
+                  <span className="material-symbols-rounded" style={{ fontSize: "20px", color: "var(--color-icon-primary)" }}>
+                    expand_more
+                  </span>
+                </div>
+              </div>
+            </TocCard>
+
+            {/* Input */}
+            <TocCard href="/components/input" title="Input">
+              <div className={`${styles.circlePreview} ${styles.circleDashed}`}>
+                <div className={styles.inputPreview}>
+                  <span style={{ color: "var(--color-text-tertiary)", fontSize: "14px" }}>
+                    Enter text...
+                  </span>
+                </div>
+              </div>
+            </TocCard>
+
             {/* Navigation */}
             <TocCard href="/components/navigation" title="Navigation">
               <div className={`${styles.circlePreview} ${styles.circleDashed}`} style={{ gap: "20px" }}>
@@ -90,6 +133,40 @@ export default function ComponentsPage() {
                 <span style={{ fontSize: "16px", fontWeight: 600, color: "var(--color-text-primary)", letterSpacing: "-0.16px" }}>
                   robr0
                 </span>
+              </div>
+            </TocCard>
+
+            {/* Radio button */}
+            <TocCard href="/components/radio-button" title="Radio button">
+              <div className={`${styles.circlePreview} ${styles.circleDashed}`} style={{ gap: "16px", flexDirection: "column" }}>
+                <RadioButton label="Option A" checked={true} onChange={() => {}} />
+                <RadioButton label="Option B" checked={false} onChange={() => {}} />
+              </div>
+            </TocCard>
+
+            {/* Tabs */}
+            <TocCard href="/components/tabs" title="Tabs">
+              <div className={`${styles.circlePreview} ${styles.circleDashed}`}>
+                <Tabs
+                  tabs={[
+                    { label: "One", value: "one" },
+                    { label: "Two", value: "two" },
+                  ]}
+                  activeTab="one"
+                  size="compact"
+                  onTabChange={() => {}}
+                />
+              </div>
+            </TocCard>
+
+            {/* Textarea */}
+            <TocCard href="/components/textarea" title="Textarea">
+              <div className={`${styles.circlePreview} ${styles.circleDashed}`}>
+                <div className={styles.textareaPreview}>
+                  <span style={{ color: "var(--color-text-tertiary)", fontSize: "14px" }}>
+                    Enter text...
+                  </span>
+                </div>
               </div>
             </TocCard>
 

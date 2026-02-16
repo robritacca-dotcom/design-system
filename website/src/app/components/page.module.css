@@ -110,6 +110,48 @@
 }
 
 /* ============================================
+   DROPDOWN PREVIEW (mini dropdown inside circle)
+   ============================================ */
+.dropdownPreview {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 120px;
+  padding: 6px 10px;
+  border: 1px solid var(--color-bg-container-border);
+  border-radius: var(--primitive-radius-sm);
+  background: var(--color-bg-container-primary-transparent);
+}
+
+.dropdownPreviewText {
+  font-size: 14px;
+  color: var(--color-text-tertiary);
+}
+
+/* ============================================
+   INPUT PREVIEW (mini input inside circle)
+   ============================================ */
+.inputPreview {
+  width: 120px;
+  padding: 6px 10px;
+  border: 1px solid var(--color-bg-container-border);
+  border-radius: var(--primitive-radius-sm);
+  background: var(--color-bg-container-primary-transparent);
+}
+
+/* ============================================
+   TEXTAREA PREVIEW (mini textarea inside circle)
+   ============================================ */
+.textareaPreview {
+  width: 120px;
+  height: 60px;
+  padding: 6px 10px;
+  border: 1px solid var(--color-bg-container-border);
+  border-radius: var(--primitive-radius-sm);
+  background: var(--color-bg-container-primary-transparent);
+}
+
+/* ============================================
    TOGGLE PREVIEW (mini toggle inside circle)
    ============================================ */
 .togglePreview {
