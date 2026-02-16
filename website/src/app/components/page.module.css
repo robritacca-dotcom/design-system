@@ -270,6 +270,11 @@
    RESPONSIVE
    ============================================ */
 @media (max-width: 959px) {
+  .pageHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
   .dsLayout {
     padding-left: 0;
     min-width: 0;
