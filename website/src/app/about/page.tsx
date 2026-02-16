@@ -67,7 +67,7 @@ export default function AboutDsPage() {
                   <div className={`${styles.resumeCompany} animate-in animate-delay-2`}>
                     <div className={styles.companyHeader}>
                       <Image src="/logos/Figma.svg" alt="Figma" width={28} height={28} className={styles.companyLogo} />
-                      <span className={styles.companyName}>Product name</span>
+                      <span className={styles.companyName}>Figma</span>
                     </div>
                     <div className={styles.companyRoles}>
                       <div className={styles.timelineBar} />
