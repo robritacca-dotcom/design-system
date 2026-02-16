@@ -42,10 +42,10 @@ export default function DropdownPage() {
             Custom select control with keyboard navigation, chevron indicator, and support for disabled options.
           </p>
 
-          {/* Variants */}
+          {/* Default */}
           <section className={styles.section}>
             <div className={styles.sectionTitle}>
-              <h2>Variants</h2>
+              <h2>Default</h2>
             </div>
             <div className={styles.variantRow}>
               <div className={styles.variantItem}>
@@ -56,6 +56,24 @@ export default function DropdownPage() {
               </div>
               <div className={styles.variantItem}>
                 <Dropdown label="Required" placeholder="Select..." required options={colourOptions} onChange={() => {}} />
+              </div>
+            </div>
+          </section>
+
+          {/* Compact */}
+          <section className={styles.section}>
+            <div className={styles.sectionTitle}>
+              <h2>Compact</h2>
+            </div>
+            <div className={styles.variantRow}>
+              <div className={styles.variantItem}>
+                <Dropdown label="Placeholder" placeholder="Select a colour" size="compact" options={colourOptions} onChange={() => {}} />
+              </div>
+              <div className={styles.variantItem}>
+                <Dropdown label="With value" value="teal" size="compact" options={colourOptions} onChange={() => {}} />
+              </div>
+              <div className={styles.variantItem}>
+                <Dropdown label="Required" placeholder="Select..." required size="compact" options={colourOptions} onChange={() => {}} />
               </div>
             </div>
           </section>
@@ -75,18 +93,9 @@ export default function DropdownPage() {
               <div className={styles.variantItem}>
                 <Dropdown label="Disabled" value="teal" disabled options={colourOptions} onChange={() => {}} />
               </div>
-            </div>
-          </section>
-
-          {/* Disabled option */}
-          <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>With disabled option</h2>
-            </div>
-            <div className={styles.variantRow}>
               <div className={styles.variantItem}>
                 <Dropdown
-                  label="Plan"
+                  label="Disabled option"
                   value="pro"
                   options={[
                     { label: "Free", value: "free" },

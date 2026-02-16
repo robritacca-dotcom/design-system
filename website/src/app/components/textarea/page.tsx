@@ -34,14 +34,14 @@ export default function TextareaPage() {
             Multi-line text input with optional character counter, resize control, and validation states.
           </p>
 
-          {/* Variants */}
+          {/* Default */}
           <section className={styles.section}>
             <div className={styles.sectionTitle}>
-              <h2>Variants</h2>
+              <h2>Default</h2>
             </div>
             <div className={styles.variantRow}>
               <div className={styles.variantItem}>
-                <Textarea label="Default" placeholder="Enter a description..." onChange={() => {}} />
+                <Textarea label="Placeholder" placeholder="Enter a description..." onChange={() => {}} />
               </div>
               <div className={styles.variantItem}>
                 <Textarea label="With value" value="Design systems engineer passionate about tokens, components, and scalable UI architecture." onChange={() => {}} />
@@ -52,17 +52,20 @@ export default function TextareaPage() {
             </div>
           </section>
 
-          {/* Counter and helper */}
+          {/* Compact */}
           <section className={styles.section}>
             <div className={styles.sectionTitle}>
-              <h2>Counter and helper text</h2>
+              <h2>Compact</h2>
             </div>
             <div className={styles.variantRow}>
               <div className={styles.variantItem}>
-                <Textarea label="Helper text" placeholder="Tell us what you think..." helperText="Your feedback helps us improve" onChange={() => {}} />
+                <Textarea label="Placeholder" placeholder="Enter a description..." size="compact" rows={3} onChange={() => {}} />
               </div>
               <div className={styles.variantItem}>
-                <Textarea label="Character counter" placeholder="What's happening?" maxLength={280} value="Building a design system" onChange={() => {}} />
+                <Textarea label="With value" value="Compact textarea with smaller text and tighter padding." size="compact" rows={3} onChange={() => {}} />
+              </div>
+              <div className={styles.variantItem}>
+                <Textarea label="Required" placeholder="Add your comments..." required size="compact" rows={3} onChange={() => {}} />
               </div>
             </div>
           </section>
@@ -73,6 +76,12 @@ export default function TextareaPage() {
               <h2>States</h2>
             </div>
             <div className={styles.variantRow}>
+              <div className={styles.variantItem}>
+                <Textarea label="Helper text" placeholder="Tell us what you think..." helperText="Your feedback helps us improve" onChange={() => {}} />
+              </div>
+              <div className={styles.variantItem}>
+                <Textarea label="Character counter" placeholder="What's happening?" maxLength={280} value="Building a design system" onChange={() => {}} />
+              </div>
               <div className={styles.variantItem}>
                 <Textarea label="Error" value="Too short" error helperText="Description must be at least 50 characters" onChange={() => {}} />
               </div>
