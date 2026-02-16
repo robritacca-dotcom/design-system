@@ -86,19 +86,19 @@
 }
 
 .ds-input__icon--left {
-  left: var(--padding-sm); /* 8px */
+  left: var(--padding-md); /* 16px */
 }
 
 .ds-input__icon--right {
-  right: var(--padding-sm); /* 8px */
+  right: var(--padding-md); /* 16px */
 }
 
 .ds-input--has-icon-left .ds-input__field {
-  padding-left: calc(var(--padding-sm) + 24px + var(--gap-sm)); /* icon offset */
+  padding-left: calc(var(--padding-md) + 24px + var(--gap-sm)); /* 16px + 24px icon + 8px gap */
 }
 
 .ds-input--has-icon-right .ds-input__field {
-  padding-right: calc(var(--padding-sm) + 24px + var(--gap-sm)); /* icon offset */
+  padding-right: calc(var(--padding-md) + 24px + var(--gap-sm)); /* 16px + 24px icon + 8px gap */
 }
 
 /* ============================================
@@ -162,19 +162,19 @@
 }
 
 .ds-input--compact .ds-input__icon--left {
-  left: var(--padding-xs); /* 6px */
+  left: var(--padding-sm-md); /* 12px */
 }
 
 .ds-input--compact .ds-input__icon--right {
-  right: var(--padding-xs); /* 6px */
+  right: var(--padding-sm-md); /* 12px */
 }
 
 .ds-input--compact.ds-input--has-icon-left .ds-input__field {
-  padding-left: calc(var(--padding-xs) + 20px + var(--gap-sm)); /* compact icon offset */
+  padding-left: calc(var(--padding-sm-md) + 20px + var(--gap-sm)); /* 12px + 20px icon + 8px gap */
 }
 
 .ds-input--compact.ds-input--has-icon-right .ds-input__field {
-  padding-right: calc(var(--padding-xs) + 20px + var(--gap-sm)); /* compact icon offset */
+  padding-right: calc(var(--padding-sm-md) + 20px + var(--gap-sm)); /* 12px + 20px icon + 8px gap */
 }
 
 .ds-input--compact .ds-input__label {
