@@ -75,14 +75,14 @@
 }
 
 /* ============================================
-   BUTTON GRID — 7-column table layout
+   BUTTON GRID — 9-column table layout
    col 1: state label
-   cols 2–4: Primary (no icon / icon left / icon right)
-   cols 5–7: Secondary (no icon / icon left / icon right)
+   cols 2–5: Primary (no icon / icon left / icon right / both)
+   cols 6–9: Secondary (no icon / icon left / icon right / both)
    ============================================ */
 .buttonGrid {
   display: grid;
-  grid-template-columns: auto repeat(6, 1fr);
+  grid-template-columns: auto repeat(8, 1fr);
   gap: var(--primitive-gap-md) var(--primitive-gap-md);
   align-items: center;
   width: 100%;
@@ -93,9 +93,9 @@
   /* Intentionally empty */
 }
 
-/* Group headers (Primary / Secondary) — span 3 cols each */
+/* Group headers (Primary / Secondary) — span 4 cols each */
 .gridGroupHeader {
-  grid-column: span 3;
+  grid-column: span 4;
   text-align: center;
   font-size: var(--font-paragraph-size);
   font-weight: var(--font-paragraph-weight);

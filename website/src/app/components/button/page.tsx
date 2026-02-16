@@ -49,8 +49,20 @@ const sizes = [
   { label: "Compact", value: "compact" as const },
 ];
 
+const iconVariants = [
+  { label: "No icon", iconLeft: undefined, iconRight: undefined },
+  { label: "Icon, left", iconLeft: "grid_view", iconRight: undefined },
+  { label: "Icon, right", iconLeft: undefined, iconRight: "arrow_forward" },
+  { label: "Both icons", iconLeft: "grid_view", iconRight: "arrow_forward" },
+] as const;
+
 /* ============================================
    BUTTON GRID — reusable for each size
+   5-column layout: state | primary variants x4 icon combos… wait
+   Actually: 9-column layout:
+   col 1: state label
+   cols 2–5: Primary (no icon / icon left / icon right / both)
+   cols 6–9: Secondary (no icon / icon left / icon right / both)
    ============================================ */
 
 function ButtonGrid({ size }: { size: "default" | "compact" }) {
@@ -68,9 +80,9 @@ function ButtonGrid({ size }: { size: "default" | "compact" }) {
       <div className={styles.gridCorner} />
       {priorities.map((p) => (
         <React.Fragment key={`sub-${p}`}>
-          <span className={styles.gridColHeader}>No icon</span>
-          <span className={styles.gridColHeader}>Icon, left</span>
-          <span className={styles.gridColHeader}>Icon, right</span>
+          {iconVariants.map((iv) => (
+            <span key={`${p}-${iv.label}`} className={styles.gridColHeader}>{iv.label}</span>
+          ))}
         </React.Fragment>
       ))}
 
@@ -80,15 +92,18 @@ function ButtonGrid({ size }: { size: "default" | "compact" }) {
           <span className={styles.gridRowHeader}>{st.label}</span>
           {priorities.map((p) => (
             <React.Fragment key={`${p}-${st.value}`}>
-              <div className={styles.gridCell}>
-                <Button label="Button" priority={p} state={st.value} size={size} />
-              </div>
-              <div className={styles.gridCell}>
-                <Button label="Button" priority={p} state={st.value} size={size} iconLeft="grid_view" />
-              </div>
-              <div className={styles.gridCell}>
-                <Button label="Button" priority={p} state={st.value} size={size} iconRight="arrow_forward" />
-              </div>
+              {iconVariants.map((iv) => (
+                <div key={`${p}-${st.value}-${iv.label}`} className={styles.gridCell}>
+                  <Button
+                    label="Button"
+                    priority={p}
+                    state={st.value}
+                    size={size}
+                    iconLeft={iv.iconLeft}
+                    iconRight={iv.iconRight}
+                  />
+                </div>
+              ))}
             </React.Fragment>
           ))}
         </React.Fragment>
