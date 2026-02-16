@@ -42,6 +42,38 @@
 }
 
 /* ============================================
+   HOME LINKS — Figma / Storybook / GitHub
+   ============================================ */
+.homeLinks {
+  display: flex;
+  align-items: center;
+  gap: var(--primitive-gap-lg);
+  margin-top: var(--padding-sm);
+}
+
+.homeLink {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  font-family: var(--font-paragraph-family);
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  letter-spacing: var(--font-paragraph-letter-spacing);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.homeLink:hover {
+  color: var(--color-text-primary);
+}
+
+.homeLink svg {
+  flex-shrink: 0;
+}
+
+/* ============================================
    RESPONSIVE
    ============================================ */
 @media (max-width: 959px) {
@@ -65,5 +97,14 @@
   .homeSubtitle {
     font-size: 20px;
     line-height: 30px;
+  }
+
+  .homeLinks {
+    gap: var(--primitive-gap-md);
+  }
+
+  .homeLink {
+    font-size: var(--font-paragraph-sm-size);
+    line-height: var(--font-paragraph-sm-line-height);
   }
 }
