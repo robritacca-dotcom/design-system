@@ -28,6 +28,7 @@ export const navLinks: NavLink[] = [
 export const componentsSidebarLinks: NavLink[] = [
   { href: "/components", label: "Contents" },
   { href: "/components/alert", label: "Alert" },
+  { href: "/components/badge", label: "Badge" },
   { href: "/components/button", label: "Button" },
   { href: "/components/button-group", label: "Button group" },
   { href: "/components/card", label: "Card" },
