@@ -101,7 +101,7 @@
   top: 100%;
   left: 0;
   right: 0;
-  margin-top: var(--gap-xs); /* 2px */
+  margin-top: var(--gap-xxs); /* 2px */
   padding: var(--padding-xs) 0; /* 4px 0 */
   border: var(--border-xs) solid var(--color-bg-container-border);
   border-radius: var(--radius-sm); /* 8px */

@@ -6,7 +6,7 @@
 .ds-segmented-control {
   display: inline-flex;
   align-items: center;
-  gap: var(--gap-xs); /* 2px */
+  gap: var(--gap-xxs); /* 2px */
   padding: var(--padding-xs); /* 4px */
   border-radius: var(--radius-full); /* pill shape */
   background-color: var(--color-bg-container-primary);

@@ -106,8 +106,10 @@
   --border-xs: var(--primitive-border-xs);
   --border-md: var(--primitive-border-md);
 
+  --gap-xxs: var(--primitive-gap-xxs);
   --gap-xs: var(--primitive-gap-xs);
   --gap-sm: var(--primitive-gap-sm);
+  --gap-sm-md: var(--primitive-gap-sm-md);
   --gap-md: var(--primitive-gap-md);
   --gap-lg: var(--primitive-gap-lg);
   --gap-xl: var(--primitive-gap-xl);

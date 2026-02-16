@@ -139,8 +139,10 @@
   --primitive-border-md: 2px;
 
   /* Gap */
-  --primitive-gap-xs: 2px;
+  --primitive-gap-xxs: 2px;
+  --primitive-gap-xs: 4px;
   --primitive-gap-sm: 8px;
+  --primitive-gap-sm-md: 12px;
   --primitive-gap-md: 16px;
   --primitive-gap-lg: 20px;
   --primitive-gap-xl: 40px;
