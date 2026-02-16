@@ -98,7 +98,7 @@ export default function ComponentsPage() {
                 <div className={styles.togglePreview}>
                   <div className={styles.toggleSocket}>
                     <div className={styles.toggleThumb}>
-                      <span className="material-symbols-outlined" style={{ fontSize: "14px", color: "var(--color-action-primary-bg)" }}>
+                      <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-action-primary-bg)" }}>
                         check
                       </span>
                     </div>

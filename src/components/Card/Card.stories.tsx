@@ -84,7 +84,7 @@ export const WithPlaceholder: Story = {
         }}
       >
         <span
-          className="material-symbols-outlined"
+          className="material-symbols-rounded"
           style={{ fontSize: '32px', color: 'var(--color-text-tertiary)' }}
         >
           widgets

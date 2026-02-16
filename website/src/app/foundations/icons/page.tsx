@@ -1,0 +1,351 @@
+"use client";
+
+import React from "react";
+import Header from "../../../components/Header/Header";
+import Sidebar from "../../../components/Sidebar/Sidebar";
+import BlurBackground from "../../../components/BlurBackground/BlurBackground";
+import Footer from "../../../components/Footer/Footer";
+import { EntityCard } from "@design-system/components/EntityCard/EntityCard";
+import styles from "./page.module.css";
+
+const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
+  { href: "/components", label: "Components" },
+  { href: "/foundations", label: "Foundations", active: true },
+];
+
+const sidebarLinks = [
+  { href: "/foundations", label: "About" },
+  { href: "/foundations/icons", label: "Icons", active: true },
+  { href: "/foundations/logos", label: "Logos" },
+  { href: "/foundations/colour-primitives", label: "Primative colours" },
+  { href: "/foundations/colour-mode", label: "Semantic colours" },
+  { href: "/foundations/spatial", label: "Semantic spacing" },
+  { href: "/foundations/typography", label: "Typography" },
+];
+
+const subnavLinks = sidebarLinks.map((l) => ({
+  href: l.href,
+  label: l.label,
+  active: l.active,
+}));
+
+/* ============================================
+   ICON DATA
+   Material 3 — Rounded only.
+   Grouped into logical categories.
+   ============================================ */
+
+interface IconCategory {
+  title: string;
+  icons: string[];
+}
+
+const iconCategories: IconCategory[] = [
+  {
+    title: "Navigation",
+    icons: [
+      "home", "search", "menu", "close", "arrow_back", "arrow_forward",
+      "arrow_upward", "arrow_downward", "chevron_left", "chevron_right",
+      "expand_more", "expand_less", "unfold_more", "unfold_less",
+      "first_page", "last_page", "navigate_before", "navigate_next",
+      "refresh", "sync", "cached", "open_in_new", "open_in_full",
+      "fullscreen", "fullscreen_exit", "zoom_in", "zoom_out",
+      "apps", "grid_view", "view_list", "view_module", "view_column",
+      "view_agenda", "dashboard", "more_vert", "more_horiz", "menu_open",
+      "drag_indicator", "drag_handle",
+    ],
+  },
+  {
+    title: "User & Account",
+    icons: [
+      "person", "account_circle", "face", "group", "people",
+      "supervisor_account", "switch_account", "person_add", "person_remove",
+      "login", "logout", "manage_accounts", "badge", "contact_page",
+      "recent_actors", "contacts", "engineering", "support_agent",
+      "admin_panel_settings",
+    ],
+  },
+  {
+    title: "Communication",
+    icons: [
+      "mail", "email", "inbox", "send", "forward_to_inbox",
+      "mark_email_read", "mark_email_unread", "drafts", "outbox",
+      "unsubscribe", "move_to_inbox", "phone", "call", "call_end",
+      "dialpad", "voicemail", "contact_phone", "phone_in_talk",
+      "message", "chat", "chat_bubble", "comment", "forum",
+      "question_answer", "feedback", "sms", "textsms", "speaker_notes",
+      "campaign", "announcement",
+    ],
+  },
+  {
+    title: "Content & Files",
+    icons: [
+      "folder", "folder_open", "create_new_folder", "snippet_folder",
+      "folder_shared", "description", "article", "note", "sticky_note_2",
+      "text_snippet", "assignment", "file_copy", "content_copy",
+      "content_cut", "content_paste", "file_present", "attach_file",
+      "attachment", "link", "insert_link", "link_off", "add_link",
+      "cloud", "cloud_upload", "cloud_download", "cloud_done",
+      "cloud_sync", "cloud_off", "upload", "download", "upload_file",
+      "download_for_offline", "file_download", "file_upload",
+    ],
+  },
+  {
+    title: "Media",
+    icons: [
+      "image", "photo", "photo_camera", "camera_alt",
+      "add_photo_alternate", "photo_library", "collections", "burst_mode",
+      "panorama", "filter", "image_search", "crop", "rotate_right",
+      "flip", "tune", "palette", "brush", "color_lens", "gradient",
+      "auto_fix_high", "movie", "video_library", "videocam",
+      "play_circle", "play_arrow", "pause", "stop", "skip_next",
+      "skip_previous", "fast_forward", "fast_rewind", "replay", "repeat",
+      "shuffle", "volume_up", "volume_down", "volume_off", "volume_mute",
+      "mic", "mic_off", "headphones",
+    ],
+  },
+  {
+    title: "Editing & Formatting",
+    icons: [
+      "edit", "edit_note", "mode_edit", "draw", "create", "stylus",
+      "border_color", "format_bold", "format_italic", "format_underlined",
+      "format_size", "format_color_text", "format_align_left",
+      "format_align_center", "format_align_right", "format_align_justify",
+      "format_list_bulleted", "format_list_numbered", "format_quote",
+      "format_indent_increase", "text_fields", "title", "subject",
+      "notes", "spellcheck", "translate",
+    ],
+  },
+  {
+    title: "Actions & Status",
+    icons: [
+      "add", "add_circle", "add_box", "remove", "remove_circle", "block",
+      "do_not_disturb", "check", "check_circle", "check_box", "done",
+      "done_all", "verified", "task_alt", "cancel", "clear",
+      "highlight_off", "unpublished", "disabled_by_default", "delete",
+      "delete_forever", "delete_outline", "restore_from_trash",
+      "backspace", "save", "save_as", "archive", "unarchive", "inventory",
+      "inventory_2", "star", "star_border", "star_half", "star_rate",
+      "grade", "favorite", "favorite_border", "bookmark",
+      "bookmark_border", "bookmarks", "bookmark_add", "bookmark_remove",
+      "flag", "outlined_flag", "assistant_photo", "label",
+      "label_important", "new_label",
+    ],
+  },
+  {
+    title: "Notifications & Alerts",
+    icons: [
+      "notifications", "notifications_active", "notifications_none",
+      "notifications_off", "notification_important", "add_alert", "error",
+      "error_outline", "warning", "warning_amber", "info", "help",
+      "report", "report_problem", "priority_high", "crisis_alert",
+      "emergency", "doorbell", "alarm", "alarm_on", "timer",
+    ],
+  },
+  {
+    title: "Settings & Security",
+    icons: [
+      "settings", "settings_suggest", "build", "construction", "handyman",
+      "security", "privacy_tip", "shield", "vpn_key", "key", "password",
+      "lock", "lock_open", "lock_clock", "no_encryption", "visibility",
+      "visibility_off", "remove_red_eye", "preview", "pageview",
+    ],
+  },
+  {
+    title: "Commerce",
+    icons: [
+      "shopping_cart", "shopping_bag", "add_shopping_cart",
+      "remove_shopping_cart", "storefront", "store", "local_mall",
+      "loyalty", "card_giftcard", "redeem", "receipt", "receipt_long",
+      "payment", "credit_card", "account_balance", "savings",
+      "currency_exchange", "point_of_sale", "shopping_basket", "sell",
+      "price_check", "discount", "local_offer", "new_releases",
+    ],
+  },
+  {
+    title: "Time & Calendar",
+    icons: [
+      "schedule", "access_time", "hourglass_empty", "hourglass_full",
+      "calendar_today", "event", "event_available", "event_busy",
+      "date_range", "calendar_month", "today", "upcoming", "history",
+      "update", "query_builder", "pending", "pending_actions",
+    ],
+  },
+  {
+    title: "Location & Maps",
+    icons: [
+      "location_on", "place", "pin_drop", "add_location", "my_location",
+      "gps_fixed", "gps_off", "map", "satellite", "layers", "terrain",
+      "explore", "navigation", "directions", "near_me", "location_city",
+      "home_work", "apartment", "house", "cottage", "domain", "business",
+    ],
+  },
+  {
+    title: "Travel & Transport",
+    icons: [
+      "flight", "flight_takeoff", "flight_land", "local_airport",
+      "connecting_airports", "directions_car", "directions_bus",
+      "directions_subway", "directions_train", "directions_bike",
+      "directions_walk", "directions_run", "local_shipping", "local_taxi",
+      "departure_board", "commute", "emoji_transportation", "ev_station",
+      "local_gas_station", "traffic",
+    ],
+  },
+  {
+    title: "Devices & Hardware",
+    icons: [
+      "computer", "laptop", "phone_android", "phone_iphone", "tablet",
+      "tablet_mac", "watch", "desktop_windows", "devices", "smartphone",
+      "speaker", "headset", "keyboard", "mouse", "print", "scanner",
+      "router", "wifi", "bluetooth", "usb", "cable", "battery_full",
+      "memory", "storage", "sd_card", "sim_card", "developer_board",
+      "sensors",
+    ],
+  },
+  {
+    title: "UI & Display",
+    icons: [
+      "brightness_high", "brightness_low", "brightness_4",
+      "brightness_auto", "dark_mode", "light_mode", "contrast",
+      "invert_colors", "opacity", "tonality", "blur_on", "flare",
+      "wb_sunny", "screen_rotation", "screen_lock_rotation",
+      "stay_current_portrait", "stay_current_landscape", "crop_square",
+      "crop_free", "straighten", "transform", "aspect_ratio",
+    ],
+  },
+  {
+    title: "Social & Sharing",
+    icons: [
+      "share", "ios_share", "screen_share", "cast", "cast_connected",
+      "rss_feed", "public", "language", "web", "alternate_email",
+      "import_contacts", "group_add", "person_add_alt", "thumbs_up_down",
+      "thumb_up", "thumb_down", "sentiment_satisfied", "emoji_emotions",
+    ],
+  },
+  {
+    title: "Data & Analytics",
+    icons: [
+      "analytics", "insights", "assessment", "bar_chart", "pie_chart",
+      "show_chart", "trending_up", "trending_down", "trending_flat",
+      "equalizer", "data_usage", "donut_large", "query_stats",
+      "leaderboard", "table_chart", "table_rows", "view_timeline",
+      "timeline", "scatter_plot",
+    ],
+  },
+  {
+    title: "Development",
+    icons: [
+      "code", "terminal", "integration_instructions", "data_object",
+      "javascript", "css", "html", "bug_report", "build_circle",
+      "webhook", "api", "dataset", "database", "cloud_queue", "dns",
+      "http", "cloud_circle", "token", "schema", "science", "psychology",
+    ],
+  },
+  {
+    title: "Health & Wellness",
+    icons: [
+      "local_hospital", "medical_services", "health_and_safety", "healing",
+      "medication", "vaccines", "biotech", "coronavirus", "masks",
+      "sanitizer", "monitor_heart", "fitness_center", "sports", "pool",
+      "self_improvement", "spa",
+    ],
+  },
+  {
+    title: "Entertainment",
+    icons: [
+      "sports_esports", "videogame_asset", "casino", "nightlife",
+      "theater_comedy", "local_movies", "music_note", "library_music",
+      "album", "audiotrack", "piano", "guitar", "mic_external_on",
+    ],
+  },
+  {
+    title: "Food & Dining",
+    icons: [
+      "restaurant", "local_dining", "fastfood", "local_pizza",
+      "lunch_dining", "dinner_dining", "breakfast_dining", "local_cafe",
+      "local_bar", "liquor", "cake", "icecream", "emoji_food_beverage",
+    ],
+  },
+  {
+    title: "Weather & Nature",
+    icons: [
+      "wb_cloudy", "ac_unit", "grain", "thunderstorm", "water_drop",
+      "air", "wind_power", "eco", "energy_savings_leaf", "park", "forest",
+      "nature", "nature_people",
+    ],
+  },
+  {
+    title: "Sports",
+    icons: [
+      "sports_basketball", "sports_soccer", "sports_tennis", "golf_course",
+      "skateboarding", "snowboarding", "surfing", "kayaking", "hiking",
+    ],
+  },
+  {
+    title: "Miscellaneous",
+    icons: [
+      "extension", "lightbulb", "emoji_objects", "tips_and_updates",
+      "school", "military_tech", "workspace_premium", "verified_user",
+      "gavel", "balance", "policy", "copyright", "fingerprint",
+      "qr_code", "qr_code_scanner", "barcode_reader", "nfc", "pets",
+      "cruelty_free", "volunteer_activism", "heart_broken", "diversity_3",
+    ],
+  },
+];
+
+const totalIcons = iconCategories.reduce((sum, cat) => sum + cat.icons.length, 0);
+
+/* ============================================
+   PAGE
+   ============================================ */
+
+export default function IconsPage() {
+  return (
+    <>
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
+
+      <BlurBackground />
+
+      <Header navLinks={navLinks} subnavLinks={subnavLinks} />
+
+      <div className={styles.dsLayout}>
+        <Sidebar links={sidebarLinks} />
+
+        <main className={styles.dsContent} id="main-content">
+          {/* Page Title */}
+          <h1 className={`${styles.pageTitle} animate-in`}>Icons</h1>
+
+          {/* Intro */}
+          <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
+            {totalIcons} icons from Material Symbols 3 rounded. One weight, one optical size, one style&nbsp;&mdash; keeping the set minimal and consistent.
+          </p>
+
+          {/* Icon Categories */}
+          {iconCategories.map((category, idx) => (
+            <section
+              key={category.title}
+              className={`${styles.iconSection}${idx < 2 ? " animate-in animate-delay-2" : ""}`}
+            >
+              <div className={styles.iconSectionTitle}>
+                <h2>{category.title}</h2>
+                <span className={styles.iconCount}>{category.icons.length}</span>
+              </div>
+
+              <div className={styles.iconGrid}>
+                {category.icons.map((iconName) => (
+                  <EntityCard key={iconName} label={iconName} icon={iconName} />
+                ))}
+              </div>
+            </section>
+          ))}
+        </main>
+      </div>
+
+      <Footer />
+    </>
+  );
+}

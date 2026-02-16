@@ -28,7 +28,7 @@ export default function ThemeToggle({ className }: { className?: string }) {
         <div className={styles.toggleTrack} />
         <div className={styles.toggleThumb}>
           <span
-            className="material-symbols-outlined"
+            className="material-symbols-rounded"
             style={{
               fontSize: "14px",
               color: "var(--color-action-primary-bg)",

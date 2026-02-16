@@ -57,7 +57,7 @@ export const ToggleSwitch = ({
       <div className={`${baseClass}__track`}>
         <div className={`${baseClass}__thumb`}>
           <span
-            className={`${baseClass}__thumb-icon material-symbols-outlined`}
+            className={`${baseClass}__thumb-icon material-symbols-rounded`}
             aria-hidden="true"
           >
             check

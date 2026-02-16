@@ -154,9 +154,9 @@ export default function Header({ navLinks, subnavLinks }: HeaderProps) {
         aria-label="Toggle menu"
       >
         {mobileMenuOpen ? (
-          <span className="material-symbols-outlined">close</span>
+          <span className="material-symbols-rounded">close</span>
         ) : (
-          <span className="material-symbols-outlined">menu</span>
+          <span className="material-symbols-rounded">menu</span>
         )}
       </button>
 

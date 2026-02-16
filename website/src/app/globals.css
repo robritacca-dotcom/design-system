@@ -256,54 +256,14 @@ a {
 }
 
 /* ============================================
-   MATERIAL SYMBOLS - Local variable fonts
+   MATERIAL SYMBOLS - Rounded only
    ============================================ */
-@font-face {
-  font-family: 'Material Symbols Outlined';
-  font-style: normal;
-  font-weight: 100 700;
-  src: url('/MaterialSymbolsOutlined-VariableFont_FILL,GRAD,opsz,wght.ttf') format('truetype');
-  font-display: block;
-}
-
 @font-face {
   font-family: 'Material Symbols Rounded';
   font-style: normal;
   font-weight: 100 700;
   src: url('/MaterialSymbolsRounded-VariableFont_FILL,GRAD,opsz,wght.ttf') format('truetype');
   font-display: block;
-}
-
-@font-face {
-  font-family: 'Material Symbols Sharp';
-  font-style: normal;
-  font-weight: 100 700;
-  src: url('/MaterialSymbolsSharp-VariableFont_FILL,GRAD,opsz,wght.ttf') format('truetype');
-  font-display: block;
-}
-
-.material-symbols-outlined {
-  font-family: 'Material Symbols Outlined';
-  font-weight: normal;
-  font-style: normal;
-  font-size: 24px;
-  line-height: 1;
-  letter-spacing: normal;
-  text-transform: none;
-  display: inline-block;
-  white-space: nowrap;
-  word-wrap: normal;
-  direction: ltr;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  font-feature-settings: 'liga';
-  font-variation-settings:
-    'FILL' var(--material-symbols-fill, 0),
-    'wght' var(--material-symbols-weight, 200),
-    'GRAD' var(--material-symbols-grade, 0),
-    'opsz' var(--material-symbols-size, 24);
-  color: var(--color-text-primary);
 }
 
 .material-symbols-rounded {
@@ -327,29 +287,7 @@ a {
     'wght' var(--material-symbols-weight, 200),
     'GRAD' var(--material-symbols-grade, 0),
     'opsz' var(--material-symbols-size, 24);
-}
-
-.material-symbols-sharp {
-  font-family: 'Material Symbols Sharp';
-  font-weight: normal;
-  font-style: normal;
-  font-size: 24px;
-  line-height: 1;
-  letter-spacing: normal;
-  text-transform: none;
-  display: inline-block;
-  white-space: nowrap;
-  word-wrap: normal;
-  direction: ltr;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  font-feature-settings: 'liga';
-  font-variation-settings:
-    'FILL' var(--material-symbols-fill, 0),
-    'wght' var(--material-symbols-weight, 200),
-    'GRAD' var(--material-symbols-grade, 0),
-    'opsz' var(--material-symbols-size, 24);
+  color: var(--color-text-primary);
 }
 
 .icon-filled {
