@@ -1,42 +1,11 @@
 /* ============================================
    PAGE LINKS — Figma + Storybook buttons
-   Sits inline with the page title row
+   Sits inline with the page title row.
+   Individual buttons use the DS Button component.
    ============================================ */
 .pageLinks {
   display: inline-flex;
   align-items: center;
-  gap: var(--primitive-gap-sm);
-  flex-shrink: 0;
-}
-
-.pageLink {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: var(--primitive-padding-xs) var(--primitive-padding-md);
-  border-radius: var(--primitive-radius-full);
-  background: var(--color-bg-container-primary);
-  border: 1px solid var(--color-bg-container-border);
-  color: var(--color-text-secondary);
-  text-decoration: none;
-  font-family: var(--font-paragraph-sm-family);
-  font-size: var(--font-paragraph-sm-size);
-  font-weight: var(--font-paragraph-sm-weight);
-  line-height: var(--font-paragraph-sm-line-height);
-  letter-spacing: var(--font-paragraph-sm-letter-spacing);
-  transition: background-color 0.2s ease, border-color 0.2s ease;
-  white-space: nowrap;
-}
-
-.pageLink:hover {
-  background: var(--color-action-passive-bg-hover);
-  border-color: var(--color-text-tertiary);
-}
-
-.pageLink:active {
-  background: var(--color-action-passive-bg-active);
-}
-
-.pageLink svg {
+  gap: var(--primitive-gap-lg);
   flex-shrink: 0;
 }
