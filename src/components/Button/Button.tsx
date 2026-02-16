@@ -13,6 +13,8 @@ export interface ButtonProps {
   priority?: 'primary' | 'secondary';
   /** Button state */
   state?: 'default' | 'hover' | 'active' | 'disabled';
+  /** Button size */
+  size?: 'default' | 'compact';
   /** Show text label */
   text?: boolean;
   /** Optional click handler */
@@ -36,6 +38,7 @@ export const Button = ({
   iconRight,
   priority = 'primary',
   state = 'default',
+  size = 'default',
   text = true,
   onClick,
   href,
@@ -45,8 +48,9 @@ export const Button = ({
   const baseClass = 'ds-button';
   const variantClass = `${baseClass}--${priority}`;
   const stateClass = `${baseClass}--${state}`;
+  const sizeClass = `${baseClass}--${size}`;
 
-  const classes = [baseClass, variantClass, stateClass, className].filter(Boolean).join(' ');
+  const classes = [baseClass, variantClass, stateClass, sizeClass, className].filter(Boolean).join(' ');
 
   const isDisabled = state === 'disabled';
 

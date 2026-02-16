@@ -36,6 +36,25 @@
 }
 
 /* ============================================
+   SIZE — DEFAULT (no overrides needed, base styles apply)
+   ============================================ */
+
+.ds-button--default {
+  /* Base padding & typography inherited from .ds-button */
+}
+
+/* ============================================
+   SIZE — COMPACT
+   ============================================ */
+
+.ds-button--compact {
+  padding: var(--padding-xs) var(--radius-md); /* Figma: 4px 12px */
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+}
+
+/* ============================================
    PRIMARY BUTTON
    ============================================ */
 

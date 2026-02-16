@@ -132,10 +132,34 @@
   align-items: center;
 }
 
-/* Scale buttons down so the grid fits */
-.gridCell :global(.ds-button) {
+/* ============================================
+   SIZE BLOCK — groups each size variant
+   ============================================ */
+.sizeBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-lg);
+}
+
+.sizeLabel {
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  letter-spacing: var(--font-heading-3-letter-spacing);
+  color: var(--color-text-tertiary);
+}
+
+/* Scale default buttons down so the grid fits */
+.gridCell :global(.ds-button--default) {
   font-size: 13px;
   padding: 6px 12px;
+  gap: 4px;
+}
+
+/* Scale compact buttons down proportionally */
+.gridCell :global(.ds-button--compact) {
+  font-size: 11px;
+  padding: 3px 9px;
   gap: 4px;
 }
 

@@ -44,6 +44,59 @@ const states = [
 
 const priorities = ["primary", "secondary"] as const;
 
+const sizes = [
+  { label: "Default", value: "default" as const },
+  { label: "Compact", value: "compact" as const },
+];
+
+/* ============================================
+   BUTTON GRID — reusable for each size
+   ============================================ */
+
+function ButtonGrid({ size }: { size: "default" | "compact" }) {
+  return (
+    <div className={styles.buttonGrid}>
+      {/* Column group headers */}
+      <div className={styles.gridCorner} />
+      {priorities.map((p) => (
+        <div key={p} className={styles.gridGroupHeader}>
+          <span>{p === "primary" ? "Primary" : "Secondary"}</span>
+        </div>
+      ))}
+
+      {/* Sub-column headers */}
+      <div className={styles.gridCorner} />
+      {priorities.map((p) => (
+        <React.Fragment key={`sub-${p}`}>
+          <span className={styles.gridColHeader}>No icon</span>
+          <span className={styles.gridColHeader}>Icon, left</span>
+          <span className={styles.gridColHeader}>Icon, right</span>
+        </React.Fragment>
+      ))}
+
+      {/* State rows */}
+      {states.map((st) => (
+        <React.Fragment key={st.value}>
+          <span className={styles.gridRowHeader}>{st.label}</span>
+          {priorities.map((p) => (
+            <React.Fragment key={`${p}-${st.value}`}>
+              <div className={styles.gridCell}>
+                <Button label="Button" priority={p} state={st.value} size={size} />
+              </div>
+              <div className={styles.gridCell}>
+                <Button label="Button" priority={p} state={st.value} size={size} iconLeft="grid_view" />
+              </div>
+              <div className={styles.gridCell}>
+                <Button label="Button" priority={p} state={st.value} size={size} iconRight="arrow_forward" />
+              </div>
+            </React.Fragment>
+          ))}
+        </React.Fragment>
+      ))}
+    </div>
+  );
+}
+
 /* ============================================
    PAGE
    ============================================ */
@@ -83,46 +136,12 @@ export default function ButtonPage() {
               <h2>Components</h2>
             </div>
 
-            {/* Grid Table */}
-            <div className={styles.buttonGrid}>
-              {/* Column group headers */}
-              <div className={styles.gridCorner} />
-              {priorities.map((p) => (
-                <div key={p} className={styles.gridGroupHeader}>
-                  <span>{p === "primary" ? "Primary" : "Secondary"}</span>
-                </div>
-              ))}
-
-              {/* Sub-column headers */}
-              <div className={styles.gridCorner} />
-              {priorities.map((p) => (
-                <React.Fragment key={`sub-${p}`}>
-                  <span className={styles.gridColHeader}>No icon</span>
-                  <span className={styles.gridColHeader}>Icon, left</span>
-                  <span className={styles.gridColHeader}>Icon, right</span>
-                </React.Fragment>
-              ))}
-
-              {/* State rows */}
-              {states.map((st) => (
-                <React.Fragment key={st.value}>
-                  <span className={styles.gridRowHeader}>{st.label}</span>
-                  {priorities.map((p) => (
-                    <React.Fragment key={`${p}-${st.value}`}>
-                      <div className={styles.gridCell}>
-                        <Button label="Button" priority={p} state={st.value} />
-                      </div>
-                      <div className={styles.gridCell}>
-                        <Button label="Button" priority={p} state={st.value} iconLeft="grid_view" />
-                      </div>
-                      <div className={styles.gridCell}>
-                        <Button label="Button" priority={p} state={st.value} iconRight="arrow_forward" />
-                      </div>
-                    </React.Fragment>
-                  ))}
-                </React.Fragment>
-              ))}
-            </div>
+            {sizes.map((sz) => (
+              <div key={sz.value} className={styles.sizeBlock}>
+                <h3 className={styles.sizeLabel}>{sz.label}</h3>
+                <ButtonGrid size={sz.value} />
+              </div>
+            ))}
           </section>
         </main>
       </div>

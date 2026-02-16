@@ -20,6 +20,11 @@ const meta = {
       options: ['default', 'hover', 'active', 'disabled'],
       description: 'Button state for design system documentation',
     },
+    size: {
+      control: 'select',
+      options: ['default', 'compact'],
+      description: 'Button size — default or compact',
+    },
     label: {
       control: 'text',
       description: 'Button text content',
@@ -44,6 +49,7 @@ const meta = {
   args: {
     onClick: fn(),
     label: 'Button',
+    size: 'default',
   },
 } satisfies Meta<typeof Button>;
 
@@ -208,5 +214,99 @@ export const TextOnly: Story = {
     text: true,
     iconLeft: undefined,
     iconRight: undefined,
+  },
+};
+
+// ============================================
+// Compact Button States
+// ============================================
+
+// Compact Primary States
+export const CompactPrimaryDefault: Story = {
+  args: {
+    priority: 'primary',
+    state: 'default',
+    size: 'compact',
+    label: 'Button',
+    text: true,
+    iconRight: 'arrow_forward',
+  },
+};
+
+export const CompactPrimaryHover: Story = {
+  args: {
+    priority: 'primary',
+    state: 'hover',
+    size: 'compact',
+    label: 'Button',
+    text: true,
+    iconRight: 'arrow_forward',
+  },
+};
+
+export const CompactPrimaryActive: Story = {
+  args: {
+    priority: 'primary',
+    state: 'active',
+    size: 'compact',
+    label: 'Button',
+    text: true,
+    iconRight: 'arrow_forward',
+  },
+};
+
+export const CompactPrimaryDisabled: Story = {
+  args: {
+    priority: 'primary',
+    state: 'disabled',
+    size: 'compact',
+    label: 'Button',
+    text: true,
+    iconRight: 'arrow_forward',
+  },
+};
+
+// Compact Secondary States
+export const CompactSecondaryDefault: Story = {
+  args: {
+    priority: 'secondary',
+    state: 'default',
+    size: 'compact',
+    label: 'Button',
+    text: true,
+    iconRight: 'arrow_forward',
+  },
+};
+
+export const CompactSecondaryHover: Story = {
+  args: {
+    priority: 'secondary',
+    state: 'hover',
+    size: 'compact',
+    label: 'Button',
+    text: true,
+    iconRight: 'arrow_forward',
+  },
+};
+
+export const CompactSecondaryActive: Story = {
+  args: {
+    priority: 'secondary',
+    state: 'active',
+    size: 'compact',
+    label: 'Button',
+    text: true,
+    iconRight: 'arrow_forward',
+  },
+};
+
+export const CompactSecondaryDisabled: Story = {
+  args: {
+    priority: 'secondary',
+    state: 'disabled',
+    size: 'compact',
+    label: 'Button',
+    text: true,
+    iconRight: 'arrow_forward',
   },
 };
