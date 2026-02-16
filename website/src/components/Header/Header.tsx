@@ -109,7 +109,7 @@ export default function Header({ navLinks, subnavLinks }: HeaderProps) {
               height={24}
               className={styles.navLogoIcon}
             />
-            <span className={styles.navLogoText}>robr0</span>
+            <span className={styles.navLogoText}>robr0 DS</span>
           </Link>
           <div className={styles.navCenter}>
             <ButtonGroup
@@ -135,7 +135,7 @@ export default function Header({ navLinks, subnavLinks }: HeaderProps) {
               height={24}
               className={styles.navLogoIcon}
             />
-            <span className={styles.navLogoText}>robr0</span>
+            <span className={styles.navLogoText}>robr0 DS</span>
           </Link>
           <div className={styles.navCenter}>
             <ButtonGroup
