@@ -122,14 +122,14 @@
    ============================================ */
 
 .ds-table--compact .ds-table__header-cell {
-  padding: var(--padding-xs) var(--radius-md); /* 4px 12px */
+  padding: var(--padding-xs) var(--padding-sm-md); /* 4px 12px */
   font-size: var(--font-paragraph-sm-size);
   line-height: var(--font-paragraph-sm-line-height);
   letter-spacing: var(--font-paragraph-sm-letter-spacing);
 }
 
 .ds-table--compact .ds-table__cell {
-  padding: var(--padding-xs) var(--radius-md); /* 4px 12px */
+  padding: var(--padding-xs) var(--padding-sm-md); /* 4px 12px */
   font-size: var(--font-paragraph-sm-size);
   line-height: var(--font-paragraph-sm-line-height);
   letter-spacing: var(--font-paragraph-sm-letter-spacing);

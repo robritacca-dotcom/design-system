@@ -98,6 +98,7 @@
   --padding-xxs: var(--primitive-padding-xxs);
   --padding-xs: var(--primitive-padding-xs);
   --padding-sm: var(--primitive-padding-sm);
+  --padding-sm-md: var(--primitive-padding-sm-md);
   --padding-md: var(--primitive-padding-md);
   --padding-lg: var(--primitive-padding-lg);
   --padding-xl: var(--primitive-padding-xl);

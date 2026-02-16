@@ -94,7 +94,7 @@
    ============================================ */
 
 .ds-date-input--compact .ds-date-input__field {
-  padding: var(--padding-xs) var(--radius-md); /* 4px 12px */
+  padding: var(--padding-xs) var(--padding-sm-md); /* 4px 12px */
   padding-left: calc(var(--padding-xs) + 20px + var(--gap-sm)); /* compact icon offset */
   font-size: var(--font-paragraph-sm-size);
   line-height: var(--font-paragraph-sm-line-height);

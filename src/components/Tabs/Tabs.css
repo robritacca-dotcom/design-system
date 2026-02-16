@@ -55,7 +55,7 @@
    ============================================ */
 
 .ds-tabs--compact .ds-tabs__tab {
-  padding: var(--padding-xs) var(--radius-md); /* 4px 12px */
+  padding: var(--padding-xs) var(--padding-sm-md); /* 4px 12px */
   font-size: var(--font-paragraph-sm-size);
   line-height: var(--font-paragraph-sm-line-height);
   letter-spacing: var(--font-paragraph-sm-letter-spacing);
