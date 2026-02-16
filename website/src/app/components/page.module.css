@@ -94,7 +94,7 @@
 }
 
 .circleDashed {
-  border: 2px dashed var(--color-core-accent-purple);
+  border: none;
 }
 
 /* ============================================
