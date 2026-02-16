@@ -320,10 +320,7 @@ export default function IconsPage() {
               key={category.title}
               className={`${styles.iconSection}${idx < 2 ? " animate-in animate-delay-2" : ""}`}
             >
-              <div className={styles.iconSectionTitle}>
-                <h2>{category.title}</h2>
-                <span className={styles.iconCount}>{category.icons.length}</span>
-              </div>
+              <SectionTitle title={category.title} trailing={category.icons.length} />
 
               <div className={styles.iconGrid}>
                 {category.icons.map((iconName) => (

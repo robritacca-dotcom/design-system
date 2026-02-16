@@ -5,8 +5,7 @@ import Header from "../../../components/Header/Header";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
-import { Instructions } from "@design-system/components/Instructions/Instructions";
-import PageLinks from "../../../components/PageLinks/PageLinks";
+nullimport PageLinks from "../../../components/PageLinks/PageLinks";
 import { getNavLinks, getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 const navLinks = getNavLinks("Components");
@@ -41,9 +40,7 @@ export default function InstructionsPage() {
 
           {/* Numbered */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Numbered</h2>
-            </div>
+            <SectionTitle title="Numbered" />
             <div className={styles.variantStack}>
               <Instructions
                 title="Getting started"
@@ -58,9 +55,7 @@ export default function InstructionsPage() {
 
           {/* With icons */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>With icons</h2>
-            </div>
+            <SectionTitle title="With icons" />
             <div className={styles.variantStack}>
               <Instructions
                 title="Setup pipeline"
@@ -75,9 +70,7 @@ export default function InstructionsPage() {
 
           {/* Horizontal */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Horizontal</h2>
-            </div>
+            <SectionTitle title="Horizontal" />
             <div className={styles.variantStack} style={{ width: "100%" }}>
               <Instructions
                 direction="horizontal"
@@ -94,9 +87,7 @@ export default function InstructionsPage() {
 
           {/* Compact */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Compact</h2>
-            </div>
+            <SectionTitle title="Compact" />
             <div className={styles.variantStack}>
               <Instructions
                 size="compact"

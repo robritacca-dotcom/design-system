@@ -10,6 +10,7 @@ import { ColourSwatch } from "@design-system/components/ColourSwatch/ColourSwatc
 import PageLinks from "../../../components/PageLinks/PageLinks";
 import { getNavLinks, getSidebarLinks, foundationsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
+import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
 
 const navLinks = getNavLinks("Foundations");
 const { sidebarLinks, subnavLinks } = getSidebarLinks(foundationsSidebarLinks, "/foundations/colour-primitives");
@@ -216,9 +217,7 @@ export default function PrimitiveColoursPage() {
               key={ramp.title}
               className={`${styles.colourGroup}${idx < 3 ? " animate-in animate-delay-2" : ""}`}
             >
-              <div className={styles.colourGroupTitle}>
-                <h2>{ramp.title}</h2>
-              </div>
+              <SectionTitle title={ramp.title} />
               <div className={styles.colourSwatches}>
                 {ramp.swatches.map((s) => (
                   <ColourSwatch

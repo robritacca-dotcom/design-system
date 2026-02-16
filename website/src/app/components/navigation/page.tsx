@@ -10,6 +10,7 @@ import { Nav } from "@design-system/components/Nav/Nav";
 import { ToggleSwitch } from "@design-system/components/ToggleSwitch/ToggleSwitch";
 import { ButtonGroup } from "@design-system/components/ButtonGroup/ButtonGroup";
 import type { ButtonProps } from "@design-system/components/Button/Button";
+import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
 import { getNavLinks, getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
@@ -82,9 +83,7 @@ export default function NavigationPage() {
 
           {/* Desktop Nav */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Desktop</h2>
-            </div>
+            <SectionTitle title="Desktop" />
             <div className={styles.showcase}>
               <span className={styles.showcaseLabel}>
                 Full-width top navigation with brand, links, and trailing content
@@ -110,9 +109,7 @@ export default function NavigationPage() {
 
           {/* Mobile Nav Bar */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Mobile bar</h2>
-            </div>
+            <SectionTitle title="Mobile bar" />
             <div className={styles.showcase}>
               <span className={styles.showcaseLabel}>
                 Collapsed navigation bar with brand and hamburger trigger
@@ -135,9 +132,7 @@ export default function NavigationPage() {
 
           {/* Hamburger Menu */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Hamburger menu</h2>
-            </div>
+            <SectionTitle title="Hamburger menu" />
             <div className={styles.showcase}>
               <span className={styles.showcaseLabel}>
                 Slide-out drawer with top-level links, nested subnav, and theme toggle

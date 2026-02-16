@@ -6,6 +6,7 @@ import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
 import { ToggleSwitch } from "@design-system/components/ToggleSwitch/ToggleSwitch";
+import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
 import { getNavLinks, getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
@@ -49,9 +50,7 @@ export default function ToggleSwitchPage() {
 
           {/* Default */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Default</h2>
-            </div>
+            <SectionTitle title="Default" />
             <div className={styles.variantRow}>
               <div className={styles.variantItem}>
                 <ToggleSwitch checked={true} label="On" onChange={() => {}} />
@@ -67,9 +66,7 @@ export default function ToggleSwitchPage() {
 
           {/* Compact */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Compact</h2>
-            </div>
+            <SectionTitle title="Compact" />
             <div className={styles.variantRow}>
               <div className={styles.variantItem}>
                 <ToggleSwitch checked={true} label="On" size="compact" onChange={() => {}} />
@@ -85,9 +82,7 @@ export default function ToggleSwitchPage() {
 
           {/* States */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>States</h2>
-            </div>
+            <SectionTitle title="States" />
             <div className={styles.variantRow}>
               <div className={styles.variantItem}>
                 <ToggleSwitch checked={true} disabled label="Disabled, on" onChange={() => {}} />

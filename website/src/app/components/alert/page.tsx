@@ -5,8 +5,7 @@ import Header from "../../../components/Header/Header";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
-import { Alert } from "@design-system/components/Alert/Alert";
-import PageLinks from "../../../components/PageLinks/PageLinks";
+nullimport PageLinks from "../../../components/PageLinks/PageLinks";
 import { getNavLinks, getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 const navLinks = getNavLinks("Components");
@@ -41,9 +40,7 @@ export default function AlertPage() {
 
           {/* Default */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Default</h2>
-            </div>
+            <SectionTitle title="Default" />
             <div className={styles.variantStack}>
               <Alert variant="info" title="Information" description="This is an informational message with helpful context." />
               <Alert variant="positive" title="Success" description="Your changes have been saved successfully." />
@@ -55,9 +52,7 @@ export default function AlertPage() {
 
           {/* Compact */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Compact</h2>
-            </div>
+            <SectionTitle title="Compact" />
             <div className={styles.variantStack}>
               <Alert variant="info" size="compact" title="Information" description="Compact informational message." />
               <Alert variant="positive" size="compact" title="Success" description="Your changes have been saved." />
@@ -69,9 +64,7 @@ export default function AlertPage() {
 
           {/* States */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>States</h2>
-            </div>
+            <SectionTitle title="States" />
             <div className={styles.variantStack}>
               <Alert variant="info" title="Dismissible" description="Click the close button to dismiss this alert." dismissible onDismiss={() => {}} />
               <Alert variant="positive" title="Title only" />

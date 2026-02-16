@@ -6,6 +6,7 @@ import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
 import { Checkbox } from "@design-system/components/Checkbox/Checkbox";
+import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
 import { getNavLinks, getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
@@ -41,9 +42,7 @@ export default function CheckboxPage() {
 
           {/* Default */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Default</h2>
-            </div>
+            <SectionTitle title="Default" />
             <div className={styles.variantRow}>
               <div className={styles.variantItem}>
                 <Checkbox label="Unchecked" checked={false} onChange={() => {}} />
@@ -62,9 +61,7 @@ export default function CheckboxPage() {
 
           {/* Compact */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Compact</h2>
-            </div>
+            <SectionTitle title="Compact" />
             <div className={styles.variantRow}>
               <div className={styles.variantItem}>
                 <Checkbox label="Unchecked" checked={false} size="compact" onChange={() => {}} />
@@ -83,9 +80,7 @@ export default function CheckboxPage() {
 
           {/* States */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>States</h2>
-            </div>
+            <SectionTitle title="States" />
             <div className={styles.variantRow}>
               <div className={styles.variantItem}>
                 <Checkbox label="Disabled, unchecked" checked={false} disabled onChange={() => {}} />

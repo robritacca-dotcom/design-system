@@ -245,6 +245,28 @@
 }
 
 /* ============================================
+   SECTION TITLE PREVIEW
+   ============================================ */
+.sectionTitlePreview {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100px;
+}
+
+.sectionTitlePreviewText {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.sectionTitlePreviewDivider {
+  height: 1px;
+  width: 100%;
+  background: var(--color-divider);
+}
+
+/* ============================================
    RESPONSIVE
    ============================================ */
 @media (max-width: 959px) {

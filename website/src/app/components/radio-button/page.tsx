@@ -6,6 +6,7 @@ import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
 import { RadioButton, RadioGroup } from "@design-system/components/RadioButton/RadioButton";
+import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
 import { getNavLinks, getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
@@ -41,9 +42,7 @@ export default function RadioButtonPage() {
 
           {/* Single states */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>States</h2>
-            </div>
+            <SectionTitle title="States" />
             <div className={styles.stateGrid}>
               <div className={styles.gridCorner} />
               <span className={styles.gridColHeader}>With label</span>
@@ -85,9 +84,7 @@ export default function RadioButtonPage() {
 
           {/* Group layouts */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Radio group</h2>
-            </div>
+            <SectionTitle title="Radio group" />
             <div className={styles.variantRow}>
               <div className={styles.variantItem}>
                 <RadioGroup

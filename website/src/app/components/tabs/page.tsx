@@ -6,6 +6,7 @@ import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
 import { Tabs } from "@design-system/components/Tabs/Tabs";
+import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
 import { getNavLinks, getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
@@ -41,9 +42,7 @@ export default function TabsPage() {
 
           {/* Default */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Default</h2>
-            </div>
+            <SectionTitle title="Default" />
             <div className={styles.variantStack}>
               <Tabs
                 tabs={[
@@ -59,9 +58,7 @@ export default function TabsPage() {
 
           {/* With icons */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>With icons</h2>
-            </div>
+            <SectionTitle title="With icons" />
             <div className={styles.variantStack}>
               <Tabs
                 tabs={[
@@ -77,9 +74,7 @@ export default function TabsPage() {
 
           {/* Compact */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Compact</h2>
-            </div>
+            <SectionTitle title="Compact" />
             <div className={styles.variantStack}>
               <Tabs
                 tabs={[
@@ -96,9 +91,7 @@ export default function TabsPage() {
 
           {/* Full width */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Full width</h2>
-            </div>
+            <SectionTitle title="Full width" />
             <div className={styles.variantStack} style={{ width: "100%" }}>
               <Tabs
                 tabs={[
@@ -115,9 +108,7 @@ export default function TabsPage() {
 
           {/* With disabled */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>With disabled tab</h2>
-            </div>
+            <SectionTitle title="With disabled tab" />
             <div className={styles.variantStack}>
               <Tabs
                 tabs={[

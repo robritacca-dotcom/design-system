@@ -10,6 +10,7 @@ import { ColourSwatch } from "@design-system/components/ColourSwatch/ColourSwatc
 import PageLinks from "../../../components/PageLinks/PageLinks";
 import { getNavLinks, getSidebarLinks, foundationsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
+import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
 
 const navLinks = getNavLinks("Foundations");
 const { sidebarLinks, subnavLinks } = getSidebarLinks(foundationsSidebarLinks, "/foundations/colour-mode");
@@ -311,7 +312,7 @@ export default function SemanticColoursPage() {
 
           {/* Primary UI Colours */}
           <section className={`${styles.colourGroup} animate-in animate-delay-2`}>
-            <div className={styles.colourGroupTitle}><h2>Primary UI Colours</h2></div>
+            <SectionTitle title="Primary UI Colours" />
             <div className={styles.colourSwatches}>
               {primaryUiColours.map((s) => (
                 <ColourSwatch key={s.label} label={s.label} cssVar={s.cssVar} dark={s.dark} light={s.light} theme={theme} />
@@ -321,7 +322,7 @@ export default function SemanticColoursPage() {
 
           {/* Accent Colours */}
           <section className={styles.colourGroup}>
-            <div className={styles.colourGroupTitle}><h2>Accent Colours</h2></div>
+            <SectionTitle title="Accent Colours" />
             <div className={styles.colourSwatches}>
               {accentColours.map((s) => (
                 <ColourSwatch key={s.label} label={s.label} cssVar={s.cssVar} dark={s.dark} light={s.light} theme={theme} />
@@ -331,7 +332,7 @@ export default function SemanticColoursPage() {
 
           {/* Page */}
           <section className={styles.colourGroup}>
-            <div className={styles.colourGroupTitle}><h2>Page</h2></div>
+            <SectionTitle title="Page" />
             <div className={styles.colourSwatches}>
               {pageColours.map((s) => (
                 <ColourSwatch key={s.label} label={s.label} cssVar={s.cssVar} dark={s.dark} light={s.light} theme={theme} />
@@ -341,7 +342,7 @@ export default function SemanticColoursPage() {
 
           {/* Container */}
           <section className={styles.colourGroup}>
-            <div className={styles.colourGroupTitle}><h2>Container</h2></div>
+            <SectionTitle title="Container" />
             <div className={styles.colourSwatches}>
               {containerColours.map((s) => (
                 <ColourSwatch key={s.label} label={s.label} cssVar={s.cssVar} dark={s.dark} light={s.light} theme={theme} />
@@ -351,7 +352,7 @@ export default function SemanticColoursPage() {
 
           {/* Text */}
           <section className={styles.colourGroup}>
-            <div className={styles.colourGroupTitle}><h2>Text</h2></div>
+            <SectionTitle title="Text" />
             <div className={styles.colourSwatches}>
               {textColours.map((s) => (
                 <ColourSwatch key={s.label} label={s.label} cssVar={s.cssVar} dark={s.dark} light={s.light} theme={theme} />
@@ -361,7 +362,7 @@ export default function SemanticColoursPage() {
 
           {/* Action / Primary */}
           <section className={styles.colourGroup}>
-            <div className={styles.colourGroupTitle}><h2>Action / Primary</h2></div>
+            <SectionTitle title="Action / Primary" />
             <div className={styles.colourSwatches}>
               {actionPrimaryColours.map((s) => (
                 <ColourSwatch key={s.label} label={s.label} cssVar={s.cssVar} dark={s.dark} light={s.light} theme={theme} />
@@ -371,7 +372,7 @@ export default function SemanticColoursPage() {
 
           {/* Action / Passive */}
           <section className={styles.colourGroup}>
-            <div className={styles.colourGroupTitle}><h2>Action / Passive</h2></div>
+            <SectionTitle title="Action / Passive" />
             <div className={styles.colourSwatches}>
               {actionPassiveColours.map((s) => (
                 <ColourSwatch key={s.label} label={s.label} cssVar={s.cssVar} dark={s.dark} light={s.light} theme={theme} />
@@ -381,7 +382,7 @@ export default function SemanticColoursPage() {
 
           {/* Status */}
           <section className={styles.colourGroup}>
-            <div className={styles.colourGroupTitle}><h2>Status</h2></div>
+            <SectionTitle title="Status" />
             <div className={styles.colourSwatches}>
               {statusColours.map((s) => (
                 <ColourSwatch key={s.label} label={s.label} cssVar={s.bgVar} dark={s.dark} light={s.light} theme={theme} status borderVar={s.borderVar} />

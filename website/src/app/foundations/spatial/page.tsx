@@ -9,6 +9,7 @@ import type { SpacingSwatchVariant } from "@design-system/components/SpacingSwat
 import PageLinks from "../../../components/PageLinks/PageLinks";
 import { getNavLinks, getSidebarLinks, foundationsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
+import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
 
 const navLinks = getNavLinks("Foundations");
 const { sidebarLinks, subnavLinks } = getSidebarLinks(foundationsSidebarLinks, "/foundations/spatial");
@@ -112,9 +113,7 @@ export default function SemanticSpacingPage() {
               key={section.title}
               className={`${styles.spacingGroup}${idx < 2 ? " animate-in animate-delay-2" : ""}`}
             >
-              <div className={styles.spacingGroupTitle}>
-                <h2>{section.title}</h2>
-              </div>
+              <SectionTitle title={section.title} />
               <div className={styles.spacingGrid}>
                 {section.tokens.map((t) => (
                   <SpacingSwatch

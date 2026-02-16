@@ -5,8 +5,7 @@ import Header from "../../../components/Header/Header";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
-import { SegmentedControl } from "@design-system/components/SegmentedControl/SegmentedControl";
-import PageLinks from "../../../components/PageLinks/PageLinks";
+nullimport PageLinks from "../../../components/PageLinks/PageLinks";
 import { getNavLinks, getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 const navLinks = getNavLinks("Components");
@@ -41,9 +40,7 @@ export default function SegmentedControlPage() {
 
           {/* Default */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Default</h2>
-            </div>
+            <SectionTitle title="Default" />
             <div className={styles.variantStack}>
               <SegmentedControl
                 segments={[
@@ -59,9 +56,7 @@ export default function SegmentedControlPage() {
 
           {/* With icons */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>With icons</h2>
-            </div>
+            <SectionTitle title="With icons" />
             <div className={styles.variantStack}>
               <SegmentedControl
                 segments={[
@@ -85,9 +80,7 @@ export default function SegmentedControlPage() {
 
           {/* Full width */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Full width</h2>
-            </div>
+            <SectionTitle title="Full width" />
             <div className={styles.variantStack} style={{ width: "100%" }}>
               <SegmentedControl
                 segments={[
@@ -104,9 +97,7 @@ export default function SegmentedControlPage() {
 
           {/* With disabled */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>With disabled segment</h2>
-            </div>
+            <SectionTitle title="With disabled segment" />
             <div className={styles.variantStack}>
               <SegmentedControl
                 segments={[
@@ -122,9 +113,7 @@ export default function SegmentedControlPage() {
 
           {/* Compact */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Compact</h2>
-            </div>
+            <SectionTitle title="Compact" />
             <div className={styles.variantStack}>
               <SegmentedControl
                 size="compact"

@@ -53,14 +53,6 @@
   border-bottom: 1px solid var(--color-bg-container-border);
 }
 
-.sectionTitle {
-  font-size: var(--font-heading-2-size);
-  font-weight: var(--font-heading-2-weight);
-  line-height: var(--font-heading-2-line-height);
-  letter-spacing: var(--font-heading-2-letter-spacing);
-  color: var(--color-text-secondary);
-}
-
 .sectionDescription {
   font-size: var(--font-paragraph-size);
   font-weight: var(--font-paragraph-weight);

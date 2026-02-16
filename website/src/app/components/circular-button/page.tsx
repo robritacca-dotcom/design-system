@@ -5,8 +5,7 @@ import Header from "../../../components/Header/Header";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
-import { CircularButton } from "@design-system/components/CircularButton/CircularButton";
-import PageLinks from "../../../components/PageLinks/PageLinks";
+nullimport PageLinks from "../../../components/PageLinks/PageLinks";
 import { getNavLinks, getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 const navLinks = getNavLinks("Components");
@@ -50,9 +49,7 @@ export default function CircularButtonPage() {
 
           {/* Primary states */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Primary</h2>
-            </div>
+            <SectionTitle title="Primary" />
             <div className={styles.stateGrid}>
               <div className={styles.gridCorner} />
               {states.map((s) => (
@@ -73,9 +70,7 @@ export default function CircularButtonPage() {
 
           {/* Secondary states */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Secondary</h2>
-            </div>
+            <SectionTitle title="Secondary" />
             <div className={styles.stateGrid}>
               <div className={styles.gridCorner} />
               {states.map((s) => (
@@ -96,9 +91,7 @@ export default function CircularButtonPage() {
 
           {/* Compact */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Compact</h2>
-            </div>
+            <SectionTitle title="Compact" />
             <div className={styles.variantRow}>
               <CircularButton icon="add" priority="primary" size="compact" ariaLabel="Add" />
               <CircularButton icon="close" priority="primary" size="compact" ariaLabel="Close" />

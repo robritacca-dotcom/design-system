@@ -6,6 +6,7 @@ import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
 import { Button } from "@design-system/components/Button/Button";
+import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
 import { getNavLinks, getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
@@ -57,9 +58,7 @@ function ButtonGrid({
 
   return (
     <section className={styles.variantBlock}>
-      <div className={styles.sectionTitle}>
-        <h2>{heading}</h2>
-      </div>
+      <SectionTitle title="{heading}" />
 
       <div className={styles.buttonGrid}>
         {/* Column headers */}

@@ -10,6 +10,7 @@ import { Button } from "@design-system/components/Button/Button";
 import { CircularButton } from "@design-system/components/CircularButton/CircularButton";
 import { Input } from "@design-system/components/Input/Input";
 import { Checkbox } from "@design-system/components/Checkbox/Checkbox";
+import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
 import { getNavLinks, getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
@@ -62,9 +63,7 @@ export default function TablePage() {
 
           {/* Default */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Default</h2>
-            </div>
+            <SectionTitle title="Default" />
             <div className={styles.tableWrapper}>
               <Table columns={basicColumns} rows={basicRows} />
             </div>
@@ -72,9 +71,7 @@ export default function TablePage() {
 
           {/* Compact */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Compact</h2>
-            </div>
+            <SectionTitle title="Compact" />
             <div className={styles.tableWrapper}>
               <Table columns={basicColumns} rows={basicRows} size="compact" />
             </div>
@@ -82,9 +79,7 @@ export default function TablePage() {
 
           {/* Striped */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>Striped</h2>
-            </div>
+            <SectionTitle title="Striped" />
             <div className={styles.tableWrapper}>
               <Table columns={basicColumns} rows={basicRows} striped />
             </div>
@@ -92,9 +87,7 @@ export default function TablePage() {
 
           {/* With icons */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>With icons</h2>
-            </div>
+            <SectionTitle title="With icons" />
             <div className={styles.tableWrapper}>
               <Table
                 columns={[
@@ -149,9 +142,7 @@ export default function TablePage() {
 
           {/* With controls */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>With controls</h2>
-            </div>
+            <SectionTitle title="With controls" />
             <div className={styles.tableWrapper}>
               <Table
                 columns={[
@@ -228,9 +219,7 @@ export default function TablePage() {
 
           {/* With inputs */}
           <section className={styles.section}>
-            <div className={styles.sectionTitle}>
-              <h2>With inputs</h2>
-            </div>
+            <SectionTitle title="With inputs" />
             <div className={styles.tableWrapper}>
               <Table
                 columns={[

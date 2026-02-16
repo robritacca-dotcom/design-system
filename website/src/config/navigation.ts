@@ -41,6 +41,7 @@ export const componentsSidebarLinks: NavLink[] = [
   { href: "/components/navigation", label: "Navigation" },
   { href: "/components/popover", label: "Popover" },
   { href: "/components/radio-button", label: "Radio button" },
+  { href: "/components/section-title", label: "Section title" },
   { href: "/components/segmented-control", label: "Segmented control" },
   { href: "/components/table", label: "Table" },
   { href: "/components/tabs", label: "Tabs" },
