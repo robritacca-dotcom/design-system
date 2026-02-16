@@ -10,6 +10,8 @@ export interface TextareaProps {
   value?: string;
   /** Number of visible rows */
   rows?: number;
+  /** Component size */
+  size?: 'default' | 'compact';
   /** Whether the textarea is disabled */
   disabled?: boolean;
   /** Whether the textarea is required */
@@ -43,6 +45,7 @@ export const Textarea = ({
   placeholder = '',
   value = '',
   rows = 4,
+  size = 'default',
   disabled = false,
   required = false,
   error = false,
@@ -58,10 +61,11 @@ export const Textarea = ({
   id,
 }: TextareaProps) => {
   const baseClass = 'ds-textarea';
+  const sizeClass = size === 'compact' ? `${baseClass}--compact` : '';
   const errorClass = error ? `${baseClass}--error` : '';
   const disabledClass = disabled ? `${baseClass}--disabled` : '';
 
-  const classes = [baseClass, errorClass, disabledClass, className]
+  const classes = [baseClass, sizeClass, errorClass, disabledClass, className]
     .filter(Boolean)
     .join(' ');
 

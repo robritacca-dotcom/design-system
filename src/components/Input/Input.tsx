@@ -11,6 +11,8 @@ export interface InputProps {
   value?: string;
   /** Input type */
   type?: 'text' | 'email' | 'password' | 'number' | 'search' | 'tel' | 'url';
+  /** Component size */
+  size?: 'default' | 'compact';
   /** Whether the input is disabled */
   disabled?: boolean;
   /** Whether the input is required */
@@ -44,6 +46,7 @@ export const Input = ({
   placeholder = '',
   value,
   type = 'text',
+  size = 'default',
   disabled = false,
   required = false,
   error = false,
@@ -59,12 +62,13 @@ export const Input = ({
   id,
 }: InputProps) => {
   const baseClass = 'ds-input';
+  const sizeClass = size === 'compact' ? `${baseClass}--compact` : '';
   const errorClass = error ? `${baseClass}--error` : '';
   const disabledClass = disabled ? `${baseClass}--disabled` : '';
   const hasLeftIcon = iconLeft ? `${baseClass}--has-icon-left` : '';
   const hasRightIcon = iconRight ? `${baseClass}--has-icon-right` : '';
 
-  const classes = [baseClass, errorClass, disabledClass, hasLeftIcon, hasRightIcon, className]
+  const classes = [baseClass, sizeClass, errorClass, disabledClass, hasLeftIcon, hasRightIcon, className]
     .filter(Boolean)
     .join(' ');
 
