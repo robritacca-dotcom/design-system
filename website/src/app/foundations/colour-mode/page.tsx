@@ -289,7 +289,7 @@ export default function SemanticColoursPage() {
 
           {/* Intro */}
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Maps semantic color roles to different primitive values per mode, enabling light and dark themes without changing component logic.
+            Each colour here has a role, like "page background" or "error border", and maps to a different primitive value depending on whether the UI is in light or dark mode. Components only reference these roles, so switching themes is just swapping which primitives each role points to. Toggle the mode above to see the values change.
           </p>
 
           {/* Example images */}

@@ -123,7 +123,7 @@ export default function ButtonPage() {
 
           {/* Intro */}
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Standardized button components that power all interactive actions, from primary CTAs to top level and sub navigation.
+            The main action element. Primary buttons have a border and fill on hover for high-emphasis actions. Secondary buttons are transparent and blend into the surface for lower-priority options. Both come in default and compact sizes.
           </p>
 
           {/* Variant grids — one per priority × size */}

@@ -306,7 +306,7 @@ export default function IconsPage() {
 
           {/* Intro */}
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            {totalIcons} icons from Material Symbols 3 rounded. One weight, one optical size, one style&nbsp;&mdash; keeping the set minimal and consistent.
+            {totalIcons} icons from Material Symbols 3, all using the rounded variant. Only one weight and one optical size across the entire set so they stay visually consistent next to text and inside components.
           </p>
 
           {/* Icon Categories */}

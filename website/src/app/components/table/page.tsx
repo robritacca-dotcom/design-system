@@ -52,7 +52,7 @@ export default function TablePage() {
           </div>
 
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Data table with flexible cell content, striped rows, and compact sizing. Cells accept any content including text, icons, inputs, and buttons.
+            For displaying structured data in rows and columns. Cells are flexible and can hold text, icons, form inputs, or action buttons. Supports striped rows for readability and a compact size for denser layouts.
           </p>
 
           {/* Default */}

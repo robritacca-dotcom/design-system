@@ -190,7 +190,7 @@ export default function PrimitiveColoursPage() {
 
           {/* Intro */}
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Base color values with no semantic meaning that serve as the source of truth for all higher level color tokens.
+            Seven colour ramps built from a single palette in Figma. These raw values never get used directly in components. Instead, they feed into the semantic layer where each value gets assigned a role like "page background" or "primary text". Keeping them separate means the palette can evolve without touching any component styles.
           </p>
 
           {/* Example images */}

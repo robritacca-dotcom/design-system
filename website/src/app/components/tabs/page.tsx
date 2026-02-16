@@ -31,7 +31,7 @@ export default function TabsPage() {
           </div>
 
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Horizontal tab navigation with underline indicator, icon support, and compact sizing for content switching.
+            For switching between different views or sections within the same page. The active tab gets an underline and a colour change. Supports optional icons and a full-width mode that stretches tabs to fill the container. Use Segmented Control instead when the options represent filters or modes rather than separate content areas.
           </p>
 
           {/* Default */}

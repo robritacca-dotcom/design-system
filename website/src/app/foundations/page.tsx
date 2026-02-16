@@ -34,10 +34,10 @@ export default function FoundationsPage() {
           {/* Intro */}
           <div className={`${styles.introSection} animate-in animate-delay-1`}>
             <p className={styles.subDisplay}>
-              The core building blocks: tokens, colors, spacing, and typography
+              The shared values behind every component
             </p>
             <p className={styles.introBody}>
-              Tokens are the underlying values the site runs on. They are used everywhere layout, color, and type appear. Instead of styling elements directly, everything references these shared variables so changes propagate consistently. The same token structure exists in Figma and in code, allowing updates to flow through without reinterpreting intent.
+              Foundations are the colours, spacing, and type styles that all components are built on. Every value here starts as a Figma variable, gets exported as a CSS token, and is referenced by components rather than hard-coded. That means updating a colour or spacing value in one place updates it everywhere it is used.
             </p>
           </div>
 

@@ -39,7 +39,7 @@ export default function ToggleSwitchPage() {
 
           {/* Intro */}
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Binary on/off control with a sliding thumb and check indicator, used for settings like theme switching.
+            An on/off switch for settings that take effect immediately, like enabling dark mode or toggling a notification. The sliding thumb and check icon give clear visual feedback. Use Checkbox instead for options that need to be saved or submitted as part of a form.
           </p>
 
           {/* Default */}

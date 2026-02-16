@@ -32,7 +32,7 @@ export default function PopoverPage() {
           </div>
 
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Contextual overlay panel with click and hover triggers, escape-to-close, and four position options.
+            A small panel that appears next to a trigger element, positioned above, below, left, or right. Can open on click or on hover for tooltip-like behaviour. Closes on outside click or pressing escape.
           </p>
 
           {/* Click trigger */}

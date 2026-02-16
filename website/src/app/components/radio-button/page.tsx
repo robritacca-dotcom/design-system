@@ -31,7 +31,7 @@ export default function RadioButtonPage() {
           </div>
 
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Single-select control with animated dot indicator, available as individual buttons or grouped with vertical and horizontal layouts.
+            For choosing exactly one option from a small set. Can be used individually or grouped in vertical and horizontal layouts. Use Checkbox instead when users can select more than one, or Dropdown when the list of options is long.
           </p>
 
           {/* Single states */}

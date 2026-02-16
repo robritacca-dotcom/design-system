@@ -31,7 +31,7 @@ export default function DatePickerPage() {
           </div>
 
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Inline calendar with month navigation, selectable dates, today indicator, and min/max date constraints.
+            A full calendar grid that sits inline on the page. Highlights today, supports min/max date limits, and lets users pick a date by clicking a cell. Use this when the date context matters and users benefit from seeing the full month. Use Date Input instead for a lighter-weight form field.
           </p>
 
           {/* Default */}

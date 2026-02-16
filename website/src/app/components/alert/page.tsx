@@ -31,7 +31,7 @@ export default function AlertPage() {
           </div>
 
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Contextual feedback with status variants, optional dismiss button, and compact sizing for inline notifications.
+            For surfacing feedback, confirmations, warnings, and errors. Each variant maps to a status colour (positive, warning, error, info, neutral) so the meaning is immediately clear. Can be dismissed with an optional close button.
           </p>
 
           {/* Default */}

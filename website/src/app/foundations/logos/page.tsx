@@ -176,7 +176,7 @@ export default function LogosPage() {
 
           {/* Intro */}
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Custom vector logo assets standardized for consistent use across the site and its components.
+            SVG logos for brands, tools, and clients referenced across the portfolio. Each is sized and exported from a single Figma frame to keep alignment and proportions consistent when used inside cards and layouts.
           </p>
 
           {/* Logo Categories */}

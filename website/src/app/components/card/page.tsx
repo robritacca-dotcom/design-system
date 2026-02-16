@@ -45,7 +45,7 @@ export default function CardPage() {
 
           {/* Intro */}
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            A family of card components for previews, navigation, and token documentation — from content cards to colour swatches and typography specimens.
+            A family of card components used throughout the system. The base card handles previews and navigation links. Specialized variants like colour swatches, spacing swatches, and typography specimens are purpose-built for documenting tokens on the foundations pages.
           </p>
 
           {/* ----------------------------------------

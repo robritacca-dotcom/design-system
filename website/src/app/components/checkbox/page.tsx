@@ -31,7 +31,7 @@ export default function CheckboxPage() {
           </div>
 
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Selection control for binary or indeterminate choices, with animated check and minus indicators.
+            For toggling a single option on or off, or selecting multiple items from a list. Supports a third "mixed" state for cases like a parent checkbox that controls a partially selected group. Use Radio Button when only one choice should be selected at a time.
           </p>
 
           {/* Default */}

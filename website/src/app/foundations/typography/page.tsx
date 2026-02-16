@@ -256,7 +256,7 @@ export default function TypographyPage() {
 
           {/* Intro */}
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            A single type system built on Nunito Sans, scaled from mega through paragraph to support consistent hierarchy and readable layout across the site.
+            Everything is set in Nunito Sans. Mega and Display styles are for hero moments and landing pages. Headings structure sections. Title is for bold labels. Paragraph Em is the default for buttons and interactive controls. Paragraph is body copy. The SM variants scale each of those down for compact components and secondary text.
           </p>
 
           {/* Type Sections */}
