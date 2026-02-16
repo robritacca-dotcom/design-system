@@ -165,6 +165,20 @@ const bodyStyles: TypeStyleData[] = [
     },
   },
   {
+    name: "Paragraph Em",
+    weight: "Medium",
+    size: "16",
+    lineHeight: "24px",
+    letterSpacing: "-1%",
+    previewStyle: {
+      fontFamily: "var(--font-paragraph-em-family)",
+      fontSize: "var(--font-paragraph-em-size)",
+      fontWeight: "var(--font-paragraph-em-weight)" as unknown as number,
+      lineHeight: "var(--font-paragraph-em-line-height)",
+      letterSpacing: "var(--font-paragraph-em-letter-spacing)",
+    },
+  },
+  {
     name: "Paragraph",
     weight: "Regular",
     size: "16",
@@ -176,6 +190,20 @@ const bodyStyles: TypeStyleData[] = [
       fontWeight: "var(--font-paragraph-weight)" as unknown as number,
       lineHeight: "var(--font-paragraph-line-height)",
       letterSpacing: "var(--font-paragraph-letter-spacing)",
+    },
+  },
+  {
+    name: "Paragraph SM Em",
+    weight: "Medium",
+    size: "14",
+    lineHeight: "20px",
+    letterSpacing: "0",
+    previewStyle: {
+      fontFamily: "var(--font-paragraph-sm-em-family)",
+      fontSize: "var(--font-paragraph-sm-em-size)",
+      fontWeight: "var(--font-paragraph-sm-em-weight)" as unknown as number,
+      lineHeight: "var(--font-paragraph-sm-em-line-height)",
+      letterSpacing: "var(--font-paragraph-sm-em-letter-spacing)",
     },
   },
   {

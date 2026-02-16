@@ -16,12 +16,12 @@
   /* Border radius */
   border-radius: var(--radius-full); /* Figma: --radius/full (999px) */
 
-  /* Typography - Using paragraph style tokens */
-  font-family: var(--font-paragraph-family);
-  font-weight: var(--font-paragraph-weight);
-  font-size: var(--font-paragraph-size);
-  line-height: var(--font-paragraph-line-height);
-  letter-spacing: var(--font-paragraph-letter-spacing);
+  /* Typography - Using paragraph em (medium weight) for clickable controls */
+  font-family: var(--font-paragraph-em-family);
+  font-weight: var(--font-paragraph-em-weight);
+  font-size: var(--font-paragraph-em-size);
+  line-height: var(--font-paragraph-em-line-height);
+  letter-spacing: var(--font-paragraph-em-letter-spacing);
   text-align: center;
 
   /* Transitions */
@@ -49,9 +49,9 @@
 
 .ds-button--compact {
   padding: var(--padding-xs) var(--padding-sm-md); /* 6px 12px */
-  font-size: var(--font-paragraph-sm-size);
-  line-height: var(--font-paragraph-sm-line-height);
-  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  font-size: var(--font-paragraph-sm-em-size);
+  line-height: var(--font-paragraph-sm-em-line-height);
+  letter-spacing: var(--font-paragraph-sm-em-letter-spacing);
 }
 
 .ds-button--compact .ds-button__icon {

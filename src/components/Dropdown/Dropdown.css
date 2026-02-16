@@ -59,11 +59,11 @@
    ============================================ */
 
 .ds-dropdown__value {
-  font-family: var(--font-paragraph-family);
-  font-size: var(--font-paragraph-size);
-  font-weight: var(--font-paragraph-weight);
-  line-height: var(--font-paragraph-line-height);
-  letter-spacing: var(--font-paragraph-letter-spacing);
+  font-family: var(--font-paragraph-em-family);
+  font-size: var(--font-paragraph-em-size);
+  font-weight: var(--font-paragraph-em-weight);
+  line-height: var(--font-paragraph-em-line-height);
+  letter-spacing: var(--font-paragraph-em-letter-spacing);
   color: var(--color-text-primary);
   flex: 1;
   overflow: hidden;
@@ -122,11 +122,11 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--padding-sm) var(--padding-md); /* 8px 16px */
-  font-family: var(--font-paragraph-family);
-  font-size: var(--font-paragraph-size);
-  font-weight: var(--font-paragraph-weight);
-  line-height: var(--font-paragraph-line-height);
-  letter-spacing: var(--font-paragraph-letter-spacing);
+  font-family: var(--font-paragraph-em-family);
+  font-size: var(--font-paragraph-em-size);
+  font-weight: var(--font-paragraph-em-weight);
+  line-height: var(--font-paragraph-em-line-height);
+  letter-spacing: var(--font-paragraph-em-letter-spacing);
   color: var(--color-text-primary);
   cursor: pointer;
   transition: background-color 0.2s ease;
@@ -142,7 +142,6 @@
 
 .ds-dropdown__option--selected {
   color: var(--color-action-primary-text-tertiary);
-  font-weight: var(--font-title-body-weight);
 }
 
 .ds-dropdown__option--disabled {
@@ -212,9 +211,9 @@
 }
 
 .ds-dropdown--compact .ds-dropdown__value {
-  font-size: var(--font-paragraph-sm-size);
-  line-height: var(--font-paragraph-sm-line-height);
-  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  font-size: var(--font-paragraph-sm-em-size);
+  line-height: var(--font-paragraph-sm-em-line-height);
+  letter-spacing: var(--font-paragraph-sm-em-letter-spacing);
 }
 
 .ds-dropdown--compact .ds-dropdown__chevron {
@@ -230,9 +229,9 @@
 
 .ds-dropdown--compact .ds-dropdown__option {
   padding: var(--padding-xs) var(--padding-sm-md); /* 6px 12px */
-  font-size: var(--font-paragraph-sm-size);
-  line-height: var(--font-paragraph-sm-line-height);
-  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  font-size: var(--font-paragraph-sm-em-size);
+  line-height: var(--font-paragraph-sm-em-line-height);
+  letter-spacing: var(--font-paragraph-sm-em-letter-spacing);
 }
 
 .ds-dropdown--compact .ds-dropdown__check {

@@ -113,10 +113,10 @@
   cursor: pointer;
   transition: background-color 0.2s ease, color 0.2s ease;
 
-  /* Typography */
-  font-family: var(--font-paragraph-sm-family);
-  font-size: var(--font-paragraph-sm-size);
-  font-weight: var(--font-paragraph-sm-weight);
+  /* Typography — paragraph sm em for clickable cells */
+  font-family: var(--font-paragraph-sm-em-family);
+  font-size: var(--font-paragraph-sm-em-size);
+  font-weight: var(--font-paragraph-sm-em-weight);
   line-height: 1;
   color: var(--color-text-primary);
 }
@@ -145,7 +145,6 @@
 .ds-date-picker__cell--selected {
   background-color: var(--color-action-primary-bg);
   color: var(--color-action-primary-text);
-  font-weight: var(--font-title-body-weight);
 }
 
 .ds-date-picker__cell--selected:hover:not(:disabled) {

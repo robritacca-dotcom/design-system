@@ -44,28 +44,15 @@
   position: relative;
 }
 
-/* Typography */
+/* Typography — paragraph em (medium weight) for clickable controls */
 .ds-segmented-control__label {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  font-family: var(--font-paragraph-family);
-  font-size: var(--font-paragraph-size);
-  font-weight: var(--font-paragraph-weight);
-  line-height: var(--font-paragraph-line-height);
-  letter-spacing: var(--font-paragraph-letter-spacing);
+  font-family: var(--font-paragraph-em-family);
+  font-size: var(--font-paragraph-em-size);
+  font-weight: var(--font-paragraph-em-weight);
+  line-height: var(--font-paragraph-em-line-height);
+  letter-spacing: var(--font-paragraph-em-letter-spacing);
   color: var(--color-text-secondary);
-  transition: color 0.2s ease, font-weight 0.2s ease;
-}
-
-/* Hidden bold text reserves width so buttons don't shift on weight change */
-.ds-segmented-control__label::after {
-  content: attr(data-text);
-  font-weight: var(--font-title-body-weight); /* 600 — matches active weight */
-  height: 0;
-  overflow: hidden;
-  visibility: hidden;
-  pointer-events: none;
+  transition: color 0.2s ease;
 }
 
 /* Icon */
@@ -97,7 +84,6 @@
 
 .ds-segmented-control__segment--active .ds-segmented-control__label {
   color: var(--color-action-primary-text);
-  font-weight: var(--font-title-body-weight); /* 600 */
 }
 
 .ds-segmented-control__segment--active .ds-segmented-control__icon {
@@ -135,9 +121,9 @@
 }
 
 .ds-segmented-control--compact .ds-segmented-control__label {
-  font-size: var(--font-paragraph-sm-size);
-  line-height: var(--font-paragraph-sm-line-height);
-  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  font-size: var(--font-paragraph-sm-em-size);
+  line-height: var(--font-paragraph-sm-em-line-height);
+  letter-spacing: var(--font-paragraph-sm-em-letter-spacing);
 }
 
 .ds-segmented-control--compact .ds-segmented-control__icon {
