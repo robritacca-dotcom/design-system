@@ -175,9 +175,6 @@ const totalLogos = logoCategories.reduce((sum, cat) => sum + cat.logos.length, 0
 export default function LogosPage() {
   return (
     <>
-      <a href="#main-content" className="skip-link">
-        Skip to main content
-      </a>
 
       <BlurBackground />
 

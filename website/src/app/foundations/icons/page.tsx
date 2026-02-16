@@ -305,9 +305,6 @@ const totalIcons = iconCategories.reduce((sum, cat) => sum + cat.icons.length, 0
 export default function IconsPage() {
   return (
     <>
-      <a href="#main-content" className="skip-link">
-        Skip to main content
-      </a>
 
       <BlurBackground />
 
