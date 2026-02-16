@@ -37,6 +37,7 @@
   font-size: 18px;
   width: 18px;
   height: 18px;
+  line-height: 1;
   color: var(--color-action-primary-text-active);
   opacity: 0;
   transition: opacity 0.2s ease;
