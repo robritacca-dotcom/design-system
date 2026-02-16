@@ -112,12 +112,14 @@ export default function Header({ navLinks, subnavLinks }: HeaderProps) {
             />
             <span className={styles.navLogoText}>robr0</span>
           </Link>
-          <div className={styles.navRight}>
+          <div className={styles.navCenter}>
             <ButtonGroup
               orientation="horizontal"
               buttons={navButtonProps}
               className={styles.navMenu}
             />
+          </div>
+          <div className={styles.navRight}>
             <ThemeToggle className={styles.desktopThemeToggle} />
           </div>
         </div>
@@ -136,12 +138,14 @@ export default function Header({ navLinks, subnavLinks }: HeaderProps) {
             />
             <span className={styles.navLogoText}>robr0</span>
           </Link>
-          <div className={styles.navRight}>
+          <div className={styles.navCenter}>
             <ButtonGroup
               orientation="horizontal"
               buttons={navButtonProps}
               className={styles.navMenu}
             />
+          </div>
+          <div className={styles.navRight}>
             <ThemeToggle className={styles.desktopThemeToggle} />
           </div>
         </div>
