@@ -25,8 +25,7 @@ export default function TextareaPage() {
         <main className={styles.dsContent} id="main-content">
           <div className={`${styles.pageHeader} animate-in`}>
             <h1 className={styles.pageTitle}>Textarea</h1>
-            <PageLinks
-              figmaUrl="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26"
+            <PageLinks
               storybookPath="/?path=/docs/components-textarea--docs"
             />
           </div>

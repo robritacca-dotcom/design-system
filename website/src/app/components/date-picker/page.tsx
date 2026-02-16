@@ -26,7 +26,6 @@ export default function DatePickerPage() {
           <div className={`${styles.pageHeader} animate-in`}>
             <h1 className={styles.pageTitle}>Date picker</h1>
             <PageLinks
-              figmaUrl="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26"
               storybookPath="/?path=/docs/components-datepicker--docs"
             />
           </div>

@@ -17,6 +17,17 @@
 }
 
 /* ============================================
+   PAGE HEADER
+   ============================================ */
+.pageHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--primitive-gap-lg);
+  width: 100%;
+}
+
+/* ============================================
    PAGE TITLE - Display 2
    ============================================ */
 .pageTitle {

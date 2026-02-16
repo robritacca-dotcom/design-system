@@ -5,9 +5,9 @@ import styles from "./PageLinks.module.css";
 const STORYBOOK_BASE = "https://design-system-iota-one.vercel.app";
 
 interface PageLinksProps {
-  /** Figma file URL */
-  figmaUrl: string;
-  /** Storybook story path (e.g. "/?path=/docs/components-button--docs") — omit for index pages */
+  /** Figma file URL — omit to hide the Figma button */
+  figmaUrl?: string;
+  /** Storybook story path (e.g. "/?path=/docs/components-button--docs") — omit to hide the Storybook button */
   storybookPath?: string;
 }
 
@@ -41,16 +41,18 @@ const StorybookIcon = () => (
 export default function PageLinks({ figmaUrl, storybookPath }: PageLinksProps) {
   return (
     <div className={styles.pageLinks}>
-      <Button
-        label="Figma"
-        priority="secondary"
-        size="compact"
-        iconLeft={<FigmaIcon />}
-        iconRight="open_in_new"
-        href={figmaUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-      />
+      {figmaUrl && (
+        <Button
+          label="Figma"
+          priority="secondary"
+          size="compact"
+          iconLeft={<FigmaIcon />}
+          iconRight="open_in_new"
+          href={figmaUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        />
+      )}
 
       {storybookPath && (
         <Button
