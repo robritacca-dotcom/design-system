@@ -197,6 +197,18 @@ export default function ComponentsPage() {
               </div>
             </TocCard>
 
+            {/* Table */}
+            <TocCard href="/components/table" title="Table">
+              <div className={`${styles.circlePreview} ${styles.circleDashed}`}>
+                <div className={styles.tablePreview}>
+                  <div className={`${styles.tablePreviewRow} ${styles.tablePreviewRowHeader}`} />
+                  <div className={styles.tablePreviewRow} />
+                  <div className={styles.tablePreviewRow} />
+                  <div className={styles.tablePreviewRow} />
+                </div>
+              </div>
+            </TocCard>
+
             {/* Tabs */}
             <TocCard href="/components/tabs" title="Tabs">
               <div className={`${styles.circlePreview} ${styles.circleDashed}`}>

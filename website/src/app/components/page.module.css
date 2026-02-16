@@ -234,6 +234,25 @@
 }
 
 /* ============================================
+   TABLE PREVIEW (mini table inside circle)
+   ============================================ */
+.tablePreview {
+  display: flex;
+  flex-direction: column;
+  width: 100px;
+  gap: 0;
+}
+
+.tablePreviewRow {
+  height: 12px;
+  border-bottom: 1px solid var(--color-bg-container-border);
+}
+
+.tablePreviewRowHeader {
+  border-bottom-width: 2px;
+}
+
+/* ============================================
    RESPONSIVE
    ============================================ */
 @media (max-width: 959px) {
