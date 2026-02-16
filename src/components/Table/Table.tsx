@@ -96,9 +96,20 @@ export const Table = ({
               <td
                 key={col.key}
                 className={`${baseClass}__cell`}
-                style={{ textAlign: col.align || 'left' }}
               >
-                {row.cells[col.key]}
+                <div
+                  className={`${baseClass}__cell-content`}
+                  style={{
+                    justifyContent:
+                      col.align === 'center'
+                        ? 'center'
+                        : col.align === 'right'
+                          ? 'flex-end'
+                          : 'flex-start',
+                  }}
+                >
+                  {row.cells[col.key]}
+                </div>
               </td>
             ))}
           </tr>
