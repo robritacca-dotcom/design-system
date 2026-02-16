@@ -167,6 +167,7 @@
   right: 2.38%;
   width: 52.38%;
   border-radius: 50%;
+  background: var(--color-action-primary-text);
   display: flex;
   align-items: center;
   justify-content: center;
