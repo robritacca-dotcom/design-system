@@ -30,20 +30,15 @@ const meta = {
     },
     iconLeft: {
       control: 'text',
-      description: 'Material Symbol icon name for left side (e.g., "menu", "home", "settings")',
+      description: 'Material Symbol Rounded icon name for left side (e.g., "menu", "home")',
     },
     iconRight: {
       control: 'text',
-      description: 'Material Symbol icon name for right side (e.g., "arrow_forward", "chevron_right")',
+      description: 'Material Symbol Rounded icon name for right side (e.g., "arrow_forward")',
     },
     icon: {
       control: 'text',
       description: 'Deprecated - use iconLeft instead',
-    },
-    iconStyle: {
-      control: 'select',
-      options: ['outlined', 'rounded', 'sharp'],
-      description: 'Icon style variant',
     },
   },
   args: {
@@ -137,7 +132,7 @@ export const SecondaryDisabled: Story = {
   },
 };
 
-// With Icon Left - Sharp (Default)
+// With Icon Left
 export const PrimaryWithIconLeft: Story = {
   args: {
     priority: 'primary',
@@ -146,7 +141,6 @@ export const PrimaryWithIconLeft: Story = {
     text: true,
     iconLeft: 'menu',
     iconRight: undefined,
-    iconStyle: 'sharp',
   },
 };
 
@@ -158,7 +152,6 @@ export const SecondaryWithIconLeft: Story = {
     text: true,
     iconLeft: 'home',
     iconRight: undefined,
-    iconStyle: 'sharp',
   },
 };
 
@@ -171,7 +164,6 @@ export const WithBothIcons: Story = {
     text: true,
     iconLeft: 'check',
     iconRight: 'arrow_forward',
-    iconStyle: 'sharp',
   },
 };
 
@@ -183,33 +175,6 @@ export const WithIconLeftAndRight: Story = {
     text: true,
     iconLeft: 'download',
     iconRight: 'chevron_right',
-    iconStyle: 'sharp',
-  },
-};
-
-// Icon Styles - Rounded
-export const WithIconRounded: Story = {
-  args: {
-    priority: 'primary',
-    state: 'default',
-    label: 'Settings',
-    text: true,
-    iconLeft: 'settings',
-    iconRight: 'arrow_forward',
-    iconStyle: 'rounded',
-  },
-};
-
-// Icon Styles - Outlined
-export const WithIconOutlined: Story = {
-  args: {
-    priority: 'primary',
-    state: 'default',
-    label: 'Favorite',
-    text: true,
-    iconLeft: 'favorite',
-    iconRight: 'chevron_right',
-    iconStyle: 'outlined',
   },
 };
 
@@ -221,7 +186,6 @@ export const PrimaryIconOnly: Story = {
     text: false,
     iconLeft: 'add',
     iconRight: undefined,
-    iconStyle: 'sharp',
   },
 };
 
@@ -232,7 +196,6 @@ export const SecondaryIconOnly: Story = {
     text: false,
     iconLeft: 'close',
     iconRight: undefined,
-    iconStyle: 'sharp',
   },
 };
 

@@ -66,56 +66,54 @@
 }
 
 /* ============================================
-   BUTTON MATRIX — grid table
+   BUTTON VARIANT GROUPS
+   Two columns: Primary and Secondary
    ============================================ */
-.buttonMatrix {
+.variantGroups {
   display: grid;
-  grid-template-columns: auto repeat(6, 1fr);
-  gap: var(--primitive-gap-xl) var(--primitive-gap-lg);
-  align-items: center;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--primitive-gap-xl);
   width: 100%;
 }
 
 /* ============================================
-   COLUMN HEADERS
+   VARIANT GROUP — Primary or Secondary
    ============================================ */
-.columnGroupHeader {
+.variantGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-lg);
+}
+
+.variantGroupTitle {
   font-size: var(--font-paragraph-size);
   font-weight: var(--font-paragraph-weight);
   line-height: var(--font-paragraph-line-height);
   color: var(--color-text-primary);
-  text-align: center;
-}
-
-.columnHeader {
-  font-size: var(--font-paragraph-sm-size);
-  font-weight: var(--font-paragraph-sm-weight);
-  line-height: var(--font-paragraph-sm-line-height);
-  letter-spacing: var(--font-paragraph-sm-letter-spacing);
-  color: var(--color-text-tertiary);
-  text-align: center;
 }
 
 /* ============================================
-   ROW LABELS
+   STATE ROW — one state (e.g. Default)
    ============================================ */
-.rowLabel {
-  font-size: var(--font-paragraph-sm-size);
-  font-weight: var(--font-paragraph-sm-weight);
-  line-height: var(--font-paragraph-sm-line-height);
-  letter-spacing: var(--font-paragraph-sm-letter-spacing);
-  color: var(--color-text-tertiary);
-  text-align: right;
-  padding-right: var(--primitive-padding-md);
-}
-
-/* ============================================
-   BUTTON CELL
-   ============================================ */
-.buttonCell {
+.stateRow {
   display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-sm);
+}
+
+.stateLabel {
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  color: var(--color-text-tertiary);
+}
+
+.stateButtons {
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
+  gap: var(--primitive-gap-md);
 }
 
 /* ============================================
@@ -137,8 +135,7 @@
     line-height: 36px;
   }
 
-  .buttonMatrix {
-    overflow-x: auto;
-    min-width: 700px;
+  .variantGroups {
+    grid-template-columns: 1fr;
   }
 }

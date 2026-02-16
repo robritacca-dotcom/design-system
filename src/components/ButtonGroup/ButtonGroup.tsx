@@ -30,7 +30,6 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
           iconLeft={button.iconLeft}
           iconRight={button.iconRight}
           icon={button.icon}
-          iconStyle={button.iconStyle}
           onClick={button.onClick}
           href={button.href}
         />

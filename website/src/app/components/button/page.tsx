@@ -6,7 +6,6 @@ import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
 import { Button } from "@design-system/components/Button/Button";
-import type { ButtonProps } from "@design-system/components/Button/Button";
 import styles from "./page.module.css";
 
 const navLinks = [
@@ -32,35 +31,14 @@ const subnavLinks = sidebarLinks.map((l) => ({
 }));
 
 /* ============================================
-   BUTTON MATRIX DATA
-   Rows: states × columns: icon variants
+   BUTTON STATES
    ============================================ */
 
-type State = "disabled" | "default" | "hover" | "active";
-
-const states: { label: string; value: State }[] = [
-  { label: "Disabled", value: "disabled" },
-  { label: "Default", value: "default" },
-  { label: "Hover", value: "hover" },
-  { label: "Active", value: "active" },
-];
-
-interface ColumnDef {
-  label: string;
-  iconLeft?: string;
-  iconRight?: string;
-}
-
-const primaryColumns: ColumnDef[] = [
-  { label: "No icon" },
-  { label: "Icon, left", iconLeft: "grid_view" },
-  { label: "Icon, right", iconRight: "arrow_forward" },
-];
-
-const secondaryColumns: ColumnDef[] = [
-  { label: "No icon" },
-  { label: "Icon, left", iconLeft: "grid_view" },
-  { label: "Icon, right", iconRight: "arrow_forward" },
+const states = [
+  { label: "Disabled", value: "disabled" as const },
+  { label: "Default", value: "default" as const },
+  { label: "Hover", value: "hover" as const },
+  { label: "Active", value: "active" as const },
 ];
 
 /* ============================================
@@ -96,69 +74,38 @@ export default function ButtonPage() {
               <h2>Components</h2>
             </div>
 
-            <div className={styles.buttonMatrix}>
-              {/* Row 1: Column group headers */}
-              <span /> {/* empty corner */}
-              <span
-                className={styles.columnGroupHeader}
-                style={{ gridColumn: "2 / 5" }}
-              >
-                Primary
-              </span>
-              <span
-                className={styles.columnGroupHeader}
-                style={{ gridColumn: "5 / 8" }}
-              >
-                Secondary
-              </span>
+            <div className={styles.variantGroups}>
+              {/* Primary */}
+              <div className={styles.variantGroup}>
+                <span className={styles.variantGroupTitle}>Primary</span>
 
-              {/* Row 2: Column sub-headers */}
-              <span /> {/* empty corner */}
-              {primaryColumns.map((col) => (
-                <span key={`ph-${col.label}`} className={styles.columnHeader}>
-                  {col.label}
-                </span>
-              ))}
-              {secondaryColumns.map((col) => (
-                <span key={`sh-${col.label}`} className={styles.columnHeader}>
-                  {col.label}
-                </span>
-              ))}
+                {states.map((st) => (
+                  <div key={`p-${st.value}`} className={styles.stateRow}>
+                    <span className={styles.stateLabel}>{st.label}</span>
+                    <div className={styles.stateButtons}>
+                      <Button label="Button" priority="primary" state={st.value} />
+                      <Button label="Button" priority="primary" state={st.value} iconLeft="grid_view" />
+                      <Button label="Button" priority="primary" state={st.value} iconRight="arrow_forward" />
+                    </div>
+                  </div>
+                ))}
+              </div>
 
-              {/* Data rows */}
-              {states.map((st) => (
-                <React.Fragment key={st.value}>
-                  <span className={styles.rowLabel}>{st.label}</span>
-                  {primaryColumns.map((col) => (
-                    <div
-                      key={`p-${st.value}-${col.label}`}
-                      className={styles.buttonCell}
-                    >
-                      <Button
-                        label="Button"
-                        priority="primary"
-                        state={st.value}
-                        iconLeft={col.iconLeft}
-                        iconRight={col.iconRight}
-                      />
+              {/* Secondary */}
+              <div className={styles.variantGroup}>
+                <span className={styles.variantGroupTitle}>Secondary</span>
+
+                {states.map((st) => (
+                  <div key={`s-${st.value}`} className={styles.stateRow}>
+                    <span className={styles.stateLabel}>{st.label}</span>
+                    <div className={styles.stateButtons}>
+                      <Button label="Button" priority="secondary" state={st.value} />
+                      <Button label="Button" priority="secondary" state={st.value} iconLeft="grid_view" />
+                      <Button label="Button" priority="secondary" state={st.value} iconRight="arrow_forward" />
                     </div>
-                  ))}
-                  {secondaryColumns.map((col) => (
-                    <div
-                      key={`s-${st.value}-${col.label}`}
-                      className={styles.buttonCell}
-                    >
-                      <Button
-                        label="Button"
-                        priority="secondary"
-                        state={st.value}
-                        iconLeft={col.iconLeft}
-                        iconRight={col.iconRight}
-                      />
-                    </div>
-                  ))}
-                </React.Fragment>
-              ))}
+                  </div>
+                ))}
+              </div>
             </div>
           </section>
         </main>

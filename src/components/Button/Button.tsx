@@ -9,8 +9,6 @@ export interface ButtonProps {
   iconLeft?: string;
   /** Material Symbol icon name for right side (e.g., 'arrow_forward', 'chevron_right') */
   iconRight?: string;
-  /** Icon style variant */
-  iconStyle?: 'outlined' | 'rounded' | 'sharp';
   /** Button priority/variant */
   priority?: 'primary' | 'secondary';
   /** Button state */
@@ -36,7 +34,6 @@ export const Button = ({
   label = 'Button',
   iconLeft,
   iconRight,
-  iconStyle = 'sharp',
   priority = 'primary',
   state = 'default',
   text = true,
@@ -53,8 +50,8 @@ export const Button = ({
 
   const isDisabled = state === 'disabled';
 
-  // Map iconStyle to Material Symbols class
-  const iconStyleClass = `material-symbols-${iconStyle}`;
+  // Material Symbols — rounded only
+  const iconClass = 'material-symbols-rounded';
 
   // Backwards compatibility: icon prop maps to iconLeft
   const leftIcon = iconLeft || icon;
@@ -62,13 +59,13 @@ export const Button = ({
   const children = (
     <>
       {leftIcon && (
-        <span className={`${baseClass}__icon ${iconStyleClass}`} aria-hidden="true">
+        <span className={`${baseClass}__icon ${iconClass}`} aria-hidden="true">
           {leftIcon}
         </span>
       )}
       {text && <span className={`${baseClass}__text`}>{label}</span>}
       {iconRight && (
-        <span className={`${baseClass}__icon ${iconStyleClass}`} aria-hidden="true">
+        <span className={`${baseClass}__icon ${iconClass}`} aria-hidden="true">
           {iconRight}
         </span>
       )}
