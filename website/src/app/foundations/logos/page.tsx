@@ -17,7 +17,7 @@ const navLinks = [
 ];
 
 const sidebarLinks = [
-  { href: "/foundations", label: "About" },
+  { href: "/foundations", label: "Contents" },
   { href: "/foundations/icons", label: "Icons" },
   { href: "/foundations/logos", label: "Logos", active: true },
   { href: "/foundations/colour-primitives", label: "Primative colours" },
