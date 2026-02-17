@@ -1,0 +1,76 @@
+/* ============================================
+   PROGRESS BAR COMPONENT
+   Displays completion progress as a horizontal bar
+   ============================================ */
+
+.ds-progress-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--padding-sm);
+  width: 100%;
+}
+
+/* ============================================
+   TRACK
+   ============================================ */
+
+.ds-progress-bar__track {
+  flex: 1;
+  height: 8px;
+  background-color: var(--color-bg-container-secondary);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.ds-progress-bar--compact .ds-progress-bar__track {
+  height: 4px;
+}
+
+/* ============================================
+   FILL
+   ============================================ */
+
+.ds-progress-bar__fill {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  transition: width 0.3s ease;
+}
+
+/* ============================================
+   LABEL
+   ============================================ */
+
+.ds-progress-bar__label {
+  font-family: var(--font-paragraph-sm-em-family);
+  font-size: var(--font-paragraph-sm-em-size);
+  font-weight: var(--font-paragraph-sm-em-weight);
+  line-height: var(--font-paragraph-sm-em-line-height);
+  letter-spacing: var(--font-paragraph-sm-em-letter-spacing);
+  color: var(--color-text-secondary);
+  min-width: 36px;
+  text-align: right;
+}
+
+/* ============================================
+   VARIANTS
+   ============================================ */
+
+.ds-progress-bar--info .ds-progress-bar__fill {
+  background-color: var(--color-status-info-text);
+}
+
+.ds-progress-bar--positive .ds-progress-bar__fill {
+  background-color: var(--color-status-positive-text);
+}
+
+.ds-progress-bar--warning .ds-progress-bar__fill {
+  background-color: var(--color-status-warning-text);
+}
+
+.ds-progress-bar--error .ds-progress-bar__fill {
+  background-color: var(--color-status-error-text);
+}
+
+.ds-progress-bar--neutral .ds-progress-bar__fill {
+  background-color: var(--color-text-secondary);
+}
