@@ -52,25 +52,9 @@
 }
 
 /* ============================================
-   VARIANTS
+   FILL COLOUR
    ============================================ */
 
-.ds-progress-bar--info .ds-progress-bar__fill {
-  background-color: var(--color-status-info-text);
-}
-
-.ds-progress-bar--positive .ds-progress-bar__fill {
-  background-color: var(--color-status-positive-text);
-}
-
-.ds-progress-bar--warning .ds-progress-bar__fill {
-  background-color: var(--color-status-warning-text);
-}
-
-.ds-progress-bar--error .ds-progress-bar__fill {
-  background-color: var(--color-status-error-text);
-}
-
-.ds-progress-bar--neutral .ds-progress-bar__fill {
-  background-color: var(--color-text-secondary);
+.ds-progress-bar__fill {
+  background-color: var(--color-action-primary-bg);
 }
