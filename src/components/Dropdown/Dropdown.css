@@ -38,20 +38,24 @@
   justify-content: space-between;
   gap: var(--gap-sm); /* 8px */
   padding: var(--padding-sm) var(--padding-md); /* 8px 16px */
-  border: var(--border-xs) solid var(--color-bg-container-border);
-  border-radius: var(--radius-sm); /* 8px */
-  background-color: var(--color-bg-container-primary-transparent);
+  border: var(--border-xs) solid var(--color-input-border-primary);
+  border-radius: var(--radius-md); /* 12px */
+  background-color: var(--color-input-bg-primary);
   cursor: pointer;
   transition: border-color 0.2s ease;
   outline: none;
 }
 
+.ds-dropdown__trigger:hover:not(:focus-visible) {
+  border-color: var(--color-input-border-hover);
+}
+
 .ds-dropdown__trigger:focus-visible {
-  border-color: var(--color-action-primary-bg);
+  border-color: var(--color-input-border-selected);
 }
 
 .ds-dropdown--open .ds-dropdown__trigger {
-  border-color: var(--color-action-primary-bg);
+  border-color: var(--color-input-border-selected);
 }
 
 /* ============================================
@@ -64,7 +68,7 @@
   font-weight: var(--font-paragraph-em-weight);
   line-height: var(--font-paragraph-em-line-height);
   letter-spacing: var(--font-paragraph-em-letter-spacing);
-  color: var(--color-text-primary);
+  color: var(--color-input-text-primary);
   flex: 1;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -72,7 +76,7 @@
 }
 
 .ds-dropdown__value--placeholder {
-  color: var(--color-text-tertiary);
+  color: var(--color-input-text-placeholder);
 }
 
 /* ============================================
@@ -103,8 +107,8 @@
   right: 0;
   margin-top: var(--gap-xxs); /* 2px */
   padding: var(--padding-xxs); /* inset gap on all sides */
-  border: var(--border-xs) solid var(--color-bg-container-border);
-  border-radius: var(--radius-sm); /* 8px */
+  border: var(--border-xs) solid var(--color-input-border-primary);
+  border-radius: var(--radius-md); /* 12px */
   background-color: var(--color-bg-page-primary);
   list-style: none;
   max-height: 240px;
@@ -242,12 +246,22 @@
    DISABLED STATE
    ============================================ */
 
-.ds-dropdown--disabled {
-  opacity: 0.4;
+.ds-dropdown--disabled .ds-dropdown__label {
+  color: var(--color-input-text-disabled);
 }
 
 .ds-dropdown--disabled .ds-dropdown__trigger {
+  background-color: var(--color-input-bg-disabled);
+  border-color: var(--color-input-border-disabled);
   cursor: not-allowed;
+}
+
+.ds-dropdown--disabled .ds-dropdown__value {
+  color: var(--color-input-text-disabled);
+}
+
+.ds-dropdown--disabled .ds-dropdown__chevron {
+  color: var(--color-input-text-disabled);
 }
 
 /* ============================================
