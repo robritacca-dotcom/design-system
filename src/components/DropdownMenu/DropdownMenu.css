@@ -45,7 +45,7 @@
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
 
   /* Inset gap: panel padding creates the gap between item hover fill and panel edge */
-  padding: var(--padding-xxs);
+  padding: var(--padding-xxs) var(--padding-xxxs); /* 4px top/bottom, 2px left/right — subtle inset */
 
   /* Reset list */
   list-style: none;
@@ -142,6 +142,7 @@
   display: flex;
   align-items: center;
   gap: var(--gap-sm); /* 8px between icon and text */
+  line-height: 1;
 }
 
 .ds-dropdown-menu__item-icon {
@@ -150,6 +151,10 @@
   height: 20px;
   color: var(--color-icon-secondary);
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 }
 
 /* ============================================
@@ -178,6 +183,10 @@
   color: var(--color-text-tertiary);
   margin-left: auto;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 }
 
 /* ============================================
@@ -187,7 +196,7 @@
 .ds-dropdown-menu__separator {
   height: 1px;
   background: var(--color-bg-container-border);
-  margin: var(--padding-xxs) var(--padding-sm);
+  margin: var(--padding-xxs) var(--padding-sm-md);
   list-style: none;
 }
 
