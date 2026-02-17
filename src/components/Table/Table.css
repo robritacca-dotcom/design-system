@@ -5,8 +5,10 @@
 
 .ds-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
   border-spacing: 0;
+  border-radius: var(--radius-sm); /* 8px */
+  overflow: hidden;
 
   /* Typography */
   font-family: var(--font-paragraph-family);

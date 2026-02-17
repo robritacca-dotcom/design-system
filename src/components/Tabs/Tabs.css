@@ -131,7 +131,7 @@
 .ds-tabs__tab:focus-visible {
   outline: 2px solid var(--color-action-primary-bg);
   outline-offset: -2px;
-  border-radius: var(--radius-xs);
+  border-radius: var(--radius-sm);
 }
 
 /* ============================================
