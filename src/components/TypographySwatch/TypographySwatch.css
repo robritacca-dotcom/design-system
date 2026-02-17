@@ -15,6 +15,7 @@
 
   /* Appearance */
   background: var(--color-bg-container-primary);
+  border: var(--border-xs) solid var(--color-bg-container-border);
   border-radius: var(--radius-xl); /* 24px */
   padding: var(--padding-xl) var(--padding-lg) var(--padding-lg); /* 40px top, 20px sides/bottom */
   overflow: hidden;
