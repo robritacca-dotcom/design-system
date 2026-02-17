@@ -17,6 +17,7 @@
 
   /* Appearance */
   background: var(--color-bg-container-primary);
+  border: var(--border-xs) solid var(--color-bg-container-border);
   border-radius: var(--radius-xl);
   padding: var(--padding-lg);
 }

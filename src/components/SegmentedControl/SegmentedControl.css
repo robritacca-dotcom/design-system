@@ -10,7 +10,7 @@
   padding: var(--padding-xxs); /* 4px */
   border-radius: var(--radius-full); /* pill shape */
   background-color: var(--color-bg-container-primary);
-  border: none;
+  border: var(--border-xs) solid var(--color-bg-container-border);
 }
 
 /* ============================================
