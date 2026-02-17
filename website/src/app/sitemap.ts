@@ -20,6 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/components/date-input",
     "/components/date-picker",
     "/components/dropdown",
+    "/components/dropdown-menu",
     "/components/input",
     "/components/instructions",
     "/components/navigation",

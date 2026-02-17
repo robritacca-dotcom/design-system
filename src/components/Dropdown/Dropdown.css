@@ -102,7 +102,7 @@
   left: 0;
   right: 0;
   margin-top: var(--gap-xxs); /* 2px */
-  padding: var(--padding-xxs) 0; /* 4px 0 */
+  padding: var(--padding-xxs); /* inset gap on all sides */
   border: var(--border-xs) solid var(--color-bg-container-border);
   border-radius: var(--radius-sm); /* 8px */
   background-color: var(--color-bg-page-primary);
@@ -111,17 +111,32 @@
   overflow-y: auto;
   z-index: 10;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+
+  /* Animation */
+  animation: ds-dropdown-appear 0.15s ease-out;
+}
+
+@keyframes ds-dropdown-appear {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 /* ============================================
-   OPTION
+   OPTION (with inset-gap hover)
    ============================================ */
 
 .ds-dropdown__option {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--padding-sm) var(--padding-md); /* 8px 16px */
+  padding: var(--padding-sm) var(--padding-sm-md); /* 8px 12px */
+  border-radius: var(--radius-sm);
   font-family: var(--font-paragraph-em-family);
   font-size: var(--font-paragraph-em-size);
   font-weight: var(--font-paragraph-em-weight);
@@ -129,7 +144,7 @@
   letter-spacing: var(--font-paragraph-em-letter-spacing);
   color: var(--color-text-primary);
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.12s ease;
 }
 
 .ds-dropdown__option:hover {
@@ -151,6 +166,39 @@
 
 .ds-dropdown__option--disabled:hover {
   background-color: transparent;
+}
+
+/* ============================================
+   GROUPED MODE
+   ============================================ */
+
+.ds-dropdown__group {
+  list-style: none;
+}
+
+.ds-dropdown__group-label {
+  display: block;
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-em-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  color: var(--color-text-tertiary);
+  padding: var(--padding-xs) var(--padding-sm-md);
+  user-select: none;
+}
+
+.ds-dropdown__group-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ds-dropdown__separator {
+  height: 1px;
+  background: var(--color-bg-container-border);
+  margin: var(--padding-xxs) var(--padding-sm);
+  list-style: none;
 }
 
 /* ============================================
@@ -228,10 +276,15 @@
 }
 
 .ds-dropdown--compact .ds-dropdown__option {
-  padding: var(--padding-xs) var(--padding-sm-md); /* 6px 12px */
+  padding: var(--padding-xs) var(--padding-sm); /* 6px 8px */
   font-size: var(--font-paragraph-sm-em-size);
   line-height: var(--font-paragraph-sm-em-line-height);
   letter-spacing: var(--font-paragraph-sm-em-letter-spacing);
+}
+
+.ds-dropdown--compact .ds-dropdown__group-label {
+  font-size: var(--font-caption-size);
+  line-height: var(--font-caption-line-height);
 }
 
 .ds-dropdown--compact .ds-dropdown__check {

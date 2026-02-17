@@ -159,6 +159,25 @@ export default function ComponentsPage() {
               </div>
             </TocCard>
 
+            {/* Dropdown menu */}
+            <TocCard href="/components/dropdown-menu" title="Dropdown menu">
+              <div className={styles.dropdownMenuPreview}>
+                <div className={styles.dropdownMenuPreviewItem}>
+                  <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-icon-secondary)" }}>person</span>
+                  <span style={{ fontSize: "11px", color: "var(--color-text-primary)" }}>Profile</span>
+                </div>
+                <div className={styles.dropdownMenuPreviewItem} style={{ background: "var(--color-action-passive-bg-hover)" }}>
+                  <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-icon-secondary)" }}>settings</span>
+                  <span style={{ fontSize: "11px", color: "var(--color-text-primary)" }}>Settings</span>
+                </div>
+                <div className={styles.dropdownMenuPreviewSep} />
+                <div className={styles.dropdownMenuPreviewItem}>
+                  <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-icon-secondary)" }}>logout</span>
+                  <span style={{ fontSize: "11px", color: "var(--color-text-primary)" }}>Log out</span>
+                </div>
+              </div>
+            </TocCard>
+
             {/* Input */}
             <TocCard href="/components/input" title="Input">
               <div className={styles.inputPreview}>
