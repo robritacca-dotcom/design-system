@@ -5,7 +5,24 @@
 
 .ds-skeleton {
   background-color: var(--color-bg-container-secondary);
-  animation: ds-skeleton-pulse 1.8s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+.ds-skeleton::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-bg-container-primary) 50%,
+    transparent 100%
+  );
+  animation: ds-skeleton-shimmer 1.8s ease-in-out infinite;
 }
 
 /* ============================================
@@ -49,17 +66,14 @@
 }
 
 /* ============================================
-   PULSE ANIMATION
+   SHIMMER ANIMATION
    ============================================ */
 
-@keyframes ds-skeleton-pulse {
+@keyframes ds-skeleton-shimmer {
   0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.4;
+    transform: translateX(-100%);
   }
   100% {
-    opacity: 1;
+    transform: translateX(100%);
   }
 }
