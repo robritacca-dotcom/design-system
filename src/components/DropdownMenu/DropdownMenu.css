@@ -2,6 +2,7 @@
    DROPDOWN MENU COMPONENT
    Contextual menu with sections, sub-menus,
    keyboard shortcuts, and inset-gap hover.
+   Tokens aligned to Figma spec.
    ============================================ */
 
 .ds-dropdown-menu {
@@ -38,14 +39,14 @@
   min-width: 200px;
   margin-top: var(--gap-xxs); /* 4px offset from trigger */
 
-  /* Appearance */
+  /* Appearance — Figma: page/primary bg, input/border/primary, radius/md */
   background: var(--color-bg-page-primary);
-  border: var(--border-xs) solid var(--color-bg-container-border);
-  border-radius: var(--radius-sm);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  border: var(--border-xs) solid var(--color-input-border-primary);
+  border-radius: var(--radius-md); /* 12px */
+  box-shadow: 0 0 21px rgba(0, 0, 0, 0.25);
 
-  /* Inset gap: panel padding creates the gap between item hover fill and panel edge */
-  padding: var(--padding-xxs) var(--padding-xxxs); /* 4px top/bottom, 2px left/right — subtle inset */
+  /* Inset gap — Figma: padding/xxs (4px) all sides */
+  padding: var(--padding-xxs);
 
   /* Reset list */
   list-style: none;
@@ -61,18 +62,46 @@
   right: 0;
 }
 
+/* Compact items: paragraph-sm-em (14/20), padding xs sm-md (6px 12px), radius-sm (8px) */
 .ds-dropdown-menu__panel--compact .ds-dropdown-menu__item {
-  padding: var(--padding-xs) var(--padding-sm); /* 6px 8px */
-  font-size: var(--font-paragraph-sm-size);
-  line-height: var(--font-paragraph-sm-line-height);
-  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  padding: var(--padding-xs) var(--padding-sm-md); /* 6px 12px */
+  border-radius: var(--radius-sm); /* 8px */
+  font-family: var(--font-paragraph-sm-em-family);
+  font-size: var(--font-paragraph-sm-em-size);
+  font-weight: var(--font-paragraph-sm-em-weight);
+  line-height: var(--font-paragraph-sm-em-line-height);
+  letter-spacing: var(--font-paragraph-sm-em-letter-spacing);
 }
 
+/* Compact icons: 20px (vs 24px default) */
+.ds-dropdown-menu__panel--compact .ds-dropdown-menu__item-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+/* Compact submenu chevron: 20px */
+.ds-dropdown-menu__panel--compact .ds-dropdown-menu__submenu-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+/* Compact group label: same padding as compact items so heights match */
 .ds-dropdown-menu__panel--compact .ds-dropdown-menu__group-label {
-  font-size: var(--font-caption-size);
-  line-height: var(--font-caption-line-height);
+  min-height: auto;
+  padding: var(--padding-xs) var(--padding-sm-md); /* matches compact item padding */
+  font-size: var(--font-paragraph-sm-em-size);
+  line-height: var(--font-paragraph-sm-em-line-height);
+  letter-spacing: var(--font-paragraph-sm-em-letter-spacing);
 }
 
+/* Compact separator margin matches compact item padding */
+.ds-dropdown-menu__panel--compact .ds-dropdown-menu__separator {
+  margin: var(--padding-xxs) var(--padding-sm-md);
+}
+
+/* Compact shortcuts */
 .ds-dropdown-menu__panel--compact .ds-dropdown-menu__shortcut {
   font-size: var(--font-caption-size);
 }
@@ -90,6 +119,9 @@
 
 /* ============================================
    MENU ITEM
+   Figma: Button/secondary internally —
+   padding/sm (8px) vertical, padding/md (16px) horizontal,
+   radius/md (12px), paragraph-em typography.
    ============================================ */
 
 .ds-dropdown-menu__item {
@@ -97,20 +129,20 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--gap-md); /* 16px between label and shortcut */
-  padding: var(--padding-sm) var(--padding-sm-md); /* 8px 12px */
-  border-radius: var(--radius-sm);
+  padding: var(--padding-sm) var(--padding-md); /* Figma: 8px 16px */
+  border-radius: var(--radius-md); /* Figma: 12px */
   cursor: pointer;
   position: relative;
   white-space: nowrap;
   list-style: none;
 
-  /* Typography — paragraph */
-  font-family: var(--font-paragraph-family);
-  font-size: var(--font-paragraph-size);
-  font-weight: var(--font-paragraph-weight);
-  line-height: var(--font-paragraph-line-height);
-  letter-spacing: var(--font-paragraph-letter-spacing);
-  color: var(--color-text-primary);
+  /* Typography — paragraph em (medium weight, matches Figma Button secondary) */
+  font-family: var(--font-paragraph-em-family);
+  font-size: var(--font-paragraph-em-size);
+  font-weight: var(--font-paragraph-em-weight);
+  line-height: var(--font-paragraph-em-line-height);
+  letter-spacing: var(--font-paragraph-em-letter-spacing);
+  color: var(--color-action-passive-text);
 
   transition: background-color 0.12s ease, color 0.12s ease;
 }
@@ -141,14 +173,15 @@
 .ds-dropdown-menu__item-label {
   display: flex;
   align-items: center;
-  gap: var(--gap-sm); /* 8px between icon and text */
+  gap: var(--gap-sm); /* Figma: 8px between icon and text */
   line-height: 1;
 }
 
+/* Figma: icons are 24px within menu items */
 .ds-dropdown-menu__item-icon {
-  font-size: 20px;
-  width: 20px;
-  height: 20px;
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
   color: var(--color-icon-secondary);
   flex-shrink: 0;
   display: flex;
@@ -174,12 +207,13 @@
 
 /* ============================================
    SUB-MENU INDICATOR
+   Figma: 24px chevron icon
    ============================================ */
 
 .ds-dropdown-menu__submenu-icon {
-  font-size: 18px;
-  width: 18px;
-  height: 18px;
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
   color: var(--color-text-tertiary);
   margin-left: auto;
   flex-shrink: 0;
@@ -195,8 +229,8 @@
 
 .ds-dropdown-menu__separator {
   height: 1px;
-  background: var(--color-bg-container-border);
-  margin: var(--padding-xxs) var(--padding-sm-md);
+  background: var(--color-input-border-primary);
+  margin: var(--padding-xxs) var(--padding-md);
   list-style: none;
 }
 
@@ -208,14 +242,20 @@
   list-style: none;
 }
 
+/* Figma: section label is paragraph-em at text/tertiary,
+   40px height container, padding-left aligns with item text */
 .ds-dropdown-menu__group-label {
-  font-family: var(--font-paragraph-sm-family);
-  font-size: var(--font-paragraph-sm-size);
-  font-weight: var(--font-paragraph-sm-em-weight);
-  line-height: var(--font-paragraph-sm-line-height);
-  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+  font-family: var(--font-paragraph-em-family);
+  font-size: var(--font-paragraph-em-size);
+  font-weight: var(--font-paragraph-em-weight);
+  line-height: var(--font-paragraph-em-line-height);
+  letter-spacing: var(--font-paragraph-em-letter-spacing);
   color: var(--color-text-tertiary);
-  padding: var(--padding-xs) var(--padding-sm-md);
+  padding-left: var(--padding-md);
+  padding-right: var(--padding-md);
   user-select: none;
 }
 
@@ -230,7 +270,7 @@
    ============================================ */
 
 .ds-dropdown-menu__item--has-submenu {
-  padding-right: var(--padding-sm); /* Slightly less right padding for chevron */
+  padding-right: var(--padding-sm-md); /* Slightly less right padding for chevron */
 }
 
 /* ============================================
