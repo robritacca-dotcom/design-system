@@ -35,19 +35,17 @@ export default function ProgressBarPage() {
               Task completion at a glance
             </p>
             <p className={styles.introBody}>
-              A horizontal bar that fills to indicate how far through a process or task the user is. Supports status colour variants and an optional percentage label.
+              A horizontal bar that fills to indicate how far through a process or task the user is. Available in default and compact sizes with an optional percentage label.
             </p>
           </div>
 
-          {/* Variants */}
+          {/* Default */}
           <section className={styles.section}>
-            <SectionTitle title="Variants" />
+            <SectionTitle title="Default" />
             <div className={styles.variantStack} style={{ maxWidth: "400px" }}>
-              <ProgressBar variant="info" value={80} showLabel />
-              <ProgressBar variant="positive" value={100} showLabel />
-              <ProgressBar variant="warning" value={55} showLabel />
-              <ProgressBar variant="error" value={30} showLabel />
-              <ProgressBar variant="neutral" value={45} showLabel />
+              <ProgressBar value={80} showLabel />
+              <ProgressBar value={45} showLabel />
+              <ProgressBar value={100} showLabel />
             </div>
           </section>
 
@@ -55,8 +53,8 @@ export default function ProgressBarPage() {
           <section className={styles.section}>
             <SectionTitle title="Compact" />
             <div className={styles.variantStack} style={{ maxWidth: "400px" }}>
-              <ProgressBar variant="info" value={65} size="compact" />
-              <ProgressBar variant="positive" value={90} size="compact" />
+              <ProgressBar value={65} size="compact" />
+              <ProgressBar value={30} size="compact" />
             </div>
           </section>
         </main>

@@ -178,7 +178,7 @@ export default function ComponentsPage() {
             {/* Progress bar */}
             <TocCard href="/components/progress-bar" title="Progress bar">
               <div style={{ width: "120px" }}>
-                <ProgressBar variant="info" value={65} size="compact" />
+                <ProgressBar value={65} size="compact" />
               </div>
             </TocCard>
 

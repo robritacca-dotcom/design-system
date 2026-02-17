@@ -4,8 +4,6 @@ import './ProgressBar.css';
 export interface ProgressBarProps {
   /** Current progress value (0–100) */
   value?: number;
-  /** Visual variant */
-  variant?: 'info' | 'positive' | 'warning' | 'error' | 'neutral';
   /** Size of the bar */
   size?: 'default' | 'compact';
   /** Show percentage label */
@@ -19,7 +17,6 @@ export interface ProgressBarProps {
  */
 export const ProgressBar = ({
   value = 0,
-  variant = 'info',
   size = 'default',
   showLabel = false,
   className = '',
@@ -28,7 +25,6 @@ export const ProgressBar = ({
   const baseClass = 'ds-progress-bar';
   const classes = [
     baseClass,
-    `${baseClass}--${variant}`,
     `${baseClass}--${size}`,
     className,
   ]
