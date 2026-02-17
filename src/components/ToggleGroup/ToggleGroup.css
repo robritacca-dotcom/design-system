@@ -1,0 +1,84 @@
+/* ============================================
+   TOGGLE GROUP COMPONENT
+   A set of two-state buttons
+   ============================================ */
+
+.ds-toggle-group {
+  display: inline-flex;
+  border: var(--border-xs) solid var(--color-bg-container-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+/* ============================================
+   ITEM
+   ============================================ */
+
+.ds-toggle-group__item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-xs) var(--padding-sm);
+  font-family: var(--font-paragraph-sm-em-family);
+  font-size: var(--font-paragraph-sm-em-size);
+  font-weight: var(--font-paragraph-sm-em-weight);
+  line-height: var(--font-paragraph-sm-em-line-height);
+  letter-spacing: var(--font-paragraph-sm-em-letter-spacing);
+  color: var(--color-text-secondary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.ds-toggle-group__item + .ds-toggle-group__item {
+  border-left: var(--border-xs) solid var(--color-bg-container-border);
+}
+
+.ds-toggle-group__item .material-symbols-rounded {
+  font-size: 20px;
+}
+
+/* ============================================
+   ITEM — HOVER
+   ============================================ */
+
+.ds-toggle-group__item:hover {
+  background-color: var(--color-bg-container-secondary);
+  color: var(--color-text-primary);
+}
+
+/* ============================================
+   ITEM — ACTIVE
+   ============================================ */
+
+.ds-toggle-group__item--active {
+  background-color: var(--color-action-primary-bg);
+  color: var(--color-action-primary-text);
+}
+
+.ds-toggle-group__item--active:hover {
+  background-color: var(--color-action-primary-bg-hover);
+  color: var(--color-action-primary-text);
+}
+
+/* ============================================
+   COMPACT
+   ============================================ */
+
+.ds-toggle-group--compact .ds-toggle-group__item {
+  padding: var(--padding-xxs) var(--padding-xs);
+}
+
+.ds-toggle-group--compact .ds-toggle-group__item .material-symbols-rounded {
+  font-size: 18px;
+}
+
+/* ============================================
+   DISABLED
+   ============================================ */
+
+.ds-toggle-group--disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}

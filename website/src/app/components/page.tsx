@@ -13,11 +13,16 @@ import { Checkbox } from "@design-system/components/Checkbox/Checkbox";
 import { CircularButton } from "@design-system/components/CircularButton/CircularButton";
 import { Dropdown } from "@design-system/components/Dropdown/Dropdown";
 import { Input } from "@design-system/components/Input/Input";
+import { ProgressBar } from "@design-system/components/ProgressBar/ProgressBar";
 import { RadioButton } from "@design-system/components/RadioButton/RadioButton";
 import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
 import { SegmentedControl } from "@design-system/components/SegmentedControl/SegmentedControl";
+import { Skeleton } from "@design-system/components/Skeleton/Skeleton";
+import { Slider } from "@design-system/components/Slider/Slider";
+import { Spinner } from "@design-system/components/Spinner/Spinner";
 import { Tabs } from "@design-system/components/Tabs/Tabs";
 import { Textarea } from "@design-system/components/Textarea/Textarea";
+import { ToggleGroup } from "@design-system/components/ToggleGroup/ToggleGroup";
 import PageLinks from "../../components/PageLinks/PageLinks";
 import { getNavLinks, getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
@@ -170,6 +175,13 @@ export default function ComponentsPage() {
               </div>
             </TocCard>
 
+            {/* Progress bar */}
+            <TocCard href="/components/progress-bar" title="Progress bar">
+              <div style={{ width: "120px" }}>
+                <ProgressBar variant="info" value={65} size="compact" />
+              </div>
+            </TocCard>
+
             {/* Radio button */}
             <TocCard href="/components/radio-button" title="Radio button">
               <div className={styles.previewColumn} style={{ gap: "16px" }}>
@@ -196,6 +208,29 @@ export default function ComponentsPage() {
                 activeSegment="a"
                 size="compact"
               />
+            </TocCard>
+
+            {/* Skeleton */}
+            <TocCard href="/components/skeleton" title="Skeleton">
+              <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                <Skeleton variant="circular" width="32px" height="32px" />
+                <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                  <Skeleton variant="text" width="80px" />
+                  <Skeleton variant="text" width="60px" />
+                </div>
+              </div>
+            </TocCard>
+
+            {/* Slider */}
+            <TocCard href="/components/slider" title="Slider">
+              <div style={{ width: "120px" }}>
+                <Slider value={60} />
+              </div>
+            </TocCard>
+
+            {/* Spinner */}
+            <TocCard href="/components/spinner" title="Spinner">
+              <Spinner size="lg" />
             </TocCard>
 
             {/* Table */}
@@ -228,6 +263,20 @@ export default function ComponentsPage() {
                   Enter text...
                 </span>
               </div>
+            </TocCard>
+
+            {/* Toggle group */}
+            <TocCard href="/components/toggle-group" title="Toggle group">
+              <ToggleGroup
+                items={[
+                  { value: "bold", label: "format_bold", icon: true },
+                  { value: "italic", label: "format_italic", icon: true },
+                  { value: "underline", label: "format_underlined", icon: true },
+                ]}
+                value={["bold"]}
+                multiple
+                size="compact"
+              />
             </TocCard>
 
             {/* Toggle switch */}
