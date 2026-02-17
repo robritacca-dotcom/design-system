@@ -11,6 +11,13 @@ export interface DropdownOption {
   disabled?: boolean;
 }
 
+export interface DropdownOptionGroup {
+  /** Group heading */
+  label: string;
+  /** Options within the group */
+  options: DropdownOption[];
+}
+
 export interface DropdownProps {
   /** Dropdown label text */
   label?: string;
@@ -18,8 +25,10 @@ export interface DropdownProps {
   placeholder?: string;
   /** Currently selected value */
   value?: string;
-  /** Available options */
+  /** Available options (flat list) */
   options: DropdownOption[];
+  /** Optional grouped options — when provided, renders groups with labels and separators */
+  groups?: DropdownOptionGroup[];
   /** Component size */
   size?: 'default' | 'compact';
   /** Whether the dropdown is disabled */
@@ -47,6 +56,7 @@ export const Dropdown = ({
   placeholder = 'Select an option',
   value,
   options,
+  groups,
   size = 'default',
   disabled = false,
   required = false,
@@ -64,6 +74,7 @@ export const Dropdown = ({
   const listRef = useRef<HTMLUListElement>(null);
 
   const baseClass = 'ds-dropdown';
+  const isGrouped = groups && groups.length > 0;
   const sizeClass = size === 'compact' ? `${baseClass}--compact` : '';
   const openClass = isOpen ? `${baseClass}--open` : '';
   const errorClass = error ? `${baseClass}--error` : '';
@@ -73,7 +84,12 @@ export const Dropdown = ({
     .filter(Boolean)
     .join(' ');
 
-  const selectedOption = options.find((opt) => opt.value === value);
+  // Flatten all options for keyboard navigation (groups or flat)
+  const flatOptions: DropdownOption[] = isGrouped
+    ? groups.flatMap((g) => g.options)
+    : options;
+
+  const selectedOption = flatOptions.find((opt) => opt.value === value);
   const inputId = id || name || label?.toLowerCase().replace(/\s+/g, '-');
 
   const handleToggle = () => {
@@ -108,8 +124,8 @@ export const Dropdown = ({
       case 'Enter':
       case ' ':
         e.preventDefault();
-        if (isOpen && focusedIndex >= 0 && !options[focusedIndex]?.disabled) {
-          handleSelect(options[focusedIndex].value);
+        if (isOpen && focusedIndex >= 0 && !flatOptions[focusedIndex]?.disabled) {
+          handleSelect(flatOptions[focusedIndex].value);
         } else {
           setIsOpen((prev) => !prev);
         }
@@ -121,8 +137,8 @@ export const Dropdown = ({
         } else {
           setFocusedIndex((prev) => {
             let next = prev + 1;
-            while (next < options.length && options[next].disabled) next++;
-            return next < options.length ? next : prev;
+            while (next < flatOptions.length && flatOptions[next].disabled) next++;
+            return next < flatOptions.length ? next : prev;
           });
         }
         break;
@@ -131,7 +147,7 @@ export const Dropdown = ({
         if (isOpen) {
           setFocusedIndex((prev) => {
             let next = prev - 1;
-            while (next >= 0 && options[next].disabled) next--;
+            while (next >= 0 && flatOptions[next].disabled) next--;
             return next >= 0 ? next : prev;
           });
         }
@@ -181,36 +197,83 @@ export const Dropdown = ({
       </div>
       {isOpen && (
         <ul
-          className={`${baseClass}__menu`}
+          className={[
+            `${baseClass}__menu`,
+            isGrouped ? `${baseClass}__menu--grouped` : '',
+          ].filter(Boolean).join(' ')}
           role="listbox"
           id={`${inputId}-listbox`}
           ref={listRef}
           aria-labelledby={label ? `${inputId}-label` : undefined}
         >
-          {options.map((option, index) => (
-            <li
-              key={option.value}
-              className={[
-                `${baseClass}__option`,
-                option.value === value ? `${baseClass}__option--selected` : '',
-                option.disabled ? `${baseClass}__option--disabled` : '',
-                index === focusedIndex ? `${baseClass}__option--focused` : '',
-              ]
-                .filter(Boolean)
-                .join(' ')}
-              role="option"
-              aria-selected={option.value === value}
-              aria-disabled={option.disabled}
-              onClick={() => !option.disabled && handleSelect(option.value)}
-            >
-              {option.label}
-              {option.value === value && (
-                <span className={`${baseClass}__check material-symbols-rounded`} aria-hidden="true">
-                  check
-                </span>
-              )}
-            </li>
-          ))}
+          {isGrouped
+            ? (() => {
+                let flatIndex = 0;
+                return groups.map((group, groupIdx) => (
+                  <li key={`group-${groupIdx}`} className={`${baseClass}__group`} role="none">
+                    <span className={`${baseClass}__group-label`} role="presentation">
+                      {group.label}
+                    </span>
+                    <ul className={`${baseClass}__group-list`} role="group" aria-label={group.label}>
+                      {group.options.map((option) => {
+                        const myIndex = flatIndex++;
+                        return (
+                          <li
+                            key={option.value}
+                            className={[
+                              `${baseClass}__option`,
+                              option.value === value ? `${baseClass}__option--selected` : '',
+                              option.disabled ? `${baseClass}__option--disabled` : '',
+                              myIndex === focusedIndex ? `${baseClass}__option--focused` : '',
+                            ]
+                              .filter(Boolean)
+                              .join(' ')}
+                            role="option"
+                            aria-selected={option.value === value}
+                            aria-disabled={option.disabled}
+                            onClick={() => !option.disabled && handleSelect(option.value)}
+                          >
+                            {option.label}
+                            {option.value === value && (
+                              <span className={`${baseClass}__check material-symbols-rounded`} aria-hidden="true">
+                                check
+                              </span>
+                            )}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                    {groupIdx < groups.length - 1 && (
+                      <li className={`${baseClass}__separator`} role="separator" />
+                    )}
+                  </li>
+                ));
+              })()
+            : options.map((option, index) => (
+                <li
+                  key={option.value}
+                  className={[
+                    `${baseClass}__option`,
+                    option.value === value ? `${baseClass}__option--selected` : '',
+                    option.disabled ? `${baseClass}__option--disabled` : '',
+                    index === focusedIndex ? `${baseClass}__option--focused` : '',
+                  ]
+                    .filter(Boolean)
+                    .join(' ')}
+                  role="option"
+                  aria-selected={option.value === value}
+                  aria-disabled={option.disabled}
+                  onClick={() => !option.disabled && handleSelect(option.value)}
+                >
+                  {option.label}
+                  {option.value === value && (
+                    <span className={`${baseClass}__check material-symbols-rounded`} aria-hidden="true">
+                      check
+                    </span>
+                  )}
+                </li>
+              ))
+          }
         </ul>
       )}
       {helperText && (

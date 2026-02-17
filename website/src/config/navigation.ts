@@ -39,6 +39,7 @@ export const componentsSidebarLinks: NavLink[] = [
   { href: "/components/date-input", label: "Date input" },
   { href: "/components/date-picker", label: "Date picker" },
   { href: "/components/dropdown", label: "Dropdown" },
+  { href: "/components/dropdown-menu", label: "Dropdown menu" },
   { href: "/components/input", label: "Input" },
   { href: "/components/instructions", label: "Instructions" },
   { href: "/components/navigation", label: "Navigation" },

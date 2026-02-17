@@ -1,0 +1,240 @@
+/* ============================================
+   DROPDOWN MENU COMPONENT
+   Contextual menu with sections, sub-menus,
+   keyboard shortcuts, and inset-gap hover.
+   ============================================ */
+
+.ds-dropdown-menu {
+  position: relative;
+  display: inline-flex;
+}
+
+/* ============================================
+   TRIGGER
+   ============================================ */
+
+.ds-dropdown-menu__trigger {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.ds-dropdown-menu__trigger:focus-visible {
+  outline: 2px solid var(--color-action-primary-bg);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ============================================
+   PANEL
+   The floating menu container
+   ============================================ */
+
+.ds-dropdown-menu__panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 50;
+  min-width: 200px;
+  margin-top: var(--gap-xxs); /* 4px offset from trigger */
+
+  /* Appearance */
+  background: var(--color-bg-page-primary);
+  border: var(--border-xs) solid var(--color-bg-container-border);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+
+  /* Inset gap: panel padding creates the gap between item hover fill and panel edge */
+  padding: var(--padding-xxs);
+
+  /* Reset list */
+  list-style: none;
+  margin-block: 0;
+  padding-inline: 0;
+
+  /* Animation */
+  animation: ds-dropdown-menu-appear 0.15s ease-out;
+}
+
+.ds-dropdown-menu__panel--align-end {
+  left: auto;
+  right: 0;
+}
+
+.ds-dropdown-menu__panel--compact .ds-dropdown-menu__item {
+  padding: var(--padding-xs) var(--padding-sm); /* 6px 8px */
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+}
+
+.ds-dropdown-menu__panel--compact .ds-dropdown-menu__group-label {
+  font-size: var(--font-caption-size);
+  line-height: var(--font-caption-line-height);
+}
+
+.ds-dropdown-menu__panel--compact .ds-dropdown-menu__shortcut {
+  font-size: var(--font-caption-size);
+}
+
+/* ============================================
+   SUB-MENU PANEL
+   ============================================ */
+
+.ds-dropdown-menu__submenu {
+  position: absolute;
+  left: 100%;
+  top: 0;
+  margin-left: var(--gap-xxs); /* 4px offset from parent */
+}
+
+/* ============================================
+   MENU ITEM
+   ============================================ */
+
+.ds-dropdown-menu__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-md); /* 16px between label and shortcut */
+  padding: var(--padding-sm) var(--padding-sm-md); /* 8px 12px */
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  position: relative;
+  white-space: nowrap;
+  list-style: none;
+
+  /* Typography — paragraph */
+  font-family: var(--font-paragraph-family);
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  letter-spacing: var(--font-paragraph-letter-spacing);
+  color: var(--color-text-primary);
+
+  transition: background-color 0.12s ease, color 0.12s ease;
+}
+
+.ds-dropdown-menu__item:hover,
+.ds-dropdown-menu__item--focused {
+  background-color: var(--color-action-passive-bg-hover);
+}
+
+/* ============================================
+   DISABLED ITEM
+   ============================================ */
+
+.ds-dropdown-menu__item--disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.ds-dropdown-menu__item--disabled:hover,
+.ds-dropdown-menu__item--disabled.ds-dropdown-menu__item--focused {
+  background-color: transparent;
+}
+
+/* ============================================
+   ITEM LABEL (text + optional icon)
+   ============================================ */
+
+.ds-dropdown-menu__item-label {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm); /* 8px between icon and text */
+}
+
+.ds-dropdown-menu__item-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  color: var(--color-icon-secondary);
+  flex-shrink: 0;
+}
+
+/* ============================================
+   KEYBOARD SHORTCUT
+   ============================================ */
+
+.ds-dropdown-menu__shortcut {
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  color: var(--color-text-tertiary);
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* ============================================
+   SUB-MENU INDICATOR
+   ============================================ */
+
+.ds-dropdown-menu__submenu-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  color: var(--color-text-tertiary);
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* ============================================
+   SEPARATOR
+   ============================================ */
+
+.ds-dropdown-menu__separator {
+  height: 1px;
+  background: var(--color-bg-container-border);
+  margin: var(--padding-xxs) var(--padding-sm);
+  list-style: none;
+}
+
+/* ============================================
+   GROUP
+   ============================================ */
+
+.ds-dropdown-menu__group {
+  list-style: none;
+}
+
+.ds-dropdown-menu__group-label {
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-em-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  color: var(--color-text-tertiary);
+  padding: var(--padding-xs) var(--padding-sm-md);
+  user-select: none;
+}
+
+.ds-dropdown-menu__group-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ============================================
+   HAS-SUBMENU ITEM
+   ============================================ */
+
+.ds-dropdown-menu__item--has-submenu {
+  padding-right: var(--padding-sm); /* Slightly less right padding for chevron */
+}
+
+/* ============================================
+   APPEAR ANIMATION
+   ============================================ */
+
+@keyframes ds-dropdown-menu-appear {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
