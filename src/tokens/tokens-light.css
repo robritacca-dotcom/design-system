@@ -88,6 +88,18 @@
   --color-status-neutral-border: #303030;
   --color-status-neutral-text: #232323;
 
+  /* Input */
+  --color-input-text-primary: #050505;
+  --color-input-text-placeholder: #6D6D6D;
+  --color-input-text-disabled: #A2A2A2;
+  --color-input-text-inverse: #A2A2A2;
+  --color-input-border-primary: #D6D6D6;
+  --color-input-border-hover: #6DBCD6;
+  --color-input-border-selected: #2C9AB9;
+  --color-input-border-disabled: #BCBCBC;
+  --color-input-bg-primary: #FFFFFF;
+  --color-input-bg-disabled: #D6D6D6;
+
   /* Spacing (from primitives) */
   --radius-xxs: var(--primitive-radius-xxs);
   --radius-xs: var(--primitive-radius-xs);

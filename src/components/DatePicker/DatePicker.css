@@ -8,9 +8,9 @@
   flex-direction: column;
   gap: var(--gap-sm); /* 8px */
   padding: var(--padding-md); /* 16px */
-  border: var(--border-xs) solid var(--color-bg-container-border);
-  border-radius: var(--radius-sm); /* 8px */
-  background-color: var(--color-bg-container-primary-transparent);
+  border: var(--border-xs) solid var(--color-input-border-primary);
+  border-radius: var(--radius-md); /* 12px */
+  background-color: var(--color-input-bg-primary);
   user-select: none;
 }
 
