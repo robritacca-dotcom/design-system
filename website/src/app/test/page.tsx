@@ -120,7 +120,7 @@ export default function TestPage() {
           <span className={styles.meta}>Sprint completion</span>
         </div>
         <div className={styles.sep} />
-        <ProgressBar value={89} label="Sprint progress" />
+        <ProgressBar value={89} />
       </div>
 
       {/* ============================================
