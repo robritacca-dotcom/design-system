@@ -12,8 +12,8 @@ const meta = {
   argTypes: {
     priority: {
       control: 'select',
-      options: ['primary', 'secondary'],
-      description: 'Button variant - primary or secondary',
+      options: ['primary', 'secondary', 'destructive'],
+      description: 'Button variant - primary, secondary, or destructive',
     },
     state: {
       control: 'select',
@@ -308,5 +308,105 @@ export const CompactSecondaryDisabled: Story = {
     label: 'Button',
     text: true,
     iconRight: 'arrow_forward',
+  },
+};
+
+// ============================================
+// Destructive Button States
+// ============================================
+
+export const DestructiveDefault: Story = {
+  args: {
+    priority: 'destructive',
+    state: 'default',
+    label: 'Delete',
+    text: true,
+    iconLeft: 'delete',
+  },
+};
+
+export const DestructiveHover: Story = {
+  args: {
+    priority: 'destructive',
+    state: 'hover',
+    label: 'Delete',
+    text: true,
+    iconLeft: 'delete',
+  },
+};
+
+export const DestructiveActive: Story = {
+  args: {
+    priority: 'destructive',
+    state: 'active',
+    label: 'Delete',
+    text: true,
+    iconLeft: 'delete',
+  },
+};
+
+export const DestructiveDisabled: Story = {
+  args: {
+    priority: 'destructive',
+    state: 'disabled',
+    label: 'Delete',
+    text: true,
+    iconLeft: 'delete',
+  },
+};
+
+// Compact Destructive States
+export const CompactDestructiveDefault: Story = {
+  args: {
+    priority: 'destructive',
+    state: 'default',
+    size: 'compact',
+    label: 'Remove',
+    text: true,
+    iconLeft: 'close',
+  },
+};
+
+export const CompactDestructiveHover: Story = {
+  args: {
+    priority: 'destructive',
+    state: 'hover',
+    size: 'compact',
+    label: 'Remove',
+    text: true,
+    iconLeft: 'close',
+  },
+};
+
+export const CompactDestructiveActive: Story = {
+  args: {
+    priority: 'destructive',
+    state: 'active',
+    size: 'compact',
+    label: 'Remove',
+    text: true,
+    iconLeft: 'close',
+  },
+};
+
+export const CompactDestructiveDisabled: Story = {
+  args: {
+    priority: 'destructive',
+    state: 'disabled',
+    size: 'compact',
+    label: 'Remove',
+    text: true,
+    iconLeft: 'close',
+  },
+};
+
+// Destructive Icon Only
+export const DestructiveIconOnly: Story = {
+  args: {
+    priority: 'destructive',
+    state: 'default',
+    text: false,
+    iconLeft: 'delete',
+    iconRight: undefined,
   },
 };

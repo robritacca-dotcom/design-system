@@ -149,6 +149,51 @@
 }
 
 /* ============================================
+   DESTRUCTIVE BUTTON
+   For dangerous actions: delete, remove, etc.
+   Uses accent-red as the border / fill colour.
+   ============================================ */
+
+.ds-button--destructive {
+  border: var(--border-xs) solid var(--color-core-accent-red);
+  background-color: transparent;
+}
+
+.ds-button--destructive .ds-button__text {
+  color: var(--color-core-accent-red);
+}
+
+.ds-button--destructive.ds-button--default {
+  border: var(--border-xs) solid var(--color-core-accent-red);
+  background-color: transparent;
+}
+
+.ds-button--destructive.ds-button--hover {
+  border: var(--border-xs) solid var(--color-core-accent-red);
+  background-color: var(--color-core-accent-red);
+}
+
+.ds-button--destructive.ds-button--hover .ds-button__text {
+  color: var(--color-status-error-bg);
+}
+
+.ds-button--destructive.ds-button--active {
+  border: var(--border-xs) solid var(--color-core-accent-red);
+  background-color: var(--color-status-error-text);
+}
+
+.ds-button--destructive.ds-button--active .ds-button__text {
+  color: var(--color-status-error-bg);
+}
+
+.ds-button--destructive.ds-button--disabled {
+  border: var(--border-xs) solid var(--color-core-accent-red);
+  background-color: transparent;
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ============================================
    ICON
    ============================================ */
 
@@ -179,6 +224,15 @@
   color: var(--color-icon-primary);
 }
 
+.ds-button--destructive .ds-button__icon {
+  color: var(--color-core-accent-red);
+}
+
+.ds-button--destructive.ds-button--hover .ds-button__icon,
+.ds-button--destructive.ds-button--active .ds-button__icon {
+  color: var(--color-status-error-bg);
+}
+
 /* ============================================
    TEXT
    ============================================ */
@@ -207,6 +261,18 @@
   background-color: var(--color-action-passive-bg-hover);
 }
 
+.ds-button--destructive:not(.ds-button--disabled):hover {
+  background-color: var(--color-core-accent-red);
+}
+
+.ds-button--destructive:not(.ds-button--disabled):hover .ds-button__text {
+  color: var(--color-status-error-bg);
+}
+
+.ds-button--destructive:not(.ds-button--disabled):hover .ds-button__icon {
+  color: var(--color-status-error-bg);
+}
+
 /* ============================================
    ACTIVE STATES (for interactive use)
    ============================================ */
@@ -225,6 +291,18 @@
 
 .ds-button--secondary:not(.ds-button--disabled):active {
   background-color: var(--color-action-passive-bg-active);
+}
+
+.ds-button--destructive:not(.ds-button--disabled):active {
+  background-color: var(--color-status-error-text);
+}
+
+.ds-button--destructive:not(.ds-button--disabled):active .ds-button__text {
+  color: var(--color-status-error-bg);
+}
+
+.ds-button--destructive:not(.ds-button--disabled):active .ds-button__icon {
+  color: var(--color-status-error-bg);
 }
 
 /* ============================================

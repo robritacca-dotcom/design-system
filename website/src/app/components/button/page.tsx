@@ -21,7 +21,7 @@ const states = [
   { label: "Active", value: "active" as const },
 ];
 
-const priorities = ["primary", "secondary"] as const;
+const priorities = ["primary", "secondary", "destructive"] as const;
 
 const sizes = [
   { label: "Default", value: "default" as const },
@@ -38,6 +38,7 @@ const iconVariants = [
 const priorityLabels: Record<string, string> = {
   primary: "Primary",
   secondary: "Secondary",
+  destructive: "Destructive",
 };
 
 /* ============================================
@@ -51,7 +52,7 @@ function ButtonGrid({
   priority,
   size,
 }: {
-  priority: "primary" | "secondary";
+  priority: "primary" | "secondary" | "destructive";
   size: "default" | "compact";
 }) {
   const heading = `${priorityLabels[priority]}${size === "compact" ? ", compact" : ""}`;
@@ -126,7 +127,7 @@ export default function ButtonPage() {
               The main action element
             </p>
             <p className={styles.introBody}>
-              Primary buttons have a border and fill on hover for high-emphasis actions. Secondary buttons are transparent and blend into the surface for lower-priority options. Both come in default and compact sizes.
+              Primary buttons have a border and fill on hover for high-emphasis actions. Secondary buttons are transparent and blend into the surface for lower-priority options. Destructive buttons signal dangerous or irreversible actions like delete and remove. All variants come in default and compact sizes.
             </p>
           </div>
 
