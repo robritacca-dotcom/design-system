@@ -6,8 +6,10 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import Footer from "../../components/Footer/Footer";
 import TocCard from "../../components/TocCard/TocCard";
+import { Accordion } from "@design-system/components/Accordion/Accordion";
 import { Alert } from "@design-system/components/Alert/Alert";
 import { Badge } from "@design-system/components/Badge/Badge";
+import { Breadcrumb } from "@design-system/components/Breadcrumb/Breadcrumb";
 import { Button } from "@design-system/components/Button/Button";
 import { Checkbox } from "@design-system/components/Checkbox/Checkbox";
 import { CircularButton } from "@design-system/components/CircularButton/CircularButton";
@@ -58,6 +60,20 @@ export default function ComponentsPage() {
           </div>
 
           <div className={`${styles.tocGrid} animate-in animate-delay-2`}>
+            {/* Accordion */}
+            <TocCard href="/components/accordion" title="Accordion">
+              <div className={styles.previewColumn} style={{ gap: "4px", width: "120px" }}>
+                <div className={styles.accordionPreviewRow}>
+                  <span style={{ fontSize: "11px", fontWeight: 500, color: "var(--color-text-primary)" }}>Section 1</span>
+                  <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-icon-primary)", transform: "rotate(180deg)" }}>expand_more</span>
+                </div>
+                <div className={styles.accordionPreviewRow}>
+                  <span style={{ fontSize: "11px", fontWeight: 500, color: "var(--color-text-primary)" }}>Section 2</span>
+                  <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-icon-primary)" }}>expand_more</span>
+                </div>
+              </div>
+            </TocCard>
+
             {/* Alert */}
             <TocCard href="/components/alert" title="Alert">
               <Alert variant="info" title="Heads up" size="compact" />
@@ -69,6 +85,17 @@ export default function ComponentsPage() {
                 <Badge variant="info" label="Info" />
                 <Badge variant="positive" label="Success" />
                 <Badge variant="error" label="Error" />
+              </div>
+            </TocCard>
+
+            {/* Breadcrumb */}
+            <TocCard href="/components/breadcrumb" title="Breadcrumb">
+              <div className={styles.previewRow} style={{ gap: "4px", fontSize: "12px" }}>
+                <span style={{ color: "var(--color-text-secondary)" }}>Home</span>
+                <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-text-tertiary)" }}>chevron_right</span>
+                <span style={{ color: "var(--color-text-secondary)" }}>Section</span>
+                <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-text-tertiary)" }}>chevron_right</span>
+                <span style={{ color: "var(--color-text-primary)", fontWeight: 500 }}>Page</span>
               </div>
             </TocCard>
 
