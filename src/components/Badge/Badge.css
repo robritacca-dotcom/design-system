@@ -13,7 +13,7 @@
   letter-spacing: var(--font-paragraph-sm-em-letter-spacing);
   padding: var(--padding-xxs) var(--padding-xs); /* 2px 6px */
   border: var(--border-xs) solid transparent;
-  border-radius: var(--radius-xs); /* 4px */
+  border-radius: var(--radius-sm); /* 8px */
   white-space: nowrap;
 }
 
