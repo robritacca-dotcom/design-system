@@ -10,7 +10,7 @@ export interface ButtonProps {
   /** Icon for right side — Material Symbol name (string) or custom element (ReactNode) */
   iconRight?: string | React.ReactNode;
   /** Button priority/variant */
-  priority?: 'primary' | 'secondary';
+  priority?: 'primary' | 'secondary' | 'destructive';
   /** Button state */
   state?: 'default' | 'hover' | 'active' | 'disabled';
   /** Button size */

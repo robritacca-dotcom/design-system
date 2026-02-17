@@ -24,7 +24,7 @@ const simpleItems: DropdownMenuEntry[] = [
   { label: "Open", icon: "folder_open", onClick: () => {} },
   { label: "Save", icon: "save", onClick: () => {} },
   { type: "separator" },
-  { label: "Delete", icon: "delete", onClick: () => {} },
+  { label: "Delete", icon: "delete", destructive: true, onClick: () => {} },
 ];
 
 const groupedItems: DropdownMenuEntry[] = [
@@ -51,7 +51,7 @@ const groupedItems: DropdownMenuEntry[] = [
   { label: "Support", icon: "help", onClick: () => {} },
   { label: "API", icon: "terminal", disabled: true },
   { type: "separator" },
-  { label: "Log out", icon: "logout", shortcut: "⇧ ⌘ Q", onClick: () => {} },
+  { label: "Log out", icon: "logout", shortcut: "⇧ ⌘ Q", destructive: true, onClick: () => {} },
 ];
 
 const subMenuItems: DropdownMenuEntry[] = [

@@ -16,6 +16,8 @@ export interface DropdownMenuItem {
   icon?: string;
   /** Disabled state */
   disabled?: boolean;
+  /** Destructive / danger styling (red text) for delete, remove, etc. */
+  destructive?: boolean;
   /** Click handler */
   onClick?: () => void;
   /** Nested sub-menu items */
@@ -112,6 +114,7 @@ const SubMenuItem = ({ item, baseClass, focused, size, onActivate }: SubMenuItem
     `${baseClass}__item`,
     focused ? `${baseClass}__item--focused` : '',
     item.disabled ? `${baseClass}__item--disabled` : '',
+    item.destructive ? `${baseClass}__item--destructive` : '',
     `${baseClass}__item--has-submenu`,
   ]
     .filter(Boolean)
@@ -219,6 +222,7 @@ const MenuPanel = ({
     const itemClasses = [
       `${baseClass}__item`,
       entry.disabled ? `${baseClass}__item--disabled` : '',
+      entry.destructive ? `${baseClass}__item--destructive` : '',
     ]
       .filter(Boolean)
       .join(' ');
@@ -401,6 +405,7 @@ export const DropdownMenu = ({
       `${baseClass}__item`,
       isFocused ? `${baseClass}__item--focused` : '',
       entry.disabled ? `${baseClass}__item--disabled` : '',
+      entry.destructive ? `${baseClass}__item--destructive` : '',
     ]
       .filter(Boolean)
       .join(' ');

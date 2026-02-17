@@ -53,7 +53,7 @@ const defaultItems: DropdownMenuEntry[] = [
   { label: 'Open', icon: 'folder_open', onClick: () => console.log('Open') },
   { label: 'Save', icon: 'save', onClick: () => console.log('Save') },
   { type: 'separator' },
-  { label: 'Delete', icon: 'delete', onClick: () => console.log('Delete') },
+  { label: 'Delete', icon: 'delete', destructive: true, onClick: () => console.log('Delete') },
 ];
 
 export const Default: Story = {
@@ -91,7 +91,7 @@ const groupedItems: DropdownMenuEntry[] = [
   { label: 'Support', icon: 'help', onClick: () => {} },
   { label: 'API', icon: 'terminal', disabled: true },
   { type: 'separator' },
-  { label: 'Log out', icon: 'logout', shortcut: '⇧ ⌘ Q', onClick: () => {} },
+  { label: 'Log out', icon: 'logout', shortcut: '⇧ ⌘ Q', destructive: true, onClick: () => {} },
 ];
 
 export const WithGroups: Story = {
@@ -236,7 +236,7 @@ const allFeaturesItems: DropdownMenuEntry[] = [
   { label: 'Support', icon: 'help', onClick: () => {} },
   { label: 'API', icon: 'terminal', disabled: true },
   { type: 'separator' },
-  { label: 'Log out', icon: 'logout', shortcut: '⇧ ⌘ Q', onClick: () => {} },
+  { label: 'Log out', icon: 'logout', shortcut: '⇧ ⌘ Q', destructive: true, onClick: () => {} },
 ];
 
 export const AllFeatures: Story = {
