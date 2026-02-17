@@ -244,6 +244,22 @@ export default function ComponentsPage() {
               </div>
             </TocCard>
 
+            {/* Selection card */}
+            <TocCard href="/components/selection-card" title="Selection card">
+              <div className={styles.previewColumn} style={{ gap: "4px", width: "130px" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "6px 8px", borderRadius: "8px", border: "1px solid var(--color-action-primary-border)" }}>
+                  <span style={{ fontSize: "11px", fontWeight: 500, color: "var(--color-text-primary)" }}>Option A</span>
+                  <div style={{ width: "14px", height: "14px", borderRadius: "50%", border: "2px solid var(--color-action-primary-bg)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <div style={{ width: "7px", height: "7px", borderRadius: "50%", background: "var(--color-action-primary-bg)" }} />
+                  </div>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "6px 8px", borderRadius: "8px", border: "1px solid var(--color-bg-container-border)" }}>
+                  <span style={{ fontSize: "11px", color: "var(--color-text-primary)" }}>Option B</span>
+                  <div style={{ width: "14px", height: "14px", borderRadius: "50%", border: "2px solid var(--color-bg-container-border)" }} />
+                </div>
+              </div>
+            </TocCard>
+
             {/* Segmented control */}
             <TocCard href="/components/segmented-control" title="Segmented control">
               <SegmentedControl

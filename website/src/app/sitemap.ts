@@ -28,6 +28,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/components/progress-bar",
     "/components/radio-button",
     "/components/section-title",
+    "/components/selection-card",
     "/components/segmented-control",
     "/components/skeleton",
     "/components/slider",
