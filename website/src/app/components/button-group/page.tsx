@@ -16,37 +16,37 @@ import styles from "./page.module.css";
    ============================================ */
 
 const horizontalDefault: ButtonProps[] = [
-  { label: "Home", priority: "secondary", state: "default" },
-  { label: "About", priority: "secondary", state: "default" },
-  { label: "Components", priority: "secondary", state: "active" },
-  { label: "Foundations", priority: "secondary", state: "default" },
+  { label: "Home", priority: "tertiary", state: "default" },
+  { label: "About", priority: "tertiary", state: "default" },
+  { label: "Components", priority: "tertiary", state: "active" },
+  { label: "Foundations", priority: "tertiary", state: "default" },
 ];
 
 const horizontalWithIcons: ButtonProps[] = [
-  { label: "Home", priority: "secondary", state: "default", iconLeft: "home" },
-  { label: "Settings", priority: "secondary", state: "default", iconLeft: "settings" },
-  { label: "Profile", priority: "secondary", state: "active", iconLeft: "person" },
+  { label: "Home", priority: "tertiary", state: "default", iconLeft: "home" },
+  { label: "Settings", priority: "tertiary", state: "default", iconLeft: "settings" },
+  { label: "Profile", priority: "tertiary", state: "active", iconLeft: "person" },
 ];
 
 const verticalDefault: ButtonProps[] = [
-  { label: "Overview", priority: "secondary", state: "active" },
-  { label: "Button", priority: "secondary", state: "default" },
-  { label: "Button group", priority: "secondary", state: "default" },
-  { label: "Card", priority: "secondary", state: "default" },
-  { label: "Navigation", priority: "secondary", state: "default" },
-  { label: "Toggle switch", priority: "secondary", state: "default" },
+  { label: "Overview", priority: "tertiary", state: "active" },
+  { label: "Button", priority: "tertiary", state: "default" },
+  { label: "Button group", priority: "tertiary", state: "default" },
+  { label: "Card", priority: "tertiary", state: "default" },
+  { label: "Navigation", priority: "tertiary", state: "default" },
+  { label: "Toggle switch", priority: "tertiary", state: "default" },
 ];
 
 const verticalWithIcons: ButtonProps[] = [
-  { label: "Dashboard", priority: "secondary", state: "default", iconLeft: "dashboard" },
-  { label: "Analytics", priority: "secondary", state: "active", iconLeft: "bar_chart" },
-  { label: "Settings", priority: "secondary", state: "default", iconLeft: "settings" },
-  { label: "Help", priority: "secondary", state: "default", iconLeft: "help" },
+  { label: "Dashboard", priority: "tertiary", state: "default", iconLeft: "dashboard" },
+  { label: "Analytics", priority: "tertiary", state: "active", iconLeft: "bar_chart" },
+  { label: "Settings", priority: "tertiary", state: "default", iconLeft: "settings" },
+  { label: "Help", priority: "tertiary", state: "default", iconLeft: "help" },
 ];
 
 const primaryGroup: ButtonProps[] = [
-  { label: "Cancel", priority: "secondary", state: "default" },
-  { label: "Save", priority: "primary", state: "default", iconRight: "arrow_forward" },
+  { label: "Cancel", priority: "tertiary", state: "default" },
+  { label: "Save", priority: "secondary", state: "default", iconRight: "arrow_forward" },
 ];
 
 /* ============================================

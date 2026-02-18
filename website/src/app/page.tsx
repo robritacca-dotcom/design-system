@@ -57,7 +57,7 @@ export default function HomePage() {
           <div className={styles.homeLinks}>
             <Button
               label="Figma"
-              priority="secondary"
+              priority="tertiary"
               iconLeft={<FigmaIcon />}
               iconRight="open_in_new"
               href="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26?node-id=113-7533"
@@ -66,7 +66,7 @@ export default function HomePage() {
             />
             <Button
               label="Storybook"
-              priority="secondary"
+              priority="tertiary"
               iconLeft={<StorybookIcon />}
               iconRight="open_in_new"
               href="https://design-system-iota-one.vercel.app"
@@ -75,7 +75,7 @@ export default function HomePage() {
             />
             <Button
               label="GitHub"
-              priority="secondary"
+              priority="tertiary"
               iconLeft={<GitHubIcon />}
               iconRight="open_in_new"
               href="https://github.com/robritacca-dotcom/design-system"

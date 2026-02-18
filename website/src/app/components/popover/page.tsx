@@ -54,7 +54,7 @@ export default function PopoverPage() {
                   </div>
                 }
               >
-                <Button label="Click me" priority="primary" size="compact" />
+                <Button label="Click me" priority="secondary" size="compact" />
               </Popover>
             </div>
           </section>
@@ -68,7 +68,7 @@ export default function PopoverPage() {
                 position="bottom"
                 content={<p style={{ margin: 0 }}>Tooltip-style popover on hover.</p>}
               >
-                <Button label="Hover me" priority="secondary" size="compact" />
+                <Button label="Hover me" priority="tertiary" size="compact" />
               </Popover>
             </div>
           </section>
@@ -78,13 +78,13 @@ export default function PopoverPage() {
             <SectionTitle title="Positions" />
             <div className={styles.variantRow} style={{ gap: "80px", padding: "60px 0" }}>
               <Popover trigger="click" position="bottom" open content={<p style={{ margin: 0 }}>Bottom</p>}>
-                <Button label="Bottom" priority="secondary" size="compact" />
+                <Button label="Bottom" priority="tertiary" size="compact" />
               </Popover>
               <Popover trigger="click" position="top" open content={<p style={{ margin: 0 }}>Top</p>}>
-                <Button label="Top" priority="secondary" size="compact" />
+                <Button label="Top" priority="tertiary" size="compact" />
               </Popover>
               <Popover trigger="click" position="right" open content={<p style={{ margin: 0 }}>Right</p>}>
-                <Button label="Right" priority="secondary" size="compact" />
+                <Button label="Right" priority="tertiary" size="compact" />
               </Popover>
             </div>
           </section>
@@ -99,7 +99,7 @@ export default function PopoverPage() {
                 size="compact"
                 content={<p style={{ margin: 0, fontSize: "14px" }}>Compact popover content.</p>}
               >
-                <Button label="Compact" priority="primary" size="compact" />
+                <Button label="Compact" priority="secondary" size="compact" />
               </Popover>
             </div>
           </section>

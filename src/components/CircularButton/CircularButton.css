@@ -64,16 +64,16 @@
 }
 
 /* ============================================
-   PRIMARY VARIANT
+   PRIMARY VARIANT (SOLID)
    ============================================ */
 
 .ds-circular-button--primary {
-  border: var(--border-xs) solid var(--color-action-primary-border);
-  background-color: transparent;
+  background-color: var(--color-action-primary-bg);
+  border: none;
 }
 
 .ds-circular-button--primary .ds-circular-button__icon {
-  color: var(--color-action-icon-default);
+  color: var(--color-action-primary-text);
 }
 
 .ds-circular-button--primary.ds-circular-button--hover {
@@ -81,7 +81,7 @@
 }
 
 .ds-circular-button--primary.ds-circular-button--hover .ds-circular-button__icon {
-  color: var(--color-action-icon-active);
+  color: var(--color-action-primary-text-active);
 }
 
 .ds-circular-button--primary.ds-circular-button--active {
@@ -89,7 +89,7 @@
 }
 
 .ds-circular-button--primary.ds-circular-button--active .ds-circular-button__icon {
-  color: var(--color-action-icon-active);
+  color: var(--color-action-primary-text-active);
 }
 
 .ds-circular-button--primary.ds-circular-button--disabled {
@@ -103,7 +103,7 @@
 }
 
 .ds-circular-button--primary:not(.ds-circular-button--disabled):hover .ds-circular-button__icon {
-  color: var(--color-action-icon-active);
+  color: var(--color-action-primary-text-active);
 }
 
 .ds-circular-button--primary:not(.ds-circular-button--disabled):active {
@@ -111,28 +111,36 @@
 }
 
 .ds-circular-button--primary:not(.ds-circular-button--disabled):active .ds-circular-button__icon {
-  color: var(--color-action-icon-active);
+  color: var(--color-action-primary-text-active);
 }
 
 /* ============================================
-   SECONDARY VARIANT (PASSIVE)
+   SECONDARY VARIANT (OUTLINED)
    ============================================ */
 
 .ds-circular-button--secondary {
-  background-color: var(--color-action-passive-bg);
-  border: none;
+  border: var(--border-xs) solid var(--color-action-primary-border);
+  background-color: transparent;
 }
 
 .ds-circular-button--secondary .ds-circular-button__icon {
-  color: var(--color-icon-primary);
+  color: var(--color-action-icon-default);
 }
 
 .ds-circular-button--secondary.ds-circular-button--hover {
-  background-color: var(--color-action-passive-bg-hover);
+  background-color: var(--color-action-primary-bg-hover);
+}
+
+.ds-circular-button--secondary.ds-circular-button--hover .ds-circular-button__icon {
+  color: var(--color-action-icon-active);
 }
 
 .ds-circular-button--secondary.ds-circular-button--active {
-  background-color: var(--color-action-passive-bg-active);
+  background-color: var(--color-action-primary-bg-active);
+}
+
+.ds-circular-button--secondary.ds-circular-button--active .ds-circular-button__icon {
+  color: var(--color-action-icon-active);
 }
 
 .ds-circular-button--secondary.ds-circular-button--disabled {
@@ -142,10 +150,53 @@
 
 /* Interactive hover/active */
 .ds-circular-button--secondary:not(.ds-circular-button--disabled):hover {
-  background-color: var(--color-action-passive-bg-hover);
+  background-color: var(--color-action-primary-bg-hover);
+}
+
+.ds-circular-button--secondary:not(.ds-circular-button--disabled):hover .ds-circular-button__icon {
+  color: var(--color-action-icon-active);
 }
 
 .ds-circular-button--secondary:not(.ds-circular-button--disabled):active {
+  background-color: var(--color-action-primary-bg-active);
+}
+
+.ds-circular-button--secondary:not(.ds-circular-button--disabled):active .ds-circular-button__icon {
+  color: var(--color-action-icon-active);
+}
+
+/* ============================================
+   TERTIARY VARIANT (PASSIVE / GHOST)
+   ============================================ */
+
+.ds-circular-button--tertiary {
+  background-color: var(--color-action-passive-bg);
+  border: none;
+}
+
+.ds-circular-button--tertiary .ds-circular-button__icon {
+  color: var(--color-icon-primary);
+}
+
+.ds-circular-button--tertiary.ds-circular-button--hover {
+  background-color: var(--color-action-passive-bg-hover);
+}
+
+.ds-circular-button--tertiary.ds-circular-button--active {
+  background-color: var(--color-action-passive-bg-active);
+}
+
+.ds-circular-button--tertiary.ds-circular-button--disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Interactive hover/active */
+.ds-circular-button--tertiary:not(.ds-circular-button--disabled):hover {
+  background-color: var(--color-action-passive-bg-hover);
+}
+
+.ds-circular-button--tertiary:not(.ds-circular-button--disabled):active {
   background-color: var(--color-action-passive-bg-active);
 }
 

@@ -19,28 +19,28 @@ import styles from "./page.module.css";
    ============================================ */
 
 const demoNavButtons: ButtonProps[] = [
-  { label: "Home", priority: "secondary", state: "default" },
-  { label: "About", priority: "secondary", state: "default" },
-  { label: "Components", priority: "secondary", state: "active" },
-  { label: "Foundations", priority: "secondary", state: "default" },
+  { label: "Home", priority: "tertiary", state: "default" },
+  { label: "About", priority: "tertiary", state: "default" },
+  { label: "Components", priority: "tertiary", state: "active" },
+  { label: "Foundations", priority: "tertiary", state: "default" },
 ];
 
 const demoMobileMenuTopLinks: ButtonProps[] = [
-  { label: "Home", priority: "secondary", state: "default" },
-  { label: "About", priority: "secondary", state: "disabled" },
-  { label: "Work", priority: "secondary", state: "disabled" },
-  { label: "robr0 DS", priority: "secondary", state: "active" },
+  { label: "Home", priority: "tertiary", state: "default" },
+  { label: "About", priority: "tertiary", state: "disabled" },
+  { label: "Work", priority: "tertiary", state: "disabled" },
+  { label: "robr0 DS", priority: "tertiary", state: "active" },
 ];
 
 const demoMobileSubnavLinks: ButtonProps[] = [
-  { label: "Contents", priority: "secondary", state: "active" },
-  { label: "Menu item", priority: "secondary", state: "default" },
-  { label: "Menu item", priority: "secondary", state: "default" },
-  { label: "Menu item", priority: "secondary", state: "default" },
-  { label: "Menu item", priority: "secondary", state: "default" },
-  { label: "Colour", priority: "secondary", state: "default" },
-  { label: "Menu item", priority: "secondary", state: "default" },
-  { label: "Menu item", priority: "secondary", state: "default" },
+  { label: "Contents", priority: "tertiary", state: "active" },
+  { label: "Menu item", priority: "tertiary", state: "default" },
+  { label: "Menu item", priority: "tertiary", state: "default" },
+  { label: "Menu item", priority: "tertiary", state: "default" },
+  { label: "Menu item", priority: "tertiary", state: "default" },
+  { label: "Colour", priority: "tertiary", state: "default" },
+  { label: "Menu item", priority: "tertiary", state: "default" },
+  { label: "Menu item", priority: "tertiary", state: "default" },
 ];
 
 /* ============================================

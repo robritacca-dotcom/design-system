@@ -44,11 +44,11 @@ export default function CircularButtonPage() {
               An icon-only button in a circular shape
             </p>
             <p className={styles.introBody}>
-              For actions where a label is not needed, like close, menu, or navigation arrows. Uses the same primary and secondary styles as Button. Good for toolbars and compact UI where space is tight.
+              For actions where a label is not needed, like close, menu, or navigation arrows. Uses the same primary, secondary, and tertiary styles as Button. Good for toolbars and compact UI where space is tight.
             </p>
           </div>
 
-          {/* Primary states */}
+          {/* Primary states (Solid) */}
           <section className={styles.section}>
             <SectionTitle title="Primary" />
             <div className={styles.stateGrid}>
@@ -69,7 +69,7 @@ export default function CircularButtonPage() {
             </div>
           </section>
 
-          {/* Secondary states */}
+          {/* Secondary states (Outlined) */}
           <section className={styles.section}>
             <SectionTitle title="Secondary" />
             <div className={styles.stateGrid}>
@@ -90,16 +90,39 @@ export default function CircularButtonPage() {
             </div>
           </section>
 
+          {/* Tertiary states (Ghost / Passive) */}
+          <section className={styles.section}>
+            <SectionTitle title="Tertiary" />
+            <div className={styles.stateGrid}>
+              <div className={styles.gridCorner} />
+              {states.map((s) => (
+                <span key={s.value} className={styles.gridColHeader}>{s.label}</span>
+              ))}
+              {icons.map((icon) => (
+                <React.Fragment key={icon}>
+                  <span className={styles.gridRowHeader}>{icon}</span>
+                  {states.map((s) => (
+                    <div key={s.value} className={styles.gridCell}>
+                      <CircularButton icon={icon} priority="tertiary" state={s.value} ariaLabel={icon} />
+                    </div>
+                  ))}
+                </React.Fragment>
+              ))}
+            </div>
+          </section>
+
           {/* Compact */}
           <section className={styles.section}>
             <SectionTitle title="Compact" />
             <div className={styles.variantRow}>
               <CircularButton icon="add" priority="primary" size="compact" ariaLabel="Add" />
-              <CircularButton icon="close" priority="primary" size="compact" ariaLabel="Close" />
-              <CircularButton icon="edit" priority="secondary" size="compact" ariaLabel="Edit" />
-              <CircularButton icon="more_vert" priority="secondary" size="compact" ariaLabel="More" />
-              <CircularButton icon="search" priority="secondary" size="compact" ariaLabel="Search" />
-              <CircularButton icon="settings" priority="secondary" size="compact" ariaLabel="Settings" />
+              <CircularButton icon="delete" priority="primary" size="compact" ariaLabel="Delete" />
+              <CircularButton icon="add" priority="secondary" size="compact" ariaLabel="Add" />
+              <CircularButton icon="close" priority="secondary" size="compact" ariaLabel="Close" />
+              <CircularButton icon="edit" priority="tertiary" size="compact" ariaLabel="Edit" />
+              <CircularButton icon="more_vert" priority="tertiary" size="compact" ariaLabel="More" />
+              <CircularButton icon="search" priority="tertiary" size="compact" ariaLabel="Search" />
+              <CircularButton icon="settings" priority="tertiary" size="compact" ariaLabel="Settings" />
             </div>
           </section>
         </main>

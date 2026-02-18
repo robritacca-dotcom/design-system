@@ -44,7 +44,7 @@ export default function PageLinks({ figmaUrl, storybookPath }: PageLinksProps) {
       {figmaUrl && (
         <Button
           label="Figma"
-          priority="secondary"
+          priority="tertiary"
           size="compact"
           iconLeft={<FigmaIcon />}
           iconRight="open_in_new"
@@ -57,7 +57,7 @@ export default function PageLinks({ figmaUrl, storybookPath }: PageLinksProps) {
       {storybookPath && (
         <Button
           label="Storybook"
-          priority="secondary"
+          priority="tertiary"
           size="compact"
           iconLeft={<StorybookIcon />}
           iconRight="open_in_new"

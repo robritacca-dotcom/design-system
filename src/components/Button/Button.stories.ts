@@ -12,8 +12,8 @@ const meta = {
   argTypes: {
     priority: {
       control: 'select',
-      options: ['primary', 'secondary'],
-      description: 'Button variant - primary or secondary',
+      options: ['primary', 'secondary', 'tertiary'],
+      description: 'Button variant — primary (solid), secondary (outlined), or tertiary (ghost)',
     },
     state: {
       control: 'select',
@@ -56,7 +56,10 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// Primary Button States
+// ============================================
+// Primary Button States (Solid)
+// ============================================
+
 export const PrimaryDefault: Story = {
   args: {
     priority: 'primary',
@@ -97,7 +100,10 @@ export const PrimaryDisabled: Story = {
   },
 };
 
-// Secondary Button States
+// ============================================
+// Secondary Button States (Outlined)
+// ============================================
+
 export const SecondaryDefault: Story = {
   args: {
     priority: 'secondary',
@@ -138,7 +144,54 @@ export const SecondaryDisabled: Story = {
   },
 };
 
+// ============================================
+// Tertiary Button States (Ghost / Passive)
+// ============================================
+
+export const TertiaryDefault: Story = {
+  args: {
+    priority: 'tertiary',
+    state: 'default',
+    label: 'Button',
+    text: true,
+    iconRight: 'arrow_forward',
+  },
+};
+
+export const TertiaryHover: Story = {
+  args: {
+    priority: 'tertiary',
+    state: 'hover',
+    label: 'Button',
+    text: true,
+    iconRight: 'arrow_forward',
+  },
+};
+
+export const TertiaryActive: Story = {
+  args: {
+    priority: 'tertiary',
+    state: 'active',
+    label: 'Button',
+    text: true,
+    iconRight: 'arrow_forward',
+  },
+};
+
+export const TertiaryDisabled: Story = {
+  args: {
+    priority: 'tertiary',
+    state: 'disabled',
+    label: 'Button',
+    text: true,
+    iconRight: 'arrow_forward',
+  },
+};
+
+// ============================================
 // With Icon Left
+// ============================================
+
 export const PrimaryWithIconLeft: Story = {
   args: {
     priority: 'primary',
@@ -153,6 +206,17 @@ export const PrimaryWithIconLeft: Story = {
 export const SecondaryWithIconLeft: Story = {
   args: {
     priority: 'secondary',
+    state: 'default',
+    label: 'Edit',
+    text: true,
+    iconLeft: 'edit',
+    iconRight: undefined,
+  },
+};
+
+export const TertiaryWithIconLeft: Story = {
+  args: {
+    priority: 'tertiary',
     state: 'default',
     label: 'Home',
     text: true,
@@ -175,7 +239,7 @@ export const WithBothIcons: Story = {
 
 export const WithIconLeftAndRight: Story = {
   args: {
-    priority: 'secondary',
+    priority: 'tertiary',
     state: 'default',
     label: 'Download',
     text: true,
@@ -205,6 +269,16 @@ export const SecondaryIconOnly: Story = {
   },
 };
 
+export const TertiaryIconOnly: Story = {
+  args: {
+    priority: 'tertiary',
+    state: 'default',
+    text: false,
+    iconLeft: 'close',
+    iconRight: undefined,
+  },
+};
+
 // Text Only (No Icons)
 export const TextOnly: Story = {
   args: {
@@ -221,7 +295,6 @@ export const TextOnly: Story = {
 // Compact Button States
 // ============================================
 
-// Compact Primary States
 export const CompactPrimaryDefault: Story = {
   args: {
     priority: 'primary',
@@ -266,7 +339,6 @@ export const CompactPrimaryDisabled: Story = {
   },
 };
 
-// Compact Secondary States
 export const CompactSecondaryDefault: Story = {
   args: {
     priority: 'secondary',
@@ -303,6 +375,50 @@ export const CompactSecondaryActive: Story = {
 export const CompactSecondaryDisabled: Story = {
   args: {
     priority: 'secondary',
+    state: 'disabled',
+    size: 'compact',
+    label: 'Button',
+    text: true,
+    iconRight: 'arrow_forward',
+  },
+};
+
+export const CompactTertiaryDefault: Story = {
+  args: {
+    priority: 'tertiary',
+    state: 'default',
+    size: 'compact',
+    label: 'Button',
+    text: true,
+    iconRight: 'arrow_forward',
+  },
+};
+
+export const CompactTertiaryHover: Story = {
+  args: {
+    priority: 'tertiary',
+    state: 'hover',
+    size: 'compact',
+    label: 'Button',
+    text: true,
+    iconRight: 'arrow_forward',
+  },
+};
+
+export const CompactTertiaryActive: Story = {
+  args: {
+    priority: 'tertiary',
+    state: 'active',
+    size: 'compact',
+    label: 'Button',
+    text: true,
+    iconRight: 'arrow_forward',
+  },
+};
+
+export const CompactTertiaryDisabled: Story = {
+  args: {
+    priority: 'tertiary',
     state: 'disabled',
     size: 'compact',
     label: 'Button',

@@ -17,7 +17,7 @@ export default function Sidebar({ links }: SidebarProps) {
     label: link.label,
     href: link.href,
     state: link.active ? ("active" as const) : ("default" as const),
-    priority: "secondary" as const,
+    priority: "tertiary" as const,
   }));
 
   return (

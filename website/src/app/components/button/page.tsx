@@ -21,7 +21,7 @@ const states = [
   { label: "Active", value: "active" as const },
 ];
 
-const priorities = ["primary", "secondary"] as const;
+const priorities = ["primary", "secondary", "tertiary"] as const;
 
 const sizes = [
   { label: "Default", value: "default" as const },
@@ -38,6 +38,7 @@ const iconVariants = [
 const priorityLabels: Record<string, string> = {
   primary: "Primary",
   secondary: "Secondary",
+  tertiary: "Tertiary",
 };
 
 /* ============================================
@@ -51,7 +52,7 @@ function ButtonGrid({
   priority,
   size,
 }: {
-  priority: "primary" | "secondary";
+  priority: "primary" | "secondary" | "tertiary";
   size: "default" | "compact";
 }) {
   const heading = `${priorityLabels[priority]}${size === "compact" ? ", compact" : ""}`;
@@ -126,7 +127,7 @@ export default function ButtonPage() {
               The main action element
             </p>
             <p className={styles.introBody}>
-              Primary buttons have a border and fill on hover for high-emphasis actions. Secondary buttons are transparent and blend into the surface for lower-priority options. Both come in default and compact sizes.
+              Primary buttons are solid-filled for the highest-emphasis actions. Secondary buttons have a border and fill on hover. Tertiary buttons are transparent and blend into the surface for lower-priority options. All come in default and compact sizes.
             </p>
           </div>
 

@@ -6,7 +6,7 @@ export interface CircularButtonProps {
   /** Material Symbol icon name */
   icon: string;
   /** Button priority/variant */
-  priority?: 'primary' | 'secondary';
+  priority?: 'primary' | 'secondary' | 'tertiary';
   /** Button state */
   state?: 'default' | 'hover' | 'active' | 'disabled';
   /** Button size */

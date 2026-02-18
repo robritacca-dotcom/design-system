@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
-import { Checkbox } from './Checkbox';
+import { Checkbox, CheckboxGroup } from './Checkbox';
 
 const meta = {
   title: 'Components/Checkbox',
@@ -65,5 +65,95 @@ export const NoLabel: Story = {
   args: {
     checked: true,
     ariaLabel: 'Standalone checkbox',
+  },
+};
+
+// ============================================
+// Checkbox Group Stories
+// ============================================
+
+const groupMeta = {
+  title: 'Components/CheckboxGroup',
+  component: CheckboxGroup,
+  parameters: {
+    layout: 'centered',
+  },
+  tags: ['autodocs'],
+  argTypes: {
+    label: { control: 'text', description: 'Group label' },
+    direction: {
+      control: 'select',
+      options: ['vertical', 'horizontal'],
+      description: 'Layout direction',
+    },
+    size: {
+      control: 'select',
+      options: ['default', 'compact'],
+      description: 'Component size',
+    },
+  },
+  args: {
+    onChange: fn(),
+  },
+} satisfies Meta<typeof CheckboxGroup>;
+
+type GroupStory = StoryObj<typeof groupMeta>;
+
+export const GroupVertical: GroupStory = {
+  render: (args) => <CheckboxGroup {...args} />,
+  args: {
+    label: 'Notifications',
+    items: [
+      { label: 'Email', value: 'email' },
+      { label: 'Push notifications', value: 'push' },
+      { label: 'SMS', value: 'sms' },
+      { label: 'In-app', value: 'in-app' },
+    ],
+    values: ['email', 'push'],
+    direction: 'vertical',
+  },
+};
+
+export const GroupHorizontal: GroupStory = {
+  render: (args) => <CheckboxGroup {...args} />,
+  args: {
+    label: 'Categories',
+    items: [
+      { label: 'Design', value: 'design' },
+      { label: 'Development', value: 'dev' },
+      { label: 'Marketing', value: 'marketing' },
+    ],
+    values: ['design'],
+    direction: 'horizontal',
+  },
+};
+
+export const GroupWithDisabled: GroupStory = {
+  render: (args) => <CheckboxGroup {...args} />,
+  args: {
+    label: 'Features',
+    items: [
+      { label: 'Dark mode', value: 'dark' },
+      { label: 'Notifications', value: 'notif', disabled: true },
+      { label: 'Analytics', value: 'analytics' },
+      { label: 'Beta features', value: 'beta', disabled: true },
+    ],
+    values: ['dark', 'analytics'],
+    direction: 'vertical',
+  },
+};
+
+export const GroupCompact: GroupStory = {
+  render: (args) => <CheckboxGroup {...args} />,
+  args: {
+    label: 'Filters',
+    items: [
+      { label: 'Active', value: 'active' },
+      { label: 'Pending', value: 'pending' },
+      { label: 'Archived', value: 'archived' },
+    ],
+    values: ['active'],
+    size: 'compact',
+    direction: 'horizontal',
   },
 };

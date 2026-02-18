@@ -63,7 +63,7 @@ export default function CardPage() {
               <Card title="Button">
                 <Button
                   label="Button"
-                  priority="primary"
+                  priority="secondary"
                   iconRight="arrow_forward"
                 />
               </Card>
@@ -73,7 +73,7 @@ export default function CardPage() {
               <Card title="Card" interactive>
                 <Button
                   label="Interactive"
-                  priority="secondary"
+                  priority="tertiary"
                   size="compact"
                 />
               </Card>

@@ -63,6 +63,67 @@ const MinusIcon = () => (
   </svg>
 );
 
+/* ============================================
+   CHECKBOX GROUP — Wraps multiple Checkboxes
+   ============================================ */
+
+export interface CheckboxGroupProps {
+  /** Group label */
+  label?: string;
+  /** Checkbox options */
+  items: { label: string; value: string; disabled?: boolean }[];
+  /** Currently selected values */
+  values?: string[];
+  /** Layout direction */
+  direction?: 'vertical' | 'horizontal';
+  /** Component size */
+  size?: 'default' | 'compact';
+  /** Callback when selection changes */
+  onChange?: (values: string[]) => void;
+  /** Additional CSS classes */
+  className?: string;
+}
+
+export const CheckboxGroup = ({
+  label,
+  items,
+  values = [],
+  direction = 'vertical',
+  size = 'default',
+  onChange,
+  className = '',
+}: CheckboxGroupProps) => {
+  const baseClass = 'ds-checkbox-group';
+  const directionClass = `${baseClass}--${direction}`;
+  const classes = [baseClass, directionClass, className].filter(Boolean).join(' ');
+
+  const handleToggle = (itemValue: string) => {
+    if (!onChange) return;
+    const next = values.includes(itemValue)
+      ? values.filter((v) => v !== itemValue)
+      : [...values, itemValue];
+    onChange(next);
+  };
+
+  return (
+    <div className={classes} role="group" aria-label={label}>
+      {label && <span className={`${baseClass}__label`}>{label}</span>}
+      <div className={`${baseClass}__items`}>
+        {items.map((item) => (
+          <Checkbox
+            key={item.value}
+            label={item.label}
+            checked={values.includes(item.value)}
+            disabled={item.disabled}
+            size={size}
+            onChange={() => handleToggle(item.value)}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
 export const Checkbox = ({
   label,
   checked = false,

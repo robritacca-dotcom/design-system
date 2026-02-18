@@ -24,7 +24,7 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
       {buttons.map((button, index) => (
         <Button
           key={index}
-          priority={button.priority || 'secondary'}
+          priority={button.priority || 'tertiary'}
           state={button.state || 'default'}
           label={button.label}
           iconLeft={button.iconLeft}

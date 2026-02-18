@@ -26,7 +26,7 @@ export default function NotFound() {
           </p>
           <Button
             label="Back to home"
-            priority="primary"
+            priority="secondary"
             iconLeft="arrow_back"
             href="/"
           />

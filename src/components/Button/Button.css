@@ -67,28 +67,19 @@
 }
 
 /* ============================================
-   PRIMARY BUTTON
+   PRIMARY BUTTON (SOLID)
    ============================================ */
 
 .ds-button--primary {
-  /* Figma: --action/primary/border/primary (#0a4e66) - 1px border */
-  border: var(--border-xs) solid var(--color-action-primary-border);
-  background-color: transparent;
+  background-color: var(--color-action-primary-bg);
+  border: none;
 }
 
 .ds-button--primary .ds-button__text {
-  /* Figma: --text/primary */
-  color: var(--color-text-primary);
-}
-
-.ds-button--primary.ds-button--default {
-  border: var(--border-xs) solid var(--color-action-primary-border);
-  background-color: transparent;
+  color: var(--color-action-primary-text);
 }
 
 .ds-button--primary.ds-button--hover {
-  /* Figma: hover state - 1px border */
-  border: var(--border-xs) solid var(--color-action-primary-border);
   background-color: var(--color-action-primary-bg-hover);
 }
 
@@ -97,9 +88,7 @@
 }
 
 .ds-button--primary.ds-button--active {
-  /* Figma: --action/primary/background/active (#0a4e66) - 1px border */
   background-color: var(--color-action-primary-bg-active);
-  border: var(--border-xs) solid var(--color-action-primary-border);
 }
 
 .ds-button--primary.ds-button--active .ds-button__text {
@@ -107,6 +96,52 @@
 }
 
 .ds-button--primary.ds-button--disabled {
+  background-color: var(--color-action-primary-bg);
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ============================================
+   SECONDARY BUTTON (OUTLINED)
+   ============================================ */
+
+.ds-button--secondary {
+  /* Figma: --action/primary/border/primary (#0a4e66) - 1px border */
+  border: var(--border-xs) solid var(--color-action-primary-border);
+  background-color: transparent;
+}
+
+.ds-button--secondary .ds-button__text {
+  /* Figma: --text/primary */
+  color: var(--color-text-primary);
+}
+
+.ds-button--secondary.ds-button--default {
+  border: var(--border-xs) solid var(--color-action-primary-border);
+  background-color: transparent;
+}
+
+.ds-button--secondary.ds-button--hover {
+  /* Figma: hover state - 1px border */
+  border: var(--border-xs) solid var(--color-action-primary-border);
+  background-color: var(--color-action-primary-bg-hover);
+}
+
+.ds-button--secondary.ds-button--hover .ds-button__text {
+  color: var(--color-action-primary-text-active);
+}
+
+.ds-button--secondary.ds-button--active {
+  /* Figma: --action/primary/background/active (#0a4e66) - 1px border */
+  background-color: var(--color-action-primary-bg-active);
+  border: var(--border-xs) solid var(--color-action-primary-border);
+}
+
+.ds-button--secondary.ds-button--active .ds-button__text {
+  color: var(--color-action-primary-text-active);
+}
+
+.ds-button--secondary.ds-button--disabled {
   border: var(--border-xs) solid var(--color-action-primary-border);
   background-color: transparent;
   opacity: 0.4;
@@ -114,35 +149,35 @@
 }
 
 /* ============================================
-   SECONDARY BUTTON (PASSIVE)
+   TERTIARY BUTTON (PASSIVE / GHOST)
    ============================================ */
 
-.ds-button--secondary {
+.ds-button--tertiary {
   /* Figma: --action/passive/background/primary (rgba(241, 241, 241, 0.01)) */
   background-color: var(--color-action-passive-bg);
   border: none;
 }
 
-.ds-button--secondary .ds-button__text {
+.ds-button--tertiary .ds-button__text {
   /* Figma: --action/passive/text/primary (#050505) */
   color: var(--color-action-passive-text);
 }
 
-.ds-button--secondary.ds-button--default {
+.ds-button--tertiary.ds-button--default {
   background-color: var(--color-action-passive-bg);
 }
 
-.ds-button--secondary.ds-button--hover {
+.ds-button--tertiary.ds-button--hover {
   /* Figma: hover background (#d6d6d6) */
   background-color: var(--color-action-passive-bg-hover);
 }
 
-.ds-button--secondary.ds-button--active {
+.ds-button--tertiary.ds-button--active {
   /* Figma: --action/passive/background/active (#bcbcbc) */
   background-color: var(--color-action-passive-bg-active);
 }
 
-.ds-button--secondary.ds-button--disabled {
+.ds-button--tertiary.ds-button--disabled {
   background-color: var(--color-action-passive-bg);
   opacity: 0.4;
   cursor: not-allowed;
@@ -167,15 +202,24 @@
 }
 
 .ds-button--primary .ds-button__icon {
-  color: var(--color-action-icon-default);
+  color: var(--color-action-primary-text);
 }
 
 .ds-button--primary.ds-button--active .ds-button__icon,
 .ds-button--primary.ds-button--hover .ds-button__icon {
-  color: var(--color-action-icon-active);
+  color: var(--color-action-primary-text-active);
 }
 
 .ds-button--secondary .ds-button__icon {
+  color: var(--color-action-icon-default);
+}
+
+.ds-button--secondary.ds-button--active .ds-button__icon,
+.ds-button--secondary.ds-button--hover .ds-button__icon {
+  color: var(--color-action-icon-active);
+}
+
+.ds-button--tertiary .ds-button__icon {
   color: var(--color-icon-primary);
 }
 
@@ -200,10 +244,22 @@
 }
 
 .ds-button--primary:not(.ds-button--disabled):hover .ds-button__icon {
-  color: var(--color-action-icon-active);
+  color: var(--color-action-primary-text-active);
 }
 
 .ds-button--secondary:not(.ds-button--disabled):hover {
+  background-color: var(--color-action-primary-bg-hover);
+}
+
+.ds-button--secondary:not(.ds-button--disabled):hover .ds-button__text {
+  color: var(--color-action-primary-text-active);
+}
+
+.ds-button--secondary:not(.ds-button--disabled):hover .ds-button__icon {
+  color: var(--color-action-icon-active);
+}
+
+.ds-button--tertiary:not(.ds-button--disabled):hover {
   background-color: var(--color-action-passive-bg-hover);
 }
 
@@ -220,10 +276,22 @@
 }
 
 .ds-button--primary:not(.ds-button--disabled):active .ds-button__icon {
-  color: var(--color-action-icon-active);
+  color: var(--color-action-primary-text-active);
 }
 
 .ds-button--secondary:not(.ds-button--disabled):active {
+  background-color: var(--color-action-primary-bg-active);
+}
+
+.ds-button--secondary:not(.ds-button--disabled):active .ds-button__text {
+  color: var(--color-action-primary-text-active);
+}
+
+.ds-button--secondary:not(.ds-button--disabled):active .ds-button__icon {
+  color: var(--color-action-icon-active);
+}
+
+.ds-button--tertiary:not(.ds-button--disabled):active {
   background-color: var(--color-action-passive-bg-active);
 }
 

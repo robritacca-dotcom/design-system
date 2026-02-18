@@ -13,8 +13,8 @@ const meta = {
     icon: { control: 'text', description: 'Material Symbol icon name' },
     priority: {
       control: 'select',
-      options: ['primary', 'secondary'],
-      description: 'Button variant',
+      options: ['primary', 'secondary', 'tertiary'],
+      description: 'Button variant — primary (solid), secondary (outlined), or tertiary (ghost)',
     },
     state: {
       control: 'select',
@@ -39,7 +39,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// Primary states
+// Primary states (Solid)
 export const PrimaryDefault: Story = {
   args: { priority: 'primary', state: 'default', icon: 'add', ariaLabel: 'Add' },
 };
@@ -56,47 +56,72 @@ export const PrimaryDisabled: Story = {
   args: { priority: 'primary', state: 'disabled', icon: 'add', ariaLabel: 'Add' },
 };
 
-// Secondary states
+// Secondary states (Outlined)
 export const SecondaryDefault: Story = {
-  args: { priority: 'secondary', state: 'default', icon: 'close', ariaLabel: 'Close' },
+  args: { priority: 'secondary', state: 'default', icon: 'edit', ariaLabel: 'Edit' },
 };
 
 export const SecondaryHover: Story = {
-  args: { priority: 'secondary', state: 'hover', icon: 'close', ariaLabel: 'Close' },
+  args: { priority: 'secondary', state: 'hover', icon: 'edit', ariaLabel: 'Edit' },
 };
 
 export const SecondaryActive: Story = {
-  args: { priority: 'secondary', state: 'active', icon: 'close', ariaLabel: 'Close' },
+  args: { priority: 'secondary', state: 'active', icon: 'edit', ariaLabel: 'Edit' },
 };
 
 export const SecondaryDisabled: Story = {
-  args: { priority: 'secondary', state: 'disabled', icon: 'close', ariaLabel: 'Close' },
+  args: { priority: 'secondary', state: 'disabled', icon: 'edit', ariaLabel: 'Edit' },
+};
+
+// Tertiary states (Ghost / Passive)
+export const TertiaryDefault: Story = {
+  args: { priority: 'tertiary', state: 'default', icon: 'close', ariaLabel: 'Close' },
+};
+
+export const TertiaryHover: Story = {
+  args: { priority: 'tertiary', state: 'hover', icon: 'close', ariaLabel: 'Close' },
+};
+
+export const TertiaryActive: Story = {
+  args: { priority: 'tertiary', state: 'active', icon: 'close', ariaLabel: 'Close' },
+};
+
+export const TertiaryDisabled: Story = {
+  args: { priority: 'tertiary', state: 'disabled', icon: 'close', ariaLabel: 'Close' },
 };
 
 // Compact
 export const CompactPrimaryDefault: Story = {
-  args: { priority: 'primary', state: 'default', size: 'compact', icon: 'edit', ariaLabel: 'Edit' },
+  args: { priority: 'primary', state: 'default', size: 'compact', icon: 'add', ariaLabel: 'Add' },
 };
 
 export const CompactPrimaryHover: Story = {
-  args: { priority: 'primary', state: 'hover', size: 'compact', icon: 'edit', ariaLabel: 'Edit' },
+  args: { priority: 'primary', state: 'hover', size: 'compact', icon: 'add', ariaLabel: 'Add' },
 };
 
 export const CompactSecondaryDefault: Story = {
-  args: { priority: 'secondary', state: 'default', size: 'compact', icon: 'more_vert', ariaLabel: 'More options' },
+  args: { priority: 'secondary', state: 'default', size: 'compact', icon: 'edit', ariaLabel: 'Edit' },
 };
 
 export const CompactSecondaryHover: Story = {
-  args: { priority: 'secondary', state: 'hover', size: 'compact', icon: 'more_vert', ariaLabel: 'More options' },
+  args: { priority: 'secondary', state: 'hover', size: 'compact', icon: 'edit', ariaLabel: 'Edit' },
+};
+
+export const CompactTertiaryDefault: Story = {
+  args: { priority: 'tertiary', state: 'default', size: 'compact', icon: 'more_vert', ariaLabel: 'More options' },
+};
+
+export const CompactTertiaryHover: Story = {
+  args: { priority: 'tertiary', state: 'hover', size: 'compact', icon: 'more_vert', ariaLabel: 'More options' },
 };
 
 // Common icon examples
 export const Search: Story = {
-  args: { priority: 'secondary', icon: 'search', ariaLabel: 'Search' },
+  args: { priority: 'tertiary', icon: 'search', ariaLabel: 'Search' },
 };
 
 export const Settings: Story = {
-  args: { priority: 'secondary', icon: 'settings', ariaLabel: 'Settings' },
+  args: { priority: 'tertiary', icon: 'settings', ariaLabel: 'Settings' },
 };
 
 export const Delete: Story = {
@@ -104,5 +129,5 @@ export const Delete: Story = {
 };
 
 export const Refresh: Story = {
-  args: { priority: 'secondary', icon: 'refresh', ariaLabel: 'Refresh' },
+  args: { priority: 'tertiary', icon: 'refresh', ariaLabel: 'Refresh' },
 };
