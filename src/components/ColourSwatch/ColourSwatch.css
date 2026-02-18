@@ -16,6 +16,7 @@
   height: 360px;
 
   /* Appearance */
+  border: var(--border-xs) solid var(--color-bg-container-border);
   border-radius: var(--radius-xl); /* 24px */
   padding: var(--padding-lg); /* 20px */
   overflow: hidden;

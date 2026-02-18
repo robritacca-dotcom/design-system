@@ -79,6 +79,45 @@ export default function DropdownPage() {
             </div>
           </section>
 
+          {/* Grouped */}
+          <section className={styles.section}>
+            <SectionTitle title="Grouped options" />
+            <div className={styles.variantRow}>
+              <div className={styles.variantItem}>
+                <Dropdown
+                  label="Font family"
+                  placeholder="Choose a font"
+                  options={[]}
+                  groups={[
+                    {
+                      label: "Sans-serif",
+                      options: [
+                        { label: "Inter", value: "inter" },
+                        { label: "Roboto", value: "roboto" },
+                        { label: "Open Sans", value: "open-sans" },
+                      ],
+                    },
+                    {
+                      label: "Serif",
+                      options: [
+                        { label: "Georgia", value: "georgia" },
+                        { label: "Merriweather", value: "merriweather" },
+                      ],
+                    },
+                    {
+                      label: "Monospace",
+                      options: [
+                        { label: "Fira Code", value: "fira-code" },
+                        { label: "JetBrains Mono", value: "jetbrains-mono" },
+                      ],
+                    },
+                  ]}
+                  onChange={() => {}}
+                />
+              </div>
+            </div>
+          </section>
+
           {/* States */}
           <section className={styles.section}>
             <SectionTitle title="States" />

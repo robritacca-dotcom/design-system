@@ -113,7 +113,7 @@
   border: none;
   background: none;
   cursor: pointer;
-  border-radius: var(--radius-xs); /* 4px */
+  border-radius: var(--radius-sm); /* 8px */
   transition: background-color 0.2s ease;
 }
 

@@ -454,6 +454,19 @@ export const SemanticColors: Story = {
         />
       </TokenSection>
 
+      <TokenSection title="Input">
+        <ColorToken name="Text Primary" value="--color-input-text-primary" />
+        <ColorToken name="Text Placeholder" value="--color-input-text-placeholder" />
+        <ColorToken name="Text Disabled" value="--color-input-text-disabled" />
+        <ColorToken name="Text Inverse" value="--color-input-text-inverse" />
+        <ColorToken name="Border Primary" value="--color-input-border-primary" />
+        <ColorToken name="Border Hover" value="--color-input-border-hover" />
+        <ColorToken name="Border Selected" value="--color-input-border-selected" />
+        <ColorToken name="Border Disabled" value="--color-input-border-disabled" />
+        <ColorToken name="Background Primary" value="--color-input-bg-primary" />
+        <ColorToken name="Background Disabled" value="--color-input-bg-disabled" />
+      </TokenSection>
+
       <TokenSection title="Core Colors">
         <ColorToken name="UI Primary" value="--color-core-ui-primary" />
         <ColorToken name="UI Secondary" value="--color-core-ui-secondary" />

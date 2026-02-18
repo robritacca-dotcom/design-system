@@ -77,6 +77,18 @@
   --color-status-neutral-border: #6D6D6D;
   --color-status-neutral-text: #F1F1F1;
 
+  /* Input */
+  --color-input-text-primary: #F1F1F1;
+  --color-input-text-placeholder: #A2A2A2;
+  --color-input-text-disabled: #303030;
+  --color-input-text-inverse: #303030;
+  --color-input-border-primary: #232323;
+  --color-input-border-hover: #0A4E66;
+  --color-input-border-selected: #2C9AB9;
+  --color-input-border-disabled: #232323;
+  --color-input-bg-primary: #050505;
+  --color-input-bg-disabled: #0E0E0E;
+
   /* Core colours */
   --color-core-ui-primary: #118AB2;
   --color-core-ui-secondary: #0A4E66;

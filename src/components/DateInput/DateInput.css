@@ -61,9 +61,9 @@
   width: 100%;
   padding: var(--padding-sm) var(--padding-md); /* 8px 16px */
   padding-left: calc(var(--padding-md) + 24px + var(--gap-sm)); /* 16px + 24px icon + 8px gap */
-  border: var(--border-xs) solid var(--color-bg-container-border);
-  border-radius: var(--radius-sm); /* 8px */
-  background-color: var(--color-bg-container-primary-transparent);
+  border: var(--border-xs) solid var(--color-input-border-primary);
+  border-radius: var(--radius-md); /* 12px */
+  background-color: var(--color-input-bg-primary);
 
   /* Typography */
   font-family: var(--font-paragraph-family);
@@ -71,7 +71,7 @@
   font-weight: var(--font-paragraph-weight);
   line-height: var(--font-paragraph-line-height);
   letter-spacing: var(--font-paragraph-letter-spacing);
-  color: var(--color-text-primary);
+  color: var(--color-input-text-primary);
 
   /* Transitions */
   transition: border-color 0.2s ease, background-color 0.2s ease;
@@ -84,9 +84,13 @@
   cursor: pointer;
 }
 
+.ds-date-input__field:hover:not(:focus):not(:disabled) {
+  border-color: var(--color-input-border-hover);
+}
+
 .ds-date-input__field:focus {
-  border-color: var(--color-action-primary-bg);
-  background-color: var(--color-bg-container-primary-transparent);
+  border-color: var(--color-input-border-selected);
+  background-color: var(--color-input-bg-primary);
 }
 
 /* ============================================
@@ -147,11 +151,17 @@
    DISABLED STATE
    ============================================ */
 
-.ds-date-input--disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
+.ds-date-input--disabled .ds-date-input__label {
+  color: var(--color-input-text-disabled);
 }
 
 .ds-date-input--disabled .ds-date-input__field {
+  background-color: var(--color-input-bg-disabled);
+  border-color: var(--color-input-border-disabled);
+  color: var(--color-input-text-disabled);
   cursor: not-allowed;
+}
+
+.ds-date-input--disabled .ds-date-input__icon {
+  color: var(--color-input-text-disabled);
 }

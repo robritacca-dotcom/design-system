@@ -246,6 +246,20 @@
 }
 
 /* ============================================
+   ACCORDION PREVIEW
+   ============================================ */
+.accordionPreviewRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 4px 8px;
+  border: 1px solid var(--color-bg-container-border);
+  border-radius: var(--primitive-radius-xs);
+  background: var(--color-bg-container-primary-transparent);
+}
+
+/* ============================================
    SECTION TITLE PREVIEW
    ============================================ */
 .sectionTitlePreview {
@@ -265,6 +279,35 @@
   height: 1px;
   width: 100%;
   background: var(--color-divider);
+}
+
+/* ============================================
+   DROPDOWN MENU PREVIEW
+   ============================================ */
+.dropdownMenuPreview {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 110px;
+  padding: 3px;
+  border: 1px solid var(--color-bg-container-border);
+  border-radius: var(--primitive-radius-sm);
+  background: var(--color-bg-page-primary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropdownMenuPreviewItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 6px;
+  border-radius: 4px;
+}
+
+.dropdownMenuPreviewSep {
+  height: 1px;
+  background: var(--color-bg-container-border);
+  margin: 1px 4px;
 }
 
 /* ============================================

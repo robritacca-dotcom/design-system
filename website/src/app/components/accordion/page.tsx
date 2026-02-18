@@ -1,0 +1,93 @@
+"use client";
+
+import React from "react";
+import Header from "../../../components/Header/Header";
+import Sidebar from "../../../components/Sidebar/Sidebar";
+import BlurBackground from "../../../components/BlurBackground/BlurBackground";
+import Footer from "../../../components/Footer/Footer";
+import { Accordion } from "@design-system/components/Accordion/Accordion";
+import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
+import PageLinks from "../../../components/PageLinks/PageLinks";
+import { getNavLinks, getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
+import styles from "./page.module.css";
+const navLinks = getNavLinks("Components");
+const { sidebarLinks, subnavLinks } = getSidebarLinks(componentsSidebarLinks, "/components/accordion");
+
+const faqItems = [
+  {
+    id: "1",
+    title: "What is a design system?",
+    content: (
+      <p>
+        A design system is a collection of reusable components, guided by clear standards, that can be assembled to build any number of applications consistently and efficiently.
+      </p>
+    ),
+  },
+  {
+    id: "2",
+    title: "Why use design tokens?",
+    content: (
+      <p>
+        Tokens store design decisions — colours, spacing, typography — as named variables so every component stays in sync when values change.
+      </p>
+    ),
+  },
+  {
+    id: "3",
+    title: "How do I contribute?",
+    content: (
+      <p>
+        Open a pull request with your component or token change. Make sure it follows the naming conventions and includes Storybook stories.
+      </p>
+    ),
+  },
+];
+
+export default function AccordionPage() {
+  return (
+    <>
+      <BlurBackground />
+      <Header navLinks={navLinks} subnavLinks={subnavLinks} />
+
+      <div className={styles.dsLayout}>
+        <Sidebar links={sidebarLinks} />
+
+        <main className={styles.dsContent} id="main-content">
+          <div className={`${styles.pageHeader} animate-in`}>
+            <h1 className={styles.pageTitle}>Accordion</h1>
+            <PageLinks
+              storybookPath="/?path=/docs/components-accordion--docs"
+            />
+          </div>
+
+          <div className={`${styles.introSection} animate-in animate-delay-1`}>
+            <p className={styles.subDisplay}>
+              Expand and collapse content
+            </p>
+            <p className={styles.introBody}>
+              Accordions organise related content into collapsible sections so users can focus on what matters. Available in single-open or multiple-open mode.
+            </p>
+          </div>
+
+          {/* Single */}
+          <section className={styles.section}>
+            <SectionTitle title="Single open" />
+            <div style={{ maxWidth: "520px" }}>
+              <Accordion items={faqItems} defaultExpanded={["1"]} />
+            </div>
+          </section>
+
+          {/* Multiple */}
+          <section className={styles.section}>
+            <SectionTitle title="Multiple open" />
+            <div style={{ maxWidth: "520px" }}>
+              <Accordion items={faqItems} multiple defaultExpanded={["1", "3"]} />
+            </div>
+          </section>
+        </main>
+      </div>
+
+      <Footer />
+    </>
+  );
+}
