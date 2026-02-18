@@ -6,6 +6,9 @@ import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
 import { BarChart } from "@design-system/components/Chart/BarChart";
+import { LineChart } from "@design-system/components/Chart/LineChart";
+import { PieChart } from "@design-system/components/Chart/PieChart";
+import { RadialChart } from "@design-system/components/Chart/RadialChart";
 import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
 import { getNavLinks, getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
@@ -15,11 +18,11 @@ const navLinks = getNavLinks("Components");
 const { sidebarLinks, subnavLinks } = getSidebarLinks(componentsSidebarLinks, "/components/chart");
 
 /* ============================================
-   Sample data — 3 months of daily page views
+   Sample data
    ============================================ */
 function generatePageViews() {
   const data: { label: string; value: number }[] = [];
-  const start = new Date(2024, 3, 1); // Apr 1
+  const start = new Date(2024, 3, 1);
   for (let i = 0; i < 90; i++) {
     const d = new Date(start);
     d.setDate(d.getDate() + i);
@@ -32,21 +35,33 @@ function generatePageViews() {
 
 const pageViewData = generatePageViews();
 
-const monthlyData = [
-  { label: "Jan", value: 186 },
-  { label: "Feb", value: 305 },
-  { label: "Mar", value: 237 },
-  { label: "Apr", value: 73 },
-  { label: "May", value: 209 },
-  { label: "Jun", value: 214 },
+const lineData = [
+  { month: "Jan", desktop: 186, mobile: 80 },
+  { month: "Feb", desktop: 305, mobile: 200 },
+  { month: "Mar", desktop: 237, mobile: 120 },
+  { month: "Apr", desktop: 73, mobile: 190 },
+  { month: "May", desktop: 209, mobile: 130 },
+  { month: "Jun", desktop: 214, mobile: 140 },
 ];
 
-const frameworkData = [
-  { label: "React", value: 420 },
-  { label: "Vue", value: 310 },
-  { label: "Angular", value: 180 },
-  { label: "Svelte", value: 250 },
-  { label: "Solid", value: 140 },
+const browserData = [
+  { name: "Chrome", value: 275 },
+  { name: "Safari", value: 200 },
+  { name: "Firefox", value: 187 },
+  { name: "Edge", value: 173 },
+  { name: "Other", value: 90 },
+];
+
+const taskData = [
+  { name: "Completed", value: 72, color: "#06D6A0" },
+  { name: "In Progress", value: 18, color: "#FFD166" },
+  { name: "Failed", value: 10, color: "#EF476F" },
+];
+
+const sprintData = [
+  { name: "Design", value: 86 },
+  { name: "Development", value: 65 },
+  { name: "Testing", value: 42 },
 ];
 
 export default function ChartPage() {
@@ -75,9 +90,11 @@ export default function ChartPage() {
             </p>
           </div>
 
-          {/* Interactive bar chart */}
+          {/* ============================================
+             BAR CHART
+             ============================================ */}
           <section className={`${styles.section} animate-in animate-delay-2`}>
-            <SectionTitle title="Bar chart — interactive" />
+            <SectionTitle title="Bar chart" />
             <BarChart
               data={pageViewData}
               title="Bar Chart - Interactive"
@@ -90,28 +107,72 @@ export default function ChartPage() {
             />
           </section>
 
-          {/* Minimal */}
+          {/* ============================================
+             LINE CHART
+             ============================================ */}
           <section className={styles.section}>
-            <SectionTitle title="Minimal" />
-            <BarChart
-              data={monthlyData}
-              title="Monthly Revenue"
-              dataLabel="Revenue"
-              height={300}
+            <SectionTitle title="Line chart" />
+            <LineChart
+              data={lineData}
+              xKey="month"
+              series={[
+                { dataKey: "desktop", label: "Desktop", color: "#118AB2" },
+                { dataKey: "mobile", label: "Mobile", color: "#06D6A0" },
+              ]}
+              title="Visitors by Device"
+              subtitle="January - June 2024"
+              summaryItems={[
+                { label: "Desktop", value: "1,224" },
+                { label: "Mobile", value: 860 },
+              ]}
             />
           </section>
 
-          {/* Custom colour */}
+          {/* ============================================
+             PIE CHARTS
+             ============================================ */}
           <section className={styles.section}>
-            <SectionTitle title="Custom colour" />
-            <BarChart
-              data={frameworkData}
-              title="Framework Popularity"
-              subtitle="GitHub stars (thousands)"
-              dataLabel="Stars"
-              barColor="#06D6A0"
-              height={300}
-            />
+            <SectionTitle title="Pie chart" />
+            <div className={styles.chartRow}>
+              <PieChart
+                data={browserData}
+                title="Browser Share"
+                subtitle="Visitor distribution by browser"
+                height={380}
+              />
+              <PieChart
+                data={taskData}
+                title="Task Status — Donut"
+                subtitle="Current sprint"
+                innerRadius={80}
+                height={380}
+              />
+            </div>
+          </section>
+
+          {/* ============================================
+             RADIAL CHARTS
+             ============================================ */}
+          <section className={styles.section}>
+            <SectionTitle title="Radial chart" />
+            <div className={styles.chartRow}>
+              <RadialChart
+                data={sprintData}
+                title="Sprint Progress"
+                subtitle="Completion by phase"
+                height={380}
+              />
+              <RadialChart
+                data={[
+                  { name: "Revenue", value: 78, color: "#06D6A0" },
+                  { name: "Users", value: 92, color: "#118AB2" },
+                  { name: "Retention", value: 55, color: "#FFD166" },
+                ]}
+                title="KPI Overview"
+                subtitle="Q2 2024 targets"
+                height={380}
+              />
+            </div>
           </section>
         </main>
       </div>
