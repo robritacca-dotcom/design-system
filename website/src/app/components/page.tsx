@@ -117,6 +117,34 @@ export default function ComponentsPage() {
               <div className={styles.cardPreview} />
             </TocCard>
 
+            {/* Chart */}
+            <TocCard href="/components/chart" title="Chart">
+              <svg width="120" height="64" viewBox="0 0 120 64" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ overflow: "visible" }}>
+                {[
+                  { x: 4, h: 28 },
+                  { x: 18, h: 44 },
+                  { x: 32, h: 36 },
+                  { x: 46, h: 52 },
+                  { x: 60, h: 24 },
+                  { x: 74, h: 40 },
+                  { x: 88, h: 48 },
+                  { x: 102, h: 32 },
+                ].map((bar, i) => (
+                  <rect
+                    key={i}
+                    x={bar.x}
+                    y={64 - bar.h}
+                    width={10}
+                    height={bar.h}
+                    rx={2}
+                    fill="var(--color-action-primary-bg)"
+                    opacity={0.85}
+                  />
+                ))}
+                <line x1="0" y1="63.5" x2="120" y2="63.5" stroke="var(--color-bg-container-border)" strokeWidth="1" />
+              </svg>
+            </TocCard>
+
             {/* Checkbox */}
             <TocCard href="/components/checkbox" title="Checkbox">
               <div className={styles.previewRow} style={{ gap: "16px" }}>
@@ -246,14 +274,14 @@ export default function ComponentsPage() {
 
             {/* Selection card */}
             <TocCard href="/components/selection-card" title="Selection card">
-              <div className={styles.previewColumn} style={{ gap: "4px", width: "130px" }}>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "6px 8px", borderRadius: "8px", border: "1px solid var(--color-action-primary-border)" }}>
+              <div className={styles.previewColumn} style={{ gap: "4px", width: "100%" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "8px 12px", borderRadius: "8px", border: "1px solid var(--color-action-primary-border)" }}>
                   <span style={{ fontSize: "11px", fontWeight: 500, color: "var(--color-text-primary)" }}>Option A</span>
                   <div style={{ width: "14px", height: "14px", borderRadius: "50%", border: "2px solid var(--color-action-primary-bg)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                     <div style={{ width: "7px", height: "7px", borderRadius: "50%", background: "var(--color-action-primary-bg)" }} />
                   </div>
                 </div>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "6px 8px", borderRadius: "8px", border: "1px solid var(--color-bg-container-border)" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "8px 12px", borderRadius: "8px", border: "1px solid var(--color-bg-container-border)" }}>
                   <span style={{ fontSize: "11px", color: "var(--color-text-primary)" }}>Option B</span>
                   <div style={{ width: "14px", height: "14px", borderRadius: "50%", border: "2px solid var(--color-bg-container-border)" }} />
                 </div>
