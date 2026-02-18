@@ -4,7 +4,7 @@ interface BlurBackgroundProps {
 
 export default function BlurBackground({ fullHeight }: BlurBackgroundProps) {
   return (
-    <div className={`blur-container${fullHeight ? " blur-container-full" : ""}`}>
+    <div className={`blur-container${fullHeight ? " blur-container-full" : ""}`} aria-hidden="true">
       <div className="blur-ellipse blur-yellow" />
       <div className="blur-ellipse blur-green" />
       <div className="blur-ellipse blur-purple" />

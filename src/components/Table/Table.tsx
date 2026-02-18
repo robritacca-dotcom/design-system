@@ -78,6 +78,7 @@ export const Table = ({
             <th
               key={col.key}
               className={`${baseClass}__header-cell`}
+              scope="col"
               style={{
                 width: col.width,
                 textAlign: col.align || 'left',

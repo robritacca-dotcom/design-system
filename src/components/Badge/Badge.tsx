@@ -26,5 +26,5 @@ export const Badge = ({
     .filter(Boolean)
     .join(' ');
 
-  return <span className={classes}>{label}</span>;
+  return <span className={classes} role="status">{label}</span>;
 };

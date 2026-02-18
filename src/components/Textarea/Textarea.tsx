@@ -111,7 +111,7 @@ export const Textarea = ({
           </p>
         )}
         {maxLength && (
-          <span className={`${baseClass}__counter`}>
+          <span className={`${baseClass}__counter`} aria-live="polite" aria-atomic="true">
             {charCount}/{maxLength}
           </span>
         )}

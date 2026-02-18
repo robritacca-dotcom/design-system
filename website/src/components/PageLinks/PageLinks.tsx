@@ -12,7 +12,7 @@ interface PageLinksProps {
 }
 
 const FigmaIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <path d="M9.058 21.748c1.795 0 3.25-1.455 3.25-3.25v-3.249H9.058a3.249 3.249 0 1 0 0 6.499Z" fill="#0ACF83"/>
     <path d="M5.809 12a3.249 3.249 0 0 1 3.25-3.249h3.249v6.499H9.058A3.249 3.249 0 0 1 5.81 12Z" fill="#A259FF"/>
     <path d="M5.809 5.502a3.249 3.249 0 0 1 3.25-3.25h3.249v6.499H9.058a3.249 3.249 0 0 1-3.25-3.249Z" fill="#F24E1E"/>
@@ -22,7 +22,7 @@ const FigmaIcon = () => (
 );
 
 const StorybookIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <path d="M3.202 24.115 2.335 4.305c-.029-.654.557-1.21 1.319-1.25L23.312 2.002c.776-.041 1.445.465 1.493 1.13l.002.074V24.793c0 .667-.63 1.207-1.408 1.207h-.063L4.546 25.275c-.732-.028-1.316-.532-1.344-1.16Z" fill="#FF4785"/>
     <mask id="sb" style={{maskType: "luminance"}} maskUnits="userSpaceOnUse" x="2" y="2" width="23" height="24">
       <path d="M3.202 24.115 2.335 4.305c-.029-.654.557-1.21 1.319-1.25L23.312 2.002c.776-.041 1.445.465 1.493 1.13l.002.074V24.793c0 .667-.63 1.207-1.408 1.207h-.063L4.546 25.275c-.732-.028-1.316-.532-1.344-1.16Z" fill="white"/>

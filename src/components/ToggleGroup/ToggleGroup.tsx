@@ -23,6 +23,8 @@ export interface ToggleGroupProps {
   disabled?: boolean;
   /** Change handler */
   onChange?: (value: string | string[]) => void;
+  /** Accessible label for the group */
+  ariaLabel?: string;
   /** Additional CSS classes */
   className?: string;
 }
@@ -37,6 +39,7 @@ export const ToggleGroup = ({
   size = 'default',
   disabled = false,
   onChange,
+  ariaLabel,
   className = '',
 }: ToggleGroupProps) => {
   const baseClass = 'ds-toggle-group';
@@ -65,7 +68,7 @@ export const ToggleGroup = ({
   };
 
   return (
-    <div className={classes} role="group">
+    <div className={classes} role="group" aria-label={ariaLabel}>
       {items.map((item) => {
         const isActive = activeValues.includes(item.value);
         const btnClass = [
@@ -81,11 +84,12 @@ export const ToggleGroup = ({
             className={btnClass}
             onClick={() => handleClick(item.value)}
             aria-pressed={isActive}
+            aria-label={item.icon ? item.label : undefined}
             disabled={disabled}
             type="button"
           >
             {item.icon ? (
-              <span className="material-symbols-rounded">{item.label}</span>
+              <span className="material-symbols-rounded" aria-hidden="true">{item.label}</span>
             ) : (
               item.label
             )}

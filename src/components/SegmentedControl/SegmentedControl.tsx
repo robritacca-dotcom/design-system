@@ -24,6 +24,8 @@ export interface SegmentedControlProps {
   size?: 'default' | 'compact';
   /** Full width — segments fill container */
   fullWidth?: boolean;
+  /** Accessible label for the tablist */
+  ariaLabel?: string;
   /** Additional CSS classes */
   className?: string;
 }
@@ -39,6 +41,7 @@ export const SegmentedControl = ({
   onSegmentChange,
   size = 'default',
   fullWidth = false,
+  ariaLabel,
   className = '',
 }: SegmentedControlProps) => {
   const baseClass = 'ds-segmented-control';
@@ -87,7 +90,7 @@ export const SegmentedControl = ({
   };
 
   return (
-    <div className={classes} role="tablist" ref={containerRef}>
+    <div className={classes} role="tablist" aria-label={ariaLabel} ref={containerRef}>
       {segments.map((segment, idx) => {
         const isActive = segment.value === activeSegment;
         const btnClasses = [

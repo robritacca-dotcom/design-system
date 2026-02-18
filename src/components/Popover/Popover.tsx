@@ -16,6 +16,8 @@ export interface PopoverProps {
   open?: boolean;
   /** Callback when open state changes */
   onOpenChange?: (open: boolean) => void;
+  /** Accessible label for the trigger */
+  ariaLabel?: string;
   /** Additional CSS classes for the popover panel */
   className?: string;
 }
@@ -34,6 +36,7 @@ export const Popover = ({
   trigger = 'click',
   open: controlledOpen,
   onOpenChange,
+  ariaLabel,
   className = '',
 }: PopoverProps) => {
   const [internalOpen, setInternalOpen] = useState(false);
@@ -120,6 +123,8 @@ export const Popover = ({
         role={trigger === 'click' ? 'button' : undefined}
         tabIndex={trigger === 'click' ? 0 : undefined}
         aria-expanded={isOpen}
+        aria-label={ariaLabel}
+        aria-haspopup="dialog"
         onKeyDown={(e) => {
           if (trigger === 'click' && (e.key === 'Enter' || e.key === ' ')) {
             e.preventDefault();
