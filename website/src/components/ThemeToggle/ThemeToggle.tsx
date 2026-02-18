@@ -10,7 +10,8 @@ const themeSegments = [
 ];
 
 export default function ThemeToggle({ className }: { className?: string }) {
-  const [theme, setTheme] = useState<string | null>(null);
+  // Default to "dark" to match the SSR data-theme attribute on <html>
+  const [theme, setTheme] = useState("dark");
 
   // Sync state from the actual DOM attribute on mount (source of truth)
   useEffect(() => {
@@ -26,9 +27,6 @@ export default function ThemeToggle({ className }: { className?: string }) {
     localStorage.setItem("theme", value);
     setTheme(value);
   }, []);
-
-  // Don't render until we know the real theme (avoids mismatch flicker)
-  if (!theme) return null;
 
   return (
     <div className={`${styles.themeToggle} ${className || ""}`}>
