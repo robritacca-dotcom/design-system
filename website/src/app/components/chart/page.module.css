@@ -74,6 +74,20 @@
 }
 
 /* ============================================
+   CHART ROW — side-by-side charts
+   ============================================ */
+.chartRow {
+  display: flex;
+  gap: var(--primitive-gap-xl);
+  width: 100%;
+}
+
+.chartRow > * {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ============================================
    RESPONSIVE
    ============================================ */
 @media (max-width: 959px) {
@@ -85,4 +99,5 @@
   .dsLayout { padding-left: 0; min-width: 0; }
   .dsContent { max-width: 100%; min-width: 0; }
   .subDisplay { font-size: 24px; line-height: 36px; }
+  .chartRow { flex-direction: column; }
 }
