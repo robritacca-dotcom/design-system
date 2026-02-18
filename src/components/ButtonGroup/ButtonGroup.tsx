@@ -7,6 +7,8 @@ export interface ButtonGroupProps {
   orientation?: 'horizontal' | 'vertical';
   /** Array of button configurations */
   buttons: Array<ButtonProps>;
+  /** Accessible label for the group */
+  ariaLabel?: string;
   /** Additional CSS class */
   className?: string;
 }
@@ -14,12 +16,14 @@ export interface ButtonGroupProps {
 export const ButtonGroup: React.FC<ButtonGroupProps> = ({
   orientation = 'horizontal',
   buttons,
+  ariaLabel,
   className = '',
 }) => {
   return (
     <div
       className={`ds-button-group ds-button-group--${orientation} ${className}`}
       role="group"
+      aria-label={ariaLabel}
     >
       {buttons.map((button, index) => (
         <Button

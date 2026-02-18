@@ -21,8 +21,8 @@ export default function Sidebar({ links }: SidebarProps) {
   }));
 
   return (
-    <aside className={styles.sidebar}>
-      <ButtonGroup orientation="vertical" buttons={buttons} />
+    <aside className={styles.sidebar} aria-label="Component navigation">
+      <ButtonGroup orientation="vertical" buttons={buttons} ariaLabel="Components" />
     </aside>
   );
 }

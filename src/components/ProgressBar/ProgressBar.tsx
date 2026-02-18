@@ -8,6 +8,8 @@ export interface ProgressBarProps {
   size?: 'default' | 'compact';
   /** Show percentage label */
   showLabel?: boolean;
+  /** Accessible label describing what is loading */
+  ariaLabel?: string;
   /** Additional CSS classes */
   className?: string;
 }
@@ -19,6 +21,7 @@ export const ProgressBar = ({
   value = 0,
   size = 'default',
   showLabel = false,
+  ariaLabel,
   className = '',
 }: ProgressBarProps) => {
   const clamped = Math.max(0, Math.min(100, value));
@@ -32,7 +35,7 @@ export const ProgressBar = ({
     .join(' ');
 
   return (
-    <div className={classes} role="progressbar" aria-valuenow={clamped} aria-valuemin={0} aria-valuemax={100}>
+    <div className={classes} role="progressbar" aria-valuenow={clamped} aria-valuemin={0} aria-valuemax={100} aria-label={ariaLabel}>
       <div className={`${baseClass}__track`}>
         <div className={`${baseClass}__fill`} style={{ width: `${clamped}%` }} />
       </div>

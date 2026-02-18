@@ -39,7 +39,7 @@ export const EntityCard = ({
             className={`${baseClass}__image`}
           />
         ) : icon ? (
-          <span className={`${baseClass}__icon material-symbols-rounded`}>
+          <span className={`${baseClass}__icon material-symbols-rounded`} aria-hidden="true">
             {icon}
           </span>
         ) : null}

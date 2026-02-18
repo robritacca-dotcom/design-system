@@ -35,8 +35,15 @@ export const Card = ({
     <div
       className={classes}
       onClick={interactive ? onClick : undefined}
+      onKeyDown={interactive ? (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onClick?.();
+        }
+      } : undefined}
       role={interactive ? 'button' : undefined}
       tabIndex={interactive ? 0 : undefined}
+      aria-label={interactive ? title : undefined}
     >
       <div className={`${baseClass}__preview`}>{children}</div>
       <h3 className={`${baseClass}__title`}>{title}</h3>

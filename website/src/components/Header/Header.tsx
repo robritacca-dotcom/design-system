@@ -185,6 +185,11 @@ export default function Header({ navLinks, subnavLinks }: HeaderProps) {
 
   return (
     <>
+      {/* Skip to main content */}
+      <a href="#main-content" className="sr-only-focusable">
+        Skip to main content
+      </a>
+
       {/* Sticky Header */}
       <header
         className={`${styles.stickyHeader} ${stickyVisible ? styles.stickyHeaderVisible : ""}`}
@@ -208,7 +213,7 @@ export default function Header({ navLinks, subnavLinks }: HeaderProps) {
       </header>
 
       {/* Main Nav (in-flow) */}
-      <nav ref={navRef} className={styles.nav}>
+      <nav ref={navRef} className={styles.nav} aria-label="Main navigation">
         <div className={styles.navContainer}>
           <Link href="/" className={styles.navLogo}>
             <LogoIcon className={styles.navLogoIcon} />
@@ -232,11 +237,12 @@ export default function Header({ navLinks, subnavLinks }: HeaderProps) {
         className={`${styles.mobileMenuBtn} ${mobileMenuOpen ? styles.mobileMenuBtnOpen : ""}`}
         onClick={mobileMenuOpen ? closeMobileMenu : openMobileMenu}
         aria-label="Toggle menu"
+        aria-expanded={mobileMenuOpen}
       >
         {mobileMenuOpen ? (
-          <span className="material-symbols-rounded">close</span>
+          <span className="material-symbols-rounded" aria-hidden="true">close</span>
         ) : (
-          <span className="material-symbols-rounded">menu</span>
+          <span className="material-symbols-rounded" aria-hidden="true">menu</span>
         )}
       </button>
 
@@ -246,12 +252,14 @@ export default function Header({ navLinks, subnavLinks }: HeaderProps) {
         onClick={(e) => {
           if (e.target === e.currentTarget) closeMobileMenu();
         }}
+        aria-hidden={!mobileMenuOpen}
       >
-        <div className={styles.mobileMenu}>
+        <nav className={styles.mobileMenu} aria-label="Mobile navigation">
           <div className={styles.mobileMenuLinks}>
             <ButtonGroup
               orientation="vertical"
               buttons={navButtonProps}
+              ariaLabel="Main pages"
             />
             {subnavLinks && (
               <div className={styles.mobileSubnav}>
@@ -263,7 +271,7 @@ export default function Header({ navLinks, subnavLinks }: HeaderProps) {
             )}
           </div>
           <ThemeToggle className={styles.mobileThemeToggle} />
-        </div>
+        </nav>
       </div>
     </>
   );

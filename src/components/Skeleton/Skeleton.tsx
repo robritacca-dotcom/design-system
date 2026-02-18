@@ -31,11 +31,12 @@ export const Skeleton = ({
 
   if (variant === 'text' && lines > 1) {
     return (
-      <div className={`${baseClass}__group`} style={{ width }}>
+      <div className={`${baseClass}__group`} role="status" aria-label="Loading" aria-busy="true" style={{ width }}>
         {Array.from({ length: lines }).map((_, i) => (
           <div
             key={i}
             className={classes}
+            aria-hidden="true"
             style={{
               width: i === lines - 1 ? '75%' : '100%',
               height,
@@ -46,5 +47,5 @@ export const Skeleton = ({
     );
   }
 
-  return <div className={classes} style={{ width, height }} />;
+  return <div className={classes} role="status" aria-label="Loading" aria-busy="true" style={{ width, height }} />;
 };

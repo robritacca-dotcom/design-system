@@ -37,6 +37,7 @@ export default function ThemeToggle({ className }: { className?: string }) {
         activeSegment={theme}
         onSegmentChange={handleChange}
         size="compact"
+        ariaLabel="Theme"
       />
     </div>
   );
