@@ -5,7 +5,7 @@ import Header from "../../../components/Header/Header";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
-import { Checkbox } from "@design-system/components/Checkbox/Checkbox";
+import { Checkbox, CheckboxGroup } from "@design-system/components/Checkbox/Checkbox";
 import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
 import { getNavLinks, getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
@@ -89,6 +89,66 @@ export default function CheckboxPage() {
               </div>
               <div className={styles.variantItem}>
                 <Checkbox label="Disabled, indeterminate" indeterminate={true} checked={false} disabled onChange={() => {}} />
+              </div>
+            </div>
+          </section>
+
+          {/* Group — Vertical */}
+          <section className={styles.section}>
+            <SectionTitle title="Group, vertical" />
+            <div className={styles.variantRow}>
+              <div className={styles.variantItem}>
+                <CheckboxGroup
+                  label="Notifications"
+                  items={[
+                    { label: "Email", value: "email" },
+                    { label: "SMS", value: "sms" },
+                    { label: "Push", value: "push" },
+                  ]}
+                  values={["email", "push"]}
+                  onChange={() => {}}
+                />
+              </div>
+            </div>
+          </section>
+
+          {/* Group — Horizontal */}
+          <section className={styles.section}>
+            <SectionTitle title="Group, horizontal" />
+            <div className={styles.variantRow}>
+              <div className={styles.variantItem}>
+                <CheckboxGroup
+                  label="Toppings"
+                  direction="horizontal"
+                  items={[
+                    { label: "Cheese", value: "cheese" },
+                    { label: "Pepperoni", value: "pepperoni" },
+                    { label: "Olives", value: "olives" },
+                    { label: "Anchovies", value: "anchovies", disabled: true },
+                  ]}
+                  values={["cheese"]}
+                  onChange={() => {}}
+                />
+              </div>
+            </div>
+          </section>
+
+          {/* Group — Compact */}
+          <section className={styles.section}>
+            <SectionTitle title="Group, compact" />
+            <div className={styles.variantRow}>
+              <div className={styles.variantItem}>
+                <CheckboxGroup
+                  label="Preferences"
+                  size="compact"
+                  items={[
+                    { label: "Dark mode", value: "dark" },
+                    { label: "Notifications", value: "notif" },
+                    { label: "Auto-save", value: "autosave" },
+                  ]}
+                  values={["dark", "autosave"]}
+                  onChange={() => {}}
+                />
               </div>
             </div>
           </section>
