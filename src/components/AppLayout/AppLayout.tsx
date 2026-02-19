@@ -55,7 +55,7 @@ export const AppLayout = ({
     .join(' ');
 
   return (
-    <div className={classes}>
+    <div className={classes} data-theme="dark">
       <AppSidebar
         sections={sections}
         profile={profile}

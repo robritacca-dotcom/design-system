@@ -6,7 +6,7 @@
 .ds-app-layout {
   display: flex;
   min-height: 100vh;
-  background-color: var(--color-bg-page-inverse);
+  background-color: var(--color-bg-page-primary);
 }
 
 /* ============================================
