@@ -1,0 +1,191 @@
+import React, { useCallback } from 'react';
+import {
+  ScatterChart as RechartsScatterChart,
+  Scatter,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Legend,
+  ZAxis,
+} from 'recharts';
+import type { ChartSummaryItem } from './BarChart';
+import './Chart.css';
+
+interface ScatterTooltipPayloadEntry {
+  value?: number;
+  name?: string;
+  dataKey?: string;
+  payload?: Record<string, unknown>;
+  [key: string]: unknown;
+}
+
+interface ScatterTooltipProps {
+  active?: boolean;
+  payload?: ScatterTooltipPayloadEntry[];
+  xLabel: string;
+  yLabel: string;
+}
+
+export interface ScatterDatasetConfig {
+  /** Display name for this dataset (shown in tooltip and legend) */
+  name: string;
+  /** Array of data points */
+  data: Record<string, unknown>[];
+  /** Fill colour */
+  color?: string;
+}
+
+export interface ScatterChartProps {
+  /** One or more scatter datasets to plot */
+  datasets: ScatterDatasetConfig[];
+  /** Key in data for x-axis values */
+  xKey?: string;
+  /** Key in data for y-axis values */
+  yKey?: string;
+  /** Display label for x-axis */
+  xLabel?: string;
+  /** Display label for y-axis */
+  yLabel?: string;
+  /** Chart title */
+  title?: string;
+  /** Description text below the title */
+  subtitle?: string;
+  /** Summary stats displayed in the header */
+  summaryItems?: ChartSummaryItem[];
+  /** Chart area height in pixels */
+  height?: number;
+  /** Additional CSS classes on the wrapper */
+  className?: string;
+}
+
+const PALETTE = [
+  '#118AB2', // teal-07
+  '#06D6A0', // green-07
+  '#EF476F', // red-07
+  '#FFD166', // yellow-07
+  '#9E47EF', // purple-07
+];
+
+function getCSSVar(name: string, fallback: string): string {
+  if (typeof window === 'undefined') return fallback;
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback;
+}
+
+function ScatterTooltip({ active, payload, xLabel, yLabel }: ScatterTooltipProps) {
+  if (!active || !payload?.length) return null;
+
+  const xEntry = payload.find((p) => p.dataKey === payload[0]?.dataKey);
+  const yEntry = payload.find((p) => p.name === yLabel) || payload[1];
+
+  return (
+    <div className="ds-chart__tooltip">
+      <div className="ds-chart__tooltip-row">
+        <span className="ds-chart__tooltip-name">{xLabel}</span>
+        <span className="ds-chart__tooltip-value">
+          {xEntry?.value?.toLocaleString()}
+        </span>
+      </div>
+      {yEntry && (
+        <div className="ds-chart__tooltip-row">
+          <span className="ds-chart__tooltip-name">{yLabel}</span>
+          <span className="ds-chart__tooltip-value">
+            {yEntry.value?.toLocaleString()}
+          </span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/**
+ * Scatter chart built on Recharts with design-system tokens.
+ * Plots one or more datasets as point clouds on an X/Y grid.
+ */
+export const ScatterChart = ({
+  datasets,
+  xKey = 'x',
+  yKey = 'y',
+  xLabel = 'X',
+  yLabel = 'Y',
+  title,
+  subtitle,
+  summaryItems,
+  height = 350,
+  className = '',
+}: ScatterChartProps) => {
+  const baseClass = 'ds-chart';
+  const classes = [baseClass, className].filter(Boolean).join(' ');
+
+  const textSecondary = getCSSVar('--color-text-secondary', '#A2A2A2');
+  const gridColor = getCSSVar('--color-divider', '#232323');
+
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+  const renderTooltip = useCallback(
+    (props: any) => <ScatterTooltip {...props} xLabel={xLabel} yLabel={yLabel} />,
+    [xLabel, yLabel],
+  );
+
+  return (
+    <div className={classes}>
+      {(title || subtitle || summaryItems) && (
+        <div className={`${baseClass}__header`}>
+          <div className={`${baseClass}__header-text`}>
+            {title && <h3 className={`${baseClass}__title`}>{title}</h3>}
+            {subtitle && <p className={`${baseClass}__subtitle`}>{subtitle}</p>}
+          </div>
+          {summaryItems && summaryItems.length > 0 && (
+            <div className={`${baseClass}__summary`}>
+              {summaryItems.map((item, i) => (
+                <div key={i} className={`${baseClass}__summary-item`}>
+                  <span className={`${baseClass}__summary-label`}>{item.label}</span>
+                  <span className={`${baseClass}__summary-value`}>
+                    {typeof item.value === 'number' ? item.value.toLocaleString() : item.value}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      <div className={`${baseClass}__body`}>
+        <ResponsiveContainer width="100%" height={height}>
+          <RechartsScatterChart margin={{ top: 8, right: 4, bottom: 0, left: -12 }}>
+            <CartesianGrid stroke={gridColor} />
+            <XAxis
+              type="number"
+              dataKey={xKey}
+              name={xLabel}
+              tick={{ fill: textSecondary, fontSize: 12 }}
+              tickLine={false}
+              axisLine={{ stroke: gridColor }}
+            />
+            <YAxis
+              type="number"
+              dataKey={yKey}
+              name={yLabel}
+              tick={{ fill: textSecondary, fontSize: 12 }}
+              tickLine={false}
+              axisLine={false}
+            />
+            <ZAxis range={[48, 48]} />
+            <Tooltip content={renderTooltip} />
+            {datasets.map((ds, i) => (
+              <Scatter
+                key={ds.name}
+                name={ds.name}
+                data={ds.data}
+                fill={ds.color || PALETTE[i % PALETTE.length]}
+              />
+            ))}
+            {datasets.length > 1 && (
+              <Legend wrapperStyle={{ color: textSecondary, fontSize: 12 }} />
+            )}
+          </RechartsScatterChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
+  );
+};
