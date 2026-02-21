@@ -185,11 +185,6 @@ export default function Header({ navLinks, subnavLinks }: HeaderProps) {
 
   return (
     <>
-      {/* Skip to main content */}
-      <a href="#main-content" className="sr-only-focusable">
-        Skip to main content
-      </a>
-
       {/* Sticky Header */}
       <header
         className={`${styles.stickyHeader} ${stickyVisible ? styles.stickyHeaderVisible : ""}`}
