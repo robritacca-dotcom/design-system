@@ -60,6 +60,7 @@ const logos = [
   'slii.svg',
   'storybook.svg',
   'stripe.svg',
+  'substack.svg',
   'turbotax.svg',
   'uoft.svg',
   'usa.svg',

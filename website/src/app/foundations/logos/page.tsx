@@ -122,6 +122,7 @@ const logoCategories: LogoCategory[] = [
     title: "Social & Media",
     logos: [
       { label: "meta", file: "meta.svg" },
+      { label: "substack", file: "substack.svg" },
       { label: "redgiant", file: "redgiant.svg" },
       { label: "canon", file: "canon.svg" },
     ],
