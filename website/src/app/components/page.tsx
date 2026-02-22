@@ -94,6 +94,24 @@ export default function ComponentsPage() {
               </div>
             </TocCard>
 
+            {/* App sidebar */}
+            <TocCard href="/components/app-sidebar" title="App sidebar">
+              <div className={styles.previewColumn} style={{ gap: "4px", width: "100px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px", padding: "4px 6px", borderRadius: "4px", background: "var(--color-action-passive-bg-hover)" }}>
+                  <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-icon-primary)" }}>dashboard</span>
+                  <span style={{ fontSize: "10px", color: "var(--color-text-primary)" }}>Dashboard</span>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px", padding: "4px 6px" }}>
+                  <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-icon-secondary)" }}>analytics</span>
+                  <span style={{ fontSize: "10px", color: "var(--color-text-secondary)" }}>Analytics</span>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px", padding: "4px 6px" }}>
+                  <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-icon-secondary)" }}>settings</span>
+                  <span style={{ fontSize: "10px", color: "var(--color-text-secondary)" }}>Settings</span>
+                </div>
+              </div>
+            </TocCard>
+
             {/* Avatar */}
             <TocCard href="/components/avatar" title="Avatar">
               <div className={styles.previewRow} style={{ gap: "8px" }}>

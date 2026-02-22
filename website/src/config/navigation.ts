@@ -30,6 +30,7 @@ export const componentsSidebarLinks: NavLink[] = [
   { href: "/components/accordion", label: "Accordion" },
   { href: "/components/alert", label: "Alert" },
   { href: "/components/alert-dialog", label: "Alert dialog" },
+  { href: "/components/app-sidebar", label: "App sidebar" },
   { href: "/components/avatar", label: "Avatar" },
   { href: "/components/badge", label: "Badge" },
   { href: "/components/breadcrumb", label: "Breadcrumb" },
