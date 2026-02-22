@@ -55,8 +55,12 @@
 .ds-app-sidebar__logo-inner {
   display: flex;
   align-items: center;
-  gap: var(--gap-lg);
+  gap: 0;
   min-width: 0;
+}
+
+.ds-app-sidebar--expanded .ds-app-sidebar__logo-inner {
+  gap: var(--gap-lg);
 }
 
 .ds-app-sidebar__logo-icon {
@@ -73,11 +77,14 @@
   letter-spacing: var(--font-paragraph-em-letter-spacing);
   color: var(--color-text-primary);
   white-space: nowrap;
+  width: 0;
+  overflow: hidden;
   opacity: 0;
   transition: opacity 0.2s ease;
 }
 
 .ds-app-sidebar--expanded .ds-app-sidebar__logo-text {
+  width: auto;
   opacity: 1;
 }
 
@@ -85,7 +92,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
+  width: 0;
   height: 24px;
   flex-shrink: 0;
   background: none;
@@ -93,11 +100,13 @@
   color: var(--color-icon-primary);
   cursor: pointer;
   padding: 0;
+  overflow: hidden;
   opacity: 0;
   transition: opacity 0.2s ease;
 }
 
 .ds-app-sidebar--expanded .ds-app-sidebar__toggle {
+  width: 24px;
   opacity: 1;
 }
 
@@ -177,8 +186,12 @@
 .ds-app-sidebar__btn-left {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0;
   min-width: 0;
+}
+
+.ds-app-sidebar--expanded .ds-app-sidebar__btn-left {
+  gap: 8px;
 }
 
 .ds-app-sidebar__btn-icon {
@@ -195,11 +208,14 @@
   letter-spacing: var(--font-paragraph-em-letter-spacing);
   color: var(--color-text-primary);
   white-space: nowrap;
+  width: 0;
+  overflow: hidden;
   opacity: 0;
   transition: opacity 0.2s ease;
 }
 
 .ds-app-sidebar--expanded .ds-app-sidebar__btn-label {
+  width: auto;
   opacity: 1;
 }
 
@@ -207,11 +223,14 @@
   font-size: 24px;
   color: var(--color-icon-secondary);
   flex-shrink: 0;
+  width: 0;
+  overflow: hidden;
   transition: transform 0.25s ease, opacity 0.2s ease;
   opacity: 0;
 }
 
 .ds-app-sidebar--expanded .ds-app-sidebar__btn-chevron {
+  width: auto;
   opacity: 1;
 }
 
