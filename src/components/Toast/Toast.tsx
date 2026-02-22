@@ -15,7 +15,7 @@ export interface ToastData {
   /** Toast description / body text */
   description?: string;
   /** Toast variant determines colour and icon */
-  variant?: 'info' | 'positive' | 'warning' | 'error';
+  variant?: 'info' | 'positive' | 'warning' | 'error' | 'neutral';
   /** Auto-dismiss duration in ms (0 = no auto-dismiss) */
   duration?: number;
   /** Whether the toast can be manually dismissed */
@@ -69,6 +69,7 @@ const defaultIcons: Record<string, string> = {
   positive: 'check_circle',
   warning: 'warning',
   error: 'error',
+  neutral: 'info',
 };
 
 let toastCounter = 0;
@@ -284,7 +285,7 @@ export interface ToastProps {
   /** Toast description / body text */
   description?: string;
   /** Toast variant */
-  variant?: 'info' | 'positive' | 'warning' | 'error';
+  variant?: 'info' | 'positive' | 'warning' | 'error' | 'neutral';
   /** Whether the toast can be manually dismissed */
   dismissible?: boolean;
   /** Custom icon override — Material Symbol name */

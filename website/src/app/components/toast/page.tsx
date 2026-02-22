@@ -63,6 +63,17 @@ function ToastTriggers() {
           })
         }
       />
+      <Button
+        label="Neutral toast"
+        priority="tertiary"
+        onClick={() =>
+          toast({
+            variant: "neutral",
+            title: "Note",
+            description: "This is a neutral notification.",
+          })
+        }
+      />
     </div>
   );
 }
@@ -108,6 +119,9 @@ export default function ToastPage() {
               </div>
               <div className={styles.toastDemo}>
                 <Toast variant="error" title="Error" description="Something went wrong." />
+              </div>
+              <div className={styles.toastDemo}>
+                <Toast variant="neutral" title="Note" description="This is a neutral notification." />
               </div>
             </div>
           </section>

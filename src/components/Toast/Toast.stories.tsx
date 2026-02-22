@@ -18,7 +18,7 @@ const meta = {
     description: { control: 'text', description: 'Toast description / body text' },
     variant: {
       control: 'select',
-      options: ['info', 'positive', 'warning', 'error'],
+      options: ['info', 'positive', 'warning', 'error', 'neutral'],
       description: 'Toast variant',
     },
     dismissible: { control: 'boolean', description: 'Whether the toast can be dismissed' },
@@ -94,6 +94,14 @@ export const NonDismissible: Story = {
   },
 };
 
+export const Neutral: Story = {
+  args: {
+    variant: 'neutral',
+    title: 'Note',
+    description: 'This is a neutral notification.',
+  },
+};
+
 export const AllVariants: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '380px' }}>
@@ -101,6 +109,7 @@ export const AllVariants: Story = {
       <Toast variant="positive" title="Success" description="Your changes have been saved." />
       <Toast variant="warning" title="Warning" description="This action may have consequences." />
       <Toast variant="error" title="Error" description="Something went wrong." />
+      <Toast variant="neutral" title="Note" description="This is a neutral notification." />
     </div>
   ),
 };
@@ -155,6 +164,17 @@ const ToastTriggers = () => {
             variant: 'error',
             title: 'Error',
             description: 'Something went wrong. Please try again.',
+          })
+        }
+      />
+      <Button
+        label="Neutral toast"
+        priority="tertiary"
+        onClick={() =>
+          toast({
+            variant: 'neutral',
+            title: 'Note',
+            description: 'This is a neutral notification.',
           })
         }
       />

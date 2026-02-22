@@ -280,6 +280,35 @@
 }
 
 /* ============================================
+   VARIANT — NEUTRAL
+   ============================================ */
+
+.ds-toast--neutral {
+  background-color: var(--color-status-neutral-bg);
+  border-color: var(--color-status-neutral-border);
+}
+
+.ds-toast--neutral .ds-toast__icon {
+  color: var(--color-status-neutral-border);
+}
+
+.ds-toast--neutral .ds-toast__title {
+  color: var(--color-status-neutral-text);
+}
+
+.ds-toast--neutral .ds-toast__description {
+  color: var(--color-status-neutral-text);
+}
+
+.ds-toast--neutral .ds-toast__dismiss {
+  color: var(--color-status-neutral-text);
+}
+
+.ds-toast--neutral .ds-toast__progress {
+  background-color: var(--color-status-neutral-border);
+}
+
+/* ============================================
    ANIMATIONS
    ============================================ */
 
