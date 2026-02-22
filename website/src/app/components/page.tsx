@@ -25,7 +25,6 @@ import { Slider } from "@design-system/components/Slider/Slider";
 import { Spinner } from "@design-system/components/Spinner/Spinner";
 import { Tabs } from "@design-system/components/Tabs/Tabs";
 import { Textarea } from "@design-system/components/Textarea/Textarea";
-import { Toast } from "@design-system/components/Toast/Toast";
 import { ToggleGroup } from "@design-system/components/ToggleGroup/ToggleGroup";
 import PageLinks from "../../components/PageLinks/PageLinks";
 import { getNavLinks, getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
@@ -412,7 +411,10 @@ export default function ComponentsPage() {
 
             {/* Toast */}
             <TocCard href="/components/toast" title="Toast">
-              <Toast variant="positive" title="Saved" dismissible={false} />
+              <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", padding: "6px 10px", borderRadius: "6px", background: "var(--color-status-positive-bg)", border: "1px solid var(--color-status-positive-border)" }}>
+                <span className="material-symbols-rounded" style={{ fontSize: "16px", color: "var(--color-status-positive-border)" }}>check_circle</span>
+                <span style={{ fontSize: "12px", fontWeight: 500, color: "var(--color-status-positive-text)" }}>Saved</span>
+              </div>
             </TocCard>
 
             {/* Toggle group */}
