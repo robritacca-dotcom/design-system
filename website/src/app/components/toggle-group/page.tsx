@@ -46,58 +46,66 @@ export default function ToggleGroupPage() {
           {/* Text items */}
           <section className={styles.section}>
             <SectionTitle title="Text items" />
-            <ToggleGroup
-              items={[
-                { value: "left", label: "Left" },
-                { value: "center", label: "Center" },
-                { value: "right", label: "Right" },
-              ]}
-              value={align}
-              onChange={(v) => setAlign(v as string)}
-            />
+            <div>
+              <ToggleGroup
+                items={[
+                  { value: "left", label: "Left" },
+                  { value: "center", label: "Center" },
+                  { value: "right", label: "Right" },
+                ]}
+                value={align}
+                onChange={(v) => setAlign(v as string)}
+              />
+            </div>
           </section>
 
           {/* Icon items — multiple */}
           <section className={styles.section}>
             <SectionTitle title="Icon items (multiple)" />
-            <ToggleGroup
-              items={[
-                { value: "bold", label: "format_bold", icon: true },
-                { value: "italic", label: "format_italic", icon: true },
-                { value: "underline", label: "format_underlined", icon: true },
-              ]}
-              value={formats}
-              multiple
-              onChange={(v) => setFormats(v as string[])}
-            />
+            <div>
+              <ToggleGroup
+                items={[
+                  { value: "bold", label: "format_bold", icon: true },
+                  { value: "italic", label: "format_italic", icon: true },
+                  { value: "underline", label: "format_underlined", icon: true },
+                ]}
+                value={formats}
+                multiple
+                onChange={(v) => setFormats(v as string[])}
+              />
+            </div>
           </section>
 
           {/* Compact */}
           <section className={styles.section}>
             <SectionTitle title="Compact" />
-            <ToggleGroup
-              items={[
-                { value: "grid", label: "grid_view", icon: true },
-                { value: "list", label: "view_list", icon: true },
-              ]}
-              value={view}
-              size="compact"
-              onChange={(v) => setView(v as string)}
-            />
+            <div>
+              <ToggleGroup
+                items={[
+                  { value: "grid", label: "grid_view", icon: true },
+                  { value: "list", label: "view_list", icon: true },
+                ]}
+                value={view}
+                size="compact"
+                onChange={(v) => setView(v as string)}
+              />
+            </div>
           </section>
 
           {/* Disabled */}
           <section className={styles.section}>
             <SectionTitle title="Disabled" />
-            <ToggleGroup
-              items={[
-                { value: "a", label: "Option A" },
-                { value: "b", label: "Option B" },
-                { value: "c", label: "Option C" },
-              ]}
-              value="a"
-              disabled
-            />
+            <div>
+              <ToggleGroup
+                items={[
+                  { value: "a", label: "Option A" },
+                  { value: "b", label: "Option B" },
+                  { value: "c", label: "Option C" },
+                ]}
+                value="a"
+                disabled
+              />
+            </div>
           </section>
         </main>
       </div>
