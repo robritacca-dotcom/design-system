@@ -1,0 +1,110 @@
+"use client";
+
+import React from "react";
+import Header from "../../../components/Header/Header";
+import Sidebar from "../../../components/Sidebar/Sidebar";
+import BlurBackground from "../../../components/BlurBackground/BlurBackground";
+import Footer from "../../../components/Footer/Footer";
+import { Carousel } from "@design-system/components/Carousel/Carousel";
+import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
+import PageLinks from "../../../components/PageLinks/PageLinks";
+import { getNavLinks, getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
+import styles from "./page.module.css";
+const navLinks = getNavLinks("Components");
+const { sidebarLinks, subnavLinks } = getSidebarLinks(componentsSidebarLinks, "/components/carousel");
+
+const slides = [
+  { bg: "var(--color-status-info-bg)", label: "Slide 1" },
+  { bg: "var(--color-status-positive-bg)", label: "Slide 2" },
+  { bg: "var(--color-status-warning-bg)", label: "Slide 3" },
+  { bg: "var(--color-status-error-bg)", label: "Slide 4" },
+];
+
+export default function CarouselPage() {
+  return (
+    <>
+      <BlurBackground />
+      <Header navLinks={navLinks} subnavLinks={subnavLinks} />
+
+      <div className={styles.dsLayout}>
+        <Sidebar links={sidebarLinks} />
+
+        <main className={styles.dsContent} id="main-content">
+          <div className={`${styles.pageHeader} animate-in`}>
+            <h1 className={styles.pageTitle}>Carousel</h1>
+            <PageLinks
+              storybookPath="/?path=/docs/components-carousel--docs"
+            />
+          </div>
+
+          <div className={`${styles.introSection} animate-in animate-delay-1`}>
+            <p className={styles.subDisplay}>
+              Browse content one slide at a time
+            </p>
+            <p className={styles.introBody}>
+              A sliding content viewer with arrow navigation, dot indicators, optional auto-play, and keyboard support. Pauses auto-play on hover for accessibility.
+            </p>
+          </div>
+
+          {/* Default */}
+          <section className={styles.section}>
+            <SectionTitle title="Default" />
+            <div className={styles.carouselDemo}>
+              <Carousel>
+                {slides.map((slide, i) => (
+                  <div key={i} className={styles.slideContent} style={{ backgroundColor: slide.bg }}>
+                    {slide.label}
+                  </div>
+                ))}
+              </Carousel>
+            </div>
+          </section>
+
+          {/* Loop */}
+          <section className={styles.section}>
+            <SectionTitle title="Loop" />
+            <div className={styles.carouselDemo}>
+              <Carousel loop>
+                {slides.map((slide, i) => (
+                  <div key={i} className={styles.slideContent} style={{ backgroundColor: slide.bg }}>
+                    {slide.label}
+                  </div>
+                ))}
+              </Carousel>
+            </div>
+          </section>
+
+          {/* Auto-play */}
+          <section className={styles.section}>
+            <SectionTitle title="Auto-play" />
+            <div className={styles.carouselDemo}>
+              <Carousel autoPlay autoPlayInterval={3000} loop>
+                {slides.map((slide, i) => (
+                  <div key={i} className={styles.slideContent} style={{ backgroundColor: slide.bg }}>
+                    {slide.label}
+                  </div>
+                ))}
+              </Carousel>
+            </div>
+          </section>
+
+          {/* Dots only */}
+          <section className={styles.section}>
+            <SectionTitle title="Dots only" />
+            <div className={styles.carouselDemo}>
+              <Carousel showArrows={false}>
+                {slides.map((slide, i) => (
+                  <div key={i} className={styles.slideContent} style={{ backgroundColor: slide.bg }}>
+                    {slide.label}
+                  </div>
+                ))}
+              </Carousel>
+            </div>
+          </section>
+        </main>
+      </div>
+
+      <Footer />
+    </>
+  );
+}

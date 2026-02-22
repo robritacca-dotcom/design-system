@@ -8,6 +8,7 @@ import Footer from "../../components/Footer/Footer";
 import TocCard from "../../components/TocCard/TocCard";
 import { Accordion } from "@design-system/components/Accordion/Accordion";
 import { Alert } from "@design-system/components/Alert/Alert";
+import { Avatar } from "@design-system/components/Avatar/Avatar";
 import { Badge } from "@design-system/components/Badge/Badge";
 import { Breadcrumb } from "@design-system/components/Breadcrumb/Breadcrumb";
 import { Button } from "@design-system/components/Button/Button";
@@ -24,6 +25,7 @@ import { Slider } from "@design-system/components/Slider/Slider";
 import { Spinner } from "@design-system/components/Spinner/Spinner";
 import { Tabs } from "@design-system/components/Tabs/Tabs";
 import { Textarea } from "@design-system/components/Textarea/Textarea";
+import { Toast } from "@design-system/components/Toast/Toast";
 import { ToggleGroup } from "@design-system/components/ToggleGroup/ToggleGroup";
 import PageLinks from "../../components/PageLinks/PageLinks";
 import { getNavLinks, getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
@@ -79,6 +81,28 @@ export default function ComponentsPage() {
               <Alert variant="info" title="Heads up" size="compact" />
             </TocCard>
 
+            {/* Alert dialog */}
+            <TocCard href="/components/alert-dialog" title="Alert dialog">
+              <div className={styles.previewColumn} style={{ gap: "6px", width: "120px" }}>
+                <div style={{ padding: "8px 10px", borderRadius: "6px", border: "1px solid var(--color-bg-container-border)", background: "var(--color-bg-page-primary)", display: "flex", flexDirection: "column", gap: "6px" }}>
+                  <span style={{ fontSize: "11px", fontWeight: 600, color: "var(--color-text-primary)" }}>Confirm?</span>
+                  <div style={{ display: "flex", gap: "4px", justifyContent: "flex-end" }}>
+                    <div style={{ padding: "2px 8px", borderRadius: "4px", fontSize: "9px", color: "var(--color-text-secondary)", background: "var(--color-bg-container-secondary)" }}>Cancel</div>
+                    <div style={{ padding: "2px 8px", borderRadius: "4px", fontSize: "9px", color: "#fff", background: "var(--color-action-primary-bg)" }}>OK</div>
+                  </div>
+                </div>
+              </div>
+            </TocCard>
+
+            {/* Avatar */}
+            <TocCard href="/components/avatar" title="Avatar">
+              <div className={styles.previewRow} style={{ gap: "8px" }}>
+                <Avatar size="sm" name="Jane Doe" />
+                <Avatar size="md" name="Alex Smith" />
+                <Avatar size="sm" />
+              </div>
+            </TocCard>
+
             {/* Badge */}
             <TocCard href="/components/badge" title="Badge">
               <div className={styles.previewRow} style={{ gap: "8px" }}>
@@ -115,6 +139,19 @@ export default function ComponentsPage() {
             {/* Card */}
             <TocCard href="/components/card" title="Card">
               <div className={styles.cardPreview} />
+            </TocCard>
+
+            {/* Carousel */}
+            <TocCard href="/components/carousel" title="Carousel">
+              <div className={styles.previewRow} style={{ gap: "8px", alignItems: "center" }}>
+                <span className="material-symbols-rounded" style={{ fontSize: "18px", color: "var(--color-icon-secondary)" }}>chevron_left</span>
+                <div style={{ display: "flex", gap: "4px" }}>
+                  <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--color-action-primary-bg)" }} />
+                  <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--color-bg-container-border)" }} />
+                  <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--color-bg-container-border)" }} />
+                </div>
+                <span className="material-symbols-rounded" style={{ fontSize: "18px", color: "var(--color-icon-secondary)" }}>chevron_right</span>
+              </div>
             </TocCard>
 
             {/* Chart */}
@@ -355,6 +392,11 @@ export default function ComponentsPage() {
               </div>
             </TocCard>
 
+            {/* Toast */}
+            <TocCard href="/components/toast" title="Toast">
+              <Toast variant="positive" title="Saved" dismissible={false} />
+            </TocCard>
+
             {/* Toggle group */}
             <TocCard href="/components/toggle-group" title="Toggle group">
               <ToggleGroup
@@ -379,6 +421,16 @@ export default function ComponentsPage() {
                     </span>
                   </div>
                 </div>
+              </div>
+            </TocCard>
+
+            {/* Tooltip */}
+            <TocCard href="/components/tooltip" title="Tooltip">
+              <div className={styles.popoverPreview}>
+                <span style={{ fontSize: "12px", color: "var(--color-bg-page-primary)", background: "var(--color-bg-page-inverse)", padding: "2px 8px", borderRadius: "4px" }}>
+                  Tooltip
+                </span>
+                <div style={{ width: "8px", height: "8px", background: "var(--color-bg-page-inverse)", transform: "rotate(45deg)", marginTop: "-5px" }} />
               </div>
             </TocCard>
           </div>

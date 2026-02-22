@@ -1,0 +1,122 @@
+/* ============================================
+   TOOLTIP COMPONENT
+   Contextual text label on hover / focus
+   ============================================ */
+
+.ds-tooltip {
+  position: relative;
+  display: inline-flex;
+}
+
+/* ============================================
+   PANEL
+   ============================================ */
+
+.ds-tooltip__panel {
+  position: absolute;
+  z-index: 50;
+  padding: var(--padding-xs) var(--padding-sm); /* 6px 8px */
+  border-radius: var(--radius-xs); /* 4px */
+  background-color: var(--color-bg-page-inverse);
+  color: var(--color-bg-page-primary);
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.ds-tooltip__panel--visible {
+  opacity: 1;
+}
+
+/* ============================================
+   POSITIONS
+   ============================================ */
+
+.ds-tooltip__panel--top {
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  margin-bottom: var(--gap-xs); /* 4px */
+}
+
+.ds-tooltip__panel--top.ds-tooltip__panel--visible {
+  transform: translateX(-50%) translateY(0);
+}
+
+.ds-tooltip__panel--bottom {
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-4px);
+  margin-top: var(--gap-xs);
+}
+
+.ds-tooltip__panel--bottom.ds-tooltip__panel--visible {
+  transform: translateX(-50%) translateY(0);
+}
+
+.ds-tooltip__panel--left {
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%) translateX(4px);
+  margin-right: var(--gap-xs);
+}
+
+.ds-tooltip__panel--left.ds-tooltip__panel--visible {
+  transform: translateY(-50%) translateX(0);
+}
+
+.ds-tooltip__panel--right {
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%) translateX(-4px);
+  margin-left: var(--gap-xs);
+}
+
+.ds-tooltip__panel--right.ds-tooltip__panel--visible {
+  transform: translateY(-50%) translateX(0);
+}
+
+/* ============================================
+   ARROW
+   ============================================ */
+
+.ds-tooltip__arrow {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-bg-page-inverse);
+  transform: rotate(45deg);
+}
+
+/* Arrow — top position (arrow points down) */
+.ds-tooltip__panel--top .ds-tooltip__arrow {
+  bottom: -4px;
+  left: 50%;
+  margin-left: -4px;
+}
+
+/* Arrow — bottom position (arrow points up) */
+.ds-tooltip__panel--bottom .ds-tooltip__arrow {
+  top: -4px;
+  left: 50%;
+  margin-left: -4px;
+}
+
+/* Arrow — left position (arrow points right) */
+.ds-tooltip__panel--left .ds-tooltip__arrow {
+  right: -4px;
+  top: 50%;
+  margin-top: -4px;
+}
+
+/* Arrow — right position (arrow points left) */
+.ds-tooltip__panel--right .ds-tooltip__arrow {
+  left: -4px;
+  top: 50%;
+  margin-top: -4px;
+}

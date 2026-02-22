@@ -29,11 +29,14 @@ export const componentsSidebarLinks: NavLink[] = [
   { href: "/components", label: "Contents" },
   { href: "/components/accordion", label: "Accordion" },
   { href: "/components/alert", label: "Alert" },
+  { href: "/components/alert-dialog", label: "Alert dialog" },
+  { href: "/components/avatar", label: "Avatar" },
   { href: "/components/badge", label: "Badge" },
   { href: "/components/breadcrumb", label: "Breadcrumb" },
   { href: "/components/button", label: "Button" },
   { href: "/components/button-group", label: "Button group" },
   { href: "/components/card", label: "Card" },
+  { href: "/components/carousel", label: "Carousel" },
   { href: "/components/chart", label: "Chart" },
   { href: "/components/checkbox", label: "Checkbox" },
   { href: "/components/circular-button", label: "Circular button" },
@@ -56,8 +59,10 @@ export const componentsSidebarLinks: NavLink[] = [
   { href: "/components/table", label: "Table" },
   { href: "/components/tabs", label: "Tabs" },
   { href: "/components/textarea", label: "Textarea" },
+  { href: "/components/toast", label: "Toast" },
   { href: "/components/toggle-group", label: "Toggle group" },
   { href: "/components/toggle-switch", label: "Toggle switch" },
+  { href: "/components/tooltip", label: "Tooltip" },
 ];
 
 export const foundationsSidebarLinks: NavLink[] = [
