@@ -114,6 +114,11 @@
   flex-direction: column;
   gap: var(--gap-xs);
   flex-shrink: 0;
+  align-items: center;
+}
+
+.ds-app-sidebar--expanded .ds-app-sidebar__nav {
+  align-items: stretch;
 }
 
 /* Category label — only visible when expanded */
@@ -142,18 +147,23 @@
 .ds-app-sidebar__btn {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   height: 40px;
-  padding: var(--padding-sm) var(--padding-lg);
+  padding: var(--padding-sm);
   border-radius: var(--radius-full);
   background: transparent;
   border: none;
   color: var(--color-text-primary);
   cursor: pointer;
   overflow: hidden;
-  width: 100%;
   text-align: left;
-  transition: background-color 0.15s ease;
+  transition: background-color 0.15s ease, padding 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ds-app-sidebar--expanded .ds-app-sidebar__btn {
+  width: 100%;
+  padding: var(--padding-sm) var(--padding-lg);
+  justify-content: space-between;
 }
 
 .ds-app-sidebar__btn:hover {
@@ -290,16 +300,25 @@
 .ds-app-sidebar__profile {
   display: flex;
   align-items: center;
+  justify-content: center;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.ds-app-sidebar--expanded .ds-app-sidebar__profile {
   justify-content: space-between;
   padding: 0 var(--padding-lg);
-  flex-shrink: 0;
 }
 
 .ds-app-sidebar__profile-left {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 0;
   min-width: 0;
+}
+
+.ds-app-sidebar--expanded .ds-app-sidebar__profile-left {
+  gap: 10px;
 }
 
 .ds-app-sidebar__avatar {
@@ -321,11 +340,14 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
+  width: 0;
+  overflow: hidden;
   opacity: 0;
   transition: opacity 0.2s ease;
 }
 
 .ds-app-sidebar--expanded .ds-app-sidebar__profile-info {
+  width: auto;
   opacity: 1;
 }
 
@@ -362,11 +384,14 @@
   cursor: pointer;
   padding: 0;
   flex-shrink: 0;
+  width: 0;
+  overflow: hidden;
   opacity: 0;
   transition: opacity 0.2s ease;
 }
 
 .ds-app-sidebar--expanded .ds-app-sidebar__profile-more {
+  width: auto;
   opacity: 1;
 }
 
