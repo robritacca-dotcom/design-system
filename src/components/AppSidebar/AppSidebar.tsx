@@ -224,7 +224,15 @@ export const AppSidebar = ({
       <div className={`${baseClass}__top`}>
         {/* Logo */}
         <div className={`${baseClass}__logo`}>
-          <div className={`${baseClass}__logo-inner`}>
+          <div
+            className={`${baseClass}__logo-inner`}
+            onClick={!isExpanded ? toggleExpanded : undefined}
+            role={!isExpanded ? 'button' : undefined}
+            tabIndex={!isExpanded ? 0 : undefined}
+            aria-label={!isExpanded ? 'Expand sidebar' : undefined}
+            onKeyDown={!isExpanded ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleExpanded(); } } : undefined}
+            style={!isExpanded ? { cursor: 'pointer' } : undefined}
+          >
             <span className={`${baseClass}__logo-icon`}>
               {logo || <DefaultLogo />}
             </span>
