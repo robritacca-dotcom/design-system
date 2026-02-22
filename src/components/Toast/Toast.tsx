@@ -203,6 +203,10 @@ export const ToastProvider = ({
   maxToasts = 5,
 }: ToastProviderProps) => {
   const [toasts, setToasts] = useState<InternalToast[]>([]);
+  const [mounted, setMounted] = useState(false);
+
+  // SSR guard — only render portal on the client
+  useEffect(() => { setMounted(true); }, []);
 
   const toast = useCallback(
     (data: ToastData): string => {
@@ -243,28 +247,29 @@ export const ToastProvider = ({
   return (
     <ToastContext.Provider value={{ toast, dismiss, dismissAll }}>
       {children}
-      {ReactDOM.createPortal(
-        <div
-          className={containerClasses}
-          role="region"
-          aria-label="Notifications"
-        >
-          {toasts.map((t) => (
-            <ToastItem
-              key={t.id}
-              id={t.id}
-              title={t.title}
-              description={t.description}
-              variant={t.variant || 'info'}
-              dismissible={t.dismissible ?? true}
-              icon={t.icon}
-              duration={t.duration ?? 5000}
-              onDismiss={dismiss}
-            />
-          ))}
-        </div>,
-        document.body
-      )}
+      {mounted &&
+        ReactDOM.createPortal(
+          <div
+            className={containerClasses}
+            role="region"
+            aria-label="Notifications"
+          >
+            {toasts.map((t) => (
+              <ToastItem
+                key={t.id}
+                id={t.id}
+                title={t.title}
+                description={t.description}
+                variant={t.variant || 'info'}
+                dismissible={t.dismissible ?? true}
+                icon={t.icon}
+                duration={t.duration ?? 5000}
+                onDismiss={dismiss}
+              />
+            ))}
+          </div>,
+          document.body
+        )}
     </ToastContext.Provider>
   );
 };

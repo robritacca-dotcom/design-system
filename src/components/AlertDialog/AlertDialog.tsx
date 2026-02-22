@@ -1,4 +1,4 @@
-import { useEffect, useRef, useId } from 'react';
+import { useState, useEffect, useRef, useId } from 'react';
 import ReactDOM from 'react-dom';
 import { Button } from '../Button/Button';
 import './AlertDialog.css';
@@ -49,8 +49,12 @@ export const AlertDialog = ({
   const previousFocusRef = useRef<HTMLElement | null>(null);
   const titleId = useId();
   const descId = useId();
+  const [mounted, setMounted] = useState(false);
 
   const baseClass = 'ds-alert-dialog';
+
+  // SSR guard — only render portal on the client
+  useEffect(() => { setMounted(true); }, []);
 
   // Store the previously focused element when opening
   useEffect(() => {
@@ -184,5 +188,6 @@ export const AlertDialog = ({
     </div>
   );
 
+  if (!mounted) return null;
   return ReactDOM.createPortal(dialog, document.body);
 };
