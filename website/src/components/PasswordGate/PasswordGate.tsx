@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { Button } from "@design-system/components/Button/Button";
 import styles from "./PasswordGate.module.css";
 
@@ -72,7 +73,13 @@ export default function PasswordGate({
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Portal target only available after mount (SSR-safe)
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Focus the input when the modal opens
   useEffect(() => {
@@ -126,7 +133,7 @@ export default function PasswordGate({
         onClick={() => setOpen(true)}
       />
 
-      {open && (
+      {open && mounted && createPortal(
         <div
           className={styles.overlay}
           role="dialog"
@@ -184,7 +191,8 @@ export default function PasswordGate({
               </div>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );
