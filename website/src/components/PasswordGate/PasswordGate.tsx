@@ -18,10 +18,10 @@ import styles from "./PasswordGate.module.css";
  */
 
 // Encrypted payload generated locally with AES-GCM + PBKDF2 (250k iters, SHA-256)
-const SALT_B64 = "D8+zo/HrFPPkgQMu+2+qSw==";
-const IV_B64 = "88Cjdz7B5lIgaFRk";
+const SALT_B64 = "EIvfAEBAIqeR9szz60NF9Q==";
+const IV_B64 = "esjXvXortXvzcZHv";
 const CT_B64 =
-  "Atj1asZ2sivOKZcEcf86DPY0mfQSZ/Hx5VDO7IdMM9YayjHXBjbX0Nn/4x1sTD1EeKnYuFN7tuTQ9OzH1j+kdB9KwMvqVMH+UiO03Bu4W4O3ITdJODcGeYCM2xUhOtothas=";
+  "XmwNdnG+Z5h+Ra9viyE1Rug5yBADa3BwZUvznB2p/rhy2WIm0T26CSs2MJLJBs1FreLhR4zD9tMlWwn054G1sUiHiSGEU9/fWuoTWMiT3JLzyNkPWF6IdgR47ZAlRhMBswg=";
 const PBKDF2_ITERATIONS = 250000;
 
 function b64ToBytes(b64: string): Uint8Array<ArrayBuffer> {
