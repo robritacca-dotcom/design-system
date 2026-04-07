@@ -62,11 +62,23 @@ async function decryptUrl(password: string): Promise<string> {
 }
 
 interface PasswordGateProps {
-  /** Label for the trigger button */
+  /**
+   * Render prop receiving an `open` callback.
+   * Use it to wire up any custom trigger element(s) — they all share
+   * the same modal instance.
+   *
+   * Example:
+   *   <PasswordGate>
+   *     {(open) => <button onClick={open}>Unlock</button>}
+   *   </PasswordGate>
+   */
+  children?: (open: () => void) => React.ReactNode;
+  /** Fallback: if no children provided, renders a default Button trigger with this label */
   triggerLabel?: string;
 }
 
 export default function PasswordGate({
+  children,
   triggerLabel = "View work samples",
 }: PasswordGateProps) {
   const [open, setOpen] = useState(false);
@@ -124,14 +136,20 @@ export default function PasswordGate({
     }
   };
 
+  const openModal = () => setOpen(true);
+
   return (
     <>
-      <Button
-        label={triggerLabel}
-        priority="primary"
-        iconRight="lock"
-        onClick={() => setOpen(true)}
-      />
+      {children ? (
+        children(openModal)
+      ) : (
+        <Button
+          label={triggerLabel}
+          priority="primary"
+          iconRight="lock"
+          onClick={openModal}
+        />
+      )}
 
       {open && mounted && createPortal(
         <div

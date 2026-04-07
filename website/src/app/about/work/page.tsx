@@ -6,6 +6,7 @@ import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
 import PasswordGate from "../../../components/PasswordGate/PasswordGate";
+import { Button } from "@design-system/components/Button/Button";
 import { getNavLinks, getSidebarLinks, aboutSidebarLinks } from "@/config/navigation";
 import styles from "../page.module.css";
 import workStyles from "./work.module.css";
@@ -34,22 +35,39 @@ export default function AboutWorkPage() {
             A small selection of work samples shared privately on request.
           </p>
 
-          {/* Cover image with drop shadow */}
-          <div className={`${workStyles.coverWrap} animate-in animate-delay-2`}>
-            <Image
-              src="/images/portfolio.png"
-              alt="Robert Ritacca — Product Design, Strategy &amp; Leadership work samples cover"
-              width={2554}
-              height={1433}
-              priority
-              className={workStyles.cover}
-            />
-          </div>
+          {/* Both the cover image and the button trigger the same password modal */}
+          <PasswordGate>
+            {(open) => (
+              <>
+                <div className={`${workStyles.coverWrap} animate-in animate-delay-2`}>
+                  <button
+                    type="button"
+                    onClick={open}
+                    aria-label="View work samples — opens password prompt"
+                    className={workStyles.coverButton}
+                  >
+                    <Image
+                      src="/images/portfolio.png"
+                      alt="Robert Ritacca — Product Design, Strategy &amp; Leadership work samples cover"
+                      width={2554}
+                      height={1433}
+                      priority
+                      className={workStyles.cover}
+                    />
+                  </button>
+                </div>
 
-          {/* Password-gated CTA */}
-          <div className={`${workStyles.ctaRow} animate-in animate-delay-3`}>
-            <PasswordGate triggerLabel="View work samples" />
-          </div>
+                <div className={`${workStyles.ctaRow} animate-in animate-delay-3`}>
+                  <Button
+                    label="View work samples"
+                    priority="primary"
+                    iconRight="lock"
+                    onClick={open}
+                  />
+                </div>
+              </>
+            )}
+          </PasswordGate>
         </main>
       </div>
 
