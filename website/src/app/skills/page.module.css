@@ -64,7 +64,7 @@
 .inlineCode {
   font-family: monospace;
   font-size: var(--font-paragraph-sm-size);
-  padding: 2px 6px;
+  padding: var(--primitive-padding-xxxs) var(--primitive-padding-xs);
   background: var(--color-bg-container-primary);
   border: 1px solid var(--color-bg-container-border);
   border-radius: var(--radius-xs);
@@ -152,14 +152,6 @@
   flex-shrink: 0;
 }
 
-.skillInvokePhrase {
-  font-family: monospace;
-  font-size: var(--font-paragraph-sm-size);
-  padding: 2px 8px;
-  background: var(--color-bg-container-secondary);
-  border-radius: var(--radius-xs);
-  color: var(--color-text-secondary);
-}
 
 /* ============================================
    RESPONSIVE
