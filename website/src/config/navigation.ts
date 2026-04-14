@@ -19,6 +19,7 @@ export const navLinks: NavLink[] = [
   { href: "/about", label: "About" },
   { href: "/components", label: "Components" },
   { href: "/foundations", label: "Foundations" },
+  { href: "/skills", label: "Skills" },
 ];
 
 /* ============================================
@@ -74,6 +75,10 @@ export const foundationsSidebarLinks: NavLink[] = [
   { href: "/foundations/colour-mode", label: "Semantic colours" },
   { href: "/foundations/spatial", label: "Semantic spacing" },
   { href: "/foundations/typography", label: "Typography" },
+];
+
+export const skillsSidebarLinks: NavLink[] = [
+  { href: "/skills", label: "Overview" },
 ];
 
 export const aboutSidebarLinks: NavLink[] = [

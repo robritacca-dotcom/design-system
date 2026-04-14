@@ -1,0 +1,520 @@
+"use client";
+
+import Header from "../../components/Header/Header";
+import Sidebar from "../../components/Sidebar/Sidebar";
+import BlurBackground from "../../components/BlurBackground/BlurBackground";
+import Footer from "../../components/Footer/Footer";
+import { Button } from "@design-system/components/Button/Button";
+import { getNavLinks, getSidebarLinks, skillsSidebarLinks } from "@/config/navigation";
+import styles from "./page.module.css";
+
+const navLinks = getNavLinks("Skills");
+const { sidebarLinks, subnavLinks } = getSidebarLinks(skillsSidebarLinks, "/skills");
+
+/* ============================================
+   SKILL DATA
+   ============================================ */
+
+interface SkillInfo {
+  slug: string;
+  name: string;
+  icon: string;
+  description: string;
+  invoke: string[];
+  content: string;
+}
+
+const skills: SkillInfo[] = [
+  {
+    slug: "new-component",
+    name: "new-component",
+    icon: "widgets",
+    description:
+      "Scaffolds a new design system component with all three required files — a typed React component, a token-only CSS stylesheet, and a Storybook stories file. Enforces the ds- BEM naming prefix, semantic token usage, and the correct stories format without needing reminders.",
+    invoke: ["add a [Name] component", "create a [Name] component", "scaffold [Name]"],
+    content: `# new-component
+
+Scaffold a new design system component with all three required files.
+
+## When invoked
+
+Use this skill any time you are asked to add or create a new component to the design system — phrases like "add a [Name] component", "create a [Name] component", "scaffold [Name]".
+
+## Instructions
+
+1. **Ask** for the component name (PascalCase) and a one-sentence description of its purpose, if not already provided.
+
+2. **Read these reference files before writing anything:**
+   - \`src/components/Button/Button.tsx\` — structural reference (props interface, BEM class usage, conditional rendering)
+   - \`src/components/Badge/Badge.css\` — CSS token reference (no raw hex/pixels, semantic token usage)
+   - \`src/components/Badge/Badge.stories.tsx\` — stories file reference (\`satisfies Meta\`, \`StoryObj\`, autodocs)
+   - \`src/tokens/tokens-light.css\` — full list of available semantic tokens
+
+3. **Create the directory** \`src/components/ComponentName/\` and write exactly three files:
+
+### File 1: \`ComponentName.tsx\`
+- Named export (not default)
+- Typed props interface (\`ComponentNameProps\`)
+- BEM class naming with \`ds-componentname\` root prefix (e.g. \`ds-button\`, \`ds-badge\`)
+- Modifier classes follow \`ds-componentname--variant\` pattern
+- Imports CSS: \`import "./ComponentName.css"\`
+- If the component renders as \`<a>\` when an \`href\` prop is passed, follow the Button pattern of conditional element rendering
+
+### File 2: \`ComponentName.css\`
+- CSS custom properties exclusively — **no hardcoded hex colours**, no raw \`rgb()\`/\`rgba()\`
+- Acceptable raw pixel values: icon sizes only (20px, 24px) — these have no token equivalent
+- All other spacing, padding, gap, border-radius, font sizes must use semantic tokens from \`tokens-light.css\` / \`tokens-typography.css\`
+- Section comments grouping related rules (e.g. \`/* Base */\`, \`/* Variants */\`, \`/* States */\`, \`/* Dark theme */\`)
+- Dark theme overrides use \`:root[data-theme="dark"] .ds-componentname { }\` selector
+
+### File 3: \`ComponentName.stories.tsx\`
+- Import: \`import type { Meta, StoryObj } from "@storybook/react-vite"\`
+- Meta uses \`satisfies Meta<typeof ComponentName>\`
+- \`title: "Components/ComponentName"\`
+- \`tags: ["autodocs"]\`
+- \`parameters: { layout: "centered" }\`
+- One named \`StoryObj\` export per meaningful variant or state combination
+- Story names are descriptive (e.g. \`Default\`, \`WithIcon\`, \`Disabled\`, \`Small\`)
+
+4. **After creating files**, ask Rob: "Should I also add a documentation page for this component on the website? (invokes the \`component-doc-page\` skill)"
+`,
+  },
+  {
+    slug: "new-page",
+    name: "new-page",
+    icon: "insert_drive_file",
+    description:
+      "Creates a new website page with the full standard layout shell (Header, Sidebar, BlurBackground, Footer, PageLinks) and automatically wires it into the navigation config. Prevents the common mistake of adding a route without updating the sidebar.",
+    invoke: ["add a page for [X]", "create a [section] page", "add [X] to the site"],
+    content: `# new-page
+
+Add a new page to the website with the standard layout shell and correct navigation wiring.
+
+## When invoked
+
+Use this skill when asked to add or create a new page on the website — phrases like "add a page for [X]", "create a [section] page", "add [X] to the site".
+
+## Instructions
+
+1. **Gather requirements** if not already provided:
+   - Page URL path (e.g. \`/foundations/motion\`)
+   - Section: \`Components\` | \`Foundations\` | \`About\` | \`Skills\` (determines which sidebar)
+   - Page title and one-sentence description (for metadata and page header)
+   - Figma URL (optional) and Storybook path (optional) — for \`PageLinks\`
+
+2. **Read these reference files before writing anything:**
+   - \`website/src/app/components/button/page.tsx\` — gold-standard page structure
+   - \`website/src/app/components/button/page.module.css\` — CSS module reference
+   - \`website/src/app/components/button/layout.tsx\` — metadata reference
+   - \`website/src/config/navigation.ts\` — navigation config (single source of truth)
+
+3. **Create the directory** \`website/src/app/<path>/\` with three files:
+
+### File 1: \`page.tsx\`
+- \`"use client"\` directive at top
+- Standard imports: \`Header\`, \`Sidebar\`, \`BlurBackground\`, \`Footer\`, \`PageLinks\` from \`@/components/\`
+- Import \`styles\` from \`./page.module.css\`
+- Import \`getNavLinks\`, \`getSidebarLinks\`, and the correct section sidebar links array from \`@/config/navigation\`
+- Page structure with \`dsLayout\`, \`dsContent\`, \`pageHeader\`, \`pageTitle\`, \`subDisplay\`, \`introSection\`, \`introBody\` classes
+- Include \`<PageLinks figmaUrl={...} storybookPath={...} />\` if URLs are available
+
+### File 2: \`page.module.css\`
+- Must include: \`dsLayout\`, \`dsContent\`, \`pageHeader\`, \`pageTitle\`, \`subDisplay\`, \`introSection\`, \`introBody\`
+- CSS custom properties only — no hardcoded values
+- Match the structure from the Button page module CSS
+
+### File 3: \`layout.tsx\`
+- Exports \`metadata\` with \`title\` and \`description\`
+- \`title\` format: \`"Page Title | robr0 DS"\`
+- Exports default \`Layout\` component wrapping \`{children}\` in a fragment
+
+4. **Update \`website/src/config/navigation.ts\`:**
+   - Find the correct sidebar links array for the section
+   - Add the new entry in alphabetical order by label
+   - Entry format: \`{ label: "Page Title", href: "/path/to/page" }\`
+
+5. **If this is a component page**, also add the component to the preview card grid in \`website/src/app/components/page.tsx\`.
+`,
+  },
+  {
+    slug: "visual-review",
+    name: "visual-review",
+    icon: "preview",
+    description:
+      "Starts the Next.js dev server, navigates to specified pages, and screenshots them in both light and dark mode. Checks for invisible text, broken layouts, overflow, and stuck hover states — then reports findings or confirms all clear.",
+    invoke: ["check how this looks", "review light and dark", "visual check", "screenshot the page"],
+    content: `# visual-review
+
+Start the website dev server and screenshot pages in both light and dark mode to catch visual issues.
+
+## When invoked
+
+Use this skill when asked to visually review changes — phrases like "check how this looks", "review light and dark", "does this look right", "screenshot the page", "visual check".
+
+## Instructions
+
+1. **Determine which URLs to review.** If not specified, default to the page(s) most recently modified in the current conversation. Ask if unclear.
+
+2. **Start the preview server** using \`preview_start\` targeting the \`website/\` directory (Next.js dev server, port 3000). Wait for it to be ready.
+
+3. **For each URL to review**, do the following in order:
+
+   **Dark mode check:**
+   - Navigate to the URL
+   - Verify \`data-theme="dark"\` is present on \`<html>\` (use \`preview_eval\`: \`document.documentElement.getAttribute('data-theme')\`)
+   - If it's \`"light"\`, click the ThemeToggle button (it's in the Header — use \`preview_snapshot\` to find it, then \`preview_click\`)
+   - Take a screenshot with \`preview_screenshot\`
+
+   **Light mode check:**
+   - Click the ThemeToggle to switch to light mode
+   - Verify \`data-theme="light"\` on \`<html>\`
+   - Take a screenshot with \`preview_screenshot\`
+
+4. **Examine each screenshot for:**
+   - Text that is invisible or the same colour as its background
+   - Components that appear broken, overflow their container, or clip
+   - Spacing that looks inconsistent or misaligned
+   - Hover/focus states that appear stuck
+   - Images or assets that failed to load
+
+5. **Report findings** concisely:
+   - Format: \`[URL] [dark|light] — description of issue\`
+   - If no issues found, say: \`[URL] — looks correct in both themes\`
+
+6. **Stop the preview server** with \`preview_stop\` when all pages are reviewed.
+
+## Key context
+
+- Theme state is stored on \`document.documentElement\` as \`data-theme="light"\` or \`data-theme="dark"\`
+- The ThemeToggle component is always in the \`<Header>\` at the top of every page
+- The \`animate-in\` class on page elements triggers CSS entry animations — these are normal on first load
+`,
+  },
+  {
+    slug: "token-audit",
+    name: "token-audit",
+    icon: "manage_search",
+    description:
+      "Scans CSS files for hardcoded hex colours, raw rgb() values, and pixel values that should reference design tokens. Reports file, line number, offending value, and recommended token replacement. Accepts a single component, all-components, or website as scope.",
+    invoke: ["check for hardcoded values", "token audit", "audit [component] CSS", "are there raw colours"],
+    content: `# token-audit
+
+Scan CSS files for hardcoded values that should use design tokens, and report violations.
+
+## When invoked
+
+Use this skill when asked to check for hardcoded values, audit token usage, find raw colours or pixel values, or check design system compliance — phrases like "check for hardcoded values", "token audit", "are there any raw colours", "audit [component] CSS".
+
+## Instructions
+
+1. **Determine scope.** Accept one of:
+   - A specific component name (e.g. \`Avatar\`) → scans \`src/components/Avatar/Avatar.css\`
+   - \`all-components\` → scans all \`src/components/**/*.css\`
+   - \`website\` → scans all \`website/src/**/*.css\` and \`website/src/**/*.module.css\`
+   - A specific file path
+
+2. **Read the token reference files first** to know what tokens are available:
+   - \`src/tokens/tokens-primitives.css\` — spatial/size primitives
+   - \`src/tokens/tokens-light.css\` — semantic colour tokens
+   - \`src/tokens/tokens-typography.css\` — font size, weight, line-height tokens
+
+3. **Scan each CSS file** in scope for violations:
+
+   **Flag as violations:**
+   - Hardcoded hex colours: \`#rrggbb\`, \`#rgb\`, \`#rrggbbaa\`
+   - Raw \`rgb()\` or \`rgba()\` calls that could map to a semantic colour token
+   - Pixel values for \`padding\`, \`margin\`, \`gap\`, \`border-radius\`, \`font-size\`, \`line-height\` that correspond to a known token
+   - Hardcoded font weights where a typography token exists
+
+   **Do NOT flag:**
+   - Files within \`src/tokens/\` themselves
+   - \`0px\`, \`0\`, \`100%\`, \`50%\` — structural values
+   - Icon pixel sizes: \`16px\`, \`20px\`, \`24px\`, \`48px\` — no token equivalent, note as "acceptable raw value"
+   - \`1px\` border widths — acceptable
+   - CSS variable declarations themselves (lines starting with \`--\`)
+
+4. **For each violation**, output:
+   - File path (relative to repo root)
+   - Line number
+   - The offending value
+   - Recommended token replacement
+
+   Format: \`path/to/file.css:42 — #3b82f6 → var(--color-action-default)\`
+
+5. **Summarise** at the end:
+   - \`X violation(s) found\`
+   - \`Y acceptable raw value(s) noted (icon sizes)\`
+   - If zero violations: "No token violations found. CSS is token-compliant."
+`,
+  },
+  {
+    slug: "rotate-password",
+    name: "rotate-password",
+    icon: "lock_reset",
+    description:
+      "Re-encrypts the PasswordGate ciphertext using a new password. Generates fresh salt and IV, derives a key via PBKDF2/AES-GCM (matching the codebase's 250k iteration count), and updates the three constants in PasswordGate.tsx — without ever logging the password or plaintext URL.",
+    invoke: ["rotate the password", "change the work page password", "update the password gate"],
+    content: `# rotate-password
+
+Re-encrypt the PasswordGate ciphertext for a new password.
+
+## When invoked
+
+Use this skill when asked to rotate, change, or update the PasswordGate password — phrases like "rotate the password", "change the work page password", "update the password gate".
+
+## Instructions
+
+1. **Read** \`website/src/components/PasswordGate/PasswordGate.tsx\` to confirm the current constants (\`SALT_B64\`, \`IV_B64\`, \`CT_B64\`, \`PBKDF2_ITERATIONS\`).
+
+2. **Ask Rob for the new password** — do not log it, display it in output, or include it in any commit message or diff description.
+
+3. **Ask Rob to confirm the target URL** to encrypt. Do not display the decrypted URL of the existing ciphertext — ask Rob to provide it fresh.
+
+4. **Generate the new ciphertext** by running a Node.js script via Bash using the Web Crypto API:
+
+\`\`\`js
+const crypto = require("crypto").webcrypto;
+const password = process.argv[2];
+const url = process.argv[3];
+
+async function encrypt() {
+  const enc = new TextEncoder();
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const keyMaterial = await crypto.subtle.importKey(
+    "raw", enc.encode(password), "PBKDF2", false, ["deriveKey"]
+  );
+  const key = await crypto.subtle.deriveKey(
+    { name: "PBKDF2", salt, iterations: 250000, hash: "SHA-256" },
+    keyMaterial,
+    { name: "AES-GCM", length: 256 },
+    false,
+    ["encrypt"]
+  );
+  const ct = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, enc.encode(url));
+  const b64 = (buf) => Buffer.from(buf).toString("base64");
+  console.log(JSON.stringify({ salt: b64(salt), iv: b64(iv), ct: b64(new Uint8Array(ct)) }));
+}
+encrypt();
+\`\`\`
+
+   Run as: \`node script.mjs "<password>" "<url>"\`
+
+5. **Update \`PasswordGate.tsx\`** — replace only \`SALT_B64\`, \`IV_B64\`, and \`CT_B64\`. Do not touch any other code.
+
+6. **Show Rob the updated constants** (base64 strings only — not the password or plaintext URL).
+
+7. **Clean up** the temporary script file immediately after use.
+
+8. **Remind Rob** to commit with a message like: \`"Rotate PasswordGate ciphertext to a stronger password"\`
+
+## Security notes
+
+- Never display the plaintext password in tool output, file content, or commit messages
+- Never display the decrypted URL in output — only the base64 ciphertext blobs
+- \`PBKDF2_ITERATIONS\` (250,000) must not be changed — it must match between encryption and decryption
+`,
+  },
+  {
+    slug: "pre-deploy",
+    name: "pre-deploy",
+    icon: "rocket_launch",
+    description:
+      "Runs both the component library build (Vite + TypeScript) and the website build (Next.js) before a push to Vercel. Knows the non-standard monorepo build order and watches for SSR-unsafe code, portal regressions, and static generation failures.",
+    invoke: ["is this ready to push?", "run the build", "pre-deploy check", "check before I push"],
+    content: `# pre-deploy
+
+Run both builds and confirm the site is safe to push to Vercel.
+
+## When invoked
+
+Use this skill when asked to check if changes are ready to push, deploy, or ship — phrases like "is this ready to push?", "run the build", "pre-deploy check", "check before I push".
+
+## Instructions
+
+1. **Run the component library build** from the repo root:
+   \`\`\`
+   npm run build
+   \`\`\`
+   This runs TypeScript type-checking + Vite build. Capture all output.
+
+2. **Run the website build** from the \`website/\` directory:
+   \`\`\`
+   cd website && npm run build
+   \`\`\`
+   Note: the website build script does \`cd .. && npm install --include=dev\` first (monorepo alias setup). This is expected and normal.
+
+3. **For each build, check output for:**
+
+   **TypeScript errors:**
+   - Any \`error TS\` lines
+   - Type mismatches, missing props, invalid imports
+
+   **Next.js-specific issues:**
+   - \`"use client"\` missing on components that use browser APIs
+   - SSR-unsafe code running outside client guards — particularly \`website/src/app/layout.tsx\`
+   - Portal/modal components that reference \`document\` — watch for regressions (AlertDialog, Toast were fixed in commit \`080eaf50\`)
+   - Pages that fail static generation (look for \`Error occurred prerendering page\`)
+
+   **General failures:**
+   - Any non-zero exit code
+   - \`Build failed\` or \`Compiled with errors\`
+
+4. **Report result:**
+
+   If both pass:
+   > Both builds succeeded. Safe to push.
+
+   If either fails, show:
+   - Which build failed
+   - The exact error message(s)
+   - File path and line number if available
+   - A brief diagnosis of likely cause
+
+5. **Do not push** — this skill only builds and reports. Pushing is Rob's decision.
+`,
+  },
+  {
+    slug: "component-doc-page",
+    name: "component-doc-page",
+    icon: "article",
+    description:
+      "Creates a full-quality documentation page for a design system component on the website. Reads the component's props to generate a variant showcase grid (the Button page is the benchmark), writes all three page files, and wires navigation.",
+    invoke: ["document [X] on the website", "add a docs page for [X]", "create the website page for [X]"],
+    content: `# component-doc-page
+
+Create a full-quality documentation page for a design system component on the website.
+
+## When invoked
+
+Use this skill when asked to document a component on the website, add a component page, or create docs for a component — phrases like "document [X] on the website", "add a docs page for [X]", "create the website page for [X]".
+
+This is a more thorough, component-specific version of \`new-page\`. The Button page is the quality benchmark.
+
+## Instructions
+
+1. **Gather requirements** if not already provided:
+   - Component name (PascalCase)
+   - Figma node URL (optional — ask Rob, or omit if unknown)
+   - Storybook path (optional — usually \`Components-ComponentName--docs\`)
+
+2. **Read the source component** \`src/components/ComponentName/ComponentName.tsx\`:
+   - Extract all props from the TypeScript interface
+   - Identify all variant enumerations (e.g. \`type\`, \`size\`, \`status\` props with union types)
+   - Understand the component's states (default, hover, active, disabled, loading, etc.)
+   - Note the BEM class names used for each variant/state
+
+3. **Read the gold-standard reference:**
+   - \`website/src/app/components/button/page.tsx\` — study the variant showcase grid structure
+   - \`website/src/app/components/button/page.module.css\` — CSS module structure
+
+4. **Create \`website/src/app/components/<component-slug>/page.tsx\`:**
+   - \`"use client"\` directive
+   - Standard layout shell: \`Header\`, \`Sidebar\`, \`BlurBackground\`, \`Footer\`, \`PageLinks\`
+   - \`pageHeader\` block with \`subDisplay\` ("Components") and \`pageTitle\` (component name)
+   - \`introSection\` with an \`introBody\` paragraph describing the component's purpose
+   - **Variant showcase grid**: render the component in every meaningful combination of its variants and states
+   - Import: \`import { ComponentName } from "@design-system/components/ComponentName/ComponentName"\`
+   - Include \`<PageLinks figmaUrl={...} storybookPath={...} />\` if URLs provided
+
+5. **Create \`page.module.css\`**, **\`layout.tsx\`** with standard structure.
+
+6. **Update \`website/src/config/navigation.ts\`:**
+   - Find \`componentsSidebarLinks\` and add entry in alphabetical order
+
+7. **Check \`website/src/app/components/page.tsx\`** — add to preview card grid if not already present.
+`,
+  },
+];
+
+/* ============================================
+   DOWNLOAD HELPER
+   ============================================ */
+
+function downloadSkill(filename: string, content: string) {
+  const blob = new Blob([content], { type: "text/markdown" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+/* ============================================
+   PAGE
+   ============================================ */
+
+export default function SkillsPage() {
+  return (
+    <>
+      <BlurBackground />
+
+      <Header navLinks={navLinks} subnavLinks={subnavLinks} />
+
+      <div className={styles.dsLayout}>
+        <Sidebar links={sidebarLinks} />
+
+        <main className={styles.dsContent} id="main-content">
+          {/* Page Header */}
+          <div className={`${styles.pageHeader} animate-in`}>
+            <h1 className={styles.pageTitle}>Claude Skills</h1>
+          </div>
+
+          {/* Intro */}
+          <div className={`${styles.introSection} animate-in animate-delay-1`}>
+            <p className={styles.subDisplay}>
+              Reusable AI instructions, tuned for this project
+            </p>
+            <p className={styles.introBody}>
+              These skill files live in{" "}
+              <code className={styles.inlineCode}>.claude/skills/</code> and encode
+              this project&apos;s conventions — component patterns, token rules, navigation
+              wiring, and more. Invoke any skill by name in Claude Code and it follows
+              the exact steps without re-explanation each session. Download any skill
+              to adapt it for your own project.
+            </p>
+          </div>
+
+          {/* Skills List */}
+          <div className={`${styles.skillsGrid} animate-in animate-delay-2`}>
+            {skills.map((skill) => (
+              <div key={skill.slug} className={styles.skillCard}>
+                <div className={styles.skillCardHeader}>
+                  <div className={styles.skillMeta}>
+                    <span className={`material-symbols-rounded ${styles.skillIcon}`}>
+                      {skill.icon}
+                    </span>
+                    <code className={styles.skillName}>{skill.name}</code>
+                  </div>
+                  <Button
+                    label="Download"
+                    variant="secondary"
+                    size="sm"
+                    icon="download"
+                    onClick={() => downloadSkill(`${skill.slug}.md`, skill.content)}
+                  />
+                </div>
+
+                <p className={styles.skillDescription}>{skill.description}</p>
+
+                <div className={styles.skillInvoke}>
+                  <span className={styles.skillInvokeLabel}>Invoke:</span>
+                  {skill.invoke.map((phrase) => (
+                    <code key={phrase} className={styles.skillInvokePhrase}>
+                      {phrase}
+                    </code>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </main>
+      </div>
+
+      <Footer />
+    </>
+  );
+}
