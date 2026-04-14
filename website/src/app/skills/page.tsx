@@ -6,6 +6,7 @@ import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import Footer from "../../components/Footer/Footer";
 import { Button } from "@design-system/components/Button/Button";
 import { Badge } from "@design-system/components/Badge/Badge";
+import { ToastProvider, useToast } from "@design-system/components/Toast/Toast";
 import { getNavLinks, getSidebarLinks, skillsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
@@ -596,7 +597,14 @@ function downloadSkill(filename: string, content: string) {
    PAGE
    ============================================ */
 
-export default function SkillsPage() {
+function SkillsContent() {
+  const { toast } = useToast();
+
+  function copySkill(content: string) {
+    navigator.clipboard.writeText(content);
+    toast({ title: "Copied to clipboard", variant: "positive", duration: 3000 });
+  }
+
   return (
     <>
       <BlurBackground />
@@ -644,7 +652,7 @@ export default function SkillsPage() {
                       priority="secondary"
                       size="compact"
                       iconLeft="content_copy"
-                      onClick={() => navigator.clipboard.writeText(skill.content)}
+                      onClick={() => copySkill(skill.content)}
                     />
                     <Button
                       label="Download"
@@ -672,5 +680,13 @@ export default function SkillsPage() {
 
       <Footer />
     </>
+  );
+}
+
+export default function SkillsPage() {
+  return (
+    <ToastProvider position="bottom-right">
+      <SkillsContent />
+    </ToastProvider>
   );
 }
