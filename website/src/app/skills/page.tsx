@@ -5,6 +5,7 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import Footer from "../../components/Footer/Footer";
 import { Button } from "@design-system/components/Button/Button";
+import { Badge } from "@design-system/components/Badge/Badge";
 import { getNavLinks, getSidebarLinks, skillsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
@@ -425,6 +426,222 @@ This is a more thorough, component-specific version of \`new-page\`. The Button 
 7. **Check \`website/src/app/components/page.tsx\`** — add to preview card grid if not already present.
 `,
   },
+  {
+    slug: "heuristic-analysis",
+    name: "heuristic-analysis",
+    icon: "fact_check",
+    description:
+      "Evaluates a page or component against Nielsen's 10 Usability Heuristics. Takes screenshots in light and dark mode, reads the source code, then produces a structured findings table with severity ratings (Pass / Minor / Moderate / Critical) and specific fix suggestions.",
+    invoke: ["heuristic analysis of [page]", "UX review of [page]", "usability check on [component]"],
+    content: `# heuristic-analysis
+
+Evaluate a page or component against Nielsen's 10 Usability Heuristics and produce a structured findings report.
+
+## When invoked
+
+Use this skill when asked to run a UX or usability review — phrases like "heuristic analysis of [page]", "UX review of [page]", "usability check on [component]", "how does [X] score on usability".
+
+## Instructions
+
+1. **Determine scope.** Accept one of:
+   - A website URL path (e.g. \`/components/button\`) → review the live page
+   - A component name (e.g. \`AlertDialog\`) → review the component source and its rendered output
+
+2. **Gather visual evidence.** Start the preview server and screenshot the target in both light and dark mode (follow the \`visual-review\` skill pattern). Stop the server when done.
+
+3. **Read the source code** for the page or component to understand the full implementation, not just what's visible in screenshots.
+
+4. **Evaluate against each of Nielsen's 10 Heuristics.** For each, assign a severity:
+   - ✅ **Pass** — fully satisfied, no issues
+   - ⚠️ **Minor** — small gap, low user impact
+   - 🔶 **Moderate** — noticeable issue, degrades experience
+   - 🔴 **Critical** — breaks usability, must fix
+
+   **The 10 Heuristics:**
+   1. **Visibility of system status** — Does the UI communicate what's happening? (loading states, active states, progress indicators, feedback on interaction)
+   2. **Match between system and real world** — Do labels, icons, and concepts match the user's mental model? (plain language, familiar metaphors, no jargon)
+   3. **User control and freedom** — Can users undo, cancel, go back, or exit? (close buttons, undo actions, Escape key support on overlays)
+   4. **Consistency and standards** — Are patterns applied uniformly? (same component behaves the same way everywhere, no contradictory conventions)
+   5. **Error prevention** — Does the UI prevent mistakes before they happen? (confirmation dialogs for destructive actions, disabled states, validation hints before submission)
+   6. **Recognition rather than recall** — Are options visible rather than requiring memory? (labels on icon-only buttons, visible choices, no hidden commands)
+   7. **Flexibility and efficiency of use** — Can experienced users work faster? (keyboard shortcuts, compact modes, sensible defaults)
+   8. **Aesthetic and minimalist design** — Is every element necessary? (no redundant labels, no visual noise, appropriate information density)
+   9. **Help users recognise, diagnose, and recover from errors** — Are error messages plain, specific, and constructive? (not just "Something went wrong")
+   10. **Help and documentation** — Are tooltips, placeholder text, or inline guidance provided where genuinely needed?
+
+5. **Produce a structured report:**
+
+   \`\`\`
+   ## Heuristic Analysis: [Page/Component Name]
+
+   | # | Heuristic | Severity | Finding |
+   |---|-----------|----------|---------|
+   | 1 | Visibility of system status | ✅ Pass | — |
+   | 2 | Match with real world | 🔶 Moderate | Submit button gives no feedback after click — add loading state |
+   ...
+
+   ### Findings requiring action
+   [Only Minor/Moderate/Critical items, each with a specific fix suggestion]
+
+   ### Summary
+   X critical · Y moderate · Z minor · W passing
+   \`\`\`
+
+6. **Be specific.** Reference the exact element, prop, or file where possible. A finding like "the Dismiss button in AlertDialog has no visible focus ring (AlertDialog.css:47)" is more useful than "focus styles are missing".
+`,
+  },
+  {
+    slug: "accessibility-audit",
+    name: "accessibility-audit",
+    icon: "accessibility",
+    description:
+      "Audits a component or page against WCAG 2.1 AA criteria. Checks semantic HTML, ARIA usage, keyboard navigation, focus styles, and colour contrast via both source code analysis and live screenshots. Reports file and line-level findings with WCAG criterion and severity.",
+    invoke: ["accessibility audit", "a11y check on [component/page]", "check WCAG compliance", "is [X] accessible"],
+    content: `# accessibility-audit
+
+Audit a component or page for accessibility violations against WCAG 2.1 AA criteria.
+
+## When invoked
+
+Use this skill when asked to check accessibility, run an a11y audit, or find WCAG issues — phrases like "accessibility audit", "a11y check on [component/page]", "check WCAG compliance", "is [X] accessible".
+
+## Instructions
+
+1. **Determine scope.** Accept one of:
+   - A component name (e.g. \`Dropdown\`) → audits \`src/components/Dropdown/Dropdown.tsx\` and its CSS
+   - A website page URL (e.g. \`/components/button\`) → audits the live rendered page
+   - \`all-components\` → audits all components in \`src/components/\`
+
+2. **Read the source files.** For each component in scope, read the \`.tsx\` and \`.css\` files before taking screenshots.
+
+3. **Structural audit (from source code).** Check for:
+
+   **Semantic HTML & ARIA:**
+   - Interactive elements use correct roles (\`button\`, \`link\`, \`checkbox\`, etc.) — never a \`<div onClick>\` without \`role\` and \`tabIndex\`
+   - Icon-only \`<button>\` elements have \`aria-label\` describing their action
+   - \`<img>\` elements have meaningful \`alt\` text; decorative images use \`alt=""\`
+   - Form inputs are associated with \`<label>\` via \`htmlFor\`/\`id\`, or have \`aria-label\`
+   - Modals and dialogs use \`role="dialog"\` and \`aria-modal="true"\`, with \`aria-labelledby\` pointing to the title
+   - Lists use \`<ul>\`/\`<ol>\` + \`<li>\`, not \`<div>\` stacks
+   - Heading hierarchy is logical — no h3 before h2, no skipped levels
+
+   **Keyboard Navigation:**
+   - All interactive elements are reachable by Tab key (not \`tabIndex={-1}\` without justification)
+   - Custom interactive components handle \`onKeyDown\` for Enter/Space (buttons), arrow keys (RadioGroup, SegmentedControl, ToggleGroup)
+   - Modal/dialog traps focus while open and restores focus to the trigger on close
+   - Escape key closes dismissible overlays (Tooltip, Popover, DropdownMenu, AlertDialog)
+
+   **Focus Styles:**
+   - Every interactive element has a \`:focus-visible\` rule in its CSS
+   - Focus ring uses \`--color-focus-ring\` token — not silently removed with \`outline: none\`
+
+4. **Visual audit (from screenshots).** Start the preview server and screenshot the target in both light and dark mode (follow the \`visual-review\` skill pattern). Check:
+   - **Colour contrast:** Body text should use \`--color-text-*\` tokens. Flag any text rendered below 4.5:1 contrast (WCAG 1.4.3). Note which token is used and flag if it's outside the \`--color-text-*\` / \`--color-on-*\` families.
+   - **Text sizing:** No text visually below ~12px (WCAG 1.4.4)
+   - **Focus visibility:** Confirm focus rings are clearly visible in both light and dark themes
+
+   Stop the server when done.
+
+5. **For each issue, report:**
+
+   \`\`\`
+   src/components/Dropdown/Dropdown.tsx:84 — WCAG 4.1.2 Name, Role, Value [Critical]
+   Trigger button has no accessible name. Icon-only button needs aria-label="Open dropdown".
+   \`\`\`
+
+   Severity:
+   - **Critical** — blocks keyboard or screen reader users entirely
+   - **Moderate** — degrades experience significantly
+   - **Minor** — best practice violation, low direct impact
+
+6. **Summarise:**
+   - \`X critical · Y moderate · Z minor\`
+   - If clean: "No accessibility violations found. Component meets WCAG 2.1 AA."
+`,
+  },
+  {
+    slug: "api-consistency",
+    name: "api-consistency",
+    icon: "compare",
+    description:
+      "Reads all component Props interfaces and flags inconsistencies across the library: mixed boolean naming (disabled vs isDisabled), mismatched size enums, missing standard props (className, disabled), and structural mismatches within component families. Produces a grouped findings report prioritised by breaking impact.",
+    invoke: ["review component APIs", "prop consistency audit", "are our component props consistent", "check for API inconsistencies"],
+    content: `# api-consistency
+
+Review component prop interfaces across the design system for naming inconsistencies, missing standard props, and pattern violations.
+
+## When invoked
+
+Use this skill when asked to review component APIs, check prop naming consistency, or audit TypeScript interfaces — phrases like "review component APIs", "prop consistency audit", "are our component props consistent", "check for API inconsistencies".
+
+## Instructions
+
+1. **Determine scope.** Accept one of:
+   - A list of specific components (e.g. \`Button, IconButton, CircularButton\`) → compare those
+   - \`all\` → scan all components in \`src/components/\`
+   - A category description (e.g. "all button-like components", "all form inputs") → infer the relevant components
+
+2. **Read every component's TypeScript interface.** For each \`.tsx\` file in scope, extract:
+   - All prop names, types, and whether they are required or optional
+   - Default values (from destructuring defaults in the function signature)
+
+3. **Check for these specific inconsistencies:**
+
+   **Boolean prop naming:**
+   - Should follow \`is*\`/\`has*\` convention OR plain adjective — not both (e.g. \`isDisabled\` on one component, \`disabled\` on another doing the same thing)
+   - Flag: mixed usage within the same component family
+
+   **Event handler naming:**
+   - Must be \`on*\` (e.g. \`onClick\`, \`onChange\`, \`onDismiss\`)
+   - Flag: \`handleClick\`, \`clickHandler\`, \`onClickHandler\`, or similar
+
+   **Content prop naming:**
+   - \`label\` for display text, \`children\` for slot content
+   - Flag: \`text\`, \`title\`, \`copy\`, \`content\` used interchangeably across components for the same purpose
+
+   **Size enum values:**
+   - Should use a consistent vocabulary across components
+   - Flag: \`"sm"/"md"/"lg"\` on one component and \`"small"/"medium"/"large"\` on another, or \`"compact"/"default"\` on one and \`"small"/"medium"\` on another
+
+   **Missing standard props on interactive components:**
+   - All components rendering clickable/interactive elements should have \`className?: string\`
+   - All components with visual disabled states should have \`disabled?: boolean\`
+   - All form-like components should have \`id?: string\` and \`name?: string\`
+
+   **Family consistency:**
+   - Components in the same family (e.g. Button / IconButton / CircularButton) should share \`size\` enum values
+   - If one component accepts \`iconLeft\`/\`iconRight\`, siblings in the same family should follow the same pattern
+   - Default values: if \`size\` defaults to \`"default"\` on Button, it should not default to \`"medium"\` on a related component
+
+4. **Output a grouped findings report:**
+
+   \`\`\`
+   ## API Consistency Report
+
+   ### Boolean prop naming
+   - Button: uses \`disabled\` (plain adjective)
+   - ToggleSwitch: uses \`isDisabled\` (is* prefix)
+   → Standardise to \`disabled\` across all interactive components
+
+   ### Size enum values
+   - Button: "compact" | "default" | "large"
+   - Slider: "small" | "medium" | "large"
+   → Standardise to Button's enum (it is the most-used component)
+
+   ### Missing className prop
+   - DatePicker — no className passthrough
+   - Carousel — no className passthrough
+
+   ### Summary
+   X naming inconsistencies · Y missing props · Z structural mismatches
+   \`\`\`
+
+5. **Prioritise fixes** by impact:
+   - **High:** Renames that would require consuming code changes — flag these clearly so Rob can decide whether to batch into a breaking release
+   - **Medium:** Missing props that are commonly needed by consumers
+   - **Low:** Style preferences with no breaking impact
+`,
+  },
 ];
 
 /* ============================================
@@ -490,6 +707,13 @@ export default function SkillsPage() {
                     <code className={styles.skillName}>{skill.name}</code>
                   </div>
                   <Button
+                    label="Copy"
+                    priority="secondary"
+                    size="compact"
+                    iconLeft="content_copy"
+                    onClick={() => navigator.clipboard.writeText(skill.content)}
+                  />
+                  <Button
                     label="Download"
                     priority="secondary"
                     size="compact"
@@ -503,9 +727,7 @@ export default function SkillsPage() {
                 <div className={styles.skillInvoke}>
                   <span className={styles.skillInvokeLabel}>Invoke:</span>
                   {skill.invoke.map((phrase) => (
-                    <code key={phrase} className={styles.skillInvokePhrase}>
-                      {phrase}
-                    </code>
+                    <Badge key={phrase} variant="neutral" label={phrase} />
                   ))}
                 </div>
               </div>
