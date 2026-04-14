@@ -669,7 +669,7 @@ function SkillsContent() {
                 <div className={styles.skillInvoke}>
                   <span className={styles.skillInvokeLabel}>Invoke:</span>
                   {skill.invoke.map((phrase) => (
-                    <Badge key={phrase} variant="neutral" label={phrase} />
+                    <Badge key={phrase} variant="info" label={phrase} />
                   ))}
                 </div>
               </div>
