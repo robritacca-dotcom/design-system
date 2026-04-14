@@ -491,9 +491,9 @@ export default function SkillsPage() {
                   </div>
                   <Button
                     label="Download"
-                    variant="secondary"
-                    size="sm"
-                    icon="download"
+                    priority="secondary"
+                    size="compact"
+                    iconLeft="download"
                     onClick={() => downloadSkill(`${skill.slug}.md`, skill.content)}
                   />
                 </div>
