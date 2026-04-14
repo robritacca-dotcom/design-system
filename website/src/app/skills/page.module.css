@@ -77,7 +77,7 @@
 .skillsGrid {
   display: flex;
   flex-direction: column;
-  gap: var(--primitive-gap-md);
+  gap: var(--primitive-gap-lg);
 }
 
 .skillCard {
@@ -86,7 +86,7 @@
   gap: var(--primitive-gap-md);
   padding: var(--primitive-gap-xl);
   border: 1px solid var(--color-bg-container-border);
-  border-radius: var(--radius-md);
+  border-radius: var(--primitive-radius-xl);
   background: var(--color-bg-container-primary);
 }
 
