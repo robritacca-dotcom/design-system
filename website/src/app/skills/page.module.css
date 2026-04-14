@@ -119,10 +119,11 @@
 }
 
 .skillName {
-  font-family: monospace;
+  font-family: var(--font-title-body-family);
   font-size: var(--font-title-body-size);
   font-weight: var(--font-title-body-weight);
   line-height: var(--font-title-body-line-height);
+  letter-spacing: var(--font-title-body-letter-spacing);
   color: var(--color-text-primary);
 }
 
