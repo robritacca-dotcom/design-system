@@ -649,7 +649,7 @@ function SkillsContent() {
                   <div className={styles.skillActions}>
                     <Button
                       label="Copy"
-                      priority="secondary"
+                      priority="tertiary"
                       size="compact"
                       iconLeft="content_copy"
                       onClick={() => copySkill(skill.content)}
