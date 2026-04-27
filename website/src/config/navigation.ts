@@ -20,6 +20,7 @@ export const navLinks: NavLink[] = [
   { href: "/components", label: "Components" },
   { href: "/foundations", label: "Foundations" },
   { href: "/skills", label: "Skills" },
+  { href: "/design-md", label: "Design MD" },
 ];
 
 /* ============================================
@@ -79,6 +80,10 @@ export const foundationsSidebarLinks: NavLink[] = [
 
 export const skillsSidebarLinks: NavLink[] = [
   { href: "/skills", label: "Overview" },
+];
+
+export const designMdSidebarLinks: NavLink[] = [
+  { href: "/design-md", label: "Overview" },
 ];
 
 export const aboutSidebarLinks: NavLink[] = [

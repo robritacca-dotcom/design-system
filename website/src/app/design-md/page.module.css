@@ -1,0 +1,226 @@
+/* ============================================
+   DESIGN MD PAGE LAYOUT
+   ============================================ */
+.dsLayout {
+  display: flex;
+  gap: var(--primitive-gap-xxl);
+  width: 100%;
+  max-width: 1440px;
+  padding-top: var(--primitive-gap-xl);
+}
+
+.dsContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-xxxl);
+  min-width: 0;
+}
+
+/* ============================================
+   PAGE HEADER
+   ============================================ */
+.pageHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--primitive-gap-lg);
+  width: 100%;
+}
+
+.pageTitle {
+  font-size: var(--font-display-2-size);
+  font-weight: var(--font-display-2-weight);
+  line-height: var(--font-display-2-line-height);
+  letter-spacing: var(--font-display-2-letter-spacing);
+  color: var(--color-text-primary);
+}
+
+/* ============================================
+   MARKDOWN BODY
+   ============================================ */
+.markdownBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-xxxl);
+}
+
+/* Top-level sections (## headings) */
+.markdownBody :global(h2) {
+  font-size: var(--font-heading-1-size);
+  font-weight: var(--font-heading-1-weight);
+  line-height: var(--font-heading-1-line-height);
+  letter-spacing: var(--font-heading-1-letter-spacing);
+  color: var(--color-text-primary);
+  padding-bottom: var(--primitive-padding-sm);
+  border-bottom: 1px solid var(--color-divider);
+  margin-bottom: var(--primitive-gap-lg);
+}
+
+/* Sub-sections (### headings) */
+.markdownBody :global(h3) {
+  font-size: var(--font-heading-2-size);
+  font-weight: var(--font-heading-2-weight);
+  line-height: var(--font-heading-2-line-height);
+  letter-spacing: var(--font-heading-2-letter-spacing);
+  color: var(--color-text-primary);
+  margin-top: var(--primitive-gap-xl);
+  margin-bottom: var(--primitive-gap-sm);
+}
+
+.markdownBody :global(h4) {
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  letter-spacing: var(--font-heading-3-letter-spacing);
+  color: var(--color-text-primary);
+  margin-top: var(--primitive-gap-lg);
+  margin-bottom: var(--primitive-gap-xs);
+}
+
+/* Paragraphs */
+.markdownBody :global(p) {
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  color: var(--color-text-secondary);
+  max-width: 72ch;
+}
+
+/* Strong / bold */
+.markdownBody :global(strong) {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+/* Inline code */
+.markdownBody :global(code) {
+  font-family: monospace;
+  font-size: var(--font-paragraph-sm-size);
+  padding: 2px 6px;
+  border-radius: var(--primitive-radius-xs);
+  background: var(--color-bg-container-secondary);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+/* Unordered lists */
+.markdownBody :global(ul) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-sm);
+  padding-left: var(--primitive-padding-lg);
+  max-width: 72ch;
+}
+
+/* Ordered lists */
+.markdownBody :global(ol) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-sm);
+  padding-left: var(--primitive-padding-lg);
+  max-width: 72ch;
+}
+
+.markdownBody :global(li) {
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  color: var(--color-text-secondary);
+  list-style-type: disc;
+}
+
+.markdownBody :global(ol li) {
+  list-style-type: decimal;
+}
+
+/* Horizontal rule */
+.markdownBody :global(hr) {
+  border: none;
+  border-top: 1px solid var(--color-divider);
+  margin: var(--primitive-gap-xl) 0;
+}
+
+/* ============================================
+   TABLES
+   ============================================ */
+.markdownBody :global(table) {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+}
+
+.markdownBody :global(thead) {
+  background: var(--color-bg-container-primary);
+}
+
+.markdownBody :global(th) {
+  text-align: left;
+  font-weight: 600;
+  font-size: var(--font-paragraph-sm-em-size);
+  color: var(--color-text-primary);
+  padding: var(--primitive-padding-sm) var(--primitive-padding-sm-md);
+  border-bottom: 1px solid var(--color-divider);
+  white-space: nowrap;
+}
+
+.markdownBody :global(td) {
+  padding: var(--primitive-padding-sm) var(--primitive-padding-sm-md);
+  color: var(--color-text-secondary);
+  border-bottom: 1px solid var(--color-divider);
+  vertical-align: top;
+}
+
+.markdownBody :global(td code) {
+  white-space: normal;
+}
+
+.markdownBody :global(tr:last-child td) {
+  border-bottom: none;
+}
+
+.markdownBody :global(tbody tr:hover) {
+  background: var(--color-bg-container-primary);
+}
+
+/* Table wrapper so wide tables scroll on mobile */
+.markdownBody :global(table) {
+  display: block;
+  overflow-x: auto;
+  border: 1px solid var(--color-divider);
+  border-radius: var(--primitive-radius-md);
+}
+
+/* ============================================
+   SECTION WRAPPER — each ## becomes one block
+   ============================================ */
+.section {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 959px) {
+  .pageHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--primitive-gap-md);
+  }
+
+  .dsLayout {
+    padding-left: 0;
+    min-width: 0;
+  }
+
+  .markdownBody :global(h2) {
+    font-size: 22px;
+  }
+
+  .markdownBody :global(p),
+  .markdownBody :global(li) {
+    max-width: 100%;
+  }
+}
