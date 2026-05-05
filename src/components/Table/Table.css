@@ -142,18 +142,23 @@
   background: var(--color-bg-container-primary);
 }
 
-/* Header cell: stronger divider line beneath */
-.ds-table--bordered .ds-table__row--header {
+/* Remove row-level border — border-collapse: separate ignores it */
+.ds-table--bordered .ds-table__row {
+  border-bottom: none;
+}
+
+/* Header cells: bottom divider */
+.ds-table--bordered .ds-table__header-cell {
   border-bottom: 1px solid var(--color-divider);
 }
 
-/* Body rows: use --color-divider instead of --color-bg-container-border */
-.ds-table--bordered .ds-table__body .ds-table__row {
+/* Body cells: bottom divider */
+.ds-table--bordered .ds-table__cell {
   border-bottom: 1px solid var(--color-divider);
 }
 
 /* Last body row: no bottom border (the wrapper border handles it) */
-.ds-table--bordered .ds-table__body .ds-table__row:last-child {
+.ds-table--bordered .ds-table__body .ds-table__row:last-child .ds-table__cell {
   border-bottom: none;
 }
 
