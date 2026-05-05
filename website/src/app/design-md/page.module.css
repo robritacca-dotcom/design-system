@@ -51,12 +51,15 @@
   margin: 0;
 }
 
-/* H2 — top-level sections (## headings) */
+/* H2 — top-level sections (Colors, Typography, Components, etc.)
+   Uses sub-display (30px / weight 300) for a light, airy major-section header.
+   The light weight contrasts hard with the bold h3 below it, making hierarchy unmistakable. */
 .markdownBody :global(h2) {
-  font-size: var(--font-heading-1-size);
-  font-weight: var(--font-heading-1-weight);
-  line-height: var(--font-heading-1-line-height);
-  letter-spacing: var(--font-heading-1-letter-spacing);
+  font-family: var(--font-sub-display-family);
+  font-size: var(--font-sub-display-size);
+  font-weight: var(--font-sub-display-weight);
+  line-height: var(--font-sub-display-line-height);
+  letter-spacing: var(--font-sub-display-letter-spacing);
   color: var(--color-text-primary);
   padding-bottom: var(--primitive-padding-sm);
   border-bottom: 1px solid var(--color-divider);
@@ -68,23 +71,27 @@
   margin-top: 0;
 }
 
-/* H3 — sub-sections */
+/* H3 — sub-sections (Token Tiers, Action / Brand, Surfaces, etc.)
+   heading-3 (22px / weight 600) — clearly smaller and bolder than h2. */
 .markdownBody :global(h3) {
-  font-size: var(--font-heading-2-size);
-  font-weight: var(--font-heading-2-weight);
-  line-height: var(--font-heading-2-line-height);
-  letter-spacing: var(--font-heading-2-letter-spacing);
-  color: var(--color-text-primary);
-  margin-top: var(--primitive-gap-lg);
-  margin-bottom: var(--primitive-gap-sm);
-}
-
-/* H4 — minor headings */
-.markdownBody :global(h4) {
+  font-family: var(--font-heading-3-family);
   font-size: var(--font-heading-3-size);
   font-weight: var(--font-heading-3-weight);
   line-height: var(--font-heading-3-line-height);
   letter-spacing: var(--font-heading-3-letter-spacing);
+  color: var(--color-text-primary);
+  margin-top: var(--primitive-gap-xl);
+  margin-bottom: var(--primitive-gap-sm);
+}
+
+/* H4 — minor headings
+   title-body (16px / weight 600) — paragraph-sized, bold. Inline with body copy hierarchy. */
+.markdownBody :global(h4) {
+  font-family: var(--font-title-body-family);
+  font-size: var(--font-title-body-size);
+  font-weight: var(--font-title-body-weight);
+  line-height: var(--font-title-body-line-height);
+  letter-spacing: var(--font-title-body-letter-spacing);
   color: var(--color-text-primary);
   margin-top: var(--primitive-gap-md);
   margin-bottom: var(--primitive-gap-xs);
@@ -233,6 +240,12 @@
   }
 
   .markdownBody :global(h2) {
-    font-size: 22px;
+    font-size: 26px;
+    line-height: 32px;
+  }
+
+  .markdownBody :global(h3) {
+    font-size: 18px;
+    line-height: 24px;
   }
 }
