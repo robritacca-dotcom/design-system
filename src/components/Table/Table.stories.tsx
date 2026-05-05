@@ -68,11 +68,12 @@ const textRows = [
    STORIES
    ============================================ */
 
-// Default — text only
+// Default — text only, bordered
 export const Default: Story = {
   args: {
     columns: textColumns,
     rows: textRows,
+    bordered: true,
   },
 };
 

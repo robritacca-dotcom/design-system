@@ -46,7 +46,7 @@ export default function TablePage() {
         <main className={styles.dsContent} id="main-content">
           <div className={`${styles.pageHeader} animate-in`}>
             <h1 className={styles.pageTitle}>Table</h1>
-            <PageLinks
+            <PageLinks
               storybookPath="/?path=/docs/components-table--docs"
             />
           </div>
@@ -64,7 +64,7 @@ export default function TablePage() {
           <section className={styles.section}>
             <SectionTitle title="Default" />
             <div className={styles.tableWrapper}>
-              <Table columns={basicColumns} rows={basicRows} />
+              <Table columns={basicColumns} rows={basicRows} bordered />
             </div>
           </section>
 
@@ -72,7 +72,7 @@ export default function TablePage() {
           <section className={styles.section}>
             <SectionTitle title="Compact" />
             <div className={styles.tableWrapper}>
-              <Table columns={basicColumns} rows={basicRows} size="compact" />
+              <Table columns={basicColumns} rows={basicRows} size="compact" bordered />
             </div>
           </section>
 
@@ -80,7 +80,7 @@ export default function TablePage() {
           <section className={styles.section}>
             <SectionTitle title="Striped" />
             <div className={styles.tableWrapper}>
-              <Table columns={basicColumns} rows={basicRows} striped />
+              <Table columns={basicColumns} rows={basicRows} striped bordered />
             </div>
           </section>
 
@@ -89,6 +89,7 @@ export default function TablePage() {
             <SectionTitle title="With icons" />
             <div className={styles.tableWrapper}>
               <Table
+                bordered
                 columns={[
                   { key: "name", header: "Name", width: "35%" },
                   { key: "department", header: "Department", width: "30%" },
@@ -144,6 +145,7 @@ export default function TablePage() {
             <SectionTitle title="With controls" />
             <div className={styles.tableWrapper}>
               <Table
+                bordered
                 columns={[
                   { key: "select", header: "", width: "48px", align: "center" },
                   { key: "name", header: "Name", width: "25%" },
@@ -221,6 +223,7 @@ export default function TablePage() {
             <SectionTitle title="With inputs" />
             <div className={styles.tableWrapper}>
               <Table
+                bordered
                 columns={[
                   { key: "setting", header: "Setting", width: "30%" },
                   { key: "value", header: "Value" },
