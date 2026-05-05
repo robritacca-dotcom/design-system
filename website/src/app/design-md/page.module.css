@@ -13,7 +13,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: var(--primitive-gap-xxxl);
+  gap: var(--primitive-gap-xl);
   min-width: 0;
 }
 
@@ -38,14 +38,20 @@
 
 /* ============================================
    MARKDOWN BODY
+   Reset all default margins, then set
+   per-element vertical rhythm explicitly.
    ============================================ */
 .markdownBody {
-  display: flex;
-  flex-direction: column;
-  gap: var(--primitive-gap-xxxl);
+  display: block;
+  max-width: 920px;
 }
 
-/* Top-level sections (## headings) */
+.markdownBody > *,
+.markdownBody :global(*) {
+  margin: 0;
+}
+
+/* H2 — top-level sections (## headings) */
 .markdownBody :global(h2) {
   font-size: var(--font-heading-1-size);
   font-weight: var(--font-heading-1-weight);
@@ -54,27 +60,33 @@
   color: var(--color-text-primary);
   padding-bottom: var(--primitive-padding-sm);
   border-bottom: 1px solid var(--color-divider);
-  margin-bottom: var(--primitive-gap-lg);
+  margin-top: var(--primitive-gap-xxl);
+  margin-bottom: var(--primitive-gap-md);
 }
 
-/* Sub-sections (### headings) */
+.markdownBody :global(h2:first-child) {
+  margin-top: 0;
+}
+
+/* H3 — sub-sections */
 .markdownBody :global(h3) {
   font-size: var(--font-heading-2-size);
   font-weight: var(--font-heading-2-weight);
   line-height: var(--font-heading-2-line-height);
   letter-spacing: var(--font-heading-2-letter-spacing);
   color: var(--color-text-primary);
-  margin-top: var(--primitive-gap-xl);
+  margin-top: var(--primitive-gap-lg);
   margin-bottom: var(--primitive-gap-sm);
 }
 
+/* H4 — minor headings */
 .markdownBody :global(h4) {
   font-size: var(--font-heading-3-size);
   font-weight: var(--font-heading-3-weight);
   line-height: var(--font-heading-3-line-height);
   letter-spacing: var(--font-heading-3-letter-spacing);
   color: var(--color-text-primary);
-  margin-top: var(--primitive-gap-lg);
+  margin-top: var(--primitive-gap-md);
   margin-bottom: var(--primitive-gap-xs);
 }
 
@@ -84,7 +96,11 @@
   font-weight: var(--font-paragraph-weight);
   line-height: var(--font-paragraph-line-height);
   color: var(--color-text-secondary);
-  max-width: 72ch;
+  margin-bottom: var(--primitive-gap-md);
+}
+
+.markdownBody :global(p:last-child) {
+  margin-bottom: 0;
 }
 
 /* Strong / bold */
@@ -95,31 +111,23 @@
 
 /* Inline code */
 .markdownBody :global(code) {
-  font-family: monospace;
-  font-size: var(--font-paragraph-sm-size);
-  padding: 2px 6px;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 13px;
+  padding: 1px 6px;
   border-radius: var(--primitive-radius-xs);
   background: var(--color-bg-container-secondary);
-  color: var(--color-text-secondary);
+  color: var(--color-text-primary);
   white-space: nowrap;
 }
 
-/* Unordered lists */
-.markdownBody :global(ul) {
-  display: flex;
-  flex-direction: column;
-  gap: var(--primitive-gap-sm);
-  padding-left: var(--primitive-padding-lg);
-  max-width: 72ch;
-}
-
-/* Ordered lists */
+/* Lists */
+.markdownBody :global(ul),
 .markdownBody :global(ol) {
   display: flex;
   flex-direction: column;
-  gap: var(--primitive-gap-sm);
-  padding-left: var(--primitive-padding-lg);
-  max-width: 72ch;
+  gap: var(--primitive-gap-xs);
+  padding-left: var(--primitive-padding-md);
+  margin-bottom: var(--primitive-gap-md);
 }
 
 .markdownBody :global(li) {
@@ -128,76 +136,81 @@
   line-height: var(--font-paragraph-line-height);
   color: var(--color-text-secondary);
   list-style-type: disc;
+  padding-left: var(--primitive-padding-xxs);
 }
 
 .markdownBody :global(ol li) {
   list-style-type: decimal;
 }
 
-/* Horizontal rule */
+.markdownBody :global(li > p) {
+  margin-bottom: 0;
+}
+
+.markdownBody :global(li > ul),
+.markdownBody :global(li > ol) {
+  margin-top: var(--primitive-gap-xs);
+  margin-bottom: 0;
+}
+
+/* Hide horizontal rules — h2 borders provide section separation */
 .markdownBody :global(hr) {
-  border: none;
-  border-top: 1px solid var(--color-divider);
-  margin: var(--primitive-gap-xl) 0;
+  display: none;
 }
 
 /* ============================================
    TABLES
+   Wrapped in .tableWrapper for horizontal scroll
    ============================================ */
-.markdownBody :global(table) {
+.tableWrapper {
+  overflow-x: auto;
+  border: 1px solid var(--color-divider);
+  border-radius: var(--primitive-radius-md);
+  margin-bottom: var(--primitive-gap-md);
+  background: var(--color-bg-page-primary);
+}
+
+.tableWrapper :global(table) {
   width: 100%;
   border-collapse: collapse;
   font-size: var(--font-paragraph-sm-size);
   line-height: var(--font-paragraph-sm-line-height);
+  table-layout: auto;
 }
 
-.markdownBody :global(thead) {
+.tableWrapper :global(thead) {
   background: var(--color-bg-container-primary);
 }
 
-.markdownBody :global(th) {
+.tableWrapper :global(th) {
   text-align: left;
   font-weight: 600;
   font-size: var(--font-paragraph-sm-em-size);
   color: var(--color-text-primary);
-  padding: var(--primitive-padding-sm) var(--primitive-padding-sm-md);
+  padding: var(--primitive-padding-sm-md) var(--primitive-padding-md);
   border-bottom: 1px solid var(--color-divider);
   white-space: nowrap;
 }
 
-.markdownBody :global(td) {
-  padding: var(--primitive-padding-sm) var(--primitive-padding-sm-md);
+.tableWrapper :global(td) {
+  padding: var(--primitive-padding-sm-md) var(--primitive-padding-md);
   color: var(--color-text-secondary);
   border-bottom: 1px solid var(--color-divider);
   vertical-align: top;
+  line-height: 1.5;
 }
 
-.markdownBody :global(td code) {
-  white-space: normal;
+.tableWrapper :global(td code),
+.tableWrapper :global(th code) {
+  white-space: nowrap;
 }
 
-.markdownBody :global(tr:last-child td) {
+.tableWrapper :global(tbody tr:last-child td) {
   border-bottom: none;
 }
 
-.markdownBody :global(tbody tr:hover) {
+.tableWrapper :global(tbody tr:hover) {
   background: var(--color-bg-container-primary);
-}
-
-/* Table wrapper so wide tables scroll on mobile */
-.markdownBody :global(table) {
-  display: block;
-  overflow-x: auto;
-  border: 1px solid var(--color-divider);
-  border-radius: var(--primitive-radius-md);
-}
-
-/* ============================================
-   SECTION WRAPPER — each ## becomes one block
-   ============================================ */
-.section {
-  display: flex;
-  flex-direction: column;
 }
 
 /* ============================================
@@ -215,12 +228,11 @@
     min-width: 0;
   }
 
-  .markdownBody :global(h2) {
-    font-size: 22px;
+  .markdownBody {
+    max-width: 100%;
   }
 
-  .markdownBody :global(p),
-  .markdownBody :global(li) {
-    max-width: 100%;
+  .markdownBody :global(h2) {
+    font-size: 22px;
   }
 }

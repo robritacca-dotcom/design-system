@@ -36,7 +36,18 @@ export default function DesignMdPage() {
           </div>
 
           <div className={`${styles.markdownBody} animate-in animate-delay-1`}>
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={{
+                table: ({ ...props }) => (
+                  <div className={styles.tableWrapper}>
+                    <table {...props} />
+                  </div>
+                ),
+              }}
+            >
+              {content}
+            </ReactMarkdown>
           </div>
         </main>
       </div>
