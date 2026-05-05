@@ -2,7 +2,7 @@
 
 ## Overview
 
-This design system is a **cool-professional, teal-anchored** component library and documentation website. The base atmosphere is a **pure white page floor** (`--color-bg-page-primary` — #FFFFFF) lifted by a **neutral container hierarchy** (light gray #F1F1F1 → mid gray #D6D6D6 → deep gray #BCBCBC) — clinical, precise, never warm. The brand voltage comes from **Anthropic teal** (`--color-action-primary-bg` — #118AB2), a mid-depth cyan-blue that reads trustworthy and technical without corporate-blue flatness.
+This design system is a **cool-professional, teal-anchored** component library and documentation website. The base atmosphere is a **pure white page floor** (`--color-bg-page-primary` — #FFFFFF) lifted by a **neutral container hierarchy** (light gray #F1F1F1 → mid gray #D6D6D6 → deep gray #BCBCBC) — clinical, precise, never warm. The brand voltage comes from **signature teal** (`--color-action-primary-bg` — #118AB2), a mid-depth cyan-blue that reads trustworthy and technical without corporate-blue flatness.
 
 The system runs a **single typeface throughout**: **Nunito Sans** at weight 300 (display/hero) → 600 (headings) → 500/400 (body/UI). There is no serif face and no monospace split — the typographic personality is clean, rounded, and approachable rather than editorial.
 
