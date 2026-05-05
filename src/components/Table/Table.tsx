@@ -28,6 +28,12 @@ export interface TableProps {
   size?: 'default' | 'compact';
   /** Alternating row background colours */
   striped?: boolean;
+  /**
+   * Adds an outer border + border-radius container, a tinted thead background,
+   * and `--color-divider` row lines — matching the bordered table style used on
+   * markdown content pages.
+   */
+  bordered?: boolean;
   /** Accessible caption for the table */
   caption?: string;
   /** Whether to visually hide the caption (still available to screen readers) */
@@ -46,6 +52,7 @@ export const Table = ({
   rows,
   size = 'default',
   striped = false,
+  bordered = false,
   caption,
   captionHidden = false,
   className = '',
@@ -53,12 +60,13 @@ export const Table = ({
   const baseClass = 'ds-table';
   const sizeClass = `${baseClass}--${size}`;
   const stripedClass = striped ? `${baseClass}--striped` : '';
+  const borderedClass = bordered ? `${baseClass}--bordered` : '';
 
-  const classes = [baseClass, sizeClass, stripedClass, className]
+  const classes = [baseClass, sizeClass, stripedClass, borderedClass, className]
     .filter(Boolean)
     .join(' ');
 
-  return (
+  const table = (
     <table className={classes}>
       {caption && (
         <caption
@@ -118,4 +126,14 @@ export const Table = ({
       </tbody>
     </table>
   );
+
+  if (bordered) {
+    return (
+      <div className={`${baseClass}__wrapper`}>
+        {table}
+      </div>
+    );
+  }
+
+  return table;
 };

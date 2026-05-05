@@ -120,6 +120,49 @@
 }
 
 /* ============================================
+   BORDERED VARIANT
+   Outer border box + tinted thead + divider row lines.
+   Matches the table style used on markdown content pages.
+   ============================================ */
+
+.ds-table__wrapper {
+  overflow-x: auto;
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius-md); /* 12px */
+  background: var(--color-bg-page-primary);
+}
+
+/* When bordered, the table fills the wrapper — no radius needed on the table itself */
+.ds-table--bordered {
+  border-radius: 0;
+}
+
+/* Thead gets a tinted background to distinguish it from body rows */
+.ds-table--bordered .ds-table__head {
+  background: var(--color-bg-container-primary);
+}
+
+/* Header cell: stronger divider line beneath */
+.ds-table--bordered .ds-table__row--header {
+  border-bottom: 1px solid var(--color-divider);
+}
+
+/* Body rows: use --color-divider instead of --color-bg-container-border */
+.ds-table--bordered .ds-table__body .ds-table__row {
+  border-bottom: 1px solid var(--color-divider);
+}
+
+/* Last body row: no bottom border (the wrapper border handles it) */
+.ds-table--bordered .ds-table__body .ds-table__row:last-child {
+  border-bottom: none;
+}
+
+/* Row hover on bordered variant */
+.ds-table--bordered .ds-table__body .ds-table__row:hover {
+  background-color: var(--color-bg-container-primary);
+}
+
+/* ============================================
    SIZE — COMPACT
    ============================================ */
 

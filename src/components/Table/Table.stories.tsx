@@ -23,6 +23,10 @@ const meta = {
       control: 'boolean',
       description: 'Alternating row backgrounds',
     },
+    bordered: {
+      control: 'boolean',
+      description: 'Outer border container + tinted thead + divider row lines',
+    },
     caption: {
       control: 'text',
       description: 'Accessible table caption',
@@ -87,6 +91,26 @@ export const Striped: Story = {
     columns: textColumns,
     rows: textRows,
     striped: true,
+  },
+};
+
+// Bordered — outer border box + tinted thead + divider rows
+export const Bordered: Story = {
+  args: {
+    columns: textColumns,
+    rows: textRows,
+    bordered: true,
+  },
+};
+
+// Bordered + compact
+export const BorderedCompact: Story = {
+  name: 'Bordered (compact)',
+  args: {
+    columns: textColumns,
+    rows: textRows,
+    bordered: true,
+    size: 'compact',
   },
 };
 
