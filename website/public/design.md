@@ -113,6 +113,71 @@ Nunito Sans is a rounded humanist sans-serif. The rounded terminals give UI elem
 
 ---
 
+## Page Layout & Heading Hierarchy
+
+This section documents how to apply the typographic scale when building new pages in the documentation website. Following these rules ensures every page reads with the same visual hierarchy.
+
+### Heading Roles
+
+| Level | Token | Size | Weight | Role |
+|---|---|---|---|---|
+| Page title (`h1`) | `--font-display-2-*` | 64px | 300 | Route title — rendered once per page at the top, outside the markdown body |
+| Major section (`h2`) | `--font-sub-display-*` | 30px | 300 | Top-level content sections (e.g. Colors, Typography) |
+| Sub-section (`h3`) | `--font-heading-3-*` | 22px | 600 | Named groupings within a section (e.g. Token Tiers, Action / Brand) |
+| Minor heading (`h4`) | `--font-title-body-*` | 16px | 600 | Inline labels or additional sub-groups |
+
+### The Weight-Contrast Rule
+
+**Weight contrast is the primary differentiator between adjacent heading levels — not size alone.**
+
+- `h2` is 30px / weight 300 (light). `h3` is 22px / weight 600 (bold). The 8px size gap alone is not enough — the jump from 300 → 600 is what makes the hierarchy unmistakable at a glance.
+- Never use the same weight for two consecutive heading levels. A heading that is only slightly smaller than the one above it, at the same weight, will look like a duplicate rather than a sub-item.
+- The correct pairing is always: **light heading above, bold heading below** at the major → minor transition.
+
+### Section Dividers
+
+`h2` elements carry a `border-bottom: 1px solid var(--color-divider)` by default to visually close the preceding section. Do not insert `<hr>` elements between sections — they duplicate the divider. The border on `h2` is the only section separator needed.
+
+### Applying to Markdown Pages
+
+When a page renders markdown (via `react-markdown` or similar), apply these heading styles using `:global()` selectors scoped to the markdown body container:
+
+```css
+/* h2 — major section, light and airy */
+.markdownBody :global(h2) {
+  font-size: var(--font-sub-display-size);      /* 30px */
+  font-weight: var(--font-sub-display-weight);  /* 300 */
+  border-bottom: 1px solid var(--color-divider);
+  margin-top: var(--primitive-gap-xxl);         /* 60px above */
+  margin-bottom: var(--primitive-gap-md);       /* 16px below */
+}
+
+/* h3 — sub-section, bold contrast */
+.markdownBody :global(h3) {
+  font-size: var(--font-heading-3-size);        /* 22px */
+  font-weight: var(--font-heading-3-weight);    /* 600 */
+  margin-top: var(--primitive-gap-xl);          /* 40px above */
+  margin-bottom: var(--primitive-gap-sm);       /* 8px below */
+}
+
+/* h4 — minor heading, same weight as h3, smaller size */
+.markdownBody :global(h4) {
+  font-size: var(--font-title-body-size);       /* 16px */
+  font-weight: var(--font-title-body-weight);   /* 600 */
+  margin-top: var(--primitive-gap-md);
+  margin-bottom: var(--primitive-gap-xs);
+}
+```
+
+### Responsive Collapse
+
+Below 959px:
+- `h2` → 26px (from 30px)
+- `h3` → 18px (from 22px)
+- The weight contrast rule still applies; do not change weights at any breakpoint.
+
+---
+
 ## Spacing & Layout
 
 ### Base Units
