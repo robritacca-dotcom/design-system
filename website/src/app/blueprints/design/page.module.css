@@ -13,8 +13,34 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: var(--primitive-gap-xl);
+  gap: var(--primitive-gap-xxxl);
   min-width: 0;
+}
+
+/* ============================================
+   INTRO SECTION
+   ============================================ */
+.introSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-lg);
+}
+
+.subDisplay {
+  font-family: var(--font-sub-display-family);
+  font-size: var(--font-sub-display-size);
+  font-weight: var(--font-sub-display-weight);
+  line-height: var(--font-sub-display-line-height);
+  letter-spacing: var(--font-sub-display-letter-spacing);
+  color: var(--color-text-primary);
+  margin-bottom: 0;
+}
+
+.introBody {
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  color: var(--color-text-primary);
 }
 
 /* ============================================
@@ -88,6 +114,17 @@
    title-body (16px / weight 600) — paragraph-sized, bold. Inline with body copy hierarchy. */
 .markdownBody :global(h4) {
   font-family: var(--font-title-body-family);
+  font-size: var(--font-title-body-size);
+  font-weight: var(--font-title-body-weight);
+  line-height: var(--font-title-body-line-height);
+  letter-spacing: var(--font-title-body-letter-spacing);
+  color: var(--color-text-primary);
+  margin-top: var(--primitive-gap-md);
+  margin-bottom: var(--primitive-gap-xs);
+}
+
+/* Bold-only paragraphs act as inline headings (e.g. "Key Characteristics:") */
+.markdownBody :global(p:has(> strong:only-child)) {
   font-size: var(--font-title-body-size);
   font-weight: var(--font-title-body-weight);
   line-height: var(--font-title-body-line-height);
@@ -233,6 +270,11 @@
   .dsLayout {
     padding-left: 0;
     min-width: 0;
+  }
+
+  .subDisplay {
+    font-size: 24px;
+    line-height: 36px;
   }
 
   .markdownBody {

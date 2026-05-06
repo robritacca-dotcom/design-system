@@ -20,7 +20,7 @@ export const navLinks: NavLink[] = [
   { href: "/components", label: "Components" },
   { href: "/foundations", label: "Foundations" },
   { href: "/skills", label: "Skills" },
-  { href: "/design-md", label: "Design MD" },
+  { href: "/blueprints", label: "Blueprints" },
 ];
 
 /* ============================================
@@ -82,8 +82,10 @@ export const skillsSidebarLinks: NavLink[] = [
   { href: "/skills", label: "Overview" },
 ];
 
-export const designMdSidebarLinks: NavLink[] = [
-  { href: "/design-md", label: "Overview" },
+export const blueprintsSidebarLinks: NavLink[] = [
+  { href: "/blueprints", label: "Overview" },
+  { href: "/blueprints/design", label: "Design MD" },
+  { href: "/blueprints/claude", label: "Claude MD" },
 ];
 
 export const aboutSidebarLinks: NavLink[] = [

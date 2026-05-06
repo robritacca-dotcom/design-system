@@ -5,7 +5,7 @@ import { Button } from "@design-system/components/Button/Button";
 export default function DownloadButton() {
   return (
     <a href="/design.md" download="design.md">
-      <Button label="Download design.md" priority="secondary" size="default" iconLeft="download" />
+      <Button label="Download" priority="tertiary" size="compact" iconLeft="download" iconRight="open_in_new" />
     </a>
   );
 }
