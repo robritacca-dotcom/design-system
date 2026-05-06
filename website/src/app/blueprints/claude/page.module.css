@@ -67,7 +67,6 @@
    ============================================ */
 .markdownBody {
   display: block;
-  max-width: 920px;
 }
 
 .markdownBody > *,
