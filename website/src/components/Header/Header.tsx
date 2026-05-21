@@ -192,7 +192,7 @@ export default function Header({ navLinks, subnavLinks }: HeaderProps) {
         <div className={styles.navContainer}>
           <Link href="/" className={styles.navLogo}>
             <LogoIcon className={styles.navLogoIcon} />
-            <span className={styles.navLogoText}>robr0 DS</span>
+            <span className={styles.navLogoText}>Robert Ritacca</span>
           </Link>
           <div className={styles.navCenter}>
             <ButtonGroup
@@ -212,7 +212,7 @@ export default function Header({ navLinks, subnavLinks }: HeaderProps) {
         <div className={styles.navContainer}>
           <Link href="/" className={styles.navLogo}>
             <LogoIcon className={styles.navLogoIcon} />
-            <span className={styles.navLogoText}>robr0 DS</span>
+            <span className={styles.navLogoText}>Robert Ritacca</span>
           </Link>
           <div className={styles.navCenter}>
             <ButtonGroup

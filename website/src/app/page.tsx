@@ -54,13 +54,19 @@ export default function HomePage() {
       <main className={styles.homeContainer} id="main-content">
         <div className={`${styles.homeHeading} animate-in animate-delay-1`}>
           <div className={styles.homeNameTitle}>
-            <h1 className={styles.homeTitle}>robr0 DS</h1>
+            <h1 className={styles.homeTitle}>Robert Ritacca</h1>
             <p className={styles.homeSubtitle}>
-              The codified design system for all of my upcoming personal projects
+              Principal Product Designer @Intuit, previously @Meta
             </p>
           </div>
           <div className={styles.homeDivider} />
           <div className={styles.homeLinks}>
+            <Button
+              label="Work"
+              priority="tertiary"
+              iconLeft="work"
+              href="/about/work"
+            />
             <Button
               label="Figma"
               priority="tertiary"
