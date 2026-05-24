@@ -41,7 +41,9 @@ const caseStudies: CaseStudy[] = [
     cover: "/images/ds-hero.png",
   },
   {
-    title: "Coming soon",
+    href: "/work/meta-career-profile",
+    title: "Career Profile Vision",
+    dek: "Reimagining Meta's candidate experience platform as a scalable, personalized recruiting ecosystem",
     company: { name: "Meta", logo: "/logos/meta.svg" },
   },
   {

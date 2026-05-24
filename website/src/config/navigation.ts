@@ -140,7 +140,7 @@ export const workSidebarLinks: NavLink[] = [
   { href: "/work/embedded-ai-turbotax", label: "Embedded AI Experiences" },
   { href: "/work/robr0-ds", label: "Building robr0 DS" },
   { href: "/work/cibc-firstcaribbean", label: "CIBC FirstCaribbean" },
-  { href: "#", label: "Meta", disabled: true },
+  { href: "/work/meta-career-profile", label: "Meta — Career Profile" },
   { href: "#", label: "Intuit — Agent chat", disabled: true },
   { href: "#", label: "Augmenta", disabled: true },
 ];
