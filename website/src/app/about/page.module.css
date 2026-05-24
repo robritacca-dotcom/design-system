@@ -386,15 +386,7 @@
 .artifactIcon {
   font-size: 40px;
   line-height: 1;
-  font-variation-settings: "FILL" 1;
   color: var(--color-text-primary);
-  width: 56px;
-  height: 56px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--radius-md);
-  background: var(--color-bg-container-tertiary);
   flex-shrink: 0;
 }
 
