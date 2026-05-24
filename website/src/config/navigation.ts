@@ -139,7 +139,7 @@ export const aboutSidebarLinks: NavLink[] = [
 
 export const workSidebarLinks: NavLink[] = [
   { href: "/work", label: "Overview" },
-  { href: "/work/embedded-ai-turbotax", label: "Embedded AI Experiences", logo: "/logos/Intuit.svg" },
+  { href: "/work/embedded-ai-turbotax", label: "Embedded AI Experiences", logo: "/logos/turbotax.svg" },
   { href: "/work/robr0-ds", label: "Building robr0 DS", logo: "/logos/rr.svg" },
   { href: "/work/cibc-firstcaribbean", label: "FirstCaribbean", logo: "/logos/CIBC.svg" },
   { href: "/work/meta-career-profile", label: "Career Profile", logo: "/logos/meta.svg" },
