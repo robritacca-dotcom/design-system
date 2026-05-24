@@ -4,6 +4,7 @@ import Image from "next/image";
 import MegaNav from "../../components/MegaNav/MegaNav";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import Footer from "../../components/Footer/Footer";
+import { ToastProvider, useToast } from "@design-system/components/Toast/Toast";
 import styles from "./page.module.css";
 
 interface ContactMethod {
@@ -15,6 +16,8 @@ interface ContactMethod {
   /** Path to a product logo (preferred over icon when present) */
   logo?: string;
   external?: boolean;
+  /** Show a copy-to-clipboard button on the card */
+  copyable?: boolean;
 }
 
 const methods: ContactMethod[] = [
@@ -23,6 +26,7 @@ const methods: ContactMethod[] = [
     value: "rob.ritacca@gmail.com",
     href: "mailto:rob.ritacca@gmail.com",
     icon: "mail",
+    copyable: true,
   },
   {
     label: "LinkedIn",
@@ -61,7 +65,18 @@ const methods: ContactMethod[] = [
   },
 ];
 
-export default function ContactPage() {
+function ContactContent() {
+  const { toast } = useToast();
+
+  async function copyToClipboard(text: string) {
+    try {
+      await navigator.clipboard.writeText(text);
+      toast({ title: "Copied to clipboard", variant: "positive", duration: 3000 });
+    } catch {
+      toast({ title: "Could not copy", variant: "error", duration: 3000 });
+    }
+  }
+
   return (
     <>
       <BlurBackground fullHeight />
@@ -104,12 +119,30 @@ export default function ContactPage() {
                 <span className={styles.methodLabel}>{m.label}</span>
                 <span className={styles.methodValue}>{m.value}</span>
               </div>
-              <span
-                className={`material-symbols-rounded ${styles.methodChevron}`}
-                aria-hidden="true"
-              >
-                {m.external ? "open_in_new" : "arrow_forward"}
-              </span>
+              <div className={styles.methodActions}>
+                {m.copyable && (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      copyToClipboard(m.value);
+                    }}
+                    className={styles.copyButton}
+                    aria-label={`Copy ${m.value}`}
+                  >
+                    <span className="material-symbols-rounded" aria-hidden="true">
+                      content_copy
+                    </span>
+                  </button>
+                )}
+                <span
+                  className={`material-symbols-rounded ${styles.methodChevron}`}
+                  aria-hidden="true"
+                >
+                  {m.external ? "open_in_new" : "arrow_forward"}
+                </span>
+              </div>
             </a>
           ))}
         </div>
@@ -117,5 +150,13 @@ export default function ContactPage() {
 
       <Footer />
     </>
+  );
+}
+
+export default function ContactPage() {
+  return (
+    <ToastProvider position="bottom-right">
+      <ContactContent />
+    </ToastProvider>
   );
 }
