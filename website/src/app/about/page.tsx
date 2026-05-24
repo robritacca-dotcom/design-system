@@ -1,16 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import Header from "../../components/Header/Header";
+import Link from "next/link";
+import MegaNav from "../../components/MegaNav/MegaNav";
+import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import Footer from "../../components/Footer/Footer";
 import PageLinks from "../../components/PageLinks/PageLinks";
-import { getNavLinks, getSidebarLinks, aboutSidebarLinks } from "@/config/navigation";
+import { getSidebarLinks, aboutSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
-const navLinks = getNavLinks("About");
-const { sidebarLinks, subnavLinks } = getSidebarLinks(aboutSidebarLinks, "/about");
+const { sidebarLinks } = getSidebarLinks(aboutSidebarLinks, "/about");
 
 export default function AboutDsPage() {
   return (
@@ -18,12 +19,13 @@ export default function AboutDsPage() {
 
       <BlurBackground />
 
-      <Header navLinks={navLinks} subnavLinks={subnavLinks} />
+      <MegaNav />
 
       <div className={styles.dsLayout}>
         <Sidebar links={sidebarLinks} />
 
         <main className={styles.dsContent} id="main-content">
+          <PageBreadcrumb />
           {/* Page Title */}
           <div className={`${styles.pageHeader} animate-in`}>
             <h1 className={styles.pageTitle}>About robr0 DS</h1>
@@ -277,6 +279,65 @@ export default function AboutDsPage() {
                 </div>
               </div>
             </aside>
+          </div>
+
+          {/* Take it with you — the artifacts visitors can reuse */}
+          <div className={`${styles.resumeSection} animate-in animate-delay-4`}>
+            <div className={styles.resumeSectionHeader}>
+              <h2 className={styles.resumeSectionTitle}>Take it with you</h2>
+            </div>
+            <p className={styles.artifactsIntro}>
+              The whole system is open. If you want to apply this approach to your own project, three artifacts make it easy — drop them into your codebase or AI tooling and you have a working starting point.
+            </p>
+            <div className={styles.artifactsGrid}>
+              <Link href="/blueprints/claude" className={styles.artifactCard}>
+                <span className={`material-symbols-rounded ${styles.artifactIcon}`} aria-hidden="true">
+                  psychology
+                </span>
+                <div className={styles.artifactBody}>
+                  <h3 className={styles.artifactTitle}>Claude MD</h3>
+                  <p className={styles.artifactDescription}>
+                    The codebase context file Claude Code reads on every session. Project structure, token architecture, component anatomy, and the conventions a builder needs to extend the system without exploring. Hand it to any AI agent and it knows the rules.
+                  </p>
+                  <span className={styles.artifactCta}>
+                    Read Claude MD
+                    <span className="material-symbols-rounded" aria-hidden="true">arrow_forward</span>
+                  </span>
+                </div>
+              </Link>
+
+              <Link href="/blueprints/design" className={styles.artifactCard}>
+                <span className={`material-symbols-rounded ${styles.artifactIcon}`} aria-hidden="true">
+                  description
+                </span>
+                <div className={styles.artifactBody}>
+                  <h3 className={styles.artifactTitle}>Design MD</h3>
+                  <p className={styles.artifactDescription}>
+                    The design language in a single markdown reference — tokens, typography, colours, and every component spec. The source of truth for how the system looks and behaves, written so a human or a model can pick it up cold.
+                  </p>
+                  <span className={styles.artifactCta}>
+                    Read Design MD
+                    <span className="material-symbols-rounded" aria-hidden="true">arrow_forward</span>
+                  </span>
+                </div>
+              </Link>
+
+              <Link href="/skills" className={styles.artifactCard}>
+                <span className={`material-symbols-rounded ${styles.artifactIcon}`} aria-hidden="true">
+                  auto_awesome
+                </span>
+                <div className={styles.artifactBody}>
+                  <h3 className={styles.artifactTitle}>Skills</h3>
+                  <p className={styles.artifactDescription}>
+                    Reusable Claude Code skills — scaffold a new component, audit token usage, run a heuristic review, ship a pre-deploy check. Each one is a markdown file you can download and drop into <code>.claude/skills/</code> on your own project.
+                  </p>
+                  <span className={styles.artifactCta}>
+                    Browse Skills
+                    <span className="material-symbols-rounded" aria-hidden="true">arrow_forward</span>
+                  </span>
+                </div>
+              </Link>
+            </div>
           </div>
         </main>
       </div>

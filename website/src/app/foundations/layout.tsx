@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Foundations",
+  title: "Foundations — robr0 DS",
   description:
     "Core design tokens — primitive colours, semantic colours, typography, spacing, icons, and logos.",
 };

@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import Header from "../../../components/Header/Header";
+import MegaNav from "../../../components/MegaNav/MegaNav";
+import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
@@ -9,10 +10,9 @@ import { AlertDialog } from "@design-system/components/AlertDialog/AlertDialog";
 import { Button } from "@design-system/components/Button/Button";
 import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
-import { getNavLinks, getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
+import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
-const navLinks = getNavLinks("Components");
-const { sidebarLinks, subnavLinks } = getSidebarLinks(componentsSidebarLinks, "/components/alert-dialog");
+const { sidebarLinks } = getSidebarLinks(componentsSidebarLinks, "/components/alert-dialog");
 
 export default function AlertDialogPage() {
   const [defaultOpen, setDefaultOpen] = useState(false);
@@ -22,12 +22,13 @@ export default function AlertDialogPage() {
   return (
     <>
       <BlurBackground />
-      <Header navLinks={navLinks} subnavLinks={subnavLinks} />
+      <MegaNav />
 
       <div className={styles.dsLayout}>
         <Sidebar links={sidebarLinks} />
 
         <main className={styles.dsContent} id="main-content">
+          <PageBreadcrumb />
           <div className={`${styles.pageHeader} animate-in`}>
             <h1 className={styles.pageTitle}>Alert dialog</h1>
             <PageLinks

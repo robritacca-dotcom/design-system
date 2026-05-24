@@ -1,29 +1,22 @@
 "use client";
 
 import Image from "next/image";
-import Header from "../../../components/Header/Header";
-import Sidebar from "../../../components/Sidebar/Sidebar";
+import MegaNav from "../../../components/MegaNav/MegaNav";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
 import PasswordGate from "../../../components/PasswordGate/PasswordGate";
 import { Button } from "@design-system/components/Button/Button";
-import { getNavLinks, getSidebarLinks, aboutSidebarLinks } from "@/config/navigation";
 import styles from "../page.module.css";
 import workStyles from "./work.module.css";
-
-const navLinks = getNavLinks("About");
-const { sidebarLinks, subnavLinks } = getSidebarLinks(aboutSidebarLinks, "/about/work");
 
 export default function AboutWorkPage() {
   return (
     <>
       <BlurBackground />
 
-      <Header navLinks={navLinks} subnavLinks={subnavLinks} />
+      <MegaNav />
 
       <div className={styles.dsLayout}>
-        <Sidebar links={sidebarLinks} />
-
         <main className={styles.dsContent} id="main-content">
           {/* Page Title */}
           <div className={`${styles.pageHeader} animate-in`}>

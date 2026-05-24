@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About Robert Ritacca",
+  title: "About",
   description:
-    "About Robert Ritacca — designer and developer behind the robr0 Design System.",
+    "Principal Product Designer at Intuit, previously Meta. Background, principles, and what I work on.",
 };
 
 export default function AboutMeLayout({

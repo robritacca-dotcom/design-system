@@ -1,0 +1,201 @@
+/* ============================================
+   WORK INDEX PAGE LAYOUT
+   ============================================ */
+.dsLayout {
+  display: flex;
+  gap: var(--primitive-gap-xxl);
+  width: 100%;
+  max-width: 1440px;
+  padding-top: var(--primitive-gap-xl);
+}
+
+.dsContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-xxxl);
+  min-width: 0;
+}
+
+/* ============================================
+   PAGE HEADER + TITLE
+   ============================================ */
+.pageHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--primitive-gap-lg);
+  width: 100%;
+}
+
+.pageTitle {
+  font-size: var(--font-display-2-size);
+  font-weight: var(--font-display-2-weight);
+  line-height: var(--font-display-2-line-height);
+  letter-spacing: var(--font-display-2-letter-spacing);
+  color: var(--color-text-primary);
+}
+
+.subDisplay {
+  font-family: var(--font-sub-display-family);
+  font-size: var(--font-sub-display-size);
+  font-weight: var(--font-sub-display-weight);
+  line-height: var(--font-sub-display-line-height);
+  letter-spacing: var(--font-sub-display-letter-spacing);
+  color: var(--color-text-primary);
+  margin-bottom: 0;
+}
+
+/* ============================================
+   INTRO SECTION
+   ============================================ */
+.introSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-lg);
+}
+
+.introBody {
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  color: var(--color-text-primary);
+}
+
+/* ============================================
+   CASE STUDY GRID
+   2-column on desktop, 1-column on mobile.
+   ============================================ */
+.caseStudyGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--primitive-gap-lg);
+  width: 100%;
+}
+
+.caseStudyCard {
+  background: var(--color-bg-container-primary-semi);
+  border: var(--border-xs) solid var(--color-bg-container-border);
+  border-radius: var(--primitive-radius-xl);
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.caseStudyCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.coverWrap {
+  width: 100%;
+  aspect-ratio: 940 / 480;
+  overflow: hidden;
+  background: var(--color-bg-container-secondary);
+}
+
+.coverImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.caseStudyText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-sm);
+  padding: var(--primitive-padding-lg);
+}
+
+.caseStudyDate {
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-em-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ============================================
+   COMPANY EYEBROW (logo + name above title)
+   ============================================ */
+.caseStudyCompany {
+  display: flex;
+  align-items: center;
+  gap: var(--primitive-gap-xs);
+}
+
+.companyLogo {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.companyName {
+  font-family: var(--font-paragraph-sm-em-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-em-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-secondary);
+}
+
+/* ============================================
+   PLACEHOLDER COVER (logo centered on neutral bg)
+   ============================================ */
+.coverPlaceholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg-container-secondary);
+}
+
+.coverPlaceholderLogo {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  opacity: 0.6;
+}
+
+/* ============================================
+   PLACEHOLDER CARD (no href, not interactive)
+   ============================================ */
+.caseStudyCardPlaceholder {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.caseStudyCardPlaceholder:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.caseStudyTitle {
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  letter-spacing: var(--font-heading-3-letter-spacing);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.caseStudyDek {
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 959px) {
+  .caseStudyGrid {
+    grid-template-columns: 1fr;
+  }
+}

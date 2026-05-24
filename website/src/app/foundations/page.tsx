@@ -1,17 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import Header from "../../components/Header/Header";
+import MegaNav from "../../components/MegaNav/MegaNav";
+import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import Footer from "../../components/Footer/Footer";
 import TocCard from "../../components/TocCard/TocCard";
 import PageLinks from "../../components/PageLinks/PageLinks";
-import { getNavLinks, getSidebarLinks, foundationsSidebarLinks } from "@/config/navigation";
+import { getSidebarLinks, foundationsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
-const navLinks = getNavLinks("Foundations");
-const { sidebarLinks, subnavLinks } = getSidebarLinks(foundationsSidebarLinks, "/foundations");
+const { sidebarLinks } = getSidebarLinks(foundationsSidebarLinks, "/foundations");
 
 export default function FoundationsPage() {
   return (
@@ -19,12 +19,13 @@ export default function FoundationsPage() {
 
       <BlurBackground />
 
-      <Header navLinks={navLinks} subnavLinks={subnavLinks} />
+      <MegaNav />
 
       <div className={styles.dsLayout}>
         <Sidebar links={sidebarLinks} />
 
         <main className={styles.dsContent} id="main-content">
+          <PageBreadcrumb />
           {/* Page Title */}
           <div className={`${styles.pageHeader} animate-in`}>
             <h1 className={styles.pageTitle}>Foundations</h1>

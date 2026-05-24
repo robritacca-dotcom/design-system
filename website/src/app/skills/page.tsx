@@ -1,17 +1,17 @@
 "use client";
 
-import Header from "../../components/Header/Header";
+import MegaNav from "../../components/MegaNav/MegaNav";
+import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import Footer from "../../components/Footer/Footer";
 import { Button } from "@design-system/components/Button/Button";
 import { Badge } from "@design-system/components/Badge/Badge";
 import { ToastProvider, useToast } from "@design-system/components/Toast/Toast";
-import { getNavLinks, getSidebarLinks, skillsSidebarLinks } from "@/config/navigation";
+import { getSidebarLinks, aboutSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
-const navLinks = getNavLinks("Skills");
-const { sidebarLinks, subnavLinks } = getSidebarLinks(skillsSidebarLinks, "/skills");
+const { sidebarLinks } = getSidebarLinks(aboutSidebarLinks, "/skills");
 
 /* ============================================
    SKILL DATA
@@ -609,12 +609,13 @@ function SkillsContent() {
     <>
       <BlurBackground />
 
-      <Header navLinks={navLinks} subnavLinks={subnavLinks} />
+      <MegaNav />
 
       <div className={styles.dsLayout}>
         <Sidebar links={sidebarLinks} />
 
         <main className={styles.dsContent} id="main-content">
+          <PageBreadcrumb />
           {/* Page Header */}
           <div className={`${styles.pageHeader} animate-in`}>
             <h1 className={styles.pageTitle}>Claude Skills</h1>
@@ -656,7 +657,7 @@ function SkillsContent() {
                     />
                     <Button
                       label="Download"
-                      priority="secondary"
+                      priority="tertiary"
                       size="compact"
                       iconLeft="download"
                       onClick={() => downloadSkill(`${skill.slug}.md`, skill.content)}
