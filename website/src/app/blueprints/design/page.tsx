@@ -3,6 +3,7 @@ import path from "path";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import MegaNav from "../../../components/MegaNav/MegaNav";
+import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
@@ -28,6 +29,7 @@ export default function DesignBlueprintPage() {
         <Sidebar links={sidebarLinks} />
 
         <main className={styles.dsContent} id="main-content">
+          <PageBreadcrumb />
           <div className={`${styles.pageHeader} animate-in`}>
             <h1 className={styles.pageTitle}>Design MD</h1>
             <DownloadButton />

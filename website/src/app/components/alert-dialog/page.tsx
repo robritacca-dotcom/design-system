@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
+import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
@@ -27,6 +28,7 @@ export default function AlertDialogPage() {
         <Sidebar links={sidebarLinks} />
 
         <main className={styles.dsContent} id="main-content">
+          <PageBreadcrumb />
           <div className={`${styles.pageHeader} animate-in`}>
             <h1 className={styles.pageTitle}>Alert dialog</h1>
             <PageLinks

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import MegaNav from "../../../components/MegaNav/MegaNav";
+import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
@@ -278,6 +279,7 @@ export default function SemanticColoursPage() {
         <Sidebar links={sidebarLinks} />
 
         <main className={styles.dsContent} id="main-content">
+          <PageBreadcrumb />
           {/* Page Title */}
           <div className={`${styles.pageHeader} animate-in`}>
             <h1 className={styles.pageTitle}>Semantic colours</h1>
