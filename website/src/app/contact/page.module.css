@@ -73,10 +73,24 @@
   outline-offset: 2px;
 }
 
+.methodIconWrap {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
 .methodIcon {
   font-size: 24px;
   color: var(--color-text-secondary);
-  flex-shrink: 0;
+}
+
+.methodLogo {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
 }
 
 .methodText {
@@ -112,11 +126,3 @@
   flex-shrink: 0;
 }
 
-/* ============================================
-   CTA
-   ============================================ */
-.cta {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}

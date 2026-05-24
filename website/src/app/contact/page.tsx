@@ -1,16 +1,19 @@
 "use client";
 
+import Image from "next/image";
 import MegaNav from "../../components/MegaNav/MegaNav";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import Footer from "../../components/Footer/Footer";
-import { Button } from "@design-system/components/Button/Button";
 import styles from "./page.module.css";
 
 interface ContactMethod {
   label: string;
   value: string;
   href: string;
-  icon: string;
+  /** Material Symbols name — used when no product logo exists */
+  icon?: string;
+  /** Path to a product logo (preferred over icon when present) */
+  logo?: string;
   external?: boolean;
 }
 
@@ -25,21 +28,35 @@ const methods: ContactMethod[] = [
     label: "LinkedIn",
     value: "linkedin.com/in/robertritacca",
     href: "https://www.linkedin.com/in/robertritacca/",
-    icon: "work",
+    logo: "/logos/LinkedIN.png",
+    external: true,
+  },
+  {
+    label: "Instagram",
+    value: "instagram.com/robertritacca",
+    href: "https://www.instagram.com/robertritacca/",
+    logo: "/logos/IG.png",
+    external: true,
+  },
+  {
+    label: "X",
+    value: "x.com/robertritacca",
+    href: "https://x.com/robertritacca",
+    logo: "/logos/X.png",
     external: true,
   },
   {
     label: "Substack",
     value: "robertritacca1.substack.com",
     href: "https://robertritacca1.substack.com/",
-    icon: "edit_note",
+    logo: "/logos/substack.svg",
     external: true,
   },
   {
     label: "GitHub",
     value: "github.com/robritacca-dotcom",
     href: "https://github.com/robritacca-dotcom",
-    icon: "code",
+    logo: "/logos/Git.svg",
     external: true,
   },
 ];
@@ -68,8 +85,20 @@ export default function ContactPage() {
               rel={m.external ? "noopener noreferrer" : undefined}
               className={styles.method}
             >
-              <span className={`material-symbols-rounded ${styles.methodIcon}`} aria-hidden="true">
-                {m.icon}
+              <span className={styles.methodIconWrap}>
+                {m.logo ? (
+                  <Image
+                    src={m.logo}
+                    alt=""
+                    width={24}
+                    height={24}
+                    className={styles.methodLogo}
+                  />
+                ) : (
+                  <span className={`material-symbols-rounded ${styles.methodIcon}`} aria-hidden="true">
+                    {m.icon}
+                  </span>
+                )}
               </span>
               <div className={styles.methodText}>
                 <span className={styles.methodLabel}>{m.label}</span>
@@ -83,15 +112,6 @@ export default function ContactPage() {
               </span>
             </a>
           ))}
-        </div>
-
-        <div className={`${styles.cta} animate-in animate-delay-2`}>
-          <Button
-            label="Email me"
-            priority="primary"
-            iconLeft="mail"
-            href="mailto:rob.ritacca@gmail.com"
-          />
         </div>
       </main>
 
