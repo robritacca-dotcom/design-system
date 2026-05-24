@@ -1,0 +1,122 @@
+/* ============================================
+   CONTACT PAGE
+   ============================================ */
+.contactContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--primitive-gap-xxxl);
+  width: 100%;
+  max-width: 720px;
+  padding: var(--primitive-gap-xxxl) var(--primitive-padding-xl);
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-md);
+  align-items: center;
+  text-align: center;
+}
+
+.title {
+  font-family: var(--font-display-2-family);
+  font-size: var(--font-display-2-size);
+  font-weight: var(--font-display-2-weight);
+  line-height: var(--font-display-2-line-height);
+  letter-spacing: var(--font-display-2-letter-spacing);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.subtitle {
+  font-family: var(--font-sub-display-family);
+  font-size: var(--font-sub-display-size);
+  font-weight: var(--font-sub-display-weight);
+  line-height: var(--font-sub-display-line-height);
+  letter-spacing: var(--font-sub-display-letter-spacing);
+  color: var(--color-text-secondary);
+  margin: 0;
+  max-width: 560px;
+}
+
+/* ============================================
+   CONTACT METHODS
+   ============================================ */
+.methods {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-sm);
+  width: 100%;
+}
+
+.method {
+  display: flex;
+  align-items: center;
+  gap: var(--primitive-gap-lg);
+  padding: var(--primitive-padding-lg);
+  border: 1px solid var(--color-bg-container-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-container-primary-semi);
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
+}
+
+.method:hover {
+  background: var(--color-bg-container-secondary);
+  border-color: var(--color-border-secondary);
+}
+
+.method:focus-visible {
+  outline: 2px solid var(--color-action-primary-bg);
+  outline-offset: 2px;
+}
+
+.methodIcon {
+  font-size: 24px;
+  color: var(--color-text-secondary);
+  flex-shrink: 0;
+}
+
+.methodText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.methodLabel {
+  font-family: var(--font-title-body-family);
+  font-size: var(--font-title-body-size);
+  font-weight: var(--font-title-body-weight);
+  line-height: var(--font-title-body-line-height);
+  color: var(--color-text-primary);
+}
+
+.methodValue {
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.methodChevron {
+  font-size: 18px;
+  color: var(--color-text-tertiary);
+  flex-shrink: 0;
+}
+
+/* ============================================
+   CTA
+   ============================================ */
+.cta {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
