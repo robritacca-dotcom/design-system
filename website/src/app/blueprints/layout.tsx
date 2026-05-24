@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Blueprints",
+  title: "Blueprints — robr0 DS",
   description:
     "The markdown spec files that define how to build with this design system — design tokens, component rules, and codebase context for builders.",
 };

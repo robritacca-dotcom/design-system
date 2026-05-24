@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Work — Robert Ritacca",
-  description: "Selected case studies and product design work.",
+  title: "Work",
+  description: "Selected case studies on product, AI, and design systems.",
 };
 
 export default function WorkLayout({ children }: { children: React.ReactNode }) {

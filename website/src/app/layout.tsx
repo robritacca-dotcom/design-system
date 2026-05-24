@@ -12,40 +12,42 @@ const nunitoSans = Nunito_Sans({
   variable: "--font-nunito-sans",
 });
 
+const SITE_DESCRIPTION =
+  "Principal Product Designer at Intuit, previously Meta. Selected case studies, a personal design system (robr0 DS), and writing on AI and product design.";
+
 export const metadata: Metadata = {
   title: {
-    default: "robr0 Design System | Robert Ritacca",
-    template: "%s | robr0 DS",
+    default: "Robert Ritacca — Principal Product Designer",
+    template: "%s — Robert Ritacca",
   },
-  description:
-    "A token-based design system with primitive colours, semantic tokens, typography, spacing, and reusable components built with React and CSS.",
+  description: SITE_DESCRIPTION,
   metadataBase: new URL("https://robr0-ds.vercel.app"),
   keywords: [
-    "design system",
-    "React components",
-    "design tokens",
-    "UI library",
-    "typography",
-    "colour primitives",
-    "semantic tokens",
     "Robert Ritacca",
-    "robr0",
+    "product designer",
+    "principal designer",
+    "Intuit",
+    "Meta",
+    "AI design",
+    "design system",
+    "robr0 DS",
+    "case studies",
+    "design tokens",
+    "React components",
   ],
   authors: [{ name: "Robert Ritacca" }],
   creator: "Robert Ritacca",
   openGraph: {
-    title: "robr0 Design System",
-    description:
-      "A token-based design system with primitive colours, semantic tokens, typography, spacing, and reusable components built with React and CSS.",
-    siteName: "robr0 DS",
+    title: "Robert Ritacca — Principal Product Designer",
+    description: SITE_DESCRIPTION,
+    siteName: "Robert Ritacca",
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary",
-    title: "robr0 Design System",
-    description:
-      "A token-based design system with primitive colours, semantic tokens, typography, spacing, and reusable components built with React and CSS.",
+    title: "Robert Ritacca — Principal Product Designer",
+    description: SITE_DESCRIPTION,
   },
   robots: {
     index: true,
