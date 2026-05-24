@@ -63,7 +63,16 @@ export default function HomePage() {
               label="Work"
               priority="tertiary"
               iconLeft="work"
-              href="/about/work"
+              href="/work"
+            />
+            <Button
+              label="Substack"
+              priority="tertiary"
+              iconLeft={<SubstackIcon />}
+              iconRight="open_in_new"
+              href="https://substack.com/home/post/p-188692608"
+              target="_blank"
+              rel="noopener noreferrer"
             />
             <Button
               label="Figma"
@@ -89,15 +98,6 @@ export default function HomePage() {
               iconLeft={<GitHubIcon />}
               iconRight="open_in_new"
               href="https://github.com/robritacca-dotcom/design-system"
-              target="_blank"
-              rel="noopener noreferrer"
-            />
-            <Button
-              label="Substack"
-              priority="tertiary"
-              iconLeft={<SubstackIcon />}
-              iconRight="open_in_new"
-              href="https://substack.com/home/post/p-188692608"
               target="_blank"
               rel="noopener noreferrer"
             />
