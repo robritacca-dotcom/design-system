@@ -87,6 +87,18 @@ export default function Robr0DsCaseStudy() {
             Why I built a personal design system from scratch, and how an AI-augmented Figma-to-React pipeline let me ship a polished site alone.
           </p>
 
+          {/* Hero image */}
+          <figure className={`${styles.cover} animate-in animate-delay-2`}>
+            <Image
+              src="/images/ds-hero.png"
+              alt="robr0 DS — design system overview"
+              width={1440}
+              height={900}
+              priority
+              className={styles.coverImage}
+            />
+          </figure>
+
           {/* Two-column body — mirrors the embedded-ai-turbotax case study */}
           <div className={`${styles.resumeLayout} animate-in animate-delay-3`}>
             {/* Main — article body */}

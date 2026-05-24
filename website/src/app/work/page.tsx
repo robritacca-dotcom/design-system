@@ -38,6 +38,7 @@ const caseStudies: CaseStudy[] = [
     title: "Building robr0 DS — a one-person design system, end to end",
     dek: "Why I built a personal design system and the AI-augmented pipeline behind this site",
     company: { name: "Personal", logo: "/logos/rr.svg" },
+    cover: "/images/ds-hero.png",
   },
   {
     title: "Coming soon",
