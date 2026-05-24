@@ -86,8 +86,11 @@ export default function MegaNav() {
     return () => document.removeEventListener("keydown", onKey);
   }, [open, mobileOpen]);
 
-  // Close mega when pathname changes (user navigated)
+  // Close mega when pathname changes (user navigated via a link).
+  // The setState here is intentional — we react to external navigation,
+  // which is exactly what Effects are for.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setOpen(false);
     setMobileOpen(false);
   }, [pathname]);
