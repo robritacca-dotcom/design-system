@@ -7,7 +7,6 @@ import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import Footer from "../../components/Footer/Footer";
-import PageLinks from "../../components/PageLinks/PageLinks";
 import { getSidebarLinks, aboutSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
@@ -29,11 +28,6 @@ export default function AboutDsPage() {
           {/* Page Title */}
           <div className={`${styles.pageHeader} animate-in`}>
             <h1 className={styles.pageTitle}>About robr0 DS</h1>
-            <PageLinks
-              figmaUrl="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26?node-id=246-5864"
-              storybookPath="/?path=/docs/robr0-ds--docs"
-              githubUrl="https://github.com/robritacca-dotcom/design-system"
-            />
           </div>
 
           {/* Intro */}
@@ -196,92 +190,54 @@ export default function AboutDsPage() {
               </div>
             </div>
 
-            {/* Tools Rail (Right — 1/3 width) */}
+            {/* Links Rail (Right — 1/3 width) */}
             <aside className={styles.resumeSidebar}>
               <div className={`${styles.resumeSection} animate-in animate-delay-2`}>
                 <div className={styles.resumeSectionHeader}>
-                  <h2 className={styles.resumeSectionTitle}>Tools</h2>
+                  <h2 className={styles.resumeSectionTitle}>Links</h2>
                 </div>
 
-                <div className={styles.toolItem}>
-                  <Image src="/logos/Figma.svg" alt="Figma" width={28} height={28} />
+                <a
+                  href="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26?node-id=246-5864"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.toolItem}
+                >
+                  <Image src="/logos/Figma.svg" alt="" width={28} height={28} />
                   <div className={styles.toolDetails}>
                     <span className={styles.toolName}>Figma</span>
-                    <span className={styles.toolDesc}>robr0 DS design file, variables, MCP server</span>
+                    <span className={styles.toolDesc}>Tokens + components, source</span>
                   </div>
-                </div>
+                  <span className={`material-symbols-rounded ${styles.toolLinkIcon}`} aria-hidden="true">open_in_new</span>
+                </a>
 
-                <div className={styles.toolItem}>
-                  <Image src="/logos/Claude.svg" alt="Claude" width={28} height={28} />
-                  <div className={styles.toolDetails}>
-                    <span className={styles.toolName}>Claude Code + Opus 4.6</span>
-                    <span className={styles.toolDesc}>AI component generation from Figma</span>
-                  </div>
-                </div>
-
-                <div className={styles.toolItem}>
-                  <Image src="/logos/cursor.svg" alt="Cursor" width={28} height={28} />
-                  <div className={styles.toolDetails}>
-                    <span className={styles.toolName}>Cursor</span>
-                    <span className={styles.toolDesc}>AI code editor and file inspection</span>
-                  </div>
-                </div>
-
-                <div className={styles.toolItem}>
-                  <Image src="/logos/storybook.svg" alt="Storybook" width={28} height={28} />
+                <a
+                  href="https://design-system-iota-one.vercel.app/?path=/docs/robr0-ds--docs"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.toolItem}
+                >
+                  <Image src="/logos/storybook.svg" alt="" width={28} height={28} />
                   <div className={styles.toolDetails}>
                     <span className={styles.toolName}>Storybook</span>
-                    <span className={styles.toolDesc}>Component documentation site</span>
+                    <span className={styles.toolDesc}>Every component, every variant</span>
                   </div>
-                </div>
+                  <span className={`material-symbols-rounded ${styles.toolLinkIcon}`} aria-hidden="true">open_in_new</span>
+                </a>
 
-                <div className={styles.toolItem}>
-                  <Image src="/logos/React.svg" alt="React" width={28} height={28} />
+                <a
+                  href="https://github.com/robritacca-dotcom/design-system"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.toolItem}
+                >
+                  <Image src="/logos/Git.svg" alt="" width={28} height={28} />
                   <div className={styles.toolDetails}>
-                    <span className={styles.toolName}>React</span>
-                    <span className={styles.toolDesc}>Component framework</span>
+                    <span className={styles.toolName}>GitHub</span>
+                    <span className={styles.toolDesc}>The whole system, public</span>
                   </div>
-                </div>
-
-                <div className={styles.toolItem}>
-                  <Image src="/logos/Git.svg" alt="GitHub" width={28} height={28} />
-                  <div className={styles.toolDetails}>
-                    <span className={styles.toolName}>Github</span>
-                    <span className={styles.toolDesc}>Version Control</span>
-                  </div>
-                </div>
-
-                <div className={styles.toolItem}>
-                  <Image src="/logos/ChatGPT.svg" alt="ChatGPT" width={28} height={28} />
-                  <div className={styles.toolDetails}>
-                    <span className={styles.toolName}>ChatGPT</span>
-                    <span className={styles.toolDesc}>Content writing</span>
-                  </div>
-                </div>
-
-                <div className={styles.toolItem}>
-                  <Image src="/vercel.svg" alt="Vercel" width={28} height={28} />
-                  <div className={styles.toolDetails}>
-                    <span className={styles.toolName}>Vercel</span>
-                    <span className={styles.toolDesc}>Auto-deploy platform</span>
-                  </div>
-                </div>
-
-                <div className={styles.toolItem}>
-                  <Image src="/logos/material.svg" alt="Material 3" width={28} height={28} />
-                  <div className={styles.toolDetails}>
-                    <span className={styles.toolName}>Material 3</span>
-                    <span className={styles.toolDesc}>Icon and typography system</span>
-                  </div>
-                </div>
-
-                <div className={styles.toolItem}>
-                  <Image src="/logos/GoDaddy.svg" alt="GoDaddy" width={28} height={28} />
-                  <div className={styles.toolDetails}>
-                    <span className={styles.toolName}>GoDaddy</span>
-                    <span className={styles.toolDesc}>Domain</span>
-                  </div>
-                </div>
+                  <span className={`material-symbols-rounded ${styles.toolLinkIcon}`} aria-hidden="true">open_in_new</span>
+                </a>
               </div>
             </aside>
           </div>
