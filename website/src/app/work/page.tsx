@@ -48,6 +48,13 @@ const caseStudies: CaseStudy[] = [
     cover: "/images/meta-career-profile-hero.png",
   },
   {
+    href: "/work/meta-offers",
+    title: "Offer Creation Flow",
+    dek: "Improving the velocity between hire decision and offer extension at recruiting scale",
+    company: { name: "Meta", logo: "/logos/meta.svg" },
+    cover: "/images/meta-offers/hero.png",
+  },
+  {
     href: "/work/intuit-agent-chat",
     title: "Intuit Agent Chat",
     dek: "Designing and shipping Intuit's official conversational AI platform from 0 → 1",
