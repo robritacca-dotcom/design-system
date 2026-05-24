@@ -52,6 +52,23 @@
 }
 
 /* ============================================
+   HERO COVER IMAGE
+   ============================================ */
+.cover {
+  margin: 0;
+  width: 100%;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--color-bg-container-border);
+}
+
+.coverImage {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ============================================
    RESUME LAYOUT — main + 320px aside
    ============================================ */
 .resumeLayout {

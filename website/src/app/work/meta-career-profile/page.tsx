@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
@@ -35,6 +36,18 @@ export default function MetaCareerProfileCaseStudy() {
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
             Reimagining Meta&apos;s candidate experience platform as a scalable, personalized, end-to-end recruiting ecosystem.
           </p>
+
+          {/* Hero image */}
+          <figure className={`${styles.cover} animate-in animate-delay-2`}>
+            <Image
+              src="/images/meta-career-profile-hero.png"
+              alt="Career Profile Vision — Meta candidate experience platform"
+              width={2560}
+              height={1440}
+              priority
+              className={styles.coverImage}
+            />
+          </figure>
 
           {/* Two-column body */}
           <div className={`${styles.resumeLayout} animate-in animate-delay-3`}>
