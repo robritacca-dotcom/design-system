@@ -203,8 +203,9 @@
 }
 
 .megaGrid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
   gap: var(--primitive-gap-sm);
 }
 
@@ -220,6 +221,8 @@
   text-decoration: none;
   color: inherit;
   transition: background 0.15s ease;
+  flex: 0 1 280px;
+  min-width: 0;
 }
 
 .megaItem:hover {
@@ -374,12 +377,6 @@
 /* ============================================
    RESPONSIVE
    ============================================ */
-@media (max-width: 768px) {
-  .megaGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
 @media (max-width: 959px) {
   .navCenter,
   .desktopThemeToggle {
