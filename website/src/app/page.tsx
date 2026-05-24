@@ -70,7 +70,7 @@ export default function HomePage() {
               priority="tertiary"
               iconLeft={<SubstackIcon />}
               iconRight="open_in_new"
-              href="https://substack.com/home/post/p-188692608"
+              href="https://robertritacca1.substack.com/"
               target="_blank"
               rel="noopener noreferrer"
             />
