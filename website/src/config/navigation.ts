@@ -140,12 +140,12 @@ export const aboutSidebarLinks: NavLink[] = [
 export const workSidebarLinks: NavLink[] = [
   { href: "/work", label: "Overview" },
   { href: "/work/embedded-ai-turbotax", label: "Embedded AI Experiences", logo: "/logos/turbotax.svg" },
-  { href: "/work/robr0-ds", label: "Building robr0 DS", logo: "/logos/rr.svg" },
-  { href: "/work/cibc-firstcaribbean", label: "FirstCaribbean", logo: "/logos/CIBC.svg" },
+  { href: "/work/intuit-agent-chat", label: "Agent Chat", logo: "/logos/Intuit.svg" },
+  { href: "/work/augmenta-ai", label: "Construction Platform", logo: "/logos/Augmenta.svg" },
   { href: "/work/meta-career-profile", label: "Career Profile", logo: "/logos/meta.svg" },
   { href: "/work/meta-offers", label: "Offer Creation Flow", logo: "/logos/meta.svg" },
-  { href: "/work/augmenta-ai", label: "Construction Platform", logo: "/logos/Augmenta.svg" },
-  { href: "/work/intuit-agent-chat", label: "Agent Chat", logo: "/logos/Intuit.svg" },
+  { href: "/work/robr0-ds", label: "Building robr0 DS", logo: "/logos/rr.svg" },
+  { href: "/work/cibc-firstcaribbean", label: "FirstCaribbean", logo: "/logos/CIBC.svg" },
 ];
 
 /* ============================================

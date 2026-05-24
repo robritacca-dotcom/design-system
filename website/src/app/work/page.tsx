@@ -34,11 +34,18 @@ const caseStudies: CaseStudy[] = [
     cover: "/images/embedded-ai-cover.webp",
   },
   {
-    href: "/work/robr0-ds",
-    title: "Building robr0 DS — a one-person design system, end to end",
-    dek: "Why I built a personal design system and the AI-augmented pipeline behind this site",
-    company: { name: "Personal", logo: "/logos/rr.svg" },
-    cover: "/images/ds-hero.png",
+    href: "/work/intuit-agent-chat",
+    title: "Intuit Agent Chat",
+    dek: "Designing and shipping Intuit's official conversational AI platform from 0 → 1",
+    company: { name: "Intuit", logo: "/logos/Intuit.svg" },
+    cover: "/images/intuit-agent-chat/widget-anatomy.png",
+  },
+  {
+    href: "/work/augmenta-ai",
+    title: "Augmenta Construction Platform",
+    dek: "Turning automation into usability — the redesign behind 42% faster outcomes",
+    company: { name: "Augmenta", logo: "/logos/Augmenta.svg" },
+    cover: "/images/augmenta/tile-cover.png",
   },
   {
     href: "/work/meta-career-profile",
@@ -55,11 +62,11 @@ const caseStudies: CaseStudy[] = [
     cover: "/images/meta-offers/hero.png",
   },
   {
-    href: "/work/intuit-agent-chat",
-    title: "Intuit Agent Chat",
-    dek: "Designing and shipping Intuit's official conversational AI platform from 0 → 1",
-    company: { name: "Intuit", logo: "/logos/Intuit.svg" },
-    cover: "/images/intuit-agent-chat/widget-anatomy.png",
+    href: "/work/robr0-ds",
+    title: "Building robr0 DS — a one-person design system, end to end",
+    dek: "Why I built a personal design system and the AI-augmented pipeline behind this site",
+    company: { name: "Personal", logo: "/logos/rr.svg" },
+    cover: "/images/ds-hero.png",
   },
   {
     href: "/work/cibc-firstcaribbean",
@@ -67,13 +74,6 @@ const caseStudies: CaseStudy[] = [
     dek: "Designing for multi-country, multi-currency international banking at Devbridge",
     company: { name: "CIBC", logo: "/logos/CIBC.svg" },
     cover: "/images/cibc-firstcaribbean-cover.jpg",
-  },
-  {
-    href: "/work/augmenta-ai",
-    title: "Augmenta Construction Platform",
-    dek: "Turning automation into usability — the redesign behind 42% faster outcomes",
-    company: { name: "Augmenta", logo: "/logos/Augmenta.svg" },
-    cover: "/images/augmenta/tile-cover.png",
   },
 ];
 
