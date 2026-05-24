@@ -9,6 +9,8 @@ export interface NavLink {
   label: string;
   active?: boolean;
   disabled?: boolean;
+  /** Optional logo path (e.g. "/logos/Intuit.svg") rendered to the left of the label in Sidebar */
+  logo?: string;
 }
 
 /** A row in the Design system mega menu */
@@ -137,12 +139,12 @@ export const aboutSidebarLinks: NavLink[] = [
 
 export const workSidebarLinks: NavLink[] = [
   { href: "/work", label: "Overview" },
-  { href: "/work/embedded-ai-turbotax", label: "Embedded AI Experiences" },
-  { href: "/work/robr0-ds", label: "Building robr0 DS" },
-  { href: "/work/cibc-firstcaribbean", label: "CIBC FirstCaribbean" },
-  { href: "/work/meta-career-profile", label: "Meta — Career Profile" },
-  { href: "#", label: "Intuit — Agent chat", disabled: true },
-  { href: "#", label: "Augmenta", disabled: true },
+  { href: "/work/embedded-ai-turbotax", label: "Embedded AI Experiences", logo: "/logos/Intuit.svg" },
+  { href: "/work/robr0-ds", label: "Building robr0 DS", logo: "/logos/rr.svg" },
+  { href: "/work/cibc-firstcaribbean", label: "FirstCaribbean", logo: "/logos/CIBC.svg" },
+  { href: "/work/meta-career-profile", label: "Career Profile", logo: "/logos/meta.svg" },
+  { href: "#", label: "Agent chat", disabled: true, logo: "/logos/Intuit.svg" },
+  { href: "#", label: "Augmenta", disabled: true, logo: "/logos/Augmenta.svg" },
 ];
 
 /* ============================================

@@ -6,6 +6,13 @@
   height: fit-content;
 }
 
+.itemLogo {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
 /* Compressed layout at 1280px */
 @media (max-width: 1280px) {
   .sidebar {

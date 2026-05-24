@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ButtonGroup } from "@design-system/components/ButtonGroup/ButtonGroup";
 import type { ButtonProps } from "@design-system/components/Button/Button";
 import styles from "./Sidebar.module.css";
@@ -7,6 +8,8 @@ interface SidebarLink {
   label: string;
   active?: boolean;
   disabled?: boolean;
+  /** Optional logo path (e.g. "/logos/Intuit.svg") rendered to the left of the label */
+  logo?: string;
 }
 
 interface SidebarProps {
@@ -23,6 +26,15 @@ export default function Sidebar({ links }: SidebarProps) {
         ? ("active" as const)
         : ("default" as const),
     priority: "tertiary" as const,
+    iconLeft: link.logo ? (
+      <Image
+        src={link.logo}
+        alt=""
+        width={18}
+        height={18}
+        className={styles.itemLogo}
+      />
+    ) : undefined,
   }));
 
   return (
