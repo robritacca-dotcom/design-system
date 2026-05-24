@@ -1,14 +1,14 @@
 "use client";
 
 import React from "react";
-import Header from "../../../components/Header/Header";
+import MegaNav from "../../../components/MegaNav/MegaNav";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
 import { Dropdown } from "@design-system/components/Dropdown/Dropdown";
 import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
-import { getNavLinks, getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
+import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 const colourOptions = [
   { label: "Red", value: "red" },
@@ -18,14 +18,13 @@ const colourOptions = [
   { label: "Green", value: "green" },
 ];
 
-const navLinks = getNavLinks("Components");
-const { sidebarLinks, subnavLinks } = getSidebarLinks(componentsSidebarLinks, "/components/dropdown");
+const { sidebarLinks } = getSidebarLinks(componentsSidebarLinks, "/components/dropdown");
 
 export default function DropdownPage() {
   return (
     <>
       <BlurBackground />
-      <Header navLinks={navLinks} subnavLinks={subnavLinks} />
+      <MegaNav />
 
       <div className={styles.dsLayout}>
         <Sidebar links={sidebarLinks} />
@@ -33,7 +32,7 @@ export default function DropdownPage() {
         <main className={styles.dsContent} id="main-content">
           <div className={`${styles.pageHeader} animate-in`}>
             <h1 className={styles.pageTitle}>Dropdown</h1>
-            <PageLinks
+            <PageLinks
               storybookPath="/?path=/docs/components-dropdown--docs"
             />
           </div>

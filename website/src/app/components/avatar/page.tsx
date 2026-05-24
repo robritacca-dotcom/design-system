@@ -1,23 +1,22 @@
 "use client";
 
 import React from "react";
-import Header from "../../../components/Header/Header";
+import MegaNav from "../../../components/MegaNav/MegaNav";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
 import { Avatar } from "@design-system/components/Avatar/Avatar";
 import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
-import { getNavLinks, getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
+import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
-const navLinks = getNavLinks("Components");
-const { sidebarLinks, subnavLinks } = getSidebarLinks(componentsSidebarLinks, "/components/avatar");
+const { sidebarLinks } = getSidebarLinks(componentsSidebarLinks, "/components/avatar");
 
 export default function AvatarPage() {
   return (
     <>
       <BlurBackground />
-      <Header navLinks={navLinks} subnavLinks={subnavLinks} />
+      <MegaNav />
 
       <div className={styles.dsLayout}>
         <Sidebar links={sidebarLinks} />

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Header from "../../../components/Header/Header";
+import MegaNav from "../../../components/MegaNav/MegaNav";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
@@ -15,11 +15,10 @@ import { ScatterChart } from "@design-system/components/Chart/ScatterChart";
 import { Treemap } from "@design-system/components/Chart/Treemap";
 import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
-import { getNavLinks, getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
+import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
-const navLinks = getNavLinks("Components");
-const { sidebarLinks, subnavLinks } = getSidebarLinks(componentsSidebarLinks, "/components/chart");
+const { sidebarLinks } = getSidebarLinks(componentsSidebarLinks, "/components/chart");
 
 /* ============================================
    Sample data
@@ -113,7 +112,7 @@ export default function ChartPage() {
   return (
     <>
       <BlurBackground />
-      <Header navLinks={navLinks} subnavLinks={subnavLinks} />
+      <MegaNav />
 
       <div className={styles.dsLayout}>
         <Sidebar links={sidebarLinks} />

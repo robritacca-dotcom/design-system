@@ -1,22 +1,21 @@
 "use client";
 
-import Header from "../../components/Header/Header";
+import MegaNav from "../../components/MegaNav/MegaNav";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import Footer from "../../components/Footer/Footer";
 import TocCard from "../../components/TocCard/TocCard";
-import { getNavLinks, getSidebarLinks, blueprintsSidebarLinks } from "@/config/navigation";
+import { getSidebarLinks, blueprintsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
-const navLinks = getNavLinks("Blueprints");
-const { sidebarLinks, subnavLinks } = getSidebarLinks(blueprintsSidebarLinks, "/blueprints");
+const { sidebarLinks } = getSidebarLinks(blueprintsSidebarLinks, "/blueprints");
 
 export default function BlueprintsPage() {
   return (
     <>
       <BlurBackground />
 
-      <Header navLinks={navLinks} subnavLinks={subnavLinks} />
+      <MegaNav />
 
       <div className={styles.dsLayout}>
         <Sidebar links={sidebarLinks} />

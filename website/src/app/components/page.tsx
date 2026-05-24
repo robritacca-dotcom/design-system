@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Header from "../../components/Header/Header";
+import MegaNav from "../../components/MegaNav/MegaNav";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import Footer from "../../components/Footer/Footer";
@@ -27,10 +27,9 @@ import { Tabs } from "@design-system/components/Tabs/Tabs";
 import { Textarea } from "@design-system/components/Textarea/Textarea";
 import { ToggleGroup } from "@design-system/components/ToggleGroup/ToggleGroup";
 import PageLinks from "../../components/PageLinks/PageLinks";
-import { getNavLinks, getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
+import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
-const navLinks = getNavLinks("Components");
-const { sidebarLinks, subnavLinks } = getSidebarLinks(componentsSidebarLinks, "/components");
+const { sidebarLinks } = getSidebarLinks(componentsSidebarLinks, "/components");
 
 export default function ComponentsPage() {
   return (
@@ -38,7 +37,7 @@ export default function ComponentsPage() {
 
       <BlurBackground />
 
-      <Header navLinks={navLinks} subnavLinks={subnavLinks} />
+      <MegaNav />
 
       <div className={styles.dsLayout}>
         <Sidebar links={sidebarLinks} />

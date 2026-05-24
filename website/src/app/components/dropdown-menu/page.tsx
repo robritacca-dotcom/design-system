@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Header from "../../../components/Header/Header";
+import MegaNav from "../../../components/MegaNav/MegaNav";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
@@ -9,11 +9,10 @@ import { DropdownMenu, DropdownMenuEntry } from "@design-system/components/Dropd
 import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
 import { Button } from "@design-system/components/Button/Button";
 import PageLinks from "../../../components/PageLinks/PageLinks";
-import { getNavLinks, getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
+import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
-const navLinks = getNavLinks("Components");
-const { sidebarLinks, subnavLinks } = getSidebarLinks(componentsSidebarLinks, "/components/dropdown-menu");
+const { sidebarLinks } = getSidebarLinks(componentsSidebarLinks, "/components/dropdown-menu");
 
 /* ============================================
    DEMO DATA
@@ -95,7 +94,7 @@ export default function DropdownMenuPage() {
   return (
     <>
       <BlurBackground />
-      <Header navLinks={navLinks} subnavLinks={subnavLinks} />
+      <MegaNav />
 
       <div className={styles.dsLayout}>
         <Sidebar links={sidebarLinks} />

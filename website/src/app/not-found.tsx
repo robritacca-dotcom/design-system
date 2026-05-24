@@ -1,13 +1,11 @@
 "use client";
 
-import Header from "../components/Header/Header";
+import MegaNav from "../components/MegaNav/MegaNav";
 import BlurBackground from "../components/BlurBackground/BlurBackground";
 import Footer from "../components/Footer/Footer";
 import { Button } from "@design-system/components/Button/Button";
-import { getNavLinks } from "@/config/navigation";
 import styles from "./not-found.module.css";
 
-const navLinks = getNavLinks("");
 
 export default function NotFound() {
   return (
@@ -15,7 +13,7 @@ export default function NotFound() {
 
       <BlurBackground fullHeight />
 
-      <Header navLinks={navLinks} />
+      <MegaNav />
 
       <main className={styles.container} id="main-content">
         <div className={`${styles.content} animate-in`}>

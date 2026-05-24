@@ -2,16 +2,15 @@ import fs from "fs";
 import path from "path";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import Header from "../../../components/Header/Header";
+import MegaNav from "../../../components/MegaNav/MegaNav";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
 import DownloadButton from "./DownloadButton";
-import { getNavLinks, getSidebarLinks, blueprintsSidebarLinks } from "@/config/navigation";
+import { getSidebarLinks, blueprintsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
-const navLinks = getNavLinks("Blueprints");
-const { sidebarLinks, subnavLinks } = getSidebarLinks(blueprintsSidebarLinks, "/blueprints/claude");
+const { sidebarLinks } = getSidebarLinks(blueprintsSidebarLinks, "/blueprints/claude");
 
 export default function ClaudeBlueprintPage() {
   const filePath = path.join(process.cwd(), "public", "CLAUDE.md");
@@ -23,7 +22,7 @@ export default function ClaudeBlueprintPage() {
     <>
       <BlurBackground />
 
-      <Header navLinks={navLinks} subnavLinks={subnavLinks} />
+      <MegaNav />
 
       <div className={styles.dsLayout}>
         <Sidebar links={sidebarLinks} />

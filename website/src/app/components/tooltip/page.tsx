@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Header from "../../../components/Header/Header";
+import MegaNav from "../../../components/MegaNav/MegaNav";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
@@ -10,16 +10,15 @@ import { Button } from "@design-system/components/Button/Button";
 import { CircularButton } from "@design-system/components/CircularButton/CircularButton";
 import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
-import { getNavLinks, getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
+import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
-const navLinks = getNavLinks("Components");
-const { sidebarLinks, subnavLinks } = getSidebarLinks(componentsSidebarLinks, "/components/tooltip");
+const { sidebarLinks } = getSidebarLinks(componentsSidebarLinks, "/components/tooltip");
 
 export default function TooltipPage() {
   return (
     <>
       <BlurBackground />
-      <Header navLinks={navLinks} subnavLinks={subnavLinks} />
+      <MegaNav />
 
       <div className={styles.dsLayout}>
         <Sidebar links={sidebarLinks} />

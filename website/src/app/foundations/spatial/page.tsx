@@ -1,18 +1,17 @@
 "use client";
 
-import Header from "../../../components/Header/Header";
+import MegaNav from "../../../components/MegaNav/MegaNav";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
 import { SpacingSwatch } from "@design-system/components/SpacingSwatch/SpacingSwatch";
 import type { SpacingSwatchVariant } from "@design-system/components/SpacingSwatch/SpacingSwatch";
 import PageLinks from "../../../components/PageLinks/PageLinks";
-import { getNavLinks, getSidebarLinks, foundationsSidebarLinks } from "@/config/navigation";
+import { getSidebarLinks, foundationsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
 
-const navLinks = getNavLinks("Foundations");
-const { sidebarLinks, subnavLinks } = getSidebarLinks(foundationsSidebarLinks, "/foundations/spatial");
+const { sidebarLinks } = getSidebarLinks(foundationsSidebarLinks, "/foundations/spatial");
 
 /* ============================================
    SPACING DATA
@@ -82,7 +81,7 @@ export default function SemanticSpacingPage() {
 
       <BlurBackground />
 
-      <Header navLinks={navLinks} subnavLinks={subnavLinks} />
+      <MegaNav />
 
       <div className={styles.dsLayout}>
         <Sidebar links={sidebarLinks} />

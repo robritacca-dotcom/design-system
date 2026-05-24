@@ -1,17 +1,16 @@
 "use client";
 
-import Header from "../../components/Header/Header";
+import MegaNav from "../../components/MegaNav/MegaNav";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import Footer from "../../components/Footer/Footer";
 import { Button } from "@design-system/components/Button/Button";
 import { Badge } from "@design-system/components/Badge/Badge";
 import { ToastProvider, useToast } from "@design-system/components/Toast/Toast";
-import { getNavLinks, getSidebarLinks, skillsSidebarLinks } from "@/config/navigation";
+import { getSidebarLinks, skillsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
-const navLinks = getNavLinks("Skills");
-const { sidebarLinks, subnavLinks } = getSidebarLinks(skillsSidebarLinks, "/skills");
+const { sidebarLinks } = getSidebarLinks(skillsSidebarLinks, "/skills");
 
 /* ============================================
    SKILL DATA
@@ -609,7 +608,7 @@ function SkillsContent() {
     <>
       <BlurBackground />
 
-      <Header navLinks={navLinks} subnavLinks={subnavLinks} />
+      <MegaNav />
 
       <div className={styles.dsLayout}>
         <Sidebar links={sidebarLinks} />

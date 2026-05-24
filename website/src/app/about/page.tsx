@@ -1,16 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import Header from "../../components/Header/Header";
+import MegaNav from "../../components/MegaNav/MegaNav";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import Footer from "../../components/Footer/Footer";
 import PageLinks from "../../components/PageLinks/PageLinks";
-import { getNavLinks, getSidebarLinks, aboutSidebarLinks } from "@/config/navigation";
+import { getSidebarLinks, aboutSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
-const navLinks = getNavLinks("About");
-const { sidebarLinks, subnavLinks } = getSidebarLinks(aboutSidebarLinks, "/about");
+const { sidebarLinks } = getSidebarLinks(aboutSidebarLinks, "/about");
 
 export default function AboutDsPage() {
   return (
@@ -18,7 +17,7 @@ export default function AboutDsPage() {
 
       <BlurBackground />
 
-      <Header navLinks={navLinks} subnavLinks={subnavLinks} />
+      <MegaNav />
 
       <div className={styles.dsLayout}>
         <Sidebar links={sidebarLinks} />

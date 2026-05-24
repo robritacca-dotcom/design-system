@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Header from "../../../components/Header/Header";
+import MegaNav from "../../../components/MegaNav/MegaNav";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
@@ -9,10 +9,9 @@ import { Toast, ToastProvider, useToast } from "@design-system/components/Toast/
 import { Button } from "@design-system/components/Button/Button";
 import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
-import { getNavLinks, getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
+import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
-const navLinks = getNavLinks("Components");
-const { sidebarLinks, subnavLinks } = getSidebarLinks(componentsSidebarLinks, "/components/toast");
+const { sidebarLinks } = getSidebarLinks(componentsSidebarLinks, "/components/toast");
 
 function ToastTriggers() {
   const { toast } = useToast();
@@ -82,7 +81,7 @@ export default function ToastPage() {
   return (
     <ToastProvider position="bottom-right">
       <BlurBackground />
-      <Header navLinks={navLinks} subnavLinks={subnavLinks} />
+      <MegaNav />
 
       <div className={styles.dsLayout}>
         <Sidebar links={sidebarLinks} />

@@ -2,15 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import Header from "../../components/Header/Header";
+import MegaNav from "../../components/MegaNav/MegaNav";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import Footer from "../../components/Footer/Footer";
-import { getNavLinks, getSidebarLinks, workSidebarLinks } from "@/config/navigation";
+import { getSidebarLinks, workSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
-const navLinks = getNavLinks("Work");
-const { sidebarLinks, subnavLinks } = getSidebarLinks(workSidebarLinks, "/work");
+const { sidebarLinks } = getSidebarLinks(workSidebarLinks, "/work");
 
 interface Company {
   name: string;
@@ -117,7 +116,7 @@ export default function WorkPage() {
     <>
       <BlurBackground />
 
-      <Header navLinks={navLinks} subnavLinks={subnavLinks} />
+      <MegaNav />
 
       <div className={styles.dsLayout}>
         <Sidebar links={sidebarLinks} />

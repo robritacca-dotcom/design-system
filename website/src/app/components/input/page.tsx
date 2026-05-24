@@ -1,23 +1,22 @@
 "use client";
 
 import React from "react";
-import Header from "../../../components/Header/Header";
+import MegaNav from "../../../components/MegaNav/MegaNav";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
 import { Input } from "@design-system/components/Input/Input";
 import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
-import { getNavLinks, getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
+import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
-const navLinks = getNavLinks("Components");
-const { sidebarLinks, subnavLinks } = getSidebarLinks(componentsSidebarLinks, "/components/input");
+const { sidebarLinks } = getSidebarLinks(componentsSidebarLinks, "/components/input");
 
 export default function InputPage() {
   return (
     <>
       <BlurBackground />
-      <Header navLinks={navLinks} subnavLinks={subnavLinks} />
+      <MegaNav />
 
       <div className={styles.dsLayout}>
         <Sidebar links={sidebarLinks} />
@@ -25,7 +24,7 @@ export default function InputPage() {
         <main className={styles.dsContent} id="main-content">
           <div className={`${styles.pageHeader} animate-in`}>
             <h1 className={styles.pageTitle}>Input</h1>
-            <PageLinks
+            <PageLinks
               storybookPath="/?path=/docs/components-input--docs"
             />
           </div>

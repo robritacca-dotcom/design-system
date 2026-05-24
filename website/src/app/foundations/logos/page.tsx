@@ -1,18 +1,17 @@
 "use client";
 
 import React from "react";
-import Header from "../../../components/Header/Header";
+import MegaNav from "../../../components/MegaNav/MegaNav";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
 import { EntityCard } from "@design-system/components/EntityCard/EntityCard";
 import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
-import { getNavLinks, getSidebarLinks, foundationsSidebarLinks } from "@/config/navigation";
+import { getSidebarLinks, foundationsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
-const navLinks = getNavLinks("Foundations");
-const { sidebarLinks, subnavLinks } = getSidebarLinks(foundationsSidebarLinks, "/foundations/logos");
+const { sidebarLinks } = getSidebarLinks(foundationsSidebarLinks, "/foundations/logos");
 
 /* ============================================
    LOGO DATA
@@ -162,7 +161,7 @@ export default function LogosPage() {
 
       <BlurBackground />
 
-      <Header navLinks={navLinks} subnavLinks={subnavLinks} />
+      <MegaNav />
 
       <div className={styles.dsLayout}>
         <Sidebar links={sidebarLinks} />

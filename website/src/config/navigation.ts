@@ -29,16 +29,6 @@ export interface BreadcrumbItem {
    TOP NAV — shared across every page
    ============================================ */
 
-export const navLinks: NavLink[] = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/work", label: "Work" },
-  { href: "/components", label: "Components" },
-  { href: "/foundations", label: "Foundations" },
-  { href: "/skills", label: "Skills" },
-  { href: "/blueprints", label: "Blueprints" },
-];
-
 /* ============================================
    DESIGN SYSTEM MEGA MENU
    Drives the dropdown panel on the "Design system" trigger.
@@ -176,19 +166,7 @@ export const aboutSidebarLinks: NavLink[] = [
    ============================================ */
 
 /**
- * Returns navLinks with the correct section marked active.
- * @param section — "Home" | "About" | "Components" | "Foundations"
- */
-export function getNavLinks(section: string): NavLink[] {
-  return navLinks.map((link) => ({
-    ...link,
-    active: link.label === section ? true : undefined,
-  }));
-}
-
-/**
- * Returns sidebar links with the matching href marked active,
- * plus derives subnavLinks for the Header component.
+ * Returns sidebar links with the matching href marked active.
  */
 export function getSidebarLinks(links: NavLink[], activeHref: string) {
   const sidebarLinks = links.map((link) => ({
@@ -196,13 +174,7 @@ export function getSidebarLinks(links: NavLink[], activeHref: string) {
     active: link.href === activeHref ? true : undefined,
   }));
 
-  const subnavLinks = sidebarLinks.map((l) => ({
-    href: l.href,
-    label: l.label,
-    active: l.active,
-  }));
-
-  return { sidebarLinks, subnavLinks };
+  return { sidebarLinks };
 }
 
 /* ============================================
