@@ -657,7 +657,7 @@ function SkillsContent() {
                     />
                     <Button
                       label="Download"
-                      priority="secondary"
+                      priority="tertiary"
                       size="compact"
                       iconLeft="download"
                       onClick={() => downloadSkill(`${skill.slug}.md`, skill.content)}
