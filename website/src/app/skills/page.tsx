@@ -8,10 +8,10 @@ import Footer from "../../components/Footer/Footer";
 import { Button } from "@design-system/components/Button/Button";
 import { Badge } from "@design-system/components/Badge/Badge";
 import { ToastProvider, useToast } from "@design-system/components/Toast/Toast";
-import { getSidebarLinks, skillsSidebarLinks } from "@/config/navigation";
+import { getSidebarLinks, aboutSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
-const { sidebarLinks } = getSidebarLinks(skillsSidebarLinks, "/skills");
+const { sidebarLinks } = getSidebarLinks(aboutSidebarLinks, "/skills");
 
 /* ============================================
    SKILL DATA

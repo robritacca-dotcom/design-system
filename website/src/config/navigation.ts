@@ -39,20 +39,8 @@ export const dsMegaItems: MegaItem[] = [
   {
     href: "/about",
     label: "About",
-    description: "What the design system is and how it works",
+    description: "How robr0 DS works, plus the artifacts you can take and reuse",
     icon: "info",
-  },
-  {
-    href: "/blueprints",
-    label: "Blueprints",
-    description: "Markdown spec files that define the system",
-    icon: "description",
-  },
-  {
-    href: "/skills",
-    label: "Skills",
-    description: "Reusable AI instructions for Claude Code",
-    icon: "auto_awesome",
   },
   {
     href: "/foundations",
@@ -136,14 +124,15 @@ export const foundationsSidebarLinks: NavLink[] = [
   { href: "/foundations/typography", label: "Typography" },
 ];
 
-export const skillsSidebarLinks: NavLink[] = [
-  { href: "/skills", label: "Overview" },
-];
-
-export const blueprintsSidebarLinks: NavLink[] = [
-  { href: "/blueprints", label: "Overview" },
-  { href: "/blueprints/design", label: "Design MD" },
+/**
+ * Sidebar for the About cluster — the landing page + the artifacts
+ * (Claude MD, Design MD, Skills) that visitors can take and reuse.
+ */
+export const aboutSidebarLinks: NavLink[] = [
+  { href: "/about", label: "About" },
   { href: "/blueprints/claude", label: "Claude MD" },
+  { href: "/blueprints/design", label: "Design MD" },
+  { href: "/skills", label: "Skills" },
 ];
 
 export const workSidebarLinks: NavLink[] = [
@@ -187,9 +176,12 @@ interface SectionConfig {
 }
 
 const breadcrumbSections: SectionConfig[] = [
+  // About cluster — all four pages share the same parent breadcrumb
   { base: "/about", label: "About", parent: "Design system", sidebar: null },
-  { base: "/blueprints", label: "Blueprints", parent: "Design system", sidebar: blueprintsSidebarLinks },
-  { base: "/skills", label: "Skills", parent: "Design system", sidebar: skillsSidebarLinks },
+  { base: "/blueprints/claude", label: "Claude MD", parent: "Design system", sidebar: null },
+  { base: "/blueprints/design", label: "Design MD", parent: "Design system", sidebar: null },
+  { base: "/skills", label: "Skills", parent: "Design system", sidebar: null },
+  // Other DS sections
   { base: "/foundations", label: "Foundations", parent: "Design system", sidebar: foundationsSidebarLinks },
   { base: "/components", label: "Components", parent: "Design system", sidebar: componentsSidebarLinks },
   { base: "/work", label: "Work", parent: null, sidebar: workSidebarLinks },
