@@ -42,7 +42,7 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
           {/* Cover image — under the subtitle */}
           <figure className={`${styles.cover} animate-in animate-delay-2`}>
             <Image
-              src="/images/embedded-ai-cover.webp"
+              src="/images/heroes/embedded-ai.png"
               alt="Designing Embedded AI Experiences Inside ChatGPT and Claude — cover"
               width={940}
               height={480}

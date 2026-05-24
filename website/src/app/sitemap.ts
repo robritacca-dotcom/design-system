@@ -12,6 +12,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/work/robr0-ds",
     "/work/cibc-firstcaribbean",
     "/work/meta-career-profile",
+    "/work/meta-offers",
+    "/work/augmenta-ai",
+    "/work/intuit-agent-chat",
     "/contact",
 
     // Design system cluster (About is the landing)

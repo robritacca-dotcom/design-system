@@ -1,0 +1,312 @@
+/* ============================================
+   CASE STUDY — Meta · Offer Creation Flow
+   ============================================ */
+
+.dsLayout {
+  display: flex;
+  gap: var(--primitive-gap-xxl);
+  width: 100%;
+  max-width: 1440px;
+  padding-top: var(--primitive-gap-xl);
+}
+
+.dsContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-xl);
+  min-width: 0;
+}
+
+/* ============================================
+   PAGE HEADER
+   ============================================ */
+.pageHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--primitive-gap-lg);
+  width: 100%;
+}
+
+.pageTitle {
+  font-family: var(--font-display-2-family);
+  font-size: var(--font-display-2-size);
+  font-weight: var(--font-display-2-weight);
+  line-height: var(--font-display-2-line-height);
+  letter-spacing: var(--font-display-2-letter-spacing);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.subDisplay {
+  font-family: var(--font-sub-display-family);
+  font-size: var(--font-sub-display-size);
+  font-weight: var(--font-sub-display-weight);
+  line-height: var(--font-sub-display-line-height);
+  letter-spacing: var(--font-sub-display-letter-spacing);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* ============================================
+   HERO COVER IMAGE
+   ============================================ */
+.cover {
+  margin: 0;
+  width: 100%;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--color-bg-container-border);
+}
+
+.coverImage {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ============================================
+   RESUME LAYOUT — main + 320px aside
+   ============================================ */
+.resumeLayout {
+  display: flex;
+  gap: var(--primitive-gap-xxl);
+  width: 100%;
+  padding-top: var(--primitive-gap-xl);
+}
+
+.resumeMain {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.resumeSidebar {
+  width: 320px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-xxxl);
+}
+
+.resumeSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-xl);
+}
+
+.resumeSectionHeader {
+  padding-bottom: var(--primitive-padding-lg);
+  border-bottom: 1px solid var(--color-bg-container-border);
+}
+
+.resumeSectionTitle {
+  font-size: var(--font-heading-2-size);
+  font-weight: var(--font-heading-2-weight);
+  line-height: var(--font-heading-2-line-height);
+  letter-spacing: var(--font-heading-2-letter-spacing);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* ============================================
+   ARTICLE BODY
+   ============================================ */
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-lg);
+}
+
+.body p {
+  font-family: var(--font-paragraph-family);
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.body h2 {
+  font-family: var(--font-heading-2-family);
+  font-size: var(--font-heading-2-size);
+  font-weight: var(--font-heading-2-weight);
+  line-height: var(--font-heading-2-line-height);
+  letter-spacing: var(--font-heading-2-letter-spacing);
+  color: var(--color-text-primary);
+  margin: var(--primitive-gap-xl) 0 0;
+}
+
+.body ul {
+  list-style: disc;
+  padding-left: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-sm);
+  margin: 0;
+}
+
+.body li {
+  font-family: var(--font-paragraph-family);
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  color: var(--color-text-primary);
+}
+
+.body li::marker {
+  color: var(--color-text-tertiary);
+}
+
+.body strong {
+  font-weight: var(--font-paragraph-em-weight);
+  color: var(--color-text-primary);
+}
+
+.body em {
+  font-style: italic;
+}
+
+/* ============================================
+   INLINE FIGURE — image + caption
+   ============================================ */
+.figure {
+  margin: var(--primitive-gap-md) 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-sm);
+}
+
+.figureImage {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-bg-container-border);
+  background: var(--color-bg-container-secondary);
+}
+
+.figureCaption {
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+  margin: 0;
+}
+
+.footnote {
+  color: var(--color-text-tertiary) !important;
+  font-size: var(--font-paragraph-sm-size) !important;
+  padding-top: var(--primitive-gap-md);
+  border-top: 1px solid var(--color-bg-container-border);
+}
+
+/* ============================================
+   PEER QUOTES — testimonials stacked
+   ============================================ */
+.peerQuotes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-md);
+}
+
+.peerQuote {
+  margin: 0;
+  padding: var(--primitive-padding-lg);
+  border: 1px solid var(--color-bg-container-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-container-primary-semi);
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-sm);
+}
+
+.peerQuoteText {
+  font-family: var(--font-paragraph-em-family);
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-em-weight);
+  line-height: var(--font-paragraph-line-height);
+  color: var(--color-text-primary) !important;
+  margin: 0;
+}
+
+.peerQuoteFooter {
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-em-weight);
+  color: var(--color-text-tertiary);
+}
+
+/* ============================================
+   DETAILS LIST (right rail — fact sheet)
+   ============================================ */
+.detailList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-md);
+}
+
+.detailItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.detailLabel {
+  font-family: var(--font-paragraph-sm-family);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+}
+
+.detailValue {
+  font-family: var(--font-title-body-family);
+  font-size: var(--font-title-body-size);
+  font-weight: var(--font-title-body-weight);
+  line-height: var(--font-title-body-line-height);
+  color: var(--color-text-primary);
+}
+
+.statusLive {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--primitive-gap-xs);
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-status-positive-text, #10b981);
+  flex-shrink: 0;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 959px) {
+  .resumeLayout {
+    flex-direction: column;
+  }
+
+  .resumeSidebar {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .pageTitle {
+    font-size: 40px;
+    line-height: 1.05;
+  }
+
+  .subDisplay {
+    font-size: 22px;
+    line-height: 32px;
+  }
+}
