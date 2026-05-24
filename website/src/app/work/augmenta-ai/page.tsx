@@ -37,16 +37,17 @@ export default function AugmentaCaseStudy() {
             Turning automation into usability — the redesign behind 42% faster outcomes.
           </p>
 
-          {/* Hero image */}
-          <figure className={`${styles.cover} animate-in animate-delay-2`}>
-            <Image
-              src="/images/augmenta/hero.jpg"
-              alt="Augmenta Construction Platform — generative electrical design"
-              width={1920}
-              height={1080}
-              priority
-              className={styles.coverImage}
-            />
+          {/* Hero video */}
+          <figure className={`${styles.videoHero} animate-in animate-delay-2`}>
+            <div className={styles.videoFrame}>
+              <iframe
+                src="https://www.youtube.com/embed/mkhLi4tnHgk"
+                title="Augmenta Construction Platform — product walk-through"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                className={styles.videoIframe}
+              />
+            </div>
           </figure>
 
           {/* Two-column body */}
@@ -256,6 +257,47 @@ export default function AugmentaCaseStudy() {
                     <span className={styles.detailLabel}>Timeline</span>
                     <span className={styles.detailValue}>August 2023 → May 2024</span>
                   </div>
+                </div>
+              </div>
+
+              <div className={styles.resumeSection}>
+                <div className={styles.resumeSectionHeader}>
+                  <h2 className={styles.resumeSectionTitle}>Links</h2>
+                </div>
+                <div className={styles.linkList}>
+                  <a
+                    href="https://www.augmenta.ai/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.linkItem}
+                  >
+                    <Image src="/logos/Augmenta.svg" alt="" width={28} height={28} className={styles.linkLogo} />
+                    <div className={styles.linkContent}>
+                      <div className={styles.linkTitle}>
+                        <span>Augmenta.ai</span>
+                        <span className="material-symbols-rounded" aria-hidden="true">open_in_new</span>
+                      </div>
+                      <span className={styles.linkSub}>Company site</span>
+                    </div>
+                  </a>
+
+                  <a
+                    href="https://youtu.be/mkhLi4tnHgk"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.linkItem}
+                  >
+                    <span className={`material-symbols-rounded ${styles.linkIconSymbol}`} aria-hidden="true">
+                      play_circle
+                    </span>
+                    <div className={styles.linkContent}>
+                      <div className={styles.linkTitle}>
+                        <span>Watch on YouTube</span>
+                        <span className="material-symbols-rounded" aria-hidden="true">open_in_new</span>
+                      </div>
+                      <span className={styles.linkSub}>Product walk-through</span>
+                    </div>
+                  </a>
                 </div>
               </div>
             </aside>
