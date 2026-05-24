@@ -139,6 +139,22 @@
   border-bottom: 1px solid var(--color-bg-container-border);
 }
 
+/* Same visual weight as resumeSectionHeader but no internal border —
+   the Tabs component already has its own bottom rule. */
+.resumeTabsHeader {
+  padding-bottom: 0;
+}
+
+.blockquoteAttribution {
+  display: inline-block;
+  margin-top: var(--primitive-gap-sm);
+  font-family: var(--font-paragraph-sm-em-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-em-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+}
+
 .resumeSectionTitle {
   font-size: var(--font-heading-2-size);
   font-weight: var(--font-heading-2-weight);
