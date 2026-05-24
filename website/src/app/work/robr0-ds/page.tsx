@@ -15,12 +15,6 @@ import styles from "./page.module.css";
 
 const { sidebarLinks } = getSidebarLinks(workSidebarLinks, "/work/robr0-ds");
 
-const GitHubIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <path fillRule="evenodd" clipRule="evenodd" d="M12.01 0C5.369 0 0 5.5 0 12.304c0 5.44 3.44 10.043 8.212 11.673.597.122.815-.265.815-.59 0-.286-.02-1.264-.02-2.283-3.34.734-4.036-1.466-4.036-1.466-.537-1.426-1.332-1.793-1.332-1.793-1.094-.754.08-.754.08-.754 1.212.082 1.849 1.263 1.849 1.263 1.073 1.874 2.803 1.345 3.5 1.019.098-.795.417-1.345.755-1.65-2.665-.285-5.468-1.345-5.468-6.07 0-1.345.477-2.445 1.232-3.3-.119-.306-.537-1.57.12-3.26 0 0 1.014-.326 3.3 1.263.98-.27 1.989-.407 3.003-.408 1.014 0 2.048.143 3.002.408 2.287-1.59 3.301-1.263 3.301-1.263.657 1.69.239 2.954.12 3.26.775.855 1.232 1.955 1.232 3.3 0 4.725-2.803 5.764-5.488 6.07.438.387.815 1.12.815 2.281 0 1.65-.02 2.975-.02 3.382 0 .326.22.713.816.59C20.56 22.347 24 17.744 24 12.305 24.02 5.5 18.63 0 12.01 0" fill="currentColor"/>
-  </svg>
-);
-
 /** The pipeline diagram — six labeled boxes connected by chevrons. */
 function PipelineDiagram() {
   const steps = [
@@ -63,23 +57,11 @@ export default function Robr0DsCaseStudy() {
         <main className={styles.dsContent} id="main-content">
           <PageBreadcrumb />
 
-          {/* Page header — title + GitHub link inline */}
+          {/* Page header */}
           <div className={`${styles.pageHeader} animate-in`}>
             <h1 className={styles.pageTitle}>
               Building robr0 DS — a one-person design system, end to end
             </h1>
-            <div className={styles.pageActions}>
-              <Button
-                label="GitHub"
-                priority="tertiary"
-                size="compact"
-                iconLeft={<GitHubIcon />}
-                iconRight="open_in_new"
-                href="https://github.com/robritacca-dotcom/design-system"
-                target="_blank"
-                rel="noopener noreferrer"
-              />
-            </div>
           </div>
 
           {/* Subtitle / dek */}
