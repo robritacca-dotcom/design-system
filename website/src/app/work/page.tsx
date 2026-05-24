@@ -59,8 +59,11 @@ const caseStudies: CaseStudy[] = [
     cover: "/images/cibc-firstcaribbean-cover.jpg",
   },
   {
-    title: "Coming soon",
+    href: "/work/augmenta-ai",
+    title: "Augmenta Construction Platform",
+    dek: "Turning automation into usability — the redesign behind 42% faster outcomes",
     company: { name: "Augmenta", logo: "/logos/Augmenta.svg" },
+    cover: "/images/augmenta/hero.jpg",
   },
 ];
 

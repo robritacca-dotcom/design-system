@@ -143,8 +143,8 @@ export const workSidebarLinks: NavLink[] = [
   { href: "/work/robr0-ds", label: "Building robr0 DS", logo: "/logos/rr.svg" },
   { href: "/work/cibc-firstcaribbean", label: "FirstCaribbean", logo: "/logos/CIBC.svg" },
   { href: "/work/meta-career-profile", label: "Career Profile", logo: "/logos/meta.svg" },
+  { href: "/work/augmenta-ai", label: "Construction Platform", logo: "/logos/Augmenta.svg" },
   { href: "#", label: "Agent chat", disabled: true, logo: "/logos/Intuit.svg" },
-  { href: "#", label: "Augmenta", disabled: true, logo: "/logos/Augmenta.svg" },
 ];
 
 /* ============================================
