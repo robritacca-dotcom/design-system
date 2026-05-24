@@ -1,13 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
-import { Tabs } from "@design-system/components/Tabs/Tabs";
 import { getSidebarLinks, workSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
@@ -16,13 +14,7 @@ const { sidebarLinks } = getSidebarLinks(
   "/work/embedded-ai-turbotax"
 );
 
-const tabs = [
-  { value: "learned", label: "What I learned" },
-  { value: "built", label: "How we built it" },
-];
-
 export default function EmbeddedAiTurbotaxCaseStudy() {
-  const [activeTab, setActiveTab] = useState<"learned" | "built">("learned");
   return (
     <>
       <BlurBackground />
@@ -64,16 +56,10 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
             {/* Main — article body */}
             <div className={styles.resumeMain}>
               <div className={styles.resumeSection}>
-                <div className={styles.resumeTabsHeader}>
-                  <Tabs
-                    tabs={tabs}
-                    activeTab={activeTab}
-                    onTabChange={(v) => setActiveTab(v as "learned" | "built")}
-                    ariaLabel="Case study sections"
-                  />
+                <div className={styles.resumeSectionHeader}>
+                  <h2 className={styles.resumeSectionTitle}>Case study</h2>
                 </div>
 
-                {activeTab === "learned" && (
                 <div className={styles.body}>
                   <p className={styles.lede}>
                     Last October, I started leading design work for a new category of TurboTax experience: embedded AI applications running directly inside ChatGPT and Claude. The work began as a relatively small MVP ahead of tax season, with the first release launching in December. We followed with a larger V2 release in January, and then a major expansion in April alongside the Claude Connector launch.
@@ -231,104 +217,6 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                     What makes this moment particularly exciting is that very few established patterns exist yet. Most teams are still discovering these interaction models in real time. It feels far less like optimizing mature UX conventions and much more like helping define an entirely new computing paradigm while it is still forming.
                   </p>
                 </div>
-                )}
-
-                {activeTab === "built" && (
-                <div className={styles.body}>
-                  <p className={styles.lede}>
-                    Some of the work happens before the product ships — the prototyping pipeline we used to align the cross-functional team in days, not weeks. This is the workflow we ran when there was no template, no repo, and no existing pattern to fall back on.
-                  </p>
-
-                  <h2>The framing</h2>
-
-                  <p>
-                    What if our idea doesn&apos;t fit what&apos;s already been built? New surface, new experience model, no template to fall back on — so we built the foundation itself, end to end, in under a day.
-                  </p>
-
-                  <p>
-                    The setup was simple and unforgiving:
-                  </p>
-
-                  <ul>
-                    <li><strong>Goal</strong> — demonstrate a working TurboTax plugin inside Claude CoWork to a cross-functional team, with enough advanced features and flows to drive a real alignment decision.</li>
-                    <li><strong>Timeline</strong> — under one day. Start at 9am, share-out at 5pm.</li>
-                    <li><strong>Constraint</strong> — no existing Claude CoWork template to start from, and the prototype had to look real.</li>
-                  </ul>
-
-                  <h2>When to do this</h2>
-
-                  <p>
-                    No repo, no existing artifacts, no design source? This is your starting point. Higher fidelity output means better alignment with cross-functional partners, which means a faster path to moving things forward. The upfront investment in context and templates pays off every time you spin up a new prototype.
-                  </p>
-
-                  <h2>Step 1 — Gather the sources</h2>
-
-                  <p>
-                    The agent can only build as well as the information it&apos;s given. Before any prompting, we fed the system as much context as possible upfront. These sources set the guardrails so what gets generated actually looks like an existing product.
-                  </p>
-
-                  <p>
-                    We pulled four:
-                  </p>
-
-                  <ul>
-                    <li><strong>Claude Figma Library</strong> — the Anthropic-provided UI kit from the MCP App Ecosystem Kit. Designed for claude.ai, not CoWork specifically, so the UI patterns don&apos;t translate one-to-one. But the foundational elements do: icons, components, typography.</li>
-                    <li><strong>DESIGN.md</strong> — a markdown-based design system from getdesign.md. A plain-text &ldquo;design system manifest&rdquo; for AI agents — like a README but for visual styling. Captures Claude&apos;s visual language in a format AI tools can consume directly. The starting point for code generation.</li>
-                    <li><strong>Cowork screenshot</strong> — no Figma file, no design source, just a screenshot. The actual surface we&apos;re building in. Ground truth for layout, chrome, and context.</li>
-                    <li><strong>TurboTax patterns via MCP</strong> — shipped widgets and components built for the Claude MCP app — real, not concepts. Transferred from claude.ai into CoWork via Figma MCP, so live components and tokens become queryable context with no exporting needed.</li>
-                  </ul>
-
-                  <h2>Step 2 — Prompt, set rules, iterate</h2>
-
-                  <p>
-                    Once context is loaded, the work becomes prompting and refining. The rules define three things: <strong>how each prototype behaves, where it lives, and what the design guardrails are.</strong> This keeps every generated output consistent and on-system — not one-offs.
-                  </p>
-
-                  <h2>Step 3 — Build and publish</h2>
-
-                  <p>
-                    The destination matters as much as the artifact. We wired it so:
-                  </p>
-
-                  <ul>
-                    <li>Claude Code is connected to the Intuit GitHub repo</li>
-                    <li>Every prototype gets pushed there automatically — no manual handoff</li>
-                    <li>GitHub Pages turns each push into a live, shareable URL</li>
-                    <li>Builds are visible to the whole team as they happen</li>
-                  </ul>
-
-                  <h2>The output</h2>
-
-                  <p>
-                    The inputs (sources, rules, templates) produced three things that compound:
-                  </p>
-
-                  <ul>
-                    <li><strong>Prototypes</strong> — each spun up in minutes. Pre-wired with interactions, reasoning, streaming, established cards, and context. Change the scenario, not the system.</li>
-                    <li><strong>Prototype index page</strong> — auto-populated as new prototypes are pushed. Tracks versions and divergent concepts in one place. Each card is a self-contained, clickable scenario.</li>
-                    <li><strong>Card library</strong> — every new component lands here. Claude pulls from it before writing anything new. Pure render functions — drop into any prototype script to embed inline. The system gets smarter with every card added.</li>
-                  </ul>
-
-                  <h2>The loop, summarized</h2>
-
-                  <ul>
-                    <li><strong>Gather</strong> — sources, libraries, context</li>
-                    <li><strong>Prompt / iterate</strong> — rules, generation, refinement</li>
-                    <li><strong>Build / publish</strong> — GitHub, Pages, live URLs</li>
-                    <li><strong>Share / align</strong> — test, learn, do it again</li>
-                  </ul>
-
-                  <blockquote>
-                    &ldquo;The PE felt like it wouldn&apos;t take that long to actually build out what was in the prototype.&rdquo;
-                    <br />
-                    <span className={styles.blockquoteAttribution}>— Lily, AI Inc PM</span>
-                  </blockquote>
-
-                  <p>
-                    That&apos;s the bar: a prototype convincing enough that a principal engineer sees a real product behind it. When that happens, the cross-functional conversation skips months of &ldquo;what would this even look like&rdquo; and lands directly on &ldquo;here&apos;s what we&apos;d need to harden to ship.&rdquo;
-                  </p>
-                </div>
-                )}
               </div>
             </div>
 
