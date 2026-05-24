@@ -258,6 +258,16 @@
   color: var(--color-text-secondary);
 }
 
+.roleBullets a {
+  color: var(--color-action-primary-bg);
+  font-weight: var(--font-paragraph-em-weight);
+  text-decoration: none;
+}
+
+.roleBullets a:hover {
+  text-decoration: underline;
+}
+
 /* ============================================
    SKILLS
    ============================================ */

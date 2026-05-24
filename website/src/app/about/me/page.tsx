@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
@@ -58,7 +59,8 @@ export default function AboutMePage() {
                             <span className={styles.roleDates}>Jan 2026 – <span className={styles.present}>Present</span></span>
                           </div>
                           <ul className={styles.roleBullets}>
-                            <li>Leading TurboTax AI experiences across ChatGPT, Claude, and Gemini, meeting consumers where they are</li>
+                            <li>Shipped TurboTax&apos;s embedded AI experiences inside ChatGPT and Claude in time for tax season — surfacing TurboTax to nearly 1 billion users on those platforms</li>
+                            <li>Designed the bidirectional filing checklist that lets users prep their taxes inside an AI chat and finish the return in TurboTax — full story in the <Link href="/work/embedded-ai-turbotax">case study</Link></li>
                             <li>Driving the operationalization of agentic solutions across TurboTax and the broader consumer platform including Credit Karma</li>
                             <li>Designing action-oriented financial workflows that turn AI into real outcomes, not just answers</li>
                           </ul>
@@ -70,9 +72,11 @@ export default function AboutMePage() {
                             <span className={styles.roleDates}>May 2024 – Jan 2026</span>
                           </div>
                           <ul className={styles.roleBullets}>
-                            <li>Led design of Intuit Intelligence, Intuit&apos;s end-to-end conversational AI platform enabling domain teams to inject agents and dynamic UI into products through a consistent, scalable, and extensible contextual capability</li>
-                            <li>Built core agent UX foundations adopted by 150+ product teams, supporting 600+ designers and thousands of engineers</li>
-                            <li>Defined scalable AI-native patterns for chat, documents, memory, and dynamic UI used across QuickBooks, TurboTax, Credit Karma, and Mailchimp</li>
+                            <li>Led design of Intuit Intelligence — Intuit&apos;s end-to-end conversational AI platform enabling domain teams to inject agents and dynamic UI into products through a consistent, scalable, and extensible contextual capability</li>
+                            <li>Onboarded 150+ teams end-to-end with 58 teams in production, including TurboTax, QuickBooks, Credit Karma, and Mailchimp</li>
+                            <li>Powering 3.8M monthly customer interactions across Intuit&apos;s consumer and small-business platforms</li>
+                            <li>2.8M component instantiations from the shared AI-native UI library spanning chat, documents, memory, and dynamic UI</li>
+                            <li>Supported 600+ designers and thousands of engineers shipping with the platform</li>
                           </ul>
                         </div>
                       </div>
