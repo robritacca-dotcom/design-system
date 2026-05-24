@@ -384,19 +384,18 @@
 }
 
 .artifactIcon {
-  font-size: 32px;
+  font-size: 40px;
+  line-height: 1;
+  font-variation-settings: "FILL" 1;
   color: var(--color-text-primary);
-  width: 48px;
-  height: 48px;
+  width: 56px;
+  height: 56px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-md);
-  background: var(--color-bg-container-secondary);
-}
-
-.artifactCard:hover .artifactIcon {
   background: var(--color-bg-container-tertiary);
+  flex-shrink: 0;
 }
 
 .artifactBody {

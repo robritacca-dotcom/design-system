@@ -31,16 +31,21 @@ export default function AboutDsPage() {
             <h1 className={styles.pageTitle}>About robr0 DS</h1>
             <PageLinks
               figmaUrl="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26?node-id=246-5864"
+              storybookPath="/?path=/docs/robr0-ds--docs"
+              githubUrl="https://github.com/robritacca-dotcom/design-system"
             />
           </div>
 
           {/* Intro */}
           <div className={`${styles.introSection} animate-in animate-delay-1`}>
             <p className={styles.subDisplay}>
-              Design system infrastructure powered by AI tooling
+              A personal design system, built to make this site
             </p>
             <p className={styles.introBody}>
-              I built a design-to-code pipeline that keeps design and development perfectly in sync. Everything starts in Figma where I define design tokens as variables and build components. Claude Code connects to Figma via MCP, reads the design data directly, and generates production-ready React components with token-based CSS and Storybook documentation. When I push changes to GitHub, Vercel automatically deploys both the component library (Storybook) and this website within 60 seconds. Design changes flow straight to production with zero manual translation or deployment steps. It&apos;s infrastructure that lets one person maintain design system quality that normally requires a full team.
+              robr0 DS is the system I built — by myself — to make every page you see here. Tokens live in Figma. Components live in React. Claude Code wires them together so a change in Figma reaches production in under a minute. None of it is theoretical: the buttons, the colours, the type, the layout — they&apos;re all running on the same system this page describes.
+            </p>
+            <p className={styles.introBody}>
+              I&apos;m putting all of it on display because I think the system is the work. The pipeline below shows how the pieces fit. The tools rail lists what makes it run. And if you want to lift any of it for your own project, everything is open — the artifacts at the bottom of this page are ready to drop in.
             </p>
           </div>
 
