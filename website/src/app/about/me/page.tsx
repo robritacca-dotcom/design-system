@@ -72,7 +72,7 @@ export default function AboutMePage() {
                             <span className={styles.roleDates}>May 2024 – Jan 2026</span>
                           </div>
                           <ul className={styles.roleBullets}>
-                            <li>Led design of Intuit Intelligence — Intuit&apos;s end-to-end conversational AI platform enabling domain teams to inject agents and dynamic UI into products through a consistent, scalable, and extensible contextual capability</li>
+                            <li>Led design of Intuit Intelligence — Intuit&apos;s end-to-end conversational AI platform enabling domain teams to inject agents and dynamic UI into products through a consistent, scalable, and extensible contextual capability — full story in the <Link href="/work/intuit-agent-chat">case study</Link></li>
                             <li>Onboarded 150+ teams end-to-end with 58 teams in production, including TurboTax, QuickBooks, Credit Karma, and Mailchimp</li>
                             <li>Powering 3.8M monthly customer interactions across Intuit&apos;s consumer and small-business platforms</li>
                             <li>2.8M component instantiations from the shared AI-native UI library spanning chat, documents, memory, and dynamic UI</li>
@@ -103,7 +103,7 @@ export default function AboutMePage() {
                           </p>
                           <ul className={styles.roleBullets}>
                             <li>Drove continuous product improvement through user research, testing, and iterative design — shaping workflows and building new capabilities like 4x expanded signal visibility across 3D and tabular views</li>
-                            <li>Reduced the time-to-value metric from 14 to 5 days by streamlining generation workflows and cutting required cycles from 12 to 5 through clearer feedback and improved anomaly detection</li>
+                            <li>Reduced the time-to-value metric from 14 to 5 days by streamlining generation workflows and cutting required cycles from 12 to 5 through clearer feedback and improved anomaly detection — full story in the <Link href="/work/augmenta-ai">case study</Link></li>
                             <li>Improved solution quality by reducing anomalies per output by 60% and cutting engineering intervention from 13+ to ~1 per project through better tooling, visualization, and in-product guidance</li>
                           </ul>
                         </div>
@@ -130,7 +130,7 @@ export default function AboutMePage() {
                             Directed and executed on design initiatives rooted in evidence across a horizontal portfolio of Recruiting Products, supporting Meta in the mission to discover, develop and hire the best talent in the world.
                           </p>
                           <ul className={styles.roleBullets}>
-                            <li>Redesigned the Job Offer tool within Meta&apos;s Applicant Tracking System, improving offer extension velocity by over 10%, compensation approval velocity by 25%, and volume of data points by 50%</li>
+                            <li>Redesigned the Job Offer tool within Meta&apos;s Applicant Tracking System, improving offer extension velocity by over 10%, compensation approval velocity by 25%, and volume of data points by 50% — full story in the <Link href="/work/meta-offers">case study</Link></li>
                             <li>Redesigned the Internal Mobility transfer and eligibility tool, resulting in a 58% increase in data accuracy and a 33% reduction in processing time to earn an estimated savings of 2000 hours/year of productivity</li>
                             <li>Led design direction for a mixed-reality initiative of 40+ people across 6 organizations, including Recruiting Products and an external XR development shop. Drove the creation of a Design Brief, overcoming challenges around hardware logistics, digital onboarding. Successfully implemented a pilot program for our target users to participate in an immersive experience within a VR environment.</li>
                           </ul>
@@ -159,7 +159,7 @@ export default function AboutMePage() {
                           </p>
                           <ul className={styles.roleBullets}>
                             <li>Led design for mySCP, a cross-platform healthcare application suite used by 8,000+ clinicians across desktop, iOS, and Android</li>
-                            <li>Led design for multiple CIBC banking products, including First Caribbean and Smart Banking for Business, spanning desktop, iOS, and Android</li>
+                            <li>Led design for multiple CIBC banking products, including <Link href="/work/cibc-firstcaribbean">First Caribbean</Link> and Smart Banking for Business, spanning desktop, iOS, and Android</li>
                           </ul>
                         </div>
                         <div className={styles.role}>
