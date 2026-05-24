@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>IA proto — Robert Ritacca</title>
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --fg: #f4f4f4;
+    --muted: rgba(244, 244, 244, 0.55);
+    --line: rgba(244, 244, 244, 0.25);
+    --line-strong: rgba(244, 244, 244, 0.5);
+    --fill: rgba(244, 244, 244, 0.06);
+    --accent-fill: rgba(244, 244, 244, 0.14);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  body { padding: 48px 32px 80px; }
+  .container { max-width: 1280px; margin: 0 auto; }
+
+  h1 {
+    font-weight: 300;
+    font-size: 32px;
+    letter-spacing: 0.01em;
+    margin: 0 0 8px;
+  }
+  .caption {
+    color: var(--muted);
+    margin: 0 0 48px;
+    max-width: 64ch;
+  }
+
+  .panel-label {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 48px 0 12px;
+  }
+
+  /* Placeholder shapes */
+  .ph { background: var(--fill); border-radius: 3px; }
+  .ph-line { height: 8px; background: var(--line); border-radius: 2px; }
+
+  .frame {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--bg);
+    position: relative;
+  }
+
+  /* ----- Nav ----- */
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    z-index: 4;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+  }
+  .logo-mark {
+    width: 22px; height: 22px;
+    border: 1px solid var(--fg);
+    border-radius: 4px;
+  }
+  .nav-links {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--fg);
+    font-size: 13px;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .nav-link.active { background: var(--accent-fill); }
+  .nav-link.has-menu::after {
+    content: "▾";
+    font-size: 9px;
+    opacity: 0.7;
+    margin-left: 2px;
+  }
+  .toggle {
+    width: 72px; height: 28px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+  }
+
+  /* ----- Mega menu ----- */
+  .mega {
+    border-top: 1px solid var(--line);
+    background: var(--bg);
+    padding: 28px 24px 32px;
+    position: relative;
+    z-index: 3;
+  }
+  .mega-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+  }
+  .mega-item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+  }
+  .mega-item.active { background: var(--accent-fill); border-color: var(--line-strong); }
+  .mega-glyph {
+    width: 36px;
+    height: 36px;
+    border: 1px dashed var(--line-strong);
+    border-radius: 8px;
+  }
+  .mega-label {
+    font-size: 14px;
+    color: var(--fg);
+  }
+  .mega-sub {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+  .mega-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+  }
+  .mega-footer-link {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* ----- Home hero ----- */
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    padding: 140px 32px;
+    text-align: center;
+  }
+  .hero-title {
+    height: 64px;
+    width: 56%;
+    background: var(--line-strong);
+    border-radius: 4px;
+  }
+  .hero-sub {
+    height: 16px;
+    width: 46%;
+    background: var(--line);
+    border-radius: 3px;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .hero-action {
+    width: 90px;
+    height: 28px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+  }
+
+  @media (max-width: 720px) {
+    .mega-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>IA Prototype</h1>
+  <p class="caption">
+    Two screens: the home page (minimal hero) and the top nav with the Design system mega menu open. Boxes and lines stand in for typography and content.
+  </p>
+
+  <!-- ============================================
+       1. HOME PAGE
+       ============================================ -->
+  <div class="panel-label">1. Home page</div>
+  <div class="frame">
+    <div class="nav">
+      <div class="logo">
+        <div class="logo-mark"></div>
+        <span>Robert Ritacca</span>
+      </div>
+      <div class="nav-links">
+        <a class="nav-link" href="#">About</a>
+        <a class="nav-link" href="#">Work</a>
+        <a class="nav-link has-menu" href="#">Design system</a>
+        <a class="nav-link" href="#">Contact</a>
+      </div>
+      <div class="toggle"></div>
+    </div>
+
+    <div class="hero">
+      <div class="hero-title"></div>
+      <div class="hero-sub"></div>
+      <div class="hero-actions">
+        <div class="hero-action"></div>
+        <div class="hero-action"></div>
+        <div class="hero-action"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       2. NAV with mega menu OPEN
+       ============================================ -->
+  <div class="panel-label">2. Top nav · Design system mega menu open</div>
+  <div class="frame">
+    <div class="nav">
+      <div class="logo">
+        <div class="logo-mark"></div>
+        <span>Robert Ritacca</span>
+      </div>
+      <div class="nav-links">
+        <a class="nav-link" href="#">About</a>
+        <a class="nav-link" href="#">Work</a>
+        <a class="nav-link active has-menu" href="#">Design system</a>
+        <a class="nav-link" href="#">Contact</a>
+      </div>
+      <div class="toggle"></div>
+    </div>
+
+    <div class="mega">
+      <div class="mega-grid">
+        <div class="mega-item">
+          <div class="mega-glyph"></div>
+          <div class="mega-label">About</div>
+          <div class="mega-sub">What this design system is, the pipeline that builds it.</div>
+        </div>
+        <div class="mega-item">
+          <div class="mega-glyph"></div>
+          <div class="mega-label">Blueprints</div>
+          <div class="mega-sub">design.md and CLAUDE.md — the spec files.</div>
+        </div>
+        <div class="mega-item">
+          <div class="mega-glyph"></div>
+          <div class="mega-label">Skills</div>
+          <div class="mega-sub">Reusable Claude Code skills.</div>
+        </div>
+        <div class="mega-item">
+          <div class="mega-glyph"></div>
+          <div class="mega-label">Foundations</div>
+          <div class="mega-sub">Colour, type, spacing, icons, logos.</div>
+        </div>
+        <div class="mega-item">
+          <div class="mega-glyph"></div>
+          <div class="mega-label">Components</div>
+          <div class="mega-sub">42 React components with Storybook.</div>
+        </div>
+      </div>
+      <div class="mega-footer">
+        <span class="mega-footer-link">→ View Storybook</span>
+        <span class="mega-footer-link">→ Figma file</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

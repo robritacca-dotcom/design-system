@@ -1,0 +1,47 @@
+.page {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 120px var(--primitive-padding-xl);
+}
+
+.hint {
+  text-align: center;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-md);
+}
+
+.hintTitle {
+  font-family: var(--font-display-2-family);
+  font-size: 40px;
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: var(--font-display-2-letter-spacing);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.hintText {
+  font-family: var(--font-paragraph-family);
+  font-size: var(--font-paragraph-size);
+  line-height: var(--font-paragraph-line-height);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.hintSmall {
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+  margin: 0;
+}

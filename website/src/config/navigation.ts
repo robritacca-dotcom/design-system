@@ -8,6 +8,7 @@ export interface NavLink {
   href: string;
   label: string;
   active?: boolean;
+  disabled?: boolean;
 }
 
 /* ============================================
@@ -17,6 +18,7 @@ export interface NavLink {
 export const navLinks: NavLink[] = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
+  { href: "/work", label: "Work" },
   { href: "/components", label: "Components" },
   { href: "/foundations", label: "Foundations" },
   { href: "/skills", label: "Skills" },
@@ -86,6 +88,15 @@ export const blueprintsSidebarLinks: NavLink[] = [
   { href: "/blueprints", label: "Overview" },
   { href: "/blueprints/design", label: "Design MD" },
   { href: "/blueprints/claude", label: "Claude MD" },
+];
+
+export const workSidebarLinks: NavLink[] = [
+  { href: "/work", label: "Overview" },
+  { href: "/work/embedded-ai-turbotax", label: "Embedded AI Experiences" },
+  { href: "#", label: "Meta", disabled: true },
+  { href: "#", label: "Intuit — Agent chat", disabled: true },
+  { href: "#", label: "Augmenta", disabled: true },
+  { href: "#", label: "Devbridge", disabled: true },
 ];
 
 export const aboutSidebarLinks: NavLink[] = [

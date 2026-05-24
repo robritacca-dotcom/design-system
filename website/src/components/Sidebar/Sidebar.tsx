@@ -6,6 +6,7 @@ interface SidebarLink {
   href: string;
   label: string;
   active?: boolean;
+  disabled?: boolean;
 }
 
 interface SidebarProps {
@@ -15,8 +16,12 @@ interface SidebarProps {
 export default function Sidebar({ links }: SidebarProps) {
   const buttons: ButtonProps[] = links.map((link) => ({
     label: link.label,
-    href: link.href,
-    state: link.active ? ("active" as const) : ("default" as const),
+    href: link.disabled ? undefined : link.href,
+    state: link.disabled
+      ? ("disabled" as const)
+      : link.active
+        ? ("active" as const)
+        : ("default" as const),
     priority: "tertiary" as const,
   }));
 
