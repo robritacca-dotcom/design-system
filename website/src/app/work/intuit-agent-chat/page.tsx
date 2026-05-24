@@ -37,16 +37,17 @@ export default function IntuitAgentChatCaseStudy() {
             The official conversational AI platform for all of Intuit. Designed and built from 0 → 1.
           </p>
 
-          {/* Hero image — composable widget anatomy */}
-          <figure className={`${styles.cover} animate-in animate-delay-2`}>
-            <Image
-              src="/images/intuit-agent-chat/widget-anatomy.png"
-              alt="Agent Chat — composable widget anatomy"
-              width={1920}
-              height={1080}
-              priority
-              className={styles.coverImage}
-            />
+          {/* Hero video */}
+          <figure className={`${styles.videoHero} animate-in animate-delay-2`}>
+            <div className={styles.videoFrame}>
+              <iframe
+                src="https://www.youtube.com/embed/sJc0uKPVZew"
+                title="Intuit Agent Chat — product walk-through"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                className={styles.videoIframe}
+              />
+            </div>
           </figure>
 
           {/* Two-column body */}
