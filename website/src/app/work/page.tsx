@@ -49,12 +49,15 @@ const caseStudies: CaseStudy[] = [
     company: { name: "Intuit", logo: "/logos/Intuit.svg" },
   },
   {
-    title: "Coming soon",
-    company: { name: "Augmenta", logo: "/logos/Augmenta.svg" },
+    href: "/work/cibc-firstcaribbean",
+    title: "CIBC FirstCaribbean — Mobile Banking Platform",
+    dek: "Designing for multi-country, multi-currency international banking at Devbridge",
+    company: { name: "CIBC", logo: "/logos/CIBC.svg" },
+    cover: "/images/cibc-firstcaribbean-cover.jpg",
   },
   {
     title: "Coming soon",
-    company: { name: "Devbridge", logo: "/logos/Devbridge.svg" },
+    company: { name: "Augmenta", logo: "/logos/Augmenta.svg" },
   },
 ];
 

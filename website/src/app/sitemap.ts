@@ -10,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/work",
     "/work/embedded-ai-turbotax",
     "/work/robr0-ds",
+    "/work/cibc-firstcaribbean",
     "/contact",
 
     // Design system cluster (About is the landing)
