@@ -6,19 +6,12 @@ import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
-import { Button } from "@design-system/components/Button/Button";
 import { getSidebarLinks, workSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
 const { sidebarLinks } = getSidebarLinks(
   workSidebarLinks,
   "/work/embedded-ai-turbotax"
-);
-
-const SubstackIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <path fillRule="evenodd" clipRule="evenodd" d="M2 1H22.125V3.82419H2V1ZM2 11.3015H22.125V24L12.0604 18.3491L2 24V11.3015ZM2 6.15072H22.125V8.97491H2V6.15072Z" fill="#FF681A"/>
-  </svg>
 );
 
 export default function EmbeddedAiTurbotaxCaseStudy() {
@@ -33,23 +26,11 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
 
         <main className={styles.dsContent} id="main-content">
           <PageBreadcrumb />
-          {/* Page header — title + Substack action inline */}
+          {/* Page header */}
           <div className={`${styles.pageHeader} animate-in`}>
             <h1 className={styles.pageTitle}>
               Designing Embedded AI Experiences Inside ChatGPT and Claude
             </h1>
-            <div className={styles.pageActions}>
-              <Button
-                label="Substack"
-                priority="tertiary"
-                size="compact"
-                iconLeft={<SubstackIcon />}
-                iconRight="open_in_new"
-                href="https://robertritacca1.substack.com/p/designing-embedded-ai-experiences?r=1n9uct&utm_medium=ios&triedRedirect=true"
-                target="_blank"
-                rel="noopener noreferrer"
-              />
-            </div>
           </div>
 
           {/* Subtitle */}
@@ -268,6 +249,23 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                   <h2 className={styles.resumeSectionTitle}>Links</h2>
                 </div>
                 <div className={styles.linkList}>
+                  {/* Substack post */}
+                  <a
+                    href="https://robertritacca1.substack.com/p/designing-embedded-ai-experiences?r=1n9uct&utm_medium=ios&triedRedirect=true"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.linkItem}
+                  >
+                    <Image src="/logos/substack.svg" alt="" width={28} height={28} className={styles.linkLogo} />
+                    <div className={styles.linkContent}>
+                      <div className={styles.linkTitle}>
+                        <span>Read on Substack</span>
+                        <span className="material-symbols-rounded" aria-hidden="true">open_in_new</span>
+                      </div>
+                      <span className={styles.linkSub}>Original post — same essay, longer form</span>
+                    </div>
+                  </a>
+
                   {/* Webby */}
                   <a
                     href="https://winners.webbyawards.com/2026/ai/ai-experiences-applications/financial-services/379906/turbotax-chatgpt"
