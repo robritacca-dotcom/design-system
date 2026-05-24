@@ -48,8 +48,11 @@ const caseStudies: CaseStudy[] = [
     cover: "/images/meta-career-profile-hero.png",
   },
   {
-    title: "Agent chat — coming soon",
+    href: "/work/intuit-agent-chat",
+    title: "Intuit Agent Chat",
+    dek: "Designing and shipping Intuit's official conversational AI platform from 0 → 1",
     company: { name: "Intuit", logo: "/logos/Intuit.svg" },
+    cover: "/images/intuit-agent-chat/widget-anatomy.png",
   },
   {
     href: "/work/cibc-firstcaribbean",
