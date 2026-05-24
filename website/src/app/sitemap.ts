@@ -9,6 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/about/me",
     "/work",
     "/work/embedded-ai-turbotax",
+    "/work/robr0-ds",
     "/contact",
 
     // Design system cluster (About is the landing)

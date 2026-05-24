@@ -34,6 +34,12 @@ const caseStudies: CaseStudy[] = [
     cover: "/images/embedded-ai-cover.webp",
   },
   {
+    href: "/work/robr0-ds",
+    title: "Building robr0 DS — a one-person design system, end to end",
+    dek: "Why I built a personal design system and the AI-augmented pipeline behind this site",
+    company: { name: "Personal", logo: "/logos/rr.svg" },
+  },
+  {
     title: "Coming soon",
     company: { name: "Meta", logo: "/logos/meta.svg" },
   },
