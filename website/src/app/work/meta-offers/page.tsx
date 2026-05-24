@@ -65,7 +65,7 @@ export default function MetaOffersCaseStudy() {
           {/* Hero image */}
           <figure className={`${styles.cover} animate-in animate-delay-2`}>
             <Image
-              src="/images/meta-offers/hero.png"
+              src="/images/heroes/meta-offers.png"
               alt="Offer Creation Flow — hero"
               width={1920}
               height={1080}
