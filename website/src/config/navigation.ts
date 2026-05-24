@@ -155,12 +155,6 @@ export const workSidebarLinks: NavLink[] = [
   { href: "#", label: "Devbridge", disabled: true },
 ];
 
-export const aboutSidebarLinks: NavLink[] = [
-  { href: "/about", label: "About robr0 DS" },
-  { href: "/about/me", label: "About me" },
-  { href: "/about/work", label: "Work" },
-];
-
 /* ============================================
    HELPERS
    ============================================ */

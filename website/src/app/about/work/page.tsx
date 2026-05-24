@@ -2,17 +2,12 @@
 
 import Image from "next/image";
 import MegaNav from "../../../components/MegaNav/MegaNav";
-import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
-import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
 import PasswordGate from "../../../components/PasswordGate/PasswordGate";
 import { Button } from "@design-system/components/Button/Button";
-import { getSidebarLinks, aboutSidebarLinks } from "@/config/navigation";
 import styles from "../page.module.css";
 import workStyles from "./work.module.css";
-
-const { sidebarLinks } = getSidebarLinks(aboutSidebarLinks, "/about/work");
 
 export default function AboutWorkPage() {
   return (
@@ -22,10 +17,7 @@ export default function AboutWorkPage() {
       <MegaNav />
 
       <div className={styles.dsLayout}>
-        <Sidebar links={sidebarLinks} />
-
         <main className={styles.dsContent} id="main-content">
-          <PageBreadcrumb />
           {/* Page Title */}
           <div className={`${styles.pageHeader} animate-in`}>
             <h1 className={styles.pageTitle}>Work</h1>
