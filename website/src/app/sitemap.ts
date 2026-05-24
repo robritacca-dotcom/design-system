@@ -4,17 +4,42 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://robr0-ds.vercel.app";
 
   const routes = [
+    // Home + personal
     "",
-    "/about",
     "/about/me",
+    "/work",
+    "/work/embedded-ai-turbotax",
+    "/contact",
+
+    // Design system cluster (About is the landing)
+    "/about",
+    "/blueprints/claude",
+    "/blueprints/design",
+    "/skills",
+
+    // Foundations
+    "/foundations",
+    "/foundations/colour-mode",
+    "/foundations/colour-primitives",
+    "/foundations/icons",
+    "/foundations/logos",
+    "/foundations/spatial",
+    "/foundations/typography",
+
+    // Components — every page in the library
     "/components",
     "/components/accordion",
     "/components/alert",
+    "/components/alert-dialog",
+    "/components/app-sidebar",
+    "/components/avatar",
     "/components/badge",
     "/components/breadcrumb",
     "/components/button",
     "/components/button-group",
     "/components/card",
+    "/components/carousel",
+    "/components/chart",
     "/components/checkbox",
     "/components/circular-button",
     "/components/date-input",
@@ -28,23 +53,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/components/progress-bar",
     "/components/radio-button",
     "/components/section-title",
-    "/components/selection-card",
     "/components/segmented-control",
+    "/components/selection-card",
     "/components/skeleton",
     "/components/slider",
     "/components/spinner",
     "/components/table",
     "/components/tabs",
     "/components/textarea",
+    "/components/toast",
     "/components/toggle-group",
     "/components/toggle-switch",
-    "/foundations",
-    "/foundations/colour-mode",
-    "/foundations/colour-primitives",
-    "/foundations/icons",
-    "/foundations/logos",
-    "/foundations/spatial",
-    "/foundations/typography",
+    "/components/tooltip",
   ];
 
   return routes.map((route) => ({

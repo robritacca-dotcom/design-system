@@ -618,7 +618,7 @@ function SkillsContent() {
           <PageBreadcrumb />
           {/* Page Header */}
           <div className={`${styles.pageHeader} animate-in`}>
-            <h1 className={styles.pageTitle}>Claude Skills</h1>
+            <h1 className={styles.pageTitle}>Skills</h1>
           </div>
 
           {/* Intro */}

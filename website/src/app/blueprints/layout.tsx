@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Blueprints — robr0 DS",
+  title: "Blueprints",
   description:
-    "The markdown spec files that define how to build with this design system — design tokens, component rules, and codebase context for builders.",
+    "Markdown spec files that define how robr0 DS is built — design tokens, component rules, and codebase context.",
 };
 
 export default function BlueprintsLayout({ children }: { children: React.ReactNode }) {

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Skills — robr0 DS",
+  title: "Skills",
   description:
-    "Reusable Claude Code skill files that encode this project's conventions — component patterns, token rules, navigation wiring, and more.",
+    "Reusable Claude Code skill files I wrote to extend robr0 DS — each one a markdown file you can download.",
 };
 
 export default function SkillsLayout({ children }: { children: React.ReactNode }) {
