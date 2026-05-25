@@ -54,7 +54,8 @@ export default function HomePage() {
           <div className={styles.homeNameTitle}>
             <h1 className={styles.homeTitle}>Robert Ritacca</h1>
             <p className={styles.homeSubtitle}>
-              Principal Product Designer @Intuit, previously @Meta
+              Designing and building AI-native products, systems, and experiences.
+              From interaction design to design systems to AI-augmented product development.
             </p>
           </div>
           <div className={styles.homeDivider} />
