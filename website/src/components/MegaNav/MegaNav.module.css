@@ -239,20 +239,12 @@
 }
 
 .megaIcon {
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-md);
-  background: var(--color-bg-container-secondary);
+  width: 24px;
+  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--color-text-primary);
-  transition: background 0.15s ease;
-}
-
-.megaItem:hover .megaIcon,
-.megaItemActive .megaIcon {
-  background: var(--color-bg-container-tertiary);
 }
 
 .megaIcon .material-symbols-rounded,
