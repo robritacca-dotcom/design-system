@@ -72,7 +72,7 @@ export default function Robr0DsCaseStudy() {
           {/* Hero image */}
           <figure className={`${styles.cover} animate-in animate-delay-2`}>
             <Image
-              src="/images/ds-hero.png"
+              src="/images/heroes/robr0-ds.png"
               alt="robr0 DS — design system overview"
               width={1440}
               height={900}

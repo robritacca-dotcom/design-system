@@ -40,7 +40,7 @@ export default function MetaCareerProfileCaseStudy() {
           {/* Hero image */}
           <figure className={`${styles.cover} animate-in animate-delay-2`}>
             <Image
-              src="/images/meta-career-profile-hero.png"
+              src="/images/heroes/meta-vision.png"
               alt="Career Profile Vision — Meta candidate experience platform"
               width={2560}
               height={1440}
