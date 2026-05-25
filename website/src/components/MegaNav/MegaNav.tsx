@@ -40,9 +40,11 @@ export default function MegaNav() {
   const pathname = usePathname() ?? "/";
   const [open, setOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isStuck, setIsStuck] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const inFlowHeaderRef = useRef<HTMLElement>(null);
 
   const isDsActive = isDesignSystemPath(pathname);
   const isAboutActive = pathname === "/about/me";
@@ -95,6 +97,27 @@ export default function MegaNav() {
     setMobileOpen(false);
   }, [pathname]);
 
+  // Toggle the sticky overlay header when the in-flow header scrolls out of view
+  useEffect(() => {
+    let ticking = false;
+    const check = () => {
+      const el = inFlowHeaderRef.current;
+      if (el) {
+        setIsStuck(el.getBoundingClientRect().bottom < 0);
+      }
+      ticking = false;
+    };
+    const onScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(check);
+        ticking = true;
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    check();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   // Lock body scroll while mobile menu is open
   useEffect(() => {
     if (mobileOpen) {
@@ -108,7 +131,7 @@ export default function MegaNav() {
   }, [mobileOpen]);
 
   return (
-    <header className={styles.header}>
+    <header ref={inFlowHeaderRef} className={styles.header}>
       <div className={styles.headerInner}>
         <div className={styles.logoSlot}>
           <Link href="/" className={styles.logo}>
@@ -215,6 +238,70 @@ export default function MegaNav() {
                 </Link>
               );
             })}
+          </div>
+        </div>
+      </div>
+
+      {/* STICKY OVERLAY HEADER — slides in when the in-flow header scrolls out of view */}
+      <div
+        className={`${styles.stickyHeader} ${isStuck ? styles.stickyHeaderVisible : ""}`}
+        aria-hidden={!isStuck}
+      >
+        <div className={styles.headerInner}>
+          <div className={styles.logoSlot}>
+            <Link href="/" className={styles.logo} tabIndex={isStuck ? 0 : -1}>
+              <LogoIcon className={styles.logoMark} />
+              <span className={styles.logoText}>Robert Ritacca</span>
+            </Link>
+          </div>
+
+          <div className={styles.navCenter}>
+            <nav className={styles.nav} aria-label="Primary (sticky)">
+              <Link
+                href="/about/me"
+                className={`${styles.navLink} ${isAboutActive ? styles.navLinkActive : ""}`}
+                tabIndex={isStuck ? 0 : -1}
+              >
+                About
+              </Link>
+              <Link
+                href="/work"
+                className={`${styles.navLink} ${isWorkActive ? styles.navLinkActive : ""}`}
+                tabIndex={isStuck ? 0 : -1}
+              >
+                Work
+              </Link>
+              <Link
+                href="/about"
+                className={`${styles.navLink} ${isDsActive ? styles.navLinkActive : ""}`}
+                tabIndex={isStuck ? 0 : -1}
+              >
+                Design system
+              </Link>
+              <Link
+                href="/contact"
+                className={`${styles.navLink} ${isContactActive ? styles.navLinkActive : ""}`}
+                tabIndex={isStuck ? 0 : -1}
+              >
+                Contact
+              </Link>
+            </nav>
+          </div>
+
+          <div className={styles.rightSlot}>
+            <ThemeToggle className={styles.desktopThemeToggle} />
+            <button
+              type="button"
+              className={styles.mobileMenuBtn}
+              onClick={() => setMobileOpen((v) => !v)}
+              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileOpen}
+              tabIndex={isStuck ? 0 : -1}
+            >
+              <span className="material-symbols-rounded" aria-hidden="true">
+                {mobileOpen ? "close" : "menu"}
+              </span>
+            </button>
           </div>
         </div>
       </div>

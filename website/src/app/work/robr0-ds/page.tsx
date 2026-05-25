@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import MegaNav from "../../../components/MegaNav/MegaNav";
@@ -10,8 +11,31 @@ import Footer from "../../../components/Footer/Footer";
 import { Button } from "@design-system/components/Button/Button";
 import { Badge } from "@design-system/components/Badge/Badge";
 import { Alert } from "@design-system/components/Alert/Alert";
+import { SegmentedControl } from "@design-system/components/SegmentedControl/SegmentedControl";
+import { ProgressBar } from "@design-system/components/ProgressBar/ProgressBar";
+import { LineChart } from "@design-system/components/Chart/LineChart";
+import { BarChart } from "@design-system/components/Chart/BarChart";
 import { getSidebarLinks, workSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
+
+/* ============================================
+   Sample data — themed to the system's own growth
+   ============================================ */
+const systemGrowth = [
+  { month: "Jan", components: 8, tokens: 24 },
+  { month: "Feb", components: 14, tokens: 38 },
+  { month: "Mar", components: 22, tokens: 51 },
+  { month: "Apr", components: 30, tokens: 64 },
+  { month: "May", components: 37, tokens: 74 },
+  { month: "Jun", components: 42, tokens: 84 },
+];
+
+const tokensByCategory = [
+  { label: "Colour", value: 32 },
+  { label: "Spacing", value: 18 },
+  { label: "Radius", value: 6 },
+  { label: "Typography", value: 28 },
+];
 
 const { sidebarLinks } = getSidebarLinks(workSidebarLinks, "/work/robr0-ds");
 
@@ -45,6 +69,7 @@ function PipelineDiagram() {
 }
 
 export default function Robr0DsCaseStudy() {
+  const [viewSegment, setViewSegment] = useState("week");
   return (
     <>
       <BlurBackground />
@@ -195,10 +220,11 @@ export default function Robr0DsCaseStudy() {
                   <h2>What it produces</h2>
 
                   <p>
-                    Forty-two React components, full Storybook docs, light and dark themes, the entire site you&apos;re reading right now. Here&apos;s a tiny live slice — these are the actual components from the system, rendered inline:
+                    Forty-two React components, full Storybook docs, light and dark themes, the entire site you&apos;re reading right now. Here&apos;s a live slice — every element below is a real component from the system, rendered inline from the same token layer:
                   </p>
 
                   <div className={styles.liveDemo} aria-label="Live components from robr0 DS">
+                    {/* Controls */}
                     <div className={styles.demoRow}>
                       <Button label="Primary" priority="primary" size="compact" />
                       <Button label="Secondary" priority="secondary" size="compact" />
@@ -211,10 +237,51 @@ export default function Robr0DsCaseStudy() {
                       <Badge variant="error" label="Error" />
                       <Badge variant="neutral" label="Neutral" />
                     </div>
+                    <div className={styles.demoRow}>
+                      <SegmentedControl
+                        segments={[
+                          { label: "Day", value: "day" },
+                          { label: "Week", value: "week" },
+                          { label: "Month", value: "month" },
+                        ]}
+                        activeSegment={viewSegment}
+                        onSegmentChange={setViewSegment}
+                      />
+                      <div style={{ flex: 1, minWidth: 200 }}>
+                        <ProgressBar value={75} showLabel />
+                      </div>
+                    </div>
+
+                    {/* Charts */}
+                    <LineChart
+                      data={systemGrowth}
+                      xKey="month"
+                      series={[
+                        { dataKey: "components", label: "Components", color: "#118AB2" },
+                        { dataKey: "tokens", label: "Tokens", color: "#06D6A0" },
+                      ]}
+                      title="System growth"
+                      subtitle="Components and tokens shipped, Jan – Jun"
+                      summaryItems={[
+                        { label: "Components", value: 42 },
+                        { label: "Tokens", value: 84 },
+                      ]}
+                      height={240}
+                    />
+
+                    <BarChart
+                      data={tokensByCategory}
+                      title="Tokens by category"
+                      subtitle="What 84 semantic tokens cover"
+                      dataLabel="Tokens"
+                      summaryItems={[{ label: "Total", value: 84 }]}
+                      height={220}
+                    />
+
                     <Alert
                       variant="positive"
                       title="It&rsquo;s the same system the rest of this page uses."
-                      description="Every component in robr0 DS is a real React component, rendered from the same token layer."
+                      description="Every component above &mdash; buttons, badges, segmented control, progress bar, charts &mdash; is a real React component from robr0 DS, rendered from the same token layer."
                     />
                   </div>
 
