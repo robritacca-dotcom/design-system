@@ -231,9 +231,6 @@ export default function MetaOffersCaseStudy() {
                     ))}
                   </div>
 
-                  <p className={styles.footnote}>
-                    <em>Photos and names of individual teammates and candidates have been removed from this case study.</em>
-                  </p>
                 </div>
               </div>
             </div>

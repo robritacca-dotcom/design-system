@@ -34,7 +34,7 @@ export default function IntuitAgentChatCaseStudy() {
 
           {/* Subtitle / dek */}
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            The official conversational AI platform for all of Intuit. Designed and built from 0 → 1.
+            The conversational AI platform for all of Intuit. Designed from 0 → 1 — now 58 agents in production, 3.8M monthly active users, and growing.
           </p>
 
           {/* Hero video */}
@@ -66,7 +66,7 @@ export default function IntuitAgentChatCaseStudy() {
                   </p>
 
                   <p>
-                    I led the design workstream for the web triad — design, engineering, and PM working as one team — across two fiscal years.
+                    I led design as the principal IC — the lead designer on a cross-functional team of 15 web engineers, 10 mobile engineers, technical program management, PM, and four other designers — across two fiscal years and still shipping.
                   </p>
 
                   <h2>Problem</h2>
@@ -153,6 +153,19 @@ export default function IntuitAgentChatCaseStudy() {
                     <strong>Capabilities shipped in v1 and v2</strong> — themeable, flexible layouts, threads, agent status &amp; reasoning, dynamic cards with renderer extensions, responsive panel, response actions, doc upload (PCI-compliant), 100% token coverage, and an Agent Typography Kit.
                   </p>
 
+                  <figure className={styles.figure}>
+                    <Image
+                      src="/images/intuit-agent-chat/widget-anatomy.png"
+                      alt="Intuit Agent Chat widget anatomy"
+                      width={1920}
+                      height={1080}
+                      className={styles.figureImage}
+                    />
+                    <figcaption className={styles.figureCaption}>
+                      Widget anatomy — the building blocks behind every deployment.
+                    </figcaption>
+                  </figure>
+
                   <p>
                     <strong>Mobile parity from day one.</strong> Web, iOS, and Android — not an afterthought.
                   </p>
@@ -170,8 +183,39 @@ export default function IntuitAgentChatCaseStudy() {
                     </figcaption>
                   </figure>
 
+                  <figure className={styles.figure}>
+                    <Image
+                      src="/images/intuit-agent-chat/agent-parts.png"
+                      alt="Intuit Agent Chat — annotated widget parts"
+                      width={1920}
+                      height={1080}
+                      className={styles.figureImage}
+                    />
+                    <figcaption className={styles.figureCaption}>
+                      Every surface, labelled — the parts powering every Agent Chat deployment.
+                    </figcaption>
+                  </figure>
+
+                  <h2>In production</h2>
+
                   <p>
-                    <strong>Anchor use-case: Project Clarity.</strong> Stood up a mission team with the QuickBooks Business Intelligence team as the first major adoption of Intuit Agent Chat. The problem: customers were exporting QB data into third-party AI tools because QB didn&apos;t support analysis natively. The solution: the QB Analytics Agent, surfacing customer and business insights directly in QB through Agent Chat. Live in QBO to 200k+ customers.
+                    Agent Chat is the foundational widget powering every AI experience across Intuit. Two major brands launched in year one — with more in flight.
+                  </p>
+
+                  <h3>QuickBooks</h3>
+
+                  <p>
+                    <strong>Started with Project Clarity</strong> — a mission team embedded with the QuickBooks Business Intelligence org. Customers were exporting QB data into third-party AI tools because QuickBooks didn&apos;t support analysis natively. The QB Analytics Agent changed that: ask about your revenue, profit and loss, cash flow, and payroll directly in the product. Launched as <a href="https://quickbooks.intuit.com/intuit-intelligence/" target="_blank" rel="noopener noreferrer">Intuit Intelligence</a> to 200k+ customers.
+                  </p>
+
+                  <p>
+                    Early success unlocked rapid adoption across the full product. Agent Chat expanded into payroll, project management, and more — every major workflow in QuickBooks now has an agent surface built on the same widget.
+                  </p>
+
+                  <h3>TurboTax</h3>
+
+                  <p>
+                    Multiple agent use cases live in production: the <strong>Deductions &amp; Credits Agent</strong> surfaces personalized opportunities during filing; the <strong>Explanations Agent</strong> answers &ldquo;what does this mean?&rdquo; for any line item; and the <strong>Digital Assistant</strong> guides customers through the full filing workflow. All powered by Agent Chat.
                   </p>
 
                   <h2>The harder problem — governance</h2>
@@ -180,7 +224,7 @@ export default function IntuitAgentChatCaseStudy() {
                     Two audiences with opposing incentives — domain teams who own workflows and platform teams who own oversight. Domain teams will circumvent if shared patterns don&apos;t meet their needs; platform teams resist losing control to centralized solutions. A lot of the work was coordination, not design: building trust, defining ownership, and creating an extension model that didn&apos;t ask either side to give up what they cared about.
                   </p>
 
-                  <h2>Impact (as of Dec 2025)</h2>
+                  <h2>Impact</h2>
 
                   <ul>
                     <li><strong>150 teams</strong> in end-to-end integration on the platform</li>
@@ -207,9 +251,6 @@ export default function IntuitAgentChatCaseStudy() {
                     </figcaption>
                   </figure>
 
-                  <p className={styles.footnote}>
-                    <em>Photos and names of individual teammates have been removed from this case study. The work was a cross-functional effort — product development, design, PM, program management, and accessibility — across both web and mobile.</em>
-                  </p>
                 </div>
               </div>
             </div>

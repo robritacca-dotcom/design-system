@@ -219,9 +219,6 @@ export default function AugmentaCaseStudy() {
                     The downstream result: detailed 3D schematics flow into pre-fabrication and field installation in days instead of weeks. Engineering interventions — the single biggest indicator of an unscalable product — dropped by a third.
                   </p>
 
-                  <p className={styles.footnote}>
-                    <em>Photos of people, named users, and team imagery have been removed from this case study.</em>
-                  </p>
                 </div>
               </div>
             </div>
