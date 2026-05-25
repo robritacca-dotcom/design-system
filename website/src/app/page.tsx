@@ -55,7 +55,7 @@ export default function HomePage() {
             <h1 className={styles.homeTitle}>Robert Ritacca</h1>
             <p className={styles.homeSubtitle}>
               Designing and building AI-native products, systems, and experiences.
-              From interaction design to design systems to AI-augmented product development.
+              Bridging interaction, systems thinking, and modern AI workflows.
             </p>
           </div>
           <div className={styles.homeDivider} />

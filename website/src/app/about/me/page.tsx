@@ -29,7 +29,7 @@ export default function AboutMePage() {
           {/* Page Description */}
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
             Designing and building AI-native products, systems, and experiences.
-            From interaction design to design systems to AI-augmented product development.
+            Bridging interaction, systems thinking, and modern AI workflows.
           </p>
 
           {/* Resume Two-Column Layout */}
