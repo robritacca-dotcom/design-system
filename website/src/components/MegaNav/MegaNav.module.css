@@ -261,6 +261,13 @@
   line-height: 1;
 }
 
+.megaLogo {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display: block;
+}
+
 .megaItemText {
   display: flex;
   flex-direction: column;

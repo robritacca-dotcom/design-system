@@ -13,12 +13,13 @@ export interface NavLink {
   logo?: string;
 }
 
-/** A row in the Design system mega menu */
+/** A row in a mega menu — provide either an `icon` (Material Symbol) or a `logo` (image path) */
 export interface MegaItem {
   href: string;
   label: string;
   description: string;
-  icon: string; // Material Symbols name
+  icon?: string; // Material Symbols name
+  logo?: string; // Path to logo SVG/image — rendered in the icon slot when set
 }
 
 /** One step in a breadcrumb trail; omit href for the current page (last item) */
@@ -70,6 +71,58 @@ export const dsActiveMatchers = [
 export function isDesignSystemPath(pathname: string): boolean {
   return dsActiveMatchers.some((match) => match(pathname));
 }
+
+/* ============================================
+   WORK MEGA MENU
+   Drives the dropdown panel on the "Work" trigger.
+   One row per case study. Uses the company logo
+   in place of an icon.
+   ============================================ */
+
+export const workMegaItems: MegaItem[] = [
+  {
+    href: "/work/embedded-ai-turbotax",
+    label: "Embedded AI Experiences",
+    description: "TurboTax inside ChatGPT and Claude",
+    logo: "/logos/turbotax.svg",
+  },
+  {
+    href: "/work/intuit-agent-chat",
+    label: "Intuit Agent Chat",
+    description: "Intuit's conversational AI platform, 0 → 1",
+    logo: "/logos/Intuit.svg",
+  },
+  {
+    href: "/work/augmenta-ai",
+    label: "Augmenta Construction Platform",
+    description: "Automation made usable — 42% faster outcomes",
+    logo: "/logos/Augmenta.svg",
+  },
+  {
+    href: "/work/meta-career-profile",
+    label: "Career Profile Vision",
+    description: "Meta's candidate experience, reimagined",
+    logo: "/logos/meta.svg",
+  },
+  {
+    href: "/work/meta-offers",
+    label: "Offer Creation Flow",
+    description: "Hiring velocity from decision to offer",
+    logo: "/logos/meta.svg",
+  },
+  {
+    href: "/work/robr0-ds",
+    label: "robr0 DS",
+    description: "A one-person design system, end to end",
+    logo: "/logos/rr.svg",
+  },
+  {
+    href: "/work/cibc-firstcaribbean",
+    label: "CIBC FirstCaribbean",
+    description: "Multi-country, multi-currency mobile banking",
+    logo: "/logos/CIBC.svg",
+  },
+];
 
 /* ============================================
    SECTION SIDEBAR LINKS

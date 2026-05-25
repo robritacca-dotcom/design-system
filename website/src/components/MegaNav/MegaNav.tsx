@@ -1,11 +1,14 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
-import { dsMegaItems, isDesignSystemPath } from "@/config/navigation";
+import { dsMegaItems, isDesignSystemPath, workMegaItems, type MegaItem } from "@/config/navigation";
 import styles from "./MegaNav.module.css";
+
+type MenuKey = "ds" | "work" | null;
 
 /** Inline SVG logo — matches the production Header */
 function LogoIcon({ className }: { className?: string }) {
@@ -36,12 +39,37 @@ function LogoIcon({ className }: { className?: string }) {
   );
 }
 
+/** Renders a mega-menu item's leading visual — either a Material Symbol or a company logo */
+function MegaItemMedia({ item }: { item: MegaItem }) {
+  if (item.logo) {
+    return (
+      <div className={styles.megaIcon}>
+        <Image
+          src={item.logo}
+          alt=""
+          width={24}
+          height={24}
+          className={styles.megaLogo}
+        />
+      </div>
+    );
+  }
+  return (
+    <div className={styles.megaIcon}>
+      <span className="material-symbols-rounded" aria-hidden="true">
+        {item.icon}
+      </span>
+    </div>
+  );
+}
+
 export default function MegaNav() {
   const pathname = usePathname() ?? "/";
-  const [open, setOpen] = useState(false);
+  const [openMenu, setOpenMenu] = useState<MenuKey>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-  const triggerRef = useRef<HTMLButtonElement>(null);
+  const dsTriggerRef = useRef<HTMLButtonElement>(null);
+  const workTriggerRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
   const isDsActive = isDesignSystemPath(pathname);
@@ -49,49 +77,56 @@ export default function MegaNav() {
   const isWorkActive = pathname === "/work" || pathname.startsWith("/work/");
   const isContactActive = pathname === "/contact";
 
-  const openMenu = useCallback(() => {
+  const openMenuFor = useCallback((key: Exclude<MenuKey, null>) => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
-    setOpen(true);
+    setOpenMenu(key);
   }, []);
 
   const scheduleClose = useCallback(() => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
-    closeTimer.current = setTimeout(() => setOpen(false), 160);
+    closeTimer.current = setTimeout(() => setOpenMenu(null), 160);
   }, []);
 
   // Close on click outside
   useEffect(() => {
-    if (!open) return;
+    if (!openMenu) return;
     const onClick = (e: MouseEvent) => {
       const t = e.target as Node;
-      if (triggerRef.current?.contains(t) || menuRef.current?.contains(t)) return;
-      setOpen(false);
+      if (
+        dsTriggerRef.current?.contains(t) ||
+        workTriggerRef.current?.contains(t) ||
+        menuRef.current?.contains(t)
+      ) {
+        return;
+      }
+      setOpenMenu(null);
     };
     document.addEventListener("mousedown", onClick);
     return () => document.removeEventListener("mousedown", onClick);
-  }, [open]);
+  }, [openMenu]);
 
   // Close on Escape
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        if (open) {
-          setOpen(false);
-          triggerRef.current?.focus();
+        if (openMenu) {
+          const triggerToFocus = openMenu === "work" ? workTriggerRef.current : dsTriggerRef.current;
+          setOpenMenu(null);
+          triggerToFocus?.focus();
         }
         if (mobileOpen) setMobileOpen(false);
       }
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, [open, mobileOpen]);
+  }, [openMenu, mobileOpen]);
 
   // Close mega when pathname changes (user navigated via a link).
   // The setState here is intentional — we react to external navigation,
   // which is exactly what Effects are for.
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setOpen(false);
+    setOpenMenu(null);
     setMobileOpen(false);
   }, [pathname]);
 
@@ -106,6 +141,8 @@ export default function MegaNav() {
       document.body.style.overflow = "";
     };
   }, [mobileOpen]);
+
+  const activeItems = openMenu === "work" ? workMegaItems : dsMegaItems;
 
   return (
     <header className={styles.header}>
@@ -125,32 +162,52 @@ export default function MegaNav() {
             >
               About
             </Link>
-            <Link
-              href="/work"
-              className={`${styles.navLink} ${isWorkActive ? styles.navLinkActive : ""}`}
-            >
-              Work
-            </Link>
 
             <div
               className={styles.dsWrap}
-              onMouseEnter={openMenu}
+              onMouseEnter={() => openMenuFor("work")}
               onMouseLeave={scheduleClose}
             >
               <button
-                ref={triggerRef}
+                ref={workTriggerRef}
                 type="button"
                 className={`${styles.navLink} ${styles.dsTrigger} ${
-                  open || isDsActive ? styles.navLinkActive : ""
+                  openMenu === "work" || isWorkActive ? styles.navLinkActive : ""
                 }`}
-                aria-expanded={open}
+                aria-expanded={openMenu === "work"}
                 aria-haspopup="true"
-                aria-controls="ds-mega"
-                onClick={() => setOpen((v) => !v)}
+                aria-controls="site-mega"
+                onClick={() => setOpenMenu((v) => (v === "work" ? null : "work"))}
+              >
+                <span>Work</span>
+                <span
+                  className={`material-symbols-rounded ${styles.caret} ${openMenu === "work" ? styles.caretOpen : ""}`}
+                  aria-hidden="true"
+                >
+                  expand_more
+                </span>
+              </button>
+            </div>
+
+            <div
+              className={styles.dsWrap}
+              onMouseEnter={() => openMenuFor("ds")}
+              onMouseLeave={scheduleClose}
+            >
+              <button
+                ref={dsTriggerRef}
+                type="button"
+                className={`${styles.navLink} ${styles.dsTrigger} ${
+                  openMenu === "ds" || isDsActive ? styles.navLinkActive : ""
+                }`}
+                aria-expanded={openMenu === "ds"}
+                aria-haspopup="true"
+                aria-controls="site-mega"
+                onClick={() => setOpenMenu((v) => (v === "ds" ? null : "ds"))}
               >
                 <span>Design system</span>
                 <span
-                  className={`material-symbols-rounded ${styles.caret} ${open ? styles.caretOpen : ""}`}
+                  className={`material-symbols-rounded ${styles.caret} ${openMenu === "ds" ? styles.caretOpen : ""}`}
                   aria-hidden="true"
                 >
                   expand_more
@@ -183,31 +240,29 @@ export default function MegaNav() {
         </div>
       </div>
 
-      {/* MEGA MENU — Design system dropdown */}
+      {/* MEGA MENU — shared panel, swaps content based on which trigger is open */}
       <div
         ref={menuRef}
-        id="ds-mega"
-        className={`${styles.mega} ${open ? styles.megaOpen : ""}`}
-        onMouseEnter={openMenu}
+        id="site-mega"
+        className={`${styles.mega} ${openMenu ? styles.megaOpen : ""}`}
+        onMouseEnter={() => openMenu && openMenuFor(openMenu)}
         onMouseLeave={scheduleClose}
-        aria-hidden={!open}
+        aria-hidden={!openMenu}
       >
         <div className={styles.megaInner}>
           <div className={styles.megaGrid}>
-            {dsMegaItems.map((item) => {
-              const itemActive = pathname === item.href || (item.href !== "/about" && pathname.startsWith(item.href + "/"));
+            {activeItems.map((item) => {
+              const itemActive =
+                pathname === item.href ||
+                (item.href !== "/about" && pathname.startsWith(item.href + "/"));
               return (
                 <Link
                   key={item.href}
                   href={item.href}
                   className={`${styles.megaItem} ${itemActive ? styles.megaItemActive : ""}`}
-                  tabIndex={open ? 0 : -1}
+                  tabIndex={openMenu ? 0 : -1}
                 >
-                  <div className={styles.megaIcon}>
-                    <span className="material-symbols-rounded" aria-hidden="true">
-                      {item.icon}
-                    </span>
-                  </div>
+                  <MegaItemMedia item={item} />
                   <div className={styles.megaItemText}>
                     <div className={styles.megaLabel}>{item.label}</div>
                     <div className={styles.megaDescription}>{item.description}</div>
@@ -235,13 +290,19 @@ export default function MegaNav() {
           >
             About
           </Link>
-          <Link
-            href="/work"
-            className={styles.mobileLink}
-            onClick={() => setMobileOpen(false)}
-          >
-            Work
-          </Link>
+          <div className={styles.mobileSection}>
+            <div className={styles.mobileSectionLabel}>Work</div>
+            {workMegaItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`${styles.mobileLink} ${styles.mobileLinkNested}`}
+                onClick={() => setMobileOpen(false)}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
           <div className={styles.mobileSection}>
             <div className={styles.mobileSectionLabel}>Design system</div>
             {dsMegaItems.map((item) => (
