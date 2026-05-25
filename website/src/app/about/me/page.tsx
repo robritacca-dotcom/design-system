@@ -28,9 +28,8 @@ export default function AboutMePage() {
 
           {/* Page Description */}
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            I work at the intersection of AI, interaction design, and platform
-            architecture, building foundations that support complex products and
-            teams.
+            Designing and building AI-native products, systems, and experiences.
+            From interaction design to design systems to AI-augmented product development.
           </p>
 
           {/* Resume Two-Column Layout */}
