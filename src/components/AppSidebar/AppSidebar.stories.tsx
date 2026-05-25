@@ -72,21 +72,28 @@ const meta = {
     defaultExpanded: true,
   },
   decorators: [
-    (Story) => (
-      <div style={{ display: 'flex', minHeight: '100vh', background: '#0E0E0E' }}>
-        <Story />
-        <div style={{
-          marginLeft: 280,
-          padding: 40,
-          flex: 1,
-          transition: 'margin-left 0.25s ease',
-          color: '#F1F1F1',
-        }}>
-          <h1 style={{ fontSize: 32, marginBottom: 8 }}>Page Content</h1>
-          <p style={{ color: '#6D6D6D' }}>Content area beside the sidebar.</p>
+    (Story, ctx) => {
+      const expanded = (ctx.args as { defaultExpanded?: boolean }).defaultExpanded ?? false;
+      return (
+        <div style={{ display: 'flex', minHeight: '100vh', background: '#0E0E0E' }}>
+          <Story />
+          <div style={{
+            marginLeft: expanded ? 280 : 64,
+            padding: 40,
+            flex: 1,
+            transition: 'margin-left 0.25s ease',
+            color: '#F1F1F1',
+          }}>
+            <h1 style={{ fontSize: 32, marginBottom: 8 }}>Page Content</h1>
+            <p style={{ color: '#6D6D6D' }}>
+              {expanded
+                ? 'Content area beside the sidebar.'
+                : 'Collapsed sidebar — hover over icons to see tooltips.'}
+            </p>
+          </div>
         </div>
-      </div>
-    ),
+      );
+    },
   ],
 } satisfies Meta<typeof AppSidebar>;
 
@@ -103,22 +110,6 @@ export const Collapsed: Story = {
   args: {
     defaultExpanded: false,
   },
-  decorators: [
-    (Story) => (
-      <div style={{ display: 'flex', minHeight: '100vh', background: '#0E0E0E' }}>
-        <Story />
-        <div style={{
-          marginLeft: 64,
-          padding: 40,
-          flex: 1,
-          color: '#F1F1F1',
-        }}>
-          <h1 style={{ fontSize: 32, marginBottom: 8 }}>Page Content</h1>
-          <p style={{ color: '#6D6D6D' }}>Collapsed sidebar — hover over icons to see tooltips.</p>
-        </div>
-      </div>
-    ),
-  ],
 };
 
 export const WithActiveAccordion: Story = {
