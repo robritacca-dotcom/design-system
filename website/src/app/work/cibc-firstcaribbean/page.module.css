@@ -324,3 +324,33 @@
     line-height: 32px;
   }
 }
+
+/* ============================================
+   TOOLS LIST (right rail)
+   ============================================ */
+.toolList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-lg);
+}
+
+.toolItem {
+  display: flex;
+  align-items: center;
+  gap: var(--primitive-gap-md);
+}
+
+.toolLogo {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.toolName {
+  font-family: var(--font-title-body-family);
+  font-size: var(--font-title-body-size);
+  font-weight: var(--font-title-body-weight);
+  line-height: var(--font-title-body-line-height);
+  color: var(--color-text-primary);
+}

@@ -6,6 +6,7 @@ import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
+import SampleCaseStudyCard from "../../../components/SampleCaseStudyCard/SampleCaseStudyCard";
 import { getSidebarLinks, workSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
@@ -220,8 +221,36 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
               </div>
             </div>
 
-            {/* Aside — Tools + Links */}
+            {/* Aside — Details + Tools + Links */}
             <aside className={styles.resumeSidebar} aria-label="Case study resources">
+              {/* Details */}
+              <div className={styles.resumeSection}>
+                <div className={styles.resumeSectionHeader}>
+                  <h2 className={styles.resumeSectionTitle}>Details</h2>
+                </div>
+                <div className={styles.detailList}>
+                  <div className={styles.detailItem}>
+                    <span className={styles.detailLabel}>Company</span>
+                    <span className={styles.detailValue} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                      <Image src="/logos/turbotax.svg" alt="" width={20} height={20} style={{ objectFit: "contain", flexShrink: 0 }} />
+                      <span>Intuit TurboTax</span>
+                    </span>
+                  </div>
+                  <div className={styles.detailItem}>
+                    <span className={styles.detailLabel}>Role</span>
+                    <span className={styles.detailValue}>Principal Product Designer</span>
+                  </div>
+                  <div className={styles.detailItem}>
+                    <span className={styles.detailLabel}>Platforms</span>
+                    <span className={styles.detailValue}>Web · Mobile Web · iOS · Android</span>
+                  </div>
+                  <div className={styles.detailItem}>
+                    <span className={styles.detailLabel}>Year</span>
+                    <span className={styles.detailValue}>2026</span>
+                  </div>
+                </div>
+              </div>
+
               {/* Tools */}
               <div className={styles.resumeSection}>
                 <div className={styles.resumeSectionHeader}>
@@ -229,12 +258,12 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                 </div>
                 <div className={styles.toolList}>
                   <div className={styles.toolItem}>
-                    <Image src="/logos/Figma.svg" alt="Figma" width={28} height={28} className={styles.toolLogo} />
-                    <span className={styles.toolName}>Figma</span>
-                  </div>
-                  <div className={styles.toolItem}>
                     <Image src="/logos/Claude.svg" alt="Claude" width={28} height={28} className={styles.toolLogo} />
                     <span className={styles.toolName}>Claude</span>
+                  </div>
+                  <div className={styles.toolItem}>
+                    <Image src="/logos/Figma.svg" alt="Figma" width={28} height={28} className={styles.toolLogo} />
+                    <span className={styles.toolName}>Figma</span>
                   </div>
                   <div className={styles.toolItem}>
                     <Image src="/logos/cursor.svg" alt="Cursor" width={28} height={28} className={styles.toolLogo} />
@@ -339,6 +368,8 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
               </div>
             </aside>
           </div>
+
+          <SampleCaseStudyCard />
         </main>
       </div>
 

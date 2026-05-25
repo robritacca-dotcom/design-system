@@ -86,7 +86,7 @@ export default function AboutMePage() {
                   <div className={`${styles.resumeCompany} animate-in animate-delay-3`}>
                     <div className={styles.timelineSpacer} />
                     <div className={styles.companyHeader}>
-                      <Image src="/logos/Augmenta.svg" alt="Augmenta" width={32} height={32} className={styles.companyLogo} />
+                      <Image src="/logos/logo/Augmenta.png" alt="Augmenta" width={32} height={32} className={styles.companyLogo} />
                       <span className={styles.companyName}>Augmenta</span>
                     </div>
                     <div className={styles.companyRoles}>

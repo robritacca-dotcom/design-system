@@ -44,7 +44,7 @@ const caseStudies: CaseStudy[] = [
     href: "/work/augmenta-ai",
     title: "Augmenta Construction Platform",
     dek: "Turning automation into usability — the redesign behind 42% faster outcomes",
-    company: { name: "Augmenta", logo: "/logos/Augmenta.svg" },
+    company: { name: "Augmenta", logo: "/logos/logo/Augmenta.png" },
     cover: "/images/heroes/augmenta.png",
   },
   {
@@ -70,7 +70,7 @@ const caseStudies: CaseStudy[] = [
   },
   {
     href: "/work/cibc-firstcaribbean",
-    title: "CIBC FirstCaribbean — Mobile Banking Platform",
+    title: "CIBC FirstCaribbean — Banking Platform",
     dek: "Designing for multi-country, multi-currency international banking at Devbridge",
     company: { name: "CIBC", logo: "/logos/CIBC.svg" },
     cover: "/images/cibc-firstcaribbean-cover.jpg",

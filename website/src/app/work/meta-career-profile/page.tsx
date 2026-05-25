@@ -6,6 +6,7 @@ import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
+import SampleCaseStudyCard from "../../../components/SampleCaseStudyCard/SampleCaseStudyCard";
 import { getSidebarLinks, workSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
@@ -335,8 +336,11 @@ export default function MetaCareerProfileCaseStudy() {
                 </div>
                 <div className={styles.detailList}>
                   <div className={styles.detailItem}>
-                    <span className={styles.detailLabel}>Client</span>
-                    <span className={styles.detailValue}>Meta — Recruiting Products</span>
+                    <span className={styles.detailLabel}>Company</span>
+                    <span className={styles.detailValue} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                      <Image src="/logos/meta.svg" alt="" width={20} height={20} style={{ objectFit: "contain", flexShrink: 0 }} />
+                      <span>Meta — Recruiting Products</span>
+                    </span>
                   </div>
                   <div className={styles.detailItem}>
                     <span className={styles.detailLabel}>Product</span>
@@ -356,8 +360,22 @@ export default function MetaCareerProfileCaseStudy() {
                   </div>
                 </div>
               </div>
+
+              <div className={styles.resumeSection}>
+                <div className={styles.resumeSectionHeader}>
+                  <h2 className={styles.resumeSectionTitle}>Tools</h2>
+                </div>
+                <div className={styles.toolList}>
+                  <div className={styles.toolItem}>
+                    <Image src="/logos/Figma.svg" alt="Figma" width={28} height={28} className={styles.toolLogo} />
+                    <span className={styles.toolName}>Figma</span>
+                  </div>
+                </div>
+              </div>
             </aside>
           </div>
+
+          <SampleCaseStudyCard />
         </main>
       </div>
 

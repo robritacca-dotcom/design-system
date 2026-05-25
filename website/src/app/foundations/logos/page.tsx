@@ -133,7 +133,7 @@ const logoCategories: LogoCategory[] = [
       { label: "Cognizant", file: "Cognizant.svg" },
       { label: "Devbridge", file: "Devbridge.svg" },
       { label: "AdParlor", file: "AdParlor.svg" },
-      { label: "Augmenta", file: "Augmenta.svg" },
+      { label: "Augmenta", file: "logo/Augmenta.png" },
       { label: "Fengate", file: "Fengate.svg" },
       { label: "slii", file: "slii.svg" },
       { label: "Deque", file: "Deque.svg" },

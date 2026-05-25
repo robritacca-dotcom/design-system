@@ -21,7 +21,7 @@ const logos = [
   'Arc.svg',
   'Asana.svg',
   'Atlassian.svg',
-  'Augmenta.svg',
+  'logo/Augmenta.png',
   'Canada.svg',
   'canon.svg',
   'chatGPT black.svg',

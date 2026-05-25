@@ -336,6 +336,25 @@ export default function Robr0DsCaseStudy() {
             <aside className={styles.resumeSidebar} aria-label="Case study resources">
               <div className={styles.resumeSection}>
                 <div className={styles.resumeSectionHeader}>
+                  <h2 className={styles.resumeSectionTitle}>Details</h2>
+                </div>
+                <div className={styles.detailList}>
+                  <div className={styles.detailItem}>
+                    <span className={styles.detailLabel}>Company</span>
+                    <span className={styles.detailValue} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                      <Image src="/logos/rr.svg" alt="" width={20} height={20} style={{ objectFit: "contain", flexShrink: 0 }} />
+                      <span>Personal site</span>
+                    </span>
+                  </div>
+                  <div className={styles.detailItem}>
+                    <span className={styles.detailLabel}>Year</span>
+                    <span className={styles.detailValue}>2026</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className={styles.resumeSection}>
+                <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Tools</h2>
                 </div>
                 <div className={styles.toolList}>
