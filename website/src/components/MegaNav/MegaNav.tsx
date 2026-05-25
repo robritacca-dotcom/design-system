@@ -195,7 +195,7 @@ export default function MegaNav() {
         <div className={styles.megaInner}>
           <div className={styles.megaGrid}>
             {dsMegaItems.map((item) => {
-              const itemActive = pathname === item.href || pathname.startsWith(item.href + "/");
+              const itemActive = pathname === item.href || (item.href !== "/about" && pathname.startsWith(item.href + "/"));
               return (
                 <Link
                   key={item.href}
