@@ -31,7 +31,7 @@ const caseStudies: CaseStudy[] = [
     title: "Designing Embedded AI Experiences Inside ChatGPT and Claude",
     dek: "What I learned leading design for TurboTax's embedded AI experiences",
     company: { name: "TurboTax", logo: "/logos/turbotax.svg" },
-    cover: "/images/heroes/embedded-ai.png",
+    cover: "/images/heroes/claude.png",
   },
   {
     href: "/work/intuit-agent-chat",
