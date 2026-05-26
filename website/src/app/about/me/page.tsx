@@ -17,6 +17,17 @@ export default function AboutMePage() {
       <MegaNav />
 
       <div className={styles.dsLayout}>
+        <div className={styles.profileCol}>
+          <Image
+            src="/images/robr0-img.png"
+            alt="Robert Ritacca"
+            width={291}
+            height={350}
+            className={styles.profileImage}
+            priority
+          />
+        </div>
+
         <main className={styles.dsContent} id="main-content">
           {/* Page Title */}
           <div className={`${styles.pageHeader} animate-in`}>

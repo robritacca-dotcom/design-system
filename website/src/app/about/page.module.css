@@ -469,11 +469,33 @@ a.toolItem:hover {
 }
 
 /* ============================================
+   PROFILE COLUMN (about/me — left slot matching sidebar width)
+   ============================================ */
+.profileCol {
+  width: 291px;
+  flex-shrink: 0;
+  position: sticky;
+  top: calc(78px + var(--primitive-padding-lg) * 2 + var(--primitive-gap-xl));
+  height: fit-content;
+}
+
+.profileImage {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius-md);
+}
+
+/* ============================================
    RESPONSIVE
    ============================================ */
 @media (max-width: 959px) {
   .artifactsGrid {
     grid-template-columns: 1fr;
+  }
+
+  .profileCol {
+    display: none;
   }
 }
 
