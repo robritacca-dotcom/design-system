@@ -129,6 +129,7 @@
 
 .caret {
   font-size: 18px;
+  line-height: 1;
   transition: transform 0.2s ease;
   margin-left: 2px;
   color: var(--color-text-secondary);
