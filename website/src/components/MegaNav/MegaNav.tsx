@@ -44,6 +44,8 @@ export default function MegaNav() {
   const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const stickyTriggerRef = useRef<HTMLButtonElement>(null);
+  const stickyMenuRef = useRef<HTMLDivElement>(null);
   const inFlowHeaderRef = useRef<HTMLElement>(null);
 
   const isDsActive = isDesignSystemPath(pathname);
@@ -66,7 +68,10 @@ export default function MegaNav() {
     if (!open) return;
     const onClick = (e: MouseEvent) => {
       const t = e.target as Node;
-      if (triggerRef.current?.contains(t) || menuRef.current?.contains(t)) return;
+      if (
+        triggerRef.current?.contains(t) || menuRef.current?.contains(t) ||
+        stickyTriggerRef.current?.contains(t) || stickyMenuRef.current?.contains(t)
+      ) return;
       setOpen(false);
     };
     document.addEventListener("mousedown", onClick);
@@ -271,13 +276,32 @@ export default function MegaNav() {
               >
                 Work
               </Link>
-              <Link
-                href="/about"
-                className={`${styles.navLink} ${isDsActive ? styles.navLinkActive : ""}`}
-                tabIndex={isStuck ? 0 : -1}
+              <div
+                className={styles.dsWrap}
+                onMouseEnter={openMenu}
+                onMouseLeave={scheduleClose}
               >
-                Design system
-              </Link>
+                <button
+                  ref={stickyTriggerRef}
+                  type="button"
+                  className={`${styles.navLink} ${styles.dsTrigger} ${
+                    open || isDsActive ? styles.navLinkActive : ""
+                  }`}
+                  aria-expanded={open}
+                  aria-haspopup="true"
+                  aria-controls="ds-mega-sticky"
+                  onClick={() => setOpen((v) => !v)}
+                  tabIndex={isStuck ? 0 : -1}
+                >
+                  <span>Design system</span>
+                  <span
+                    className={`material-symbols-rounded ${styles.caret} ${open ? styles.caretOpen : ""}`}
+                    aria-hidden="true"
+                  >
+                    expand_more
+                  </span>
+                </button>
+              </div>
               <Link
                 href="/contact"
                 className={`${styles.navLink} ${isContactActive ? styles.navLinkActive : ""}`}
@@ -302,6 +326,42 @@ export default function MegaNav() {
                 {mobileOpen ? "close" : "menu"}
               </span>
             </button>
+          </div>
+        </div>
+
+        {/* Sticky mega menu — same content, positioned relative to sticky header */}
+        <div
+          ref={stickyMenuRef}
+          id="ds-mega-sticky"
+          className={`${styles.mega} ${open ? styles.megaOpen : ""}`}
+          onMouseEnter={openMenu}
+          onMouseLeave={scheduleClose}
+          aria-hidden={!open}
+        >
+          <div className={styles.megaInner}>
+            <div className={styles.megaGrid}>
+              {dsMegaItems.map((item) => {
+                const itemActive = pathname === item.href || (item.href !== "/about" && pathname.startsWith(item.href + "/"));
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`${styles.megaItem} ${itemActive ? styles.megaItemActive : ""}`}
+                    tabIndex={open && isStuck ? 0 : -1}
+                  >
+                    <div className={styles.megaIcon}>
+                      <span className="material-symbols-rounded" aria-hidden="true">
+                        {item.icon}
+                      </span>
+                    </div>
+                    <div className={styles.megaItemText}>
+                      <div className={styles.megaLabel}>{item.label}</div>
+                      <div className={styles.megaDescription}>{item.description}</div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
