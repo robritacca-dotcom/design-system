@@ -40,17 +40,15 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
             during one of the first large-scale launches inside major AI platforms
           </p>
 
-          {/* Cover image — under the subtitle */}
-          <figure className={`${styles.cover} animate-in animate-delay-2`}>
-            <Image
-              src="/images/heroes/claude.png"
-              alt="Designing Embedded AI Experiences Inside ChatGPT and Claude — cover"
-              width={940}
-              height={480}
-              priority
-              className={styles.coverImage}
+          {/* Cover video — under the subtitle */}
+          <div className={`${styles.cover} ${styles.videoWrapper} animate-in animate-delay-2`}>
+            <iframe
+              src="https://www.youtube.com/embed/V0K3CDb-8QM"
+              title="Designing Embedded AI Experiences Inside ChatGPT and Claude"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
             />
-          </figure>
+          </div>
 
           {/* Two-column body — mirrors the About page resumeLayout */}
           <div className={`${styles.resumeLayout} animate-in animate-delay-3`}>
