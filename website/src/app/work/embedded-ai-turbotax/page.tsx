@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
@@ -16,6 +17,21 @@ const { sidebarLinks } = getSidebarLinks(
 );
 
 export default function EmbeddedAiTurbotaxCaseStudy() {
+  const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
+
+  const closeLightbox = useCallback(() => setLightbox(null), []);
+
+  useEffect(() => {
+    if (!lightbox) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") closeLightbox(); };
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [lightbox, closeLightbox]);
+
   return (
     <>
       <BlurBackground />
@@ -91,6 +107,21 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                     In practice, it was one product with multiple deployments, multiple orchestration environments, and multiple interaction models depending on where the user entered the experience. The application also had to support bidirectional data synchronization between systems. Users were authorizing secure connections between TurboTax and the AI platforms themselves, allowing conversational workflows to persist information, extract documents, generate preparation states, and synchronize that information back into the primary TurboTax product.
                   </p>
 
+                  <figure
+                    className={styles.articleFigure}
+                    onClick={() => setLightbox({ src: "/images/embedded-ai/ChatGPT.webp", alt: "TurboTax connector listing in ChatGPT" })}
+                  >
+                    <Image
+                      src="/images/embedded-ai/ChatGPT.webp"
+                      alt="TurboTax connector listing in ChatGPT"
+                      width={960}
+                      height={480}
+                      className={styles.articleImage}
+                      style={{ width: "100%", height: "auto" }}
+                    />
+                    <figcaption className={styles.articleCaption}>The TurboTax connector in the ChatGPT app directory — users could connect directly before entering the embedded experience.</figcaption>
+                  </figure>
+
                   <h2>When the platform owns the orchestrator</h2>
 
                   <p>
@@ -135,6 +166,21 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                     There are moments where you cannot deterministically control how users answer certain questions or progress through sensitive workflows, even when those workflows are deeply connected to your application logic. Those constraints fundamentally change how you think about product design. A large part of the work becomes designing around platform restrictions, orchestration constraints, and interaction systems you do not entirely own. Instead of fully controlling experiences, you are often designing resilient systems that can adapt to different orchestration behaviors while still maintaining continuity and trust.
                   </p>
 
+                  <figure
+                    className={styles.articleFigure}
+                    onClick={() => setLightbox({ src: "/images/embedded-ai/Claude.png", alt: "TurboTax document upload interface embedded inside Claude" })}
+                  >
+                    <Image
+                      src="/images/embedded-ai/Claude.png"
+                      alt="TurboTax document upload interface embedded inside Claude"
+                      width={1330}
+                      height={888}
+                      className={styles.articleImage}
+                      style={{ width: "100%", height: "auto" }}
+                    />
+                    <figcaption className={styles.articleCaption}>Document upload embedded inside Claude — drag-and-drop, document recognition, and live progress within a single artifact the platform controls.</figcaption>
+                  </figure>
+
                   <h2>Conversation didn&apos;t replace interfaces</h2>
 
                   <p>
@@ -152,6 +198,21 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                     <li>Persistent state</li>
                     <li>Auditability</li>
                   </ul>
+
+                  <figure
+                    className={styles.articleFigure}
+                    onClick={() => setLightbox({ src: "/images/embedded-ai/Checklist.png", alt: "Dynamic filing checklist showing empty and populated states side by side" })}
+                  >
+                    <Image
+                      src="/images/embedded-ai/Checklist.png"
+                      alt="Dynamic filing checklist showing empty and populated states side by side"
+                      width={1020}
+                      height={808}
+                      className={styles.articleImage}
+                      style={{ width: "100%", height: "auto" }}
+                    />
+                    <figcaption className={styles.articleCaption}>Dynamic filing checklist — empty state alongside a populated state. Users wanted structured verification, not just conversation.</figcaption>
+                  </figure>
 
                   <p>
                     One of the strongest patterns we observed was that users loved conversational intake but still wanted highly structured verification before committing actions — especially in workflows involving money, legal implications, identity, or irreversible outcomes. The future likely is not &ldquo;everything becomes chat.&rdquo; It feels much more likely that conversational orchestration will coexist with interfaces that dynamically materialize around the conversation itself depending on context and intent.
@@ -211,6 +272,21 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                   <p>
                     After spending the last year working in this space, I genuinely believe embedded AI application design is becoming its own category. It sits somewhere between systems design, conversational UX, orchestration design, platform design, and traditional product design, but it is not fully any one of them. The work increasingly involves orchestrating intelligence, managing probabilistic systems, designing continuity, balancing automation with oversight, shaping trust boundaries, and coordinating dynamic interfaces across ecosystems you do not fully control.
                   </p>
+
+                  <figure
+                    className={styles.articleFigure}
+                    onClick={() => setLightbox({ src: "/images/embedded-ai/Delivery.png", alt: "Full design delivery — component specifications and screen flows across both AI platforms" })}
+                  >
+                    <Image
+                      src="/images/embedded-ai/Delivery.png"
+                      alt="Full design delivery — component specifications and screen flows across both AI platforms"
+                      width={700}
+                      height={264}
+                      className={styles.articleImage}
+                      style={{ width: "100%", height: "auto" }}
+                    />
+                    <figcaption className={styles.articleCaption}>Design delivery overview — component specifications and screen flows across ChatGPT and Claude. One system, two platform deployments.</figcaption>
+                  </figure>
 
                   <p>
                     What makes this moment particularly exciting is that very few established patterns exist yet. Most teams are still discovering these interaction models in real time. It feels far less like optimizing mature UX conventions and much more like helping define an entirely new computing paradigm while it is still forming.
@@ -372,6 +448,21 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
       </div>
 
       <Footer />
+
+      {lightbox && (
+        <div className={styles.lightboxOverlay} onClick={closeLightbox} role="dialog" aria-modal="true" aria-label="Image preview">
+          <button className={styles.lightboxClose} onClick={closeLightbox} aria-label="Close preview">
+            <span className="material-symbols-rounded">close</span>
+          </button>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={lightbox.src}
+            alt={lightbox.alt}
+            className={styles.lightboxImg}
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
     </>
   );
 }

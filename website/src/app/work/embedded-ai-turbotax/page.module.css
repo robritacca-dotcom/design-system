@@ -92,6 +92,98 @@
 }
 
 /* ============================================
+   ARTICLE FIGURES (inline images)
+   ============================================ */
+.articleFigure {
+  margin: var(--primitive-gap-xl) 0 0;
+  cursor: zoom-in;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-bg-container-secondary);
+}
+
+.articleImage {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: opacity 0.2s ease;
+}
+
+.articleFigure:hover .articleImage {
+  opacity: 0.88;
+}
+
+.articleCaption {
+  display: block;
+  padding: var(--primitive-padding-md) var(--primitive-padding-lg);
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+  border-top: 1px solid var(--color-bg-container-border);
+}
+
+/* ============================================
+   LIGHTBOX
+   ============================================ */
+.lightboxOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(5, 5, 5, 0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--primitive-gap-xl);
+  cursor: zoom-out;
+  animation: lightboxFadeIn 0.15s ease;
+}
+
+@keyframes lightboxFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.lightboxImg {
+  max-width: 90vw;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  border-radius: var(--radius-md);
+  display: block;
+  cursor: default;
+  box-shadow: 0 24px 64px rgba(5, 5, 5, 0.5);
+}
+
+.lightboxClose {
+  position: fixed;
+  top: var(--primitive-gap-lg);
+  right: var(--primitive-gap-lg);
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  border: none;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  z-index: 10000;
+}
+
+.lightboxClose:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.lightboxClose .material-symbols-rounded {
+  font-size: 20px;
+  line-height: 1;
+}
+
+/* ============================================
    BYLINE
    ============================================ */
 .meta {
