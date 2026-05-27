@@ -335,6 +335,7 @@ export default function MegaNav() {
           ref={stickyMenuRef}
           id="ds-mega-sticky"
           className={`${styles.mega} ${open ? styles.megaOpen : ""}`}
+          style={!isStuck ? { pointerEvents: "none" } : undefined}
           onMouseEnter={openMenu}
           onMouseLeave={scheduleClose}
           aria-hidden={!open}
