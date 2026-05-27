@@ -177,12 +177,13 @@ export default function MegaNav() {
                 onClick={() => setOpen((v) => !v)}
               >
                 <span>Design system</span>
-                <span
-                  className={`material-symbols-rounded ${styles.caret} ${open ? styles.caretOpen : ""}`}
-                  aria-hidden="true"
+                <svg
+                  className={`${styles.caret} ${open ? styles.caretOpen : ""}`}
+                  width="8" height="5" viewBox="0 0 8 5"
+                  aria-hidden="true" fill="none"
                 >
-                  expand_more
-                </span>
+                  <path d="M1 1L4 4L7 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
               </button>
             </div>
 

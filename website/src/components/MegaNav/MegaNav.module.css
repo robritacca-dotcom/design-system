@@ -128,11 +128,10 @@
 }
 
 .caret {
-  font-size: 18px;
-  line-height: 1;
-  transition: transform 0.2s ease;
-  margin-left: 2px;
+  flex-shrink: 0;
+  margin-left: 4px;
   color: var(--color-text-secondary);
+  transition: transform 0.2s ease;
 }
 
 .caretOpen {
