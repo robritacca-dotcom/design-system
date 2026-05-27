@@ -122,6 +122,54 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                     <figcaption className={styles.articleCaption}>The TurboTax connector in the ChatGPT app directory — users could connect directly before entering the embedded experience.</figcaption>
                   </figure>
 
+                  <h2>Building at the speed of the platforms</h2>
+
+                  <p>
+                    The pace of the work was unlike anything I had shipped before. A first release was in market within weeks of kicking off, followed by two major expansions before the end of tax season. Moving that fast required rethinking how design and engineering operated together — and it meant the team had to adopt the same kind of agentic workflow we were building products on top of.
+                  </p>
+
+                  <p>
+                    Rather than treating design and engineering as sequential handoffs, we ran them in parallel. The loop was tight: gather sources and context, prompt and iterate to generate and refine, build and publish to live environments, then share and align before cycling again. Every pass through that loop produced something shippable.
+                  </p>
+
+                  <figure
+                    className={styles.articleFigure}
+                    onClick={() => setLightbox({ src: "/images/embedded-ai/process-loop.png", alt: "The agentic build loop: Gather, Prompt / iterate, Build / publish, Share / align" })}
+                  >
+                    <Image
+                      src="/images/embedded-ai/process-loop.png"
+                      alt="The agentic build loop: Gather, Prompt / iterate, Build / publish, Share / align"
+                      width={1280}
+                      height={720}
+                      className={styles.articleImage}
+                      style={{ width: "100%", height: "auto" }}
+                    />
+                    <figcaption className={styles.articleCaption}>The loop, summarized — Gather, Prompt / iterate, Build / publish, Share / align. The same agentic model we were designing for became the way we worked.</figcaption>
+                  </figure>
+
+                  <p>
+                    Figma became more than a design tool — it became the MCP entry point. By connecting the component library directly via Figma MCP, live components and tokens became queryable context. No exporting, no redlining, no translation layer between what was designed and what could be generated. The library was both the source material and the generation scaffold.
+                  </p>
+
+                  <p>
+                    I also contributed front-end components directly to the build. Rather than handing off specs and waiting, I worked alongside the engineering team in code — writing and shipping real widgets for the Claude MCP app, not concepts for someone else to implement. The line between design and engineering stopped being meaningful. What mattered was that the right artifact shipped.
+                  </p>
+
+                  <figure
+                    className={styles.articleFigure}
+                    onClick={() => setLightbox({ src: "/images/embedded-ai/process-figma-mcp.png", alt: "TurboTax patterns connected to Claude via Figma MCP — the design library as source material and generation scaffold" })}
+                  >
+                    <Image
+                      src="/images/embedded-ai/process-figma-mcp.png"
+                      alt="TurboTax patterns connected to Claude via Figma MCP — the design library as source material and generation scaffold"
+                      width={1280}
+                      height={720}
+                      className={styles.articleImage}
+                      style={{ width: "100%", height: "auto" }}
+                    />
+                    <figcaption className={styles.articleCaption}>TT Patterns → Claude via Figma MCP. Live components and tokens as queryable context — no exporting needed. The library is both the source material and the MCP entry point for generation.</figcaption>
+                  </figure>
+
                   <h2>When the platform owns the orchestrator</h2>
 
                   <p>
