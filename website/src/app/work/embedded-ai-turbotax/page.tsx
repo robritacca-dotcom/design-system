@@ -170,6 +170,21 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                     <figcaption className={styles.articleCaption}>TT Patterns → Claude via Figma MCP. Live components and tokens as queryable context — no exporting needed. The library is both the source material and the MCP entry point for generation.</figcaption>
                   </figure>
 
+                  <p>
+                    One structural decision that made this possible was building a single Figma component that combined both the ChatGPT and Claude platform patterns simultaneously. Rather than maintaining two separate design files that would inevitably drift apart, I unified the UI kit into one component set with platform-aware theming baked in — so any change propagated to both deployments at once, and both platforms could be designed for and reviewed side by side.
+                  </p>
+
+                  <figure className={styles.articleFigure}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="/images/NVIDIA_Overlay_0lJCFbk46w.gif"
+                      alt="Figma component combining ChatGPT and Claude platform patterns — a single component set that adapts to both platforms simultaneously"
+                      className={styles.articleImage}
+                      style={{ width: "100%", height: "auto" }}
+                    />
+                    <figcaption className={styles.articleCaption}>A single Figma component set covering both ChatGPT and Claude patterns — one change, both platforms updated at once.</figcaption>
+                  </figure>
+
                   <h2>When the platform owns the orchestrator</h2>
 
                   <p>
