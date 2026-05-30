@@ -67,6 +67,19 @@ export default function AugmentaCaseStudy() {
                     Augmenta generates constructible, code-compliant designs of electrical raceways — the conduit, cable tray, and supports that connect every piece of electrical equipment in a building. Their target user is the Virtual Construction Designer: the engineer inside Autodesk Revit who plans how a project actually gets built. Think Figma, but for the physical world — high-stakes, governed by real-world physics, strict compliance, and precise engineering standards.
                   </p>
 
+                  <figure className={styles.figure}>
+                    <Image
+                      src="/images/augmenta/slide25-img02.png"
+                      alt="A Virtual Construction Designer working inside the Augmenta platform"
+                      width={1600}
+                      height={950}
+                      className={styles.figureImage}
+                    />
+                    <figcaption className={styles.figureCaption}>
+                      A Virtual Construction Designer working inside Augmenta — the target user for the redesign.
+                    </figcaption>
+                  </figure>
+
                   <p>
                     When I joined: 1 design partner, 7 pilot firms testing, 20+ on the waitlist, $0 in revenue.
                   </p>
@@ -94,6 +107,19 @@ export default function AugmentaCaseStudy() {
                   <p>
                     Ran pilot workshops with 7 electrical design firms to map real workflows, test product fit, and prioritize features. We mapped the unified customer journey — Estimation → Planning → Design → Detailing → Pre-Construction → Construction — and decided which stages to prioritize, deprioritize, and deprecate.
                   </p>
+
+                  <figure className={styles.figure}>
+                    <Image
+                      src="/images/augmenta/slide30-img01.png"
+                      alt="Service blueprint extracted from a lighthouse customer workshop"
+                      width={1600}
+                      height={950}
+                      className={styles.figureImage}
+                    />
+                    <figcaption className={styles.figureCaption}>
+                      Service blueprint extracted from a lighthouse customer workshop — mapping the real workflow to identify where the product fit and where it fell short.
+                    </figcaption>
+                  </figure>
 
                   <p>
                     What pilot users actually wanted: improved UX, consistent UI, simpler data input, an enhanced solution viewer. <strong>More signal, fewer features.</strong> They explicitly didn&apos;t want complex electrical calculations.
@@ -136,6 +162,19 @@ export default function AugmentaCaseStudy() {
                     </figcaption>
                   </figure>
 
+                  <figure className={styles.figure}>
+                    <Image
+                      src="/images/augmenta/slide36-img01.png"
+                      alt="Figma prototype created for team alignment and engineering handoff"
+                      width={1600}
+                      height={950}
+                      className={styles.figureImage}
+                    />
+                    <figcaption className={styles.figureCaption}>
+                      Figma prototype used to align the team and support engineering handoff — bridging design intent and implementation.
+                    </figcaption>
+                  </figure>
+
                   <p>
                     <strong>Framing</strong> — language matters. We replaced engineering-speak with intent-aligned language (&ldquo;Placement considerations&rdquo; instead of &ldquo;Unhandled error&rdquo;), turning error states into actionable guidance.
                   </p>
@@ -149,6 +188,32 @@ export default function AugmentaCaseStudy() {
                     <li><strong>Signal enhancement</strong> — surfaced the previously hidden &ldquo;unknown&rdquo; parts of failed runs. Result: <strong>successful generations went up 10×</strong>, and user analysis of solutions spiked <strong>5×</strong>.</li>
                     <li><strong>Error handling</strong> — moved from unintelligible errors to errors visualized in 3D space, right where the issue was.</li>
                   </ul>
+
+                  <figure className={styles.figure}>
+                    <Image
+                      src="/images/augmenta/slide43-img01.png"
+                      alt="The team reviewing AI output together — flagging anomalies and aligning on engineering and UX fixes"
+                      width={1600}
+                      height={950}
+                      className={styles.figureImage}
+                    />
+                    <figcaption className={styles.figureCaption}>
+                      The team reviewing AI output together — identifying anomalies and aligning on fixes from both an engineering and UX perspective.
+                    </figcaption>
+                  </figure>
+
+                  <figure className={styles.figure}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="/images/augmenta/slide12-img02.gif"
+                      alt="AI generation output — solutions plotted on x/y axes, showing the volume and spread of generated designs"
+                      className={styles.figureImage}
+                      style={{ width: "100%", height: "auto" }}
+                    />
+                    <figcaption className={styles.figureCaption}>
+                      AI output visualized on x/y axes — each point a generated solution. Surfacing this signal let engineers understand what was being generated and why some runs fell short.
+                    </figcaption>
+                  </figure>
 
                   <figure className={styles.figure}>
                     <Image
@@ -167,6 +232,19 @@ export default function AugmentaCaseStudy() {
                   <p>
                     The fully realized workflow ships back into Revit, where the generated designs work seamlessly with existing detailing and spooling pipelines.
                   </p>
+
+                  <figure className={styles.figure}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="/images/augmenta/slide12-img03.gif"
+                      alt="Generated output rendered in 3D inside the Augmenta platform"
+                      className={styles.figureImage}
+                      style={{ width: "100%", height: "auto" }}
+                    />
+                    <figcaption className={styles.figureCaption}>
+                      Generated output rendered in 3D inside the Augmenta platform — the full spatial result of a successful run.
+                    </figcaption>
+                  </figure>
 
                   <figure className={styles.figure}>
                     <Image
