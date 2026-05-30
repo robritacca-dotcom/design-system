@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
@@ -16,6 +17,21 @@ const { sidebarLinks } = getSidebarLinks(
 );
 
 export default function AugmentaCaseStudy() {
+  const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
+
+  const closeLightbox = useCallback(() => setLightbox(null), []);
+
+  useEffect(() => {
+    if (!lightbox) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") closeLightbox(); };
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [lightbox, closeLightbox]);
+
   return (
     <>
       <BlurBackground />
@@ -67,7 +83,7 @@ export default function AugmentaCaseStudy() {
                     Augmenta generates constructible, code-compliant designs of electrical raceways — the conduit, cable tray, and supports that connect every piece of electrical equipment in a building. Their target user is the Virtual Construction Designer: the engineer inside Autodesk Revit who plans how a project actually gets built. Think Figma, but for the physical world — high-stakes, governed by real-world physics, strict compliance, and precise engineering standards.
                   </p>
 
-                  <figure className={styles.figure}>
+                  <figure className={styles.figure} onClick={() => setLightbox({ src: "/images/augmenta/slide25-img02.png", alt: "A Virtual Construction Designer working inside the Augmenta platform" })}>
                     <Image
                       src="/images/augmenta/slide25-img02.png"
                       alt="A Virtual Construction Designer working inside the Augmenta platform"
@@ -77,6 +93,19 @@ export default function AugmentaCaseStudy() {
                     />
                     <figcaption className={styles.figureCaption}>
                       A Virtual Construction Designer working inside Augmenta — the target user for the redesign.
+                    </figcaption>
+                  </figure>
+
+                  <figure className={styles.figure} onClick={() => setLightbox({ src: "/images/augmenta/slide12-img03.gif", alt: "Generated output rendered in 3D inside the Augmenta platform" })}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="/images/augmenta/slide12-img03.gif"
+                      alt="Generated output rendered in 3D inside the Augmenta platform"
+                      className={styles.figureImage}
+                      style={{ width: "100%", height: "auto" }}
+                    />
+                    <figcaption className={styles.figureCaption}>
+                      Generated output rendered in 3D inside the Augmenta platform — the full spatial result of a successful run.
                     </figcaption>
                   </figure>
 
@@ -108,7 +137,7 @@ export default function AugmentaCaseStudy() {
                     Ran pilot workshops with 7 electrical design firms to map real workflows, test product fit, and prioritize features. We mapped the unified customer journey — Estimation → Planning → Design → Detailing → Pre-Construction → Construction — and decided which stages to prioritize, deprioritize, and deprecate.
                   </p>
 
-                  <figure className={styles.figure}>
+                  <figure className={styles.figure} onClick={() => setLightbox({ src: "/images/augmenta/slide30-img01.png", alt: "Service blueprint extracted from a lighthouse customer workshop" })}>
                     <Image
                       src="/images/augmenta/slide30-img01.png"
                       alt="Service blueprint extracted from a lighthouse customer workshop"
@@ -149,7 +178,7 @@ export default function AugmentaCaseStudy() {
                     <strong>Screen density</strong> — engineers want signal, not whitespace. We rebuilt the canvas to surface more data per pixel without losing clarity.
                   </p>
 
-                  <figure className={styles.figure}>
+                  <figure className={styles.figure} onClick={() => setLightbox({ src: "/images/augmenta/screen-density.png", alt: "Screen density: low to high" })}>
                     <Image
                       src="/images/augmenta/screen-density.png"
                       alt="Screen density: low to high"
@@ -162,7 +191,7 @@ export default function AugmentaCaseStudy() {
                     </figcaption>
                   </figure>
 
-                  <figure className={styles.figure}>
+                  <figure className={styles.figure} onClick={() => setLightbox({ src: "/images/augmenta/slide36-img01.png", alt: "Figma prototype created for team alignment and engineering handoff" })}>
                     <Image
                       src="/images/augmenta/slide36-img01.png"
                       alt="Figma prototype created for team alignment and engineering handoff"
@@ -189,7 +218,7 @@ export default function AugmentaCaseStudy() {
                     <li><strong>Error handling</strong> — moved from unintelligible errors to errors visualized in 3D space, right where the issue was.</li>
                   </ul>
 
-                  <figure className={styles.figure}>
+                  <figure className={styles.figure} onClick={() => setLightbox({ src: "/images/augmenta/slide43-img01.png", alt: "The team reviewing AI output together — flagging anomalies and aligning on engineering and UX fixes" })}>
                     <Image
                       src="/images/augmenta/slide43-img01.png"
                       alt="The team reviewing AI output together — flagging anomalies and aligning on engineering and UX fixes"
@@ -202,7 +231,7 @@ export default function AugmentaCaseStudy() {
                     </figcaption>
                   </figure>
 
-                  <figure className={styles.figure}>
+                  <figure className={styles.figure} onClick={() => setLightbox({ src: "/images/augmenta/slide12-img02.gif", alt: "AI generation output — solutions plotted on x/y axes" })}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src="/images/augmenta/slide12-img02.gif"
@@ -215,7 +244,7 @@ export default function AugmentaCaseStudy() {
                     </figcaption>
                   </figure>
 
-                  <figure className={styles.figure}>
+                  <figure className={styles.figure} onClick={() => setLightbox({ src: "/images/augmenta/error-handling.gif", alt: "Error handling — from unintelligible text to errors visualized in space" })}>
                     <Image
                       src="/images/augmenta/error-handling.gif"
                       alt="Error handling — from unintelligible text to errors visualized in space"
@@ -233,20 +262,7 @@ export default function AugmentaCaseStudy() {
                     The fully realized workflow ships back into Revit, where the generated designs work seamlessly with existing detailing and spooling pipelines.
                   </p>
 
-                  <figure className={styles.figure}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src="/images/augmenta/slide12-img03.gif"
-                      alt="Generated output rendered in 3D inside the Augmenta platform"
-                      className={styles.figureImage}
-                      style={{ width: "100%", height: "auto" }}
-                    />
-                    <figcaption className={styles.figureCaption}>
-                      Generated output rendered in 3D inside the Augmenta platform — the full spatial result of a successful run.
-                    </figcaption>
-                  </figure>
-
-                  <figure className={styles.figure}>
+                  <figure className={styles.figure} onClick={() => setLightbox({ src: "/images/augmenta/revit-export.png", alt: "Generated designs export directly to Revit" })}>
                     <Image
                       src="/images/augmenta/revit-export.png"
                       alt="Generated designs export directly to Revit"
@@ -403,6 +419,21 @@ export default function AugmentaCaseStudy() {
       </div>
 
       <Footer />
+
+      {lightbox && (
+        <div className={styles.lightboxOverlay} onClick={closeLightbox} role="dialog" aria-modal="true" aria-label="Image preview">
+          <button className={styles.lightboxClose} onClick={closeLightbox} aria-label="Close preview">
+            <span className="material-symbols-rounded">close</span>
+          </button>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={lightbox.src}
+            alt={lightbox.alt}
+            className={styles.lightboxImg}
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
     </>
   );
 }
