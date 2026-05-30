@@ -122,7 +122,7 @@ export default function AugmentaCaseStudy() {
                   </figure>
 
                   <p>
-                    What pilot users actually wanted: improved UX, consistent UI, simpler data input, an enhanced solution viewer. <strong>More signal, fewer features.</strong> They explicitly didn&apos;t want complex electrical calculations.
+                    What pilot users actually said they wanted: to get to solutions faster, with less effort. We translated that into simpler data input, an enhanced solution viewer with more data, and a tighter feature set. <strong>More signal on output, fewer features to navigate.</strong> They explicitly didn&apos;t want complex electrical calculations.
                   </p>
 
                   <p>
