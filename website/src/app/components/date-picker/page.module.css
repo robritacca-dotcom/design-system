@@ -18,6 +18,7 @@
 }
 
 .pageHeader {
+  margin-top: calc(var(--primitive-gap-xl) - var(--primitive-gap-xxxl));
   display: flex;
   align-items: baseline;
   justify-content: space-between;
