@@ -4,6 +4,7 @@ import { DropdownMenu, DropdownMenuEntry } from './DropdownMenu';
 const meta: Meta<typeof DropdownMenu> = {
   title: 'Components/DropdownMenu',
   component: DropdownMenu,
+  tags: ['autodocs'],
   parameters: { layout: 'centered' },
   argTypes: {
     align: { control: 'radio', options: ['start', 'end'] },

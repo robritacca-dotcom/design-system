@@ -4,6 +4,7 @@ import { SelectionCard } from './SelectionCard';
 const meta: Meta<typeof SelectionCard> = {
   title: 'Components/SelectionCard',
   component: SelectionCard,
+  tags: ['autodocs'],
   parameters: { layout: 'centered' },
   argTypes: {
     mode: { control: 'radio', options: ['radio', 'checkbox', 'toggle'] },

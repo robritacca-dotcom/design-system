@@ -29,7 +29,7 @@ export default function FoundationsPage() {
           {/* Page Title */}
           <div className={`${styles.pageHeader} animate-in`}>
             <h1 className={styles.pageTitle}>Foundations</h1>
-            <PageLinks figmaUrl="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26?node-id=244-3125" storybookPath="/?path=/docs/robr0-ds--docs" />
+            <PageLinks figmaUrl="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26?node-id=244-3125" storybookPath="/?path=/docs/foundations-tokens--docs" />
           </div>
 
           {/* Intro */}
