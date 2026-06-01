@@ -46,6 +46,18 @@
   --primitive-red-09: #8E2641;
   --primitive-red-10: #571727;
 
+  /* Orange Scale */
+  --primitive-orange-01: #FFF3EC;
+  --primitive-orange-02: #FBD9C5;
+  --primitive-orange-03: #F6B794;
+  --primitive-orange-04: #F1996E;
+  --primitive-orange-05: #E98256;
+  --primitive-orange-06: #E07045;
+  --primitive-orange-07: #EF8247;
+  --primitive-orange-08: #C65E33;
+  --primitive-orange-09: #8F4324;
+  --primitive-orange-10: #552716;
+
   /* Yellow Scale */
   --primitive-yellow-01: #FFF9EA;
   --primitive-yellow-02: #FFF0C9;

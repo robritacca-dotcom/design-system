@@ -58,6 +58,20 @@ const redColours: PrimitiveSwatch[] = [
   { label: "Red 10", cssVar: "--primitive-red-10", hex: "#571727", rgb: "87 / 23 / 39" },
 ];
 
+/* --- Orange Scale (01–10) --- */
+const orangeColours: PrimitiveSwatch[] = [
+  { label: "Orange 01", cssVar: "--primitive-orange-01", hex: "#FFF3EC", rgb: "255 / 243 / 236" },
+  { label: "Orange 02", cssVar: "--primitive-orange-02", hex: "#FBD9C5", rgb: "251 / 217 / 197" },
+  { label: "Orange 03", cssVar: "--primitive-orange-03", hex: "#F6B794", rgb: "246 / 183 / 148" },
+  { label: "Orange 04", cssVar: "--primitive-orange-04", hex: "#F1996E", rgb: "241 / 153 / 110" },
+  { label: "Orange 05", cssVar: "--primitive-orange-05", hex: "#E98256", rgb: "233 / 130 / 86" },
+  { label: "Orange 06", cssVar: "--primitive-orange-06", hex: "#E07045", rgb: "224 / 112 / 69" },
+  { label: "Orange 07", cssVar: "--primitive-orange-07", hex: "#EF8247", rgb: "239 / 130 / 71" },
+  { label: "Orange 08", cssVar: "--primitive-orange-08", hex: "#C65E33", rgb: "198 / 94 / 51" },
+  { label: "Orange 09", cssVar: "--primitive-orange-09", hex: "#8F4324", rgb: "143 / 67 / 36" },
+  { label: "Orange 10", cssVar: "--primitive-orange-10", hex: "#552716", rgb: "85 / 39 / 22" },
+];
+
 /* --- Yellow Scale (01–10) --- */
 const yellowColours: PrimitiveSwatch[] = [
   { label: "Yellow 01", cssVar: "--primitive-yellow-01", hex: "#FFF9EA", rgb: "255 / 249 / 234" },
@@ -132,6 +146,7 @@ const purpleColours: PrimitiveSwatch[] = [
 const colourRamps = [
   { title: "Neutral", swatches: neutralColours },
   { title: "Red", swatches: redColours },
+  { title: "Orange", swatches: orangeColours },
   { title: "Yellow", swatches: yellowColours },
   { title: "Green", swatches: greenColours },
   { title: "Teal", swatches: tealColours },

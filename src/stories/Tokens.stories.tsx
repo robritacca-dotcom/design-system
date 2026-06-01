@@ -3,6 +3,7 @@ import React from 'react';
 
 const meta = {
   title: 'Foundations/Tokens',
+  tags: ['autodocs'],
   parameters: {
     layout: 'padded',
   },
@@ -240,6 +241,19 @@ export const Primitives: Story = {
         <ColorToken name="08" value="--primitive-red-08" />
         <ColorToken name="09" value="--primitive-red-09" />
         <ColorToken name="10 (Darkest)" value="--primitive-red-10" />
+      </TokenSection>
+
+      <TokenSection title="Orange Scale">
+        <ColorToken name="01 (Lightest)" value="--primitive-orange-01" />
+        <ColorToken name="02" value="--primitive-orange-02" />
+        <ColorToken name="03" value="--primitive-orange-03" />
+        <ColorToken name="04" value="--primitive-orange-04" />
+        <ColorToken name="05" value="--primitive-orange-05" />
+        <ColorToken name="06" value="--primitive-orange-06" />
+        <ColorToken name="07" value="--primitive-orange-07" />
+        <ColorToken name="08" value="--primitive-orange-08" />
+        <ColorToken name="09" value="--primitive-orange-09" />
+        <ColorToken name="10 (Darkest)" value="--primitive-orange-10" />
       </TokenSection>
 
       <TokenSection title="Yellow Scale">

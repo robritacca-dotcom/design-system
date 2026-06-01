@@ -27,6 +27,7 @@ const methods: ContactMethod[] = [
     href: "mailto:rob.ritacca@gmail.com",
     icon: "mail",
     copyable: true,
+    external: true,
   },
   {
     label: "LinkedIn",

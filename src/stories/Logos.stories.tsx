@@ -3,6 +3,7 @@ import React from 'react';
 
 const meta = {
   title: 'Foundations/Logos',
+  tags: ['autodocs'],
   parameters: {
     layout: 'padded',
   },

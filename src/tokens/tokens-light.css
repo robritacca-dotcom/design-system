@@ -59,7 +59,7 @@
   --color-core-accent-red: #EF476F;
   --color-core-accent-purple: #9E47EF;
   --color-core-accent-blue: #1E47B0;
-  --color-core-accent-orange: #EF8247;
+  --color-core-accent-orange: var(--primitive-orange-07);
   --color-core-accent-yellow: #FFD166;
   --color-core-accent-green: #06D6A0;
 
@@ -69,9 +69,9 @@
   --color-status-positive-text: #024336;
 
   /* Status - Warning */
-  --color-status-warning-bg: #FFF3EC;
-  --color-status-warning-border: #EF8247;
-  --color-status-warning-text: #552716;
+  --color-status-warning-bg: var(--primitive-orange-01);
+  --color-status-warning-border: var(--primitive-orange-07);
+  --color-status-warning-text: var(--primitive-orange-10);
 
   /* Status - Error */
   --color-status-error-bg: #FDEFF3;

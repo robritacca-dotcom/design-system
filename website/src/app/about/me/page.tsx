@@ -19,10 +19,10 @@ export default function AboutMePage() {
       <div className={styles.dsLayout}>
         <div className={styles.profileCol}>
           <Image
-            src="/images/robr0-img.png"
+            src="/images/robr02.jpg"
             alt="Robert Ritacca"
             width={291}
-            height={350}
+            height={291}
             className={styles.profileImage}
             priority
           />

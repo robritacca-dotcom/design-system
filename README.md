@@ -1,73 +1,73 @@
-# React + TypeScript + Vite
+# robr0 Design System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A personal design system and React component library — 42 components, a three-tier token architecture, dark mode, and a full documentation website.
 
-Currently, two official plugins are available:
+**[→ View the live docs site](https://design-system-iota-one.vercel.app)**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## What's inside
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Layer | Description |
+|---|---|
+| **Component library** (`/src`) | 42+ React components built with Vite + TypeScript. Each component has its own scoped CSS, TypeScript props interface, and Storybook stories. |
+| **Design tokens** (`/src/tokens`) | Three-tier token system: primitives → semantic light/dark → component CSS vars. Dark mode is driven by `data-theme="dark"` — no media queries in components. |
+| **Documentation website** (`/website`) | Next.js app with live interactive examples for every component, plus foundations pages for colour, typography, spacing, and icons. |
+| **Storybook** | Interactive component playground with autodocs and per-variant stories. |
 
-## Expanding the ESLint configuration
+### Components
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Accordion · Alert · Alert dialog · App sidebar · Avatar · Badge · Breadcrumb · Button · Button group · Card · Carousel · Chart · Checkbox · Circular button · Date input · Date picker · Dropdown · Dropdown menu · Input · Instructions · Navigation · Popover · Progress bar · Radio button · Section title · Selection card · Segmented control · Skeleton · Slider · Spinner · Table · Tabs · Textarea · Toast · Toggle group · Toggle switch · Tooltip
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Tech
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- **React 18 + TypeScript** — component library
+- **Vite** — dev server and library build
+- **Next.js 14** — documentation site
+- **Storybook 8** — component explorer
+- **CSS custom properties** — all theming via semantic tokens, no CSS-in-JS
+
+---
+
+## Running locally
+
+```bash
+# Component library (Vite dev sandbox)
+npm run dev              # http://localhost:5173
+
+# Storybook
+npm run storybook        # http://localhost:6006
+
+# Documentation website
+cd website
+npm install
+npm run dev              # http://localhost:3000
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Token architecture
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Tokens flow in one direction — primitives are never used directly in components:
+
 ```
+tokens-primitives.css      --primitive-teal-07: #118AB2
+        ↓
+tokens-light/dark.css      --color-action-primary-bg: var(--primitive-teal-07)
+        ↓
+Component CSS              background-color: var(--color-action-primary-bg)
+```
+
+---
+
+## Design principles
+
+- **Single typeface**: Nunito Sans (weight 300 for display, 600 for headings, 400/500 for body)
+- **White-floor UI**: depth comes from a container color ramp, not box shadows
+- **Teal is the action color**: primary buttons and focus rings only — never decorative
+- **Five status variants**: info, positive, warning, error, neutral — shared tokens across Badge, Alert, Toast, ProgressBar
+- **Material Symbols Rounded** for all icons
+
+Full spec in [`design.md`](design.md).

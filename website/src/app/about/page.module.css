@@ -481,9 +481,10 @@ a.toolItem:hover {
 
 .profileImage {
   width: 100%;
-  height: auto;
+  aspect-ratio: 1 / 1;
   display: block;
-  border-radius: var(--radius-md);
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 /* ============================================
