@@ -58,7 +58,7 @@ export const PrimaryUI: Story = {
 export const AccentRed: Story = {
   args: {
     label: 'Red',
-    cssVar: '--color-core-accent-red',
+    cssVar: '--color-core-accent-coral',
     theme: 'dark',
     dark: { primitive: '--red--07--', hex: '#EF476F', rgb: '239 / 71 / 111' },
     light: { primitive: '--red--07--', hex: '#EF476F', rgb: '239 / 71 / 111' },

@@ -219,12 +219,12 @@
 }
 
 .statUp {
-  color: var(--color-core-accent-green);
+  color: var(--color-core-accent-mint);
   font-weight: 500;
 }
 
 .statDown {
-  color: var(--color-core-accent-red);
+  color: var(--color-core-accent-coral);
   font-weight: 500;
 }
 
@@ -350,7 +350,7 @@
   font-size: var(--font-paragraph-sm-size);
   font-weight: 500;
   line-height: var(--font-paragraph-sm-line-height);
-  color: var(--color-core-accent-green);
+  color: var(--color-core-accent-mint);
 }
 
 .trendDown {
@@ -358,7 +358,7 @@
   font-size: var(--font-paragraph-sm-size);
   font-weight: 500;
   line-height: var(--font-paragraph-sm-line-height);
-  color: var(--color-core-accent-red);
+  color: var(--color-core-accent-coral);
 }
 
 .totalRow {

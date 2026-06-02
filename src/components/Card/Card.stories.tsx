@@ -77,7 +77,7 @@ export const WithPlaceholder: Story = {
           width: 120,
           height: 120,
           borderRadius: '50%',
-          border: '2px dashed var(--color-core-accent-purple)',
+          border: '2px dashed var(--color-core-accent-violet)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',

@@ -92,10 +92,10 @@
   /* Core colours */
   --color-core-ui-primary: #118AB2;
   --color-core-ui-secondary: #0A4E66;
-  --color-core-accent-red: #EF476F;
-  --color-core-accent-purple: #9E47EF;
-  --color-core-accent-blue: #1E47B0;
-  --color-core-accent-orange: var(--primitive-orange-07);
-  --color-core-accent-yellow: #FFD166;
-  --color-core-accent-green: #06D6A0;
+  --color-core-accent-coral: #EF476F;
+  --color-core-accent-violet: #9E47EF;
+  --color-core-accent-cobalt: #1E47B0;
+  --color-core-accent-amber: var(--primitive-orange-07);
+  --color-core-accent-gold: #FFD166;
+  --color-core-accent-mint: #06D6A0;
 }

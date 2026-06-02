@@ -484,12 +484,12 @@ export const SemanticColors: Story = {
       <TokenSection title="Core Colors">
         <ColorToken name="UI Primary" value="--color-core-ui-primary" />
         <ColorToken name="UI Secondary" value="--color-core-ui-secondary" />
-        <ColorToken name="Accent Red" value="--color-core-accent-red" />
-        <ColorToken name="Accent Purple" value="--color-core-accent-purple" />
-        <ColorToken name="Accent Blue" value="--color-core-accent-blue" />
-        <ColorToken name="Accent Orange" value="--color-core-accent-orange" />
-        <ColorToken name="Accent Yellow" value="--color-core-accent-yellow" />
-        <ColorToken name="Accent Green" value="--color-core-accent-green" />
+        <ColorToken name="Accent Red" value="--color-core-accent-coral" />
+        <ColorToken name="Accent Purple" value="--color-core-accent-violet" />
+        <ColorToken name="Accent Blue" value="--color-core-accent-cobalt" />
+        <ColorToken name="Accent Orange" value="--color-core-accent-amber" />
+        <ColorToken name="Accent Yellow" value="--color-core-accent-gold" />
+        <ColorToken name="Accent Green" value="--color-core-accent-mint" />
       </TokenSection>
     </div>
   ),

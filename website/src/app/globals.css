@@ -109,7 +109,7 @@ a {
   width: 45vw; height: 45vw;
   left: 50%; top: 50%;
   margin-left: -5%; margin-top: -10%;
-  background: var(--color-core-accent-yellow);
+  background: var(--color-core-accent-gold);
   animation-duration: 18s;
 }
 
@@ -117,7 +117,7 @@ a {
   width: 55vw; height: 55vw;
   left: 50%; top: 50%;
   margin-left: -15%; margin-top: -15%;
-  background: var(--color-core-accent-green);
+  background: var(--color-core-accent-mint);
   animation-duration: 16s;
   animation-delay: 1s;
 }
@@ -126,7 +126,7 @@ a {
   width: 90vw; height: 90vw;
   left: 50%; top: 50%;
   margin-left: -10%; margin-top: -20%;
-  background: var(--color-core-accent-purple);
+  background: var(--color-core-accent-violet);
   animation-duration: 22s;
   animation-delay: 0.5s;
 }
@@ -144,7 +144,7 @@ a {
   width: 55vw; height: 55vw;
   left: 50%; top: 50%;
   margin-left: -40%; margin-top: 20%;
-  background: var(--color-core-accent-blue);
+  background: var(--color-core-accent-cobalt);
   animation-duration: 17s;
   animation-delay: 0.8s;
 }
@@ -153,7 +153,7 @@ a {
   width: 48vw; height: 48vw;
   left: 50%; top: 50%;
   margin-left: 15%; margin-top: -50%;
-  background: var(--color-core-accent-red);
+  background: var(--color-core-accent-coral);
   animation-duration: 19s;
   animation-delay: 0.3s;
 }
@@ -162,7 +162,7 @@ a {
   width: 30vw; height: 30vw;
   left: 50%; top: 50%;
   margin-left: 20%; margin-top: 15%;
-  background: var(--color-core-accent-orange);
+  background: var(--color-core-accent-amber);
   animation-duration: 15s;
   animation-delay: 1.2s;
 }

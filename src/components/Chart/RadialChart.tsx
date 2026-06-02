@@ -61,11 +61,11 @@ function getDefaultColors(): string[] {
     getComputedStyle(document.documentElement).getPropertyValue(v).trim() || fb;
   return [
     get('--color-action-primary-bg', '#118AB2'),
-    get('--color-core-accent-green', '#06D6A0'),
-    get('--color-core-accent-yellow', '#FFD166'),
-    get('--color-core-accent-red', '#EF476F'),
-    get('--color-core-accent-purple', '#9E47EF'),
-    get('--color-core-accent-orange', '#EF8247'),
+    get('--color-core-accent-mint', '#06D6A0'),
+    get('--color-core-accent-gold', '#FFD166'),
+    get('--color-core-accent-coral', '#EF476F'),
+    get('--color-core-accent-violet', '#9E47EF'),
+    get('--color-core-accent-amber', '#EF8247'),
   ];
 }
 

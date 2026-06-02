@@ -278,15 +278,15 @@
    ============================================ */
 
 .ds-dropdown-menu__item--destructive {
-  color: var(--color-core-accent-red);
+  color: var(--color-core-accent-coral);
 }
 
 .ds-dropdown-menu__item--destructive .ds-dropdown-menu__item-icon {
-  color: var(--color-core-accent-red);
+  color: var(--color-core-accent-coral);
 }
 
 .ds-dropdown-menu__item--destructive .ds-dropdown-menu__shortcut {
-  color: var(--color-core-accent-red);
+  color: var(--color-core-accent-coral);
   opacity: 0.7;
 }
 

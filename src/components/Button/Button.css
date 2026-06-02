@@ -186,26 +186,26 @@
 /* ============================================
    DESTRUCTIVE BUTTON
    For dangerous actions: delete, remove, etc.
-   Uses accent-red as the border / fill colour.
+   Uses accent-coral as the border / fill colour.
    ============================================ */
 
 .ds-button--destructive {
-  border: var(--border-xs) solid var(--color-core-accent-red);
+  border: var(--border-xs) solid var(--color-core-accent-coral);
   background-color: transparent;
 }
 
 .ds-button--destructive .ds-button__text {
-  color: var(--color-core-accent-red);
+  color: var(--color-core-accent-coral);
 }
 
 .ds-button--destructive.ds-button--default {
-  border: var(--border-xs) solid var(--color-core-accent-red);
+  border: var(--border-xs) solid var(--color-core-accent-coral);
   background-color: transparent;
 }
 
 .ds-button--destructive.ds-button--hover {
-  border: var(--border-xs) solid var(--color-core-accent-red);
-  background-color: var(--color-core-accent-red);
+  border: var(--border-xs) solid var(--color-core-accent-coral);
+  background-color: var(--color-core-accent-coral);
 }
 
 .ds-button--destructive.ds-button--hover .ds-button__text {
@@ -213,8 +213,8 @@
 }
 
 .ds-button--destructive.ds-button--active {
-  border: var(--border-xs) solid var(--color-core-accent-red);
-  background-color: var(--color-core-accent-red);
+  border: var(--border-xs) solid var(--color-core-accent-coral);
+  background-color: var(--color-core-accent-coral);
 }
 
 .ds-button--destructive.ds-button--active .ds-button__text {
@@ -222,7 +222,7 @@
 }
 
 .ds-button--destructive.ds-button--disabled {
-  border: var(--border-xs) solid var(--color-core-accent-red);
+  border: var(--border-xs) solid var(--color-core-accent-coral);
   background-color: transparent;
   opacity: 0.4;
   cursor: not-allowed;
@@ -269,7 +269,7 @@
 }
 
 .ds-button--destructive .ds-button__icon {
-  color: var(--color-core-accent-red);
+  color: var(--color-core-accent-coral);
 }
 
 .ds-button--destructive.ds-button--hover .ds-button__icon,
@@ -318,7 +318,7 @@
 }
 
 .ds-button--destructive:not(.ds-button--disabled):hover {
-  background-color: var(--color-core-accent-red);
+  background-color: var(--color-core-accent-coral);
 }
 
 .ds-button--destructive:not(.ds-button--disabled):hover .ds-button__text {
@@ -362,7 +362,7 @@
 }
 
 .ds-button--destructive:not(.ds-button--disabled):active {
-  background-color: var(--color-core-accent-red);
+  background-color: var(--color-core-accent-coral);
 }
 
 .ds-button--destructive:not(.ds-button--disabled):active .ds-button__text {

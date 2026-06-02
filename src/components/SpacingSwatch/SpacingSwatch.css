@@ -41,7 +41,7 @@
 
 .ds-spacing-swatch__border-bar {
   height: 50px;
-  background: var(--color-core-accent-purple);
+  background: var(--color-core-accent-violet);
 }
 
 /* ============================================
@@ -63,8 +63,8 @@
 
 .ds-spacing-swatch__gap-bar {
   height: 50px;
-  border-left: 1px solid var(--color-core-accent-red);
-  border-right: 1px solid var(--color-core-accent-red);
+  border-left: 1px solid var(--color-core-accent-coral);
+  border-right: 1px solid var(--color-core-accent-coral);
 }
 
 /* ============================================
