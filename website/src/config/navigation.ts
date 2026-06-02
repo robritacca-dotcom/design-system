@@ -98,6 +98,7 @@ export const componentsSidebarLinks: NavLink[] = [
   { href: "/components/dropdown-menu", label: "Dropdown menu" },
   { href: "/components/input", label: "Input" },
   { href: "/components/instructions", label: "Instructions" },
+  { href: "/components/link-list", label: "Link list" },
   { href: "/components/navigation", label: "Navigation" },
   { href: "/components/popover", label: "Popover" },
   { href: "/components/progress-bar", label: "Progress bar" },

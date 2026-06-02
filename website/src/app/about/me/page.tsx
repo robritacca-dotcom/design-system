@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { LinkList } from "@design-system/components/LinkList/LinkList";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
@@ -233,6 +234,24 @@ export default function AboutMePage() {
 
             {/* Right Rail */}
             <aside className={styles.resumeSidebar}>
+              {/* Consulting Section */}
+              <div className={`${styles.resumeSection} animate-in animate-delay-2`}>
+                <div className={styles.resumeSectionHeader}>
+                  <h2 className={styles.resumeSectionTitle}>Work with me</h2>
+                </div>
+                <LinkList
+                  items={[
+                    {
+                      label: "Book a consultation",
+                      href: "https://buy.stripe.com/28o7vb5NBaSJ3NC5kn",
+                      logo: "/logos/stripe-new.png",
+                      logoAlt: "Stripe",
+                      sub: "Secure checkout via Stripe",
+                    },
+                  ]}
+                />
+              </div>
+
               {/* Skills Section */}
               <div className={`${styles.resumeSection} animate-in animate-delay-2`}>
                 <div className={styles.resumeSectionHeader}>
@@ -285,27 +304,24 @@ export default function AboutMePage() {
                 <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Education</h2>
                 </div>
-
-                <div className={styles.educationList}>
-                  <div className={styles.educationItem}>
-                    <Image src="/logos/uoft.svg" alt="University of Toronto" width={32} height={32} className={styles.educationLogo} />
-                    <div className={styles.educationDetails}>
-                      <span className={styles.educationDegree}>
-                        <a href="https://visualculture.utoronto.ca/" target="_blank" rel="noopener noreferrer">HBA, Visual Culture &amp; Communication</a>
-                      </span>
-                      <span className={styles.educationSchool}>University of Toronto</span>
-                    </div>
-                  </div>
-                  <div className={styles.educationItem}>
-                    <Image src="/logos/sheridan.svg" alt="Sheridan College" width={32} height={32} className={styles.educationLogo} />
-                    <div className={styles.educationDetails}>
-                      <span className={styles.educationDegree}>
-                        <a href="https://www.sheridancollege.ca/programs/digital-communication-certificate" target="_blank" rel="noopener noreferrer">Certificate, Digital Communication</a>
-                      </span>
-                      <span className={styles.educationSchool}>Sheridan College</span>
-                    </div>
-                  </div>
-                </div>
+                <LinkList
+                  items={[
+                    {
+                      label: "HBA, Visual Culture & Communication",
+                      href: "https://visualculture.utoronto.ca/",
+                      logo: "/logos/uoft.svg",
+                      logoAlt: "University of Toronto",
+                      sub: "University of Toronto",
+                    },
+                    {
+                      label: "Certificate, Digital Communication",
+                      href: "https://www.sheridancollege.ca/programs/digital-communication-certificate",
+                      logo: "/logos/sheridan.svg",
+                      logoAlt: "Sheridan College",
+                      sub: "Sheridan College",
+                    },
+                  ]}
+                />
               </div>
 
               {/* Certificates Section */}
@@ -313,27 +329,24 @@ export default function AboutMePage() {
                 <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Certificates</h2>
                 </div>
-
-                <div className={styles.educationList}>
-                  <div className={styles.educationItem}>
-                    <Image src="/logos/slii.svg" alt="Ken Blanchard" width={32} height={32} className={styles.educationLogo} />
-                    <div className={styles.educationDetails}>
-                      <span className={styles.educationDegree}>
-                        <a href="https://www.kenblanchard.com/situationalleadership/" target="_blank" rel="noopener noreferrer">Situational Leadership (SLII)</a>
-                      </span>
-                      <span className={styles.educationSchool}>Ken Blanchard</span>
-                    </div>
-                  </div>
-                  <div className={styles.educationItem}>
-                    <Image src="/logos/Deque.svg" alt="Deque University" width={32} height={32} className={styles.educationLogo} />
-                    <div className={styles.educationDetails}>
-                      <span className={styles.educationDegree}>
-                        <a href="https://www.deque.com/certification/accessibility-for-designers/" target="_blank" rel="noopener noreferrer">Accessibility for Designers</a>
-                      </span>
-                      <span className={styles.educationSchool}>Deque University</span>
-                    </div>
-                  </div>
-                </div>
+                <LinkList
+                  items={[
+                    {
+                      label: "Situational Leadership (SLII)",
+                      href: "https://www.kenblanchard.com/situationalleadership/",
+                      logo: "/logos/slii.svg",
+                      logoAlt: "Ken Blanchard",
+                      sub: "Ken Blanchard",
+                    },
+                    {
+                      label: "Accessibility for Designers",
+                      href: "https://www.deque.com/certification/accessibility-for-designers/",
+                      logo: "/logos/Deque.svg",
+                      logoAlt: "Deque University",
+                      sub: "Deque University",
+                    },
+                  ]}
+                />
               </div>
             </aside>
           </div>
