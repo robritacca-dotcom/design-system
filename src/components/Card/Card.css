@@ -64,3 +64,106 @@
   width: 100%;
   text-align: center;
 }
+
+/* ============================================
+   CASE-STUDY VARIANT
+   ============================================ */
+
+.ds-card--case-study {
+  height: auto;
+  min-width: 0;
+  padding: 0;
+  gap: 0;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.ds-card--case-study:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.ds-card--case-study--placeholder {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.ds-card--case-study--placeholder:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.ds-card--case-study__cover-wrap {
+  width: 100%;
+  aspect-ratio: 940 / 480;
+  overflow: hidden;
+  background: var(--color-bg-container-secondary);
+}
+
+.ds-card--case-study__cover-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ds-card--case-study__cover-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg-container-secondary);
+}
+
+.ds-card--case-study__cover-placeholder-logo {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  opacity: 0.6;
+}
+
+.ds-card--case-study__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+  padding: var(--padding-lg);
+}
+
+.ds-card--case-study__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-xs);
+}
+
+.ds-card--case-study__company-logo {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.ds-card--case-study__company-name {
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-em-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-secondary);
+}
+
+.ds-card--case-study__title {
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  letter-spacing: var(--font-heading-3-letter-spacing);
+  color: var(--color-text-primary);
+  margin: 0;
+  text-align: left;
+}
+
+.ds-card--case-study__dek {
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
