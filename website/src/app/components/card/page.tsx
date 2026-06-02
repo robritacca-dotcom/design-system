@@ -82,6 +82,44 @@ export default function CardPage() {
           </section>
 
           {/* ----------------------------------------
+              CASE-STUDY CARD
+              ---------------------------------------- */}
+          <section className={styles.section}>
+            <SectionTitle title="Case study card" />
+            <div className={styles.caseStudyRow}>
+              <Card
+                variant="case-study"
+                title="Designing Embedded AI Experiences Inside ChatGPT and Claude"
+                dek="What I learned leading design for TurboTax's embedded AI experiences"
+                companyName="TurboTax"
+                companyLogo="/logos/turbotax.svg"
+                coverSrc="/images/heroes/claude.png"
+                href="/work/embedded-ai-turbotax"
+              />
+              <Card
+                variant="case-study"
+                title="Intuit Agent Chat"
+                dek="Designing and shipping Intuit's official conversational AI platform from 0 → 1"
+                companyName="Intuit"
+                companyLogo="/logos/Intuit.svg"
+                coverSrc="/images/heroes/agent-chat.png"
+                href="/work/intuit-agent-chat"
+              />
+            </div>
+            <div className={styles.caseStudyRow}>
+              <Card
+                variant="case-study"
+                title="Coming soon"
+                dek="This case study is still being written."
+                companyName="Acme"
+                companyLogo="/logos/Intuit.svg"
+                placeholder
+              />
+              <div />
+            </div>
+          </section>
+
+          {/* ----------------------------------------
               ENTITY CARD — compact icon / logo card
               ---------------------------------------- */}
           <section className={styles.section}>

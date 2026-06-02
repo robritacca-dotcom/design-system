@@ -86,6 +86,14 @@
   flex-wrap: wrap;
 }
 
+/* Case study card row — 2-column grid */
+.caseStudyRow {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--primitive-gap-lg);
+  width: 100%;
+}
+
 /* Entity Card (compact icon cards) */
 .entityRow {
   display: flex;
