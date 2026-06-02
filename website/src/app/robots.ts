@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://robr0-ds.vercel.app/sitemap.xml",
+    sitemap: "https://robertritacca.com/sitemap.xml",
   };
 }

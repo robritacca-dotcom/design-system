@@ -21,7 +21,10 @@ export const metadata: Metadata = {
     template: "%s — Robert Ritacca",
   },
   description: SITE_DESCRIPTION,
-  metadataBase: new URL("https://robr0-ds.vercel.app"),
+  metadataBase: new URL("https://robertritacca.com"),
+  alternates: {
+    canonical: "https://robertritacca.com",
+  },
   keywords: [
     "Robert Ritacca",
     "product designer",
@@ -45,7 +48,7 @@ export const metadata: Metadata = {
     type: "website",
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Robert Ritacca — Principal Product Designer",
     description: SITE_DESCRIPTION,
   },
