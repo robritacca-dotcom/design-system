@@ -448,6 +448,20 @@ export default function Robr0DsCaseStudy() {
                       <span className={styles.linkSub}>System overview + artifacts</span>
                     </div>
                   </Link>
+                  <a
+                    href="https://robertritacca1.substack.com/p/design-still-derisks-dev"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.linkItem}
+                  >
+                    <Image src="/logos/substack.svg" alt="" width={28} height={28} className={styles.linkLogo} />
+                    <div className={styles.linkContent}>
+                      <div className={styles.linkTitle}>
+                        Design still derisks dev
+                      </div>
+                      <span className={styles.linkSub}>Article on Substack</span>
+                    </div>
+                  </a>
                 </div>
               </div>
             </aside>
