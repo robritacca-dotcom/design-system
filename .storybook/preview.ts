@@ -1,4 +1,5 @@
 import '../src/tokens/tokens.css';
+import '../src/fonts/material-symbols.css';
 import type { Preview } from '@storybook/react-vite';
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
 
