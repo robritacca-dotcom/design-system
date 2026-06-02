@@ -28,6 +28,7 @@ import { Tabs } from "@design-system/components/Tabs/Tabs";
 import { Textarea } from "@design-system/components/Textarea/Textarea";
 import { ToggleGroup } from "@design-system/components/ToggleGroup/ToggleGroup";
 import PageLinks from "../../components/PageLinks/PageLinks";
+import { LinkList } from "@design-system/components/LinkList/LinkList";
 import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 const { sidebarLinks } = getSidebarLinks(componentsSidebarLinks, "/components");
@@ -281,6 +282,22 @@ export default function ComponentsPage() {
                   <span className={styles.instructionBadge}>2</span>
                   <span className={styles.instructionLabel}>Second</span>
                 </div>
+              </div>
+            </TocCard>
+
+            {/* Link list */}
+            <TocCard href="/components/link-list" title="Link list">
+              <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                {[
+                  { logo: "/logos/substack.svg", label: "Substack" },
+                  { logo: "/logos/Git.svg", label: "GitHub" },
+                ].map((item) => (
+                  <div key={item.label} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                    <img src={item.logo} alt="" width={20} height={20} style={{ objectFit: "contain", flexShrink: 0 }} />
+                    <span style={{ fontSize: "11px", fontWeight: 500, color: "var(--color-text-primary)" }}>{item.label}</span>
+                    <span className="material-symbols-rounded" style={{ fontSize: "12px", color: "var(--color-text-tertiary)", marginLeft: "auto" }}>open_in_new</span>
+                  </div>
+                ))}
               </div>
             </TocCard>
 
