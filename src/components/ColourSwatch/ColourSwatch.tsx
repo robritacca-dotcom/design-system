@@ -53,7 +53,7 @@ export const ColourSwatch = ({
 
   const style: React.CSSProperties = {
     backgroundColor: `var(${cssVar})`,
-    ...(status && borderVar ? { borderLeftColor: `var(${borderVar})` } : {}),
+    ...(status && borderVar ? { borderColor: `var(${borderVar})` } : {}),
   };
 
   return (

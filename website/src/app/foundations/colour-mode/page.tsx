@@ -53,32 +53,32 @@ const primaryUiColours: SwatchData[] = [
 /* --- Accent --- */
 const accentColours: SwatchData[] = [
   {
-    label: "Red", cssVar: "--color-core-accent-coral",
+    label: "Coral", cssVar: "--color-core-accent-coral",
     dark: { primitive: "--red--07--", hex: "#EF476F", rgb: "239 / 71 / 111" },
     light: { primitive: "--red--07--", hex: "#EF476F", rgb: "239 / 71 / 111" },
   },
   {
-    label: "Orange", cssVar: "--color-core-accent-amber",
+    label: "Amber", cssVar: "--color-core-accent-amber",
     dark: { primitive: "--orange--05--", hex: "#EF8247", rgb: "239 / 130 / 71" },
     light: { primitive: "--orange--05--", hex: "#EF8247", rgb: "239 / 130 / 71" },
   },
   {
-    label: "Yellow", cssVar: "--color-core-accent-gold",
+    label: "Gold", cssVar: "--color-core-accent-gold",
     dark: { primitive: "--yellow--07--", hex: "#FFD166", rgb: "255 / 209 / 102" },
     light: { primitive: "--yellow--07--", hex: "#FFD166", rgb: "255 / 209 / 102" },
   },
   {
-    label: "Purple", cssVar: "--color-core-accent-violet",
+    label: "Violet", cssVar: "--color-core-accent-violet",
     dark: { primitive: "--purple--07--", hex: "#9E47EF", rgb: "158 / 71 / 239" },
     light: { primitive: "--purple--07--", hex: "#9E47EF", rgb: "158 / 71 / 239" },
   },
   {
-    label: "Blue", cssVar: "--color-core-accent-cobalt",
+    label: "Cobalt", cssVar: "--color-core-accent-cobalt",
     dark: { primitive: "--blue--07--", hex: "#1E47B0", rgb: "30 / 71 / 176" },
     light: { primitive: "--blue--07--", hex: "#1E47B0", rgb: "30 / 71 / 176" },
   },
   {
-    label: "Green", cssVar: "--color-core-accent-mint",
+    label: "Mint", cssVar: "--color-core-accent-mint",
     dark: { primitive: "--green--07--", hex: "#06D6A0", rgb: "6 / 214 / 160" },
     light: { primitive: "--green--07--", hex: "#06D6A0", rgb: "6 / 214 / 160" },
   },

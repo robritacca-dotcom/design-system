@@ -23,9 +23,9 @@
   position: relative;
 }
 
-/* Status variant — left accent border */
+/* Status variant — 1px full border */
 .ds-colour-swatch--status {
-  border-left: 3px solid;
+  border: 1px solid;
 }
 
 /* ============================================
