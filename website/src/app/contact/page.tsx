@@ -92,60 +92,95 @@ function ContactContent() {
           </p>
         </div>
 
-        <div className={`${styles.methods} animate-in animate-delay-1`}>
-          {methods.map((m) => (
-            <a
-              key={m.label}
-              href={m.href}
-              target={m.external ? "_blank" : undefined}
-              rel={m.external ? "noopener noreferrer" : undefined}
-              className={styles.method}
-            >
-              <span className={styles.methodIconWrap}>
-                {m.logo ? (
-                  <Image
-                    src={m.logo}
-                    alt=""
-                    width={24}
-                    height={24}
-                    className={styles.methodLogo}
-                  />
-                ) : (
-                  <span className={`material-symbols-rounded ${styles.methodIcon}`} aria-hidden="true">
-                    {m.icon}
-                  </span>
-                )}
+        <div className={`${styles.section} animate-in animate-delay-1`}>
+          <h2 className={styles.sectionTitle}>Book a consultation</h2>
+          <a
+            href="https://buy.stripe.com/28o7vb5NBaSJ3NC5kn"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`${styles.method} ${styles.methodConsultation}`}
+          >
+            <span className={styles.methodIconWrap}>
+              <Image
+                src="/logos/stripe-new.png"
+                alt=""
+                width={24}
+                height={24}
+                className={styles.methodLogo}
+              />
+            </span>
+            <div className={styles.methodText}>
+              <span className={styles.methodLabel}>Pay via Stripe</span>
+              <span className={styles.methodValue}>Secure checkout — book a design consultation</span>
+            </div>
+            <div className={styles.methodActions}>
+              <span
+                className={`material-symbols-rounded ${styles.methodChevron}`}
+                aria-hidden="true"
+              >
+                open_in_new
               </span>
-              <div className={styles.methodText}>
-                <span className={styles.methodLabel}>{m.label}</span>
-                <span className={styles.methodValue}>{m.value}</span>
-              </div>
-              <div className={styles.methodActions}>
-                {m.copyable && (
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      copyToClipboard(m.value);
-                    }}
-                    className={styles.copyButton}
-                    aria-label={`Copy ${m.value}`}
-                  >
-                    <span className="material-symbols-rounded" aria-hidden="true">
-                      content_copy
+            </div>
+          </a>
+        </div>
+
+        <div className={`${styles.section} animate-in animate-delay-2`}>
+          <h2 className={styles.sectionTitle}>Get in touch</h2>
+          <div className={styles.methods}>
+            {methods.map((m) => (
+              <a
+                key={m.label}
+                href={m.href}
+                target={m.external ? "_blank" : undefined}
+                rel={m.external ? "noopener noreferrer" : undefined}
+                className={styles.method}
+              >
+                <span className={styles.methodIconWrap}>
+                  {m.logo ? (
+                    <Image
+                      src={m.logo}
+                      alt=""
+                      width={24}
+                      height={24}
+                      className={styles.methodLogo}
+                    />
+                  ) : (
+                    <span className={`material-symbols-rounded ${styles.methodIcon}`} aria-hidden="true">
+                      {m.icon}
                     </span>
-                  </button>
-                )}
-                <span
-                  className={`material-symbols-rounded ${styles.methodChevron}`}
-                  aria-hidden="true"
-                >
-                  {m.external ? "open_in_new" : "arrow_forward"}
+                  )}
                 </span>
-              </div>
-            </a>
-          ))}
+                <div className={styles.methodText}>
+                  <span className={styles.methodLabel}>{m.label}</span>
+                  <span className={styles.methodValue}>{m.value}</span>
+                </div>
+                <div className={styles.methodActions}>
+                  {m.copyable && (
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        copyToClipboard(m.value);
+                      }}
+                      className={styles.copyButton}
+                      aria-label={`Copy ${m.value}`}
+                    >
+                      <span className="material-symbols-rounded" aria-hidden="true">
+                        content_copy
+                      </span>
+                    </button>
+                  )}
+                  <span
+                    className={`material-symbols-rounded ${styles.methodChevron}`}
+                    aria-hidden="true"
+                  >
+                    {m.external ? "open_in_new" : "arrow_forward"}
+                  </span>
+                </div>
+              </a>
+            ))}
+          </div>
         </div>
       </main>
 
