@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useLayoutEffect, useState } from "react";
+import { useCallback, useSyncExternalStore } from "react";
 import { SegmentedControl } from "@design-system/components/SegmentedControl/SegmentedControl";
 import styles from "./ThemeToggle.module.css";
 
@@ -9,18 +9,43 @@ const themeSegments = [
   { value: "dark", label: "Dark", icon: "dark_mode" },
 ];
 
-export default function ThemeToggle({ className }: { className?: string }) {
-  const [theme, setTheme] = useState("dark");
+/**
+ * The `data-theme` attribute on <html> is the single source of truth for the
+ * theme — it's set by the inline script in layout.tsx before first paint and
+ * mutated on toggle. Every ThemeToggle instance (in-flow header, sticky header,
+ * mobile menu) subscribes to it, so they all stay in sync no matter which one
+ * is clicked, and they never drift on client-side navigation.
+ */
+function subscribe(callback: () => void) {
+  const observer = new MutationObserver(callback);
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["data-theme"],
+  });
+  // Reflect theme changes made in other tabs.
+  window.addEventListener("storage", callback);
+  return () => {
+    observer.disconnect();
+    window.removeEventListener("storage", callback);
+  };
+}
 
-  useLayoutEffect(() => {
-    const current = document.documentElement.getAttribute("data-theme") || "dark";
-    if (current !== theme) setTheme(current);
-  }, []);
+function getSnapshot() {
+  return document.documentElement.getAttribute("data-theme") || "dark";
+}
+
+// Matches the SSR value of data-theme on <html> in layout.tsx.
+function getServerSnapshot() {
+  return "dark";
+}
+
+export default function ThemeToggle({ className }: { className?: string }) {
+  const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   const handleChange = useCallback((value: string) => {
     document.documentElement.setAttribute("data-theme", value);
     localStorage.setItem("theme", value);
-    setTheme(value);
+    // No setState needed — the MutationObserver above notifies every instance.
   }, []);
 
   return (
