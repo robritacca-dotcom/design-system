@@ -88,6 +88,7 @@ export const componentsSidebarLinks: NavLink[] = [
   { href: "/components/button", label: "Button" },
   { href: "/components/button-group", label: "Button group" },
   { href: "/components/card", label: "Card" },
+  { href: "/components/contact-card", label: "Contact card" },
   { href: "/components/carousel", label: "Carousel" },
   { href: "/components/chart", label: "Chart" },
   { href: "/components/checkbox", label: "Checkbox" },

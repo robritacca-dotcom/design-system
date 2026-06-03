@@ -1,0 +1,116 @@
+/* ============================================
+   CONTACT CARD
+   ============================================ */
+.ds-contact-card {
+  display: flex;
+  align-items: center;
+  gap: var(--primitive-gap-lg);
+  padding: var(--primitive-padding-lg);
+  border: 1px solid var(--color-bg-container-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-container-primary-semi);
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.ds-contact-card:hover {
+  background: var(--color-bg-container-secondary);
+  border-color: var(--color-border-secondary);
+}
+
+.ds-contact-card:focus-visible {
+  outline: 2px solid var(--color-action-primary-bg);
+  outline-offset: 2px;
+}
+
+/* Icon / logo slot */
+.ds-contact-card__icon-wrap {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ds-contact-card__icon {
+  font-size: 24px;
+  color: var(--color-text-secondary);
+}
+
+.ds-contact-card__logo {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+/* Text */
+.ds-contact-card__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.ds-contact-card__label {
+  font-family: var(--font-title-body-family);
+  font-size: var(--font-title-body-size);
+  font-weight: var(--font-title-body-weight);
+  line-height: var(--font-title-body-line-height);
+  color: var(--color-text-primary);
+}
+
+.ds-contact-card__value {
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Actions */
+.ds-contact-card__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--primitive-gap-xs);
+  flex-shrink: 0;
+}
+
+.ds-contact-card__copy-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--color-text-tertiary);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.ds-contact-card__copy-btn:hover {
+  background: var(--color-bg-container-tertiary);
+  color: var(--color-text-primary);
+}
+
+.ds-contact-card__copy-btn:focus-visible {
+  outline: 2px solid var(--color-action-primary-bg);
+  outline-offset: 2px;
+}
+
+.ds-contact-card__copy-btn .material-symbols-rounded {
+  font-size: 18px;
+}
+
+.ds-contact-card__chevron {
+  font-size: 18px;
+  color: var(--color-text-tertiary);
+  flex-shrink: 0;
+}

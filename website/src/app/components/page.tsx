@@ -160,6 +160,22 @@ export default function ComponentsPage() {
               <div className={styles.cardPreview} />
             </TocCard>
 
+            {/* Contact card */}
+            <TocCard href="/components/contact-card" title="Contact card">
+              <div style={{ display: "flex", flexDirection: "column", gap: "6px", width: "160px" }}>
+                {[
+                  { icon: "mail", label: "Email" },
+                  { icon: "person", label: "LinkedIn" },
+                ].map((item) => (
+                  <div key={item.label} style={{ display: "flex", alignItems: "center", gap: "8px", padding: "6px 10px", borderRadius: "8px", border: "1px solid var(--color-bg-container-border)", background: "var(--color-bg-container-primary-semi)" }}>
+                    <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-icon-secondary)" }}>{item.icon}</span>
+                    <span style={{ fontSize: "11px", fontWeight: 500, color: "var(--color-text-primary)", flex: 1 }}>{item.label}</span>
+                    <span className="material-symbols-rounded" style={{ fontSize: "12px", color: "var(--color-text-tertiary)" }}>open_in_new</span>
+                  </div>
+                ))}
+              </div>
+            </TocCard>
+
             {/* Carousel */}
             <TocCard href="/components/carousel" title="Carousel">
               <div className={styles.previewRow} style={{ gap: "8px", alignItems: "center" }}>

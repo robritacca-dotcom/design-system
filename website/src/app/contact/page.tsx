@@ -5,6 +5,7 @@ import MegaNav from "../../components/MegaNav/MegaNav";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import Footer from "../../components/Footer/Footer";
 import { ToastProvider, useToast } from "@design-system/components/Toast/Toast";
+import { ContactCard } from "@design-system/components/ContactCard/ContactCard";
 import styles from "./page.module.css";
 
 interface ContactMethod {
@@ -20,7 +21,7 @@ interface ContactMethod {
   copyable?: boolean;
 }
 
-const methods: ContactMethod[] = [
+const connectMethods: ContactMethod[] = [
   {
     label: "Email",
     value: "rob.ritacca@gmail.com",
@@ -36,18 +37,21 @@ const methods: ContactMethod[] = [
     logo: "/logos/LinkedIN.png",
     external: true,
   },
-  {
-    label: "Instagram",
-    value: "instagram.com/robr0designs",
-    href: "https://www.instagram.com/robr0designs/",
-    logo: "/logos/IG.png",
-    external: true,
-  },
+];
+
+const followMethods: ContactMethod[] = [
   {
     label: "X",
     value: "x.com/robr0",
     href: "https://x.com/robr0",
     logo: "/logos/X.png",
+    external: true,
+  },
+  {
+    label: "Instagram",
+    value: "instagram.com/robr0designs",
+    href: "https://www.instagram.com/robr0designs/",
+    logo: "/logos/IG.png",
     external: true,
   },
   {
@@ -92,7 +96,28 @@ function ContactContent() {
           </p>
         </div>
 
+        {/* Connect with me */}
         <div className={`${styles.section} animate-in animate-delay-1`}>
+          <h2 className={styles.sectionTitle}>Connect with me</h2>
+          <div className={styles.methods}>
+            {connectMethods.map((m) => (
+              <ContactCard
+                key={m.label}
+                label={m.label}
+                value={m.value}
+                href={m.href}
+                icon={m.icon}
+                logo={m.logo}
+                external={m.external}
+                copyable={m.copyable}
+                onCopy={copyToClipboard}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Book a consultation */}
+        <div className={`${styles.section} animate-in animate-delay-2`}>
           <h2 className={styles.sectionTitle}>Book a consultation</h2>
           <a
             href="https://buy.stripe.com/28o7vb5NBaSJ3NC5kn"
@@ -124,61 +149,22 @@ function ContactContent() {
           </a>
         </div>
 
-        <div className={`${styles.section} animate-in animate-delay-2`}>
-          <h2 className={styles.sectionTitle}>Get in touch</h2>
+        {/* Follow me */}
+        <div className={`${styles.section} animate-in animate-delay-3`}>
+          <h2 className={styles.sectionTitle}>Follow me</h2>
           <div className={styles.methods}>
-            {methods.map((m) => (
-              <a
+            {followMethods.map((m) => (
+              <ContactCard
                 key={m.label}
+                label={m.label}
+                value={m.value}
                 href={m.href}
-                target={m.external ? "_blank" : undefined}
-                rel={m.external ? "noopener noreferrer" : undefined}
-                className={styles.method}
-              >
-                <span className={styles.methodIconWrap}>
-                  {m.logo ? (
-                    <Image
-                      src={m.logo}
-                      alt=""
-                      width={24}
-                      height={24}
-                      className={styles.methodLogo}
-                    />
-                  ) : (
-                    <span className={`material-symbols-rounded ${styles.methodIcon}`} aria-hidden="true">
-                      {m.icon}
-                    </span>
-                  )}
-                </span>
-                <div className={styles.methodText}>
-                  <span className={styles.methodLabel}>{m.label}</span>
-                  <span className={styles.methodValue}>{m.value}</span>
-                </div>
-                <div className={styles.methodActions}>
-                  {m.copyable && (
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        copyToClipboard(m.value);
-                      }}
-                      className={styles.copyButton}
-                      aria-label={`Copy ${m.value}`}
-                    >
-                      <span className="material-symbols-rounded" aria-hidden="true">
-                        content_copy
-                      </span>
-                    </button>
-                  )}
-                  <span
-                    className={`material-symbols-rounded ${styles.methodChevron}`}
-                    aria-hidden="true"
-                  >
-                    {m.external ? "open_in_new" : "arrow_forward"}
-                  </span>
-                </div>
-              </a>
+                icon={m.icon}
+                logo={m.logo}
+                external={m.external}
+                copyable={m.copyable}
+                onCopy={copyToClipboard}
+              />
             ))}
           </div>
         </div>
