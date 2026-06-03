@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { SegmentedControl } from "@design-system/components/SegmentedControl/SegmentedControl";
 import styles from "./ThemeToggle.module.css";
 
@@ -10,17 +10,12 @@ const themeSegments = [
 ];
 
 export default function ThemeToggle({ className }: { className?: string }) {
-  // Default to "dark" to match the SSR data-theme attribute on <html>
-  const [theme, setTheme] = useState("dark");
-
-  // Sync state from the actual DOM attribute on mount (source of truth)
-  useEffect(() => {
-    const current =
-      document.documentElement.getAttribute("data-theme") ||
-      localStorage.getItem("theme") ||
-      "dark";
-    setTheme(current);
-  }, []);
+  const [theme, setTheme] = useState(() => {
+    if (typeof document !== "undefined") {
+      return document.documentElement.getAttribute("data-theme") || "dark";
+    }
+    return "dark";
+  });
 
   const handleChange = useCallback((value: string) => {
     document.documentElement.setAttribute("data-theme", value);
