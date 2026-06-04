@@ -239,6 +239,47 @@ export default function CibcFirstCaribbeanCaseStudy() {
                       <span className={styles.linkSub}>Client site</span>
                     </div>
                   </a>
+
+                  <a
+                    href="https://apps.apple.com/ca/app/cibc-caribbean-mobile/id1094351996"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.linkItem}
+                  >
+                    <svg
+                      className={styles.linkIconSymbol}
+                      width={28}
+                      height={28}
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <path fill="currentColor" d="M14.832 5.46c.641-.828 1.128-1.999.952-3.194-1.05.073-2.275.744-2.99 1.619-.652.792-1.188 1.971-.979 3.115 1.147.036 2.33-.65 3.017-1.54m5.667 11.242c-.46 1.023-.68 1.48-1.271 2.386-.825 1.264-1.987 2.839-3.43 2.85-1.28.014-1.61-.838-3.347-.828-1.738.01-2.1.845-3.382.832-1.441-.013-2.543-1.433-3.367-2.698-2.307-3.533-2.55-7.68-1.127-9.887 1.012-1.566 2.608-2.483 4.108-2.483 1.526 0 2.486.843 3.75.843 1.226 0 1.972-.845 3.737-.845 1.336 0 2.752.732 3.76 1.996-3.303 1.82-2.769 6.565.569 7.834"/>
+                    </svg>
+                    <div className={styles.linkContent}>
+                      <div className={styles.linkTitle}>
+                        <span>CIBC Caribbean Mobile</span>
+                        <span className="material-symbols-rounded" aria-hidden="true">open_in_new</span>
+                      </div>
+                      <span className={styles.linkSub}>iPhone app on the App Store</span>
+                    </div>
+                  </a>
+
+                  <a
+                    href="https://play.google.com/store/apps/details?id=com.CIBC.FCIB.mobilebanking&hl=en_CA"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.linkItem}
+                  >
+                    <Image src="/logos/play.png" alt="" width={28} height={28} className={styles.linkLogo} />
+                    <div className={styles.linkContent}>
+                      <div className={styles.linkTitle}>
+                        <span>CIBC Caribbean Mobile</span>
+                        <span className="material-symbols-rounded" aria-hidden="true">open_in_new</span>
+                      </div>
+                      <span className={styles.linkSub}>Android app on Google Play</span>
+                    </div>
+                  </a>
                 </div>
               </div>
             </aside>

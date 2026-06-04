@@ -100,6 +100,12 @@ const logoCategories: LogoCategory[] = [
     ],
   },
   {
+    title: "Google",
+    logos: [
+      { label: "Google Play", file: "play.png" },
+    ],
+  },
+  {
     title: "Intuit",
     logos: [
       { label: "Intuit", file: "Intuit.svg" },

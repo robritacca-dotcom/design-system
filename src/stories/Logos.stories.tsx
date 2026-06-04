@@ -51,6 +51,7 @@ const logos = [
   'miro.svg',
   'nextjs black.svg',
   'nextjs white.svg',
+  'play.png',
   'premiere.svg',
   'quickbooks.svg',
   'React.svg',
