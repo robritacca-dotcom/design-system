@@ -33,8 +33,8 @@ const megaStyles: TypeStyleData[] = [
   {
     name: "Mega 1",
     weight: "Light",
-    size: "132",
-    lineHeight: "85%",
+    size: "132px",
+    lineHeight: "112px",
     letterSpacing: "2%",
     previewStyle: {
       fontFamily: "var(--font-mega-1-family)",
@@ -47,8 +47,8 @@ const megaStyles: TypeStyleData[] = [
   {
     name: "Mega 2",
     weight: "Light",
-    size: "116",
-    lineHeight: "85%",
+    size: "116px",
+    lineHeight: "99px",
     letterSpacing: "2%",
     previewStyle: {
       fontFamily: "var(--font-mega-2-family)",
@@ -64,8 +64,8 @@ const displayStyles: TypeStyleData[] = [
   {
     name: "Display 1",
     weight: "Light",
-    size: "96",
-    lineHeight: "100%",
+    size: "96px",
+    lineHeight: "96px",
     letterSpacing: "2%",
     previewStyle: {
       fontFamily: "var(--font-display-1-family)",
@@ -78,8 +78,8 @@ const displayStyles: TypeStyleData[] = [
   {
     name: "Display 2",
     weight: "Light",
-    size: "64",
-    lineHeight: "100%",
+    size: "64px",
+    lineHeight: "64px",
     letterSpacing: "1.5%",
     previewStyle: {
       fontFamily: "var(--font-display-2-family)",
@@ -92,7 +92,7 @@ const displayStyles: TypeStyleData[] = [
   {
     name: "Sub display",
     weight: "Light",
-    size: "30",
+    size: "30px",
     lineHeight: "44px",
     letterSpacing: "1.5%",
     previewStyle: {
@@ -109,7 +109,7 @@ const headingStyles: TypeStyleData[] = [
   {
     name: "Heading 1",
     weight: "SemiBold",
-    size: "30",
+    size: "30px",
     lineHeight: "44px",
     letterSpacing: "1.5%",
     previewStyle: {
@@ -123,7 +123,7 @@ const headingStyles: TypeStyleData[] = [
   {
     name: "Heading 2",
     weight: "SemiBold",
-    size: "26",
+    size: "26px",
     lineHeight: "32px",
     letterSpacing: "1.5%",
     previewStyle: {
@@ -137,7 +137,7 @@ const headingStyles: TypeStyleData[] = [
   {
     name: "Heading 3",
     weight: "SemiBold",
-    size: "22",
+    size: "22px",
     lineHeight: "28px",
     letterSpacing: "1.5%",
     previewStyle: {
@@ -154,7 +154,7 @@ const bodyStyles: TypeStyleData[] = [
   {
     name: "Title",
     weight: "SemiBold",
-    size: "16",
+    size: "16px",
     lineHeight: "24px",
     letterSpacing: "-1%",
     previewStyle: {
@@ -168,7 +168,7 @@ const bodyStyles: TypeStyleData[] = [
   {
     name: "Paragraph Em",
     weight: "Medium",
-    size: "16",
+    size: "16px",
     lineHeight: "24px",
     letterSpacing: "-1%",
     previewStyle: {
@@ -182,7 +182,7 @@ const bodyStyles: TypeStyleData[] = [
   {
     name: "Paragraph",
     weight: "Regular",
-    size: "16",
+    size: "16px",
     lineHeight: "24px",
     letterSpacing: "0",
     previewStyle: {
@@ -196,7 +196,7 @@ const bodyStyles: TypeStyleData[] = [
   {
     name: "Paragraph SM Em",
     weight: "Medium",
-    size: "14",
+    size: "14px",
     lineHeight: "20px",
     letterSpacing: "0",
     previewStyle: {
@@ -210,7 +210,7 @@ const bodyStyles: TypeStyleData[] = [
   {
     name: "Paragraph SM",
     weight: "Regular",
-    size: "14",
+    size: "14px",
     lineHeight: "20px",
     letterSpacing: "0",
     previewStyle: {
