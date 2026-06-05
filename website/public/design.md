@@ -71,12 +71,12 @@ Never reference `--primitive-*` tokens inside components. Always use the semanti
 | `neutral` | #D6D6D6 | `#303030` | #232323 | #232323 | #F1F1F1 |
 
 ### Core Accents (data-viz, decorative — not for semantic status)
-- Red: `--color-core-accent-red` #EF476F
-- Orange: `--color-core-accent-orange` #EF8247
-- Yellow: `--color-core-accent-yellow` #FFD166
-- Green: `--color-core-accent-green` #06D6A0
-- Blue: `--color-core-accent-blue` #1E47B0
-- Purple: `--color-core-accent-purple` #9E47EF
+- Coral: `--color-core-accent-coral` #EF476F
+- Amber: `--color-core-accent-amber` #EF8247
+- Gold: `--color-core-accent-gold` #FFD166
+- Mint: `--color-core-accent-mint` #06D6A0
+- Cobalt: `--color-core-accent-cobalt` #1E47B0
+- Violet: `--color-core-accent-violet` #9E47EF
 
 ---
 
@@ -263,7 +263,7 @@ No drop shadows in the default component library. If a shadow is needed for a fl
 | `primary` | `--color-action-primary-bg` (#118AB2) | none | `--color-action-primary-text` (#CFEAF3) |
 | `secondary` | transparent | `--color-action-primary-border` (#0A4E66) 1px | `--color-text-primary` |
 | `tertiary` | `--color-action-passive-bg` (near-transparent) | none | `--color-action-passive-text` |
-| `destructive` | transparent | `--color-core-accent-red` (#EF476F) 1px | `--color-core-accent-red` |
+| `destructive` | transparent | `--color-core-accent-coral` (#EF476F) 1px | `--color-core-accent-coral` |
 
 Hover: primary → `--color-action-primary-bg-hover`; secondary/destructive → fill with their respective border color. Active: primary → `--color-action-primary-bg-active`.
 
