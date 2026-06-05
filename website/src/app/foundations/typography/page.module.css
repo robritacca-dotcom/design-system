@@ -47,6 +47,18 @@
   margin-bottom: 0;
 }
 
+.fontLink {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  text-decoration-thickness: 1px;
+  transition: color 0.2s ease;
+}
+
+.fontLink:hover {
+  color: var(--color-action-primary-bg);
+}
+
 /* ============================================
    INTRO SECTION
    ============================================ */

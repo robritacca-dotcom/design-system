@@ -259,7 +259,15 @@ export default function TypographyPage() {
           {/* Intro */}
           <div className={`${styles.introSection} animate-in animate-delay-1`}>
             <p className={styles.subDisplay}>
-              Everything is set in Nunito Sans
+              Everything is set in{" "}
+              <a
+                href="https://fonts.google.com/specimen/Nunito+Sans"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.fontLink}
+              >
+                Nunito Sans
+              </a>
             </p>
             <p className={styles.introBody}>
               Mega and Display styles are for hero moments and landing pages. Headings structure sections. Title is for bold labels. Paragraph Em is the default for buttons and interactive controls. Paragraph is body copy. The SM variants scale each of those down for compact components and secondary text.
