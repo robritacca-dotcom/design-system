@@ -163,6 +163,25 @@
   white-space: nowrap;
 }
 
+/* Code blocks (pre > code) */
+.markdownBody :global(pre) {
+  background: var(--color-bg-container-primary);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--primitive-radius-md);
+  padding: var(--primitive-padding-md);
+  margin-bottom: var(--primitive-gap-md);
+  overflow-x: auto;
+}
+
+.markdownBody :global(pre code) {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  white-space: pre;
+}
+
 /* Lists */
 .markdownBody :global(ul),
 .markdownBody :global(ol) {
