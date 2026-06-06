@@ -307,6 +307,116 @@
 }
 
 /* ============================================
+   MINI CATALOG
+   Grid of tiles linking out to every foundation
+   page + the components index. Shows the breadth
+   of the system inline in the case study.
+   ============================================ */
+.catalog {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-lg);
+  margin: var(--primitive-gap-md) 0;
+}
+
+.catalogGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-sm);
+}
+
+.catalogGroupLabel {
+  font-family: var(--font-paragraph-sm-family);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+  margin: 0;
+}
+
+.catalogGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--primitive-gap-md);
+}
+
+.catalogTile {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--primitive-gap-md);
+  padding: var(--primitive-padding-lg);
+  background: var(--color-bg-container-secondary);
+  border: 1px solid var(--color-bg-container-border);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.catalogTile:hover {
+  border-color: var(--color-action-primary-bg);
+  transform: translateY(-2px);
+}
+
+.catalogTileWide {
+  grid-column: 1 / -1;
+}
+
+.catalogIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-container-primary-semi);
+  border: 1px solid var(--color-bg-container-border);
+}
+
+.catalogIcon .material-symbols-rounded {
+  font-size: 22px;
+  color: var(--color-action-primary-bg);
+}
+
+.catalogText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.catalogTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--primitive-gap-xs);
+  font-family: var(--font-title-body-family);
+  font-size: var(--font-title-body-size);
+  font-weight: var(--font-title-body-weight);
+  line-height: var(--font-title-body-line-height);
+  color: var(--color-text-primary);
+}
+
+.catalogTitle .material-symbols-rounded {
+  font-size: 16px;
+  color: var(--color-text-tertiary);
+  transition: transform 0.2s ease;
+}
+
+.catalogTile:hover .catalogTitle .material-symbols-rounded {
+  transform: translateX(2px);
+}
+
+.catalogSub {
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+}
+
+/* ============================================
    LIVE COMPONENT DEMO
    Inline mini-grid showing real components.
    ============================================ */
@@ -454,6 +564,10 @@
   }
 
   .imagePair {
+    grid-template-columns: 1fr;
+  }
+
+  .catalogGrid {
     grid-template-columns: 1fr;
   }
 }

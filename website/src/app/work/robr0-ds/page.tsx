@@ -68,6 +68,65 @@ function PipelineDiagram() {
   );
 }
 
+/* ============================================
+   Mini catalog — every documented layer of the
+   system, linked inline so the case study shows
+   its own breadth.
+   ============================================ */
+const foundationTiles = [
+  { href: "/foundations/colour-primitives", icon: "palette", label: "Primitive colours", sub: "Every raw hue — the bottom of the token stack" },
+  { href: "/foundations/colour-mode", icon: "contrast", label: "Semantic colours", sub: "Primitives wrapped in intent, with light + dark" },
+  { href: "/foundations/typography", icon: "text_fields", label: "Typography", sub: "One Nunito Sans scale, weight as hierarchy" },
+  { href: "/foundations/spatial", icon: "straighten", label: "Spacing & radius", sub: "The spatial tokens every component shares" },
+  { href: "/foundations/icons", icon: "interests", label: "Icons", sub: "Material Symbols Rounded, sized to the system" },
+  { href: "/foundations/logos", icon: "verified", label: "Logos", sub: "Brand marks used across the site" },
+];
+
+function CatalogTile({ href, icon, label, sub, wide }: { href: string; icon: string; label: string; sub: string; wide?: boolean }) {
+  return (
+    <Link href={href} className={`${styles.catalogTile} ${wide ? styles.catalogTileWide : ""}`}>
+      <span className={styles.catalogIcon}>
+        <span className="material-symbols-rounded" aria-hidden="true">{icon}</span>
+      </span>
+      <span className={styles.catalogText}>
+        <span className={styles.catalogTitle}>
+          {label}
+          <span className="material-symbols-rounded" aria-hidden="true">arrow_forward</span>
+        </span>
+        <span className={styles.catalogSub}>{sub}</span>
+      </span>
+    </Link>
+  );
+}
+
+/** The mini catalog — foundations grid + the components index. */
+function MiniCatalog() {
+  return (
+    <div className={styles.catalog} aria-label="Browse the design system">
+      <div className={styles.catalogGroup}>
+        <p className={styles.catalogGroupLabel}>Foundations</p>
+        <div className={styles.catalogGrid}>
+          {foundationTiles.map((t) => (
+            <CatalogTile key={t.href} {...t} />
+          ))}
+        </div>
+      </div>
+      <div className={styles.catalogGroup}>
+        <p className={styles.catalogGroupLabel}>Components</p>
+        <div className={styles.catalogGrid}>
+          <CatalogTile
+            href="/components"
+            icon="widgets"
+            label="42 components"
+            sub="Every component with live examples + Storybook docs"
+            wide
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Robr0DsCaseStudy() {
   const [viewSegment, setViewSegment] = useState("week");
   return (
@@ -135,11 +194,20 @@ export default function Robr0DsCaseStudy() {
                   <h2>The three-tier token architecture</h2>
 
                   <p>
-                    The whole thing rests on a single architectural rule: primitives at the bottom, semantic tokens in the middle, components on top. <strong>No component CSS ever references a primitive directly.</strong>
+                    The whole thing rests on a single architectural rule:{" "}
+                    <Link href="/foundations/colour-primitives" className={styles.inlineLink}>primitives</Link>{" "}
+                    at the bottom,{" "}
+                    <Link href="/foundations/colour-mode" className={styles.inlineLink}>semantic tokens</Link>{" "}
+                    in the middle,{" "}
+                    <Link href="/components" className={styles.inlineLink}>components</Link>{" "}
+                    on top. <strong>No component CSS ever references a primitive directly.</strong>
                   </p>
 
                   <p>
-                    Primitives are the raw values — every shade of teal I might ever use, every spacing step, every radius. They&apos;re defined as variables in Figma and exported into CSS:
+                    Primitives are the raw values — every{" "}
+                    <Link href="/foundations/colour-primitives" className={styles.inlineLink}>shade of teal</Link>{" "}
+                    I might ever use, every{" "}
+                    <Link href="/foundations/spatial" className={styles.inlineLink}>spacing step, every radius</Link>. They&apos;re defined as variables in Figma and exported into CSS:
                   </p>
 
                   <figure className={styles.imagePair}>
@@ -166,7 +234,9 @@ export default function Robr0DsCaseStudy() {
                   </figure>
 
                   <p>
-                    Semantic tokens give those primitives meaning. <code>--primitive-teal-07</code> becomes <code>--color-action-primary-bg</code>. <code>--primitive-neutral-09</code> becomes <code>--color-text-primary</code>. The semantic layer is also where light and dark mode diverge — same component CSS, different mapping underneath:
+                    Semantic tokens give those primitives meaning. <code>--primitive-teal-07</code> becomes <code>--color-action-primary-bg</code>. <code>--primitive-neutral-09</code> becomes <code>--color-text-primary</code>. The semantic layer is also where{" "}
+                    <Link href="/foundations/colour-mode" className={styles.inlineLink}>light and dark mode</Link>{" "}
+                    diverge — same component CSS, different mapping underneath:
                   </p>
 
                   <figure className={styles.imagePair}>
@@ -220,7 +290,9 @@ export default function Robr0DsCaseStudy() {
                   <h2>What it produces</h2>
 
                   <p>
-                    Forty-two React components, full Storybook docs, light and dark themes, the entire site you&apos;re reading right now. Here&apos;s a live slice — every element below is a real component from the system, rendered inline from the same token layer:
+                    <Link href="/components" className={styles.inlineLink}>Forty-two React components</Link>, full Storybook docs,{" "}
+                    <Link href="/foundations/typography" className={styles.inlineLink}>a single type scale</Link>,{" "}
+                    <Link href="/foundations/colour-mode" className={styles.inlineLink}>light and dark themes</Link>, the entire site you&apos;re reading right now. Here&apos;s a live slice — every element below is a real component from the system, rendered inline from the same token layer:
                   </p>
 
                   <div className={styles.liveDemo} aria-label="Live components from robr0 DS">
@@ -284,6 +356,14 @@ export default function Robr0DsCaseStudy() {
                       description="Every component above &mdash; buttons, badges, segmented control, progress bar, charts &mdash; is a real React component from robr0 DS, rendered from the same token layer."
                     />
                   </div>
+
+                  <h2>Browse the system</h2>
+
+                  <p>
+                    Every layer described above has its own documented page. This is the map — each tile is the real reference I work from, the same one any visitor can read:
+                  </p>
+
+                  <MiniCatalog />
 
                   <h2>What changed in my practice</h2>
 
