@@ -13,7 +13,7 @@ const nunitoSans = Nunito_Sans({
 });
 
 const SITE_DESCRIPTION =
-  "Principal Product Designer at Intuit, previously Meta. Selected case studies, a personal design system (robr0 DS), and writing on AI and product design.";
+  "Principal Product Designer crafting AI-native products, systems, and experiences. Selected case studies, a personal design system (robr0 DS), and writing on design and AI.";
 
 export const metadata: Metadata = {
   title: {
@@ -29,8 +29,6 @@ export const metadata: Metadata = {
     "Robert Ritacca",
     "product designer",
     "principal designer",
-    "Intuit",
-    "Meta",
     "AI design",
     "design system",
     "robr0 DS",
