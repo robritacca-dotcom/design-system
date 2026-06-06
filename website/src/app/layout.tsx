@@ -46,11 +46,20 @@ export const metadata: Metadata = {
     siteName: "Robert Ritacca",
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: "/images/Thumbnail.png",
+        width: 1200,
+        height: 630,
+        alt: "Robert Ritacca — Product Designer",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Robert Ritacca — Principal Product Designer",
     description: SITE_DESCRIPTION,
+    images: ["/images/Thumbnail.png"],
   },
   robots: {
     index: true,
