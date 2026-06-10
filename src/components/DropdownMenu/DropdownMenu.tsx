@@ -151,7 +151,6 @@ const SubMenuItem = ({ item, baseClass, focused, size, onActivate }: SubMenuItem
           baseClass={baseClass}
           size={size}
           isSubmenu
-          onClose={() => setSubOpen(false)}
           onItemActivate={onActivate}
         />
       )}
@@ -168,7 +167,6 @@ interface MenuPanelProps {
   baseClass: string;
   size: 'default' | 'compact';
   isSubmenu?: boolean;
-  onClose: () => void;
   onItemActivate: () => void;
 }
 
@@ -177,7 +175,6 @@ const MenuPanel = ({
   baseClass,
   size,
   isSubmenu = false,
-  onClose,
   onItemActivate,
 }: MenuPanelProps) => {
   const panelClasses = [

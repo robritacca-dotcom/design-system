@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import './DatePicker.css';
 import '../../fonts/material-symbols.css';
 

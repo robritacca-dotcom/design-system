@@ -65,6 +65,7 @@ export const Disabled: Story = {
 };
 
 export const AllVariants: Story = {
+  args: { items: [] },
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start' }}>
       <ToggleGroup

@@ -1,4 +1,3 @@
-import React from 'react';
 import './LinkList.css';
 import '../../fonts/material-symbols.css';
 

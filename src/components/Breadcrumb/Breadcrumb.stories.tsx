@@ -61,6 +61,7 @@ export const TwoItems: Story = {
 };
 
 export const AllVariants: Story = {
+  args: { items: [] },
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
       <Breadcrumb

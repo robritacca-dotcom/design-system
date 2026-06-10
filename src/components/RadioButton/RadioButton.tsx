@@ -26,12 +26,10 @@ export const RadioButton = ({
   label,
   checked = false,
   disabled = false,
-  name,
   value = '',
   onChange,
   className = '',
   ariaLabel,
-  id,
 }: RadioButtonProps) => {
   const baseClass = 'ds-radio';
   const checkedClass = checked ? `${baseClass}--checked` : '';

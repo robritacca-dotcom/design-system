@@ -1,4 +1,3 @@
-import React from 'react';
 import './ContactCard.css';
 import '../../fonts/material-symbols.css';
 
@@ -36,11 +35,17 @@ export const ContactCard = ({
 }: ContactCardProps) => {
   const classes = ['ds-contact-card', className].filter(Boolean).join(' ');
 
+  // Protocol links (mailto:, tel:) hand off to the OS default client. Opening
+  // them in a new tab leaves an empty blank tab behind, so never set _blank for
+  // them — even when `external` is true (it still drives the open_in_new icon).
+  const isProtocolLink = /^(mailto:|tel:)/i.test(href);
+  const openInNewTab = external && !isProtocolLink;
+
   return (
     <a
       href={href}
-      target={external ? '_blank' : undefined}
-      rel={external ? 'noopener noreferrer' : undefined}
+      target={openInNewTab ? '_blank' : undefined}
+      rel={openInNewTab ? 'noopener noreferrer' : undefined}
       className={classes}
     >
       <span className="ds-contact-card__icon-wrap" aria-hidden="true">

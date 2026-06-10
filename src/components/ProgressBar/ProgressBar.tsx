@@ -1,4 +1,3 @@
-import React from 'react';
 import './ProgressBar.css';
 
 export interface ProgressBarProps {

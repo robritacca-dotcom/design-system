@@ -1,5 +1,5 @@
 import React from 'react';
-import { ButtonGroup, ButtonGroupProps } from '../ButtonGroup/ButtonGroup';
+import { ButtonGroup, type ButtonGroupProps } from '../ButtonGroup/ButtonGroup';
 import './Nav.css';
 
 export interface NavProps {

@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import React from 'react';
 import { EntityCard } from './EntityCard';
 import '../../fonts/material-symbols.css';
 
@@ -46,6 +45,7 @@ export const LongLabel: Story = {
    ============================================ */
 
 export const IconGrid: Story = {
+  args: { label: '' },
   render: () => (
     <div style={{
       display: 'grid',
@@ -61,6 +61,7 @@ export const IconGrid: Story = {
 };
 
 export const LogoGrid: Story = {
+  args: { label: '' },
   render: () => (
     <div style={{
       display: 'grid',

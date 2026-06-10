@@ -133,8 +133,6 @@ export const Checkbox = ({
   onChange,
   className = '',
   ariaLabel,
-  name,
-  id,
 }: CheckboxProps) => {
   const baseClass = 'ds-checkbox';
   const checkedClass = checked ? `${baseClass}--checked` : '';

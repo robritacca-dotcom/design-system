@@ -236,6 +236,7 @@ export const CompactHorizontal: Story = {
 
 // Side-by-side Comparison
 export const Comparison: Story = {
+  args: { buttons: [] },
   render: () => (
     <div style={{ display: 'flex', gap: '80px', flexWrap: 'wrap' }}>
       {/* Vertical */}

@@ -1,4 +1,3 @@
-import React from 'react';
 import './SpacingSwatch.css';
 
 export type SpacingSwatchVariant = 'border' | 'radius' | 'gap' | 'padding';

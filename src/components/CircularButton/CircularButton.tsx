@@ -1,4 +1,3 @@
-import React from 'react';
 import './CircularButton.css';
 import '../../fonts/material-symbols.css';
 

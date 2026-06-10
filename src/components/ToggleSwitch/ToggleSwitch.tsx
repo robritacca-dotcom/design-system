@@ -1,4 +1,3 @@
-import React from 'react';
 import './ToggleSwitch.css';
 import '../../fonts/material-symbols.css';
 

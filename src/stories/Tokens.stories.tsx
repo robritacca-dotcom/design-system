@@ -13,7 +13,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 // Helper component to display color tokens
-const ColorToken = ({ name, value }: { name: string; value: string }) => {
+const ColorToken = ({ value }: { name: string; value: string }) => {
   const computedValue = getComputedStyle(document.documentElement)
     .getPropertyValue(value)
     .trim();
@@ -64,7 +64,7 @@ const ColorToken = ({ name, value }: { name: string; value: string }) => {
 };
 
 // Helper component to display spacing tokens
-const SpacingToken = ({ name, value }: { name: string; value: string }) => {
+const SpacingToken = ({ value }: { name: string; value: string }) => {
   const computedValue = getComputedStyle(document.documentElement)
     .getPropertyValue(value)
     .trim();
@@ -115,7 +115,7 @@ const SpacingToken = ({ name, value }: { name: string; value: string }) => {
 };
 
 // Helper component to display border radius tokens
-const RadiusToken = ({ name, value }: { name: string; value: string }) => {
+const RadiusToken = ({ value }: { name: string; value: string }) => {
   const computedValue = getComputedStyle(document.documentElement)
     .getPropertyValue(value)
     .trim();

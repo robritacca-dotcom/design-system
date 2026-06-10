@@ -1,4 +1,3 @@
-import React from 'react';
 import './ToggleGroup.css';
 
 export interface ToggleGroupItem {

@@ -1,4 +1,3 @@
-import React from 'react';
 import './EntityCard.css';
 
 export interface EntityCardProps {
