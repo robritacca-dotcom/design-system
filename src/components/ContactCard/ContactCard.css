@@ -12,6 +12,13 @@
   text-decoration: none;
   color: inherit;
   transition: background 0.15s ease, border-color 0.15s ease;
+  /* Resets so the card renders identically whether it's an <a> or a <button>
+     (copy-only cards use a button). */
+  width: 100%;
+  box-sizing: border-box;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
 }
 
 .ds-contact-card:hover {

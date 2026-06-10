@@ -18,6 +18,8 @@ export interface ContactCardProps {
   copyable?: boolean;
   /** Called with the card's value when the copy button is clicked */
   onCopy?: (value: string) => void;
+  /** Renders the whole card as a button that copies `value` on click — no navigation */
+  copyOnClick?: boolean;
   /** Additional CSS classes */
   className?: string;
 }
@@ -31,6 +33,7 @@ export const ContactCard = ({
   external = false,
   copyable = false,
   onCopy,
+  copyOnClick = false,
   className = '',
 }: ContactCardProps) => {
   const classes = ['ds-contact-card', className].filter(Boolean).join(' ');
@@ -41,13 +44,14 @@ export const ContactCard = ({
   const isProtocolLink = /^(mailto:|tel:)/i.test(href);
   const openInNewTab = external && !isProtocolLink;
 
-  return (
-    <a
-      href={href}
-      target={openInNewTab ? '_blank' : undefined}
-      rel={openInNewTab ? 'noopener noreferrer' : undefined}
-      className={classes}
-    >
+  const trailingIcon = copyOnClick
+    ? 'content_copy'
+    : external
+      ? 'open_in_new'
+      : 'arrow_forward';
+
+  const content = (
+    <>
       <span className="ds-contact-card__icon-wrap" aria-hidden="true">
         {logo ? (
           <img
@@ -70,7 +74,7 @@ export const ContactCard = ({
       </div>
 
       <div className="ds-contact-card__actions">
-        {copyable && (
+        {copyable && !copyOnClick && (
           <button
             type="button"
             onClick={(e) => {
@@ -87,9 +91,36 @@ export const ContactCard = ({
           </button>
         )}
         <span className="material-symbols-rounded ds-contact-card__chevron" aria-hidden="true">
-          {external ? 'open_in_new' : 'arrow_forward'}
+          {trailingIcon}
         </span>
       </div>
+    </>
+  );
+
+  // Copy-only card: the whole card is a button that copies `value` to the
+  // clipboard. No navigation at all, so it can't silently fail the way a
+  // mailto: link does when there's no registered mail handler.
+  if (copyOnClick) {
+    return (
+      <button
+        type="button"
+        className={classes}
+        onClick={() => onCopy?.(value)}
+        aria-label={`Copy ${value} to clipboard`}
+      >
+        {content}
+      </button>
+    );
+  }
+
+  return (
+    <a
+      href={href}
+      target={openInNewTab ? '_blank' : undefined}
+      rel={openInNewTab ? 'noopener noreferrer' : undefined}
+      className={classes}
+    >
+      {content}
     </a>
   );
 };

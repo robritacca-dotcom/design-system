@@ -19,6 +19,8 @@ interface ContactMethod {
   external?: boolean;
   /** Show a copy-to-clipboard button on the card */
   copyable?: boolean;
+  /** Make the whole card copy `value` on click instead of navigating */
+  copyOnClick?: boolean;
 }
 
 const connectMethods: ContactMethod[] = [
@@ -27,8 +29,7 @@ const connectMethods: ContactMethod[] = [
     value: "rob.ritacca@gmail.com",
     href: "mailto:rob.ritacca@gmail.com",
     icon: "mail",
-    copyable: true,
-    external: true,
+    copyOnClick: true,
   },
   {
     label: "LinkedIn",
@@ -110,6 +111,7 @@ function ContactContent() {
                 logo={m.logo}
                 external={m.external}
                 copyable={m.copyable}
+                copyOnClick={m.copyOnClick}
                 onCopy={copyToClipboard}
               />
             ))}
@@ -163,6 +165,7 @@ function ContactContent() {
                 logo={m.logo}
                 external={m.external}
                 copyable={m.copyable}
+                copyOnClick={m.copyOnClick}
                 onCopy={copyToClipboard}
               />
             ))}
