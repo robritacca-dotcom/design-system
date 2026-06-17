@@ -80,7 +80,7 @@ export default function HomePage() {
               priority="tertiary"
               iconLeft={<FigmaIcon />}
               iconRight="open_in_new"
-              href="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26?node-id=113-7533"
+              href="https://www.figma.com/@robr0"
               target="_blank"
               rel="noopener noreferrer"
             />
