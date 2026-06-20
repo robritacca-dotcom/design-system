@@ -110,7 +110,7 @@ export default function AugmentaCaseStudy() {
                   </figure>
 
                   <p>
-                    When I joined: 1 design partner, 7 pilot firms testing, 20+ on the waitlist, $0 in revenue.
+                    When I joined: a single design partner, a handful of pilot firms testing, a growing waitlist, and pre-revenue.
                   </p>
 
                   <h2>Problem</h2>
@@ -120,7 +120,7 @@ export default function AugmentaCaseStudy() {
                   <ul>
                     <li><strong>Too feature-heavy</strong> — trying to serve every persona at once</li>
                     <li><strong>Inconsistent, confusing UX</strong> — patterns and components drifted across the app</li>
-                    <li><strong>Slow value delivery</strong> — often 2 weeks for a useful output</li>
+                    <li><strong>Slow value delivery</strong> — often weeks for a useful output</li>
                   </ul>
 
                   <p>
@@ -134,7 +134,7 @@ export default function AugmentaCaseStudy() {
                   <h2>Approach</h2>
 
                   <p>
-                    Ran pilot workshops with 7 electrical design firms to map real workflows, test product fit, and prioritize features. We mapped the unified customer journey — Estimation → Planning → Design → Detailing → Pre-Construction → Construction — and decided which stages to prioritize, deprioritize, and deprecate.
+                    Ran pilot workshops with our cohort of electrical design firms to map real workflows, test product fit, and prioritize features. We mapped the unified customer journey — Estimation → Planning → Design → Detailing → Pre-Construction → Construction — and decided which stages to prioritize, deprioritize, and deprecate.
                   </p>
 
                   <figure className={styles.figure} onClick={() => setLightbox({ src: "/images/augmenta/slide30-img01.png", alt: "Service blueprint extracted from a lighthouse customer workshop" })}>
@@ -210,11 +210,11 @@ export default function AugmentaCaseStudy() {
 
                   <h3>3. Faster value through better inputs and signal</h3>
 
-                  <p>The bottleneck was generation time — often a full day per iteration. We changed three things:</p>
+                  <p>The bottleneck was generation time — each iteration dragged on far longer than users could tolerate. We changed three things:</p>
 
                   <ul>
                     <li><strong>Prompt structure</strong> — moved from moderately structured, broad input to more structured, granular input so the first pass was usable.</li>
-                    <li><strong>Signal enhancement</strong> — surfaced the previously hidden &ldquo;unknown&rdquo; parts of failed runs. Result: <strong>successful generations went up 10×</strong>, and user analysis of solutions spiked <strong>5×</strong>.</li>
+                    <li><strong>Signal enhancement</strong> — surfaced the previously hidden &ldquo;unknown&rdquo; parts of failed runs. Result: <strong>successful generations rose ~900%</strong>, and user analysis of solutions jumped <strong>~400%</strong>.</li>
                     <li><strong>Error handling</strong> — moved from unintelligible errors to errors visualized in 3D space, right where the issue was.</li>
                   </ul>
 
@@ -275,36 +275,28 @@ export default function AugmentaCaseStudy() {
                     </figcaption>
                   </figure>
 
-                  <h2>Impact (May 2024 vs. August 2023)</h2>
+                  <h2>Impact (across the engagement)</h2>
 
                   <div className={styles.tableWrap}>
                     <table className={styles.impactTable}>
                       <thead>
                         <tr>
                           <th>Metric</th>
-                          <th>Aug 2023</th>
-                          <th>May 2024</th>
                           <th>Improvement</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
                           <td>Time-to-value (initial prep → final export)</td>
-                          <td>14 business days</td>
-                          <td><strong>8.12 business days</strong></td>
-                          <td><strong>42.3% faster</strong></td>
+                          <td><strong>42% faster</strong></td>
                         </tr>
                         <tr>
                           <td>Generation cycles to acceptable result</td>
-                          <td>12</td>
-                          <td><strong>7</strong></td>
-                          <td><strong>41.6% fewer</strong></td>
+                          <td><strong>~42% fewer</strong></td>
                         </tr>
                         <tr>
                           <td>Engineering interventions per cycle</td>
-                          <td>1.08</td>
-                          <td><strong>0.7</strong></td>
-                          <td><strong>35.5% fewer blockers</strong></td>
+                          <td><strong>36% fewer blockers</strong></td>
                         </tr>
                       </tbody>
                     </table>
@@ -350,7 +342,7 @@ export default function AugmentaCaseStudy() {
                   </div>
                   <div className={styles.detailItem}>
                     <span className={styles.detailLabel}>Timeline</span>
-                    <span className={styles.detailValue}>August 2023 → May 2024</span>
+                    <span className={styles.detailValue}>~9-month engagement</span>
                   </div>
                 </div>
               </div>
