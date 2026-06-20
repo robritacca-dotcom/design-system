@@ -215,7 +215,7 @@ export default function AugmentaCaseStudy() {
                   </p>
 
                   <p>
-                    So I brought in Ant Design as a foundation and worked with engineering to rip and replace every component — redesigning each screen, writing specs and stories, and handing off a master prototype we used for team alignment and testing with pilot firms. The wins were immediate: clearer IA, far higher screen density (several times more studies visible at once), and a dark mode the pilot firms loved.
+                    So I brought in <a href="https://ant.design/" target="_blank" rel="noopener noreferrer">Ant Design</a> as a foundation and worked with engineering to rip and replace every component — redesigning each screen, writing specs and stories, and handing off a master prototype we used for team alignment and testing with pilot firms. The wins were immediate: clearer IA, far higher screen density (several times more studies visible at once), and a dark mode the pilot firms loved.
                   </p>
 
                   <figure className={styles.figure} onClick={() => setLightbox({ src: "/images/augmenta/screen-density.png", alt: "Screen density: low to high" })}>
@@ -257,7 +257,7 @@ export default function AugmentaCaseStudy() {
                   </p>
 
                   <p>
-                    <strong>Better signal.</strong> Because of the high mathematical bar, the system would detect an error — a clash, say — and silently stop, producing zero output even after a customer had spent time prompting. We did it to save compute and to avoid handing over obviously unconstructable designs — partly face-saving. The byproduct was no signal: the customer had no idea why it failed, even when the cause was a small, fixable input error on their end.
+                    <strong>Better signal.</strong> Because of the high mathematical bar, the system would detect an error — a clash, say — and silently stop, producing zero output even after a customer had spent time prompting. We did it to save compute and to avoid handing over obviously unconstructable designs. The byproduct was no signal: the customer had no idea why it failed, even when the cause was a small, fixable input error on their end.
                   </p>
 
                   <p>
