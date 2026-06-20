@@ -15,6 +15,7 @@ type Story = StoryObj<typeof meta>;
 const logos = [
   'Adobe.svg',
   'AdParlor.svg',
+  'ant-design.svg',
   'apple black.svg',
   'apple white.svg',
   'Apple.svg',

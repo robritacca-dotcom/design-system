@@ -403,6 +403,10 @@ export default function AugmentaCaseStudy() {
                     <span className={styles.toolName}>Figma</span>
                   </div>
                   <div className={styles.toolItem}>
+                    <Image src="/logos/ant-design.svg" alt="Ant Design" width={28} height={28} className={styles.toolLogo} />
+                    <span className={styles.toolName}>Ant Design</span>
+                  </div>
+                  <div className={styles.toolItem}>
                     <Image src="/logos/cursor.svg" alt="Cursor" width={28} height={28} className={styles.toolLogo} />
                     <span className={styles.toolName}>Cursor</span>
                   </div>

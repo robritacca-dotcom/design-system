@@ -69,6 +69,7 @@ const logoCategories: LogoCategory[] = [
       { label: "vercel white", file: "vercel white.svg" },
       { label: "wordpress", file: "wordpress.svg" },
       { label: "material", file: "material.svg" },
+      { label: "Ant Design", file: "ant-design.svg" },
     ],
   },
   {
