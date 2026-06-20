@@ -110,17 +110,45 @@ export default function AugmentaCaseStudy() {
                   </figure>
 
                   <p>
-                    When I joined: a single design partner, a handful of pilot firms testing, a growing waitlist, and pre-revenue.
+                    I was the sole product designer on a small, deeply engineering-led team — owning product design strategy, research, and execution. When I joined: a single design partner, a handful of pilot firms testing, a growing waitlist, and pre-revenue, funded entirely by investors. Critically, the product had been built around that one design partner&apos;s highly specific workflow — the reference point for nearly every decision.
                   </p>
 
-                  <h2>Problem</h2>
+                  <h2>Why it matters</h2>
+
+                  <p>
+                    Construction runs on thin margins. Rising material costs, inflation, and waste leave little room for error — and modern commercial buildings are staggeringly complex, demanding tight coordination across electrical, mechanical, and plumbing trades that are usually run by separate firms, in silos.
+                  </p>
+
+                  <p>
+                    To de-risk all of this, large projects rely on Building Information Modelling (BIM): Virtual Construction Designers model each trade in 3D, inside the architect&apos;s Revit model, so the hard decisions get made up front. Done well, components can be pre-fabricated off-site — installers simply follow the blueprint instead of cutting and coordinating in the field. That is the ideal modern workflow.
+                  </p>
+
+                  <p>
+                    But BIM is hard. Skilled modellers are scarce, coordination across siloed trades is fragile, and a single sync error or philosophical disagreement can burn enormous design effort — and still leave problems to solve on site. Augmenta set out to automate this technical design work with AI, starting with electrical, ultimately translating an AI-generated, human-supervised model into real, fabricated components any installer can pick up and install.
+                  </p>
+
+                  <h2>The opportunity</h2>
+
+                  <p>
+                    The prize is enormous. A traditional manual workflow — model, coordinate, edit, then pre-fabricate — represents a huge block of skilled design hours before anything reaches the field. A flawless AI generation could, in theory, produce the same output in a fraction of that time: a potential <strong>95%+ reduction</strong> in modelling effort, with no edits and no extra coordination.
+                  </p>
+
+                  <p>
+                    Reality, when I joined, fell far short. It took many generation cycles — often weeks — to reach a single useful output, before any coordination or edits. The time savings were marginal, and the way generations worked introduced risk and eroded trust, so pilot firms were reluctant to put it on real projects.
+                  </p>
+
+                  <p>
+                    That set our North Star. Pilot firms told us they would walk away after about a week of iterating — a handful of cycles — if they hadn&apos;t seen a useful result. Not because a week is ideal, but because it was the threshold they would not cross. Getting a trustworthy, useful output inside that window became the goal everything pointed at.
+                  </p>
+
+                  <h2>The problem</h2>
 
                   <p>The product was hard to use. Three symptoms, one root cause:</p>
 
                   <ul>
                     <li><strong>Too feature-heavy</strong> — trying to serve every persona at once</li>
-                    <li><strong>Inconsistent, confusing UX</strong> — patterns and components drifted across the app</li>
-                    <li><strong>Slow value delivery</strong> — often weeks for a useful output</li>
+                    <li><strong>Inconsistent, confusing UX</strong> — patterns and components drifted across the app, with poor information architecture</li>
+                    <li><strong>Slow value delivery</strong> — too many cycles to a useful output, driving abandonment</li>
                   </ul>
 
                   <p>
@@ -128,13 +156,17 @@ export default function AugmentaCaseStudy() {
                   </p>
 
                   <p>
-                    The deeper issue was philosophical. Augmenta&apos;s engineering had set high thresholds for correctness and completeness, only surfacing solutions that met strict mathematical standards. Minor input errors — a mislabeled roof material — meant zero solutions, eroding trust and usability.
+                    What made this uniquely hard is that the output is ruthlessly objective. A design is &ldquo;constructable&rdquo; only if it satisfies several dimensions at once — correct electrical load and capacity for the building, the right materials, and clash-free coordination against the mechanical and plumbing trades. The stakes are high: a wrong calculation can waste material, cost money in the field, or — in the case of electrical load — cause catastrophic real-world damage.
+                  </p>
+
+                  <p>
+                    So Augmenta&apos;s engineers held a deliberately high bar for correctness and completeness, only surfacing solutions that met strict mathematical standards. The byproduct was unforgiving: a minor input error — a mislabeled roof material — could mean zero solutions at all, eroding trust and usability.
                   </p>
 
                   <h2>Approach</h2>
 
                   <p>
-                    Ran pilot workshops with our cohort of electrical design firms to map real workflows, test product fit, and prioritize features. We mapped the unified customer journey — Estimation → Planning → Design → Detailing → Pre-Construction → Construction — and decided which stages to prioritize, deprioritize, and deprecate.
+                    To get inside the customer&apos;s head, I designed a workshop I ran on repeat with each of our pilot electrical design firms. The goal was to map their real workflows, test product fit, and prioritize what to build or deprecate. The format was a journey-mapping and service-blueprinting exercise: we mapped their key functions and deliverables over time, walked through which Augmenta capabilities fit each phase, and captured their feedback.
                   </p>
 
                   <figure className={styles.figure} onClick={() => setLightbox({ src: "/images/augmenta/slide30-img01.png", alt: "Service blueprint extracted from a lighthouse customer workshop" })}>
@@ -151,7 +183,15 @@ export default function AugmentaCaseStudy() {
                   </figure>
 
                   <p>
-                    What pilot users actually said they wanted: to get to solutions faster, with less effort. We translated that into simpler data input, an enhanced solution viewer with more data, and a tighter feature set. <strong>More signal on output, fewer features to navigate.</strong> They explicitly didn&apos;t want complex electrical calculations.
+                    By the end we had a blueprint for each firm — similar in shape, but with telling differences. We consolidated them into a single unified customer journey, and one pattern jumped out: the only process every firm shared, at roughly the same point, was electrical <em>routing</em>.
+                  </p>
+
+                  <p>
+                    That was the unlock. Our software didn&apos;t just route — it also calculated electrical load and chose materials, a far more complex job. But most designers at these firms never did those calculations, and wouldn&apos;t have had the authority to anyway. The feature that defined the product was overkill for the market. It existed because the whole product had been built around our single design partner&apos;s workflow — which turned out to be far less common than we had assumed.
+                  </p>
+
+                  <p>
+                    <strong>The decision: refocus 100% on electrical routing, not calculations.</strong> Less strain on the system, a more concentrated effort to do one thing well, and a clean path to many more customers.
                   </p>
 
                   <p>
@@ -165,17 +205,17 @@ export default function AugmentaCaseStudy() {
                   <h3>1. Right surface for the right user</h3>
 
                   <p>
-                    Identified VDCs as the MVP persona. Doubled down on solution data — exposing more signal about completion (routed source/destinations) and correctness (constructability). Deprioritized everything the VDC teams didn&apos;t care about.
+                    Identified VDCs as the MVP persona and doubled down on solution data — exposing more signal about completion (routed sources and destinations) and correctness (constructability). Everything the VDC teams didn&apos;t care about, including the load calculations, came off the critical path.
                   </p>
 
-                  <h3>2. Consistency through a heuristic overhaul</h3>
+                  <h3>2. Consistency through a design-system overhaul</h3>
 
                   <p>
-                    Audited the product against Nielsen heuristics and fixed what the audit surfaced: inconsistent patterns, poor IA, poor use of space, unclear workflows, missing system/status information, incoherent errors. Two emblematic before/after moves:
+                    The product had been hand-built in close partnership with an electrical design firm — not a designer — and heavily shaped by engineering preference. A heuristic audit surfaced the rest: poor information architecture, poor use of screen space, missing system status, and incoherent errors that made troubleshooting painful.
                   </p>
 
                   <p>
-                    <strong>Screen density</strong> — engineers want signal, not whitespace. We rebuilt the canvas to surface more data per pixel without losing clarity.
+                    So I brought in Ant Design as a foundation and worked with engineering to rip and replace every component — redesigning each screen, writing specs and stories, and handing off a master prototype we used for team alignment and testing with pilot firms. The wins were immediate: clearer IA, far higher screen density (several times more studies visible at once), and a dark mode the pilot firms loved.
                   </p>
 
                   <figure className={styles.figure} onClick={() => setLightbox({ src: "/images/augmenta/screen-density.png", alt: "Screen density: low to high" })}>
@@ -205,18 +245,24 @@ export default function AugmentaCaseStudy() {
                   </figure>
 
                   <p>
-                    <strong>Framing</strong> — language matters. We replaced engineering-speak with intent-aligned language (&ldquo;Placement considerations&rdquo; instead of &ldquo;Unhandled error&rdquo;), turning error states into actionable guidance.
+                    <strong>Framing mattered too.</strong> We replaced engineering-speak with intent-aligned language — &ldquo;Placement considerations&rdquo; instead of &ldquo;Unhandled error&rdquo; — turning daunting, catastrophic-sounding failures into calm, actionable guidance.
                   </p>
 
                   <h3>3. Faster value through better inputs and signal</h3>
 
-                  <p>The bottleneck was generation time — each iteration dragged on far longer than users could tolerate. We changed three things:</p>
+                  <p>Two changes attacked time-to-value head-on.</p>
 
-                  <ul>
-                    <li><strong>Prompt structure</strong> — moved from moderately structured, broad input to more structured, granular input so the first pass was usable.</li>
-                    <li><strong>Signal enhancement</strong> — surfaced the previously hidden &ldquo;unknown&rdquo; parts of failed runs. Result: <strong>successful generations rose ~900%</strong>, and user analysis of solutions jumped <strong>~400%</strong>.</li>
-                    <li><strong>Error handling</strong> — moved from unintelligible errors to errors visualized in 3D space, right where the issue was.</li>
-                  </ul>
+                  <p>
+                    <strong>Better inputs.</strong> Unlike a chat assistant, these prompts are 100% mathematical. The first generation was rarely useful because the input wasn&apos;t granular enough — so we reorganized the prompt structure and roughly doubled the number of fields for fine-grained control. That alone doubled the usability of the very first generation, right out of the gate.
+                  </p>
+
+                  <p>
+                    <strong>Better signal.</strong> Because of the high mathematical bar, the system would detect an error — a clash, say — and silently stop, producing zero output even after a customer had spent time prompting. We did it to save compute and to avoid handing over obviously unconstructable designs — partly face-saving. The byproduct was no signal: the customer had no idea why it failed, even when the cause was a small, fixable input error on their end.
+                  </p>
+
+                  <p>
+                    After analyzing hundreds of failed generations, we found the common culprits — clashing chief among them — and made a bet: instead of stopping, let the generation complete and visualize each problem in 3D, as a big red box right where the issue was. It was a breakthrough. Customers could see the full solution, tie each red box to specific parts or routes, fix the problem themselves, and lean on Augmenta far less. Surfacing this previously hidden signal sent successful generations up <strong>~900%</strong> and user analysis of solutions up <strong>~400%</strong>.
+                  </p>
 
                   <figure className={styles.figure} onClick={() => setLightbox({ src: "/images/augmenta/slide43-img01.png", alt: "The team reviewing AI output together — flagging anomalies and aligning on engineering and UX fixes" })}>
                     <Image
@@ -303,7 +349,7 @@ export default function AugmentaCaseStudy() {
                   </div>
 
                   <p>
-                    The downstream result: detailed 3D schematics flow into pre-fabrication and field installation in days instead of weeks. Engineering interventions — the single biggest indicator of an unscalable product — dropped by a third.
+                    The downstream result: detailed 3D schematics flow into pre-fabrication and field installation in days instead of weeks. Engineering interventions — the single biggest indicator of an unscalable product — dropped by a third, closing in on the North Star of a useful output before pilot firms would otherwise have walked.
                   </p>
 
                 </div>
