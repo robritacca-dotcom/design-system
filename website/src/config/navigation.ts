@@ -143,7 +143,7 @@ export const aboutSidebarLinks: NavLink[] = [
 export const workSidebarLinks: NavLink[] = [
   { href: "/work", label: "Contents" },
   { href: "/work/embedded-ai-turbotax", label: "Embedded AI Experiences", logo: "/logos/turbotax.svg" },
-  { href: "/work/intuit-agent-chat", label: "Agent Chat", logo: "/logos/Intuit.svg" },
+  { href: "/work/intuit-agent-chat", label: "Agent Chat Platform", logo: "/logos/Intuit.svg" },
   { href: "/work/augmenta-ai", label: "AI Construction Platform", logo: "/logos/logo/Augmenta.png" },
   { href: "/work/meta-career-profile", label: "Career Profile", logo: "/logos/meta.svg" },
   { href: "/work/meta-offers", label: "Offer Creation Flow", logo: "/logos/meta.svg" },

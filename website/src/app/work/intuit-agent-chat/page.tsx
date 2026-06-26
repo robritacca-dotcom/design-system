@@ -30,7 +30,7 @@ export default function IntuitAgentChatCaseStudy() {
 
           {/* Page header */}
           <div className={`${styles.pageHeader} animate-in`}>
-            <h1 className={styles.pageTitle}>Intuit Agent Chat</h1>
+            <h1 className={styles.pageTitle}>Intuit Agent Chat Platform</h1>
           </div>
 
           {/* Subtitle / dek */}

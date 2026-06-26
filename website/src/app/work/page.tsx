@@ -22,7 +22,7 @@ const caseStudies = [
   },
   {
     href: "/work/intuit-agent-chat",
-    title: "Intuit Agent Chat",
+    title: "Intuit Agent Chat Platform",
     dek: "Designing and shipping Intuit's official conversational AI platform from 0 → 1",
     companyName: "Intuit",
     companyLogo: "/logos/Intuit.svg",
