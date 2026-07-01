@@ -35,7 +35,7 @@ export default function IntuitAgentChatCaseStudy() {
 
           {/* Subtitle / dek */}
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            The conversational AI platform for all of Intuit. Designed from 0 → 1 — now 58 agents in production, 3.8M monthly active users, and growing.
+            The conversational AI platform for all of Intuit. Designed from 0 → 1 — now 70+ agents in production, ~50M sessions served, and growing.
           </p>
 
           {/* Hero video */}
@@ -109,6 +109,10 @@ export default function IntuitAgentChatCaseStudy() {
                     <li><strong>Extensible</strong> — domain teams can plug in their own UI without forking the widget</li>
                   </ul>
 
+                  <p>
+                    We didn&apos;t wait for the perfect spec. A working MVP shipped in 4 months, in time for GED — Intuit&apos;s company-wide hackathon — and 40+ teams started experimenting with it immediately. Swapping a quarterly release cadence for a monthly one kept the momentum visible, and grew an organic community of 600+ developers around the platform.
+                  </p>
+
                   <h2>Solution</h2>
 
                   <p>
@@ -151,7 +155,15 @@ export default function IntuitAgentChatCaseStudy() {
                   </figure>
 
                   <p>
-                    <strong>Capabilities shipped in v1 and v2</strong> — themeable, flexible layouts, threads, agent status &amp; reasoning, dynamic cards with renderer extensions, responsive panel, response actions, doc upload (PCI-compliant), 100% token coverage, and an Agent Typography Kit.
+                    <strong>Extensible, backend-driven cards.</strong> Domain teams needed to ship new response content without waiting on our release schedule. So cards render from data, not code — teams compose a response at runtime from our base components (inputs, lists, actions) or drop in fully custom content, and it ships the moment their backend sends it.
+                  </p>
+
+                  <p>
+                    <strong>Confirm before acting.</strong> Once agents could take real actions instead of just answering, we needed a moment where the user could see exactly what was about to happen and approve it. Structured confirmation cards became the pattern for anything an agent proposed to do on the user&apos;s behalf — turning &ldquo;the agent did something&rdquo; into &ldquo;I told it to.&rdquo;
+                  </p>
+
+                  <p>
+                    <strong>Capabilities shipped in v1 and v2</strong> — themeable, flexible layouts, threads, dynamic welcome flows, agent status &amp; reasoning, citations and follow-up suggestions, extensible cards, human-in-the-loop confirmations, responsive panel, response actions, PII-safe doc upload (PCI-compliant), 100% token coverage, and an Agent Typography Kit.
                   </p>
 
                   <figure className={styles.figure}>
@@ -166,6 +178,10 @@ export default function IntuitAgentChatCaseStudy() {
                       Widget anatomy — the building blocks behind every deployment.
                     </figcaption>
                   </figure>
+
+                  <p>
+                    <strong>Handoff without repeating yourself.</strong> When an agent hit its limit, the conversation needed to become a live expert conversation without the customer starting over. We built the handoff to carry full conversation context to the expert side, so the transfer feels like the same conversation continuing, not a new one starting.
+                  </p>
 
                   <p>
                     <strong>Mobile parity from day one.</strong> Web, iOS, and Android — not an afterthought.
@@ -196,6 +212,10 @@ export default function IntuitAgentChatCaseStudy() {
                       Every surface, labelled — the parts powering every Agent Chat deployment.
                     </figcaption>
                   </figure>
+
+                  <p>
+                    The next problem is already in motion: giving agents access to what&apos;s actually on a user&apos;s screen and the ability to act within it, not just describe what to do in a text box.
+                  </p>
 
                   <h2>In production</h2>
 
@@ -228,10 +248,11 @@ export default function IntuitAgentChatCaseStudy() {
                   <h2>Impact</h2>
 
                   <ul>
-                    <li><strong>150 teams</strong> in end-to-end integration on the platform</li>
-                    <li><strong>58 agents</strong> live in production — <strong>200%+ of FY26 adoption goal</strong></li>
-                    <li><strong>3.8M</strong> monthly active users</li>
-                    <li>Live in <strong>QuickBooks</strong> and <strong>TurboTax</strong></li>
+                    <li><strong>70+ agents</strong> live in production across TurboTax, QuickBooks, Mailchimp, and internal developer teams</li>
+                    <li><strong>~50M sessions</strong> served in production</li>
+                    <li><strong>Company-wide standard</strong> — unanimous executive vote to standardize as the default platform</li>
+                    <li><strong>~10 months</strong> from zero to product-market fit</li>
+                    <li><strong>600+ developer community</strong>, organic adoption that converted into committed migration</li>
                     <li><strong>2.8M</strong> Figma component instantiations in the last year</li>
                   </ul>
 
@@ -291,7 +312,7 @@ export default function IntuitAgentChatCaseStudy() {
                   </div>
                   <div className={styles.detailItem}>
                     <span className={styles.detailLabel}>Reach</span>
-                    <span className={styles.detailValue}>150 teams · 58 agents · 3.8M MAU</span>
+                    <span className={styles.detailValue}>70+ agents · ~50M sessions · 600+ developers</span>
                   </div>
                 </div>
               </div>
