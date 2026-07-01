@@ -5,7 +5,7 @@ import { Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import { buildPersonJsonLd, buildWebsiteJsonLd } from "@/lib/structuredData";
 
-const GA_ID = "G-RCSFYMD51K";
+const GA_ID = "G-K89BMNXNSV";
 
 const nunitoSans = Nunito_Sans({
   subsets: ["latin"],
