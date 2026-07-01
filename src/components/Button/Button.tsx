@@ -25,6 +25,8 @@ export interface ButtonProps {
   target?: string;
   /** Optional rel attribute for links */
   rel?: string;
+  /** Marks this link as the current page (adds aria-current="page") */
+  ariaCurrent?: boolean;
   /** Additional CSS classes */
   className?: string;
   /** @deprecated Use iconLeft instead */
@@ -48,6 +50,7 @@ export const Button = ({
   href,
   target,
   rel,
+  ariaCurrent,
   className = '',
   icon, // deprecated, maps to iconLeft for backwards compatibility
 }: ButtonProps) => {
@@ -97,6 +100,7 @@ export const Button = ({
         href={href}
         target={target}
         rel={rel}
+        aria-current={ariaCurrent ? 'page' : undefined}
         onClick={onClick}
       >
         {children}

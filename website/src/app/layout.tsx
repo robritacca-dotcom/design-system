@@ -123,7 +123,12 @@ export default function RootLayout({
           `}
         </Script>
       </head>
-      <body className={nunitoSans.variable}>{children}</body>
+      <body className={nunitoSans.variable}>
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
+        {children}
+      </body>
     </html>
   );
 }

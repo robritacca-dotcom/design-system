@@ -150,12 +150,14 @@ export default function MegaNav() {
             <Link
               href="/about/me"
               className={`${styles.navLink} ${isAboutActive ? styles.navLinkActive : ""}`}
+              aria-current={isAboutActive ? "page" : undefined}
             >
               About
             </Link>
             <Link
               href="/work"
               className={`${styles.navLink} ${isWorkActive ? styles.navLinkActive : ""}`}
+              aria-current={isWorkActive ? "page" : undefined}
             >
               Work
             </Link>
@@ -190,6 +192,7 @@ export default function MegaNav() {
             <Link
               href="/contact"
               className={`${styles.navLink} ${isContactActive ? styles.navLinkActive : ""}`}
+              aria-current={isContactActive ? "page" : undefined}
             >
               Contact
             </Link>
@@ -231,6 +234,7 @@ export default function MegaNav() {
                   href={item.href}
                   className={`${styles.megaItem} ${itemActive ? styles.megaItemActive : ""}`}
                   tabIndex={open ? 0 : -1}
+                  aria-current={itemActive ? "page" : undefined}
                 >
                   <div className={styles.megaIcon}>
                     <span className="material-symbols-rounded" aria-hidden="true">
@@ -267,6 +271,7 @@ export default function MegaNav() {
                 href="/about/me"
                 className={`${styles.navLink} ${isAboutActive ? styles.navLinkActive : ""}`}
                 tabIndex={isStuck ? 0 : -1}
+                aria-current={isAboutActive ? "page" : undefined}
               >
                 About
               </Link>
@@ -274,6 +279,7 @@ export default function MegaNav() {
                 href="/work"
                 className={`${styles.navLink} ${isWorkActive ? styles.navLinkActive : ""}`}
                 tabIndex={isStuck ? 0 : -1}
+                aria-current={isWorkActive ? "page" : undefined}
               >
                 Work
               </Link>
@@ -307,6 +313,7 @@ export default function MegaNav() {
                 href="/contact"
                 className={`${styles.navLink} ${isContactActive ? styles.navLinkActive : ""}`}
                 tabIndex={isStuck ? 0 : -1}
+                aria-current={isContactActive ? "page" : undefined}
               >
                 Contact
               </Link>
@@ -350,6 +357,7 @@ export default function MegaNav() {
                     href={item.href}
                     className={`${styles.megaItem} ${itemActive ? styles.megaItemActive : ""}`}
                     tabIndex={open && isStuck ? 0 : -1}
+                    aria-current={itemActive ? "page" : undefined}
                   >
                     <div className={styles.megaIcon}>
                       <span className="material-symbols-rounded" aria-hidden="true">
@@ -381,6 +389,7 @@ export default function MegaNav() {
             href="/about/me"
             className={styles.mobileLink}
             onClick={() => setMobileOpen(false)}
+            aria-current={isAboutActive ? "page" : undefined}
           >
             About
           </Link>
@@ -388,26 +397,32 @@ export default function MegaNav() {
             href="/work"
             className={styles.mobileLink}
             onClick={() => setMobileOpen(false)}
+            aria-current={isWorkActive ? "page" : undefined}
           >
             Work
           </Link>
           <div className={styles.mobileSection}>
             <div className={styles.mobileSectionLabel}>Design system</div>
-            {dsMegaItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`${styles.mobileLink} ${styles.mobileLinkNested}`}
-                onClick={() => setMobileOpen(false)}
-              >
-                {item.label}
-              </Link>
-            ))}
+            {dsMegaItems.map((item) => {
+              const itemActive = pathname === item.href || (item.href !== "/about" && pathname.startsWith(item.href + "/"));
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`${styles.mobileLink} ${styles.mobileLinkNested}`}
+                  onClick={() => setMobileOpen(false)}
+                  aria-current={itemActive ? "page" : undefined}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
           </div>
           <Link
             href="/contact"
             className={styles.mobileLink}
             onClick={() => setMobileOpen(false)}
+            aria-current={isContactActive ? "page" : undefined}
           >
             Contact
           </Link>

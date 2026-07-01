@@ -207,6 +207,28 @@ a {
 }
 
 /* ============================================
+   SKIP LINK
+   ============================================ */
+.skip-link {
+  position: absolute;
+  top: -48px;
+  left: var(--gap-md);
+  z-index: 1000;
+  padding: 10px 20px;
+  background: var(--color-bg-container-primary);
+  color: var(--color-text-primary);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus-visible {
+  top: var(--gap-md);
+  outline: 2px solid var(--color-action-primary-bg);
+  outline-offset: 2px;
+}
+
+/* ============================================
    FOOTER
    ============================================ */
 .footer {

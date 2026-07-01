@@ -25,6 +25,7 @@ export default function Sidebar({ links }: SidebarProps) {
       : link.active
         ? ("active" as const)
         : ("default" as const),
+    ariaCurrent: link.active,
     priority: "tertiary" as const,
     iconLeft: link.logo ? (
       <Image
