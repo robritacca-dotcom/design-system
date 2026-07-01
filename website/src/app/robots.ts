@@ -5,6 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
+      disallow: ["/test", "/test2", "/dashboard", "/dashboard2"],
     },
     sitemap: "https://robertritacca.com/sitemap.xml",
   };

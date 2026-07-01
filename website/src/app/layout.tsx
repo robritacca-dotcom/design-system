@@ -3,6 +3,7 @@ import Script from "next/script";
 import "@design-system/tokens/tokens.css";
 import { Nunito_Sans } from "next/font/google";
 import "./globals.css";
+import { buildPersonJsonLd, buildWebsiteJsonLd } from "@/lib/structuredData";
 
 const GA_ID = "G-RCSFYMD51K";
 
@@ -101,6 +102,14 @@ export default function RootLayout({
           rel="stylesheet"
         />
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildPersonJsonLd()) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildWebsiteJsonLd()) }}
+        />
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
           strategy="afterInteractive"

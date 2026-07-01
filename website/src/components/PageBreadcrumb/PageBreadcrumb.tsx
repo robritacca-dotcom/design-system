@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { Breadcrumb } from "@design-system/components/Breadcrumb/Breadcrumb";
 import { getBreadcrumbs } from "@/config/navigation";
+import { buildBreadcrumbJsonLd } from "@/lib/structuredData";
 import styles from "./PageBreadcrumb.module.css";
 
 /**
@@ -18,6 +19,10 @@ export default function PageBreadcrumb() {
 
   return (
     <div className={styles.wrap}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbJsonLd(items)) }}
+      />
       <Breadcrumb items={items} />
     </div>
   );
