@@ -383,7 +383,7 @@ The theme is activated by `data-theme="dark"` on the HTML root element. The `tok
 ## Responsive Behavior
 
 ### Breakpoints
-The website uses standard Tailwind-compatible breakpoints:
+The website uses standard breakpoints:
 - **Mobile**: < 768px
 - **Tablet**: 768px – 1024px
 - **Desktop**: 1024px – 1440px
@@ -420,8 +420,8 @@ The website uses standard Tailwind-compatible breakpoints:
 
 - **Animation / transition timings** — Component transitions use hardcoded `0.2s ease`. No token exists for easing curves or durations. If the system needs animated loading states or page transitions, a `--motion-*` token layer should be added.
 - **Icon sizing tokens** — Material Symbols sizes (24px default, 20px compact) are hardcoded in component CSS. No `--icon-size-*` token exists. Formalising this would help consistency across new components.
-- **Figma source link** — The system was exported from Figma but no public Figma link is documented. Add the Figma file URL here once available.
-- **Breakpoint tokens** — Responsive breakpoints are not tokenized. They exist as Tailwind config or raw media query values in component CSS.
+- **Figma parity** — The system originates in Figma ([robr0-ds26](https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26)), and foundation/component pages deep-link to specific frames via `figmaUrl`. Keeping the Figma file and the coded tokens in sync is still a manual process — there is no automated export pipeline.
+- **Breakpoint tokens** — Responsive breakpoints are not tokenized. They exist as raw media-query values in component CSS.
 - **Form validation patterns** — Error state on Input is documented, but multi-field form-level validation patterns (inline error summaries, field grouping) are not in scope here.
 - **Code/monospace** — No monospace font or `--font-code-*` token is defined. If code blocks are needed on the documentation site, add a JetBrains Mono or Fira Code entry to the typography token layer.
 - **Chart theming** — Recharts chart components use `--color-core-accent-*` tokens for data series, but a formal `--chart-series-{n}` token set for ordered series colors has not been codified.

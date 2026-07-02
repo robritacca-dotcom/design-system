@@ -4,7 +4,7 @@
 
 A React component library + design system + documentation website. It has two interconnected parts:
 
-1. **Component Library** (`/src`) — 42+ React components built with Vite + TypeScript. Each component has its own folder with implementation, scoped CSS, and Storybook stories. Components are consumed by the website via the `@design-system` path alias.
+1. **Component Library** (`/src`) — 44 React components built with Vite + TypeScript. Each component has its own folder with implementation, scoped CSS, and Storybook stories. Components are consumed by the website via the `@design-system` path alias.
 2. **Documentation Website** (`/website`) — A separate Next.js app that showcases every component with live, interactive examples. Each component has its own page under `website/src/app/components/[component-name]/`.
 
 The design spec lives in [`design.md`](design.md) — read it before touching tokens, colors, or typography.
@@ -39,22 +39,21 @@ npm run build-storybook # export static Storybook
 /
 ├── design.md                  # Design spec — source of truth for tokens, colors, typography
 ├── src/
-│   ├── components/            # 42 component folders (each self-contained)
+│   ├── components/            # 44 component folders (each self-contained)
 │   ├── tokens/
 │   │   ├── tokens-primitives.css    # Raw hex/px values — never use directly in components
 │   │   ├── tokens-light.css         # Semantic tokens, light theme
 │   │   ├── tokens-dark.css          # Semantic tokens, dark theme
 │   │   └── tokens-typography.css    # Font size/weight/line-height scale
-│   ├── fonts/                 # Nunito Sans + Material Symbols web fonts
+│   ├── fonts/                 # Material Symbols icon font (self-hosted); Nunito Sans is loaded via Google Fonts
 │   └── App.tsx                # Dev sandbox (generic; components are imported via @design-system)
 ├── .storybook/                # Storybook config
-├── website/                   # Next.js docs site (separate npm project)
-│   ├── src/app/
-│   │   ├── components/        # One folder per component, each with page.tsx + page.module.css
-│   │   ├── foundations/       # Design tokens & layout doc pages
-│   │   └── about/             # About/work pages
-│   └── src/components/        # Shared Next.js UI (Header, Sidebar, Footer, etc.)
-└── old-website-reference/     # Archived previous version — do not touch
+└── website/                   # Next.js docs site (separate npm project)
+    ├── src/app/
+    │   ├── components/        # One folder per component, each with page.tsx + page.module.css
+    │   ├── foundations/       # Design tokens & layout doc pages
+    │   └── about/             # About/work pages
+    └── src/components/        # Shared Next.js UI (Header, Sidebar, Footer, etc.)
 ```
 
 ---
