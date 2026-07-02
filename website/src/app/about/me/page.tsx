@@ -30,6 +30,12 @@ export default function AboutMePage() {
         </div>
 
         <main className={styles.dsContent} id="main-content">
+          {/* Location */}
+          <div className={styles.locationRow}>
+            <Image src="/logos/Canada.svg" alt="" width={20} height={20} />
+            <span>Based in Toronto, Canada</span>
+          </div>
+
           {/* Page Title */}
           <div className={`${styles.pageHeader} animate-in`}>
             <h1 className={styles.pageTitle}>Robert Ritacca</h1>
@@ -39,10 +45,16 @@ export default function AboutMePage() {
           </div>
 
           {/* Page Description */}
-          <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Designing and building AI-native products, systems, and experiences.
-            Bridging interaction, systems thinking, and modern AI workflows.
-          </p>
+          <div className={styles.introSection}>
+            <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
+              Agentic AI and complex systems, designed for enterprise scale.
+            </p>
+
+            {/* Bio */}
+            <p className={`${styles.introBody} animate-in animate-delay-2`}>
+              Experienced product designer based in Toronto, specializing in complex systems, agentic AI experiences, and enterprise-scale design. Versatile background across big tech, startups, and consulting. Expert in leading cross-functional teams, building scalable design systems, and solving ambiguous 0&rarr;1 problems through data-informed research, strategy, and execution.
+            </p>
+          </div>
 
           {/* Resume Two-Column Layout */}
           <div className={styles.resumeLayout}>

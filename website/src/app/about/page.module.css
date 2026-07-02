@@ -17,6 +17,22 @@
 }
 
 /* ============================================
+   LOCATION ROW
+   ============================================ */
+.locationRow {
+  display: flex;
+  align-items: center;
+  gap: var(--primitive-gap-xs);
+  padding-bottom: var(--primitive-gap-md);
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  color: var(--color-text-secondary);
+}
+
+/* ============================================
    PAGE HEADER
    ============================================ */
 .pageHeader {
