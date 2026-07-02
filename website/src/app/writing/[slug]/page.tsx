@@ -17,6 +17,12 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+const SubstackMark = () => (
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className={styles.linkLogo}>
+    <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z" fill="#FF6719"/>
+  </svg>
+);
+
 // Pre-render a page for each known article at build time; new slugs are
 // rendered on-demand and then cached (ISR).
 export async function generateStaticParams() {
@@ -72,31 +78,72 @@ export default async function ArticlePage({ params }: PageProps) {
             <h1 className={styles.pageTitle}>{article.title}</h1>
           </div>
 
-          <p className={`${styles.meta} animate-in animate-delay-1`}>
-            {formatArticleDate(article.date)}
-            {article.author ? ` · ${article.author}` : ""}
-          </p>
-
-          {article.coverImage && (
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img
-              src={article.coverImage}
-              alt=""
-              className={`${styles.cover} animate-in animate-delay-2`}
-            />
+          {article.subtitle && (
+            <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
+              {article.subtitle}
+            </p>
           )}
 
-          {/* Article body — HTML mirrored straight from the Substack feed. */}
-          <article
-            className={`${styles.prose} animate-in animate-delay-3`}
-            dangerouslySetInnerHTML={{ __html: article.contentHtml }}
-          />
+          {article.coverImage && (
+            <figure className={`${styles.hero} animate-in animate-delay-2`}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={article.coverImage} alt="" className={styles.heroImg} />
+            </figure>
+          )}
 
-          <p className={styles.substackLink}>
-            <a href={article.substackUrl} target="_blank" rel="noopener noreferrer">
-              Read the original on Substack →
-            </a>
-          </p>
+          {/* Two-column body — article on the left, details rail on the right */}
+          <div className={`${styles.resumeLayout} animate-in animate-delay-3`}>
+            <div className={styles.resumeMain}>
+              {/* Article body — HTML mirrored straight from the Substack feed. */}
+              <article
+                className={styles.prose}
+                dangerouslySetInnerHTML={{ __html: article.contentHtml }}
+              />
+            </div>
+
+            <aside className={styles.resumeSidebar} aria-label="Article details">
+              <div className={styles.resumeSection}>
+                <div className={styles.resumeSectionHeader}>
+                  <h2 className={styles.resumeSectionTitle}>Details</h2>
+                </div>
+                <div className={styles.detailList}>
+                  <div className={styles.detailItem}>
+                    <span className={styles.detailLabel}>Published</span>
+                    <span className={styles.detailValue}>{formatArticleDate(article.date)}</span>
+                  </div>
+                  {article.author && (
+                    <div className={styles.detailItem}>
+                      <span className={styles.detailLabel}>Author</span>
+                      <span className={styles.detailValue}>{article.author}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className={styles.resumeSection}>
+                <div className={styles.resumeSectionHeader}>
+                  <h2 className={styles.resumeSectionTitle}>Links</h2>
+                </div>
+                <div className={styles.linkList}>
+                  <a
+                    href={article.substackUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.linkItem}
+                  >
+                    <SubstackMark />
+                    <div className={styles.linkContent}>
+                      <div className={styles.linkTitle}>
+                        <span>Read on Substack</span>
+                        <span className="material-symbols-rounded" aria-hidden="true">open_in_new</span>
+                      </div>
+                      <span className={styles.linkSub}>Original article</span>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </aside>
+          </div>
         </main>
       </div>
 

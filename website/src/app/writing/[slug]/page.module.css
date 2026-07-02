@@ -1,7 +1,9 @@
 /* ============================================
    ARTICLE PAGE — a single Substack post mirrored
-   on-site. `.prose` styles the HTML injected from
-   the feed's <content:encoded>.
+   on-site. Uses the same skeleton as a work case
+   study: full-width hero + main body + details rail.
+   `.prose` styles the HTML injected from the feed's
+   <content:encoded>.
    ============================================ */
 .dsLayout {
   display: flex;
@@ -20,11 +22,13 @@
 }
 
 /* ============================================
-   HEADER
+   HEADER + SUBTITLE
    ============================================ */
 .pageHeader {
   display: flex;
   align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--primitive-gap-lg);
   width: 100%;
 }
 
@@ -35,30 +39,180 @@
   line-height: var(--font-display-2-line-height);
   letter-spacing: var(--font-display-2-letter-spacing);
   color: var(--color-text-primary);
-  max-width: 40ch;
+  margin: 0;
 }
 
-.meta {
-  font-size: var(--font-paragraph-sm-size);
-  font-weight: var(--font-paragraph-sm-weight);
-  line-height: var(--font-paragraph-sm-line-height);
+.subDisplay {
+  font-family: var(--font-sub-display-family);
+  font-size: var(--font-sub-display-size);
+  font-weight: var(--font-sub-display-weight);
+  line-height: var(--font-sub-display-line-height);
+  letter-spacing: var(--font-sub-display-letter-spacing);
   color: var(--color-text-secondary);
-  margin-top: calc(-1 * var(--primitive-gap-md));
+  margin: 0;
 }
 
-.cover {
+/* ============================================
+   HERO — full-width cover image
+   ============================================ */
+.hero {
+  margin: 0;
   width: 100%;
-  max-width: 760px;
+}
+
+.heroImg {
+  display: block;
+  width: 100%;
   height: auto;
   border-radius: var(--radius-md);
   border: 1px solid var(--color-bg-container-border);
 }
 
 /* ============================================
+   RESUME LAYOUT — main + 320px aside
+   ============================================ */
+.resumeLayout {
+  display: flex;
+  gap: var(--primitive-gap-xxl);
+  width: 100%;
+  padding-top: var(--primitive-gap-xl);
+}
+
+.resumeMain {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.resumeSidebar {
+  width: 320px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-xxxl);
+  position: sticky;
+  top: calc(78px + var(--primitive-gap-xl));
+  height: fit-content;
+}
+
+.resumeSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-xl);
+}
+
+.resumeSectionHeader {
+  padding-bottom: var(--primitive-padding-lg);
+  border-bottom: 1px solid var(--color-bg-container-border);
+}
+
+.resumeSectionTitle {
+  font-size: var(--font-heading-2-size);
+  font-weight: var(--font-heading-2-weight);
+  line-height: var(--font-heading-2-line-height);
+  letter-spacing: var(--font-heading-2-letter-spacing);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* ============================================
+   DETAILS LIST (right rail — fact sheet)
+   ============================================ */
+.detailList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-md);
+}
+
+.detailItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.detailLabel {
+  font-family: var(--font-paragraph-sm-family);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+}
+
+.detailValue {
+  font-family: var(--font-title-body-family);
+  font-size: var(--font-title-body-size);
+  font-weight: var(--font-title-body-weight);
+  line-height: var(--font-title-body-line-height);
+  color: var(--color-text-primary);
+}
+
+/* ============================================
+   LINKS LIST (right rail)
+   ============================================ */
+.linkList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-lg);
+}
+
+.linkItem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--primitive-gap-md);
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.2s ease;
+}
+
+.linkItem:hover {
+  opacity: 0.8;
+}
+
+.linkLogo {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.linkContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.linkTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--primitive-gap-xs);
+  font-family: var(--font-title-body-family);
+  font-size: var(--font-title-body-size);
+  font-weight: var(--font-title-body-weight);
+  line-height: var(--font-title-body-line-height);
+  color: var(--color-text-primary);
+}
+
+.linkTitle :global(.material-symbols-rounded) {
+  font-size: 16px;
+  color: var(--color-text-tertiary);
+}
+
+.linkSub {
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+}
+
+/* ============================================
    PROSE — injected article HTML
    ============================================ */
 .prose {
-  max-width: 720px;
   display: flex;
   flex-direction: column;
   color: var(--color-text-primary);
@@ -169,23 +323,33 @@
   padding: 0;
 }
 
-/* Substack subscription widgets embedded in the feed — keep them tidy */
 .prose :global(.subscription-widget-wrap),
 .prose :global(.button-wrapper) {
   margin: var(--primitive-gap-lg) 0;
 }
 
 /* ============================================
-   BACK-TO-SUBSTACK LINK
+   RESPONSIVE
    ============================================ */
-.substackLink {
-  padding-top: var(--primitive-gap-lg);
-  border-top: 1px solid var(--color-divider);
-  font-size: var(--font-paragraph-size);
+@media (max-width: 959px) {
+  .resumeLayout {
+    flex-direction: column-reverse;
+  }
+
+  .resumeSidebar {
+    width: 100%;
+    position: static;
+  }
 }
 
-.substackLink a {
-  color: var(--color-action-primary-bg);
-  text-decoration: underline;
-  text-underline-offset: 2px;
+@media (max-width: 768px) {
+  .pageTitle {
+    font-size: 40px;
+    line-height: 1.05;
+  }
+
+  .subDisplay {
+    font-size: 22px;
+    line-height: 32px;
+  }
 }
