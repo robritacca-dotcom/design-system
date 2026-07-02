@@ -47,12 +47,12 @@ export default function AboutMePage() {
           {/* Page Description */}
           <div className={styles.introSection}>
             <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-              Agentic AI and complex systems, designed for enterprise scale.
+              Designing products that bring clarity to complex problems.
             </p>
 
             {/* Bio */}
             <p className={`${styles.introBody} animate-in animate-delay-2`}>
-              Experienced product designer based in Toronto, specializing in complex systems, agentic AI experiences, and enterprise-scale design. Versatile background across big tech, startups, and consulting. Expert in leading cross-functional teams, building scalable design systems, and solving ambiguous 0&rarr;1 problems through data-informed research, strategy, and execution.
+              Experienced product designer, specializing in AI-native products, agentic experiences, and complex workflows. Versatile background across big tech, startups, and consulting. I partner with engineering, product, and leadership to transform ambiguous problems into intuitive, scalable products that deliver value for users and the business. Experienced in 0&rarr;1 product development, enterprise applications, and the design systems and platforms that enable teams to build faster.
             </p>
           </div>
 
