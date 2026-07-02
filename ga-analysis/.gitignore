@@ -1,0 +1,7 @@
+# Never commit the service-account key or pulled data
+service-account.json
+*.key.json
+key*.json
+credentials*.json
+.venv/
+output/
