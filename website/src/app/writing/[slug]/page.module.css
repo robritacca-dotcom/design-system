@@ -1,0 +1,191 @@
+/* ============================================
+   ARTICLE PAGE — a single Substack post mirrored
+   on-site. `.prose` styles the HTML injected from
+   the feed's <content:encoded>.
+   ============================================ */
+.dsLayout {
+  display: flex;
+  gap: var(--primitive-gap-xxl);
+  width: 100%;
+  max-width: 1440px;
+  padding-top: var(--primitive-gap-xl);
+}
+
+.dsContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-xl);
+  min-width: 0;
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+.pageHeader {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.pageTitle {
+  font-family: var(--font-display-2-family);
+  font-size: var(--font-display-2-size);
+  font-weight: var(--font-display-2-weight);
+  line-height: var(--font-display-2-line-height);
+  letter-spacing: var(--font-display-2-letter-spacing);
+  color: var(--color-text-primary);
+  max-width: 40ch;
+}
+
+.meta {
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-secondary);
+  margin-top: calc(-1 * var(--primitive-gap-md));
+}
+
+.cover {
+  width: 100%;
+  max-width: 760px;
+  height: auto;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-bg-container-border);
+}
+
+/* ============================================
+   PROSE — injected article HTML
+   ============================================ */
+.prose {
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  color: var(--color-text-primary);
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+}
+
+.prose :global(p),
+.prose :global(ul),
+.prose :global(ol),
+.prose :global(blockquote),
+.prose :global(figure),
+.prose :global(pre) {
+  margin: 0 0 var(--primitive-gap-lg) 0;
+}
+
+.prose :global(h1),
+.prose :global(h2) {
+  font-family: var(--font-heading-1-family);
+  font-size: var(--font-heading-1-size);
+  font-weight: var(--font-heading-1-weight);
+  line-height: var(--font-heading-1-line-height);
+  letter-spacing: var(--font-heading-1-letter-spacing);
+  color: var(--color-text-primary);
+  margin: var(--primitive-gap-xl) 0 var(--primitive-gap-md) 0;
+}
+
+.prose :global(h3),
+.prose :global(h4) {
+  font-family: var(--font-heading-3-family);
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  letter-spacing: var(--font-heading-3-letter-spacing);
+  color: var(--color-text-primary);
+  margin: var(--primitive-gap-lg) 0 var(--primitive-gap-sm) 0;
+}
+
+.prose :global(a) {
+  color: var(--color-action-primary-bg);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.prose :global(strong) {
+  font-weight: var(--font-paragraph-em-weight);
+}
+
+.prose :global(img) {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+}
+
+.prose :global(figure) {
+  margin-inline: 0;
+}
+
+.prose :global(figcaption) {
+  font-size: var(--font-paragraph-sm-size);
+  color: var(--color-text-secondary);
+  text-align: center;
+  margin-top: var(--primitive-gap-sm);
+}
+
+.prose :global(ul),
+.prose :global(ol) {
+  padding-left: var(--primitive-gap-xl);
+}
+
+.prose :global(li) {
+  margin-bottom: var(--primitive-gap-xs);
+}
+
+.prose :global(blockquote) {
+  border-left: 3px solid var(--color-action-primary-bg);
+  padding-left: var(--primitive-gap-lg);
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.prose :global(hr) {
+  border: none;
+  border-top: 1px solid var(--color-divider);
+  margin: var(--primitive-gap-xl) 0;
+  width: 100%;
+}
+
+.prose :global(code) {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.9em;
+  background: var(--color-bg-container-secondary);
+  padding: 0.1em 0.35em;
+  border-radius: var(--radius-sm);
+}
+
+.prose :global(pre) {
+  background: var(--color-bg-container-secondary);
+  border: 1px solid var(--color-bg-container-border);
+  border-radius: var(--radius-md);
+  padding: var(--primitive-gap-lg);
+  overflow-x: auto;
+}
+
+.prose :global(pre code) {
+  background: none;
+  padding: 0;
+}
+
+/* Substack subscription widgets embedded in the feed — keep them tidy */
+.prose :global(.subscription-widget-wrap),
+.prose :global(.button-wrapper) {
+  margin: var(--primitive-gap-lg) 0;
+}
+
+/* ============================================
+   BACK-TO-SUBSTACK LINK
+   ============================================ */
+.substackLink {
+  padding-top: var(--primitive-gap-lg);
+  border-top: 1px solid var(--color-divider);
+  font-size: var(--font-paragraph-size);
+}
+
+.substackLink a {
+  color: var(--color-action-primary-bg);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}

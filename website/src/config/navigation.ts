@@ -140,6 +140,19 @@ export const aboutSidebarLinks: NavLink[] = [
   { href: "/skills", label: "Skills" },
 ];
 
+/**
+ * Sidebar for the Writing cluster. Built dynamically from the articles
+ * synced off the Substack feed, so it always reflects what's published.
+ */
+export function buildWritingSidebarLinks(
+  articles: { slug: string; title: string }[]
+): NavLink[] {
+  return [
+    { href: "/writing", label: "Contents" },
+    ...articles.map((a) => ({ href: `/writing/${a.slug}`, label: a.title })),
+  ];
+}
+
 export const workSidebarLinks: NavLink[] = [
   { href: "/work", label: "Contents" },
   { href: "/work/embedded-ai-turbotax", label: "Embedded AI Experiences", logo: "/logos/turbotax.svg" },
@@ -192,6 +205,8 @@ const breadcrumbSections: SectionConfig[] = [
   { base: "/foundations", label: "Foundations", parent: "Design system", sidebar: foundationsSidebarLinks },
   { base: "/components", label: "Components", parent: "Design system", sidebar: componentsSidebarLinks },
   { base: "/work", label: "Work", parent: null, sidebar: workSidebarLinks },
+  // Writing — article sub-labels resolve from the slug (feed is dynamic)
+  { base: "/writing", label: "Writing", parent: null, sidebar: null },
 ];
 
 function slugToTitle(slug: string): string {

@@ -13,6 +13,27 @@
   flex-shrink: 0;
 }
 
+/* Left-align sidebar links and truncate long labels (e.g. article titles)
+   with an ellipsis so they always fit the fixed-width rail. Using max-width
+   (not width) keeps short labels as content-width pills. */
+.sidebar :global(.ds-button-group),
+.sidebar :global(.ds-button) {
+  max-width: 100%;
+}
+
+.sidebar :global(.ds-button) {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.sidebar :global(.ds-button__text) {
+  min-width: 0;
+  flex: 0 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 /* Hidden on mobile */
 @media (max-width: 959px) {
   .sidebar {

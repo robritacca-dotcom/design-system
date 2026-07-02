@@ -11,6 +11,8 @@ interface PageLinksProps {
   storybookPath?: string;
   /** Full GitHub URL (repo, file, etc.) — omit to hide the GitHub button */
   githubUrl?: string;
+  /** Substack publication/post URL — omit to hide the Substack button */
+  substackUrl?: string;
 }
 
 const FigmaIcon = () => (
@@ -41,14 +43,33 @@ const StorybookIcon = () => (
   </svg>
 );
 
+const SubstackIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z" fill="#FF6719"/>
+  </svg>
+);
+
 /**
  * PageLinks — Figma + Storybook external link buttons
  * Uses the DS Button component (secondary, compact) with custom SVG icons.
  * Positioned inline with the page title.
  */
-export default function PageLinks({ figmaUrl, storybookPath, githubUrl }: PageLinksProps) {
+export default function PageLinks({ figmaUrl, storybookPath, githubUrl, substackUrl }: PageLinksProps) {
   return (
     <div className={styles.pageLinks}>
+      {substackUrl && (
+        <Button
+          label="Substack"
+          priority="tertiary"
+          size="compact"
+          iconLeft={<SubstackIcon />}
+          iconRight="open_in_new"
+          href={substackUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        />
+      )}
+
       {figmaUrl && (
         <Button
           label="Figma"

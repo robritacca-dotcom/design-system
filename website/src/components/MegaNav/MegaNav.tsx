@@ -51,6 +51,7 @@ export default function MegaNav() {
   const isDsActive = isDesignSystemPath(pathname);
   const isAboutActive = pathname === "/about/me";
   const isWorkActive = pathname === "/work" || pathname.startsWith("/work/");
+  const isWritingActive = pathname === "/writing" || pathname.startsWith("/writing/");
   const isContactActive = pathname === "/contact";
 
   const openMenu = useCallback(() => {
@@ -160,6 +161,13 @@ export default function MegaNav() {
               aria-current={isWorkActive ? "page" : undefined}
             >
               Work
+            </Link>
+            <Link
+              href="/writing"
+              className={`${styles.navLink} ${isWritingActive ? styles.navLinkActive : ""}`}
+              aria-current={isWritingActive ? "page" : undefined}
+            >
+              Writing
             </Link>
 
             <div
@@ -283,6 +291,14 @@ export default function MegaNav() {
               >
                 Work
               </Link>
+              <Link
+                href="/writing"
+                className={`${styles.navLink} ${isWritingActive ? styles.navLinkActive : ""}`}
+                tabIndex={isStuck ? 0 : -1}
+                aria-current={isWritingActive ? "page" : undefined}
+              >
+                Writing
+              </Link>
               <div
                 className={styles.dsWrap}
                 onMouseEnter={openMenu}
@@ -400,6 +416,14 @@ export default function MegaNav() {
             aria-current={isWorkActive ? "page" : undefined}
           >
             Work
+          </Link>
+          <Link
+            href="/writing"
+            className={styles.mobileLink}
+            onClick={() => setMobileOpen(false)}
+            aria-current={isWritingActive ? "page" : undefined}
+          >
+            Writing
           </Link>
           <div className={styles.mobileSection}>
             <div className={styles.mobileSectionLabel}>Design system</div>

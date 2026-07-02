@@ -1,12 +1,19 @@
 import type { MetadataRoute } from "next";
+import { getArticles } from "@/lib/substack";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://robertritacca.com";
+
+  // Writing articles are pulled from the Substack feed, so the sitemap
+  // stays in sync as posts are published.
+  const articles = await getArticles();
 
   const routes = [
     // Home + personal
     "",
     "/about/me",
+    "/writing",
+    ...articles.map((a) => `/writing/${a.slug}`),
     "/work",
     "/work/embedded-ai-turbotax",
     "/work/robr0-ds",
