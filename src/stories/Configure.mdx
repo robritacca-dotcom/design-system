@@ -7,30 +7,37 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 # robr0 Design System
 
-A design system that treats design decisions as data. Every colour, space, radius, and typographic choice is a token — defined once, referenced everywhere. The result is a codebase where changing a single variable updates the entire system.
+A React component library and design system where every visual decision is a token. Colour, spacing, radius, and typography are defined once and referenced everywhere, so a change to a single value propagates through the whole system. Built with Vite and TypeScript, documented in Storybook, and consumed by a live Next.js reference site.
+
+<div className="ds-stats">
+  <div className="ds-stat"><span className="ds-stat-num">44</span><span className="ds-stat-label">Components</span></div>
+  <div className="ds-stat"><span className="ds-stat-num">3</span><span className="ds-stat-label">Token tiers</span></div>
+  <div className="ds-stat"><span className="ds-stat-num">2</span><span className="ds-stat-label">Themes</span></div>
+  <div className="ds-stat"><span className="ds-stat-num">1</span><span className="ds-stat-label">Typeface</span></div>
+</div>
 
 </div>
 
 <div className="ds-section">
 
-## Philosophy
+## Principles
 
 <div className="ds-principles">
   <div className="ds-principle">
-    <h4>Tokens over magic numbers</h4>
-    <p>No hardcoded values in components. Every visual property traces back to a named token with a clear purpose. If you can't name it, it shouldn't exist.</p>
+    <h4>Tokens, not hardcoded values</h4>
+    <p>Components reference named tokens rather than raw hex or pixel values. Every visual property traces back to a token with a clear, documented purpose.</p>
   </div>
   <div className="ds-principle">
     <h4>Semantic, not literal</h4>
-    <p>Components don't know they're teal or 8px — they know they're a primary action or a small gap. Swap the primitives underneath and themes change without touching a single component.</p>
+    <p>A component knows it renders a primary action or a small gap — not that it's teal or 8px. Swapping the primitives underneath changes themes without touching component code.</p>
   </div>
   <div className="ds-principle">
     <h4>Composition over configuration</h4>
-    <p>Small, focused components that combine freely. A table cell holds any content — text, icons, buttons, inputs — because it accepts React nodes, not a fixed set of props.</p>
+    <p>Small, focused components that combine freely. A table cell accepts any React node — text, icons, buttons, inputs — rather than a fixed set of props.</p>
   </div>
   <div className="ds-principle">
-    <h4>Two sizes, not infinite</h4>
-    <p>Every component supports default and compact. No medium, large, extra-large. Constraints force consistency and reduce decision fatigue.</p>
+    <h4>Two sizes, deliberately</h4>
+    <p>Every component ships a default and a compact variant. Keeping the size scale small keeps the system consistent and predictable to work with.</p>
   </div>
 </div>
 
@@ -40,27 +47,27 @@ A design system that treats design decisions as data. Every colour, space, radiu
 
 ## Architecture
 
-The system flows in one direction: raw values become purposeful tokens, tokens become components, components become pages.
+The system flows in one direction: raw values become purposeful tokens, tokens drive components, and components build pages.
 
 <div className="ds-layers">
   <div className="ds-layer">
     <div className="ds-layer-label">Primitives</div>
-    <p>The raw scale — colours, spacing values, border widths, radii. These are the atoms. Never referenced directly by components.</p>
+    <p>The raw scale — colours, spacing, border widths, radii — as fixed hex and pixel values. The source of truth, never referenced directly by components.</p>
   </div>
   <div className="ds-layer-connector" />
   <div className="ds-layer">
     <div className="ds-layer-label">Semantic tokens</div>
-    <p>Purpose-driven mappings. A primitive becomes "action primary background" or "text secondary". Light and dark themes are just different mappings over the same primitives.</p>
+    <p>Purpose-driven mappings over the primitives. A primitive becomes "action primary background" or "text secondary". Light and dark are two mappings over the same underlying scale.</p>
   </div>
   <div className="ds-layer-connector" />
   <div className="ds-layer">
     <div className="ds-layer-label">Components</div>
-    <p>React components that consume semantic tokens via CSS custom properties. Theme-aware by default — no conditional logic, just token references.</p>
+    <p>React components that consume semantic tokens through CSS custom properties. Theme-aware by default — token references rather than conditional logic.</p>
   </div>
   <div className="ds-layer-connector" />
   <div className="ds-layer">
     <div className="ds-layer-label">Application</div>
-    <p>A Next.js site that imports tokens once and uses components directly. Theme switching is a single data attribute on the root element.</p>
+    <p>A Next.js reference site that imports the tokens once and uses the components directly. Switching themes is a single data attribute on the root element.</p>
   </div>
 </div>
 
@@ -70,20 +77,20 @@ The system flows in one direction: raw values become purposeful tokens, tokens b
 
 ## Theming
 
-Light and dark aren't separate systems — they're alternate readings of the same token layer. Components never know which theme they're in. They reference semantic tokens, and the theme decides what those tokens resolve to.
+Light and dark are not separate systems — they're two readings of the same token layer. Components reference semantic tokens and stay agnostic to the active theme; the theme decides what each token resolves to.
 
 <div className="ds-theme-grid">
   <div className="ds-theme-card ds-theme-light">
     <h4>Light</h4>
-    <p>Neutral backgrounds, dark text, teal accents. Semi-transparent layers for depth.</p>
+    <p>Neutral backgrounds, near-black text, teal accents. Semi-transparent layers carry depth.</p>
   </div>
   <div className="ds-theme-card ds-theme-dark">
     <h4>Dark</h4>
-    <p>Same token names, different primitives. Surfaces darken, text lightens, accents persist.</p>
+    <p>Same token names, different primitives. Surfaces darken, text lightens, accents hold steady.</p>
   </div>
 </div>
 
-Action tokens use semi-transparent rgba values so interactive elements get natural glass-like layering with backdrop blur — no opaque paint required.
+Action tokens use semi-transparent rgba values, so interactive elements layer naturally over any surface with backdrop blur rather than opaque fills.
 
 </div>
 
@@ -106,11 +113,11 @@ Action tokens use semi-transparent rgba values so interactive elements get natur
   </div>
   <div className="ds-convention">
     <strong>Typography scale</strong>
-    <span>Display, heading, sub-display, title-body (600), paragraph-em (500), paragraph (400), paragraph-sm. Each is a full token set: family, size, weight, line-height, letter-spacing.</span>
+    <span>Mega and display for marketing, heading 1–3 and sub-display for structure, title-body and paragraph tiers for content. Each step is a full token set: family, size, weight, line-height, and letter-spacing.</span>
   </div>
   <div className="ds-convention">
     <strong>Local fonts</strong>
-    <span>All fonts are self-hosted — no external CDN dependencies. Nunito Sans for text, Material Symbols for icons.</span>
+    <span>All fonts are self-hosted with no external CDN dependency. Nunito Sans for text, Material Symbols Rounded for icons.</span>
   </div>
 </div>
 
@@ -126,6 +133,36 @@ Action tokens use semi-transparent rgba values so interactive elements get natur
   .ds-intro p {
     font-size: 16px;
     line-height: 1.6;
+    color: #6D6D6D;
+  }
+
+  /* Stats */
+  .ds-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(128, 128, 128, 0.2);
+  }
+
+  .ds-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .ds-stat-num {
+    font-size: 32px;
+    font-weight: 300;
+    line-height: 1;
+    color: #118AB2;
+  }
+
+  .ds-stat-label {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
     color: #6D6D6D;
   }
 
