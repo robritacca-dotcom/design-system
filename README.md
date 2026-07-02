@@ -10,8 +10,8 @@ A personal portfolio site built on a custom React design system I designed and e
 
 | Part | Description |
 |---|---|
-| **Portfolio website** (`/website`) | Next.js app with case studies, work history, skills, and about pages — all built exclusively with the design system components below. |
-| **Design system** (`/src`) | 42+ React components, a three-tier token architecture, dark mode, and a full documentation site. Built to production standards. |
+| **Portfolio website** (`/website`) | Next.js app with case studies, work history, writing, and about pages — all built exclusively with the design system components below. |
+| **Design system** (`/src`) | 44 React components, a three-tier token architecture, dark mode, and a full documentation site. Built to production standards. |
 
 ---
 
@@ -19,7 +19,7 @@ A personal portfolio site built on a custom React design system I designed and e
 
 ### Components
 
-Accordion · Alert · Alert dialog · App sidebar · Avatar · Badge · Breadcrumb · Button · Button group · Card · Carousel · Chart · Checkbox · Circular button · Date input · Date picker · Dropdown · Dropdown menu · Input · Instructions · Navigation · Popover · Progress bar · Radio button · Section title · Selection card · Segmented control · Skeleton · Slider · Spinner · Table · Tabs · Textarea · Toast · Toggle group · Toggle switch · Tooltip
+Accordion · Alert · Alert dialog · App sidebar · Avatar · Badge · Breadcrumb · Button · Button group · Card · Carousel · Chart · Checkbox · Circular button · Contact card · Date input · Date picker · Dropdown · Dropdown menu · Input · Instructions · Link list · Navigation · Popover · Progress bar · Radio button · Section title · Selection card · Segmented control · Skeleton · Slider · Spinner · Table · Tabs · Textarea · Toast · Toggle group · Toggle switch · Tooltip
 
 ### Token architecture
 
@@ -49,10 +49,10 @@ Full spec in [`design.md`](design.md).
 
 ## Tech
 
-- **React 18 + TypeScript** — component library
+- **React 19 + TypeScript** — component library
 - **Vite** — dev server and library build
-- **Next.js 14** — portfolio site and DS documentation
-- **Storybook 8** — component explorer
+- **Next.js 16** — portfolio site and DS documentation
+- **Storybook 10** — component explorer
 - **CSS custom properties** — all theming via semantic tokens, no CSS-in-JS
 
 ---
