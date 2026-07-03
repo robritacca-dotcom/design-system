@@ -14,8 +14,8 @@ const { sidebarLinks } = getSidebarLinks(workSidebarLinks, "/work");
 const caseStudies = [
   {
     href: "/work/embedded-ai-turbotax",
-    title: "Designing Embedded AI Experiences Inside ChatGPT and Claude",
-    dek: "What I learned leading design for TurboTax's embedded AI experiences",
+    title: "TurboTax, Embedded in ChatGPT and Claude",
+    dek: "Leading design for a Webby-winning tax experience that runs natively inside two AI platforms — from December MVP to full launch in one tax season.",
     companyName: "TurboTax",
     companyLogo: "/logos/turbotax.svg",
     coverSrc: "/images/heroes/claude.png",
