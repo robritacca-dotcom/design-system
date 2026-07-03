@@ -52,7 +52,14 @@ const followMethods: ContactMethod[] = [
     label: "Instagram",
     value: "instagram.com/robr0designs",
     href: "https://www.instagram.com/robr0designs/",
-    logo: "/logos/IG.png",
+    logo: "/logos/IG.svg",
+    external: true,
+  },
+  {
+    label: "Figma",
+    value: "figma.com/@robr0",
+    href: "https://www.figma.com/@robr0",
+    logo: "/logos/Figma.svg",
     external: true,
   },
   {

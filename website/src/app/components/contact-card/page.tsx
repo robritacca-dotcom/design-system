@@ -100,7 +100,7 @@ export default function ContactCardPage() {
                 label="Instagram"
                 value="instagram.com/robr0designs"
                 href="https://www.instagram.com/robr0designs/"
-                logo="/logos/IG.png"
+                logo="/logos/IG.svg"
                 external
               />
               <ContactCard
