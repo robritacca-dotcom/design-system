@@ -40,7 +40,9 @@ export default function AboutMePage() {
           <div className={`${styles.pageHeader} animate-in`}>
             <h1 className={styles.pageTitle}>Robert Ritacca</h1>
             <PageLinks
-              figmaUrl="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26?node-id=246-6397"
+              linkedinUrl="https://www.linkedin.com/in/robertritacca/"
+              xUrl="https://x.com/robr0"
+              instagramUrl="https://www.instagram.com/robr0designs/"
             />
           </div>
 
