@@ -2,7 +2,9 @@
 
 A personal portfolio site built on a custom React design system I designed and engineered from scratch. The DS isn't a side project — it's the backbone every portfolio page is built on, ensuring the work is presented consistently and with the same craft standards I apply professionally.
 
-**[→ View the live site](https://design-system-iota-one.vercel.app)**
+**[→ Live site](https://robertritacca.com/)** · **[→ Storybook](https://design-system-iota-one.vercel.app/?path=/docs/robr0-ds--docs)**
+
+The **live site** is the portfolio built on the design system. **Storybook** is the interactive component explorer for the design system itself — two separate parts of this repo.
 
 ---
 
@@ -10,8 +12,8 @@ A personal portfolio site built on a custom React design system I designed and e
 
 | Part | Description |
 |---|---|
-| **Portfolio website** (`/website`) | Next.js app with case studies, work history, writing, and about pages — all built exclusively with the design system components below. |
-| **Design system** (`/src`) | 44 React components, a three-tier token architecture, dark mode, and a full documentation site. Built to production standards. |
+| **Portfolio website** (`/website`) | Next.js app with case studies, work history, writing, and about pages — all built exclusively with the design system components below. **[Live site →](https://robertritacca.com/)** |
+| **Design system** (`/src`) | 44 React components, a three-tier token architecture, dark mode, and a full documentation site. Built to production standards. **[Storybook →](https://design-system-iota-one.vercel.app/?path=/docs/robr0-ds--docs)** |
 
 ---
 
