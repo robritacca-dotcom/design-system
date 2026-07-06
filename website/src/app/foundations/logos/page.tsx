@@ -35,6 +35,7 @@ const logoCategories: LogoCategory[] = [
     title: "robr0",
     logos: [
       { label: "rr", file: "rr.svg" },
+      { label: "rr animated", file: "rr-animated.svg" },
     ],
   },
   {

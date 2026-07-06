@@ -57,6 +57,7 @@ const logos = [
   'React.svg',
   'redgiant.svg',
   'rr.svg',
+  'rr-animated.svg',
   'sheridan.svg',
   'sketch.svg',
   'slii.svg',
