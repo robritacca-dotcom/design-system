@@ -42,6 +42,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Robert Ritacca — Principal Product Designer",
     description: SITE_DESCRIPTION,
+    url: "https://robertritacca.com",
     siteName: "Robert Ritacca",
     locale: "en_US",
     type: "website",
