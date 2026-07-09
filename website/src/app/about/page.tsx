@@ -49,7 +49,7 @@ export default function AboutDsPage() {
             <div className={styles.resumeSectionHeader}>
               <h2 className={styles.resumeSectionTitle}>Contributions</h2>
             </div>
-            <p className={styles.artifactsIntro}>
+            <p className={styles.contributionsIntro}>
               The system is built in public — every commit lands on GitHub. This is the real activity, pulled live from the account that builds robr0 DS.
             </p>
             <GitHubContributions />
