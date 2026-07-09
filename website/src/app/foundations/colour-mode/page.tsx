@@ -238,6 +238,35 @@ const statusColours: StatusSwatchData[] = [
   },
 ];
 
+/* --- Chart / Contribution --- */
+const chartContributionColours: SwatchData[] = [
+  {
+    label: "Level 0", cssVar: "--color-chart-contribution-0",
+    dark: { primitive: "--neutral--08--", hex: "#232323", rgb: "35 / 35 / 35" },
+    light: { primitive: "--neutral--01--", hex: "#F1F1F1", rgb: "241 / 241 / 241" },
+  },
+  {
+    label: "Level 1", cssVar: "--color-chart-contribution-1",
+    dark: { primitive: "--green--10--", hex: "#024336", rgb: "2 / 67 / 54" },
+    light: { primitive: "--green--02--", hex: "#CEF6E8", rgb: "206 / 246 / 232" },
+  },
+  {
+    label: "Level 2", cssVar: "--color-chart-contribution-2",
+    dark: { primitive: "--green--09--", hex: "#03765A", rgb: "3 / 118 / 90" },
+    light: { primitive: "--green--04--", hex: "#6DE0C0", rgb: "109 / 224 / 192" },
+  },
+  {
+    label: "Level 3", cssVar: "--color-chart-contribution-3",
+    dark: { primitive: "--green--08--", hex: "#05A67C", rgb: "5 / 166 / 124" },
+    light: { primitive: "--green--07--", hex: "#06D6A0", rgb: "6 / 214 / 160" },
+  },
+  {
+    label: "Level 4", cssVar: "--color-chart-contribution-4",
+    dark: { primitive: "--green--07--", hex: "#06D6A0", rgb: "6 / 214 / 160" },
+    light: { primitive: "--green--09--", hex: "#03765A", rgb: "3 / 118 / 90" },
+  },
+];
+
 /* ============================================
    THEME HOOK
    ============================================ */
@@ -387,6 +416,16 @@ export default function SemanticColoursPage() {
             <div className={styles.colourSwatches}>
               {statusColours.map((s) => (
                 <ColourSwatch key={s.label} label={s.label} cssVar={s.bgVar} dark={s.dark} light={s.light} theme={theme} status borderVar={s.borderVar} />
+              ))}
+            </div>
+          </section>
+
+          {/* Chart / Contribution */}
+          <section className={styles.colourGroup}>
+            <SectionTitle title="Chart / Contribution" />
+            <div className={styles.colourSwatches}>
+              {chartContributionColours.map((s) => (
+                <ColourSwatch key={s.label} label={s.label} cssVar={s.cssVar} dark={s.dark} light={s.light} theme={theme} />
               ))}
             </div>
           </section>

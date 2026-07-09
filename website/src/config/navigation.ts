@@ -93,6 +93,7 @@ export const componentsSidebarLinks: NavLink[] = [
   { href: "/components/chart", label: "Chart" },
   { href: "/components/checkbox", label: "Checkbox" },
   { href: "/components/circular-button", label: "Circular button" },
+  { href: "/components/contribution-graph", label: "Contribution graph" },
   { href: "/components/date-input", label: "Date input" },
   { href: "/components/date-picker", label: "Date picker" },
   { href: "/components/dropdown", label: "Dropdown" },

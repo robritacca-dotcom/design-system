@@ -88,6 +88,13 @@
   --color-status-neutral-border: #303030;
   --color-status-neutral-text: #232323;
 
+  /* Chart - Contribution heatmap ramp (level 0 = none → level 4 = most) */
+  --color-chart-contribution-0: var(--color-bg-container-primary);
+  --color-chart-contribution-1: var(--primitive-green-02);
+  --color-chart-contribution-2: var(--primitive-green-04);
+  --color-chart-contribution-3: var(--primitive-green-07);
+  --color-chart-contribution-4: var(--primitive-green-09);
+
   /* Input */
   --color-input-text-primary: #050505;
   --color-input-text-placeholder: #6D6D6D;

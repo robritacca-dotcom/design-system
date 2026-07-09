@@ -554,6 +554,45 @@ export const StatusColors: Story = {
   ),
 };
 
+// Chart Colors Story
+export const ChartColors: Story = {
+  render: () => (
+    <div style={{ maxWidth: '800px' }}>
+      <h2
+        style={{
+          fontSize: '24px',
+          fontWeight: 700,
+          color: 'var(--color-text-primary)',
+          marginBottom: '24px',
+        }}
+      >
+        Chart Color Tokens
+      </h2>
+      <p
+        style={{
+          fontSize: '14px',
+          color: 'var(--color-text-secondary)',
+          marginBottom: '32px',
+          lineHeight: '1.5',
+        }}
+      >
+        The contribution heatmap ramp used by the ContributionGraph component.
+        Level 0 is no activity; levels 1–4 step through the green primitives,
+        with the ramp direction flipped per theme so the highest level always
+        reads brightest.
+      </p>
+
+      <TokenSection title="Contribution Ramp">
+        <ColorToken name="Level 0" value="--color-chart-contribution-0" />
+        <ColorToken name="Level 1" value="--color-chart-contribution-1" />
+        <ColorToken name="Level 2" value="--color-chart-contribution-2" />
+        <ColorToken name="Level 3" value="--color-chart-contribution-3" />
+        <ColorToken name="Level 4" value="--color-chart-contribution-4" />
+      </TokenSection>
+    </div>
+  ),
+};
+
 // Spacing Tokens Story
 export const SemanticSpacing: Story = {
   render: () => (

@@ -103,12 +103,18 @@ CSS class naming: `ds-{component}` base class, `ds-{component}--{modifier}` for 
 
 ## How to Add a New Component
 
+A new component is not done until it appears in **every** place the system documents itself: the library, Storybook, and all relevant sections of the showcase website. Do not skip registration steps.
+
 1. **Create the folder**: `src/components/MyComponent/`
 2. **Write `MyComponent.tsx`**: Export a named component + a TypeScript interface for props. Use semantic tokens in class names, never inline styles.
 3. **Write `MyComponent.css`**: All CSS vars must be from `tokens-light/dark.css`. No hardcoded hex, px values from primitives, or magic numbers.
 4. **Write `MyComponent.stories.tsx`**: Export a `meta` (with `title: 'Components/MyComponent'`, `tags: ['autodocs']`) and at least a `Default` story plus one per meaningful variant. (`.stories.ts` also works for stories with no JSX, but `.tsx` is the convention across the library.)
-5. **Add a website page**: Create `website/src/app/components/my-component/page.tsx` + `page.module.css`. Follow the pattern in an existing page (e.g., `website/src/app/components/button/page.tsx`).
-6. **Register in navigation** if needed: check `website/src/config/navigation.ts`.
+5. **Add a website showcase page**: Create `website/src/app/components/my-component/page.tsx` + `page.module.css`. Follow the pattern in an existing page (e.g., `website/src/app/components/button/page.tsx`).
+6. **Register it everywhere the website lists components** (all three, alphabetical order):
+   - `website/src/config/navigation.ts` — add to `componentsSidebarLinks`
+   - `website/src/app/components/page.tsx` — add a `TocCard` with a small live preview to the components index grid
+   - `website/src/app/sitemap.ts` — add the new route
+7. **Document it in `design.md`**: add a short component spec section (class name, tokens used, key behaviours).
 
 Checklist before shipping a component:
 - [ ] All colors via semantic tokens
@@ -117,6 +123,23 @@ Checklist before shipping a component:
 - [ ] Interactive elements have ARIA roles and keyboard navigation
 - [ ] At least one Storybook story per variant
 - [ ] Website showcase page added
+- [ ] Registered in sidebar nav, components index `TocCard` grid, and sitemap
+- [ ] Spec section added to `design.md`
+
+---
+
+## How to Add a New Token
+
+Tokens also have multiple homes — a token that exists only in CSS is incomplete. When adding or changing a token:
+
+1. **Both theme files, always**: define it in `src/tokens/tokens-light.css` **and** `src/tokens/tokens-dark.css` (every semantic token needs a value in each). Add a primitive to `tokens-primitives.css` first if no suitable one exists; semantic tokens should reference primitives.
+2. **Document it in `design.md`**: it's the source of truth for the design language — record the token's role and its light/dark values.
+3. **Add it to the foundations doc pages** on the website, in the section matching its type:
+   - Semantic colors → `website/src/app/foundations/colour-mode/page.tsx` (add a swatch data entry with per-theme primitive name/hex/RGB, and a new `SectionTitle` group if it's a new category)
+   - New primitives → `website/src/app/foundations/colour-primitives/page.tsx`
+   - Spacing/radius/border → `website/src/app/foundations/spatial/page.tsx`
+   - Typography → `website/src/app/foundations/typography/page.tsx`
+4. **Update the Storybook token docs**: `src/stories/Tokens.stories.tsx` documents semantic tokens by category (colors, status, chart, spacing) — add the new token to the matching story, or a new story if it's a new category. (`src/stories/` also holds `Typography`, `Icons`, and `Logos` foundation docs.)
 
 ---
 

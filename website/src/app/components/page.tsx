@@ -15,6 +15,7 @@ import { Breadcrumb } from "@design-system/components/Breadcrumb/Breadcrumb";
 import { Button } from "@design-system/components/Button/Button";
 import { Checkbox } from "@design-system/components/Checkbox/Checkbox";
 import { CircularButton } from "@design-system/components/CircularButton/CircularButton";
+import { ContributionGraph, type ContributionDay } from "@design-system/components/ContributionGraph/ContributionGraph";
 import { Dropdown } from "@design-system/components/Dropdown/Dropdown";
 import { Input } from "@design-system/components/Input/Input";
 import { ProgressBar } from "@design-system/components/ProgressBar/ProgressBar";
@@ -32,6 +33,17 @@ import { LinkList } from "@design-system/components/LinkList/LinkList";
 import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 const { sidebarLinks } = getSidebarLinks(componentsSidebarLinks, "/components");
+
+// Small fixed dataset for the contribution graph preview card
+const contributionPreviewDays: ContributionDay[] = Array.from({ length: 8 * 7 }, (_, i) => {
+  const d = new Date(2026, 0, 4 + i);
+  const level = ([0, 1, 3, 0, 2, 4, 1, 0, 2, 3, 1, 4, 0, 2][i % 14]) as ContributionDay["level"];
+  return {
+    date: `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`,
+    count: level * 3,
+    level,
+  };
+});
 
 export default function ComponentsPage() {
   return (
@@ -231,6 +243,15 @@ export default function ComponentsPage() {
                 <CircularButton icon="search" ariaLabel="Search" priority="secondary" />
                 <CircularButton icon="settings" ariaLabel="Settings" priority="tertiary" />
               </div>
+            </TocCard>
+
+            {/* Contribution graph */}
+            <TocCard href="/components/contribution-graph" title="Contribution graph">
+              <ContributionGraph
+                days={contributionPreviewDays}
+                showMonthLabels={false}
+                showLegend={false}
+              />
             </TocCard>
 
             {/* Date input */}

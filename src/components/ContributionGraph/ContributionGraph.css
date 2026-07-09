@@ -1,0 +1,133 @@
+/* ============================================
+   CONTRIBUTION GRAPH COMPONENT
+   GitHub-style activity heatmap — one cell per
+   day, coloured by the contribution colour ramp
+   ============================================ */
+
+.ds-contribution-graph {
+  --ds-contribution-cell: 12px;
+  --ds-contribution-gap: 3px;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+  width: 100%;
+  min-width: 0;
+}
+
+/* Grid + month labels scroll together on narrow screens */
+.ds-contribution-graph__scroll {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xxs);
+  overflow-x: auto;
+  padding-bottom: var(--padding-xxxs);
+}
+
+/* ============================================
+   MONTH LABELS
+   ============================================ */
+
+.ds-contribution-graph__months {
+  display: grid;
+  column-gap: var(--ds-contribution-gap);
+}
+
+.ds-contribution-graph__month-label {
+  grid-row: 1;
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+  white-space: nowrap;
+}
+
+/* ============================================
+   GRID
+   ============================================ */
+
+.ds-contribution-graph__grid {
+  display: flex;
+  gap: var(--ds-contribution-gap);
+  width: max-content;
+}
+
+.ds-contribution-graph__week {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-contribution-gap);
+}
+
+.ds-contribution-graph__cell {
+  width: var(--ds-contribution-cell);
+  height: var(--ds-contribution-cell);
+  border-radius: var(--radius-xxs);
+  flex-shrink: 0;
+}
+
+.ds-contribution-graph__cell--empty {
+  background-color: transparent;
+}
+
+.ds-contribution-graph__cell--level-0 {
+  background-color: var(--color-chart-contribution-0);
+}
+
+.ds-contribution-graph__cell--level-1 {
+  background-color: var(--color-chart-contribution-1);
+}
+
+.ds-contribution-graph__cell--level-2 {
+  background-color: var(--color-chart-contribution-2);
+}
+
+.ds-contribution-graph__cell--level-3 {
+  background-color: var(--color-chart-contribution-3);
+}
+
+.ds-contribution-graph__cell--level-4 {
+  background-color: var(--color-chart-contribution-4);
+}
+
+/* ============================================
+   FOOTER — caption + legend
+   ============================================ */
+
+.ds-contribution-graph__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-md);
+  flex-wrap: wrap;
+}
+
+.ds-contribution-graph__caption {
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-secondary);
+}
+
+.ds-contribution-graph__legend {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-contribution-gap);
+}
+
+.ds-contribution-graph__legend-label {
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+}
+
+.ds-contribution-graph__legend-label:first-child {
+  margin-right: var(--gap-xxs);
+}
+
+.ds-contribution-graph__legend-label:last-child {
+  margin-left: var(--gap-xxs);
+}

@@ -329,6 +329,15 @@ Default icons (Material Symbols Rounded): `info`, `check_circle`, `warning`, `er
 
 Recharts wrapper exposing: `AreaChart`, `BarChart`, `LineChart`, `PieChart`, `RadarChart`, `RadialChart`, `ScatterChart`, `StackedBarChart`, `Treemap`. Uses core accent colors for data series. Tooltips and legends use system typography tokens. Axes text in `--color-text-tertiary`.
 
+### Contribution graph
+
+**`ds-contribution-graph`** — GitHub-style activity heatmap: weeks as columns, weekdays as rows, one 12px cell per day at `--radius-xxs`. Cell colour comes from the five-step contribution ramp, defined in both themes:
+
+- `--color-chart-contribution-0` — no activity (`--color-bg-container-primary` light / #232323 dark)
+- `--color-chart-contribution-1` → `-4` — increasing activity, green primitives (light: green-02 → 04 → 07 → 09; dark: green-10 → 09 → 08 → 07, so the brightest cell is mint #06D6A0)
+
+Month labels, caption, and Less→More legend use `--font-paragraph-sm-*` in `--color-text-tertiary`/`--color-text-secondary`. The grid scrolls horizontally inside its own container on narrow screens. This ramp is for activity intensity only — ordered multi-series chart colors remain an open gap (see below).
+
 ---
 
 ## Light / Dark Theme Contract

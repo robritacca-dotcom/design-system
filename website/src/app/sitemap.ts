@@ -55,6 +55,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/components/chart",
     "/components/checkbox",
     "/components/circular-button",
+    "/components/contribution-graph",
     "/components/date-input",
     "/components/date-picker",
     "/components/dropdown",
