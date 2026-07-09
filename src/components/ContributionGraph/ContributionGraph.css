@@ -31,6 +31,7 @@
 .ds-contribution-graph__months {
   display: grid;
   column-gap: var(--ds-contribution-gap);
+  width: 100%;
 }
 
 .ds-contribution-graph__month-label {
@@ -48,9 +49,9 @@
    ============================================ */
 
 .ds-contribution-graph__grid {
-  display: flex;
+  display: grid;
   gap: var(--ds-contribution-gap);
-  width: max-content;
+  width: 100%;
 }
 
 .ds-contribution-graph__week {
@@ -64,6 +65,14 @@
   height: var(--ds-contribution-cell);
   border-radius: var(--radius-xxs);
   flex-shrink: 0;
+}
+
+/* Cells inside the grid stretch with their column; the fixed size above
+   only applies to the legend swatches */
+.ds-contribution-graph__week .ds-contribution-graph__cell {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
 }
 
 .ds-contribution-graph__cell--empty {

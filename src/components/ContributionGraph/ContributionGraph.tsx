@@ -105,13 +105,17 @@ export const ContributionGraph = ({
 
   const classes = ['ds-contribution-graph', className].filter(Boolean).join(' ');
 
+  // Columns stretch to fill the container but never shrink below the base
+  // cell size — past that, the scroll wrapper takes over
+  const columnTemplate = `repeat(${weeks.length}, minmax(var(--ds-contribution-cell), 1fr))`;
+
   return (
     <div className={classes}>
       <div className="ds-contribution-graph__scroll">
         {showMonthLabels && (
           <div
             className="ds-contribution-graph__months"
-            style={{ gridTemplateColumns: `repeat(${weeks.length}, var(--ds-contribution-cell))` }}
+            style={{ gridTemplateColumns: columnTemplate }}
             aria-hidden="true"
           >
             {monthLabels.map(({ weekIndex, label }) => (
@@ -126,7 +130,12 @@ export const ContributionGraph = ({
           </div>
         )}
 
-        <div className="ds-contribution-graph__grid" role="img" aria-label={caption ?? 'Contribution activity'}>
+        <div
+          className="ds-contribution-graph__grid"
+          style={{ gridTemplateColumns: columnTemplate }}
+          role="img"
+          aria-label={caption ?? 'Contribution activity'}
+        >
           {weeks.map((week, weekIndex) => (
             <div key={weekIndex} className="ds-contribution-graph__week">
               {week.map((day, dayIndex) =>
