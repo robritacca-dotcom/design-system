@@ -1,0 +1,20 @@
+{
+  "displayed": [
+    "accessibility-audit",
+    "api-consistency",
+    "component-doc-page",
+    "growth-loop",
+    "heuristic-analysis",
+    "new-component",
+    "new-page",
+    "pre-deploy",
+    "token-audit",
+    "visual-review"
+  ],
+  "external": [
+    "ga-report"
+  ],
+  "unlisted": [
+    "rotate-password"
+  ]
+}

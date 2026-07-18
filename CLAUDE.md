@@ -4,10 +4,27 @@
 
 A React component library + design system + documentation website. It has two interconnected parts:
 
-1. **Component Library** (`/src`) — React components built with Vite + TypeScript. Each component has its own folder with implementation, scoped CSS, and Storybook stories. Components are consumed by the website via the `@design-system` path alias. The official component list and count live in `src/components/registry.json` — anywhere a count is displayed imports `COMPONENT_COUNT` from `src/components/registry.ts`; **never hardcode the number** (a build-time validator enforces the registry matches the folders).
+1. **Component Library** (`/src`) — React components built with Vite + TypeScript. Each component has its own folder with implementation, scoped CSS, and Storybook stories. Components are consumed by the website via the `@design-system` path alias. The official component list and count live in `src/components/registry.json` — see **Registries** below; never hardcode a count.
 2. **Documentation Website** (`/website`) — A separate Next.js app that showcases every component with live, interactive examples. Each component has its own page under `website/src/app/components/[component-name]/`.
 
 The design spec lives in [`design.md`](design.md) — read it before touching tokens, colors, or typography.
+
+---
+
+## Registries — counts are never hardcoded
+
+**General rule:** any count of items displayed anywhere (components, skills, tokens, loops — anything countable) must derive from a registry that is the single source of truth for that collection, kept in sync with reality by a build-time validator. Never write a literal number (or a hand-maintained list that implies one) into page copy, stats, or docs.
+
+Existing registries:
+
+| Collection | Registry | Count export | Validator |
+|---|---|---|---|
+| Components | `src/components/registry.json` (`components` + `docOnlyHelpers`) | `COMPONENT_COUNT` from `src/components/registry.ts` | `scripts/validate-component-registry.mjs` — every folder registered, every entry has a folder |
+| Skills | `.claude/skills/registry.json` (`displayed` + `external` + `unlisted`) | `SKILL_COUNT` from `website/src/data/skills-registry.ts` | `scripts/validate-skills-registry.mjs` — every `.md` registered, every entry has a file, page list matches `displayed` + `external` |
+
+Both validators run before every build (`npm run validate-registry`, wired into `prebuild`/`prestorybook`/`prebuild-storybook` and the website's `prebuild`).
+
+When a new countable collection appears on the site (tokens, loops, case studies…): create a registry file next to the collection, export the count from a small accessor module, add a validator script chained into `validate-registry`, and pull every displayed number from the export. When adding a skill: register it in `.claude/skills/registry.json` (`displayed` if it appears on `/skills`, `unlisted` if internal) and, if displayed, add its card to `website/src/app/skills/page.tsx` — the build fails if the three drift.
 
 ---
 

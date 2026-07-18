@@ -9,6 +9,7 @@ import Footer from "../../components/Footer/Footer";
 import { Badge } from "@design-system/components/Badge/Badge";
 import { CodeBlock } from "@design-system/components/CodeBlock/CodeBlock";
 import { getSidebarLinks, aboutSidebarLinks } from "@/config/navigation";
+import { SKILL_COUNT } from "@/data/skills-registry";
 import styles from "./page.module.css";
 
 const { sidebarLinks } = getSidebarLinks(aboutSidebarLinks, "/skills");
@@ -817,7 +818,7 @@ export default function SkillsPage() {
               Reusable AI instructions, tuned for this project
             </p>
             <p className={styles.introBody}>
-              These skill files live in{" "}
+              These {SKILL_COUNT} skill files live in{" "}
               <code className={styles.inlineCode}>.claude/skills/</code> — most in this
               repo, one (<code className={styles.inlineCode}>ga-report</code>) in my
               personal skills folder — and encode this project&apos;s conventions:

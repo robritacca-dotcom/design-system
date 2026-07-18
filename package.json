@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "validate-registry": "node scripts/validate-component-registry.mjs",
+    "validate-registry": "node scripts/validate-component-registry.mjs && node scripts/validate-skills-registry.mjs",
     "prebuild": "npm run validate-registry",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
