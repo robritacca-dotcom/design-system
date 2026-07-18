@@ -273,6 +273,22 @@ Sizes: `default` (padding 8px × 20px), `compact` (padding 6px × 12px).
 
 **`ds-badge`** — Inline status label. Radius `--radius-xs` (4px) — notably tighter than buttons and inputs. Text: `--font-paragraph-sm-em-*` (14px/500). Padding: 2px vertical × 8px horizontal. Each of the five status variants (`info`, `positive`, `warning`, `error`, `neutral`) maps directly to its `--color-status-*-bg`, `--color-status-*-border`, and `--color-status-*-text` tokens. Renders with `role="status"` for accessibility.
 
+### Chip
+
+**`ds-chip`** — Compact pill for attributes, filters, and inline metadata. Always pill-shaped (`--radius-full`) like Button. Neutral by default: `--color-bg-page-primary` fill, `--color-bg-container-border` hairline, `--color-text-secondary` text in `--font-paragraph-sm-em-*` (14px/500). Icon size: 20px (default), 16px (compact) — smaller than Button's because the chip is a tighter control.
+
+Distinct from Badge: a Badge communicates *status* through the five status colours and is never interactive; a Chip is neutral and optionally interactive.
+
+Renders as a `<span>` when non-clickable, a `<button>` when given `onClick` (with `aria-pressed` when `selected` is set). `onRemove` adds a trailing close button (Material Symbol `close`) with its own accessible label; when a chip is both clickable and removable the container stays a `<span>` and the main region becomes an inner button so buttons never nest.
+
+States:
+- **Hover** (clickable): `--color-action-passive-bg-hover` fill; **Active**: `--color-action-passive-bg-active`
+- **Selected**: `--color-action-primary-bg` fill with `--color-action-primary-text` — same teal selection convention as SegmentedControl
+- **Disabled**: `opacity: 0.4`, `cursor: not-allowed`
+- **Focus**: standard 2px `--color-action-primary-bg` focus ring
+
+Sizes: `default` (padding 6px × 12px — 32px tall), `compact` (padding 2px × 8px — 24px tall).
+
 ### Alert
 
 **`ds-alert`** — Container for inline status messages. Same five variants as Badge. Wider form — carries an icon, title, and description block. References same `--color-status-*` tokens. Use when message needs to persist in the layout (vs Toast which is ephemeral).

@@ -14,6 +14,7 @@ import { Badge } from "@design-system/components/Badge/Badge";
 import { Breadcrumb } from "@design-system/components/Breadcrumb/Breadcrumb";
 import { Button } from "@design-system/components/Button/Button";
 import { Checkbox } from "@design-system/components/Checkbox/Checkbox";
+import { Chip } from "@design-system/components/Chip/Chip";
 import { CircularButton } from "@design-system/components/CircularButton/CircularButton";
 import { ContributionGraph, type ContributionDay } from "@design-system/components/ContributionGraph/ContributionGraph";
 import { Dropdown } from "@design-system/components/Dropdown/Dropdown";
@@ -234,6 +235,15 @@ export default function ComponentsPage() {
               <div className={styles.previewRow} style={{ gap: "16px" }}>
                 <Checkbox checked={true} ariaLabel="Checked" onChange={() => {}} />
                 <Checkbox checked={false} ariaLabel="Unchecked" onChange={() => {}} />
+              </div>
+            </TocCard>
+
+            {/* Chip */}
+            <TocCard href="/components/chip" title="Chip">
+              <div className={styles.previewRow} style={{ gap: "8px" }}>
+                <Chip size="compact" label="Filter" icon="check" selected onClick={() => {}} />
+                <Chip size="compact" label="Label" />
+                <Chip size="compact" label="Tag" onRemove={() => {}} />
               </div>
             </TocCard>
 

@@ -142,33 +142,19 @@
   flex-shrink: 0;
 }
 
-/* The run cycle — numbered stages that wrap */
+/* The run cycle — numbered stages that wrap (rendered as compact Chips) */
 .loopStages {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: var(--primitive-gap-sm);
+  gap: var(--gap-sm);
 }
 
-.loopStage {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--primitive-gap-xs);
-  padding: var(--primitive-padding-xxxs) var(--primitive-padding-sm);
-  border: 1px solid var(--color-bg-container-border);
-  border-radius: var(--radius-full);
-  background: var(--color-bg-page);
-  font-size: var(--font-paragraph-sm-size);
-  font-weight: var(--font-paragraph-sm-weight);
-  line-height: var(--font-paragraph-sm-line-height);
-  color: var(--color-text-secondary);
-  white-space: nowrap;
-}
-
+/* Stage number prefix inside the chip label */
 .loopStageNum {
-  font-size: var(--font-paragraph-sm-size);
   font-weight: var(--font-paragraph-sm-em-weight);
   color: var(--color-text-tertiary);
+  margin-right: var(--gap-xs);
 }
 
 /* Guardrails list */

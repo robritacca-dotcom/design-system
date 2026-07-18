@@ -7,6 +7,7 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import Footer from "../../components/Footer/Footer";
 import { Badge } from "@design-system/components/Badge/Badge";
+import { Chip } from "@design-system/components/Chip/Chip";
 import { getSidebarLinks, aboutSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
@@ -124,10 +125,16 @@ export default function LoopsPage() {
                   <span className={styles.loopSectionLabel}>Each run:</span>
                   <div className={styles.loopStages}>
                     {loop.stages.map((stage, i) => (
-                      <span key={stage} className={styles.loopStage}>
-                        <span className={styles.loopStageNum}>{i + 1}</span>
-                        {stage}
-                      </span>
+                      <Chip
+                        key={stage}
+                        size="compact"
+                        label={
+                          <>
+                            <span className={styles.loopStageNum}>{i + 1}</span>
+                            {stage}
+                          </>
+                        }
+                      />
                     ))}
                   </div>
                 </div>

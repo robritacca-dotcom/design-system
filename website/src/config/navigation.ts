@@ -54,7 +54,7 @@ export const dsMegaItems: MegaItem[] = [
   {
     href: "/components",
     label: "Components",
-    description: "42 React components with full Storybook docs",
+    description: "43 React components with full Storybook docs",
     icon: "widgets",
   },
 ];
@@ -93,6 +93,7 @@ export const componentsSidebarLinks: NavLink[] = [
   { href: "/components/carousel", label: "Carousel" },
   { href: "/components/chart", label: "Chart" },
   { href: "/components/checkbox", label: "Checkbox" },
+  { href: "/components/chip", label: "Chip" },
   { href: "/components/circular-button", label: "Circular button" },
   { href: "/components/contribution-graph", label: "Contribution graph" },
   { href: "/components/date-input", label: "Date input" },
