@@ -257,11 +257,15 @@ export default function ComponentsPage() {
 
             {/* Contribution graph */}
             <TocCard href="/components/contribution-graph" title="Contribution graph">
-              <ContributionGraph
-                days={contributionPreviewDays}
-                showMonthLabels={false}
-                showLegend={false}
-              />
+              {/* The graph is fluid (width: 100%) — constrain it so the
+                  cells stay small inside the preview card */}
+              <div style={{ width: "150px" }}>
+                <ContributionGraph
+                  days={contributionPreviewDays}
+                  showMonthLabels={false}
+                  showLegend={false}
+                />
+              </div>
             </TocCard>
 
             {/* Date input */}
