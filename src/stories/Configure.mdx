@@ -1,5 +1,6 @@
 {/* robr0 Design System overview page */}
 import { Meta } from "@storybook/addon-docs/blocks";
+import { COMPONENT_COUNT } from "../components/registry";
 
 <Meta title="robr0 DS" />
 
@@ -10,7 +11,7 @@ import { Meta } from "@storybook/addon-docs/blocks";
 A React component library and design system where every visual decision is a token. Colour, spacing, radius, and typography are defined once and referenced everywhere, so a change to a single value propagates through the whole system. Built with Vite and TypeScript, documented in Storybook, and consumed by a live Next.js reference site.
 
 <div className="ds-stats">
-  <div className="ds-stat"><span className="ds-stat-num">44</span><span className="ds-stat-label">Components</span></div>
+  <div className="ds-stat"><span className="ds-stat-num">{COMPONENT_COUNT}</span><span className="ds-stat-label">Components</span></div>
   <div className="ds-stat"><span className="ds-stat-num">3</span><span className="ds-stat-label">Token tiers</span></div>
   <div className="ds-stat"><span className="ds-stat-num">2</span><span className="ds-stat-label">Themes</span></div>
   <div className="ds-stat"><span className="ds-stat-num">1</span><span className="ds-stat-label">Typeface</span></div>

@@ -4,6 +4,8 @@
    and subnav links across the site.
    ============================================ */
 
+import { COMPONENT_COUNT } from "@design-system/components/registry";
+
 export interface NavLink {
   href: string;
   label: string;
@@ -54,7 +56,7 @@ export const dsMegaItems: MegaItem[] = [
   {
     href: "/components",
     label: "Components",
-    description: "48 React components with full Storybook docs",
+    description: `${COMPONENT_COUNT} React components with full Storybook docs`,
     icon: "widgets",
   },
 ];

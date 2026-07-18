@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { COMPONENT_COUNT } from "@design-system/components/registry";
 import Link from "next/link";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
@@ -117,7 +118,7 @@ function MiniCatalog() {
           <CatalogTile
             href="/components"
             icon="widgets"
-            label="42 components"
+            label={`${COMPONENT_COUNT} components`}
             sub="Every component with live examples + Storybook docs"
             wide
           />

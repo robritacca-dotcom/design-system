@@ -4,7 +4,7 @@
 
 A React component library + design system + documentation website. It has two interconnected parts:
 
-1. **Component Library** (`/src`) — 44 React components built with Vite + TypeScript. Each component has its own folder with implementation, scoped CSS, and Storybook stories. Components are consumed by the website via the `@design-system` path alias.
+1. **Component Library** (`/src`) — React components built with Vite + TypeScript. Each component has its own folder with implementation, scoped CSS, and Storybook stories. Components are consumed by the website via the `@design-system` path alias. The official component list and count live in `src/components/registry.json` — anywhere a count is displayed imports `COMPONENT_COUNT` from `src/components/registry.ts`; **never hardcode the number** (a build-time validator enforces the registry matches the folders).
 2. **Documentation Website** (`/website`) — A separate Next.js app that showcases every component with live, interactive examples. Each component has its own page under `website/src/app/components/[component-name]/`.
 
 The design spec lives in [`design.md`](design.md) — read it before touching tokens, colors, or typography.
@@ -39,7 +39,7 @@ npm run build-storybook # export static Storybook
 /
 ├── design.md                  # Design spec — source of truth for tokens, colors, typography
 ├── src/
-│   ├── components/            # 44 component folders (each self-contained)
+│   ├── components/            # Component folders (each self-contained) + registry.json (official list/count)
 │   ├── tokens/
 │   │   ├── tokens-primitives.css    # Raw hex/px values — never use directly in components
 │   │   ├── tokens-light.css         # Semantic tokens, light theme
@@ -110,10 +110,11 @@ A new component is not done until it appears in **every** place the system docum
 3. **Write `MyComponent.css`**: All CSS vars must be from `tokens-light/dark.css`. No hardcoded hex, px values from primitives, or magic numbers.
 4. **Write `MyComponent.stories.tsx`**: Export a `meta` (with `title: 'Components/MyComponent'`, `tags: ['autodocs']`) and at least a `Default` story plus one per meaningful variant. (`.stories.ts` also works for stories with no JSX, but `.tsx` is the convention across the library.)
 5. **Add a website showcase page**: Create `website/src/app/components/my-component/page.tsx` + `page.module.css`. Follow the pattern in an existing page (e.g., `website/src/app/components/button/page.tsx`).
-6. **Register it everywhere the website lists components** (all three, alphabetical order):
-   - `website/src/config/navigation.ts` — add to `componentsSidebarLinks`
-   - `website/src/app/components/page.tsx` — add a `TocCard` with a small live preview to the components index grid
-   - `website/src/app/sitemap.ts` — add the new route
+6. **Register it everywhere the website lists components** (all four):
+   - `src/components/registry.json` — add the folder name to `components` (the official count everywhere derives from this; the build fails if you forget)
+   - `website/src/config/navigation.ts` — add to `componentsSidebarLinks` (alphabetical)
+   - `website/src/app/components/page.tsx` — add a `TocCard` with a small live preview to the components index grid (alphabetical)
+   - `website/src/app/sitemap.ts` — add the new route (alphabetical)
 7. **Document it in `design.md`**: add a short component spec section (class name, tokens used, key behaviours).
 
 Checklist before shipping a component:
@@ -123,6 +124,7 @@ Checklist before shipping a component:
 - [ ] Interactive elements have ARIA roles and keyboard navigation
 - [ ] At least one Storybook story per variant
 - [ ] Website showcase page added
+- [ ] Added to `src/components/registry.json` (build-enforced)
 - [ ] Registered in sidebar nav, components index `TocCard` grid, and sitemap
 - [ ] Spec section added to `design.md`
 

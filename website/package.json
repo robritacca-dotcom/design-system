@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node ../scripts/validate-component-registry.mjs",
     "build": "cd .. && npm install --include=dev && cd website && next build",
     "start": "next start",
     "lint": "eslint"
