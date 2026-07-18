@@ -260,7 +260,7 @@ export default function AboutDsPage() {
               <h2 className={styles.resumeSectionTitle}>Take it with you</h2>
             </div>
             <p className={styles.artifactsIntro}>
-              The whole system is open. If you want to apply this approach to your own project, three artifacts make it easy — drop them into your codebase or AI tooling and you have a working starting point.
+              The whole system is open. If you want to apply this approach to your own project, these artifacts make it easy — drop them into your codebase or AI tooling and you have a working starting point.
             </p>
             <div className={styles.artifactsGrid}>
               <Link href="/blueprints/claude" className={styles.artifactCard}>
@@ -306,6 +306,22 @@ export default function AboutDsPage() {
                   </p>
                   <span className={styles.artifactCta}>
                     Browse Skills
+                    <span className="material-symbols-rounded" aria-hidden="true">arrow_forward</span>
+                  </span>
+                </div>
+              </Link>
+
+              <Link href="/loops" className={styles.artifactCard}>
+                <span className={`material-symbols-rounded ${styles.artifactIcon}`} aria-hidden="true">
+                  cycle
+                </span>
+                <div className={styles.artifactBody}>
+                  <h3 className={styles.artifactTitle}>Loops</h3>
+                  <p className={styles.artifactDescription}>
+                    Skills that run themselves. Scheduled agents that do real work against real data — the first one reads this site&apos;s analytics every week and proposes copy experiments — with guardrails that keep a human approving every change.
+                  </p>
+                  <span className={styles.artifactCta}>
+                    See the Loops
                     <span className="material-symbols-rounded" aria-hidden="true">arrow_forward</span>
                   </span>
                 </div>

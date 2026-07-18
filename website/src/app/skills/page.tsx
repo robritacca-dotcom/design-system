@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import MegaNav from "../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../components/Sidebar/Sidebar";
@@ -100,7 +101,7 @@ Use this skill when asked to add or create a new page on the website — phrases
 
 1. **Gather requirements** if not already provided:
    - Page URL path (e.g. \`/foundations/motion\`)
-   - Section: \`Components\` | \`Foundations\` | \`About\` | \`Skills\` (determines which sidebar)
+   - Section: \`Components\` | \`Foundations\` | \`About\` (determines which sidebar)
    - Page title and one-sentence description (for metadata and page header)
    - Figma URL (optional) and Storybook path (optional) — for \`PageLinks\`
 
@@ -117,7 +118,25 @@ Use this skill when asked to add or create a new page on the website — phrases
 - Standard imports: \`Header\`, \`Sidebar\`, \`BlurBackground\`, \`Footer\`, \`PageLinks\` from \`@/components/\`
 - Import \`styles\` from \`./page.module.css\`
 - Import \`getNavLinks\`, \`getSidebarLinks\`, and the correct section sidebar links array from \`@/config/navigation\`
-- Page structure with \`dsLayout\`, \`dsContent\`, \`pageHeader\`, \`pageTitle\`, \`subDisplay\`, \`introSection\`, \`introBody\` classes
+- Page structure:
+  \`\`\`
+  <div className={styles.dsLayout}>
+    <Header links={getNavLinks(...)} />
+    <BlurBackground />
+    <Sidebar links={getSidebarLinks(sectionSidebarLinks, "/current/path")} />
+    <main className={styles.dsContent}>
+      <div className={styles.pageHeader}>
+        <p className={\`\${styles.subDisplay} animate-in\`}>Section label</p>
+        <h1 className={\`\${styles.pageTitle} animate-in\`}>Page Title</h1>
+      </div>
+      <div className={\`\${styles.introSection} animate-in\`}>
+        <p className={styles.introBody}>Introductory description.</p>
+      </div>
+      {/* Page content goes here */}
+    </main>
+    <Footer />
+  </div>
+  \`\`\`
 - Include \`<PageLinks figmaUrl={...} storybookPath={...} />\` if URLs are available
 
 ### File 2: \`page.module.css\`
@@ -131,11 +150,11 @@ Use this skill when asked to add or create a new page on the website — phrases
 - Exports default \`Layout\` component wrapping \`{children}\` in a fragment
 
 4. **Update \`website/src/config/navigation.ts\`:**
-   - Find the correct sidebar links array for the section
+   - Find the correct sidebar links array for the section (\`componentsSidebarLinks\`, \`foundationsSidebarLinks\`, \`aboutSidebarLinks\`)
    - Add the new entry in alphabetical order by label
    - Entry format: \`{ label: "Page Title", href: "/path/to/page" }\`
 
-5. **If this is a component page**, also add the component to the preview card grid in \`website/src/app/components/page.tsx\`.
+5. **If this is a component page**, also add the component to the preview card grid in \`website/src/app/components/page.tsx\` — find the existing card list and add a new entry matching the format.
 `,
   },
   {
@@ -175,9 +194,10 @@ Use this skill when asked to visually review changes — phrases like "check how
 4. **Examine each screenshot for:**
    - Text that is invisible or the same colour as its background
    - Components that appear broken, overflow their container, or clip
-   - Spacing that looks inconsistent or misaligned
-   - Hover/focus states that appear stuck
-   - Images or assets that failed to load
+   - Spacing that looks inconsistent or misaligned compared to other pages
+   - Hover/focus states that appear stuck in an active state
+   - Images or assets that failed to load (broken image icons)
+   - Any layout that differs unexpectedly between light and dark
 
 5. **Report findings** concisely:
    - Format: \`[URL] [dark|light] — description of issue\`
@@ -188,6 +208,7 @@ Use this skill when asked to visually review changes — phrases like "check how
 ## Key context
 
 - Theme state is stored on \`document.documentElement\` as \`data-theme="light"\` or \`data-theme="dark"\`
+- Theme persists via localStorage key \`theme\` and a cookie
 - The ThemeToggle component is always in the \`<Header>\` at the top of every page
 - The \`animate-in\` class on page elements triggers CSS entry animations — these are normal on first load
 `,
@@ -215,7 +236,7 @@ Use this skill when asked to check for hardcoded values, audit token usage, find
    - \`website\` → scans all \`website/src/**/*.css\` and \`website/src/**/*.module.css\`
    - A specific file path
 
-2. **Read the token reference files first** to know what tokens are available:
+2. **Read the token reference files first** to know what tokens are available and what pixel values they map to:
    - \`src/tokens/tokens-primitives.css\` — spatial/size primitives
    - \`src/tokens/tokens-light.css\` — semantic colour tokens
    - \`src/tokens/tokens-typography.css\` — font size, weight, line-height tokens
@@ -225,21 +246,22 @@ Use this skill when asked to check for hardcoded values, audit token usage, find
    **Flag as violations:**
    - Hardcoded hex colours: \`#rrggbb\`, \`#rgb\`, \`#rrggbbaa\`
    - Raw \`rgb()\` or \`rgba()\` calls that could map to a semantic colour token
-   - Pixel values for \`padding\`, \`margin\`, \`gap\`, \`border-radius\`, \`font-size\`, \`line-height\` that correspond to a known token
-   - Hardcoded font weights where a typography token exists
+   - Pixel values for \`padding\`, \`margin\`, \`gap\`, \`border-radius\`, \`font-size\`, \`line-height\` that correspond to a known token (cross-reference the primitives file)
+   - Hardcoded font weights (e.g. \`font-weight: 600\`) where a typography token exists
 
    **Do NOT flag:**
-   - Files within \`src/tokens/\` themselves
-   - \`0px\`, \`0\`, \`100%\`, \`50%\` — structural values
-   - Icon pixel sizes: \`16px\`, \`20px\`, \`24px\`, \`48px\` — no token equivalent, note as "acceptable raw value"
+   - Files within \`src/tokens/\` themselves (these define the tokens)
+   - \`0px\`, \`0\`, \`100%\`, \`50%\` — these are structural, not token-replaceable
+   - Icon-related pixel sizes: \`16px\`, \`20px\`, \`24px\`, \`48px\` — no token equivalent, acceptable as-is. Note these as "acceptable raw value"
    - \`1px\` border widths — acceptable
+   - Values inside \`calc()\` that are genuine arithmetic, not replaceable with a single token
    - CSS variable declarations themselves (lines starting with \`--\`)
 
 4. **For each violation**, output:
    - File path (relative to repo root)
    - Line number
    - The offending value
-   - Recommended token replacement
+   - Recommended token replacement (if a clear match exists in the token files)
 
    Format: \`path/to/file.css:42 — #3b82f6 → var(--color-action-default)\`
 
@@ -276,7 +298,7 @@ Use this skill when asked to check if changes are ready to push, deploy, or ship
    \`\`\`
    cd website && npm run build
    \`\`\`
-   Note: the website build script does \`cd .. && npm install --include=dev\` first (monorepo alias setup). This is expected and normal.
+   Note: the website build script does \`cd .. && npm install --include=dev\` first (monorepo alias setup) before running Next.js. This is expected and normal.
 
 3. **For each build, check output for:**
 
@@ -285,9 +307,9 @@ Use this skill when asked to check if changes are ready to push, deploy, or ship
    - Type mismatches, missing props, invalid imports
 
    **Next.js-specific issues:**
-   - \`"use client"\` missing on components that use browser APIs
-   - SSR-unsafe code running outside client guards — particularly \`website/src/app/layout.tsx\`
-   - Portal/modal components that reference \`document\` — watch for regressions (AlertDialog, Toast were fixed in commit \`080eaf50\`)
+   - \`"use client"\` missing on components that use browser APIs (\`window\`, \`document\`, \`localStorage\`, \`useEffect\`, \`useState\`, etc.)
+   - SSR-unsafe code running outside client guards — particularly watch \`website/src/app/layout.tsx\` (the inline \`themeScript\`)
+   - Portal/modal components that reference \`document\` — these have caused past build failures (AlertDialog, Toast were fixed in commit \`080eaf50\`; watch for regressions if those components change)
    - Pages that fail static generation (look for \`Error occurred prerendering page\`)
 
    **General failures:**
@@ -300,7 +322,7 @@ Use this skill when asked to check if changes are ready to push, deploy, or ship
    > Both builds succeeded. Safe to push.
 
    If either fails, show:
-   - Which build failed
+   - Which build failed (component library or website)
    - The exact error message(s)
    - File path and line number if available
    - A brief diagnosis of likely cause
@@ -339,24 +361,34 @@ This is a more thorough, component-specific version of \`new-page\`. The Button 
    - Note the BEM class names used for each variant/state
 
 3. **Read the gold-standard reference:**
-   - \`website/src/app/components/button/page.tsx\` — study the variant showcase grid structure
+   - \`website/src/app/components/button/page.tsx\` — study the variant showcase grid structure (rows = states, columns = variants), the \`pageHeader\` block, \`introSection\`, and how \`PageLinks\` is used
    - \`website/src/app/components/button/page.module.css\` — CSS module structure
 
 4. **Create \`website/src/app/components/<component-slug>/page.tsx\`:**
    - \`"use client"\` directive
    - Standard layout shell: \`Header\`, \`Sidebar\`, \`BlurBackground\`, \`Footer\`, \`PageLinks\`
    - \`pageHeader\` block with \`subDisplay\` ("Components") and \`pageTitle\` (component name)
-   - \`introSection\` with an \`introBody\` paragraph describing the component's purpose
-   - **Variant showcase grid**: render the component in every meaningful combination of its variants and states
-   - Import: \`import { ComponentName } from "@design-system/components/ComponentName/ComponentName"\`
+   - \`introSection\` with an \`introBody\` paragraph — write a clear 1–2 sentence description of the component's purpose, inferred from its props and JSDoc if available
+   - **Variant showcase grid**: render the component in every meaningful combination of its variants and states. For components with discrete variants × states (like Button), render a proper grid. For simpler components, render one example per meaningful state/variant.
+   - Import the component: \`import { ComponentName } from "@design-system/components/ComponentName/ComponentName"\`
    - Include \`<PageLinks figmaUrl={...} storybookPath={...} />\` if URLs provided
 
-5. **Create \`page.module.css\`**, **\`layout.tsx\`** with standard structure.
+5. **Create \`website/src/app/components/<component-slug>/page.module.css\`:**
+   - Standard layout classes: \`dsLayout\`, \`dsContent\`, \`pageHeader\`, \`pageTitle\`, \`subDisplay\`, \`introSection\`, \`introBody\`
+   - Any additional classes needed for the variant showcase grid
+   - CSS custom properties only
 
-6. **Update \`website/src/config/navigation.ts\`:**
-   - Find \`componentsSidebarLinks\` and add entry in alphabetical order
+6. **Create \`website/src/app/components/<component-slug>/layout.tsx\`:**
+   - \`metadata.title\`: \`"ComponentName | robr0 DS"\`
+   - \`metadata.description\`: same as \`introBody\` text
 
-7. **Check \`website/src/app/components/page.tsx\`** — add to preview card grid if not already present.
+7. **Update \`website/src/config/navigation.ts\`:**
+   - Find \`componentsSidebarLinks\` array
+   - Add entry in alphabetical order: \`{ label: "Component Name", href: "/components/component-slug" }\`
+   - If entry already exists, skip this step
+
+8. **Check \`website/src/app/components/page.tsx\`** (the component gallery):
+   - If the component is not already in the preview card grid, add it following the existing card pattern
 `,
   },
   {
@@ -575,6 +607,188 @@ Use this skill when asked to review component APIs, check prop naming consistenc
    - **Low:** Style preferences with no breaking impact
 `,
   },
+  {
+    slug: "growth-loop",
+    name: "growth-loop",
+    icon: "cycle",
+    description:
+      "Runs one analytics-driven copy experiment end to end: pulls GA4 data, filters bot noise, forms a falsifiable hypothesis about the words on a page, implements the change on a branch in a temporary worktree, verifies the build, and writes a problem / hypothesis / solution report for approval. The only skill here that also runs itself — every Monday, as the loop described on the Loops page.",
+    invoke: ["run the growth loop", "/growth-loop"],
+    content: `# growth-loop
+
+Weekly GA-driven copy experiment loop for www.robertritacca.com (this repo's \`website/\` deploys there via Vercel). Each run: analyze last month's GA data, find ONE copy problem, form a hypothesis, implement the fix on a local branch, and write a clear report for the user to approve. **Never push, merge, or deploy — the user approves every change.**
+
+## When invoked
+
+Run when asked to "run the growth loop" (\`/growth-loop\`) or by the \`growth-loop-weekly\` scheduled task.
+
+## Scope guardrails (read first)
+
+- **Copy only.** Headlines, body text, CTA/link labels, button text, page \`metadata\` titles/descriptions — all inside \`website/src\`. No CSS, no layout, no component structure, no new components, no dependencies.
+- **One focused change per run.** One page, or one copy element (e.g. the same CTA wording) across a few pages. A reviewer should be able to read the diff in under two minutes.
+- **Local branch only.** Never \`git push\`, never merge, never touch the user's checked-out branch or working tree (use a worktree — see step 4).
+- Never read into version control or modify \`ga-analysis/service-account.json\` or \`ga-analysis/output/\`.
+
+## The loop
+
+### 0. Close the previous loop
+
+Read the newest report in \`ga-analysis/loop-reports/\` (git-ignored, local-only). If a previous experiment was approved/merged, check whether its metric moved in this run's data and record the verdict (improved / no change / worse / too early to tell) in this run's report. If the previous branch was never merged, note that instead and don't count it as tested. Don't re-run a hypothesis a previous report already tested unless the report says the change was never merged.
+
+### 1. Pull the data
+
+\`\`\`bash
+cd /Users/rritacca/Documents/Projects/design-system/ga-analysis && ./.venv/bin/python pull_ga.py --days 28
+\`\`\`
+
+Output lands in \`ga-analysis/output/all.json\`. If the venv is missing: \`python3 -m venv .venv && ./.venv/bin/pip install -q -r requirements.txt\`. FutureWarnings are harmless.
+
+### 2. Analyze — with the ga-report skill's judgment calls
+
+Apply every gotcha from the \`ga-report\` skill (\`~/.claude/skills/ga-report/SKILL.md\`):
+- Subtract bot traffic (historically Singapore at ~4% engagement; spam referrers \`ddvvff.org\`, \`snucm.com\`) before drawing conclusions.
+- Sum pages by \`pagePath\`, not \`pageTitle\` (titles are fragmented from past SEO edits).
+- High Direct (~75%) is normal dark social, not a problem.
+- Component gallery pages naturally have short dwell — don't flag that.
+
+Look for **copy-shaped problems**, e.g.: a high-traffic landing page with weak engagement or dwell; strong entry pages that don't lead anywhere (missing/weak CTA copy); case studies with good dwell but low reach (weak titles/descriptions); a mismatch between what a traffic source promises and what the page's headline says.
+
+### 3. Pick ONE problem and write the hypothesis
+
+The hypothesis must be falsifiable and name its metric:
+> If we [specific copy change], then [specific metric for a specific page/segment] should [direction] over the next few weeks, because [reasoning grounded in the data].
+
+If the data doesn't support a confident copy hypothesis this week, **say so and stop** — a no-op run with a short "nothing worth changing" report is a valid outcome. Don't invent a change to have something to ship.
+
+### 4. Implement on a branch (via worktree)
+
+Work in a temporary worktree so the user's working tree is untouched:
+
+\`\`\`bash
+REPO=/Users/rritacca/Documents/Projects/design-system
+WT=$REPO/../.growth-loop-worktree
+BRANCH=growth/$(date +%F)-<short-slug>
+git -C $REPO worktree add "$WT" -b "$BRANCH" main
+\`\`\`
+
+Make the copy edits in \`$WT/website/src/...\`, then verify the build without reinstalling deps:
+
+\`\`\`bash
+ln -s $REPO/node_modules "$WT/node_modules"
+ln -s $REPO/website/node_modules "$WT/website/node_modules"
+cd "$WT/website" && npm run build
+\`\`\`
+
+If the build fails because of your edit, fix it. Then commit in the worktree (conventional message, e.g. \`experiment(growth): reword /work CTA — hypothesis in loop report 2026-07-20\`) and clean up:
+
+\`\`\`bash
+rm "$WT/node_modules" "$WT/website/node_modules"
+git -C $REPO worktree remove "$WT"
+\`\`\`
+
+The branch survives worktree removal and is ready for the user to review.
+
+### 5. Write the report
+
+Save to \`ga-analysis/loop-reports/YYYY-MM-DD.md\` **and** repeat it in full in the final message to the user. Plain English — the user is a designer, no analytics jargon. Format:
+
+\`\`\`markdown
+# Growth loop — YYYY-MM-DD
+
+## Last week's experiment
+[Verdict on the previous change, or "none / not merged".]
+
+## The problem
+[What the data shows, with the actual numbers, after bot filtering.]
+
+## The hypothesis
+If we ..., then ... should ..., because ...
+
+## The change (branch: growth/YYYY-MM-DD-slug)
+[File(s) touched. Before → after for every copy string changed.]
+
+## How we'll know
+[Which metric to look at next run, and roughly what movement would count as a win.]
+\`\`\`
+
+### 6. Hand off for approval
+
+End by telling the user: the branch name, that the build passed, and that nothing is pushed or deployed. To approve they merge the branch (or ask Claude to open a PR); to reject they delete the branch. That's the whole approval step.
+`,
+  },
+  {
+    slug: "ga-report",
+    name: "ga-report",
+    icon: "query_stats",
+    description:
+      "Pulls GA4 data for this site and analyzes it in plain English — with the judgment calls baked in: which traffic is bots, why page titles fragment, and which numbers are normal for a portfolio rather than problems. Lives in my personal skills folder rather than the repo, because it encodes analytics context instead of codebase conventions.",
+    invoke: ["GA report", "how's the site doing", "site traffic analysis"],
+    content: `---
+name: ga-report
+description: Pull Google Analytics (GA4) data for robertritacca.com and analyze it in plain English. Use when the user asks for a GA report, site traffic analysis, analytics summary, "how's the site doing", visitor/pageview breakdown, or to refresh GA numbers.
+---
+
+# GA report
+
+Pulls GA4 data for **www.robertritacca.com** (property \`311163767\`) via the
+\`ga-analysis/pull_ga.py\` script, then analyzes it in plain, non-jargon English.
+
+## Where things live
+
+- Script + venv: \`/Users/rritacca/Documents/Projects/design-system/ga-analysis/\`
+- Runner: \`./.venv/bin/python pull_ga.py\`
+- Output: \`ga-analysis/output/all.json\` (+ one CSV per report). Git-ignored.
+- Credentials: \`ga-analysis/service-account.json\` (git-ignored; already set up).
+
+## Steps
+
+1. **Pick a window.** If the user gave one (e.g. "last month", "this week", "90 days"),
+   use it. Otherwise default to \`--days 30\`. The script accepts \`--days N\` or
+   \`--start YYYY-MM-DD --end YYYY-MM-DD\`.
+
+2. **Run the pull** from the ga-analysis folder:
+   \`\`\`bash
+   cd /Users/rritacca/Documents/Projects/design-system/ga-analysis && ./.venv/bin/python pull_ga.py --days 30
+   \`\`\`
+   If the venv is missing, create it first:
+   \`\`\`bash
+   python3 -m venv .venv && ./.venv/bin/pip install -q -r requirements.txt
+   \`\`\`
+   The Python-version FutureWarnings are harmless — ignore them.
+
+3. **Read the data.** Load \`ga-analysis/output/all.json\`. It's large; if it exceeds
+   the read cap, use a small Python snippet with the venv interpreter to compute
+   aggregates instead of reading the whole file. Reports included: \`daily_trend\`,
+   \`channels\`, \`top_pages\`, \`countries\`, \`devices\`, \`sources\`, \`landing_pages\`, \`events\`.
+
+4. **Analyze in plain English.** Lead with what matters, not raw dumps. Cover:
+   - Headline: total users, % new, sessions, pageviews, pages/session, engaged %.
+   - Traffic sources (channels + the \`sources\` detail — call out LinkedIn / Medium /
+     Reddit / Google / any AI-assistant referral by name).
+   - Best content (top_pages) with dwell time — case studies are the important ones;
+     component gallery pages naturally have short dwell, don't flag that as a problem.
+   - Geography + device split.
+
+## Judgment calls / gotchas (apply these every time)
+
+- **Bot / junk traffic:** flag any country or source with high user count but very low
+  engagement rate (historically **Singapore ~4%** engaged = bots). Spam referrers seen:
+  \`ddvvff.org\`, \`snucm.com\`. Subtract these when stating the "real" audience size.
+- **Page-title fragmentation:** the same URL (e.g. \`/\` or \`/work\`) appears under several
+  different \`pageTitle\` values because of past SEO/metadata edits. Sum by \`pagePath\`,
+  don't treat each title as a separate page.
+- **Direct is usually high (~75%)** for this portfolio — that's dark social (LinkedIn app,
+  DMs, résumé links), not an error.
+- **Mobile engagement** tends to run lower than desktop here — worth mentioning if the gap
+  is large.
+
+## Output
+
+A tight written summary (the user is a designer, not an analyst — no acronym soup).
+Offer, but don't auto-run: charting it as a visual, or filtering bots in GA.
+Never commit \`output/\` or \`service-account.json\`.
+`,
+  },
 ];
 
 /* ============================================
@@ -628,11 +842,14 @@ function SkillsContent() {
             </p>
             <p className={styles.introBody}>
               These skill files live in{" "}
-              <code className={styles.inlineCode}>.claude/skills/</code> and encode
-              this project&apos;s conventions — component patterns, token rules, navigation
-              wiring, and more. Invoke any skill by name in Claude Code and it follows
-              the exact steps without re-explanation each session. Download any skill
-              to adapt it for your own project.
+              <code className={styles.inlineCode}>.claude/skills/</code> — most in this
+              repo, one (<code className={styles.inlineCode}>ga-report</code>) in my
+              personal skills folder — and encode this project&apos;s conventions:
+              component patterns, token rules, navigation wiring, and more. Invoke any
+              skill by name in Claude Code and it follows the exact steps without
+              re-explanation each session. Download any skill to adapt it for your own
+              project. One of them even runs on its own schedule — see{" "}
+              <Link href="/loops" className={styles.introLink}>Loops</Link>.
             </p>
           </div>
 

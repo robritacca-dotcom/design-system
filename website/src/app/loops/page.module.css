@@ -1,5 +1,5 @@
 /* ============================================
-   SKILLS PAGE LAYOUT
+   LOOPS PAGE LAYOUT
    ============================================ */
 .dsLayout {
   display: flex;
@@ -62,29 +62,19 @@
   color: var(--color-text-primary);
 }
 
-.inlineCode {
-  font-family: monospace;
-  font-size: var(--font-paragraph-sm-size);
-  padding: var(--primitive-padding-xxxs) var(--primitive-padding-xs);
-  background: var(--color-bg-container-primary);
-  border: 1px solid var(--color-bg-container-border);
-  border-radius: var(--radius-xs);
-  color: var(--color-text-secondary);
-}
-
 /* ============================================
-   SKILLS GRID
+   LOOPS GRID
    ============================================ */
-.skillsGrid {
+.loopsGrid {
   display: flex;
   flex-direction: column;
   gap: var(--primitive-gap-lg);
 }
 
-.skillCard {
+.loopCard {
   display: flex;
   flex-direction: column;
-  gap: var(--primitive-gap-md);
+  gap: var(--primitive-gap-lg);
   padding: var(--primitive-gap-xl);
   border: 1px solid var(--color-bg-container-border);
   border-radius: var(--primitive-radius-xl);
@@ -92,34 +82,34 @@
 }
 
 /* ============================================
-   SKILL CARD HEADER
+   LOOP CARD HEADER
    ============================================ */
-.skillCardHeader {
+.loopCardHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--primitive-gap-md);
 }
 
-.skillMeta {
+.loopMeta {
   display: flex;
   align-items: center;
   gap: var(--primitive-gap-sm);
 }
 
-.skillActions {
+.loopBadges {
   display: flex;
   align-items: center;
   gap: var(--primitive-gap-xs);
 }
 
-.skillIcon {
+.loopIcon {
   font-size: 20px;
   color: var(--color-icon-primary);
   flex-shrink: 0;
 }
 
-.skillName {
+.loopName {
   font-family: var(--font-heading-3-family);
   font-size: var(--font-heading-3-size);
   font-weight: var(--font-heading-3-weight);
@@ -129,23 +119,22 @@
 }
 
 /* ============================================
-   SKILL CARD BODY
+   LOOP CARD BODY
    ============================================ */
-.skillDescription {
+.loopDescription {
   font-size: var(--font-paragraph-size);
   font-weight: var(--font-paragraph-weight);
   line-height: var(--font-paragraph-line-height);
   color: var(--color-text-secondary);
 }
 
-.skillInvoke {
+.loopSection {
   display: flex;
-  align-items: center;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: var(--primitive-gap-sm);
 }
 
-.skillInvokeLabel {
+.loopSectionLabel {
   font-size: var(--font-paragraph-sm-size);
   font-weight: var(--font-paragraph-sm-weight);
   line-height: var(--font-paragraph-sm-line-height);
@@ -153,6 +142,89 @@
   flex-shrink: 0;
 }
 
+/* The run cycle — numbered stages that wrap */
+.loopStages {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--primitive-gap-sm);
+}
+
+.loopStage {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--primitive-gap-xs);
+  padding: var(--primitive-padding-xxxs) var(--primitive-padding-sm);
+  border: 1px solid var(--color-bg-container-border);
+  border-radius: var(--radius-full);
+  background: var(--color-bg-page);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.loopStageNum {
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-em-weight);
+  color: var(--color-text-tertiary);
+}
+
+/* Guardrails list */
+.loopGuardrails {
+  margin: 0;
+  padding-left: var(--primitive-padding-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-xs);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-secondary);
+}
+
+/* Footer — skills used + trigger */
+.loopFooter {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--primitive-gap-sm);
+  border-top: 1px solid var(--color-bg-container-border);
+  padding-top: var(--primitive-gap-md);
+}
+
+.loopSkillLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--primitive-gap-xs);
+  font-family: monospace;
+  font-size: var(--font-paragraph-sm-size);
+  padding: var(--primitive-padding-xxxs) var(--primitive-padding-xs);
+  background: var(--color-bg-page);
+  border: 1px solid var(--color-bg-container-border);
+  border-radius: var(--radius-xs);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: border-color 0.2s ease;
+}
+
+.loopSkillLink:hover {
+  border-color: var(--color-text-tertiary);
+}
+
+.loopSkillLink .material-symbols-rounded {
+  font-size: 16px;
+  color: var(--color-icon-primary);
+}
+
+.loopTrigger {
+  margin-left: auto;
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+}
 
 /* ============================================
    RESPONSIVE
@@ -178,19 +250,12 @@
     line-height: 36px;
   }
 
-  .skillCardHeader {
+  .loopCardHeader {
     flex-wrap: wrap;
   }
-}
 
-/* Inline link in intro copy */
-.introLink {
-  color: var(--color-text-primary);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  transition: color 0.2s ease;
-}
-
-.introLink:hover {
-  color: var(--color-text-secondary);
+  .loopTrigger {
+    margin-left: 0;
+    width: 100%;
+  }
 }

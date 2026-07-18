@@ -64,6 +64,7 @@ export const dsActiveMatchers = [
   (path: string) => path === "/about", // exact — /about/me is NOT under Design system
   (path: string) => path.startsWith("/blueprints"),
   (path: string) => path.startsWith("/skills"),
+  (path: string) => path.startsWith("/loops"),
   (path: string) => path.startsWith("/foundations"),
   (path: string) => path.startsWith("/components"),
 ];
@@ -138,6 +139,7 @@ export const aboutSidebarLinks: NavLink[] = [
   { href: "/about", label: "About" },
   { href: "/blueprints/claude", label: "Claude MD" },
   { href: "/blueprints/design", label: "Design MD" },
+  { href: "/loops", label: "Loops" },
   { href: "/skills", label: "Skills" },
 ];
 
@@ -202,6 +204,7 @@ const breadcrumbSections: SectionConfig[] = [
   { base: "/blueprints/claude", label: "Claude MD", parent: "Design system", sidebar: null },
   { base: "/blueprints/design", label: "Design MD", parent: "Design system", sidebar: null },
   { base: "/skills", label: "Skills", parent: "Design system", sidebar: null },
+  { base: "/loops", label: "Loops", parent: "Design system", sidebar: null },
   // Other DS sections
   { base: "/foundations", label: "Foundations", parent: "Design system", sidebar: foundationsSidebarLinks },
   { base: "/components", label: "Components", parent: "Design system", sidebar: componentsSidebarLinks },

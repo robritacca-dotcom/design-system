@@ -406,7 +406,7 @@ export default function Robr0DsCaseStudy() {
                   <h2>What&apos;s next</h2>
 
                   <p>
-                    I&apos;m continuing to harden the pipeline — better visual regression checks, agent-driven design reviews, more skills as patterns surface. The next case studies on this site (Meta, Augmenta, Intuit Agent Chat) will all be authored using this same infrastructure. The system makes the writing faster too.
+                    I&apos;m continuing to harden the pipeline — better visual regression checks, more skills as patterns surface, and agents that don&apos;t wait to be asked: the first scheduled <Link href="/loops" className={styles.inlineLink}>loop</Link> is already running weekly experiments on this site&apos;s copy. The next case studies on this site (Meta, Augmenta, Intuit Agent Chat) will all be authored using this same infrastructure. The system makes the writing faster too.
                   </p>
                 </div>
               </div>
