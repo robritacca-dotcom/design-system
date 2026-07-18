@@ -39,27 +39,7 @@
    ============================================ */
 
 .search {
-  /* Match the ButtonGroup's 2px vertical rhythm so the field reads
-     as the first row of the list */
-  margin-bottom: var(--primitive-gap-xxs);
-}
-
-/* Quiet, list-row treatment: no chrome at rest, pill hover like the
-   tertiary link pills, teal border only on focus */
-.search :global(.ds-input__field) {
-  border-color: transparent;
-  background-color: transparent;
-  border-radius: var(--radius-full);
-}
-
-.search :global(.ds-input__field):hover:not(:focus):not(:disabled) {
-  border-color: transparent;
-  background-color: var(--color-action-passive-bg-hover);
-}
-
-.search :global(.ds-input__field):focus {
-  border-color: var(--color-input-border-selected);
-  background-color: transparent;
+  margin-bottom: var(--primitive-gap-md);
 }
 
 /* The native webkit cancel (x) renders dark-on-dark in dark mode —
@@ -70,24 +50,23 @@
   appearance: none;
 }
 
-/* Optically center the 24px search icon on the rail's icon axis:
-   the pinned home icon (20px at x=20) centers at x=30, so the search
-   icon needs left 18px. Field text stays at 48px — flush with the
-   pinned link's label. */
-.search :global(.ds-input__icon--left) {
-  left: 18px;
-}
-
-/* Pinned section-landing link ("Components") above the search field —
-   home icon marks it as fixed utility, distinct from the link list */
+/* Pinned section-landing link ("Components overview") between the
+   search field and the list */
 .pinnedHome {
-  margin-bottom: var(--primitive-gap-md);
+  margin-bottom: var(--primitive-gap-lg);
 }
 
-.pinnedHome :global(.ds-button__icon) {
-  font-size: 20px;
-  width: 20px;
-  height: 20px;
+/* Storybook-style section subheader above the link list */
+.listHeader {
+  margin: 0 0 var(--primitive-gap-xs);
+  padding-left: var(--primitive-padding-lg); /* aligns with list labels (x=20) */
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-em-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
 }
 
 /* No-results state */

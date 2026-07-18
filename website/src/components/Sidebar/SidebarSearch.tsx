@@ -9,6 +9,8 @@ import styles from "./Sidebar.module.css";
 
 interface SidebarSearchProps {
   links: SidebarLink[];
+  /** Small subheader above the link list (Storybook-style section label) */
+  listLabel?: string;
 }
 
 /**
@@ -16,7 +18,7 @@ interface SidebarSearchProps {
  * link list. The first link (the section landing, e.g. "Contents") is
  * pinned and never filtered out, so the rail always stays navigable.
  */
-export default function SidebarSearch({ links }: SidebarSearchProps) {
+export default function SidebarSearch({ links, listLabel = "Components" }: SidebarSearchProps) {
   const [query, setQuery] = useState("");
   const inputId = useId();
 
@@ -41,19 +43,6 @@ export default function SidebarSearch({ links }: SidebarSearchProps) {
 
   return (
     <div onKeyDown={onKeyDown}>
-      {pinned && (
-        <div className={styles.pinnedHome}>
-          <Button
-            label={pinned.label}
-            href={pinned.disabled ? undefined : pinned.href}
-            state={pinned.active ? "active" : "default"}
-            ariaCurrent={pinned.active}
-            priority="tertiary"
-            iconLeft="home"
-          />
-        </div>
-      )}
-
       <div role="search" aria-label="Sidebar" className={styles.search}>
         <Input
           id={inputId}
@@ -65,6 +54,20 @@ export default function SidebarSearch({ links }: SidebarSearchProps) {
           onChange={setQuery}
         />
       </div>
+
+      {pinned && (
+        <div className={styles.pinnedHome}>
+          <Button
+            label={pinned.label}
+            href={pinned.disabled ? undefined : pinned.href}
+            state={pinned.active ? "active" : "default"}
+            ariaCurrent={pinned.active}
+            priority="tertiary"
+          />
+        </div>
+      )}
+
+      <p className={styles.listHeader}>{listLabel}</p>
 
       <p role="status" aria-live="polite" className={styles.srOnly}>
         {q
