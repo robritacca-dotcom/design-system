@@ -1,0 +1,115 @@
+/* ============================================
+   CODE BLOCK COMPONENT
+   Monospace code with an optional header row
+   (filename, language) and a copy button.
+   Note: the system typeface is Nunito Sans;
+   code is the one sanctioned monospace context.
+   ============================================ */
+
+.ds-code-block {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: var(--border-xs) solid var(--color-bg-container-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-container-primary);
+  overflow: hidden;
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+
+.ds-code-block__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-sm);
+  padding: var(--padding-xs) var(--padding-sm) var(--padding-xs) var(--padding-md);
+  border-bottom: var(--border-xs) solid var(--color-bg-container-border);
+}
+
+.ds-code-block__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  min-width: 0;
+}
+
+.ds-code-block__filename {
+  font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ds-code-block__language {
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-em-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-tertiary);
+  flex-shrink: 0;
+}
+
+/* ============================================
+   COPY BUTTON
+   ============================================ */
+
+.ds-code-block__copy {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-xs);
+  margin: 0;
+  padding: var(--padding-xxxs) var(--padding-sm);
+  border: none;
+  border-radius: var(--radius-full);
+  background: none;
+  font-family: var(--font-paragraph-sm-em-family);
+  font-size: var(--font-paragraph-sm-em-size);
+  font-weight: var(--font-paragraph-sm-em-weight);
+  line-height: var(--font-paragraph-sm-em-line-height);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.ds-code-block__copy .material-symbols-rounded {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  line-height: 1;
+}
+
+.ds-code-block__copy:hover {
+  background-color: var(--color-action-passive-bg-hover);
+}
+
+.ds-code-block__copy:focus-visible {
+  outline: 2px solid var(--color-action-primary-bg);
+  outline-offset: 2px;
+}
+
+/* ============================================
+   CODE AREA
+   ============================================ */
+
+.ds-code-block__pre {
+  margin: 0;
+  padding: var(--padding-md);
+  overflow-x: auto;
+}
+
+.ds-code-block__code {
+  font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-primary);
+  white-space: pre;
+}

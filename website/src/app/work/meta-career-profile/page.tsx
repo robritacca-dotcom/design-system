@@ -7,6 +7,7 @@ import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
 import SampleCaseStudyCard from "../../../components/SampleCaseStudyCard/SampleCaseStudyCard";
+import { Quote } from "@design-system/components/Quote/Quote";
 import { getSidebarLinks, workSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
@@ -290,9 +291,9 @@ export default function MetaCareerProfileCaseStudy() {
 
                   <p>This project fundamentally changed how I think about platform design.</p>
 
-                  <blockquote>
+                  <Quote variant="pull">
                     Large-scale systems are not primarily UI problems. They are coordination problems.
-                  </blockquote>
+                  </Quote>
 
                   <p>
                     The challenge is not creating beautiful screens. The challenge is creating frameworks that allow hundreds of people and teams to build coherently over time.

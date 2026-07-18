@@ -341,6 +341,26 @@ Default icons (Material Symbols Rounded): `info`, `check_circle`, `warning`, `er
 
 **`ds-table`** — Data table with header row, body rows, optional sorting. Header: `--font-title-body-*` (weight 600). Body: `--font-paragraph-*`. Row dividers: `--color-divider`. Background: `--color-bg-page-primary` or `--color-bg-container-primary` depending on context.
 
+### Stat
+
+**`ds-stat`** — A single headline metric: display-weight numeral over a quiet label, with an optional trend delta. Value uses `--font-sub-display-*` (30px/300) by default, `--font-display-2-*` (64px/300) at `large` — the weight-contrast rule applied to numerals. Label: `--font-paragraph-sm-*` in `--color-text-tertiary`. Delta: `--font-paragraph-sm-em-*` with a 16px Material arrow; colours by trend — `up` → `--color-status-positive-text`, `down` → `--color-status-error-text`, `neutral` → `--color-text-tertiary`. Compose several in a flex row for a case-study metrics band.
+
+### CodeBlock
+
+**`ds-code-block`** — Monospace code in a `--color-bg-container-primary` container with `--radius-md` and a hairline border. The one sanctioned monospace context in the system (system mono stack — Nunito Sans everywhere else). Optional header row: filename (mono, `--color-text-secondary`), uppercase language tag (`--color-text-tertiary`, 0.08em tracking), and a copy button that confirms with a check for 2s. Code text is 14px/20px, `--color-text-primary`; long lines scroll horizontally. No syntax highlighting — monochrome by design, no dependencies.
+
+### Quote
+
+**`ds-quote`** — Blockquote with optional attribution, two registers. `default`: body-size text in `--color-text-secondary` behind a `--border-md` left rule in `--color-bg-container-tertiary`. `pull`: `--font-sub-display-*` (30px/300) in `--color-text-primary`, no rule — the scale is the emphasis. Attribution: em-dash + `--font-paragraph-sm-em-*` primary; detail line: `--font-paragraph-sm-*` tertiary. Renders semantic `<figure>/<blockquote>/<figcaption>`.
+
+### Figure
+
+**`ds-figure`** — Image + caption in a `--radius-md` container with `--color-bg-container-secondary` fill. Accepts any image element as children (plain `<img>` or `next/image`); the media slot stretches it full-width. Caption: `--font-paragraph-sm-*` tertiary, `--padding-md`/`--padding-lg`, hairline top border. Passing `onClick` makes it zoomable: `cursor: zoom-in`, hover dims the image to 0.88, `role="button"` + Enter/Space activation, standard teal focus ring.
+
+### Timeline
+
+**`ds-timeline`** — Ordered sequence (`<ol>`) with connected markers; `vertical` (default) for histories and process narratives, `horizontal` for compact steppers. Markers: 12px dot in `--color-bg-container-tertiary`; `numbered` or per-item `icon` upgrades to a 28px badge (`--color-bg-container-primary` fill, hairline border). Connector: `--border-md` line in `--color-divider`, hidden after the last item. Item anatomy: meta (`--font-paragraph-sm-*` tertiary) over title (`--font-title-body-*`, 16px/600) over description (`--font-paragraph-sm-*` secondary).
+
 ### Chart
 
 Recharts wrapper exposing: `AreaChart`, `BarChart`, `LineChart`, `PieChart`, `RadarChart`, `RadialChart`, `ScatterChart`, `StackedBarChart`, `Treemap`. Uses core accent colors for data series. Tooltips and legends use system typography tokens. Axes text in `--color-text-tertiary`.

@@ -190,37 +190,11 @@
 }
 
 /* ============================================
-   INLINE FIGURE — image + caption
+   INLINE FIGURE — design-system Figure inside
+   the article body; keep the prose rhythm
    ============================================ */
-.figure {
-  margin: var(--primitive-gap-xl) 0 0;
-  cursor: zoom-in;
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  background: var(--color-bg-container-secondary);
-}
-
-.figureImage {
-  width: 100%;
-  height: auto;
-  display: block;
-  transition: opacity 0.2s ease;
-}
-
-.figure:hover .figureImage {
-  opacity: 0.88;
-}
-
-.figureCaption {
-  display: block;
-  padding: var(--primitive-padding-md) var(--primitive-padding-lg);
-  font-family: var(--font-paragraph-sm-family);
-  font-size: var(--font-paragraph-sm-size);
-  font-weight: var(--font-paragraph-sm-weight);
-  line-height: var(--font-paragraph-sm-line-height);
-  color: var(--color-text-tertiary);
-  border-top: 1px solid var(--color-bg-container-border);
-  margin: 0;
+.body :global(.ds-figure) {
+  margin-top: var(--primitive-gap-xl);
 }
 
 /* ============================================
@@ -290,49 +264,13 @@
 }
 
 /* ============================================
-   IMPACT TABLE
+   IMPACT — stat band (design-system Stat row)
    ============================================ */
-.tableWrap {
-  width: 100%;
-  overflow-x: auto;
-  border: 1px solid var(--color-bg-container-border);
-  border-radius: var(--radius-md);
-  background: var(--color-bg-container-primary-semi);
-}
-
-.impactTable {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: var(--font-paragraph-family);
-}
-
-.impactTable th,
-.impactTable td {
-  padding: var(--primitive-padding-md);
-  text-align: left;
-  font-size: var(--font-paragraph-sm-size);
-  line-height: var(--font-paragraph-sm-line-height);
-  color: var(--color-text-primary);
-  border-bottom: 1px solid var(--color-bg-container-border);
-}
-
-.impactTable th {
-  font-family: var(--font-paragraph-sm-em-family);
-  font-weight: 600;
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--color-text-tertiary);
-  background: var(--color-bg-container-secondary);
-}
-
-.impactTable tbody tr:last-child td {
-  border-bottom: none;
-}
-
-.impactTable td strong {
-  font-weight: var(--font-paragraph-em-weight);
-  color: var(--color-text-primary);
+.statBand {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--primitive-gap-xl) var(--primitive-gap-xxl);
+  margin-top: var(--primitive-gap-lg);
 }
 
 /* ============================================
@@ -457,12 +395,6 @@
   .subDisplay {
     font-size: 22px;
     line-height: 32px;
-  }
-
-  .impactTable th,
-  .impactTable td {
-    padding: var(--primitive-padding-sm);
-    font-size: 13px;
   }
 }
 

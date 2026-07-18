@@ -1,0 +1,175 @@
+/* ============================================
+   TIMELINE COMPONENT
+   Ordered steps/events with connected markers.
+   Vertical timeline or horizontal stepper.
+   ============================================ */
+
+.ds-timeline {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+}
+
+.ds-timeline__item {
+  position: relative;
+  display: flex;
+}
+
+/* ============================================
+   MARKERS
+   Dot by default; badge (circle) when numbered
+   or carrying an icon.
+   ============================================ */
+
+.ds-timeline__marker {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-bg-container-tertiary);
+}
+
+.ds-timeline__marker--badge {
+  width: 28px;
+  height: 28px;
+  background-color: var(--color-bg-container-primary);
+  border: var(--border-xs) solid var(--color-bg-container-border);
+  font-family: var(--font-paragraph-sm-em-family);
+  font-size: var(--font-paragraph-sm-em-size);
+  font-weight: var(--font-paragraph-sm-em-weight);
+  color: var(--color-text-secondary);
+}
+
+.ds-timeline__marker-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  line-height: 1;
+  color: var(--color-icon-primary);
+}
+
+/* ============================================
+   CONTENT
+   ============================================ */
+
+.ds-timeline__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xxs);
+  min-width: 0;
+}
+
+.ds-timeline__meta {
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  color: var(--color-text-tertiary);
+}
+
+.ds-timeline__title {
+  font-family: var(--font-title-body-family);
+  font-size: var(--font-title-body-size);
+  font-weight: var(--font-title-body-weight);
+  line-height: var(--font-title-body-line-height);
+  letter-spacing: var(--font-title-body-letter-spacing);
+  color: var(--color-text-primary);
+}
+
+.ds-timeline__description {
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  color: var(--color-text-secondary);
+}
+
+/* ============================================
+   VERTICAL (default) — markers on the left,
+   connector line running down between them
+   ============================================ */
+
+.ds-timeline--vertical {
+  flex-direction: column;
+  gap: var(--gap-lg);
+}
+
+.ds-timeline--vertical .ds-timeline__item {
+  gap: var(--gap-md);
+  align-items: flex-start;
+}
+
+/* Align dot markers with the title's line box */
+.ds-timeline--vertical .ds-timeline__marker {
+  margin-top: 6px;
+}
+
+.ds-timeline--vertical .ds-timeline__marker--badge {
+  margin-top: 0;
+}
+
+/* Connector line — from this marker down to the next item */
+.ds-timeline--vertical .ds-timeline__item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: calc(-1 * var(--gap-lg));
+  left: 5px; /* centre of the 12px dot */
+  width: var(--border-md);
+  background-color: var(--color-divider);
+}
+
+.ds-timeline--vertical.ds-timeline--numbered .ds-timeline__item::before,
+.ds-timeline--vertical .ds-timeline__item:has(.ds-timeline__marker--badge)::before {
+  left: 13px; /* centre of the 28px badge */
+}
+
+.ds-timeline--vertical .ds-timeline__item:last-child::before {
+  display: none;
+}
+
+/* ============================================
+   HORIZONTAL — stepper: markers on top,
+   connector line running across
+   ============================================ */
+
+.ds-timeline--horizontal {
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.ds-timeline--horizontal .ds-timeline__item {
+  flex: 1;
+  flex-direction: column;
+  gap: var(--gap-sm);
+  min-width: 0;
+  padding-right: var(--padding-md);
+}
+
+/* Connector line — from this marker across to the next */
+.ds-timeline--horizontal .ds-timeline__item::before {
+  content: '';
+  position: absolute;
+  top: 5px; /* centre of the 12px dot */
+  left: 0;
+  right: 0;
+  height: var(--border-md);
+  background-color: var(--color-divider);
+}
+
+.ds-timeline--horizontal.ds-timeline--numbered .ds-timeline__item::before,
+.ds-timeline--horizontal .ds-timeline__item:has(.ds-timeline__marker--badge)::before {
+  top: 13px; /* centre of the 28px badge */
+}
+
+.ds-timeline--horizontal .ds-timeline__item:last-child::before {
+  display: none;
+}

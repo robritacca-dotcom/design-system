@@ -172,15 +172,8 @@
   color: var(--color-text-tertiary);
 }
 
-.body blockquote {
-  font-family: var(--font-sub-display-family);
-  font-size: var(--font-sub-display-size);
-  font-weight: var(--font-sub-display-weight);
-  line-height: var(--font-sub-display-line-height);
-  letter-spacing: var(--font-sub-display-letter-spacing);
-  color: var(--color-text-primary);
-  border-left: 2px solid var(--color-border-secondary);
-  padding: var(--primitive-gap-sm) 0 var(--primitive-gap-sm) var(--primitive-gap-lg);
+/* Design-system Quote inside the article body keeps the prose rhythm */
+.body :global(.ds-quote) {
   margin: var(--primitive-gap-xl) 0;
 }
 

@@ -8,6 +8,8 @@ import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
 import SampleCaseStudyCard from "../../../components/SampleCaseStudyCard/SampleCaseStudyCard";
+import { Figure } from "@design-system/components/Figure/Figure";
+import { Stat } from "@design-system/components/Stat/Stat";
 import { getSidebarLinks, workSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
@@ -83,31 +85,23 @@ export default function AugmentaCaseStudy() {
                     Augmenta generates constructible, code-compliant designs of electrical raceways — the conduit, cable tray, and supports that connect every piece of electrical equipment in a building. Their target user is the Virtual Construction Designer: the engineer inside Autodesk Revit who plans how a project actually gets built. Think Figma, but for the physical world — high-stakes, governed by real-world physics, strict compliance, and precise engineering standards.
                   </p>
 
-                  <figure className={styles.figure} onClick={() => setLightbox({ src: "/images/augmenta/slide25-img02.png", alt: "A Virtual Construction Designer working inside the Augmenta platform" })}>
+                  <Figure onClick={() => setLightbox({ src: "/images/augmenta/slide25-img02.png", alt: "A Virtual Construction Designer working inside the Augmenta platform" })} caption={<>A Virtual Construction Designer working inside Augmenta — the target user for the redesign.</>}>
                     <Image
                       src="/images/augmenta/slide25-img02.png"
                       alt="A Virtual Construction Designer working inside the Augmenta platform"
                       width={1600}
                       height={950}
-                      className={styles.figureImage}
                     />
-                    <figcaption className={styles.figureCaption}>
-                      A Virtual Construction Designer working inside Augmenta — the target user for the redesign.
-                    </figcaption>
-                  </figure>
+                  </Figure>
 
-                  <figure className={styles.figure} onClick={() => setLightbox({ src: "/images/augmenta/slide12-img03.gif", alt: "Generated output rendered in 3D inside the Augmenta platform" })}>
+                  <Figure onClick={() => setLightbox({ src: "/images/augmenta/slide12-img03.gif", alt: "Generated output rendered in 3D inside the Augmenta platform" })} caption={<>Generated output rendered in 3D inside the Augmenta platform — the full spatial result of a successful run.</>}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src="/images/augmenta/slide12-img03.gif"
                       alt="Generated output rendered in 3D inside the Augmenta platform"
-                      className={styles.figureImage}
                       style={{ width: "100%", height: "auto" }}
                     />
-                    <figcaption className={styles.figureCaption}>
-                      Generated output rendered in 3D inside the Augmenta platform — the full spatial result of a successful run.
-                    </figcaption>
-                  </figure>
+                  </Figure>
 
                   <p>
                     I was the sole product designer on a small, deeply engineering-led team — owning product design strategy, research, and execution. When I joined: a single design partner, a handful of pilot firms testing, a growing waitlist, and pre-revenue, funded entirely by investors. Critically, the product had been built around that one design partner&apos;s highly specific workflow — the reference point for nearly every decision.
@@ -169,18 +163,14 @@ export default function AugmentaCaseStudy() {
                     To get inside the customer&apos;s head, I designed a workshop I ran on repeat with each of our pilot electrical design firms. The goal was to map their real workflows, test product fit, and prioritize what to build or deprecate. The format was a journey-mapping and service-blueprinting exercise: we mapped their key functions and deliverables over time, walked through which Augmenta capabilities fit each phase, and captured their feedback.
                   </p>
 
-                  <figure className={styles.figure} onClick={() => setLightbox({ src: "/images/augmenta/slide30-img01.png", alt: "Service blueprint extracted from a lighthouse customer workshop" })}>
+                  <Figure onClick={() => setLightbox({ src: "/images/augmenta/slide30-img01.png", alt: "Service blueprint extracted from a lighthouse customer workshop" })} caption={<>Service blueprint extracted from a lighthouse customer workshop — mapping the real workflow to identify where the product fit and where it fell short.</>}>
                     <Image
                       src="/images/augmenta/slide30-img01.png"
                       alt="Service blueprint extracted from a lighthouse customer workshop"
                       width={1600}
                       height={950}
-                      className={styles.figureImage}
                     />
-                    <figcaption className={styles.figureCaption}>
-                      Service blueprint extracted from a lighthouse customer workshop — mapping the real workflow to identify where the product fit and where it fell short.
-                    </figcaption>
-                  </figure>
+                  </Figure>
 
                   <p>
                     By the end we had a blueprint for each firm — similar in shape, but with telling differences. We consolidated them into a single unified customer journey, and one pattern jumped out: the only process every firm shared, at roughly the same point, was electrical <em>routing</em>.
@@ -218,31 +208,23 @@ export default function AugmentaCaseStudy() {
                     So I brought in <a href="https://ant.design/" target="_blank" rel="noopener noreferrer">Ant Design</a> as a foundation and worked with engineering to rip and replace every component — redesigning each screen, writing specs and stories, and handing off a master prototype we used for team alignment and testing with pilot firms. The wins were immediate: clearer IA, far higher screen density (several times more studies visible at once), and a dark mode the pilot firms loved.
                   </p>
 
-                  <figure className={styles.figure} onClick={() => setLightbox({ src: "/images/augmenta/screen-density.png", alt: "Screen density: low to high" })}>
+                  <Figure onClick={() => setLightbox({ src: "/images/augmenta/screen-density.png", alt: "Screen density: low to high" })} caption={<>Screen density: low to high.</>}>
                     <Image
                       src="/images/augmenta/screen-density.png"
                       alt="Screen density: low to high"
                       width={1600}
                       height={950}
-                      className={styles.figureImage}
                     />
-                    <figcaption className={styles.figureCaption}>
-                      Screen density: low to high.
-                    </figcaption>
-                  </figure>
+                  </Figure>
 
-                  <figure className={styles.figure} onClick={() => setLightbox({ src: "/images/augmenta/slide36-img01.png", alt: "Figma prototype created for team alignment and engineering handoff" })}>
+                  <Figure onClick={() => setLightbox({ src: "/images/augmenta/slide36-img01.png", alt: "Figma prototype created for team alignment and engineering handoff" })} caption={<>Figma prototype used to align the team and support engineering handoff — bridging design intent and implementation.</>}>
                     <Image
                       src="/images/augmenta/slide36-img01.png"
                       alt="Figma prototype created for team alignment and engineering handoff"
                       width={1600}
                       height={950}
-                      className={styles.figureImage}
                     />
-                    <figcaption className={styles.figureCaption}>
-                      Figma prototype used to align the team and support engineering handoff — bridging design intent and implementation.
-                    </figcaption>
-                  </figure>
+                  </Figure>
 
                   <p>
                     <strong>Framing mattered too.</strong> We replaced engineering-speak with intent-aligned language — &ldquo;Placement considerations&rdquo; instead of &ldquo;Unhandled error&rdquo; — turning daunting, catastrophic-sounding failures into calm, actionable guidance.
@@ -264,88 +246,68 @@ export default function AugmentaCaseStudy() {
                     After analyzing hundreds of failed generations, we found the common culprits — clashing chief among them — and made a bet: instead of stopping, let the generation complete and visualize each problem in 3D, as a big red box right where the issue was. It was a breakthrough. Customers could see the full solution, tie each red box to specific parts or routes, fix the problem themselves, and lean on Augmenta far less. Surfacing this previously hidden signal sent successful generations up <strong>~900%</strong> and user analysis of solutions up <strong>~400%</strong>.
                   </p>
 
-                  <figure className={styles.figure} onClick={() => setLightbox({ src: "/images/augmenta/slide43-img01.png", alt: "The team reviewing AI output together — flagging anomalies and aligning on engineering and UX fixes" })}>
+                  <Figure onClick={() => setLightbox({ src: "/images/augmenta/slide43-img01.png", alt: "The team reviewing AI output together — flagging anomalies and aligning on engineering and UX fixes" })} caption={<>The team reviewing AI output together — identifying anomalies and aligning on fixes from both an engineering and UX perspective.</>}>
                     <Image
                       src="/images/augmenta/slide43-img01.png"
                       alt="The team reviewing AI output together — flagging anomalies and aligning on engineering and UX fixes"
                       width={1600}
                       height={950}
-                      className={styles.figureImage}
                     />
-                    <figcaption className={styles.figureCaption}>
-                      The team reviewing AI output together — identifying anomalies and aligning on fixes from both an engineering and UX perspective.
-                    </figcaption>
-                  </figure>
+                  </Figure>
 
-                  <figure className={styles.figure} onClick={() => setLightbox({ src: "/images/augmenta/slide12-img02.gif", alt: "AI generation output — solutions plotted on x/y axes" })}>
+                  <Figure onClick={() => setLightbox({ src: "/images/augmenta/slide12-img02.gif", alt: "AI generation output — solutions plotted on x/y axes" })} caption={<>AI output visualized on x/y axes — each point a generated solution. Surfacing this signal let engineers understand what was being generated and why some runs fell short.</>}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src="/images/augmenta/slide12-img02.gif"
                       alt="AI generation output — solutions plotted on x/y axes, showing the volume and spread of generated designs"
-                      className={styles.figureImage}
                       style={{ width: "100%", height: "auto" }}
                     />
-                    <figcaption className={styles.figureCaption}>
-                      AI output visualized on x/y axes — each point a generated solution. Surfacing this signal let engineers understand what was being generated and why some runs fell short.
-                    </figcaption>
-                  </figure>
+                  </Figure>
 
-                  <figure className={styles.figure} onClick={() => setLightbox({ src: "/images/augmenta/error-handling.gif", alt: "Error handling — from unintelligible text to errors visualized in space" })}>
+                  <Figure onClick={() => setLightbox({ src: "/images/augmenta/error-handling.gif", alt: "Error handling — from unintelligible text to errors visualized in space" })} caption={<>Error handling — from unintelligible text to errors visualized in space.</>}>
                     <Image
                       src="/images/augmenta/error-handling.gif"
                       alt="Error handling — from unintelligible text to errors visualized in space"
                       width={891}
                       height={481}
                       unoptimized
-                      className={styles.figureImage}
                     />
-                    <figcaption className={styles.figureCaption}>
-                      Error handling — from unintelligible text to errors visualized in space.
-                    </figcaption>
-                  </figure>
+                  </Figure>
 
                   <p>
                     The fully realized workflow ships back into Revit, where the generated designs work seamlessly with existing detailing and spooling pipelines.
                   </p>
 
-                  <figure className={styles.figure} onClick={() => setLightbox({ src: "/images/augmenta/revit-export.png", alt: "Generated designs export directly to Revit" })}>
+                  <Figure onClick={() => setLightbox({ src: "/images/augmenta/revit-export.png", alt: "Generated designs export directly to Revit" })} caption={<>Generated designs export directly to Revit.</>}>
                     <Image
                       src="/images/augmenta/revit-export.png"
                       alt="Generated designs export directly to Revit"
                       width={812}
                       height={428}
-                      className={styles.figureImage}
                     />
-                    <figcaption className={styles.figureCaption}>
-                      Generated designs export directly to Revit.
-                    </figcaption>
-                  </figure>
+                  </Figure>
 
                   <h2>Impact (across the engagement)</h2>
 
-                  <div className={styles.tableWrap}>
-                    <table className={styles.impactTable}>
-                      <thead>
-                        <tr>
-                          <th>Metric</th>
-                          <th>Improvement</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>Time-to-value (initial prep → final export)</td>
-                          <td><strong>42% faster</strong></td>
-                        </tr>
-                        <tr>
-                          <td>Generation cycles to acceptable result</td>
-                          <td><strong>~42% fewer</strong></td>
-                        </tr>
-                        <tr>
-                          <td>Engineering interventions per cycle</td>
-                          <td><strong>36% fewer blockers</strong></td>
-                        </tr>
-                      </tbody>
-                    </table>
+                  <div className={styles.statBand}>
+                    <Stat
+                      value="42%"
+                      label="Faster time-to-value"
+                      trend="up"
+                      delta="initial prep → final export"
+                    />
+                    <Stat
+                      value="~42%"
+                      label="Fewer generation cycles"
+                      trend="up"
+                      delta="to acceptable result"
+                    />
+                    <Stat
+                      value="36%"
+                      label="Fewer engineering blockers"
+                      trend="up"
+                      delta="per generation cycle"
+                    />
                   </div>
 
                   <p>

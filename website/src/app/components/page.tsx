@@ -16,6 +16,10 @@ import { Button } from "@design-system/components/Button/Button";
 import { Checkbox } from "@design-system/components/Checkbox/Checkbox";
 import { Chip } from "@design-system/components/Chip/Chip";
 import { CircularButton } from "@design-system/components/CircularButton/CircularButton";
+import { CodeBlock } from "@design-system/components/CodeBlock/CodeBlock";
+import { Quote } from "@design-system/components/Quote/Quote";
+import { Stat } from "@design-system/components/Stat/Stat";
+import { Timeline } from "@design-system/components/Timeline/Timeline";
 import { ContributionGraph, type ContributionDay } from "@design-system/components/ContributionGraph/ContributionGraph";
 import { Dropdown } from "@design-system/components/Dropdown/Dropdown";
 import { Input } from "@design-system/components/Input/Input";
@@ -255,6 +259,13 @@ export default function ComponentsPage() {
               </div>
             </TocCard>
 
+            {/* Code block */}
+            <TocCard href="/components/code-block" title="Code block">
+              <div style={{ width: "180px" }}>
+                <CodeBlock code={`--radius-full: 999px;`} filename="tokens.css" showCopy={false} />
+              </div>
+            </TocCard>
+
             {/* Contribution graph */}
             <TocCard href="/components/contribution-graph" title="Contribution graph">
               {/* The graph is fluid (width: 100%) — constrain it so the
@@ -309,6 +320,18 @@ export default function ComponentsPage() {
                 <div className={styles.dropdownMenuPreviewItem}>
                   <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-icon-secondary)" }}>logout</span>
                   <span style={{ fontSize: "11px", color: "var(--color-text-primary)" }}>Log out</span>
+                </div>
+              </div>
+            </TocCard>
+
+            {/* Figure */}
+            <TocCard href="/components/figure" title="Figure">
+              <div style={{ width: "140px", borderRadius: "8px", overflow: "hidden", border: "1px solid var(--color-bg-container-border)" }}>
+                <div style={{ height: "60px", background: "var(--color-bg-container-secondary)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <span className="material-symbols-rounded" style={{ fontSize: "24px", color: "var(--color-icon-secondary)" }}>image</span>
+                </div>
+                <div style={{ padding: "6px 10px", fontSize: "10px", color: "var(--color-text-tertiary)", borderTop: "1px solid var(--color-bg-container-border)" }}>
+                  Caption text
                 </div>
               </div>
             </TocCard>
@@ -379,6 +402,17 @@ export default function ComponentsPage() {
               </div>
             </TocCard>
 
+            {/* Quote */}
+            <TocCard href="/components/quote" title="Quote">
+              <div style={{ width: "170px" }}>
+                <Quote>
+                  <span style={{ fontSize: "12px", lineHeight: "16px", display: "block" }}>
+                    Systems are coordination problems.
+                  </span>
+                </Quote>
+              </div>
+            </TocCard>
+
             {/* Radio button */}
             <TocCard href="/components/radio-button" title="Radio button">
               <div className={styles.previewColumn} style={{ gap: "16px" }}>
@@ -446,6 +480,11 @@ export default function ComponentsPage() {
               <Spinner size="lg" />
             </TocCard>
 
+            {/* Stat */}
+            <TocCard href="/components/stat" title="Stat">
+              <Stat value="~900%" label="Successful generations" trend="up" delta="+clash view" />
+            </TocCard>
+
             {/* Table */}
             <TocCard href="/components/table" title="Table">
               <div className={styles.tablePreview}>
@@ -475,6 +514,16 @@ export default function ComponentsPage() {
                 <span style={{ color: "var(--color-text-tertiary)", fontSize: "14px" }}>
                   Enter text...
                 </span>
+              </div>
+            </TocCard>
+
+            {/* Timeline */}
+            <TocCard href="/components/timeline" title="Timeline">
+              <div style={{ width: "150px" }}>
+                <Timeline
+                  numbered
+                  items={[{ title: "Discover" }, { title: "Design" }, { title: "Ship" }]}
+                />
               </div>
             </TocCard>
 

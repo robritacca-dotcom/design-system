@@ -1,0 +1,61 @@
+/* ============================================
+   FIGURE COMPONENT
+   Image + caption in a rounded container.
+   Pass onClick for a zoomable (lightbox) figure.
+   ============================================ */
+
+.ds-figure {
+  margin: 0;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background-color: var(--color-bg-container-secondary);
+}
+
+/* ============================================
+   MEDIA — child img/picture fills the width
+   ============================================ */
+
+.ds-figure__media {
+  display: block;
+  line-height: 0;
+}
+
+.ds-figure__media img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: opacity 0.2s ease;
+}
+
+/* ============================================
+   CAPTION
+   ============================================ */
+
+.ds-figure__caption {
+  display: block;
+  padding: var(--padding-md) var(--padding-lg);
+  border-top: var(--border-xs) solid var(--color-bg-container-border);
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  color: var(--color-text-tertiary);
+}
+
+/* ============================================
+   ZOOMABLE (has onClick)
+   ============================================ */
+
+.ds-figure--zoomable {
+  cursor: zoom-in;
+}
+
+.ds-figure--zoomable:hover .ds-figure__media img {
+  opacity: 0.88;
+}
+
+.ds-figure--zoomable:focus-visible {
+  outline: 2px solid var(--color-action-primary-bg);
+  outline-offset: 2px;
+}
