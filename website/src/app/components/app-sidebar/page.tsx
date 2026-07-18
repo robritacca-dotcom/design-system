@@ -60,7 +60,7 @@ const demoSections = [
 
 const demoProfile = {
   name: "robr0",
-  email: "robr0@gmail.com",
+  email: "robr0@example.com",
 };
 
 export default function AppSidebarPage() {

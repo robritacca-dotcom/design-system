@@ -48,7 +48,7 @@ const sampleSections = [
 
 const sampleProfile = {
   name: 'robr0',
-  email: 'robr0@gmail.com',
+  email: 'robr0@example.com',
 };
 
 const meta = {
