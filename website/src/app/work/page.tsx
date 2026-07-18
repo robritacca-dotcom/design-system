@@ -39,7 +39,7 @@ const caseStudies = [
   {
     href: "/work/meta-career-profile",
     title: "Career Profile Vision",
-    dek: "Reimagining Meta's candidate experience platform as a scalable, personalized recruiting ecosystem",
+    dek: "Turning the maze of tools Meta candidates face into one guided, personal journey through interviews, offers, and onboarding",
     companyName: "Meta",
     companyLogo: "/logos/meta.svg",
     coverSrc: "/images/heroes/meta-vision.png",

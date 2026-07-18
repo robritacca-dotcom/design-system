@@ -35,7 +35,7 @@ export default function MetaCareerProfileCaseStudy() {
 
           {/* Subtitle / dek */}
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Reimagining Meta&apos;s candidate experience platform as a scalable, personalized, end-to-end recruiting ecosystem.
+            Interviewing at Meta meant navigating a maze of disconnected tools during the most stressful moment of your career. I led the design vision to turn it into one guided journey.
           </p>
 
           {/* Hero image */}
@@ -61,15 +61,15 @@ export default function MetaCareerProfileCaseStudy() {
 
                 <div className={styles.body}>
                   <p className={styles.lede}>
-                    At Meta, I led product design exploration and systems thinking for the long-term vision of Career Profile (CP) — a candidate-facing platform designed to guide people through every stage of the recruiting journey.
+                    Every year, millions of people interview at Meta — and for most of them it&apos;s the highest-stakes moment of their career. Career Profile is the platform that carries candidates through all of it: scheduling interviews, studying prep material, reviewing offers, starting onboarding.
                   </p>
 
                   <p>
-                    The challenge was not simply redesigning screens. Career Profile had evolved into a fragmented collection of tools, workflows, and informational pages built over several years. The experience lacked consistency, scalability, personalization, and a cohesive mental model for candidates navigating one of the most important moments of their careers.
+                    By the time I took on this work, Career Profile had grown into a patchwork of tools and content pages built by different teams over several years. Candidates couldn&apos;t tell where they were in the process or what to do next — at exactly the moments they were most anxious.
                   </p>
 
                   <p>
-                    This project explored how to transform CP into a modular platform capable of supporting millions of candidates across roles, regions, and recruiting stages — while enabling internal teams to build consistently on top of a shared foundation.
+                    As Lead Product Designer, I owned the long-term design vision: turning that patchwork into a single guided journey, personal to each candidate, that could scale across every role, region, and recruiting stage — and give the teams building on it one shared foundation.
                   </p>
 
                   <h2>The problem</h2>
