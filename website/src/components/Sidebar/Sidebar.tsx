@@ -1,9 +1,8 @@
-import Image from "next/image";
-import { ButtonGroup } from "@design-system/components/ButtonGroup/ButtonGroup";
-import type { ButtonProps } from "@design-system/components/Button/Button";
+import SidebarLinks from "./SidebarLinks";
+import SidebarSearch from "./SidebarSearch";
 import styles from "./Sidebar.module.css";
 
-interface SidebarLink {
+export interface SidebarLink {
   href: string;
   label: string;
   active?: boolean;
@@ -14,33 +13,18 @@ interface SidebarLink {
 
 interface SidebarProps {
   links: SidebarLink[];
+  /** Opt-in live filter input at the top of the rail */
+  searchable?: boolean;
 }
 
-export default function Sidebar({ links }: SidebarProps) {
-  const buttons: ButtonProps[] = links.map((link) => ({
-    label: link.label,
-    href: link.disabled ? undefined : link.href,
-    state: link.disabled
-      ? ("disabled" as const)
-      : link.active
-        ? ("active" as const)
-        : ("default" as const),
-    ariaCurrent: link.active,
-    priority: "tertiary" as const,
-    iconLeft: link.logo ? (
-      <Image
-        src={link.logo}
-        alt=""
-        width={18}
-        height={18}
-        className={styles.itemLogo}
-      />
-    ) : undefined,
-  }));
-
+export default function Sidebar({ links, searchable = false }: SidebarProps) {
   return (
     <aside className={styles.sidebar} aria-label="Component navigation">
-      <ButtonGroup orientation="vertical" buttons={buttons} ariaLabel="Components" />
+      {searchable ? (
+        <SidebarSearch links={links} />
+      ) : (
+        <SidebarLinks links={links} />
+      )}
     </aside>
   );
 }

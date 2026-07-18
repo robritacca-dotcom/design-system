@@ -34,6 +34,116 @@
   white-space: nowrap;
 }
 
+/* ============================================
+   SEARCHABLE VARIANT
+   ============================================ */
+
+.search {
+  /* Match the ButtonGroup's 2px vertical rhythm so the field reads
+     as the first row of the list */
+  margin-bottom: var(--primitive-gap-xxs);
+}
+
+/* Quiet, list-row treatment: no chrome at rest, pill hover like the
+   tertiary link pills, teal border only on focus */
+.search :global(.ds-input__field) {
+  border-color: transparent;
+  background-color: transparent;
+  border-radius: var(--radius-full);
+}
+
+.search :global(.ds-input__field):hover:not(:focus):not(:disabled) {
+  border-color: transparent;
+  background-color: var(--color-action-passive-bg-hover);
+}
+
+.search :global(.ds-input__field):focus {
+  border-color: var(--color-input-border-selected);
+  background-color: transparent;
+}
+
+/* The native webkit cancel (x) renders dark-on-dark in dark mode —
+   hide it for cross-theme consistency; Escape and the no-results
+   "Clear search" button cover clearing. */
+.search input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Optically center the 24px search icon on the rail's icon axis:
+   the pinned home icon (20px at x=20) centers at x=30, so the search
+   icon needs left 18px. Field text stays at 48px — flush with the
+   pinned link's label. */
+.search :global(.ds-input__icon--left) {
+  left: 18px;
+}
+
+/* Pinned section-landing link ("Components") above the search field —
+   home icon marks it as fixed utility, distinct from the link list */
+.pinnedHome {
+  margin-bottom: var(--primitive-gap-md);
+}
+
+.pinnedHome :global(.ds-button__icon) {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+/* No-results state */
+.noResults {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--primitive-gap-sm);
+  padding: var(--primitive-padding-sm) var(--primitive-padding-md);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .noResults {
+    animation: sidebarFadeIn 0.2s ease;
+  }
+}
+
+@keyframes sidebarFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.noResultsIcon {
+  font-size: 20px;
+  color: var(--color-icon-secondary);
+}
+
+.noResultsText {
+  margin: 0;
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  color: var(--color-text-tertiary);
+  /* Long queries must not blow out the fixed-width rail */
+  overflow-wrap: anywhere;
+}
+
+/* Visually hidden — for the aria-live results announcement */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* Hidden on mobile */
 @media (max-width: 959px) {
   .sidebar {

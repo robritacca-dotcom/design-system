@@ -78,7 +78,7 @@ export function isDesignSystemPath(pathname: string): boolean {
    ============================================ */
 
 export const componentsSidebarLinks: NavLink[] = [
-  { href: "/components", label: "Contents" },
+  { href: "/components", label: "Components" },
   { href: "/components/accordion", label: "Accordion" },
   { href: "/components/alert", label: "Alert" },
   { href: "/components/alert-dialog", label: "Alert dialog" },

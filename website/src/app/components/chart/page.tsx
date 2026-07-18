@@ -116,7 +116,7 @@ export default function ChartPage() {
       <MegaNav />
 
       <div className={styles.dsLayout}>
-        <Sidebar links={sidebarLinks} />
+        <Sidebar links={sidebarLinks} searchable />
 
         <main className={styles.dsContent} id="main-content">
           <PageBreadcrumb />
