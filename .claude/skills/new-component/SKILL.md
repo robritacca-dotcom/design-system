@@ -1,3 +1,8 @@
+---
+name: new-component
+description: Scaffold a new design system component with all required files and registration steps. Use when asked to add, create, or scaffold a new design system component.
+---
+
 # new-component
 
 Scaffold a new design system component with all three required files.

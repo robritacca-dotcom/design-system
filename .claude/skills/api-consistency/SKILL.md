@@ -1,3 +1,8 @@
+---
+name: api-consistency
+description: Review component prop interfaces across the design system for naming inconsistencies, missing standard props, and pattern violations. Use when asked to review component APIs, audit prop naming consistency, or check TypeScript interfaces for API inconsistencies.
+---
+
 # api-consistency
 
 Review component prop interfaces across the design system for naming inconsistencies, missing standard props, and pattern violations.

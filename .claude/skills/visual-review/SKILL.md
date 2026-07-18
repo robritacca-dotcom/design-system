@@ -1,3 +1,8 @@
+---
+name: visual-review
+description: Start the website dev server and screenshot pages in both light and dark mode to catch visual issues. Use when asked to visually review changes, check light and dark mode, or screenshot pages.
+---
+
 # visual-review
 
 Start the website dev server and screenshot pages in both light and dark mode to catch visual issues.

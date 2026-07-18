@@ -1,3 +1,8 @@
+---
+name: heuristic-analysis
+description: Evaluate a page or component against Nielsen's 10 Usability Heuristics and produce a structured findings report. Use when asked for a heuristic analysis, UX review, or usability check.
+---
+
 # heuristic-analysis
 
 Evaluate a page or component against Nielsen's 10 Usability Heuristics and produce a structured findings report.

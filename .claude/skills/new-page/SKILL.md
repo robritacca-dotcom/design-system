@@ -1,3 +1,8 @@
+---
+name: new-page
+description: Add a new page to the website with the standard layout shell and correct navigation wiring. Use when asked to add or create a new page on the site.
+---
+
 # new-page
 
 Add a new page to the website with the standard layout shell and correct navigation wiring.

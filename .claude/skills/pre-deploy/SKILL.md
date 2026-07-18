@@ -1,3 +1,8 @@
+---
+name: pre-deploy
+description: Run both builds (component library and website) and confirm the site is safe to push to Vercel. Use when asked whether changes are ready to push, deploy, or ship, or for a pre-deploy check.
+---
+
 # pre-deploy
 
 Run both builds and confirm the site is safe to push to Vercel.

@@ -1,3 +1,8 @@
+---
+name: token-audit
+description: Scan CSS files for hardcoded values that should use design tokens, and report violations. Use when asked to check for hardcoded values, raw colours or pixel values, or audit token usage and design system compliance.
+---
+
 # token-audit
 
 Scan CSS files for hardcoded values that should use design tokens, and report violations.

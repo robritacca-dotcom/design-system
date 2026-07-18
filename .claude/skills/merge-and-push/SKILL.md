@@ -1,3 +1,8 @@
+---
+name: merge-and-push
+description: Commit the session's work and push to main safely — builds green first, no unrelated files swept in, a clear report after. Use when asked to merge and push, commit and push, push this, or ship it.
+---
+
 # merge-and-push
 
 Commit the session's work and push to main safely — builds green first, no unrelated files swept in, a clear report after.

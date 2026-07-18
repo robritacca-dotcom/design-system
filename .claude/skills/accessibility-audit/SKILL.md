@@ -1,3 +1,8 @@
+---
+name: accessibility-audit
+description: Audit a component or page for accessibility violations against WCAG 2.1 AA criteria. Use when asked for an accessibility audit, a11y check, WCAG compliance check, or "is X accessible".
+---
+
 # accessibility-audit
 
 Audit a component or page for accessibility violations against WCAG 2.1 AA criteria.

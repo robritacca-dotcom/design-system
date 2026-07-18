@@ -1,3 +1,8 @@
+---
+name: growth-loop
+description: Weekly GA-driven copy experiment loop for www.robertritacca.com — analyze last month's GA data, find one copy problem, implement the fix on a local branch, and write a report for approval. Use when asked to run the growth loop. Never pushes, merges, or deploys.
+---
+
 # growth-loop
 
 Weekly GA-driven copy experiment loop for www.robertritacca.com (this repo's `website/` deploys there via Vercel). Each run: analyze last month's GA data, find ONE copy problem, form a hypothesis, implement the fix on a local branch, and write a clear report for the user to approve. **Never push, merge, or deploy — the user approves every change.**
@@ -22,7 +27,7 @@ Read the newest report in `ga-analysis/loop-reports/` (git-ignored, local-only).
 ### 1. Pull the data
 
 ```bash
-cd /Users/rritacca/Documents/Projects/design-system/ga-analysis && ./.venv/bin/python pull_ga.py --days 28
+cd ~/Documents/Projects/design-system/ga-analysis && ./.venv/bin/python pull_ga.py --days 28
 ```
 
 Output lands in `ga-analysis/output/all.json`. If the venv is missing: `python3 -m venv .venv && ./.venv/bin/pip install -q -r requirements.txt`. FutureWarnings are harmless.
@@ -49,7 +54,7 @@ If the data doesn't support a confident copy hypothesis this week, **say so and 
 Work in a temporary worktree so the user's working tree is untouched:
 
 ```bash
-REPO=/Users/rritacca/Documents/Projects/design-system
+REPO=~/Documents/Projects/design-system
 WT=$REPO/../.growth-loop-worktree
 BRANCH=growth/$(date +%F)-<short-slug>
 git -C $REPO worktree add "$WT" -b "$BRANCH" main

@@ -1,3 +1,8 @@
+---
+name: component-doc-page
+description: Create a full-quality documentation page for a design system component on the website. Use when asked to document a component on the website, add a component docs page, or create the website page for a component.
+---
+
 # component-doc-page
 
 Create a full-quality documentation page for a design system component on the website.

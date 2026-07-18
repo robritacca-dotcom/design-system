@@ -3,15 +3,16 @@
  * Validates .claude/skills/registry.json against the filesystem and the
  * skills page.
  *
- * Every .md file in .claude/skills must appear in exactly one of the
+ * Every skill folder in .claude/skills (a directory holding a SKILL.md,
+ * the layout Claude Code discovers) must appear in exactly one of the
  * registry's `displayed` or `unlisted` lists; `external` entries live
  * outside the repo (personal skills folder) and must NOT have a repo
- * file. The skills page must show exactly `displayed` + `external`.
+ * folder. The skills page must show exactly `displayed` + `external`.
  * Runs before every build so the public skills list can never silently
  * drift from reality.
  */
-import { readdirSync, readFileSync } from 'node:fs';
-import { basename, dirname, join } from 'node:path';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -22,10 +23,18 @@ const skillsPagePath = join(
 
 const registry = JSON.parse(readFileSync(join(skillsDir, 'registry.json'), 'utf8'));
 
-const files = readdirSync(skillsDir)
-  .filter((name) => name.endsWith('.md'))
-  .map((name) => basename(name, '.md'))
+const files = readdirSync(skillsDir, { withFileTypes: true })
+  .filter((e) => e.isDirectory() && existsSync(join(skillsDir, e.name, 'SKILL.md')))
+  .map((e) => e.name)
   .sort();
+
+// Claude Code only discovers a skill if SKILL.md opens with YAML
+// frontmatter containing `name` and `description`.
+const badFrontmatter = files.filter((f) => {
+  const src = readFileSync(join(skillsDir, f, 'SKILL.md'), 'utf8');
+  const fm = src.match(/^---\n([\s\S]*?)\n---\n/);
+  return !fm || !/^name:\s*\S/m.test(fm[1]) || !/^description:\s*\S/m.test(fm[1]);
+});
 
 const { displayed, external, unlisted } = registry;
 const repoRegistered = [...displayed, ...unlisted].sort();
@@ -48,10 +57,19 @@ const extraOnPage = pageSlugs.filter((s) => !shownOnSite.includes(s));
 
 let failed = false;
 
+if (badFrontmatter.length > 0) {
+  failed = true;
+  console.error(
+    `✗ SKILL.md files missing frontmatter with "name" and "description" ` +
+      `(Claude Code won't discover them):\n` +
+      badFrontmatter.map((f) => `    - ${f}/SKILL.md`).join('\n')
+  );
+}
+
 if (missingFromRegistry.length > 0) {
   failed = true;
   console.error(
-    `✗ Skill files missing from .claude/skills/registry.json:\n` +
+    `✗ Skill folders missing from .claude/skills/registry.json:\n` +
       missingFromRegistry.map((f) => `    - ${f}`).join('\n') +
       `\n  Add each to "displayed" (shown on /skills) or "unlisted" (internal).`
   );
@@ -60,7 +78,7 @@ if (missingFromRegistry.length > 0) {
 if (missingFromDisk.length > 0) {
   failed = true;
   console.error(
-    `✗ Registry entries with no .md file in .claude/skills:\n` +
+    `✗ Registry entries with no <name>/SKILL.md in .claude/skills:\n` +
       missingFromDisk.map((r) => `    - ${r}`).join('\n')
   );
 }
@@ -68,7 +86,7 @@ if (missingFromDisk.length > 0) {
 if (externalWithFile.length > 0) {
   failed = true;
   console.error(
-    `✗ "external" entries that DO have a repo file (move to "displayed"): ` +
+    `✗ "external" entries that DO have a repo skill folder (move to "displayed"): ` +
       externalWithFile.join(', ')
   );
 }

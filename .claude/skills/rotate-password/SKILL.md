@@ -1,3 +1,8 @@
+---
+name: rotate-password
+description: Re-encrypt the PasswordGate ciphertext for a new password. Use when asked to rotate, change, or update the PasswordGate or work page password.
+---
+
 # rotate-password
 
 Re-encrypt the PasswordGate ciphertext for a new password.
