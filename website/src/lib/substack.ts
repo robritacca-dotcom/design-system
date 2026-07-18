@@ -8,6 +8,8 @@
    within the revalidate window — no rebuilds.
    ============================================ */
 
+import sanitizeHtml from "sanitize-html";
+
 /** How long (seconds) before the feed is re-fetched. 1 hour. */
 export const FEED_REVALIDATE_SECONDS = 3600;
 
@@ -80,9 +82,38 @@ function parseItem(itemXml: string): Article {
     coverImage,
     // Substack repeats the cover image as the first figure of the body; strip
     // it so it isn't shown twice (we render the cover separately above).
-    contentHtml: stripLeadingCover(tag(itemXml, "content:encoded"), coverImage),
+    // Sanitized because it's third-party HTML rendered via dangerouslySetInnerHTML.
+    contentHtml: sanitizeContent(
+      stripLeadingCover(tag(itemXml, "content:encoded"), coverImage)
+    ),
     author: decodeEntities(tag(itemXml, "dc:creator")),
   };
+}
+
+/**
+ * Sanitizes feed HTML before it reaches dangerouslySetInnerHTML: keeps the
+ * markup Substack posts actually use, drops scripts, event handlers, inline
+ * styles, and embeds. Classes are kept (inert without matching CSS) so the
+ * article layout survives; disallowed wrappers keep their inner content.
+ */
+function sanitizeContent(html: string): string {
+  return sanitizeHtml(html, {
+    allowedTags: [
+      "h1", "h2", "h3", "h4", "h5", "h6", "p", "a", "img", "figure",
+      "figcaption", "ul", "ol", "li", "blockquote", "pre", "code",
+      "strong", "em", "b", "i", "s", "u", "sub", "sup", "hr", "br",
+      "div", "span", "table", "thead", "tbody", "tr", "th", "td",
+    ],
+    allowedAttributes: {
+      a: ["href", "title", "target", "rel"],
+      img: ["src", "alt", "title", "width", "height", "srcset", "sizes", "loading"],
+      "*": ["class"],
+    },
+    allowedSchemes: ["https", "http", "mailto"],
+    transformTags: {
+      a: sanitizeHtml.simpleTransform("a", { rel: "noopener noreferrer" }),
+    },
+  });
 }
 
 /** Removes the body's leading <figure> when it duplicates the cover image. */
