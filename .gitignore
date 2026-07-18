@@ -28,3 +28,8 @@ storybook-static
 .vercel
 # Growth-loop local reports (never committed)
 ga-analysis/loop-reports/
+
+# macOS Finder/iCloud duplicate copies ("name 2.ext") — the registry
+# validator also fails the build on these so they get deleted, not shipped
+* [2-9]
+* [2-9].*

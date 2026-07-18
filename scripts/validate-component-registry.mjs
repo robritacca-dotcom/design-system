@@ -9,11 +9,41 @@
  * silently drift from reality.
  */
 import { readdirSync, readFileSync } from 'node:fs';
-import { dirname, join } from 'node:path';
+import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
 const componentsDir = join(repoRoot, 'src', 'components');
+
+/**
+ * macOS (Finder copy-paste, iCloud sync conflicts) creates duplicates
+ * named "original 2.ext". They silently shadow the real file — fail the
+ * build so they get deleted instead of committed.
+ */
+const FINDER_DUPLICATE = /^.+ [2-9]\d*(\.[^ ]+)?$/;
+const SKIP_DIRS = new Set([
+  'node_modules',
+  '.git',
+  '.next',
+  '.venv',
+  'dist',
+  'out',
+  'build',
+  'storybook-static',
+]);
+
+function findFinderDuplicates(dir, found = []) {
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    if (SKIP_DIRS.has(entry.name)) continue;
+    const full = join(dir, entry.name);
+    if (FINDER_DUPLICATE.test(entry.name)) {
+      found.push(relative(repoRoot, full));
+      continue;
+    }
+    if (entry.isDirectory()) findFinderDuplicates(full, found);
+  }
+  return found;
+}
 
 const registry = JSON.parse(
   readFileSync(join(componentsDir, 'registry.json'), 'utf8')
@@ -32,7 +62,17 @@ const duplicates = registry.components.filter((c) =>
   registry.docOnlyHelpers.includes(c)
 );
 
+const finderDuplicates = findFinderDuplicates(repoRoot);
+
 let failed = false;
+
+if (finderDuplicates.length > 0) {
+  failed = true;
+  console.error(
+    `✗ Finder-style duplicate files (" 2" copies) — delete them:\n` +
+      finderDuplicates.map((f) => `    - ${f}`).join('\n')
+  );
+}
 
 if (missingFromRegistry.length > 0) {
   failed = true;
