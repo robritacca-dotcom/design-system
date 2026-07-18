@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useId, useState, type CSSProperties } from 'react';
 import './CodeBlock.css';
 import '../../fonts/material-symbols.css';
 
@@ -11,6 +11,12 @@ export interface CodeBlockProps {
   filename?: string;
   /** Show the copy-to-clipboard button */
   showCopy?: boolean;
+  /** Max height of the block; code scrolls vertically inside while the header stays pinned. Numbers are px. */
+  maxHeight?: number | string;
+  /** Show a chevron beside the filename that collapses/expands the code area */
+  collapsible?: boolean;
+  /** Start collapsed (only applies when collapsible) */
+  defaultCollapsed?: boolean;
   /** Additional CSS classes */
   className?: string;
 }
@@ -24,13 +30,31 @@ export const CodeBlock = ({
   language,
   filename,
   showCopy = true,
+  maxHeight,
+  collapsible = false,
+  defaultCollapsed = false,
   className = '',
 }: CodeBlockProps) => {
   const baseClass = 'ds-code-block';
   const [copied, setCopied] = useState(false);
+  const [collapsed, setCollapsed] = useState(collapsible && defaultCollapsed);
+  const panelId = useId();
 
-  const classes = [baseClass, className].filter(Boolean).join(' ');
-  const hasHeader = Boolean(filename || language || showCopy);
+  const classes = [
+    baseClass,
+    collapsed ? `${baseClass}--collapsed` : '',
+    className,
+  ]
+    .filter(Boolean)
+    .join(' ');
+  const style =
+    maxHeight !== undefined
+      ? ({
+          '--ds-code-block-max-height':
+            typeof maxHeight === 'number' ? `${maxHeight}px` : maxHeight,
+        } as CSSProperties)
+      : undefined;
+  const hasHeader = Boolean(filename || language || showCopy || collapsible);
 
   const copy = () => {
     // Textarea fallback for contexts where the async clipboard API is
@@ -58,10 +82,24 @@ export const CodeBlock = ({
   };
 
   return (
-    <div className={classes}>
+    <div className={classes} style={style}>
       {hasHeader && (
         <div className={`${baseClass}__header`}>
           <div className={`${baseClass}__meta`}>
+            {collapsible && (
+              <button
+                type="button"
+                className={`${baseClass}__toggle`}
+                onClick={() => setCollapsed((c) => !c)}
+                aria-expanded={!collapsed}
+                aria-controls={panelId}
+                aria-label={collapsed ? 'Expand code' : 'Collapse code'}
+              >
+                <span className="material-symbols-rounded" aria-hidden="true">
+                  expand_more
+                </span>
+              </button>
+            )}
             {filename && <code className={`${baseClass}__filename`}>{filename}</code>}
             {language && <span className={`${baseClass}__language`}>{language}</span>}
           </div>
@@ -80,9 +118,13 @@ export const CodeBlock = ({
           )}
         </div>
       )}
-      <pre className={`${baseClass}__pre`}>
-        <code className={`${baseClass}__code`}>{code}</code>
-      </pre>
+      <div id={panelId} className={`${baseClass}__panel`} aria-hidden={collapsed || undefined}>
+        <div className={`${baseClass}__panel-inner`}>
+          <pre className={`${baseClass}__pre`}>
+            <code className={`${baseClass}__code`}>{code}</code>
+          </pre>
+        </div>
+      </div>
     </div>
   );
 };

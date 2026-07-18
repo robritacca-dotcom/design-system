@@ -347,7 +347,7 @@ Default icons (Material Symbols Rounded): `info`, `check_circle`, `warning`, `er
 
 ### CodeBlock
 
-**`ds-code-block`** — Monospace code in a `--color-bg-container-primary` container with `--radius-md` and a hairline border. The one sanctioned monospace context in the system (system mono stack — Nunito Sans everywhere else). Optional header row: filename (mono, `--color-text-secondary`), uppercase language tag (`--color-text-tertiary`, 0.08em tracking), and a copy button that confirms with a check for 2s. Code text is 14px/20px, `--color-text-primary`; long lines scroll horizontally. No syntax highlighting — monochrome by design, no dependencies.
+**`ds-code-block`** — Monospace code in a `--color-bg-container-primary` container with `--radius-md` and a hairline border. The one sanctioned monospace context in the system (system mono stack — Nunito Sans everywhere else). Optional header row: filename (mono, `--color-text-secondary`), uppercase language tag (`--color-text-tertiary`, 0.08em tracking), and a copy button that confirms with a check for 2s. Code text is 14px/20px, `--color-text-primary`; long lines scroll horizontally. An optional `maxHeight` prop caps the block: the code area scrolls vertically inside while the header stays pinned. An optional `collapsible` prop adds a chevron beside the filename (`--color-icon-primary`, 20px, rotates −90° when closed) that collapses the code area with the same 0fr/1fr grid animation as Accordion; `defaultCollapsed` starts it closed. No syntax highlighting — monochrome by design, no dependencies.
 
 ### Quote
 
