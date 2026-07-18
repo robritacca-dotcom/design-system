@@ -6,9 +6,8 @@ import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import Footer from "../../components/Footer/Footer";
-import { Button } from "@design-system/components/Button/Button";
 import { Badge } from "@design-system/components/Badge/Badge";
-import { ToastProvider, useToast } from "@design-system/components/Toast/Toast";
+import { CodeBlock } from "@design-system/components/CodeBlock/CodeBlock";
 import { getSidebarLinks, aboutSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
@@ -792,33 +791,10 @@ Never commit \`output/\` or \`service-account.json\`.
 ];
 
 /* ============================================
-   DOWNLOAD HELPER
-   ============================================ */
-
-function downloadSkill(filename: string, content: string) {
-  const blob = new Blob([content], { type: "text/markdown" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-}
-
-/* ============================================
    PAGE
    ============================================ */
 
-function SkillsContent() {
-  const { toast } = useToast();
-
-  function copySkill(content: string) {
-    navigator.clipboard.writeText(content);
-    toast({ title: "Copied to clipboard", variant: "positive", duration: 3000 });
-  }
-
+export default function SkillsPage() {
   return (
     <>
       <BlurBackground />
@@ -847,8 +823,8 @@ function SkillsContent() {
               personal skills folder — and encode this project&apos;s conventions:
               component patterns, token rules, navigation wiring, and more. Invoke any
               skill by name in Claude Code and it follows the exact steps without
-              re-explanation each session. Download any skill to adapt it for your own
-              project. One of them even runs on its own schedule — see{" "}
+              re-explanation each session. Expand any skill to read the full file, and
+              copy it to adapt it for your own project. One of them even runs on its own schedule — see{" "}
               <Link href="/loops" className={styles.introLink}>Loops</Link>.
             </p>
           </div>
@@ -864,25 +840,18 @@ function SkillsContent() {
                     </span>
                     <code className={styles.skillName}>{skill.name}</code>
                   </div>
-                  <div className={styles.skillActions}>
-                    <Button
-                      label="Copy"
-                      priority="tertiary"
-                      size="compact"
-                      iconLeft="content_copy"
-                      onClick={() => copySkill(skill.content)}
-                    />
-                    <Button
-                      label="Download"
-                      priority="tertiary"
-                      size="compact"
-                      iconLeft="download"
-                      onClick={() => downloadSkill(`${skill.slug}.md`, skill.content)}
-                    />
-                  </div>
                 </div>
 
                 <p className={styles.skillDescription}>{skill.description}</p>
+
+                <CodeBlock
+                  code={skill.content}
+                  filename={`${skill.slug}.md`}
+                  language="md"
+                  collapsible
+                  defaultCollapsed
+                  maxHeight={300}
+                />
 
                 <div className={styles.skillInvoke}>
                   <span className={styles.skillInvokeLabel}>Invoke:</span>
@@ -898,13 +867,5 @@ function SkillsContent() {
 
       <Footer />
     </>
-  );
-}
-
-export default function SkillsPage() {
-  return (
-    <ToastProvider position="bottom-right">
-      <SkillsContent />
-    </ToastProvider>
   );
 }
