@@ -1,6 +1,9 @@
 ---
 name: merge-and-push
 description: Commit the session's work and push to main safely — builds green first, no unrelated files swept in, a clear report after. Use when asked to merge and push, commit and push, push this, or ship it.
+icon: publish
+displayDescription: "Ships completed work safely: surveys the tree so unrelated files never get swept into a commit, runs both builds (registry validators included) before anything is committed, groups changes into logical conventional commits, pushes, and reports exactly what shipped and what was deliberately left out."
+invoke: ["merge and push","commit and push","push this","ship it"]
 ---
 
 # merge-and-push
@@ -25,6 +28,8 @@ Use this skill when asked to ship completed work — phrases like "merge and pus
    cd website && npm run build      # website: validators + Next.js static build
    ```
    The registry validators run automatically via `prebuild`. **If either build fails, stop** — fix the failure if it was caused by this session's work, otherwise report it. Never push red.
+
+   Note: the build regenerates `website/src/data/skills-content.generated.ts` from the SKILL.md files. If the session touched any skill file, the regenerated file is in scope — commit it alongside the skill edits (the validator fails the build if it's stale).
 
 3. **Group changes into logical commits** — one commit per concern, not one giant commit. Match the repo's conventional style (`feat(scope):`, `fix(scope):`, `chore(scope):`), with a 1–3 sentence body explaining the why. Check `git log --oneline -5` if unsure of the voice.
 

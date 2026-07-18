@@ -1,6 +1,9 @@
 ---
 name: accessibility-audit
 description: Audit a component or page for accessibility violations against WCAG 2.1 AA criteria. Use when asked for an accessibility audit, a11y check, WCAG compliance check, or "is X accessible".
+icon: accessibility
+displayDescription: "Audits a component or page against WCAG 2.1 AA criteria. Checks semantic HTML, ARIA usage, keyboard navigation, focus styles, and colour contrast via both source code analysis and live screenshots. Reports file and line-level findings with WCAG criterion and severity."
+invoke: ["accessibility audit","a11y check on [component/page]","check WCAG compliance","is [X] accessible"]
 ---
 
 # accessibility-audit
@@ -33,16 +36,16 @@ Use this skill when asked to check accessibility, run an a11y audit, or find WCA
 
    **Keyboard Navigation:**
    - All interactive elements are reachable by Tab key (not `tabIndex={-1}` without justification)
-   - Custom interactive components handle `onKeyDown` for Enter/Space (buttons), arrow keys (RadioGroup, SegmentedControl, ToggleGroup)
+   - Custom interactive components handle `onKeyDown` for Enter/Space (buttons), arrow keys (RadioButton, SegmentedControl, ToggleGroup)
    - Modal/dialog traps focus while open and restores focus to the trigger on close
    - Escape key closes dismissible overlays (Tooltip, Popover, DropdownMenu, AlertDialog)
 
    **Focus Styles:**
    - Every interactive element has a `:focus-visible` rule in its CSS
-   - Focus ring uses `--color-focus-ring` token — not silently removed with `outline: none`
+   - Focus ring uses the teal action token (`--color-action-primary-bg`) — per design.md, teal is reserved for primary CTAs and focus rings. Flag any `outline: none` without a visible replacement
 
 4. **Visual audit (from screenshots).** Start the preview server and screenshot the target in both light and dark mode (follow the `visual-review` skill pattern). Check:
-   - **Colour contrast:** Body text should use `--color-text-*` tokens. Flag any text rendered below 4.5:1 contrast (WCAG 1.4.3). Note which token is used and flag if it's outside the `--color-text-*` / `--color-on-*` families.
+   - **Colour contrast:** Body text should use `--color-text-*` tokens. Flag any text rendered below 4.5:1 contrast (WCAG 1.4.3). Note which token is used and flag if it's outside the `--color-text-*` family.
    - **Text sizing:** No text visually below ~12px (WCAG 1.4.4)
    - **Focus visibility:** Confirm focus rings are clearly visible in both light and dark themes
 

@@ -1,6 +1,9 @@
 ---
 name: component-doc-page
 description: Create a full-quality documentation page for a design system component on the website. Use when asked to document a component on the website, add a component docs page, or create the website page for a component.
+icon: article
+displayDescription: "Creates a full-quality documentation page for a design system component on the website. Reads the component's props to generate a variant showcase grid (the Button page is the benchmark), writes all three page files, and wires navigation, the components index, and the sitemap."
+invoke: ["document [X] on the website","add a docs page for [X]","create the website page for [X]"]
 ---
 
 # component-doc-page
@@ -18,7 +21,7 @@ This is a more thorough, component-specific version of `new-page`. The Button pa
 1. **Gather requirements** if not already provided:
    - Component name (PascalCase)
    - Figma node URL (optional — ask Rob, or omit if unknown)
-   - Storybook path (optional — usually `Components-ComponentName--docs`)
+   - Storybook path (optional — format: `/?path=/docs/components-<slug>--docs`)
 
 2. **Read the source component** `src/components/ComponentName/ComponentName.tsx`:
    - Extract all props from the TypeScript interface
@@ -31,13 +34,13 @@ This is a more thorough, component-specific version of `new-page`. The Button pa
    - `website/src/app/components/button/page.module.css` — CSS module structure
 
 4. **Create `website/src/app/components/<component-slug>/page.tsx`:**
-   - `"use client"` directive
-   - Standard layout shell: `Header`, `Sidebar`, `BlurBackground`, `Footer`, `PageLinks`
-   - `pageHeader` block with `subDisplay` ("Components") and `pageTitle` (component name)
-   - `introSection` with an `introBody` paragraph — write a clear 1–2 sentence description of the component's purpose, inferred from its props and JSDoc if available
+   - Mirror the Button page's layout shell exactly — same components, same nesting, same class names, with your slug in the `getSidebarLinks` call. Don't improvise structure.
+   - Invariants the exemplar can't teach:
+     - `subDisplay` is a *tagline* for the component (e.g. Button's "The main action element") — not the word "Components"; the breadcrumb already shows the section
+     - `introBody` is a clear 1–2 sentence description of the component's purpose, inferred from its props and JSDoc if available
+     - Import the component via the `@design-system` alias, never a relative path into `src/`
+     - Include `PageLinks` with whichever Figma/Storybook URLs were provided
    - **Variant showcase grid**: render the component in every meaningful combination of its variants and states. For components with discrete variants × states (like Button), render a proper grid. For simpler components, render one example per meaningful state/variant.
-   - Import the component: `import { ComponentName } from "@design-system/components/ComponentName/ComponentName"`
-   - Include `<PageLinks figmaUrl={...} storybookPath={...} />` if URLs provided
 
 5. **Create `website/src/app/components/<component-slug>/page.module.css`:**
    - Standard layout classes: `dsLayout`, `dsContent`, `pageHeader`, `pageTitle`, `subDisplay`, `introSection`, `introBody`
@@ -45,13 +48,16 @@ This is a more thorough, component-specific version of `new-page`. The Button pa
    - CSS custom properties only
 
 6. **Create `website/src/app/components/<component-slug>/layout.tsx`:**
-   - `metadata.title`: `"ComponentName | robr0 DS"`
+   - `metadata.title`: `"ComponentName"` only — the root layout's title template appends "— Robert Ritacca"
    - `metadata.description`: same as `introBody` text
 
 7. **Update `website/src/config/navigation.ts`:**
    - Find `componentsSidebarLinks` array
-   - Add entry in alphabetical order: `{ label: "Component Name", href: "/components/component-slug" }`
+   - Add entry in alphabetical order: `{ href: "/components/component-slug", label: "Component Name" }`
    - If entry already exists, skip this step
 
-8. **Check `website/src/app/components/page.tsx`** (the component gallery):
-   - If the component is not already in the preview card grid, add it following the existing card pattern
+8. **Update `website/src/app/components/page.tsx`** (the components index):
+   - Add a `TocCard` in alphabetical order: `<TocCard href="/components/component-slug" title="Component Name">` wrapping a small preview — use the real component (imported via `@design-system`) where it reads well at miniature size, as most cards do, or a small inline-styled mockup where it doesn't (see the Accordion card)
+
+9. **Update `website/src/app/sitemap.ts`:**
+   - Add `"/components/component-slug"` to the routes list in alphabetical order — the page is invisible to search engines without it

@@ -1,6 +1,9 @@
 ---
 name: heuristic-analysis
 description: Evaluate a page or component against Nielsen's 10 Usability Heuristics and produce a structured findings report. Use when asked for a heuristic analysis, UX review, or usability check.
+icon: fact_check
+displayDescription: "Evaluates a page or component against Nielsen's 10 Usability Heuristics. Takes screenshots in light and dark mode, reads the source code, then produces a structured findings table with severity ratings (Pass / Minor / Moderate / Critical) and specific fix suggestions."
+invoke: ["heuristic analysis of [page]","UX review of [page]","usability check on [component]"]
 ---
 
 # heuristic-analysis

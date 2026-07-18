@@ -1,6 +1,9 @@
 ---
 name: token-audit
 description: Scan CSS files for hardcoded values that should use design tokens, and report violations. Use when asked to check for hardcoded values, raw colours or pixel values, or audit token usage and design system compliance.
+icon: manage_search
+displayDescription: "Scans CSS files for hardcoded hex colours, raw rgb() values, and pixel values that should reference design tokens. Reports file, line number, offending value, and recommended token replacement. Accepts a single component, all-components, or website as scope."
+invoke: ["check for hardcoded values","token audit","audit [component] CSS","are there raw colours"]
 ---
 
 # token-audit
@@ -19,10 +22,7 @@ Use this skill when asked to check for hardcoded values, audit token usage, find
    - `website` → scans all `website/src/**/*.css` and `website/src/**/*.module.css`
    - A specific file path
 
-2. **Read the token reference files first** to know what tokens are available and what pixel values they map to:
-   - `src/tokens/tokens-primitives.css` — spatial/size primitives
-   - `src/tokens/tokens-light.css` — semantic colour tokens
-   - `src/tokens/tokens-typography.css` — font size, weight, line-height tokens
+2. **Read the token files in `src/tokens/` first** to know what tokens are available and what raw values they map to — primitives (raw hex/px), the light *and* dark semantic files, and typography (font size, weight, line-height).
 
 3. **Scan each CSS file** in scope for violations:
 
@@ -46,7 +46,7 @@ Use this skill when asked to check for hardcoded values, audit token usage, find
    - The offending value
    - Recommended token replacement (if a clear match exists in the token files)
 
-   Format: `path/to/file.css:42 — #3b82f6 → var(--color-action-default)`
+   Format: `path/to/file.css:42 — #118AB2 → var(--color-action-primary-bg)`
 
 5. **Summarise** at the end:
    - `X violation(s) found`

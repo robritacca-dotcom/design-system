@@ -1,6 +1,9 @@
 ---
 name: visual-review
 description: Start the website dev server and screenshot pages in both light and dark mode to catch visual issues. Use when asked to visually review changes, check light and dark mode, or screenshot pages.
+icon: preview
+displayDescription: "Opens the site in a browser preview, drives each page through both light and dark mode, and screenshots them. Checks for invisible text, broken layouts, overflow, and stuck hover states — then reports findings or confirms all clear."
+invoke: ["check how this looks","review light and dark","visual check","screenshot the page"]
 ---
 
 # visual-review
@@ -13,22 +16,13 @@ Use this skill when asked to visually review changes — phrases like "check how
 
 ## Instructions
 
+Use the browser/preview tools available in the current environment for every step below — this skill describes *what* to do; map it to whatever tools the harness currently provides. Never launch the dev server through a raw shell command.
+
 1. **Determine which URLs to review.** If not specified, default to the page(s) most recently modified in the current conversation. Ask if unclear.
 
-2. **Start the preview server** using `preview_start` targeting the `website/` directory (Next.js dev server, port 3000). Wait for it to be ready.
+2. **Open the website's Next.js dev server** (the `website/` project, port 3000) in the browser preview and wait for it to be ready.
 
-3. **For each URL to review**, do the following in order:
-
-   **Dark mode check:**
-   - Navigate to the URL
-   - Verify `data-theme="dark"` is present on `<html>` (use `preview_eval`: `document.documentElement.getAttribute('data-theme')`)
-   - If it's `"light"`, click the ThemeToggle button (it's in the Header — use `preview_snapshot` to find it, then `preview_click`)
-   - Take a screenshot with `preview_screenshot`
-
-   **Light mode check:**
-   - Click the ThemeToggle to switch to light mode
-   - Verify `data-theme="light"` on `<html>`
-   - Take a screenshot with `preview_screenshot`
+3. **For each URL, check both themes.** The site's theme is driven by the `data-theme` attribute on `<html>` — not by `prefers-color-scheme`, so forcing the browser's colour scheme does nothing. To switch: click the theme toggle in the top nav (`MegaNav`, top-right), or set the attribute programmatically. Verify the attribute actually changed before screenshotting, then take a screenshot in each theme.
 
 4. **Examine each screenshot for:**
    - Text that is invisible or the same colour as its background
@@ -42,11 +36,10 @@ Use this skill when asked to visually review changes — phrases like "check how
    - Format: `[URL] [dark|light] — description of issue`
    - If no issues found, say: `[URL] — looks correct in both themes`
 
-6. **Stop the preview server** with `preview_stop` when all pages are reviewed.
+6. **Stop the preview server** when all pages are reviewed, unless the session is still using it.
 
 ## Key context
 
-- Theme state is stored on `document.documentElement` as `data-theme="light"` or `data-theme="dark"`
-- Theme persists via localStorage key `theme` and a cookie
-- The ThemeToggle component is always in the `<Header>` at the top of every page
+- Theme state lives on `document.documentElement` as `data-theme="light"` or `data-theme="dark"`; it persists via the localStorage key `theme` and is applied before first paint by an inline script in the root layout
+- The theme toggle is rendered by `MegaNav` (top-right of every page)
 - The `animate-in` class on page elements triggers CSS entry animations — these are normal on first load

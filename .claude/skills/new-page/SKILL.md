@@ -1,6 +1,9 @@
 ---
 name: new-page
 description: Add a new page to the website with the standard layout shell and correct navigation wiring. Use when asked to add or create a new page on the site.
+icon: insert_drive_file
+displayDescription: "Creates a new website page by mirroring a live exemplar page's layout shell, then wires it into every place the site tracks pages: the section sidebar, breadcrumbs, and the sitemap. Prevents the common mistake of adding a route without registering it."
+invoke: ["add a page for [X]","create a [section] page","add [X] to the site"]
 ---
 
 # new-page
@@ -11,61 +14,43 @@ Add a new page to the website with the standard layout shell and correct navigat
 
 Use this skill when asked to add or create a new page on the website — phrases like "add a page for [X]", "create a [section] page", "add [X] to the site".
 
+For a **component documentation page**, use the `component-doc-page` skill instead — it covers the variant showcase and component-specific registrations.
+
 ## Instructions
 
 1. **Gather requirements** if not already provided:
    - Page URL path (e.g. `/foundations/motion`)
-   - Section: `Components` | `Foundations` | `About` (determines which sidebar)
-   - Page title and one-sentence description (for metadata and page header)
-   - Figma URL (optional) and Storybook path (optional) — for `PageLinks`
+   - Which section it belongs to — the sidebar arrays in `website/src/config/navigation.ts` are the authoritative list of sections (components, foundations, the about cluster, work; writing is fed dynamically from Substack)
+   - Page title, a short `subDisplay` tagline, and a 1–2 sentence description (for metadata and the intro block)
+   - Figma URL and Storybook path (optional) — for `PageLinks`
 
-2. **Read these reference files before writing anything:**
-   - `website/src/app/components/button/page.tsx` — gold-standard page structure
-   - `website/src/app/components/button/page.module.css` — CSS module reference
-   - `website/src/app/components/button/layout.tsx` — metadata reference
-   - `website/src/config/navigation.ts` — navigation config (single source of truth)
+2. **Read the exemplars before writing anything.** The live pages are the source of truth for structure — mirror them rather than writing a shell from memory:
+   - `website/src/app/skills/page.tsx` — a standard content page (layout shell, sidebar wiring, header/intro blocks, entry animations)
+   - `website/src/app/components/button/page.tsx` + `page.module.css` + `layout.tsx` — the richest example, with `PageLinks` and per-page CSS
+   - `website/src/config/navigation.ts` — nav config (single source of truth for sidebars, mega menu, and breadcrumbs)
+   - `website/src/app/sitemap.ts` — the route list
 
-3. **Create the directory** `website/src/app/<path>/` with three files:
+3. **Create the directory** `website/src/app/<path>/` with three files, mirroring the exemplar:
 
 ### File 1: `page.tsx`
-- `"use client"` directive at top
-- Standard imports: `Header`, `Sidebar`, `BlurBackground`, `Footer`, `PageLinks` from `@/components/`
-- Import `styles` from `./page.module.css`
-- Import `getNavLinks`, `getSidebarLinks`, and the correct section sidebar links array from `@/config/navigation`
-- Page structure:
-  ```
-  <div className={styles.dsLayout}>
-    <Header links={getNavLinks(...)} />
-    <BlurBackground />
-    <Sidebar links={getSidebarLinks(sectionSidebarLinks, "/current/path")} />
-    <main className={styles.dsContent}>
-      <div className={styles.pageHeader}>
-        <p className={`${styles.subDisplay} animate-in`}>Section label</p>
-        <h1 className={`${styles.pageTitle} animate-in`}>Page Title</h1>
-      </div>
-      <div className={`${styles.introSection} animate-in`}>
-        <p className={styles.introBody}>Introductory description.</p>
-      </div>
-      {/* Page content goes here */}
-    </main>
-    <Footer />
-  </div>
-  ```
-- Include `<PageLinks figmaUrl={...} storybookPath={...} />` if URLs are available
+- Copy the exemplar's shell exactly — same components, same nesting, same class names. Don't improvise structure.
+- Invariants the exemplar can't teach:
+  - `subDisplay` is a *tagline* inside the intro block (e.g. the Skills page's "Reusable AI instructions, tuned for this project") — not the section name; the breadcrumb already shows where you are
+  - Sidebar links come from `getSidebarLinks(<section>SidebarLinks, "<your path>")`
+  - Include `PageLinks` only if Figma/Storybook URLs exist
 
 ### File 2: `page.module.css`
-- Must include: `dsLayout`, `dsContent`, `pageHeader`, `pageTitle`, `subDisplay`, `introSection`, `introBody`
-- CSS custom properties only — no hardcoded values
-- Match the structure from the Button page module CSS
+- Copy the exemplar's layout classes; add page-specific classes as needed
+- Semantic design tokens only — no hardcoded colours or magic values
 
 ### File 3: `layout.tsx`
 - Exports `metadata` with `title` and `description`
-- `title` format: `"Page Title | robr0 DS"`
-- Exports default `Layout` component wrapping `{children}` in a fragment
+- `title` is the bare page name only — the root layout's title template appends "— Robert Ritacca"
+- Default export wraps `{children}` in a fragment
 
-4. **Update `website/src/config/navigation.ts`:**
-   - Find the correct sidebar links array for the section (`componentsSidebarLinks`, `foundationsSidebarLinks`, `aboutSidebarLinks`)
-   - Add the new entry in alphabetical order by label
-   - Entry format: `{ label: "Page Title", href: "/path/to/page" }`
+4. **Register the page everywhere the site tracks pages:**
+   - **Sidebar**: add `{ href, label }` to the section's array in `website/src/config/navigation.ts`, matching that array's existing order convention (components and foundations are alphabetical; work and about are curated)
+   - **Sitemap**: add the route to `website/src/app/sitemap.ts`
+   - **Breadcrumbs**: sub-pages of an existing section resolve automatically from the sidebar entry. Only if the page starts a *new* section: add a `breadcrumbSections` entry, and if it lives under the Design system umbrella, extend `dsActiveMatchers` (and `dsMegaItems` if it should appear in the mega menu)
 
-5. **If this is a component page**, also add the component to the preview card grid in `website/src/app/components/page.tsx` — find the existing card list and add a new entry matching the format.
+5. **Verify**: load the page in the browser and confirm the sidebar highlights it, the breadcrumb trail is correct, and both themes render properly.

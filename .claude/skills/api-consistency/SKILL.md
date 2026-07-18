@@ -1,6 +1,9 @@
 ---
 name: api-consistency
 description: Review component prop interfaces across the design system for naming inconsistencies, missing standard props, and pattern violations. Use when asked to review component APIs, audit prop naming consistency, or check TypeScript interfaces for API inconsistencies.
+icon: compare
+displayDescription: "Reads all component Props interfaces and flags inconsistencies across the library: mixed boolean naming (disabled vs isDisabled), mismatched size enums, missing standard props (className, disabled), and structural mismatches within component families. Produces a grouped findings report prioritised by breaking impact."
+invoke: ["review component APIs","prop consistency audit","are our component props consistent","check for API inconsistencies"]
 ---
 
 # api-consistency
@@ -14,7 +17,7 @@ Use this skill when asked to review component APIs, check prop naming consistenc
 ## Instructions
 
 1. **Determine scope.** Accept one of:
-   - A list of specific components (e.g. `Button, IconButton, CircularButton`) → compare those
+   - A list of specific components (e.g. `Button, CircularButton, ButtonGroup`) → compare those
    - `all` → scan all components in `src/components/`
    - A category description (e.g. "all button-like components", "all form inputs") → infer the relevant components
 
@@ -46,7 +49,7 @@ Use this skill when asked to review component APIs, check prop naming consistenc
    - All form-like components should have `id?: string` and `name?: string`
 
    **Family consistency:**
-   - Components in the same family (e.g. Button / IconButton / CircularButton) should share `size` enum values
+   - Components in the same family (e.g. Button / CircularButton / ButtonGroup) should share `size` enum values
    - If one component accepts `iconLeft`/`iconRight`, siblings in the same family should follow the same pattern
    - Default values: if `size` defaults to `"default"` on Button, it should not default to `"medium"` on a related component
 
