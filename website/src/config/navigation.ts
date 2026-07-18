@@ -233,7 +233,7 @@ export function getBreadcrumbs(pathname: string): BreadcrumbItem[] {
   const path = pathname.length > 1 ? pathname.replace(/\/$/, "") : pathname;
 
   // Top-level pages with no breadcrumb
-  if (path === "/" || path === "/contact" || path === "/about/me" || path === "/about/work") {
+  if (path === "/" || path === "/contact" || path === "/about/me") {
     return [];
   }
 

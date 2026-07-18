@@ -9,7 +9,7 @@ import styles from "./PageBreadcrumb.module.css";
 /**
  * Renders the current page's breadcrumb trail based on the URL.
  * Returns nothing for top-level pages where no trail is needed
- * (home, /contact, /about/me, /about/work, /work).
+ * (home, /contact, /about/me, /work).
  */
 export default function PageBreadcrumb() {
   const pathname = usePathname() ?? "/";

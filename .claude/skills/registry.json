@@ -15,7 +15,5 @@
   "external": [
     "ga-report"
   ],
-  "unlisted": [
-    "rotate-password"
-  ]
+  "unlisted": []
 }
