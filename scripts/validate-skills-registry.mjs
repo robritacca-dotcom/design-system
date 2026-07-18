@@ -46,6 +46,25 @@ const pageSlugs = [...pageSource.matchAll(/^\s*slug: "([^"]+)",$/gm)]
   .map((m) => m[1])
   .sort();
 
+// The skills page and the committed skill files are public — they must not
+// leak local absolute paths (machine username) or a GA property id.
+const leakPatterns = [
+  [/\/Users\/[A-Za-z]/, 'local absolute path (/Users/…)'],
+  [/property[\s_-]?(?:id)?\W{0,3}\d{6,}/i, 'GA property id'],
+];
+const leaks = [];
+for (const [label, src] of [
+  ['website/src/app/skills/page.tsx', pageSource],
+  ...files.map((f) => [
+    `.claude/skills/${f}/SKILL.md`,
+    readFileSync(join(skillsDir, f, 'SKILL.md'), 'utf8'),
+  ]),
+]) {
+  for (const [pattern, what] of leakPatterns) {
+    if (pattern.test(src)) leaks.push(`${label}: ${what}`);
+  }
+}
+
 const missingFromRegistry = files.filter((f) => !repoRegistered.includes(f));
 const missingFromDisk = repoRegistered.filter((r) => !files.includes(r));
 const externalWithFile = external.filter((e) => files.includes(e));
@@ -56,6 +75,14 @@ const missingFromPage = shownOnSite.filter((s) => !pageSlugs.includes(s));
 const extraOnPage = pageSlugs.filter((s) => !shownOnSite.includes(s));
 
 let failed = false;
+
+if (leaks.length > 0) {
+  failed = true;
+  console.error(
+    `✗ Sensitive details in public skills content (redact before committing):\n` +
+      leaks.map((l) => `    - ${l}`).join('\n')
+  );
+}
 
 if (badFrontmatter.length > 0) {
   failed = true;

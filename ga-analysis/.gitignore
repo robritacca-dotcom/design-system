@@ -1,5 +1,6 @@
-# Never commit the service-account key or pulled data
+# Never commit the service-account key, the property id, or pulled data
 service-account.json
+property-id.txt
 *.key.json
 key*.json
 credentials*.json

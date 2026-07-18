@@ -685,7 +685,7 @@ Read the newest report in \`ga-analysis/loop-reports/\` (git-ignored, local-only
 ### 1. Pull the data
 
 \`\`\`bash
-cd /Users/rritacca/Documents/Projects/design-system/ga-analysis && ./.venv/bin/python pull_ga.py --days 28
+cd ~/Documents/Projects/design-system/ga-analysis && ./.venv/bin/python pull_ga.py --days 28
 \`\`\`
 
 Output lands in \`ga-analysis/output/all.json\`. If the venv is missing: \`python3 -m venv .venv && ./.venv/bin/pip install -q -r requirements.txt\`. FutureWarnings are harmless.
@@ -712,7 +712,7 @@ If the data doesn't support a confident copy hypothesis this week, **say so and 
 Work in a temporary worktree so the user's working tree is untouched:
 
 \`\`\`bash
-REPO=/Users/rritacca/Documents/Projects/design-system
+REPO=~/Documents/Projects/design-system
 WT=$REPO/../.growth-loop-worktree
 BRANCH=growth/$(date +%F)-<short-slug>
 git -C $REPO worktree add "$WT" -b "$BRANCH" main
@@ -777,12 +777,12 @@ description: Pull Google Analytics (GA4) data for robertritacca.com and analyze 
 
 # GA report
 
-Pulls GA4 data for **www.robertritacca.com** (property \`311163767\`) via the
+Pulls GA4 data for **www.robertritacca.com** (property \`•••••••••\`) via the
 \`ga-analysis/pull_ga.py\` script, then analyzes it in plain, non-jargon English.
 
 ## Where things live
 
-- Script + venv: \`/Users/rritacca/Documents/Projects/design-system/ga-analysis/\`
+- Script + venv: \`~/Documents/Projects/design-system/ga-analysis/\`
 - Runner: \`./.venv/bin/python pull_ga.py\`
 - Output: \`ga-analysis/output/all.json\` (+ one CSV per report). Git-ignored.
 - Credentials: \`ga-analysis/service-account.json\` (git-ignored; already set up).
@@ -795,7 +795,7 @@ Pulls GA4 data for **www.robertritacca.com** (property \`311163767\`) via the
 
 2. **Run the pull** from the ga-analysis folder:
    \`\`\`bash
-   cd /Users/rritacca/Documents/Projects/design-system/ga-analysis && ./.venv/bin/python pull_ga.py --days 30
+   cd ~/Documents/Projects/design-system/ga-analysis && ./.venv/bin/python pull_ga.py --days 30
    \`\`\`
    If the venv is missing, create it first:
    \`\`\`bash

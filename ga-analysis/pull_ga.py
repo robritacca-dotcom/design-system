@@ -24,9 +24,28 @@ from google.analytics.data_v1beta.types import (
     RunReportRequest,
 )
 
-PROPERTY_ID = "311163767"  # www.robertritacca.com
 HERE = Path(__file__).resolve().parent
 OUTPUT_DIR = HERE / "output"
+
+
+def _property_id() -> str:
+    # Kept out of the source: this repo is public. Env var wins; otherwise
+    # read the git-ignored property-id.txt next to this script.
+    pid = os.environ.get("GA_PROPERTY_ID", "").strip()
+    if not pid:
+        id_file = HERE / "property-id.txt"
+        if id_file.exists():
+            pid = id_file.read_text().strip()
+    if not pid:
+        raise SystemExit(
+            "GA4 property id not found. Set GA_PROPERTY_ID or write the id to "
+            "ga-analysis/property-id.txt (git-ignored). It's the numeric id under "
+            "Admin → Property settings in analytics.google.com."
+        )
+    return pid
+
+
+PROPERTY_ID = _property_id()
 
 # Each report: (name, [dimensions], [metrics], optional order-by-metric)
 REPORTS = [

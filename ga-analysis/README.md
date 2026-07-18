@@ -1,7 +1,9 @@
 # GA analysis
 
-Pulls a snapshot of GA4 data for **www.robertritacca.com** (property `311163767`)
-into CSV + JSON so Claude can analyze it.
+Pulls a snapshot of GA4 data for **www.robertritacca.com** into CSV + JSON so
+Claude can analyze it. The GA4 property id is deliberately not in this repo —
+the script reads it from `GA_PROPERTY_ID` or the git-ignored
+`ga-analysis/property-id.txt`.
 
 ## One-time setup (~10 min)
 
@@ -10,6 +12,7 @@ into CSV + JSON so Claude can analyze it.
 3. **Create a service account**: APIs & Services → Credentials → *Create credentials* → *Service account*. Name it e.g. `ga-reader`. Skip the optional role steps → *Done*.
 4. **Make a key**: click the service account → *Keys* → *Add key* → *Create new key* → **JSON**. A file downloads. Save it as `ga-analysis/service-account.json`. **This is a secret — it is git-ignored, never commit it.**
 5. **Grant it read access in GA**: analytics.google.com → *Admin* (gear) → under the `www.robertritacca.com` property → *Property access management* → **+** → paste the service account email (looks like `ga-reader@<project>.iam.gserviceaccount.com`) → role **Viewer** → *Add*.
+6. **Record the property id**: Admin → *Property settings* → copy the numeric property id into `ga-analysis/property-id.txt` (git-ignored).
 
 ## Run
 
