@@ -1,142 +1,177 @@
 #!/usr/bin/env node
 /**
  * Validates .claude/skills/registry.json against the filesystem and the
- * skills page.
+ * generated /skills page data.
  *
  * Every skill folder in .claude/skills (a directory holding a SKILL.md,
  * the layout Claude Code discovers) must appear in exactly one of the
  * registry's `displayed` or `unlisted` lists; `external` entries live
  * outside the repo (personal skills folder) and must NOT have a repo
- * folder. The skills page must show exactly `displayed` + `external`.
- * Runs before every build so the public skills list can never silently
- * drift from reality.
+ * folder — their published copy lives in website/src/data/external-skills.
+ * The /skills page renders website/src/data/skills-content.generated.ts,
+ * which scripts/generate-skills-content.mjs builds from the skill files;
+ * this validator fails if that file is stale. Runs before every build so
+ * the public skills list can never silently drift from reality.
  */
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { buildSkillsContent, outputPath } from './generate-skills-content.mjs';
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
 const skillsDir = join(repoRoot, '.claude', 'skills');
-const skillsPagePath = join(
-  repoRoot, 'website', 'src', 'app', 'skills', 'page.tsx'
-);
+const externalDir = join(repoRoot, 'website', 'src', 'data', 'external-skills');
 
 const registry = JSON.parse(readFileSync(join(skillsDir, 'registry.json'), 'utf8'));
+const { displayed, external, unlisted } = registry;
 
 const files = readdirSync(skillsDir, { withFileTypes: true })
   .filter((e) => e.isDirectory() && existsSync(join(skillsDir, e.name, 'SKILL.md')))
   .map((e) => e.name)
   .sort();
 
+// Every skill source we lint: repo skills + published copies of external ones.
+const skillSources = [
+  ...files.map((f) => [`.claude/skills/${f}/SKILL.md`, join(skillsDir, f, 'SKILL.md')]),
+  ...external
+    .filter((e) => existsSync(join(externalDir, `${e}.md`)))
+    .map((e) => [
+      `website/src/data/external-skills/${e}.md`,
+      join(externalDir, `${e}.md`),
+    ]),
+].map(([label, path]) => [label, path, readFileSync(path, 'utf8')]);
+
 // Claude Code only discovers a skill if SKILL.md opens with YAML
-// frontmatter containing `name` and `description`.
-const badFrontmatter = files.filter((f) => {
-  const src = readFileSync(join(skillsDir, f, 'SKILL.md'), 'utf8');
-  const fm = src.match(/^---\n([\s\S]*?)\n---\n/);
-  return !fm || !/^name:\s*\S/m.test(fm[1]) || !/^description:\s*\S/m.test(fm[1]);
-});
+// frontmatter containing `name` and `description`. Skills shown on the
+// /skills page additionally need the card metadata the generator reads.
+const frontmatterOf = (src) => src.match(/^---\n([\s\S]*?)\n---\n/)?.[1] ?? '';
+const shownOnSite = [...displayed, ...external];
+const badFrontmatter = [];
+for (const [label, , src] of skillSources) {
+  const fm = frontmatterOf(src);
+  const slug = label.replace(/^.*\/([^/]+?)(?:\/SKILL)?\.md$/, '$1');
+  const required = ['name', 'description'];
+  if (shownOnSite.includes(slug)) required.push('icon', 'displayDescription', 'invoke');
+  const missing = required.filter((k) => !new RegExp(`^${k}:\\s*\\S`, 'm').test(fm));
+  if (missing.length > 0) badFrontmatter.push(`${label}: missing ${missing.join(', ')}`);
+}
 
-const { displayed, external, unlisted } = registry;
-const repoRegistered = [...displayed, ...unlisted].sort();
-const shownOnSite = [...displayed, ...external].sort();
-
-// Slugs the skills page actually renders
-const pageSource = readFileSync(skillsPagePath, 'utf8');
-const pageSlugs = [...pageSource.matchAll(/^\s*slug: "([^"]+)",$/gm)]
-  .map((m) => m[1])
-  .sort();
-
-// The skills page and the committed skill files are public — they must not
-// leak local absolute paths (machine username) or a GA property id.
+// The committed skill files and their published copies are public — they
+// must not leak local absolute paths (machine username) or a GA property id.
 const leakPatterns = [
   [/\/Users\/[A-Za-z]/, 'local absolute path (/Users/…)'],
   [/property[\s_-]?(?:id)?\W{0,3}\d{6,}/i, 'GA property id'],
 ];
 const leaks = [];
-for (const [label, src] of [
-  ['website/src/app/skills/page.tsx', pageSource],
-  ...files.map((f) => [
-    `.claude/skills/${f}/SKILL.md`,
-    readFileSync(join(skillsDir, f, 'SKILL.md'), 'utf8'),
-  ]),
-]) {
+for (const [label, , src] of skillSources) {
   for (const [pattern, what] of leakPatterns) {
     if (pattern.test(src)) leaks.push(`${label}: ${what}`);
   }
 }
 
+// Backtick-quoted repo paths in skill bodies must exist — catches skills
+// whose reference files were renamed or deleted. Placeholder-ish mentions
+// (globs, <slug> templates, ComponentName examples) are skipped.
+const pathPrefix = /^(src|website|scripts|\.claude|\.storybook|design\.md)(\/|$)/;
+const placeholder = /[<>*{}[\] ]|ComponentName|MyComponent|component-slug/;
+const deadPaths = [];
+for (const [label, , src] of skillSources) {
+  for (const [, candidate] of src.matchAll(/`([^`\n]+)`/g)) {
+    if (!pathPrefix.test(candidate) || placeholder.test(candidate)) continue;
+    if (!existsSync(join(repoRoot, candidate))) {
+      deadPaths.push(`${label}: \`${candidate}\` does not exist`);
+    }
+  }
+}
+
+// The generated page data must match what the skill files produce.
+let staleGenerated = null;
+try {
+  const expected = buildSkillsContent();
+  const onDisk = existsSync(outputPath) ? readFileSync(outputPath, 'utf8') : '';
+  if (onDisk !== expected) {
+    staleGenerated =
+      'website/src/data/skills-content.generated.ts is stale — run ' +
+      '`node scripts/generate-skills-content.mjs` and commit the result.';
+  }
+} catch (err) {
+  staleGenerated = `generating skills content failed: ${err.message}`;
+}
+
+const repoRegistered = [...displayed, ...unlisted].sort();
 const missingFromRegistry = files.filter((f) => !repoRegistered.includes(f));
 const missingFromDisk = repoRegistered.filter((r) => !files.includes(r));
 const externalWithFile = external.filter((e) => files.includes(e));
+const externalWithoutCopy = external.filter(
+  (e) => !existsSync(join(externalDir, `${e}.md`))
+);
 const duplicates = [...displayed, ...external, ...unlisted].filter(
   (slug, i, all) => all.indexOf(slug) !== i
 );
-const missingFromPage = shownOnSite.filter((s) => !pageSlugs.includes(s));
-const extraOnPage = pageSlugs.filter((s) => !shownOnSite.includes(s));
 
 let failed = false;
+const fail = (msg) => {
+  failed = true;
+  console.error(`✗ ${msg}`);
+};
 
 if (leaks.length > 0) {
-  failed = true;
-  console.error(
-    `✗ Sensitive details in public skills content (redact before committing):\n` +
+  fail(
+    `Sensitive details in public skills content (redact before committing):\n` +
       leaks.map((l) => `    - ${l}`).join('\n')
   );
 }
 
 if (badFrontmatter.length > 0) {
-  failed = true;
-  console.error(
-    `✗ SKILL.md files missing frontmatter with "name" and "description" ` +
-      `(Claude Code won't discover them):\n` +
-      badFrontmatter.map((f) => `    - ${f}/SKILL.md`).join('\n')
+  fail(
+    `Skill files with incomplete frontmatter (name/description for Claude Code ` +
+      `discovery; icon/displayDescription/invoke for the /skills page):\n` +
+      badFrontmatter.map((f) => `    - ${f}`).join('\n')
+  );
+}
+
+if (deadPaths.length > 0) {
+  fail(
+    `Skill files referencing repo paths that don't exist (stale instructions):\n` +
+      deadPaths.map((p) => `    - ${p}`).join('\n')
   );
 }
 
 if (missingFromRegistry.length > 0) {
-  failed = true;
-  console.error(
-    `✗ Skill folders missing from .claude/skills/registry.json:\n` +
+  fail(
+    `Skill folders missing from .claude/skills/registry.json:\n` +
       missingFromRegistry.map((f) => `    - ${f}`).join('\n') +
       `\n  Add each to "displayed" (shown on /skills) or "unlisted" (internal).`
   );
 }
 
 if (missingFromDisk.length > 0) {
-  failed = true;
-  console.error(
-    `✗ Registry entries with no <name>/SKILL.md in .claude/skills:\n` +
+  fail(
+    `Registry entries with no <name>/SKILL.md in .claude/skills:\n` +
       missingFromDisk.map((r) => `    - ${r}`).join('\n')
   );
 }
 
 if (externalWithFile.length > 0) {
-  failed = true;
-  console.error(
-    `✗ "external" entries that DO have a repo skill folder (move to "displayed"): ` +
+  fail(
+    `"external" entries that DO have a repo skill folder (move to "displayed"): ` +
       externalWithFile.join(', ')
   );
 }
 
-if (duplicates.length > 0) {
-  failed = true;
-  console.error(`✗ Listed in more than one registry list: ${duplicates.join(', ')}`);
+if (externalWithoutCopy.length > 0) {
+  fail(
+    `"external" entries missing a published copy in website/src/data/external-skills/: ` +
+      externalWithoutCopy.map((e) => `${e}.md`).join(', ')
+  );
 }
 
-if (missingFromPage.length > 0 || extraOnPage.length > 0) {
-  failed = true;
-  if (missingFromPage.length > 0) {
-    console.error(
-      `✗ Registered skills missing from website/src/app/skills/page.tsx:\n` +
-        missingFromPage.map((s) => `    - ${s}`).join('\n')
-    );
-  }
-  if (extraOnPage.length > 0) {
-    console.error(
-      `✗ Skills on the page but not in the registry:\n` +
-        extraOnPage.map((s) => `    - ${s}`).join('\n')
-    );
-  }
+if (duplicates.length > 0) {
+  fail(`Listed in more than one registry list: ${duplicates.join(', ')}`);
+}
+
+if (staleGenerated) {
+  fail(staleGenerated);
 }
 
 if (failed) {
