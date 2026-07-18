@@ -26,3 +26,5 @@ dist-ssr
 *storybook.log
 storybook-static
 .vercel
+# Growth-loop local reports (never committed)
+ga-analysis/loop-reports/
