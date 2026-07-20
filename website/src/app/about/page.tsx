@@ -28,7 +28,7 @@ export default function AboutDsPage() {
           <PageBreadcrumb />
           {/* Page Title */}
           <div className={`${styles.pageHeader} animate-in`}>
-            <h1 className={styles.pageTitle}>About robr0 DS</h1>
+            <h1 className={styles.pageTitle}>Overview of robr0 DS</h1>
           </div>
 
           {/* Intro */}

@@ -43,9 +43,9 @@ export interface BreadcrumbItem {
 export const dsMegaItems: MegaItem[] = [
   {
     href: "/about",
-    label: "About",
+    label: "Docs",
     description: "How robr0 DS works, plus the artifacts you can take and reuse",
-    icon: "info",
+    icon: "menu_book",
   },
   {
     href: "/foundations",
@@ -143,11 +143,12 @@ export const foundationsSidebarLinks: NavLink[] = [
 ];
 
 /**
- * Sidebar for the About cluster — the landing page + the artifacts
+ * Sidebar for the Docs cluster — the overview landing page + the artifacts
  * (Claude MD, Design MD, Skills) that visitors can take and reuse.
+ * (Routes keep their original /about URL; only the naming changed.)
  */
 export const aboutSidebarLinks: NavLink[] = [
-  { href: "/about", label: "About" },
+  { href: "/about", label: "Overview" },
   { href: "/blueprints/claude", label: "Claude MD" },
   { href: "/blueprints/design", label: "Design MD" },
   { href: "/loops", label: "Loops" },
@@ -210,8 +211,8 @@ interface SectionConfig {
 }
 
 const breadcrumbSections: SectionConfig[] = [
-  // About cluster — all four pages share the same parent breadcrumb
-  { base: "/about", label: "About", parent: "Design system", sidebar: null },
+  // Docs cluster — all pages share the same parent breadcrumb
+  { base: "/about", label: "Docs", parent: "Design system", sidebar: null },
   { base: "/blueprints/claude", label: "Claude MD", parent: "Design system", sidebar: null },
   { base: "/blueprints/design", label: "Design MD", parent: "Design system", sidebar: null },
   { base: "/skills", label: "Skills", parent: "Design system", sidebar: null },

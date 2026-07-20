@@ -24,7 +24,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/work/intuit-agent-chat",
     "/contact",
 
-    // Design system cluster (About is the landing)
+    // Design system cluster (Docs overview is the landing, served at /about)
     "/about",
     "/blueprints/claude",
     "/blueprints/design",
