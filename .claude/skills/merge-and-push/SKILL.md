@@ -29,7 +29,7 @@ Use this skill when asked to ship completed work — phrases like "merge and pus
    ```
    The registry validators run automatically via `prebuild`. **If either build fails, stop** — fix the failure if it was caused by this session's work, otherwise report it. Never push red.
 
-   Note: the build regenerates `website/src/data/skills-content.generated.ts` from the SKILL.md files. If the session touched any skill file, the regenerated file is in scope — commit it alongside the skill edits (the validator fails the build if it's stale).
+   Note: the build regenerates two derived files — `website/src/data/skills-content.generated.ts` (from the SKILL.md files) and the marked component count/list sections of `README.md` (from `src/components/registry.json`). If either changed after the builds, it changed because this session's work made it stale — treat it as in scope and commit it alongside the edits that caused it (the validators fail the build if the skills content is stale, and the README would otherwise drift from the registry).
 
 3. **Group changes into logical commits** — one commit per concern, not one giant commit. Match the repo's conventional style (`feat(scope):`, `fix(scope):`, `chore(scope):`), with a 1–3 sentence body explaining the why. Check `git log --oneline -5` if unsure of the voice.
 

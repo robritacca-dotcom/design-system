@@ -50,7 +50,7 @@ Use this skill any time you are asked to add or create a new component to the de
 - One named `StoryObj` export per meaningful variant or state combination
 - Story names are descriptive (e.g. `Default`, `WithIcon`, `Disabled`, `Small`)
 
-4. **Register the component** in `src/components/registry.json` — add the folder name to the `components` array (alphabetical). This file is the single source of truth for the component count; `scripts/validate-component-registry.mjs` runs before every build and **fails if the folder is unregistered**. Run `npm run validate-registry` to confirm.
+4. **Register the component** in `src/components/registry.json` — add the folder name to the `components` array (alphabetical). This file is the single source of truth for the component count; `scripts/validate-component-registry.mjs` runs before every build and **fails if the folder is unregistered**. Run `npm run validate-registry` to confirm — this also regenerates the README's component count and list from the registry, so **commit the updated `README.md` alongside the registration**.
 
 5. **Document it in `design.md`** — add a short component spec section (class name, tokens used, key behaviours), following the format of the existing component sections.
 

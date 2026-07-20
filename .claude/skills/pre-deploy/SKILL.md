@@ -20,7 +20,7 @@ Use this skill when asked to check if changes are ready to push, deploy, or ship
    ```
    npm run build
    ```
-   This runs the registry validators (`prebuild`), then TypeScript type-checking + Vite build. Capture all output — a registry-drift failure (unregistered component or skill, stale generated skills content) surfaces here before the compile even starts.
+   This runs the registry validators (`prebuild`), then TypeScript type-checking + Vite build. Capture all output — a registry-drift failure (unregistered component or skill, stale generated skills content, README Tech versions out of step with package.json) surfaces here before the compile even starts. The prebuild also regenerates the README's component count/list from the registry — if `README.md` comes out modified, commit it with the work that changed the registry.
 
 2. **Run the website build** from the `website/` directory:
    ```
