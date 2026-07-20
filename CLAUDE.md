@@ -24,7 +24,11 @@ Existing registries:
 
 Both validators run before every build (`npm run validate-registry`, wired into `prebuild`/`prestorybook`/`prebuild-storybook` and the website's `prebuild`).
 
+**README.md is a generated surface for registry data.** `scripts/generate-readme-content.mjs` (also in the `validate-registry` chain) rewrites the README's component count and component list from `src/components/registry.json` between `<!-- component-count -->` / `<!-- component-list:start/end -->` markers — never hand-edit inside the markers, and commit README.md when a build regenerates it. The same script fails the build if the README's Tech section names a different major version of React, Next.js, Storybook, or Vite than package.json.
+
 When a new countable collection appears on the site (tokens, loops, case studies…): create a registry file next to the collection, export the count from a small accessor module, add a validator script chained into `validate-registry`, and pull every displayed number from the export. When adding a skill: register it in `.claude/skills/registry.json` (`displayed` if it appears on `/skills`, `unlisted` if internal) and, if displayed, add its card to `website/src/app/skills/page.tsx` — the build fails if the three drift.
+
+**Self-descriptions stay in sync.** The repo describes itself in prose in several places — `README.md`, `design.md`, this file, and the website's foundations/about pages. Whenever a change makes a statement in any of them false (a new component category, a dropped dependency, a renamed part, a changed principle), update that prose in the same change — don't leave it for a future audit. If the drifting fact is *countable or mechanically checkable* (a count, a list, a version number), don't just fix the prose: route it through a registry + generator/validator in the `validate-registry` chain so it can never drift again (the README component section and Tech versions are the reference example).
 
 ---
 

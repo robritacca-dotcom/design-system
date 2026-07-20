@@ -5,7 +5,7 @@
   "scripts": {
     "predev": "node ../scripts/generate-skills-content.mjs",
     "dev": "next dev",
-    "prebuild": "node ../scripts/generate-skills-content.mjs && node ../scripts/validate-component-registry.mjs && node ../scripts/validate-skills-registry.mjs",
+    "prebuild": "node ../scripts/generate-skills-content.mjs && node ../scripts/generate-readme-content.mjs && node ../scripts/validate-component-registry.mjs && node ../scripts/validate-skills-registry.mjs",
     "build": "cd .. && npm install --include=dev && cd website && next build",
     "start": "next start",
     "lint": "eslint"
