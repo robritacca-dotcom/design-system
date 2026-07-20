@@ -341,6 +341,18 @@ Default icons (Material Symbols Rounded): `info`, `check_circle`, `warning`, `er
 
 **`ds-table`** — Data table with header row, body rows, optional sorting. Header: `--font-title-body-*` (weight 600). Body: `--font-paragraph-*`. Row dividers: `--color-divider`. Background: `--color-bg-page-primary` or `--color-bg-container-primary` depending on context.
 
+### Dialog
+
+**`ds-dialog`** — General-purpose modal for arbitrary content; for confirm/cancel prompts use AlertDialog. Panel: `--radius-md`, `--color-bg-page-primary`, hairline `--color-bg-container-border` border, the floating-surface shadow, over a `rgba(0,0,0,0.5)` backdrop; opens with the standard 0.2s scale + fade. Header: `--font-heading-6-*` title with optional `--font-paragraph-sm-*` tertiary description and a 32px ghost close button. Body slot scrolls (`overflow-y: auto`) when content exceeds the viewport-capped panel height; optional footer slot right-aligns consumer-provided Buttons. Sizes: `sm` 400px / `md` 560px (default) / `lg` 720px max-width. Behaviour: portal to `<body>`, focus trap with Tab cycling, focus restore on close, body scroll lock, `role="dialog" aria-modal="true"`; `dismissible={false}` disables ESC, backdrop click, and hides the close button.
+
+### Divider
+
+**`ds-divider`** — Thin rule separating stacked content: `--border-xs` (1px) in `--color-divider`. Plain horizontal renders a semantic `<hr>`; a `label` variant sets text inline in the line (`--font-paragraph-sm-*` in `--color-text-secondary`, `center` or `start` position, `role="separator"`); `vertical` stretches to container height inside flex rows (`aria-orientation="vertical"`). Spacing prop maps to the gap scale: `none`/`sm` (8px)/`md` (16px, default)/`lg` (20px) — block margin when horizontal, inline when vertical. Not for separating page sections under `h2` headings — the `h2` bottom border already does that (see Section Dividers above); Divider is for forms, lists, toolbars, and card interiors.
+
+### Pagination
+
+**`ds-pagination`** — Page navigation for long datasets; pairs with Table. A `<nav>` of pill page buttons (40px, `--radius-full`) with chevron arrows at each end; first and last pages always visible, ellipses cover the gaps (`siblingCount` controls the window, default 1). Current page takes the SegmentedControl active treatment: `--color-action-primary-bg` fill with `--color-action-primary-text`, `aria-current="page"`. Idle buttons: `--font-paragraph-em-*` in `--color-text-secondary`, hover `--color-action-passive-bg-hover`. Arrows disable at the ends (`opacity: 0.4`, `cursor: not-allowed`). `compact` swaps the numbers for a "Page X of Y" readout (`--font-paragraph-sm-*`) between 32px arrows.
+
 ### Stat
 
 **`ds-stat`** — A single headline metric: display-weight numeral over a quiet label, with an optional trend delta. Value uses `--font-sub-display-*` (30px/300) by default, `--font-display-2-*` (64px/300) at `large` — the weight-contrast rule applied to numerals. Label: `--font-paragraph-sm-*` in `--color-text-tertiary`. Delta: `--font-paragraph-sm-em-*` with a 16px Material arrow; colours by trend — `up` → `--color-status-positive-text`, `down` → `--color-status-error-text`, `neutral` → `--color-text-tertiary`. Compose several in a flex row for a case-study metrics band.

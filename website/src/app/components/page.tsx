@@ -21,7 +21,9 @@ import { Quote } from "@design-system/components/Quote/Quote";
 import { Stat } from "@design-system/components/Stat/Stat";
 import { Timeline } from "@design-system/components/Timeline/Timeline";
 import { ContributionGraph, type ContributionDay } from "@design-system/components/ContributionGraph/ContributionGraph";
+import { Divider } from "@design-system/components/Divider/Divider";
 import { Dropdown } from "@design-system/components/Dropdown/Dropdown";
+import { Pagination } from "@design-system/components/Pagination/Pagination";
 import { Input } from "@design-system/components/Input/Input";
 import { ProgressBar } from "@design-system/components/ProgressBar/ProgressBar";
 import { RadioButton } from "@design-system/components/RadioButton/RadioButton";
@@ -295,6 +297,29 @@ export default function ComponentsPage() {
               </span>
             </TocCard>
 
+            {/* Dialog */}
+            <TocCard href="/components/dialog" title="Dialog">
+              <div style={{ padding: "10px", borderRadius: "6px", border: "1px solid var(--color-bg-container-border)", background: "var(--color-bg-page-primary)", display: "flex", flexDirection: "column", gap: "6px", width: "130px" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ fontSize: "11px", fontWeight: 600, color: "var(--color-text-primary)" }}>Edit profile</span>
+                  <span className="material-symbols-rounded" style={{ fontSize: "12px", color: "var(--color-icon-primary)" }}>close</span>
+                </div>
+                <div style={{ height: "5px", borderRadius: "3px", background: "var(--color-bg-container-primary)" }} />
+                <div style={{ height: "5px", borderRadius: "3px", background: "var(--color-bg-container-primary)", width: "70%" }} />
+                <div style={{ display: "flex", gap: "4px", justifyContent: "flex-end" }}>
+                  <div style={{ padding: "2px 8px", borderRadius: "999px", fontSize: "9px", color: "#fff", background: "var(--color-action-primary-bg)" }}>Save</div>
+                </div>
+              </div>
+            </TocCard>
+
+            {/* Divider */}
+            <TocCard href="/components/divider" title="Divider">
+              <div style={{ width: "120px" }}>
+                <Divider spacing="sm" />
+                <Divider label="or" spacing="sm" />
+              </div>
+            </TocCard>
+
             {/* Dropdown */}
             <TocCard href="/components/dropdown" title="Dropdown">
               <div className={styles.dropdownPreview}>
@@ -383,6 +408,11 @@ export default function ComponentsPage() {
                   robr0
                 </span>
               </div>
+            </TocCard>
+
+            {/* Pagination */}
+            <TocCard href="/components/pagination" title="Pagination">
+              <Pagination page={2} pageCount={3} onPageChange={() => {}} compact />
             </TocCard>
 
             {/* Popover */}
