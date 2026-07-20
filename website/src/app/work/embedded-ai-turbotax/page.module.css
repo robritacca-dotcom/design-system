@@ -121,7 +121,7 @@
   font-weight: var(--font-paragraph-sm-weight);
   line-height: var(--font-paragraph-sm-line-height);
   color: var(--color-text-tertiary);
-  border-top: 1px solid var(--color-bg-container-border);
+  border-top: 1px solid var(--color-divider);
 }
 
 /* ============================================
@@ -243,7 +243,7 @@
 
 .resumeSectionHeader {
   padding-bottom: var(--primitive-padding-lg);
-  border-bottom: 1px solid var(--color-bg-container-border);
+  border-bottom: 1px solid var(--color-divider);
 }
 
 .resumeSectionTitle {

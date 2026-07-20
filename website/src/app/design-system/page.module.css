@@ -50,7 +50,7 @@
 
 .sectionHeader {
   padding-bottom: var(--primitive-padding-xl);
-  border-bottom: 1px solid var(--color-bg-container-border);
+  border-bottom: 1px solid var(--color-divider);
 }
 
 .sectionDescription {

@@ -109,7 +109,7 @@
 
 .resumeSectionHeader {
   padding-bottom: var(--primitive-padding-lg);
-  border-bottom: 1px solid var(--color-bg-container-border);
+  border-bottom: 1px solid var(--color-divider);
 }
 
 .resumeSectionTitle {
@@ -233,7 +233,7 @@
   color: var(--color-text-tertiary) !important;
   font-size: var(--font-paragraph-sm-size) !important;
   padding-top: var(--primitive-gap-md);
-  border-top: 1px solid var(--color-bg-container-border);
+  border-top: 1px solid var(--color-divider);
 }
 
 /* ============================================

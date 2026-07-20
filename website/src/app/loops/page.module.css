@@ -176,7 +176,7 @@
   align-items: center;
   flex-wrap: wrap;
   gap: var(--primitive-gap-sm);
-  border-top: 1px solid var(--color-bg-container-border);
+  border-top: 1px solid var(--color-divider);
   padding-top: var(--primitive-gap-md);
 }
 
