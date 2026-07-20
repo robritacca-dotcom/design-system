@@ -15,7 +15,9 @@ const contentSecurityPolicy = [
   `script-src 'self' 'unsafe-inline'${scriptEval} https://www.googletagmanager.com`,
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com",
-  "img-src 'self' data: https://www.googletagmanager.com https://*.google-analytics.com",
+  // substackcdn.com serves the article cover images and in-post images
+  // surfaced on /writing from the Substack RSS feed.
+  "img-src 'self' data: https://substackcdn.com https://www.googletagmanager.com https://*.google-analytics.com",
   "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com",
   "frame-ancestors 'none'",
 ].join("; ");
