@@ -19,6 +19,8 @@ const contentSecurityPolicy = [
   // surfaced on /writing from the Substack RSS feed.
   "img-src 'self' data: https://substackcdn.com https://www.googletagmanager.com https://*.google-analytics.com",
   "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com",
+  // The /work case-study pages embed YouTube videos in iframes.
+  "frame-src https://www.youtube.com https://www.youtube-nocookie.com",
   "frame-ancestors 'none'",
 ].join("; ");
 
