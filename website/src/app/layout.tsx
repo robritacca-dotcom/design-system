@@ -102,7 +102,6 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
           rel="stylesheet"
         />
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(buildPersonJsonLd()) }}
@@ -125,6 +124,15 @@ export default function RootLayout({
         </Script>
       </head>
       <body className={nunitoSans.variable}>
+        {/* Must run before first paint (html stays visibility:hidden until
+            .theme-ready). Emitted as raw HTML in a hidden div, not a React
+            <script> element: parser-inserted scripts still execute, while
+            React-rendered ones are inert on client render and trigger a dev
+            warning ("Encountered a script tag while rendering…"). */}
+        <div
+          hidden
+          dangerouslySetInnerHTML={{ __html: `<script>${themeScript}</script>` }}
+        />
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
