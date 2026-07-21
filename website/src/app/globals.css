@@ -90,12 +90,53 @@ a {
 }
 
 .blur-ellipse {
+  --blob-halo: 0px;
   position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(var(--blob-size) + var(--blob-halo) * 2);
+  height: calc(var(--blob-size) + var(--blob-halo) * 2);
+  margin-left: calc(var(--blob-ml) - var(--blob-halo));
+  margin-top: calc(var(--blob-mt) - var(--blob-halo));
   border-radius: 50%;
+  background: var(--blob-color);
   filter: blur(80px);
   opacity: 0.15;
   animation: floatCloud 16s ease-in-out infinite;
   will-change: transform;
+}
+
+/* On desktop-sized viewports, swap filter: blur(80px) for a radial gradient
+   whose stops sample the Gaussian CDF at σ = 80px (the exact profile the blur
+   produces on a disc edge). Identical pixels, but the texture rasterizes once
+   instead of the GPU re-running 8 large blur passes every animation frame —
+   which is what starves tile rasterization and causes blank checkerboarding
+   during fast scroll. The box grows by --blob-halo (3σ) per side to hold the
+   halo the filter used to paint outside the element; the margin shift keeps
+   the disc centre unchanged. Not applied below 1280px: the approximation is
+   only pixel-accurate while every disc radius is large relative to σ. */
+@media (min-width: 1280px) {
+  .blur-container .blur-ellipse {
+    --blob-halo: 240px;
+    border-radius: 0;
+    filter: none;
+    background: radial-gradient(circle closest-side,
+      var(--blob-color) 0,
+      var(--blob-color) calc(100% - 480px),
+      color-mix(in srgb, var(--blob-color) 99.38%, transparent) calc(100% - 440px),
+      color-mix(in srgb, var(--blob-color) 97.72%, transparent) calc(100% - 400px),
+      color-mix(in srgb, var(--blob-color) 93.32%, transparent) calc(100% - 360px),
+      color-mix(in srgb, var(--blob-color) 84.13%, transparent) calc(100% - 320px),
+      color-mix(in srgb, var(--blob-color) 69.15%, transparent) calc(100% - 280px),
+      color-mix(in srgb, var(--blob-color) 50%, transparent) calc(100% - 240px),
+      color-mix(in srgb, var(--blob-color) 30.85%, transparent) calc(100% - 200px),
+      color-mix(in srgb, var(--blob-color) 15.87%, transparent) calc(100% - 160px),
+      color-mix(in srgb, var(--blob-color) 6.68%, transparent) calc(100% - 120px),
+      color-mix(in srgb, var(--blob-color) 2.28%, transparent) calc(100% - 80px),
+      color-mix(in srgb, var(--blob-color) 0.62%, transparent) calc(100% - 40px),
+      transparent 100%
+    );
+  }
 }
 
 @keyframes floatCloud {
@@ -106,72 +147,64 @@ a {
 }
 
 .blur-yellow {
-  width: 45vw; height: 45vw;
-  left: 50%; top: 50%;
-  margin-left: -5%; margin-top: -10%;
-  background: var(--color-core-accent-gold);
+  --blob-size: 45vw;
+  --blob-ml: -5%; --blob-mt: -10%;
+  --blob-color: var(--color-core-accent-gold);
   animation-duration: 18s;
 }
 
 .blur-green {
-  width: 55vw; height: 55vw;
-  left: 50%; top: 50%;
-  margin-left: -15%; margin-top: -15%;
-  background: var(--color-core-accent-mint);
+  --blob-size: 55vw;
+  --blob-ml: -15%; --blob-mt: -15%;
+  --blob-color: var(--color-core-accent-mint);
   animation-duration: 16s;
   animation-delay: 1s;
 }
 
 .blur-purple {
-  width: 90vw; height: 90vw;
-  left: 50%; top: 50%;
-  margin-left: -10%; margin-top: -20%;
-  background: var(--color-core-accent-violet);
+  --blob-size: 90vw;
+  --blob-ml: -10%; --blob-mt: -20%;
+  --blob-color: var(--color-core-accent-violet);
   animation-duration: 22s;
   animation-delay: 0.5s;
 }
 
 .blur-neutral {
-  width: 55vw; height: 55vw;
-  left: 50%; top: 50%;
-  margin-left: -25%; margin-top: -20%;
-  background: var(--color-bg-container-secondary);
+  --blob-size: 55vw;
+  --blob-ml: -25%; --blob-mt: -20%;
+  --blob-color: var(--color-bg-container-secondary);
   animation-duration: 14s;
   animation-delay: 1.5s;
 }
 
 .blur-blue {
-  width: 55vw; height: 55vw;
-  left: 50%; top: 50%;
-  margin-left: -40%; margin-top: 20%;
-  background: var(--color-core-accent-cobalt);
+  --blob-size: 55vw;
+  --blob-ml: -40%; --blob-mt: 20%;
+  --blob-color: var(--color-core-accent-cobalt);
   animation-duration: 17s;
   animation-delay: 0.8s;
 }
 
 .blur-red {
-  width: 48vw; height: 48vw;
-  left: 50%; top: 50%;
-  margin-left: 15%; margin-top: -50%;
-  background: var(--color-core-accent-coral);
+  --blob-size: 48vw;
+  --blob-ml: 15%; --blob-mt: -50%;
+  --blob-color: var(--color-core-accent-coral);
   animation-duration: 19s;
   animation-delay: 0.3s;
 }
 
 .blur-orange {
-  width: 30vw; height: 30vw;
-  left: 50%; top: 50%;
-  margin-left: 20%; margin-top: 15%;
-  background: var(--color-core-accent-amber);
+  --blob-size: 30vw;
+  --blob-ml: 20%; --blob-mt: 15%;
+  --blob-color: var(--color-core-accent-amber);
   animation-duration: 15s;
   animation-delay: 1.2s;
 }
 
 .blur-teal {
-  width: 75vw; height: 75vw;
-  left: 50%; top: 50%;
-  margin-left: -50%; margin-top: -40%;
-  background: var(--color-core-ui-secondary);
+  --blob-size: 75vw;
+  --blob-ml: -50%; --blob-mt: -40%;
+  --blob-color: var(--color-core-ui-secondary);
   animation-duration: 20s;
   animation-delay: 0.7s;
 }
