@@ -131,8 +131,8 @@ export const Treemap = ({
   const baseClass = 'ds-chart';
   const classes = [baseClass, className].filter(Boolean).join(' ');
 
-  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   const renderTooltip = useCallback(
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     (props: any) => <TreemapTooltip {...props} />,
     [],
   );

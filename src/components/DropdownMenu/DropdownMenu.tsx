@@ -106,6 +106,7 @@ const SubMenuItem = ({ item, baseClass, focused, size, onActivate }: SubMenuItem
   // Open sub-menu when focused via keyboard
   useEffect(() => {
     if (focused && item.children && item.children.length > 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- syncing submenu visibility to keyboard focus arriving from the parent menu
       setSubOpen(true);
     }
   }, [focused, item.children]);

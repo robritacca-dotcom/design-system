@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import './Popover.css';
 
 export interface PopoverProps {
@@ -46,12 +46,12 @@ export const Popover = ({
   const isControlled = controlledOpen !== undefined;
   const isOpen = isControlled ? controlledOpen : internalOpen;
 
-  const setOpen = (next: boolean) => {
+  const setOpen = useCallback((next: boolean) => {
     if (!isControlled) {
       setInternalOpen(next);
     }
     onOpenChange?.(next);
-  };
+  }, [isControlled, onOpenChange]);
 
   // Click outside to close
   useEffect(() => {
@@ -65,7 +65,7 @@ export const Popover = ({
 
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
-  }, [isOpen, trigger]);
+  }, [isOpen, trigger, setOpen]);
 
   // Escape key to close
   useEffect(() => {
@@ -79,7 +79,7 @@ export const Popover = ({
 
     document.addEventListener('keydown', handler);
     return () => document.removeEventListener('keydown', handler);
-  }, [isOpen]);
+  }, [isOpen, setOpen]);
 
   const handleClick = () => {
     if (trigger === 'click') {

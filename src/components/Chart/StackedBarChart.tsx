@@ -118,8 +118,8 @@ export const StackedBarChart = ({
   const cursorColor = getCSSVar('--color-bg-container-secondary', '#303030');
   const defaultColors = getDefaultColors();
 
-  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   const renderTooltip = useCallback(
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     (props: any) => <StackedTooltip {...props} />,
     [],
   );
