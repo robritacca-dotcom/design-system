@@ -2,7 +2,7 @@
 name: merge-and-push
 description: Commit the session's work and push to main safely — builds green first, no unrelated files swept in, a clear report after. Use when asked to merge and push, commit and push, push this, or ship it.
 icon: publish
-displayDescription: "Ships completed work safely: surveys the tree so unrelated files never get swept into a commit, runs the full local verify (lint, both builds, Storybook — mirroring CI) before anything is committed, groups changes into logical conventional commits, pushes, confirms the CI run goes green, and reports exactly what shipped and what was deliberately left out."
+displayDescription: "Ships completed work safely: surveys the tree so unrelated files never get swept into a commit, runs the full local verify (lint, story tests, all three builds — mirroring CI) before anything is committed, groups changes into logical conventional commits, pushes, confirms the CI run goes green, and reports exactly what shipped and what was deliberately left out."
 invoke: ["merge and push","commit and push","push this","ship it"]
 ---
 
@@ -24,7 +24,7 @@ Use this skill when asked to ship completed work — phrases like "merge and pus
 
 2. **Run the full verify before committing**:
    ```bash
-   npm run verify   # lint + library build + Storybook build + website build
+   npm run verify   # lint + library build + story tests + Storybook build + website build
    ```
    This one script is the single source of truth for local checks and mirrors the CI jobs in `.github/workflows/ci.yml` — if CI gains a check (tests, a11y), it gets added to `verify`, never listed here separately. The registry validators run automatically via the builds' `prebuild` hooks. **If any step fails, stop** — fix the failure if it was caused by this session's work, otherwise report it. Never push red.
 

@@ -59,6 +59,7 @@ Full spec in [`design.md`](design.md).
 - **Vite 7** — dev server and library build
 - **Next.js 16** — portfolio site and DS documentation
 - **Storybook 10** — component explorer
+- **Vitest + Playwright** — every Storybook story runs as a render test in headless Chromium
 - **CSS custom properties** — all theming via semantic tokens, no CSS-in-JS
 
 ---
