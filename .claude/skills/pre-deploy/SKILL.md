@@ -1,14 +1,14 @@
 ---
 name: pre-deploy
-description: Run both builds (component library and website) and confirm the site is safe to push to Vercel. Use when asked whether changes are ready to push, deploy, or ship, or for a pre-deploy check.
+description: Run the full local verify (lint, library build, Storybook build, website build) and confirm the site is safe to push to Vercel. Use when asked whether changes are ready to push, deploy, or ship, or for a pre-deploy check.
 icon: rocket_launch
-displayDescription: "Runs both the component library build (Vite + TypeScript) and the website build (Next.js) before a push to Vercel. Knows the non-standard monorepo build order and watches for SSR-unsafe code, portal regressions, and static generation failures."
+displayDescription: "Runs the same checks as CI — lint, the component library build (Vite + TypeScript), the Storybook build, and the website build (Next.js) — before a push to Vercel. Knows the non-standard monorepo build order and watches for SSR-unsafe code, portal regressions, and static generation failures."
 invoke: ["is this ready to push?","run the build","pre-deploy check","check before I push"]
 ---
 
 # pre-deploy
 
-Run both builds and confirm the site is safe to push to Vercel.
+Run the full local verify and confirm the site is safe to push to Vercel.
 
 ## When invoked
 
@@ -16,19 +16,18 @@ Use this skill when asked to check if changes are ready to push, deploy, or ship
 
 ## Instructions
 
-1. **Run the component library build** from the repo root:
+1. **Run the full verify** from the repo root:
    ```
-   npm run build
+   npm run verify
    ```
-   This runs the registry validators (`prebuild`), then TypeScript type-checking + Vite build. Capture all output — a registry-drift failure (unregistered component or skill, stale generated skills content, README Tech versions out of step with package.json) surfaces here before the compile even starts. The prebuild also regenerates the README's component count/list from the registry — if `README.md` comes out modified, commit it with the work that changed the registry.
+   This is the single source of truth for local checks and mirrors the CI jobs in `.github/workflows/ci.yml`. It runs, in order: ESLint, the library build, the Storybook build, and the website build. The registry validators run via the builds' `prebuild` hooks — a registry-drift failure (unregistered component or skill, stale generated skills content, README Tech versions out of step with package.json) surfaces before the compiles even start. The prebuild also regenerates the README's component count/list from the registry — if `README.md` comes out modified, commit it with the work that changed the registry.
 
-2. **Run the website build** from the `website/` directory:
-   ```
-   cd website && npm run build
-   ```
    Note: the website build script does `cd .. && npm install --include=dev` first (monorepo alias setup) before running Next.js. This is expected and normal.
 
-3. **For each build, check output for:**
+2. **Check the output of each step for:**
+
+   **Lint failures:**
+   - Any ESLint `error` lines (warnings don't fail the run, but mention them)
 
    **TypeScript errors:**
    - Any `error TS` lines
@@ -44,15 +43,15 @@ Use this skill when asked to check if changes are ready to push, deploy, or ship
    - Any non-zero exit code
    - `Build failed` or `Compiled with errors`
 
-4. **Report result:**
+3. **Report result:**
 
-   If both pass:
-   > Both builds succeeded. Safe to push.
+   If everything passes:
+   > Verify passed (lint + library, Storybook, and website builds). Safe to push.
 
-   If either fails, show:
-   - Which build failed (component library or website)
+   If any step fails, show:
+   - Which step failed (lint, component library, Storybook, or website)
    - The exact error message(s)
    - File path and line number if available
    - A brief diagnosis of likely cause
 
-5. **Do not push** — this skill only builds and reports. Pushing is Rob's decision.
+4. **Do not push** — this skill only checks and reports. Pushing is Rob's decision.

@@ -2,7 +2,7 @@
 name: merge-and-push
 description: Commit the session's work and push to main safely — builds green first, no unrelated files swept in, a clear report after. Use when asked to merge and push, commit and push, push this, or ship it.
 icon: publish
-displayDescription: "Ships completed work safely: surveys the tree so unrelated files never get swept into a commit, runs both builds (registry validators included) before anything is committed, groups changes into logical conventional commits, pushes, and reports exactly what shipped and what was deliberately left out."
+displayDescription: "Ships completed work safely: surveys the tree so unrelated files never get swept into a commit, runs the full local verify (lint, both builds, Storybook — mirroring CI) before anything is committed, groups changes into logical conventional commits, pushes, confirms the CI run goes green, and reports exactly what shipped and what was deliberately left out."
 invoke: ["merge and push","commit and push","push this","ship it"]
 ---
 
@@ -22,12 +22,11 @@ Use this skill when asked to ship completed work — phrases like "merge and pus
 
    **Never run `git add -A`, `git add .`, or `git add` on a directory** — always add explicit file paths. Out-of-scope files are excluded by default and named in the final report; if it's genuinely unclear whether something belongs, ask before including it.
 
-2. **Run both builds before committing** (the `pre-deploy` skill's checks, inlined):
+2. **Run the full verify before committing**:
    ```bash
-   npm run build                    # library: registry validators + tsc + Vite
-   cd website && npm run build      # website: validators + Next.js static build
+   npm run verify   # lint + library build + Storybook build + website build
    ```
-   The registry validators run automatically via `prebuild`. **If either build fails, stop** — fix the failure if it was caused by this session's work, otherwise report it. Never push red.
+   This one script is the single source of truth for local checks and mirrors the CI jobs in `.github/workflows/ci.yml` — if CI gains a check (tests, a11y), it gets added to `verify`, never listed here separately. The registry validators run automatically via the builds' `prebuild` hooks. **If any step fails, stop** — fix the failure if it was caused by this session's work, otherwise report it. Never push red.
 
    Note: the build regenerates two derived files — `website/src/data/skills-content.generated.ts` (from the SKILL.md files) and the marked component count/list sections of `README.md` (from `src/components/registry.json`). If either changed after the builds, it changed because this session's work made it stale — treat it as in scope and commit it alongside the edits that caused it (the validators fail the build if the skills content is stale, and the README would otherwise drift from the registry).
 
@@ -35,8 +34,14 @@ Use this skill when asked to ship completed work — phrases like "merge and pus
 
 4. **Push**: `git push` on `main`. Remember: **a push to main deploys robertritacca.com via Vercel** — pushing is publishing.
 
-5. **Report** in the final message:
-   - Each pushed commit (hash + subject) and confirmation both builds passed
+5. **Confirm CI went green**: after the push, watch the GitHub Actions run to completion:
+   ```bash
+   gh run watch $(gh run list --branch main --limit 1 --json databaseId --jq '.[0].databaseId')
+   ```
+   CI runs in parallel with the Vercel deploy — it gates nothing, but a red run on main means something the local verify missed (or an environment difference) and must be investigated, not left as a red X.
+
+6. **Report** in the final message:
+   - Each pushed commit (hash + subject), confirmation `npm run verify` passed locally, and the CI run result
    - Every file deliberately left out and why
    - Anything the deploy will visibly change on the live site
 
