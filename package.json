@@ -9,6 +9,7 @@
     "prebuild": "npm run validate-registry",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "verify": "npm run lint && npm run build && npm run build-storybook && npm --prefix website run build",
     "preview": "vite preview",
     "prestorybook": "npm run validate-registry",
     "storybook": "storybook dev -p 6006",
