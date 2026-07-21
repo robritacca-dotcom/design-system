@@ -273,6 +273,22 @@ Sizes: `default` (padding 8px × 20px), `compact` (padding 6px × 12px).
 
 **`ds-badge`** — Inline status label. Radius `--radius-xs` (4px) — notably tighter than buttons and inputs. Text: `--font-paragraph-sm-em-*` (14px/500). Padding: 2px vertical × 8px horizontal. Each of the five status variants (`info`, `positive`, `warning`, `error`, `neutral`) maps directly to its `--color-status-*-bg`, `--color-status-*-border`, and `--color-status-*-text` tokens. Renders with `role="status"` for accessibility.
 
+### Chip
+
+**`ds-chip`** — Compact pill for attributes, filters, and inline metadata. Always pill-shaped (`--radius-full`) like Button. Neutral by default: `--color-bg-page-primary` fill, `--color-bg-container-border` hairline, `--color-text-secondary` text in `--font-paragraph-sm-em-*` (14px/500). Icon size: 20px (default), 16px (compact) — smaller than Button's because the chip is a tighter control.
+
+Distinct from Badge: a Badge communicates *status* through the five status colours and is never interactive; a Chip is neutral and optionally interactive.
+
+Renders as a `<span>` when non-clickable, a `<button>` when given `onClick` (with `aria-pressed` when `selected` is set). `onRemove` adds a trailing close button (Material Symbol `close`) with its own accessible label; when a chip is both clickable and removable the container stays a `<span>` and the main region becomes an inner button so buttons never nest.
+
+States:
+- **Hover** (clickable): `--color-action-passive-bg-hover` fill; **Active**: `--color-action-passive-bg-active`
+- **Selected**: `--color-action-primary-bg` fill with `--color-action-primary-text` — same teal selection convention as SegmentedControl
+- **Disabled**: `opacity: 0.4`, `cursor: not-allowed`
+- **Focus**: standard 2px `--color-action-primary-bg` focus ring
+
+Sizes: `default` (padding 6px × 12px — 32px tall), `compact` (padding 2px × 8px — 24px tall).
+
 ### Alert
 
 **`ds-alert`** — Container for inline status messages. Same five variants as Badge. Wider form — carries an icon, title, and description block. References same `--color-status-*` tokens. Use when message needs to persist in the layout (vs Toast which is ephemeral).
@@ -325,9 +341,50 @@ Default icons (Material Symbols Rounded): `info`, `check_circle`, `warning`, `er
 
 **`ds-table`** — Data table with header row, body rows, optional sorting. Header: `--font-title-body-*` (weight 600). Body: `--font-paragraph-*`. Row dividers: `--color-divider`. Background: `--color-bg-page-primary` or `--color-bg-container-primary` depending on context.
 
+### Dialog
+
+**`ds-dialog`** — General-purpose modal for arbitrary content; for confirm/cancel prompts use AlertDialog. Panel: `--radius-md`, `--color-bg-page-primary`, hairline `--color-bg-container-border` border, the floating-surface shadow, over a `rgba(0,0,0,0.5)` backdrop; opens with the standard 0.2s scale + fade. Header: `--font-heading-6-*` title with optional `--font-paragraph-sm-*` tertiary description and a 32px ghost close button. Body slot scrolls (`overflow-y: auto`) when content exceeds the viewport-capped panel height; optional footer slot right-aligns consumer-provided Buttons. Sizes: `sm` 400px / `md` 560px (default) / `lg` 720px max-width. Behaviour: portal to `<body>`, focus trap with Tab cycling, focus restore on close, body scroll lock, `role="dialog" aria-modal="true"`; `dismissible={false}` disables ESC, backdrop click, and hides the close button.
+
+### Divider
+
+**`ds-divider`** — Thin rule separating stacked content: `--border-xs` (1px) in `--color-divider`. Plain horizontal renders a semantic `<hr>`; a `label` variant sets text inline in the line (`--font-paragraph-sm-*` in `--color-text-secondary`, `center` or `start` position, `role="separator"`); `vertical` stretches to container height inside flex rows (`aria-orientation="vertical"`). Spacing prop maps to the gap scale: `none`/`sm` (8px)/`md` (16px, default)/`lg` (20px) — block margin when horizontal, inline when vertical. Not for separating page sections under `h2` headings — the `h2` bottom border already does that (see Section Dividers above); Divider is for forms, lists, toolbars, and card interiors.
+
+### Pagination
+
+**`ds-pagination`** — Page navigation for long datasets; pairs with Table. A `<nav>` of pill page buttons (40px, `--radius-full`) with chevron arrows at each end; first and last pages always visible, ellipses cover the gaps (`siblingCount` controls the window, default 1). Current page takes the SegmentedControl active treatment: `--color-action-primary-bg` fill with `--color-action-primary-text`, `aria-current="page"`. Idle buttons: `--font-paragraph-em-*` in `--color-text-secondary`, hover `--color-action-passive-bg-hover`. Arrows disable at the ends (`opacity: 0.4`, `cursor: not-allowed`). `compact` swaps the numbers for a "Page X of Y" readout (`--font-paragraph-sm-*`) between 32px arrows.
+
+### Stat
+
+**`ds-stat`** — A single headline metric: display-weight numeral over a quiet label, with an optional trend delta. Value uses `--font-sub-display-*` (30px/300) by default, `--font-display-2-*` (64px/300) at `large` — the weight-contrast rule applied to numerals. Label: `--font-paragraph-sm-*` in `--color-text-tertiary`. Delta: `--font-paragraph-sm-em-*` with a 16px Material arrow; colours by trend — `up` → `--color-status-positive-text`, `down` → `--color-status-error-text`, `neutral` → `--color-text-tertiary`. Compose several in a flex row for a case-study metrics band.
+
+### CodeBlock
+
+**`ds-code-block`** — Monospace code in a `--color-bg-container-primary` container with `--radius-md` and a hairline border. The one sanctioned monospace context in the system (system mono stack — Nunito Sans everywhere else). Optional header row: filename (mono, `--color-text-secondary`), uppercase language tag (`--color-text-tertiary`, 0.08em tracking), and a copy button that confirms with a check for 2s. Code text is 14px/20px, `--color-text-primary`; long lines scroll horizontally. An optional `maxHeight` prop caps the block: the code area scrolls vertically inside while the header stays pinned. An optional `collapsible` prop adds a chevron beside the filename (`--color-icon-primary`, 20px, rotates −90° when closed) that collapses the code area with the same 0fr/1fr grid animation as Accordion; `defaultCollapsed` starts it closed. No syntax highlighting — monochrome by design, no dependencies.
+
+### Quote
+
+**`ds-quote`** — Blockquote with optional attribution, two registers. `default`: body-size text in `--color-text-secondary` behind a `--border-md` left rule in `--color-bg-container-tertiary`. `pull`: `--font-sub-display-*` (30px/300) in `--color-text-primary`, no rule — the scale is the emphasis. Attribution: em-dash + `--font-paragraph-sm-em-*` primary; detail line: `--font-paragraph-sm-*` tertiary. Renders semantic `<figure>/<blockquote>/<figcaption>`.
+
+### Figure
+
+**`ds-figure`** — Image + caption in a `--radius-md` container with `--color-bg-container-secondary` fill. Accepts any image element as children (plain `<img>` or `next/image`); the media slot stretches it full-width. Caption: `--font-paragraph-sm-*` tertiary, `--padding-md`/`--padding-lg`, hairline top border. Passing `onClick` makes it zoomable: `cursor: zoom-in`, hover dims the image to 0.88, `role="button"` + Enter/Space activation, standard teal focus ring.
+
+### Timeline
+
+**`ds-timeline`** — Ordered sequence (`<ol>`) with connected markers; `vertical` (default) for histories and process narratives, `horizontal` for compact steppers. Markers: 12px dot in `--color-bg-container-tertiary`; `numbered` or per-item `icon` upgrades to a 28px badge (`--color-bg-container-primary` fill, hairline border). Connector: `--border-md` line in `--color-divider`, hidden after the last item. Item anatomy: meta (`--font-paragraph-sm-*` tertiary) over title (`--font-title-body-*`, 16px/600) over description (`--font-paragraph-sm-*` secondary).
+
 ### Chart
 
 Recharts wrapper exposing: `AreaChart`, `BarChart`, `LineChart`, `PieChart`, `RadarChart`, `RadialChart`, `ScatterChart`, `StackedBarChart`, `Treemap`. Uses core accent colors for data series. Tooltips and legends use system typography tokens. Axes text in `--color-text-tertiary`.
+
+### Contribution graph
+
+**`ds-contribution-graph`** — GitHub-style activity heatmap: weeks as columns, weekdays as rows, one 12px cell per day at `--radius-xxs`. Cell colour comes from the five-step contribution ramp, defined in both themes:
+
+- `--color-chart-contribution-0` — no activity (`--color-bg-container-primary` light / #232323 dark)
+- `--color-chart-contribution-1` → `-4` — increasing activity, green primitives (light: green-02 → 04 → 07 → 09; dark: green-10 → 09 → 08 → 07, so the brightest cell is mint #06D6A0)
+
+Month labels, caption, and Less→More legend use `--font-paragraph-sm-*` in `--color-text-tertiary`/`--color-text-secondary`. The grid scrolls horizontally inside its own container on narrow screens. This ramp is for activity intensity only — ordered multi-series chart colors remain an open gap (see below).
 
 ---
 
@@ -383,7 +440,7 @@ The theme is activated by `data-theme="dark"` on the HTML root element. The `tok
 ## Responsive Behavior
 
 ### Breakpoints
-The website uses standard Tailwind-compatible breakpoints:
+The website uses standard breakpoints:
 - **Mobile**: < 768px
 - **Tablet**: 768px – 1024px
 - **Desktop**: 1024px – 1440px
@@ -413,6 +470,7 @@ The website uses standard Tailwind-compatible breakpoints:
 4. **New typography style** — Add to `tokens-typography.css` following the `--font-{name}-{property}` naming pattern.
 5. **Reference a component token** — Always use the full CSS variable, e.g. `var(--font-heading-1-size)`. Never inline the resolved value.
 6. **Storybook stories** — Each component must have a `.stories.tsx` file with a Default story and one story per meaningful variant. Use `data-theme` Storybook theme toggle to verify dark mode.
+7. **Before shipping** — Run `npm run verify` (lint + library, Storybook, and website builds). The same checks run automatically in CI (`.github/workflows/ci.yml`) on every push and PR, including a drift guard that fails if generated documentation is stale.
 
 ---
 
@@ -420,8 +478,8 @@ The website uses standard Tailwind-compatible breakpoints:
 
 - **Animation / transition timings** — Component transitions use hardcoded `0.2s ease`. No token exists for easing curves or durations. If the system needs animated loading states or page transitions, a `--motion-*` token layer should be added.
 - **Icon sizing tokens** — Material Symbols sizes (24px default, 20px compact) are hardcoded in component CSS. No `--icon-size-*` token exists. Formalising this would help consistency across new components.
-- **Figma source link** — The system was exported from Figma but no public Figma link is documented. Add the Figma file URL here once available.
-- **Breakpoint tokens** — Responsive breakpoints are not tokenized. They exist as Tailwind config or raw media query values in component CSS.
+- **Figma parity** — The system originates in Figma ([robr0-ds26](https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26)), and foundation/component pages deep-link to specific frames via `figmaUrl`. Keeping the Figma file and the coded tokens in sync is still a manual process — there is no automated export pipeline.
+- **Breakpoint tokens** — Responsive breakpoints are not tokenized. They exist as raw media-query values in component CSS.
 - **Form validation patterns** — Error state on Input is documented, but multi-field form-level validation patterns (inline error summaries, field grouping) are not in scope here.
 - **Code/monospace** — No monospace font or `--font-code-*` token is defined. If code blocks are needed on the documentation site, add a JetBrains Mono or Fira Code entry to the typography token layer.
 - **Chart theming** — Recharts chart components use `--color-core-accent-*` tokens for data series, but a formal `--chart-series-{n}` token set for ordered series colors has not been codified.
