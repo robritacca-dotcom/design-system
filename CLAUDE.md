@@ -201,4 +201,4 @@ Tokens also have multiple homes — a token that exists only in CSS is incomplet
 - No `--icon-size-*` tokens — icon sizes are hardcoded per component
 - No `--chart-series-{n}` formal token set for ordered chart series colors
 - Figma source file documented: [robr0-ds26](https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26) — foundation/component pages deep-link to specific frames via `figmaUrl`
-- No GitHub Actions CI — no automated lint/test/Storybook build on push
+- No automated tests — CI (`.github/workflows/ci.yml`) runs lint, the library/Storybook/website builds, and the registry validators on every push and PR, but the Vitest story-test setup wired in `vite.config.ts` is not yet executed anywhere
