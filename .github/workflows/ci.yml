@@ -23,6 +23,19 @@ jobs:
       - name: Check generated content is committed
         run: git diff --exit-code
 
+  test:
+    name: Story tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test
+
   storybook:
     name: Build Storybook
     runs-on: ubuntu-latest

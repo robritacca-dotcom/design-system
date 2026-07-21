@@ -52,16 +52,19 @@ Other useful commands:
 npm run build           # type-check + build library
 npm run lint            # ESLint
 npm run build-storybook # export static Storybook
-npm run verify          # full local quality gate: lint + all three builds (mirrors CI)
+npm run test            # run every Storybook story as a render test (headless Chromium)
+npm run verify          # full local quality gate: lint + tests + all three builds (mirrors CI)
 ```
 
 ---
 
 ## CI & Local Verify
 
-Every push to `main` and every PR runs `.github/workflows/ci.yml` (three jobs: library lint + build, Storybook build, website build). The library job ends with a **drift guard** — `git diff --exit-code` after the generators run — so a registry change that lands without its regenerated README/skills/blueprint content fails CI.
+Every push to `main` and every PR runs `.github/workflows/ci.yml` (four jobs: library lint + build, story tests, Storybook build, website build). The library job ends with a **drift guard** — `git diff --exit-code` after the generators run — so a registry change that lands without its regenerated README/skills/blueprint content fails CI.
 
-`npm run verify` is the **single local mirror of CI**: lint, library build, Storybook build, website build, in that order. The rule that keeps them in sync: **when CI gains a check (tests, a11y), add it to `verify` in the same change** — skills and docs reference `verify`, never individual commands, so nothing else needs updating.
+**Story tests**: `npm run test` runs every Storybook story as a render test in headless Chromium (Vitest + `@storybook/addon-vitest`, configured in `vite.config.ts`). A story that throws on render fails the suite — so every component variant is smoke-tested on every change. A11y checks run alongside in `'todo'` mode (report-only; see `.storybook/preview.ts`).
+
+`npm run verify` is the **single local mirror of CI**: lint, library build, story tests, Storybook build, website build, in that order. The rule that keeps them in sync: **when CI gains a check (a11y, visual regression), add it to `verify` in the same change** — skills and docs reference `verify`, never individual commands, so nothing else needs updating.
 
 ---
 
@@ -212,4 +215,4 @@ Tokens also have multiple homes — a token that exists only in CSS is incomplet
 - No `--icon-size-*` tokens — icon sizes are hardcoded per component
 - No `--chart-series-{n}` formal token set for ordered chart series colors
 - Figma source file documented: [robr0-ds26](https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26) — foundation/component pages deep-link to specific frames via `figmaUrl`
-- No automated tests — CI (`.github/workflows/ci.yml`) runs lint, the library/Storybook/website builds, and the registry validators on every push and PR, but the Vitest story-test setup wired in `vite.config.ts` is not yet executed anywhere
+- A11y checks are report-only — story tests run axe per story, but `a11y.test` in `.storybook/preview.ts` is `'todo'`, so violations warn instead of failing CI; no visual-regression coverage yet either (Chromatic planned)

@@ -177,6 +177,7 @@ export default function AboutDsPage() {
                           </p>
                           <ul className={styles.roleBullets}>
                             <li>Lints the codebase and builds the library, Storybook, and the website on every change</li>
+                            <li>Renders every Storybook story as an automated smoke test in headless Chrome — every variant, every run</li>
                             <li>Drift guard fails the build if generated docs (component counts, skills, blueprints) go stale</li>
                             <li>The same checklist runs locally as a single command, so local and CI can never disagree</li>
                           </ul>

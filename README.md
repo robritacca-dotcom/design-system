@@ -65,10 +65,10 @@ Full spec in [`design.md`](design.md).
 
 ## Quality & CI
 
-Every push and pull request runs a GitHub Actions pipeline ([`ci.yml`](.github/workflows/ci.yml)) with three jobs: **lint + library build**, **Storybook build**, and **website build**. The same checklist runs locally with one command:
+Every push and pull request runs a GitHub Actions pipeline ([`ci.yml`](.github/workflows/ci.yml)) with four jobs: **lint + library build**, **story tests** (every Storybook story rendered in headless Chromium via Vitest), **Storybook build**, and **website build**. The same checklist runs locally with one command:
 
 ```bash
-npm run verify   # lint + library build + Storybook build + website build
+npm run verify   # lint + library build + story tests + Storybook build + website build
 ```
 
 CI also guards against documentation drift: generated surfaces (this README's component count and list, the website's skills pages, the published CLAUDE.md/design.md blueprints) are rebuilt from their source registries on every build, and CI fails if the committed copies are stale. The numbers on the site are never hand-written.
