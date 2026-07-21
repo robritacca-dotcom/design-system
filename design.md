@@ -470,6 +470,7 @@ The website uses standard breakpoints:
 4. **New typography style** — Add to `tokens-typography.css` following the `--font-{name}-{property}` naming pattern.
 5. **Reference a component token** — Always use the full CSS variable, e.g. `var(--font-heading-1-size)`. Never inline the resolved value.
 6. **Storybook stories** — Each component must have a `.stories.tsx` file with a Default story and one story per meaningful variant. Use `data-theme` Storybook theme toggle to verify dark mode.
+7. **Before shipping** — Run `npm run verify` (lint + library, Storybook, and website builds). The same checks run automatically in CI (`.github/workflows/ci.yml`) on every push and PR, including a drift guard that fails if generated documentation is stale.
 
 ---
 

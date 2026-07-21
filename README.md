@@ -1,5 +1,7 @@
 # robr0 — Portfolio + Design System
 
+[![CI](https://github.com/robritacca-dotcom/design-system/actions/workflows/ci.yml/badge.svg)](https://github.com/robritacca-dotcom/design-system/actions/workflows/ci.yml)
+
 A personal portfolio site built on a custom React design system I designed and engineered from scratch. The DS isn't a side project — it's the backbone every portfolio page is built on, ensuring the work is presented consistently and with the same craft standards I apply professionally.
 
 **[→ Live site](https://robertritacca.com/)** · **[→ Storybook](https://design-system-iota-one.vercel.app/?path=/docs/robr0-ds--docs)**
@@ -58,6 +60,18 @@ Full spec in [`design.md`](design.md).
 - **Next.js 16** — portfolio site and DS documentation
 - **Storybook 10** — component explorer
 - **CSS custom properties** — all theming via semantic tokens, no CSS-in-JS
+
+---
+
+## Quality & CI
+
+Every push and pull request runs a GitHub Actions pipeline ([`ci.yml`](.github/workflows/ci.yml)) with three jobs: **lint + library build**, **Storybook build**, and **website build**. The same checklist runs locally with one command:
+
+```bash
+npm run verify   # lint + library build + Storybook build + website build
+```
+
+CI also guards against documentation drift: generated surfaces (this README's component count and list, the website's skills pages, the published CLAUDE.md/design.md blueprints) are rebuilt from their source registries on every build, and CI fails if the committed copies are stale. The numbers on the site are never hand-written.
 
 ---
 

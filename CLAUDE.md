@@ -28,6 +28,8 @@ Both validators run before every build (`npm run validate-registry`, wired into 
 
 When a new countable collection appears on the site (tokens, loops, case studies…): create a registry file next to the collection, export the count from a small accessor module, add a validator script chained into `validate-registry`, and pull every displayed number from the export. When adding a skill: register it in `.claude/skills/registry.json` (`displayed` if it appears on `/skills`, `unlisted` if internal) and, if displayed, add its card to `website/src/app/skills/page.tsx` — the build fails if the three drift.
 
+**The website's /blueprints pages are a generated surface too.** `scripts/sync-blueprints.mjs` (in the `validate-registry` chain) copies the root `CLAUDE.md` and `design.md` into `website/public/` on every build — never hand-edit those copies; edit the root files.
+
 **Self-descriptions stay in sync.** The repo describes itself in prose in several places — `README.md`, `design.md`, this file, and the website's foundations/about pages. Whenever a change makes a statement in any of them false (a new component category, a dropped dependency, a renamed part, a changed principle), update that prose in the same change — don't leave it for a future audit. If the drifting fact is *countable or mechanically checkable* (a count, a list, a version number), don't just fix the prose: route it through a registry + generator/validator in the `validate-registry` chain so it can never drift again (the README component section and Tech versions are the reference example).
 
 ---
@@ -50,7 +52,16 @@ Other useful commands:
 npm run build           # type-check + build library
 npm run lint            # ESLint
 npm run build-storybook # export static Storybook
+npm run verify          # full local quality gate: lint + all three builds (mirrors CI)
 ```
+
+---
+
+## CI & Local Verify
+
+Every push to `main` and every PR runs `.github/workflows/ci.yml` (three jobs: library lint + build, Storybook build, website build). The library job ends with a **drift guard** — `git diff --exit-code` after the generators run — so a registry change that lands without its regenerated README/skills/blueprint content fails CI.
+
+`npm run verify` is the **single local mirror of CI**: lint, library build, Storybook build, website build, in that order. The rule that keeps them in sync: **when CI gains a check (tests, a11y), add it to `verify` in the same change** — skills and docs reference `verify`, never individual commands, so nothing else needs updating.
 
 ---
 

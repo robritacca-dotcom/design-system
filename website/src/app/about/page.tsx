@@ -168,6 +168,19 @@ export default function AboutDsPage() {
                             <li>Portfolio visibility at github.com/robritacca-dotcom/design-system</li>
                           </ul>
                         </div>
+                        <div className={styles.role}>
+                          <div className={styles.roleHeader}>
+                            <h3 className={styles.roleTitle}>Continuous integration</h3>
+                          </div>
+                          <p className={styles.roleDescription}>
+                            Every push and PR runs an automated quality gate before anything is trusted.
+                          </p>
+                          <ul className={styles.roleBullets}>
+                            <li>Lints the codebase and builds the library, Storybook, and the website on every change</li>
+                            <li>Drift guard fails the build if generated docs (component counts, skills, blueprints) go stale</li>
+                            <li>The same checklist runs locally as a single command, so local and CI can never disagree</li>
+                          </ul>
+                        </div>
                       </div>
                     </div>
                   </div>
