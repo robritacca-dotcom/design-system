@@ -116,8 +116,8 @@ export const BarChart = ({
   const gridColor = getCSSVar('--color-divider', '#232323');
   const cursorColor = getCSSVar('--color-bg-container-secondary', '#303030');
 
-  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   const renderTooltip = useCallback(
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     (props: any) => (
       <ChartTooltip {...props} barColor={resolvedBarColor} dataLabel={dataLabel} />
     ),

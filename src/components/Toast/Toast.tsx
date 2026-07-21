@@ -1,4 +1,6 @@
-import { useState, useEffect, useRef, useContext, useCallback, createContext, type ReactNode } from 'react';
+import { useState, useEffect, useRef, useContext, useCallback, useSyncExternalStore, createContext, type ReactNode } from 'react';
+
+const emptySubscribe = () => () => {};
 import ReactDOM from 'react-dom';
 import './Toast.css';
 import '../../fonts/material-symbols.css';
@@ -52,6 +54,7 @@ const ToastContext = createContext<ToastContextValue | null>(null);
  * Hook to access the toast API.
  * Must be used within a ToastProvider.
  */
+// eslint-disable-next-line react-refresh/only-export-components -- useToast is part of the Toast public API and lives with its provider
 export const useToast = (): ToastContextValue => {
   const context = useContext(ToastContext);
   if (!context) {
@@ -102,7 +105,8 @@ const ToastItem = ({
   const [pauseTimer, setPauseTimer] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
   const remainingRef = useRef(duration);
-  const startTimeRef = useRef(Date.now());
+  // Set when the auto-dismiss timer starts; 0 until then
+  const startTimeRef = useRef(0);
 
   const baseClass = 'ds-toast';
 
@@ -204,10 +208,9 @@ export const ToastProvider = ({
   maxToasts = 5,
 }: ToastProviderProps) => {
   const [toasts, setToasts] = useState<InternalToast[]>([]);
-  const [mounted, setMounted] = useState(false);
 
   // SSR guard — only render portal on the client
-  useEffect(() => { setMounted(true); }, []);
+  const mounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
 
   const toast = useCallback(
     (data: ToastData): string => {

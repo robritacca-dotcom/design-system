@@ -1,7 +1,9 @@
-import React, { useState, useEffect, useRef, useId } from 'react';
+import React, { useEffect, useRef, useId, useSyncExternalStore } from 'react';
 import ReactDOM from 'react-dom';
 import './Dialog.css';
 import '../../fonts/material-symbols.css';
+
+const emptySubscribe = () => () => {};
 
 export interface DialogProps {
   /** Whether the dialog is open */
@@ -45,12 +47,10 @@ export const Dialog = ({
   const previousFocusRef = useRef<HTMLElement | null>(null);
   const titleId = useId();
   const descId = useId();
-  const [mounted, setMounted] = useState(false);
-
   const baseClass = 'ds-dialog';
 
   // SSR guard — only render portal on the client
-  useEffect(() => { setMounted(true); }, []);
+  const mounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
 
   // Store the previously focused element when opening
   useEffect(() => {

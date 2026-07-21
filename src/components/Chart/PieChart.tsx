@@ -114,8 +114,8 @@ export const PieChart = ({
   const defaultColors = getDefaultColors();
   const textSecondary = getCSSVar('--color-text-secondary', '#A2A2A2');
 
-  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   const renderTooltip = useCallback(
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     (props: any) => <PieChartTooltip {...props} />,
     [],
   );

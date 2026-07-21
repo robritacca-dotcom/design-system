@@ -100,8 +100,8 @@ export const LineChart = ({
   const gridColor = getCSSVar('--color-divider', '#232323');
   const defaultColor = getCSSVar('--color-action-primary-bg', '#118AB2');
 
-  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   const renderTooltip = useCallback(
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     (props: any) => <LineChartTooltip {...props} />,
     [],
   );

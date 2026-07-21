@@ -72,32 +72,7 @@ export const NoLabel: Story = {
 // Checkbox Group Stories
 // ============================================
 
-const groupMeta = {
-  title: 'Components/CheckboxGroup',
-  component: CheckboxGroup,
-  parameters: {
-    layout: 'centered',
-  },
-  tags: ['autodocs'],
-  argTypes: {
-    label: { control: 'text', description: 'Group label' },
-    direction: {
-      control: 'select',
-      options: ['vertical', 'horizontal'],
-      description: 'Layout direction',
-    },
-    size: {
-      control: 'select',
-      options: ['default', 'compact'],
-      description: 'Component size',
-    },
-  },
-  args: {
-    onChange: fn(),
-  },
-} satisfies Meta<typeof CheckboxGroup>;
-
-type GroupStory = StoryObj<typeof groupMeta>;
+type GroupStory = StoryObj<typeof CheckboxGroup>;
 
 export const GroupVertical: GroupStory = {
   render: (args) => <CheckboxGroup {...args} />,

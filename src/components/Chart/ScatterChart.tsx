@@ -121,8 +121,8 @@ export const ScatterChart = ({
   const textSecondary = getCSSVar('--color-text-secondary', '#A2A2A2');
   const gridColor = getCSSVar('--color-divider', '#232323');
 
-  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   const renderTooltip = useCallback(
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     (props: any) => <ScatterTooltip {...props} xLabel={xLabel} yLabel={yLabel} />,
     [xLabel, yLabel],
   );

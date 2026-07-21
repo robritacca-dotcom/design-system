@@ -123,8 +123,8 @@ export const RadialChart = ({
     fill: item.color || defaultColors[i % defaultColors.length],
   }));
 
-  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   const renderTooltip = useCallback(
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     (props: any) => <RadialTooltip {...props} />,
     [],
   );
@@ -176,11 +176,11 @@ export const RadialChart = ({
                 verticalAlign="bottom"
                 iconType="circle"
                 iconSize={8}
-                /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
                 {...({ payload: chartData.map((d) => ({
                   value: d.name,
                   type: 'circle' as const,
                   color: d.fill,
+                  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
                 })) } as any)}
                 formatter={(value: string) => (
                   <span style={{ color: textSecondary, fontSize: 12 }}>{value}</span>
