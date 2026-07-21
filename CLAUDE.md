@@ -206,7 +206,7 @@ Tokens also have multiple homes — a token that exists only in CSS is incomplet
 
 ---
 
-## Known Gaps (from design.md)
+## Known Gaps
 
 - No `--motion-*` token for animation timings — transitions are hardcoded `0.2s ease`
 - No `--icon-size-*` tokens — icon sizes are hardcoded per component
