@@ -43,7 +43,7 @@
   background: var(--color-bg-page-primary);
   border: var(--border-xs) solid var(--color-input-border-primary);
   border-radius: var(--radius-md); /* 12px */
-  box-shadow: 0 0 21px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--shadow-floating);
 
   /* Inset gap — Figma: padding/xxs (4px) all sides */
   padding: var(--padding-xxs);

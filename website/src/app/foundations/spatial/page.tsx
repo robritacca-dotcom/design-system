@@ -128,6 +128,28 @@ export default function SemanticSpacingPage() {
               </div>
             </section>
           ))}
+
+          {/* Elevation */}
+          <section className={styles.spacingGroup}>
+            <SectionTitle title="Elevation" />
+            <p className={styles.elevationNote}>
+              Depth is colour-based — standard containers never carry shadows. The only two
+              shadows in the system are semantic tokens, each with a stronger dark-mode value:{" "}
+              <code>--shadow-floating</code> for anchored floating surfaces (popovers, dropdown
+              menus, chart tooltips, toasts) and <code>--shadow-modal</code> for Dialog and
+              AlertDialog panels, which pair with the <code>--color-scrim</code> backdrop.
+            </p>
+            <div className={styles.elevationGrid}>
+              <div className={`${styles.elevationTile} ${styles.elevationTileFloating}`}>
+                <span className={styles.elevationLabel}>Floating</span>
+                <span className={styles.elevationValue}>--shadow-floating</span>
+              </div>
+              <div className={`${styles.elevationTile} ${styles.elevationTileModal}`}>
+                <span className={styles.elevationLabel}>Modal</span>
+                <span className={styles.elevationValue}>--shadow-modal</span>
+              </div>
+            </div>
+          </section>
         </main>
       </div>
 

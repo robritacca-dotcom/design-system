@@ -17,8 +17,8 @@
   z-index: 50;
   padding: var(--padding-xs) var(--padding-sm); /* 6px 8px */
   border-radius: var(--radius-xs); /* 4px */
-  background-color: var(--primitive-neutral-09);
-  color: var(--primitive-neutral-01);
+  background-color: var(--color-bg-container-inverse);
+  color: var(--color-text-on-inverse);
   font-family: var(--font-paragraph-sm-family);
   font-size: var(--font-paragraph-sm-size);
   font-weight: var(--font-paragraph-sm-weight);
@@ -89,7 +89,7 @@
   position: absolute;
   width: 8px;
   height: 8px;
-  background-color: var(--primitive-neutral-09);
+  background-color: var(--color-bg-container-inverse);
   transform: rotate(45deg);
 }
 

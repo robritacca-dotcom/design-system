@@ -144,6 +144,25 @@ const textColours: SwatchData[] = [
     dark: { primitive: "--neutral--07--", hex: "#303030", rgb: "48 / 48 / 48" },
     light: { primitive: "--neutral--04--", hex: "#A2A2A2", rgb: "162 / 162 / 162" },
   },
+  {
+    label: "On Inverse", cssVar: "--color-text-on-inverse",
+    dark: { primitive: "--neutral--09--", hex: "#0E0E0E", rgb: "14 / 14 / 14" },
+    light: { primitive: "--neutral--01--", hex: "#F1F1F1", rgb: "241 / 241 / 241" },
+  },
+];
+
+/* --- Overlay & Controls --- */
+const overlayControlColours: SwatchData[] = [
+  {
+    label: "Scrim", cssVar: "--color-scrim",
+    dark: { primitive: "--true-black-strong--", hex: "rgba(0,0,0,0.7)", rgb: "0 / 0 / 0" },
+    light: { primitive: "--true-black-semi--", hex: "rgba(0,0,0,0.5)", rgb: "0 / 0 / 0" },
+  },
+  {
+    label: "Control Thumb", cssVar: "--color-control-thumb",
+    dark: { primitive: "--neutral--01--", hex: "#F1F1F1", rgb: "241 / 241 / 241" },
+    light: { primitive: "--neutral--00--", hex: "#FFFFFF", rgb: "255 / 255 / 255" },
+  },
 ];
 
 /* --- Action / Primary --- */
@@ -400,6 +419,16 @@ export default function SemanticColoursPage() {
             <SectionTitle title="Action / Passive" />
             <div className={styles.colourSwatches}>
               {actionPassiveColours.map((s) => (
+                <ColourSwatch key={s.label} label={s.label} cssVar={s.cssVar} dark={s.dark} light={s.light} theme={theme} />
+              ))}
+            </div>
+          </section>
+
+          {/* Overlay & Controls */}
+          <section className={styles.colourGroup}>
+            <SectionTitle title="Overlay & Controls" />
+            <div className={styles.colourSwatches}>
+              {overlayControlColours.map((s) => (
                 <ColourSwatch key={s.label} label={s.label} cssVar={s.cssVar} dark={s.dark} light={s.light} theme={theme} />
               ))}
             </div>

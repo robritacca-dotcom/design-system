@@ -142,6 +142,12 @@ const purpleColours: PrimitiveSwatch[] = [
   { label: "Purple 10", cssVar: "--primitive-purple-10", hex: "#31164A", rgb: "49 / 22 / 74" },
 ];
 
+const trueBlackColours: PrimitiveSwatch[] = [
+  { label: "True Black", cssVar: "--primitive-true-black", hex: "#000000", rgb: "0 / 0 / 0" },
+  { label: "True Black Semi", cssVar: "--primitive-true-black-semi", hex: "rgba(0,0,0,0.5)", rgb: "0 / 0 / 0" },
+  { label: "True Black Strong", cssVar: "--primitive-true-black-strong", hex: "rgba(0,0,0,0.7)", rgb: "0 / 0 / 0" },
+];
+
 /* All colour ramps in display order */
 const colourRamps = [
   { title: "Neutral", swatches: neutralColours },
@@ -152,6 +158,7 @@ const colourRamps = [
   { title: "Teal", swatches: tealColours },
   { title: "Blue", swatches: blueColours },
   { title: "Purple", swatches: purpleColours },
+  { title: "True Black", swatches: trueBlackColours },
 ];
 
 /* ============================================

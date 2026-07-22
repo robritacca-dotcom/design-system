@@ -29,7 +29,7 @@
   border: var(--border-xs) solid var(--color-bg-container-border);
   border-radius: var(--radius-sm); /* 8px */
   background-color: var(--color-bg-container-primary);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--shadow-floating);
 
   /* Hidden by default */
   opacity: 0;

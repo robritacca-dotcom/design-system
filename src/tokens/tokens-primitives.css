@@ -120,6 +120,8 @@
 
   /* True Black */
   --primitive-true-black: #000000;
+  --primitive-true-black-semi: rgba(0, 0, 0, 0.5);
+  --primitive-true-black-strong: rgba(0, 0, 0, 0.7);
 
   /* ============================================
      SPACING PRIMITIVES

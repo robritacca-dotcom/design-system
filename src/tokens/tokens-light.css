@@ -10,6 +10,7 @@
   --color-text-secondary: #303030;
   --color-text-tertiary: #6D6D6D;
   --color-text-inverse: #A2A2A2;
+  --color-text-on-inverse: var(--primitive-neutral-01);
 
   /* Icon */
   --color-icon-primary: #6D6D6D;
@@ -30,6 +31,14 @@
 
   /* Divider */
   --color-divider: var(--primitive-neutral-02-semi);
+
+  /* Overlay & controls */
+  --color-scrim: var(--primitive-true-black-semi);
+  --color-control-thumb: var(--primitive-neutral-00);
+
+  /* Elevation — the only shadows in the system (floating surfaces + modals) */
+  --shadow-floating: 0 4px 16px rgba(0, 0, 0, 0.12);
+  --shadow-modal: 0 8px 32px rgba(0, 0, 0, 0.2);
 
   /* Action - Primary */
   --color-action-primary-bg: #118AB2;

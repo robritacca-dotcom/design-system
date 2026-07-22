@@ -35,7 +35,9 @@ const registry = JSON.parse(
   readFileSync(join(repoRoot, 'src', 'components', 'registry.json'), 'utf8')
 );
 
-const original = readFileSync(readmePath, 'utf8');
+// Normalize CRLF so Windows checkouts (core.autocrlf=true) match the
+// LF-based markers and produce the same output as CI.
+const original = readFileSync(readmePath, 'utf8').replace(/\r\n/g, '\n');
 let readme = original;
 
 const countMarker = /<!-- component-count -->[\s\S]*?<!-- \/component-count -->/;

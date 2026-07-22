@@ -230,6 +230,12 @@ export const Primitives: Story = {
         <ColorToken name="11 (Black)" value="--primitive-neutral-11" />
       </TokenSection>
 
+      <TokenSection title="True Black">
+        <ColorToken name="True Black" value="--primitive-true-black" />
+        <ColorToken name="Semi (50%)" value="--primitive-true-black-semi" />
+        <ColorToken name="Strong (70%)" value="--primitive-true-black-strong" />
+      </TokenSection>
+
       <TokenSection title="Red Scale">
         <ColorToken name="01 (Lightest)" value="--primitive-red-01" />
         <ColorToken name="02" value="--primitive-red-02" />
@@ -396,6 +402,7 @@ export const SemanticColors: Story = {
         <ColorToken name="Secondary" value="--color-text-secondary" />
         <ColorToken name="Tertiary" value="--color-text-tertiary" />
         <ColorToken name="Inverse" value="--color-text-inverse" />
+        <ColorToken name="On Inverse" value="--color-text-on-inverse" />
       </TokenSection>
 
       <TokenSection title="Icon Colors">
@@ -479,6 +486,11 @@ export const SemanticColors: Story = {
         <ColorToken name="Border Disabled" value="--color-input-border-disabled" />
         <ColorToken name="Background Primary" value="--color-input-bg-primary" />
         <ColorToken name="Background Disabled" value="--color-input-bg-disabled" />
+      </TokenSection>
+
+      <TokenSection title="Overlay & Controls">
+        <ColorToken name="Scrim" value="--color-scrim" />
+        <ColorToken name="Control Thumb" value="--color-control-thumb" />
       </TokenSection>
 
       <TokenSection title="Core Colors">
@@ -588,6 +600,91 @@ export const ChartColors: Story = {
         <ColorToken name="Level 2" value="--color-chart-contribution-2" />
         <ColorToken name="Level 3" value="--color-chart-contribution-3" />
         <ColorToken name="Level 4" value="--color-chart-contribution-4" />
+      </TokenSection>
+    </div>
+  ),
+};
+
+// Elevation Story
+const ShadowToken = ({ value }: { name: string; value: string }) => {
+  const computedValue = getComputedStyle(document.documentElement)
+    .getPropertyValue(value)
+    .trim();
+
+  return (
+    <div style={{ marginBottom: '24px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+        <div
+          style={{
+            width: '120px',
+            height: '64px',
+            backgroundColor: 'var(--color-bg-page-primary)',
+            border: '1px solid var(--color-bg-container-border)',
+            borderRadius: '8px',
+            boxShadow: `var(${value})`,
+            flexShrink: 0,
+          }}
+        />
+        <div style={{ flex: 1 }}>
+          <div
+            style={{
+              fontSize: '13px',
+              fontFamily: 'monospace',
+              color: 'var(--color-text-primary)',
+              fontWeight: 600,
+            }}
+          >
+            {value}
+          </div>
+          <div
+            style={{
+              fontSize: '12px',
+              color: 'var(--color-text-tertiary)',
+              marginTop: '2px',
+            }}
+          >
+            {computedValue}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const Elevation: Story = {
+  render: () => (
+    <div style={{ maxWidth: '800px' }}>
+      <h2
+        style={{
+          fontSize: '24px',
+          fontWeight: 700,
+          color: 'var(--color-text-primary)',
+          marginBottom: '24px',
+        }}
+      >
+        Elevation Tokens
+      </h2>
+      <p
+        style={{
+          fontSize: '14px',
+          color: 'var(--color-text-secondary)',
+          marginBottom: '32px',
+          lineHeight: '1.5',
+        }}
+      >
+        Depth is colour-based — standard containers never carry shadows. These
+        are the only two shadows in the system, plus the modal scrim. All three
+        get stronger values in dark mode so they read against the near-black
+        page floor.
+      </p>
+
+      <TokenSection title="Shadows">
+        <ShadowToken name="Floating" value="--shadow-floating" />
+        <ShadowToken name="Modal" value="--shadow-modal" />
+      </TokenSection>
+
+      <TokenSection title="Scrim">
+        <ColorToken name="Scrim" value="--color-scrim" />
       </TokenSection>
     </div>
   ),

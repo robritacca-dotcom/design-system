@@ -30,7 +30,9 @@ export const outputPath = join(
 );
 
 function parseSkillFile(path, slug) {
-  const src = readFileSync(path, 'utf8');
+  // Normalize CRLF so Windows checkouts (core.autocrlf=true) parse and
+  // generate byte-identical output to CI's LF checkouts.
+  const src = readFileSync(path, 'utf8').replace(/\r\n/g, '\n');
   const fmMatch = src.match(/^---\n([\s\S]*?)\n---\n/);
   if (!fmMatch) throw new Error(`${path}: missing frontmatter`);
   const fm = fmMatch[1];

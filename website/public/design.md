@@ -17,9 +17,9 @@ The system is **light/dark-first**: every semantic color token has a light-theme
 - White page floor (`--color-bg-page-primary` — #FFFFFF) with near-black primary text (`--color-text-primary` — #050505 light / #F1F1F1 dark).
 - Teal primary action (`--color-action-primary-bg` — #118AB2). Used exclusively on primary CTA buttons and focus rings. Never decorative.
 - Nunito Sans single-family system. Weight 300 for Mega/Display (marketing), 600 for headings, 500/400 for body and UI labels.
-- Container hierarchy as depth signal — no drop shadows. Depth is conveyed by stepping through `--color-bg-container-primary` → `secondary` → `tertiary`.
+- Container hierarchy as depth signal — standard containers carry no drop shadows. Depth is conveyed by stepping through `--color-bg-container-primary` → `secondary` → `tertiary`; the only shadows are the `--shadow-floating`/`--shadow-modal` tokens on floating surfaces and the interactive-card hover lift.
 - Five semantic status variants running through every feedback component: `info` (blue), `positive` (green), `warning` (orange), `error` (red), `neutral` (gray).
-- Border radius is hierarchical: `--radius-xs` (4px) for badges, `--radius-md` (12px) for inputs and cards, `--radius-full` (999px) for buttons.
+- Border radius is hierarchical: `--radius-xs` (4px) for badges, `--radius-md` (12px) for inputs and standard containers, `--radius-xl` (24px) for Card/EntityCard navigation tiles, `--radius-full` (999px) for buttons.
 - Material Symbols Rounded for all iconography — 24px default, 20px compact.
 - Accessibility-first: ARIA roles, semantic HTML, and keyboard navigation in every interactive component.
 
@@ -49,13 +49,19 @@ Never reference `--primitive-*` tokens inside components. Always use the semanti
 - **Container secondary** (`--color-bg-container-secondary` — #D6D6D6 light / #303030 dark): Second elevation — nested containers, divider fills.
 - **Container tertiary** (`--color-bg-container-tertiary` — #BCBCBC light / #232323 dark): Third elevation — pressed states, deepest nesting.
 - **Container border** (`--color-bg-container-border` — #D6D6D6 light / #232323 dark): Hairline borders on containers.
+- **Container inverse** (`--color-bg-container-inverse` — #0E0E0E light / #F1F1F1 dark): High-contrast inverted surface — the tooltip bubble. Always paired with `--color-text-on-inverse`.
 - **Divider** (`--color-divider` — rgba(214,214,214,0.8) light / rgba(35,35,35,0.8) dark): Horizontal/vertical rule between sections.
+
+### Overlay & Controls
+- **Scrim** (`--color-scrim` — rgba(0,0,0,0.5) light / rgba(0,0,0,0.7) dark): Modal backdrop behind Dialog and AlertDialog. Darker in dark mode so the modal still separates from the near-black floor.
+- **Control thumb** (`--color-control-thumb` — #FFFFFF light / #F1F1F1 dark): The circular thumb inside toggle switches (ToggleSwitch, SelectionCard's toggle indicator).
 
 ### Text
 - **Primary** (`--color-text-primary` — #050505 light / #F1F1F1 dark): Headlines and primary content.
 - **Secondary** (`--color-text-secondary` — #303030 light / #BCBCBC dark): Emphasized body, card subheadings.
 - **Tertiary** (`--color-text-tertiary` — #6D6D6D light / #A2A2A2 dark): Labels, helper text, captions.
 - **Inverse** (`--color-text-inverse` — #A2A2A2 light / #303030 dark): De-emphasized secondary labels; inverts in dark mode.
+- **On inverse** (`--color-text-on-inverse` — #F1F1F1 light / #0E0E0E dark): Text sitting on `--color-bg-container-inverse` surfaces (tooltip labels).
 
 ### Icons
 - **Primary** (`--color-icon-primary` — #6D6D6D light / #D6D6D6 dark): Default icon fill — tertiary buttons, input icons, nav icons.
@@ -227,11 +233,11 @@ Whitespace communicates hierarchy. Dense elements use micro-gaps (2–8px); comf
 | `--radius-sm` | 8px | Small sub-elements, inner nested surfaces |
 | `--radius-md` | 12px | Inputs, cards (standard), modals |
 | `--radius-lg` | 16px | Large feature cards, hero containers |
-| `--radius-xl` | 24px | Oversized hero containers, page-level sections |
+| `--radius-xl` | 24px | Card/EntityCard navigation tiles, oversized hero containers, page-level sections |
 | `--radius-xxl` | 48px | Pill containers, oversized decorative elements |
 | `--radius-full` | 999px | All buttons (primary, secondary, tertiary, destructive), toggle thumbs |
 
-**Key rule:** Buttons are always `--radius-full` (pill shape). Inputs are always `--radius-md` (12px). This contrast — rounded pill CTAs vs softer-cornered inputs — is intentional and consistent.
+**Key rule:** Buttons are always `--radius-full` (pill shape). Inputs are always `--radius-md` (12px). Card and EntityCard — the navigational tiles — use the larger `--radius-xl` (24px) to read as destinations rather than form surfaces. This contrast — rounded pill CTAs vs softer-cornered inputs vs generously rounded tiles — is intentional and consistent.
 
 ---
 
@@ -248,7 +254,12 @@ The system uses **color-block first, shadow rare** philosophy. Depth is communic
 | Input | `--color-input-bg-primary` with `--color-input-border-primary` hairline | Text inputs, textareas, dropdowns |
 | Status containers | Colored bg + colored border per variant | Alerts, toasts, badges |
 
-No drop shadows in the default component library. If a shadow is needed for a floating surface (a popover, a dropdown menu), keep it minimal: `0 2px 8px rgba(5,5,5,0.08)`.
+Standard containers never carry shadows. The only shadows in the system are two semantic elevation tokens, defined per theme (stronger opacity in dark mode so they read against the #050505 floor):
+
+- **`--shadow-floating`** (`0 4px 16px rgba(0,0,0,0.12)` light / `0.55` dark) — anchored floating surfaces: Popover, Dropdown menus, DropdownMenu, chart tooltips, Toast.
+- **`--shadow-modal`** (`0 8px 32px rgba(0,0,0,0.2)` light / `0.6` dark) — modal surfaces: Dialog and AlertDialog panels, paired with the `--color-scrim` backdrop.
+
+Never write a literal `box-shadow` value in component CSS — use one of these two tokens or no shadow at all. (One documented exception: the interactive Card hover lift — see Do's and Don'ts.)
 
 ---
 
@@ -314,11 +325,11 @@ Default icons (Material Symbols Rounded): `info`, `check_circle`, `warning`, `er
 
 ### Card
 
-**`ds-card`** — Table-of-contents navigation tile. Two parts: `.ds-card__preview` (content/component preview area) + `.ds-card__title` (h3 label below). Used in component/foundations index grids. When `interactive`, gains `role="button"` and keyboard support. Background: `--color-bg-container-primary`.
+**`ds-card`** — Table-of-contents navigation tile. Two parts: `.ds-card__preview` (content/component preview area) + `.ds-card__title` (h3 label below). Used in component/foundations index grids. When `interactive`, gains `role="button"` and keyboard support. Background: `--color-bg-container-primary-semi`; radius: `--radius-xl` (24px). Interactive and case-study variants lift on hover with `0 8px 24px rgba(0,0,0,0.3)` — the system's one sanctioned container shadow (see Do's and Don'ts).
 
 ### EntityCard
 
-**`ds-entity-card`** — Compact icon-or-image + label card. Used specifically on Icons and Logos pages in the Foundations section. Takes a Material Symbol name (`icon`) or image path (`imageSrc`). Centered layout with label beneath. Not interactive — display-only.
+**`ds-entity-card`** — Compact icon-or-image + label card. Used specifically on Icons and Logos pages in the Foundations section. Takes a Material Symbol name (`icon`) or image path (`imageSrc`). Centered layout with label beneath. Radius: `--radius-xl` (24px), matching Card. Not interactive — display-only.
 
 ### SelectionCard
 
@@ -400,6 +411,9 @@ The theme is activated by `data-theme="dark"` on the HTML root element. The `tok
 - `--color-divider` (light semi → dark semi)
 - `--color-input-bg-primary`, `--color-input-border-primary`, `--color-input-text-primary`
 - `--color-action-passive-*` (near-transparent fills swap to dark semi-transparent)
+- `--color-bg-container-inverse` / `--color-text-on-inverse` (the tooltip surface flips from near-black to near-white)
+- `--color-scrim` (0.5 → 0.7 black), `--color-control-thumb` (#FFFFFF → #F1F1F1)
+- `--shadow-floating`, `--shadow-modal` (shadow opacity increases in dark mode)
 
 **Tokens that stay stable:**
 - `--color-action-primary-bg` #118AB2 — teal does not change in dark mode
@@ -418,7 +432,7 @@ The theme is activated by `data-theme="dark"` on the HTML root element. The `tok
 - Use semantic tokens (`--color-*`, `--radius-*`, `--gap-*`, `--padding-*`, `--font-*`) in every component. Never use `--primitive-*` tokens directly.
 - Reserve `--color-action-primary-bg` (teal) for primary CTA buttons, focus rings, and active input states. Nowhere else.
 - Use Nunito Sans weight 300 for display/marketing text and weight 600 for in-app headings. The weight split is intentional.
-- Apply `--radius-full` to all buttons and `--radius-md` to all inputs and cards. This contrast is the system's shape signature.
+- Apply `--radius-full` to all buttons, `--radius-md` to all inputs and standard containers, and `--radius-xl` to Card/EntityCard navigation tiles. This contrast is the system's shape signature.
 - Map all feedback UI to the five-variant status system (`info`/`positive`/`warning`/`error`/`neutral`) — Badge, Alert, Toast, ProgressBar all share the same semantic tokens.
 - Prefer `--color-divider` for rule lines over custom border colors.
 - Use Material Symbols Rounded for icons. 24px default, 20px compact.
@@ -430,7 +444,7 @@ The theme is activated by `data-theme="dark"` on the HTML root element. The `tok
 - Don't set `display` size typography (Mega/Display tokens) inside app UI pages — reserve them for the marketing homepage hero only.
 - Don't bold display sizes. Weight 300 is non-negotiable for Mega/Display; weight 600 is the max for in-app headings.
 - Don't invent a fourth surface tone outside page / container-primary / container-secondary / container-tertiary. The neutral ramp is intentionally short.
-- Don't add `box-shadow` to standard cards and containers. Depth comes from background steps, not shadows.
+- Don't add `box-shadow` to standard cards and containers. Depth comes from background steps, not shadows. The one exception: interactive Card tiles lift with `0 8px 24px rgba(0,0,0,0.3)` on hover — a deliberate navigational affordance, not an elevation pattern to copy elsewhere. Floating surfaces and modals use `--shadow-floating`/`--shadow-modal`.
 - Don't hardcode colors. Every color must be a semantic token so dark mode works without extra code.
 - Don't break the five-status system by adding a sixth variant (e.g. "brand") to Badge or Alert. Use `neutral` and customize within the component page if needed.
 - Don't disable the `data-theme` swap on any subtree — all components must participate in theme switching.

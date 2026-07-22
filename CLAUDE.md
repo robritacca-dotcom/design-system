@@ -113,7 +113,7 @@ Component CSS               background-color: var(--color-action-primary-bg)
 Key invariants:
 - Teal `--color-action-primary-bg` (#118AB2) is **only** for primary CTA buttons and focus rings. Never decorative.
 - Never hardcode hex values in component CSS — always a semantic token.
-- Buttons are always `--radius-full` (pill). Inputs and cards are always `--radius-md` (12px).
+- Buttons are always `--radius-full` (pill). Inputs are always `--radius-md` (12px). Card/EntityCard navigation tiles are the exception: `--radius-xl` (24px).
 
 ---
 
@@ -187,7 +187,7 @@ Tokens also have multiple homes — a token that exists only in CSS is incomplet
 - **White-floor UI**: page background is pure white (#FFFFFF light / #050505 dark). Depth comes from the container color ramp (`container-primary` → `secondary` → `tertiary`) — not shadows.
 - **Teal (#118AB2) is the action color**: primary buttons, focus rings, active input borders. Using it decoratively on text or illustrations dilutes its CTA signal.
 - **Five status variants — no more**: `info` (blue), `positive` (green), `warning` (orange), `error` (red), `neutral` (gray). Badge, Alert, Toast, and ProgressBar all share the same `--color-status-*` token set.
-- **No box shadows on standard containers**: the elevation system is color-based. The only shadow in the system is on floating surfaces (popovers, dropdowns): `0 2px 8px rgba(5,5,5,0.08)`.
+- **No box shadows on standard containers**: the elevation system is color-based. The only shadows are the semantic tokens `--shadow-floating` (popovers, dropdowns, chart tooltips, toasts) and `--shadow-modal` (Dialog/AlertDialog, paired with `--color-scrim`), plus one sanctioned exception: interactive Card tiles lift on hover (see design.md).
 - **Material Symbols Rounded** for all icons — 24px default, 20px compact.
 - **Weight contrast is the heading hierarchy rule**: `h2` is 30px/300 (light), `h3` is 22px/600 (bold). Never use the same weight for consecutive heading levels.
 

@@ -39,7 +39,12 @@ const skillSources = [
       `website/src/data/external-skills/${e}.md`,
       join(externalDir, `${e}.md`),
     ]),
-].map(([label, path]) => [label, path, readFileSync(path, 'utf8')]);
+].map(([label, path]) => [
+  label,
+  path,
+  // Normalize CRLF so Windows checkouts lint identically to CI.
+  readFileSync(path, 'utf8').replace(/\r\n/g, '\n'),
+]);
 
 // Claude Code only discovers a skill if SKILL.md opens with YAML
 // frontmatter containing `name` and `description`. Skills shown on the
@@ -88,7 +93,9 @@ for (const [label, , src] of skillSources) {
 let staleGenerated = null;
 try {
   const expected = buildSkillsContent();
-  const onDisk = existsSync(outputPath) ? readFileSync(outputPath, 'utf8') : '';
+  const onDisk = existsSync(outputPath)
+    ? readFileSync(outputPath, 'utf8').replace(/\r\n/g, '\n')
+    : '';
   if (onDisk !== expected) {
     staleGenerated =
       'website/src/data/skills-content.generated.ts is stale — run ' +

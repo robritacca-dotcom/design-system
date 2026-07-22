@@ -27,7 +27,7 @@
 .ds-dialog__backdrop {
   position: absolute;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--color-scrim);
 }
 
 /* ============================================
@@ -46,7 +46,7 @@
   border: var(--border-xs) solid var(--color-bg-container-border);
   border-radius: var(--radius-md); /* 12px */
   background-color: var(--color-bg-page-primary);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-modal);
   transform: scale(0.96);
   transition: transform 0.2s ease;
   outline: none;
