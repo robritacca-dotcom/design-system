@@ -173,17 +173,17 @@ export default function Robr0DsCaseStudy() {
           <div className={`${styles.resumeLayout} animate-in animate-delay-3`}>
             {/* Main — article body */}
             <div className={styles.resumeMain}>
-              <div className={styles.resumeSection}>
+              <section className={styles.resumeSection}>
                 <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Case study</h2>
                 </div>
 
-                <div className={styles.body}>
+                <article className={styles.body}>
                   <p className={styles.lede}>
                     The site you&apos;re on runs on a design system I built end to end. Tokens, components, theming, docs, the pipeline that ships it — all mine. It started as two days of rules in February 2026. Six months later, it runs parts of its own maintenance. This is the story of the problem I set out to test, the journey the system took, and where it stands today.
                   </p>
 
-                  <h2>The problem</h2>
+                  <h2 id="the-problem">The problem</h2>
 
                   <p>
                     Plenty of great design systems exist — shadcn, Mantine, Material, Radix. Any of them would&apos;ve gotten me a portfolio site in a weekend. But that would have answered the wrong question. The question I actually wanted to test was this: <strong>can one designer, working with AI agents, carry a design system through its entire lifecycle?</strong> Not just drawing the components — the parts that normally take a team. Documenting them. Testing them. Hardening them for a public repo. Keeping the docs honest as the system grows.
@@ -213,9 +213,9 @@ export default function Robr0DsCaseStudy() {
                     The handoff that usually sits between design and engineering is just gone. The spec is the work.
                   </blockquote>
 
-                  <h2>The journey</h2>
+                  <h2 id="the-journey">The journey</h2>
 
-                  <h3>February — constraints before components</h3>
+                  <h3 id="february-constraints-before-components">February — constraints before components</h3>
 
                   <p>
                     Day one wasn&apos;t a button. It was rules. The first commits established the architecture the whole system still rests on:{" "}
@@ -294,7 +294,7 @@ export default function Robr0DsCaseStudy() {
                     By the end of February the library stood at 39 components. And then, for three months, that number barely moved. The plateau turned out to be the most interesting part of the story.
                   </p>
 
-                  <h3>Spring — the system writes itself down</h3>
+                  <h3 id="spring-the-system-writes-itself-down">Spring — the system writes itself down</h3>
 
                   <p>
                     What happened during the plateau wasn&apos;t rest — the project&apos;s centre of gravity shifted from building components to building <em>the system around the system</em>. In April, the first Claude skills appeared: repeatable QA work — heuristic analysis, accessibility audits, API consistency reviews — packaged as instructions an AI agent can run on demand. Shortly after, the documents that govern the build became first-class content:{" "}
@@ -302,19 +302,19 @@ export default function Robr0DsCaseStudy() {
                     <Link href="/blueprints/claude" className={styles.inlineLink}>CLAUDE.md</Link>, the instructions that steer the agents, were both published on the site as Blueprints. The idea underneath: everything an AI needs to build this system well is a document — and documents can be shipped, shared, and reused.
                   </p>
 
-                  <h3>May — from component site to portfolio</h3>
+                  <h3 id="may-from-component-site-to-portfolio">May — from component site to portfolio</h3>
 
                   <p>
                     Then the biggest identity shift in the project&apos;s history. The site stopped being &ldquo;robr0 DS with an about page&rdquo; and became my portfolio, with the design system as its flagship exhibit. A mega navigation, breadcrumbs, a contact page — and six case studies in one sustained push, including the one you&apos;re reading now. The system had become good enough at building pages that the bottleneck was no longer building. It was having something to say.
                   </p>
 
-                  <h3>June — reaching outward</h3>
+                  <h3 id="june-reaching-outward">June — reaching outward</h3>
 
                   <p>
                     Early summer was about the world outside the repo: a technical SEO pass, structured data, the move to a proper domain. The analytics setup was repaired and gained a pull script for on-demand reporting — a small utility that would quietly become the foundation of something bigger a few weeks later. A Writing section began auto-syncing my articles from Substack, and a run of polish closed long-standing irritations, including a theme-toggle flicker bug that had survived two previous fixes.
                   </p>
 
-                  <h3>July — the system starts to maintain itself</h3>
+                  <h3 id="july-the-system-starts-to-maintain-itself">July — the system starts to maintain itself</h3>
 
                   <p>
                     This is where the original bet paid off. In the span of three weeks:
@@ -332,7 +332,7 @@ export default function Robr0DsCaseStudy() {
                     The through-line of the journey: in February, AI helped me build the system. By July, the system was running parts of its own maintenance — and reporting back to me.
                   </p>
 
-                  <h2>Where it is now</h2>
+                  <h2 id="where-it-is-now">Where it is now</h2>
 
                   <p>
                     <Link href="/components" className={styles.inlineLink}>{COMPONENT_COUNT} React components</Link>, full Storybook docs,{" "}
@@ -402,7 +402,7 @@ export default function Robr0DsCaseStudy() {
                     />
                   </div>
 
-                  <h2>Browse the system</h2>
+                  <h2 id="browse-the-system">Browse the system</h2>
 
                   <p>
                     Every layer described above has its own documented page. This is the map — each tile is the real reference I work from, the same one any visitor can read:
@@ -416,7 +416,7 @@ export default function Robr0DsCaseStudy() {
                     is a build-progression timeline of everything described above, kept current by one of the system&apos;s own scheduled loops: every two weeks it reads the git history since its last visit and consolidates it into stories.
                   </p>
 
-                  <h2>What changed in my practice</h2>
+                  <h2 id="what-changed-in-my-practice">What changed in my practice</h2>
 
                   <p>
                     The most interesting outcome wasn&apos;t the system itself — it was how building this way rewired how I work:
@@ -433,7 +433,7 @@ export default function Robr0DsCaseStudy() {
                     None of this replaces design judgment. It moves where judgment is applied — earlier, at the spec level, before code or visuals exist.
                   </p>
 
-                  <h2>The artifacts I&apos;m leaving open</h2>
+                  <h2 id="the-artifacts-im-leaving-open">The artifacts I&apos;m leaving open</h2>
 
                   <p>
                     The whole system is on GitHub. Three artifacts make the approach reusable on any project you start tomorrow:
@@ -455,18 +455,18 @@ export default function Robr0DsCaseStudy() {
                     Each one is a markdown file. Download it, drop it into your project, point Claude at it. The pipeline isn&apos;t magic — it&apos;s a stack of small written agreements an AI can act on.
                   </p>
 
-                  <h2>What&apos;s next</h2>
+                  <h2 id="whats-next">What&apos;s next</h2>
 
                   <p>
                     The direction is more of what July started: hardening and autonomy. On the hardening side, promoting the accessibility checks from report-only to build-blocking, and adding visual regression coverage so a stray pixel fails CI the way a broken story already does. On the autonomy side, more <Link href="/loops" className={styles.inlineLink}>loops</Link> that don&apos;t wait to be asked — the weekly copy experiments and the biweekly journal are the first two, not the last. The experiment continues, and so far the answer to the original question is yes: one designer really can run the whole lifecycle — as long as the system helps.
                   </p>
-                </div>
-              </div>
+                </article>
+              </section>
             </div>
 
             {/* Right rail — tools + links */}
             <aside className={styles.resumeSidebar} aria-label="Case study resources">
-              <div className={styles.resumeSection}>
+              <section className={styles.resumeSection}>
                 <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Details</h2>
                 </div>
@@ -483,9 +483,9 @@ export default function Robr0DsCaseStudy() {
                     <span className={styles.detailValue}>2026</span>
                   </div>
                 </div>
-              </div>
+              </section>
 
-              <div className={styles.resumeSection}>
+              <section className={styles.resumeSection}>
                 <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Tools</h2>
                 </div>
@@ -515,9 +515,9 @@ export default function Robr0DsCaseStudy() {
                     <span className={styles.toolName}>Material Symbols</span>
                   </div>
                 </div>
-              </div>
+              </section>
 
-              <div className={styles.resumeSection}>
+              <section className={styles.resumeSection}>
                 <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Links</h2>
                 </div>
@@ -595,7 +595,7 @@ export default function Robr0DsCaseStudy() {
                     </div>
                   </a>
                 </div>
-              </div>
+              </section>
             </aside>
           </div>
         </main>

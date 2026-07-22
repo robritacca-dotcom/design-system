@@ -78,13 +78,13 @@ export default function MetaOffersCaseStudy() {
           {/* Two-column body */}
           <div className={`${styles.resumeLayout} animate-in animate-delay-3`}>
             <div className={styles.resumeMain}>
-              <div className={styles.resumeSection}>
+              <section className={styles.resumeSection}>
                 <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Case study</h2>
                 </div>
 
-                <div className={styles.body}>
-                  <h2>Context</h2>
+                <article className={styles.body}>
+                  <h2 id="context">Context</h2>
 
                   <p>
                     Meta&apos;s recruiting engine, in raw numbers: <strong>8,000 recruiters, 10 million candidates, 60,000 offers, 50,000 target hires.</strong> The Recruiting Products portfolio spans Application → Pre-screen → Screen → Full loop → <strong>Offer</strong> → Pre-hire, across two surfaces: the Meta Career Site + Candidate Profile (for candidates and new hires) and the Recruiter ATS (for sourcers and recruiters).
@@ -94,7 +94,7 @@ export default function MetaOffersCaseStudy() {
                     I was on the Offers team inside Recruiting Products, partnering with the Compensation Analysis team and a panel of 30+ recruiters and 3 comp analysts acting as SMEs.
                   </p>
 
-                  <h2>Problem</h2>
+                  <h2 id="problem">Problem</h2>
 
                   <p>Two types of offers, very different velocity profiles:</p>
 
@@ -122,7 +122,7 @@ export default function MetaOffersCaseStudy() {
                     To make the parsing problem concrete: two recruiters writing about the same candidate would produce wildly different free-text notes. A comp analyst then had to reconstruct structured fields — base salary, target bonus %, unvested equity, forfeited cash — from prose. Multiplied across thousands of offers, this produced <strong>repeating rejection loops</strong>: comp asks for more info, recruiter resubmits, comp asks again.
                   </p>
 
-                  <h2>Approach</h2>
+                  <h2 id="approach">Approach</h2>
 
                   <p>
                     The objective was specific and measurable: improve velocity between hire-decision and offer extension by <strong>(1)</strong> increasing the volume, quality, and consistency of captured data, <strong>(2)</strong> reducing average comp approval time, and <strong>(3)</strong> reducing the number of comp requests.
@@ -132,7 +132,7 @@ export default function MetaOffersCaseStudy() {
                     User-tested an early prototype with 30+ recruiters. The signal was clear: they liked the higher level of capture detail, but the prototype produced information overload and missed the nuance of individual candidate scenarios. The redesign needed to be <strong>structured enough to be parseable, flexible enough to capture nuance.</strong>
                   </p>
 
-                  <h2>Solution</h2>
+                  <h2 id="solution">Solution</h2>
 
                   <p>A redesigned end-to-end Offer Creation Flow, built on a handful of specific changes.</p>
 
@@ -212,7 +212,7 @@ export default function MetaOffersCaseStudy() {
                     <strong>Pre-launch rigor.</strong> Ran dogfooding with 30+ recruiters using real offers; led Design QA flagging critical UX/UI issues; collaborated with content design and saw through compliance reviews.
                   </p>
 
-                  <h2>Impact (launched July 2022 to 8k+ users)</h2>
+                  <h2 id="impact-launched-july-2022-to-8k-users">Impact (launched July 2022 to 8k+ users)</h2>
 
                   <ul>
                     <li><strong>9%</strong> improvement to the overall velocity between hire-decision and offer extension</li>
@@ -221,7 +221,7 @@ export default function MetaOffersCaseStudy() {
                     <li><strong>12.2%</strong> reduction in overall compensation approval requests</li>
                   </ul>
 
-                  <h2>Selected peer feedback (anonymized)</h2>
+                  <h2 id="selected-peer-feedback-anonymized">Selected peer feedback (anonymized)</h2>
 
                   <div className={styles.peerQuotes}>
                     {peerFeedback.map((q, i) => (
@@ -232,13 +232,13 @@ export default function MetaOffersCaseStudy() {
                     ))}
                   </div>
 
-                </div>
-              </div>
+                </article>
+              </section>
             </div>
 
             {/* Right rail — details */}
             <aside className={styles.resumeSidebar} aria-label="Case study details">
-              <div className={styles.resumeSection}>
+              <section className={styles.resumeSection}>
                 <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Details</h2>
                 </div>
@@ -274,9 +274,9 @@ export default function MetaOffersCaseStudy() {
                     <span className={styles.detailValue}>8,000+ recruiters · 60+ comp analysts · all Meta candidates</span>
                   </div>
                 </div>
-              </div>
+              </section>
 
-              <div className={styles.resumeSection}>
+              <section className={styles.resumeSection}>
                 <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Tools</h2>
                 </div>
@@ -286,7 +286,7 @@ export default function MetaOffersCaseStudy() {
                     <span className={styles.toolName}>Figma</span>
                   </div>
                 </div>
-              </div>
+              </section>
             </aside>
           </div>
 

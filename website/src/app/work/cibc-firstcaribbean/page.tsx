@@ -55,12 +55,12 @@ export default function CibcFirstCaribbeanCaseStudy() {
           <div className={`${styles.resumeLayout} animate-in animate-delay-3`}>
             {/* Main — article body */}
             <div className={styles.resumeMain}>
-              <div className={styles.resumeSection}>
+              <section className={styles.resumeSection}>
                 <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Case study</h2>
                 </div>
 
-                <div className={styles.body}>
+                <article className={styles.body}>
                   <p className={styles.lede}>
                     While at Devbridge, I led design for the launch of the new CIBC FirstCaribbean mobile banking experience across iOS and Android. At the time, Devbridge was a Chicago-based product consultancy with a growing Toronto office, where I eventually became Product Design Manager leading a small team of designers.
                   </p>
@@ -69,7 +69,7 @@ export default function CibcFirstCaribbeanCaseStudy() {
                     This project became a defining milestone in my career. It ultimately led to my promotion from Senior Product Designer to Product Design Manager — not because of visual polish alone, but because it taught me how to operate inside a highly complex, international product ecosystem.
                   </p>
 
-                  <h2>The context</h2>
+                  <h2 id="the-context">The context</h2>
 
                   <p>
                     CIBC had acquired FirstCaribbean, a banking organization operating across multiple Caribbean countries. Unlike traditional Canadian banking products, this was not a single-country banking experience.
@@ -87,7 +87,7 @@ export default function CibcFirstCaribbeanCaseStudy() {
                     I led the design effort through the early strategy, product definition, and launch phases before transitioning ownership to the broader team as the platform matured.
                   </p>
 
-                  <h2>The design problem</h2>
+                  <h2 id="the-design-problem">The design problem</h2>
 
                   <p>
                     One of the most important lessons from this project was realizing that <strong>products cannot inherit assumptions from the markets you personally live in.</strong>
@@ -129,7 +129,7 @@ export default function CibcFirstCaribbeanCaseStudy() {
                     The goal was to create confidence and clarity in moments where financial ambiguity could easily create user anxiety.
                   </p>
 
-                  <h2>What I learned</h2>
+                  <h2 id="what-i-learned">What I learned</h2>
 
                   <p>
                     Looking back, this project shaped how I think about product design more than almost any early-career engagement.
@@ -148,13 +148,13 @@ export default function CibcFirstCaribbeanCaseStudy() {
                   <blockquote>
                     Good product design is often less about simplifying complexity away, and more about helping users confidently navigate it.
                   </blockquote>
-                </div>
-              </div>
+                </article>
+              </section>
             </div>
 
             {/* Right rail — tools + links */}
             <aside className={styles.resumeSidebar} aria-label="Case study resources">
-              <div className={styles.resumeSection}>
+              <section className={styles.resumeSection}>
                 <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Details</h2>
                 </div>
@@ -183,9 +183,9 @@ export default function CibcFirstCaribbeanCaseStudy() {
                     <span className={styles.detailValue}>2017</span>
                   </div>
                 </div>
-              </div>
+              </section>
 
-              <div className={styles.resumeSection}>
+              <section className={styles.resumeSection}>
                 <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Tools</h2>
                 </div>
@@ -199,9 +199,9 @@ export default function CibcFirstCaribbeanCaseStudy() {
                     <span className={styles.toolName}>Adobe</span>
                   </div>
                 </div>
-              </div>
+              </section>
 
-              <div className={styles.resumeSection}>
+              <section className={styles.resumeSection}>
                 <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Links</h2>
                 </div>
@@ -281,7 +281,7 @@ export default function CibcFirstCaribbeanCaseStudy() {
                     </div>
                   </a>
                 </div>
-              </div>
+              </section>
             </aside>
           </div>
 

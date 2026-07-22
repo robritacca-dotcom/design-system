@@ -55,12 +55,12 @@ export default function MetaCareerProfileCaseStudy() {
           <div className={`${styles.resumeLayout} animate-in animate-delay-3`}>
             {/* Main — article body */}
             <div className={styles.resumeMain}>
-              <div className={styles.resumeSection}>
+              <section className={styles.resumeSection}>
                 <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Case study</h2>
                 </div>
 
-                <div className={styles.body}>
+                <article className={styles.body}>
                   <p className={styles.lede}>
                     Every year, millions of people interview at Meta — and for most of them it&apos;s the highest-stakes moment of their career. Career Profile is the platform that carries candidates through all of it: scheduling interviews, studying prep material, reviewing offers, starting onboarding.
                   </p>
@@ -73,7 +73,7 @@ export default function MetaCareerProfileCaseStudy() {
                     As Lead Product Designer, I owned the long-term design vision: turning that patchwork into a single guided journey, personal to each candidate, that could scale across every role, region, and recruiting stage — and give the teams building on it one shared foundation.
                   </p>
 
-                  <h2>The problem</h2>
+                  <h2 id="the-problem">The problem</h2>
 
                   <p>The existing experience had several systemic issues:</p>
 
@@ -95,7 +95,7 @@ export default function MetaCareerProfileCaseStudy() {
                     <li>Scale globally across candidate types and workflows</li>
                   </ul>
 
-                  <h2>My role</h2>
+                  <h2 id="my-role">My role</h2>
 
                   <p>
                     As Lead Product Designer, I drove the UX vision, systems thinking, information architecture, and interaction framework for the future-state platform experience.
@@ -118,7 +118,7 @@ export default function MetaCareerProfileCaseStudy() {
                     This was highly strategic platform work that sat between product design, design systems, content architecture, and organizational scalability.
                   </p>
 
-                  <h2>Design principles</h2>
+                  <h2 id="design-principles">Design principles</h2>
 
                   <p>
                     One of the first steps was establishing a set of product and experience principles that could guide future decisions across many teams and surfaces. Several themes emerged repeatedly:
@@ -144,7 +144,7 @@ export default function MetaCareerProfileCaseStudy() {
 
                   <p>These principles became the foundation for the rest of the system architecture.</p>
 
-                  <h2>Key insight — mental models matter</h2>
+                  <h2 id="key-insight-mental-models-matter">Key insight — mental models matter</h2>
 
                   <p>
                     A major breakthrough in the work was recognizing that candidates interact with recruiting experiences through fundamentally different mental models depending on their goal.
@@ -154,7 +154,7 @@ export default function MetaCareerProfileCaseStudy() {
                     I developed a typology framework that categorized experiences into three core modes:
                   </p>
 
-                  <h3>Browse — &ldquo;Help me understand where to go.&rdquo;</h3>
+                  <h3 id="browse-help-me-understand-where-to-go">Browse — &ldquo;Help me understand where to go.&rdquo;</h3>
 
                   <p>Used for exploration, orientation, and discovery.</p>
 
@@ -165,7 +165,7 @@ export default function MetaCareerProfileCaseStudy() {
                     <li>Meta Connections</li>
                   </ul>
 
-                  <h3>Study — &ldquo;Help me understand the material in front of me.&rdquo;</h3>
+                  <h3 id="study-help-me-understand-the-material-in-front-of-me">Study — &ldquo;Help me understand the material in front of me.&rdquo;</h3>
 
                   <p>Used for deep content consumption and learning.</p>
 
@@ -176,7 +176,7 @@ export default function MetaCareerProfileCaseStudy() {
                     <li>FAQ content</li>
                   </ul>
 
-                  <h3>Work — &ldquo;Help me solve a specific problem.&rdquo;</h3>
+                  <h3 id="work-help-me-solve-a-specific-problem">Work — &ldquo;Help me solve a specific problem.&rdquo;</h3>
 
                   <p>Used for executional workflows.</p>
 
@@ -191,7 +191,7 @@ export default function MetaCareerProfileCaseStudy() {
                     This framework created a scalable foundation for page templates, layouts, content hierarchy, and future extensibility across the entire platform.
                   </p>
 
-                  <h2>The timeline-centered experience</h2>
+                  <h2 id="the-timeline-centered-experience">The timeline-centered experience</h2>
 
                   <p>
                     One of the core concepts I explored was shifting the platform around a dynamic recruiting timeline that acted as the primary anchor for the experience.
@@ -225,7 +225,7 @@ export default function MetaCareerProfileCaseStudy() {
                     The experience evolved from static information architecture into a <strong>living system centered around candidate progression</strong>.
                   </p>
 
-                  <h2>Personalization at scale</h2>
+                  <h2 id="personalization-at-scale">Personalization at scale</h2>
 
                   <p>
                     Another major focus was balancing personalization with operational scalability. Rather than redesigning the platform for every user type, the strategy focused on:
@@ -250,29 +250,29 @@ export default function MetaCareerProfileCaseStudy() {
                     This allowed the platform to feel tailored without creating separate products for every audience.
                   </p>
 
-                  <h2>Systems thinking beyond the UI</h2>
+                  <h2 id="systems-thinking-beyond-the-ui">Systems thinking beyond the UI</h2>
 
                   <p>Much of the work extended beyond interface design.</p>
 
-                  <h3>Design system strategy</h3>
+                  <h3 id="design-system-strategy">Design system strategy</h3>
 
                   <p>
                     Evaluating multiple internal Meta design systems and their suitability for external candidate-facing products.
                   </p>
 
-                  <h3>Platform governance</h3>
+                  <h3 id="platform-governance">Platform governance</h3>
 
                   <p>
                     Defining how external recruiting teams could safely build into the ecosystem while maintaining UX consistency.
                   </p>
 
-                  <h3>Navigation and information architecture</h3>
+                  <h3 id="navigation-and-information-architecture">Navigation and information architecture</h3>
 
                   <p>
                     Exploring logged-in vs logged-out content models, discoverability tradeoffs, and platform scalability.
                   </p>
 
-                  <h3>Candidate lifecycle mapping</h3>
+                  <h3 id="candidate-lifecycle-mapping">Candidate lifecycle mapping</h3>
 
                   <p>Designing for users across the full journey:</p>
 
@@ -287,7 +287,7 @@ export default function MetaCareerProfileCaseStudy() {
                     This work required balancing business constraints, recruiting operations, platform scalability, and user experience simultaneously.
                   </p>
 
-                  <h2>What I learned</h2>
+                  <h2 id="what-i-learned">What I learned</h2>
 
                   <p>This project fundamentally changed how I think about platform design.</p>
 
@@ -307,7 +307,7 @@ export default function MetaCareerProfileCaseStudy() {
                     Most importantly, I learned that candidate experience is not simply about efficiency. It is about <strong>trust</strong>. Recruiting is emotionally high stakes, and clarity, orientation, and transparency can meaningfully reduce anxiety during one of the most important transitions in someone&apos;s career.
                   </p>
 
-                  <h2>Outcome</h2>
+                  <h2 id="outcome">Outcome</h2>
 
                   <p>
                     While this was long-term vision work, the project established foundational thinking around:
@@ -325,13 +325,13 @@ export default function MetaCareerProfileCaseStudy() {
                   <p>
                     The concepts influenced future recruiting platform discussions and created a stronger strategic foundation for how candidate experiences could evolve at Meta.
                   </p>
-                </div>
-              </div>
+                </article>
+              </section>
             </div>
 
             {/* Right rail — details */}
             <aside className={styles.resumeSidebar} aria-label="Case study details">
-              <div className={styles.resumeSection}>
+              <section className={styles.resumeSection}>
                 <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Details</h2>
                 </div>
@@ -360,9 +360,9 @@ export default function MetaCareerProfileCaseStudy() {
                     <span className={styles.detailValue}>2022–2023</span>
                   </div>
                 </div>
-              </div>
+              </section>
 
-              <div className={styles.resumeSection}>
+              <section className={styles.resumeSection}>
                 <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Tools</h2>
                 </div>
@@ -372,7 +372,7 @@ export default function MetaCareerProfileCaseStudy() {
                     <span className={styles.toolName}>Figma</span>
                   </div>
                 </div>
-              </div>
+              </section>
             </aside>
           </div>
 

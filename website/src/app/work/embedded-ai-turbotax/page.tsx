@@ -70,12 +70,12 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
           <div className={`${styles.resumeLayout} animate-in animate-delay-3`}>
             {/* Main — article body */}
             <div className={styles.resumeMain}>
-              <div className={styles.resumeSection}>
+              <section className={styles.resumeSection}>
                 <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Case study</h2>
                 </div>
 
-                <div className={styles.body}>
+                <article className={styles.body}>
                   <p className={styles.lede}>
                     Last October, I started leading design work for a new category of TurboTax experience: embedded AI applications running directly inside ChatGPT and Claude. The work began as a relatively small MVP ahead of tax season, with the first release launching in December. We followed with a larger V2 release in January, and then a major expansion in April alongside the Claude Connector launch.
                   </p>
@@ -97,7 +97,7 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                     It was one of the first times TurboTax had operated natively inside major consumer AI ecosystems at this level of depth, and the work ultimately went on to win a Webby Award. More importantly, though, it gave our team an unusually early look into what designing embedded AI applications inside systems like ChatGPT and Claude actually feels like in practice.
                   </p>
 
-                  <h2>One product, many environments</h2>
+                  <h2 id="one-product-many-environments">One product, many environments</h2>
 
                   <p>
                     One of the most interesting aspects of the work was that we were not designing a traditional standalone product. We were designing an embedded application that had to exist coherently across multiple AI ecosystems simultaneously. Using the UI kits and platform guidance provided by OpenAI and Anthropic, we built what was effectively a centralized MCP-powered application layer for TurboTax. The core experience remained structurally similar regardless of where it launched, but through tokens, platform-specific theming, and custom component layers, the application could dynamically adapt itself to feel native inside ChatGPT or native inside Claude while still operating from the same underlying system architecture.
@@ -122,7 +122,7 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                     <figcaption className={styles.articleCaption}>The TurboTax connector in the ChatGPT app directory — users could connect directly before entering the embedded experience.</figcaption>
                   </figure>
 
-                  <h2>Building at the speed of the platforms</h2>
+                  <h2 id="building-at-the-speed-of-the-platforms">Building at the speed of the platforms</h2>
 
                   <p>
                     The pace of the work was unlike anything I had shipped before. A first release was in market within weeks of kicking off, followed by two major expansions before the end of tax season. Moving that fast required rethinking how design and engineering operated together — and it meant the team had to adopt the same kind of agentic workflow we were building products on top of.
@@ -185,7 +185,7 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                     <figcaption className={styles.articleCaption}>A single Figma component set covering both ChatGPT and Claude patterns — one change, both platforms updated at once.</figcaption>
                   </figure>
 
-                  <h2>When the platform owns the orchestrator</h2>
+                  <h2 id="when-the-platform-owns-the-orchestrator">When the platform owns the orchestrator</h2>
 
                   <p>
                     At a high level, that sounds relatively straightforward. In reality, it introduced an entirely new category of product and UX challenges that I do not think the industry fully appreciates yet. Once you begin designing applications inside systems like ChatGPT and Claude, you are no longer fully designing the orchestration layer yourself. <strong>OpenAI and Anthropic own the orchestrator, and that changes almost everything about how product design behaves.</strong>
@@ -211,7 +211,7 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                     This creates a very unusual dynamic because parts of the experience become emergent rather than explicitly authored. The platform determines how apps are surfaced, how tools are called, how memory behaves, how transitions occur between systems, and how much conversational continuity exists from one interaction to the next.
                   </p>
 
-                  <h2>Concrete platform constraints</h2>
+                  <h2 id="concrete-platform-constraints">Concrete platform constraints</h2>
 
                   <p>
                     There are also surprisingly concrete UX limitations that emerge from this model:
@@ -244,7 +244,7 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                     <figcaption className={styles.articleCaption}>Document upload embedded inside Claude — drag-and-drop, document recognition, and live progress within a single artifact the platform controls.</figcaption>
                   </figure>
 
-                  <h2>Conversation didn&apos;t replace interfaces</h2>
+                  <h2 id="conversation-didnt-replace-interfaces">Conversation didn&apos;t replace interfaces</h2>
 
                   <p>
                     One of the biggest assumptions I changed my mind about during this work was the idea that conversational interfaces alone would simply replace traditional interfaces outright. Conversation is incredibly effective for onboarding, ambiguity reduction, contextual intake, organization, and guidance. Users naturally prefer conversational interaction when they are uncertain, unfamiliar with a workflow, or trying to navigate complexity. But once workflows become denser, more stateful, more document-heavy, or more verification-oriented, users begin demanding structure again.
@@ -281,7 +281,7 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                     One of the strongest patterns we observed was that users loved conversational intake but still wanted highly structured verification before committing actions — especially in workflows involving money, legal implications, identity, or irreversible outcomes. The future likely is not &ldquo;everything becomes chat.&rdquo; It feels much more likely that conversational orchestration will coexist with interfaces that dynamically materialize around the conversation itself depending on context and intent.
                   </p>
 
-                  <h2>Continuity is the new expectation</h2>
+                  <h2 id="continuity-is-the-new-expectation">Continuity is the new expectation</h2>
 
                   <p>
                     Another thing that became immediately obvious during research was how quickly embedded AI systems change user expectations around continuity. As soon as the system begins remembering context, organizing information, understanding intent, and reducing friction, users start expecting that continuity everywhere. The moment the system loses context or breaks continuity, the experience suddenly feels fragmented — not necessarily because the technology is broken, but because the user&apos;s mental model has already shifted from &ldquo;I&apos;m using tools&rdquo; to &ldquo;I&apos;m operating inside an intelligent environment.&rdquo;
@@ -291,7 +291,7 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                     That transition happens remarkably fast. One of the biggest UX challenges we encountered was not whether users liked the AI interactions themselves. Most did. The challenge was what happened when continuity stopped. Users expected the intelligence layer to persist across onboarding, uploads, interviews, transitions, filing workflows, and product boundaries. From a technical perspective, those boundaries are understandable. From a user perspective, they increasingly feel artificial because the intelligence layer creates an expectation of seamlessness that traditional systems were never designed to support.
                   </p>
 
-                  <h2>Trust in probabilistic systems</h2>
+                  <h2 id="trust-in-probabilistic-systems">Trust in probabilistic systems</h2>
 
                   <p>
                     Traditional software is deterministic. Embedded AI systems are probabilistic. Users are constantly trying to understand:
@@ -309,7 +309,7 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                     Those questions become especially important in workflows involving finance, healthcare, legal systems, or identity. The challenge becomes less about designing interactions and more about <strong>designing confidence calibration</strong>. Users need to understand uncertainty, provenance, verification, accountability, and the boundaries between systems that may all appear unified from the outside.
                   </p>
 
-                  <h2>Why open-ended prompting often falls short</h2>
+                  <h2 id="why-open-ended-prompting-often-falls-short">Why open-ended prompting often falls short</h2>
 
                   <p>
                     One of the clearest lessons from the work was how much the industry currently overestimates open-ended prompting. Blank prompt boxes assume users already possess:
@@ -330,7 +330,7 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                     Good AI UX often reduces the amount of prompting required rather than increasing it.
                   </blockquote>
 
-                  <h2>A new design category</h2>
+                  <h2 id="a-new-design-category">A new design category</h2>
 
                   <p>
                     After spending the last year working in this space, I genuinely believe embedded AI application design is becoming its own category. It sits somewhere between systems design, conversational UX, orchestration design, platform design, and traditional product design, but it is not fully any one of them. The work increasingly involves orchestrating intelligence, managing probabilistic systems, designing continuity, balancing automation with oversight, shaping trust boundaries, and coordinating dynamic interfaces across ecosystems you do not fully control.
@@ -354,14 +354,14 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                   <p>
                     What makes this moment particularly exciting is that very few established patterns exist yet. Most teams are still discovering these interaction models in real time. It feels far less like optimizing mature UX conventions and much more like helping define an entirely new computing paradigm while it is still forming.
                   </p>
-                </div>
-              </div>
+                </article>
+              </section>
             </div>
 
             {/* Aside — Details + Tools + Links */}
             <aside className={styles.resumeSidebar} aria-label="Case study resources">
               {/* Details */}
-              <div className={styles.resumeSection}>
+              <section className={styles.resumeSection}>
                 <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Details</h2>
                 </div>
@@ -386,10 +386,10 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                     <span className={styles.detailValue}>2026</span>
                   </div>
                 </div>
-              </div>
+              </section>
 
               {/* Tools */}
-              <div className={styles.resumeSection}>
+              <section className={styles.resumeSection}>
                 <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Tools</h2>
                 </div>
@@ -407,10 +407,10 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                     <span className={styles.toolName}>Cursor</span>
                   </div>
                 </div>
-              </div>
+              </section>
 
               {/* Links */}
-              <div className={styles.resumeSection}>
+              <section className={styles.resumeSection}>
                 <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Links</h2>
                 </div>
@@ -502,7 +502,7 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                     </div>
                   </a>
                 </div>
-              </div>
+              </section>
             </aside>
           </div>
 

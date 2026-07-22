@@ -54,13 +54,13 @@ export default function IntuitAgentChatCaseStudy() {
           {/* Two-column body */}
           <div className={`${styles.resumeLayout} animate-in animate-delay-3`}>
             <div className={styles.resumeMain}>
-              <div className={styles.resumeSection}>
+              <section className={styles.resumeSection}>
                 <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Case study</h2>
                 </div>
 
-                <div className={styles.body}>
-                  <h2>Context</h2>
+                <article className={styles.body}>
+                  <h2 id="context">Context</h2>
 
                   <p>
                     Intuit operates four cornerstone brands — QuickBooks, TurboTax, Credit Karma, Mailchimp — serving 100M+ customers, with 600+ designers and 8,000+ developers building on a shared platform. GenUX is Intuit&apos;s AI agent development platform: the layer that delivers consistent, performant, scalable UX across every Intuit app and agentic experience. Agent Chat is the conversational surface that ships on top of it.
@@ -70,7 +70,7 @@ export default function IntuitAgentChatCaseStudy() {
                     I led design as the principal IC — the lead designer on a cross-functional team of 15 web engineers, 10 mobile engineers, technical program management, PM, and four other designers — across two fiscal years and still shipping.
                   </p>
 
-                  <h2>Problem</h2>
+                  <h2 id="problem">Problem</h2>
 
                   <p>
                     Intuit had no shared conversational-AI surface, so every domain team was rolling its own. The legacy assistive widget was losing adoption, and teams were rebuilding the same stack in parallel. Four root causes kept surfacing:
@@ -87,7 +87,7 @@ export default function IntuitAgentChatCaseStudy() {
                     Multiple teams were rushing to launch DFY agent experiences and independently building custom conversation stacks. The platform didn&apos;t have an answer, and the teams weren&apos;t willing to wait for one.
                   </p>
 
-                  <h2>Approach</h2>
+                  <h2 id="approach">Approach</h2>
 
                   <p>
                     Co-facilitated workshops with 12+ teams and 40+ participants across business units. Three clear takeaways:
@@ -113,7 +113,7 @@ export default function IntuitAgentChatCaseStudy() {
                     We didn&apos;t wait for the perfect spec. A working MVP shipped in 4 months, in time for GED — Intuit&apos;s company-wide hackathon — and 40+ teams started experimenting with it immediately. Swapping a quarterly release cadence for a monthly one kept the momentum visible, and grew an organic community of 600+ developers around the platform.
                   </p>
 
-                  <h2>Solution</h2>
+                  <h2 id="solution">Solution</h2>
 
                   <p>
                     I designed and shipped a widget that&apos;s instantly themeable, highly customizable, and configurable — built once, deployed everywhere.
@@ -217,13 +217,13 @@ export default function IntuitAgentChatCaseStudy() {
                     The next problem is already in motion: giving agents access to what&apos;s actually on a user&apos;s screen and the ability to act within it, not just describe what to do in a text box.
                   </p>
 
-                  <h2>In production</h2>
+                  <h2 id="in-production">In production</h2>
 
                   <p>
                     Agent Chat is the foundational widget powering every AI experience across Intuit. Two major brands launched in year one — with more in flight.
                   </p>
 
-                  <h3>QuickBooks</h3>
+                  <h3 id="quickbooks">QuickBooks</h3>
 
                   <p>
                     <strong>Started with Project Clarity</strong> — a mission team embedded with the QuickBooks Business Intelligence org. Customers were exporting QB data into third-party AI tools because QuickBooks didn&apos;t support analysis natively. The QB Analytics Agent changed that: ask about your revenue, profit and loss, cash flow, and payroll directly in the product. Launched as <a href="https://quickbooks.intuit.com/intuit-intelligence/" target="_blank" rel="noopener noreferrer">Intuit Intelligence</a> to 200k+ customers.
@@ -233,19 +233,19 @@ export default function IntuitAgentChatCaseStudy() {
                     Early success unlocked rapid adoption across the full product. Agent Chat expanded into payroll, project management, and more — every major workflow in QuickBooks now has an agent surface built on the same widget.
                   </p>
 
-                  <h3>TurboTax</h3>
+                  <h3 id="turbotax">TurboTax</h3>
 
                   <p>
                     Multiple agent use cases live in production: the <strong>Deductions &amp; Credits Agent</strong> surfaces personalized opportunities during filing; the <strong>Explanations Agent</strong> answers &ldquo;what does this mean?&rdquo; for any line item; and the <strong>Digital Assistant</strong> guides customers through the full filing workflow. All powered by Agent Chat.
                   </p>
 
-                  <h2>The harder problem — governance</h2>
+                  <h2 id="the-harder-problem-governance">The harder problem — governance</h2>
 
                   <p>
                     Two audiences with opposing incentives — domain teams who own workflows and platform teams who own oversight. Domain teams will circumvent if shared patterns don&apos;t meet their needs; platform teams resist losing control to centralized solutions. A lot of the work was coordination, not design: building trust, defining ownership, and creating an extension model that didn&apos;t ask either side to give up what they cared about.
                   </p>
 
-                  <h2>Impact</h2>
+                  <h2 id="impact">Impact</h2>
 
                   <ul>
                     <li><strong>70+ agents</strong> live in production across TurboTax, QuickBooks, Mailchimp, and internal developer teams</li>
@@ -273,13 +273,13 @@ export default function IntuitAgentChatCaseStudy() {
                     </figcaption>
                   </figure>
 
-                </div>
-              </div>
+                </article>
+              </section>
             </div>
 
             {/* Right rail — details */}
             <aside className={styles.resumeSidebar} aria-label="Case study details">
-              <div className={styles.resumeSection}>
+              <section className={styles.resumeSection}>
                 <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Details</h2>
                 </div>
@@ -315,9 +315,9 @@ export default function IntuitAgentChatCaseStudy() {
                     <span className={styles.detailValue}>70+ agents · ~50M sessions · 600+ developers</span>
                   </div>
                 </div>
-              </div>
+              </section>
 
-              <div className={styles.resumeSection}>
+              <section className={styles.resumeSection}>
                 <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Tools</h2>
                 </div>
@@ -335,7 +335,7 @@ export default function IntuitAgentChatCaseStudy() {
                     <span className={styles.toolName}>Cursor</span>
                   </div>
                 </div>
-              </div>
+              </section>
             </aside>
           </div>
 

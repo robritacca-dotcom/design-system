@@ -73,13 +73,13 @@ export default function AugmentaCaseStudy() {
           <div className={`${styles.resumeLayout} animate-in animate-delay-3`}>
             {/* Main — article body */}
             <div className={styles.resumeMain}>
-              <div className={styles.resumeSection}>
+              <section className={styles.resumeSection}>
                 <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Case study</h2>
                 </div>
 
-                <div className={styles.body}>
-                  <h2>Context</h2>
+                <article className={styles.body}>
+                  <h2 id="context">Context</h2>
 
                   <p>
                     Augmenta generates constructible, code-compliant designs of electrical raceways — the conduit, cable tray, and supports that connect every piece of electrical equipment in a building. Their target user is the Virtual Construction Designer: the engineer inside Autodesk Revit who plans how a project actually gets built. Think Figma, but for the physical world — high-stakes, governed by real-world physics, strict compliance, and precise engineering standards.
@@ -107,7 +107,7 @@ export default function AugmentaCaseStudy() {
                     I was the sole product designer on a small, deeply engineering-led team — owning product design strategy, research, and execution. When I joined: a single design partner, a handful of pilot firms testing, a growing waitlist, and pre-revenue, funded entirely by investors. Critically, the product had been built around that one design partner&apos;s highly specific workflow — the reference point for nearly every decision.
                   </p>
 
-                  <h2>Why it matters</h2>
+                  <h2 id="why-it-matters">Why it matters</h2>
 
                   <p>
                     Construction runs on thin margins. Rising material costs, inflation, and waste leave little room for error — and modern commercial buildings are staggeringly complex, demanding tight coordination across electrical, mechanical, and plumbing trades that are usually run by separate firms, in silos.
@@ -121,7 +121,7 @@ export default function AugmentaCaseStudy() {
                     But BIM is hard. Skilled modellers are scarce, coordination across siloed trades is fragile, and a single sync error or philosophical disagreement can burn enormous design effort — and still leave problems to solve on site. Augmenta set out to automate this technical design work with AI, starting with electrical, ultimately translating an AI-generated, human-supervised model into real, fabricated components any installer can pick up and install.
                   </p>
 
-                  <h2>The opportunity</h2>
+                  <h2 id="the-opportunity">The opportunity</h2>
 
                   <p>
                     The prize is enormous. A traditional manual workflow — model, coordinate, edit, then pre-fabricate — represents a huge block of skilled design hours before anything reaches the field. A flawless AI generation could, in theory, produce the same output in a fraction of that time: a potential <strong>95%+ reduction</strong> in modelling effort, with no edits and no extra coordination.
@@ -135,7 +135,7 @@ export default function AugmentaCaseStudy() {
                     That set our North Star. Pilot firms told us they would walk away after about a week of iterating — a handful of cycles — if they hadn&apos;t seen a useful result. Not because a week is ideal, but because it was the threshold they would not cross. Getting a trustworthy, useful output inside that window became the goal everything pointed at.
                   </p>
 
-                  <h2>The problem</h2>
+                  <h2 id="the-problem">The problem</h2>
 
                   <p>The product was hard to use. Three symptoms, one root cause:</p>
 
@@ -157,7 +157,7 @@ export default function AugmentaCaseStudy() {
                     So Augmenta&apos;s engineers held a deliberately high bar for correctness and completeness, only surfacing solutions that met strict mathematical standards. The byproduct was unforgiving: a minor input error — a mislabeled roof material — could mean zero solutions at all, eroding trust and usability.
                   </p>
 
-                  <h2>Approach</h2>
+                  <h2 id="approach">Approach</h2>
 
                   <p>
                     To get inside the customer&apos;s head, I designed a workshop I ran on repeat with each of our pilot electrical design firms. The goal was to map their real workflows, test product fit, and prioritize what to build or deprecate. The format was a journey-mapping and service-blueprinting exercise: we mapped their key functions and deliverables over time, walked through which Augmenta capabilities fit each phase, and captured their feedback.
@@ -188,17 +188,17 @@ export default function AugmentaCaseStudy() {
                     <strong>Renewed focus:</strong> Virtual Construction Design teams, from project kickoff through early phases of coordination. Not earlier (device layout, conduit sizing). Not later (detailing, assembly drawings). One persona, one slice of the workflow, done well.
                   </p>
 
-                  <h2>Solution</h2>
+                  <h2 id="solution">Solution</h2>
 
                   <p>Three problems, three answers.</p>
 
-                  <h3>1. Right surface for the right user</h3>
+                  <h3 id="right-surface-for-the-right-user">1. Right surface for the right user</h3>
 
                   <p>
                     Identified VDCs as the MVP persona and doubled down on solution data — exposing more signal about completion (routed sources and destinations) and correctness (constructability). Everything the VDC teams didn&apos;t care about, including the load calculations, came off the critical path.
                   </p>
 
-                  <h3>2. Consistency through a design-system overhaul</h3>
+                  <h3 id="consistency-through-a-design-system-overhaul">2. Consistency through a design-system overhaul</h3>
 
                   <p>
                     The product had been hand-built in close partnership with an electrical design firm — not a designer — and heavily shaped by engineering preference. A heuristic audit surfaced the rest: poor information architecture, poor use of screen space, missing system status, and incoherent errors that made troubleshooting painful.
@@ -230,7 +230,7 @@ export default function AugmentaCaseStudy() {
                     <strong>Framing mattered too.</strong> We replaced engineering-speak with intent-aligned language — &ldquo;Placement considerations&rdquo; instead of &ldquo;Unhandled error&rdquo; — turning daunting, catastrophic-sounding failures into calm, actionable guidance.
                   </p>
 
-                  <h3>3. Faster value through better inputs and signal</h3>
+                  <h3 id="faster-value-through-better-inputs-and-signal">3. Faster value through better inputs and signal</h3>
 
                   <p>Two changes attacked time-to-value head-on.</p>
 
@@ -287,7 +287,7 @@ export default function AugmentaCaseStudy() {
                     />
                   </Figure>
 
-                  <h2>Impact (across the engagement)</h2>
+                  <h2 id="impact-across-the-engagement">Impact (across the engagement)</h2>
 
                   <div className={styles.statBand}>
                     <Stat
@@ -314,13 +314,13 @@ export default function AugmentaCaseStudy() {
                     The downstream result: detailed 3D schematics flow into pre-fabrication and field installation in days instead of weeks. Engineering interventions — the single biggest indicator of an unscalable product — dropped by a third, closing in on the North Star of a useful output before pilot firms would otherwise have walked.
                   </p>
 
-                </div>
-              </div>
+                </article>
+              </section>
             </div>
 
             {/* Right rail — details */}
             <aside className={styles.resumeSidebar} aria-label="Case study details">
-              <div className={styles.resumeSection}>
+              <section className={styles.resumeSection}>
                 <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Details</h2>
                 </div>
@@ -353,9 +353,9 @@ export default function AugmentaCaseStudy() {
                     <span className={styles.detailValue}>~9-month engagement</span>
                   </div>
                 </div>
-              </div>
+              </section>
 
-              <div className={styles.resumeSection}>
+              <section className={styles.resumeSection}>
                 <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Tools</h2>
                 </div>
@@ -373,9 +373,9 @@ export default function AugmentaCaseStudy() {
                     <span className={styles.toolName}>Cursor</span>
                   </div>
                 </div>
-              </div>
+              </section>
 
-              <div className={styles.resumeSection}>
+              <section className={styles.resumeSection}>
                 <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Links</h2>
                 </div>
@@ -414,7 +414,7 @@ export default function AugmentaCaseStudy() {
                     </div>
                   </a>
                 </div>
-              </div>
+              </section>
             </aside>
           </div>
 
