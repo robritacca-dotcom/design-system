@@ -3,7 +3,7 @@
    ============================================ */
 .dsLayout {
   display: flex;
-  gap: var(--primitive-gap-xxl);
+  gap: var(--layout-column-gap);
   width: 100%;
   max-width: 1440px;
   padding-top: var(--primitive-gap-xl);
@@ -68,7 +68,7 @@
    ============================================ */
 .updatesLayout {
   display: flex;
-  gap: var(--primitive-gap-xxl);
+  gap: var(--layout-column-gap);
   width: 100%;
 }
 
@@ -89,7 +89,7 @@
    RIGHT RAIL
    ============================================ */
 .updatesRail {
-  width: 320px;
+  width: var(--layout-rail-width);
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
@@ -208,6 +208,16 @@
 /* ============================================
    RESPONSIVE
    ============================================ */
+@media (max-width: 1151px) {
+  .updatesLayout {
+    flex-direction: column;
+  }
+
+  .updatesRail {
+    width: 100%;
+  }
+}
+
 @media (max-width: 959px) {
   .pageHeader {
     flex-direction: column;
@@ -223,13 +233,5 @@
   .subDisplay {
     font-size: 24px;
     line-height: 36px;
-  }
-
-  .updatesLayout {
-    flex-direction: column;
-  }
-
-  .updatesRail {
-    width: 100%;
   }
 }

@@ -3,7 +3,7 @@
    ============================================ */
 .dsLayout {
   display: flex;
-  gap: var(--primitive-gap-xxl);
+  gap: var(--layout-column-gap);
   width: 100%;
   max-width: 1440px;
   padding-top: var(--primitive-gap-xl);

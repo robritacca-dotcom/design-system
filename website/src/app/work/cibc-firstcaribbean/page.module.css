@@ -6,7 +6,7 @@
 
 .dsLayout {
   display: flex;
-  gap: var(--primitive-gap-xxl);
+  gap: var(--layout-column-gap);
   width: 100%;
   max-width: 1440px;
   padding-top: var(--primitive-gap-xl);
@@ -86,7 +86,7 @@
    ============================================ */
 .resumeLayout {
   display: flex;
-  gap: var(--primitive-gap-xxl);
+  gap: var(--layout-column-gap);
   width: 100%;
   padding-top: var(--primitive-gap-xl);
 }
@@ -99,7 +99,7 @@
 }
 
 .resumeSidebar {
-  width: 320px;
+  width: var(--layout-rail-width);
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
@@ -303,7 +303,7 @@
 /* ============================================
    RESPONSIVE
    ============================================ */
-@media (max-width: 959px) {
+@media (max-width: 1151px) {
   .resumeLayout {
     flex-direction: column;
   }

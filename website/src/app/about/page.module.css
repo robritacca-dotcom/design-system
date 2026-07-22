@@ -3,7 +3,7 @@
    ============================================ */
 .dsLayout {
   display: flex;
-  gap: var(--primitive-gap-xxl);
+  gap: var(--layout-column-gap);
   width: 100%;
   max-width: 1440px;
   padding-top: var(--primitive-gap-xl);
@@ -134,7 +134,7 @@ a.toolItem:hover {
    ============================================ */
 .resumeLayout {
   display: flex;
-  gap: var(--primitive-gap-xxl);
+  gap: var(--layout-column-gap);
   width: 100%;
 }
 
@@ -145,7 +145,7 @@ a.toolItem:hover {
 }
 
 .resumeSidebar {
-  width: 320px;
+  width: var(--layout-rail-width);
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
@@ -448,7 +448,7 @@ a.toolItem:hover {
    PROFILE COLUMN (about/me — left slot matching sidebar width)
    ============================================ */
 .profileCol {
-  width: 291px;
+  width: var(--layout-sidebar-width);
   flex-shrink: 0;
   position: sticky;
   top: calc(78px + var(--primitive-padding-lg) * 2 + var(--primitive-gap-xl));
@@ -476,7 +476,16 @@ a.toolItem:hover {
   }
 }
 
-@media (max-width: 959px) {
+@media (max-width: 1151px) {
+  .resumeLayout {
+    flex-direction: column;
+  }
+
+  .resumeSidebar {
+    width: 100%;
+  }
+}
+
 @media (max-width: 959px) {
   .pageHeader {
     flex-direction: column;
@@ -496,13 +505,5 @@ a.toolItem:hover {
   .subDisplay {
     font-size: 24px;
     line-height: 36px;
-  }
-
-  .resumeLayout {
-    flex-direction: column;
-  }
-
-  .resumeSidebar {
-    width: 100%;
   }
 }

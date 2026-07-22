@@ -1,5 +1,5 @@
 .sidebar {
-  width: 291px;
+  width: var(--layout-sidebar-width);
   flex-shrink: 0;
   position: sticky;
   top: calc(78px + var(--primitive-padding-lg) * 2 + var(--primitive-gap-xl));

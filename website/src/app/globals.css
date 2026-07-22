@@ -21,6 +21,25 @@ html.theme-ready {
 
 :root {
   --font-family-primary: var(--font-nunito-sans);
+
+  /* Docs-shell column widths: left nav rail, right details rail, and the
+     gap between columns. Every page module sizes its rails from these so
+     the mid-breakpoint override below reaches all of them at once. */
+  --layout-sidebar-width: 291px;
+  --layout-rail-width: 320px;
+  --layout-column-gap: var(--primitive-gap-xxl);
+}
+
+/* Mid breakpoint (960–1279px): narrow both rails and tighten the column
+   gap so the center column keeps a readable measure. Right rails stack
+   below the main content at 1151px (per-page), and the left nav hides at
+   959px (Sidebar.module.css). */
+@media (max-width: 1279px) {
+  :root {
+    --layout-sidebar-width: 240px;
+    --layout-rail-width: 280px;
+    --layout-column-gap: var(--primitive-gap-xl);
+  }
 }
 
 html[data-theme="dark"] {
