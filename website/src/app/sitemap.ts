@@ -1,5 +1,11 @@
 import type { MetadataRoute } from "next";
 import { getArticles } from "@/lib/substack";
+import {
+  componentsSidebarLinks,
+  docsSidebarLinks,
+  foundationsSidebarLinks,
+  workSidebarLinks,
+} from "@/config/navigation";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://robertritacca.com";
@@ -14,83 +20,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/about/me",
     "/writing",
     ...articles.map((a) => `/writing/${a.slug}`),
-    "/work",
-    "/work/embedded-ai-turbotax",
-    "/work/robr0-ds",
-    "/work/cibc-firstcaribbean",
-    "/work/meta-career-profile",
-    "/work/meta-offers",
-    "/work/augmenta-ai",
-    "/work/intuit-agent-chat",
     "/contact",
 
-    // Design system cluster (/docs is the landing; the overview is served at /about)
-    "/docs",
-    "/about",
-    "/blueprints/claude",
-    "/blueprints/design",
-    "/loops",
-    "/project-journal",
-    "/skills",
-
-    // Foundations
-    "/foundations",
-    "/foundations/colour-mode",
-    "/foundations/colour-primitives",
-    "/foundations/icons",
-    "/foundations/logos",
-    "/foundations/spatial",
-    "/foundations/typography",
-
-    // Components — every page in the library
-    "/components",
-    "/components/accordion",
-    "/components/alert",
-    "/components/alert-dialog",
-    "/components/app-sidebar",
-    "/components/avatar",
-    "/components/badge",
-    "/components/breadcrumb",
-    "/components/button",
-    "/components/button-group",
-    "/components/card",
-    "/components/carousel",
-    "/components/chart",
-    "/components/checkbox",
-    "/components/chip",
-    "/components/circular-button",
-    "/components/code-block",
-    "/components/contribution-graph",
-    "/components/date-input",
-    "/components/date-picker",
-    "/components/dialog",
-    "/components/divider",
-    "/components/dropdown",
-    "/components/dropdown-menu",
-    "/components/figure",
-    "/components/input",
-    "/components/instructions",
-    "/components/navigation",
-    "/components/pagination",
-    "/components/popover",
-    "/components/progress-bar",
-    "/components/quote",
-    "/components/radio-button",
-    "/components/section-title",
-    "/components/segmented-control",
-    "/components/selection-card",
-    "/components/skeleton",
-    "/components/slider",
-    "/components/spinner",
-    "/components/stat",
-    "/components/table",
-    "/components/tabs",
-    "/components/textarea",
-    "/components/timeline",
-    "/components/toast",
-    "/components/toggle-group",
-    "/components/toggle-switch",
-    "/components/tooltip",
+    // Section clusters derive from the shared sidebar configs in
+    // navigation.ts — the single source of truth for these routes —
+    // so the sitemap can't drift when a page is added there.
+    ...workSidebarLinks.map((l) => l.href),
+    ...docsSidebarLinks.map((l) => l.href),
+    ...foundationsSidebarLinks.map((l) => l.href),
+    ...componentsSidebarLinks.map((l) => l.href),
   ];
 
   return routes.map((route) => ({
