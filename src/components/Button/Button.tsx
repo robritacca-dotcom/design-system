@@ -27,6 +27,8 @@ export interface ButtonProps {
   rel?: string;
   /** Marks this link as the current page (adds aria-current="page") */
   ariaCurrent?: boolean;
+  /** Id of an element describing this button — set automatically by Tooltip */
+  'aria-describedby'?: string;
   /** Additional CSS classes */
   className?: string;
   /** @deprecated Use iconLeft instead */
@@ -51,6 +53,7 @@ export const Button = ({
   target,
   rel,
   ariaCurrent,
+  'aria-describedby': ariaDescribedby,
   className = '',
   icon, // deprecated, maps to iconLeft for backwards compatibility
 }: ButtonProps) => {
@@ -101,6 +104,7 @@ export const Button = ({
         target={target}
         rel={rel}
         aria-current={ariaCurrent ? 'page' : undefined}
+        aria-describedby={ariaDescribedby}
         onClick={onClick}
       >
         {children}
@@ -114,6 +118,7 @@ export const Button = ({
       className={classes}
       onClick={onClick}
       disabled={isDisabled}
+      aria-describedby={ariaDescribedby}
     >
       {children}
     </button>

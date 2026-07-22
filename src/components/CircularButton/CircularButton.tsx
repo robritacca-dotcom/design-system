@@ -20,6 +20,8 @@ export interface CircularButtonProps {
   target?: string;
   /** Optional rel attribute for links */
   rel?: string;
+  /** Id of an element describing this button — set automatically by Tooltip */
+  'aria-describedby'?: string;
   /** Additional CSS classes */
   className?: string;
 }
@@ -39,6 +41,7 @@ export const CircularButton = ({
   href,
   target,
   rel,
+  'aria-describedby': ariaDescribedby,
   className = '',
 }: CircularButtonProps) => {
   const baseClass = 'ds-circular-button';
@@ -67,6 +70,7 @@ export const CircularButton = ({
         rel={rel}
         onClick={onClick}
         aria-label={ariaLabel}
+        aria-describedby={ariaDescribedby}
       >
         {children}
       </a>
@@ -80,6 +84,7 @@ export const CircularButton = ({
       onClick={onClick}
       disabled={isDisabled}
       aria-label={ariaLabel}
+      aria-describedby={ariaDescribedby}
     >
       {children}
     </button>
