@@ -114,6 +114,22 @@ export default function ComponentsPage() {
               </div>
             </TocCard>
 
+            {/* App layout */}
+            <TocCard href="/components/app-layout" title="App layout">
+              <div style={{ display: "flex", width: "140px", height: "72px", borderRadius: "6px", overflow: "hidden", border: "1px solid var(--color-bg-container-border)" }}>
+                <div style={{ width: "34px", background: "var(--color-bg-container-secondary)", display: "flex", flexDirection: "column", alignItems: "center", gap: "5px", paddingTop: "6px" }}>
+                  <span className="material-symbols-rounded" style={{ fontSize: "12px", color: "var(--color-icon-primary)" }}>dashboard</span>
+                  <span className="material-symbols-rounded" style={{ fontSize: "12px", color: "var(--color-icon-secondary)" }}>analytics</span>
+                  <span className="material-symbols-rounded" style={{ fontSize: "12px", color: "var(--color-icon-secondary)" }}>settings</span>
+                </div>
+                <div style={{ flex: 1, background: "var(--color-bg-page-primary)", padding: "8px", display: "flex", flexDirection: "column", gap: "4px" }}>
+                  <div style={{ width: "50%", height: "8px", borderRadius: "3px", background: "var(--color-bg-container-secondary)" }} />
+                  <div style={{ width: "80%", height: "5px", borderRadius: "3px", background: "var(--color-bg-container-primary)" }} />
+                  <div style={{ width: "70%", height: "5px", borderRadius: "3px", background: "var(--color-bg-container-primary)" }} />
+                </div>
+              </div>
+            </TocCard>
+
             {/* App sidebar */}
             <TocCard href="/components/app-sidebar" title="App sidebar">
               <div className={styles.previewColumn} style={{ gap: "4px", width: "100px" }}>
@@ -346,6 +362,18 @@ export default function ComponentsPage() {
                   <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-icon-secondary)" }}>logout</span>
                   <span style={{ fontSize: "11px", color: "var(--color-text-primary)" }}>Log out</span>
                 </div>
+              </div>
+            </TocCard>
+
+            {/* Entity card */}
+            <TocCard href="/components/entity-card" title="Entity card">
+              <div className={styles.previewRow} style={{ gap: "8px" }}>
+                {["home", "star"].map((name) => (
+                  <div key={name} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", padding: "10px 14px", borderRadius: "10px", border: "1px solid var(--color-bg-container-border)", background: "var(--color-bg-container-primary)" }}>
+                    <span className="material-symbols-rounded" style={{ fontSize: "20px", color: "var(--color-text-primary)" }}>{name}</span>
+                    <span style={{ fontSize: "10px", color: "var(--color-text-tertiary)" }}>{name}</span>
+                  </div>
+                ))}
               </div>
             </TocCard>
 
