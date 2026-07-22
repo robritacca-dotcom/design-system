@@ -42,7 +42,7 @@ export interface BreadcrumbItem {
 
 export const dsMegaItems: MegaItem[] = [
   {
-    href: "/about",
+    href: "/docs",
     label: "Docs",
     description: "How robr0 DS works, plus the artifacts you can take and reuse",
     icon: "menu_book",
@@ -63,6 +63,7 @@ export const dsMegaItems: MegaItem[] = [
 
 /** URL prefixes that should mark the "Design system" mega trigger as active */
 export const dsActiveMatchers = [
+  (path: string) => path === "/docs",
   (path: string) => path === "/about", // exact — /about/me is NOT under Design system
   (path: string) => path.startsWith("/blueprints"),
   (path: string) => path.startsWith("/skills"),
@@ -144,17 +145,18 @@ export const foundationsSidebarLinks: NavLink[] = [
 ];
 
 /**
- * Sidebar for the Docs cluster — the overview landing page + the artifacts
- * (Claude MD, Design MD, Skills) that visitors can take and reuse.
- * (Routes keep their original /about URL; only the naming changed.)
+ * Sidebar for the Docs cluster — the /docs index page, the system overview,
+ * and the artifacts (Claude MD, Design MD, Skills, Loops) visitors can take
+ * and reuse. (Sub-pages keep their original URLs; /docs is the landing.)
  */
-export const aboutSidebarLinks: NavLink[] = [
+export const docsSidebarLinks: NavLink[] = [
+  { href: "/docs", label: "Contents" },
   { href: "/about", label: "Overview" },
   { href: "/blueprints/claude", label: "Claude MD" },
   { href: "/blueprints/design", label: "Design MD" },
+  { href: "/skills", label: "Skills" },
   { href: "/loops", label: "Loops" },
   { href: "/project-journal", label: "Project journal" },
-  { href: "/skills", label: "Skills" },
 ];
 
 /**
@@ -213,13 +215,8 @@ interface SectionConfig {
 }
 
 const breadcrumbSections: SectionConfig[] = [
-  // Docs cluster — all pages share the same parent breadcrumb
-  { base: "/about", label: "Docs", parent: "Design system", sidebar: null },
-  { base: "/blueprints/claude", label: "Claude MD", parent: "Design system", sidebar: null },
-  { base: "/blueprints/design", label: "Design MD", parent: "Design system", sidebar: null },
-  { base: "/skills", label: "Skills", parent: "Design system", sidebar: null },
-  { base: "/loops", label: "Loops", parent: "Design system", sidebar: null },
-  { base: "/project-journal", label: "Project journal", parent: "Design system", sidebar: null },
+  // Docs cluster pages are handled directly in getBreadcrumbs (driven by
+  // docsSidebarLinks) since their URLs don't share a /docs prefix.
   // Other DS sections
   { base: "/foundations", label: "Foundations", parent: "Design system", sidebar: foundationsSidebarLinks },
   { base: "/components", label: "Components", parent: "Design system", sidebar: componentsSidebarLinks },
@@ -242,6 +239,20 @@ export function getBreadcrumbs(pathname: string): BreadcrumbItem[] {
   // Top-level pages with no breadcrumb
   if (path === "/" || path === "/contact" || path === "/about/me") {
     return [];
+  }
+
+  // Docs cluster — the landing lives at /docs but sub-pages keep their
+  // original URLs, so match against the sidebar links (no shared prefix).
+  if (path === "/docs") {
+    return [{ label: "Design system" }, { label: "Docs" }];
+  }
+  const docsLink = docsSidebarLinks.find((l) => l.href === path && l.href !== "/docs");
+  if (docsLink) {
+    return [
+      { label: "Design system" },
+      { label: "Docs", href: "/docs" },
+      { label: docsLink.label },
+    ];
   }
 
   for (const section of breadcrumbSections) {

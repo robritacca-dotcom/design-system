@@ -8,10 +8,10 @@ import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import Footer from "../../components/Footer/Footer";
 import { Badge } from "@design-system/components/Badge/Badge";
 import { Chip } from "@design-system/components/Chip/Chip";
-import { getSidebarLinks, aboutSidebarLinks } from "@/config/navigation";
+import { getSidebarLinks, docsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
-const { sidebarLinks } = getSidebarLinks(aboutSidebarLinks, "/loops");
+const { sidebarLinks } = getSidebarLinks(docsSidebarLinks, "/loops");
 
 /* ============================================
    LOOP DATA

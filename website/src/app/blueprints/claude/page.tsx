@@ -8,10 +8,10 @@ import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
 import DownloadButton from "./DownloadButton";
-import { getSidebarLinks, aboutSidebarLinks } from "@/config/navigation";
+import { getSidebarLinks, docsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
-const { sidebarLinks } = getSidebarLinks(aboutSidebarLinks, "/blueprints/claude");
+const { sidebarLinks } = getSidebarLinks(docsSidebarLinks, "/blueprints/claude");
 
 export default function ClaudeBlueprintPage() {
   const filePath = path.join(process.cwd(), "public", "CLAUDE.md");

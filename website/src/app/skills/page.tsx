@@ -8,12 +8,12 @@ import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import Footer from "../../components/Footer/Footer";
 import { Badge } from "@design-system/components/Badge/Badge";
 import { CodeBlock } from "@design-system/components/CodeBlock/CodeBlock";
-import { getSidebarLinks, aboutSidebarLinks } from "@/config/navigation";
+import { getSidebarLinks, docsSidebarLinks } from "@/config/navigation";
 import { SKILL_COUNT } from "@/data/skills-registry";
 import { skillsContent } from "@/data/skills-content.generated";
 import styles from "./page.module.css";
 
-const { sidebarLinks } = getSidebarLinks(aboutSidebarLinks, "/skills");
+const { sidebarLinks } = getSidebarLinks(docsSidebarLinks, "/skills");
 
 
 /* ============================================
