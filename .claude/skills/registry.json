@@ -11,7 +11,8 @@
     "heuristic-analysis",
     "accessibility-audit",
     "api-consistency",
-    "growth-loop"
+    "growth-loop",
+    "site-updates"
   ],
   "external": [
     "ga-report"
