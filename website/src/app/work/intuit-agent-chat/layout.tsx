@@ -1,11 +1,24 @@
 import type { Metadata } from "next";
+import { buildCaseStudyJsonLd } from "@/lib/structuredData";
 
-export const metadata: Metadata = {
-  title: "Intuit Agent Chat Platform",
-  description:
-    "Case study: the official conversational AI platform for all of Intuit. Designed and built from 0 → 1 across web, iOS, and Android. Live in QuickBooks and TurboTax.",
-};
+const title = "Intuit Agent Chat Platform";
+const description =
+  "Case study: the official conversational AI platform for all of Intuit. Designed and built from 0 → 1 across web, iOS, and Android. Live in QuickBooks and TurboTax.";
+
+export const metadata: Metadata = { title, description };
 
 export default function IntuitAgentChatLayout({ children }: { children: React.ReactNode }) {
-  return children;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            buildCaseStudyJsonLd({ slug: "intuit-agent-chat", headline: title, description })
+          ),
+        }}
+      />
+      {children}
+    </>
+  );
 }

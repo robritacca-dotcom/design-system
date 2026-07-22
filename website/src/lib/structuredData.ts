@@ -26,6 +26,36 @@ export function buildWebsiteJsonLd() {
   };
 }
 
+/**
+ * Builds an Article schema for a /work case study. Pass the same headline and
+ * description the page's `metadata` export declares so the two never disagree.
+ */
+export function buildCaseStudyJsonLd({
+  slug,
+  headline,
+  description,
+}: {
+  slug: string;
+  headline: string;
+  description: string;
+}) {
+  const url = `${SITE_URL}/work/${slug}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline,
+    description,
+    url,
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    image: `${url}/opengraph-image`,
+    author: {
+      "@type": "Person",
+      name: "Robert Ritacca",
+      url: SITE_URL,
+    },
+  };
+}
+
 /** Builds a BreadcrumbList schema from the same trail PageBreadcrumb renders. */
 export function buildBreadcrumbJsonLd(items: BreadcrumbItem[]) {
   return {

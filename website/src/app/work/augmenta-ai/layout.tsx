@@ -1,11 +1,24 @@
 import type { Metadata } from "next";
+import { buildCaseStudyJsonLd } from "@/lib/structuredData";
 
-export const metadata: Metadata = {
-  title: "Augmenta Construction Platform",
-  description:
-    "Case study: turning automation into usability — the redesign behind 42% faster outcomes for Augmenta's generative electrical raceway platform.",
-};
+const title = "Augmenta Construction Platform";
+const description =
+  "Case study: turning automation into usability — the redesign behind 42% faster outcomes for Augmenta's generative electrical raceway platform.";
+
+export const metadata: Metadata = { title, description };
 
 export default function AugmentaLayout({ children }: { children: React.ReactNode }) {
-  return children;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            buildCaseStudyJsonLd({ slug: "augmenta-ai", headline: title, description })
+          ),
+        }}
+      />
+      {children}
+    </>
+  );
 }

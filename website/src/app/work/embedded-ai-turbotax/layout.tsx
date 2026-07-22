@@ -1,11 +1,24 @@
 import type { Metadata } from "next";
+import { buildCaseStudyJsonLd } from "@/lib/structuredData";
 
-export const metadata: Metadata = {
-  title: "Designing Embedded AI Experiences Inside ChatGPT and Claude",
-  description:
-    "Case study: leading design for TurboTax's embedded AI experiences during one of the first large-scale launches inside major AI platforms.",
-};
+const title = "Designing Embedded AI Experiences Inside ChatGPT and Claude";
+const description =
+  "Case study: leading design for TurboTax's embedded AI experiences during one of the first large-scale launches inside major AI platforms.";
+
+export const metadata: Metadata = { title, description };
 
 export default function EmbeddedAiTurbotaxLayout({ children }: { children: React.ReactNode }) {
-  return children;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            buildCaseStudyJsonLd({ slug: "embedded-ai-turbotax", headline: title, description })
+          ),
+        }}
+      />
+      {children}
+    </>
+  );
 }
