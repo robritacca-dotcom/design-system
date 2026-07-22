@@ -440,11 +440,12 @@ The theme is activated by `data-theme="dark"` on the HTML root element. The `tok
 ## Responsive Behavior
 
 ### Breakpoints
-The website uses standard breakpoints:
-- **Mobile**: < 768px
-- **Tablet**: 768px – 1024px
-- **Desktop**: 1024px – 1440px
-- **Wide**: > 1440px
+The website's docs shell (left nav rail + main column + right details rail) steps down at four widths. The rail widths and column gap live as `--layout-*` custom properties in `globals.css`, so the mid-breakpoint narrowing applies to every page at once:
+- **≥ 1280px** — full shell: 291px left nav (`--layout-sidebar-width`), 320px right rail (`--layout-rail-width`), 60px column gaps (`--layout-column-gap`).
+- **≤ 1279px (mid)** — both rails narrow (nav 240px, rail 280px) and the column gap tightens to 40px, keeping the center column at a readable measure.
+- **≤ 1151px** — the right details rail stacks below the main content (per-page media query on the `resumeLayout`/`updatesLayout` flex row); the left nav stays.
+- **≤ 959px (mobile)** — the left nav hides and pages collapse to a single column.
+- **≤ 768px** — typography collapse (page titles and sub-display sizes step down).
 
 ### Typography Collapse
 - Mega / Display sizes are marketing-only and should scale down significantly on mobile (e.g. Display 2 at 64px → ~36–40px).
@@ -479,7 +480,7 @@ The website uses standard breakpoints:
 - **Animation / transition timings** — Component transitions use hardcoded `0.2s ease`. No token exists for easing curves or durations. If the system needs animated loading states or page transitions, a `--motion-*` token layer should be added.
 - **Icon sizing tokens** — Material Symbols sizes (24px default, 20px compact) are hardcoded in component CSS. No `--icon-size-*` token exists. Formalising this would help consistency across new components.
 - **Figma parity** — The system originates in Figma ([robr0-ds26](https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26)), and foundation/component pages deep-link to specific frames via `figmaUrl`. Keeping the Figma file and the coded tokens in sync is still a manual process — there is no automated export pipeline.
-- **Breakpoint tokens** — Responsive breakpoints are not tokenized. They exist as raw media-query values in component CSS.
+- **Breakpoint tokens** — The docs-shell column widths are tokenized (`--layout-*` in the website's `globals.css`), but the media-query thresholds themselves (1279 / 1151 / 959 / 768px) remain raw values repeated across CSS files — CSS custom properties cannot drive `@media` conditions.
 - **Form validation patterns** — Error state on Input is documented, but multi-field form-level validation patterns (inline error summaries, field grouping) are not in scope here.
 - **Code/monospace** — No monospace font or `--font-code-*` token is defined. If code blocks are needed on the documentation site, add a JetBrains Mono or Fira Code entry to the typography token layer.
 - **Chart theming** — Recharts chart components use `--color-core-accent-*` tokens for data series, but a formal `--chart-series-{n}` token set for ordered series colors has not been codified.
