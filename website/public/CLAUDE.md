@@ -21,8 +21,9 @@ Existing registries:
 |---|---|---|---|
 | Components | `src/components/registry.json` (`components` + `docOnlyHelpers`) | `COMPONENT_COUNT` from `src/components/registry.ts` | `scripts/validate-component-registry.mjs` — every folder registered, every entry has a folder |
 | Skills | `.claude/skills/registry.json` (`displayed` + `external` + `unlisted`) | `SKILL_COUNT` from `website/src/data/skills-registry.ts` | `scripts/validate-skills-registry.mjs` — every `.md` registered, every entry has a file, page list matches `displayed` + `external` |
+| Project journal | `website/src/data/site-updates.json` (curated timeline entries + `asOf` commit bookmark) | `SITE_UPDATE_COUNT` from `website/src/data/site-updates.ts` | `scripts/validate-site-updates.mjs` — structure only (complete stories, valid bookmark, no commit-hash dumps); freshness is the biweekly `site-updates` skill's job, never the build's |
 
-Both validators run before every build (`npm run validate-registry`, wired into `prebuild`/`prestorybook`/`prebuild-storybook` and the website's `prebuild`).
+The `/project-journal` page renders this data as the build-progression timeline; entries are agent-curated stories (one theme consolidating many commits — what/why/outcome prose), appended by the `site-updates` skill. All validators run before every build (`npm run validate-registry`, wired into `prebuild`/`prestorybook`/`prebuild-storybook` and the website's `prebuild`).
 
 **README.md is a generated surface for registry data.** `scripts/generate-readme-content.mjs` (also in the `validate-registry` chain) rewrites the README's component count and component list from `src/components/registry.json` between `<!-- component-count -->` / `<!-- component-list:start/end -->` markers — never hand-edit inside the markers, and commit README.md when a build regenerates it. The same script fails the build if the README's Tech section names a different major version of React, Next.js, Storybook, or Vite than package.json.
 
