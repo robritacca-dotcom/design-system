@@ -74,6 +74,9 @@ export default function SiteUpdatesPage() {
 
           <div className={`${styles.updatesLayout} animate-in animate-delay-3`}>
             <div className={styles.timelineSection}>
+              <div className={styles.timelineSectionHeader}>
+                <h2 className={styles.timelineSectionTitle}>Timeline</h2>
+              </div>
               <Timeline items={items} orientation="vertical" />
             </div>
 
