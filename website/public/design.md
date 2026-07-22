@@ -280,6 +280,22 @@ Hover: primary → `--color-action-primary-bg-hover`; secondary/destructive → 
 
 Sizes: `default` (padding 8px × 20px), `compact` (padding 6px × 12px).
 
+### ButtonGroup
+
+**`ds-button-group`** — Inline container that composes Buttons for nav and subnav contexts. Two orientations: `horizontal` (default — `--gap-lg` between buttons, used in top navigation) and `vertical` (`--gap-xxs`, left-aligned hug-content column for subnav/mobile). Purely compositional: each entry is a full `ButtonProps` config passed straight through to Button, so priorities and states mix freely. `role="group"` with an optional `ariaLabel`.
+
+### CircularButton
+
+**`ds-circular-button`** — Round icon-only button, 40px (default) or 32px (compact), always `--radius-full`. Same three priorities as Button — `primary` (`--color-action-primary-bg` fill), `secondary` (outlined, `--border-xs` + action border tokens), `tertiary` (ghost, `--color-action-passive-bg-hover` on hover) — with the same state set (`default`/`hover`/`active`/`disabled`). Icon is a single Material Symbol at 24px default / 20px compact. Renders as `<a>` when `href` is set. `ariaLabel` is required — there is no visible label.
+
+### SegmentedControl
+
+**`ds-segmented-control`** — Horizontal set of mutually exclusive options on a `--color-bg-container-primary` track with a `--radius-full` pill silhouette. The active segment takes `--color-action-primary-bg` with `--color-action-primary-text`; idle segments use `--font-paragraph-em-*` in `--color-text-secondary` with `--color-action-passive-bg-hover` on hover. Segments accept an optional Material Symbol icon and per-segment `disabled`. Sizes: `default`, `compact`; `fullWidth` stretches segments across the container. Keyboard: Arrow keys cycle enabled segments, Home/End jump to the ends.
+
+### ToggleGroup
+
+**`ds-toggle-group`** — A row of two-state buttons sharing a bordered `--radius-sm` container (`--border-xs` on `--color-bg-container-border`). Single-select by default; `multiple` allows any combination. Active items fill with `--color-action-primary-bg` and `--color-action-primary-text`; items can be text labels or Material Symbol icons (`icon: true`). Sizes: `default`, `compact`. Group-level `disabled` applies the standard `opacity: 0.4` treatment. `role="group"` + `aria-pressed` per item.
+
 ### Badge
 
 **`ds-badge`** — Inline status label. Radius `--radius-xs` (4px) — notably tighter than buttons and inputs. Text: `--font-paragraph-sm-em-*` (14px/500). Padding: 2px vertical × 8px horizontal. Each of the five status variants (`info`, `positive`, `warning`, `error`, `neutral`) maps directly to its `--color-status-*-bg`, `--color-status-*-border`, and `--color-status-*-text` tokens. Renders with `role="status"` for accessibility.
@@ -317,11 +333,51 @@ States:
 
 Icon slots (Material Symbols Rounded): left icon at 16px from edge, right icon at 16px from edge. Compact size: padding 6px × 12px, icon 20px.
 
+### Checkbox
+
+**`ds-checkbox`** — Custom checkbox with an inline SVG check (and minus for `indeterminate`) instead of font glyphs, for pixel-perfect centring. The box is `--radius-sm` with a `--border-md` border; checked state fills `--color-action-primary-bg` with `--color-action-primary-text-active` stroke, hover darkens to `--color-action-primary-bg-hover`. Sizes: `default`, `compact`. Disabled: `opacity: 0.4`, `cursor: not-allowed`. A `CheckboxGroup` wrapper renders a labelled list of checkboxes bound to a value array.
+
+### RadioButton
+
+**`ds-radio`** — Single-select control: a `--radius-full` circle with a `--border-md` ring and an inner dot that fills `--color-action-primary-bg` when checked; hover shifts the ring toward `--color-action-primary-border-tertiary`. Implemented as a `role="radio"` element with `aria-checked`, Space/Enter activation, and managed `tabIndex`; group radios by `name` (a `RadioGroup` wrapper exists alongside). Label uses `--font-paragraph-*`. Disabled: `opacity: 0.4`.
+
+### ToggleSwitch
+
+**`ds-toggle-switch`** — Binary on/off switch: a 42×24px `--radius-full` track filled with `--color-action-primary-bg` when on, holding a 20px `--color-control-thumb` circle that slides with a spring-curve transition and shows a check icon. Rendered as a `<button role="switch" aria-checked>`; the optional inline label uses `--font-paragraph-*`. Sizes: `default`, `compact`. Used for settings like the site's theme toggle. SelectionCard's `toggle` mode reuses this exact anatomy.
+
+### Slider
+
+**`ds-slider`** — Range input styled with a two-tone track: `--color-action-primary-bg` fill up to the current value, `--color-bg-container-secondary` beyond it, with a `--radius-full` thumb that gains a `--color-action-primary-bg-hover` focus ring. Native `<input type="range">` underneath, so keyboard and screen-reader behaviour come for free (`min`/`max`/`step` props). Sizes: `default`, `compact`. Disabled: `opacity: 0.4`.
+
+### DateInput
+
+**`ds-date-input`** — Form field wrapping the native date input with the standard input anatomy: label (`--font-paragraph-em-*`), `--radius-md` field on `--color-input-bg-primary` with `--color-input-border-primary`, hover/selected borders (`--color-input-border-hover` / `--color-input-border-selected`), calendar icon in `--color-icon-primary`, and helper/error text below (`--font-paragraph-sm-*`, error via `--color-status-error-border`). Supports `min`/`max`, `required`, `disabled` (input disabled tokens), and sizes `default`/`compact`. Value format is `YYYY-MM-DD`.
+
+### DatePicker
+
+**`ds-date-picker`** — Inline calendar: month header with `--radius-full` chevron nav buttons, `Su–Sa` day-header row, and a grid of day cells. The selected day fills `--color-action-primary-bg` with `--color-action-primary-text` at `--radius-full`; today is highlighted; out-of-range days (`min`/`max`) and the `disabled` state get the standard muted treatment. Container: `--radius-md` on `--color-input-bg-primary` with `--color-input-border-primary`. Sizes: `default`, `compact`. Emits `onDateSelect` with `YYYY-MM-DD`.
+
+### Dropdown
+
+**`ds-dropdown`** — Select-style form field. Closed state matches Input anatomy (label, `--radius-md`, input border/bg tokens, helper/error text); open state reveals a `--radius-md` listbox on `--color-bg-page-primary` elevated with `--shadow-floating`, max-height 240px with scroll. Options support disabled entries and grouped sections (`groups`) with headings and separators. The selected option is marked with `--color-action-primary-text-tertiary`; hover uses `--color-action-passive-bg-hover`. Listbox keyboard pattern (arrows, Escape, Enter) with `aria-expanded` wiring. Sizes: `default`, `compact`. For action menus (not form values) use DropdownMenu.
+
 ### Toast
 
 **`ds-toast`** — Ephemeral notification via `ToastProvider` + `useToast()` hook. Rendered via React portal into `document.body`. Default duration: 5000ms. Pauses on hover/focus. Progress bar animates across bottom. Position: configurable (`top-right`, `bottom-right`, etc.), defaults to `bottom-right`. Max stack: 5 toasts. Five variants share the same `--color-status-*` token mapping as Badge/Alert.
 
 Default icons (Material Symbols Rounded): `info`, `check_circle`, `warning`, `error`, `info` for each variant. Override via `icon` prop.
+
+### ProgressBar
+
+**`ds-progress-bar`** — Determinate progress as a horizontal `--radius-full` track in `--color-bg-container-secondary` with a `--color-core-accent-mint` fill scaled to the clamped 0–100 value. Optional percentage label (`showLabel`) in `--font-paragraph-sm-em-*`. `role="progressbar"` with `aria-valuenow`/`-valuemin`/`-valuemax` and an `ariaLabel` describing what is loading. Sizes: `default`, `compact` (bar height).
+
+### Skeleton
+
+**`ds-skeleton`** — Loading placeholder with a pulsing fill stepping between `--color-bg-container-primary` and `--color-bg-container-secondary`. Three shapes: `text` (`--radius-sm` line, multi-line via `lines` — the last line renders at 75% width), `circular` (`--radius-full`), and `rectangular`. `width`/`height` accept any CSS length. Announced as `role="status"` with `aria-label="Loading"` and `aria-busy`.
+
+### Spinner
+
+**`ds-spinner`** — Indeterminate loading indicator: an SVG circle with a `--color-bg-container-secondary` track and a rotating arc in `--color-action-primary-bg` (`variant="primary"`) or `--color-text-secondary` (`variant="neutral"`). Sizes `sm`/`md`/`lg` (16/24/36px). `role="status"` with a configurable `label`. Use Spinner for indeterminate waits and ProgressBar when the completion fraction is known.
 
 ### Card
 
@@ -344,9 +400,25 @@ Default icons (Material Symbols Rounded): `info`, `check_circle`, `warning`, `er
 
 **`ds-app-layout`** — Full-page shell: header + collapsible sidebar + main content area. **`ds-app-sidebar`** — The side navigation component. Used as the outer wrapper for every documentation page on the website. Sidebar background: `--color-bg-container-primary`.
 
+### Nav
+
+**`ds-nav`** — Top navigation bar: a 78px-tall, max-width 1440px flex row with a brand slot (icon + `--font-paragraph-em-*` text, `--gap-lg`) on the left and a horizontal ButtonGroup plus optional `trailing` content (e.g. the theme ToggleSwitch) on the right at `--gap-xl`. Purely compositional — active states come from the Button configs passed in.
+
+### Breadcrumb
+
+**`ds-breadcrumb`** — Location trail as a `<nav aria-label="Breadcrumb">` ordered list. Items are links in `--font-paragraph-sm-*` `--color-text-secondary` separated by `chevron_right` Material Symbols in `--color-text-tertiary`; the current (last) item is plain text in `--color-text-primary` at the `-em` weight. `maxItems` collapses the middle of long trails to an ellipsis, always keeping the first and the trailing items. Link focus rings use `--color-action-primary-bg`.
+
 ### Tabs
 
 **`ds-tabs`** — Tabbed interface with `TabsList`, `TabsTrigger`, and `TabsContent`. Active tab trigger: teal border-bottom or teal fill depending on variant. Use for grouping related content on a single page (e.g., component page showing Light/Dark/Mobile views).
+
+### Accordion
+
+**`ds-accordion`** — Collapsible content sections in a single `--radius-sm` bordered container (`--border-xs` on `--color-bg-container-border`, row dividers inside). Headers are `--font-paragraph-em-*` buttons with a rotating `expand_more` chevron and `--color-action-passive-bg-hover` on hover; panels hold arbitrary content at `--font-paragraph-*`. Single-open by default, `multiple` allows several; `defaultExpanded` seeds initial state. Headers carry `aria-expanded` and are wired to their panels.
+
+### Carousel
+
+**`ds-carousel`** — Sliding content viewport. Navigation arrows are 36px `--radius-full` bordered buttons on `--color-bg-page-primary` (no shadow — the arrows are not floating surfaces); dot indicators mark the active slide with `--color-action-primary-bg`. Supports `autoPlay` with configurable interval (pauses on hover), `loop`, keyboard navigation (arrow keys), and an `onSlideChange` callback. Slides are the component's children.
 
 ### Table
 
@@ -354,7 +426,23 @@ Default icons (Material Symbols Rounded): `info`, `check_circle`, `warning`, `er
 
 ### Dialog
 
-**`ds-dialog`** — General-purpose modal for arbitrary content; for confirm/cancel prompts use AlertDialog. Panel: `--radius-md`, `--color-bg-page-primary`, hairline `--color-bg-container-border` border, the floating-surface shadow, over a `rgba(0,0,0,0.5)` backdrop; opens with the standard 0.2s scale + fade. Header: `--font-heading-6-*` title with optional `--font-paragraph-sm-*` tertiary description and a 32px ghost close button. Body slot scrolls (`overflow-y: auto`) when content exceeds the viewport-capped panel height; optional footer slot right-aligns consumer-provided Buttons. Sizes: `sm` 400px / `md` 560px (default) / `lg` 720px max-width. Behaviour: portal to `<body>`, focus trap with Tab cycling, focus restore on close, body scroll lock, `role="dialog" aria-modal="true"`; `dismissible={false}` disables ESC, backdrop click, and hides the close button.
+**`ds-dialog`** — General-purpose modal for arbitrary content; for confirm/cancel prompts use AlertDialog. Panel: `--radius-md`, `--color-bg-page-primary`, hairline `--color-bg-container-border` border, `--shadow-modal`, over a `--color-scrim` backdrop; opens with the standard 0.2s scale + fade. Header: `--font-heading-6-*` title with optional `--font-paragraph-sm-*` tertiary description and a 32px ghost close button. Body slot scrolls (`overflow-y: auto`) when content exceeds the viewport-capped panel height; optional footer slot right-aligns consumer-provided Buttons. Sizes: `sm` 400px / `md` 560px (default) / `lg` 720px max-width. Behaviour: portal to `<body>`, focus trap with Tab cycling, focus restore on close, body scroll lock, `role="dialog" aria-modal="true"`; `dismissible={false}` disables ESC, backdrop click, and hides the close button.
+
+### AlertDialog
+
+**`ds-alert-dialog`** — Modal confirmation for important or destructive actions. A portal-rendered overlay: `--color-scrim` backdrop behind a `--radius-md` panel on `--color-bg-page-primary` with `--border-xs` border and `--shadow-modal`, title + description text, and a Cancel/Confirm Button pair. `variant="destructive"` styles the confirm action with the error tokens. Focus is trapped while open and restored on close; ESC dismisses; the panel wires `aria-labelledby`/`aria-describedby` to the generated title/description ids. SSR-safe (portal only mounts client-side). For general-purpose modal content use Dialog; AlertDialog is only for confirm/cancel decisions.
+
+### Popover
+
+**`ds-popover`** — Anchored contextual overlay. Wraps a trigger and positions a `--radius-sm` panel (min-width 200px, `--padding-md`, `--color-bg-container-primary`, `--border-xs` border, `--shadow-floating`) on the chosen side (`top`/`bottom`/`left`/`right`). Trigger mode is `click` (outside-click and ESC dismiss) or `hover`; open state can be controlled via `open`/`onOpenChange`. Content is arbitrary ReactNode — unlike Tooltip, which is text-only. Sizes: `default`, `compact`.
+
+### DropdownMenu
+
+**`ds-dropdown-menu`** — Action menu opened from a trigger element (contrast with Dropdown, which is a form select). The panel is `--radius-md` on `--color-bg-page-primary` with a `--border-xs` `--color-input-border-primary` hairline and `--shadow-floating`, `--padding-xxs` inset, aligned `start` or `end`. Entries are a typed tree: items (label, optional Material Symbol icon, keyboard `shortcut` hint, `disabled`, `destructive` — red via the error/coral tokens), `separator`s, labelled `group`s, and nested sub-menus via `children`. Full keyboard navigation across the flattened item list; hover uses `--color-action-passive-bg-hover`. Sizes: `default`, `compact`.
+
+### Tooltip
+
+**`ds-tooltip`** — Text-only contextual label on hover or focus. The bubble is the system's inverse surface: `--color-bg-container-inverse` with `--color-text-on-inverse` at `--radius-xs`, `--font-paragraph-sm-*`, with a rotated-square arrow in the same fill. Four positions (`top`/`bottom`/`left`/`right`) with a 4px slide-in transition; `showDelay`/`hideDelay` control timing (300/150ms default). The panel has `role="tooltip"` and an id; Tooltip clones its child element with `aria-describedby` pointing at that id — host elements get it automatically, and Button/CircularButton accept the attribute natively. Content is a string; anything richer belongs in Popover.
 
 ### Divider
 
@@ -379,6 +467,26 @@ Default icons (Material Symbols Rounded): `info`, `check_circle`, `warning`, `er
 ### Figure
 
 **`ds-figure`** — Image + caption in a `--radius-md` container with `--color-bg-container-secondary` fill. Accepts any image element as children (plain `<img>` or `next/image`); the media slot stretches it full-width. Caption: `--font-paragraph-sm-*` tertiary, `--padding-md`/`--padding-lg`, hairline top border. Passing `onClick` makes it zoomable: `cursor: zoom-in`, hover dims the image to 0.88, `role="button"` + Enter/Space activation, standard teal focus ring.
+
+### Avatar
+
+**`ds-avatar`** — User identity circle (`--radius-full`) in three sizes — `sm` 32px, `md` 40px, `lg` 56px. Renders the image when `src` is provided, falls back to initials derived from `name` on `--color-bg-container-secondary`, then to a person icon. An optional `status` dot (`online`/`away`/`offline`/`busy`) sits on the rim, filled with the matching status border token and ringed in `--color-bg-page-primary`. `role="img"` with a label from `alt`/`name`. One of the components using the `sm/md/lg` size vocabulary (with Spinner and Dialog) — intentional for components with three or more sizes.
+
+### ContactCard
+
+**`ds-contact-card`** — Full-width contact row card: icon-or-logo slot, label (`--font-title-body-*`) with a truncating value line (`--font-paragraph-sm-*`, `--color-text-tertiary`), and a trailing affordance icon. `--radius-md` on `--color-bg-container-primary-semi` with a `--color-bg-container-border` hairline; hover deepens to `--color-bg-container-secondary`. Renders as an `<a>` (protocol links like `mailto:` never open a new tab even when `external`) or, in `copyOnClick` mode, as a `<button>` that copies the value — `copyable` instead adds a discrete copy button alongside. The trailing icon signals the behaviour: `arrow_forward`, `open_in_new`, or `content_copy`.
+
+### LinkList
+
+**`ds-link-list`** — Vertical list of external links at `--gap-lg`. Each row: a 28px logo image or Material Symbol, then a `--font-title-body-*` title with an inline `open_in_new` indicator and optional `--font-paragraph-sm-*` subtitle lines in `--color-text-tertiary`. Rows are `<a target="_blank">` with a hover opacity dim. Data-driven via an `items` array — lighter-weight than a stack of ContactCards; used for publication and award lists.
+
+### SectionTitle
+
+**`ds-section-title`** — The standard section heading used across the docs site: an `<h2>` in `--font-heading-2-*` `--color-text-secondary` with an optional `trailing` slot (count, badge, metadata) in `--font-paragraph-*` `--color-text-tertiary`, closed by a `--color-divider` bottom border with `--padding-xl` breathing room. This is the h2-carries-the-divider rule from the typography spec, packaged as a component.
+
+### Instructions
+
+**`ds-instructions`** — Step-by-step guidance list. Each step has a `--radius-full` indicator badge — the step number, or a Material Symbol when `icon` is set — connected by hairline lines (`--color-bg-container-border`), with a `--font-paragraph-em-*` label and optional `--font-paragraph-*` description. Renders as an `<ol>`; directions `vertical` (default) and `horizontal`; sizes `default`/`compact`.
 
 ### Timeline
 
