@@ -72,7 +72,7 @@ function InteractivePagination(props: {
   pageCount: number;
   initialPage?: number;
   siblingCount?: number;
-  compact?: boolean;
+  size?: "default" | "compact";
 }) {
   const [page, setPage] = React.useState(props.initialPage ?? 1);
   return (
@@ -81,7 +81,7 @@ function InteractivePagination(props: {
       pageCount={props.pageCount}
       onPageChange={setPage}
       siblingCount={props.siblingCount}
-      compact={props.compact}
+      size={props.size}
     />
   );
 }
@@ -138,7 +138,7 @@ export default function PaginationPage() {
           <section className={styles.section}>
             <SectionTitle title="Compact" />
             <div className={styles.demoStack}>
-              <InteractivePagination pageCount={12} initialPage={3} compact />
+              <InteractivePagination pageCount={12} initialPage={3} size="compact" />
             </div>
           </section>
 

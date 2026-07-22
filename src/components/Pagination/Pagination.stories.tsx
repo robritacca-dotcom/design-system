@@ -16,7 +16,11 @@ const meta = {
       control: 'number',
       description: 'Pages shown on each side of the current page',
     },
-    compact: { control: 'boolean', description: 'Compact prev/next readout mode' },
+    size: {
+      control: 'select',
+      options: ['default', 'compact'],
+      description: 'Compact swaps the numbers for a prev/next readout',
+    },
   },
   args: {
     page: 1,
@@ -67,7 +71,7 @@ export const Compact: Story = {
   args: {
     page: 3,
     pageCount: 12,
-    compact: true,
+    size: 'compact',
   },
   render: (args) => <Interactive {...args} />,
 };

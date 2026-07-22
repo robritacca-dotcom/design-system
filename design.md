@@ -362,7 +362,7 @@ Default icons (Material Symbols Rounded): `info`, `check_circle`, `warning`, `er
 
 ### Pagination
 
-**`ds-pagination`** — Page navigation for long datasets; pairs with Table. A `<nav>` of pill page buttons (40px, `--radius-full`) with chevron arrows at each end; first and last pages always visible, ellipses cover the gaps (`siblingCount` controls the window, default 1). Current page takes the SegmentedControl active treatment: `--color-action-primary-bg` fill with `--color-action-primary-text`, `aria-current="page"`. Idle buttons: `--font-paragraph-em-*` in `--color-text-secondary`, hover `--color-action-passive-bg-hover`. Arrows disable at the ends (`opacity: 0.4`, `cursor: not-allowed`). `compact` swaps the numbers for a "Page X of Y" readout (`--font-paragraph-sm-*`) between 32px arrows.
+**`ds-pagination`** — Page navigation for long datasets; pairs with Table. A `<nav>` of pill page buttons (40px, `--radius-full`) with chevron arrows at each end; first and last pages always visible, ellipses cover the gaps (`siblingCount` controls the window, default 1). Current page takes the SegmentedControl active treatment: `--color-action-primary-bg` fill with `--color-action-primary-text`, `aria-current="page"`. Idle buttons: `--font-paragraph-em-*` in `--color-text-secondary`, hover `--color-action-passive-bg-hover`. Arrows disable at the ends (`opacity: 0.4`, `cursor: not-allowed`). `size="compact"` swaps the numbers for a "Page X of Y" readout (`--font-paragraph-sm-*`) between 32px arrows.
 
 ### Stat
 

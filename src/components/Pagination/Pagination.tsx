@@ -10,8 +10,8 @@ export interface PaginationProps {
   onPageChange: (page: number) => void;
   /** Pages shown on each side of the current page */
   siblingCount?: number;
-  /** Compact mode — prev/next arrows with a "Page X of Y" readout */
-  compact?: boolean;
+  /** Component size — compact swaps the numbers for a "Page X of Y" readout */
+  size?: 'default' | 'compact';
   /** Accessible label for the nav landmark */
   ariaLabel?: string;
   /** Additional CSS classes */
@@ -61,11 +61,12 @@ export const Pagination = ({
   pageCount,
   onPageChange,
   siblingCount = 1,
-  compact = false,
+  size = 'default',
   ariaLabel = 'Pagination',
   className = '',
 }: PaginationProps) => {
   const baseClass = 'ds-pagination';
+  const compact = size === 'compact';
 
   const clampedPage = Math.min(Math.max(page, 1), Math.max(pageCount, 1));
   const isFirst = clampedPage <= 1;

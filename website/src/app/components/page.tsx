@@ -412,7 +412,7 @@ export default function ComponentsPage() {
 
             {/* Pagination */}
             <TocCard href="/components/pagination" title="Pagination">
-              <Pagination page={2} pageCount={3} onPageChange={() => {}} compact />
+              <Pagination page={2} pageCount={3} onPageChange={() => {}} size="compact" />
             </TocCard>
 
             {/* Popover */}
