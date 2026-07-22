@@ -52,7 +52,7 @@ const sampleProfile = {
 };
 
 const meta = {
-  title: 'Components/App Sidebar',
+  title: 'Components/AppSidebar',
   component: AppSidebar,
   parameters: {
     layout: 'fullscreen',

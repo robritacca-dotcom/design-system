@@ -1,4 +1,12 @@
-import { useState, useRef, useId, type ReactNode } from 'react';
+import {
+  useState,
+  useRef,
+  useId,
+  cloneElement,
+  isValidElement,
+  type ReactNode,
+  type ReactElement,
+} from 'react';
 import './Tooltip.css';
 
 export interface TooltipProps {
@@ -46,6 +54,14 @@ export const Tooltip = ({
     hideTimeoutRef.current = setTimeout(() => setVisible(false), hideDelay);
   };
 
+  // Associate the trigger with the tooltip for screen readers. When the
+  // child is a single element, put aria-describedby directly on it.
+  const trigger = isValidElement(children)
+    ? cloneElement(children as ReactElement<{ 'aria-describedby'?: string }>, {
+        'aria-describedby': tooltipId,
+      })
+    : children;
+
   const containerClasses = [baseClass, className].filter(Boolean).join(' ');
   const panelClasses = [
     `${baseClass}__panel`,
@@ -63,7 +79,7 @@ export const Tooltip = ({
       onFocus={show}
       onBlur={hide}
     >
-      {children}
+      {trigger}
 
       <span
         className={panelClasses}

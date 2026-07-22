@@ -179,22 +179,6 @@ export default function ComponentsPage() {
               <div className={styles.cardPreview} />
             </TocCard>
 
-            {/* Contact card */}
-            <TocCard href="/components/contact-card" title="Contact card">
-              <div style={{ display: "flex", flexDirection: "column", gap: "6px", width: "160px" }}>
-                {[
-                  { icon: "mail", label: "Email" },
-                  { icon: "person", label: "LinkedIn" },
-                ].map((item) => (
-                  <div key={item.label} style={{ display: "flex", alignItems: "center", gap: "8px", padding: "6px 10px", borderRadius: "8px", border: "1px solid var(--color-bg-container-border)", background: "var(--color-bg-container-primary-semi)" }}>
-                    <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-icon-secondary)" }}>{item.icon}</span>
-                    <span style={{ fontSize: "11px", fontWeight: 500, color: "var(--color-text-primary)", flex: 1 }}>{item.label}</span>
-                    <span className="material-symbols-rounded" style={{ fontSize: "12px", color: "var(--color-text-tertiary)" }}>open_in_new</span>
-                  </div>
-                ))}
-              </div>
-            </TocCard>
-
             {/* Carousel */}
             <TocCard href="/components/carousel" title="Carousel">
               <div className={styles.previewRow} style={{ gap: "8px", alignItems: "center" }}>
@@ -265,6 +249,22 @@ export default function ComponentsPage() {
             <TocCard href="/components/code-block" title="Code block">
               <div style={{ width: "180px" }}>
                 <CodeBlock code={`--radius-full: 999px;`} filename="tokens.css" showCopy={false} />
+              </div>
+            </TocCard>
+
+            {/* Contact card */}
+            <TocCard href="/components/contact-card" title="Contact card">
+              <div style={{ display: "flex", flexDirection: "column", gap: "6px", width: "160px" }}>
+                {[
+                  { icon: "mail", label: "Email" },
+                  { icon: "person", label: "LinkedIn" },
+                ].map((item) => (
+                  <div key={item.label} style={{ display: "flex", alignItems: "center", gap: "8px", padding: "6px 10px", borderRadius: "8px", border: "1px solid var(--color-bg-container-border)", background: "var(--color-bg-container-primary-semi)" }}>
+                    <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-icon-secondary)" }}>{item.icon}</span>
+                    <span style={{ fontSize: "11px", fontWeight: 500, color: "var(--color-text-primary)", flex: 1 }}>{item.label}</span>
+                    <span className="material-symbols-rounded" style={{ fontSize: "12px", color: "var(--color-text-tertiary)" }}>open_in_new</span>
+                  </div>
+                ))}
               </div>
             </TocCard>
 
@@ -459,6 +459,18 @@ export default function ComponentsPage() {
               </div>
             </TocCard>
 
+            {/* Segmented control */}
+            <TocCard href="/components/segmented-control" title="Segmented control">
+              <SegmentedControl
+                segments={[
+                  { label: "A", value: "a" },
+                  { label: "B", value: "b" },
+                ]}
+                activeSegment="a"
+                size="compact"
+              />
+            </TocCard>
+
             {/* Selection card */}
             <TocCard href="/components/selection-card" title="Selection card">
               <div className={styles.previewColumn} style={{ gap: "6px", width: "180px" }}>
@@ -473,18 +485,6 @@ export default function ComponentsPage() {
                   <div style={{ width: "14px", height: "14px", borderRadius: "50%", border: "2px solid var(--color-bg-container-border)" }} />
                 </div>
               </div>
-            </TocCard>
-
-            {/* Segmented control */}
-            <TocCard href="/components/segmented-control" title="Segmented control">
-              <SegmentedControl
-                segments={[
-                  { label: "A", value: "a" },
-                  { label: "B", value: "b" },
-                ]}
-                activeSegment="a"
-                size="compact"
-              />
             </TocCard>
 
             {/* Skeleton */}

@@ -77,7 +77,7 @@ export default function AppSidebarPage() {
           <div className={`${styles.pageHeader} animate-in`}>
             <h1 className={styles.pageTitle}>App sidebar</h1>
             <PageLinks
-              storybookPath="/?path=/docs/components-app-sidebar--docs"
+              storybookPath="/?path=/docs/components-appsidebar--docs"
             />
           </div>
 

@@ -5,7 +5,7 @@ import { AlertDialog } from './AlertDialog';
 import { Button } from '../Button/Button';
 
 const meta = {
-  title: 'Components/Alert Dialog',
+  title: 'Components/AlertDialog',
   component: AlertDialog,
   parameters: {
     layout: 'centered',

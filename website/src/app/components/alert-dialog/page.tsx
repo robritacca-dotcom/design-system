@@ -32,7 +32,7 @@ export default function AlertDialogPage() {
           <div className={`${styles.pageHeader} animate-in`}>
             <h1 className={styles.pageTitle}>Alert dialog</h1>
             <PageLinks
-              storybookPath="/?path=/docs/components-alert-dialog--docs"
+              storybookPath="/?path=/docs/components-alertdialog--docs"
             />
           </div>
 

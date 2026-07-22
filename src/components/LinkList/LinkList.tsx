@@ -18,11 +18,14 @@ export interface LinkListItem {
 
 export interface LinkListProps {
   items: LinkListItem[];
+  /** Additional CSS classes */
+  className?: string;
 }
 
-export const LinkList = ({ items }: LinkListProps) => {
+export const LinkList = ({ items, className = '' }: LinkListProps) => {
+  const classes = ['ds-link-list', className].filter(Boolean).join(' ');
   return (
-    <div className="ds-link-list">
+    <div className={classes}>
       {items.map((item) => {
         const subs = item.sub
           ? Array.isArray(item.sub)
