@@ -29,6 +29,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/blueprints/claude",
     "/blueprints/design",
     "/loops",
+    "/project-journal",
     "/skills",
 
     // Foundations

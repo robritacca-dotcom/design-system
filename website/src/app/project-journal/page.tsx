@@ -1,0 +1,177 @@
+import Link from "next/link";
+import Image from "next/image";
+import MegaNav from "../../components/MegaNav/MegaNav";
+import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
+import Sidebar from "../../components/Sidebar/Sidebar";
+import BlurBackground from "../../components/BlurBackground/BlurBackground";
+import Footer from "../../components/Footer/Footer";
+import { Timeline } from "@design-system/components/Timeline/Timeline";
+import { getSidebarLinks, aboutSidebarLinks } from "@/config/navigation";
+import { siteUpdates, siteUpdatesAsOf, SITE_UPDATE_COUNT } from "@/data/site-updates";
+import styles from "./page.module.css";
+
+const { sidebarLinks } = getSidebarLinks(aboutSidebarLinks, "/project-journal");
+
+function formatDate(iso: string): string {
+  return new Date(`${iso}T00:00:00`).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
+export default function SiteUpdatesPage() {
+  const items = siteUpdates.map((entry) => ({
+    meta: entry.meta,
+    title: entry.title,
+    description: (
+      <>
+        {entry.body.map((paragraph, i) => (
+          <p key={i} className={styles.entryParagraph}>
+            {paragraph}
+          </p>
+        ))}
+      </>
+    ),
+  }));
+
+  return (
+    <>
+      <BlurBackground />
+
+      <MegaNav />
+
+      <div className={styles.dsLayout}>
+        <Sidebar links={sidebarLinks} />
+
+        <main className={styles.dsContent} id="main-content">
+          <PageBreadcrumb />
+          <div className={`${styles.pageHeader} animate-in`}>
+            <h1 className={styles.pageTitle}>Project journal</h1>
+          </div>
+
+          <div className={`${styles.introSection} animate-in animate-delay-1`}>
+            <p className={styles.subDisplay}>The progression of the build</p>
+            <p className={styles.introBody}>
+              An evergreen record of the largest updates to robr0 DS and this
+              site — each entry consolidates the commits behind one theme into
+              what was built, why, and what it changed. Curated from the full
+              history and extended on a biweekly loop.
+            </p>
+          </div>
+
+          <div className={`${styles.updatesLayout} animate-in animate-delay-2`}>
+            <div className={styles.timelineSection}>
+              <Timeline items={items} orientation="vertical" />
+            </div>
+
+            <aside className={styles.updatesRail} aria-label="Project journal details">
+              <div className={styles.railSection}>
+                <div className={styles.railSectionHeader}>
+                  <h2 className={styles.railSectionTitle}>Details</h2>
+                </div>
+                <div className={styles.detailList}>
+                  <div className={styles.detailItem}>
+                    <span className={styles.detailLabel}>Entries</span>
+                    <span className={styles.detailValue}>{SITE_UPDATE_COUNT}</span>
+                  </div>
+                  <div className={styles.detailItem}>
+                    <span className={styles.detailLabel}>History since</span>
+                    <span className={styles.detailValue}>February 13, 2026</span>
+                  </div>
+                  <div className={styles.detailItem}>
+                    <span className={styles.detailLabel}>Last curated</span>
+                    <span className={styles.detailValue}>{formatDate(siteUpdatesAsOf.date)}</span>
+                  </div>
+                  <div className={styles.detailItem}>
+                    <span className={styles.detailLabel}>Cadence</span>
+                    <span className={styles.detailValue}>Biweekly — 1st &amp; 15th</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className={styles.railSection}>
+                <div className={styles.railSectionHeader}>
+                  <h2 className={styles.railSectionTitle}>Links</h2>
+                </div>
+                <div className={styles.linkList}>
+                  <a
+                    href="https://github.com/robritacca-dotcom/design-system/commits/main"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.linkItem}
+                  >
+                    <Image src="/logos/Git.svg" alt="" width={28} height={28} className={styles.linkLogo} />
+                    <div className={styles.linkContent}>
+                      <div className={styles.linkTitle}>
+                        <span>Commit history</span>
+                        <span className="material-symbols-rounded" aria-hidden="true">open_in_new</span>
+                      </div>
+                      <span className={styles.linkSub}>Every commit behind these stories</span>
+                    </div>
+                  </a>
+
+                  <a
+                    href="https://github.com/robritacca-dotcom/design-system"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.linkItem}
+                  >
+                    <Image src="/logos/Git.svg" alt="" width={28} height={28} className={styles.linkLogo} />
+                    <div className={styles.linkContent}>
+                      <div className={styles.linkTitle}>
+                        <span>GitHub repo</span>
+                        <span className="material-symbols-rounded" aria-hidden="true">open_in_new</span>
+                      </div>
+                      <span className={styles.linkSub}>The whole system, public</span>
+                    </div>
+                  </a>
+
+                  <a
+                    href="https://design-system-iota-one.vercel.app"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.linkItem}
+                  >
+                    <Image src="/logos/storybook.svg" alt="" width={28} height={28} className={styles.linkLogo} />
+                    <div className={styles.linkContent}>
+                      <div className={styles.linkTitle}>
+                        <span>Storybook</span>
+                        <span className="material-symbols-rounded" aria-hidden="true">open_in_new</span>
+                      </div>
+                      <span className={styles.linkSub}>Every component, every variant</span>
+                    </div>
+                  </a>
+
+                  <Link href="/loops" className={styles.linkItem}>
+                    <Image src="/logos/rr.svg" alt="" width={28} height={28} className={styles.linkLogo} />
+                    <div className={styles.linkContent}>
+                      <div className={styles.linkTitle}>
+                        <span>Loops</span>
+                        <span className="material-symbols-rounded" aria-hidden="true">arrow_forward</span>
+                      </div>
+                      <span className={styles.linkSub}>The loop that keeps this page current</span>
+                    </div>
+                  </Link>
+
+                  <Link href="/work/robr0-ds" className={styles.linkItem}>
+                    <Image src="/logos/rr.svg" alt="" width={28} height={28} className={styles.linkLogo} />
+                    <div className={styles.linkContent}>
+                      <div className={styles.linkTitle}>
+                        <span>Building robr0 DS</span>
+                        <span className="material-symbols-rounded" aria-hidden="true">arrow_forward</span>
+                      </div>
+                      <span className={styles.linkSub}>The case study behind the system</span>
+                    </div>
+                  </Link>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </main>
+      </div>
+
+      <Footer />
+    </>
+  );
+}
