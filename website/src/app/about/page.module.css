@@ -345,14 +345,6 @@ a.toolItem:hover {
   max-width: 64ch;
 }
 
-/* Contributions section intro — full width to match the graph below it */
-.contributionsIntro {
-  font-size: var(--font-paragraph-size);
-  font-weight: var(--font-paragraph-weight);
-  line-height: var(--font-paragraph-line-height);
-  color: var(--color-text-secondary);
-}
-
 .artifactsGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

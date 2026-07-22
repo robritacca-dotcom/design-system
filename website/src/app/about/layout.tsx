@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Docs — robr0 DS",
+  title: "Overview of robr0 DS",
   description:
-    "robr0 DS is the personal design system I built to make this site. Here's how the pipeline comes together, and the artifacts you can take and reuse.",
+    "An overview of robr0 DS, the personal design system I built to make this site — how the pipeline comes together, and the artifacts you can take and reuse.",
 };
 
 export default function AboutLayout({

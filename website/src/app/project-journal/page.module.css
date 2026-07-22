@@ -64,6 +64,36 @@
 }
 
 /* ============================================
+   CONTRIBUTIONS — full-width GitHub activity graph
+   ============================================ */
+.contributionsSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-xl);
+}
+
+.contributionsHeader {
+  padding-bottom: var(--primitive-padding-lg);
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.contributionsTitle {
+  font-size: var(--font-heading-2-size);
+  font-weight: var(--font-heading-2-weight);
+  line-height: var(--font-heading-2-line-height);
+  letter-spacing: var(--font-heading-2-letter-spacing);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.contributionsIntro {
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  color: var(--color-text-secondary);
+}
+
+/* ============================================
    TIMELINE + RIGHT RAIL — full-width main + 320px aside
    ============================================ */
 .updatesLayout {

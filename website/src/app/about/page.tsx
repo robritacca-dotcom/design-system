@@ -7,11 +7,10 @@ import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import Footer from "../../components/Footer/Footer";
-import GitHubContributions from "../../components/GitHubContributions/GitHubContributions";
-import { getSidebarLinks, aboutSidebarLinks } from "@/config/navigation";
+import { getSidebarLinks, docsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
-const { sidebarLinks } = getSidebarLinks(aboutSidebarLinks, "/about");
+const { sidebarLinks } = getSidebarLinks(docsSidebarLinks, "/about");
 
 export default function AboutDsPage() {
   return (
@@ -42,17 +41,6 @@ export default function AboutDsPage() {
             <p className={styles.introBody}>
               I&apos;m putting all of it on display because I think the system is the work. The pipeline below shows how the pieces fit. The tools rail lists what makes it run. And if you want to lift any of it for your own project, everything is open — the artifacts at the bottom of this page are ready to drop in.
             </p>
-          </div>
-
-          {/* Contributions — real GitHub activity for this repo's account */}
-          <div className={`${styles.resumeSection} animate-in animate-delay-2`}>
-            <div className={styles.resumeSectionHeader}>
-              <h2 className={styles.resumeSectionTitle}>Contributions</h2>
-            </div>
-            <p className={styles.contributionsIntro}>
-              The system is built in public — every commit lands on GitHub. This is the real activity, pulled live from the account that builds robr0 DS.
-            </p>
-            <GitHubContributions />
           </div>
 
           {/* Pipeline + Tools two-column layout */}

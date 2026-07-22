@@ -5,12 +5,13 @@ import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import Footer from "../../components/Footer/Footer";
+import GitHubContributions from "../../components/GitHubContributions/GitHubContributions";
 import { Timeline } from "@design-system/components/Timeline/Timeline";
-import { getSidebarLinks, aboutSidebarLinks } from "@/config/navigation";
+import { getSidebarLinks, docsSidebarLinks } from "@/config/navigation";
 import { siteUpdates, siteUpdatesAsOf, SITE_UPDATE_COUNT } from "@/data/site-updates";
 import styles from "./page.module.css";
 
-const { sidebarLinks } = getSidebarLinks(aboutSidebarLinks, "/project-journal");
+const { sidebarLinks } = getSidebarLinks(docsSidebarLinks, "/project-journal");
 
 function formatDate(iso: string): string {
   return new Date(`${iso}T00:00:00`).toLocaleDateString("en-US", {
@@ -60,7 +61,18 @@ export default function SiteUpdatesPage() {
             </p>
           </div>
 
-          <div className={`${styles.updatesLayout} animate-in animate-delay-2`}>
+          {/* Contributions — real GitHub activity for this repo's account */}
+          <div className={`${styles.contributionsSection} animate-in animate-delay-2`}>
+            <div className={styles.contributionsHeader}>
+              <h2 className={styles.contributionsTitle}>Contributions</h2>
+            </div>
+            <p className={styles.contributionsIntro}>
+              The system is built in public — every commit lands on GitHub. This is the real activity, pulled live from the account that builds robr0 DS.
+            </p>
+            <GitHubContributions />
+          </div>
+
+          <div className={`${styles.updatesLayout} animate-in animate-delay-3`}>
             <div className={styles.timelineSection}>
               <Timeline items={items} orientation="vertical" />
             </div>
