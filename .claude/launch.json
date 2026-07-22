@@ -9,6 +9,12 @@
       "autoPort": true
     },
     {
+      "name": "website-prod",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "website", "run", "start", "--", "--port", "4310"],
+      "port": 4310
+    },
+    {
       "name": "storybook",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "storybook"],
