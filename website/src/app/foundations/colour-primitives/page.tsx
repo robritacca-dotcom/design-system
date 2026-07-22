@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import Image from "next/image";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
@@ -158,23 +158,18 @@ const colourRamps = [
    THEME HOOK
    ============================================ */
 
+function subscribeToTheme(callback: () => void) {
+  const observer = new MutationObserver(callback);
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  return () => observer.disconnect();
+}
+
+function getTheme(): "dark" | "light" {
+  return document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
+}
+
 function useTheme() {
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
-
-  useEffect(() => {
-    const root = document.documentElement;
-    const current = root.getAttribute("data-theme") as "dark" | "light" | null;
-    setTheme(current === "light" ? "light" : "dark");
-
-    const observer = new MutationObserver(() => {
-      const t = root.getAttribute("data-theme") as "dark" | "light" | null;
-      setTheme(t === "light" ? "light" : "dark");
-    });
-    observer.observe(root, { attributes: true, attributeFilter: ["data-theme"] });
-    return () => observer.disconnect();
-  }, []);
-
-  return theme;
+  return useSyncExternalStore<"dark" | "light">(subscribeToTheme, getTheme, () => "dark");
 }
 
 /* ============================================
@@ -211,7 +206,7 @@ export default function PrimitiveColoursPage() {
               Seven colour ramps built from a single palette in Figma
             </p>
             <p className={styles.introBody}>
-              These raw values never get used directly in components. Instead, they feed into the semantic layer where each value gets assigned a role like "page background" or "primary text". Keeping them separate means the palette can evolve without touching any component styles.
+              These raw values never get used directly in components. Instead, they feed into the semantic layer where each value gets assigned a role like &quot;page background&quot; or &quot;primary text&quot;. Keeping them separate means the palette can evolve without touching any component styles.
             </p>
           </div>
 

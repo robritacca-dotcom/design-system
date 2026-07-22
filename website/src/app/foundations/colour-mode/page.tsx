@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import Image from "next/image";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
@@ -271,23 +271,18 @@ const chartContributionColours: SwatchData[] = [
    THEME HOOK
    ============================================ */
 
+function subscribeToTheme(callback: () => void) {
+  const observer = new MutationObserver(callback);
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  return () => observer.disconnect();
+}
+
+function getTheme(): "dark" | "light" {
+  return document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
+}
+
 function useTheme() {
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
-
-  useEffect(() => {
-    const root = document.documentElement;
-    const current = root.getAttribute("data-theme") as "dark" | "light" | null;
-    setTheme(current === "light" ? "light" : "dark");
-
-    const observer = new MutationObserver(() => {
-      const t = root.getAttribute("data-theme") as "dark" | "light" | null;
-      setTheme(t === "light" ? "light" : "dark");
-    });
-    observer.observe(root, { attributes: true, attributeFilter: ["data-theme"] });
-    return () => observer.disconnect();
-  }, []);
-
-  return theme;
+  return useSyncExternalStore<"dark" | "light">(subscribeToTheme, getTheme, () => "dark");
 }
 
 /* ============================================
@@ -324,7 +319,7 @@ export default function SemanticColoursPage() {
               Semantic roles that map to primitives per mode
             </p>
             <p className={styles.introBody}>
-              Each colour here has a role, like "page background" or "error border", and maps to a different primitive value depending on whether the UI is in light or dark mode. Components only reference these roles, so switching themes is just swapping which primitives each role points to. Toggle the mode above to see the values change.
+              Each colour here has a role, like &quot;page background&quot; or &quot;error border&quot;, and maps to a different primitive value depending on whether the UI is in light or dark mode. Components only reference these roles, so switching themes is just swapping which primitives each role points to. Toggle the mode above to see the values change.
             </p>
           </div>
 

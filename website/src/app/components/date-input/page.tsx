@@ -33,7 +33,7 @@ export default function DateInputPage() {
 
           <div className={`${styles.introSection} animate-in animate-delay-1`}>
             <p className={styles.subDisplay}>
-              A text field that opens the browser's native date picker
+              A text field that opens the browser&apos;s native date picker
             </p>
             <p className={styles.introBody}>
               Good for forms where you need a quick date entry without the weight of a full calendar. Use Date Picker instead when you want an always-visible inline calendar.

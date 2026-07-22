@@ -36,7 +36,7 @@ export default function CheckboxPage() {
               Toggle a single option on or off, or select multiple items
             </p>
             <p className={styles.introBody}>
-              Supports a third "mixed" state for cases like a parent checkbox that controls a partially selected group. Use Radio Button when only one choice should be selected at a time.
+              Supports a third &quot;mixed&quot; state for cases like a parent checkbox that controls a partially selected group. Use Radio Button when only one choice should be selected at a time.
             </p>
           </div>
 
