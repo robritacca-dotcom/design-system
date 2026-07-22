@@ -66,7 +66,11 @@ export const Timeline = ({
         <li key={`${item.title}-${index}`} className={`${baseClass}__item`}>
           <span
             className={`${baseClass}__marker${
-              item.icon || numbered ? ` ${baseClass}__marker--badge` : ''
+              item.icon
+                ? ` ${baseClass}__marker--icon`
+                : numbered
+                  ? ` ${baseClass}__marker--badge`
+                  : ''
             }`}
           >
             {renderMarker(item, index)}

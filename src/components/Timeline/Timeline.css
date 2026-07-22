@@ -18,8 +18,8 @@
 
 /* ============================================
    MARKERS
-   Dot by default; badge (circle) when numbered
-   or carrying an icon.
+   Dot by default; badge (circle) when numbered;
+   bare floating icon when carrying an icon.
    ============================================ */
 
 .ds-timeline__marker {
@@ -46,10 +46,18 @@
   color: var(--color-text-secondary);
 }
 
+/* Icon markers float bare — same 28px box as the badge
+   so connector geometry is shared, but no circle */
+.ds-timeline__marker--icon {
+  width: 28px;
+  height: 28px;
+  background-color: transparent;
+}
+
 .ds-timeline__marker-icon {
-  font-size: 16px;
-  width: 16px;
-  height: 16px;
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
   line-height: 1;
   color: var(--color-icon-primary);
 }
@@ -84,11 +92,11 @@
 }
 
 .ds-timeline__description {
-  font-family: var(--font-paragraph-sm-family);
-  font-size: var(--font-paragraph-sm-size);
-  font-weight: var(--font-paragraph-sm-weight);
-  line-height: var(--font-paragraph-sm-line-height);
-  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  font-family: var(--font-paragraph-family);
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  letter-spacing: var(--font-paragraph-letter-spacing);
   color: var(--color-text-secondary);
 }
 
@@ -112,7 +120,8 @@
   margin-top: 6px;
 }
 
-.ds-timeline--vertical .ds-timeline__marker--badge {
+.ds-timeline--vertical .ds-timeline__marker--badge,
+.ds-timeline--vertical .ds-timeline__marker--icon {
   margin-top: 0;
 }
 
@@ -128,8 +137,15 @@
 }
 
 .ds-timeline--vertical.ds-timeline--numbered .ds-timeline__item::before,
-.ds-timeline--vertical .ds-timeline__item:has(.ds-timeline__marker--badge)::before {
-  left: 13px; /* centre of the 28px badge */
+.ds-timeline--vertical .ds-timeline__item:has(.ds-timeline__marker--badge)::before,
+.ds-timeline--vertical .ds-timeline__item:has(.ds-timeline__marker--icon)::before {
+  left: 13px; /* centre of the 28px badge/icon box */
+}
+
+/* Bare icons have no opaque fill to cover the line —
+   start it just below the icon box instead */
+.ds-timeline--vertical .ds-timeline__item:has(.ds-timeline__marker--icon)::before {
+  top: 32px;
 }
 
 .ds-timeline--vertical .ds-timeline__item:last-child::before {
@@ -166,8 +182,15 @@
 }
 
 .ds-timeline--horizontal.ds-timeline--numbered .ds-timeline__item::before,
-.ds-timeline--horizontal .ds-timeline__item:has(.ds-timeline__marker--badge)::before {
-  top: 13px; /* centre of the 28px badge */
+.ds-timeline--horizontal .ds-timeline__item:has(.ds-timeline__marker--badge)::before,
+.ds-timeline--horizontal .ds-timeline__item:has(.ds-timeline__marker--icon)::before {
+  top: 13px; /* centre of the 28px badge/icon box */
+}
+
+/* Bare icons have no opaque fill to cover the line —
+   start it just after the icon box instead */
+.ds-timeline--horizontal .ds-timeline__item:has(.ds-timeline__marker--icon)::before {
+  left: 32px;
 }
 
 .ds-timeline--horizontal .ds-timeline__item:last-child::before {

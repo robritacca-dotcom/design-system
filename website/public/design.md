@@ -371,7 +371,7 @@ Default icons (Material Symbols Rounded): `info`, `check_circle`, `warning`, `er
 
 ### Timeline
 
-**`ds-timeline`** — Ordered sequence (`<ol>`) with connected markers; `vertical` (default) for histories and process narratives, `horizontal` for compact steppers. Markers: 12px dot in `--color-bg-container-tertiary`; `numbered` or per-item `icon` upgrades to a 28px badge (`--color-bg-container-primary` fill, hairline border). Connector: `--border-md` line in `--color-divider`, hidden after the last item. Item anatomy: meta (`--font-paragraph-sm-*` tertiary) over title (`--font-title-body-*`, 16px/600) over description (`--font-paragraph-sm-*` secondary).
+**`ds-timeline`** — Ordered sequence (`<ol>`) with connected markers; `vertical` (default) for histories and process narratives, `horizontal` for compact steppers. Markers: 12px dot in `--color-bg-container-tertiary`; `numbered` upgrades to a 28px badge (`--color-bg-container-primary` fill, hairline border); a per-item `icon` renders as a bare 24px Material Symbol (no circle) centred in the same 28px box. Connector: `--border-md` line in `--color-divider`, hidden after the last item; it stands off below/after bare icon markers instead of passing behind them. Item anatomy: meta (`--font-paragraph-sm-*` tertiary) over title (`--font-title-body-*`, 16px/600) over description (`--font-paragraph-*` secondary).
 
 ### Chart
 
