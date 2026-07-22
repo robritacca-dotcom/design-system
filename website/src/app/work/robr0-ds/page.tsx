@@ -46,11 +46,11 @@ const { sidebarLinks } = getSidebarLinks(workSidebarLinks, "/work/robr0-ds");
 /** The pipeline diagram — six labeled boxes connected by chevrons. */
 function PipelineDiagram() {
   const steps = [
-    { label: "Figma", note: "Tokens + components" },
-    { label: "MCP", note: "Bridge" },
+    { label: "Figma", note: "Foundation + exploration" },
+    { label: "design.md", note: "The written spec" },
     { label: "Claude Code", note: "Generates React + CSS" },
     { label: "Storybook", note: "Auto-built docs" },
-    { label: "GitHub", note: "Source of truth" },
+    { label: "GitHub", note: "Version control + CI" },
     { label: "Vercel", note: "~60s to live" },
   ];
   return (
@@ -200,13 +200,13 @@ export default function Robr0DsCaseStudy() {
                   </ul>
 
                   <p>
-                    The bet was a pipeline. Tokens and components live in Figma, and from there they flow to production through a chain that runs without a handoff meeting:
+                    The bet was a pipeline. Design decisions live in a written spec, and from there they flow to production through a chain that runs without a handoff meeting:
                   </p>
 
                   <PipelineDiagram />
 
                   <p>
-                    Claude Code reads the Figma file directly through MCP. It generates token CSS, React components with the right TypeScript shape, and Storybook stories that match the Figma variants. I push to GitHub. Vercel deploys both this site and the Storybook in under a minute.
+                    The foundation started in Figma — every token as a variable, every early component as a set of variants — and in those first weeks Claude Code read the file directly through MCP. As the system matured, the source of truth moved into the repo itself: design.md carries the design language now, and Claude Code generates token CSS, React components with the right TypeScript shape, and Storybook stories straight from the written spec. Figma is still where I explore bigger visual changes — but the spec is what ships. I push to GitHub. Vercel deploys both this site and the Storybook in under a minute.
                   </p>
 
                   <blockquote>
@@ -231,7 +231,7 @@ export default function Robr0DsCaseStudy() {
                     Primitives are the raw values — every{" "}
                     <Link href="/foundations/colour-primitives" className={styles.inlineLink}>shade of teal</Link>{" "}
                     I might ever use, every{" "}
-                    <Link href="/foundations/spatial" className={styles.inlineLink}>spacing step, every radius</Link>. They&apos;re defined as variables in Figma and exported into CSS:
+                    <Link href="/foundations/spatial" className={styles.inlineLink}>spacing step, every radius</Link>. They were designed as variables in Figma, then coded as CSS custom properties — the layer everything else is built on:
                   </p>
 
                   <figure className={styles.imagePair}>
@@ -253,7 +253,7 @@ export default function Robr0DsCaseStudy() {
                         height={800}
                         className={styles.pairImage}
                       />
-                      <figcaption className={styles.pairCaption}>The same primitives in CSS — one source of truth in two surfaces.</figcaption>
+                      <figcaption className={styles.pairCaption}>The same primitives in CSS — the layer the code actually reads.</figcaption>
                     </div>
                   </figure>
 
@@ -425,7 +425,7 @@ export default function Robr0DsCaseStudy() {
                   <ul>
                     <li><strong>The spec is the work.</strong> The time that used to go into pushing pixels now goes into writing clear specs that an AI agent can execute. The thinking is the deliverable.</li>
                     <li><strong>Speed compresses iteration.</strong> I can try three layout directions in an afternoon and keep the best one. Earlier in my career that was a week.</li>
-                    <li><strong>Designer-to-dev sync is near zero.</strong> Tokens flow from Figma to production without a handoff meeting. When the design changes, the code changes — same gesture.</li>
+                    <li><strong>Designer-to-dev handoff is gone.</strong> The design language lives in one written spec, in version control, next to the code it governs. When the design changes, the spec changes — and the code follows in the same gesture.</li>
                     <li><strong>The system reports to me now.</strong> Loops run the routine maintenance — analytics reviews, journal updates — and hand me a branch and a report. My judgment moved from doing the work to approving it.</li>
                   </ul>
 
@@ -566,7 +566,7 @@ export default function Robr0DsCaseStudy() {
                         <span>Figma file</span>
                         <span className="material-symbols-rounded" aria-hidden="true">open_in_new</span>
                       </div>
-                      <span className={styles.linkSub}>Tokens + components, source</span>
+                      <span className={styles.linkSub}>Where the foundation was designed</span>
                     </div>
                   </a>
 

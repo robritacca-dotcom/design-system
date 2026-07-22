@@ -37,7 +37,7 @@ export default function AboutDsPage() {
               A personal design system, built to make this site
             </p>
             <p className={styles.introBody}>
-              robr0 DS is the system I built — by myself — to make every page you see here. Tokens live in Figma. Components live in React. Claude Code wires them together so a change in Figma reaches production in under a minute. None of it is theoretical: the buttons, the colours, the type, the layout — they&apos;re all running on the same system this page describes.
+              robr0 DS is the system I built — by myself — to make every page you see here. The foundation was designed in Figma. The system itself lives in the repo: a written spec, tokens as layered CSS, components in React. Claude Code builds from the spec, so a design change reaches production in under a minute. None of it is theoretical: the buttons, the colours, the type, the layout — they&apos;re all running on the same system this page describes.
             </p>
             <p className={styles.introBody}>
               I&apos;m putting all of it on display because I think the system is the work. The pipeline below shows how the pieces fit. The tools rail lists what makes it run. And if you want to lift any of it for your own project, everything is open — the artifacts at the bottom of this page are ready to drop in.
@@ -76,15 +76,15 @@ export default function AboutDsPage() {
                       <div className={styles.rolesContent}>
                         <div className={styles.role}>
                           <div className={styles.roleHeader}>
-                            <h3 className={styles.roleTitle}>Design source of truth</h3>
+                            <h3 className={styles.roleTitle}>Design foundation</h3>
                           </div>
                           <p className={styles.roleDescription}>
-                            All design decisions live in Figma. I design the robr0 DS system here — not mockups, but the actual source that generates code.
+                            Where the system&apos;s foundation was designed — the token architecture, the colour ramps, the component vocabulary. Today it&apos;s the sketchpad for visual exploration; the source of truth has moved into the repo.
                           </p>
                           <ul className={styles.roleBullets}>
-                            <li>Build design tokens as variables: 7 color ramps + spatial tokens (gap, padding, radius, border)</li>
-                            <li>Design components with variants and map semantics for light/dark modes</li>
-                            <li>Export JSON and expose via MCP for direct code generation</li>
+                            <li>Designed the token architecture as variables: 7 color ramps + spatial tokens (gap, padding, radius, border)</li>
+                            <li>Designed the original components with variants and light/dark semantic mappings</li>
+                            <li>Still where bigger visual changes get explored before they land in the written spec</li>
                           </ul>
                         </div>
                       </div>
@@ -106,11 +106,11 @@ export default function AboutDsPage() {
                             <h3 className={styles.roleTitle}>AI component generator</h3>
                           </div>
                           <p className={styles.roleDescription}>
-                            Reads my Figma file via MCP and writes production React code directly from design data.
+                            Builds production React from the written spec that lives in the repo — design.md for the design language, CLAUDE.md for the rules.
                           </p>
                           <ul className={styles.roleBullets}>
-                            <li>Converts token JSON to layered CSS variables (primitives → semantics → components)</li>
-                            <li>Generates React components matching Figma variants with TypeScript and token-based CSS</li>
+                            <li>Maintains the layered CSS token architecture (primitives → semantics → components)</li>
+                            <li>Generates React components with TypeScript and token-based CSS from the spec</li>
                             <li>Builds Storybook documentation automatically for every component</li>
                           </ul>
                         </div>
@@ -232,7 +232,7 @@ export default function AboutDsPage() {
                   <Image src="/logos/Figma.svg" alt="" width={28} height={28} />
                   <div className={styles.toolDetails}>
                     <span className={styles.toolName}>Figma</span>
-                    <span className={styles.toolDesc}>Tokens + components, source</span>
+                    <span className={styles.toolDesc}>Where the foundation was designed</span>
                   </div>
                   <span className={`material-symbols-rounded ${styles.toolLinkIcon}`} aria-hidden="true">open_in_new</span>
                 </a>
