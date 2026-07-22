@@ -20,6 +20,7 @@ Existing registries:
 | Collection | Registry | Count export | Validator |
 |---|---|---|---|
 | Components | `src/components/registry.json` (`components` + `docOnlyHelpers`) | `COMPONENT_COUNT` from `src/components/registry.ts` | `scripts/validate-component-registry.mjs` — every folder registered, every entry has a folder |
+| Component website surfaces | `src/components/registry.json` (same registry) | — | `scripts/validate-website-surfaces.mjs` — every public component has a showcase page, sidebar nav entry (alphabetical), index-grid `TocCard`, and a `###` spec section in `design.md` |
 | Skills | `.claude/skills/registry.json` (`displayed` + `external` + `unlisted`) | `SKILL_COUNT` from `website/src/data/skills-registry.ts` | `scripts/validate-skills-registry.mjs` — every `.md` registered, every entry has a file, page list matches `displayed` + `external` |
 | Project journal | `website/src/data/site-updates.json` (curated timeline entries + `asOf` commit bookmark) | `SITE_UPDATE_COUNT` from `website/src/data/site-updates.ts` | `scripts/validate-site-updates.mjs` — structure only (complete stories, valid bookmark, no commit-hash dumps); freshness is the biweekly `site-updates` skill's job, never the build's |
 
@@ -146,12 +147,13 @@ A new component is not done until it appears in **every** place the system docum
 3. **Write `MyComponent.css`**: All CSS vars must be from `tokens-light/dark.css`. No hardcoded hex, px values from primitives, or magic numbers.
 4. **Write `MyComponent.stories.tsx`**: Export a `meta` (with `title: 'Components/MyComponent'`, `tags: ['autodocs']`) and at least a `Default` story plus one per meaningful variant. (`.stories.ts` also works for stories with no JSX, but `.tsx` is the convention across the library.)
 5. **Add a website showcase page**: Create `website/src/app/components/my-component/page.tsx` + `page.module.css`. Follow the pattern in an existing page (e.g., `website/src/app/components/button/page.tsx`).
-6. **Register it everywhere the website lists components** (all four):
-   - `src/components/registry.json` — add the folder name to `components` (the official count everywhere derives from this; the build fails if you forget)
+6. **Register it everywhere the website lists components** (all three — the sitemap derives from the sidebar config automatically):
+   - `src/components/registry.json` — add the folder name to `components` (the official count everywhere derives from this)
    - `website/src/config/navigation.ts` — add to `componentsSidebarLinks` (alphabetical)
    - `website/src/app/components/page.tsx` — add a `TocCard` with a small live preview to the components index grid (alphabetical)
-   - `website/src/app/sitemap.ts` — add the new route (alphabetical)
 7. **Document it in `design.md`**: add a short component spec section (class name, tokens used, key behaviours).
+
+Steps 5–7 are build-enforced: `scripts/validate-website-surfaces.mjs` fails the build if any public component is missing its showcase page, nav entry, `TocCard`, or `design.md` spec, or if the sidebar falls out of alphabetical order.
 
 Checklist before shipping a component:
 - [ ] All colors via semantic tokens
@@ -159,10 +161,10 @@ Checklist before shipping a component:
 - [ ] Disabled state at `opacity: 0.4`, `cursor: not-allowed`
 - [ ] Interactive elements have ARIA roles and keyboard navigation
 - [ ] At least one Storybook story per variant
-- [ ] Website showcase page added
+- [ ] Website showcase page added (build-enforced)
 - [ ] Added to `src/components/registry.json` (build-enforced)
-- [ ] Registered in sidebar nav, components index `TocCard` grid, and sitemap
-- [ ] Spec section added to `design.md`
+- [ ] Registered in sidebar nav and components index `TocCard` grid (build-enforced; sitemap derives from the nav)
+- [ ] Spec section added to `design.md` (build-enforced)
 
 ---
 
