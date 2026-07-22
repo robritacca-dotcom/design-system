@@ -570,11 +570,11 @@ export default function Robr0DsCaseStudy() {
                     </div>
                   </a>
 
-                  <Link href="/about" className={styles.linkItem}>
+                  <Link href="/docs" className={styles.linkItem}>
                     <Image src="/logos/rr.svg" alt="" width={28} height={28} className={styles.linkLogo} />
                     <div className={styles.linkContent}>
                       <div className={styles.linkTitle}>
-                        <span>About robr0 DS</span>
+                        <span>robr0 DS docs</span>
                         <span className="material-symbols-rounded" aria-hidden="true">arrow_forward</span>
                       </div>
                       <span className={styles.linkSub}>System overview + artifacts</span>
