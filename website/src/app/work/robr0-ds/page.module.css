@@ -152,6 +152,16 @@
   margin: var(--primitive-gap-xl) 0 0;
 }
 
+.body h3 {
+  font-family: var(--font-heading-3-family);
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  letter-spacing: var(--font-heading-3-letter-spacing);
+  color: var(--color-text-primary);
+  margin: var(--primitive-gap-lg) 0 0;
+}
+
 .body ul {
   list-style: disc;
   padding-left: 24px;

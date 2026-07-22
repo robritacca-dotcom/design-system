@@ -20,22 +20,25 @@ import { getSidebarLinks, workSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
 /* ============================================
-   Sample data — themed to the system's own growth
+   Real history — registered components and semantic
+   tokens measured from git at each month-end
+   (snapshot taken July 2026)
    ============================================ */
 const systemGrowth = [
-  { month: "Jan", components: 8, tokens: 24 },
-  { month: "Feb", components: 14, tokens: 38 },
-  { month: "Mar", components: 22, tokens: 51 },
-  { month: "Apr", components: 30, tokens: 64 },
-  { month: "May", components: 37, tokens: 74 },
-  { month: "Jun", components: 42, tokens: 84 },
+  { month: "Feb", components: 39, tokens: 156 },
+  { month: "Mar", components: 39, tokens: 156 },
+  { month: "Apr", components: 39, tokens: 156 },
+  { month: "May", components: 39, tokens: 156 },
+  { month: "Jun", components: 41, tokens: 156 },
+  { month: "Jul", components: 51, tokens: 161 },
 ];
 
 const tokensByCategory = [
-  { label: "Colour", value: 32 },
-  { label: "Spacing", value: 18 },
-  { label: "Radius", value: 6 },
-  { label: "Typography", value: 28 },
+  { label: "Colour", value: 70 },
+  { label: "Typography", value: 66 },
+  { label: "Spacing", value: 15 },
+  { label: "Radius", value: 8 },
+  { label: "Border", value: 2 },
 ];
 
 const { sidebarLinks } = getSidebarLinks(workSidebarLinks, "/work/robr0-ds");
@@ -151,7 +154,7 @@ export default function Robr0DsCaseStudy() {
 
           {/* Subtitle / dek */}
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Why I built a personal design system from scratch, and how an AI-augmented Figma-to-React pipeline let me ship a polished site alone.
+            Why I built a personal design system from scratch — and how six months of working with AI agents turned it from a weekend of components into a system that partly maintains itself.
           </p>
 
           {/* Hero image */}
@@ -177,13 +180,17 @@ export default function Robr0DsCaseStudy() {
 
                 <div className={styles.body}>
                   <p className={styles.lede}>
-                    The site you&apos;re on runs on a design system I built end to end. Tokens, components, theming, docs — all mine. This is the story of why I built it instead of grabbing an off-the-shelf system, and what fell out of doing it that way.
+                    The site you&apos;re on runs on a design system I built end to end. Tokens, components, theming, docs, the pipeline that ships it — all mine. It started as two days of rules in February 2026. Six months later, it runs parts of its own maintenance. This is the story of the problem I set out to test, the journey the system took, and where it stands today.
                   </p>
 
-                  <h2>Why build a personal design system in 2026?</h2>
+                  <h2>The problem</h2>
 
                   <p>
-                    Plenty of great systems exist — shadcn, Mantine, Material, Radix. Any of them would&apos;ve gotten me a portfolio site in a weekend. I picked the longer road on purpose:
+                    Plenty of great design systems exist — shadcn, Mantine, Material, Radix. Any of them would&apos;ve gotten me a portfolio site in a weekend. But that would have answered the wrong question. The question I actually wanted to test was this: <strong>can one designer, working with AI agents, carry a design system through its entire lifecycle?</strong> Not just drawing the components — the parts that normally take a team. Documenting them. Testing them. Hardening them for a public repo. Keeping the docs honest as the system grows.
+                  </p>
+
+                  <p>
+                    There were personal reasons too:
                   </p>
 
                   <ul>
@@ -192,16 +199,32 @@ export default function Robr0DsCaseStudy() {
                     <li>As a portfolio piece, the system itself is the proof — it demonstrates how I think better than any case study about how I think could.</li>
                   </ul>
 
-                  <h2>The three-tier token architecture</h2>
+                  <p>
+                    The bet was a pipeline. Tokens and components live in Figma, and from there they flow to production through a chain that runs without a handoff meeting:
+                  </p>
+
+                  <PipelineDiagram />
 
                   <p>
-                    The whole thing rests on a single architectural rule:{" "}
+                    Claude Code reads the Figma file directly through MCP. It generates token CSS, React components with the right TypeScript shape, and Storybook stories that match the Figma variants. I push to GitHub. Vercel deploys both this site and the Storybook in under a minute.
+                  </p>
+
+                  <blockquote>
+                    The handoff that usually sits between design and engineering is just gone. The spec is the work.
+                  </blockquote>
+
+                  <h2>The journey</h2>
+
+                  <h3>February — constraints before components</h3>
+
+                  <p>
+                    Day one wasn&apos;t a button. It was rules. The first commits established the architecture the whole system still rests on:{" "}
                     <Link href="/foundations/colour-primitives" className={styles.inlineLink}>primitives</Link>{" "}
                     at the bottom,{" "}
                     <Link href="/foundations/colour-mode" className={styles.inlineLink}>semantic tokens</Link>{" "}
                     in the middle,{" "}
                     <Link href="/components" className={styles.inlineLink}>components</Link>{" "}
-                    on top. <strong>No component CSS ever references a primitive directly.</strong>
+                    on top — with light and dark values from the very first day, and one hard rule: <strong>no component CSS ever references a primitive directly.</strong> Everything since has been built inside those lines.
                   </p>
 
                   <p>
@@ -235,7 +258,7 @@ export default function Robr0DsCaseStudy() {
                   </figure>
 
                   <p>
-                    Semantic tokens give those primitives meaning. <code>--primitive-teal-07</code> becomes <code>--color-action-primary-bg</code>. <code>--primitive-neutral-09</code> becomes <code>--color-text-primary</code>. The semantic layer is also where{" "}
+                    Semantic tokens give those primitives meaning. <code>--primitive-teal-07</code> becomes <code>--color-action-primary-bg</code>. The semantic layer is also where{" "}
                     <Link href="/foundations/colour-mode" className={styles.inlineLink}>light and dark mode</Link>{" "}
                     diverge — same component CSS, different mapping underneath:
                   </p>
@@ -264,36 +287,57 @@ export default function Robr0DsCaseStudy() {
                   </figure>
 
                   <p>
-                    The payoff is concrete:
+                    Those constraints paid for themselves almost immediately. Within 48 hours a separate documentation site was live — the one you&apos;re reading — importing the actual library components through a path alias, so every example on it is the real thing. Then came the sprint: on February 16th, one extraordinary day took the library from a handful of components to dozens — inputs, checkboxes, tabs, tables, badges, accordions, dropdowns — each with Storybook stories and a showcase page. What kept that day from producing a pile of parts instead of a system was the consistency passes threaded between the components: one icon scale, one spacing scale named to match Figma exactly, focus states everywhere. A week later the library took on data visualization — eight chart components, application shells, and two dashboard demos proving it could compose real product surfaces, not just isolated widgets.
                   </p>
+
+                  <p>
+                    By the end of February the library stood at 39 components. And then, for three months, that number barely moved. The plateau turned out to be the most interesting part of the story.
+                  </p>
+
+                  <h3>Spring — the system writes itself down</h3>
+
+                  <p>
+                    What happened during the plateau wasn&apos;t rest — the project&apos;s centre of gravity shifted from building components to building <em>the system around the system</em>. In April, the first Claude skills appeared: repeatable QA work — heuristic analysis, accessibility audits, API consistency reviews — packaged as instructions an AI agent can run on demand. Shortly after, the documents that govern the build became first-class content:{" "}
+                    <Link href="/blueprints/design" className={styles.inlineLink}>design.md</Link>, the full design spec, and{" "}
+                    <Link href="/blueprints/claude" className={styles.inlineLink}>CLAUDE.md</Link>, the instructions that steer the agents, were both published on the site as Blueprints. The idea underneath: everything an AI needs to build this system well is a document — and documents can be shipped, shared, and reused.
+                  </p>
+
+                  <h3>May — from component site to portfolio</h3>
+
+                  <p>
+                    Then the biggest identity shift in the project&apos;s history. The site stopped being &ldquo;robr0 DS with an about page&rdquo; and became my portfolio, with the design system as its flagship exhibit. A mega navigation, breadcrumbs, a contact page — and six case studies in one sustained push, including the one you&apos;re reading now. The system had become good enough at building pages that the bottleneck was no longer building. It was having something to say.
+                  </p>
+
+                  <h3>June — reaching outward</h3>
+
+                  <p>
+                    Early summer was about the world outside the repo: a technical SEO pass, structured data, the move to a proper domain. The analytics setup was repaired and gained a pull script for on-demand reporting — a small utility that would quietly become the foundation of something bigger a few weeks later. A Writing section began auto-syncing my articles from Substack, and a run of polish closed long-standing irritations, including a theme-toggle flicker bug that had survived two previous fixes.
+                  </p>
+
+                  <h3>July — the system starts to maintain itself</h3>
+
+                  <p>
+                    This is where the original bet paid off. In the span of three weeks:
+                  </p>
+
                   <ul>
-                    <li><strong>Light and dark mode are free.</strong> Swap the semantic mapping; everything reads correctly.</li>
-                    <li><strong>Renaming a hex changes nothing.</strong> Components don&apos;t know primitives exist.</li>
-                    <li><strong>Component CSS reads like intent, not like pixels.</strong> <code>background: var(--color-action-primary-bg)</code> tells you what it&apos;s doing.</li>
+                    <li><strong>The first loop went live.</strong> A skill that runs every week on a schedule: it reads the site&apos;s analytics, forms one falsifiable hypothesis about the words on a page, implements the change on a branch, and writes me a report for approval. That analytics pull script from June was exactly the foundation it needed.</li>
+                    <li><strong>Numbers stopped being able to lie.</strong> Every count displayed on this site — components, skills, journal entries — now derives from a registry file checked by a build-time validator. The component count on this page comes from one; it can never silently go stale.</li>
+                    <li><strong>A security scrub</strong> audited the public repo the way an outside attacker would read it, and the hardening it produced now travels with every deploy.</li>
+                    <li><strong>A gap analysis against mature design systems</strong> ranked what the library was still missing, and the highest-impact components shipped — which, together with a batch of content components, took the library from 41 to 51 in a single month.</li>
+                    <li><strong>A real quality gate arrived.</strong> CI now runs lint, three builds, and every Storybook story as a render test in headless Chromium — 434 stories at the time it shipped — plus a drift guard that fails the build if generated docs fall out of sync with the code.</li>
                   </ul>
 
-                  <h2>The pipeline: Figma to React in under a minute</h2>
-
                   <p>
-                    The tokens and components live in Figma. From there, they flow to production through a chain that runs without a handoff meeting:
+                    The through-line of the journey: in February, AI helped me build the system. By July, the system was running parts of its own maintenance — and reporting back to me.
                   </p>
 
-                  <PipelineDiagram />
+                  <h2>Where it is now</h2>
 
                   <p>
-                    Claude Code reads the Figma file directly through MCP. It generates token CSS, React components with the right TypeScript shape, and Storybook stories that match the Figma variants. I push to GitHub. Vercel deploys both this site and the Storybook in under a minute. The whole loop fits in a coffee break.
-                  </p>
-
-                  <blockquote>
-                    The handoff that usually sits between design and engineering is just gone. The spec is the work.
-                  </blockquote>
-
-                  <h2>What it produces</h2>
-
-                  <p>
-                    <Link href="/components" className={styles.inlineLink}>Forty-two React components</Link>, full Storybook docs,{" "}
+                    <Link href="/components" className={styles.inlineLink}>{COMPONENT_COUNT} React components</Link>, full Storybook docs,{" "}
                     <Link href="/foundations/typography" className={styles.inlineLink}>a single type scale</Link>,{" "}
-                    <Link href="/foundations/colour-mode" className={styles.inlineLink}>light and dark themes</Link>, the entire site you&apos;re reading right now. Here&apos;s a live slice — every element below is a real component from the system, rendered inline from the same token layer:
+                    <Link href="/foundations/colour-mode" className={styles.inlineLink}>light and dark themes</Link>, a CI quality gate, a weekly growth loop — and the entire site you&apos;re reading right now. Here&apos;s a live slice: every element below is a real component from the system, and the charts show the system&apos;s real history, measured from git:
                   </p>
 
                   <div className={styles.liveDemo} aria-label="Live components from robr0 DS">
@@ -334,10 +378,10 @@ export default function Robr0DsCaseStudy() {
                         { dataKey: "tokens", label: "Tokens", color: "#06D6A0" },
                       ]}
                       title="System growth"
-                      subtitle="Components and tokens shipped, Jan – Jun"
+                      subtitle="Registered components and semantic tokens at each month-end, Feb – Jul 2026 — the spring plateau is when the system around the system was built"
                       summaryItems={[
-                        { label: "Components", value: 42 },
-                        { label: "Tokens", value: 84 },
+                        { label: "Components", value: COMPONENT_COUNT },
+                        { label: "Semantic tokens", value: 161 },
                       ]}
                       height={240}
                     />
@@ -345,9 +389,9 @@ export default function Robr0DsCaseStudy() {
                     <BarChart
                       data={tokensByCategory}
                       title="Tokens by category"
-                      subtitle="What 84 semantic tokens cover"
+                      subtitle="What 161 semantic tokens cover, as of July 2026"
                       dataLabel="Tokens"
-                      summaryItems={[{ label: "Total", value: 84 }]}
+                      summaryItems={[{ label: "Total", value: 161 }]}
                       height={220}
                     />
 
@@ -366,6 +410,12 @@ export default function Robr0DsCaseStudy() {
 
                   <MiniCatalog />
 
+                  <p>
+                    And the story keeps writing itself — literally. The{" "}
+                    <Link href="/project-journal" className={styles.inlineLink}>project journal</Link>{" "}
+                    is a build-progression timeline of everything described above, kept current by one of the system&apos;s own scheduled loops: every two weeks it reads the git history since its last visit and consolidates it into stories.
+                  </p>
+
                   <h2>What changed in my practice</h2>
 
                   <p>
@@ -376,6 +426,7 @@ export default function Robr0DsCaseStudy() {
                     <li><strong>The spec is the work.</strong> The time that used to go into pushing pixels now goes into writing clear specs that an AI agent can execute. The thinking is the deliverable.</li>
                     <li><strong>Speed compresses iteration.</strong> I can try three layout directions in an afternoon and keep the best one. Earlier in my career that was a week.</li>
                     <li><strong>Designer-to-dev sync is near zero.</strong> Tokens flow from Figma to production without a handoff meeting. When the design changes, the code changes — same gesture.</li>
+                    <li><strong>The system reports to me now.</strong> Loops run the routine maintenance — analytics reviews, journal updates — and hand me a branch and a report. My judgment moved from doing the work to approving it.</li>
                   </ul>
 
                   <p>
@@ -407,7 +458,7 @@ export default function Robr0DsCaseStudy() {
                   <h2>What&apos;s next</h2>
 
                   <p>
-                    I&apos;m continuing to harden the pipeline — better visual regression checks, more skills as patterns surface, and agents that don&apos;t wait to be asked: the first scheduled <Link href="/loops" className={styles.inlineLink}>loop</Link> is already running weekly experiments on this site&apos;s copy. The next case studies on this site (Meta, Augmenta, Intuit Agent Chat) will all be authored using this same infrastructure. The system makes the writing faster too.
+                    The direction is more of what July started: hardening and autonomy. On the hardening side, promoting the accessibility checks from report-only to build-blocking, and adding visual regression coverage so a stray pixel fails CI the way a broken story already does. On the autonomy side, more <Link href="/loops" className={styles.inlineLink}>loops</Link> that don&apos;t wait to be asked — the weekly copy experiments and the biweekly journal are the first two, not the last. The experiment continues, and so far the answer to the original question is yes: one designer really can run the whole lifecycle — as long as the system helps.
                   </p>
                 </div>
               </div>
