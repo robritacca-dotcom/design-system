@@ -61,11 +61,11 @@ npm run verify          # full local quality gate: lint + tests + all three buil
 
 ## CI & Local Verify
 
-Every push to `main` and every PR runs `.github/workflows/ci.yml` (four jobs: library lint + build, story tests, Storybook build, website build). The library job ends with a **drift guard** — `git diff --exit-code` after the generators run — so a registry change that lands without its regenerated README/skills/blueprint content fails CI.
+Every push to `main` and every PR runs `.github/workflows/ci.yml` (four jobs: library lint + build, story tests, Storybook build, website lint + build). The library job ends with a **drift guard** — `git diff --exit-code` after the generators run — so a registry change that lands without its regenerated README/skills/blueprint content fails CI.
 
 **Story tests**: `npm run test` runs every Storybook story as a render test in headless Chromium (Vitest + `@storybook/addon-vitest`, configured in `vite.config.ts`). A story that throws on render fails the suite — so every component variant is smoke-tested on every change. A11y checks run alongside in `'todo'` mode (report-only; see `.storybook/preview.ts`).
 
-`npm run verify` is the **single local mirror of CI**: lint, library build, story tests, Storybook build, website build, in that order. The rule that keeps them in sync: **when CI gains a check (a11y, visual regression), add it to `verify` in the same change** — skills and docs reference `verify`, never individual commands, so nothing else needs updating.
+`npm run verify` is the **single local mirror of CI**: lint, library build, story tests, Storybook build, website lint, website build, in that order. The rule that keeps them in sync: **when CI gains a check (a11y, visual regression), add it to `verify` in the same change** — skills and docs reference `verify`, never individual commands, so nothing else needs updating.
 
 ---
 

@@ -11,7 +11,7 @@
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "verify": "npm run lint && npm run build && npm run test && npm run build-storybook && npm --prefix website run build",
+    "verify": "npm run lint && npm run build && npm run test && npm run build-storybook && npm --prefix website run lint && npm --prefix website run build",
     "preview": "vite preview",
     "prestorybook": "npm run validate-registry",
     "storybook": "storybook dev -p 6006",
