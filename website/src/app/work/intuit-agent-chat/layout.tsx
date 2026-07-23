@@ -5,7 +5,11 @@ const title = "Intuit Agent Chat Platform";
 const description =
   "Case study: the official conversational AI platform for all of Intuit. Designed and built from 0 → 1 across web, iOS, and Android. Live in QuickBooks and TurboTax.";
 
-export const metadata: Metadata = { title, description };
+export const metadata: Metadata = {
+  title,
+  description,
+  alternates: { canonical: "/work/intuit-agent-chat" },
+};
 
 export default function IntuitAgentChatLayout({ children }: { children: React.ReactNode }) {
   return (

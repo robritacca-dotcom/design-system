@@ -7,6 +7,7 @@ import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
 import { getSidebarLinks, buildWritingSidebarLinks } from "@/config/navigation";
 import { getArticles, getArticle, formatArticleDate } from "@/lib/substack";
+import { buildArticleJsonLd } from "@/lib/structuredData";
 import styles from "./page.module.css";
 
 // Re-fetch the feed at most hourly (see the list page). Updates to a
@@ -64,6 +65,21 @@ export default async function ArticlePage({ params }: PageProps) {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            buildArticleJsonLd({
+              slug,
+              title: article.title,
+              description: article.subtitle,
+              datePublished: article.date,
+              image: article.coverImage ?? undefined,
+            })
+          ),
+        }}
+      />
+
       <BlurBackground />
 
       <MegaNav />

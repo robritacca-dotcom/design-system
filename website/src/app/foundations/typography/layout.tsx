@@ -1,15 +1,10 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/config/navigation";
 
-export const metadata: Metadata = {
-  title: "Typography",
-  description:
-    "Type scale and font tokens — from mega display headings to small paragraph text, all referenced as CSS custom properties.",
-};
+export const metadata = pageMetadata(
+  "/foundations/typography",
+  "Type scale and font tokens — from mega display headings to small paragraph text, all referenced as CSS custom properties."
+);
 
-export default function TypographyLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

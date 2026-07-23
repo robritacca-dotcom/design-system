@@ -5,7 +5,11 @@ const title = "CIBC FirstCaribbean — Banking Platform";
 const description =
   "Case study: leading design for CIBC FirstCaribbean's new banking platform across iOS and Android at Devbridge — designing for multi-country, multi-currency international banking.";
 
-export const metadata: Metadata = { title, description };
+export const metadata: Metadata = {
+  title,
+  description,
+  alternates: { canonical: "/work/cibc-firstcaribbean" },
+};
 
 export default function CibcFirstCaribbeanLayout({ children }: { children: React.ReactNode }) {
   return (

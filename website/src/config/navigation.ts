@@ -230,6 +230,12 @@ export const TITLE_TEMPLATE = `%s — ${TITLE_SUFFIX}`;
  * suffix cascades to the section's sub-pages — Next only applies a template to
  * direct children, so intermediate layouts must carry it or grandchildren would
  * render bare, unsuffixed titles.
+ *
+ * Deliberately sets NO canonical: this layout wraps the section's sub-pages, and
+ * `alternates` inherits, so a canonical here would make every sub-page that
+ * doesn't override it self-canonicalise to the section landing. The landing (and
+ * any sub-page without its own canonical) self-canonicalises to its own URL by
+ * default; leaf pages set explicit canonicals via `pageMetadata` or directly.
  */
 export function sectionMetadata(label: string, description?: string): Metadata {
   // `default` is the bare label — the root layout's template adds the suffix to
@@ -242,6 +248,8 @@ export function sectionMetadata(label: string, description?: string): Metadata {
  * Builds a page's Next.js `Metadata` with its `title` derived from the nav
  * label for `href`, so the browser-tab title can never drift from the sidebar
  * label or breadcrumb. Pass a `description` to keep the page's bespoke SEO copy.
+ * Self-canonicalizes to `href` (resolved against `metadataBase`) so the page
+ * owns its own canonical instead of inheriting one from a parent layout.
  * Throws at build time if `href` has no nav label — that surfaces a page whose
  * title source is missing rather than silently falling back to the site default.
  */
@@ -252,7 +260,8 @@ export function pageMetadata(href: string, description?: string): Metadata {
       `pageMetadata: no nav label found for "${href}". Add it to a sidebar links array in navigation.ts.`
     );
   }
-  return description ? { title, description } : { title };
+  const alternates = { canonical: href };
+  return description ? { title, description, alternates } : { title, alternates };
 }
 
 /* ============================================

@@ -5,7 +5,11 @@ const title = "Meta — Offer Creation Flow";
 const description =
   "Case study: improving the velocity between hire decision and offer extension at Meta. 9% faster overall offer velocity, 23.7% reduction in comp approval time, live since July 2022 to 8,000+ recruiters.";
 
-export const metadata: Metadata = { title, description };
+export const metadata: Metadata = {
+  title,
+  description,
+  alternates: { canonical: "/work/meta-offers" },
+};
 
 export default function MetaOffersLayout({ children }: { children: React.ReactNode }) {
   return (

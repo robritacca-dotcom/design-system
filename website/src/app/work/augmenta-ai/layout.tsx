@@ -5,7 +5,11 @@ const title = "Augmenta Construction Platform";
 const description =
   "Case study: turning automation into usability — the redesign behind 42% faster outcomes for Augmenta's generative electrical raceway platform.";
 
-export const metadata: Metadata = { title, description };
+export const metadata: Metadata = {
+  title,
+  description,
+  alternates: { canonical: "/work/augmenta-ai" },
+};
 
 export default function AugmentaLayout({ children }: { children: React.ReactNode }) {
   return (

@@ -56,6 +56,58 @@ export function buildCaseStudyJsonLd({
   };
 }
 
+/**
+ * Builds a BlogPosting schema for a /writing article. The page's canonical
+ * points at Substack (the original), but this still describes the mirrored
+ * page's content for richer presentation.
+ */
+export function buildArticleJsonLd({
+  slug,
+  title,
+  description,
+  datePublished,
+  image,
+}: {
+  slug: string;
+  title: string;
+  description?: string;
+  datePublished: string;
+  image?: string;
+}) {
+  const url = `${SITE_URL}/writing/${slug}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: title,
+    ...(description ? { description } : {}),
+    url,
+    datePublished,
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    ...(image ? { image } : {}),
+    author: { "@type": "Person", name: "Robert Ritacca", url: SITE_URL },
+  };
+}
+
+/**
+ * Builds a SoftwareApplication schema for robr0 DS — the design system itself,
+ * as a developer-facing piece of software. No component count here: counts are
+ * never hardcoded (see CLAUDE.md), and it would drift.
+ */
+export function buildDesignSystemJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: "robr0 DS",
+    description:
+      "A one-person React design system — layered design tokens, a fully documented component library, and a docs website, built end to end.",
+    applicationCategory: "DeveloperApplication",
+    operatingSystem: "Web",
+    url: `${SITE_URL}/overview`,
+    codeRepository: "https://github.com/robritacca-dotcom/design-system",
+    author: { "@type": "Person", name: "Robert Ritacca", url: SITE_URL },
+  };
+}
+
 /** Builds a BreadcrumbList schema from the same trail PageBreadcrumb renders. */
 export function buildBreadcrumbJsonLd(items: BreadcrumbItem[]) {
   return {

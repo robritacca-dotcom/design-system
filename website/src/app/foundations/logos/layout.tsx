@@ -1,15 +1,10 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/config/navigation";
 
-export const metadata: Metadata = {
-  title: "Logos",
-  description:
-    "Brand logos and marks used across projects — SVG assets with light and dark mode variants.",
-};
+export const metadata = pageMetadata(
+  "/foundations/logos",
+  "Brand logos and marks used across projects — SVG assets with light and dark mode variants."
+);
 
-export default function LogosLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
