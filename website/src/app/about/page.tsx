@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { Timeline, type TimelineCompany } from "@design-system/components/Timeline/Timeline";
 import MegaNav from "../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../components/Sidebar/Sidebar";
@@ -11,6 +12,104 @@ import { getSidebarLinks, docsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
 const { sidebarLinks } = getSidebarLinks(docsSidebarLinks, "/about");
+
+const pipelineLogo = (src: string, alt: string) => (
+  <Image src={src} alt={alt} width={32} height={32} />
+);
+
+const PIPELINE: TimelineCompany[] = [
+  {
+    name: "Figma",
+    logo: pipelineLogo("/logos/Figma.svg", "Figma"),
+    roles: [
+      {
+        title: "Design foundation",
+        description:
+          "Where the system's foundation was designed — the token architecture, the colour ramps, the component vocabulary. Today it's the sketchpad for visual exploration; the source of truth has moved into the repo.",
+        bullets: [
+          "Designed the token architecture as variables: 7 color ramps + spatial tokens (gap, padding, radius, border)",
+          "Designed the original components with variants and light/dark semantic mappings",
+          "Still where bigger visual changes get explored before they land in the written spec",
+        ],
+      },
+    ],
+  },
+  {
+    name: "Claude Code",
+    logo: pipelineLogo("/logos/Claude.svg", "Claude"),
+    roles: [
+      {
+        title: "AI component generator",
+        description:
+          "Builds production React from the written spec that lives in the repo — design.md for the design language, CLAUDE.md for the rules.",
+        bullets: [
+          "Maintains the layered CSS token architecture (primitives → semantics → components)",
+          "Generates React components with TypeScript and token-based CSS from the spec",
+          "Builds Storybook documentation automatically for every component",
+        ],
+      },
+    ],
+  },
+  {
+    name: "Storybook",
+    logo: pipelineLogo("/logos/storybook.svg", "Storybook"),
+    roles: [
+      {
+        title: "Live documentation site",
+        description:
+          "Interactive component library at design-system-iota-one.vercel.app showing every piece of robr0 DS.",
+        bullets: [
+          "Component playground with live controls for all props and states",
+          "Token docs (colors, spacing, typography), icon gallery, logo library",
+          "Auto-deploys on every code push",
+        ],
+      },
+    ],
+  },
+  {
+    name: "GitHub",
+    logo: pipelineLogo("/logos/Git.svg", "GitHub"),
+    roles: [
+      {
+        title: "Version control",
+        description:
+          "Public repository storing the entire codebase with full commit history.",
+        bullets: [
+          "Tracks all changes to design system and website (monorepo)",
+          "Triggers Vercel deployment on every push to main",
+          "Portfolio visibility at github.com/robritacca-dotcom/design-system",
+        ],
+      },
+      {
+        title: "Continuous integration",
+        description:
+          "Every push and PR runs an automated quality gate before anything is trusted.",
+        bullets: [
+          "Lints the codebase and builds the library, Storybook, and the website on every change",
+          "Renders every Storybook story as an automated smoke test in headless Chrome — every variant, every run",
+          "Drift guard fails the build if generated docs (component counts, skills, blueprints) go stale",
+          "The same checklist runs locally as a single command, so local and CI can never disagree",
+        ],
+      },
+    ],
+  },
+  {
+    name: "Vercel",
+    logo: pipelineLogo("/vercel.svg", "Vercel"),
+    roles: [
+      {
+        title: "Auto-deployment",
+        description:
+          "Watches GitHub and deploys both sites automatically on every push.",
+        bullets: [
+          "Builds and deploys Storybook → design-system-iota-one.vercel.app",
+          "Builds and deploys website → robr0-ds.vercel.app",
+          "Live in under 60 seconds with SSL and global CDN",
+        ],
+      },
+    ],
+  },
+];
 
 export default function AboutDsPage() {
   return (
@@ -47,160 +146,12 @@ export default function AboutDsPage() {
           <div className={styles.resumeLayout}>
             {/* Pipeline Column (Left — 2/3 width) */}
             <div className={styles.resumeMain}>
-              <div className={styles.resumeSection}>
+              <div className={`${styles.resumeSection} animate-in animate-delay-2`}>
                 <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Pipeline</h2>
                 </div>
 
-                <div className={styles.resumeCompanies}>
-                  {/* Figma */}
-                  <div className={`${styles.resumeCompany} animate-in animate-delay-2`}>
-                    <div className={styles.companyHeader}>
-                      <Image src="/logos/Figma.svg" alt="Figma" width={28} height={28} className={styles.companyLogo} />
-                      <span className={styles.companyName}>Figma</span>
-                    </div>
-                    <div className={styles.companyRoles}>
-                      <div className={styles.timelineBar} />
-                      <div className={styles.rolesContent}>
-                        <div className={styles.role}>
-                          <div className={styles.roleHeader}>
-                            <h3 className={styles.roleTitle}>Design foundation</h3>
-                          </div>
-                          <p className={styles.roleDescription}>
-                            Where the system&apos;s foundation was designed — the token architecture, the colour ramps, the component vocabulary. Today it&apos;s the sketchpad for visual exploration; the source of truth has moved into the repo.
-                          </p>
-                          <ul className={styles.roleBullets}>
-                            <li>Designed the token architecture as variables: 7 color ramps + spatial tokens (gap, padding, radius, border)</li>
-                            <li>Designed the original components with variants and light/dark semantic mappings</li>
-                            <li>Still where bigger visual changes get explored before they land in the written spec</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Claude Code */}
-                  <div className={`${styles.resumeCompany} animate-in animate-delay-3`}>
-                    <div className={styles.timelineSpacer} />
-                    <div className={styles.companyHeader}>
-                      <Image src="/logos/Claude.svg" alt="Claude" width={28} height={28} className={styles.companyLogo} />
-                      <span className={styles.companyName}>Claude Code</span>
-                    </div>
-                    <div className={styles.companyRoles}>
-                      <div className={styles.timelineBar} />
-                      <div className={styles.rolesContent}>
-                        <div className={styles.role}>
-                          <div className={styles.roleHeader}>
-                            <h3 className={styles.roleTitle}>AI component generator</h3>
-                          </div>
-                          <p className={styles.roleDescription}>
-                            Builds production React from the written spec that lives in the repo — design.md for the design language, CLAUDE.md for the rules.
-                          </p>
-                          <ul className={styles.roleBullets}>
-                            <li>Maintains the layered CSS token architecture (primitives → semantics → components)</li>
-                            <li>Generates React components with TypeScript and token-based CSS from the spec</li>
-                            <li>Builds Storybook documentation automatically for every component</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Storybook */}
-                  <div className={`${styles.resumeCompany} animate-in animate-delay-3`}>
-                    <div className={styles.timelineSpacer} />
-                    <div className={styles.companyHeader}>
-                      <Image src="/logos/storybook.svg" alt="Storybook" width={28} height={28} className={styles.companyLogo} />
-                      <span className={styles.companyName}>Storybook</span>
-                    </div>
-                    <div className={styles.companyRoles}>
-                      <div className={styles.timelineBar} />
-                      <div className={styles.rolesContent}>
-                        <div className={styles.role}>
-                          <div className={styles.roleHeader}>
-                            <h3 className={styles.roleTitle}>Live documentation site</h3>
-                          </div>
-                          <p className={styles.roleDescription}>
-                            Interactive component library at design-system-iota-one.vercel.app showing every piece of robr0 DS.
-                          </p>
-                          <ul className={styles.roleBullets}>
-                            <li>Component playground with live controls for all props and states</li>
-                            <li>Token docs (colors, spacing, typography), icon gallery, logo library</li>
-                            <li>Auto-deploys on every code push</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* GitHub */}
-                  <div className={`${styles.resumeCompany} animate-in animate-delay-4`}>
-                    <div className={styles.timelineSpacer} />
-                    <div className={styles.companyHeader}>
-                      <Image src="/logos/Git.svg" alt="GitHub" width={28} height={28} className={styles.companyLogo} />
-                      <span className={styles.companyName}>GitHub</span>
-                    </div>
-                    <div className={styles.companyRoles}>
-                      <div className={styles.timelineBar} />
-                      <div className={styles.rolesContent}>
-                        <div className={styles.role}>
-                          <div className={styles.roleHeader}>
-                            <h3 className={styles.roleTitle}>Version control</h3>
-                          </div>
-                          <p className={styles.roleDescription}>
-                            Public repository storing the entire codebase with full commit history.
-                          </p>
-                          <ul className={styles.roleBullets}>
-                            <li>Tracks all changes to design system and website (monorepo)</li>
-                            <li>Triggers Vercel deployment on every push to main</li>
-                            <li>Portfolio visibility at github.com/robritacca-dotcom/design-system</li>
-                          </ul>
-                        </div>
-                        <div className={styles.role}>
-                          <div className={styles.roleHeader}>
-                            <h3 className={styles.roleTitle}>Continuous integration</h3>
-                          </div>
-                          <p className={styles.roleDescription}>
-                            Every push and PR runs an automated quality gate before anything is trusted.
-                          </p>
-                          <ul className={styles.roleBullets}>
-                            <li>Lints the codebase and builds the library, Storybook, and the website on every change</li>
-                            <li>Renders every Storybook story as an automated smoke test in headless Chrome — every variant, every run</li>
-                            <li>Drift guard fails the build if generated docs (component counts, skills, blueprints) go stale</li>
-                            <li>The same checklist runs locally as a single command, so local and CI can never disagree</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Vercel */}
-                  <div className={`${styles.resumeCompany} animate-in animate-delay-4`}>
-                    <div className={styles.timelineSpacer} />
-                    <div className={styles.companyHeader}>
-                      <Image src="/vercel.svg" alt="Vercel" width={28} height={28} className={styles.companyLogo} />
-                      <span className={styles.companyName}>Vercel</span>
-                    </div>
-                    <div className={styles.companyRoles}>
-                      <div className={styles.timelineBar} />
-                      <div className={styles.rolesContent}>
-                        <div className={styles.role}>
-                          <div className={styles.roleHeader}>
-                            <h3 className={styles.roleTitle}>Auto-deployment</h3>
-                          </div>
-                          <p className={styles.roleDescription}>
-                            Watches GitHub and deploys both sites automatically on every push.
-                          </p>
-                          <ul className={styles.roleBullets}>
-                            <li>Builds and deploys Storybook → design-system-iota-one.vercel.app</li>
-                            <li>Builds and deploys website → robr0-ds.vercel.app</li>
-                            <li>Live in under 60 seconds with SSL and global CDN</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <Timeline variant="company" items={PIPELINE} />
               </div>
             </div>
 
