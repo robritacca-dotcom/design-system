@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import "@design-system/tokens/tokens.css";
 import { Nunito_Sans } from "next/font/google";
@@ -23,9 +23,10 @@ export const metadata: Metadata = {
   },
   description: SITE_DESCRIPTION,
   metadataBase: new URL("https://robertritacca.com"),
-  alternates: {
-    canonical: "https://robertritacca.com",
-  },
+  // No root `alternates.canonical` — it would be inherited by every page,
+  // canonicalising the whole site to the homepage. Each page sets its own
+  // canonical (via pageMetadata/sectionMetadata or an explicit alternates
+  // block); pages that set none self-canonicalise to their own URL.
   keywords: [
     "Robert Ritacca",
     "product designer",
@@ -46,25 +47,36 @@ export const metadata: Metadata = {
     siteName: "Robert Ritacca",
     locale: "en_US",
     type: "website",
-    images: [
-      {
-        url: "/images/Thumbnail.png",
-        width: 1200,
-        height: 630,
-        alt: "Robert Ritacca — Product Designer",
-      },
-    ],
+    // og:image (and the Twitter image) come from the file-convention
+    // opengraph-image.tsx routes — the root one plus per-section overrides —
+    // so every page gets a branded 1200×630 card, not one static Thumbnail.
   },
   twitter: {
     card: "summary_large_image",
     title: "Robert Ritacca — Principal Product Designer",
     description: SITE_DESCRIPTION,
-    images: ["/images/Thumbnail.png"],
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  // Matches the white-floor UI: pure white in light, near-black in dark.
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#FFFFFF" },
+    { media: "(prefers-color-scheme: dark)", color: "#050505" },
+  ],
 };
 
 const themeScript = `
@@ -98,8 +110,13 @@ export default function RootLayout({
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
+        {/* display=block (not swap): the icon font has no visual fallback, so
+            swap would flash raw ligature text (e.g. "expand_more") before the
+            font loads. Block keeps icons invisible for the brief load, matching
+            the design system's self-hosted `font-display: block`. Proper fix
+            (subset + self-host as woff2) is tracked separately. */}
         <link
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block"
           rel="stylesheet"
         />
         <script
