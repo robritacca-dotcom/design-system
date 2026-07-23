@@ -7,6 +7,7 @@ import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
 import { Avatar } from "@design-system/components/Avatar/Avatar";
+import { demoAvatar1, demoAvatar2 } from "@design-system/components/Avatar/demoAvatars";
 import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
 import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
@@ -44,9 +45,9 @@ export default function AvatarPage() {
           <section className={styles.section}>
             <SectionTitle title="Sizes" />
             <div className={styles.variantRow}>
-              <Avatar size="sm" src="https://i.pravatar.cc/150?img=12" alt="User" />
-              <Avatar size="md" src="https://i.pravatar.cc/150?img=12" alt="User" />
-              <Avatar size="lg" src="https://i.pravatar.cc/150?img=12" alt="User" />
+              <Avatar size="sm" src={demoAvatar1} alt="User" />
+              <Avatar size="md" src={demoAvatar1} alt="User" />
+              <Avatar size="lg" src={demoAvatar1} alt="User" />
             </div>
           </section>
 
@@ -54,7 +55,7 @@ export default function AvatarPage() {
           <section className={styles.section}>
             <SectionTitle title="Fallbacks" />
             <div className={styles.variantRow}>
-              <Avatar size="lg" src="https://i.pravatar.cc/150?img=5" alt="Jane Doe" />
+              <Avatar size="lg" src={demoAvatar2} alt="Jane Doe" />
               <Avatar size="lg" name="Jane Doe" />
               <Avatar size="lg" name="Alice" />
               <Avatar size="lg" />

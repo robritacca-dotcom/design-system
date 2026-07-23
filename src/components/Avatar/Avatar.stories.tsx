@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Avatar } from './Avatar';
+import { demoAvatar1, demoAvatar2, demoAvatar3 } from './demoAvatars';
 
 const meta = {
   title: 'Components/Avatar',
@@ -33,7 +34,7 @@ type Story = StoryObj<typeof meta>;
 
 export const WithImage: Story = {
   args: {
-    src: 'https://i.pravatar.cc/150?img=12',
+    src: demoAvatar1,
     alt: 'Jane Doe',
   },
 };
@@ -74,9 +75,9 @@ export const Sizes: Story = {
 export const SizesWithImage: Story = {
   render: () => (
     <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-      <Avatar size="sm" src="https://i.pravatar.cc/150?img=5" alt="User" />
-      <Avatar size="md" src="https://i.pravatar.cc/150?img=5" alt="User" />
-      <Avatar size="lg" src="https://i.pravatar.cc/150?img=5" alt="User" />
+      <Avatar size="sm" src={demoAvatar2} alt="User" />
+      <Avatar size="md" src={demoAvatar2} alt="User" />
+      <Avatar size="lg" src={demoAvatar2} alt="User" />
     </div>
   ),
 };
@@ -124,9 +125,9 @@ export const AllCombinations: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-        <Avatar size="sm" src="https://i.pravatar.cc/150?img=3" status="online" alt="User" />
-        <Avatar size="md" src="https://i.pravatar.cc/150?img=3" status="online" alt="User" />
-        <Avatar size="lg" src="https://i.pravatar.cc/150?img=3" status="online" alt="User" />
+        <Avatar size="sm" src={demoAvatar3} status="online" alt="User" />
+        <Avatar size="md" src={demoAvatar3} status="online" alt="User" />
+        <Avatar size="lg" src={demoAvatar3} status="online" alt="User" />
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
         <Avatar size="sm" name="Jane Doe" status="away" />
