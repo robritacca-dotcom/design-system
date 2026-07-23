@@ -35,6 +35,17 @@ const nextConfig: NextConfig = {
   async headers() {
     return [{ source: "/(.*)", headers: securityHeaders }];
   },
+  // Preserve inbound links after the IA cleanup: the DS overview moved to
+  // /overview (so /about now serves the personal bio, formerly /about/me), and
+  // the /design-system, /design-md, and bare /blueprints stub pages were retired.
+  async redirects() {
+    return [
+      { source: "/about/me", destination: "/about", permanent: true },
+      { source: "/design-system", destination: "/foundations", permanent: true },
+      { source: "/design-md", destination: "/blueprints/design", permanent: true },
+      { source: "/blueprints", destination: "/docs", permanent: true },
+    ];
+  },
   turbopack: {
     root: worktreeRoot,
     resolveAlias: {

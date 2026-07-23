@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Overview of robr0 DS",
+  title: "About",
   description:
-    "An overview of robr0 DS, the personal design system I built to make this site — how the pipeline comes together, and the artifacts you can take and reuse.",
+    "Principal Product Designer at Intuit, previously Meta. Background, principles, and what I work on.",
 };
 
-export default function AboutLayout({
+export default function AboutMeLayout({
   children,
 }: {
   children: React.ReactNode;

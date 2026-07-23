@@ -2,116 +2,151 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { LinkList } from "@design-system/components/LinkList/LinkList";
 import { Timeline, type TimelineCompany } from "@design-system/components/Timeline/Timeline";
 import MegaNav from "../../components/MegaNav/MegaNav";
-import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
-import Sidebar from "../../components/Sidebar/Sidebar";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import Footer from "../../components/Footer/Footer";
-import { getSidebarLinks, docsSidebarLinks } from "@/config/navigation";
+import PageLinks from "../../components/PageLinks/PageLinks";
 import styles from "./page.module.css";
 
-const { sidebarLinks } = getSidebarLinks(docsSidebarLinks, "/about");
-
-const pipelineLogo = (src: string, alt: string) => (
+const companyLogo = (src: string, alt: string) => (
   <Image src={src} alt={alt} width={32} height={32} />
 );
 
-const PIPELINE: TimelineCompany[] = [
+const EXPERIENCE: TimelineCompany[] = [
   {
-    name: "Figma",
-    logo: pipelineLogo("/logos/Figma.svg", "Figma"),
+    name: "Intuit",
+    logo: companyLogo("/logos/Intuit.svg", "Intuit"),
     roles: [
       {
-        title: "Design foundation",
-        description:
-          "Where the system's foundation was designed — the token architecture, the colour ramps, the component vocabulary. Today it's the sketchpad for visual exploration; the source of truth has moved into the repo.",
+        title: "Principal Product Designer, Consumer AI",
+        start: "Jan 2026",
+        present: true,
         bullets: [
-          "Designed the token architecture as variables: 7 color ramps + spatial tokens (gap, padding, radius, border)",
-          "Designed the original components with variants and light/dark semantic mappings",
-          "Still where bigger visual changes get explored before they land in the written spec",
+          "Shipped TurboTax's embedded AI experiences inside ChatGPT and Claude in time for tax season — surfacing TurboTax to nearly 1 billion users on those platforms",
+          <>
+            Designed the bidirectional filing checklist that lets users prep their taxes inside an AI chat and finish the return in TurboTax — full story in the{" "}
+            <Link href="/work/embedded-ai-turbotax">case study</Link>
+          </>,
+          "Driving the operationalization of agentic solutions across TurboTax and the broader consumer platform including Credit Karma",
+          "Designing action-oriented financial workflows that turn AI into real outcomes, not just answers",
+        ],
+      },
+      {
+        title: "Principal Product Designer | Agent Platform",
+        start: "May 2024",
+        end: "Jan 2026",
+        bullets: [
+          <>
+            Led design of Intuit Intelligence — Intuit&apos;s end-to-end conversational AI platform enabling domain teams to inject agents and dynamic UI into products through a consistent, scalable, and extensible contextual capability — full story in the{" "}
+            <Link href="/work/intuit-agent-chat">case study</Link>
+          </>,
+          "Onboarded 150+ teams end-to-end with 58 teams in production, including TurboTax, QuickBooks, Credit Karma, and Mailchimp",
+          "Powering 3.8M monthly customer interactions across Intuit's consumer and small-business platforms",
+          "2.8M component instantiations from the shared AI-native UI library spanning chat, documents, memory, and dynamic UI",
+          "Supported 600+ designers and thousands of engineers shipping with the platform",
         ],
       },
     ],
   },
   {
-    name: "Claude Code",
-    logo: pipelineLogo("/logos/Claude.svg", "Claude"),
+    name: "Augmenta",
+    logo: companyLogo("/logos/logo/Augmenta.png", "Augmenta"),
     roles: [
       {
-        title: "AI component generator",
+        title: "Principal Product Designer",
+        start: "Aug 2023",
+        end: "May 2024",
         description:
-          "Builds production React from the written spec that lives in the repo — design.md for the design language, CLAUDE.md for the rules.",
+          "Led end-to-end UX for a 0 to 1 Generative AI tool enabling engineers to create constructible, code-compliant electrical raceway designs, as the sole designer supporting 30+ engineers.",
         bullets: [
-          "Maintains the layered CSS token architecture (primitives → semantics → components)",
-          "Generates React components with TypeScript and token-based CSS from the spec",
-          "Builds Storybook documentation automatically for every component",
+          "Drove continuous product improvement through user research, testing, and iterative design — shaping workflows and building new capabilities like 4x expanded signal visibility across 3D and tabular views",
+          <>
+            Reduced the time-to-value metric from 14 to 5 days by streamlining generation workflows and cutting required cycles from 12 to 5 through clearer feedback and improved anomaly detection — full story in the{" "}
+            <Link href="/work/augmenta-ai">case study</Link>
+          </>,
+          "Improved solution quality by reducing anomalies per output by 60% and cutting engineering intervention from 13+ to ~1 per project through better tooling, visualization, and in-product guidance",
         ],
       },
     ],
   },
   {
-    name: "Storybook",
-    logo: pipelineLogo("/logos/storybook.svg", "Storybook"),
+    name: "Meta",
+    logo: companyLogo("/logos/meta.svg", "Meta"),
     roles: [
       {
-        title: "Live documentation site",
+        title: "Staff Product Designer",
+        start: "Sep 2021",
+        end: "Jul 2023",
         description:
-          "Interactive component library at design-system-iota-one.vercel.app showing every piece of robr0 DS.",
+          "Directed and executed on design initiatives rooted in evidence across a horizontal portfolio of Recruiting Products, supporting Meta in the mission to discover, develop and hire the best talent in the world.",
         bullets: [
-          "Component playground with live controls for all props and states",
-          "Token docs (colors, spacing, typography), icon gallery, logo library",
-          "Auto-deploys on every code push",
+          <>
+            Redesigned the Job Offer tool within Meta&apos;s Applicant Tracking System, improving offer extension velocity by over 10%, compensation approval velocity by 25%, and volume of data points by 50% — full story in the{" "}
+            <Link href="/work/meta-offers">case study</Link>
+          </>,
+          "Redesigned the Internal Mobility transfer and eligibility tool, resulting in a 58% increase in data accuracy and a 33% reduction in processing time to earn an estimated savings of 2000 hours/year of productivity",
+          "Led design direction for a mixed-reality initiative of 40+ people across 6 organizations, including Recruiting Products and an external XR development shop. Drove the creation of a Design Brief, overcoming challenges around hardware logistics, digital onboarding. Successfully implemented a pilot program for our target users to participate in an immersive experience within a VR environment.",
         ],
       },
     ],
   },
   {
-    name: "GitHub",
-    logo: pipelineLogo("/logos/Git.svg", "GitHub"),
+    name: "Cognizant (Previously known as Devbridge)",
+    logo: companyLogo("/logos/Cognizant.svg", "Cognizant"),
     roles: [
       {
-        title: "Version control",
+        title: "Product Design Manager",
+        start: "Sep 2018",
+        end: "Sep 2021",
         description:
-          "Public repository storing the entire codebase with full commit history.",
+          "Managed the performance, career development, and utilization of a team of 4 Product Designers within the Toronto business unit. Directed all design phases across a broad portfolio of multi-product/multi-phase delivery engagements worth $25m over 4 years.",
         bullets: [
-          "Tracks all changes to design system and website (monorepo)",
-          "Triggers Vercel deployment on every push to main",
-          "Portfolio visibility at github.com/robritacca-dotcom/design-system",
+          "Led design for mySCP, a cross-platform healthcare application suite used by 8,000+ clinicians across desktop, iOS, and Android",
+          <>
+            Led design for multiple CIBC banking products, including{" "}
+            <Link href="/work/cibc-firstcaribbean">First Caribbean</Link> and Smart Banking for Business, spanning desktop, iOS, and Android
+          </>,
         ],
       },
       {
-        title: "Continuous integration",
-        description:
-          "Every push and PR runs an automated quality gate before anything is trusted.",
-        bullets: [
-          "Lints the codebase and builds the library, Storybook, and the website on every change",
-          "Renders every Storybook story as an automated smoke test in headless Chrome — every variant, every run",
-          "Drift guard fails the build if generated docs (component counts, skills, blueprints) go stale",
-          "The same checklist runs locally as a single command, so local and CI can never disagree",
-        ],
+        title: "Senior Product Designer",
+        start: "Sep 2017",
+        end: "Sep 2018",
       },
     ],
   },
   {
-    name: "Vercel",
-    logo: pipelineLogo("/vercel.svg", "Vercel"),
+    name: "Instacart (Previously known as Unata)",
+    logo: companyLogo("/logos/Instacart.svg", "Instacart"),
     roles: [
       {
-        title: "Auto-deployment",
-        description:
-          "Watches GitHub and deploys both sites automatically on every push.",
-        bullets: [
-          "Builds and deploys Storybook → design-system-iota-one.vercel.app",
-          "Builds and deploys website → robr0-ds.vercel.app",
-          "Live in under 60 seconds with SSL and global CDN",
-        ],
+        title: "Senior Product Designer",
+        start: "Jan 2017",
+        end: "Sep 2017",
+      },
+    ],
+  },
+  {
+    name: "AdParlor",
+    logo: companyLogo("/logos/AdParlor.svg", "AdParlor"),
+    roles: [
+      {
+        title: "Senior Product Designer",
+        start: "Dec 2015",
+        end: "Jan 2017",
+      },
+      {
+        title: "Product Designer",
+        start: "Dec 2013",
+        end: "Dec 2015",
       },
     ],
   },
 ];
 
-export default function AboutDsPage() {
+export default function AboutMePage() {
   return (
     <>
 
@@ -120,166 +155,176 @@ export default function AboutDsPage() {
       <MegaNav />
 
       <div className={styles.dsLayout}>
-        <Sidebar links={sidebarLinks} />
+        <div className={styles.profileCol}>
+          <Image
+            src="/images/robr02.jpg"
+            alt="Robert Ritacca"
+            width={291}
+            height={291}
+            className={styles.profileImage}
+            priority
+          />
+        </div>
 
         <main className={styles.dsContent} id="main-content">
-          <PageBreadcrumb />
+          {/* Location */}
+          <div className={styles.locationRow}>
+            <Image src="/logos/Canada.svg" alt="" width={20} height={20} />
+            <span>Based in Toronto, Canada</span>
+          </div>
+
           {/* Page Title */}
           <div className={`${styles.pageHeader} animate-in`}>
-            <h1 className={styles.pageTitle}>Overview of robr0 DS</h1>
+            <h1 className={styles.pageTitle}>Robert Ritacca</h1>
+            <PageLinks
+              linkedinUrl="https://www.linkedin.com/in/robertritacca/"
+              xUrl="https://x.com/robr0"
+              instagramUrl="https://www.instagram.com/robr0designs/"
+            />
           </div>
 
-          {/* Intro */}
-          <div className={`${styles.introSection} animate-in animate-delay-1`}>
-            <p className={styles.subDisplay}>
-              A personal design system, built to make this site
+          {/* Page Description */}
+          <div className={styles.introSection}>
+            <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
+              Designing products that bring clarity to complex problems.
             </p>
-            <p className={styles.introBody}>
-              robr0 DS is the system I built — by myself — to make every page you see here. The foundation was designed in Figma. The system itself lives in the repo: a written spec, tokens as layered CSS, components in React. Claude Code builds from the spec, so a design change reaches production in under a minute. None of it is theoretical: the buttons, the colours, the type, the layout — they&apos;re all running on the same system this page describes.
-            </p>
-            <p className={styles.introBody}>
-              I&apos;m putting all of it on display because I think the system is the work. The pipeline below shows how the pieces fit. The tools rail lists what makes it run. And if you want to lift any of it for your own project, everything is open — the artifacts at the bottom of this page are ready to drop in.
+
+            {/* Bio */}
+            <p className={`${styles.introBody} animate-in animate-delay-2`}>
+              Experienced product designer, specializing in AI-native products, agentic experiences, and complex workflows. Versatile background across big tech, startups, and consulting. I partner with engineering, product, and leadership to transform ambiguous problems into intuitive, scalable products that deliver value for users and the business. Experienced in 0&rarr;1 product development, enterprise applications, and the design systems and platforms that enable teams to build faster.
             </p>
           </div>
 
-          {/* Pipeline + Tools two-column layout */}
+          {/* Resume Two-Column Layout */}
           <div className={styles.resumeLayout}>
-            {/* Pipeline Column (Left — 2/3 width) */}
+            {/* Work Experience Column (Left) */}
             <div className={styles.resumeMain}>
               <div className={`${styles.resumeSection} animate-in animate-delay-2`}>
                 <div className={styles.resumeSectionHeader}>
-                  <h2 className={styles.resumeSectionTitle}>Pipeline</h2>
+                  <h2 className={styles.resumeSectionTitle}>Work experience</h2>
                 </div>
 
-                <Timeline variant="company" items={PIPELINE} />
+                <Timeline variant="company" items={EXPERIENCE} />
               </div>
             </div>
 
-            {/* Links Rail (Right — 1/3 width) */}
+            {/* Right Rail */}
             <aside className={styles.resumeSidebar}>
+              {/* Consulting Section */}
               <div className={`${styles.resumeSection} animate-in animate-delay-2`}>
                 <div className={styles.resumeSectionHeader}>
-                  <h2 className={styles.resumeSectionTitle}>Links</h2>
+                  <h2 className={styles.resumeSectionTitle}>Work with me</h2>
+                </div>
+                <LinkList
+                  items={[
+                    {
+                      label: "Book a consultation",
+                      href: "https://buy.stripe.com/28o7vb5NBaSJ3NC5kn",
+                      logo: "/logos/stripe-new.png",
+                      logoAlt: "Stripe",
+                      sub: "Secure checkout via Stripe",
+                    },
+                  ]}
+                />
+              </div>
+
+              {/* Skills Section */}
+              <div className={`${styles.resumeSection} animate-in animate-delay-2`}>
+                <div className={styles.resumeSectionHeader}>
+                  <h2 className={styles.resumeSectionTitle}>Skills</h2>
                 </div>
 
-                <a
-                  href="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26?node-id=246-5864"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.toolItem}
-                >
-                  <Image src="/logos/Figma.svg" alt="" width={28} height={28} />
-                  <div className={styles.toolDetails}>
-                    <span className={styles.toolName}>Figma</span>
-                    <span className={styles.toolDesc}>Where the foundation was designed</span>
-                  </div>
-                  <span className={`material-symbols-rounded ${styles.toolLinkIcon}`} aria-hidden="true">open_in_new</span>
-                </a>
+                <div className={styles.skillsGroup}>
+                  <h4 className={styles.skillsCategory}>AI and agentic design</h4>
+                  <ul className={styles.skillsList}>
+                    <li>Agentic and conversational UX</li>
+                    <li>Multi turn interaction design</li>
+                    <li>Human in the loop workflows</li>
+                    <li>Dynamic UI from model output</li>
+                  </ul>
+                </div>
 
-                <a
-                  href="https://design-system-iota-one.vercel.app/?path=/docs/robr0-ds--docs"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.toolItem}
-                >
-                  <Image src="/logos/storybook.svg" alt="" width={28} height={28} />
-                  <div className={styles.toolDetails}>
-                    <span className={styles.toolName}>Storybook</span>
-                    <span className={styles.toolDesc}>Every component, every variant</span>
-                  </div>
-                  <span className={`material-symbols-rounded ${styles.toolLinkIcon}`} aria-hidden="true">open_in_new</span>
-                </a>
+                <div className={styles.skillsGroup}>
+                  <h4 className={styles.skillsCategory}>Product and delivery</h4>
+                  <ul className={styles.skillsList}>
+                    <li>0 to 1 product development</li>
+                    <li>Shipping and iteration ownership</li>
+                    <li>Product domain definition</li>
+                    <li>Cross functional execution</li>
+                  </ul>
+                </div>
 
-                <a
-                  href="https://github.com/robritacca-dotcom/design-system"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.toolItem}
-                >
-                  <Image src="/logos/Git.svg" alt="" width={28} height={28} />
-                  <div className={styles.toolDetails}>
-                    <span className={styles.toolName}>GitHub</span>
-                    <span className={styles.toolDesc}>The whole system, public</span>
-                  </div>
-                  <span className={`material-symbols-rounded ${styles.toolLinkIcon}`} aria-hidden="true">open_in_new</span>
-                </a>
+                <div className={styles.skillsGroup}>
+                  <h4 className={styles.skillsCategory}>Systems and platforms</h4>
+                  <ul className={styles.skillsList}>
+                    <li>Design system architecture</li>
+                    <li>Token based theming</li>
+                    <li>Reusable primitives and patterns</li>
+                    <li>Platform scale design</li>
+                  </ul>
+                </div>
+
+                <div className={styles.skillsGroup}>
+                  <h4 className={styles.skillsCategory}>Tooling and execution</h4>
+                  <ul className={styles.skillsList}>
+                    <li>Advanced Figma systems</li>
+                    <li>MCP and Cursor workflows</li>
+                    <li>Design to engineering handoff</li>
+                    <li>System level prototyping</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Education Section */}
+              <div className={`${styles.resumeSection} animate-in animate-delay-3`}>
+                <div className={styles.resumeSectionHeader}>
+                  <h2 className={styles.resumeSectionTitle}>Education</h2>
+                </div>
+                <LinkList
+                  items={[
+                    {
+                      label: "HBA, Visual Culture & Communication",
+                      href: "https://visualculture.utoronto.ca/",
+                      logo: "/logos/uoft.svg",
+                      logoAlt: "University of Toronto",
+                      sub: "University of Toronto",
+                    },
+                    {
+                      label: "Certificate, Digital Communication",
+                      href: "https://www.sheridancollege.ca/programs/digital-communication-certificate",
+                      logo: "/logos/sheridan.svg",
+                      logoAlt: "Sheridan College",
+                      sub: "Sheridan College",
+                    },
+                  ]}
+                />
+              </div>
+
+              {/* Certificates Section */}
+              <div className={`${styles.resumeSection} animate-in animate-delay-4`}>
+                <div className={styles.resumeSectionHeader}>
+                  <h2 className={styles.resumeSectionTitle}>Certificates</h2>
+                </div>
+                <LinkList
+                  items={[
+                    {
+                      label: "Situational Leadership (SLII)",
+                      href: "https://www.kenblanchard.com/situationalleadership/",
+                      logo: "/logos/slii.svg",
+                      logoAlt: "Ken Blanchard",
+                      sub: "Ken Blanchard",
+                    },
+                    {
+                      label: "Accessibility for Designers",
+                      href: "https://www.deque.com/certification/accessibility-for-designers/",
+                      logo: "/logos/Deque.svg",
+                      logoAlt: "Deque University",
+                      sub: "Deque University",
+                    },
+                  ]}
+                />
               </div>
             </aside>
-          </div>
-
-          {/* Take it with you — the artifacts visitors can reuse */}
-          <div className={`${styles.resumeSection} animate-in animate-delay-4`}>
-            <div className={styles.resumeSectionHeader}>
-              <h2 className={styles.resumeSectionTitle}>Take it with you</h2>
-            </div>
-            <p className={styles.artifactsIntro}>
-              The whole system is open. If you want to apply this approach to your own project, these artifacts make it easy — drop them into your codebase or AI tooling and you have a working starting point.
-            </p>
-            <div className={styles.artifactsGrid}>
-              <Link href="/blueprints/claude" className={styles.artifactCard}>
-                <span className={`material-symbols-rounded ${styles.artifactIcon}`} aria-hidden="true">
-                  psychology
-                </span>
-                <div className={styles.artifactBody}>
-                  <h3 className={styles.artifactTitle}>Claude MD</h3>
-                  <p className={styles.artifactDescription}>
-                    The codebase context file Claude Code reads on every session. Project structure, token architecture, component anatomy, and the conventions a builder needs to extend the system without exploring. Hand it to any AI agent and it knows the rules.
-                  </p>
-                  <span className={styles.artifactCta}>
-                    Read Claude MD
-                    <span className="material-symbols-rounded" aria-hidden="true">arrow_forward</span>
-                  </span>
-                </div>
-              </Link>
-
-              <Link href="/blueprints/design" className={styles.artifactCard}>
-                <span className={`material-symbols-rounded ${styles.artifactIcon}`} aria-hidden="true">
-                  description
-                </span>
-                <div className={styles.artifactBody}>
-                  <h3 className={styles.artifactTitle}>Design MD</h3>
-                  <p className={styles.artifactDescription}>
-                    The design language in a single markdown reference — tokens, typography, colours, and every component spec. The source of truth for how the system looks and behaves, written so a human or a model can pick it up cold.
-                  </p>
-                  <span className={styles.artifactCta}>
-                    Read Design MD
-                    <span className="material-symbols-rounded" aria-hidden="true">arrow_forward</span>
-                  </span>
-                </div>
-              </Link>
-
-              <Link href="/skills" className={styles.artifactCard}>
-                <span className={`material-symbols-rounded ${styles.artifactIcon}`} aria-hidden="true">
-                  auto_awesome
-                </span>
-                <div className={styles.artifactBody}>
-                  <h3 className={styles.artifactTitle}>Skills</h3>
-                  <p className={styles.artifactDescription}>
-                    Reusable Claude Code skills — scaffold a new component, audit token usage, run a heuristic review, ship a pre-deploy check. Each one is a markdown file you can download and drop into <code>.claude/skills/</code> on your own project.
-                  </p>
-                  <span className={styles.artifactCta}>
-                    Browse Skills
-                    <span className="material-symbols-rounded" aria-hidden="true">arrow_forward</span>
-                  </span>
-                </div>
-              </Link>
-
-              <Link href="/loops" className={styles.artifactCard}>
-                <span className={`material-symbols-rounded ${styles.artifactIcon}`} aria-hidden="true">
-                  cycle
-                </span>
-                <div className={styles.artifactBody}>
-                  <h3 className={styles.artifactTitle}>Loops</h3>
-                  <p className={styles.artifactDescription}>
-                    Skills that run themselves. Scheduled agents that do real work against real data — the first one reads this site&apos;s analytics every week and proposes copy experiments — with guardrails that keep a human approving every change.
-                  </p>
-                  <span className={styles.artifactCta}>
-                    See the Loops
-                    <span className="material-symbols-rounded" aria-hidden="true">arrow_forward</span>
-                  </span>
-                </div>
-              </Link>
-            </div>
           </div>
         </main>
       </div>

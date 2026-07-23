@@ -50,7 +50,7 @@ export default function DocsPage() {
 
           <div className={`${styles.tocGrid} animate-in animate-delay-2`}>
             {/* Overview */}
-            <TocCard href="/about" title="Overview">
+            <TocCard href="/overview" title="Overview">
               <div className={`${styles.circlePreview} ${styles.circleDashed}`}>
                 <div className={styles.pipelinePreview}>
                   <span className={styles.pipelineDot} />

@@ -49,7 +49,7 @@ export default function MegaNav() {
   const inFlowHeaderRef = useRef<HTMLElement>(null);
 
   const isDsActive = isDesignSystemPath(pathname);
-  const isAboutActive = pathname === "/about/me";
+  const isAboutActive = pathname === "/about";
   const isWorkActive = pathname === "/work" || pathname.startsWith("/work/");
   const isWritingActive = pathname === "/writing" || pathname.startsWith("/writing/");
   const isContactActive = pathname === "/contact";
@@ -149,7 +149,7 @@ export default function MegaNav() {
         <div className={styles.navCenter}>
           <nav className={styles.nav} aria-label="Primary">
             <Link
-              href="/about/me"
+              href="/about"
               className={`${styles.navLink} ${isAboutActive ? styles.navLinkActive : ""}`}
               aria-current={isAboutActive ? "page" : undefined}
             >
@@ -276,7 +276,7 @@ export default function MegaNav() {
           <div className={styles.navCenter}>
             <nav className={styles.nav} aria-label="Primary (sticky)">
               <Link
-                href="/about/me"
+                href="/about"
                 className={`${styles.navLink} ${isAboutActive ? styles.navLinkActive : ""}`}
                 tabIndex={isStuck ? 0 : -1}
                 aria-current={isAboutActive ? "page" : undefined}
@@ -403,7 +403,7 @@ export default function MegaNav() {
       >
         <nav className={styles.mobileMenu} aria-label="Mobile navigation">
           <Link
-            href="/about/me"
+            href="/about"
             className={styles.mobileLink}
             onClick={() => setMobileOpen(false)}
             aria-current={isAboutActive ? "page" : undefined}

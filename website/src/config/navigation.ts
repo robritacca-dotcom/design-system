@@ -4,6 +4,7 @@
    and subnav links across the site.
    ============================================ */
 
+import type { Metadata } from "next";
 import { COMPONENT_COUNT } from "@design-system/components/registry";
 
 export interface NavLink {
@@ -64,7 +65,7 @@ export const dsMegaItems: MegaItem[] = [
 /** URL prefixes that should mark the "Design system" mega trigger as active */
 export const dsActiveMatchers = [
   (path: string) => path === "/docs",
-  (path: string) => path === "/about", // exact — /about/me is NOT under Design system
+  (path: string) => path === "/overview", // the DS overview; /about (personal bio) is NOT under Design system
   (path: string) => path.startsWith("/blueprints"),
   (path: string) => path.startsWith("/skills"),
   (path: string) => path.startsWith("/loops"),
@@ -153,7 +154,7 @@ export const foundationsSidebarLinks: NavLink[] = [
  */
 export const docsSidebarLinks: NavLink[] = [
   { href: "/docs", label: "Contents" },
-  { href: "/about", label: "Overview" },
+  { href: "/overview", label: "Overview" },
   { href: "/blueprints/claude", label: "Claude MD" },
   { href: "/blueprints/design", label: "Design MD" },
   { href: "/skills", label: "Skills" },
@@ -178,7 +179,7 @@ export const workSidebarLinks: NavLink[] = [
   { href: "/work", label: "Contents" },
   { href: "/work/embedded-ai-turbotax", label: "TurboTax in ChatGPT & Claude", logo: "/logos/turbotax.svg" },
   { href: "/work/intuit-agent-chat", label: "Agent Chat Platform", logo: "/logos/Intuit.svg" },
-  { href: "/work/augmenta-ai", label: "AI Construction Platform", logo: "/logos/logo/Augmenta.png" },
+  { href: "/work/augmenta-ai", label: "Construction Platform", logo: "/logos/logo/Augmenta.png" },
   { href: "/work/meta-career-profile", label: "Career Profile", logo: "/logos/meta.svg" },
   { href: "/work/meta-offers", label: "Offer Creation Flow", logo: "/logos/meta.svg" },
   { href: "/work/robr0-ds", label: "Building robr0 DS", logo: "/logos/rr.svg" },
@@ -199,6 +200,59 @@ export function getSidebarLinks(links: NavLink[], activeHref: string) {
   }));
 
   return { sidebarLinks };
+}
+
+/**
+ * Every sidebar array, in one place, so a page's canonical name can be looked
+ * up from its href. This is the single source of truth for page titles — the
+ * nav label, the breadcrumb, and the browser-tab title all resolve from here.
+ */
+const allSidebarLinks: NavLink[] = [
+  ...componentsSidebarLinks,
+  ...foundationsSidebarLinks,
+  ...docsSidebarLinks,
+  ...workSidebarLinks,
+];
+
+/** The canonical label for a route, taken from the nav config (or undefined). */
+export function getNavLabel(href: string): string | undefined {
+  return allSidebarLinks.find((link) => link.href === href)?.label;
+}
+
+/** The brand suffix appended to every page's browser-tab title. */
+export const TITLE_SUFFIX = "Robert Ritacca";
+/** Next.js title template — applied to child route segments' titles. */
+export const TITLE_TEMPLATE = `%s — ${TITLE_SUFFIX}`;
+
+/**
+ * Metadata for a section landing layout (Components, Foundations, Work). Sets
+ * the section's own suffixed title AND re-declares the title template so the
+ * suffix cascades to the section's sub-pages — Next only applies a template to
+ * direct children, so intermediate layouts must carry it or grandchildren would
+ * render bare, unsuffixed titles.
+ */
+export function sectionMetadata(label: string, description?: string): Metadata {
+  // `default` is the bare label — the root layout's template adds the suffix to
+  // it once. `template` carries the suffix down to this section's sub-pages.
+  const title = { default: label, template: TITLE_TEMPLATE };
+  return description ? { title, description } : { title };
+}
+
+/**
+ * Builds a page's Next.js `Metadata` with its `title` derived from the nav
+ * label for `href`, so the browser-tab title can never drift from the sidebar
+ * label or breadcrumb. Pass a `description` to keep the page's bespoke SEO copy.
+ * Throws at build time if `href` has no nav label — that surfaces a page whose
+ * title source is missing rather than silently falling back to the site default.
+ */
+export function pageMetadata(href: string, description?: string): Metadata {
+  const title = getNavLabel(href);
+  if (!title) {
+    throw new Error(
+      `pageMetadata: no nav label found for "${href}". Add it to a sidebar links array in navigation.ts.`
+    );
+  }
+  return description ? { title, description } : { title };
 }
 
 /* ============================================
@@ -239,7 +293,7 @@ export function getBreadcrumbs(pathname: string): BreadcrumbItem[] {
   const path = pathname.length > 1 ? pathname.replace(/\/$/, "") : pathname;
 
   // Top-level pages with no breadcrumb
-  if (path === "/" || path === "/contact" || path === "/about/me") {
+  if (path === "/" || path === "/contact" || path === "/about") {
     return [];
   }
 
