@@ -1,15 +1,10 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/config/navigation";
 
-export const metadata: Metadata = {
-  title: "Accordion",
-  description:
-    "Collapsible content sections for organising related information.",
-};
+export const metadata = pageMetadata(
+  "/components/accordion",
+  "Collapsible content sections for organising related information."
+);
 
-export default function AccordionLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

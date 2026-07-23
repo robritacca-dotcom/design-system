@@ -1,15 +1,10 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/config/navigation";
 
-export const metadata: Metadata = {
-  title: "Breadcrumb",
-  description:
-    "Hierarchical navigation trail showing the user's location within the site.",
-};
+export const metadata = pageMetadata(
+  "/components/breadcrumb",
+  "Hierarchical navigation trail showing the user's location within the site."
+);
 
-export default function BreadcrumbLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

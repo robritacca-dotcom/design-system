@@ -1,15 +1,10 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/config/navigation";
 
-export const metadata: Metadata = {
-  title: "Textarea",
-  description:
-    "Multi-line text input with character counter, resize control, helper text, and error states.",
-};
+export const metadata = pageMetadata(
+  "/components/textarea",
+  "Multi-line text input with character counter, resize control, helper text, and error states."
+);
 
-export default function TextareaLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

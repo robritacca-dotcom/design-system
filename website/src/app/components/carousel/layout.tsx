@@ -1,15 +1,10 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/config/navigation";
 
-export const metadata: Metadata = {
-  title: "Carousel",
-  description:
-    "Sliding content viewer with navigation arrows, dot indicators, auto-play, and keyboard support.",
-};
+export const metadata = pageMetadata(
+  "/components/carousel",
+  "Sliding content viewer with navigation arrows, dot indicators, auto-play, and keyboard support."
+);
 
-export default function CarouselLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

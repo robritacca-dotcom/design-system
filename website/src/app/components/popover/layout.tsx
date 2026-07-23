@@ -1,15 +1,10 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/config/navigation";
 
-export const metadata: Metadata = {
-  title: "Popover",
-  description:
-    "Contextual overlay panel with click and hover triggers, positioned relative to its anchor.",
-};
+export const metadata = pageMetadata(
+  "/components/popover",
+  "Contextual overlay panel with click and hover triggers, positioned relative to its anchor."
+);
 
-export default function PopoverLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

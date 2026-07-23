@@ -1,15 +1,10 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/config/navigation";
 
-export const metadata: Metadata = {
-  title: "Toast",
-  description:
-    "Temporary notification with status variants, auto-dismiss, and stacking via ToastProvider.",
-};
+export const metadata = pageMetadata(
+  "/components/toast",
+  "Temporary notification with status variants, auto-dismiss, and stacking via ToastProvider."
+);
 
-export default function ToastLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

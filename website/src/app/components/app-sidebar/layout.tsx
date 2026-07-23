@@ -1,15 +1,10 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/config/navigation";
 
-export const metadata: Metadata = {
-  title: "App sidebar",
-  description:
-    "Collapsible navigation rail with accordion sub-items, category headings, and profile section.",
-};
+export const metadata = pageMetadata(
+  "/components/app-sidebar",
+  "Collapsible navigation rail with accordion sub-items, category headings, and profile section."
+);
 
-export default function AppSidebarLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

@@ -1,15 +1,10 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/config/navigation";
 
-export const metadata: Metadata = {
-  title: "App layout",
-  description:
-    "Full-page template pairing the collapsible App sidebar with a centred content area.",
-};
+export const metadata = pageMetadata(
+  "/components/app-layout",
+  "Full-page template pairing the collapsible App sidebar with a centred content area."
+);
 
-export default function AppLayoutPageLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

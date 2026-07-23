@@ -1,15 +1,10 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/config/navigation";
 
-export const metadata: Metadata = {
-  title: "Instructions",
-  description:
-    "Step-by-step guidance with numbered badges, connecting lines, and horizontal layout.",
-};
+export const metadata = pageMetadata(
+  "/components/instructions",
+  "Step-by-step guidance with numbered badges, connecting lines, and horizontal layout."
+);
 
-export default function InstructionsLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

@@ -1,15 +1,10 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/config/navigation";
 
-export const metadata: Metadata = {
-  title: "Dropdown menu",
-  description:
-    "Contextual menu with sections, sub-menus, keyboard shortcuts, and inset-gap hover styling.",
-};
+export const metadata = pageMetadata(
+  "/components/dropdown-menu",
+  "Contextual menu with sections, sub-menus, keyboard shortcuts, and inset-gap hover styling."
+);
 
-export default function DropdownMenuLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

@@ -1,8 +1,8 @@
 import { pageMetadata } from "@/config/navigation";
 
 export const metadata = pageMetadata(
-  "/components/alert",
-  "Contextual feedback with status variants, optional dismiss, and compact sizing."
+  "/components/figure",
+  "Images with captions, in the case-study frame."
 );
 
 export default function Layout({ children }: { children: React.ReactNode }) {

@@ -1,15 +1,10 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/config/navigation";
 
-export const metadata: Metadata = {
-  title: "Section Title",
-  description:
-    "Heading with a divider line and optional trailing content for organising page sections.",
-};
+export const metadata = pageMetadata(
+  "/components/section-title",
+  "Heading with a divider line and optional trailing content for organising page sections."
+);
 
-export default function SectionTitleLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

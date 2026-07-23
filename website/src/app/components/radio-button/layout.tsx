@@ -1,15 +1,10 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/config/navigation";
 
-export const metadata: Metadata = {
-  title: "Radio Button",
-  description:
-    "Radio button and radio group with vertical and horizontal layouts, animated dot indicator.",
-};
+export const metadata = pageMetadata(
+  "/components/radio-button",
+  "Radio button and radio group with vertical and horizontal layouts, animated dot indicator."
+);
 
-export default function RadioButtonLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

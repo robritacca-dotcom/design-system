@@ -1,15 +1,10 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/config/navigation";
 
-export const metadata: Metadata = {
-  title: "Dialog",
-  description:
-    "A general-purpose modal for focused tasks, with sizes, an optional footer, and full focus management.",
-};
+export const metadata = pageMetadata(
+  "/components/dialog",
+  "A general-purpose modal for focused tasks, with sizes, an optional footer, and full focus management."
+);
 
-export default function DialogLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

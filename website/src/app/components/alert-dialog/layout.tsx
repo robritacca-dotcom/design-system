@@ -1,15 +1,10 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/config/navigation";
 
-export const metadata: Metadata = {
-  title: "Alert dialog",
-  description:
-    "Modal confirmation overlay with title, description, and confirm / cancel actions.",
-};
+export const metadata = pageMetadata(
+  "/components/alert-dialog",
+  "Modal confirmation overlay with title, description, and confirm / cancel actions."
+);
 
-export default function AlertDialogLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

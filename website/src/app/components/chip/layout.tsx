@@ -1,8 +1,8 @@
 import { pageMetadata } from "@/config/navigation";
 
 export const metadata = pageMetadata(
-  "/components/alert",
-  "Contextual feedback with status variants, optional dismiss, and compact sizing."
+  "/components/chip",
+  "Compact pills for attributes, filters, and inline metadata."
 );
 
 export default function Layout({ children }: { children: React.ReactNode }) {

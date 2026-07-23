@@ -30,7 +30,7 @@ const caseStudies = [
   },
   {
     href: "/work/augmenta-ai",
-    title: "Augmenta AI Construction Platform",
+    title: "Augmenta Construction Platform",
     dek: "Turning automation into usability — the redesign behind 42% faster outcomes",
     companyName: "Augmenta",
     companyLogo: "/logos/logo/Augmenta.png",

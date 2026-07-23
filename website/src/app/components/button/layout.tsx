@@ -1,15 +1,10 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/config/navigation";
 
-export const metadata: Metadata = {
-  title: "Button",
-  description:
-    "Primary and secondary button variants in default and compact sizes, with icon support and multiple states.",
-};
+export const metadata = pageMetadata(
+  "/components/button",
+  "Primary and secondary button variants in default and compact sizes, with icon support and multiple states."
+);
 
-export default function ButtonLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

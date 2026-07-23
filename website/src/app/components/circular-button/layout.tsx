@@ -1,15 +1,10 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/config/navigation";
 
-export const metadata: Metadata = {
-  title: "Circular Button",
-  description:
-    "Round icon button with primary and secondary variants, default and compact sizes.",
-};
+export const metadata = pageMetadata(
+  "/components/circular-button",
+  "Round icon button with primary and secondary variants, default and compact sizes."
+);
 
-export default function CircularButtonLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

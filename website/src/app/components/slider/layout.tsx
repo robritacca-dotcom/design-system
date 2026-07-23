@@ -1,15 +1,10 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/config/navigation";
 
-export const metadata: Metadata = {
-  title: "Slider",
-  description:
-    "Range input for selecting a value within a given range with default and compact sizes.",
-};
+export const metadata = pageMetadata(
+  "/components/slider",
+  "Range input for selecting a value within a given range with default and compact sizes."
+);
 
-export default function SliderLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

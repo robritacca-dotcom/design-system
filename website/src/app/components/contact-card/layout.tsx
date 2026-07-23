@@ -1,8 +1,8 @@
 import { pageMetadata } from "@/config/navigation";
 
 export const metadata = pageMetadata(
-  "/components/alert",
-  "Contextual feedback with status variants, optional dismiss, and compact sizing."
+  "/components/contact-card",
+  "Linked contact method with icon, label, and value."
 );
 
 export default function Layout({ children }: { children: React.ReactNode }) {

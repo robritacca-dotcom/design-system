@@ -1,15 +1,10 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/config/navigation";
 
-export const metadata: Metadata = {
-  title: "Progress Bar",
-  description:
-    "Horizontal bar indicating completion progress with status variants and optional label.",
-};
+export const metadata = pageMetadata(
+  "/components/progress-bar",
+  "Horizontal bar indicating completion progress with status variants and optional label."
+);
 
-export default function ProgressBarLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

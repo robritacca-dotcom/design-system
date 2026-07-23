@@ -1,15 +1,10 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/config/navigation";
 
-export const metadata: Metadata = {
-  title: "Table",
-  description:
-    "Data table with flexible cell content, striped rows, compact sizing, and support for icons, inputs, buttons, and interactive controls.",
-};
+export const metadata = pageMetadata(
+  "/components/table",
+  "Data table with flexible cell content, striped rows, compact sizing, and support for icons, inputs, buttons, and interactive controls."
+);
 
-export default function TableLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
