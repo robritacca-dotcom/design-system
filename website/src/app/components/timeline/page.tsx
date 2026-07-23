@@ -1,6 +1,8 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
+import Link from "next/link";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
@@ -40,6 +42,57 @@ const LOOP_RUN = [
   { title: "Approval" },
 ];
 
+const companyLogo = (src: string, alt: string) => (
+  <Image src={src} alt={alt} width={32} height={32} />
+);
+
+const EXPERIENCE = [
+  {
+    name: "Intuit",
+    logo: companyLogo("/logos/Intuit.svg", "Intuit"),
+    roles: [
+      {
+        title: "Principal Product Designer, Consumer AI",
+        start: "Jan 2026",
+        present: true,
+        bullets: [
+          "Shipped TurboTax's embedded AI experiences inside ChatGPT and Claude.",
+          <>
+            Designed the bidirectional filing checklist — full story in the{" "}
+            <Link href="/work/embedded-ai-turbotax">case study</Link>
+          </>,
+        ],
+      },
+      {
+        title: "Principal Product Designer, Agent Platform",
+        start: "May 2024",
+        end: "Jan 2026",
+        bullets: [
+          "Led design of Intuit's end-to-end conversational AI platform.",
+          "Onboarded 150+ teams, 58 in production.",
+        ],
+      },
+    ],
+  },
+  {
+    name: "Augmenta",
+    logo: companyLogo("/logos/logo/Augmenta.png", "Augmenta"),
+    roles: [
+      {
+        title: "Principal Product Designer",
+        start: "Aug 2023",
+        end: "May 2024",
+        description:
+          "Led end-to-end UX for a 0→1 generative AI tool for constructible, code-compliant electrical raceway designs.",
+        bullets: [
+          "Cut time-to-value from 14 to 5 days.",
+          "Reduced anomalies per output by 60%.",
+        ],
+      },
+    ],
+  },
+];
+
 export default function TimelinePage() {
   return (
     <>
@@ -67,6 +120,8 @@ export default function TimelinePage() {
               narratives — career entries, project phases. Horizontal for compact
               steppers like a loop&apos;s run stages. Markers are dots by default,
               numbered circles with <code>numbered</code>, or Material Symbols per item.
+              The <code>company</code> variant swaps the marker for a logo and groups one
+              or more roles — each with a right-aligned date — under a single entry.
             </p>
           </div>
 
@@ -98,6 +153,12 @@ export default function TimelinePage() {
           <section className={styles.section}>
             <SectionTitle title="Horizontal stepper" />
             <Timeline orientation="horizontal" numbered items={LOOP_RUN} />
+          </section>
+
+          {/* Company */}
+          <section className={styles.section}>
+            <SectionTitle title="Company — grouped roles" />
+            <Timeline variant="company" items={EXPERIENCE} />
           </section>
         </main>
       </div>

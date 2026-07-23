@@ -197,3 +197,145 @@
 .ds-timeline--horizontal .ds-timeline__item:last-child::before {
   display: none;
 }
+
+/* ============================================
+   COMPANY VARIANT — a logo marker per entry,
+   a company/tool name, and one or more nested
+   roles. A segmented bar runs down each entry
+   (résumé / pipeline histories).
+   ============================================ */
+
+/* 32px logo marker — bare, transparent box; the image keeps its own shape.
+   Reset the base marker's circular clip so logos are never cropped. */
+.ds-timeline__marker--logo {
+  width: 32px;
+  height: 32px;
+  background-color: transparent;
+  border-radius: 0;
+  overflow: visible;
+}
+
+/* Logos display in their natural aspect ratio, capped at the 32px box */
+.ds-timeline__marker--logo :where(img, svg) {
+  max-width: 32px;
+  max-height: 32px;
+  object-fit: contain;
+}
+
+/* Logo sits at the top of the entry, aligned with the company name */
+.ds-timeline--company .ds-timeline__marker--logo {
+  margin-top: 0;
+}
+
+.ds-timeline--company .ds-timeline__content {
+  gap: var(--gap-sm);
+}
+
+.ds-timeline__company-name {
+  font-family: var(--font-title-body-family);
+  font-size: var(--font-title-body-size);
+  font-weight: var(--font-title-body-weight);
+  line-height: var(--font-title-body-line-height);
+  color: var(--color-text-primary);
+  /* centre the name against the 32px logo */
+  display: flex;
+  align-items: center;
+  min-height: 32px;
+}
+
+.ds-timeline__roles {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-lg);
+}
+
+.ds-timeline__role {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+}
+
+.ds-timeline__role-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-md);
+}
+
+.ds-timeline__role-title {
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-heading-3-family);
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  letter-spacing: var(--font-heading-3-letter-spacing);
+  color: var(--color-text-primary);
+}
+
+.ds-timeline__role-dates {
+  flex-shrink: 0;
+  white-space: nowrap;
+  font-family: var(--font-paragraph-family);
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  color: var(--color-text-tertiary);
+}
+
+.ds-timeline__present {
+  color: var(--color-status-positive-text);
+}
+
+.ds-timeline__role-description {
+  margin: 0;
+  font-family: var(--font-paragraph-family);
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  letter-spacing: var(--font-paragraph-letter-spacing);
+  color: var(--color-text-secondary);
+}
+
+.ds-timeline__role-bullets {
+  margin: 0;
+  padding-left: 20px;
+  list-style: disc;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+}
+
+.ds-timeline__role-bullets li {
+  font-family: var(--font-paragraph-family);
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  color: var(--color-text-secondary);
+}
+
+.ds-timeline__role-bullets a {
+  color: var(--color-action-primary-bg);
+  font-weight: var(--font-paragraph-em-weight);
+  text-decoration: none;
+}
+
+.ds-timeline__role-bullets a:hover {
+  text-decoration: underline;
+}
+
+/* Connector — centred under the 32px logo, with an even 8px break above and
+   below every logo: it starts 8px below this logo and runs down to 8px above
+   the next one (extending into the inter-entry gap). */
+.ds-timeline--company .ds-timeline__item::before {
+  left: 16px; /* centre of the 32px logo */
+  top: 40px; /* 32px logo + 8px break */
+  bottom: calc(8px - var(--gap-lg)); /* stop 8px above the next logo */
+}
+
+/* Last entry has no following logo — stop the bar at its own content */
+.ds-timeline--company .ds-timeline__item:last-child::before {
+  display: block;
+  bottom: 0;
+}

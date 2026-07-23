@@ -1,5 +1,67 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Timeline } from './Timeline';
+import { Timeline, type TimelineCompany } from './Timeline';
+
+/** Self-contained placeholder logo — a rounded tile with an initial, no external assets. */
+const logo = (initial: string, color: string) => (
+  <svg viewBox="0 0 32 32" width="32" height="32" role="img" aria-hidden="true">
+    <rect width="32" height="32" rx="8" fill={color} />
+    <text
+      x="16"
+      y="21"
+      textAnchor="middle"
+      fontFamily="Nunito Sans, sans-serif"
+      fontSize="16"
+      fontWeight="700"
+      fill="#ffffff"
+    >
+      {initial}
+    </text>
+  </svg>
+);
+
+const COMPANY_ITEMS: TimelineCompany[] = [
+  {
+    name: 'Intuit',
+    logo: logo('I', '#236CFF'),
+    roles: [
+      {
+        title: 'Principal Product Designer, Consumer AI',
+        start: 'Jan 2026',
+        present: true,
+        bullets: [
+          'Shipped embedded AI experiences in time for tax season.',
+          'Designed the bidirectional filing checklist across chat and app.',
+        ],
+      },
+      {
+        title: 'Principal Product Designer, Agent Platform',
+        start: 'May 2024',
+        end: 'Jan 2026',
+        bullets: [
+          'Led design of the end-to-end conversational AI platform.',
+          'Onboarded 150+ teams, 58 in production.',
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Augmenta',
+    logo: logo('A', '#C9A227'),
+    roles: [
+      {
+        title: 'Principal Product Designer',
+        start: 'Aug 2023',
+        end: 'May 2024',
+        description:
+          'Led end-to-end UX for a 0→1 generative AI tool for constructible, code-compliant electrical raceway designs.',
+        bullets: [
+          'Cut time-to-value from 14 to 5 days.',
+          'Reduced anomalies per output by 60%.',
+        ],
+      },
+    ],
+  },
+];
 
 const CAREER_ITEMS = [
   {
@@ -86,5 +148,12 @@ export const HorizontalDots: Story = {
   args: {
     items: PROCESS_ITEMS.map(({ title }) => ({ title })),
     orientation: 'horizontal',
+  },
+};
+
+export const Company: Story = {
+  args: {
+    variant: 'company',
+    items: COMPANY_ITEMS,
   },
 };
