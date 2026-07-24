@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import MegaNav from "../../components/MegaNav/MegaNav";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import Footer from "../../components/Footer/Footer";
@@ -128,34 +127,13 @@ function ContactContent() {
         {/* Book a consultation */}
         <div className={`${styles.section} animate-in animate-delay-2`}>
           <h2 className={styles.sectionTitle}>Book a consultation</h2>
-          <a
+          <ContactCard
+            label="Pay via Stripe"
+            value="Secure checkout — book a design consultation"
             href="https://buy.stripe.com/28o7vb5NBaSJ3NC5kn"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`${styles.method} ${styles.methodConsultation}`}
-          >
-            <span className={styles.methodIconWrap}>
-              <Image
-                src="/logos/stripe-new.png"
-                alt=""
-                width={24}
-                height={24}
-                className={styles.methodLogo}
-              />
-            </span>
-            <div className={styles.methodText}>
-              <span className={styles.methodLabel}>Pay via Stripe</span>
-              <span className={styles.methodValue}>Secure checkout — book a design consultation</span>
-            </div>
-            <div className={styles.methodActions}>
-              <span
-                className={`material-symbols-rounded ${styles.methodChevron}`}
-                aria-hidden="true"
-              >
-                open_in_new
-              </span>
-            </div>
-          </a>
+            logo="/logos/stripe-new.png"
+            external
+          />
         </div>
 
         {/* Follow me */}
