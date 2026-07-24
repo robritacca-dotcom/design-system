@@ -46,7 +46,17 @@ export default function FoundationsPage() {
             {/* Elevation */}
             <TocCard href="/foundations/elevation" title="Elevation">
               <div className={`${styles.circlePreview} ${styles.circleNeutral}`}>
-                <div className={styles.elevationChip} />
+                <div className={styles.elevationScene}>
+                  <div className={styles.elevationWindow}>
+                    <div className={styles.elevationBarWide} />
+                    <div className={styles.elevationBar} />
+                    <div className={styles.elevationBarShort} />
+                  </div>
+                  <div className={styles.elevationPopover}>
+                    <div className={styles.elevationPopoverBar} />
+                    <div className={styles.elevationPopoverBar} />
+                  </div>
+                </div>
               </div>
             </TocCard>
 

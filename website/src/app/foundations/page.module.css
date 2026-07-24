@@ -167,14 +167,69 @@
   padding: 0;
 }
 
-/* Elevation preview — a floating surface lifted off the container ramp */
-.elevationChip {
-  width: 96px;
-  height: 64px;
+/* Elevation preview — a mini UI with a popover floating above the base surface */
+.elevationScene {
+  position: relative;
+  width: 128px;
+  height: 88px;
+}
+
+.elevationWindow {
+  width: 112px;
+  height: 74px;
   border: var(--border-xs) solid var(--color-bg-container-border);
-  border-radius: var(--radius-md);
+  border-radius: 6px;
   background: var(--color-bg-page-primary);
-  box-shadow: var(--shadow-modal);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-sizing: border-box;
+}
+
+.elevationBarWide {
+  width: 50%;
+  height: 8px;
+  border-radius: 3px;
+  background: var(--color-bg-container-secondary);
+}
+
+.elevationBar {
+  width: 80%;
+  height: 5px;
+  border-radius: 3px;
+  background: var(--color-bg-container-primary);
+}
+
+.elevationBarShort {
+  width: 65%;
+  height: 5px;
+  border-radius: 3px;
+  background: var(--color-bg-container-primary);
+}
+
+.elevationPopover {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 58px;
+  height: 42px;
+  border: var(--border-xs) solid var(--color-bg-container-border);
+  border-radius: 6px;
+  background: var(--color-bg-page-primary);
+  box-shadow: var(--shadow-floating);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-sizing: border-box;
+}
+
+.elevationPopoverBar {
+  width: 100%;
+  height: 5px;
+  border-radius: 3px;
+  background: var(--color-bg-container-secondary);
 }
 
 /* Motion preview — dot easing back and forth on its track */
@@ -189,8 +244,8 @@
   width: 20px;
   height: 20px;
   border-radius: var(--radius-full);
-  background: var(--color-core-accent-violet);
-  animation: motionDotSlide var(--motion-duration-slower) var(--motion-ease-emphasized) infinite alternate;
+  background: var(--color-action-primary-bg);
+  animation: motionDotSlide var(--motion-duration-loop-shimmer) var(--motion-ease-emphasized) infinite alternate;
 }
 
 @keyframes motionDotSlide {
@@ -275,6 +330,10 @@
     min-width: 150px;
     min-height: 150px;
   }
+
+  .elevationScene {
+    transform: scale(0.8);
+  }
 }
 
 @media (max-width: 600px) {
@@ -290,5 +349,9 @@
     height: 120px;
     min-width: 120px;
     min-height: 120px;
+  }
+
+  .elevationScene {
+    transform: scale(0.62);
   }
 }
