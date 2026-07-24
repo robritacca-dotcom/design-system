@@ -755,3 +755,96 @@ export const SemanticSpacing: Story = {
     </div>
   ),
 };
+
+// Motion Tokens Story
+const MotionTokenRow = ({ name, value }: { name: string; value: string }) => {
+  const computedValue = getComputedStyle(document.documentElement)
+    .getPropertyValue(value)
+    .trim();
+
+  return (
+    <div style={{ marginBottom: '12px', display: 'flex', alignItems: 'baseline', gap: '12px' }}>
+      <div
+        style={{
+          flex: '0 0 120px',
+          fontSize: '13px',
+          color: 'var(--color-text-primary)',
+          fontWeight: 600,
+        }}
+      >
+        {name}
+      </div>
+      <div style={{ flex: 1 }}>
+        <div
+          style={{
+            fontSize: '13px',
+            fontFamily: 'monospace',
+            color: 'var(--color-text-primary)',
+          }}
+        >
+          {value}
+        </div>
+        <div
+          style={{
+            fontSize: '12px',
+            color: 'var(--color-text-tertiary)',
+            marginTop: '2px',
+          }}
+        >
+          {computedValue}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const Motion: Story = {
+  render: () => (
+    <div style={{ maxWidth: '800px' }}>
+      <h2
+        style={{
+          fontSize: '24px',
+          fontWeight: 700,
+          color: 'var(--color-text-primary)',
+          marginBottom: '24px',
+        }}
+      >
+        Motion Tokens
+      </h2>
+      <p
+        style={{
+          fontSize: '14px',
+          color: 'var(--color-text-secondary)',
+          marginBottom: '32px',
+          lineHeight: '1.5',
+        }}
+      >
+        Durations and easing curves for transitions and animations, defined in
+        tokens-motion.css. Compose a duration with an easing instead of writing
+        literal values like 0.2s ease. All duration tokens collapse to 0.01ms
+        under prefers-reduced-motion.
+      </p>
+
+      <TokenSection title="Durations — Core">
+        <MotionTokenRow name="Fast" value="--motion-duration-fast" />
+        <MotionTokenRow name="Base" value="--motion-duration-base" />
+        <MotionTokenRow name="Slow" value="--motion-duration-slow" />
+        <MotionTokenRow name="Slower" value="--motion-duration-slower" />
+      </TokenSection>
+
+      <TokenSection title="Durations — Extended">
+        <MotionTokenRow name="Deliberate" value="--motion-duration-deliberate" />
+        <MotionTokenRow name="Loop spin" value="--motion-duration-loop-spin" />
+        <MotionTokenRow name="Loop shimmer" value="--motion-duration-loop-shimmer" />
+      </TokenSection>
+
+      <TokenSection title="Easings">
+        <MotionTokenRow name="Standard" value="--motion-ease-standard" />
+        <MotionTokenRow name="Emphasized" value="--motion-ease-emphasized" />
+        <MotionTokenRow name="Entrance" value="--motion-ease-entrance" />
+        <MotionTokenRow name="Linear" value="--motion-ease-linear" />
+        <MotionTokenRow name="Spring" value="--motion-ease-spring" />
+      </TokenSection>
+    </div>
+  ),
+};

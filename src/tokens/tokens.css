@@ -6,5 +6,6 @@
 
 @import './tokens-primitives.css';
 @import './tokens-typography.css';
+@import './tokens-motion.css';
 @import './tokens-light.css';
 @import './tokens-dark.css';

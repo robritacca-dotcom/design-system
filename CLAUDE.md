@@ -81,7 +81,8 @@ Every push to `main` and every PR runs `.github/workflows/ci.yml` (four jobs: li
 │   │   ├── tokens-primitives.css    # Raw hex/px values — never use directly in components
 │   │   ├── tokens-light.css         # Semantic tokens, light theme
 │   │   ├── tokens-dark.css          # Semantic tokens, dark theme
-│   │   └── tokens-typography.css    # Font size/weight/line-height scale
+│   │   ├── tokens-typography.css    # Font size/weight/line-height scale
+│   │   └── tokens-motion.css        # Duration/easing scale + reduced-motion guard
 │   ├── fonts/                 # Material Symbols icon font (self-hosted); Nunito Sans is loaded via Google Fonts
 │   └── App.tsx                # Dev sandbox (generic; components are imported via @design-system)
 ├── .storybook/                # Storybook config
@@ -108,7 +109,7 @@ Component CSS               background-color: var(--color-action-primary-bg)
 ```
 
 - **Primitives** (`--primitive-*`) — raw values. Source of truth. Never referenced in components.
-- **Semantic tokens** (`--color-*`, `--radius-*`, `--gap-*`, `--padding-*`, `--font-*`) — always use these in components.
+- **Semantic tokens** (`--color-*`, `--radius-*`, `--gap-*`, `--padding-*`, `--font-*`, `--motion-*`) — always use these in components.
 - **Dark mode** is driven by `data-theme="dark"` on the root element. Every semantic token has a light and dark value — no `prefers-color-scheme` queries in components.
 
 Key invariants:
@@ -180,6 +181,7 @@ Tokens also have multiple homes — a token that exists only in CSS is incomplet
    - Spacing/radius/border → `website/src/app/foundations/spatial/page.tsx`
    - Shadows/depth → `website/src/app/foundations/elevation/page.tsx`
    - Typography → `website/src/app/foundations/typography/page.tsx`
+   - Motion (durations/easings) → `website/src/app/foundations/motion/page.tsx` (add a `MotionSwatch` entry to the matching token array)
 4. **Update the Storybook token docs**: `src/stories/Tokens.stories.tsx` documents semantic tokens by category (colors, status, chart, spacing) — add the new token to the matching story, or a new story if it's a new category. (`src/stories/` also holds `Typography`, `Icons`, and `Logos` foundation docs.)
 
 ---
@@ -205,6 +207,7 @@ Tokens also have multiple homes — a token that exists only in CSS is incomplet
 | [`src/tokens/tokens-light.css`](src/tokens/tokens-light.css) | Semantic token definitions (light) |
 | [`src/tokens/tokens-dark.css`](src/tokens/tokens-dark.css) | Semantic token overrides (dark) |
 | [`src/tokens/tokens-typography.css`](src/tokens/tokens-typography.css) | Font size/weight/line-height scale |
+| [`src/tokens/tokens-motion.css`](src/tokens/tokens-motion.css) | Duration/easing tokens + reduced-motion guard |
 | [`src/components/Button/Button.tsx`](src/components/Button/Button.tsx) | Reference implementation for a component |
 | [`src/components/Button/Button.stories.ts`](src/components/Button/Button.stories.ts) | Reference for Storybook story structure |
 | [`website/src/app/components/button/page.tsx`](website/src/app/components/button/page.tsx) | Reference for a website showcase page |
@@ -215,7 +218,7 @@ Tokens also have multiple homes — a token that exists only in CSS is incomplet
 
 ## Known Gaps
 
-- No `--motion-*` token for animation timings — transitions are hardcoded `0.2s ease`
+- Motion tokens (`--motion-*`) exist, but most component CSS still carries pre-token hardcoded timings (`0.2s ease` et al.) — migrate to the tokens as components are touched
 - No `--chart-series-{n}` formal token set for ordered chart series colors
 - Figma source file documented: [robr0-ds26](https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26) — foundation/component pages deep-link to specific frames via `figmaUrl`
 - A11y checks are report-only — story tests run axe per story, but `a11y.test` in `.storybook/preview.ts` is `'todo'`, so violations warn instead of failing CI; no visual-regression coverage yet either (Chromatic planned)

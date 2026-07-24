@@ -286,6 +286,37 @@ Never write a literal `box-shadow` value in component CSS — use one of these t
 
 ---
 
+## Motion
+
+Motion is quiet and functional — it confirms an interaction, reveals structure, or signals loading, never decorates. The whole vocabulary is defined in `tokens-motion.css` (theme-agnostic, single `:root` like typography): seven `--motion-duration-*` tokens and five `--motion-ease-*` curves. Compose a duration with an easing instead of writing literal values — never hardcode `0.2s ease` in component CSS.
+
+**Durations — core scale** (day-to-day UI):
+
+| Token | Value | Use |
+|---|---|---|
+| `--motion-duration-fast` | 150ms | Quick feedback: hovers, icons, tooltips, nav links |
+| `--motion-duration-base` | 200ms | The default — color/opacity/border transitions |
+| `--motion-duration-slow` | 300ms | Structural change: accordion, sidebar width, toast enter |
+| `--motion-duration-slower` | 600ms | Deliberate page-entrance reveals |
+
+**Durations — extended** (special-purpose; named so they stop being magic numbers, but reach for the core four first): `--motion-duration-deliberate` (400ms, carousel slide), `--motion-duration-loop-spin` (1000ms, spinner rotation), `--motion-duration-loop-shimmer` (1800ms, skeleton shimmer).
+
+**Easings:**
+
+| Token | Value | Use |
+|---|---|---|
+| `--motion-ease-standard` | `ease` | General default for color/opacity transitions |
+| `--motion-ease-emphasized` | `cubic-bezier(0.4, 0, 0.2, 1)` | Size/layout changes (sidebar width, accordion height) |
+| `--motion-ease-entrance` | `cubic-bezier(0.16, 1, 0.3, 1)` | Expressive decelerate for enter animations (modals, dropdowns, toasts) |
+| `--motion-ease-linear` | `linear` | Continuous motion (spinner, progress bars) |
+| `--motion-ease-spring` | `cubic-bezier(0.34, 1.56, 0.64, 1)` | Playful overshoot (toggle switch thumb) |
+
+**Reduced motion contract:** `tokens-motion.css` collapses every duration token to 0.01ms under `prefers-reduced-motion: reduce`, and a universal guard flattens remaining hardcoded transitions/animations. Components that consume the tokens respect the preference automatically — never write component-level `prefers-reduced-motion` queries.
+
+**Migration status:** the token layer is the contract; existing components still carry hardcoded timings (mostly `0.2s ease`) and are being migrated to the tokens as they are touched. New code must use the tokens from the start.
+
+---
+
 ## Components
 
 ### Button
@@ -644,7 +675,7 @@ The website's docs shell (left nav rail + main column + right details rail) step
 
 ## Known Gaps
 
-- **Animation / transition timings** — Component transitions use hardcoded `0.2s ease`. No token exists for easing curves or durations. If the system needs animated loading states or page transitions, a `--motion-*` token layer should be added.
+- **Motion migration** — The `--motion-*` token layer exists (see Motion), but most component CSS still carries pre-token hardcoded timings (`0.2s ease` et al.). These are being swapped to the tokens as components are touched; JS-driven timings (Tooltip delays, Toast auto-dismiss, Carousel autoplay) are not yet tokenized.
 - **Figma parity** — The system originates in Figma ([robr0-ds26](https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26)), and foundation/component pages deep-link to specific frames via `figmaUrl`. Keeping the Figma file and the coded tokens in sync is still a manual process — there is no automated export pipeline.
 - **Breakpoint tokens** — The docs-shell column widths are tokenized (`--layout-*` in the website's `globals.css`), but the media-query thresholds themselves (1279 / 1151 / 959 / 768px) remain raw values repeated across CSS files — CSS custom properties cannot drive `@media` conditions.
 - **Form validation patterns** — Error state on Input is documented, but multi-field form-level validation patterns (inline error summaries, field grouping) are not in scope here.
