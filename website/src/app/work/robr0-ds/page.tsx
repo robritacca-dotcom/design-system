@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { COMPONENT_COUNT } from "@design-system/components/registry";
+import { TOKEN_COUNT, TOKEN_COUNTS, type TokenCategory } from "@design-system/tokens/registry";
 import Link from "next/link";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
@@ -22,7 +23,8 @@ import styles from "./page.module.css";
 /* ============================================
    Real history — registered components and semantic
    tokens measured from git at each month-end
-   (snapshot taken July 2026)
+   (snapshot taken July 2026); the current month
+   comes live from the registries
    ============================================ */
 const systemGrowth = [
   { month: "Feb", components: 39, tokens: 156 },
@@ -30,16 +32,23 @@ const systemGrowth = [
   { month: "Apr", components: 39, tokens: 156 },
   { month: "May", components: 39, tokens: 156 },
   { month: "Jun", components: 41, tokens: 156 },
-  { month: "Jul", components: 51, tokens: 161 },
+  { month: "Jul", components: COMPONENT_COUNT, tokens: TOKEN_COUNT },
 ];
 
-const tokensByCategory = [
-  { label: "Colour", value: 70 },
-  { label: "Typography", value: 66 },
-  { label: "Spacing", value: 15 },
-  { label: "Radius", value: 8 },
-  { label: "Border", value: 2 },
-];
+const tokenCategoryLabels: Record<TokenCategory, string> = {
+  colour: "Colour",
+  typography: "Typography",
+  spacing: "Spacing",
+  radius: "Radius",
+  border: "Border",
+  shadow: "Shadow",
+  icons: "Icon sizes",
+  motion: "Motion",
+};
+
+const tokensByCategory = (
+  Object.entries(TOKEN_COUNTS) as [TokenCategory, number][]
+).map(([category, value]) => ({ label: tokenCategoryLabels[category], value }));
 
 const { sidebarLinks } = getSidebarLinks(workSidebarLinks, "/work/robr0-ds");
 
@@ -381,7 +390,7 @@ export default function Robr0DsCaseStudy() {
                       subtitle="Registered components and semantic tokens at each month-end, Feb – Jul 2026 — the spring plateau is when the system around the system was built"
                       summaryItems={[
                         { label: "Components", value: COMPONENT_COUNT },
-                        { label: "Semantic tokens", value: 161 },
+                        { label: "Semantic tokens", value: TOKEN_COUNT },
                       ]}
                       height={240}
                     />
@@ -389,9 +398,9 @@ export default function Robr0DsCaseStudy() {
                     <BarChart
                       data={tokensByCategory}
                       title="Tokens by category"
-                      subtitle="What 161 semantic tokens cover, as of July 2026"
+                      subtitle={`What ${TOKEN_COUNT} semantic tokens cover`}
                       dataLabel="Tokens"
-                      summaryItems={[{ label: "Total", value: 161 }]}
+                      summaryItems={[{ label: "Total", value: TOKEN_COUNT }]}
                       height={220}
                     />
 

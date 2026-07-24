@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "validate-registry": "node scripts/generate-skills-content.mjs && node scripts/generate-readme-content.mjs && node scripts/sync-blueprints.mjs && node scripts/validate-component-registry.mjs && node scripts/validate-website-surfaces.mjs && node scripts/validate-page-titles.mjs && node scripts/validate-skills-registry.mjs && node scripts/validate-site-updates.mjs",
+    "validate-registry": "node scripts/generate-skills-content.mjs && node scripts/generate-readme-content.mjs && node scripts/generate-token-registry.mjs && node scripts/sync-blueprints.mjs && node scripts/validate-component-registry.mjs && node scripts/validate-website-surfaces.mjs && node scripts/validate-page-titles.mjs && node scripts/validate-skills-registry.mjs && node scripts/validate-site-updates.mjs && node scripts/validate-token-registry.mjs",
     "prebuild": "npm run validate-registry",
     "build": "tsc -b && vite build",
     "lint": "eslint .",

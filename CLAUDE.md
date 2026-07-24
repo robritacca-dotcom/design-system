@@ -23,6 +23,7 @@ Existing registries:
 | Component website surfaces | `src/components/registry.json` (same registry) | — | `scripts/validate-website-surfaces.mjs` — every public component has a showcase page, sidebar nav entry (alphabetical), index-grid `TocCard`, and a `###` spec section in `design.md` |
 | Skills | `.claude/skills/registry.json` (`displayed` + `external` + `unlisted`) | `SKILL_COUNT` from `website/src/data/skills-registry.ts` | `scripts/validate-skills-registry.mjs` — every `.md` registered, every entry has a file, page list matches `displayed` + `external` |
 | Project journal | `website/src/data/site-updates.json` (curated timeline entries + `asOf` commit bookmark) | `SITE_UPDATE_COUNT` from `website/src/data/site-updates.ts` | `scripts/validate-site-updates.mjs` — structure only (complete stories, valid bookmark, no commit-hash dumps); freshness is the biweekly `site-updates` skill's job, never the build's |
+| Semantic tokens | `src/tokens/registry.json` — **generated** from the semantic token CSS (`tokens-light.css` + `tokens-typography.css` + `tokens-motion.css`) by `scripts/generate-token-registry.mjs`, never hand-edited | `TOKEN_COUNT` + `TOKEN_COUNTS` (per category) from `src/tokens/registry.ts` | `scripts/validate-token-registry.mjs` — registry matches the CSS, light/dark colour parity; a token with an unknown prefix fails generation until its category is added deliberately |
 
 The `/project-journal` page renders this data as the build-progression timeline; entries are agent-curated stories (one theme consolidating many commits — what/why/outcome prose), appended by the `site-updates` skill. All validators run before every build (`npm run validate-registry`, wired into `prebuild`/`prestorybook`/`prebuild-storybook` and the website's `prebuild`).
 
@@ -184,6 +185,7 @@ Tokens also have multiple homes — a token that exists only in CSS is incomplet
    - Icon sizes → `website/src/app/foundations/icons/page.tsx` (the `--icon-size-*` scale table)
    - Motion (durations/easings) → `website/src/app/foundations/motion/page.tsx` (add a `MotionSwatch` entry to the matching token array)
 4. **Update the Storybook token docs**: `src/stories/Tokens.stories.tsx` documents semantic tokens by category (colors, status, chart, spacing) — add the new token to the matching story, or a new story if it's a new category. (`src/stories/` also holds `Typography`, `Icons`, and `Logos` foundation docs.)
+5. **Counts take care of themselves**: `src/tokens/registry.json` is regenerated from the token CSS on every build (see **Registries**), so displayed token counts update automatically — never hardcode one. If the token introduces a *new prefix*, generation fails until you add the prefix to `CATEGORY_PREFIXES` in `scripts/generate-token-registry.mjs` and give the category a home wherever counts are shown.
 
 ---
 
