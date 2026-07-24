@@ -146,14 +146,14 @@ A new component is not done until it appears in **every** place the system docum
 2. **Write `MyComponent.tsx`**: Export a named component + a TypeScript interface for props. Use semantic tokens in class names, never inline styles.
 3. **Write `MyComponent.css`**: All CSS vars must be from `tokens-light/dark.css`. No hardcoded hex, px values from primitives, or magic numbers.
 4. **Write `MyComponent.stories.tsx`**: Export a `meta` (with `title: 'Components/MyComponent'`, `tags: ['autodocs']`) and at least a `Default` story plus one per meaningful variant. (`.stories.ts` also works for stories with no JSX, but `.tsx` is the convention across the library.)
-5. **Add a website showcase page**: Create `website/src/app/components/my-component/page.tsx` + `page.module.css`. Follow the pattern in an existing page (e.g., `website/src/app/components/button/page.tsx`).
+5. **Add a website showcase page**: Create `website/src/app/components/my-component/page.tsx` + `page.module.css` + `layout.tsx`. Follow the pattern in an existing page (e.g., `website/src/app/components/button/page.tsx`). The `layout.tsx` must resolve its title through `pageMetadata("/components/my-component", "<one-line description>")` — without it the tab title silently falls back to the site-wide default.
 6. **Register it everywhere the website lists components** (all three — the sitemap derives from the sidebar config automatically):
    - `src/components/registry.json` — add the folder name to `components` (the official count everywhere derives from this)
    - `website/src/config/navigation.ts` — add to `componentsSidebarLinks` (alphabetical)
    - `website/src/app/components/page.tsx` — add a `TocCard` with a small live preview to the components index grid (alphabetical)
 7. **Document it in `design.md`**: add a short component spec section (class name, tokens used, key behaviours).
 
-Steps 5–7 are build-enforced: `scripts/validate-website-surfaces.mjs` fails the build if any public component is missing its showcase page, nav entry, `TocCard`, or `design.md` spec, or if the sidebar falls out of alphabetical order.
+Steps 5–7 are build-enforced by two validators: `scripts/validate-website-surfaces.mjs` fails the build if any public component is missing its showcase page, nav entry, `TocCard`, or `design.md` spec, or if the sidebar falls out of alphabetical order; `scripts/validate-page-titles.mjs` fails it if the page has no `layout.tsx`, or if that layout does not derive its title from `pageMetadata()`.
 
 Checklist before shipping a component:
 - [ ] All colors via semantic tokens
@@ -161,7 +161,7 @@ Checklist before shipping a component:
 - [ ] Disabled state at `opacity: 0.4`, `cursor: not-allowed`
 - [ ] Interactive elements have ARIA roles and keyboard navigation
 - [ ] At least one Storybook story per variant
-- [ ] Website showcase page added (build-enforced)
+- [ ] Website showcase page added, with a `layout.tsx` title via `pageMetadata()` (build-enforced)
 - [ ] Added to `src/components/registry.json` (build-enforced)
 - [ ] Registered in sidebar nav and components index `TocCard` grid (build-enforced; sitemap derives from the nav)
 - [ ] Spec section added to `design.md` (build-enforced)

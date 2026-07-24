@@ -268,6 +268,37 @@ export default function ComponentsPage() {
               </div>
             </TocCard>
 
+            {/* Combobox */}
+            <TocCard href="/components/combobox" title="Combobox">
+              <div className={styles.previewColumn} style={{ gap: "4px", width: "150px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px", padding: "6px 10px", borderRadius: "8px", border: "1px solid var(--color-input-border-selected)", background: "var(--color-input-bg-primary)" }}>
+                  <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-icon-primary)" }}>search</span>
+                  <span style={{ fontSize: "10px", color: "var(--color-text-primary)" }}>Can</span>
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: "2px", padding: "4px", borderRadius: "8px", border: "1px solid var(--color-bg-container-border)", background: "var(--color-bg-page-primary)" }}>
+                  <span style={{ fontSize: "10px", padding: "3px 6px", borderRadius: "4px", background: "var(--color-action-passive-bg-hover)", color: "var(--color-text-primary)" }}>Canada</span>
+                  <span style={{ fontSize: "10px", padding: "3px 6px", color: "var(--color-text-tertiary)" }}>Cancún</span>
+                </div>
+              </div>
+            </TocCard>
+
+            {/* Command palette */}
+            <TocCard href="/components/command-palette" title="Command palette">
+              <div style={{ width: "160px", borderRadius: "8px", border: "1px solid var(--color-bg-container-border)", background: "var(--color-bg-page-primary)", overflow: "hidden" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px", padding: "6px 8px", borderBottom: "1px solid var(--color-divider)" }}>
+                  <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-icon-primary)" }}>search</span>
+                  <span style={{ fontSize: "10px", color: "var(--color-text-tertiary)" }}>Type a command…</span>
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: "2px", padding: "4px" }}>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "6px", padding: "3px 6px", borderRadius: "4px", background: "var(--color-action-passive-bg-hover)" }}>
+                    <span style={{ fontSize: "10px", color: "var(--color-text-primary)" }}>New file</span>
+                    <span style={{ fontSize: "8px", padding: "1px 4px", borderRadius: "3px", border: "1px solid var(--color-bg-container-border)", background: "var(--color-bg-container-primary)", color: "var(--color-text-tertiary)" }}>⌘N</span>
+                  </div>
+                  <span style={{ fontSize: "10px", padding: "3px 6px", color: "var(--color-text-tertiary)" }}>Toggle theme</span>
+                </div>
+              </div>
+            </TocCard>
+
             {/* Contact card */}
             <TocCard href="/components/contact-card" title="Contact card">
               <div style={{ display: "flex", flexDirection: "column", gap: "6px", width: "160px" }}>
@@ -336,6 +367,17 @@ export default function ComponentsPage() {
               </div>
             </TocCard>
 
+            {/* Drawer */}
+            <TocCard href="/components/drawer" title="Drawer">
+              <div style={{ position: "relative", display: "flex", justifyContent: "flex-end", width: "150px", height: "70px", borderRadius: "8px", background: "var(--color-bg-container-primary)", overflow: "hidden" }}>
+                <div style={{ width: "60%", height: "100%", padding: "8px", borderLeft: "1px solid var(--color-bg-container-border)", background: "var(--color-bg-page-primary)", display: "flex", flexDirection: "column", gap: "5px" }}>
+                  <span style={{ fontSize: "10px", fontWeight: 600, color: "var(--color-text-primary)" }}>Filters</span>
+                  <div style={{ height: "5px", borderRadius: "3px", background: "var(--color-bg-container-secondary)" }} />
+                  <div style={{ height: "5px", width: "70%", borderRadius: "3px", background: "var(--color-bg-container-secondary)" }} />
+                </div>
+              </div>
+            </TocCard>
+
             {/* Dropdown */}
             <TocCard href="/components/dropdown" title="Dropdown">
               <div className={styles.dropdownPreview}>
@@ -365,6 +407,15 @@ export default function ComponentsPage() {
               </div>
             </TocCard>
 
+            {/* Empty state */}
+            <TocCard href="/components/empty-state" title="Empty state">
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "5px", width: "150px", padding: "12px 8px", borderRadius: "8px", border: "1px dashed var(--color-bg-container-border)" }}>
+                <span className="material-symbols-rounded" style={{ fontSize: "18px", color: "var(--color-icon-primary)", background: "var(--color-bg-container-primary)", borderRadius: "999px", padding: "5px" }}>inbox</span>
+                <span style={{ fontSize: "10px", fontWeight: 600, color: "var(--color-text-primary)" }}>No messages</span>
+                <span style={{ fontSize: "9px", color: "var(--color-text-tertiary)" }}>Nothing to show yet</span>
+              </div>
+            </TocCard>
+
             {/* Entity card */}
             <TocCard href="/components/entity-card" title="Entity card">
               <div className={styles.previewRow} style={{ gap: "8px" }}>
@@ -386,6 +437,15 @@ export default function ComponentsPage() {
                 <div style={{ padding: "6px 10px", fontSize: "10px", color: "var(--color-text-tertiary)", borderTop: "1px solid var(--color-bg-container-border)" }}>
                   Caption text
                 </div>
+              </div>
+            </TocCard>
+
+            {/* File input */}
+            <TocCard href="/components/file-input" title="File input">
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", width: "150px", padding: "14px 8px", borderRadius: "8px", border: "1px dashed var(--color-input-border-primary)", background: "var(--color-input-bg-primary)" }}>
+                <span className="material-symbols-rounded" style={{ fontSize: "18px", color: "var(--color-icon-primary)" }}>upload_file</span>
+                <span style={{ fontSize: "10px", fontWeight: 500, color: "var(--color-text-primary)" }}>Drop a file</span>
+                <span style={{ fontSize: "9px", color: "var(--color-text-tertiary)" }}>or click to browse</span>
               </div>
             </TocCard>
 

@@ -361,6 +361,14 @@ Icon slots (Material Symbols Rounded): left icon at 16px from edge, right icon a
 
 **`ds-dropdown`** — Select-style form field. Closed state matches Input anatomy (label, `--radius-md`, input border/bg tokens, helper/error text); open state reveals a `--radius-md` listbox on `--color-bg-page-primary` elevated with `--shadow-floating`, max-height 240px with scroll. Options support disabled entries and grouped sections (`groups`) with headings and separators. The selected option is marked with `--color-action-primary-text-tertiary`; hover uses `--color-action-passive-bg-hover`. Listbox keyboard pattern (arrows, Escape, Enter) with `aria-expanded` wiring. Sizes: `default`, `compact`. For action menus (not form values) use DropdownMenu.
 
+### Combobox
+
+**`ds-combobox`** — Filterable select: a text field that narrows a listbox as the user types. Control matches Input anatomy (label, `--radius-md`, input border/bg tokens, helper/error text) with a leading 24px `search` icon and a trailing chevron that rotates when open; the menu is a `--radius-md` surface on `--color-bg-page-primary` elevated with `--shadow-floating`, max-height 280px with scroll. Options carry an optional `description` second line (`--font-paragraph-sm-*` tertiary) and support disabled entries plus grouped sections. `multiple` renders selections as `--radius-full` chips in `--color-bg-container-primary` inside the control, each with a remove button; Backspace on an empty query pops the last chip. `clearable` adds a clear button, `loading` swaps the list for a status row, and `emptyMessage` covers the no-match case. Async callers pair `onSearchChange` with `manualFiltering` to filter upstream. Full combobox keyboard pattern (arrows, Enter, Escape, Tab) with `aria-expanded`/`aria-activedescendant` wiring. Sizes: `default`, `compact`. Use Dropdown when the option list is short and static; Combobox is for long, searchable, or server-backed lists.
+
+### FileInput
+
+**`ds-file-input`** — Click-or-drop upload zone plus a list of chosen files. The dropzone is a dashed `--border-xs` `--color-input-border-primary` rectangle at `--radius-md` with a centred 24px `upload_file` icon and instruction copy; hovering moves the border to `--color-input-border-hover`, and an active drag fills `--color-bg-container-primary` with the selected border. The real `<input type="file">` stays in the DOM (visually hidden) for form semantics, with the zone exposed as `role="button"` and Enter/Space activation. The file list is fully controlled — each row is a `--radius-md` hairline container with a `description` icon, name, human-readable size, an optional 4px `--color-action-primary-bg` progress track, and a 32px ghost remove button. Per-file `error` swaps the row to the error tokens with an `error` icon and message in `--color-status-error-text`. Sizes: `default`, `compact`.
+
 ### Toast
 
 **`ds-toast`** — Ephemeral notification via `ToastProvider` + `useToast()` hook. Rendered via React portal into `document.body`. Default duration: 5000ms. Pauses on hover/focus. Progress bar animates across bottom. Position: configurable (`top-right`, `bottom-right`, etc.), defaults to `bottom-right`. Max stack: 5 toasts. Five variants share the same `--color-status-*` token mapping as Badge/Alert.
@@ -378,6 +386,10 @@ Default icons (Material Symbols Rounded): `info`, `check_circle`, `warning`, `er
 ### Spinner
 
 **`ds-spinner`** — Indeterminate loading indicator: an SVG circle with a `--color-bg-container-secondary` track and a rotating arc in `--color-action-primary-bg` (`variant="primary"`) or `--color-text-secondary` (`variant="neutral"`). Sizes `sm`/`md`/`lg` (16/24/36px). `role="status"` with a configurable `label`. Use Spinner for indeterminate waits and ProgressBar when the completion fraction is known.
+
+### EmptyState
+
+**`ds-empty-state`** — Placeholder for a list, table, search, or dashboard with nothing to show. Centred stack: a 48px `--radius-full` `--color-bg-container-primary` disc holding a 24px Material Symbol, a `--font-title-body-*` headline in `--color-text-primary`, supporting copy in `--font-paragraph-sm-*` tertiary capped at 420px, and an action slot that wraps consumer-provided Buttons. `variant="bordered"` adds a dashed `--color-bg-container-border` container at `--radius-md` — use it inside a card, table, or panel; `plain` sits directly on the page. `size="compact"` drops to a 36px icon disc, `--font-paragraph-em-*` headline, and `--padding-lg`, for dense sidebars. The `icon` prop takes a Material Symbol name or an arbitrary element for illustrations. Write the description as the next action, not just a statement of absence.
 
 ### Card
 
@@ -431,6 +443,14 @@ Default icons (Material Symbols Rounded): `info`, `check_circle`, `warning`, `er
 ### AlertDialog
 
 **`ds-alert-dialog`** — Modal confirmation for important or destructive actions. A portal-rendered overlay: `--color-scrim` backdrop behind a `--radius-md` panel on `--color-bg-page-primary` with `--border-xs` border and `--shadow-modal`, title + description text, and a Cancel/Confirm Button pair. `variant="destructive"` styles the confirm action with the error tokens. Focus is trapped while open and restored on close; ESC dismisses; the panel wires `aria-labelledby`/`aria-describedby` to the generated title/description ids. SSR-safe (portal only mounts client-side). For general-purpose modal content use Dialog; AlertDialog is only for confirm/cancel decisions.
+
+### Drawer
+
+**`ds-drawer`** — Edge-anchored modal panel. Shares Dialog's modal contract (portal to `<body>`, focus trap with Tab cycling, focus restore on close, body scroll lock, `role="dialog" aria-modal="true"`, `dismissible={false}` to disable ESC/scrim/close) but slides in from a viewport edge instead of scaling from centre. `side` picks the edge (`left`/`right`/`top`/`bottom`); the panel rests off-screen via a `translate` transform and returns to zero when open, over a `--color-scrim` backdrop that cross-fades. Surface: `--color-bg-page-primary` with `--shadow-modal` and a hairline `--color-bg-container-border` on the edge facing the page. Header is a `--font-heading-3-*` title with optional `--font-paragraph-sm-*` tertiary description and a 32px ghost close button; the body scrolls independently so header and footer stay pinned; the footer right-aligns consumer Buttons. Sizes measure along the slide axis — `sm`/`md`/`lg` are 320/420/560px for side drawers and 30/50/75vh for top and bottom. Side drawers go full-width under 480px. Use Dialog for centred, self-contained prompts; Drawer for filter panels, detail views, and mobile navigation.
+
+### CommandPalette
+
+**`ds-command-palette`** — Modal Cmd+K launcher over a grouped command list. Panel is a 560px `--radius-md` surface on `--color-bg-page-primary` with `--shadow-modal`, pinned 10vh from the top over a `--color-scrim` backdrop, capped at 60vh. A search row (24px `search` icon, borderless input, 32px ghost close) sits above a scrolling list of `--radius-sm` command rows; each row takes an optional 20px icon, a `--font-paragraph-em-*` label, an optional tertiary description line, and a `shortcut` array rendered as `<kbd>` chips (`--radius-xs`, `--color-bg-container-primary`, hairline border). Group headings use `--font-paragraph-sm-*` tertiary; the active row takes `--color-action-passive-bg-hover`. Filtering matches label, description, and `keywords`; disabled commands stay visible but are skipped by the highlight. Keyboard: arrows wrap through the flattened list, Home/End jump to the ends, Enter runs, Escape closes, and `hotkey` binds Cmd/Ctrl+K globally (set false when the host app owns the shortcut). A footer hint row documents those keys and hides under 480px. Closed state uses `visibility: hidden` so the input never enters the tab order.
 
 ### Popover
 
