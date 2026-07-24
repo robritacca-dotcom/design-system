@@ -73,7 +73,7 @@
   font-size: var(--font-paragraph-size);
   font-weight: var(--font-paragraph-em-weight);
   line-height: 1;
-  transition: background 0.2s ease, transform 0.2s ease;
+  transition: background var(--motion-duration-base) var(--motion-ease-standard), transform var(--motion-duration-base) var(--motion-ease-standard);
   white-space: nowrap;
 }
 

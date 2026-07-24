@@ -22,7 +22,7 @@
     var(--color-bg-container-primary) 50%,
     transparent 100%
   );
-  animation: ds-skeleton-shimmer 1.8s ease-in-out infinite;
+  animation: ds-skeleton-shimmer var(--motion-duration-loop-shimmer) ease-in-out infinite;
 }
 
 /* ============================================

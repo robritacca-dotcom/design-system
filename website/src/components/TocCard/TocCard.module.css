@@ -12,7 +12,7 @@
   text-decoration: none;
   color: inherit;
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform var(--motion-duration-slow) var(--motion-ease-standard), box-shadow var(--motion-duration-slow) var(--motion-ease-standard);
   box-shadow: 0 0 0 rgba(0, 0, 0, 0);
 }
 

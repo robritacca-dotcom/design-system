@@ -29,7 +29,7 @@
   padding: var(--padding-xs) var(--padding-sm) var(--padding-xs) var(--padding-md);
   border-bottom: var(--border-xs) solid var(--color-bg-container-border);
   flex-shrink: 0;
-  transition: border-bottom-color 0.25s ease;
+  transition: border-bottom-color var(--motion-duration-slow) var(--motion-ease-standard);
 }
 
 /* Collapsed: keep the header's height but hide its divider so it
@@ -57,13 +57,13 @@
   color: var(--color-icon-primary);
   cursor: pointer;
   flex-shrink: 0;
-  transition: background-color 0.2s ease;
+  transition: background-color var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 .ds-code-block__toggle .material-symbols-rounded {
   --icon-size: var(--icon-size-sm);
   line-height: 1;
-  transition: transform 0.25s ease;
+  transition: transform var(--motion-duration-slow) var(--motion-ease-standard);
 }
 
 .ds-code-block--collapsed .ds-code-block__toggle .material-symbols-rounded {
@@ -120,7 +120,7 @@
   color: var(--color-text-secondary);
   cursor: pointer;
   flex-shrink: 0;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color var(--motion-duration-base) var(--motion-ease-standard), color var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 .ds-code-block__copy .material-symbols-rounded {
@@ -146,7 +146,7 @@
 .ds-code-block__panel {
   display: grid;
   grid-template-rows: 1fr;
-  transition: grid-template-rows 0.25s ease;
+  transition: grid-template-rows var(--motion-duration-slow) var(--motion-ease-standard);
   min-height: 0;
 }
 

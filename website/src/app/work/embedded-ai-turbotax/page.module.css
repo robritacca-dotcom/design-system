@@ -106,7 +106,7 @@
   width: 100%;
   height: auto;
   display: block;
-  transition: opacity 0.2s ease;
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 .articleFigure:hover .articleImage {
@@ -137,7 +137,7 @@
   justify-content: center;
   padding: var(--primitive-gap-xl);
   cursor: zoom-out;
-  animation: lightboxFadeIn 0.15s ease;
+  animation: lightboxFadeIn var(--motion-duration-fast) var(--motion-ease-standard);
 }
 
 @keyframes lightboxFadeIn {
@@ -170,7 +170,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.15s ease;
+  transition: background var(--motion-duration-fast) var(--motion-ease-standard);
   z-index: 10000;
 }
 
@@ -374,7 +374,7 @@
   gap: var(--primitive-gap-md);
   text-decoration: none;
   color: inherit;
-  transition: opacity 0.2s ease;
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 .linkItem:hover {

@@ -39,7 +39,7 @@
   border-radius: var(--radius-full); /* pill shape */
   background-color: transparent;
   cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color var(--motion-duration-base) var(--motion-ease-standard), color var(--motion-duration-base) var(--motion-ease-standard);
   white-space: nowrap;
   position: relative;
 }
@@ -52,7 +52,7 @@
   line-height: var(--font-paragraph-em-line-height);
   letter-spacing: var(--font-paragraph-em-letter-spacing);
   color: var(--color-text-secondary);
-  transition: color 0.2s ease;
+  transition: color var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 /* Icon */
@@ -61,7 +61,7 @@
   --icon-size: var(--icon-size-md);
   line-height: 1;
   color: var(--color-icon-secondary);
-  transition: color 0.2s ease;
+  transition: color var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 /* ============================================

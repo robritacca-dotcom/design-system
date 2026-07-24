@@ -163,7 +163,7 @@
   gap: var(--primitive-gap-md);
   text-decoration: none;
   color: inherit;
-  transition: opacity 0.2s ease;
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 .linkItem:hover {

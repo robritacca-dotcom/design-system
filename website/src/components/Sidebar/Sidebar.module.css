@@ -80,7 +80,7 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .noResults {
-    animation: sidebarFadeIn 0.2s ease;
+    animation: sidebarFadeIn var(--motion-duration-base) var(--motion-ease-standard);
   }
 }
 

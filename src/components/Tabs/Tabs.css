@@ -47,7 +47,7 @@
   line-height: var(--font-paragraph-em-line-height);
   letter-spacing: var(--font-paragraph-em-letter-spacing);
 
-  transition: color 0.2s ease, border-color 0.2s ease;
+  transition: color var(--motion-duration-base) var(--motion-ease-standard), border-color var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 /* ============================================
@@ -71,7 +71,7 @@
 
 .ds-tabs__label {
   color: var(--color-text-tertiary);
-  transition: color 0.2s ease;
+  transition: color var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 /* ============================================
@@ -81,7 +81,7 @@
 .ds-tabs__icon {
   --icon-size: var(--icon-size-md);
   color: var(--color-icon-secondary);
-  transition: color 0.2s ease;
+  transition: color var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 /* ============================================

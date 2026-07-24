@@ -26,7 +26,7 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: border-color 0.2s ease;
+  transition: border-color var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 /* ============================================
@@ -39,7 +39,7 @@
   border-radius: var(--radius-full);
   background-color: var(--color-action-primary-bg);
   transform: scale(0);
-  transition: transform 0.2s ease;
+  transition: transform var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 /* ============================================

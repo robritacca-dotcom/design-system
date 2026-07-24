@@ -35,7 +35,7 @@
   border-radius: var(--radius-full); /* pill */
   background-color: transparent;
   cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color var(--motion-duration-base) var(--motion-ease-standard), color var(--motion-duration-base) var(--motion-ease-standard);
   font-family: var(--font-paragraph-em-family);
   font-size: var(--font-paragraph-em-size);
   font-weight: var(--font-paragraph-em-weight);

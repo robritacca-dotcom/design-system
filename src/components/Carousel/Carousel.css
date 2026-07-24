@@ -19,7 +19,7 @@
 
 .ds-carousel__track {
   display: flex;
-  transition: transform 0.4s ease;
+  transition: transform var(--motion-duration-deliberate) var(--motion-ease-standard);
 }
 
 .ds-carousel__slide {
@@ -47,7 +47,7 @@
   z-index: 2;
   color: var(--color-icon-primary);
   padding: 0;
-  transition: background-color 0.2s ease;
+  transition: background-color var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 .ds-carousel__arrow:hover:not(:disabled) {
@@ -95,7 +95,7 @@
   padding: 0;
   background-color: var(--color-bg-container-border);
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 .ds-carousel__dot:hover {

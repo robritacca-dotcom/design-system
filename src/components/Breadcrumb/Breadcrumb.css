@@ -43,7 +43,7 @@
   letter-spacing: var(--font-paragraph-sm-letter-spacing);
   color: var(--color-text-secondary);
   text-decoration: none;
-  transition: color 0.15s ease;
+  transition: color var(--motion-duration-fast) var(--motion-ease-standard);
 }
 
 .ds-breadcrumb__link:hover {

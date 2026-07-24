@@ -53,7 +53,7 @@
   margin-block: 0;
 
   /* Animation */
-  animation: ds-dropdown-menu-appear 0.15s ease-out;
+  animation: ds-dropdown-menu-appear var(--motion-duration-fast) var(--motion-ease-entrance);
 }
 
 .ds-dropdown-menu__panel--align-end {
@@ -139,7 +139,7 @@
   letter-spacing: var(--font-paragraph-em-letter-spacing);
   color: var(--color-action-passive-text);
 
-  transition: background-color 0.12s ease, color 0.12s ease;
+  transition: background-color var(--motion-duration-fast) var(--motion-ease-standard), color var(--motion-duration-fast) var(--motion-ease-standard);
 }
 
 .ds-dropdown-menu__item:hover,

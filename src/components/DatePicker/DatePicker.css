@@ -49,7 +49,7 @@
   color: var(--color-text-secondary);
   font-size: 24px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 .ds-date-picker__nav-btn:hover:not(:disabled) {
@@ -111,7 +111,7 @@
   border-radius: var(--radius-full);
   background-color: transparent;
   cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color var(--motion-duration-base) var(--motion-ease-standard), color var(--motion-duration-base) var(--motion-ease-standard);
 
   /* Typography — paragraph sm em for clickable cells */
   font-family: var(--font-paragraph-sm-em-family);

@@ -182,7 +182,7 @@
   color: var(--color-text-primary);
   text-decoration: underline;
   text-underline-offset: 3px;
-  transition: color 0.2s ease;
+  transition: color var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 .introLink:hover {

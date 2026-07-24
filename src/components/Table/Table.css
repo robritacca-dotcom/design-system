@@ -53,7 +53,7 @@
 
 .ds-table__row {
   border-bottom: var(--border-xs) solid var(--color-bg-container-border);
-  transition: background-color 0.2s ease;
+  transition: background-color var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 /* ============================================

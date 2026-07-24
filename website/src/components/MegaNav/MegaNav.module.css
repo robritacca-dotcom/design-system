@@ -98,7 +98,7 @@
   line-height: 1;
   text-decoration: none;
   cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition: background var(--motion-duration-fast) var(--motion-ease-standard), color var(--motion-duration-fast) var(--motion-ease-standard);
 }
 
 .navLink:hover {
@@ -131,7 +131,7 @@
   flex-shrink: 0;
   margin-left: 4px;
   color: var(--color-text-secondary);
-  transition: transform 0.2s ease;
+  transition: transform var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 .caretOpen {
@@ -189,7 +189,7 @@
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.22s ease, visibility 0.22s;
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard), visibility 0.22s;
 }
 
 .megaOpen {
@@ -220,7 +220,7 @@
   border-radius: var(--radius-md);
   text-decoration: none;
   color: inherit;
-  transition: background 0.15s ease;
+  transition: background var(--motion-duration-fast) var(--motion-ease-standard);
   flex: 0 1 280px;
   min-width: 0;
 }
@@ -303,7 +303,7 @@
   visibility: hidden;
   pointer-events: none;
   transform: translateY(-100%);
-  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+  transition: opacity var(--motion-duration-slow) var(--motion-ease-standard), visibility var(--motion-duration-slow) var(--motion-ease-standard), transform var(--motion-duration-slow) var(--motion-ease-standard);
 }
 
 .stickyHeaderVisible {
@@ -345,7 +345,7 @@
   z-index: 1000;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition: opacity var(--motion-duration-slow) var(--motion-ease-standard), visibility var(--motion-duration-slow) var(--motion-ease-standard);
 }
 
 .mobileMenuOverlayOpen {
@@ -369,7 +369,7 @@
   gap: var(--primitive-gap-md);
   overflow-y: auto;
   transform: translateX(-100%);
-  transition: transform 0.3s ease;
+  transition: transform var(--motion-duration-slow) var(--motion-ease-standard);
 }
 
 .mobileMenuOverlayOpen .mobileMenu {

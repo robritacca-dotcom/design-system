@@ -33,7 +33,7 @@
 .ds-progress-bar__fill {
   height: 100%;
   border-radius: var(--radius-full);
-  transition: width 0.3s ease;
+  transition: width var(--motion-duration-slow) var(--motion-ease-standard);
 }
 
 /* ============================================

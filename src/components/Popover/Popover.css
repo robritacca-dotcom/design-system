@@ -35,7 +35,7 @@
   opacity: 0;
   pointer-events: none;
   transform: scale(0.96);
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard), transform var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 .ds-popover__panel--open {

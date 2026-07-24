@@ -41,7 +41,7 @@
   background: var(--color-action-primary-bg);
   border: 2px solid var(--color-action-primary-bg);
   cursor: pointer;
-  transition: box-shadow 0.15s ease;
+  transition: box-shadow var(--motion-duration-fast) var(--motion-ease-standard);
 }
 
 .ds-slider--compact .ds-slider__input::-webkit-slider-thumb {
@@ -64,7 +64,7 @@
   background: var(--color-action-primary-bg);
   border: 2px solid var(--color-action-primary-bg);
   cursor: pointer;
-  transition: box-shadow 0.15s ease;
+  transition: box-shadow var(--motion-duration-fast) var(--motion-ease-standard);
 }
 
 .ds-slider--compact .ds-slider__input::-moz-range-thumb {

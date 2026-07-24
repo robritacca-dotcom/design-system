@@ -35,7 +35,7 @@
 .ds-spinner__circle {
   width: 100%;
   height: 100%;
-  animation: ds-spinner-rotate 1s linear infinite;
+  animation: ds-spinner-rotate var(--motion-duration-loop-spin) var(--motion-ease-linear) infinite;
 }
 
 .ds-spinner__track {

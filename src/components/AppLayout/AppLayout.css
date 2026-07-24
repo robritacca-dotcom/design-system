@@ -18,7 +18,7 @@
   justify-content: center;
   margin-left: 64px;
   padding: var(--padding-xl) var(--padding-lg);
-  transition: margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: margin-left var(--motion-duration-slow) var(--motion-ease-emphasized);
   min-width: 0;
 }
 

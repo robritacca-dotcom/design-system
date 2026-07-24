@@ -20,7 +20,7 @@
   padding: var(--padding-lg) 0;
   background-color: var(--color-bg-page-primary);
   overflow: hidden;
-  transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: width var(--motion-duration-slow) var(--motion-ease-emphasized);
 }
 
 .ds-app-sidebar--expanded {
@@ -80,7 +80,7 @@
   width: 0;
   overflow: hidden;
   opacity: 0;
-  transition: opacity 0.2s ease;
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 .ds-app-sidebar--expanded .ds-app-sidebar__logo-text {
@@ -102,7 +102,7 @@
   padding: 0;
   overflow: hidden;
   opacity: 0;
-  transition: opacity 0.2s ease;
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 .ds-app-sidebar--expanded .ds-app-sidebar__toggle {
@@ -112,7 +112,7 @@
 
 .ds-app-sidebar__toggle .material-symbols-rounded {
   --icon-size: var(--icon-size-md);
-  transition: transform 0.25s ease;
+  transition: transform var(--motion-duration-slow) var(--motion-ease-standard);
 }
 
 /* ============================================
@@ -142,7 +142,7 @@
   opacity: 0;
   height: 0;
   overflow: hidden;
-  transition: opacity 0.2s ease, height 0.2s ease;
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard), height var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 .ds-app-sidebar--expanded .ds-app-sidebar__category {
@@ -166,7 +166,7 @@
   cursor: pointer;
   overflow: hidden;
   text-align: left;
-  transition: background-color 0.15s ease, padding 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background-color var(--motion-duration-fast) var(--motion-ease-standard), padding var(--motion-duration-slow) var(--motion-ease-emphasized);
 }
 
 .ds-app-sidebar--expanded .ds-app-sidebar__btn {
@@ -211,7 +211,7 @@
   width: 0;
   overflow: hidden;
   opacity: 0;
-  transition: opacity 0.2s ease;
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 .ds-app-sidebar--expanded .ds-app-sidebar__btn-label {
@@ -225,7 +225,7 @@
   flex-shrink: 0;
   width: 0;
   overflow: hidden;
-  transition: transform 0.25s ease, opacity 0.2s ease;
+  transition: transform var(--motion-duration-slow) var(--motion-ease-standard), opacity var(--motion-duration-base) var(--motion-ease-standard);
   opacity: 0;
 }
 
@@ -246,7 +246,7 @@
   flex-direction: column;
   overflow: hidden;
   max-height: 0;
-  transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: max-height var(--motion-duration-slow) var(--motion-ease-emphasized);
 }
 
 .ds-app-sidebar__sub-items--open {
@@ -292,7 +292,7 @@
   text-align: left;
   overflow: hidden;
   white-space: nowrap;
-  transition: background-color 0.15s ease;
+  transition: background-color var(--motion-duration-fast) var(--motion-ease-standard);
 }
 
 .ds-app-sidebar__sub-btn:hover {
@@ -362,7 +362,7 @@
   width: 0;
   overflow: hidden;
   opacity: 0;
-  transition: opacity 0.2s ease;
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 .ds-app-sidebar--expanded .ds-app-sidebar__profile-info {
@@ -406,7 +406,7 @@
   width: 0;
   overflow: hidden;
   opacity: 0;
-  transition: opacity 0.2s ease;
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 .ds-app-sidebar--expanded .ds-app-sidebar__profile-more {

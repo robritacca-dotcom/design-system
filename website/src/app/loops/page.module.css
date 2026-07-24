@@ -192,7 +192,7 @@
   border-radius: var(--radius-xs);
   color: var(--color-text-secondary);
   text-decoration: none;
-  transition: border-color 0.2s ease;
+  transition: border-color var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 .loopSkillLink:hover {

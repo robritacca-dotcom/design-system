@@ -42,7 +42,7 @@
   border-radius: var(--radius-md); /* 12px */
   background-color: var(--color-input-bg-primary);
   cursor: pointer;
-  transition: border-color 0.2s ease;
+  transition: border-color var(--motion-duration-base) var(--motion-ease-standard);
   outline: none;
 }
 
@@ -86,7 +86,7 @@
 .ds-dropdown__chevron {
   --icon-size: var(--icon-size-md);
   color: var(--color-icon-primary);
-  transition: transform 0.2s ease;
+  transition: transform var(--motion-duration-base) var(--motion-ease-standard);
   flex-shrink: 0;
 }
 
@@ -115,7 +115,7 @@
   box-shadow: var(--shadow-floating);
 
   /* Animation */
-  animation: ds-dropdown-appear 0.15s ease-out;
+  animation: ds-dropdown-appear var(--motion-duration-fast) var(--motion-ease-entrance);
 }
 
 @keyframes ds-dropdown-appear {
@@ -146,7 +146,7 @@
   letter-spacing: var(--font-paragraph-em-letter-spacing);
   color: var(--color-text-primary);
   cursor: pointer;
-  transition: background-color 0.12s ease;
+  transition: background-color var(--motion-duration-fast) var(--motion-ease-standard);
 }
 
 .ds-dropdown__option:hover {

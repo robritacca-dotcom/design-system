@@ -68,11 +68,11 @@
   pointer-events: auto;
   position: relative;
   overflow: hidden;
-  animation: ds-toast-enter 0.3s ease forwards;
+  animation: ds-toast-enter var(--motion-duration-slow) var(--motion-ease-standard) forwards;
 }
 
 .ds-toast--exiting {
-  animation: ds-toast-exit 0.2s ease forwards;
+  animation: ds-toast-exit var(--motion-duration-base) var(--motion-ease-standard) forwards;
 }
 
 /* ============================================
@@ -131,7 +131,7 @@
   background: none;
   cursor: pointer;
   border-radius: var(--radius-sm); /* 8px */
-  transition: background-color 0.2s ease;
+  transition: background-color var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 .ds-toast__dismiss .material-symbols-rounded {

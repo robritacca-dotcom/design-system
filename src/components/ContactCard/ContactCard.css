@@ -11,7 +11,7 @@
   background: var(--color-bg-container-primary-semi);
   text-decoration: none;
   color: inherit;
-  transition: background 0.15s ease, border-color 0.15s ease;
+  transition: background var(--motion-duration-fast) var(--motion-ease-standard), border-color var(--motion-duration-fast) var(--motion-ease-standard);
   /* Resets so the card renders identically whether it's an <a> or a <button>
      (copy-only cards use a button). */
   width: 100%;
@@ -99,7 +99,7 @@
   background: transparent;
   color: var(--color-text-tertiary);
   cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition: background var(--motion-duration-fast) var(--motion-ease-standard), color var(--motion-duration-fast) var(--motion-ease-standard);
 }
 
 .ds-contact-card__copy-btn:hover {

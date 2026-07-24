@@ -14,7 +14,7 @@
   opacity: 0;
   visibility: hidden; /* also removes the input from the tab order */
   pointer-events: none;
-  transition: opacity 0.16s ease, visibility 0.16s ease;
+  transition: opacity var(--motion-duration-fast) var(--motion-ease-standard), visibility var(--motion-duration-fast) var(--motion-ease-standard);
 }
 
 .ds-command-palette--open {
@@ -52,7 +52,7 @@
   box-shadow: var(--shadow-modal);
   overflow: hidden;
   transform: scale(0.98);
-  transition: transform 0.16s ease;
+  transition: transform var(--motion-duration-fast) var(--motion-ease-standard);
 }
 
 .ds-command-palette--open .ds-command-palette__panel {
@@ -110,7 +110,7 @@
   color: var(--color-icon-primary);
   cursor: pointer;
   flex-shrink: 0;
-  transition: background-color 0.2s ease;
+  transition: background-color var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 .ds-command-palette__close:hover {
@@ -180,7 +180,7 @@
   padding: var(--padding-sm) var(--padding-sm-md); /* 8px 12px */
   border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: background-color 0.12s ease;
+  transition: background-color var(--motion-duration-fast) var(--motion-ease-standard);
 }
 
 .ds-command-palette__command--active {
