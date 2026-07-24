@@ -36,7 +36,8 @@ Use this skill any time you are asked to add or create a new component to the de
 
 ### File 2: `ComponentName.css`
 - CSS custom properties exclusively — **no hardcoded hex colours**, no raw `rgb()`/`rgba()`
-- Acceptable raw pixel values: icon sizes only (20px, 24px) — these have no token equivalent
+- Icons are sized by setting `--icon-size: var(--icon-size-sm|md|lg|xl)` (20/24/32/48px) on the icon element — never `font-size` or raw pixel dimensions on an icon
+- Transitions/animations compose `--motion-duration-*` with `--motion-ease-*` from `tokens-motion.css` — never literal timings like `0.2s ease` (new code must use the motion tokens from the start)
 - All other spacing, padding, gap, border-radius, font sizes must use semantic tokens from `tokens-light.css` / `tokens-typography.css`
 - Section comments grouping related rules (e.g. `/* Base */`, `/* Variants */`, `/* States */`)
 - **No dark-theme overrides and no `prefers-color-scheme` queries** — dark mode comes entirely from the semantic tokens (every token has a light and dark value; no component CSS in the library contains a `data-theme` selector)
@@ -54,4 +55,4 @@ Use this skill any time you are asked to add or create a new component to the de
 
 5. **Document it in `design.md`** — add a short component spec section (class name, tokens used, key behaviours), following the format of the existing component sections.
 
-6. **Hand off the website work.** A component is not done until it has a showcase page and appears everywhere the site lists components: `website/src/config/navigation.ts` (sidebar), the `TocCard` grid in `website/src/app/components/page.tsx`, and `website/src/app/sitemap.ts`. Ask Rob: "Should I add the website documentation page now? (invokes the `component-doc-page` skill)" — and whoever does that work must complete all three registrations above.
+6. **Hand off the website work.** A component is not done until it has a showcase page and appears everywhere the site lists components: `website/src/config/navigation.ts` (sidebar), the `TocCard` grid in `website/src/app/components/page.tsx`, and a `layout.tsx` whose title comes from `pageMetadata()` (the sitemap derives from the sidebar config automatically — no separate registration). All of it is build-enforced by `scripts/validate-website-surfaces.mjs` and `scripts/validate-page-titles.mjs`. Ask Rob: "Should I add the website documentation page now? (invokes the `component-doc-page` skill)" — and whoever does that work must complete every registration above.

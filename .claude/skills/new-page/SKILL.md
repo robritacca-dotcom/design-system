@@ -2,7 +2,7 @@
 name: new-page
 description: Add a new page to the website with the standard layout shell and correct navigation wiring. Use when asked to add or create a new page on the site.
 icon: insert_drive_file
-displayDescription: "Creates a new website page by mirroring a live exemplar page's layout shell, then wires it into every place the site tracks pages: the section sidebar, breadcrumbs, and the sitemap. Prevents the common mistake of adding a route without registering it."
+displayDescription: "Creates a new website page by mirroring a live exemplar page's layout shell, then wires it into every place the site tracks pages: the section sidebar and breadcrumbs, with the sitemap deriving automatically. Prevents the common mistake of adding a route without registering it."
 invoke: ["add a page for [X]","create a [section] page","add [X] to the site"]
 ---
 
@@ -27,8 +27,7 @@ For a **component documentation page**, use the `component-doc-page` skill inste
 2. **Read the exemplars before writing anything.** The live pages are the source of truth for structure — mirror them rather than writing a shell from memory:
    - `website/src/app/skills/page.tsx` — a standard content page (layout shell, sidebar wiring, header/intro blocks, entry animations)
    - `website/src/app/components/button/page.tsx` + `page.module.css` + `layout.tsx` — the richest example, with `PageLinks` and per-page CSS
-   - `website/src/config/navigation.ts` — nav config (single source of truth for sidebars, mega menu, and breadcrumbs)
-   - `website/src/app/sitemap.ts` — the route list
+   - `website/src/config/navigation.ts` — nav config (single source of truth for sidebars, mega menu, and breadcrumbs; the sitemap derives its routes from the sidebar configs)
 
 3. **Create the directory** `website/src/app/<path>/` with three files, mirroring the exemplar:
 
@@ -44,13 +43,12 @@ For a **component documentation page**, use the `component-doc-page` skill inste
 - Semantic design tokens only — no hardcoded colours or magic values
 
 ### File 3: `layout.tsx`
-- Exports `metadata` with `title` and `description`
-- `title` is the bare page name only — the root layout's title template appends "— Robert Ritacca"
+- Exports `metadata` via the shared helper: `export const metadata = pageMetadata("<your path>", "<one-line description>")` (import from `@/config/navigation`) — `scripts/validate-page-titles.mjs` fails the build if a page's layout doesn't derive its title this way
 - Default export wraps `{children}` in a fragment
 
 4. **Register the page everywhere the site tracks pages:**
    - **Sidebar**: add `{ href, label }` to the section's array in `website/src/config/navigation.ts`, matching that array's existing order convention (components and foundations are alphabetical; work and about are curated)
-   - **Sitemap**: add the route to `website/src/app/sitemap.ts`
+   - **Sitemap**: automatic — it derives from the sidebar configs, so the entry above covers it; never edit `website/src/app/sitemap.ts` by hand
    - **Breadcrumbs**: sub-pages of an existing section resolve automatically from the sidebar entry. Only if the page starts a *new* section: add a `breadcrumbSections` entry, and if it lives under the Design system umbrella, extend `dsActiveMatchers` (and `dsMegaItems` if it should appear in the mega menu)
 
 5. **Verify**: load the page in the browser and confirm the sidebar highlights it, the breadcrumb trail is correct, and both themes render properly.

@@ -109,7 +109,7 @@ Component CSS               background-color: var(--color-action-primary-bg)
 ```
 
 - **Primitives** (`--primitive-*`) — raw values. Source of truth. Never referenced in components.
-- **Semantic tokens** (`--color-*`, `--radius-*`, `--gap-*`, `--padding-*`, `--font-*`, `--motion-*`) — always use these in components.
+- **Semantic tokens** (`--color-*`, `--radius-*`, `--gap-*`, `--padding-*`, `--font-*`, `--motion-*`, `--icon-size-*`, `--shadow-*`) — always use these in components.
 - **Dark mode** is driven by `data-theme="dark"` on the root element. Every semantic token has a light and dark value — no `prefers-color-scheme` queries in components.
 
 Key invariants:
@@ -181,6 +181,7 @@ Tokens also have multiple homes — a token that exists only in CSS is incomplet
    - Spacing/radius/border → `website/src/app/foundations/spatial/page.tsx`
    - Shadows/depth → `website/src/app/foundations/elevation/page.tsx`
    - Typography → `website/src/app/foundations/typography/page.tsx`
+   - Icon sizes → `website/src/app/foundations/icons/page.tsx` (the `--icon-size-*` scale table)
    - Motion (durations/easings) → `website/src/app/foundations/motion/page.tsx` (add a `MotionSwatch` entry to the matching token array)
 4. **Update the Storybook token docs**: `src/stories/Tokens.stories.tsx` documents semantic tokens by category (colors, status, chart, spacing) — add the new token to the matching story, or a new story if it's a new category. (`src/stories/` also holds `Typography`, `Icons`, and `Logos` foundation docs.)
 
@@ -193,7 +194,7 @@ Tokens also have multiple homes — a token that exists only in CSS is incomplet
 - **Teal (#118AB2) is the action color**: primary buttons, focus rings, active input borders. Using it decoratively on text or illustrations dilutes its CTA signal.
 - **Five status variants — no more**: `info` (blue), `positive` (green), `warning` (orange), `error` (red), `neutral` (gray). Badge, Alert, Toast, and ProgressBar all share the same `--color-status-*` token set.
 - **No box shadows on standard containers**: the elevation system is color-based. The only shadows are the semantic tokens `--shadow-floating` (popovers, dropdowns, chart tooltips, toasts) and `--shadow-modal` (Dialog/AlertDialog, paired with `--color-scrim`), plus one sanctioned exception: interactive Card tiles lift on hover (see design.md).
-- **Material Symbols Rounded** for all icons — 24px default, 20px compact.
+- **Material Symbols Rounded** for all icons, on the four-step `--icon-size-*` scale (20/24/32/48px; 24px default, 20px compact). Components set `--icon-size` to a scale step — never `font-size` directly on an icon.
 - **Weight contrast is the heading hierarchy rule**: `h2` is 30px/300 (light), `h3` is 22px/600 (bold). Never use the same weight for consecutive heading levels.
 
 ---
@@ -218,7 +219,7 @@ Tokens also have multiple homes — a token that exists only in CSS is incomplet
 
 ## Known Gaps
 
-- Motion tokens (`--motion-*`) exist, but most component CSS still carries pre-token hardcoded timings (`0.2s ease` et al.) — migrate to the tokens as components are touched
+- CSS motion is fully tokenized (`--motion-*`), but JS-driven timings (Tooltip delays, Toast auto-dismiss, Carousel autoplay) remain hardcoded TS constants — tokenizing them is a pending follow-up
 - No `--chart-series-{n}` formal token set for ordered chart series colors
 - Figma source file documented: [robr0-ds26](https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26) — foundation/component pages deep-link to specific frames via `figmaUrl`
 - A11y checks are report-only — story tests run axe per story, but `a11y.test` in `.storybook/preview.ts` is `'todo'`, so violations warn instead of failing CI; no visual-regression coverage yet either (Chromatic planned)

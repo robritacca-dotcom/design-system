@@ -8,7 +8,7 @@ The system runs a **single typeface throughout**: **Nunito Sans** at weight 300 
 
 The **three-tier token architecture** is the defining structural rule:
 1. **Primitives** (`--primitive-*`) — raw hex/px values. Source of truth. Never used directly in components.
-2. **Semantic tokens** (`--color-*`, `--radius-*`, `--gap-*`, `--padding-*`, `--font-*`) — usage-intent variables consumed by components. Always use these.
+2. **Semantic tokens** (`--color-*`, `--radius-*`, `--gap-*`, `--padding-*`, `--font-*`, `--motion-*`, `--icon-size-*`, `--shadow-*`) — usage-intent variables consumed by components. Always use these.
 3. **Component CSS classes** (`.ds-button`, `.ds-badge`, etc.) — per-component scope, referencing semantic tokens.
 
 The system is **light/dark-first**: every semantic color token has a light-theme value and a dark-theme override. The switch is driven by `data-theme="dark"` on the root element. Status colors (positive, warning, error, info) stay perceptually stable across themes; surfaces and text invert.
@@ -37,7 +37,9 @@ Never reference `--primitive-*` tokens inside components. Always use the semanti
 - **Primary bg active** (`--color-action-primary-bg-active` — #0A4E66): Press/active darken on primary buttons.
 - **Primary text** (`--color-action-primary-text` — #CFEAF3): Text/icon color on primary teal fill (light teal for contrast).
 - **Primary text active** (`--color-action-primary-text-active` — #F1F1F1): Text on hovered/active primary button.
-- **Secondary border** (`--color-action-primary-border-secondary` — #2C9AB9): Outline on secondary (outlined) buttons.
+- **Primary border** (`--color-action-primary-border` — #0A4E66): Outline on secondary (outlined) Buttons and CircularButtons.
+- **Secondary border** (`--color-action-primary-border-secondary` — #2C9AB9): Reserved brighter border step — defined in both themes but not yet consumed by any component.
+- **Tertiary border** (`--color-action-primary-border-tertiary` — #6DBCD6): Hover ring on RadioButton.
 - **Tertiary text** (`--color-action-primary-text-tertiary` — #118AB2): Teal-coloured text for tertiary/ghost button labels.
 - **Passive bg** (`--color-action-passive-bg` — rgba(241,241,241,0.01)): Near-transparent ghost button fill.
 - **Passive bg hover** (`--color-action-passive-bg-hover` — rgba(214,214,214,0.8)): Gray hover on ghost/tertiary buttons.
@@ -313,7 +315,7 @@ Motion is quiet and functional — it confirms an interaction, reveals structure
 
 **Reduced motion contract:** `tokens-motion.css` collapses every duration token to 0.01ms under `prefers-reduced-motion: reduce`, and a universal guard flattens remaining hardcoded transitions/animations. Components that consume the tokens respect the preference automatically — never write component-level `prefers-reduced-motion` queries.
 
-**Migration status:** the token layer is the contract; existing components still carry hardcoded timings (mostly `0.2s ease`) and are being migrated to the tokens as they are touched. New code must use the tokens from the start.
+**Migration status:** all component and website CSS composes the tokens — no literal durations or easings remain (the two sanctioned exceptions: Skeleton's shimmer keeps a literal `ease-in-out`, which has no token curve, and the website's decorative 14–22s background floats stay bespoke). JS-driven timings (Tooltip show/hide delays, Toast auto-dismiss, Carousel autoplay) are still hardcoded constants — see Known Gaps.
 
 ---
 
@@ -321,7 +323,7 @@ Motion is quiet and functional — it confirms an interaction, reveals structure
 
 ### Button
 
-**`ds-button`** — The primary interactive element. Always pill-shaped (`--radius-full`). Text uses `--font-paragraph-em-*` (default) or `--font-paragraph-sm-em-*` (compact). Icon size: 24px (default), 20px (compact). Transitions: `background-color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease`. Disabled state: `opacity: 0.4`, `cursor: not-allowed` — never hidden.
+**`ds-button`** — The primary interactive element. Always pill-shaped (`--radius-full`). Text uses `--font-paragraph-em-*` (default) or `--font-paragraph-sm-em-*` (compact). Icon size: 24px (default), 20px (compact). Transitions: background-color, border-color, and opacity at `--motion-duration-base` / `--motion-ease-standard`. Disabled state: `opacity: 0.4`, `cursor: not-allowed` — never hidden.
 
 | Variant | Fill | Border | Text |
 |---|---|---|---|
@@ -492,7 +494,7 @@ Default icons (Material Symbols Rounded): `info`, `check_circle`, `warning`, `er
 
 ### Dialog
 
-**`ds-dialog`** — General-purpose modal for arbitrary content; for confirm/cancel prompts use AlertDialog. Panel: `--radius-md`, `--color-bg-page-primary`, hairline `--color-bg-container-border` border, `--shadow-modal`, over a `--color-scrim` backdrop; opens with the standard 0.2s scale + fade. Header: `--font-heading-6-*` title with optional `--font-paragraph-sm-*` tertiary description and a 32px ghost close button. Body slot scrolls (`overflow-y: auto`) when content exceeds the viewport-capped panel height; optional footer slot right-aligns consumer-provided Buttons. Sizes: `sm` 400px / `md` 560px (default) / `lg` 720px max-width. Behaviour: portal to `<body>`, focus trap with Tab cycling, focus restore on close, body scroll lock, `role="dialog" aria-modal="true"`; `dismissible={false}` disables ESC, backdrop click, and hides the close button.
+**`ds-dialog`** — General-purpose modal for arbitrary content; for confirm/cancel prompts use AlertDialog. Panel: `--radius-md`, `--color-bg-page-primary`, hairline `--color-bg-container-border` border, `--shadow-modal`, over a `--color-scrim` backdrop; opens with the standard base-duration scale + fade (`--motion-duration-base` / `--motion-ease-standard`). Header: `--font-heading-6-*` title with optional `--font-paragraph-sm-*` tertiary description and a 32px ghost close button. Body slot scrolls (`overflow-y: auto`) when content exceeds the viewport-capped panel height; optional footer slot right-aligns consumer-provided Buttons. Sizes: `sm` 400px / `md` 560px (default) / `lg` 720px max-width. Behaviour: portal to `<body>`, focus trap with Tab cycling, focus restore on close, body scroll lock, `role="dialog" aria-modal="true"`; `dismissible={false}` disables ESC, backdrop click, and hides the close button.
 
 ### AlertDialog
 
@@ -613,7 +615,7 @@ The theme is activated by `data-theme="dark"` on the HTML root element. The `tok
 ## Do's and Don'ts
 
 ### Do
-- Use semantic tokens (`--color-*`, `--radius-*`, `--gap-*`, `--padding-*`, `--font-*`) in every component. Never use `--primitive-*` tokens directly.
+- Use semantic tokens (`--color-*`, `--radius-*`, `--gap-*`, `--padding-*`, `--font-*`, `--motion-*`, `--icon-size-*`) in every component. Never use `--primitive-*` tokens directly.
 - Reserve `--color-action-primary-bg` (teal) for primary CTA buttons, focus rings, and active input states. Nowhere else.
 - Use Nunito Sans weight 300 for display/marketing text and weight 600 for in-app headings. The weight split is intentional.
 - Apply `--radius-full` to all buttons, `--radius-md` to all inputs and standard containers, and `--radius-xl` to Card/EntityCard navigation tiles. This contrast is the system's shape signature.
@@ -675,9 +677,9 @@ The website's docs shell (left nav rail + main column + right details rail) step
 
 ## Known Gaps
 
-- **Motion migration** — The `--motion-*` token layer exists (see Motion), but most component CSS still carries pre-token hardcoded timings (`0.2s ease` et al.). These are being swapped to the tokens as components are touched; JS-driven timings (Tooltip delays, Toast auto-dismiss, Carousel autoplay) are not yet tokenized.
+- **Motion (JS timings)** — CSS motion is fully tokenized, but JS-driven timings (Tooltip's 300/150ms show/hide delays, Toast's 5000ms auto-dismiss, Carousel's autoplay interval) remain hardcoded constants in component TypeScript — tokenizing them needs shared TS constants, a separate follow-up.
 - **Figma parity** — The system originates in Figma ([robr0-ds26](https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26)), and foundation/component pages deep-link to specific frames via `figmaUrl`. Keeping the Figma file and the coded tokens in sync is still a manual process — there is no automated export pipeline.
 - **Breakpoint tokens** — The docs-shell column widths are tokenized (`--layout-*` in the website's `globals.css`), but the media-query thresholds themselves (1279 / 1151 / 959 / 768px) remain raw values repeated across CSS files — CSS custom properties cannot drive `@media` conditions.
 - **Form validation patterns** — Error state on Input is documented, but multi-field form-level validation patterns (inline error summaries, field grouping) are not in scope here.
-- **Code/monospace** — No monospace font or `--font-code-*` token is defined. If code blocks are needed on the documentation site, add a JetBrains Mono or Fira Code entry to the typography token layer.
+- **Code/monospace** — CodeBlock (the one sanctioned monospace context) uses a raw system mono stack; no `--font-code-*` token is defined in the typography layer. If monospace spreads beyond CodeBlock, codify the stack (or a dedicated face like JetBrains Mono) as a token first.
 - **Chart theming** — Recharts chart components use `--color-core-accent-*` tokens for data series, but a formal `--chart-series-{n}` token set for ordered series colors has not been codified.
