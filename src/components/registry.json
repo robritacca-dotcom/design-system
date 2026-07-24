@@ -60,6 +60,7 @@
   ],
   "docOnlyHelpers": [
     "ColourSwatch",
+    "MotionSwatch",
     "SpacingSwatch",
     "TypographySwatch"
   ]
