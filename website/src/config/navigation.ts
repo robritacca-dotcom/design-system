@@ -51,7 +51,7 @@ export const dsMegaItems: MegaItem[] = [
   {
     href: "/foundations",
     label: "Foundations",
-    description: "Colours, type, spacing, icons, and logos",
+    description: "Colours, type, spacing, motion, icons, and logos",
     icon: "category",
   },
   {
@@ -147,6 +147,7 @@ export const foundationsSidebarLinks: NavLink[] = [
   { href: "/foundations/elevation", label: "Elevation" },
   { href: "/foundations/icons", label: "Icons" },
   { href: "/foundations/logos", label: "Logos" },
+  { href: "/foundations/motion", label: "Motion" },
   { href: "/foundations/colour-primitives", label: "Primitive colours" },
   { href: "/foundations/colour-mode", label: "Semantic colours" },
   { href: "/foundations/spatial", label: "Semantic spacing" },

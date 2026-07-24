@@ -38,7 +38,7 @@ export default function FoundationsPage() {
               The shared values behind every component
             </p>
             <p className={styles.introBody}>
-              Foundations are the colours, spacing, and type styles that all components are built on. Every value here starts as a Figma variable, gets exported as a CSS token, and is referenced by components rather than hard-coded. That means updating a colour or spacing value in one place updates it everywhere it is used.
+              Foundations are the colours, spacing, type styles, and motion values that all components are built on. Every value here starts as a Figma variable, gets exported as a CSS token, and is referenced by components rather than hard-coded. That means updating a colour or spacing value in one place updates it everywhere it is used.
             </p>
           </div>
 
@@ -67,6 +67,15 @@ export default function FoundationsPage() {
               <div className={`${styles.circlePreview} ${styles.circleDashed}`} style={{ gap: "10px" }}>
                 <Image src="/rr.svg" alt="robr0 Logo" width={48} height={48} />
                 <Image src="/rr.svg" alt="robr0 Logo" width={72} height={72} />
+              </div>
+            </TocCard>
+
+            {/* Motion */}
+            <TocCard href="/foundations/motion" title="Motion">
+              <div className={`${styles.circlePreview} ${styles.circleNeutral}`}>
+                <div className={styles.motionTrack}>
+                  <div className={styles.motionDot} />
+                </div>
               </div>
             </TocCard>
 

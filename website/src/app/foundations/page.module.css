@@ -177,6 +177,31 @@
   box-shadow: var(--shadow-modal);
 }
 
+/* Motion preview — dot easing back and forth on its track */
+.motionTrack {
+  width: 96px;
+  height: 20px;
+  border-radius: var(--radius-full);
+  background: var(--color-bg-container-tertiary);
+}
+
+.motionDot {
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-full);
+  background: var(--color-core-accent-violet);
+  animation: motionDotSlide var(--motion-duration-slower) var(--motion-ease-emphasized) infinite alternate;
+}
+
+@keyframes motionDotSlide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(76px); /* track width minus dot */
+  }
+}
+
 /* Spatial preview */
 .spatialBox {
   width: 60px;
