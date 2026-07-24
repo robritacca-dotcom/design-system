@@ -178,6 +178,7 @@ Tokens also have multiple homes — a token that exists only in CSS is incomplet
    - Semantic colors → `website/src/app/foundations/colour-mode/page.tsx` (add a swatch data entry with per-theme primitive name/hex/RGB, and a new `SectionTitle` group if it's a new category)
    - New primitives → `website/src/app/foundations/colour-primitives/page.tsx`
    - Spacing/radius/border → `website/src/app/foundations/spatial/page.tsx`
+   - Shadows/depth → `website/src/app/foundations/elevation/page.tsx`
    - Typography → `website/src/app/foundations/typography/page.tsx`
 4. **Update the Storybook token docs**: `src/stories/Tokens.stories.tsx` documents semantic tokens by category (colors, status, chart, spacing) — add the new token to the matching story, or a new story if it's a new category. (`src/stories/` also holds `Typography`, `Icons`, and `Logos` foundation docs.)
 

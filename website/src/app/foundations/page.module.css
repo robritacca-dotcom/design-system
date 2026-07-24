@@ -162,6 +162,21 @@
   padding: 0;
 }
 
+.circleNeutral {
+  background: var(--color-bg-container-secondary);
+  padding: 0;
+}
+
+/* Elevation preview — a floating surface lifted off the container ramp */
+.elevationChip {
+  width: 96px;
+  height: 64px;
+  border: var(--border-xs) solid var(--color-bg-container-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-page-primary);
+  box-shadow: var(--shadow-modal);
+}
+
 /* Spatial preview */
 .spatialBox {
   width: 60px;

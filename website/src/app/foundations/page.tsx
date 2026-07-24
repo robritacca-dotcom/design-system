@@ -43,6 +43,13 @@ export default function FoundationsPage() {
           </div>
 
           <div className={`${styles.tocGrid} animate-in animate-delay-2`}>
+            {/* Elevation */}
+            <TocCard href="/foundations/elevation" title="Elevation">
+              <div className={`${styles.circlePreview} ${styles.circleNeutral}`}>
+                <div className={styles.elevationChip} />
+              </div>
+            </TocCard>
+
             {/* Icons */}
             <TocCard href="/foundations/icons" title="Icons">
               <div className={`${styles.circlePreview} ${styles.circleDashed}`} style={{ gap: "10px" }}>

@@ -144,6 +144,7 @@ export const componentsSidebarLinks: NavLink[] = [
 
 export const foundationsSidebarLinks: NavLink[] = [
   { href: "/foundations", label: "Contents" },
+  { href: "/foundations/elevation", label: "Elevation" },
   { href: "/foundations/icons", label: "Icons" },
   { href: "/foundations/logos", label: "Logos" },
   { href: "/foundations/colour-primitives", label: "Primitive colours" },
