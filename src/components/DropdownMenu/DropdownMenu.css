@@ -74,16 +74,12 @@
 
 /* Compact icons: 20px (vs 24px default) */
 .ds-dropdown-menu__panel--compact .ds-dropdown-menu__item-icon {
-  font-size: 20px;
-  width: 20px;
-  height: 20px;
+  --icon-size: var(--icon-size-sm);
 }
 
 /* Compact submenu chevron: 20px */
 .ds-dropdown-menu__panel--compact .ds-dropdown-menu__submenu-icon {
-  font-size: 20px;
-  width: 20px;
-  height: 20px;
+  --icon-size: var(--icon-size-sm);
 }
 
 /* Compact group label: same padding as compact items so heights match */
@@ -178,9 +174,7 @@
 
 /* Figma: icons are 24px within menu items */
 .ds-dropdown-menu__item-icon {
-  font-size: 24px;
-  width: 24px;
-  height: 24px;
+  --icon-size: var(--icon-size-md);
   color: var(--color-icon-secondary);
   flex-shrink: 0;
   display: flex;
@@ -210,9 +204,7 @@
    ============================================ */
 
 .ds-dropdown-menu__submenu-icon {
-  font-size: 24px;
-  width: 24px;
-  height: 24px;
+  --icon-size: var(--icon-size-md);
   color: var(--color-text-tertiary);
   margin-left: auto;
   flex-shrink: 0;

@@ -171,8 +171,8 @@
   outline-offset: 2px;
 }
 
-.copyButton .material-symbols-rounded {
-  font-size: 18px;
+.copyButton :global(.material-symbols-rounded) {
+  --icon-size: var(--icon-size-sm);
 }
 
 .methodChevron {

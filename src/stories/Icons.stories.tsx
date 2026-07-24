@@ -282,6 +282,25 @@ Material Symbols 3 icon gallery — **Rounded** only.
 \`\`\`tsx
 <span className="material-symbols-rounded">home</span>
 \`\`\`
+
+## Sizing
+Set \`--icon-size\` to a scale step — never \`font-size\`, which changes the
+glyph without changing its layout box.
+
+\`\`\`css
+.ds-thing__icon { --icon-size: var(--icon-size-sm); }
+\`\`\`
+
+| Token | Value | Use |
+|---|---|---|
+| \`--icon-size-sm\` | 20px | Compact controls, inline affordances |
+| \`--icon-size-md\` | 24px | Default |
+| \`--icon-size-lg\` | 32px | Feature icons |
+| \`--icon-size-xl\` | 48px | Marketing, empty states |
+
+The scale floors at 20px because that is the bottom of the font's \`opsz\`
+(optical size) axis, which runs 20–48. \`font-optical-sizing: auto\` lets
+stroke weight track the step automatically.
         `,
       },
     },
@@ -384,4 +403,70 @@ const SearchableIconGallery = () => {
 
 export const AllIcons: Story = {
   render: () => <SearchableIconGallery />,
+};
+
+/* ============================================
+   SIZE SCALE
+   ============================================ */
+
+const ICON_SIZES = [
+  { label: 'SM', px: '20px', token: '--icon-size-sm', use: 'Compact controls, inline affordances' },
+  { label: 'MD', px: '24px', token: '--icon-size-md', use: 'Default — most UI icons' },
+  { label: 'LG', px: '32px', token: '--icon-size-lg', use: 'Feature icons, section headers' },
+  { label: 'XL', px: '48px', token: '--icon-size-xl', use: 'Marketing and empty states' },
+] as const;
+
+export const Sizes: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+      <p style={{ margin: 0, maxWidth: '60ch', color: 'var(--color-text-tertiary)', fontSize: 14 }}>
+        Components set <code>--icon-size</code> to one of these steps, never a raw{' '}
+        <code>font-size</code>. The scale starts at 20px because that is the floor of the
+        font&rsquo;s optical-size axis (20–48); below it, stroke weight stops adapting.
+      </p>
+
+      <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+        {ICON_SIZES.map((size) => (
+          <div
+            key={size.token}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 4,
+              padding: 16,
+              minWidth: 170,
+              border: '1px solid var(--color-bg-container-border)',
+              borderRadius: 'var(--radius-md)',
+            }}
+          >
+            {/* Fixed stage so all four align on one baseline */}
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'flex-end',
+                justifyContent: 'center',
+                height: 56,
+                marginBottom: 8,
+                color: 'var(--color-icon-primary)',
+              }}
+            >
+              <span
+                className="material-symbols-rounded"
+                style={{ ['--icon-size' as string]: `var(${size.token})` }}
+                aria-hidden="true"
+              >
+                settings
+              </span>
+            </div>
+            <strong style={{ fontSize: 16, color: 'var(--color-text-primary)' }}>{size.label}</strong>
+            <span style={{ fontSize: 14, fontWeight: 600, color: 'var(--color-action-primary-text-tertiary)' }}>
+              {size.px}
+            </span>
+            <code style={{ fontSize: 13, color: 'var(--color-text-secondary)' }}>{size.token}</code>
+            <span style={{ fontSize: 13, color: 'var(--color-text-tertiary)' }}>{size.use}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  ),
 };

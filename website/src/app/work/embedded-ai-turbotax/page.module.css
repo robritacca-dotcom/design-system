@@ -178,8 +178,8 @@
   background: rgba(255, 255, 255, 0.22);
 }
 
-.lightboxClose .material-symbols-rounded {
-  font-size: 20px;
+.lightboxClose :global(.material-symbols-rounded) {
+  --icon-size: var(--icon-size-sm);
   line-height: 1;
 }
 
@@ -414,8 +414,8 @@
   color: var(--color-text-primary);
 }
 
-.linkTitle .material-symbols-rounded {
-  font-size: 16px;
+.linkTitle :global(.material-symbols-rounded) {
+  --icon-size: var(--icon-size-sm);
   color: var(--color-text-tertiary);
 }
 

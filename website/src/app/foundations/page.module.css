@@ -121,6 +121,12 @@
 /* ============================================
    CIRCLE PREVIEWS
    ============================================ */
+/* Feature icons inside the round previews. Sizes live here rather than
+   inline so they read from the icon-size scale. */
+.circlePreview :global(.material-symbols-rounded) {
+  --icon-size: var(--icon-size-xl);
+}
+
 .circlePreview {
   width: 184px;
   height: 184px;

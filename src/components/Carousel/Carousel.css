@@ -73,7 +73,7 @@
 }
 
 .ds-carousel__arrow .material-symbols-rounded {
-  font-size: 20px;
+  --icon-size: var(--icon-size-sm);
 }
 
 /* ============================================

@@ -73,9 +73,7 @@
 }
 
 .ds-command-palette__search-icon {
-  font-size: 24px;
-  width: 24px;
-  height: 24px;
+  --icon-size: var(--icon-size-md);
   color: var(--color-icon-primary);
   flex-shrink: 0;
 }
@@ -125,9 +123,7 @@
 }
 
 .ds-command-palette__close .material-symbols-rounded {
-  font-size: 20px;
-  width: 20px;
-  height: 20px;
+  --icon-size: var(--icon-size-sm);
 }
 
 /* ============================================
@@ -196,14 +192,8 @@
   cursor: not-allowed;
 }
 
-/* Compounded with .material-symbols-rounded on purpose: the icon font's own
-   class also declares font-size and is imported after this file, so a lone
-   class here would tie on specificity and lose — rendering a 24px glyph in
-   a 20px box. */
-.ds-command-palette__command-icon.material-symbols-rounded {
-  font-size: 20px;
-  width: 20px;
-  height: 20px;
+.ds-command-palette__command-icon {
+  --icon-size: var(--icon-size-sm);
   color: var(--color-icon-primary);
   flex-shrink: 0;
 }

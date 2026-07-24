@@ -385,8 +385,8 @@
   border: 1px solid var(--color-bg-container-border);
 }
 
-.catalogIcon .material-symbols-rounded {
-  font-size: 22px;
+.catalogIcon :global(.material-symbols-rounded) {
+  --icon-size: var(--icon-size-md);
   color: var(--color-action-primary-bg);
 }
 
@@ -408,13 +408,13 @@
   color: var(--color-text-primary);
 }
 
-.catalogTitle .material-symbols-rounded {
-  font-size: 16px;
+.catalogTitle :global(.material-symbols-rounded) {
+  --icon-size: var(--icon-size-sm);
   color: var(--color-text-tertiary);
   transition: transform 0.2s ease;
 }
 
-.catalogTile:hover .catalogTitle .material-symbols-rounded {
+.catalogTile:hover .catalogTitle :global(.material-symbols-rounded) {
   transform: translateX(2px);
 }
 
@@ -548,8 +548,8 @@
   color: var(--color-text-primary);
 }
 
-.linkTitle .material-symbols-rounded {
-  font-size: 16px;
+.linkTitle :global(.material-symbols-rounded) {
+  --icon-size: var(--icon-size-sm);
   color: var(--color-text-tertiary);
 }
 

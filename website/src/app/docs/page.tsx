@@ -95,7 +95,7 @@ export default function DocsPage() {
                 <div className={styles.skillFiles}>
                   <span className={`${styles.skillFile} ${styles.skillFileBack}`} />
                   <span className={styles.skillFile}>
-                    <span className="material-symbols-rounded" aria-hidden="true" style={{ fontSize: "28px", color: "var(--color-text-secondary)" }}>
+                    <span className="material-symbols-rounded" aria-hidden="true" style={{ color: "var(--color-text-secondary)" }}>
                       auto_awesome
                     </span>
                   </span>
@@ -106,7 +106,7 @@ export default function DocsPage() {
             {/* Loops */}
             <TocCard href="/loops" title="Loops">
               <div className={`${styles.circlePreview} ${styles.circleBlue}`}>
-                <span className="material-symbols-rounded" aria-hidden="true" style={{ fontSize: "48px", color: "var(--color-text-secondary)" }}>
+                <span className="material-symbols-rounded" aria-hidden="true" style={{ color: "var(--color-text-secondary)" }}>
                   cycle
                 </span>
               </div>

@@ -27,9 +27,9 @@
   color: var(--color-action-primary-text, #fff);
 }
 
-.iconWrap .material-symbols-rounded,
+.iconWrap :global(.material-symbols-rounded),
 .iconWrap :global(.material-symbols-rounded) {
-  font-size: 24px;
+  --icon-size: var(--icon-size-md);
 }
 
 .text {
@@ -83,7 +83,7 @@
 }
 
 .cta :global(.material-symbols-rounded) {
-  font-size: 20px;
+  --icon-size: var(--icon-size-sm);
 }
 
 /* Stack on narrow viewports */

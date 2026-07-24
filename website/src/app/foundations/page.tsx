@@ -46,10 +46,10 @@ export default function FoundationsPage() {
             {/* Icons */}
             <TocCard href="/foundations/icons" title="Icons">
               <div className={`${styles.circlePreview} ${styles.circleDashed}`} style={{ gap: "10px" }}>
-                <span className="material-symbols-rounded" style={{ fontSize: "48px", color: "var(--color-text-secondary)" }}>
+                <span className="material-symbols-rounded" style={{ color: "var(--color-text-secondary)" }}>
                   article
                 </span>
-                <span className="material-symbols-rounded" style={{ fontSize: "48px", color: "var(--color-text-secondary)" }}>
+                <span className="material-symbols-rounded" style={{ color: "var(--color-text-secondary)" }}>
                   apps
                 </span>
               </div>

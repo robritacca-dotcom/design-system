@@ -42,7 +42,7 @@
 }
 
 .ds-contact-card__icon {
-  font-size: 24px;
+  --icon-size: var(--icon-size-md);
   color: var(--color-text-secondary);
 }
 
@@ -113,11 +113,11 @@
 }
 
 .ds-contact-card__copy-btn .material-symbols-rounded {
-  font-size: 18px;
+  --icon-size: var(--icon-size-sm);
 }
 
 .ds-contact-card__chevron {
-  font-size: 18px;
+  --icon-size: var(--icon-size-sm);
   color: var(--color-text-tertiary);
   flex-shrink: 0;
 }

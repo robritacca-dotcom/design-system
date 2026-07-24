@@ -203,12 +203,8 @@
   outline-offset: 2px;
 }
 
-/* Compounded with .material-symbols-rounded: that class also sets font-size
-   and loads after this file, so a lone class would lose the specificity tie. */
-.ds-drawer__close-icon.material-symbols-rounded {
-  font-size: 20px;
-  width: 20px;
-  height: 20px;
+.ds-drawer__close-icon {
+  --icon-size: var(--icon-size-sm);
   line-height: 1;
   color: var(--color-icon-primary);
 }

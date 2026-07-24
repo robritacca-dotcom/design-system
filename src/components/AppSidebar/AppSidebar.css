@@ -111,7 +111,7 @@
 }
 
 .ds-app-sidebar__toggle .material-symbols-rounded {
-  font-size: 24px;
+  --icon-size: var(--icon-size-md);
   transition: transform 0.25s ease;
 }
 
@@ -195,7 +195,7 @@
 }
 
 .ds-app-sidebar__btn-icon {
-  font-size: 24px;
+  --icon-size: var(--icon-size-md);
   color: var(--color-icon-primary);
   flex-shrink: 0;
 }
@@ -415,7 +415,7 @@
 }
 
 .ds-app-sidebar__profile-more .material-symbols-rounded {
-  font-size: 24px;
+  --icon-size: var(--icon-size-md);
 }
 
 /* ============================================

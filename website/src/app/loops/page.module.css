@@ -199,8 +199,8 @@
   border-color: var(--color-text-tertiary);
 }
 
-.loopSkillLink .material-symbols-rounded {
-  font-size: 16px;
+.loopSkillLink :global(.material-symbols-rounded) {
+  --icon-size: var(--icon-size-sm);
   color: var(--color-icon-primary);
 }
 

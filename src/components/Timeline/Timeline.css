@@ -55,9 +55,7 @@
 }
 
 .ds-timeline__marker-icon {
-  font-size: 24px;
-  width: 24px;
-  height: 24px;
+  --icon-size: var(--icon-size-md);
   line-height: 1;
   color: var(--color-icon-primary);
 }

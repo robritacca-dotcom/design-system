@@ -303,12 +303,12 @@ a.toolItem:hover {
   margin-top: auto;
 }
 
-.artifactCta .material-symbols-rounded {
-  font-size: 16px;
+.artifactCta :global(.material-symbols-rounded) {
+  --icon-size: var(--icon-size-sm);
   transition: transform 0.15s ease;
 }
 
-.artifactCard:hover .artifactCta .material-symbols-rounded {
+.artifactCard:hover .artifactCta :global(.material-symbols-rounded) {
   transform: translateX(2px);
 }
 

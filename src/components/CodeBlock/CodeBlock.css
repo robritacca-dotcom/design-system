@@ -61,9 +61,7 @@
 }
 
 .ds-code-block__toggle .material-symbols-rounded {
-  font-size: 20px;
-  width: 20px;
-  height: 20px;
+  --icon-size: var(--icon-size-sm);
   line-height: 1;
   transition: transform 0.25s ease;
 }
@@ -126,9 +124,7 @@
 }
 
 .ds-code-block__copy .material-symbols-rounded {
-  font-size: 16px;
-  width: 16px;
-  height: 16px;
+  --icon-size: var(--icon-size-sm);
   line-height: 1;
 }
 

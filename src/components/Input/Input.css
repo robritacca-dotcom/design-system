@@ -82,9 +82,7 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 24px;
-  width: 24px;
-  height: 24px;
+  --icon-size: var(--icon-size-md);
   color: var(--color-icon-primary);
   pointer-events: none;
 }
@@ -170,9 +168,7 @@
 }
 
 .ds-input--compact .ds-input__icon {
-  font-size: 20px;
-  width: 20px;
-  height: 20px;
+  --icon-size: var(--icon-size-sm);
 }
 
 .ds-input--compact .ds-input__icon--left {

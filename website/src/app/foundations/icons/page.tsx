@@ -25,6 +25,14 @@ interface IconCategory {
   icons: string[];
 }
 
+/** The four steps of the icon-size scale, mirroring tokens-light.css. */
+const ICON_SIZES = [
+  { label: "SM", px: "20px", token: "--icon-size-sm", use: "Compact controls, inline affordances" },
+  { label: "MD", px: "24px", token: "--icon-size-md", use: "Default — most UI icons" },
+  { label: "LG", px: "32px", token: "--icon-size-lg", use: "Feature icons, section headers" },
+  { label: "XL", px: "48px", token: "--icon-size-xl", use: "Marketing and empty states" },
+] as const;
+
 const iconCategories: IconCategory[] = [
   {
     title: "Navigation",
@@ -312,9 +320,42 @@ export default function IconsPage() {
               Material Symbols 3, rounded variant only
             </p>
             <p className={styles.introBody}>
-              One weight and one optical size across the entire set so they stay visually consistent next to text and inside components. 389 icons are included.
+              One weight across the entire set, on a four-step size scale, so icons stay visually consistent next to text and inside components. Optical size tracks each step automatically, keeping stroke weight even from 20px to 48px. 389 icons are included.
             </p>
           </div>
+
+          {/* Size scale */}
+          <section className={`${styles.iconSection} animate-in animate-delay-2`}>
+            <SectionTitle title="Sizes" trailing={ICON_SIZES.length} />
+
+            <p className={styles.sizeNote}>
+              Components set <code>--icon-size</code> to one of these steps —
+              never a raw <code>font-size</code>. The scale starts at 20px
+              because that is the floor of the font&rsquo;s optical-size axis
+              (20–48); below it, stroke weight stops adapting and small icons
+              read thin.
+            </p>
+
+            <div className={styles.sizeRow}>
+              {ICON_SIZES.map((size) => (
+                <div key={size.token} className={styles.sizeCard}>
+                  <div className={styles.sizePreview}>
+                    <span
+                      className="material-symbols-rounded"
+                      style={{ ["--icon-size" as string]: `var(${size.token})` }}
+                      aria-hidden="true"
+                    >
+                      settings
+                    </span>
+                  </div>
+                  <span className={styles.sizeLabel}>{size.label}</span>
+                  <span className={styles.sizeValue}>{size.px}</span>
+                  <code className={styles.sizeToken}>{size.token}</code>
+                  <span className={styles.sizeUse}>{size.use}</span>
+                </div>
+              ))}
+            </div>
+          </section>
 
           {/* Icon Categories */}
           {iconCategories.map((category, idx) => (

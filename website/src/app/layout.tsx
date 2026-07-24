@@ -1,6 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import "@design-system/tokens/tokens.css";
+// Single source of the Material Symbols base styles and icon-size scale.
+// Imported explicitly rather than relying on it arriving incidentally through
+// a component import, so pages that use raw .material-symbols-rounded spans
+// (e.g. /foundations/icons) are styled deterministically.
+import "@design-system/fonts/material-symbols.css";
 import { Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import { buildPersonJsonLd, buildWebsiteJsonLd } from "@/lib/structuredData";
@@ -101,24 +106,19 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="dark" suppressHydrationWarning>
       <head>
-        <link
-          rel="preconnect"
-          href="https://fonts.googleapis.com"
-        />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        {/* display=block (not swap): the icon font has no visual fallback, so
-            swap would flash raw ligature text (e.g. "expand_more") before the
-            font loads. Block keeps icons invisible for the brief load, matching
-            the design system's self-hosted `font-display: block`. Proper fix
-            (subset + self-host as woff2) is tracked separately. */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block"
-          rel="stylesheet"
-        />
+        {/* Material Symbols is served from the design system's own bundled
+            @font-face (src/fonts/material-symbols.css, imported above) — the
+            .ttf is emitted into the build, so the font was being shipped twice.
+
+            The Google Fonts <link> that used to sit here is deliberately gone.
+            Besides the duplicate request, that stylesheet ships its own
+            `.material-symbols-rounded { font-size: 24px }` rule, which tied on
+            specificity with the design system's token-driven sizing and — being
+            a <link> in <head> — won, pinning every icon to 24px regardless of
+            --icon-size. Re-adding it would silently break the icon-size scale.
+
+            Nunito Sans comes from next/font/google, which self-hosts at build
+            time, so no preconnect to fonts.googleapis.com is needed either. */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(buildPersonJsonLd()) }}

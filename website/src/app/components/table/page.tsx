@@ -102,12 +102,12 @@ export default function TablePage() {
                     cells: {
                       name: (
                         <span style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
-                          <span className="material-symbols-rounded" style={{ fontSize: "24px" }}>person</span>
+                          <span className="material-symbols-rounded">person</span>
                           Alice Chen
                         </span>
                       ),
                       department: "Design",
-                      status: <span className="material-symbols-rounded" style={{ fontSize: "24px", color: "var(--color-status-positive-text)" }}>check_circle</span>,
+                      status: <span className="material-symbols-rounded" style={{ color: "var(--color-status-positive-text)" }}>check_circle</span>,
                     },
                   },
                   {
@@ -115,12 +115,12 @@ export default function TablePage() {
                     cells: {
                       name: (
                         <span style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
-                          <span className="material-symbols-rounded" style={{ fontSize: "24px" }}>person</span>
+                          <span className="material-symbols-rounded">person</span>
                           Bob Rivera
                         </span>
                       ),
                       department: "Engineering",
-                      status: <span className="material-symbols-rounded" style={{ fontSize: "24px", color: "var(--color-status-positive-text)" }}>check_circle</span>,
+                      status: <span className="material-symbols-rounded" style={{ color: "var(--color-status-positive-text)" }}>check_circle</span>,
                     },
                   },
                   {
@@ -128,12 +128,12 @@ export default function TablePage() {
                     cells: {
                       name: (
                         <span style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
-                          <span className="material-symbols-rounded" style={{ fontSize: "24px" }}>person</span>
+                          <span className="material-symbols-rounded">person</span>
                           Carol Osei
                         </span>
                       ),
                       department: "Product",
-                      status: <span className="material-symbols-rounded" style={{ fontSize: "24px", color: "var(--color-status-error-text)" }}>cancel</span>,
+                      status: <span className="material-symbols-rounded" style={{ color: "var(--color-status-error-text)" }}>cancel</span>,
                     },
                   },
                 ]}
@@ -161,7 +161,7 @@ export default function TablePage() {
                       select: <Checkbox checked ariaLabel="Select Alice" />,
                       name: (
                         <span style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
-                          <span className="material-symbols-rounded" style={{ fontSize: "24px" }}>person</span>
+                          <span className="material-symbols-rounded">person</span>
                           Alice Chen
                         </span>
                       ),
@@ -181,7 +181,7 @@ export default function TablePage() {
                       select: <Checkbox ariaLabel="Select Bob" />,
                       name: (
                         <span style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
-                          <span className="material-symbols-rounded" style={{ fontSize: "24px" }}>person</span>
+                          <span className="material-symbols-rounded">person</span>
                           Bob Rivera
                         </span>
                       ),
@@ -201,7 +201,7 @@ export default function TablePage() {
                       select: <Checkbox ariaLabel="Select Carol" />,
                       name: (
                         <span style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
-                          <span className="material-symbols-rounded" style={{ fontSize: "24px" }}>person</span>
+                          <span className="material-symbols-rounded">person</span>
                           Carol Osei
                         </span>
                       ),

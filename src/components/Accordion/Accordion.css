@@ -71,7 +71,7 @@
 
 .ds-accordion__icon {
   flex-shrink: 0;
-  font-size: 20px;
+  --icon-size: var(--icon-size-sm);
   color: var(--color-icon-primary);
   transition: transform 0.25s ease;
 }

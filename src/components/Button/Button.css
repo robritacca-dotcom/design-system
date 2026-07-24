@@ -55,9 +55,8 @@
 }
 
 .ds-button--compact .ds-button__icon {
-  font-size: 20px;  /* Figma: compact icons are 20px (vs 24px default) */
-  width: 20px;
-  height: 20px;
+  --icon-size: var(--icon-size-sm);
+/* Figma: compact icons are 20px (vs 24px default) */
 }
 
 /* Scale any child SVG to fit the compact icon slot */
@@ -234,9 +233,8 @@
 
 .ds-button__icon {
   flex-shrink: 0;
-  font-size: 24px;  /* Figma: default icons are 24px */
-  width: 24px;
-  height: 24px;
+  --icon-size: var(--icon-size-md);
+/* Figma: default icons are 24px */
   line-height: 1;
 }
 

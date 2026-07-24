@@ -81,6 +81,15 @@ export default function ComponentsPage() {
             </p>
           </div>
 
+          {/*
+            The icons inside these preview cards are DELIBERATELY off the
+            icon-size scale. They are miniature drawings of components — a
+            12px chevron here is part of a scaled-down mock of an Accordion
+            row, not an icon in a UI. Sizing them from --icon-size-* would
+            make the mocks the wrong scale relative to the fake text beside
+            them. Leave the inline pixel values alone; they are not a token
+            violation. Real icons elsewhere on the site use the scale.
+          */}
           <div className={`${styles.tocGrid} animate-in animate-delay-2`}>
             {/* Accordion */}
             <TocCard href="/components/accordion" title="Accordion">

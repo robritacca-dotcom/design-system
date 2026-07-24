@@ -84,9 +84,7 @@
    ============================================ */
 
 .ds-dropdown__chevron {
-  font-size: 24px;
-  width: 24px;
-  height: 24px;
+  --icon-size: var(--icon-size-md);
   color: var(--color-icon-primary);
   transition: transform 0.2s ease;
   flex-shrink: 0;
@@ -210,9 +208,7 @@
    ============================================ */
 
 .ds-dropdown__check {
-  font-size: 24px;
-  width: 24px;
-  height: 24px;
+  --icon-size: var(--icon-size-md);
   color: var(--color-action-primary-bg);
 }
 
@@ -279,9 +275,7 @@
 }
 
 .ds-dropdown--compact .ds-dropdown__chevron {
-  font-size: 20px;
-  width: 20px;
-  height: 20px;
+  --icon-size: var(--icon-size-sm);
 }
 
 .ds-dropdown--compact .ds-dropdown__label {
@@ -302,7 +296,5 @@
 }
 
 .ds-dropdown--compact .ds-dropdown__check {
-  font-size: 20px;
-  width: 20px;
-  height: 20px;
+  --icon-size: var(--icon-size-sm);
 }

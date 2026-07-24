@@ -30,9 +30,7 @@
 }
 
 .ds-alert--compact .ds-alert__icon {
-  font-size: 20px;
-  width: 20px;
-  height: 20px;
+  --icon-size: var(--icon-size-sm);
 }
 
 .ds-alert--compact .ds-alert__title {
@@ -53,7 +51,7 @@
 }
 
 .ds-alert--compact .ds-alert__dismiss .material-symbols-rounded {
-  font-size: 20px;
+  --icon-size: var(--icon-size-sm);
 }
 
 /* ============================================
@@ -62,9 +60,7 @@
 
 .ds-alert__icon {
   flex-shrink: 0;
-  font-size: 24px;
-  width: 24px;
-  height: 24px;
+  --icon-size: var(--icon-size-md);
   line-height: 1;
 }
 
@@ -118,7 +114,7 @@
 }
 
 .ds-alert__dismiss .material-symbols-rounded {
-  font-size: 24px;
+  --icon-size: var(--icon-size-md);
 }
 
 .ds-alert__dismiss:hover {

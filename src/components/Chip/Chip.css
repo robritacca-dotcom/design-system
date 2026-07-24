@@ -47,9 +47,7 @@
 
 .ds-chip__icon {
   flex-shrink: 0;
-  font-size: 20px;
-  width: 20px;
-  height: 20px;
+  --icon-size: var(--icon-size-sm);
   line-height: 1;
   color: var(--color-icon-primary);
   transition: color 0.2s ease;
@@ -61,9 +59,7 @@
 }
 
 .ds-chip--compact .ds-chip__icon {
-  font-size: 16px;
-  width: 16px;
-  height: 16px;
+  --icon-size: var(--icon-size-sm);
 }
 
 .ds-chip--compact .ds-chip__icon svg {
@@ -153,16 +149,12 @@
 }
 
 .ds-chip__remove .material-symbols-rounded {
-  font-size: 20px;
-  width: 20px;
-  height: 20px;
+  --icon-size: var(--icon-size-sm);
   line-height: 1;
 }
 
 .ds-chip--compact .ds-chip__remove .material-symbols-rounded {
-  font-size: 16px;
-  width: 16px;
-  height: 16px;
+  --icon-size: var(--icon-size-sm);
 }
 
 .ds-chip__remove:not(:disabled):hover {

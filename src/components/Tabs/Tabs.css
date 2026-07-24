@@ -62,9 +62,7 @@
 }
 
 .ds-tabs--compact .ds-tabs__icon {
-  font-size: 20px;
-  width: 20px;
-  height: 20px;
+  --icon-size: var(--icon-size-sm);
 }
 
 /* ============================================
@@ -81,9 +79,7 @@
    ============================================ */
 
 .ds-tabs__icon {
-  font-size: 24px;
-  width: 24px;
-  height: 24px;
+  --icon-size: var(--icon-size-md);
   color: var(--color-icon-secondary);
   transition: color 0.2s ease;
 }

@@ -215,7 +215,6 @@ Tokens also have multiple homes — a token that exists only in CSS is incomplet
 ## Known Gaps
 
 - No `--motion-*` token for animation timings — transitions are hardcoded `0.2s ease`
-- No `--icon-size-*` tokens — icon sizes are hardcoded per component
 - No `--chart-series-{n}` formal token set for ordered chart series colors
 - Figma source file documented: [robr0-ds26](https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26) — foundation/component pages deep-link to specific frames via `figmaUrl`
 - A11y checks are report-only — story tests run axe per story, but `a11y.test` in `.storybook/preview.ts` is `'todo'`, so violations warn instead of failing CI; no visual-regression coverage yet either (Chromatic planned)

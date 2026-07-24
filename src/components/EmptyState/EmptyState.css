@@ -32,9 +32,7 @@
 }
 
 .ds-empty-state__icon .material-symbols-rounded {
-  font-size: 24px;
-  width: 24px;
-  height: 24px;
+  --icon-size: var(--icon-size-md);
 }
 
 /* ============================================
@@ -105,9 +103,7 @@
 }
 
 .ds-empty-state--compact .ds-empty-state__icon .material-symbols-rounded {
-  font-size: 20px;
-  width: 20px;
-  height: 20px;
+  --icon-size: var(--icon-size-sm);
 }
 
 .ds-empty-state--compact .ds-empty-state__title {

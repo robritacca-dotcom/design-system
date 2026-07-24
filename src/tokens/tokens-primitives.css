@@ -152,6 +152,16 @@
   --primitive-border-xs: 1px;
   --primitive-border-md: 2px;
 
+  /* Icon size
+     The scale starts at 20px because that is the floor of the Material
+     Symbols variable font's `opsz` (optical size) axis — see the fvar
+     range 20..48. Below 20 the axis clamps and optical sizing silently
+     stops tracking, so smaller icons cannot be drawn correctly. */
+  --primitive-icon-sm: 20px;
+  --primitive-icon-md: 24px;
+  --primitive-icon-lg: 32px;
+  --primitive-icon-xl: 48px;
+
   /* Gap */
   --primitive-gap-xxs: 2px;
   --primitive-gap-xs: 4px;

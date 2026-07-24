@@ -138,6 +138,15 @@
   --border-xs: var(--primitive-border-xs);
   --border-md: var(--primitive-border-md);
 
+  /* Icon size — theme-independent, so defined here only (like radius and
+     padding) rather than duplicated into tokens-dark.css. Components set
+     `--icon-size` to one of these; .material-symbols-rounded reads it for
+     font-size, box size, and optical size together. */
+  --icon-size-sm: var(--primitive-icon-sm);   /* 20px — compact controls */
+  --icon-size-md: var(--primitive-icon-md);   /* 24px — default */
+  --icon-size-lg: var(--primitive-icon-lg);   /* 32px — feature */
+  --icon-size-xl: var(--primitive-icon-xl);   /* 48px — marketing */
+
   --gap-xxs: var(--primitive-gap-xxs);
   --gap-xs: var(--primitive-gap-xs);
   --gap-sm: var(--primitive-gap-sm);

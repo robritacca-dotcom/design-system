@@ -39,7 +39,7 @@
    ============================================ */
 
 .ds-entity-card__icon {
-  font-size: 32px;
+  --icon-size: var(--icon-size-lg);
   color: var(--color-text-primary);
 }
 

@@ -20,7 +20,7 @@ The system is **light/dark-first**: every semantic color token has a light-theme
 - Container hierarchy as depth signal — standard containers carry no drop shadows. Depth is conveyed by stepping through `--color-bg-container-primary` → `secondary` → `tertiary`; the only shadows are the `--shadow-floating`/`--shadow-modal` tokens on floating surfaces and the interactive-card hover lift.
 - Five semantic status variants running through every feedback component: `info` (blue), `positive` (green), `warning` (orange), `error` (red), `neutral` (gray).
 - Border radius is hierarchical: `--radius-xs` (4px) for badges, `--radius-md` (12px) for inputs and standard containers, `--radius-xl` (24px) for Card/EntityCard navigation tiles, `--radius-full` (999px) for buttons.
-- Material Symbols Rounded for all iconography — 24px default, 20px compact.
+- Material Symbols Rounded for all iconography, on a four-step size scale — `--icon-size-sm` (20px) / `md` (24px, default) / `lg` (32px) / `xl` (48px). Optical size tracks the step automatically.
 - Accessibility-first: ARIA roles, semantic HTML, and keyboard navigation in every interactive component.
 
 ---
@@ -238,6 +238,29 @@ Whitespace communicates hierarchy. Dense elements use micro-gaps (2–8px); comf
 | `--radius-full` | 999px | All buttons (primary, secondary, tertiary, destructive), toggle thumbs |
 
 **Key rule:** Buttons are always `--radius-full` (pill shape). Inputs are always `--radius-md` (12px). Card and EntityCard — the navigational tiles — use the larger `--radius-xl` (24px) to read as destinations rather than form surfaces. This contrast — rounded pill CTAs vs softer-cornered inputs vs generously rounded tiles — is intentional and consistent.
+
+### Icon Size Scale
+
+| Token | Value | Use |
+|---|---|---|
+| `--icon-size-sm` | 20px | Compact controls, inline affordances, chips, list chevrons |
+| `--icon-size-md` | 24px | Default — the size an icon is unless told otherwise |
+| `--icon-size-lg` | 32px | Feature icons — EntityCard, section headers |
+| `--icon-size-xl` | 48px | Marketing and empty-state illustration icons |
+
+Components set **`--icon-size`**, never `font-size`:
+
+```css
+.ds-thing__icon { --icon-size: var(--icon-size-sm); }
+```
+
+`.material-symbols-rounded` reads that one property for `font-size`, `width`, and `height` together, so the glyph and its layout box can never disagree. It *consumes* the variable and never declares it — which is what keeps a component rule from colliding with the icon font's own styles. Setting `font-size` directly on an icon is a bug: it changes the glyph without changing the box.
+
+**The scale starts at 20px, and that floor is not arbitrary.** Material Symbols is a variable font whose `opsz` (optical size) axis ranges 20–48. Optical sizing thickens strokes as an icon gets smaller; below 20 the axis clamps, so a 14px icon would be drawn with 20px-tuned strokes and scaled down, reading thin and fragile. Every step therefore sits inside the axis range, and `font-optical-sizing: auto` lets the browser track the step automatically — `opsz` is deliberately omitted from `font-variation-settings`, because an explicit axis value there would override the automatic behaviour.
+
+**Documented exceptions.** Glyphs that live *inside* a control's geometry rather than acting as icons stay off the scale: the check inside ToggleSwitch's 20×20 thumb and SelectionCard's toggle (14px, 12px compact), and the miniature component mock-ups in the website's component index cards. Each is commented in place.
+
+**Dark mode** applies `GRAD: -25` to counter the optical bloom of light glyphs on dark surfaces — it thins strokes without changing glyph width, which is what `wght` would do.
 
 ---
 
@@ -565,7 +588,7 @@ The theme is activated by `data-theme="dark"` on the HTML root element. The `tok
 - Apply `--radius-full` to all buttons, `--radius-md` to all inputs and standard containers, and `--radius-xl` to Card/EntityCard navigation tiles. This contrast is the system's shape signature.
 - Map all feedback UI to the five-variant status system (`info`/`positive`/`warning`/`error`/`neutral`) — Badge, Alert, Toast, ProgressBar all share the same semantic tokens.
 - Prefer `--color-divider` for rule lines over custom border colors.
-- Use Material Symbols Rounded for icons. 24px default, 20px compact.
+- Use Material Symbols Rounded for icons, sized with `--icon-size` set to a scale step (`sm` 20 / `md` 24 / `lg` 32 / `xl` 48). Never set `font-size` on an icon directly.
 - Always wrap your app in `ToastProvider` before calling `useToast()`.
 
 ### Don't
@@ -622,7 +645,6 @@ The website's docs shell (left nav rail + main column + right details rail) step
 ## Known Gaps
 
 - **Animation / transition timings** — Component transitions use hardcoded `0.2s ease`. No token exists for easing curves or durations. If the system needs animated loading states or page transitions, a `--motion-*` token layer should be added.
-- **Icon sizing tokens** — Material Symbols sizes (24px default, 20px compact) are hardcoded in component CSS. No `--icon-size-*` token exists. Formalising this would help consistency across new components.
 - **Figma parity** — The system originates in Figma ([robr0-ds26](https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26)), and foundation/component pages deep-link to specific frames via `figmaUrl`. Keeping the Figma file and the coded tokens in sync is still a manual process — there is no automated export pipeline.
 - **Breakpoint tokens** — The docs-shell column widths are tokenized (`--layout-*` in the website's `globals.css`), but the media-query thresholds themselves (1279 / 1151 / 959 / 768px) remain raw values repeated across CSS files — CSS custom properties cannot drive `@media` conditions.
 - **Form validation patterns** — Error state on Input is documented, but multi-field form-level validation patterns (inline error summaries, field grouping) are not in scope here.

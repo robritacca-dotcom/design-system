@@ -74,6 +74,88 @@
 }
 
 /* ============================================
+   SIZE SCALE
+   Four swatch cards showing the same glyph at
+   each step, so the jumps are comparable
+   ============================================ */
+.sizeNote {
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  color: var(--color-text-tertiary);
+  max-width: 60ch;
+  margin: calc(var(--primitive-gap-xxl) * -1 + var(--primitive-gap-lg)) 0 0;
+}
+
+.sizeNote code {
+  font-size: 0.95em;
+  color: var(--color-text-secondary);
+}
+
+.sizeRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--primitive-gap-md);
+  width: 100%;
+}
+
+.sizeCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--gap-xs);
+  padding: var(--padding-md);
+  border: var(--border-xs) solid var(--color-bg-container-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-page-primary);
+}
+
+/* Fixed-height stage so the four cards align on a common baseline
+   regardless of how tall the glyph in each one is */
+.sizePreview {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+  height: 56px;
+  margin-bottom: var(--gap-sm);
+  color: var(--color-icon-primary);
+}
+
+.sizeLabel {
+  font-family: var(--font-title-body-family);
+  font-size: var(--font-title-body-size);
+  font-weight: var(--font-title-body-weight);
+  line-height: var(--font-title-body-line-height);
+  color: var(--color-text-primary);
+}
+
+.sizeValue {
+  font-family: var(--font-paragraph-sm-em-family);
+  font-size: var(--font-paragraph-sm-em-size);
+  font-weight: var(--font-paragraph-sm-em-weight);
+  line-height: var(--font-paragraph-sm-em-line-height);
+  color: var(--color-action-primary-text-tertiary);
+}
+
+.sizeToken {
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-secondary);
+  word-break: break-all;
+}
+
+.sizeUse {
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+}
+
+/* ============================================
    ICON GRID — responsive card grid
    ============================================ */
 .iconGrid {
