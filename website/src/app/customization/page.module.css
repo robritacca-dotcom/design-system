@@ -62,7 +62,6 @@
   font-weight: var(--font-paragraph-weight);
   line-height: var(--font-paragraph-line-height);
   color: var(--color-text-secondary);
-  max-width: 72ch;
 }
 
 .introBody code {
@@ -89,7 +88,6 @@
   font-weight: var(--font-paragraph-weight);
   line-height: var(--font-paragraph-line-height);
   color: var(--color-text-secondary);
-  max-width: 72ch;
 }
 
 .sectionNote code {

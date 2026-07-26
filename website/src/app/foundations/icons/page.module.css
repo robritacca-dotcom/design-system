@@ -85,7 +85,6 @@
   line-height: var(--font-paragraph-sm-line-height);
   letter-spacing: var(--font-paragraph-sm-letter-spacing);
   color: var(--color-text-tertiary);
-  max-width: 60ch;
   margin: calc(var(--primitive-gap-xxl) * -1 + var(--primitive-gap-lg)) 0 0;
 }
 

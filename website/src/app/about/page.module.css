@@ -218,7 +218,6 @@ a.toolItem:hover {
   font-weight: var(--font-paragraph-weight);
   line-height: var(--font-paragraph-line-height);
   color: var(--color-text-secondary);
-  max-width: 64ch;
 }
 
 .artifactsGrid {

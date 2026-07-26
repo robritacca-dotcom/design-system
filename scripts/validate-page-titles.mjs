@@ -10,6 +10,11 @@
  *      so the tab title can never drift from the sidebar label / breadcrumb.
  *   3. No website source hardcodes a spelled-out component count (e.g.
  *      "Forty-two React components") — counts must derive from COMPONENT_COUNT.
+ *   4. No page module caps prose with a ch-based max-width (e.g.
+ *      `max-width: 72ch`) — doc-section paragraphs run the full content
+ *      column by convention, and ad-hoc measure caps kept creeping back in
+ *      and making text wrap early. Constrain the layout column, not the
+ *      paragraph.
  *
  * Guards the "stale title after a page move" drift class. Runs in the
  * validate-registry chain before every build. Mirrors validate-website-surfaces.mjs.
@@ -65,6 +70,8 @@ const countRe = new RegExp(
 );
 
 const hardcodedCounts = [];
+const chWidthCaps = [];
+const chCapRe = /max-width:\s*[\d.]+ch/;
 const walk = (dir) => {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
     const full = join(dir, entry.name);
@@ -76,6 +83,14 @@ const walk = (dir) => {
       if (m) {
         const rel = full.slice(repoRoot.length + 1).replace(/\\/g, '/');
         hardcodedCounts.push(`${rel} → "${m[0]}" (use \${COMPONENT_COUNT})`);
+      }
+    } else if (entry.name.endsWith('.css')) {
+      const m = read(full).match(chCapRe);
+      if (m) {
+        const rel = full.slice(repoRoot.length + 1).replace(/\\/g, '/');
+        chWidthCaps.push(
+          `${rel} → "${m[0]}" (doc prose runs full column width — constrain the layout, not the paragraph)`
+        );
       }
     }
   }
@@ -92,6 +107,7 @@ for (const [what, list] of [
   ['Component pages with no layout.tsx (title falls back to the site default)', missingLayout],
   ['Component layouts not deriving their title from pageMetadata', notCentralized],
   ['Hardcoded spelled-out component counts (must use COMPONENT_COUNT)', hardcodedCounts],
+  ['ch-based max-width caps on website CSS (early-wrapping prose)', chWidthCaps],
 ]) {
   if (list.length > 0) {
     fail(`${what}:\n` + list.map((l) => `    - ${l}`).join('\n'));
