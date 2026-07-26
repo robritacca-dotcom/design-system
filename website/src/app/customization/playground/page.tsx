@@ -21,6 +21,7 @@ import { Slider } from "@robr0/design-system/components/Slider/Slider";
 import { Tabs } from "@robr0/design-system/components/Tabs/Tabs";
 import { ToggleSwitch } from "@robr0/design-system/components/ToggleSwitch/ToggleSwitch";
 import { Dropdown } from "@robr0/design-system/components/Dropdown/Dropdown";
+import { BarChart } from "@robr0/design-system/charts";
 import {
   DEFAULT_BRAND,
   DEFAULT_NEUTRAL_SEED,
@@ -42,6 +43,16 @@ const PREVIEW_TABS = [
   { value: "overview", label: "Overview" },
   { value: "activity", label: "Activity" },
   { value: "settings", label: "Settings" },
+];
+
+const CHART_DATA = [
+  { label: "Mon", value: 320 },
+  { label: "Tue", value: 480 },
+  { label: "Wed", value: 260 },
+  { label: "Thu", value: 540 },
+  { label: "Fri", value: 610 },
+  { label: "Sat", value: 380 },
+  { label: "Sun", value: 290 },
 ];
 
 export default function PlaygroundPage() {
@@ -326,6 +337,19 @@ export default function PlaygroundPage() {
               </div>
 
               <ProgressBar value={64} showLabel ariaLabel="Demo progress" />
+
+              {/* barColor is fed from state rather than left to the chart's
+                  own token lookup: the chart resolves CSS variables during
+                  render, before the effect that writes the overrides runs,
+                  so it would otherwise lag the brand lever by one change. */}
+              <BarChart
+                data={CHART_DATA}
+                title="Weekly views"
+                subtitle="Bars follow the action colour"
+                dataLabel="Views"
+                barColor={brand}
+                height={240}
+              />
 
               <div className={styles.sliderRow}>
                 <Slider
