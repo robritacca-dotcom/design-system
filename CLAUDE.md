@@ -112,6 +112,7 @@ Component CSS               background-color: var(--color-action-primary-bg)
 Key invariants:
 - Teal `--color-action-primary-bg` (#118AB2) is **only** for primary CTA buttons and focus rings. Never decorative.
 - Never hardcode hex values in component CSS — always a semantic token.
+- Never hardcode hex values in semantic colour tokens either: every `--color-*` value in `tokens-light/dark.css` must be a `var(--primitive-*)` (or `var(--color-*)`) reference — build-enforced by `scripts/validate-token-references.mjs`. This is what lets a consumer override a primitive and have it cascade through the whole system.
 - Buttons are always `--radius-full` (pill). Inputs are always `--radius-md` (12px). Card/EntityCard navigation tiles are the exception: `--radius-xl` (24px).
 
 ---
@@ -170,7 +171,7 @@ Checklist before shipping a component:
 
 Tokens also have multiple homes — a token that exists only in CSS is incomplete. When adding or changing a token:
 
-1. **Both theme files, always**: define it in `src/tokens/tokens-light.css` **and** `src/tokens/tokens-dark.css` (every semantic token needs a value in each). Add a primitive to `tokens-primitives.css` first if no suitable one exists; semantic tokens should reference primitives.
+1. **Both theme files, always**: define it in `src/tokens/tokens-light.css` **and** `src/tokens/tokens-dark.css` (every semantic token needs a value in each). Add a primitive to `tokens-primitives.css` first if no suitable one exists; semantic colour tokens **must** reference primitives via `var()` (build-enforced by `scripts/validate-token-references.mjs`).
 2. **Document it in `design.md`**: it's the source of truth for the design language — record the token's role and its light/dark values.
 3. **Add it to the foundations doc pages** on the website, in the section matching its type:
    - Semantic colors → `website/src/app/foundations/colour-mode/page.tsx` (add a swatch data entry with per-theme primitive name/hex/RGB, and a new `SectionTitle` group if it's a new category)

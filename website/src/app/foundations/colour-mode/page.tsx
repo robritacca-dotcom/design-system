@@ -59,8 +59,8 @@ const accentColours: SwatchData[] = [
   },
   {
     label: "Amber", cssVar: "--color-core-accent-amber",
-    dark: { primitive: "--orange--05--", hex: "#EF8247", rgb: "239 / 130 / 71" },
-    light: { primitive: "--orange--05--", hex: "#EF8247", rgb: "239 / 130 / 71" },
+    dark: { primitive: "--orange--07--", hex: "#EF8247", rgb: "239 / 130 / 71" },
+    light: { primitive: "--orange--07--", hex: "#EF8247", rgb: "239 / 130 / 71" },
   },
   {
     label: "Gold", cssVar: "--color-core-accent-gold",
@@ -102,17 +102,17 @@ const pageColours: SwatchData[] = [
 const containerColours: SwatchData[] = [
   {
     label: "Primary", cssVar: "--color-bg-container-primary",
-    dark: { primitive: "--neutral--09--", hex: "rgba(14,14,14,0.8)", rgb: "14 / 14 / 14" },
+    dark: { primitive: "--neutral--09-semi--", hex: "rgba(14,14,14,0.8)", rgb: "14 / 14 / 14" },
     light: { primitive: "--neutral--01--", hex: "#F1F1F1", rgb: "241 / 241 / 241" },
   },
   {
     label: "Secondary", cssVar: "--color-bg-container-secondary",
-    dark: { primitive: "--neutral--08--", hex: "#303030", rgb: "48 / 48 / 48" },
+    dark: { primitive: "--neutral--07--", hex: "#303030", rgb: "48 / 48 / 48" },
     light: { primitive: "--neutral--02--", hex: "#D6D6D6", rgb: "214 / 214 / 214" },
   },
   {
     label: "Tertiary", cssVar: "--color-bg-container-tertiary",
-    dark: { primitive: "--neutral--07--", hex: "#232323", rgb: "35 / 35 / 35" },
+    dark: { primitive: "--neutral--08--", hex: "#232323", rgb: "35 / 35 / 35" },
     light: { primitive: "--neutral--03--", hex: "#BCBCBC", rgb: "188 / 188 / 188" },
   },
   {
@@ -137,7 +137,7 @@ const textColours: SwatchData[] = [
   {
     label: "Tertiary", cssVar: "--color-text-tertiary",
     dark: { primitive: "--neutral--04--", hex: "#A2A2A2", rgb: "162 / 162 / 162" },
-    light: { primitive: "--neutral--05--", hex: "#6D6D6D", rgb: "109 / 109 / 109" },
+    light: { primitive: "--neutral--06--", hex: "#6D6D6D", rgb: "109 / 109 / 109" },
   },
   {
     label: "Inverse", cssVar: "--color-text-inverse",
@@ -213,13 +213,13 @@ const actionPassiveColours: SwatchData[] = [
   },
   {
     label: "Background Hover", cssVar: "--color-action-passive-bg-hover",
-    dark: { primitive: "--neutral--08--", hex: "rgba(35,35,35,0.8)", rgb: "35 / 35 / 35" },
-    light: { primitive: "--neutral--02--", hex: "rgba(214,214,214,0.8)", rgb: "214 / 214 / 214" },
+    dark: { primitive: "--neutral--08-semi--", hex: "rgba(35,35,35,0.8)", rgb: "35 / 35 / 35" },
+    light: { primitive: "--neutral--02-semi--", hex: "rgba(214,214,214,0.8)", rgb: "214 / 214 / 214" },
   },
   {
     label: "Background Active", cssVar: "--color-action-passive-bg-active",
-    dark: { primitive: "--neutral--07--", hex: "rgba(48,48,48,0.8)", rgb: "48 / 48 / 48" },
-    light: { primitive: "--neutral--03--", hex: "rgba(188,188,188,0.8)", rgb: "188 / 188 / 188" },
+    dark: { primitive: "--neutral--07-semi--", hex: "rgba(48,48,48,0.8)", rgb: "48 / 48 / 48" },
+    light: { primitive: "--neutral--03-semi--", hex: "rgba(188,188,188,0.8)", rgb: "188 / 188 / 188" },
   },
   {
     label: "Text Primary", cssVar: "--color-action-passive-text",
@@ -237,7 +237,7 @@ const statusColours: StatusSwatchData[] = [
   },
   {
     label: "Warning", bgVar: "--color-status-warning-bg", borderVar: "--color-status-warning-border",
-    dark: { primitive: "--orange--09--", hex: "#552716", rgb: "85 / 39 / 22" },
+    dark: { primitive: "--orange--10--", hex: "#552716", rgb: "85 / 39 / 22" },
     light: { primitive: "--orange--01--", hex: "#FFF3EC", rgb: "255 / 243 / 236" },
   },
   {

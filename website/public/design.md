@@ -29,7 +29,7 @@ The system is **light/dark-first**: every semantic color token has a light-theme
 
 ### Token Tiers
 
-Never reference `--primitive-*` tokens inside components. Always use the semantic layer (`--color-*`).
+Never reference `--primitive-*` tokens inside components. Always use the semantic layer (`--color-*`). The chain is enforced in the other direction too: every semantic colour token's value must be a `var(--primitive-*)` reference — never a raw hex/rgba literal — so that overriding a primitive re-themes everything built on it (`scripts/validate-token-references.mjs` fails the build otherwise). The hex values noted throughout this section are the resolved values of those primitives.
 
 ### Action / Brand
 - **Primary bg** (`--color-action-primary-bg` — #118AB2): Teal. Every primary CTA button fill, focus rings, active input borders. The most-recognized brand color.

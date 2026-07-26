@@ -2,32 +2,34 @@
    SEMANTIC TOKENS — LIGHT THEME
    These are what components use
    Always reference these, never primitives
+   Every value chains to tokens-primitives.css
+   (validated by scripts/validate-token-references.mjs)
    ============================================ */
 
 [data-theme="light"], :root {
   /* Text */
-  --color-text-primary: #050505;
-  --color-text-secondary: #303030;
-  --color-text-tertiary: #6D6D6D;
-  --color-text-inverse: #A2A2A2;
+  --color-text-primary: var(--primitive-neutral-10);
+  --color-text-secondary: var(--primitive-neutral-07);
+  --color-text-tertiary: var(--primitive-neutral-06);
+  --color-text-inverse: var(--primitive-neutral-04);
   --color-text-on-inverse: var(--primitive-neutral-01);
 
   /* Icon */
-  --color-icon-primary: #6D6D6D;
-  --color-icon-secondary: #A2A2A2;
+  --color-icon-primary: var(--primitive-neutral-06);
+  --color-icon-secondary: var(--primitive-neutral-04);
 
   /* Background - Page */
-  --color-bg-page-primary: #FFFFFF;
-  --color-bg-page-inverse: #050505;
+  --color-bg-page-primary: var(--primitive-neutral-00);
+  --color-bg-page-inverse: var(--primitive-neutral-10);
 
   /* Background - Container */
-  --color-bg-container-primary: #F1F1F1;
-  --color-bg-container-primary-transparent: rgba(241, 241, 241, 0.01);
-  --color-bg-container-primary-semi: rgba(241, 241, 241, 0.6);
-  --color-bg-container-secondary: #D6D6D6;
-  --color-bg-container-tertiary: #BCBCBC;
-  --color-bg-container-inverse: #0E0E0E;
-  --color-bg-container-border: #D6D6D6;
+  --color-bg-container-primary: var(--primitive-neutral-01);
+  --color-bg-container-primary-transparent: var(--primitive-neutral-01-transparent);
+  --color-bg-container-primary-semi: var(--primitive-neutral-01-semi);
+  --color-bg-container-secondary: var(--primitive-neutral-02);
+  --color-bg-container-tertiary: var(--primitive-neutral-03);
+  --color-bg-container-inverse: var(--primitive-neutral-09);
+  --color-bg-container-border: var(--primitive-neutral-02);
 
   /* Divider */
   --color-divider: var(--primitive-neutral-02-semi);
@@ -41,41 +43,41 @@
   --shadow-modal: 0 8px 32px rgba(0, 0, 0, 0.2);
 
   /* Action - Primary */
-  --color-action-primary-bg: #118AB2;
-  --color-action-primary-bg-hover: #0E6E8F;
-  --color-action-primary-bg-active: #0A4E66;
-  --color-action-primary-text: #CFEAF3;
-  --color-action-primary-text-active: #F1F1F1;
-  --color-action-primary-text-secondary: #052F3E;
-  --color-action-primary-text-tertiary: #118AB2;
-  --color-action-primary-border: #0A4E66;
-  --color-action-primary-border-secondary: #2C9AB9;
-  --color-action-primary-border-tertiary: #6DBCD6;
+  --color-action-primary-bg: var(--primitive-teal-07);
+  --color-action-primary-bg-hover: var(--primitive-teal-08);
+  --color-action-primary-bg-active: var(--primitive-teal-09);
+  --color-action-primary-text: var(--primitive-teal-02);
+  --color-action-primary-text-active: var(--primitive-neutral-01);
+  --color-action-primary-text-secondary: var(--primitive-teal-10);
+  --color-action-primary-text-tertiary: var(--primitive-teal-07);
+  --color-action-primary-border: var(--primitive-teal-09);
+  --color-action-primary-border-secondary: var(--primitive-teal-06);
+  --color-action-primary-border-tertiary: var(--primitive-teal-04);
 
   /* Action - Icon */
-  --color-action-icon-default: #050505;
-  --color-action-icon-active: #CFEAF3;
+  --color-action-icon-default: var(--primitive-neutral-10);
+  --color-action-icon-active: var(--primitive-teal-02);
 
   /* Action - Passive (Secondary button) */
-  --color-action-passive-text: #050505;
-  --color-action-passive-bg: rgba(241, 241, 241, 0.01);
-  --color-action-passive-bg-hover: rgba(214, 214, 214, 0.8);
-  --color-action-passive-bg-active: rgba(188, 188, 188, 0.8);
+  --color-action-passive-text: var(--primitive-neutral-10);
+  --color-action-passive-bg: var(--primitive-neutral-01-transparent);
+  --color-action-passive-bg-hover: var(--primitive-neutral-02-semi);
+  --color-action-passive-bg-active: var(--primitive-neutral-03-semi);
 
   /* Core colours */
-  --color-core-ui-primary: #118AB2;
-  --color-core-ui-secondary: #052F3E;
-  --color-core-accent-coral: #EF476F;
-  --color-core-accent-violet: #9E47EF;
-  --color-core-accent-cobalt: #1E47B0;
+  --color-core-ui-primary: var(--primitive-teal-07);
+  --color-core-ui-secondary: var(--primitive-teal-10);
+  --color-core-accent-coral: var(--primitive-red-07);
+  --color-core-accent-violet: var(--primitive-purple-07);
+  --color-core-accent-cobalt: var(--primitive-blue-07);
   --color-core-accent-amber: var(--primitive-orange-07);
-  --color-core-accent-gold: #FFD166;
-  --color-core-accent-mint: #06D6A0;
+  --color-core-accent-gold: var(--primitive-yellow-07);
+  --color-core-accent-mint: var(--primitive-green-07);
 
   /* Status - Positive */
-  --color-status-positive-bg: #ECFCF7;
-  --color-status-positive-border: #06D6A0;
-  --color-status-positive-text: #024336;
+  --color-status-positive-bg: var(--primitive-green-01);
+  --color-status-positive-border: var(--primitive-green-07);
+  --color-status-positive-text: var(--primitive-green-10);
 
   /* Status - Warning */
   --color-status-warning-bg: var(--primitive-orange-01);
@@ -83,19 +85,19 @@
   --color-status-warning-text: var(--primitive-orange-10);
 
   /* Status - Error */
-  --color-status-error-bg: #FDEFF3;
-  --color-status-error-border: #EF476F;
-  --color-status-error-text: #571727;
+  --color-status-error-bg: var(--primitive-red-01);
+  --color-status-error-border: var(--primitive-red-07);
+  --color-status-error-text: var(--primitive-red-10);
 
   /* Status - Info */
-  --color-status-info-bg: #EEF3FD;
-  --color-status-info-border: #1E47B0;
-  --color-status-info-text: #081633;
+  --color-status-info-bg: var(--primitive-blue-01);
+  --color-status-info-border: var(--primitive-blue-07);
+  --color-status-info-text: var(--primitive-blue-10);
 
   /* Status - Neutral */
-  --color-status-neutral-bg: #D6D6D6;
-  --color-status-neutral-border: #303030;
-  --color-status-neutral-text: #232323;
+  --color-status-neutral-bg: var(--primitive-neutral-02);
+  --color-status-neutral-border: var(--primitive-neutral-07);
+  --color-status-neutral-text: var(--primitive-neutral-08);
 
   /* Chart - Contribution heatmap ramp (level 0 = none → level 4 = most) */
   --color-chart-contribution-0: var(--color-bg-container-primary);
@@ -105,16 +107,16 @@
   --color-chart-contribution-4: var(--primitive-green-09);
 
   /* Input */
-  --color-input-text-primary: #050505;
-  --color-input-text-placeholder: #6D6D6D;
-  --color-input-text-disabled: #A2A2A2;
-  --color-input-text-inverse: #A2A2A2;
-  --color-input-border-primary: #D6D6D6;
-  --color-input-border-hover: #6DBCD6;
-  --color-input-border-selected: #2C9AB9;
-  --color-input-border-disabled: #BCBCBC;
-  --color-input-bg-primary: #FFFFFF;
-  --color-input-bg-disabled: #D6D6D6;
+  --color-input-text-primary: var(--primitive-neutral-10);
+  --color-input-text-placeholder: var(--primitive-neutral-06);
+  --color-input-text-disabled: var(--primitive-neutral-04);
+  --color-input-text-inverse: var(--primitive-neutral-04);
+  --color-input-border-primary: var(--primitive-neutral-02);
+  --color-input-border-hover: var(--primitive-teal-04);
+  --color-input-border-selected: var(--primitive-teal-06);
+  --color-input-border-disabled: var(--primitive-neutral-03);
+  --color-input-bg-primary: var(--primitive-neutral-00);
+  --color-input-bg-disabled: var(--primitive-neutral-02);
 
   /* Spacing (from primitives) */
   --radius-xxs: var(--primitive-radius-xxs);

@@ -1,32 +1,34 @@
 /* ============================================
    SEMANTIC TOKENS — DARK THEME
    Applied when data-theme="dark" is set
+   Every value chains to tokens-primitives.css
+   (validated by scripts/validate-token-references.mjs)
    ============================================ */
 
 [data-theme="dark"] {
   /* Text */
-  --color-text-primary: #F1F1F1;
-  --color-text-secondary: #BCBCBC;
-  --color-text-tertiary: #A2A2A2;
-  --color-text-inverse: #303030;
+  --color-text-primary: var(--primitive-neutral-01);
+  --color-text-secondary: var(--primitive-neutral-03);
+  --color-text-tertiary: var(--primitive-neutral-04);
+  --color-text-inverse: var(--primitive-neutral-07);
   --color-text-on-inverse: var(--primitive-neutral-09);
 
   /* Icon */
-  --color-icon-primary: #D6D6D6;
-  --color-icon-secondary: #A2A2A2;
+  --color-icon-primary: var(--primitive-neutral-02);
+  --color-icon-secondary: var(--primitive-neutral-04);
 
   /* Background - Page */
-  --color-bg-page-primary: #050505;
-  --color-bg-page-inverse: #F1F1F1;
+  --color-bg-page-primary: var(--primitive-neutral-10);
+  --color-bg-page-inverse: var(--primitive-neutral-01);
 
   /* Background - Container */
-  --color-bg-container-primary: rgba(14, 14, 14, 0.8);
-  --color-bg-container-primary-transparent: rgba(14, 14, 14, 0.01);
-  --color-bg-container-primary-semi: rgba(14, 14, 14, 0.6);
-  --color-bg-container-secondary: #303030;
-  --color-bg-container-tertiary: #232323;
-  --color-bg-container-inverse: #F1F1F1;
-  --color-bg-container-border: #232323;
+  --color-bg-container-primary: var(--primitive-neutral-09-semi);
+  --color-bg-container-primary-transparent: var(--primitive-neutral-09-transparent);
+  --color-bg-container-primary-semi: var(--primitive-neutral-09-semi-transparent);
+  --color-bg-container-secondary: var(--primitive-neutral-07);
+  --color-bg-container-tertiary: var(--primitive-neutral-08);
+  --color-bg-container-inverse: var(--primitive-neutral-01);
+  --color-bg-container-border: var(--primitive-neutral-08);
 
   /* Divider */
   --color-divider: var(--primitive-neutral-08-semi);
@@ -40,31 +42,31 @@
   --shadow-modal: 0 8px 32px rgba(0, 0, 0, 0.6);
 
   /* Action - Primary */
-  --color-action-primary-bg: #118AB2;
-  --color-action-primary-bg-hover: #0E6E8F;
-  --color-action-primary-bg-active: #0A4E66;
-  --color-action-primary-text: #CFEAF3;
-  --color-action-primary-text-active: #F1F1F1;
-  --color-action-primary-text-secondary: #052F3E;
-  --color-action-primary-text-tertiary: #118AB2;
-  --color-action-primary-border: #0A4E66;
-  --color-action-primary-border-secondary: #2C9AB9;
-  --color-action-primary-border-tertiary: #6DBCD6;
+  --color-action-primary-bg: var(--primitive-teal-07);
+  --color-action-primary-bg-hover: var(--primitive-teal-08);
+  --color-action-primary-bg-active: var(--primitive-teal-09);
+  --color-action-primary-text: var(--primitive-teal-02);
+  --color-action-primary-text-active: var(--primitive-neutral-01);
+  --color-action-primary-text-secondary: var(--primitive-teal-10);
+  --color-action-primary-text-tertiary: var(--primitive-teal-07);
+  --color-action-primary-border: var(--primitive-teal-09);
+  --color-action-primary-border-secondary: var(--primitive-teal-06);
+  --color-action-primary-border-tertiary: var(--primitive-teal-04);
 
   /* Action - Icon */
-  --color-action-icon-default: #F1F1F1;
-  --color-action-icon-active: #F1F1F1;
+  --color-action-icon-default: var(--primitive-neutral-01);
+  --color-action-icon-active: var(--primitive-neutral-01);
 
   /* Action - Passive (Secondary button) */
-  --color-action-passive-text: #F1F1F1;
-  --color-action-passive-bg: rgba(14, 14, 14, 0.01);
-  --color-action-passive-bg-hover: rgba(35, 35, 35, 0.8);
-  --color-action-passive-bg-active: rgba(48, 48, 48, 0.8);
+  --color-action-passive-text: var(--primitive-neutral-01);
+  --color-action-passive-bg: var(--primitive-neutral-09-transparent);
+  --color-action-passive-bg-hover: var(--primitive-neutral-08-semi);
+  --color-action-passive-bg-active: var(--primitive-neutral-07-semi);
 
   /* Status - Positive */
-  --color-status-positive-bg: #024336;
-  --color-status-positive-border: #06D6A0;
-  --color-status-positive-text: #ECFCF7;
+  --color-status-positive-bg: var(--primitive-green-10);
+  --color-status-positive-border: var(--primitive-green-07);
+  --color-status-positive-text: var(--primitive-green-01);
 
   /* Status - Warning */
   --color-status-warning-bg: var(--primitive-orange-10);
@@ -72,46 +74,46 @@
   --color-status-warning-text: var(--primitive-orange-01);
 
   /* Status - Error */
-  --color-status-error-bg: #571727;
-  --color-status-error-border: #EF476F;
-  --color-status-error-text: #FDEFF3;
+  --color-status-error-bg: var(--primitive-red-10);
+  --color-status-error-border: var(--primitive-red-07);
+  --color-status-error-text: var(--primitive-red-01);
 
   /* Status - Info */
-  --color-status-info-bg: #081633;
-  --color-status-info-border: #1E47B0;
-  --color-status-info-text: #EEF3FD;
+  --color-status-info-bg: var(--primitive-blue-10);
+  --color-status-info-border: var(--primitive-blue-07);
+  --color-status-info-text: var(--primitive-blue-01);
 
   /* Status - Neutral */
-  --color-status-neutral-bg: #232323;
-  --color-status-neutral-border: #6D6D6D;
-  --color-status-neutral-text: #F1F1F1;
+  --color-status-neutral-bg: var(--primitive-neutral-08);
+  --color-status-neutral-border: var(--primitive-neutral-06);
+  --color-status-neutral-text: var(--primitive-neutral-01);
 
   /* Chart - Contribution heatmap ramp (level 0 = none → level 4 = most) */
-  --color-chart-contribution-0: #232323;
+  --color-chart-contribution-0: var(--primitive-neutral-08);
   --color-chart-contribution-1: var(--primitive-green-10);
   --color-chart-contribution-2: var(--primitive-green-09);
   --color-chart-contribution-3: var(--primitive-green-08);
   --color-chart-contribution-4: var(--primitive-green-07);
 
   /* Input */
-  --color-input-text-primary: #F1F1F1;
-  --color-input-text-placeholder: #A2A2A2;
-  --color-input-text-disabled: #303030;
-  --color-input-text-inverse: #303030;
-  --color-input-border-primary: #232323;
-  --color-input-border-hover: #0A4E66;
-  --color-input-border-selected: #2C9AB9;
-  --color-input-border-disabled: #232323;
-  --color-input-bg-primary: #050505;
-  --color-input-bg-disabled: #0E0E0E;
+  --color-input-text-primary: var(--primitive-neutral-01);
+  --color-input-text-placeholder: var(--primitive-neutral-04);
+  --color-input-text-disabled: var(--primitive-neutral-07);
+  --color-input-text-inverse: var(--primitive-neutral-07);
+  --color-input-border-primary: var(--primitive-neutral-08);
+  --color-input-border-hover: var(--primitive-teal-09);
+  --color-input-border-selected: var(--primitive-teal-06);
+  --color-input-border-disabled: var(--primitive-neutral-08);
+  --color-input-bg-primary: var(--primitive-neutral-10);
+  --color-input-bg-disabled: var(--primitive-neutral-09);
 
   /* Core colours */
-  --color-core-ui-primary: #118AB2;
-  --color-core-ui-secondary: #0A4E66;
-  --color-core-accent-coral: #EF476F;
-  --color-core-accent-violet: #9E47EF;
-  --color-core-accent-cobalt: #1E47B0;
+  --color-core-ui-primary: var(--primitive-teal-07);
+  --color-core-ui-secondary: var(--primitive-teal-09);
+  --color-core-accent-coral: var(--primitive-red-07);
+  --color-core-accent-violet: var(--primitive-purple-07);
+  --color-core-accent-cobalt: var(--primitive-blue-07);
   --color-core-accent-amber: var(--primitive-orange-07);
-  --color-core-accent-gold: #FFD166;
-  --color-core-accent-mint: #06D6A0;
+  --color-core-accent-gold: var(--primitive-yellow-07);
+  --color-core-accent-mint: var(--primitive-green-07);
 }
