@@ -60,6 +60,12 @@ export const dsMegaItems: MegaItem[] = [
     description: `${COMPONENT_COUNT} React components with full Storybook docs`,
     icon: "widgets",
   },
+  {
+    href: "/customization",
+    label: "Customization",
+    description: "Install @robr0/design-system, swap the font, re-theme it live",
+    icon: "tune",
+  },
 ];
 
 /** URL prefixes that should mark the "Design system" mega trigger as active */
@@ -72,6 +78,7 @@ export const dsActiveMatchers = [
   (path: string) => path.startsWith("/project-journal"),
   (path: string) => path.startsWith("/foundations"),
   (path: string) => path.startsWith("/components"),
+  (path: string) => path.startsWith("/customization"),
 ];
 
 export function isDesignSystemPath(pathname: string): boolean {
@@ -182,6 +189,11 @@ export function buildWritingSidebarLinks(
   ];
 }
 
+export const customizationSidebarLinks: NavLink[] = [
+  { href: "/customization", label: "Get started" },
+  { href: "/customization/playground", label: "Playground" },
+];
+
 export const workSidebarLinks: NavLink[] = [
   { href: "/work", label: "Contents" },
   { href: "/work/embedded-ai-turbotax", label: "TurboTax in ChatGPT & Claude", logo: "/logos/turbotax.svg" },
@@ -217,6 +229,7 @@ export function getSidebarLinks(links: NavLink[], activeHref: string) {
 const allSidebarLinks: NavLink[] = [
   ...componentsSidebarLinks,
   ...foundationsSidebarLinks,
+  ...customizationSidebarLinks,
   ...docsSidebarLinks,
   ...workSidebarLinks,
 ];
@@ -292,6 +305,7 @@ const breadcrumbSections: SectionConfig[] = [
   // Other DS sections
   { base: "/foundations", label: "Foundations", parent: "Design system", sidebar: foundationsSidebarLinks },
   { base: "/components", label: "Components", parent: "Design system", sidebar: componentsSidebarLinks },
+  { base: "/customization", label: "Customization", parent: "Design system", sidebar: customizationSidebarLinks },
   { base: "/work", label: "Work", parent: null, sidebar: workSidebarLinks },
   // Writing — article sub-labels resolve from the slug (feed is dynamic)
   { base: "/writing", label: "Writing", parent: null, sidebar: null },

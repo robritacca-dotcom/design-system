@@ -20,7 +20,11 @@ html.theme-ready {
 }
 
 :root {
-  --font-family-primary: var(--font-nunito-sans);
+  /* Feed the next/font-loaded Nunito Sans into the design system's single
+     font token. The body reads the token (not the font variable directly)
+     so one override — here, or live in /customization/playground — restyles
+     the site and every component together. */
+  --font-family-primary: var(--font-nunito-sans), 'Nunito Sans', sans-serif;
 
   /* Docs-shell column widths: left nav rail, right details rail, and the
      gap between columns. Every page module sizes its rails from these so
@@ -51,7 +55,7 @@ html[data-theme="light"] {
 }
 
 body {
-  font-family: var(--font-nunito-sans), 'Nunito Sans', sans-serif;
+  font-family: var(--font-family-primary);
   color: var(--color-text-primary);
   background: var(--color-bg-page-primary);
   min-height: 100vh;

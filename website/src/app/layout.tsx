@@ -103,8 +103,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // The next/font variable class lives on <html>, not <body>: globals.css
+  // feeds var(--font-nunito-sans) into the design system's
+  // --font-family-primary token at :root, and a custom property resolves its
+  // var() references on the element that declares it — on <body> the variable
+  // would be invisible to :root and the token would go invalid.
   return (
-    <html lang="en" data-theme="dark" suppressHydrationWarning>
+    <html lang="en" data-theme="dark" className={nunitoSans.variable} suppressHydrationWarning>
       <head>
         {/* Material Symbols is served from the design system's own bundled
             @font-face (src/fonts/material-symbols.css, imported above) — the
@@ -140,7 +145,7 @@ export default function RootLayout({
           `}
         </Script>
       </head>
-      <body className={nunitoSans.variable}>
+      <body>
         {/* Must run before first paint (html stays visibility:hidden until
             .theme-ready). Emitted as raw HTML in a hidden div, not a React
             <script> element: parser-inserted scripts still execute, while

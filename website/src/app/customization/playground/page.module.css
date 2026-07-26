@@ -1,0 +1,223 @@
+/* ============================================
+   CUSTOMIZATION PLAYGROUND PAGE LAYOUT
+   ============================================ */
+.dsLayout {
+  display: flex;
+  gap: var(--layout-column-gap);
+  width: 100%;
+  max-width: 1440px;
+  padding-top: var(--primitive-gap-xl);
+}
+
+.dsContent {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-xxxl);
+}
+
+/* ============================================
+   PAGE TITLE - Display 2
+   ============================================ */
+.pageHeader {
+  margin-top: calc(var(--primitive-gap-xl) - var(--primitive-gap-xxxl));
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--primitive-gap-lg);
+  width: 100%;
+}
+
+.pageTitle {
+  font-size: var(--font-display-2-size);
+  font-weight: var(--font-display-2-weight);
+  line-height: var(--font-display-2-line-height);
+  letter-spacing: var(--font-display-2-letter-spacing);
+  color: var(--color-text-primary);
+}
+
+.subDisplay {
+  font-family: var(--font-sub-display-family);
+  font-size: var(--font-sub-display-size);
+  font-weight: var(--font-sub-display-weight);
+  line-height: var(--font-sub-display-line-height);
+  letter-spacing: var(--font-sub-display-letter-spacing);
+  color: var(--color-text-primary);
+  margin-bottom: 0;
+}
+
+.introSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-lg);
+}
+
+.introBody {
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  color: var(--color-text-secondary);
+  max-width: 72ch;
+}
+
+.introBody code {
+  color: var(--color-text-primary);
+}
+
+.inlineLink {
+  color: var(--color-action-primary-text-tertiary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ============================================
+   PLAYGROUND GRID — controls | sampler
+   ============================================ */
+.playgroundGrid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: var(--primitive-gap-lg);
+  align-items: start;
+}
+
+@media (max-width: 959px) {
+  .playgroundGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================
+   CONTROLS PANEL
+   ============================================ */
+.controls {
+  position: sticky;
+  top: var(--primitive-gap-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-lg);
+  padding: var(--padding-lg);
+  background-color: var(--color-bg-container-primary);
+  border: var(--border-xs) solid var(--color-bg-container-border);
+  border-radius: var(--radius-xl);
+}
+
+@media (max-width: 959px) {
+  .controls {
+    position: static;
+  }
+}
+
+.controlGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm-md);
+  padding-bottom: var(--primitive-gap-lg);
+  border-bottom: var(--border-xs) solid var(--color-divider);
+}
+
+.controlHeading {
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  color: var(--color-text-primary);
+}
+
+.controlNote {
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+}
+
+/* Colour picker row — the native input carries the swatch */
+.colorRow {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm-md);
+  cursor: pointer;
+}
+
+.colorInput {
+  width: 48px;
+  height: 32px;
+  padding: 0;
+  border: var(--border-xs) solid var(--color-input-border-primary);
+  border-radius: var(--radius-sm);
+  background: none;
+  cursor: pointer;
+}
+
+.colorInput::-webkit-color-swatch-wrapper {
+  padding: 2px;
+}
+
+.colorInput::-webkit-color-swatch {
+  border: none;
+  border-radius: var(--radius-xs);
+}
+
+.colorValue {
+  font-size: var(--font-paragraph-sm-size);
+  color: var(--color-text-secondary);
+}
+
+.sliderRow {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm-md);
+}
+
+.sliderRow > :first-child {
+  flex: 1;
+}
+
+.sliderValue {
+  min-width: 44px;
+  text-align: right;
+  font-size: var(--font-paragraph-sm-size);
+  color: var(--color-text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================
+   COMPONENT SAMPLER CANVAS
+   ============================================ */
+.canvas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-lg);
+  padding: var(--padding-lg);
+  background-color: var(--color-bg-container-primary);
+  border: var(--border-xs) solid var(--color-bg-container-border);
+  border-radius: var(--radius-xl);
+  min-width: 0;
+}
+
+.canvasRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gap-sm-md);
+}
+
+/* ============================================
+   COPY-CSS SECTION
+   ============================================ */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-lg);
+}
+
+.sectionNote {
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  color: var(--color-text-secondary);
+  max-width: 72ch;
+}
+
+.sectionNote code {
+  color: var(--color-text-primary);
+}
