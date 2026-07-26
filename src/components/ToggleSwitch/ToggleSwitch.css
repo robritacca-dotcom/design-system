@@ -54,8 +54,13 @@
 .ds-toggle-switch__thumb-icon {
   /* Intentionally off the --icon-size-* scale. This check sits inside the
      20x20 thumb; the smallest scale step is also 20px, which would fill the
-     thumb edge to edge. Control-internal glyph, not a UI icon. */
-  font-size: 14px;
+     thumb edge to edge. Control-internal glyph, not a UI icon.
+
+     Set via --icon-size (not font-size): .material-symbols-rounded derives
+     font-size, width, and height from it together. Overriding font-size
+     alone leaves the box at the 24px default, so the glyph hangs off-centre
+     inside the thumb. */
+  --icon-size: 14px;
   color: var(--color-action-primary-bg);
 }
 
@@ -119,7 +124,7 @@
 .ds-toggle-switch--compact .ds-toggle-switch__thumb-icon {
   /* Off-scale for the same reason as the default size — the compact thumb
      is only 16x16. */
-  font-size: 12px;
+  --icon-size: 12px;
 }
 
 .ds-toggle-switch--compact .ds-toggle-switch__label {
