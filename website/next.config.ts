@@ -2,7 +2,6 @@ import type { NextConfig } from "next";
 import path from "path";
 
 const worktreeRoot = path.resolve(__dirname, '..');
-const designSystemPath = path.resolve(worktreeRoot, 'src');
 
 // The GA tag and the inline theme-bootstrap script in layout.tsx require
 // 'unsafe-inline'; tighten to nonces only if those become external scripts.
@@ -46,18 +45,12 @@ const nextConfig: NextConfig = {
       { source: "/blueprints", destination: "/docs", permanent: true },
     ];
   },
+  // The design system arrives as a real (workspace-linked) package whose
+  // exports point at TypeScript source — Next compiles it like first-party
+  // code. This keeps the website on the exact import surface consumers get.
+  transpilePackages: ['@robr0/design-system'],
   turbopack: {
     root: worktreeRoot,
-    resolveAlias: {
-      '@design-system': designSystemPath,
-    },
-  },
-  webpack: (config) => {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      '@design-system': designSystemPath,
-    };
-    return config;
   },
 };
 

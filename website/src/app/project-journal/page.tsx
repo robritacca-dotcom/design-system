@@ -6,7 +6,7 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import Footer from "../../components/Footer/Footer";
 import GitHubContributions from "../../components/GitHubContributions/GitHubContributions";
-import { Timeline } from "@design-system/components/Timeline/Timeline";
+import { Timeline } from "@robr0/design-system/components/Timeline/Timeline";
 import { getSidebarLinks, docsSidebarLinks } from "@/config/navigation";
 import { siteUpdates, siteUpdatesAsOf, SITE_UPDATE_COUNT } from "@/data/site-updates";
 import styles from "./page.module.css";

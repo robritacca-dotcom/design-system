@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useId, useState } from "react";
-import { Input } from "@design-system/components/Input/Input";
-import { Button } from "@design-system/components/Button/Button";
+import { Input } from "@robr0/design-system/components/Input/Input";
+import { Button } from "@robr0/design-system/components/Button/Button";
 import SidebarLinks from "./SidebarLinks";
 import type { SidebarLink } from "./Sidebar";
 import styles from "./Sidebar.module.css";

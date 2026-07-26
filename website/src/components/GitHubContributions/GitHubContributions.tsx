@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import {
   ContributionGraph,
   type ContributionDay,
-} from "@design-system/components/ContributionGraph/ContributionGraph";
-import { Skeleton } from "@design-system/components/Skeleton/Skeleton";
+} from "@robr0/design-system/components/ContributionGraph/ContributionGraph";
+import { Skeleton } from "@robr0/design-system/components/Skeleton/Skeleton";
 
 interface ContributionsData {
   total: number;

@@ -1,4 +1,4 @@
-import { COMPONENT_COUNT } from "@design-system/components/registry";
+import { COMPONENT_COUNT } from "@robr0/design-system/components/registry";
 import { sectionMetadata } from "@/config/navigation";
 
 export const metadata = sectionMetadata(

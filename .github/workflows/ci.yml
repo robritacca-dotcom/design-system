@@ -18,8 +18,9 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run build
-      # validate-registry (run by prebuild) regenerates README/skills content;
-      # a dirty tree here means committed generated content is stale.
+      - run: npm run build:lib
+      # validate-registry (run by prebuild) regenerates README/skills/barrel
+      # content; a dirty tree here means committed generated content is stale.
       - name: Check generated content is committed
         run: git diff --exit-code
 
@@ -57,12 +58,9 @@ jobs:
         with:
           node-version: 24
           cache: npm
-          cache-dependency-path: |
-            package-lock.json
-            website/package-lock.json
+      # npm workspaces: the root install covers the website (and links
+      # @robr0/design-system into its node_modules).
       - run: npm ci
-      - run: npm ci
-        working-directory: website
       - run: npm run lint
         working-directory: website
       - run: npm run build

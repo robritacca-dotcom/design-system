@@ -9,8 +9,8 @@ import Footer from "../../../components/Footer/Footer";
 import {
   ContributionGraph,
   type ContributionDay,
-} from "@design-system/components/ContributionGraph/ContributionGraph";
-import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
+} from "@robr0/design-system/components/ContributionGraph/ContributionGraph";
+import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import GitHubContributions from "../../../components/GitHubContributions/GitHubContributions";
 import PageLinks from "../../../components/PageLinks/PageLinks";
 import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";

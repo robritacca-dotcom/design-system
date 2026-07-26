@@ -6,11 +6,12 @@
     "predev": "node ../scripts/generate-skills-content.mjs && node ../scripts/generate-token-registry.mjs && node ../scripts/sync-blueprints.mjs",
     "dev": "next dev",
     "prebuild": "node ../scripts/generate-skills-content.mjs && node ../scripts/generate-readme-content.mjs && node ../scripts/generate-token-registry.mjs && node ../scripts/sync-blueprints.mjs && node ../scripts/validate-component-registry.mjs && node ../scripts/validate-website-surfaces.mjs && node ../scripts/validate-skills-registry.mjs && node ../scripts/validate-site-updates.mjs && node ../scripts/validate-token-registry.mjs",
-    "build": "cd .. && npm install --include=dev && cd website && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "eslint"
   },
   "dependencies": {
+    "@robr0/design-system": "file:..",
     "next": "16.2.11",
     "react": "19.2.3",
     "react-dom": "19.2.3",

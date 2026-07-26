@@ -2,21 +2,21 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { COMPONENT_COUNT } from "@design-system/components/registry";
-import { TOKEN_COUNT, TOKEN_COUNTS, type TokenCategory } from "@design-system/tokens/registry";
+import { COMPONENT_COUNT } from "@robr0/design-system/components/registry";
+import { TOKEN_COUNT, TOKEN_COUNTS, type TokenCategory } from "@robr0/design-system/tokens/registry";
 import Link from "next/link";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
-import { Button } from "@design-system/components/Button/Button";
-import { Badge } from "@design-system/components/Badge/Badge";
-import { Alert } from "@design-system/components/Alert/Alert";
-import { SegmentedControl } from "@design-system/components/SegmentedControl/SegmentedControl";
-import { ProgressBar } from "@design-system/components/ProgressBar/ProgressBar";
-import { LineChart } from "@design-system/components/Chart/LineChart";
-import { BarChart } from "@design-system/components/Chart/BarChart";
+import { Button } from "@robr0/design-system/components/Button/Button";
+import { Badge } from "@robr0/design-system/components/Badge/Badge";
+import { Alert } from "@robr0/design-system/components/Alert/Alert";
+import { SegmentedControl } from "@robr0/design-system/components/SegmentedControl/SegmentedControl";
+import { ProgressBar } from "@robr0/design-system/components/ProgressBar/ProgressBar";
+import { LineChart } from "@robr0/design-system/components/Chart/LineChart";
+import { BarChart } from "@robr0/design-system/components/Chart/BarChart";
 import { getSidebarLinks, workSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 

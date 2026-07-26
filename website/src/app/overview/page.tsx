@@ -2,15 +2,15 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Timeline, type TimelineCompany } from "@design-system/components/Timeline/Timeline";
+import { Timeline, type TimelineCompany } from "@robr0/design-system/components/Timeline/Timeline";
 import MegaNav from "../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import Footer from "../../components/Footer/Footer";
 import { getSidebarLinks, docsSidebarLinks } from "@/config/navigation";
-import { COMPONENT_COUNT } from "@design-system/components/registry";
-import { TOKEN_COUNT, TOKEN_COUNTS } from "@design-system/tokens/registry";
+import { COMPONENT_COUNT } from "@robr0/design-system/components/registry";
+import { TOKEN_COUNT, TOKEN_COUNTS } from "@robr0/design-system/tokens/registry";
 import { SKILL_COUNT } from "@/data/skills-registry";
 import { SITE_UPDATE_COUNT } from "@/data/site-updates";
 import styles from "./page.module.css";

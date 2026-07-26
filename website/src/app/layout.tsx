@@ -1,11 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-import "@design-system/tokens/tokens.css";
+import "@robr0/design-system/tokens/tokens.css";
 // Single source of the Material Symbols base styles and icon-size scale.
 // Imported explicitly rather than relying on it arriving incidentally through
 // a component import, so pages that use raw .material-symbols-rounded spans
 // (e.g. /foundations/icons) are styled deterministically.
-import "@design-system/fonts/material-symbols.css";
+import "@robr0/design-system/fonts/material-symbols.css";
 import { Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import { buildPersonJsonLd, buildWebsiteJsonLd } from "@/lib/structuredData";

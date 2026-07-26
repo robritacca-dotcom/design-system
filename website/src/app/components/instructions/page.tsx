@@ -6,8 +6,8 @@ import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
-import { Instructions } from "@design-system/components/Instructions/Instructions";
-import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
+import { Instructions } from "@robr0/design-system/components/Instructions/Instructions";
+import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
 import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
@@ -95,7 +95,7 @@ export default function InstructionsPage() {
                 size="compact"
                 title="Quick start"
                 steps={[
-                  { label: "Install", description: "npm install @design-system/components" },
+                  { label: "Install", description: "npm install @robr0/design-system" },
                   { label: "Import tokens", description: "Add token CSS to your app" },
                   { label: "Use components", description: "Import and render components" },
                 ]}

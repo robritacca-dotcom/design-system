@@ -6,8 +6,8 @@ import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import Footer from "../../components/Footer/Footer";
-import { Badge } from "@design-system/components/Badge/Badge";
-import { Chip } from "@design-system/components/Chip/Chip";
+import { Badge } from "@robr0/design-system/components/Badge/Badge";
+import { Chip } from "@robr0/design-system/components/Chip/Chip";
 import { getSidebarLinks, docsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 

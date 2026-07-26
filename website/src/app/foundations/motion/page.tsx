@@ -8,11 +8,11 @@ import Footer from "../../../components/Footer/Footer";
 import PageLinks from "../../../components/PageLinks/PageLinks";
 import { getSidebarLinks, foundationsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
-import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
+import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import {
   MotionSwatch,
   type MotionSwatchDemo,
-} from "@design-system/components/MotionSwatch/MotionSwatch";
+} from "@robr0/design-system/components/MotionSwatch/MotionSwatch";
 
 const { sidebarLinks } = getSidebarLinks(foundationsSidebarLinks, "/foundations/motion");
 

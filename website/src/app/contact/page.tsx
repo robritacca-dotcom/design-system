@@ -3,8 +3,8 @@
 import MegaNav from "../../components/MegaNav/MegaNav";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import Footer from "../../components/Footer/Footer";
-import { ToastProvider, useToast } from "@design-system/components/Toast/Toast";
-import { ContactCard } from "@design-system/components/ContactCard/ContactCard";
+import { ToastProvider, useToast } from "@robr0/design-system/components/Toast/Toast";
+import { ContactCard } from "@robr0/design-system/components/ContactCard/ContactCard";
 import styles from "./page.module.css";
 
 interface ContactMethod {

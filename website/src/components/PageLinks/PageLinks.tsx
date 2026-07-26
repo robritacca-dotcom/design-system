@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@design-system/components/Button/Button";
+import { Button } from "@robr0/design-system/components/Button/Button";
 import styles from "./PageLinks.module.css";
 
 const STORYBOOK_BASE = "https://design-system-iota-one.vercel.app";

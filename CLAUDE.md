@@ -4,7 +4,7 @@
 
 A React component library + design system + documentation website. It has two interconnected parts:
 
-1. **Component Library** (`/src`) — React components built with Vite + TypeScript. Each component has its own folder with implementation, scoped CSS, and Storybook stories. Components are consumed by the website via the `@design-system` path alias. The official component list and count live in `src/components/registry.json` — see **Registries** below; never hardcode a count.
+1. **Component Library** (`/src`) — React components built with Vite + TypeScript, published to npm as **`@robr0/design-system`**. Each component has its own folder with implementation, scoped CSS, and Storybook stories. The website is an npm-workspace consumer: it depends on the package by name and imports through the same `exports` subpaths any consumer would (the in-repo exports point at `./src`, so it's live source — see **Registries** below for the generated barrel/exports surfaces). The official component list and count live in `src/components/registry.json`; never hardcode a count.
 2. **Documentation Website** (`/website`) — A separate Next.js app that showcases every component with live, interactive examples. Each component has its own page under `website/src/app/components/[component-name]/`.
 
 The design spec lives in [`design.md`](design.md) — read it before touching tokens, colors, or typography.
@@ -46,7 +46,7 @@ When a new countable collection appears on the site (tokens, loops, case studies
 npm run storybook              # http://localhost:6006
 
 # Documentation website (separate project)
-cd website && npm install && npm run dev   # http://localhost:3000
+npm install && cd website && npm run dev   # http://localhost:3000 (workspace install runs at the root)
 ```
 
 Other useful commands:
@@ -86,7 +86,7 @@ Every push to `main` and every PR runs `.github/workflows/ci.yml` (four jobs: li
 │   │   └── tokens-motion.css        # Duration/easing scale + reduced-motion guard
 │   └── fonts/                 # Material Symbols icon font (self-hosted); Nunito Sans is loaded via Google Fonts
 ├── .storybook/                # Storybook config (Storybook is the library's dev sandbox)
-└── website/                   # Next.js docs site (separate npm project)
+└── website/                   # Next.js docs site (npm workspace; consumes @robr0/design-system by name)
     ├── src/app/
     │   ├── components/        # One folder per component, each with page.tsx + page.module.css
     │   ├── foundations/       # Design tokens & layout doc pages
@@ -131,9 +131,9 @@ src/components/Button/
 └── Button.stories.ts     # Storybook stories (Meta + named Story exports)
 ```
 
-Components are imported in the website using the `@design-system` alias:
+Components are imported in the website through the package's public exports (deep subpaths; the barrel `import { Button } from '@robr0/design-system'` also works):
 ```tsx
-import { Button } from '@design-system/components/Button/Button';
+import { Button } from '@robr0/design-system/components/Button/Button';
 ```
 
 CSS class naming: `ds-{component}` base class, `ds-{component}--{modifier}` for variants. Example: `ds-button`, `ds-button--primary`, `ds-button--compact`.

@@ -16,6 +16,9 @@
   "files": [
     "dist"
   ],
+  "workspaces": [
+    "website"
+  ],
   "exports": {
     ".": "./src/index.ts",
     "./charts": "./src/charts.ts",

@@ -8,8 +8,8 @@ import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
 import SampleCaseStudyCard from "../../../components/SampleCaseStudyCard/SampleCaseStudyCard";
-import { Figure } from "@design-system/components/Figure/Figure";
-import { Stat } from "@design-system/components/Stat/Stat";
+import { Figure } from "@robr0/design-system/components/Figure/Figure";
+import { Stat } from "@robr0/design-system/components/Stat/Stat";
 import { getSidebarLinks, workSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 

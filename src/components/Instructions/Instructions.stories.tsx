@@ -102,7 +102,7 @@ export const CompactDefault: Story = {
     size: 'compact',
     title: 'Quick start',
     steps: [
-      { label: 'Install', description: 'npm install @design-system/components' },
+      { label: 'Install', description: 'npm install @robr0/design-system' },
       { label: 'Import tokens', description: 'Add token CSS to your app' },
       { label: 'Use components', description: 'Import and render components' },
     ],

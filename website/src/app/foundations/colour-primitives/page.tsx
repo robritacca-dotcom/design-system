@@ -7,11 +7,11 @@ import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
-import { ColourSwatch } from "@design-system/components/ColourSwatch/ColourSwatch";
+import { ColourSwatch } from "@robr0/design-system/components/ColourSwatch/ColourSwatch";
 import PageLinks from "../../../components/PageLinks/PageLinks";
 import { getSidebarLinks, foundationsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
-import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
+import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 
 const { sidebarLinks } = getSidebarLinks(foundationsSidebarLinks, "/foundations/colour-primitives");
 

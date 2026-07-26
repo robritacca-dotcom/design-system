@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { LinkList } from "@design-system/components/LinkList/LinkList";
-import { Timeline, type TimelineCompany } from "@design-system/components/Timeline/Timeline";
+import { LinkList } from "@robr0/design-system/components/LinkList/LinkList";
+import { Timeline, type TimelineCompany } from "@robr0/design-system/components/Timeline/Timeline";
 import MegaNav from "../../components/MegaNav/MegaNav";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import Footer from "../../components/Footer/Footer";

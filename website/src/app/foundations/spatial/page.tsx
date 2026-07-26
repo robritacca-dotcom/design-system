@@ -5,12 +5,12 @@ import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
-import { SpacingSwatch } from "@design-system/components/SpacingSwatch/SpacingSwatch";
-import type { SpacingSwatchVariant } from "@design-system/components/SpacingSwatch/SpacingSwatch";
+import { SpacingSwatch } from "@robr0/design-system/components/SpacingSwatch/SpacingSwatch";
+import type { SpacingSwatchVariant } from "@robr0/design-system/components/SpacingSwatch/SpacingSwatch";
 import PageLinks from "../../../components/PageLinks/PageLinks";
 import { getSidebarLinks, foundationsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
-import { SectionTitle } from "@design-system/components/SectionTitle/SectionTitle";
+import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 
 const { sidebarLinks } = getSidebarLinks(foundationsSidebarLinks, "/foundations/spatial");
 

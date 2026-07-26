@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { ButtonGroup } from "@design-system/components/ButtonGroup/ButtonGroup";
-import type { ButtonProps } from "@design-system/components/Button/Button";
+import { ButtonGroup } from "@robr0/design-system/components/ButtonGroup/ButtonGroup";
+import type { ButtonProps } from "@robr0/design-system/components/Button/Button";
 import type { SidebarLink } from "./Sidebar";
 import styles from "./Sidebar.module.css";
 
