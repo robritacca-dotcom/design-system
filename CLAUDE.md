@@ -27,6 +27,8 @@ Existing registries:
 
 The `/project-journal` page renders this data as the build-progression timeline; entries are agent-curated stories (one theme consolidating many commits — what/why/outcome prose), appended by the `site-updates` skill. All validators run before every build (`npm run validate-registry`, wired into `prebuild`/`prestorybook`/`prebuild-storybook` and the website's `prebuild`).
 
+**The package barrels and exports map are generated surfaces.** `scripts/generate-library-barrel.mjs` (validate-registry chain) writes `src/index.ts` and `src/charts.ts` from `src/components/registry.json` — never hand-edit them. Modules that import recharts land in `charts.ts` automatically (recharts is an optional peer dependency; the main barrel must never force a bundler to resolve it). The `exports` field in package.json is owned by `scripts/package-manifest.mjs` (single source for the package name, version, and subpaths — in-repo exports point at `./src` for workspace dogfooding, `npm run build:lib` writes the dist-form manifest that ships to npm); `scripts/validate-package-exports.mjs` fails the build if they drift.
+
 **README.md is a generated surface for registry data.** `scripts/generate-readme-content.mjs` (also in the `validate-registry` chain) rewrites the README's component count and component list from `src/components/registry.json` between `<!-- component-count -->` / `<!-- component-list:start/end -->` markers — never hand-edit inside the markers, and commit README.md when a build regenerates it. The same script fails the build if the README's Tech section names a different major version of React, Next.js, Storybook, or Vite than package.json.
 
 When a new countable collection appears on the site (tokens, loops, case studies…): create a registry file next to the collection, export the count from a small accessor module, add a validator script chained into `validate-registry`, and pull every displayed number from the export. When adding a skill: register it in `.claude/skills/registry.json` (`displayed` if it appears on `/skills`, `unlisted` if internal) and, if displayed, add its card to `website/src/app/skills/page.tsx` — the build fails if the three drift.
@@ -50,6 +52,7 @@ cd website && npm install && npm run dev   # http://localhost:3000
 Other useful commands:
 ```bash
 npm run build           # type-check the library
+npm run build:lib       # build the publishable package into dist/ (vite lib build + d.ts + assets)
 npm run lint            # ESLint
 npm run build-storybook # export static Storybook
 npm run test            # run every Storybook story as a render test (headless Chromium)

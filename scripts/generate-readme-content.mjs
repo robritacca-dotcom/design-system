@@ -19,6 +19,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { PACKAGE_NAME } from './package-manifest.mjs';
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
 const readmePath = join(repoRoot, 'README.md');
@@ -73,7 +74,7 @@ const sitePkg = JSON.parse(
 );
 const major = (range) => range.replace(/^[^\d]*/, '').split('.')[0];
 const expected = {
-  React: major(libPkg.dependencies.react),
+  React: major(libPkg.devDependencies.react),
   'Next.js': major(sitePkg.dependencies.next),
   Storybook: major(libPkg.devDependencies.storybook),
   Vite: major(libPkg.devDependencies.vite),
@@ -84,6 +85,16 @@ const versionDrift = Object.entries(expected).flatMap(([name, want]) => {
   if (!m) return [`${name}: not mentioned in README.md (expected "${name} ${want}")`];
   return m[1] === want ? [] : [`${name}: README says ${m[1]}, package.json says ${want}`];
 });
+
+// Package-name drift check: the install/usage docs must reference the
+// name the package actually publishes under (scripts/package-manifest.mjs).
+if (!readme.includes(PACKAGE_NAME)) {
+  console.error(
+    `✗ README.md never mentions the package name "${PACKAGE_NAME}" — ` +
+      `the install/usage section is missing or references a stale name.`
+  );
+  process.exit(1);
+}
 
 if (versionDrift.length > 0) {
   console.error(
