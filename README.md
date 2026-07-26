@@ -79,10 +79,7 @@ CI also guards against documentation drift: generated surfaces (this README's co
 ## Running locally
 
 ```bash
-# Component library (Vite dev sandbox)
-npm run dev              # http://localhost:5173
-
-# Storybook
+# Storybook (the library's dev sandbox)
 npm run storybook        # http://localhost:6006
 
 # Portfolio + documentation website

@@ -4,23 +4,21 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
     "validate-registry": "node scripts/generate-skills-content.mjs && node scripts/generate-readme-content.mjs && node scripts/generate-token-registry.mjs && node scripts/sync-blueprints.mjs && node scripts/validate-component-registry.mjs && node scripts/validate-website-surfaces.mjs && node scripts/validate-page-titles.mjs && node scripts/validate-skills-registry.mjs && node scripts/validate-site-updates.mjs && node scripts/validate-token-registry.mjs",
     "prebuild": "npm run validate-registry",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b",
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest",
     "verify": "npm run lint && npm run build && npm run test && npm run build-storybook && npm --prefix website run lint && npm --prefix website run build",
-    "preview": "vite preview",
     "prestorybook": "npm run validate-registry",
     "storybook": "storybook dev -p 6006",
     "prebuild-storybook": "npm run validate-registry",
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
     "recharts": "^3.7.0"
   },
   "devDependencies": {

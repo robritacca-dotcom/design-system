@@ -40,10 +40,7 @@ When a new countable collection appears on the site (tokens, loops, case studies
 ## Quick Start
 
 ```bash
-# Component library dev server
-npm run dev                    # http://localhost:5173
-
-# Storybook (interactive component showcase)
+# Storybook (interactive component showcase — the library's dev sandbox)
 npm run storybook              # http://localhost:6006
 
 # Documentation website (separate project)
@@ -52,7 +49,7 @@ cd website && npm install && npm run dev   # http://localhost:3000
 
 Other useful commands:
 ```bash
-npm run build           # type-check + build library
+npm run build           # type-check the library
 npm run lint            # ESLint
 npm run build-storybook # export static Storybook
 npm run test            # run every Storybook story as a render test (headless Chromium)
@@ -84,9 +81,8 @@ Every push to `main` and every PR runs `.github/workflows/ci.yml` (four jobs: li
 │   │   ├── tokens-dark.css          # Semantic tokens, dark theme
 │   │   ├── tokens-typography.css    # Font size/weight/line-height scale
 │   │   └── tokens-motion.css        # Duration/easing scale + reduced-motion guard
-│   ├── fonts/                 # Material Symbols icon font (self-hosted); Nunito Sans is loaded via Google Fonts
-│   └── App.tsx                # Dev sandbox (generic; components are imported via @design-system)
-├── .storybook/                # Storybook config
+│   └── fonts/                 # Material Symbols icon font (self-hosted); Nunito Sans is loaded via Google Fonts
+├── .storybook/                # Storybook config (Storybook is the library's dev sandbox)
 └── website/                   # Next.js docs site (separate npm project)
     ├── src/app/
     │   ├── components/        # One folder per component, each with page.tsx + page.module.css
