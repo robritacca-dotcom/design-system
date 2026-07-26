@@ -79,6 +79,11 @@
   grid-template-columns: 320px 1fr;
   gap: var(--primitive-gap-lg);
   align-items: start;
+  /* .animate-in gives every section its own stacking context (will-change:
+     transform), so without this the later copy-CSS section paints over the
+     controls' open Dropdown menu — its internal z-index can't escape. */
+  position: relative;
+  z-index: 1;
 }
 
 @media (max-width: 959px) {
