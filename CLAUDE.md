@@ -67,6 +67,8 @@ Every push to `main` and every PR runs `.github/workflows/ci.yml` (four jobs: li
 
 **Story tests**: `npm run test` runs every Storybook story as a render test in headless Chromium (Vitest + `@storybook/addon-vitest`, configured in `vite.config.ts`). A story that throws on render fails the suite — so every component variant is smoke-tested on every change. A11y checks run alongside in `'todo'` mode (report-only; see `.storybook/preview.ts`).
 
+**Releases** are manual: the `Release` workflow (`.github/workflows/release.yml`, workflow_dispatch, dry-run by default) builds `dist/`, runs `scripts/smoke-consumer.mjs` (packs the tarball into a scratch Vite consumer and builds it without recharts), then publishes **from `dist/`** with `npm publish --access public --provenance`. The root package.json stays `private` forever — only the generated dist manifest ships. Bump `PACKAGE_VERSION` in `scripts/package-manifest.mjs` to cut a release; it needs the `NPM_TOKEN` repo secret.
+
 `npm run verify` is the **single local mirror of CI**: lint, library build, story tests, Storybook build, website lint, website build, in that order. The rule that keeps them in sync: **when CI gains a check (a11y, visual regression), add it to `verify` in the same change** — skills and docs reference `verify`, never individual commands, so nothing else needs updating.
 
 ---

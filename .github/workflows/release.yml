@@ -1,0 +1,52 @@
+name: Release
+
+# Publishes @robr0/design-system to npm — manually triggered, dry-run by
+# default. The publish happens FROM dist/ (its generated package.json is
+# the one that ships; the root manifest stays private and never publishes).
+#
+# One-time setup before the first real run:
+#   1. Create the npm account/org that owns the @robr0 scope.
+#   2. Add an npm automation token as the NPM_TOKEN repo secret
+#      (Settings → Secrets and variables → Actions).
+# Bump PACKAGE_VERSION in scripts/package-manifest.mjs for each release.
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run — build and smoke-test, skip the actual npm publish"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+  id-token: write # npm --provenance
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+          registry-url: https://registry.npmjs.org
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build
+      - run: npm run build:lib
+      # Pack the tarball, scaffold a real Vite consumer, install, tsc, build —
+      # fails the release before anything reaches the registry.
+      - name: Consumer smoke test
+        run: node scripts/smoke-consumer.mjs
+      - name: Publish to npm
+        if: ${{ !inputs.dry_run }}
+        working-directory: dist
+        run: npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Dry-run publish preview
+        if: ${{ inputs.dry_run }}
+        working-directory: dist
+        run: npm publish --access public --dry-run
