@@ -1,3 +1,6 @@
+// No 'use client' directive: Table is purely presentational — no hooks, no event
+// handlers — so it stays renderable from a React Server Component.
+
 import React from 'react';
 import './Table.css';
 
@@ -19,7 +22,8 @@ export interface TableRow {
   cells: Record<string, React.ReactNode>;
 }
 
-export interface TableProps {
+/** Props owned by Table itself — everything else falls through to the <table>. */
+type TableOwnProps = {
   /** Column definitions */
   columns: TableColumn[];
   /** Row data */
@@ -40,100 +44,108 @@ export interface TableProps {
   captionHidden?: boolean;
   /** Additional CSS classes */
   className?: string;
-}
+};
+
+export interface TableProps
+  extends TableOwnProps,
+    Omit<React.ComponentPropsWithoutRef<'table'>, keyof TableOwnProps> {}
 
 /**
  * Table component from Figma design system.
  * Data table with flexible cell content — supports text, icons,
  * inputs, buttons, and any other React nodes inside cells.
+ *
+ * Forwards a ref to the `<table>` element and spreads unrecognised props onto
+ * it. When `bordered`, the table is wrapped in a container div — the ref and
+ * spread props still target the inner `<table>`.
  */
-export const Table = ({
-  columns,
-  rows,
-  size = 'default',
-  striped = false,
-  bordered = false,
-  caption,
-  captionHidden = false,
-  className = '',
-}: TableProps) => {
-  const baseClass = 'ds-table';
-  const sizeClass = `${baseClass}--${size}`;
-  const stripedClass = striped ? `${baseClass}--striped` : '';
-  const borderedClass = bordered ? `${baseClass}--bordered` : '';
+export const Table = React.forwardRef<HTMLTableElement, TableProps>(
+  (
+    {
+      columns,
+      rows,
+      size = 'default',
+      striped = false,
+      bordered = false,
+      caption,
+      captionHidden = false,
+      className = '',
+      ...rest
+    },
+    ref,
+  ) => {
+    const baseClass = 'ds-table';
 
-  const classes = [baseClass, sizeClass, stripedClass, borderedClass, className]
-    .filter(Boolean)
-    .join(' ');
+    const classes = [
+      baseClass,
+      `${baseClass}--${size}`,
+      striped ? `${baseClass}--striped` : '',
+      bordered ? `${baseClass}--bordered` : '',
+      className,
+    ]
+      .filter(Boolean)
+      .join(' ');
 
-  const table = (
-    <table className={classes}>
-      {caption && (
-        <caption
-          className={
-            captionHidden
-              ? `${baseClass}__caption--hidden`
-              : `${baseClass}__caption`
-          }
-        >
-          {caption}
-        </caption>
-      )}
+    const table = (
+      <table {...rest} ref={ref} className={classes}>
+        {caption && (
+          <caption
+            className={captionHidden ? `${baseClass}__caption--hidden` : `${baseClass}__caption`}
+          >
+            {caption}
+          </caption>
+        )}
 
-      <thead className={`${baseClass}__head`}>
-        <tr className={`${baseClass}__row ${baseClass}__row--header`}>
-          {columns.map((col) => (
-            <th
-              key={col.key}
-              className={`${baseClass}__header-cell`}
-              scope="col"
-              style={{
-                width: col.width,
-                textAlign: col.align || 'left',
-              }}
-            >
-              {col.header}
-            </th>
-          ))}
-        </tr>
-      </thead>
-
-      <tbody className={`${baseClass}__body`}>
-        {rows.map((row) => (
-          <tr key={row.id} className={`${baseClass}__row`}>
+        <thead className={`${baseClass}__head`}>
+          <tr className={`${baseClass}__row ${baseClass}__row--header`}>
             {columns.map((col) => (
-              <td
+              <th
                 key={col.key}
-                className={`${baseClass}__cell`}
+                className={`${baseClass}__header-cell`}
+                scope="col"
+                style={{
+                  width: col.width,
+                  textAlign: col.align || 'left',
+                }}
               >
-                <div
-                  className={`${baseClass}__cell-content`}
-                  style={{
-                    justifyContent:
-                      col.align === 'center'
-                        ? 'center'
-                        : col.align === 'right'
-                          ? 'flex-end'
-                          : 'flex-start',
-                  }}
-                >
-                  {row.cells[col.key]}
-                </div>
-              </td>
+                {col.header}
+              </th>
             ))}
           </tr>
-        ))}
-      </tbody>
-    </table>
-  );
+        </thead>
 
-  if (bordered) {
-    return (
-      <div className={`${baseClass}__wrapper`}>
-        {table}
-      </div>
+        <tbody className={`${baseClass}__body`}>
+          {rows.map((row) => (
+            <tr key={row.id} className={`${baseClass}__row`}>
+              {columns.map((col) => (
+                <td key={col.key} className={`${baseClass}__cell`}>
+                  <div
+                    className={`${baseClass}__cell-content`}
+                    style={{
+                      justifyContent:
+                        col.align === 'center'
+                          ? 'center'
+                          : col.align === 'right'
+                            ? 'flex-end'
+                            : 'flex-start',
+                    }}
+                  >
+                    {row.cells[col.key]}
+                  </div>
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
     );
-  }
 
-  return table;
-};
+    if (bordered) {
+      return <div className={`${baseClass}__wrapper`}>{table}</div>;
+    }
+
+    return table;
+  },
+);
+
+Table.displayName = 'Table';

@@ -1,18 +1,22 @@
+'use client';
+
 import React from 'react';
 import './Card.css';
 import '../../fonts/material-symbols.css';
 
-export interface CardProps {
+/** Props owned by Card itself — everything else falls through to the DOM node. */
+type CardOwnProps = {
   /** Card variant */
   variant?: 'default' | 'case-study';
-  /** Card title displayed below the preview */
+  /**
+   * Card title displayed below the preview.
+   * Note: this shadows the native `title` tooltip attribute, which Card does not expose.
+   */
   title: string;
   /** Preview content rendered inside the card (default variant only) */
   children?: React.ReactNode;
   /** Whether the card is interactive (hoverable) */
   interactive?: boolean;
-  /** Click handler */
-  onClick?: () => void;
   /** Additional CSS classes */
   className?: string;
 
@@ -31,110 +35,146 @@ export interface CardProps {
   dek?: string;
   /** Render as a disabled placeholder (no href, dimmed, not interactive) */
   placeholder?: boolean;
-}
+};
 
-export const Card = ({
-  variant = 'default',
-  title,
-  children,
-  interactive = false,
-  onClick,
-  className = '',
-  href,
-  coverSrc,
-  coverAlt,
-  companyLogo,
-  companyName,
-  dek,
-  placeholder = false,
-}: CardProps) => {
-  // ── Case-study variant ────────────────────────────────────────────────────
-  if (variant === 'case-study') {
-    const inner = (
-      <>
-        <div className="ds-card--case-study__cover-wrap">
-          {coverSrc ? (
-            <img
-              src={coverSrc}
-              alt={coverAlt ?? `${title} cover`}
-              className="ds-card--case-study__cover-image"
-            />
-          ) : (
-            <div className="ds-card--case-study__cover-placeholder">
-              {companyLogo && (
-                <img
-                  src={companyLogo}
-                  alt=""
-                  className="ds-card--case-study__cover-placeholder-logo"
-                />
-              )}
-            </div>
-          )}
-        </div>
-        <div className="ds-card--case-study__body">
-          {(companyLogo || companyName) && (
-            <div className="ds-card--case-study__eyebrow">
-              {companyLogo && (
-                <img
-                  src={companyLogo}
-                  alt=""
-                  className="ds-card--case-study__company-logo"
-                />
-              )}
-              {companyName && (
-                <span className="ds-card--case-study__company-name">{companyName}</span>
-              )}
-            </div>
-          )}
-          <h3 className="ds-card--case-study__title">{title}</h3>
-          {dek && <p className="ds-card--case-study__dek">{dek}</p>}
-        </div>
-      </>
-    );
+export interface CardProps
+  extends CardOwnProps,
+    Omit<React.ComponentPropsWithoutRef<'div'>, keyof CardOwnProps> {}
 
-    const classes = [
-      'ds-card',
-      'ds-card--case-study',
-      placeholder ? 'ds-card--case-study--placeholder' : '',
-      className,
-    ].filter(Boolean).join(' ');
+/**
+ * Card renders a preview tile, or a case-study tile when `variant="case-study"`.
+ *
+ * Renders a `<div>`, or an `<a>` in the case-study variant when `href` is
+ * supplied. Forwards a ref to whichever element it renders and spreads
+ * unrecognised props onto it.
+ */
+export const Card = React.forwardRef<HTMLDivElement | HTMLAnchorElement, CardProps>(
+  (
+    {
+      variant = 'default',
+      title,
+      children,
+      interactive = false,
+      onClick,
+      onKeyDown,
+      className = '',
+      href,
+      coverSrc,
+      coverAlt,
+      companyLogo,
+      companyName,
+      dek,
+      placeholder = false,
+      ...rest
+    },
+    ref,
+  ) => {
+    // ── Case-study variant ────────────────────────────────────────────────────
+    if (variant === 'case-study') {
+      const inner = (
+        <>
+          <div className="ds-card--case-study__cover-wrap">
+            {coverSrc ? (
+              <img
+                src={coverSrc}
+                alt={coverAlt ?? `${title} cover`}
+                className="ds-card--case-study__cover-image"
+              />
+            ) : (
+              <div className="ds-card--case-study__cover-placeholder">
+                {companyLogo && (
+                  <img
+                    src={companyLogo}
+                    alt=""
+                    className="ds-card--case-study__cover-placeholder-logo"
+                  />
+                )}
+              </div>
+            )}
+          </div>
+          <div className="ds-card--case-study__body">
+            {(companyLogo || companyName) && (
+              <div className="ds-card--case-study__eyebrow">
+                {companyLogo && (
+                  <img src={companyLogo} alt="" className="ds-card--case-study__company-logo" />
+                )}
+                {companyName && (
+                  <span className="ds-card--case-study__company-name">{companyName}</span>
+                )}
+              </div>
+            )}
+            <h3 className="ds-card--case-study__title">{title}</h3>
+            {dek && <p className="ds-card--case-study__dek">{dek}</p>}
+          </div>
+        </>
+      );
 
-    if (placeholder || !href) {
+      const classes = [
+        'ds-card',
+        'ds-card--case-study',
+        placeholder ? 'ds-card--case-study--placeholder' : '',
+        className,
+      ]
+        .filter(Boolean)
+        .join(' ');
+
+      if (placeholder || !href) {
+        return (
+          <div
+            {...rest}
+            ref={ref as React.Ref<HTMLDivElement>}
+            className={classes}
+            aria-disabled="true"
+          >
+            {inner}
+          </div>
+        );
+      }
+
       return (
-        <div className={classes} aria-disabled="true">
+        <a
+          {...(rest as React.ComponentPropsWithoutRef<'a'>)}
+          ref={ref as React.Ref<HTMLAnchorElement>}
+          href={href}
+          className={classes}
+          onClick={onClick as unknown as React.MouseEventHandler<HTMLAnchorElement>}
+        >
           {inner}
-        </div>
+        </a>
       );
     }
 
+    // ── Default variant ───────────────────────────────────────────────────────
+    const baseClass = 'ds-card';
+    const classes = [baseClass, interactive ? `${baseClass}--interactive` : '', className]
+      .filter(Boolean)
+      .join(' ');
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+      onKeyDown?.(e);
+      if (!interactive) return;
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        onClick?.(e as unknown as React.MouseEvent<HTMLDivElement>);
+      }
+    };
+
     return (
-      <a href={href} className={classes}>
-        {inner}
-      </a>
+      <div
+        {...rest}
+        ref={ref as React.Ref<HTMLDivElement>}
+        className={classes}
+        onClick={interactive ? onClick : undefined}
+        onKeyDown={handleKeyDown}
+        role={interactive ? 'button' : undefined}
+        tabIndex={interactive ? 0 : undefined}
+        aria-label={interactive ? title : undefined}
+      >
+        <div className={`${baseClass}__preview`}>{children}</div>
+        <h3 className={`${baseClass}__title`}>{title}</h3>
+      </div>
     );
-  }
+  },
+);
 
-  // ── Default variant ───────────────────────────────────────────────────────
-  const baseClass = 'ds-card';
-  const interactiveClass = interactive ? `${baseClass}--interactive` : '';
-  const classes = [baseClass, interactiveClass, className].filter(Boolean).join(' ');
-
-  return (
-    <div
-      className={classes}
-      onClick={interactive ? onClick : undefined}
-      onKeyDown={interactive ? (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          onClick?.();
-        }
-      } : undefined}
-      role={interactive ? 'button' : undefined}
-      tabIndex={interactive ? 0 : undefined}
-      aria-label={interactive ? title : undefined}
-    >
-      <div className={`${baseClass}__preview`}>{children}</div>
-      <h3 className={`${baseClass}__title`}>{title}</h3>
-    </div>
-  );
-};
+Card.displayName = 'Card';

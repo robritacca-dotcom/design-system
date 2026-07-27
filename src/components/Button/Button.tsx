@@ -1,24 +1,23 @@
+'use client';
+
 import React from 'react';
 import './Button.css';
 import '../../fonts/material-symbols.css';
 
-export interface ButtonProps {
+/** Props owned by Button itself — everything else falls through to the DOM node. */
+type ButtonOwnProps = {
   /** Button text content */
   label?: string;
   /** Icon for left side — Material Symbol name (string) or custom element (ReactNode) */
   iconLeft?: string | React.ReactNode;
   /** Icon for right side — Material Symbol name (string) or custom element (ReactNode) */
   iconRight?: string | React.ReactNode;
-  /** Button priority/variant */
-  priority?: 'primary' | 'secondary' | 'tertiary' | 'destructive';
-  /** Button state */
-  state?: 'default' | 'hover' | 'active' | 'disabled';
+  /** Visual treatment */
+  variant?: 'primary' | 'secondary' | 'tertiary' | 'destructive';
   /** Button size */
   size?: 'default' | 'compact';
-  /** Show text label */
-  text?: boolean;
-  /** Optional click handler */
-  onClick?: () => void;
+  /** Whether the button is disabled */
+  disabled?: boolean;
   /** Optional href — renders as <a> instead of <button> */
   href?: string;
   /** Optional target attribute for links */
@@ -27,100 +26,138 @@ export interface ButtonProps {
   rel?: string;
   /** Marks this link as the current page (adds aria-current="page") */
   ariaCurrent?: boolean;
-  /** Id of an element describing this button — set automatically by Tooltip */
-  'aria-describedby'?: string;
   /** Additional CSS classes */
   className?: string;
-  /** @deprecated Use iconLeft instead */
+  /** @deprecated Use `variant` instead. */
+  priority?: 'primary' | 'secondary' | 'tertiary' | 'destructive';
+  /**
+   * @deprecated Use `disabled` for the disabled state.
+   *
+   * Documentation-only affordance for rendering a *static* interaction state in
+   * Storybook and the showcase site. Real hover/active styling comes from CSS
+   * pseudo-classes and needs no prop — for docs, prefer `className="ds-button--hover"`.
+   */
+  state?: 'default' | 'hover' | 'active' | 'disabled';
+  /** @deprecated Use `iconLeft` instead. */
   icon?: string;
-}
+  /**
+   * @deprecated Will be removed once `label` loses its default in the next major;
+   * an icon-only button will simply omit `label`.
+   */
+  text?: boolean;
+};
+
+export interface ButtonProps
+  extends ButtonOwnProps,
+    Omit<React.ComponentPropsWithoutRef<'button'>, keyof ButtonOwnProps | 'type'> {}
 
 /**
- * Button component from Figma design system
- * Supports primary and secondary variants with multiple states
- * Icons can be placed on the left and/or right side of the text
+ * Button component from Figma design system.
+ * Supports primary, secondary, tertiary and destructive variants.
+ * Icons can be placed on the left and/or right side of the text.
+ *
+ * Renders a `<button>`, or an `<a>` when `href` is supplied. Forwards a ref to
+ * whichever element it renders, and spreads unrecognised props onto it.
  */
-export const Button = ({
-  label = 'Button',
-  iconLeft,
-  iconRight,
-  priority = 'primary',
-  state = 'default',
-  size = 'default',
-  text = true,
-  onClick,
-  href,
-  target,
-  rel,
-  ariaCurrent,
-  'aria-describedby': ariaDescribedby,
-  className = '',
-  icon, // deprecated, maps to iconLeft for backwards compatibility
-}: ButtonProps) => {
-  const baseClass = 'ds-button';
-  const variantClass = `${baseClass}--${priority}`;
-  const stateClass = `${baseClass}--${state}`;
-  const sizeClass = `${baseClass}--${size}`;
+export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
+  (
+    {
+      label = 'Button',
+      iconLeft,
+      iconRight,
+      variant,
+      size = 'default',
+      disabled,
+      href,
+      target,
+      rel,
+      ariaCurrent,
+      className = '',
+      priority,
+      state,
+      icon,
+      text = true,
+      ...rest
+    },
+    ref,
+  ) => {
+    const baseClass = 'ds-button';
 
-  const classes = [baseClass, variantClass, stateClass, sizeClass, className].filter(Boolean).join(' ');
+    // `priority` is the deprecated spelling of `variant`; `variant` wins when both are set.
+    const resolvedVariant = variant ?? priority ?? 'primary';
+    // `disabled` is the real prop; `state="disabled"` is the deprecated path.
+    const isDisabled = disabled ?? state === 'disabled';
+    // Keep the state modifier class so the disabled styling applies either way.
+    const resolvedState = state ?? (isDisabled ? 'disabled' : 'default');
 
-  const isDisabled = state === 'disabled';
+    const classes = [
+      baseClass,
+      `${baseClass}--${resolvedVariant}`,
+      `${baseClass}--${resolvedState}`,
+      `${baseClass}--${size}`,
+      className,
+    ]
+      .filter(Boolean)
+      .join(' ');
 
-  // Material Symbols — rounded only
-  const iconClass = 'material-symbols-rounded';
+    // Material Symbols — rounded only
+    const iconClass = 'material-symbols-rounded';
 
-  // Backwards compatibility: icon prop maps to iconLeft
-  const leftIcon = iconLeft || icon;
+    // Backwards compatibility: icon prop maps to iconLeft
+    const leftIcon = iconLeft || icon;
 
-  /** Render an icon slot — string → Material Symbol, ReactNode → custom element */
-  const renderIcon = (iconProp: string | React.ReactNode) => {
-    if (typeof iconProp === 'string') {
+    /** Render an icon slot — string → Material Symbol, ReactNode → custom element */
+    const renderIcon = (iconProp: string | React.ReactNode) => {
+      if (typeof iconProp === 'string') {
+        return (
+          <span className={`${baseClass}__icon ${iconClass}`} aria-hidden="true">
+            {iconProp}
+          </span>
+        );
+      }
       return (
-        <span className={`${baseClass}__icon ${iconClass}`} aria-hidden="true">
+        <span className={`${baseClass}__icon`} aria-hidden="true">
           {iconProp}
         </span>
       );
+    };
+
+    const content = (
+      <>
+        {leftIcon && renderIcon(leftIcon)}
+        {text && <span className={`${baseClass}__text`}>{label}</span>}
+        {iconRight && renderIcon(iconRight)}
+      </>
+    );
+
+    if (href && !isDisabled) {
+      return (
+        <a
+          {...(rest as React.ComponentPropsWithoutRef<'a'>)}
+          ref={ref as React.Ref<HTMLAnchorElement>}
+          className={classes}
+          href={href}
+          target={target}
+          rel={rel}
+          aria-current={ariaCurrent ? 'page' : undefined}
+        >
+          {content}
+        </a>
+      );
     }
-    return (
-      <span className={`${baseClass}__icon`} aria-hidden="true">
-        {iconProp}
-      </span>
-    );
-  };
 
-  const children = (
-    <>
-      {leftIcon && renderIcon(leftIcon)}
-      {text && <span className={`${baseClass}__text`}>{label}</span>}
-      {iconRight && renderIcon(iconRight)}
-    </>
-  );
-
-  if (href && !isDisabled) {
     return (
-      <a
+      <button
+        {...rest}
+        ref={ref as React.Ref<HTMLButtonElement>}
+        type="button"
         className={classes}
-        href={href}
-        target={target}
-        rel={rel}
-        aria-current={ariaCurrent ? 'page' : undefined}
-        aria-describedby={ariaDescribedby}
-        onClick={onClick}
+        disabled={isDisabled}
       >
-        {children}
-      </a>
+        {content}
+      </button>
     );
-  }
+  },
+);
 
-  return (
-    <button
-      type="button"
-      className={classes}
-      onClick={onClick}
-      disabled={isDisabled}
-      aria-describedby={ariaDescribedby}
-    >
-      {children}
-    </button>
-  );
-};
+Button.displayName = 'Button';

@@ -47,7 +47,7 @@ export default function SliderPage() {
           <section className={styles.section}>
             <SectionTitle title="Default" />
             <div className={styles.variantStack} style={{ maxWidth: "400px" }}>
-              <Slider value={value1} onChange={setValue1} />
+              <Slider value={value1} onValueChange={setValue1} />
             </div>
           </section>
 
@@ -55,7 +55,7 @@ export default function SliderPage() {
           <section className={styles.section}>
             <SectionTitle title="Compact" />
             <div className={styles.variantStack} style={{ maxWidth: "400px" }}>
-              <Slider value={value2} onChange={setValue2} size="compact" />
+              <Slider value={value2} onValueChange={setValue2} size="compact" />
             </div>
           </section>
 

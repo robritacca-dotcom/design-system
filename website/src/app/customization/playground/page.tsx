@@ -358,7 +358,7 @@ export default function PlaygroundPage() {
                   ariaLabel="Product name"
                   placeholder="Your product"
                   value={productName}
-                  onChange={setProductName}
+                  onValueChange={setProductName}
                 />
               </div>
 
@@ -409,7 +409,7 @@ export default function PlaygroundPage() {
                         min={0}
                         max={16}
                         step={1}
-                        onChange={asCustom(setTintStrength)}
+                        onValueChange={asCustom(setTintStrength)}
                         ariaLabel="Tint strength"
                       />
                       <span className={styles.sliderValue}>{tintStrength}%</span>
@@ -429,7 +429,7 @@ export default function PlaygroundPage() {
                     min={0}
                     max={200}
                     step={10}
-                    onChange={asCustom(setRadiusScale)}
+                    onValueChange={asCustom(setRadiusScale)}
                     ariaLabel="Radius scale"
                   />
                   <span className={styles.sliderValue}>{radiusScale}%</span>
@@ -564,7 +564,7 @@ export default function PlaygroundPage() {
                   value={demoSlider}
                   min={0}
                   max={100}
-                  onChange={setDemoSlider}
+                  onValueChange={setDemoSlider}
                   ariaLabel="Demo slider"
                 />
                 <span className={styles.sliderValue}>{demoSlider}</span>

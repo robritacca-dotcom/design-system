@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useRef, useEffect, useCallback, useMemo, useId } from 'react';
 import './Combobox.css';
 import '../../fonts/material-symbols.css';
@@ -20,7 +22,8 @@ export interface ComboboxOptionGroup {
   options: ComboboxOption[];
 }
 
-export interface ComboboxProps {
+/** Props owned by Combobox itself — everything else falls through to the wrapper. */
+type ComboboxOwnProps = {
   /** Combobox label text */
   label?: string;
   /** Placeholder shown in the text field when nothing is selected */
@@ -56,27 +59,39 @@ export interface ComboboxProps {
    * Called with the new selection — a `string` in single mode,
    * `string[]` when `multiple` is set.
    */
-  onChange?: (value: string | string[]) => void;
+  onValueChange?: (value: string | string[]) => void;
   /** Called as the user types, for async/server-side filtering */
   onSearchChange?: (query: string) => void;
   /** Skip built-in filtering — use when options are filtered upstream */
   manualFiltering?: boolean;
   /** Additional CSS classes */
   className?: string;
-  /** Accessible name override */
+  /** @deprecated Use `onValueChange` instead. */
+  onChange?: (value: string | string[]) => void;
+  /** @deprecated Pass the native `aria-label` attribute instead. */
   ariaLabel?: string;
-  /** HTML name attribute */
+  /**
+   * Used only as a fallback for deriving the element id (`id || name || generated`).
+   *
+   * Note: Combobox renders a `<div>` wrapper around a text input, not a native
+   * `<select>`, so `name` does **not** make the selection participate in native
+   * form submission.
+   */
   name?: string;
-  /** HTML id attribute */
-  id?: string;
-}
+};
+
+export interface ComboboxProps
+  extends ComboboxOwnProps,
+    Omit<React.ComponentPropsWithoutRef<'div'>, keyof ComboboxOwnProps> {}
 
 /**
  * Combobox component — a text field combined with a filterable listbox.
  * Unlike Dropdown (a static select), it narrows options as the user types
  * and supports multi-select chips and async option loading.
+ *
+ * Forwards a ref to the wrapping element and spreads unrecognised props onto it.
  */
-export const Combobox = ({
+export const Combobox = React.forwardRef<HTMLDivElement, ComboboxProps>(({
   label,
   placeholder = 'Search…',
   value,
@@ -91,6 +106,7 @@ export const Combobox = ({
   loading = false,
   emptyMessage = 'No results found',
   clearable = false,
+  onValueChange,
   onChange,
   onSearchChange,
   manualFiltering = false,
@@ -98,14 +114,22 @@ export const Combobox = ({
   ariaLabel,
   name,
   id,
-}: ComboboxProps) => {
+  ...rest
+}, ref) => {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [focusedIndex, setFocusedIndex] = useState(-1);
-  const rootRef = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const generatedId = useId();
+
+  /** Keep the internal ref (used for click-outside) while honouring a forwarded one. */
+  const setRootRef = (node: HTMLDivElement | null) => {
+    rootRef.current = node;
+    if (typeof ref === 'function') ref(node);
+    else if (ref) ref.current = node;
+  };
 
   const baseClass = 'ds-combobox';
   const isGrouped = Boolean(groups && groups.length > 0);
@@ -169,8 +193,9 @@ export const Combobox = ({
   };
 
   const emitChange = (next: string[]) => {
-    if (!onChange) return;
-    onChange(multiple ? next : next[0] ?? '');
+    const payload = multiple ? next : (next[0] ?? '');
+    onValueChange?.(payload);
+    onChange?.(payload);
   };
 
   const handleSelect = (option: ComboboxOption) => {
@@ -341,7 +366,7 @@ export const Combobox = ({
   const hasSelection = selectedValues.length > 0;
 
   return (
-    <div className={classes} ref={rootRef}>
+    <div {...rest} className={classes} ref={setRootRef}>
       {label && (
         <label className={`${baseClass}__label`} htmlFor={inputId}>
           {label}
@@ -393,7 +418,7 @@ export const Combobox = ({
             aria-controls={listboxId}
             aria-autocomplete="list"
             aria-activedescendant={activeOptionId}
-            aria-label={ariaLabel || (!label ? placeholder : undefined)}
+            aria-label={ariaLabel || rest['aria-label'] || (!label ? placeholder : undefined)}
             aria-describedby={helperText ? `${inputId}-helper` : undefined}
             aria-invalid={error || undefined}
             aria-required={required || undefined}
@@ -471,4 +496,6 @@ export const Combobox = ({
       )}
     </div>
   );
-};
+});
+
+Combobox.displayName = 'Combobox';

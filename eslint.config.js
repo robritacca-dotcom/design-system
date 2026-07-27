@@ -20,4 +20,13 @@ export default defineConfig([globalIgnores(['dist', 'storybook-static', 'website
     ecmaVersion: 2020,
     globals: globals.browser,
   },
+  rules: {
+    // Components destructure deprecated/no-op props purely to stop them being
+    // forwarded to a DOM node that would reject them. Prefixing with `_` marks
+    // the discard as deliberate.
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      { varsIgnorePattern: '^_', argsIgnorePattern: '^_', ignoreRestSiblings: true },
+    ],
+  },
 }, ...storybook.configs["flat/recommended"]])

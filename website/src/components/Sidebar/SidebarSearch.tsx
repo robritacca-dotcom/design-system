@@ -51,7 +51,7 @@ export default function SidebarSearch({ links, listLabel = "Components" }: Sideb
           placeholder="Search"
           ariaLabel="Search components"
           value={query}
-          onChange={setQuery}
+          onValueChange={setQuery}
         />
       </div>
 

@@ -1,21 +1,16 @@
+'use client';
+
 import React from 'react';
 import './Textarea.css';
 
-export interface TextareaProps {
+/** Props owned by Textarea itself — everything else falls through to the <textarea>. */
+type TextareaOwnProps = {
   /** Textarea label text */
   label?: string;
-  /** Placeholder text */
-  placeholder?: string;
   /** Current value */
   value?: string;
-  /** Number of visible rows */
-  rows?: number;
   /** Component size */
   size?: 'default' | 'compact';
-  /** Whether the textarea is disabled */
-  disabled?: boolean;
-  /** Whether the textarea is required */
-  required?: boolean;
   /** Error state — shows error styling and message */
   error?: boolean;
   /** Helper or error message displayed below */
@@ -24,98 +19,120 @@ export interface TextareaProps {
   resize?: 'none' | 'vertical' | 'horizontal' | 'both';
   /** Max character count — shows counter when set */
   maxLength?: number;
-  /** Callback when value changes */
-  onChange?: (value: string) => void;
-  /** Callback on focus */
-  onFocus?: () => void;
-  /** Callback on blur */
-  onBlur?: () => void;
-  /** Additional CSS classes */
+  /**
+   * Convenience callback receiving the value directly.
+   * Fires alongside `onChange`, which keeps the standard React event signature
+   * so form libraries work unmodified.
+   */
+  onValueChange?: (value: string) => void;
+  /** Additional CSS classes — applied to the wrapper, not the <textarea> */
   className?: string;
-  /** Accessible label override */
+  /** @deprecated Pass the native `aria-label` attribute instead. */
   ariaLabel?: string;
-  /** HTML name attribute */
-  name?: string;
-  /** HTML id attribute */
-  id?: string;
-}
-
-export const Textarea = ({
-  label,
-  placeholder = '',
-  value = '',
-  rows = 4,
-  size = 'default',
-  disabled = false,
-  required = false,
-  error = false,
-  helperText,
-  resize = 'vertical',
-  maxLength,
-  onChange,
-  onFocus,
-  onBlur,
-  className = '',
-  ariaLabel,
-  name,
-  id,
-}: TextareaProps) => {
-  const baseClass = 'ds-textarea';
-  const sizeClass = size === 'compact' ? `${baseClass}--compact` : '';
-  const errorClass = error ? `${baseClass}--error` : '';
-  const disabledClass = disabled ? `${baseClass}--disabled` : '';
-
-  const classes = [baseClass, sizeClass, errorClass, disabledClass, className]
-    .filter(Boolean)
-    .join(' ');
-
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (onChange) {
-      onChange(e.target.value);
-    }
-  };
-
-  const inputId = id || name || label?.toLowerCase().replace(/\s+/g, '-');
-  const charCount = value?.length || 0;
-
-  return (
-    <div className={classes}>
-      {label && (
-        <label className={`${baseClass}__label`} htmlFor={inputId}>
-          {label}
-          {required && <span className={`${baseClass}__required`} aria-hidden="true"> *</span>}
-        </label>
-      )}
-      <textarea
-        className={`${baseClass}__field`}
-        id={inputId}
-        name={name}
-        value={value}
-        placeholder={placeholder}
-        rows={rows}
-        disabled={disabled}
-        required={required}
-        maxLength={maxLength}
-        aria-label={ariaLabel || label}
-        aria-invalid={error}
-        aria-describedby={helperText ? `${inputId}-helper` : undefined}
-        onChange={handleChange}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        style={{ resize }}
-      />
-      <div className={`${baseClass}__footer`}>
-        {helperText && (
-          <p className={`${baseClass}__helper`} id={`${inputId}-helper`}>
-            {helperText}
-          </p>
-        )}
-        {maxLength && (
-          <span className={`${baseClass}__counter`} aria-live="polite" aria-atomic="true">
-            {charCount}/{maxLength}
-          </span>
-        )}
-      </div>
-    </div>
-  );
 };
+
+export interface TextareaProps
+  extends TextareaOwnProps,
+    Omit<React.ComponentPropsWithoutRef<'textarea'>, keyof TextareaOwnProps> {}
+
+/**
+ * Multi-line text input with optional label, helper text, character counter
+ * and error state.
+ *
+ * Forwards a ref to the underlying `<textarea>` and spreads unrecognised props
+ * onto it.
+ */
+export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
+  (
+    {
+      label,
+      placeholder = '',
+      value = '',
+      rows = 4,
+      size = 'default',
+      disabled = false,
+      required = false,
+      error = false,
+      helperText,
+      resize = 'vertical',
+      maxLength,
+      onChange,
+      onValueChange,
+      className = '',
+      ariaLabel,
+      name,
+      id,
+      style,
+      ...rest
+    },
+    ref,
+  ) => {
+    const baseClass = 'ds-textarea';
+
+    const classes = [
+      baseClass,
+      size === 'compact' ? `${baseClass}--compact` : '',
+      error ? `${baseClass}--error` : '',
+      disabled ? `${baseClass}--disabled` : '',
+      className,
+    ]
+      .filter(Boolean)
+      .join(' ');
+
+    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      onChange?.(e);
+      onValueChange?.(e.target.value);
+    };
+
+    const inputId = id || name || label?.toLowerCase().replace(/\s+/g, '-');
+    const charCount = value?.length || 0;
+
+    return (
+      <div className={classes}>
+        {label && (
+          <label className={`${baseClass}__label`} htmlFor={inputId}>
+            {label}
+            {required && (
+              <span className={`${baseClass}__required`} aria-hidden="true">
+                {' '}
+                *
+              </span>
+            )}
+          </label>
+        )}
+        <textarea
+          {...rest}
+          ref={ref}
+          className={`${baseClass}__field`}
+          id={inputId}
+          name={name}
+          value={value}
+          placeholder={placeholder}
+          rows={rows}
+          disabled={disabled}
+          required={required}
+          maxLength={maxLength}
+          aria-label={ariaLabel || rest['aria-label'] || label}
+          aria-invalid={error}
+          aria-describedby={helperText ? `${inputId}-helper` : rest['aria-describedby']}
+          onChange={handleChange}
+          style={{ resize, ...style }}
+        />
+        <div className={`${baseClass}__footer`}>
+          {helperText && (
+            <p className={`${baseClass}__helper`} id={`${inputId}-helper`}>
+              {helperText}
+            </p>
+          )}
+          {maxLength && (
+            <span className={`${baseClass}__counter`} aria-live="polite" aria-atomic="true">
+              {charCount}/{maxLength}
+            </span>
+          )}
+        </div>
+      </div>
+    );
+  },
+);
+
+Textarea.displayName = 'Textarea';
