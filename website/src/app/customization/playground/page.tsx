@@ -11,8 +11,9 @@ import styles from "./page.module.css";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import { CodeBlock } from "@robr0/design-system/components/CodeBlock/CodeBlock";
 import { Button } from "@robr0/design-system/components/Button/Button";
-import { Badge } from "@robr0/design-system/components/Badge/Badge";
-import { Alert } from "@robr0/design-system/components/Alert/Alert";
+import { SelectionCard } from "@robr0/design-system/components/SelectionCard/SelectionCard";
+import { SegmentedControl } from "@robr0/design-system/components/SegmentedControl/SegmentedControl";
+import { RadioButton } from "@robr0/design-system/components/RadioButton/RadioButton";
 import { Input } from "@robr0/design-system/components/Input/Input";
 import { Checkbox } from "@robr0/design-system/components/Checkbox/Checkbox";
 import { Chip } from "@robr0/design-system/components/Chip/Chip";
@@ -21,7 +22,7 @@ import { Slider } from "@robr0/design-system/components/Slider/Slider";
 import { Tabs } from "@robr0/design-system/components/Tabs/Tabs";
 import { ToggleSwitch } from "@robr0/design-system/components/ToggleSwitch/ToggleSwitch";
 import { Dropdown } from "@robr0/design-system/components/Dropdown/Dropdown";
-import { BarChart } from "@robr0/design-system/charts";
+import { BarChart, LineChart } from "@robr0/design-system/charts";
 import {
   DEFAULT_BRAND,
   DEFAULT_NEUTRAL_SEED,
@@ -135,6 +136,25 @@ const CHART_DATA = [
   { label: "Sun", value: 290 },
 ];
 
+const TREND_DATA = [
+  { month: "Jan", sessions: 180, signups: 60 },
+  { month: "Feb", sessions: 300, signups: 110 },
+  { month: "Mar", sessions: 240, signups: 90 },
+  { month: "Apr", sessions: 420, signups: 170 },
+  { month: "May", sessions: 380, signups: 210 },
+  { month: "Jun", sessions: 520, signups: 260 },
+];
+
+const PLAN_OPTIONS = [
+  { value: "starter", label: "Starter", description: "For a single project" },
+  { value: "team", label: "Team", description: "Shared workspaces and roles" },
+];
+
+const VIEW_SEGMENTS = [
+  { value: "grid", label: "Grid", icon: "grid_view" },
+  { value: "list", label: "List", icon: "view_list" },
+];
+
 export default function PlaygroundPage() {
   /* ---------- levers ---------- */
   const [preset, setPreset] = useState("custom");
@@ -170,6 +190,9 @@ export default function PlaygroundPage() {
   const [activeTab, setActiveTab] = useState("overview");
   const [demoChecked, setDemoChecked] = useState(true);
   const [demoToggle, setDemoToggle] = useState(true);
+  const [plan, setPlan] = useState("team");
+  const [view, setView] = useState("grid");
+  const [cadence, setCadence] = useState("weekly");
   const [demoSlider, setDemoSlider] = useState(60);
 
   const font = FONT_OPTIONS.find((f) => f.label === fontLabel) ?? FONT_OPTIONS[0];
@@ -455,18 +478,39 @@ export default function PlaygroundPage() {
                 ariaLabel="Preview tabs"
               />
 
-              <Alert
-                variant="info"
-                title="Live theme preview"
-                description="Every component on this canvas — and the rest of the site — renders from the overridden tokens."
+              {/* Every component on this canvas is chosen because it reads the
+                  action colour. Status-driven components (Alert, Badge) are
+                  deliberately absent: their tokens are a separate set that
+                  keeps its meaning regardless of branding, so they would sit
+                  here looking broken while everything around them changed. */}
+              <SelectionCard
+                mode="radio"
+                name="plan"
+                options={PLAN_OPTIONS}
+                value={plan}
+                onChange={(v) => setPlan(v as string)}
               />
 
               <div className={styles.canvasRow}>
-                <Badge label="Info" variant="info" />
-                <Badge label="Positive" variant="positive" />
-                <Badge label="Warning" variant="warning" />
-                <Badge label="Error" variant="error" />
-                <Badge label="Neutral" variant="neutral" />
+                <SegmentedControl
+                  segments={VIEW_SEGMENTS}
+                  activeSegment={view}
+                  onSegmentChange={setView}
+                />
+                <RadioButton
+                  label="Weekly digest"
+                  name="cadence"
+                  value="weekly"
+                  checked={cadence === "weekly"}
+                  onChange={() => setCadence("weekly")}
+                />
+                <RadioButton
+                  label="Monthly"
+                  name="cadence"
+                  value="monthly"
+                  checked={cadence === "monthly"}
+                  onChange={() => setCadence("monthly")}
+                />
               </div>
 
               <Input
@@ -503,6 +547,18 @@ export default function PlaygroundPage() {
                 subtitle="Bars follow the action colour"
                 dataLabel="Views"
                 barColor={effectiveBrand}
+                height={240}
+              />
+
+              <LineChart
+                data={TREND_DATA}
+                xKey="month"
+                series={[
+                  { dataKey: "sessions", label: "Sessions", color: effectiveBrand },
+                  { dataKey: "signups", label: "Signups", color: effectiveBrand, strokeDasharray: "5 4" },
+                ]}
+                title="Growth"
+                subtitle="Both series derive from the action colour"
                 height={240}
               />
 
