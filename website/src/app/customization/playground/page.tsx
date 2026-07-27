@@ -17,7 +17,6 @@ import { RadioButton } from "@robr0/design-system/components/RadioButton/RadioBu
 import { Input } from "@robr0/design-system/components/Input/Input";
 import { Checkbox } from "@robr0/design-system/components/Checkbox/Checkbox";
 import { Chip } from "@robr0/design-system/components/Chip/Chip";
-import { ProgressBar } from "@robr0/design-system/components/ProgressBar/ProgressBar";
 import { Slider } from "@robr0/design-system/components/Slider/Slider";
 import { Tabs } from "@robr0/design-system/components/Tabs/Tabs";
 import { ToggleSwitch } from "@robr0/design-system/components/ToggleSwitch/ToggleSwitch";
@@ -534,8 +533,6 @@ export default function PlaygroundPage() {
                   onChange={setDemoToggle}
                 />
               </div>
-
-              <ProgressBar value={64} showLabel ariaLabel="Demo progress" />
 
               {/* barColor is fed from state rather than left to the chart's
                   own token lookup: the chart resolves CSS variables during
