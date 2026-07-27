@@ -14,6 +14,24 @@ Audit a component or page for accessibility violations against WCAG 2.1 AA crite
 
 Use this skill when asked to check accessibility, run an a11y audit, or find WCAG issues — phrases like "accessibility audit", "a11y check on [component/page]", "check WCAG compliance", "is [X] accessible".
 
+## What is already automated — read this before auditing anything
+
+**Axe runs on every Storybook story and fails the build.** `.storybook/preview.ts` sets `a11y.test: 'error'`, so `npm run test` (and therefore CI and `npm run verify`) already enforces WCAG 2.1 AA across the whole library. Start by running it:
+
+```bash
+npm run test
+```
+
+If that is green, every violation axe can detect is already absent — and re-checking icon-only button names, label association, `role="dialog"` naming or ARIA parent/child relationships by hand is duplicated effort.
+
+**This skill exists for the three things that gate does not cover:**
+
+1. **Colour contrast — deliberately excluded from the automated gate.** `color-contrast` is disabled in `preview.ts` because the action colour fails behind its own label and fixing it is a design decision, not a lint fix (ROADMAP item 23). **Contrast is therefore the single highest-value thing to audit manually** — nothing else checks it.
+2. **What axe cannot see.** Axe catches roughly a third of WCAG issues. It cannot tell whether alt text is *meaningful*, whether focus order makes sense, whether a Dialog *actually* traps focus, or whether a helper message *should* have been associated with its control. (Two such bugs shipped undetected until a manual survey found them: Dropdown announced neither its helper text nor its error state.)
+3. **Anything outside the story suite** — the Next.js website pages, which axe never runs against.
+
+Report a finding as **already-enforced** if `npm run test` would have caught it; that tells the reader the gate is working rather than implying a gap.
+
 ## Instructions
 
 1. **Determine scope.** Accept one of:
@@ -23,21 +41,21 @@ Use this skill when asked to check accessibility, run an a11y audit, or find WCA
 
 2. **Read the source files.** For each component in scope, read the `.tsx` and `.css` files before taking screenshots.
 
-3. **Structural audit (from source code).** Check for:
+3. **Structural audit (from source code).** Most items here are already enforced by axe — spend your effort on the ones marked **[manual]**, which it cannot evaluate:
 
    **Semantic HTML & ARIA:**
    - Interactive elements use correct roles (`button`, `link`, `checkbox`, etc.) — never a `<div onClick>` without `role` and `tabIndex`
    - Icon-only `<button>` elements have `aria-label` describing their action
-   - `<img>` elements have meaningful `alt` text; decorative images use `alt=""`
+   - **[manual]** `<img>` elements have *meaningful* `alt` text — axe only checks that the attribute exists; decorative images use `alt=""`
    - Form inputs are associated with `<label>` via `htmlFor`/`id`, or have `aria-label`
    - Modals and dialogs use `role="dialog"` and `aria-modal="true"`, with `aria-labelledby` pointing to the title
    - Lists use `<ul>`/`<ol>` + `<li>`, not `<div>` stacks
    - Heading hierarchy is logical — no h3 before h2, no skipped levels
 
    **Keyboard Navigation:**
-   - All interactive elements are reachable by Tab key (not `tabIndex={-1}` without justification)
+   - **[manual]** All interactive elements are reachable by Tab, in an order that makes sense — axe cannot judge order
    - Custom interactive components handle `onKeyDown` for Enter/Space (buttons), arrow keys (RadioButton, SegmentedControl, ToggleGroup)
-   - Modal/dialog traps focus while open and restores focus to the trigger on close
+   - **[manual]** Modal/dialog *actually* traps focus while open and restores it to the trigger on close — axe sees the attributes, not the behaviour
    - Escape key closes dismissible overlays (Tooltip, Popover, DropdownMenu, AlertDialog)
 
    **Focus Styles:**
@@ -45,7 +63,7 @@ Use this skill when asked to check accessibility, run an a11y audit, or find WCA
    - Focus ring uses the teal action token (`--color-action-primary-bg`) — per design.md, teal is reserved for primary CTAs and focus rings. Flag any `outline: none` without a visible replacement
 
 4. **Visual audit (from screenshots).** Start the preview server and screenshot the target in both light and dark mode (follow the `visual-review` skill pattern). Check:
-   - **Colour contrast:** Body text should use `--color-text-*` tokens. Flag any text rendered below 4.5:1 contrast (WCAG 1.4.3). Note which token is used and flag if it's outside the `--color-text-*` family.
+   - **Colour contrast (the priority — nothing automated covers this):** compute the ratio for every foreground/background pair actually rendered, not just body text. Flag anything below 4.5:1 for normal text or 3:1 for large text and UI components (WCAG 1.4.3 / 1.4.11). Note which token is used. Known and already recorded as ROADMAP item 23: the primary CTA label is 3.15:1, teal-as-text on white is 3.96:1, and tertiary-on-tertiary is 2.72:1 — report these as *known deferred*, not as new findings.
    - **Text sizing:** No text visually below ~12px (WCAG 1.4.4)
    - **Focus visibility:** Confirm focus rings are clearly visible in both light and dark themes
 
