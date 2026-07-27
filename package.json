@@ -19,6 +19,11 @@
   "workspaces": [
     "website"
   ],
+  "$comment-overrides": "Security pins for transitive deps (both reach us through next). npm ONLY honours overrides in the workspace ROOT — the copies that used to live in website/package.json were silently ignored after the workspaces conversion, which un-pinned both. Keep them here.",
+  "overrides": {
+    "postcss": "^8.5.18",
+    "sharp": "^0.35.3"
+  },
   "exports": {
     ".": "./src/index.ts",
     "./charts": "./src/charts.ts",

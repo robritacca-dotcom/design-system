@@ -48,6 +48,7 @@ These are checkable by grep and should be exhaustive. For each, the question is 
 - **Every import specifier in docs matches the real exports map.** Any `import … from "…"` in documentation or example code should resolve against the package's current `exports` (or be an obvious third-party import). Renamed aliases and scopes hide here.
 - **Internal links resolve.** Route strings in website prose (`/foundations/...`, `/customization/...`) should correspond to real app directories, and the nav config should agree.
 - **Counts come from registries, never literals.** Grep displayed numbers near countable nouns; each should be an imported constant.
+- **Config still applies where it is declared.** A restructure can leave a config block sitting somewhere the tool no longer reads, and nothing warns you — it just silently stops taking effect. Check that declared intent matches installed reality: dependency `overrides`/`resolutions` (npm honours these **only** in the workspace root), engine constraints, lint and TS config inheritance, and bundler aliases. For dependency pins specifically, compare the declared range against what is actually installed (`npm ls <pkg>`) and run `npm audit` — pins are usually security fixes, so one that stops applying is a silent regression, not a style issue.
 
 ### 3. Prose surfaces — read against reality
 
