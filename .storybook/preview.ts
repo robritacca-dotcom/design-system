@@ -5,6 +5,16 @@ import { withThemeByDataAttribute } from '@storybook/addon-themes';
 
 const preview: Preview = {
   parameters: {
+    // Chromatic snapshots every story in both themes. `theme` is the global
+    // registered by withThemeByDataAttribute below, so each mode renders the
+    // same way the toolbar toggle does. Ignored by every other tool.
+    chromatic: {
+      modes: {
+        light: { theme: 'light' },
+        dark: { theme: 'dark' },
+      },
+    },
+
     controls: {
       matchers: {
        color: /(background|color)$/i,

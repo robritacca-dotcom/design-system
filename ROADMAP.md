@@ -20,22 +20,28 @@ Audited against the working tree on **2026-07-27** (57 components, 4 doc-only he
 | 4 | **B3** — the `Field` primitive | ✅ **done** — 6 controls, −160 lines, 2 a11y bugs fixed |
 | 5 | **item 6** — a11y to `'error'` (AA minus contrast) | ✅ **done** — 49 fixed, 502/502 green, axe now gates CI |
 | 6 | **Workstream A Phase 1** — registry metadata | ✅ **done** — 4 duplications collapsed; found 16 missing `'use client'` |
-| **7** | **Workstream A Phase 2** — generated prop contracts | ⬅ **NEXT — see the brief below** |
-| 8 | **item 2** — API-surface validator | not started — *must* follow 7 |
-| 9 | **item 5** — Chromatic | not started — *must* follow 5 (done), so unblocked |
-| 10 | **Workstream A Phase 3** — dense `.md` docs | not started — needs 7 |
+| 7 | **Workstream A Phase 2** — generated prop contracts | ⏸ **PARKED 2026-07-28** — see the parking record below |
+| 8 | **item 2** — API-surface validator | ⏸ **parked with 7** (only cheap if 7 exists) |
+| **9** | **item 5** — Chromatic | ⬅ **NEXT — in progress** |
+| 10 | **Workstream A Phase 3** — dense `.md` docs | ⏸ **parked with 7** (its props tables come from 7) |
 
-## ⬅ START HERE NEXT: Workstream A Phase 2 — generated prop contracts
+## ⏸ PARKED 2026-07-28: Phase 2 / item 2 / Phase 3 (the props.json bundle)
 
-**Goal:** `scripts/generate-prop-contracts.mjs` writes `src/components/props.json` from the TypeScript source via the TS Compiler API, so the public prop surface becomes machine-readable. Full spec in [Phase 2](#phase-2--generated-prop-contracts) below — read it before starting; it already enumerates the edge cases.
+**Decision:** parked as a bundle, on Rob's call, after a deliberate re-examination. Not rejected — the reasoning is recorded so it is never re-litigated from scratch.
 
-**Why it is next:** it unblocks two things. [Item 2](#2-public-api-surface-validator--m--still-open--do-not-start-before-workstream-a-phase-2) collapses from re-deriving the API surface to diffing two committed JSON files, and [Phase 3](#phase-3--dense-per-component-markdown--llmstxt) generates its docs from these contracts.
+**Why:** the system is already agent-readable through cheaper means, and the check that was meant to prove the gap disproved it instead. design.md's spec sections carry the props surface in prose *with judgment attached* (the Combobox section names `multiple`, `clearable`, `loading`, `emptyMessage`, the `onSearchChange`/`manualFiltering` pairing, and when to use Dropdown instead); the published package ships complete `.d.ts` types for any agent with it installed; llms.txt links the blueprints and every component page. What Phase 2 would add — exact types in JSON, per-component pages — is a refinement of something that already works, priced at the most complex script in the repo plus a permanent TS-upgrade regeneration tax. With **zero external dependents**, item 2's breaking-change alarm protects nobody yet.
 
-**The known-nasty cases, already identified — do not rediscover them:** `Timeline` (props type is a union alias), `Toast` + `ToastProvider` (two components in one module, `ToastProps` further down the file), the 9 chart modules under a single registry entry, `RadioGroup` (its props type is `RadioGroupProps`, not `RadioButtonGroupProps`), `CheckboxGroup`, and now `Field` + `FieldContext` (two modules, one of which exports a hook and a context rather than a component).
+**Un-park when:** the package gains real external consumers (item 2 becomes the valuable piece, and it is only cheap if props.json exists), or the agent-legibility story becomes a concrete need rather than a nice-to-have.
 
-**Determinism is the hard requirement.** Registry order, module order, source member order; record the `typescript` version in the JSON header, because `checker.typeToString()` output shifts across TS minors and the CI drift guard will fail on it. Follow the `generate-token-registry.mjs` pattern: pure exported derivation functions, side effects behind an `isMain` guard, idempotent writes.
+**Context that tipped it:** Rob is taking the system more publicly live this week and flagged overall complexity as a concern. This bundle was the largest remaining complexity add with the least user-visible payoff.
 
-**Worth considering Fable 5 for this one specifically** — novel program, no reference implementation, enumerated edge cases, and a determinism requirement the drift guard punishes. Everything else on this roadmap is fine on Opus 5.
+## ⬅ IN PROGRESS: item 5 — Chromatic visual regression
+
+**Why now:** one token edit touches all 57 components and nothing currently notices a visual regression — exactly the wrong gap to have while making changes under public scrutiny. The a11y prerequisite (item 6) is done, so baselines will not need re-accepting.
+
+**Kept deliberately minimal** (launch-week complexity budget): one workflow, `workflow_dispatch`-only until the token secret exists (a push-triggered run with no token would leave a red X on main), light+dark modes declared once in `.storybook/preview.ts`, no TurboSnap/curation until the first real run shows what the snapshot spend actually is (~1,000 per full run against the free tier's 5,000/month — so runs are deliberate, not per-push, for now).
+
+**Rob's steps:** (1) sign in at chromatic.com with GitHub and add `robritacca-dotcom/design-system` as a project; (2) copy the project token it shows; (3) add it as the `CHROMATIC_PROJECT_TOKEN` repo secret (GitHub → Settings → Secrets → Actions). Then say so — the first run gets dispatched, its baseline accepted, and only then does the workflow gain a `main` push trigger.
 
 ### What shipped 2026-07-27, in one line each
 

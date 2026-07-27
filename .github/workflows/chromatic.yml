@@ -1,0 +1,45 @@
+name: Chromatic
+
+# Visual regression via Chromatic — snapshots every Storybook story in light
+# and dark (modes declared in .storybook/preview.ts) and diffs against the
+# accepted baseline.
+#
+# DELIBERATELY workflow_dispatch-ONLY for now, for two reasons:
+#   1. Until the CHROMATIC_PROJECT_TOKEN secret exists (Rob creates the
+#      project on chromatic.com), a push-triggered run would fail and leave a
+#      red X on main.
+#   2. Snapshot budget: a full run is roughly 500 stories x 2 modes ≈ 1,000
+#      snapshots against the free tier's 5,000/month. Runs are deliberate,
+#      not per-push, until the real spend is known. Revisit the trigger (and
+#      TurboSnap) after the first few baselines.
+#
+# NOT part of `npm run verify` — the one deliberate exception to the "CI
+# check ⇒ verify" rule, because every run bills cloud snapshots. See the
+# CI & Local Verify section of CLAUDE.md.
+#
+# fetch-depth: 0 is required — Chromatic walks git history to find the
+# ancestor build whose baseline it should compare against.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  chromatic:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Run Chromatic
+        uses: chromaui/action@v13
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          buildScriptName: build-storybook
