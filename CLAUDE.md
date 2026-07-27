@@ -73,7 +73,7 @@ Every push to `main` and every PR runs `.github/workflows/ci.yml` (four jobs: li
 
 **Releases** are manual and follow the `release` skill (`.claude/skills/release`). The `Release` workflow (`.github/workflows/release.yml`, workflow_dispatch, dry-run by default) builds `dist/`, runs `scripts/smoke-consumer.mjs` (packs the tarball into a scratch Vite consumer and builds it without recharts), then publishes **from `dist/`** with `npm publish --access public --provenance`. The root package.json stays `private` forever — only the generated dist manifest ships. `PACKAGE_VERSION` in `scripts/package-manifest.mjs` is the version — never edit package.json's. `@robr0/design-system` is published; 0.1.0 shipped 2026-07-26.
 
-Two facts that bite on release day: **a published version can never be reused**, even after unpublishing, so a botched release costs a version number; and **the registry lags the workflow by minutes** — a 404 right after a green publish is propagation, not failure, so never re-run on it. The `NPM_TOKEN` secret is a granular token with an expiry that will fail the publish step with a 401 when it lapses; migrating to Trusted Publishing (OIDC) retires the token entirely and is the planned fix.
+Two facts that bite on release day: **a published version can never be reused**, even after unpublishing, so a botched release costs a version number; and **the registry lags the workflow by minutes** — a 404 right after a green publish is propagation, not failure, so never re-run on it. Auth is **Trusted Publishing (OIDC)** — there is no npm token to expire or rotate. The registration on npmjs.com is keyed to the workflow **filename**, so renaming or moving `release.yml` breaks publishing until the registration is updated; and `permissions: id-token: write` is load-bearing for authentication, not just provenance. A dry run never authenticates, so only a real publish proves the auth path works.
 
 **Infrastructure** (the facts the /overview pipeline describes — keep them in sync):
 - **Domain**: `robertritacca.com` is registered at GoDaddy; GoDaddy DNS points at the Vercel deployment (`www` CNAMEs to Vercel's DNS). Storybook deploys as a second Vercel project.
@@ -151,6 +151,16 @@ import { Button } from '@robr0/design-system/components/Button/Button';
 
 CSS class naming: `ds-{component}` base class, `ds-{component}--{modifier}` for variants. Example: `ds-button`, `ds-button--primary`, `ds-button--compact`.
 
+**The props interface is a published contract.** Since `@robr0/design-system` ships to npm, every component follows the same API shape — full details and code in the `new-component` skill; `Button.tsx` (button-or-anchor) and `Input.tsx` (form control) are the reference implementations:
+
+- `'use client'` on the first line **only** when the component uses hooks, handlers, or browser APIs. Presentational components (e.g. `Table`) deliberately omit it so consumers can render them from a Server Component.
+- Own props as a `type`, then `export interface XProps extends XOwnProps, Omit<React.ComponentPropsWithoutRef<'el'>, keyof XOwnProps> {}` — so native attributes pass through.
+- `React.forwardRef` onto the primary node (the **panel** for portal components like Dialog/Drawer), plus `displayName`. Merge with any internal ref rather than replacing it.
+- `{...rest}` spread first onto that node, so the component's own attributes win.
+- Native event signatures keep the standard names. `onChange` is a `ChangeEventHandler`; the convenience callback is named for the value's shape — `onValueChange` (string/number), `onCheckedChange` (boolean), `onValuesChange` (array) — and both fire.
+- `variant` not `priority`/`kind`; `disabled` as a real boolean. **Figma variant properties are not code props** — `hover`/`active` are CSS pseudo-classes, not state a consumer sets.
+- Deprecate, never remove. Document intentional native-name collisions (`size`, `title`) in the prop's JSDoc.
+
 ---
 
 ## How to Add a New Component
@@ -158,7 +168,7 @@ CSS class naming: `ds-{component}` base class, `ds-{component}--{modifier}` for 
 A new component is not done until it appears in **every** place the system documents itself: the library, Storybook, and all relevant sections of the showcase website. Do not skip registration steps.
 
 1. **Create the folder**: `src/components/MyComponent/`
-2. **Write `MyComponent.tsx`**: Export a named component + a TypeScript interface for props. Use semantic tokens in class names, never inline styles.
+2. **Write `MyComponent.tsx`**: Export a named component + a TypeScript interface for props, following the published-contract shape in **Component Anatomy** above (`'use client'` when interactive, own-props split, `forwardRef` + `displayName`, `{...rest}` spread, native event signatures). Use semantic tokens in class names, never inline styles.
 3. **Write `MyComponent.css`**: All CSS vars must be from `tokens-light/dark.css`. No hardcoded hex, px values from primitives, or magic numbers.
 4. **Write `MyComponent.stories.tsx`**: Export a `meta` (with `title: 'Components/MyComponent'`, `tags: ['autodocs']`) and at least a `Default` story plus one per meaningful variant. (`.stories.ts` also works for stories with no JSX, but `.tsx` is the convention across the library.)
 5. **Add a website showcase page**: Create `website/src/app/components/my-component/page.tsx` + `page.module.css` + `layout.tsx`. Follow the pattern in an existing page (e.g., `website/src/app/components/button/page.tsx`). The `layout.tsx` must resolve its title through `pageMetadata("/components/my-component", "<one-line description>")` — without it the tab title silently falls back to the site-wide default.
@@ -171,6 +181,8 @@ A new component is not done until it appears in **every** place the system docum
 Steps 5–7 are build-enforced by two validators: `scripts/validate-website-surfaces.mjs` fails the build if any public component is missing its showcase page, nav entry, `TocCard`, or `design.md` spec, or if the sidebar falls out of alphabetical order; `scripts/validate-page-titles.mjs` fails it if the page has no `layout.tsx`, or if that layout does not derive its title from `pageMetadata()`.
 
 Checklist before shipping a component:
+- [ ] Props follow the published-contract shape (own-props split, `forwardRef` + `displayName`, `{...rest}`, native event signatures)
+- [ ] `'use client'` present if interactive — and **absent** if purely presentational
 - [ ] All colors via semantic tokens
 - [ ] Dark mode verified (toggle `data-theme="dark"` in Storybook)
 - [ ] Disabled state at `opacity: 0.4`, `cursor: not-allowed`

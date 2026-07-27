@@ -19,7 +19,8 @@ Use this skill any time you are asked to add or create a new component to the de
 1. **Ask** for the component name (PascalCase) and a one-sentence description of its purpose, if not already provided.
 
 2. **Read these reference files before writing anything:**
-   - `src/components/Button/Button.tsx` — structural reference (props interface, BEM class usage, conditional rendering)
+   - `src/components/Button/Button.tsx` — structural reference for a button-or-anchor component (own-props split, forwardRef, rest spread, BEM class usage, conditional rendering)
+   - `src/components/Input/Input.tsx` — structural reference for a form control (native `onChange` + `onValueChange` convenience callback, label/helper/error wiring)
    - `src/components/Badge/Badge.css` — CSS token reference (no raw hex/pixels, semantic token usage)
    - `src/components/Badge/Badge.stories.tsx` — stories file reference (`satisfies Meta`, `StoryObj`, autodocs)
    - `src/tokens/tokens-light.css` — full list of available semantic tokens
@@ -28,11 +29,55 @@ Use this skill any time you are asked to add or create a new component to the de
 
 ### File 1: `ComponentName.tsx`
 - Named export (not default)
-- Typed props interface (`ComponentNameProps`)
 - BEM class naming with `ds-componentname` root prefix (e.g. `ds-button`, `ds-badge`)
 - Modifier classes follow `ds-componentname--variant` pattern
 - Imports CSS: `import "./ComponentName.css"`
 - If the component renders as `<a>` when an `href` prop is passed, follow the Button pattern of conditional element rendering
+
+**The component API contract — every one of these, no exceptions.** This package is published to npm, so the props interface is a public contract. Getting it wrong is a breaking change later. `src/components/Button/Button.tsx` (button-or-anchor) and `src/components/Input/Input.tsx` (form control) are the reference implementations.
+
+1. **`'use client'` on the first line** — if and only if the component uses hooks, event handlers, or browser APIs. **Purely presentational components must NOT have it** (see `src/components/Table/Table.tsx`), or consumers lose the ability to render them from a React Server Component.
+
+2. **Split the props type in two.** Own props as a `type`, then an exported `interface` that merges in the native element's props:
+   ```ts
+   type ComponentNameOwnProps = { /* ...props this component owns... */ };
+
+   export interface ComponentNameProps
+     extends ComponentNameOwnProps,
+       Omit<React.ComponentPropsWithoutRef<'div'>, keyof ComponentNameOwnProps> {}
+   ```
+   Add `| 'type'` (or any other attribute the component hardcodes) to the `Omit` list.
+
+3. **`React.forwardRef`** onto the primary DOM node, with `ComponentName.displayName = 'ComponentName'` after it. If the component already keeps an internal ref (focus trap, click-outside, picker trigger), merge them:
+   ```ts
+   const setRef = (node: HTMLDivElement | null) => {
+     internalRef.current = node;
+     if (typeof ref === 'function') ref(node); else if (ref) ref.current = node;
+   };
+   ```
+
+4. **Spread `{...rest}` onto that same node**, placed *first* so the component's own attributes win. This is what makes `data-testid`, `aria-*`, `autoComplete`, `maxLength` and form-library registration work.
+
+5. **Event handlers keep native React signatures.** `onChange` must be `React.ChangeEventHandler`, never `(value: string) => void` — that shape breaks react-hook-form, Formik and TanStack Form. Put the convenience callback under a name matching the value's shape, and fire both:
+
+   | Value shape | Convenience prop |
+   |---|---|
+   | string / number | `onValueChange` |
+   | boolean | `onCheckedChange` |
+   | array | `onValuesChange` |
+
+   ```ts
+   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+     onChange?.(e);
+     onValueChange?.(e.target.value);
+   };
+   ```
+
+6. **Never invent a prop that shadows a native one with different semantics.** Prefer `variant` (not `priority`/`kind`) and `disabled` (a real boolean, never a value inside a `state` enum). **Figma variant properties are not code props** — `hover` and `active` belong to CSS pseudo-classes, so a `state` prop that includes them has two sources of truth. Where a collision is unavoidable and intentional (`size` vs the native character-width attribute, `title` vs the native tooltip), say so in the prop's JSDoc.
+
+7. **Discard props that would be invalid on the rendered node** rather than spreading them — e.g. `name` on a `<div role="radio">`. Destructure with a `_` prefix (`name: _name`) and document why in the JSDoc; the ESLint config allows `^_`.
+
+8. **Deprecate, never remove.** Keep the old prop working and mark it `@deprecated` with the replacement named. `className` stays wherever it already is (usually the wrapper) — moving it is a silent visual break.
 
 ### File 2: `ComponentName.css`
 - CSS custom properties exclusively — **no hardcoded hex colours**, no raw `rgb()`/`rgba()`
