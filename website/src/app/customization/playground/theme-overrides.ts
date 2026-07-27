@@ -43,6 +43,9 @@ const mix = (
 const WHITE: [number, number, number] = [255, 255, 255];
 const BLACK: [number, number, number] = [0, 0, 0];
 
+const luminance = ([r, g, b]: [number, number, number]): number =>
+  (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+
 /* ---------- brand (action colour) ramp ---------- */
 
 /**
@@ -65,13 +68,22 @@ const BRAND_RAMP_WEIGHTS: ReadonlyArray<[step: string, weight: number]> = [
 
 export const DEFAULT_BRAND = "#118AB2";
 
-/** Overrides for the full teal ramp, rebuilt around a picked brand colour. */
+/**
+ * Overrides for the full teal ramp, rebuilt around a picked brand colour.
+ *
+ * The shipped ramp assumes a mid-dark base: tint steps (01–06) head toward
+ * white — step 02 is the text ON the primary fill — and shade steps (08–10)
+ * toward black for hover/pressed. For a LIGHT brand (a white button), both
+ * jobs invert: text and hover states must contrast toward black, so every
+ * step mixes darker instead. Without this, white buttons get white text.
+ */
 export function brandOverrides(brandHex: string): Overrides {
   const base = hexToRgb(brandHex);
+  const lightBrand = luminance(base) > 0.5;
   const overrides: Overrides = {};
   for (const [step, weight] of BRAND_RAMP_WEIGHTS) {
-    const value =
-      weight === 0 ? base : mix(base, weight > 0 ? WHITE : BLACK, Math.abs(weight));
+    const pole = lightBrand ? BLACK : weight > 0 ? WHITE : BLACK;
+    const value = weight === 0 ? base : mix(base, pole, Math.abs(weight));
     overrides[`--primitive-teal-${step}`] = rgbToHex(value);
   }
   return overrides;
@@ -185,8 +197,14 @@ export function googleFontHref(googleParam: string): string {
 
 /* ---------- copy-paste CSS ---------- */
 
-/** The consumer-ready snippet reproducing the current playground state. */
-export function buildCssSnippet(overrides: Overrides, font: FontOption): string {
+/** The consumer-ready snippet reproducing the current playground state.
+    `darkOverrides` adds a theme-scoped block for presets whose action
+    colour differs between themes. */
+export function buildCssSnippet(
+  overrides: Overrides,
+  font: FontOption,
+  darkOverrides?: Overrides
+): string {
   const lines: string[] = [];
   if (font.googleParam) {
     lines.push(
@@ -202,5 +220,12 @@ export function buildCssSnippet(overrides: Overrides, font: FontOption): string 
     lines.push(`  ${name}: ${value};`);
   }
   lines.push("}");
+  if (darkOverrides && Object.keys(darkOverrides).length > 0) {
+    lines.push("", '[data-theme="dark"] {');
+    for (const [name, value] of Object.entries(darkOverrides)) {
+      lines.push(`  ${name}: ${value};`);
+    }
+    lines.push("}");
+  }
   return lines.join("\n");
 }

@@ -198,6 +198,18 @@
   min-width: 0;
 }
 
+/* The mock product's own title — renamed live from the controls panel */
+.canvasTitle {
+  font-family: var(--font-heading-1-family);
+  font-size: var(--font-heading-1-size);
+  font-weight: var(--font-heading-1-weight);
+  line-height: var(--font-heading-1-line-height);
+  letter-spacing: var(--font-heading-1-letter-spacing);
+  color: var(--color-text-primary);
+  overflow-wrap: anywhere;
+  margin-bottom: calc(var(--primitive-gap-lg) - var(--primitive-gap-xl));
+}
+
 .canvasRow {
   display: flex;
   flex-wrap: wrap;

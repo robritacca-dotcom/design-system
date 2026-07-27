@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
@@ -45,6 +45,86 @@ const PREVIEW_TABS = [
   { value: "settings", label: "Settings" },
 ];
 
+/** A preset is just a saved position for every lever. Font labels must
+    match FONT_OPTIONS entries. */
+interface ThemePreset {
+  label: string;
+  brand: string;
+  /** Theme-dependent action colour: used instead of `brand` in dark mode
+      (the black & white preset flips to a white button there). */
+  brandDark?: string;
+  tintOn: boolean;
+  tintSeed: string;
+  tintStrength: number;
+  radiusScale: number;
+  pill: boolean;
+  fontLabel: string;
+  /** Preset-specific extras beyond the levers (e.g. greyscale accents). */
+  extraOverrides?: Overrides;
+}
+
+const THEME_PRESETS: Record<string, ThemePreset> = {
+  warm: {
+    label: "Warm serif",
+    brand: "#D97757",
+    tintOn: true,
+    tintSeed: "#C08B5C",
+    tintStrength: 8,
+    radiusScale: 100,
+    pill: true,
+    fontLabel: "Lora (serif)",
+  },
+  mono: {
+    label: "Black & white",
+    brand: "#171717",
+    brandDark: "#F5F5F5",
+    tintOn: false,
+    tintSeed: DEFAULT_NEUTRAL_SEED,
+    tintStrength: 6,
+    radiusScale: 40,
+    pill: false,
+    fontLabel: "Inter",
+    // Grey out the decorative accents (they colour the background glow
+    // blobs, among other things). Status colours are a separate token set
+    // and deliberately keep their meaning.
+    extraOverrides: {
+      "--color-core-accent-coral": "#A3A3A3",
+      "--color-core-accent-violet": "#8F8F8F",
+      "--color-core-accent-cobalt": "#5C5C5C",
+      "--color-core-accent-amber": "#B8B8B8",
+      "--color-core-accent-gold": "#C9C9C9",
+      "--color-core-accent-mint": "#ADADAD",
+    },
+  },
+  contrast: {
+    label: "High contrast (AAA)",
+    brand: "#1E40AF",
+    tintOn: true,
+    tintSeed: "#1E40AF",
+    tintStrength: 4,
+    radiusScale: 100,
+    pill: true,
+    fontLabel: "IBM Plex Sans",
+  },
+};
+
+const PRESET_OPTIONS = [
+  { label: "Custom", value: "custom" },
+  ...Object.entries(THEME_PRESETS).map(([value, p]) => ({ label: p.label, value })),
+];
+
+/* Live theme tracking (same pattern as foundations/colour-mode) so
+   theme-dependent presets re-derive their overrides when the site's
+   light/dark toggle flips. */
+function subscribeToTheme(callback: () => void) {
+  const observer = new MutationObserver(callback);
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["data-theme"],
+  });
+  return () => observer.disconnect();
+}
+
 const CHART_DATA = [
   { label: "Mon", value: 320 },
   { label: "Tue", value: 480 },
@@ -57,6 +137,7 @@ const CHART_DATA = [
 
 export default function PlaygroundPage() {
   /* ---------- levers ---------- */
+  const [preset, setPreset] = useState("custom");
   const [brand, setBrand] = useState(DEFAULT_BRAND);
   const [tintOn, setTintOn] = useState(false);
   const [tintSeed, setTintSeed] = useState(DEFAULT_NEUTRAL_SEED);
@@ -64,6 +145,26 @@ export default function PlaygroundPage() {
   const [radiusScale, setRadiusScale] = useState(100); // percent
   const [pill, setPill] = useState(true);
   const [fontLabel, setFontLabel] = useState(FONT_OPTIONS[0].label);
+  const [productName, setProductName] = useState("Your product");
+
+  /** Touching any individual lever means the state is no longer the preset. */
+  const asCustom = <T,>(setter: (value: T) => void) => (value: T) => {
+    setPreset("custom");
+    setter(value);
+  };
+
+  const applyPreset = (value: string) => {
+    setPreset(value);
+    const p = THEME_PRESETS[value];
+    if (!p) return; // "custom" — keep the current levers
+    setBrand(p.brand);
+    setTintOn(p.tintOn);
+    setTintSeed(p.tintSeed);
+    setTintStrength(p.tintStrength);
+    setRadiusScale(p.radiusScale);
+    setPill(p.pill);
+    setFontLabel(p.fontLabel);
+  };
 
   /* ---------- preview-only state ---------- */
   const [activeTab, setActiveTab] = useState("overview");
@@ -73,10 +174,22 @@ export default function PlaygroundPage() {
 
   const font = FONT_OPTIONS.find((f) => f.label === fontLabel) ?? FONT_OPTIONS[0];
 
+  const theme = useSyncExternalStore(
+    subscribeToTheme,
+    () => document.documentElement.getAttribute("data-theme") ?? "dark",
+    () => "dark"
+  );
+
+  /* A preset can carry a theme-dependent action colour (black & white:
+     dark button on light, white button on dark). */
+  const activePreset = THEME_PRESETS[preset];
+  const effectiveBrand =
+    activePreset?.brandDark && theme === "dark" ? activePreset.brandDark : brand;
+
   const overrides = useMemo<Overrides>(() => {
     const merged: Overrides = {};
-    if (brand.toUpperCase() !== DEFAULT_BRAND) {
-      Object.assign(merged, brandOverrides(brand));
+    if (effectiveBrand.toUpperCase() !== DEFAULT_BRAND) {
+      Object.assign(merged, brandOverrides(effectiveBrand));
     }
     if (tintOn && tintStrength > 0) {
       Object.assign(merged, neutralOverrides(tintSeed, tintStrength / 100));
@@ -84,8 +197,11 @@ export default function PlaygroundPage() {
     if (radiusScale !== 100 || !pill) {
       Object.assign(merged, radiusOverrides(radiusScale / 100, pill));
     }
+    if (activePreset?.extraOverrides) {
+      Object.assign(merged, activePreset.extraOverrides);
+    }
     return merged;
-  }, [brand, tintOn, tintSeed, tintStrength, radiusScale, pill]);
+  }, [effectiveBrand, tintOn, tintSeed, tintStrength, radiusScale, pill, activePreset]);
 
   /* ---------- apply to the whole page (see plan D5) ----------
      Custom properties substitute var() where they are declared, and the
@@ -138,6 +254,7 @@ export default function PlaygroundPage() {
   const isPristine = Object.keys(overrides).length === 0 && !font.family;
 
   const reset = () => {
+    setPreset("custom");
     setBrand(DEFAULT_BRAND);
     setTintOn(false);
     setTintSeed(DEFAULT_NEUTRAL_SEED);
@@ -147,9 +264,18 @@ export default function PlaygroundPage() {
     setFontLabel(FONT_OPTIONS[0].label);
   };
 
+  /* The copied CSS is theme-agnostic except a preset's dark-mode action
+     colour, which ships as a [data-theme="dark"] block — so :root always
+     carries the light-mode ramp regardless of the theme being previewed. */
+  const darkBrandBlock = activePreset?.brandDark
+    ? brandOverrides(activePreset.brandDark)
+    : undefined;
+  const snippetOverrides = darkBrandBlock
+    ? { ...overrides, ...brandOverrides(brand) }
+    : overrides;
   const cssSnippet = isPristine
     ? "/* Everything is at its shipped default — move a lever to generate CSS. */"
-    : buildCssSnippet(overrides, font);
+    : buildCssSnippet(snippetOverrides, font, darkBrandBlock);
 
   return (
     <>
@@ -188,6 +314,33 @@ export default function PlaygroundPage() {
             {/* Controls */}
             <section className={styles.controls} aria-label="Theme controls">
               <div className={styles.controlGroup}>
+                <h3 className={styles.controlHeading}>Theme preset</h3>
+                <p className={styles.controlNote}>
+                  Start from a saved look — any lever you touch turns it back
+                  into Custom.
+                </p>
+                <Dropdown
+                  ariaLabel="Theme preset"
+                  value={preset}
+                  options={PRESET_OPTIONS}
+                  onChange={applyPreset}
+                />
+              </div>
+
+              <div className={styles.controlGroup}>
+                <h3 className={styles.controlHeading}>Product name</h3>
+                <p className={styles.controlNote}>
+                  Renames the preview&apos;s title as you type.
+                </p>
+                <Input
+                  ariaLabel="Product name"
+                  placeholder="Your product"
+                  value={productName}
+                  onChange={setProductName}
+                />
+              </div>
+
+              <div className={styles.controlGroup}>
                 <h3 className={styles.controlHeading}>Action colour</h3>
                 <p className={styles.controlNote}>
                   Rebuilds the whole teal ramp around your pick — hover and pressed
@@ -197,11 +350,11 @@ export default function PlaygroundPage() {
                   <input
                     type="color"
                     className={styles.colorInput}
-                    value={brand}
-                    onChange={(e) => setBrand(e.target.value.toUpperCase())}
+                    value={effectiveBrand}
+                    onChange={(e) => asCustom(setBrand)(e.target.value.toUpperCase())}
                     aria-label="Brand colour"
                   />
-                  <code className={styles.colorValue}>{brand.toUpperCase()}</code>
+                  <code className={styles.colorValue}>{effectiveBrand.toUpperCase()}</code>
                 </label>
               </div>
 
@@ -214,7 +367,7 @@ export default function PlaygroundPage() {
                 <ToggleSwitch
                   label="Tint neutrals"
                   checked={tintOn}
-                  onChange={setTintOn}
+                  onChange={asCustom(setTintOn)}
                 />
                 {tintOn && (
                   <>
@@ -223,7 +376,7 @@ export default function PlaygroundPage() {
                         type="color"
                         className={styles.colorInput}
                         value={tintSeed}
-                        onChange={(e) => setTintSeed(e.target.value.toUpperCase())}
+                        onChange={(e) => asCustom(setTintSeed)(e.target.value.toUpperCase())}
                         aria-label="Neutral tint seed colour"
                       />
                       <code className={styles.colorValue}>{tintSeed.toUpperCase()}</code>
@@ -234,7 +387,7 @@ export default function PlaygroundPage() {
                         min={0}
                         max={16}
                         step={1}
-                        onChange={setTintStrength}
+                        onChange={asCustom(setTintStrength)}
                         ariaLabel="Tint strength"
                       />
                       <span className={styles.sliderValue}>{tintStrength}%</span>
@@ -254,12 +407,12 @@ export default function PlaygroundPage() {
                     min={0}
                     max={200}
                     step={10}
-                    onChange={setRadiusScale}
+                    onChange={asCustom(setRadiusScale)}
                     ariaLabel="Radius scale"
                   />
                   <span className={styles.sliderValue}>{radiusScale}%</span>
                 </div>
-                <ToggleSwitch label="Pill buttons" checked={pill} onChange={setPill} />
+                <ToggleSwitch label="Pill buttons" checked={pill} onChange={asCustom(setPill)} />
               </div>
 
               <div className={styles.controlGroup}>
@@ -272,7 +425,7 @@ export default function PlaygroundPage() {
                   ariaLabel="Typeface"
                   value={fontLabel}
                   options={FONT_OPTIONS.map((f) => ({ label: f.label, value: f.label }))}
-                  onChange={setFontLabel}
+                  onChange={asCustom(setFontLabel)}
                 />
               </div>
 
@@ -287,6 +440,8 @@ export default function PlaygroundPage() {
 
             {/* Component sampler */}
             <section className={styles.canvas} aria-label="Component preview">
+              <h1 className={styles.canvasTitle}>{productName}</h1>
+
               <div className={styles.canvasRow}>
                 <Button label="Primary action" priority="primary" />
                 <Button label="Secondary" priority="secondary" />
@@ -347,7 +502,7 @@ export default function PlaygroundPage() {
                 title="Weekly views"
                 subtitle="Bars follow the action colour"
                 dataLabel="Views"
-                barColor={brand}
+                barColor={effectiveBrand}
                 height={240}
               />
 
