@@ -20,7 +20,15 @@ const preview: Preview = {
       // 'todo' - show a11y violations in the test UI only
       // 'error' - fail CI on a11y violations
       // 'off' - skip a11y checks entirely
-      test: 'todo'
+      // Stays 'todo' until the 49 known violations are fixed — see ROADMAP item 6.
+      // Flip to 'error' as the LAST step of that item, not the first.
+      test: 'todo',
+      config: {
+        // Target is WCAG 2.1 AA minus the contrast criteria — see ROADMAP item 6.
+        // Contrast is deferred to ROADMAP item 23 (action-colour design decision).
+        // Delete this rule override when item 23 lands.
+        rules: [{ id: 'color-contrast', enabled: false }]
+      }
     }
   },
 
