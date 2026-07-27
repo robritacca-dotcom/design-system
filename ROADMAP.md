@@ -22,7 +22,7 @@ Audited against the working tree on **2026-07-27** (57 components, 4 doc-only he
 | 6 | **Workstream A Phase 1** — registry metadata | ✅ **done** — 4 duplications collapsed; found 16 missing `'use client'` |
 | 7 | **Workstream A Phase 2** — generated prop contracts | ⏸ **PARKED 2026-07-28** — see the parking record below |
 | 8 | **item 2** — API-surface validator | ⏸ **parked with 7** (only cheap if 7 exists) |
-| **9** | **item 5** — Chromatic | ⬅ **NEXT — in progress** |
+| 9 | **item 5** — Chromatic | ✅ **done 2026-07-27** — baseline: 502 stories × 2 themes, 1,004 snapshots |
 | 10 | **Workstream A Phase 3** — dense `.md` docs | ⏸ **parked with 7** (its props tables come from 7) |
 
 ## ⏸ PARKED 2026-07-28: Phase 2 / item 2 / Phase 3 (the props.json bundle)
@@ -35,13 +35,13 @@ Audited against the working tree on **2026-07-27** (57 components, 4 doc-only he
 
 **Context that tipped it:** Rob is taking the system more publicly live this week and flagged overall complexity as a concern. This bundle was the largest remaining complexity add with the least user-visible payoff.
 
-## ⬅ IN PROGRESS: item 5 — Chromatic visual regression
+## ✅ item 5 — Chromatic visual regression — SHIPPED 2026-07-27
 
-**Why now:** one token edit touches all 57 components and nothing currently notices a visual regression — exactly the wrong gap to have while making changes under public scrutiny. The a11y prerequisite (item 6) is done, so baselines will not need re-accepting.
+**Outcome:** Build 1 captured 502 stories across 73 components in both themes — 1,004 snapshots — and is the accepted baseline. Any future run diffs against it, so a token edit that shifts pixels anywhere in the system finally gets noticed.
 
-**Kept deliberately minimal** (launch-week complexity budget): one workflow, `workflow_dispatch`-only until the token secret exists (a push-triggered run with no token would leave a red X on main), light+dark modes declared once in `.storybook/preview.ts`, no TurboSnap/curation until the first real run shows what the snapshot spend actually is (~1,000 per full run against the free tier's 5,000/month — so runs are deliberate, not per-push, for now).
+**The trigger decision, made deliberately:** the workflow stays **`workflow_dispatch`-only.** A full run costs ~1,004 snapshots against the free tier's 5,000/month — a per-push trigger would exhaust the budget in a single active day (this session alone pushed 8+ times). The ritual instead: **dispatch a run before pushing anything that touches component CSS, `src/tokens/`, or `.storybook/`** — that is where visual regressions live. The `pre-deploy` skill carries this nudge. Upgrade paths if the manual ritual chafes: a path-filtered push trigger (CSS/tokens only), TurboSnap, or a paid tier — revisit after launch week once real spend is known.
 
-**Rob's steps:** (1) sign in at chromatic.com with GitHub and add `robritacca-dotcom/design-system` as a project; (2) copy the project token it shows; (3) add it as the `CHROMATIC_PROJECT_TOKEN` repo secret (GitHub → Settings → Secrets → Actions). Then say so — the first run gets dispatched, its baseline accepted, and only then does the workflow gain a `main` push trigger.
+**First-run diagnostics worth keeping:** setup failed once with `No app with code '…' found` — that Chromatic error means the token *value* is wrong (a pasted command prefix or whitespace), not that the project is missing. And the predicted chart-animation flake did not appear in Build 1, but a baseline build cannot show diff flake by definition — judge that on run 2.
 
 ### What shipped 2026-07-27, in one line each
 
