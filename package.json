@@ -1,7 +1,7 @@
 {
   "name": "@robr0/design-system",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A token-driven React design system — accessible components, light/dark theming, and CSS-variable customization.",
   "license": "MIT",
   "repository": {

@@ -17,7 +17,7 @@
  */
 
 export const PACKAGE_NAME = '@robr0/design-system';
-export const PACKAGE_VERSION = '0.1.0';
+export const PACKAGE_VERSION = '0.2.0';
 export const PACKAGE_DESCRIPTION =
   'A token-driven React design system — accessible components, light/dark theming, and CSS-variable customization.';
 export const REPOSITORY_URL = 'https://github.com/robritacca-dotcom/design-system';
