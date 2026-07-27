@@ -10,35 +10,49 @@ Audited against the working tree on **2026-07-27** (57 components, 4 doc-only he
 
 # ▶ WHERE WE ARE — last updated 2026-07-27, end of session
 
-**Five of ten sequenced steps are done and on `main`.** `@robr0/design-system@0.2.0` is live on npm with signed provenance; CI green at `9696e60`.
+**Six of ten sequenced steps are done and on `main`.** `@robr0/design-system@0.2.0` is live with signed provenance; CI green at `8301bbc`.
 
 | # | Step | Status |
 |---|---|---|
-| 1 | **B1 + B2 + B5 + item 1** — the signature pass | ✅ **done** — 18 components, `0.2.0` |
-| 2 | **item 3** — npm Trusted Publishing (OIDC) | ✅ **done** — no npm token exists any more |
-| 3 | **item 4-cheap** — Storybook install docs | ✅ **done** — and build-enforced |
+| 1 | **B1 + B2 + B5 + item 1** — the signature pass | ✅ **done** — 18 components, shipped as `0.2.0` |
+| 2 | **item 3** — npm Trusted Publishing (OIDC) | ✅ **done** — publishing is OIDC-only *by configuration* |
+| 3 | **item 4-cheap** — Storybook install docs | ✅ **done** — and build-enforced across both install surfaces |
 | 4 | **B3** — the `Field` primitive | ✅ **done** — 6 controls, −160 lines, 2 a11y bugs fixed |
-| 5 | **item 6** — a11y to `'error'` (AA minus contrast) | ✅ **done** — 49 fixed, 502/502 green |
-| **6** | **Workstream A Phase 1** — registry metadata | ⬅ **NEXT** |
-| 7 | **Workstream A Phase 2** — prop contracts | not started |
+| 5 | **item 6** — a11y to `'error'` (AA minus contrast) | ✅ **done** — 49 fixed, 502/502 green, axe now gates CI |
+| 6 | **Workstream A Phase 1** — registry metadata | ✅ **done** — 4 duplications collapsed; found 16 missing `'use client'` |
+| **7** | **Workstream A Phase 2** — generated prop contracts | ⬅ **NEXT — see the brief below** |
 | 8 | **item 2** — API-surface validator | not started — *must* follow 7 |
-| 9 | **item 5** — Chromatic | not started — *must* follow 5 |
-| 10 | **Workstream A Phase 3** — dense `.md` docs | not started |
+| 9 | **item 5** — Chromatic | not started — *must* follow 5 (done), so unblocked |
+| 10 | **Workstream A Phase 3** — dense `.md` docs | not started — needs 7 |
 
-### What shipped today, in one line each
+## ⬅ START HERE NEXT: Workstream A Phase 2 — generated prop contracts
 
-- **The signature pass** — 18 components went from 4/68 forwarding refs to 18/18, all spreading `...rest` and extending native element props. One breaking change (`onChange` → native `ChangeEvent`, convenience to `onValueChange`) which is what unblocks react-hook-form / Formik / TanStack Form.
-- **Trusted Publishing** — `NODE_AUTH_TOKEN` gone, npm pinned to ≥ 11.5.1, both credentials deleted. Took three failed attempts; all three causes are now written into the `release` skill.
-- **Storybook install docs** — Configure.mdx had zero mentions of npm across 331 lines; now has an install section, enforced by `generate-readme-content.mjs` across *both* install surfaces.
-- **`Field`** — component #57; six form controls compose inside it; fixed Dropdown announcing neither its helper text nor its error state, and FileInput never reflecting `aria-invalid`.
+**Goal:** `scripts/generate-prop-contracts.mjs` writes `src/components/props.json` from the TypeScript source via the TS Compiler API, so the public prop surface becomes machine-readable. Full spec in [Phase 2](#phase-2--generated-prop-contracts) below — read it before starting; it already enumerates the edge cases.
+
+**Why it is next:** it unblocks two things. [Item 2](#2-public-api-surface-validator--m--still-open--do-not-start-before-workstream-a-phase-2) collapses from re-deriving the API surface to diffing two committed JSON files, and [Phase 3](#phase-3--dense-per-component-markdown--llmstxt) generates its docs from these contracts.
+
+**The known-nasty cases, already identified — do not rediscover them:** `Timeline` (props type is a union alias), `Toast` + `ToastProvider` (two components in one module, `ToastProps` further down the file), the 9 chart modules under a single registry entry, `RadioGroup` (its props type is `RadioGroupProps`, not `RadioButtonGroupProps`), `CheckboxGroup`, and now `Field` + `FieldContext` (two modules, one of which exports a hook and a context rather than a component).
+
+**Determinism is the hard requirement.** Registry order, module order, source member order; record the `typescript` version in the JSON header, because `checker.typeToString()` output shifts across TS minors and the CI drift guard will fail on it. Follow the `generate-token-registry.mjs` pattern: pure exported derivation functions, side effects behind an `isMain` guard, idempotent writes.
+
+**Worth considering Fable 5 for this one specifically** — novel program, no reference implementation, enumerated edge cases, and a determinism requirement the drift guard punishes. Everything else on this roadmap is fine on Opus 5.
+
+### What shipped 2026-07-27, in one line each
+
+- **The signature pass** — 18 components went from 4/68 forwarding refs to 18/18, all spreading `...rest` and extending native element props. One breaking change (`onChange` → native `ChangeEvent`, convenience to `onValueChange`) — the thing that unblocks react-hook-form / Formik / TanStack Form.
+- **Trusted Publishing** — `NODE_AUTH_TOKEN` gone, npm pinned to ≥ 11.5.1, both credentials deleted, and Publishing access set to *"require 2FA and disallow tokens"*. Took three failed attempts; all three causes are recorded in the `release` skill.
+- **Storybook install docs** — Configure.mdx had zero mentions of npm across 331 lines; now has an install section, enforced across *both* install surfaces.
+- **`Field`** — component #57; six form controls compose inside it; fixed Dropdown announcing neither its helper text nor its error state, and FileInput never reflecting `aria-invalid`. Neither was visible to axe.
+- **a11y to `'error'`** — 49 violations cleared, nine of which were real bugs: keyboard users could not scroll CodeBlock/Dialog/Drawer, icon-only Buttons had no accessible name, and DatePicker claimed a `role="grid"` navigation model it never implemented (200 instances, one fix).
+- **Registry metadata** — `slugOf()` (×2), `displayName()`, 57 sidebar labels and 57 page descriptions collapsed into one registry. The new `client` field immediately exposed **16 interactive components still missing `'use client'`** — item 1 had only ever been applied to B1's 18.
 
 ### Open items that need Rob, not code
 
-- Nothing blocking. Optionally: flip npm **Publishing access** to *"Require 2FA and disallow tokens"* now that trusted publishing is proven (npm's own note confirms trusted publishers keep working).
+- **Nothing.** npm Publishing access is now *"require 2FA and disallow tokens"*, so the OIDC migration is complete by configuration rather than by circumstance.
 
 ### Standing rule adopted this session
 
-After each major step, check whether the change invalidated anything in `.claude/skills/*/SKILL.md`, `CLAUDE.md` or `design.md`, and fix it in the same stretch — **do not wait to be asked.** It has caught four real drifts already, including a `release` skill guardrail ("never bump the version in package.json") that would have blocked the next release outright. Where the rule is mechanically checkable, prefer converting it to a validator — see [B7](#b7--make-the-component-api-contract-build-enforced--sm--added-2026-07-27).
+After each major step, check whether the change invalidated anything in `.claude/skills/*/SKILL.md`, `CLAUDE.md` or `design.md`, and fix it in the same stretch — **do not wait to be asked.** It has now caught six real drifts, twice catching a skill that broke the instant its workflow changed: the `release` skill's "never bump the version in package.json" (would have blocked the next release outright), and `component-doc-page` prescribing `pageMetadata()` after Phase 1 made `componentPageMetadata()` mandatory. Where the rule is mechanically checkable, prefer converting it to a validator — see [B7](#b7--make-the-component-api-contract-build-enforced--sm--added-2026-07-27) and [item 26](#later--real-unscheduled).
 
 ---
 
@@ -157,7 +171,15 @@ Compared to machine-readable design systems like Meta's Astryx, three gaps remai
 
 ---
 
-## Phase 1 — Richer registry metadata
+## ✅ Phase 1 — Richer registry metadata — SHIPPED 2026-07-27
+
+**Outcome:** registry entries are objects carrying `name`, `label`, `slug`, `description`, `category`, `client`. Four duplications collapsed: `slugOf()` (verbatim in two validators), `displayName()` (README generator), 57 sidebar labels, 57 page descriptions. `componentsSidebarLinks` and `componentPageMetadata()` derive from the registry, so the sidebar, sitemap, breadcrumbs, mega-nav and page titles cannot drift — and `validate-website-surfaces.mjs` **dropped** its nav-entry and alphabetical checks rather than updating them, because asserting them would only test that `sort()` works.
+
+**The `client` field paid for itself immediately:** seeding it from reality exposed 16 interactive components with no `'use client'` — item 1 had only ever been applied to B1's 18. The validator now compares the flag against the file, so the registry cannot document a component as server-renderable when it isn't.
+
+Every new metadata check was proven to fail before being trusted (bad slug, lying `client`, duplicate slug, invented category, over-long description), and an unregistered slug was confirmed to fail the website build.
+
+## Phase 1 — original plan (kept for context)
 
 ### New `src/components/registry.json` shape
 
@@ -605,6 +627,15 @@ Both render `<div role="checkbox">` / `<div role="radio">` with hand-rolled clic
 - `RadioButton` declared a `name` prop that was **never destructured**, so `RadioGroup` passing `name={name}` silently discarded it. Radio grouping by name has never worked; grouping happens purely through React state in `RadioGroup`. `name` is now explicitly marked `@deprecated` and no-op rather than quietly ignored.
 
 The fix is a visually-identical swap to a visually-hidden native input paired with the existing styled box (the standard pattern), which also gets keyboard behaviour, form participation, and `:checked` styling for free. Deferred out of the B1 pass because it changes DOM structure and therefore needs its own visual check.
+
+**26. Validate that skills reference real APIs and scripts — `S` · added 2026-07-27.**
+Two consecutive drift audits caught a skill that broke the moment its workflow changed, and both were mechanically checkable:
+- the `release` skill said "never bump the version in `package.json`" while `validate-package-exports.mjs` required it — would have blocked the next release at the first validation step;
+- `component-doc-page` prescribed `pageMetadata("/components/<slug>", "…")` after Phase 1 made `componentPageMetadata("<slug>")` mandatory — following it fails the build.
+
+Neither was caught by any validator, because skills are prose. But the *references inside* them are not: a script in `.claude/skills/**/SKILL.md` that greps for `npm run <script>` mentions, `` `path/to/file` `` references, and exported-symbol calls (`pageMetadata(`, `componentPageMetadata(`, `useField(`) and fails when the target does not exist would have caught both. It is the repo's own rule — *anything checkable gets build-enforced* — applied to the skills themselves.
+
+Deliberately narrow: it can only check that a referenced thing **exists**, not that the surrounding instruction is still correct. That residue is what `drift-audit` is for, and this would shrink its manual surface to genuine judgement calls.
 
 **19. New AI-surface component patterns — `M`/`L` · new.** Nothing in the registry covers streaming text, citation chips, agent progress / step disclosure, confidence or uncertainty display, or reversible-action approval. No mainstream design system has good answers here yet, which makes it the most *differentiating* thing this system could add — and directly relevant to the work starting Aug 3. Distinct from Workstream A: that makes the system legible **to** agents; this is UI **for** agent-driven products.
 
