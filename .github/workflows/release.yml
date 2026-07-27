@@ -23,6 +23,7 @@ name: Release
 # real, then tag the published commit.
 #
 # 0.1.0 shipped 2026-07-26 using a granular NPM_TOKEN; that token is retired.
+# 0.2.0 shipped 2026-07-27 — the first release authenticated by OIDC.
 
 on:
   workflow_dispatch:
@@ -69,26 +70,10 @@ jobs:
       # fails the release before anything reaches the registry.
       - name: Consumer smoke test
         run: node scripts/smoke-consumer.mjs
-      # Diagnostics for the Trusted Publishing handshake. Prints only whether
-      # the OIDC variables EXIST — never their values (the request token is a
-      # credential). Remove once publishing is proven stable.
-      - name: Diagnose auth environment
-        if: ${{ !inputs.dry_run }}
-        working-directory: dist
-        run: |
-          echo "ACTIONS_ID_TOKEN_REQUEST_URL set:   ${ACTIONS_ID_TOKEN_REQUEST_URL:+yes}${ACTIONS_ID_TOKEN_REQUEST_URL:-NO}"
-          echo "ACTIONS_ID_TOKEN_REQUEST_TOKEN set: ${ACTIONS_ID_TOKEN_REQUEST_TOKEN:+yes}${ACTIONS_ID_TOKEN_REQUEST_TOKEN:-NO}"
-          echo "NODE_AUTH_TOKEN set:                ${NODE_AUTH_TOKEN:+yes}${NODE_AUTH_TOKEN:-NO}"
-          echo "npm version:  $(npm --version)"
-          echo "registry:     $(npm config get registry)"
-          echo "userconfig:   ${NPM_CONFIG_USERCONFIG:-<unset>}"
-          echo "--- .npmrc files npm can see ---"
-          for f in "$HOME/.npmrc" "$NPM_CONFIG_USERCONFIG" ./.npmrc ../.npmrc; do
-            [ -n "$f" ] && [ -f "$f" ] && { echo "== $f"; sed -E 's/(_authToken=).*/\1<redacted>/' "$f"; }
-          done
-          echo "--- package identity being published ---"
-          node -p "const p=require('./package.json'); p.name+'@'+p.version"
-
+      # --loglevel verbose is deliberate: it prints the OIDC token exchange
+      # (`POST .../oidc/token/exchange/package/...`), which is the only visible
+      # evidence that Trusted Publishing actually authenticated. Without it an
+      # auth failure surfaces only as a misleading E404 or ENEEDAUTH.
       - name: Publish to npm
         if: ${{ !inputs.dry_run }}
         working-directory: dist
