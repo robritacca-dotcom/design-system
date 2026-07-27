@@ -1,9 +1,42 @@
 {
   "asOf": {
-    "commit": "1763f3534ed54037c23469b99b11f741003b5c14",
-    "date": "2026-07-21"
+    "commit": "000059fd1b7b67176d7806e9fcd749cc76afa521",
+    "date": "2026-07-26"
   },
   "entries": [
+    {
+      "meta": "July 26, 2026",
+      "title": "Customization, made live",
+      "body": [
+        "Telling people a design system is themeable is easy; showing them is harder. The site now has a Customization section with two pages: a get-started guide covering installation, dark mode, fonts, and token overrides, and a playground where the theming actually happens in front of you.",
+        "The playground exposes a handful of deliberately chosen levers — an action colour that rebuilds an entire colour ramp around your pick, a tint that washes the neutral scale toward a seed colour, a radius scale that can square off every pill, and a dropdown of Google fonts. Moving any of them re-themes the whole page live, header and navigation included, because the overrides are applied exactly the way a real consumer would apply them. Three presets show the range: a warm serif look, a black-and-white theme that flips its button colours between light and dark mode, and a high-contrast blue tuned for accessibility. Whatever you build, the page hands you the exact CSS to paste into your own project, and everything resets when you leave."
+      ]
+    },
+    {
+      "meta": "July 26, 2026",
+      "title": "The design system ships as a real package",
+      "body": [
+        "Until now the design system was a folder that only this repository could use. It is now published on npm as @robr0/design-system, installable by anyone, with signed provenance that ties every published file back to the commit and workflow run that built it.",
+        "Getting there meant fixing something the architecture had always claimed but never enforced. Semantic tokens were supposed to reference primitive values, but most of them had raw colour values baked in, which meant overriding a primitive changed nothing. Every one of them now chains to a primitive, verified to render identically, with a build check that fails if a literal ever creeps back. That single change is what makes consumer theming possible at all.",
+        "The site itself became the package’s first consumer. Rather than reaching into the source folder next door, it now installs the design system by name and imports it through the exact same entry points a stranger would, so a packaging mistake breaks the site build instead of shipping quietly. Releases run through a workflow that installs the packed tarball into a throwaway application and builds it before anything reaches the registry — the first release, version 0.1.0, went out that way."
+      ]
+    },
+    {
+      "meta": "July 22–23, 2026",
+      "title": "Reaching outward, part two: machine-readable everything",
+      "body": [
+        "The earlier push on search and analytics made the site findable. This round made it legible to the machines doing the reading. Every page now declares its own canonical address, case studies emit structured data describing themselves as articles, and the sitemap derives each page’s last-modified date from real commit history instead of stamping everything with the build date.",
+        "Page titles moved to a single source shared with the navigation and breadcrumbs, so a tab title can no longer drift from the label pointing at it, and a build check enforces it. The site also serves an index at /llms.txt for AI agents, and branded preview images for link sharing."
+      ]
+    },
+    {
+      "meta": "July 22–23, 2026",
+      "title": "Closing the gaps: motion, icons, and the last undocumented components",
+      "body": [
+        "Two dimensions of the token system had never been formalised. Motion was scattered literal timings; it is now twelve duration and easing tokens with a reduced-motion guard, and every hardcoded timing in the library and the site was migrated onto them. Icons had a subtler problem: sizing them by font size alone let the glyph and its box disagree. A four-step icon scale now drives size and box together, and because the scale starts at twenty pixels it stays inside the range where the icon font’s optical sizing actually works. Both got their own foundations pages, alongside a new one for elevation.",
+        "Five components joined the library — Combobox, Drawer, EmptyState, CommandPalette, and FileInput — and a documentation debt got paid off: twenty-seven components had no written specification, and now none do. A build check compares the component registry against the website, so a component can no longer exist without its page, its navigation entry, and its spec."
+      ]
+    },
     {
       "meta": "July 21, 2026",
       "title": "A real quality gate: CI and story render tests",
