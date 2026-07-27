@@ -190,8 +190,9 @@ export function buildWritingSidebarLinks(
 }
 
 export const customizationSidebarLinks: NavLink[] = [
-  { href: "/customization", label: "Get started" },
+  { href: "/customization", label: "Contents" },
   { href: "/customization/playground", label: "Playground" },
+  { href: "/customization/get-started", label: "Get started" },
 ];
 
 export const workSidebarLinks: NavLink[] = [

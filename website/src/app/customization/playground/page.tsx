@@ -526,7 +526,7 @@ export default function PlaygroundPage() {
               Paste this after importing{" "}
               <code>@robr0/design-system/tokens/tokens.css</code> and your app matches
               this preview — both themes included. The install steps live on{" "}
-              <a href="/customization" className={styles.inlineLink}>
+              <a href="/customization/get-started" className={styles.inlineLink}>
                 Get started
               </a>
               .

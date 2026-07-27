@@ -1,5 +1,5 @@
 /* ============================================
-   CUSTOMIZATION INDEX PAGE LAYOUT
+   CUSTOMIZATION — GET STARTED PAGE LAYOUT
    ============================================ */
 .dsLayout {
   display: flex;
@@ -37,6 +37,7 @@
   color: var(--color-text-primary);
 }
 
+/* Sub Display */
 .subDisplay {
   font-family: var(--font-sub-display-family);
   font-size: var(--font-sub-display-size);
@@ -67,84 +68,33 @@
   color: var(--color-text-primary);
 }
 
-/* ============================================
-   TOC GRID (matches the Foundations index)
-   ============================================ */
-.tocGrid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--primitive-gap-lg);
-  width: 100%;
+.inlineLink {
+  color: var(--color-action-primary-text-tertiary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
-.circlePreview {
-  width: 184px;
-  height: 184px;
-  min-width: 184px;
-  min-height: 184px;
-  aspect-ratio: 1 / 1;
-  flex-shrink: 0;
-  border-radius: 999px;
+/* ============================================
+   SECTIONS
+   ============================================ */
+.section {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--gap-sm-md);
-  box-sizing: border-box;
+  gap: var(--primitive-gap-lg);
 }
 
-.circlePreview :global(.material-symbols-rounded) {
-  --icon-size: var(--icon-size-xl);
-}
-
-.circleNeutral {
-  background: var(--color-bg-container-secondary);
-}
-
-.circleDashed {
-  border: none;
-}
-
-/* Playground preview — a swatch row above a mini primary pill */
-.previewSwatches {
-  display: flex;
-  gap: var(--gap-xs);
-}
-
-.previewDot {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: var(--border-md) solid var(--color-bg-page-primary);
-}
-
-.dotTeal {
-  background: var(--color-core-ui-primary);
-}
-
-.dotCoral {
-  background: var(--color-core-accent-coral);
-}
-
-.dotViolet {
-  background: var(--color-core-accent-violet);
-}
-
-.dotGold {
-  background: var(--color-core-accent-gold);
-}
-
-.previewPill {
-  padding: var(--padding-xs) var(--padding-md);
-  border-radius: var(--radius-full);
-  background: var(--color-action-primary-bg);
-  color: var(--color-action-primary-text);
-  font-size: var(--font-paragraph-sm-size);
-  font-weight: 500;
-}
-
-/* Get-started preview — terminal glyph + install hint */
-.previewInstall {
-  font-size: var(--font-paragraph-sm-size);
+.sectionNote {
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
   color: var(--color-text-secondary);
+}
+
+.sectionNote code {
+  color: var(--color-text-primary);
+}
+
+.ctaLink {
+  align-self: flex-start;
+  text-decoration: none;
 }
