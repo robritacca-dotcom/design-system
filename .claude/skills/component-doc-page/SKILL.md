@@ -2,7 +2,7 @@
 name: component-doc-page
 description: Create a full-quality documentation page for a design system component on the website. Use when asked to document a component on the website, add a component docs page, or create the website page for a component.
 icon: article
-displayDescription: "Creates a full-quality documentation page for a design system component on the website. Reads the component's props to generate a variant showcase grid (the Button page is the benchmark), writes all three page files, and wires navigation and the components index — the sitemap follows from the sidebar automatically."
+displayDescription: "Creates a full-quality documentation page for a design system component on the website. Reads the component's props to generate a variant showcase grid (the Button page is the benchmark), writes all three page files, and adds the components-index card — the sidebar, sitemap and breadcrumbs derive from the component registry, so there is no navigation to wire."
 invoke: ["document [X] on the website","add a docs page for [X]","create the website page for [X]"]
 ---
 
@@ -47,17 +47,23 @@ This is a more thorough, component-specific version of `new-page`. The Button pa
    - Any additional classes needed for the variant showcase grid
    - CSS custom properties only
 
-6. **Create `website/src/app/components/<component-slug>/layout.tsx`:**
-   - Export `metadata` via the shared helper: `export const metadata = pageMetadata("/components/<component-slug>", "<one-line description>")` (import from `@/config/navigation`; the Button page's `layout.tsx` is the exemplar)
-   - The description doubles as `metadata.description` — use the same text as `introBody`
-   - `scripts/validate-page-titles.mjs` fails the build if the layout is missing or doesn't derive its title from `pageMetadata()`
+6. **Create `website/src/app/components/<component-slug>/layout.tsx`** — it is exactly this, with no description of its own:
 
-7. **Update `website/src/config/navigation.ts`:**
-   - Find `componentsSidebarLinks` array
-   - Add entry in alphabetical order: `{ href: "/components/component-slug", label: "Component Name" }`
-   - If entry already exists, skip this step
+   ```tsx
+   import { componentPageMetadata } from "@/config/navigation";
 
-8. **Update `website/src/app/components/page.tsx`** (the components index):
+   export const metadata = componentPageMetadata("<component-slug>");
+
+   export default function Layout({ children }: { children: React.ReactNode }) {
+     return <>{children}</>;
+   }
+   ```
+
+   Both the title and the description resolve from the component's entry in `src/components/registry.json` — that is the only place the one-line description lives, so do **not** pass one here. `scripts/validate-page-titles.mjs` requires this exact call and fails the build otherwise; a slug with no registry entry fails the website build with a message naming the fix.
+
+7. **Do not touch `website/src/config/navigation.ts`.** `componentsSidebarLinks` is **derived** from the registry — there is no list to add to. Registering the component in `src/components/registry.json` (with its `label`, `slug` and `description`) is what puts it in the sidebar, and the sitemap, mega-nav and breadcrumbs follow from there. If the component is not yet registered, do that first; the `new-component` skill covers the entry's shape.
+
+8. **Update `website/src/app/components/page.tsx`** (the components index) — the one surface still hand-maintained, because each card holds a bespoke preview:
    - Add a `TocCard` in alphabetical order: `<TocCard href="/components/component-slug" title="Component Name">` wrapping a small preview — use the real component (imported from `@robr0/design-system`) where it reads well at miniature size, as most cards do, or a small inline-styled mockup where it doesn't (see the Accordion card)
 
-9. **Sitemap is automatic** — `website/src/app/sitemap.ts` derives its routes from the shared sidebar configs, so the navigation entry from step 7 is what puts the page in the sitemap. Do not edit `sitemap.ts` by hand. (All of steps 7–8, plus the `design.md` spec section, are build-enforced by `scripts/validate-website-surfaces.mjs`.)
+9. **Sitemap is automatic** — `website/src/app/sitemap.ts` derives its routes from the shared sidebar configs, which for components derive from the registry. Do not edit `sitemap.ts` by hand. `scripts/validate-website-surfaces.mjs` build-enforces the showcase page, the step-8 `TocCard`, and the `design.md` spec section; the sidebar entry and its ordering are no longer checked because they can no longer drift.

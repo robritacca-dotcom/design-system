@@ -20,7 +20,7 @@ For a **component documentation page**, use the `component-doc-page` skill inste
 
 1. **Gather requirements** if not already provided:
    - Page URL path (e.g. `/foundations/motion`)
-   - Which section it belongs to — the sidebar arrays in `website/src/config/navigation.ts` are the authoritative list of sections (components, foundations, customization, the docs cluster, work; writing is fed dynamically from Substack)
+   - Which section it belongs to — the sidebar arrays in `website/src/config/navigation.ts` are the authoritative list of sections (foundations, customization, the docs cluster, work; writing is fed dynamically from Substack). **Components are the exception**: `componentsSidebarLinks` is derived from `src/components/registry.json`, so a component page is registered by adding a registry entry, not by editing the array — use the `component-doc-page` skill for those.
    - Page title, a short `subDisplay` tagline, and a 1–2 sentence description (for metadata and the intro block)
    - Figma URL and Storybook path (optional) — for `PageLinks`
 

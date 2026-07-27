@@ -61,5 +61,11 @@ export * from './components/ToggleGroup/ToggleGroup';
 export * from './components/ToggleSwitch/ToggleSwitch';
 export * from './components/Tooltip/Tooltip';
 
-export { componentRegistry, COMPONENT_COUNT } from './components/registry';
+export {
+  componentRegistry,
+  componentMetadata,
+  componentCategories,
+  COMPONENT_COUNT,
+} from './components/registry';
+export type { ComponentMeta } from './components/registry';
 export { tokenRegistry, TOKEN_COUNT, TOKEN_COUNTS } from './tokens/registry';
