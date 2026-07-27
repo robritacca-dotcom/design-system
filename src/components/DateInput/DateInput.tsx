@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { Field } from '../Field/Field';
 import './DateInput.css';
 import '../../fonts/material-symbols.css';
 
@@ -87,18 +88,16 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
     const inputId = id || name || label?.toLowerCase().replace(/\s+/g, '-');
 
     return (
-      <div className={classes}>
-        {label && (
-          <label className={`${baseClass}__label`} htmlFor={inputId}>
-            {label}
-            {required && (
-              <span className={`${baseClass}__required`} aria-hidden="true">
-                {' '}
-                *
-              </span>
-            )}
-          </label>
-        )}
+      <Field
+        className={classes}
+        label={label}
+        helperText={helperText}
+        error={error}
+        required={required}
+        disabled={disabled}
+        size={size}
+        id={inputId}
+      >
         <div className={`${baseClass}__field-wrapper`}>
           <span className={`${baseClass}__icon material-symbols-rounded`} aria-hidden="true">
             calendar_today
@@ -122,12 +121,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
             onChange={handleChange}
           />
         </div>
-        {helperText && (
-          <p className={`${baseClass}__helper`} id={`${inputId}-helper`}>
-            {helperText}
-          </p>
-        )}
-      </div>
+      </Field>
     );
   },
 );

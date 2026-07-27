@@ -14,19 +14,6 @@
    LABEL
    ============================================ */
 
-.ds-textarea__label {
-  font-family: var(--font-paragraph-em-family);
-  font-size: var(--font-paragraph-em-size);
-  font-weight: var(--font-paragraph-em-weight);
-  line-height: var(--font-paragraph-em-line-height);
-  letter-spacing: var(--font-paragraph-em-letter-spacing);
-  color: var(--color-text-primary);
-}
-
-.ds-textarea__required {
-  color: var(--color-core-accent-coral);
-}
-
 /* ============================================
    FIELD
    ============================================ */
@@ -69,24 +56,6 @@
    FOOTER (helper + counter)
    ============================================ */
 
-.ds-textarea__footer {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--gap-sm);
-}
-
-.ds-textarea__helper {
-  font-family: var(--font-paragraph-sm-family);
-  font-size: var(--font-paragraph-sm-size);
-  font-weight: var(--font-paragraph-sm-weight);
-  line-height: var(--font-paragraph-sm-line-height);
-  letter-spacing: var(--font-paragraph-sm-letter-spacing);
-  color: var(--color-text-tertiary);
-  margin: 0;
-  flex: 1;
-}
-
 .ds-textarea__counter {
   font-family: var(--font-paragraph-sm-family);
   font-size: var(--font-paragraph-sm-size);
@@ -108,10 +77,6 @@
   border-color: var(--color-status-error-border);
 }
 
-.ds-textarea--error .ds-textarea__helper {
-  color: var(--color-status-error-border);
-}
-
 .ds-textarea--error .ds-textarea__counter {
   color: var(--color-status-error-border);
 }
@@ -119,10 +84,6 @@
 /* ============================================
    DISABLED STATE
    ============================================ */
-
-.ds-textarea--disabled .ds-textarea__label {
-  color: var(--color-input-text-disabled);
-}
 
 .ds-textarea--disabled .ds-textarea__field {
   background-color: var(--color-input-bg-disabled);
@@ -146,7 +107,3 @@
   letter-spacing: var(--font-paragraph-sm-letter-spacing);
 }
 
-.ds-textarea--compact .ds-textarea__label {
-  font-size: var(--font-paragraph-sm-size);
-  line-height: var(--font-paragraph-sm-line-height);
-}

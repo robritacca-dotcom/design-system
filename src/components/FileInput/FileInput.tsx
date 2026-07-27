@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef, useState, useId } from 'react';
+import { Field } from '../Field/Field';
 import './FileInput.css';
 import '../../fonts/material-symbols.css';
 
@@ -155,25 +156,24 @@ export const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
       .join(' ');
 
     return (
-      <div className={classes}>
-        {label && (
-          <label className={`${baseClass}__label`} htmlFor={inputId}>
-            {label}
-            {required && (
-              <span className={`${baseClass}__required`} aria-hidden="true">
-                {' '}
-                *
-              </span>
-            )}
-          </label>
-        )}
-
+      <Field
+        className={classes}
+        label={label}
+        helperText={helperText}
+        error={error}
+        required={required}
+        disabled={disabled}
+        size={size}
+        id={inputId}
+      >
         <div
           className={`${baseClass}__dropzone`}
           role="button"
           tabIndex={disabled ? -1 : 0}
           aria-label={ariaLabel || rest['aria-label'] || placeholder}
           aria-describedby={helperText ? `${inputId}-helper` : undefined}
+          // Was missing: FileInput exposed an `error` prop it never reflected.
+          aria-invalid={error || undefined}
           aria-disabled={disabled || undefined}
           onClick={openPicker}
           onKeyDown={handleKeyDown}
@@ -268,12 +268,7 @@ export const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
           </ul>
         )}
 
-        {helperText && (
-          <p className={`${baseClass}__helper`} id={`${inputId}-helper`}>
-            {helperText}
-          </p>
-        )}
-      </div>
+      </Field>
     );
   },
 );

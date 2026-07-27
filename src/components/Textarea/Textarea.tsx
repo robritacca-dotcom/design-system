@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { Field } from '../Field/Field';
 import './Textarea.css';
 
 /** Props owned by Textarea itself — everything else falls through to the <textarea>. */
@@ -88,18 +89,23 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     const charCount = value?.length || 0;
 
     return (
-      <div className={classes}>
-        {label && (
-          <label className={`${baseClass}__label`} htmlFor={inputId}>
-            {label}
-            {required && (
-              <span className={`${baseClass}__required`} aria-hidden="true">
-                {' '}
-                *
-              </span>
-            )}
-          </label>
-        )}
+      <Field
+        className={classes}
+        label={label}
+        helperText={helperText}
+        error={error}
+        required={required}
+        disabled={disabled}
+        size={size}
+        id={inputId}
+        aside={
+          maxLength ? (
+            <span className={`${baseClass}__counter`} aria-live="polite" aria-atomic="true">
+              {charCount}/{maxLength}
+            </span>
+          ) : undefined
+        }
+      >
         <textarea
           {...rest}
           ref={ref}
@@ -118,19 +124,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           onChange={handleChange}
           style={{ resize, ...style }}
         />
-        <div className={`${baseClass}__footer`}>
-          {helperText && (
-            <p className={`${baseClass}__helper`} id={`${inputId}-helper`}>
-              {helperText}
-            </p>
-          )}
-          {maxLength && (
-            <span className={`${baseClass}__counter`} aria-live="polite" aria-atomic="true">
-              {charCount}/{maxLength}
-            </span>
-          )}
-        </div>
-      </div>
+      </Field>
     );
   },
 );

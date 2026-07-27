@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect, useCallback, useMemo, useId } from 'react';
+import { Field } from '../Field/Field';
 import './Combobox.css';
 import '../../fonts/material-symbols.css';
 
@@ -366,19 +367,18 @@ export const Combobox = React.forwardRef<HTMLDivElement, ComboboxProps>(({
   const hasSelection = selectedValues.length > 0;
 
   return (
-    <div {...rest} className={classes} ref={setRootRef}>
-      {label && (
-        <label className={`${baseClass}__label`} htmlFor={inputId}>
-          {label}
-          {required && (
-            <span className={`${baseClass}__required`} aria-hidden="true">
-              {' '}
-              *
-            </span>
-          )}
-        </label>
-      )}
-
+    <Field
+      {...rest}
+      className={classes}
+      ref={setRootRef}
+      label={label}
+      helperText={helperText}
+      error={error}
+      required={required}
+      disabled={disabled}
+      size={size}
+      id={inputId}
+    >
       <div className={`${baseClass}__control`} onClick={() => inputRef.current?.focus()}>
         <span className={`${baseClass}__search-icon material-symbols-rounded`} aria-hidden="true">
           search
@@ -489,12 +489,7 @@ export const Combobox = React.forwardRef<HTMLDivElement, ComboboxProps>(({
         </ul>
       )}
 
-      {helperText && (
-        <p className={`${baseClass}__helper`} id={`${inputId}-helper`}>
-          {helperText}
-        </p>
-      )}
-    </div>
+    </Field>
   );
 });
 

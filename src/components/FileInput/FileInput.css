@@ -14,19 +14,6 @@
    LABEL
    ============================================ */
 
-.ds-file-input__label {
-  font-family: var(--font-paragraph-em-family);
-  font-size: var(--font-paragraph-em-size);
-  font-weight: var(--font-paragraph-em-weight);
-  line-height: var(--font-paragraph-em-line-height);
-  letter-spacing: var(--font-paragraph-em-letter-spacing);
-  color: var(--color-text-primary);
-}
-
-.ds-file-input__required {
-  color: var(--color-core-accent-coral);
-}
-
 /* ============================================
    DROPZONE
    ============================================ */
@@ -237,16 +224,6 @@
    HELPER TEXT
    ============================================ */
 
-.ds-file-input__helper {
-  font-family: var(--font-paragraph-sm-family);
-  font-size: var(--font-paragraph-sm-size);
-  font-weight: var(--font-paragraph-sm-weight);
-  line-height: var(--font-paragraph-sm-line-height);
-  letter-spacing: var(--font-paragraph-sm-letter-spacing);
-  color: var(--color-text-tertiary);
-  margin: 0;
-}
-
 /* ============================================
    ERROR STATE
    ============================================ */
@@ -255,17 +232,9 @@
   border-color: var(--color-status-error-border);
 }
 
-.ds-file-input--error .ds-file-input__helper {
-  color: var(--color-status-error-border);
-}
-
 /* ============================================
    DISABLED STATE
    ============================================ */
-
-.ds-file-input--disabled .ds-file-input__label {
-  color: var(--color-input-text-disabled);
-}
 
 .ds-file-input--disabled .ds-file-input__dropzone {
   background-color: var(--color-input-bg-disabled);
@@ -285,11 +254,6 @@
 
 .ds-file-input--compact .ds-file-input__dropzone {
   padding: var(--padding-lg); /* 20px */
-}
-
-.ds-file-input--compact .ds-file-input__label {
-  font-size: var(--font-paragraph-sm-size);
-  line-height: var(--font-paragraph-sm-line-height);
 }
 
 .ds-file-input--compact .ds-file-input__dropzone-icon {

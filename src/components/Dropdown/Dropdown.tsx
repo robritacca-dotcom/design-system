@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { Field } from '../Field/Field';
 import './Dropdown.css';
 import '../../fonts/material-symbols.css';
 
@@ -201,26 +202,32 @@ export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
     }, [focusedIndex, isOpen]);
 
     return (
-      <div {...rest} className={classes} ref={setRootRef}>
-        {label && (
-          <label className={`${baseClass}__label`} id={`${inputId}-label`}>
-            {label}
-            {required && (
-              <span className={`${baseClass}__required`} aria-hidden="true">
-                {' '}
-                *
-              </span>
-            )}
-          </label>
-        )}
+      <Field
+        {...rest}
+        className={classes}
+        ref={setRootRef}
+        label={label}
+        helperText={helperText}
+        error={error}
+        required={required}
+        disabled={disabled}
+        size={size}
+        id={inputId}
+      >
         <div
           className={`${baseClass}__trigger`}
           role="combobox"
           aria-expanded={isOpen}
           aria-haspopup="listbox"
+          // A div is not a labelable element, so Field's htmlFor cannot reach
+          // it — point at the label's id instead (Field renders `${id}-label`).
           aria-labelledby={label ? `${inputId}-label` : undefined}
           aria-label={ariaLabel || rest['aria-label'] || (!label ? placeholder : undefined)}
           aria-controls={`${inputId}-listbox`}
+          // Previously missing entirely: the helper/error message was rendered
+          // but never announced, and the error state was visual-only.
+          aria-describedby={helperText ? `${inputId}-helper` : rest['aria-describedby']}
+          aria-invalid={error || undefined}
           tabIndex={disabled ? -1 : 0}
           onClick={handleToggle}
           onKeyDown={handleKeyDown}
@@ -323,12 +330,7 @@ export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
                 ))}
           </ul>
         )}
-        {helperText && (
-          <p className={`${baseClass}__helper`} id={`${inputId}-helper`}>
-            {helperText}
-          </p>
-        )}
-      </div>
+      </Field>
     );
   },
 );

@@ -12,6 +12,12 @@ type FieldOwnProps = {
   children?: React.ReactNode;
   /** Helper or error message rendered below the control */
   helperText?: string;
+  /**
+   * Optional content rendered opposite the helper text — a character counter,
+   * a unit, a "0/280". Present only when supplied; without it the helper sits
+   * directly in the field's column and no extra wrapper is introduced.
+   */
+  aside?: React.ReactNode;
   /** Error state — recolours the helper text and marks the control invalid */
   error?: boolean;
   /** Marks the field required and renders the required marker */
@@ -54,6 +60,7 @@ export const Field = React.forwardRef<HTMLDivElement, FieldProps>(
       label,
       children,
       helperText,
+      aside,
       error = false,
       required = false,
       disabled = false,
@@ -68,6 +75,7 @@ export const Field = React.forwardRef<HTMLDivElement, FieldProps>(
     const generatedId = useId();
     const controlId = id || generatedId;
     const describedBy = helperText ? `${controlId}-helper` : undefined;
+    const labelId = label ? `${controlId}-label` : undefined;
 
     const classes = [
       baseClass,
@@ -81,6 +89,7 @@ export const Field = React.forwardRef<HTMLDivElement, FieldProps>(
 
     const context: FieldContextValue = {
       controlId,
+      labelId,
       describedBy,
       invalid: error,
       required,
@@ -91,7 +100,7 @@ export const Field = React.forwardRef<HTMLDivElement, FieldProps>(
       <FieldContext.Provider value={context}>
         <div {...rest} ref={ref} className={classes}>
           {label && (
-            <label className={`${baseClass}__label`} htmlFor={controlId}>
+            <label className={`${baseClass}__label`} id={labelId} htmlFor={controlId}>
               {label}
               {required && (
                 <span className={`${baseClass}__required`} aria-hidden="true">
@@ -104,10 +113,25 @@ export const Field = React.forwardRef<HTMLDivElement, FieldProps>(
 
           {children}
 
-          {helperText && (
-            <p className={`${baseClass}__helper`} id={describedBy}>
-              {helperText}
-            </p>
+          {/* Without an aside the helper stays a direct child, so adopting
+              Field introduces no wrapper and cannot shift existing layout. */}
+          {aside ? (
+            <div className={`${baseClass}__footer`}>
+              {helperText ? (
+                <p className={`${baseClass}__helper`} id={describedBy}>
+                  {helperText}
+                </p>
+              ) : (
+                <span />
+              )}
+              {aside}
+            </div>
+          ) : (
+            helperText && (
+              <p className={`${baseClass}__helper`} id={describedBy}>
+                {helperText}
+              </p>
+            )
           )}
         </div>
       </FieldContext.Provider>

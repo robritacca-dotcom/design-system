@@ -15,19 +15,6 @@
    LABEL
    ============================================ */
 
-.ds-dropdown__label {
-  font-family: var(--font-paragraph-em-family);
-  font-size: var(--font-paragraph-em-size);
-  font-weight: var(--font-paragraph-em-weight);
-  line-height: var(--font-paragraph-em-line-height);
-  letter-spacing: var(--font-paragraph-em-letter-spacing);
-  color: var(--color-text-primary);
-}
-
-.ds-dropdown__required {
-  color: var(--color-core-accent-coral);
-}
-
 /* ============================================
    TRIGGER
    ============================================ */
@@ -216,16 +203,6 @@
    HELPER TEXT
    ============================================ */
 
-.ds-dropdown__helper {
-  font-family: var(--font-paragraph-sm-family);
-  font-size: var(--font-paragraph-sm-size);
-  font-weight: var(--font-paragraph-sm-weight);
-  line-height: var(--font-paragraph-sm-line-height);
-  letter-spacing: var(--font-paragraph-sm-letter-spacing);
-  color: var(--color-text-tertiary);
-  margin: 0;
-}
-
 /* ============================================
    ERROR STATE
    ============================================ */
@@ -234,17 +211,9 @@
   border-color: var(--color-status-error-border);
 }
 
-.ds-dropdown--error .ds-dropdown__helper {
-  color: var(--color-status-error-border);
-}
-
 /* ============================================
    DISABLED STATE
    ============================================ */
-
-.ds-dropdown--disabled .ds-dropdown__label {
-  color: var(--color-input-text-disabled);
-}
 
 .ds-dropdown--disabled .ds-dropdown__trigger {
   background-color: var(--color-input-bg-disabled);
@@ -276,11 +245,6 @@
 
 .ds-dropdown--compact .ds-dropdown__chevron {
   --icon-size: var(--icon-size-sm);
-}
-
-.ds-dropdown--compact .ds-dropdown__label {
-  font-size: var(--font-paragraph-sm-size);
-  line-height: var(--font-paragraph-sm-line-height);
 }
 
 .ds-dropdown--compact .ds-dropdown__option {

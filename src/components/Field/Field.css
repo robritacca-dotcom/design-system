@@ -27,6 +27,20 @@
 }
 
 /* ============================================
+   FOOTER — only rendered when an `aside` is supplied
+   (a character counter, a unit). Without one the helper
+   sits directly in the field column, so adopting Field
+   adds no wrapper to existing markup.
+   ============================================ */
+
+.ds-field__footer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--gap-sm);
+}
+
+/* ============================================
    HELPER TEXT
    ============================================ */
 

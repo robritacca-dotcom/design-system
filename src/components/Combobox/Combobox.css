@@ -16,19 +16,6 @@
    LABEL
    ============================================ */
 
-.ds-combobox__label {
-  font-family: var(--font-paragraph-em-family);
-  font-size: var(--font-paragraph-em-size);
-  font-weight: var(--font-paragraph-em-weight);
-  line-height: var(--font-paragraph-em-line-height);
-  letter-spacing: var(--font-paragraph-em-letter-spacing);
-  color: var(--color-text-primary);
-}
-
-.ds-combobox__required {
-  color: var(--color-core-accent-coral);
-}
-
 /* ============================================
    CONTROL
    ============================================ */
@@ -324,16 +311,6 @@
    HELPER TEXT
    ============================================ */
 
-.ds-combobox__helper {
-  font-family: var(--font-paragraph-sm-family);
-  font-size: var(--font-paragraph-sm-size);
-  font-weight: var(--font-paragraph-sm-weight);
-  line-height: var(--font-paragraph-sm-line-height);
-  letter-spacing: var(--font-paragraph-sm-letter-spacing);
-  color: var(--color-text-tertiary);
-  margin: 0;
-}
-
 /* ============================================
    ERROR STATE
    ============================================ */
@@ -342,17 +319,9 @@
   border-color: var(--color-status-error-border);
 }
 
-.ds-combobox--error .ds-combobox__helper {
-  color: var(--color-status-error-border);
-}
-
 /* ============================================
    DISABLED STATE
    ============================================ */
-
-.ds-combobox--disabled .ds-combobox__label {
-  color: var(--color-input-text-disabled);
-}
 
 .ds-combobox--disabled .ds-combobox__control {
   background-color: var(--color-input-bg-disabled);
@@ -376,11 +345,6 @@
 
 .ds-combobox--compact .ds-combobox__control {
   padding: var(--padding-xs) var(--padding-sm-md); /* 6px 12px */
-}
-
-.ds-combobox--compact .ds-combobox__label {
-  font-size: var(--font-paragraph-sm-size);
-  line-height: var(--font-paragraph-sm-line-height);
 }
 
 .ds-combobox--compact .ds-combobox__input,
