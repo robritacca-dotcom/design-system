@@ -69,6 +69,11 @@ Every push to `main` and every PR runs `.github/workflows/ci.yml` (four jobs: li
 
 **Releases** are manual: the `Release` workflow (`.github/workflows/release.yml`, workflow_dispatch, dry-run by default) builds `dist/`, runs `scripts/smoke-consumer.mjs` (packs the tarball into a scratch Vite consumer and builds it without recharts), then publishes **from `dist/`** with `npm publish --access public --provenance`. The root package.json stays `private` forever — only the generated dist manifest ships. Bump `PACKAGE_VERSION` in `scripts/package-manifest.mjs` to cut a release; it needs the `NPM_TOKEN` repo secret.
 
+**Infrastructure** (the facts the /overview pipeline describes — keep them in sync):
+- **Domain**: `robertritacca.com` is registered at GoDaddy; GoDaddy DNS points at the Vercel deployment (`www` CNAMEs to Vercel's DNS). Storybook deploys as a second Vercel project.
+- **Analytics**: Google Analytics 4 via the gtag snippet in `website/src/app/layout.tsx` (`GA_ID` is the public G-… measurement ID — safe to commit; it is visible in every page's source by design). GA *credentials* (service-account key, property ID) live only in the local, gitignored `ga-analysis/` data used by the `ga-report` skill — never in the repo or the site.
+- **Fonts**: Nunito Sans is **not** bundled anywhere — the website self-hosts it via `next/font/google` (fetched from Google Fonts at build time), Storybook loads it via a Google Fonts `<link>`, and package consumers bring their own (override `--font-family-primary`). Material Symbols Rounded ships as a self-hosted woff2 **inside the npm package** (`src/fonts/`). The customization playground is the one surface that loads fonts from Google at runtime.
+
 `npm run verify` is the **single local mirror of CI**: lint, library build, story tests, Storybook build, website lint, website build, in that order. The rule that keeps them in sync: **when CI gains a check (a11y, visual regression), add it to `verify` in the same change** — skills and docs reference `verify`, never individual commands, so nothing else needs updating.
 
 ---

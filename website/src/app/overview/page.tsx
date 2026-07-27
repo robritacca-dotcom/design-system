@@ -94,12 +94,31 @@ const PIPELINE: TimelineCompany[] = [
         description:
           "Public repository storing the entire codebase with full commit history.",
         bullets: [
-          "Tracks all changes to design system and website (monorepo)",
+          <>
+            npm-workspace monorepo: the library publishes as{" "}
+            <code>@robr0/design-system</code>, and this site installs that same
+            package — every page dogfoods the exact import surface a consumer gets
+          </>,
           "Triggers Vercel deployment on every push to main",
           <>
             Portfolio visibility at{" "}
             <a href="https://github.com/robritacca-dotcom/design-system" target="_blank" rel="noopener noreferrer" className={styles.inlineLink}>github.com/robritacca-dotcom/design-system</a>
           </>,
+        ],
+      },
+      {
+        title: "Package publishing",
+        description: (
+          <>
+            A manual release workflow ships the library to npm as{" "}
+            <code>@robr0/design-system</code> — see{" "}
+            <Link href="/customization/get-started" className={styles.inlineLink}>how to install and customize it</Link>.
+          </>
+        ),
+        bullets: [
+          "Builds the distributable package: per-module JS + type declarations, token CSS, and the icon font",
+          "Before anything reaches the registry, the tarball is installed into a scratch Vite app and built — a real consumer smoke test",
+          "Publishes with npm provenance; dry-run by default",
         ],
       },
       {
@@ -135,6 +154,20 @@ const PIPELINE: TimelineCompany[] = [
           "Live in under 60 seconds with SSL and global CDN",
         ],
       },
+      {
+        title: "Domain & delivery",
+        description:
+          "How the site actually reaches you — the domain, the fonts, the icons, and the measurement.",
+        bullets: [
+          <>
+            <code>robertritacca.com</code> is registered at GoDaddy, whose DNS points
+            at the Vercel deployment
+          </>,
+          "Nunito Sans is self-hosted: next/font fetches it from Google Fonts at build time and serves it from this domain — no runtime Google request",
+          "Material Symbols icons ship as a self-hosted woff2 inside the npm package itself; the playground's typeface picker is the one place fonts load from Google at runtime",
+          "Google Analytics (GA4) measures traffic via the standard gtag snippet in the root layout",
+        ],
+      },
     ],
   },
 ];
@@ -166,7 +199,8 @@ export default function AboutDsPage() {
               robr0 DS is the system I built — by myself — to make every page you see here. The foundation was designed in{" "}
               <a href="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26?node-id=246-5864" target="_blank" rel="noopener noreferrer" className={styles.inlineLink}>Figma</a>. The system itself lives in{" "}
               <a href="https://github.com/robritacca-dotcom/design-system" target="_blank" rel="noopener noreferrer" className={styles.inlineLink}>the repo</a>: a{" "}
-              <Link href="/blueprints/design" className={styles.inlineLink}>written spec</Link>, tokens as layered CSS, components in React. Claude Code builds from the spec, so a design change reaches production in under a minute. None of it is theoretical: the buttons, the colours, the type, the layout — they&apos;re all running on the same system this page describes.
+              <Link href="/blueprints/design" className={styles.inlineLink}>written spec</Link>, tokens as layered CSS, components in React. Claude Code builds from the spec, so a design change reaches production in under a minute. None of it is theoretical: the buttons, the colours, the type, the layout — they&apos;re all running on the same system this page describes. It ships as the npm package <code>@robr0/design-system</code>, and this site installs that package like any other consumer would —{" "}
+              <Link href="/customization" className={styles.inlineLink}>you can install and re-theme it yourself</Link>.
             </p>
             <p className={styles.introBody}>
               I&apos;m putting all of it on display because I think the system is the work. The pipeline below shows how the pieces fit. The rail beside it lists the key numbers and links. And if you want to lift any of it for your own project, everything is open —{" "}

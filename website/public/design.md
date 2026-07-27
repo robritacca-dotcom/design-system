@@ -95,6 +95,8 @@ The system uses **Nunito Sans** exclusively. No serif face. No monospace face. T
 
 Nunito Sans is a rounded humanist sans-serif. The rounded terminals give UI elements a friendly, approachable quality without sacrificing technical clarity. Inter is an acceptable substitute for prototyping; avoid Helvetica or Arial, which strip the rounded character.
 
+**Sourcing.** The typeface is deliberately not bundled with the npm package. The website self-hosts it via `next/font/google` (fetched from Google Fonts at build time and served first-party), Storybook loads it with a Google Fonts `<link>`, and package consumers load it however their stack prefers — or swap the whole system to another face by overriding `--font-family-primary`, the single token every type-scale step chains to. Material Symbols Rounded, by contrast, ships inside the package as a self-hosted woff2, so icons need no external setup.
+
 ### Hierarchy
 
 | Token prefix | Size | Weight | Line Height | Letter Spacing | Use |
