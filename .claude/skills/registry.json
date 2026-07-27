@@ -8,6 +8,7 @@
     "pre-deploy",
     "merge-and-push",
     "release",
+    "drift-audit",
     "component-doc-page",
     "heuristic-analysis",
     "accessibility-audit",
