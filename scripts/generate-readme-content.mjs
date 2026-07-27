@@ -98,12 +98,33 @@ const versionDrift = Object.entries(expected).flatMap(([name, want]) => {
   return m[1] === want ? [] : [`${name}: README says ${m[1]}, package.json says ${want}`];
 });
 
-// Package-name drift check: the install/usage docs must reference the
-// name the package actually publishes under (scripts/package-manifest.mjs).
-if (!readme.includes(PACKAGE_NAME)) {
+// Package-name drift check: every surface that tells a stranger how to install
+// the package must reference the name it actually publishes under
+// (scripts/package-manifest.mjs). README.md ships inside the npm tarball;
+// Configure.mdx is the Storybook landing page, which deploys separately and is
+// where people evaluating a component arrive. A scope rename that reaches one
+// but not the other leaves a live install snippet pointing at a package that
+// does not exist — so both are checked, and a missing install section fails
+// the build exactly like a stale name does.
+const nameSurfaces = [
+  { label: 'README.md', path: join(repoRoot, 'README.md'), text: readme },
+  {
+    label: 'src/stories/Configure.mdx',
+    path: join(repoRoot, 'src', 'stories', 'Configure.mdx'),
+  },
+];
+
+const nameDrift = nameSurfaces
+  .map((s) => ({ ...s, text: s.text ?? readFileSync(s.path, 'utf8') }))
+  .filter((s) => !s.text.includes(PACKAGE_NAME))
+  .map((s) => s.label);
+
+if (nameDrift.length > 0) {
   console.error(
-    `✗ README.md never mentions the package name "${PACKAGE_NAME}" — ` +
-      `the install/usage section is missing or references a stale name.`
+    `✗ These surfaces never mention the package name "${PACKAGE_NAME}":\n` +
+      nameDrift.map((l) => `    - ${l}`).join('\n') +
+      `\n  Each one tells a stranger how to install the package — a missing or ` +
+      `stale install section sends them to a package that does not exist.`
   );
   process.exit(1);
 }
