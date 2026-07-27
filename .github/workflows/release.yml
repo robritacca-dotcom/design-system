@@ -41,11 +41,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+      # NOTE: deliberately NO `registry-url:` here. Setting it makes setup-node
+      # write an .npmrc containing `_authToken=${NODE_AUTH_TOKEN}` AND export a
+      # placeholder NODE_AUTH_TOKEN ("XXXXX-XXXXX-..."). npm then believes it is
+      # already authenticated, never attempts the OIDC exchange, and the
+      # registry rejects the placeholder with a misleading `E404` on PUT.
+      # Without it npm finds no credentials and falls through to Trusted
+      # Publishing. npm defaults to registry.npmjs.org anyway, and the package
+      # sets no publishConfig, so nothing is lost. (Cost us run 30284784878.)
       - uses: actions/setup-node@v5
         with:
           node-version: 24
           cache: npm
-          registry-url: https://registry.npmjs.org
       # Trusted Publishing needs npm >= 11.5.1. Node 24 does not ship a new
       # enough npm on every patch release, and an older CLI fails to exchange
       # the OIDC token rather than falling back gracefully — so pin it forward
