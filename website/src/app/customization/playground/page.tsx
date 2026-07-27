@@ -433,7 +433,7 @@ export default function PlaygroundPage() {
                 label="Reset everything"
                 priority="secondary"
                 iconLeft="restart_alt"
-                disabled={isPristine}
+                state={isPristine ? "disabled" : "default"}
                 onClick={reset}
               />
             </section>
