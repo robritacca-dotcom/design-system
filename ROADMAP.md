@@ -1,0 +1,600 @@
+# ROADMAP
+
+The single planning surface for this repo. Everything queued, deferred, parked, or deliberately rejected lives here — if it isn't in this file, it isn't planned.
+
+**This file is intentionally *not* in the `validate-registry` chain.** Every other doc in this repo is a generated or build-enforced surface because it states *facts about the system* (counts, lists, versions) that must never drift. This file states *intent*, which can't be validated — so it is hand-maintained, and any count in it is marked as an "as of" snapshot rather than pulled from a registry. Keep it that way: don't put a number here that a registry already owns.
+
+Audited against the working tree on **2026-07-27** (56 components, 4 doc-only helpers).
+
+**Status:** `NOW` this week · `NEXT` the following stretch · `LATER` real but unscheduled · `PARKED` deliberately paused · `REJECTED` decided against, kept so it isn't re-litigated.
+**Effort:** `S` < half a day · `M` a day or two · `L` multi-day.
+
+**Contents**
+- [NOW — before Aug 3](#now--before-aug-3)
+- [Workstream A — Agent-Ready Design System](#workstream-a--agent-ready-design-system) (3 phases, `L`)
+- [NEXT — the robustness tier](#next--the-robustness-tier)
+- [LATER](#later--real-unscheduled)
+- [Parked / Rejected](#parked)
+- [Sequencing](#sequencing)
+
+---
+
+## NOW — before Aug 3
+
+### 1. `'use client'` boundary for the published package — `S`/`M` · **new, highest severity**
+**Found:** 2026-07-27 audit
+
+35 components under `src/components/` use React hooks or event handlers. **Zero** files in the library declare `'use client'`. A Next.js App Router consumer who does `import { Button } from '@robr0/design-system'` inside a server component gets a build/runtime error — hooks in a server component, or "event handlers cannot be passed to Client Component props."
+
+Two things hide this today, which is why it survived a release:
+- The website has `"use client"` at the top of **85 of its 90 pages**, so it never renders a library component from a server component. It cannot catch this.
+- `scripts/smoke-consumer.mjs` builds a **Vite SPA**. No RSC boundary exists there, so it cannot catch it either.
+
+The consumer environment most likely to be used — Next App Router, the same framework this repo's own site runs on — is the one environment never tested.
+
+**Done when:** interactive components carry the directive (per-file, or a build banner in `vite.lib.config.ts` / `scripts/build-package.mjs`), *and* a second smoke consumer builds a minimal Next App Router app importing a client-side component from a **server** page without a directive of its own. Wire it into `verify` alongside the existing smoke test.
+
+**Watch for:** don't blanket-apply the directive. Purely presentational components (Badge, Divider) are better left server-renderable; marking them client-only silently costs consumers RSC benefits. → **The client/server split is per-component data, so it belongs in the registry — see [Workstream A, Phase 1](#phase-1--richer-registry-metadata).** Record the rule in `design.md` too.
+
+### 2. Public API-surface validator — `M`
+**Scheduled 2026-07-26 for ~07-27**
+
+Publishing turned every props interface into a contract. Because deep imports (`./components/*`) are supported, renaming a component *folder* is breaking even when the barrel still exports the old name — and nothing flags it at edit time. The `release` skill only asks patch/minor/major at release, by which point the break is already written.
+
+**Done when:** a validator in the `validate-registry` chain diffs the current public surface (barrel exports + `./components/*` subpaths + exported prop interfaces) against the last published version on npm, and fails the build on a removed or renamed export unless `PACKAGE_VERSION` in `scripts/package-manifest.mjs` carries a major bump.
+
+> **⚠⚠ Do not ship this before [Workstream B](#workstream-b--component-api-foundations).** This validator's entire job is to *prevent* breaking changes. Ship it while the component API still has closed prop surfaces and Figma-variant leakage, and it freezes those mistakes into the contract. Fix the API shape first; then lock it.
+
+> **⚠ Overlap — do [Workstream A Phase 2](#phase-2--generated-prop-contracts) first.** `props.json` *is* a machine-readable snapshot of the public API surface. With it committed, this validator collapses from "re-derive the surface from npm's shipped types" into "diff the committed `props.json` against the last published `props.json`" — dramatically simpler and more accurate (it catches prop-level breaks, not just export-level ones). Building item 2 standalone first means writing TS-Compiler-API extraction twice.
+
+**Chosen over a skill deliberately:** anything mechanically checkable gets build-enforced so it can never drift.
+
+### 3. npm Trusted Publishing (OIDC) migration — `S` · **⏳ code done 2026-07-27, blocked on Rob**
+
+npm deprecates 2FA-bypass tokens for direct publishing in **Jan 2027**, and the granular `NPM_TOKEN` had an expiry that would have failed the publish step with a 401.
+
+**Done in-repo (uncommitted):**
+- `.github/workflows/release.yml` — `NODE_AUTH_TOKEN` env removed from the publish step; header comment rewritten to document the OIDC contract; added a step pinning npm forward (`npm install -g npm@latest`) because **Trusted Publishing requires npm ≥ 11.5.1 and Node 24 does not ship a new enough npm on every patch** — an older CLI fails the token exchange rather than degrading gracefully.
+- `.claude/skills/release/SKILL.md` — the 401/token-rotation guardrail replaced with the four real OIDC failure modes.
+- `CLAUDE.md` — release-auth prose updated.
+
+**Rob's steps, in this order** (the sequence matters — do not delete the secret first):
+1. On npmjs.com → the package → Settings → Trusted Publisher → GitHub Actions. Exact values (the GitHub owner is **not** the npm scope — that's the easiest way to get this wrong):
+
+   | Field | Value |
+   |---|---|
+   | Organization or user | `robritacca-dotcom` |
+   | Repository | `design-system` |
+   | Workflow filename | `release.yml` |
+   | Environment name | *blank* — the workflow uses no GitHub Environment; filling it in makes the OIDC claim mismatch and auth fail |
+   | Allowed actions | **`npm publish` only** — the workflow never calls `npm stage publish` |
+2. Commit and push the workflow change.
+3. Run the Release workflow **for real** (`dry_run=false`). **No throwaway version needed** — npm only consumes a version on a *successful* upload, so if OIDC auth fails nothing is burned and you simply retry. That means the `0.2.0` release carrying the B1 signature pass can double as the proof.
+4. Only once that publish is green: delete the `NPM_TOKEN` repo secret.
+
+**Why a real publish is mandatory here:** the dry run runs `npm publish --dry-run`, which never authenticates. It proves the build and the tarball, and tells you *nothing* about whether OIDC works.
+
+**Two things that will silently break this later:** renaming or moving `release.yml` (the trusted-publisher registration is keyed to the filename), and dropping `permissions: id-token: write` (it is load-bearing for *authentication* now, not just provenance).
+
+### 4. Storybook homepage knows nothing about npm — `S` (cheap tier)
+**Scheduled for ~07-27**
+
+`src/stories/Configure.mdx` has zero mentions of npm / install / `@robr0`; its intro still describes the pre-publish world ("consumed by a live Next.js reference site"). Storybook deploys as its own Vercel project and is where people evaluating the system land — so a visitor who likes a component has **no path to installing it**. (Counts there are already safe; it imports `COMPONENT_COUNT`.)
+
+- **Cheap, do first:** install block (`npm install` + `tokens.css` import + one component import), a clause in the intro, a link to the site's Get Started page. Then extend `scripts/generate-readme-content.mjs`'s package-name check so **both** README.md and Configure.mdx must mention `PACKAGE_NAME` — a scope rename becomes impossible to half-apply.
+- **Thorough:** extract the ~40 genuinely shared, drift-prone facts (principles, three-tier token architecture, theming contract, install snippet) into `src/content/system-facts.ts`, imported by Configure.mdx (the import pattern is already proven there), injected into README by its generator, and imported by the website's Get Started page.
+
+---
+
+# Workstream A — Agent-Ready Design System
+
+**Status:** planned 2026-07-26, not started · **Effort:** `L` (three phases, independently shippable) · **Version impact:** additive API → `0.2.0` via the `release` skill.
+
+## Context
+
+Compared to machine-readable design systems like Meta's Astryx, three gaps remain: the component registry is just 56 name strings; there is no machine-readable prop contract generated from the TypeScript; and agents must parse full HTML pages to learn a component. This workstream takes the highest-impact subset — richer registry metadata, generated prop contracts, dense per-component markdown — while keeping the system lightweight.
+
+**Explicitly out of scope: an MCP server, and shipping extra docs in the npm tarball.** Dense `.md` docs served from the website are the chosen shape.
+
+**A major side benefit found during exploration:** per-component labels, slugs, and descriptions are currently duplicated in 4+ places — `slugOf` copied verbatim in two validators, `displayName()` in the README generator, 56 hand-typed sidebar labels in `navigation.ts`, 56 hand-written descriptions in `layout.tsx` files. Phase 1 collapses all of it into the registry.
+
+**Ground rules.** Everything follows the established pattern (see `scripts/generate-token-registry.mjs` / `validate-token-registry.mjs`): generators export pure derivation functions and only run side effects behind an `isMain` guard; validators import the same functions and deep-compare against committed JSON; writes are idempotent (string-compare, write only on change) so CI's `git diff --exit-code` drift guard works. **No new dependencies** — prop extraction uses the TS Compiler API (`typescript ~5.9.3` is already a direct devDep; do **not** rely on the transitive `react-docgen-typescript`).
+
+**Defaults already taken** (flagged as open by planning, resolved with the recommended option): rewrite the 56 layouts to a `componentPageMetadata()` helper (delete the duplicate corpus, don't police it); derive the sidebar from the registry; omit a `status` field until the first non-stable component exists; category placements below are proposals to adjust in review.
+
+---
+
+## Phase 1 — Richer registry metadata
+
+### New `src/components/registry.json` shape
+
+Convert `components` from `string[]` to `object[]`. (A sibling metadata key would be a second 56-entry list that can drift — exactly what this repo's registry architecture exists to prevent.)
+
+```json
+{
+  "$comment": "SINGLE SOURCE OF TRUTH for the public component list, count, and per-component metadata…",
+  "categories": ["actions", "forms", "feedback", "navigation", "layout", "overlays", "data-display", "charts"],
+  "components": [
+    { "name": "Accordion", "label": "Accordion", "slug": "accordion",
+      "description": "…", "category": "data-display" }
+  ],
+  "docOnlyHelpers": ["ColourSwatch", "MotionSwatch", "SpacingSwatch", "TypographySwatch"]
+}
+```
+
+- `slug`/`label` are **stored, not derived** — the `Nav → navigation` exception becomes plain data.
+- Seed the 56 `description` values mechanically from the 2nd arg of `pageMetadata(...)` in each `website/src/app/components/<slug>/layout.tsx` (one-off scratchpad script, not committed). Labels seed from the current `displayName()` output.
+- **Add a `client: boolean` field here too** — see [item 1](#1-use-client-boundary-for-the-published-package--sm--new-highest-severity). The client/server split is per-component data with no other home, the generator can then emit the `'use client'` banner from the registry, and a validator can assert that any component importing React hooks is marked `client: true`. This turns a one-off fix into a permanent invariant.
+
+**Categories** (proposed; confirm the judgment calls in review):
+
+| Category | Count | Components |
+|---|---|---|
+| actions | 5 | Button, ButtonGroup, CircularButton, SegmentedControl, ToggleGroup |
+| forms | 11 | Checkbox, Combobox, DateInput, DatePicker, Dropdown, FileInput, Input, RadioButton, Slider, Textarea, ToggleSwitch |
+| feedback | 6 | Alert, EmptyState, ProgressBar, Skeleton, Spinner, Toast |
+| navigation | 4 | Breadcrumb, Nav, Pagination, Tabs |
+| layout | 4 | AppLayout, AppSidebar, Divider, SectionTitle |
+| overlays | 7 | AlertDialog, CommandPalette, Dialog, Drawer, DropdownMenu, Popover, Tooltip |
+| data-display | 17 | Accordion, Avatar, Badge, Card, Carousel, Chip, CodeBlock, ContactCard, EntityCard, Figure, Instructions, LinkList, Quote, SelectionCard, Stat, Table, Timeline |
+| charts | 2 | Chart, ContributionGraph |
+
+### `src/components/registry.ts` accessor — public API preserved
+
+```ts
+export interface ComponentMeta { name; label; slug; description; category }
+export const componentMetadata: readonly ComponentMeta[] = registry.components;
+export const componentCategories: readonly string[] = registry.categories;
+export const componentRegistry: readonly string[] = registry.components.map(c => c.name); // unchanged shape
+export const COMPONENT_COUNT = registry.components.length;                                // unchanged
+```
+
+All existing consumers use only `COMPONENT_COUNT` (navigation.ts, components/layout.tsx, overview, work/robr0-ds, Configure.mdx, smoke-consumer.mjs) — **zero changes there.**
+
+### Script touches (verified consumers of `registry.components` as strings)
+
+| File | Change |
+|---|---|
+| `scripts/validate-component-registry.mjs:57` | map to `.name` for the folder check; **add** metadata validation: alphabetical by name, slug/label unique, slug kebab-case, description non-empty ≤160 chars ending in `.`, category ∈ `registry.categories` |
+| `scripts/generate-library-barrel.mjs:38` | iterate `{ name }` |
+| `scripts/validate-website-surfaces.mjs:60` | iterate `{ name, slug }`; **delete** the local `slugOf`/`SLUG_EXCEPTIONS` (lines 31–35) |
+| `scripts/validate-page-titles.mjs:46` | same; delete duplicated `slugOf` (lines 35–39) |
+| `scripts/generate-readme-content.mjs:70` | use `c.label`; delete `displayName()` |
+| `scripts/build-package.mjs` | no change (copies the file verbatim) |
+
+### Absorb website duplication (the payoff)
+
+1. **Sidebar derives from registry** — replace the 56 hand-typed entries in `website/src/config/navigation.ts` `componentsSidebarLinks` with a map over `componentMetadata` (already imported there for `COMPONENT_COUNT`), sorted by label. Sitemap, mega-nav, breadcrumbs, and llms.txt already derive from this config, so they follow automatically. Then in `validate-website-surfaces.mjs` drop checks 2 (nav entry) and 4 (alphabetical order) — now structurally guaranteed; keep 1 (page exists), 3 (TocCard), 5 (design.md spec). Update its header comment.
+2. **Page descriptions single-sourced** — add `componentPageMetadata(slug)` next to `pageMetadata` in navigation.ts (looks up label + description from `componentMetadata`); mechanically rewrite all 56 `layout.tsx` files to `export const metadata = componentPageMetadata("<slug>");`. Update `validate-page-titles.mjs` to require `componentPageMetadata(` on component pages.
+3. **Cheap win (include):** pass `description` into the derived component `NavLink`s so the Sidebar's existing `searchable` filter can match description text.
+
+### Prose/docs updates (same change — CLAUDE.md convention)
+
+- `CLAUDE.md`: Registries table row for Components; "How to Add a New Component" step 6 (registry entry is now an object with metadata; the sidebar-nav bullet goes away) + the checklist.
+- Skills referencing the flow: `.claude/skills/new-component/SKILL.md`, `.claude/skills/component-doc-page/SKILL.md`, `.claude/skills/merge-and-push/SKILL.md`.
+- README markers regenerate identically (labels == old `displayName()` output).
+
+---
+
+## Phase 2 — Generated prop contracts
+
+### New shared helper: `scripts/lib/component-modules.mjs`
+
+Extract the folder→modules enumeration (non-story `.tsx` per registry folder, sorted, fail on empty) plus `importsRecharts()` from `generate-library-barrel.mjs:38-49`; refactor the barrel generator to import it. Needed because `Chart/` is one registry entry but **9 modules**.
+
+### New: `scripts/generate-prop-contracts.mjs` → writes `src/components/props.json`
+
+TS Compiler API, following the token-registry pattern (pure exported functions, `isMain` guard, idempotent write, throw on unhandled input):
+
+1. `ts.getParsedCommandLineOfConfigFile('tsconfig.app.json', …)` → `ts.createProgram` over all public component modules.
+2. Per module, walk `checker.getExportsOfModule(...)`.
+3. **Component detection:** exported function/const whose call signature's single parameter is a named `*Props` type. Handles the known irregulars: `RadioGroup` (`RadioGroupProps`, not `RadioButtonGroupProps`), `CheckboxGroup`, `Toast` + `ToastProvider` (`ToastProps` at line 285), the 9 chart components, `Timeline` (props type is a union alias).
+4. **Serialize every exported interface/type alias** (non-exported internals like BarChart's tooltip interfaces are excluded automatically):
+   - interfaces → `kind: "object"`, members `{ name, type (checker.typeToString with NoTruncation), required, description (JSDoc), deprecated (@deprecated tag — Button's `icon` is the live example), default (@default tag or simple destructuring initializer, else omit) }`
+   - union aliases (`TimelineProps`, `DropdownMenuEntry`) → `kind: "union", types: [names]`
+5. **Fail loudly** when a public folder yields zero component exports, or a props type isn't exported.
+6. **Deterministic:** registry order, module order, source member order. Record the `typescript` version in the JSON header — `typeToString` output can shift across TS minors, and the drift guard then makes regeneration visible in the same PR as the upgrade.
+
+JSON shape per component: `{ modules: [{ module, importPath, chartsOnly, components: [{name, propsType}], types: {…} }] }`. `chartsOnly` (from `importsRecharts`) tells agents the module needs the optional recharts peer.
+
+### Wiring
+
+- `scripts/validate-prop-contracts.mjs` — re-derive + deep-compare (validate-token-registry pattern).
+- `src/components/props.ts` — typed accessor (`componentPropContracts` + hand-written `PropContract`/`PropMember` types). **Not** in the main barrel — subpath-only.
+- Root `package.json` `validate-registry` chain: `generate-prop-contracts` after `generate-library-barrel`; `validate-prop-contracts` before `validate-package-exports`.
+- **Package plumbing — all four spots** (the assets array is the silent-omission trap):
+  1. `scripts/package-manifest.mjs` SUBPATHS: `{ key: './components/props', srcJs: './src/components/props.ts', dist: './components/props' }`
+  2. Root `package.json` `exports`: paste updated `sourceExports()` output (validator enforces exact match)
+  3. `vite.lib.config.ts` `lib.entry`: `'components/props': 'src/components/props.ts'`
+  4. `scripts/build-package.mjs:43-48` assets array: add `src/components/props.json`
+- `scripts/smoke-consumer.mjs`: import `componentPropContracts` + `componentMetadata` in the scaffolded consumer app.
+- `CLAUDE.md` Registries table: new row for prop contracts.
+
+---
+
+## Phase 3 — Dense per-component markdown + llms.txt
+
+### New: `scripts/generate-component-docs.mjs` → `website/public/components/<slug>.md` (56 files, committed)
+
+Precedent: `website/public/CLAUDE.md` / `design.md` are git-tracked generated copies served statically. No route conflict with the 56 `app/components/<slug>/page.tsx` folders (the `.md` extension differs). The generator also deletes stale `.md` files for removed or renamed components.
+
+Per-file composition — all from existing sources, nothing new to author:
+1. `# <label>` + registry description + category.
+2. Import block: deep subpath(s) from props.json `importPath`, with a recharts note when `chartsOnly`.
+3. Design spec: the component's `###` section body from `design.md` — matched with the same normalization as `validate-website-surfaces.mjs:48-53` (shared headings `Input / Textarea` and `AppLayout / AppSidebar` serve both; `Contribution graph` normalizes). Hard-fail on a miss (the validator already guarantees presence).
+4. Props tables per component export (Name / Type / Required / Default / Description), deprecated flagged, unions expanded.
+5. Links: live showcase page, `/llms.txt`.
+
+Wire into the root `validate-registry` (after generate-prop-contracts) **and** `website/package.json`'s `prebuild`/`predev` lists (add `generate-prop-contracts` there too — the docs depend on it).
+
+### `website/src/app/llms.txt/route.ts` upgrade
+
+- Components section from `componentMetadata` instead of the generic nav `section()`:
+  `- [<label>](…/components/<slug>): <description> ([props + spec](…/components/<slug>.md))`
+- Also sync `registry.json` + `props.json` into `website/public/` (fold into the docs generator) and link them under "Optional" as machine-readable indexes — web-only agents get contracts without an npm install.
+- No sitemap change (`.md` files aren't pages).
+
+---
+
+## Workstream A verification
+
+1. `npm run validate-registry` **twice** — the second run prints all "up to date" (idempotency; required for the CI drift guard).
+2. `npm run validate-registry && git diff --exit-code` after committing first-run outputs (`props.json`, `props.ts`, 56 `.md`, regenerated README/barrels) — the drift guard only sees tracked files.
+3. `npm run verify` — full CI mirror.
+4. `npm run build:lib && node scripts/smoke-consumer.mjs` — exercises the new `/components/props` subpath and metadata from the packed tarball, without recharts.
+5. Manual: website dev server → `/llms.txt`, `/components/button.md`; sidebar order/labels unchanged after derivation.
+6. Contract spot-checks: Timeline (union), Toast (two components, `ToastContextValue` as a plain type), RadioButton (`RadioGroupProps`), one Chart module (`chartsOnly: true`, internals absent), Button (`icon` deprecated).
+
+## Workstream A — explicitly deferred
+
+- **MCP server** — opted out; dense endpoints + package subpaths cover the need.
+- **Shipping design.md / dense docs inside the npm tarball** — opted out; one-line `copyFileSync` in build-package.mjs if wanted later.
+- **`status` field on registry entries** — add when the first beta/deprecated component exists.
+- **Validating design.md prose claims against contracts** — possible later, now that contracts exist.
+- Version bump / publish happens separately via the `release` skill.
+
+---
+
+# Workstream B — Component API Foundations
+
+**Status:** added 2026-07-27 after an architecture review · **Effort:** `M`/`L` · **Version impact:** entirely additive if done as deprecate-don't-delete → `0.2.0`.
+
+## Why this exists
+
+The rigor in this repo is concentrated in the **meta-layer** — registries, generators, validators, drift guards. That layer is genuinely stronger than most enterprise design systems. The **component API layer** — the actual surface a consumer touches — has not had the same rigor applied, and every item in Workstream A makes the meta-layer better still. Generating a beautiful machine-readable contract for an API that can't forward a ref just documents the problem in higher fidelity.
+
+**This workstream comes before Workstream A Phase 2 and before item 2.** Every day the API stays as-is, it's closer to being a contract that can't be changed.
+
+Evidence from the 2026-07-27 audit (68 implementation files):
+
+| Check | Result |
+|---|---|
+| Extend native HTML attribute types | **0 / 68** |
+| Forward a `ref` | **4 / 68** |
+| Spread `...rest` onto the DOM node | **10 / 68** |
+| Accept an `id` | **9 / 68** |
+| Accept a `className` | 68 / 68 ✅ |
+| Wire `aria-describedby` | 11 / 68 |
+
+## ✅ B1 / B2 / B5 / item 1 — SHIPPED 2026-07-27 (uncommitted)
+
+The signature pass is done across **18 components**: Button, Input, Textarea, Slider, ToggleSwitch, Checkbox (+Group), RadioButton (+Group), DateInput, ToggleGroup, SelectionCard, Card, FileInput, Dropdown, Dialog, Drawer, Table, DatePicker, Combobox.
+
+| Check | Before | After |
+|---|---|---|
+| `'use client'` | 0 / 68 | **17 / 18** in scope (Table deliberately excluded — presentational, stays server-renderable) |
+| `forwardRef` | 4 / 68 | **18 / 18** |
+| `...rest` spread | 10 / 68 | **18 / 18** |
+
+`npm run verify` exits **0** — lint, tsc, lib build, 495 story tests, Storybook build, website lint, website build.
+
+**Conventions that settled:**
+- Convenience callbacks are named for the value's shape, leaving `onChange` free for the native signature: `onValueChange` (string/number), `onCheckedChange` (boolean), `onValuesChange` (array).
+- Deprecated props are kept working, never removed. `variant` supersedes `priority`; `disabled` supersedes `state`; `aria-label` supersedes `ariaLabel`.
+- Props that would be invalid on the rendered DOM node (e.g. `name` on a `<div role="radio">`) are destructured and discarded rather than spread; `^_` marks the discard (see the ESLint rule added in `eslint.config.js`).
+- `className` stays on the wrapper wherever it already was — moving it would be a silent visual break.
+- Portal components (Dialog, Drawer) forward the ref to the **panel**, not the portal container.
+
+**The one non-additive change:** `Input`/`Textarea`/`Slider`/`DateInput` `onChange` now carries the native `ChangeEvent` signature. Cost: 7 call sites in this repo, all migrated to `onValueChange`. This is what unblocks react-hook-form / Formik / TanStack Form. Ships as `0.2.0`.
+
+**Known collisions, documented in JSDoc rather than renamed:** `Input.size` / `Slider.size` / `DateInput.size` / `FileInput.size` shadow the native character-width `size`; `Card.title` / `Dialog.title` / `Drawer.title` shadow the native `title` tooltip.
+
+**Follow-up worth its own commit:** six components now carry a byte-identical ref-merge block (FileInput, Dropdown, Dialog, Drawer, Combobox, plus the pattern in Checkbox/Radio). Extract a `useMergedRef` helper.
+
+**Still open in Workstream B:** [B3](#b3--a-field-primitive-for-form-composition--m), [B4](#b4--children-for-content-props-for-configuration--ml), [B6](#b6--composition-escape-hatch-aschild-or-as--sm).
+
+---
+
+## B1 — Escape hatches: refs, rest props, native attributes — `M` · **highest value**
+
+Closed prop surfaces mean a consumer cannot attach a ref, pass `data-testid`, set `autoComplete` / `inputMode` / `maxLength` / `pattern`, add an `onKeyDown`, or hand the component to a form library. `Input.onChange` is `(value: string) => void` — not React's `ChangeEvent` — so **react-hook-form, Formik, and TanStack Form cannot register an Input without an adapter.** For form-dense products this is the difference between a library that can be adopted and one that can only be demoed.
+
+**Done when**, for at least the top ~15 consumer-facing components (all form controls, Button, Card, Dialog, Drawer, Table):
+- props extend `React.ComponentPropsWithoutRef<'element'>` (with the custom props `Omit`ed where they collide)
+- the component is a `forwardRef` (or takes React 19's `ref` prop) onto its primary DOM node
+- `...rest` spreads onto that node
+- event handlers use native React signatures; where a convenience signature is genuinely better, keep it under a differently-named prop rather than shadowing the standard one
+
+**Additive.** Nothing existing breaks.
+
+## B2 — Retire Figma variants from the code API — `S` · **most diagnostic**
+
+`ButtonProps` currently has:
+```ts
+state?: 'default' | 'hover' | 'active' | 'disabled';
+text?: boolean;   // "show text label"
+```
+In Figma, `state` *must* be a variant property — you have to draw each one. In code, `hover` and `active` belong to the browser (`:hover`, `:active`), and `disabled` is a native attribute with real semantics for form submission and assistive tech. Conflating all three means hover has two sources of truth, a consumer can pin a button into a permanent fake hover, and the one genuinely semantic value is buried in an enum beside two cosmetic ones. `text?: boolean` is the same tell — in code you omit the label.
+
+This is the clearest "designed-in-Figma-then-translated" artifact in the codebase and the exact class of thing an enterprise design-system review flags on day one.
+
+**Done when:** `disabled?: boolean` is the real prop, `state` is `@deprecated` and mapped internally, `text` is deprecated in favour of omitting `label`, and a note in `design.md` records the rule: *Figma variant properties describe how a component is drawn; code props describe what it is. Pseudo-states never become props.*
+
+## B3 — A `Field` primitive for form composition — `M`
+
+Label, required marker, helper text, error text, id generation, and `aria-describedby` wiring are reimplemented independently in every form component (only 11 of 68 files wire `aria-describedby` at all). That means accessibility correctness is per-component rather than systemic.
+
+**Do this before [item 6](#6-flip-a11y-from-report-only-to-failing--m).** Flipping a11y to `'error'` without it means fixing the same label/description bug eleven times; with it, one fix propagates.
+
+**Done when:** a `Field` component owns label / description / error / generated ids / aria wiring, and the form controls compose inside it rather than each re-implementing it.
+
+## B4 — `children` for content, props for configuration — `M`/`L`
+
+Content props outnumber `children` **207 `label` + 191 `title` to 46 `children`**. A string-label API means a consumer cannot bold one word in a button, put a link inside an Alert description, or arrange an icon between two words — so every new content need becomes a new prop. That is why `ButtonProps` already carries `label`, `text`, `iconLeft`, `iconRight`, and a deprecated `icon`.
+
+Not a rewrite. Adopt the rule for **new** components immediately, and migrate the top offenders additively (accept `children`, keep `label` working, mark it deprecated).
+
+## B5 — One word per concept — `S`
+
+`variant` (74) vs `kind` (7) vs `priority` (3) vs `status` (13) all name "which visual treatment." `size` (103) is already consistent — good. Pick one (`variant` wins on usage), alias the others with deprecations. The existing `api-consistency` skill is exactly the tool for this; it should be run and its findings enforced, not just reported.
+
+## B7 — Make the component API contract build-enforced — `S`/`M` · **added 2026-07-27**
+
+After the B1 pass, the contract lives in prose: the `new-component` skill and CLAUDE.md's Component Anatomy. That is exactly the kind of drift this repo refuses to tolerate everywhere else — *"if the drifting fact is mechanically checkable, route it through a validator so it can never drift again."* Every clause of the contract is mechanically checkable:
+
+- Every public component in `registry.json` exports a `forwardRef` component with a matching `displayName`.
+- Every component whose module imports a React hook or declares an event handler has `'use client'` on line 1 — and every component that does **not** is flagged if it has the directive anyway (the Table case: a needless directive silently costs consumers RSC rendering).
+- No props interface declares a value-shaped `onChange` (`onChange?: (value` / `(checked` / `(values`) — the pattern that breaks form libraries.
+- Every exported props interface extends `ComponentPropsWithoutRef`, so native attributes always pass through.
+
+A `scripts/validate-component-api.mjs` in the `validate-registry` chain turns a convention people have to remember into one the build refuses to let them break. **Pairs naturally with [Workstream A Phase 2](#phase-2--generated-prop-contracts)** — once `props.json` exists, most of these become assertions over that file rather than fresh AST work, so sequencing B7 after A-Phase 2 makes it a much smaller job.
+
+## B6 — Composition escape hatch: `asChild` or `as` — `S`/`M`
+
+`Button` with `href` renders a raw `<a>`. A Next.js consumer therefore cannot make a Button perform client-side navigation — they'd get a full page load. (The website itself doesn't hit this: zero internal `<Button href="/…">` usages. It is a *consumer* limitation, not a live site bug.)
+
+**Done when:** interactive components accept `asChild` (render-as-child, the Radix pattern) or a polymorphic `as`, so `<Button asChild><Link href="/x">…</Link></Button>` works.
+
+---
+
+## NEXT — the robustness tier
+
+Approved 2026-07-21 as phases 3–5 of the robustness roadmap, still open. Phases 1 (CI) and 2 (story render tests) shipped.
+
+### 5. Visual regression via Chromatic — `M` · **requested 2026-07-27**
+
+`@chromatic-com/storybook` is **already a devDependency** — it ships with Storybook — but there is no project token, no `chromatic.config.json`, and no workflow. Today: zero pixel coverage. Story render tests prove a component *doesn't throw*; they say nothing about it looking right. Every CSS change to a shared token is currently unverifiable except by eye.
+
+This is the highest-leverage remaining test investment, because this system's whole thesis is a **shared token layer** — one edit to `tokens-light.css` touches all 56 components at once, and that is exactly the blast radius no current check covers.
+
+**Done when:** Chromatic project created (free tier), `CHROMATIC_PROJECT_TOKEN` added as a repo secret, a `chromatic` job added to `ci.yml`, snapshots captured in **both light and dark** via Storybook modes (`@storybook/addon-themes` is already installed), and a baseline accepted on `main`.
+
+**Watch for:**
+- **Snapshot budget** — 56 components × many stories × 2 themes burns the free tier fast. Snapshot a curated subset, or restrict modes to components whose CSS actually branches on theme.
+- **Chart flake** — Recharts animates on mount. Disable animation in chart stories or every run produces a false diff.
+- **Font FOUT** — Storybook loads Nunito Sans via a Google Fonts `<link>`; a slow fetch in CI reads as a diff. Chromatic's font-loading delay exists for exactly this.
+- Per the recharts hidden-pane note, chart DOM checks are unreliable in a hidden pane — visual snapshots are actually the *better* tool there, so prioritise chart stories once flake is handled.
+
+### 6. Flip a11y from report-only to failing — `M`
+
+`.storybook/preview.ts` has `a11y.test: 'todo'`. Axe runs on every story and reports, but nothing fails, so violations accumulate unmeasured.
+
+### Target — decided 2026-07-27
+
+**WCAG 2.1 Level AA, minus the contrast criteria (1.4.3 Contrast Minimum, 1.4.11 Non-text Contrast).** Contrast is deferred to [item 23](#23-action-colour-contrast--the-deferred-aa-criteria--m--design-decision), where it gets treated as the design change it is.
+
+The reasoning: contrast is the *only* part of AA that moves pixels. Everything else in scope — programmatic labels, semantic structure, keyboard operability, focus order, name/role/value, status messages — is invisible DOM work with zero visual risk. Deferring contrast costs nothing except contrast; targeting Level A instead would have thrown away the free half of AA for no benefit (Level A has no contrast requirement at all, so it would not have made this any cheaper).
+
+This is a stronger and more honest public position than "Level A": *AA, with one documented contrast deviation and a plan.*
+
+**Config** — `.storybook/preview.ts`:
+
+```ts
+a11y: {
+  test: 'error',
+  config: {
+    // WCAG 1.4.3 deferred pending the action-colour decision — see ROADMAP item 23.
+    rules: [{ id: 'color-contrast', enabled: false }],
+  },
+}
+```
+
+One line to delete when item 23 lands. Do **not** reach for `runOnly: {type: 'tag', values: ['wcag2a', ...]}` — that drops the non-contrast AA rules too, which is the opposite of the intent.
+
+**Done when:** violations triaged, genuine ones fixed, unfixable ones documented with a per-story disable and a recorded reason, `test` flipped to `'error'` with `color-contrast` disabled as above.
+
+**Do this before Chromatic, not after** — a11y fixes change the DOM and often the pixels, which would invalidate a freshly-accepted visual baseline.
+
+### The actual violation list — measured 2026-07-27
+
+Full axe run with `color-contrast` disabled: **49 failing stories out of 495 (~90% already clean), across 12 components.** Every violation is invisible to fix — not one requires a visual change, which confirms the AA-minus-contrast scoping.
+
+| Rule | Instances | Components | Fix |
+|---|---:|---|---|
+| `aria-required-parent` + `aria-required-children` | **200** | DatePicker | One structural fix — calendar cells carry a role whose required parent role is missing. 200 instances because it's ~35 day cells × several stories. **Highest leverage single fix in the list.** |
+| `aria-prohibited-attr` | 17 | Avatar | `aria-label` on an element whose role doesn't permit it |
+| `nested-interactive` | 13 | DropdownMenu, FileInput, Popover | Interactive element nested inside another. **Real keyboard harm, not just metadata** — prioritise |
+| `aria-progressbar-name` | 7 | ProgressBar | `role="progressbar"` with no accessible name. Trivial |
+| `landmark-unique` | 4 | Accordion, Breadcrumb | Two same-type landmarks with no distinguishing label |
+| `button-name` | 4 | Avatar | Interactive avatar with no accessible name |
+| `heading-order` | 3 | Typography (`src/stories/`) | A foundation **docs** story that deliberately demonstrates every heading level — legitimate per-story disable candidate, not a product bug |
+| `scrollable-region-focusable` | 2 | CodeBlock, Dialog | Scrollable region needs `tabindex="0"`. **Real keyboard harm** — a keyboard user currently cannot scroll these |
+| `aria-allowed-attr`, `aria-dialog-name` | 2 | Popover | `role="dialog"` with no accessible name |
+| `label` | 1 | FileInput | Input with no associated label |
+| `empty-table-header` | 1 | Table | Empty `<th>` (checkbox/actions column) needs visually-hidden text |
+
+Failing stories by component: FileInput 9, Popover 8, DatePicker 7, DropdownMenu 7, Avatar 6, ProgressBar 4, Typography 3, then Accordion / Breadcrumb / CodeBlock / Dialog / Table at 1 each.
+
+**Correction to an earlier assumption:** the API audit suggested widespread label-association failures across the form components. Axe found exactly **one** (`FileInput`). Input, Textarea, Checkbox, Dropdown and the rest wire their labels correctly today. [B3](#b3--a-field-primitive-for-form-composition--m) is still worth building — for consistency and for helper-text/error `aria-describedby` association, which axe has no rule for and therefore cannot see — but it is **not** a prerequisite for clearing this list. The B3-before-item-6 ordering is now a preference, not a dependency.
+
+**Axe catches roughly a third of WCAG issues — passing it is not conformance.** Whether alt text is *meaningful*, whether focus order is sensible, whether a Dialog actually traps focus: all human judgment. That is why [item 7](#7-interaction-tests-play-functions--m) does real accessibility work despite not being labelled as such.
+
+**Current state:** `test` is `'todo'` and `color-contrast` is disabled in `.storybook/preview.ts`. Flip to `'error'` as the last step, once the list above is clear.
+
+### 7. Interaction tests (play functions) — `M`
+
+There are **zero** play functions in the library. (A first pass during the 07-27 audit suggested 33 story files had them — that was a naive `grep "play:"` matching `display:` in inline styles. 18 story files do import `fn()` from `storybook/test` for arg spies, which is not interaction testing.)
+
+The render tests prove ~488 stories mount. Nothing proves a Dialog traps focus, a Combobox filters, a Drawer closes on Escape, or a Tooltip appears on hover.
+
+**Done when:** play functions cover the stateful components — Dialog, AlertDialog, Drawer, Combobox, CommandPalette, Toast, Tooltip, Pagination, SegmentedControl — asserting open/close, keyboard nav, focus trap and return, Escape handling.
+
+---
+
+## LATER — real, unscheduled
+
+### Package & release hygiene
+
+**8. No CHANGELOG.md — `S`.** A published package with no changelog; a consumer upgrading has no way to know what changed. Should be generated, not hand-written: `PACKAGE_VERSION` already owns the version, so a generator + validator pairing is the on-pattern fix — and it composes with [item 2](#2-public-api-surface-validator--m), which will already know what changed.
+
+**9. No bundle-size budget — `S`.** `scripts/smoke-consumer.mjs` builds a consumer app but never inspects output size. A dependency or heavy import could double the package's cost invisibly. A size assertion in the existing smoke test is nearly free, and it keeps "the main barrel must never force a bundler to resolve recharts" honest over time.
+
+**10. No dependency automation — `S`.** No `dependabot.yml`, no Renovate. With item 11, security drift is entirely manual.
+
+**11. 11 high-severity dev-tooling advisories — `M`.** eslint and vite-plugin-dts; the only offered fixes are semver-major downgrades of next/eslint. Needs a considered look, not `npm audit fix`. Dev-only, so it doesn't reach consumers — but it lights up any org's scanner.
+
+**12. No Node version pinning — `S`.** No `engines` field, no `.nvmrc`. CI runs Node 24; a contributor on an older Node gets a confusing failure instead of a clear one.
+
+**13. No CONTRIBUTING.md — `S`.** Low value while solo; real value as a portfolio artifact and as practice for the contribution model any enterprise DS lives or dies by.
+
+**14. No coverage reporting — `S`.** `@vitest/coverage-v8` is installed but no script uses it. Coverage is a weak signal for a component library (render tests inflate it), so this is genuinely optional — noted so the unused dependency isn't mistaken for an oversight.
+
+### Design system substance
+
+**15. `Table` has no sorting, selection, or row-expansion props — `L`.** Flagged in the Astryx gap analysis as *arguably higher impact than any new component*, being an enhancement to something already used rather than a new registry entry. Especially relevant to payroll/HR-shaped products, which are mostly dense tables.
+
+**16. Remaining component gaps — `M` each.** From the 2026-07-23 re-rank, after the top 5 shipped: Stepper/Wizard, NumberInput, AvatarGroup, Kbd, Toolbar. Honorable mentions: StatusDot, DateRangeInput, TreeList, HoverCard, VisuallyHidden.
+
+**17. JS-driven motion timings still hardcoded — `S`.** CSS motion is fully tokenized (`--motion-*`, passes 1+2 done 2026-07-23), but Tooltip delays, Toast auto-dismiss, and Carousel autoplay remain TS constants. The remaining pass exports durations from a TS module reading the same scale, so the two can't diverge. (The `.animate-in` reduced-motion rule is **not** redundant — keep it.)
+
+**18. No `--chart-series-{n}` token set — `M`.** Ordered chart series colours have no formal token set, so a chart author picks by hand. The last unsystematised corner of the colour system.
+
+**23. Action-colour contrast — the deferred AA criteria — `M` · design decision.**
+Split out of [item 6](#6-flip-a11y-from-report-only-to-failing--m) on 2026-07-27 because it is the only part of AA that changes how the site looks, and it deserves unhurried iteration rather than being rushed under a red build.
+
+Measured 2026-07-27, light theme:
+
+| Pair | Ratio | |
+|---|---|---|
+| Primary CTA label — `#CFEAF3` on `#118AB2` | **3.15** | ❌ fails AA |
+| Teal as text on white — `#118AB2` on `#FFF` | **3.96** | ❌ fails AA |
+| Tertiary text on tertiary container — `#6D6D6D` on `#BCBCBC` | **2.72** | ❌ fails outright |
+| Body / secondary / tertiary text on white | 20.4 / 13.2 / 5.2 | ✅ |
+| All five status variants | 10.7–16.1 | ✅ |
+| CTA label on `teal-08` (current hover) | 4.59 | ✅ |
+
+Button labels are 16px/500 — normal text, so there is no large-text exemption at 3:1. **Even pure white on `#118AB2` is 3.96**, so recolouring the label cannot reach AA; the fill has to darken. Dark mode uses the same `teal-07`/`teal-02` pair and fails identically.
+
+**Focus rings are unaffected** — non-text contrast needs only 3:1, and `#118AB2` on white is 3.96. The focus-ring use of the action colour passes as-is.
+
+Options when this comes up:
+1. **Shift the button ramp one step** — `bg: teal-08 (#0E6E8F)`, hover `teal-09`, active `teal-10` (all four primitives already exist). Label reaches 4.59. **Cost:** a visibly deeper CTA, and `#118AB2` is named as *the* action colour in `design.md` and `CLAUDE.md` — updating that prose is part of the change.
+2. **Keep `#118AB2` permanently, document the deviation** — the button *shape* passes the 3:1 UI-component bar; only the label fails. This is the status quo made explicit rather than temporary.
+3. **Cheap partial, independent of the above:** label `#CFEAF3` → white takes 3.15 → 3.96. Short of AA but a strict improvement and visually near-imperceptible. Worth doing whenever, under any option.
+
+The tertiary-on-tertiary failure (2.72) has no design tension — straight fix, and likely a rare combination. It could ship with item 6 rather than waiting.
+
+**Sequence before [item 5](#5-visual-regression-via-chromatic--m--requested-2026-07-27) if possible** — darkening the teal after visual baselines are accepted means re-accepting every snapshot containing a button.
+
+*Scope: 13 hand-picked pairs, light theme only. Axe evaluates the combinations that actually render, so expect pairs not listed here once `color-contrast` is re-enabled.*
+
+**25. Staged publishing — make a botched release recoverable — `S` · noted 2026-07-27.**
+The `release` skill opens by saying this is the one workflow where a mistake is permanent: npm never lets a version number be reused, so a bad publish burns it forever. npm's **staged publishing** directly addresses that — `npm stage publish` uploads the version to a holding area where it can be inspected and then promoted or **discarded**, instead of going straight live.
+
+Turning it on means: tick `Allow npm stage publish` on the trusted-publisher registration (currently `npm publish` only — deliberately, since the workflow doesn't use it), swap the publish step, and add a promote step plus a decision point. The `release` skill's step 5 would gain an inspect-then-promote beat.
+
+Worth doing before any release that changes the public API, which is exactly the shape of `0.2.0`. Deferred out of [item 3](#3-npm-trusted-publishing-oidc-migration--s--code-done-2026-07-27-blocked-on-rob) to keep the OIDC migration a single-variable change — proving OIDC and changing the publish command at the same time would make a failure ambiguous.
+
+**24. Checkbox and RadioButton are divs, not native inputs — `M` · found 2026-07-27 during the B1 pass.**
+Both render `<div role="checkbox">` / `<div role="radio">` with hand-rolled click and keydown handlers rather than `<input type="checkbox">` / `<input type="radio">`. Consequences:
+- They cannot participate in **native form submission** — a plain `<form>` will not include their values.
+- Form libraries cannot register them the standard way; `onCheckedChange` / `onValueChange` is the only integration path.
+- `RadioButton` declared a `name` prop that was **never destructured**, so `RadioGroup` passing `name={name}` silently discarded it. Radio grouping by name has never worked; grouping happens purely through React state in `RadioGroup`. `name` is now explicitly marked `@deprecated` and no-op rather than quietly ignored.
+
+The fix is a visually-identical swap to a visually-hidden native input paired with the existing styled box (the standard pattern), which also gets keyboard behaviour, form participation, and `:checked` styling for free. Deferred out of the B1 pass because it changes DOM structure and therefore needs its own visual check.
+
+**19. New AI-surface component patterns — `M`/`L` · new.** Nothing in the registry covers streaming text, citation chips, agent progress / step disclosure, confidence or uncertainty display, or reversible-action approval. No mainstream design system has good answers here yet, which makes it the most *differentiating* thing this system could add — and directly relevant to the work starting Aug 3. Distinct from Workstream A: that makes the system legible **to** agents; this is UI **for** agent-driven products.
+
+### Verification
+
+**20. RadialChart legend never renders — `S` · verify first.** Found 2026-07-21 (Recharts v3 + custom Legend payload). May already be fixed; may also be a hidden-pane false negative. Confirm with a screenshot before spending time on it.
+
+**21. `merge-and-push` masks verify failures — `S`.** The skill pipes verify through `tail`, so it captures `tail`'s exit code, not verify's. This masked two red builds on 2026-07-26.
+
+**22. No web-vitals or Lighthouse budget on the website — `M`.** The site is the system's shopfront and has no performance regression guard.
+
+---
+
+## PARKED
+
+**`fix/resize-flicker-2`** — resize-flicker branch on hold; round-4 leads recorded in the blur-flicker notes. The related scroll-blanking fix (pixel-matched gradient swap for `blur(80px)`, ≥1280px only) shipped to `main` on 2026-07-21 and still awaits a scroll verdict.
+
+## REJECTED — kept so they aren't re-proposed
+
+- **A full `/docs` section** — too large and duplicative; the naming-only rename shipped 2026-07-20 instead.
+- **Mirroring `design.md` wholesale onto the Storybook homepage** — wrong shape. 687 lines / 68K with 82 per-component spec sections Storybook already covers via autodocs; the two files do different jobs (authoring spec vs. visitor orientation), and `sync-blueprints.mjs` already publishes `design.md` verbatim at `/blueprints/design`. The salvageable instinct became the thorough tier of item 4.
+- **MCP server for the design system** — dense `.md` endpoints + package subpaths cover the need (Workstream A).
+- **i18n / RTL support** — out of scope for a personal system.
+- **Multi-framework ports** (Vue, Svelte) — out of scope.
+- **Refactoring `AlertDialog` onto `Dialog`** — deliberately kept separate.
+- **Astryx's Chat component category** — Meta-product-specific. (Item 19 revisits the *AI surface* problem from first principles, which is a different question.)
+
+---
+
+## Sequencing
+
+Revised 2026-07-27 after the architecture review. The governing insight: **the meta-layer is ahead of the component layer, and three planned items would freeze the component layer as-is** (item 2 locks the API surface; Workstream A Phase 2 publishes contracts describing it; Phase 3 generates 56 markdown docs from those contracts). Fix the shape before capturing it.
+
+### The single-pass principle
+
+Items **1** (`'use client'`), **B1** (refs / rest / native attrs), **B2** (`state` → `disabled`), and **B5** (naming) all mean *touching every component's signature once*. Do them as one pass, not four. That pass ships as `0.2.0`, entirely additive.
+
+### Order for the next few days
+
+| # | Work | Why here |
+|---|---|---|
+| 1 | **B1 + B2 + B5 + item 1**, as one signature pass | Additive, unblocks everything downstream, and stops the wrong API hardening into a contract |
+| 2 | **item 3** — Trusted Publishing | Independent of everything; external expiry clock |
+| 3 | **item 4-cheap** — Storybook install docs | One hour; fixes the surface strangers see |
+| 4 | **B3** — `Field` primitive | Makes the a11y phase collapse from 11 fixes to 1 |
+| 5 | **item 6** — a11y to `'error'`, **AA minus contrast** | Now tractable; entirely invisible work; must precede any visual baseline |
+| 6 | **Workstream A Phase 1** — registry metadata | Delivers the de-duplication payoff alone; natural home for item 1's `client` flag |
+| 7 | **Workstream A Phase 2** — prop contracts | Now describes the *good* API |
+| 8 | **item 2** — API-surface validator | Now freezes the right thing |
+| 9 | **item 5** — Chromatic | After a11y, so baselines survive |
+| 10 | **Workstream A Phase 3** — dense `.md` docs | Last; generated from settled contracts |
+
+**B4** (`children` over `label`) and **B6** (`asChild`) are larger and can run in parallel or slip — but adopt B4's rule for any *new* component starting now.
+
+### Dependencies, stated plainly
+
+- **B1/B2 before item 2** — the validator's job is preventing change; don't point it at an API you still intend to change.
+- **B1/B2 before Workstream A Phase 2** — contracts generated from the current API document the closed prop surfaces as if they were intentional.
+- **B3 before item 6** — *preference, not a dependency.* The 07-27 axe run found only one label-association violation (FileInput), so B3 is not required to clear item 6's list. Doing it first still avoids re-touching the form components twice.
+- **Item 6 before item 5** — a11y fixes move pixels; baselines accepted first all need re-accepting.
+- **Item 23 before item 5, if it happens at all** — darkening the action colour after baselines are accepted means re-accepting every snapshot with a button in it. Item 23 is deliberately unscheduled, so if it slips past Chromatic, accept the re-baseline cost knowingly rather than by surprise.
+- **A-Phase 2 before item 2** — `props.json` turns the validator into a diff of two committed files rather than a second TS-extraction implementation.
+
+---
+
+## Site IA — an open question, not a task
+
+The website currently carries ~14 top-level surfaces serving three different jobs:
+
+- **The design system** — components, foundations, customization, blueprints, docs
+- **The portfolio** — work, writing, about, contact, rr-animated
+- **The build meta** — project-journal, loops, skills, overview
+
+Two audiences with opposite needs are interleaved: someone evaluating *the component library* and someone evaluating *the person who built it*. Neither gets a clean path, and the front door doesn't declare which one it serves.
+
+This isn't a defect to fix — it's a decision to make deliberately. The strongest version is probably: the system **is** the portfolio piece, so let it own the front door and put the personal surfaces behind a single clearly-named entrance. Recorded here so it gets decided rather than accreted.
