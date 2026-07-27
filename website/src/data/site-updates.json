@@ -34,7 +34,7 @@
       "title": "Closing the gaps: motion, icons, and the last undocumented components",
       "body": [
         "Two dimensions of the token system had never been formalised. Motion was scattered literal timings; it is now twelve duration and easing tokens with a reduced-motion guard, and every hardcoded timing in the library and the site was migrated onto them. Icons had a subtler problem: sizing them by font size alone let the glyph and its box disagree. A four-step icon scale now drives size and box together, and because the scale starts at twenty pixels it stays inside the range where the icon font’s optical sizing actually works. Both got their own foundations pages, alongside a new one for elevation.",
-        "Five components joined the library — Combobox, Drawer, EmptyState, CommandPalette, and FileInput — and a documentation debt got paid off: twenty-seven components had no written specification, and now none do. A build check compares the component registry against the website, so a component can no longer exist without its page, its navigation entry, and its spec."
+        "Five components joined the library — Combobox, Drawer, EmptyState, CommandPalette, and FileInput — and a documentation debt got paid off: 27 components had no written specification, and now none do. A build check compares the component registry against the website, so a component can no longer exist without its page, its navigation entry, and its spec."
       ]
     },
     {
