@@ -4,7 +4,7 @@ import '../../fonts/material-symbols.css';
 export interface ContactCardProps {
   /** Primary label — e.g. "Email" */
   label: string;
-  /** Visible value or description — e.g. "rob.ritacca@gmail.com" */
+  /** Visible value or description — e.g. "hello@example.com" */
   value: string;
   /** Link destination */
   href: string;
