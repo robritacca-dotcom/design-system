@@ -4,19 +4,25 @@ name: Release
 # default. The publish happens FROM dist/ (its generated package.json is
 # the one that ships; the root manifest stays private and never publishes).
 #
-# Setup is complete: the @robr0 scope belongs to the robr0 npm account and
-# NPM_TOKEN is set as a repo secret. 0.1.0 shipped 2026-07-26.
+# AUTH: Trusted Publishing (OIDC). There is no npm token. GitHub mints a
+# short-lived OIDC token for this workflow, and npm accepts it because this
+# repo + workflow filename are registered as a trusted publisher on the
+# package's npmjs.com settings page. Consequences worth knowing:
+#   - `permissions: id-token: write` below is load-bearing — without it the
+#     publish fails to authenticate, not just to attach provenance.
+#   - The trusted-publisher registration is keyed to THIS FILENAME
+#     (release.yml). Renaming or moving this file breaks publishing until
+#     the registration is updated on npmjs.com.
+#   - Provenance is signed automatically under OIDC; --provenance is kept
+#     explicit below so the intent is visible in the log.
+#   - A dry run never authenticates, so it cannot prove OIDC works. The only
+#     proof is a real publish.
 #
 # To cut a release, follow the `release` skill (.claude/skills/release):
 # bump PACKAGE_VERSION in scripts/package-manifest.mjs, dry-run, run for
 # real, then tag the published commit.
 #
-# NPM_TOKEN is a granular token WITH AN EXPIRY — when it lapses this
-# workflow fails at the publish step with a 401. npm is also deprecating
-# 2FA-bypass tokens for direct publishing (Jan 2027), so the durable fix is
-# Trusted Publishing (OIDC): `id-token: write` is already set below, so the
-# migration is mostly deleting the token and registering this workflow as a
-# trusted publisher on npmjs.com.
+# 0.1.0 shipped 2026-07-26 using a granular NPM_TOKEN; that token is retired.
 
 on:
   workflow_dispatch:
@@ -28,7 +34,7 @@ on:
 
 permissions:
   contents: read
-  id-token: write # npm --provenance
+  id-token: write # Required for Trusted Publishing (OIDC) AND provenance
 
 jobs:
   release:
@@ -40,6 +46,14 @@ jobs:
           node-version: 24
           cache: npm
           registry-url: https://registry.npmjs.org
+      # Trusted Publishing needs npm >= 11.5.1. Node 24 does not ship a new
+      # enough npm on every patch release, and an older CLI fails to exchange
+      # the OIDC token rather than falling back gracefully — so pin it forward
+      # explicitly instead of trusting whatever the runner happens to bundle.
+      - name: Ensure npm supports Trusted Publishing
+        run: |
+          npm install -g npm@latest
+          npm --version
       - run: npm ci
       - run: npm run lint
       - run: npm run build
@@ -52,8 +66,6 @@ jobs:
         if: ${{ !inputs.dry_run }}
         working-directory: dist
         run: npm publish --access public --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Dry-run publish preview
         if: ${{ inputs.dry_run }}
         working-directory: dist
