@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import './Avatar.css';
 import '../../fonts/material-symbols.css';

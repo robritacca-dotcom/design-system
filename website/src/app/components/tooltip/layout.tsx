@@ -1,9 +1,8 @@
-import { pageMetadata } from "@/config/navigation";
+import { componentPageMetadata } from "@/config/navigation";
 
-export const metadata = pageMetadata(
-  "/components/tooltip",
-  "Contextual text label that appears on hover or focus with position and delay options."
-);
+// Title and description come from src/components/registry.json — the single
+// place a component's one-line summary lives.
+export const metadata = componentPageMetadata("tooltip");
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;

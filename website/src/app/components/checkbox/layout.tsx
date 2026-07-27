@@ -1,9 +1,8 @@
-import { pageMetadata } from "@/config/navigation";
+import { componentPageMetadata } from "@/config/navigation";
 
-export const metadata = pageMetadata(
-  "/components/checkbox",
-  "Custom checkbox with check and indeterminate states, keyboard accessible with animated transitions."
-);
+// Title and description come from src/components/registry.json — the single
+// place a component's one-line summary lives.
+export const metadata = componentPageMetadata("checkbox");
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;

@@ -1,3 +1,5 @@
+'use client';
+
 import './Pagination.css';
 import '../../fonts/material-symbols.css';
 

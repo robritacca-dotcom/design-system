@@ -35,7 +35,7 @@ const importsRecharts = (path) =>
 
 const mainLines = [];
 const chartLines = [];
-for (const name of [...registry.components].sort()) {
+for (const { name } of [...registry.components].sort((a, b) => a.name.localeCompare(b.name))) {
   const modules = readdirSync(join(componentsDir, name))
     .filter((f) => f.endsWith('.tsx') && !f.endsWith('.stories.tsx'))
     .sort();

@@ -1,9 +1,8 @@
-import { pageMetadata } from "@/config/navigation";
+import { componentPageMetadata } from "@/config/navigation";
 
-export const metadata = pageMetadata(
-  "/components/dialog",
-  "A general-purpose modal for focused tasks, with sizes, an optional footer, and full focus management."
-);
+// Title and description come from src/components/registry.json — the single
+// place a component's one-line summary lives.
+export const metadata = componentPageMetadata("dialog");
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;

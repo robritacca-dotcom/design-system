@@ -24,14 +24,6 @@ import { PACKAGE_NAME } from './package-manifest.mjs';
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
 const readmePath = join(repoRoot, 'README.md');
 
-/** "AlertDialog" -> "Alert dialog" (first word keeps its case). */
-const displayName = (folder) =>
-  folder
-    .replace(/(?<=[a-z0-9])(?=[A-Z])/g, ' ')
-    .split(' ')
-    .map((word, i) => (i === 0 ? word : word.toLowerCase()))
-    .join(' ');
-
 const registry = JSON.parse(
   readFileSync(join(repoRoot, 'src', 'components', 'registry.json'), 'utf8')
 );
@@ -67,7 +59,7 @@ readme = readme.replace(
 );
 readme = readme.replace(
   listMarker,
-  `$1${registry.components.map(displayName).join(' · ')}$2`
+  `$1${registry.components.map((c) => c.label).join(' · ')}$2`
 );
 
 // The npm badge encodes the package name twice (shield + link), so it is

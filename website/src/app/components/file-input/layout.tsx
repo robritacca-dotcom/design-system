@@ -1,9 +1,8 @@
-import { pageMetadata } from "@/config/navigation";
+import { componentPageMetadata } from "@/config/navigation";
 
-export const metadata = pageMetadata(
-  "/components/file-input",
-  "A click-or-drop upload zone paired with a controlled file list showing size, progress, and per-file errors."
-);
+// Title and description come from src/components/registry.json — the single
+// place a component's one-line summary lives.
+export const metadata = componentPageMetadata("file-input");
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;

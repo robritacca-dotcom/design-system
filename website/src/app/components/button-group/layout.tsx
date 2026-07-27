@@ -1,9 +1,8 @@
-import { pageMetadata } from "@/config/navigation";
+import { componentPageMetadata } from "@/config/navigation";
 
-export const metadata = pageMetadata(
-  "/components/button-group",
-  "Horizontal and vertical button group layouts for related actions and navigation patterns."
-);
+// Title and description come from src/components/registry.json — the single
+// place a component's one-line summary lives.
+export const metadata = componentPageMetadata("button-group");
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;

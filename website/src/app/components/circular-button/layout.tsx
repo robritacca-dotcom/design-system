@@ -1,9 +1,8 @@
-import { pageMetadata } from "@/config/navigation";
+import { componentPageMetadata } from "@/config/navigation";
 
-export const metadata = pageMetadata(
-  "/components/circular-button",
-  "Round icon button with primary and secondary variants, default and compact sizes."
-);
+// Title and description come from src/components/registry.json — the single
+// place a component's one-line summary lives.
+export const metadata = componentPageMetadata("circular-button");
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;

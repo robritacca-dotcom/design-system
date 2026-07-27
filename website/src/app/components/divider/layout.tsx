@@ -1,9 +1,8 @@
-import { pageMetadata } from "@/config/navigation";
+import { componentPageMetadata } from "@/config/navigation";
 
-export const metadata = pageMetadata(
-  "/components/divider",
-  "A thin rule separating stacked content, with optional inline label and vertical orientation."
-);
+// Title and description come from src/components/registry.json — the single
+// place a component's one-line summary lives.
+export const metadata = componentPageMetadata("divider");
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useCallback } from 'react';
 import { AppSidebar } from '../AppSidebar/AppSidebar';
 import type { AppSidebarSection, AppSidebarProfile } from '../AppSidebar/AppSidebar';

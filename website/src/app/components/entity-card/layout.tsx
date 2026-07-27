@@ -1,9 +1,8 @@
-import { pageMetadata } from "@/config/navigation";
+import { componentPageMetadata } from "@/config/navigation";
 
-export const metadata = pageMetadata(
-  "/components/entity-card",
-  "Compact display-only card with a centred icon or image and a label — powers the Icons and Logos galleries."
-);
+// Title and description come from src/components/registry.json — the single
+// place a component's one-line summary lives.
+export const metadata = componentPageMetadata("entity-card");
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;

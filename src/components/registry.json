@@ -1,63 +1,472 @@
 {
   "$comment": "SINGLE SOURCE OF TRUTH for the public component count. Every folder in src/components must appear in exactly one of these lists; scripts/validate-component-registry.mjs enforces this at build time. Import COMPONENT_COUNT from src/components/registry.ts wherever a count is displayed - never hardcode the number.",
+  "categories": [
+    "actions",
+    "charts",
+    "data-display",
+    "feedback",
+    "forms",
+    "layout",
+    "navigation",
+    "overlays"
+  ],
   "components": [
-    "Accordion",
-    "Alert",
-    "AlertDialog",
-    "AppLayout",
-    "AppSidebar",
-    "Avatar",
-    "Badge",
-    "Breadcrumb",
-    "Button",
-    "ButtonGroup",
-    "Card",
-    "Carousel",
-    "Chart",
-    "Checkbox",
-    "Chip",
-    "CircularButton",
-    "CodeBlock",
-    "Combobox",
-    "CommandPalette",
-    "ContactCard",
-    "ContributionGraph",
-    "DateInput",
-    "DatePicker",
-    "Dialog",
-    "Divider",
-    "Drawer",
-    "Dropdown",
-    "DropdownMenu",
-    "EmptyState",
-    "EntityCard",
-    "Field",
-    "Figure",
-    "FileInput",
-    "Input",
-    "Instructions",
-    "LinkList",
-    "Nav",
-    "Pagination",
-    "Popover",
-    "ProgressBar",
-    "Quote",
-    "RadioButton",
-    "SectionTitle",
-    "SegmentedControl",
-    "SelectionCard",
-    "Skeleton",
-    "Slider",
-    "Spinner",
-    "Stat",
-    "Table",
-    "Tabs",
-    "Textarea",
-    "Timeline",
-    "Toast",
-    "ToggleGroup",
-    "ToggleSwitch",
-    "Tooltip"
+    {
+      "name": "Accordion",
+      "label": "Accordion",
+      "slug": "accordion",
+      "description": "Collapsible content sections for organising related information.",
+      "category": "data-display",
+      "client": true
+    },
+    {
+      "name": "Alert",
+      "label": "Alert",
+      "slug": "alert",
+      "description": "Contextual feedback with status variants, optional dismiss, and compact sizing.",
+      "category": "feedback",
+      "client": false
+    },
+    {
+      "name": "AlertDialog",
+      "label": "Alert dialog",
+      "slug": "alert-dialog",
+      "description": "Modal confirmation overlay with title, description, and confirm / cancel actions.",
+      "category": "overlays",
+      "client": true
+    },
+    {
+      "name": "AppLayout",
+      "label": "App layout",
+      "slug": "app-layout",
+      "description": "Full-page template pairing the collapsible App sidebar with a centred content area.",
+      "category": "layout",
+      "client": true
+    },
+    {
+      "name": "AppSidebar",
+      "label": "App sidebar",
+      "slug": "app-sidebar",
+      "description": "Collapsible navigation rail with accordion sub-items, category headings, and profile section.",
+      "category": "layout",
+      "client": true
+    },
+    {
+      "name": "Avatar",
+      "label": "Avatar",
+      "slug": "avatar",
+      "description": "User profile image with initials and icon fallback, status indicator, and multiple sizes.",
+      "category": "data-display",
+      "client": true
+    },
+    {
+      "name": "Badge",
+      "label": "Badge",
+      "slug": "badge",
+      "description": "Small inline status labels with info, positive, warning, error, and neutral variants.",
+      "category": "data-display",
+      "client": false
+    },
+    {
+      "name": "Breadcrumb",
+      "label": "Breadcrumb",
+      "slug": "breadcrumb",
+      "description": "Hierarchical navigation trail showing the user's location within the site.",
+      "category": "navigation",
+      "client": false
+    },
+    {
+      "name": "Button",
+      "label": "Button",
+      "slug": "button",
+      "description": "Primary and secondary button variants in default and compact sizes, with icon support and multiple states.",
+      "category": "actions",
+      "client": true
+    },
+    {
+      "name": "ButtonGroup",
+      "label": "Button group",
+      "slug": "button-group",
+      "description": "Horizontal and vertical button group layouts for related actions and navigation patterns.",
+      "category": "actions",
+      "client": false
+    },
+    {
+      "name": "Card",
+      "label": "Card",
+      "slug": "card",
+      "description": "Card components for previews, navigation, and token documentation \u2014 from content cards to colour swatches and typography specimens.",
+      "category": "data-display",
+      "client": true
+    },
+    {
+      "name": "Carousel",
+      "label": "Carousel",
+      "slug": "carousel",
+      "description": "Sliding content viewer with navigation arrows, dot indicators, auto-play, and keyboard support.",
+      "category": "data-display",
+      "client": true
+    },
+    {
+      "name": "Chart",
+      "label": "Chart",
+      "slug": "chart",
+      "description": "Data visualisation components built on Recharts. Includes bar, line, pie, and radial chart types with design-system token integration.",
+      "category": "charts",
+      "client": false
+    },
+    {
+      "name": "Checkbox",
+      "label": "Checkbox",
+      "slug": "checkbox",
+      "description": "Custom checkbox with check and indeterminate states, keyboard accessible with animated transitions.",
+      "category": "forms",
+      "client": true
+    },
+    {
+      "name": "Chip",
+      "label": "Chip",
+      "slug": "chip",
+      "description": "Compact pills for attributes, filters, and inline metadata.",
+      "category": "data-display",
+      "client": false
+    },
+    {
+      "name": "CircularButton",
+      "label": "Circular button",
+      "slug": "circular-button",
+      "description": "Round icon button with primary and secondary variants, default and compact sizes.",
+      "category": "actions",
+      "client": false
+    },
+    {
+      "name": "CodeBlock",
+      "label": "Code block",
+      "slug": "code-block",
+      "description": "Monospace code with a header and one-click copy.",
+      "category": "data-display",
+      "client": true
+    },
+    {
+      "name": "Combobox",
+      "label": "Combobox",
+      "slug": "combobox",
+      "description": "A filterable select that narrows options as you type, with multi-select chips, grouping, and async loading.",
+      "category": "forms",
+      "client": true
+    },
+    {
+      "name": "CommandPalette",
+      "label": "Command palette",
+      "slug": "command-palette",
+      "description": "A modal Cmd+K launcher that searches a grouped command list, with keyboard navigation and shortcut hints.",
+      "category": "overlays",
+      "client": true
+    },
+    {
+      "name": "ContactCard",
+      "label": "Contact card",
+      "slug": "contact-card",
+      "description": "Linked contact method with icon, label, and value.",
+      "category": "data-display",
+      "client": true
+    },
+    {
+      "name": "ContributionGraph",
+      "label": "Contribution graph",
+      "slug": "contribution-graph",
+      "description": "A year of activity, one cell per day.",
+      "category": "charts",
+      "client": false
+    },
+    {
+      "name": "DateInput",
+      "label": "Date input",
+      "slug": "date-input",
+      "description": "Date input with native picker, calendar icon, label, and validation states.",
+      "category": "forms",
+      "client": true
+    },
+    {
+      "name": "DatePicker",
+      "label": "Date picker",
+      "slug": "date-picker",
+      "description": "Inline calendar with month navigation, day selection, and today indicator.",
+      "category": "forms",
+      "client": true
+    },
+    {
+      "name": "Dialog",
+      "label": "Dialog",
+      "slug": "dialog",
+      "description": "A general-purpose modal for focused tasks, with sizes, an optional footer, and full focus management.",
+      "category": "overlays",
+      "client": true
+    },
+    {
+      "name": "Divider",
+      "label": "Divider",
+      "slug": "divider",
+      "description": "A thin rule separating stacked content, with optional inline label and vertical orientation.",
+      "category": "layout",
+      "client": false
+    },
+    {
+      "name": "Drawer",
+      "label": "Drawer",
+      "slug": "drawer",
+      "description": "An edge-anchored modal panel that slides in from any side, for filter panels, detail views, and mobile navigation.",
+      "category": "overlays",
+      "client": true
+    },
+    {
+      "name": "Dropdown",
+      "label": "Dropdown",
+      "slug": "dropdown",
+      "description": "Custom select dropdown with keyboard navigation, disabled options, and error states.",
+      "category": "forms",
+      "client": true
+    },
+    {
+      "name": "DropdownMenu",
+      "label": "Dropdown menu",
+      "slug": "dropdown-menu",
+      "description": "Contextual menu with sections, sub-menus, keyboard shortcuts, and inset-gap hover styling.",
+      "category": "overlays",
+      "client": true
+    },
+    {
+      "name": "EmptyState",
+      "label": "Empty state",
+      "slug": "empty-state",
+      "description": "The placeholder for a list, table, or search with nothing to show \u2014 icon, headline, guidance, and a next action.",
+      "category": "feedback",
+      "client": false
+    },
+    {
+      "name": "EntityCard",
+      "label": "Entity card",
+      "slug": "entity-card",
+      "description": "Compact display-only card with a centred icon or image and a label \u2014 powers the Icons and Logos galleries.",
+      "category": "data-display",
+      "client": false
+    },
+    {
+      "name": "Field",
+      "label": "Field",
+      "slug": "field",
+      "description": "The shared scaffolding for labelled form controls \u2014 label, required marker, helper and error text, and the ARIA wiring that ties them together.",
+      "category": "forms",
+      "client": true
+    },
+    {
+      "name": "Figure",
+      "label": "Figure",
+      "slug": "figure",
+      "description": "Images with captions, in the case-study frame.",
+      "category": "data-display",
+      "client": false
+    },
+    {
+      "name": "FileInput",
+      "label": "File input",
+      "slug": "file-input",
+      "description": "A click-or-drop upload zone paired with a controlled file list showing size, progress, and per-file errors.",
+      "category": "forms",
+      "client": true
+    },
+    {
+      "name": "Input",
+      "label": "Input",
+      "slug": "input",
+      "description": "Text input with label, placeholder, left and right icons, helper text, and error states.",
+      "category": "forms",
+      "client": true
+    },
+    {
+      "name": "Instructions",
+      "label": "Instructions",
+      "slug": "instructions",
+      "description": "Step-by-step guidance with numbered badges, connecting lines, and horizontal layout.",
+      "category": "data-display",
+      "client": false
+    },
+    {
+      "name": "LinkList",
+      "label": "Link list",
+      "slug": "link-list",
+      "description": "Linked items with logo, label, and subtitle.",
+      "category": "data-display",
+      "client": false
+    },
+    {
+      "name": "Nav",
+      "label": "Navigation",
+      "slug": "navigation",
+      "description": "Desktop and mobile navigation components including top-level nav bar, collapsed mobile bar, and hamburger slide-out menu.",
+      "category": "navigation",
+      "client": false
+    },
+    {
+      "name": "Pagination",
+      "label": "Pagination",
+      "slug": "pagination",
+      "description": "Numbered page navigation for long datasets, with ellipses, disabled end arrows, and a compact readout mode.",
+      "category": "navigation",
+      "client": true
+    },
+    {
+      "name": "Popover",
+      "label": "Popover",
+      "slug": "popover",
+      "description": "Contextual overlay panel with click and hover triggers, positioned relative to its anchor.",
+      "category": "overlays",
+      "client": true
+    },
+    {
+      "name": "ProgressBar",
+      "label": "Progress bar",
+      "slug": "progress-bar",
+      "description": "Horizontal bar indicating completion progress with status variants and optional label.",
+      "category": "feedback",
+      "client": false
+    },
+    {
+      "name": "Quote",
+      "label": "Quote",
+      "slug": "quote",
+      "description": "Blockquotes and pull-quotes with attribution.",
+      "category": "data-display",
+      "client": false
+    },
+    {
+      "name": "RadioButton",
+      "label": "Radio button",
+      "slug": "radio-button",
+      "description": "Radio button and radio group with vertical and horizontal layouts, animated dot indicator.",
+      "category": "forms",
+      "client": true
+    },
+    {
+      "name": "SectionTitle",
+      "label": "Section title",
+      "slug": "section-title",
+      "description": "Heading with a divider line and optional trailing content for organising page sections.",
+      "category": "layout",
+      "client": false
+    },
+    {
+      "name": "SegmentedControl",
+      "label": "Segmented control",
+      "slug": "segmented-control",
+      "description": "Pill-style toggle between related views with keyboard navigation and icon support.",
+      "category": "actions",
+      "client": true
+    },
+    {
+      "name": "SelectionCard",
+      "label": "Selection card",
+      "slug": "selection-card",
+      "description": "Large selectable option cards with radio or checkbox indicators for high-visibility choices like settings and onboarding.",
+      "category": "data-display",
+      "client": true
+    },
+    {
+      "name": "Skeleton",
+      "label": "Skeleton",
+      "slug": "skeleton",
+      "description": "Placeholder loading indicators with text, circular, and rectangular variants.",
+      "category": "feedback",
+      "client": false
+    },
+    {
+      "name": "Slider",
+      "label": "Slider",
+      "slug": "slider",
+      "description": "Range input for selecting a value within a given range with default and compact sizes.",
+      "category": "forms",
+      "client": true
+    },
+    {
+      "name": "Spinner",
+      "label": "Spinner",
+      "slug": "spinner",
+      "description": "Animated circular loading indicator available in three sizes and primary or neutral variants.",
+      "category": "feedback",
+      "client": false
+    },
+    {
+      "name": "Stat",
+      "label": "Stat",
+      "slug": "stat",
+      "description": "Headline metrics with labels and trend deltas.",
+      "category": "data-display",
+      "client": false
+    },
+    {
+      "name": "Table",
+      "label": "Table",
+      "slug": "table",
+      "description": "Data table with flexible cell content, striped rows, compact sizing, and support for icons, inputs, buttons, and interactive controls.",
+      "category": "data-display",
+      "client": false
+    },
+    {
+      "name": "Tabs",
+      "label": "Tabs",
+      "slug": "tabs",
+      "description": "Tab navigation with underline indicator, icon support, compact size, and full-width mode.",
+      "category": "navigation",
+      "client": true
+    },
+    {
+      "name": "Textarea",
+      "label": "Textarea",
+      "slug": "textarea",
+      "description": "Multi-line text input with character counter, resize control, helper text, and error states.",
+      "category": "forms",
+      "client": true
+    },
+    {
+      "name": "Timeline",
+      "label": "Timeline",
+      "slug": "timeline",
+      "description": "Ordered sequences \u2014 histories and steppers.",
+      "category": "data-display",
+      "client": false
+    },
+    {
+      "name": "Toast",
+      "label": "Toast",
+      "slug": "toast",
+      "description": "Temporary notification with status variants, auto-dismiss, and stacking via ToastProvider.",
+      "category": "feedback",
+      "client": true
+    },
+    {
+      "name": "ToggleGroup",
+      "label": "Toggle group",
+      "slug": "toggle-group",
+      "description": "A set of two-state buttons that can be toggled on or off, supporting text and icon items.",
+      "category": "actions",
+      "client": true
+    },
+    {
+      "name": "ToggleSwitch",
+      "label": "Toggle switch",
+      "slug": "toggle-switch",
+      "description": "Binary on/off toggle control with sliding thumb and check indicator, used for settings like theme switching.",
+      "category": "forms",
+      "client": true
+    },
+    {
+      "name": "Tooltip",
+      "label": "Tooltip",
+      "slug": "tooltip",
+      "description": "Contextual text label that appears on hover or focus with position and delay options.",
+      "category": "overlays",
+      "client": true
+    }
   ],
   "docOnlyHelpers": [
     "ColourSwatch",

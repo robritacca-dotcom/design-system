@@ -1,9 +1,8 @@
-import { pageMetadata } from "@/config/navigation";
+import { componentPageMetadata } from "@/config/navigation";
 
-export const metadata = pageMetadata(
-  "/components/input",
-  "Text input with label, placeholder, left and right icons, helper text, and error states."
-);
+// Title and description come from src/components/registry.json — the single
+// place a component's one-line summary lives.
+export const metadata = componentPageMetadata("input");
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;

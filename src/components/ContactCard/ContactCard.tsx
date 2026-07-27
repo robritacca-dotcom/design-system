@@ -1,3 +1,5 @@
+'use client';
+
 import './ContactCard.css';
 import '../../fonts/material-symbols.css';
 

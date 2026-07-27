@@ -1,9 +1,8 @@
-import { pageMetadata } from "@/config/navigation";
+import { componentPageMetadata } from "@/config/navigation";
 
-export const metadata = pageMetadata(
-  "/components/command-palette",
-  "A modal Cmd+K launcher that searches a grouped command list, with keyboard navigation and shortcut hints."
-);
+// Title and description come from src/components/registry.json — the single
+// place a component's one-line summary lives.
+export const metadata = componentPageMetadata("command-palette");
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;

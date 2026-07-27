@@ -1,9 +1,8 @@
-import { pageMetadata } from "@/config/navigation";
+import { componentPageMetadata } from "@/config/navigation";
 
-export const metadata = pageMetadata(
-  "/components/slider",
-  "Range input for selecting a value within a given range with default and compact sizes."
-);
+// Title and description come from src/components/registry.json — the single
+// place a component's one-line summary lives.
+export const metadata = componentPageMetadata("slider");
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;

@@ -1,9 +1,8 @@
-import { pageMetadata } from "@/config/navigation";
+import { componentPageMetadata } from "@/config/navigation";
 
-export const metadata = pageMetadata(
-  "/components/figure",
-  "Images with captions, in the case-study frame."
-);
+// Title and description come from src/components/registry.json — the single
+// place a component's one-line summary lives.
+export const metadata = componentPageMetadata("figure");
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;

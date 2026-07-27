@@ -1,9 +1,8 @@
-import { pageMetadata } from "@/config/navigation";
+import { componentPageMetadata } from "@/config/navigation";
 
-export const metadata = pageMetadata(
-  "/components/textarea",
-  "Multi-line text input with character counter, resize control, helper text, and error states."
-);
+// Title and description come from src/components/registry.json — the single
+// place a component's one-line summary lives.
+export const metadata = componentPageMetadata("textarea");
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;

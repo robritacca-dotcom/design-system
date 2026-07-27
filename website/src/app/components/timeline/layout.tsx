@@ -1,9 +1,8 @@
-import { pageMetadata } from "@/config/navigation";
+import { componentPageMetadata } from "@/config/navigation";
 
-export const metadata = pageMetadata(
-  "/components/timeline",
-  "Ordered sequences — histories and steppers."
-);
+// Title and description come from src/components/registry.json — the single
+// place a component's one-line summary lives.
+export const metadata = componentPageMetadata("timeline");
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;

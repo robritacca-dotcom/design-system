@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect, useRef, useContext, useCallback, useSyncExternalStore, createContext, type ReactNode } from 'react';
 
 const emptySubscribe = () => () => {};

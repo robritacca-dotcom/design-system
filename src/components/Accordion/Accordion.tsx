@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useCallback } from 'react';
 import './Accordion.css';
 import '../../fonts/material-symbols.css';

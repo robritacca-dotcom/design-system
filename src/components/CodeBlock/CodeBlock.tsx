@@ -1,3 +1,5 @@
+'use client';
+
 import { useId, useState, type CSSProperties } from 'react';
 import './CodeBlock.css';
 import '../../fonts/material-symbols.css';

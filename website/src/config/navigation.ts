@@ -5,7 +5,10 @@
    ============================================ */
 
 import type { Metadata } from "next";
-import { COMPONENT_COUNT } from "@robr0/design-system/components/registry";
+import {
+  COMPONENT_COUNT,
+  componentMetadata,
+} from "@robr0/design-system/components/registry";
 
 export interface NavLink {
   href: string;
@@ -14,6 +17,8 @@ export interface NavLink {
   disabled?: boolean;
   /** Optional logo path (e.g. "/logos/Intuit.svg") rendered to the left of the label in Sidebar */
   logo?: string;
+  /** One-line summary — Sidebar's `searchable` filter matches against it too */
+  description?: string;
 }
 
 /** A row in a mega menu — provide either an `icon` (Material Symbol) or a `logo` (image path) */
@@ -89,65 +94,24 @@ export function isDesignSystemPath(pathname: string): boolean {
    SECTION SIDEBAR LINKS
    ============================================ */
 
+/**
+ * Derived from the component registry — never hand-maintained.
+ *
+ * Every entry's label, slug and description live in
+ * src/components/registry.json, so adding a component to the registry puts it
+ * in the sidebar, the sitemap, the mega-nav and the breadcrumbs at once. The
+ * alphabetical order and the nav entry itself used to be checked by
+ * validate-website-surfaces.mjs; both are now structurally guaranteed.
+ */
 export const componentsSidebarLinks: NavLink[] = [
   { href: "/components", label: "Components overview" },
-  { href: "/components/accordion", label: "Accordion" },
-  { href: "/components/alert", label: "Alert" },
-  { href: "/components/alert-dialog", label: "Alert dialog" },
-  { href: "/components/app-layout", label: "App layout" },
-  { href: "/components/app-sidebar", label: "App sidebar" },
-  { href: "/components/avatar", label: "Avatar" },
-  { href: "/components/badge", label: "Badge" },
-  { href: "/components/breadcrumb", label: "Breadcrumb" },
-  { href: "/components/button", label: "Button" },
-  { href: "/components/button-group", label: "Button group" },
-  { href: "/components/card", label: "Card" },
-  { href: "/components/carousel", label: "Carousel" },
-  { href: "/components/chart", label: "Chart" },
-  { href: "/components/checkbox", label: "Checkbox" },
-  { href: "/components/chip", label: "Chip" },
-  { href: "/components/circular-button", label: "Circular button" },
-  { href: "/components/code-block", label: "Code block" },
-  { href: "/components/combobox", label: "Combobox" },
-  { href: "/components/command-palette", label: "Command palette" },
-  { href: "/components/contact-card", label: "Contact card" },
-  { href: "/components/contribution-graph", label: "Contribution graph" },
-  { href: "/components/date-input", label: "Date input" },
-  { href: "/components/date-picker", label: "Date picker" },
-  { href: "/components/dialog", label: "Dialog" },
-  { href: "/components/divider", label: "Divider" },
-  { href: "/components/drawer", label: "Drawer" },
-  { href: "/components/dropdown", label: "Dropdown" },
-  { href: "/components/dropdown-menu", label: "Dropdown menu" },
-  { href: "/components/empty-state", label: "Empty state" },
-  { href: "/components/entity-card", label: "Entity card" },
-  { href: "/components/field", label: "Field" },
-  { href: "/components/figure", label: "Figure" },
-  { href: "/components/file-input", label: "File input" },
-  { href: "/components/input", label: "Input" },
-  { href: "/components/instructions", label: "Instructions" },
-  { href: "/components/link-list", label: "Link list" },
-  { href: "/components/navigation", label: "Navigation" },
-  { href: "/components/pagination", label: "Pagination" },
-  { href: "/components/popover", label: "Popover" },
-  { href: "/components/progress-bar", label: "Progress bar" },
-  { href: "/components/quote", label: "Quote" },
-  { href: "/components/radio-button", label: "Radio button" },
-  { href: "/components/section-title", label: "Section title" },
-  { href: "/components/segmented-control", label: "Segmented control" },
-  { href: "/components/selection-card", label: "Selection card" },
-  { href: "/components/skeleton", label: "Skeleton" },
-  { href: "/components/slider", label: "Slider" },
-  { href: "/components/spinner", label: "Spinner" },
-  { href: "/components/stat", label: "Stat" },
-  { href: "/components/table", label: "Table" },
-  { href: "/components/tabs", label: "Tabs" },
-  { href: "/components/textarea", label: "Textarea" },
-  { href: "/components/timeline", label: "Timeline" },
-  { href: "/components/toast", label: "Toast" },
-  { href: "/components/toggle-group", label: "Toggle group" },
-  { href: "/components/toggle-switch", label: "Toggle switch" },
-  { href: "/components/tooltip", label: "Tooltip" },
+  ...[...componentMetadata]
+    .sort((a, b) => a.label.localeCompare(b.label))
+    .map((c) => ({
+      href: `/components/${c.slug}`,
+      label: c.label,
+      description: c.description,
+    })),
 ];
 
 export const foundationsSidebarLinks: NavLink[] = [
@@ -284,6 +248,23 @@ export function pageMetadata(href: string, description?: string): Metadata {
   }
   const alternates = { canonical: href };
   return description ? { title, description, alternates } : { title, alternates };
+}
+
+/**
+ * Metadata for a component showcase page, resolved entirely from the registry.
+ *
+ * Replaces hand-writing the same one-line description in both registry.json and
+ * the page's layout.tsx — the registry is the only place it lives now.
+ */
+export function componentPageMetadata(slug: string): Metadata {
+  const meta = componentMetadata.find((c) => c.slug === slug);
+  if (!meta) {
+    throw new Error(
+      `componentPageMetadata: no component registered with slug "${slug}". ` +
+        `Add it to src/components/registry.json.`
+    );
+  }
+  return pageMetadata(`/components/${slug}`, meta.description);
 }
 
 /* ============================================

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect, useRef, useCallback, type ReactNode } from 'react';
 import './Carousel.css';
 import '../../fonts/material-symbols.css';

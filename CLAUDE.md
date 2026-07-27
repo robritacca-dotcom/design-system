@@ -19,8 +19,8 @@ Existing registries:
 
 | Collection | Registry | Count export | Validator |
 |---|---|---|---|
-| Components | `src/components/registry.json` (`components` + `docOnlyHelpers`) | `COMPONENT_COUNT` from `src/components/registry.ts` | `scripts/validate-component-registry.mjs` — every folder registered, every entry has a folder |
-| Component website surfaces | `src/components/registry.json` (same registry) | — | `scripts/validate-website-surfaces.mjs` — every public component has a showcase page, sidebar nav entry (alphabetical), index-grid `TocCard`, and a `###` spec section in `design.md` |
+| Components | `src/components/registry.json` (`components` + `categories` + `docOnlyHelpers`) — each entry carries `name`, `label`, `slug`, `description`, `category`, `client` | `COMPONENT_COUNT`, `componentMetadata`, `componentCategories` from `src/components/registry.ts` | `scripts/validate-component-registry.mjs` — every folder registered, every entry has a folder, metadata well-formed (kebab-case unique slugs, unique labels, descriptions ≤160 chars ending in a full stop, known category), and **`client` matches whether the file actually declares `'use client'`** |
+| Component website surfaces | `src/components/registry.json` (same registry) | — | `scripts/validate-website-surfaces.mjs` — every public component has a showcase page, index-grid `TocCard`, and a `###` spec section in `design.md`. The sidebar nav entry and its alphabetical order are no longer checked because `componentsSidebarLinks` is **derived** from the registry — they cannot drift |
 | Skills | `.claude/skills/registry.json` (`displayed` + `external` + `unlisted`) | `SKILL_COUNT` from `website/src/data/skills-registry.ts` | `scripts/validate-skills-registry.mjs` — every `.md` registered, every entry has a file, page list matches `displayed` + `external` |
 | Project journal | `website/src/data/site-updates.json` (curated timeline entries + `asOf` commit bookmark) | `SITE_UPDATE_COUNT` from `website/src/data/site-updates.ts` | `scripts/validate-site-updates.mjs` — structure only (complete stories, valid bookmark, no commit-hash dumps); freshness is the biweekly `site-updates` skill's job, never the build's |
 | Semantic tokens | `src/tokens/registry.json` — **generated** from the semantic token CSS (`tokens-light.css` + `tokens-typography.css` + `tokens-motion.css`) by `scripts/generate-token-registry.mjs`, never hand-edited | `TOKEN_COUNT` + `TOKEN_COUNTS` (per category) from `src/tokens/registry.ts` | `scripts/validate-token-registry.mjs` — registry matches the CSS, light/dark colour parity; a token with an unknown prefix fails generation until its category is added deliberately |
@@ -171,11 +171,10 @@ A new component is not done until it appears in **every** place the system docum
 2. **Write `MyComponent.tsx`**: Export a named component + a TypeScript interface for props, following the published-contract shape in **Component Anatomy** above (`'use client'` when interactive, own-props split, `forwardRef` + `displayName`, `{...rest}` spread, native event signatures). Use semantic tokens in class names, never inline styles.
 3. **Write `MyComponent.css`**: All CSS vars must be from `tokens-light/dark.css`. No hardcoded hex, px values from primitives, or magic numbers.
 4. **Write `MyComponent.stories.tsx`**: Export a `meta` (with `title: 'Components/MyComponent'`, `tags: ['autodocs']`) and at least a `Default` story plus one per meaningful variant. (`.stories.ts` also works for stories with no JSX, but `.tsx` is the convention across the library.)
-5. **Add a website showcase page**: Create `website/src/app/components/my-component/page.tsx` + `page.module.css` + `layout.tsx`. Follow the pattern in an existing page (e.g., `website/src/app/components/button/page.tsx`). The `layout.tsx` must resolve its title through `pageMetadata("/components/my-component", "<one-line description>")` — without it the tab title silently falls back to the site-wide default.
-6. **Register it everywhere the website lists components** (all three — the sitemap derives from the sidebar config automatically):
-   - `src/components/registry.json` — add the folder name to `components` (the official count everywhere derives from this)
-   - `website/src/config/navigation.ts` — add to `componentsSidebarLinks` (alphabetical)
-   - `website/src/app/components/page.tsx` — add a `TocCard` with a small live preview to the components index grid (alphabetical)
+5. **Add a website showcase page**: Create `website/src/app/components/my-component/page.tsx` + `page.module.css` + `layout.tsx`. Follow the pattern in an existing page (e.g., `website/src/app/components/button/page.tsx`). The `layout.tsx` must be exactly `export const metadata = componentPageMetadata("my-component");` — title *and* description come from the registry, so the description lives in one place. A slug with no registry entry fails the website build.
+6. **Register it** — one entry, and most surfaces follow automatically:
+   - `src/components/registry.json` — add an object to `components` (alphabetical by `name`) with `name`, `label`, `slug`, `description`, `category` and `client`. **The sidebar nav entry, the sitemap, the breadcrumbs, the mega-nav and the page's title/description all derive from this** — do not hand-add a nav entry.
+   - `website/src/app/components/page.tsx` — add a `TocCard` with a small live preview to the components index grid (alphabetical). This is the one surface still hand-maintained, because each card contains a bespoke preview.
 7. **Document it in `design.md`**: add a short component spec section (class name, tokens used, key behaviours).
 
 Steps 5–7 are build-enforced by two validators: `scripts/validate-website-surfaces.mjs` fails the build if any public component is missing its showcase page, nav entry, `TocCard`, or `design.md` spec, or if the sidebar falls out of alphabetical order; `scripts/validate-page-titles.mjs` fails it if the page has no `layout.tsx`, or if that layout does not derive its title from `pageMetadata()`.
@@ -189,8 +188,8 @@ Checklist before shipping a component:
 - [ ] Interactive elements have ARIA roles and keyboard navigation
 - [ ] At least one Storybook story per variant
 - [ ] Website showcase page added, with a `layout.tsx` title via `pageMetadata()` (build-enforced)
-- [ ] Added to `src/components/registry.json` (build-enforced)
-- [ ] Registered in sidebar nav and components index `TocCard` grid (build-enforced; sitemap derives from the nav)
+- [ ] Added to `src/components/registry.json` with complete metadata, `client` matching whether the file declares `'use client'` (build-enforced)
+- [ ] `TocCard` added to the components index grid (build-enforced). The sidebar nav, sitemap and breadcrumbs derive from the registry — nothing to add
 - [ ] Spec section added to `design.md` (build-enforced)
 
 ---

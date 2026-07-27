@@ -6,7 +6,9 @@
  *      page falls back to the site-wide default title ("Robert Ritacca —
  *      Principal Product Designer"), which is what happened to 9 component
  *      pages before this guard existed.
- *   2. That layout resolves its title through pageMetadata("/components/<slug>")
+ *   2. That layout resolves its metadata through componentPageMetadata("<slug>"),
+ *      so the title and description come from src/components/registry.json
+ *      rather than a second copy living in the layout
  *      so the tab title can never drift from the sidebar label / breadcrumb.
  *   3. No website source hardcodes a spelled-out component count (e.g.
  *      "Forty-two React components") — counts must derive from COMPONENT_COUNT.
@@ -33,18 +35,14 @@ const registry = JSON.parse(
 );
 
 /** "AlertDialog" -> "alert-dialog"; folder-name exceptions listed inline. */
-const SLUG_EXCEPTIONS = { Nav: 'navigation' };
-const slugOf = (name) =>
-  SLUG_EXCEPTIONS[name] ??
-  name.replace(/(?<=[a-z0-9])(?=[A-Z])/g, '-').toLowerCase();
-
 const componentsDir = join(repoRoot, 'website', 'src', 'app', 'components');
 
 const missingLayout = [];
 const notCentralized = [];
 
-for (const name of registry.components) {
-  const slug = slugOf(name);
+// slug and label are stored in the registry — the Nav → navigation exception
+// is data, not a special case each validator has to remember.
+for (const { name, slug } of registry.components) {
   const layoutPath = join(componentsDir, slug, 'layout.tsx');
   if (!existsSync(layoutPath)) {
     missingLayout.push(
@@ -52,9 +50,12 @@ for (const name of registry.components) {
     );
     continue;
   }
-  if (!read(layoutPath).includes('pageMetadata(')) {
+  // Component pages must use componentPageMetadata(slug), which resolves both
+  // title and description from the registry. Plain pageMetadata() would let a
+  // second copy of the description live here and drift from registry.json.
+  if (!read(layoutPath).includes(`componentPageMetadata("${slug}")`)) {
     notCentralized.push(
-      `${name} → components/${slug}/layout.tsx should set its title via pageMetadata("/components/${slug}")`
+      `${name} → components/${slug}/layout.tsx should resolve its metadata via componentPageMetadata("${slug}")`
     );
   }
 }
