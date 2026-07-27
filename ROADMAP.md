@@ -336,7 +336,21 @@ This is the clearest "designed-in-Figma-then-translated" artifact in the codebas
 
 **Done when:** `disabled?: boolean` is the real prop, `state` is `@deprecated` and mapped internally, `text` is deprecated in favour of omitting `label`, and a note in `design.md` records the rule: *Figma variant properties describe how a component is drawn; code props describe what it is. Pseudo-states never become props.*
 
-## B3 — A `Field` primitive for form composition — `M`
+## ✅ B3 — A `Field` primitive for form composition — SHIPPED 2026-07-27
+
+`Field` (component #57) owns the label + `htmlFor`, required marker, helper/error text, generated ids, and `aria-describedby` / `aria-invalid` wiring, and exposes `{controlId, labelId, describedBy, invalid, required, disabled}` through `useField()`. All six labelled form controls compose inside it: Input, Textarea, DateInput, Dropdown, Combobox, FileInput. **Net −160 lines.**
+
+**Two live accessibility bugs fixed**, both found by the survey rather than by axe:
+- **Dropdown** rendered `helperText` and an `error` state with **no `aria-describedby` and no `aria-invalid`** — the message was never announced and the error was visual only.
+- **FileInput** exposed an `error` prop it never reflected in `aria-invalid`.
+
+**Design choice that de-risked it:** Field owns **no layout**. The flex column and gap stay on each component's own root class, so adopting it moves nothing on screen. Confirmed the label/helper CSS was byte-identical across all six before extracting.
+
+**Two things Field grew to absorb real structure** instead of forcing components to compromise: `aside` (content opposite the helper — Textarea's character counter — rendered in a footer row *only* when supplied, so no other adopter gains a wrapper), and `labelId` (because `htmlFor` only associates with *labelable* elements; a `div[role="combobox"]` needs `aria-labelledby`).
+
+**Note for the next refactor of this shape:** removing CSS with unanchored regex corrupted a compound selector (`.ds-textarea--error .ds-textarea__helper` matched by a bare `.ds-textarea__helper` pattern, leaving a dangling selector that merged with the next rule). CSS does not fail a build on a mangled selector, so `verify` would not have caught it. Use line-anchored exact-selector matching and check brace balance per file.
+
+## B3 — original plan (kept for context) — `M`
 
 Label, required marker, helper text, error text, id generation, and `aria-describedby` wiring are reimplemented independently in every form component (only 11 of 68 files wire `aria-describedby` at all). That means accessibility correctness is per-component rather than systemic.
 

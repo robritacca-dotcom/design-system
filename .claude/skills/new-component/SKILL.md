@@ -79,6 +79,12 @@ Use this skill any time you are asked to add or create a new component to the de
 
 8. **Deprecate, never remove.** Keep the old prop working and mark it `@deprecated` with the replacement named. `className` stays wherever it already is (usually the wrapper) — moving it is a silent visual break.
 
+**If the component is a labelled form control, compose it inside `Field`** (`src/components/Field/Field.tsx`) rather than re-implementing the scaffolding. Field owns the label and its `htmlFor`, the required marker, the helper/error text, the generated ids, and the `aria-describedby` / `aria-invalid` wiring — six components each rolled their own before it existed, and two of them silently diverged (Dropdown announced neither its helper text nor its error state). Pass `className` (your own root classes), `label`, `helperText`, `error`, `required`, `disabled`, `size` and `id`; render the control as children. Field owns no layout, so your root class keeps its own flex/gap.
+
+Two details worth knowing before you reach for it:
+- `htmlFor` only associates with **labelable** elements (input, select, textarea, button…). If your control is a composite built from a `div` — a `role="combobox"` trigger, say — point `aria-labelledby` at `` `${id}-label` `` instead, which is the id Field puts on its label.
+- Content that belongs *opposite* the helper text (a character counter, a unit) goes in Field's `aside` prop, not a hand-rolled footer.
+
 ### File 2: `ComponentName.css`
 - CSS custom properties exclusively — **no hardcoded hex colours**, no raw `rgb()`/`rgba()`
 - Icons are sized by setting `--icon-size: var(--icon-size-sm|md|lg|xl)` (20/24/32/48px) on the icon element — never `font-size` or raw pixel dimensions on an icon
