@@ -49,7 +49,13 @@ Publishing turned every props interface into a contract. Because deep imports (`
 
 **Chosen over a skill deliberately:** anything mechanically checkable gets build-enforced so it can never drift.
 
-### 3. npm Trusted Publishing (OIDC) migration — `S` · **⏳ code done 2026-07-27, blocked on Rob**
+### 3. npm Trusted Publishing (OIDC) migration — `S` · **⏳ everything done except the publish itself**
+
+**RESUME HERE (2026-07-27).** Trusted publisher registered on npmjs.com; workflow, skill and docs shipped; `0.2.0` bumped, committed (`1129d84`), pushed, CI green; dry run green with a tarball identical in shape to `0.1.0` (223 files, ~5.8 MB unpacked). The only step left is the real publish — `gh workflow run release.yml -f dry_run=false` — which is also the first and only test of whether OIDC auth works.
+
+After it goes green: verify propagation (a 404 for a few minutes is normal — **never re-run**), tag the published commit `1129d84` as `v0.2.0`, write the GitHub Release with the `onChange` → `onValueChange` migration spelled out for consumers, then delete the `NPM_TOKEN` secret and the granular token on npmjs.com. Finally update CLAUDE.md's "0.1.0 shipped 2026-07-26" line, which goes stale the moment this publishes.
+
+If auth fails, nothing is burned — npm only consumes a version on a successful upload, so fix and retry on `0.2.0`.
 
 npm deprecates 2FA-bypass tokens for direct publishing in **Jan 2027**, and the granular `NPM_TOKEN` had an expiry that would have failed the publish step with a 401.
 
