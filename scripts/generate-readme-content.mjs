@@ -44,10 +44,13 @@ let readme = original;
 const countMarker = /<!-- component-count -->[\s\S]*?<!-- \/component-count -->/;
 const listMarker =
   /(<!-- component-list:start -->\n)[\s\S]*?(\n<!-- component-list:end -->)/;
+const npmBadgeMarker =
+  /(<!-- npm-badge:start -->\n)[\s\S]*?(\n<!-- npm-badge:end -->)/;
 
 for (const [name, re] of [
   ['component-count', countMarker],
   ['component-list', listMarker],
+  ['npm-badge', npmBadgeMarker],
 ]) {
   if (!re.test(readme)) {
     console.error(
@@ -65,6 +68,15 @@ readme = readme.replace(
 readme = readme.replace(
   listMarker,
   `$1${registry.components.map(displayName).join(' · ')}$2`
+);
+
+// The npm badge encodes the package name twice (shield + link), so it is
+// generated from the manifest rather than hand-typed — a scope change can
+// never leave a badge pointing at a package that doesn't exist.
+const encodedName = PACKAGE_NAME.replace('/', '%2F');
+readme = readme.replace(
+  npmBadgeMarker,
+  `$1[![npm](https://img.shields.io/npm/v/${encodedName}?logo=npm&color=CB3837)](https://www.npmjs.com/package/${PACKAGE_NAME})$2`
 );
 
 // Version drift check: README prose vs. package.json majors.

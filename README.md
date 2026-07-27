@@ -1,6 +1,9 @@
 # robr0 — Portfolio + Design System
 
 [![CI](https://github.com/robritacca-dotcom/design-system/actions/workflows/ci.yml/badge.svg)](https://github.com/robritacca-dotcom/design-system/actions/workflows/ci.yml)
+<!-- npm-badge:start -->
+[![npm](https://img.shields.io/npm/v/@robr0%2Fdesign-system?logo=npm&color=CB3837)](https://www.npmjs.com/package/@robr0/design-system)
+<!-- npm-badge:end -->
 
 A personal portfolio site built on a custom React design system I designed and engineered from scratch. The DS isn't a side project — it's the backbone every portfolio page is built on, ensuring the work is presented consistently and with the same craft standards I apply professionally.
 
@@ -107,7 +110,7 @@ Full spec in [`design.md`](design.md).
 Every push and pull request runs a GitHub Actions pipeline ([`ci.yml`](.github/workflows/ci.yml)) with four jobs: **lint + library build**, **story tests** (every Storybook story rendered in headless Chromium via Vitest), **Storybook build**, and **website build**. The same checklist runs locally with one command:
 
 ```bash
-npm run verify   # lint + library build + story tests + Storybook build + website build
+npm run verify   # lint + library type-check + package build + story tests + Storybook build + website build
 ```
 
 CI also guards against documentation drift: generated surfaces (this README's component count and list, the website's skills pages, the published CLAUDE.md/design.md blueprints) are rebuilt from their source registries on every build, and CI fails if the committed copies are stale. The numbers on the site are never hand-written.
@@ -120,8 +123,7 @@ CI also guards against documentation drift: generated surfaces (this README's co
 # Storybook (the library's dev sandbox)
 npm run storybook        # http://localhost:6006
 
-# Portfolio + documentation website
-cd website
+# Portfolio + documentation website (npm workspace — install once at the root)
 npm install
-npm run dev              # http://localhost:3000
+npm run dev --workspace website   # http://localhost:3000
 ```
