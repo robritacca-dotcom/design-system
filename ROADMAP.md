@@ -4,14 +4,51 @@ The single planning surface for this repo. Everything queued, deferred, parked, 
 
 **This file is intentionally *not* in the `validate-registry` chain.** Every other doc in this repo is a generated or build-enforced surface because it states *facts about the system* (counts, lists, versions) that must never drift. This file states *intent*, which can't be validated — so it is hand-maintained, and any count in it is marked as an "as of" snapshot rather than pulled from a registry. Keep it that way: don't put a number here that a registry already owns.
 
-Audited against the working tree on **2026-07-27** (56 components, 4 doc-only helpers).
+Audited against the working tree on **2026-07-27** (57 components, 4 doc-only helpers).
 
-**Status:** `NOW` this week · `NEXT` the following stretch · `LATER` real but unscheduled · `PARKED` deliberately paused · `REJECTED` decided against, kept so it isn't re-litigated.
+---
+
+# ▶ WHERE WE ARE — last updated 2026-07-27, end of session
+
+**Four of ten sequenced steps are done and on `main`.** `@robr0/design-system@0.2.0` is live on npm with signed provenance; CI green at `9696e60`.
+
+| # | Step | Status |
+|---|---|---|
+| 1 | **B1 + B2 + B5 + item 1** — the signature pass | ✅ **done** — 18 components, `0.2.0` |
+| 2 | **item 3** — npm Trusted Publishing (OIDC) | ✅ **done** — no npm token exists any more |
+| 3 | **item 4-cheap** — Storybook install docs | ✅ **done** — and build-enforced |
+| 4 | **B3** — the `Field` primitive | ✅ **done** — 6 controls, −160 lines, 2 a11y bugs fixed |
+| **5** | **item 6** — a11y to `'error'` (AA minus contrast) | ⬅ **NEXT** — 49 violations already measured |
+| 6 | **Workstream A Phase 1** — registry metadata | not started |
+| 7 | **Workstream A Phase 2** — prop contracts | not started |
+| 8 | **item 2** — API-surface validator | not started — *must* follow 7 |
+| 9 | **item 5** — Chromatic | not started — *must* follow 5 |
+| 10 | **Workstream A Phase 3** — dense `.md` docs | not started |
+
+### What shipped today, in one line each
+
+- **The signature pass** — 18 components went from 4/68 forwarding refs to 18/18, all spreading `...rest` and extending native element props. One breaking change (`onChange` → native `ChangeEvent`, convenience to `onValueChange`) which is what unblocks react-hook-form / Formik / TanStack Form.
+- **Trusted Publishing** — `NODE_AUTH_TOKEN` gone, npm pinned to ≥ 11.5.1, both credentials deleted. Took three failed attempts; all three causes are now written into the `release` skill.
+- **Storybook install docs** — Configure.mdx had zero mentions of npm across 331 lines; now has an install section, enforced by `generate-readme-content.mjs` across *both* install surfaces.
+- **`Field`** — component #57; six form controls compose inside it; fixed Dropdown announcing neither its helper text nor its error state, and FileInput never reflecting `aria-invalid`.
+
+### Open items that need Rob, not code
+
+- Nothing blocking. Optionally: flip npm **Publishing access** to *"Require 2FA and disallow tokens"* now that trusted publishing is proven (npm's own note confirms trusted publishers keep working).
+
+### Standing rule adopted this session
+
+After each major step, check whether the change invalidated anything in `.claude/skills/*/SKILL.md`, `CLAUDE.md` or `design.md`, and fix it in the same stretch — **do not wait to be asked.** It has caught four real drifts already, including a `release` skill guardrail ("never bump the version in package.json") that would have blocked the next release outright. Where the rule is mechanically checkable, prefer converting it to a validator — see [B7](#b7--make-the-component-api-contract-build-enforced--sm--added-2026-07-27).
+
+---
+
+**Status keys:** `NOW` this week · `NEXT` the following stretch · `LATER` real but unscheduled · `PARKED` deliberately paused · `REJECTED` decided against, kept so it isn't re-litigated.
 **Effort:** `S` < half a day · `M` a day or two · `L` multi-day.
 
 **Contents**
 - [NOW — before Aug 3](#now--before-aug-3)
 - [Workstream A — Agent-Ready Design System](#workstream-a--agent-ready-design-system) (3 phases, `L`)
+- [Workstream B — Component API Foundations](#workstream-b--component-api-foundations)
 - [NEXT — the robustness tier](#next--the-robustness-tier)
 - [LATER](#later--real-unscheduled)
 - [Parked / Rejected](#parked)
@@ -21,7 +58,12 @@ Audited against the working tree on **2026-07-27** (56 components, 4 doc-only he
 
 ## NOW — before Aug 3
 
-### 1. `'use client'` boundary for the published package — `S`/`M` · **new, highest severity**
+### ✅ 1. `'use client'` boundary — SHIPPED 2026-07-27 (in the signature pass)
+
+**Outcome:** 17 of the 18 components in scope now declare `'use client'`. `Table` deliberately does **not** — it is purely presentational, so it stays renderable from a Server Component. The problem statement below is kept as the record of *why*.
+
+> **Still open from this item:** the second smoke consumer (a Next App Router app importing a client component from a **server** page) was never built. The directives are correct, but nothing yet *proves* they are — the existing smoke test is a Vite SPA with no RSC boundary. Worth folding into [item 9's](#later--real-unscheduled) smoke-test work, or doing standalone.
+
 **Found:** 2026-07-27 audit
 
 35 components under `src/components/` use React hooks or event handlers. **Zero** files in the library declare `'use client'`. A Next.js App Router consumer who does `import { Button } from '@robr0/design-system'` inside a server component gets a build/runtime error — hooks in a server component, or "event handlers cannot be passed to Client Component props."
@@ -36,7 +78,7 @@ The consumer environment most likely to be used — Next App Router, the same fr
 
 **Watch for:** don't blanket-apply the directive. Purely presentational components (Badge, Divider) are better left server-renderable; marking them client-only silently costs consumers RSC benefits. → **The client/server split is per-component data, so it belongs in the registry — see [Workstream A, Phase 1](#phase-1--richer-registry-metadata).** Record the rule in `design.md` too.
 
-### 2. Public API-surface validator — `M`
+### 2. Public API-surface validator — `M` · **still open — do not start before Workstream A Phase 2**
 **Scheduled 2026-07-26 for ~07-27**
 
 Publishing turned every props interface into a contract. Because deep imports (`./components/*`) are supported, renaming a component *folder* is breaking even when the barrel still exports the old name — and nothing flags it at edit time. The `release` skill only asks patch/minor/major at release, by which point the break is already written.
@@ -49,7 +91,7 @@ Publishing turned every props interface into a contract. Because deep imports (`
 
 **Chosen over a skill deliberately:** anything mechanically checkable gets build-enforced so it can never drift.
 
-### 3. npm Trusted Publishing (OIDC) migration — `S` · **⏳ everything done except the publish itself**
+### ✅ 3. npm Trusted Publishing (OIDC) migration — SHIPPED 2026-07-27
 
 **RESUME HERE (2026-07-27).** Trusted publisher registered on npmjs.com; workflow, skill and docs shipped; `0.2.0` bumped, committed (`1129d84`), pushed, CI green; dry run green with a tarball identical in shape to `0.1.0` (223 files, ~5.8 MB unpacked). The only step left is the real publish — `gh workflow run release.yml -f dry_run=false` — which is also the first and only test of whether OIDC auth works.
 
@@ -82,7 +124,12 @@ npm deprecates 2FA-bypass tokens for direct publishing in **Jan 2027**, and the 
 
 **Two things that will silently break this later:** renaming or moving `release.yml` (the trusted-publisher registration is keyed to the filename), and dropping `permissions: id-token: write` (it is load-bearing for *authentication* now, not just provenance).
 
-### 4. Storybook homepage knows nothing about npm — `S` (cheap tier)
+### ✅ 4. Storybook homepage knows nothing about npm — CHEAP TIER SHIPPED 2026-07-27
+
+**Outcome:** Configure.mdx gained an Install section (install command, `tokens.css` import, barrel import, deep-import and optional-recharts notes) plus links to the docs site and npm, and the intro now names the package. `generate-readme-content.mjs` requires **both** README.md and Configure.mdx to mention `PACKAGE_NAME` — verified by stripping the name and confirming the build fails, not just that it passes.
+
+> **Thorough tier still open:** extracting the shared facts into `src/content/system-facts.ts` consumed by Configure.mdx, the README generator, and Get Started. The name check now guards the package name; it cannot tell whether the *snippet* is still correct.
+
 **Scheduled for ~07-27**
 
 `src/stories/Configure.mdx` has zero mentions of npm / install / `@robr0`; its intro still describes the pre-publish world ("consumed by a live Next.js reference site"). Storybook deploys as its own Vercel project and is where people evaluating the system land — so a visitor who likes a component has **no path to installing it**. (Counts there are already safe; it imports `COMPONENT_COUNT`.)
@@ -282,7 +329,7 @@ Evidence from the 2026-07-27 audit (68 implementation files):
 | Accept a `className` | 68 / 68 ✅ |
 | Wire `aria-describedby` | 11 / 68 |
 
-## ✅ B1 / B2 / B5 / item 1 — SHIPPED 2026-07-27 (uncommitted)
+## ✅ B1 / B2 / B5 / item 1 — SHIPPED 2026-07-27
 
 The signature pass is done across **18 components**: Button, Input, Textarea, Slider, ToggleSwitch, Checkbox (+Group), RadioButton (+Group), DateInput, ToggleGroup, SelectionCard, Card, FileInput, Dropdown, Dialog, Drawer, Table, DatePicker, Combobox.
 
@@ -405,7 +452,7 @@ This is the highest-leverage remaining test investment, because this system's wh
 - **Font FOUT** — Storybook loads Nunito Sans via a Google Fonts `<link>`; a slow fetch in CI reads as a diff. Chromatic's font-loading delay exists for exactly this.
 - Per the recharts hidden-pane note, chart DOM checks are unreliable in a hidden pane — visual snapshots are actually the *better* tool there, so prioritise chart stories once flake is handled.
 
-### 6. Flip a11y from report-only to failing — `M`
+### ⬅ 6. Flip a11y from report-only to failing — `M` · **THIS IS NEXT**
 
 `.storybook/preview.ts` has `a11y.test: 'todo'`. Axe runs on every story and reports, but nothing fails, so violations accumulate unmeasured.
 
@@ -581,13 +628,13 @@ Items **1** (`'use client'`), **B1** (refs / rest / native attrs), **B2** (`stat
 
 ### Order for the next few days
 
-| # | Work | Why here |
+| # | Work | Status / why here |
 |---|---|---|
-| 1 | **B1 + B2 + B5 + item 1**, as one signature pass | Additive, unblocks everything downstream, and stops the wrong API hardening into a contract |
-| 2 | **item 3** — Trusted Publishing | Independent of everything; external expiry clock |
-| 3 | **item 4-cheap** — Storybook install docs | One hour; fixes the surface strangers see |
-| 4 | **B3** — `Field` primitive | Makes the a11y phase collapse from 11 fixes to 1 |
-| 5 | **item 6** — a11y to `'error'`, **AA minus contrast** | Now tractable; entirely invisible work; must precede any visual baseline |
+| 1 | **B1 + B2 + B5 + item 1**, as one signature pass | ✅ **done 2026-07-27** — additive; stopped the wrong API hardening into a contract |
+| 2 | **item 3** — Trusted Publishing | ✅ **done 2026-07-27** — took three attempts; causes recorded in the `release` skill |
+| 3 | **item 4-cheap** — Storybook install docs | ✅ **done 2026-07-27** — and build-enforced across both install surfaces |
+| 4 | **B3** — `Field` primitive | ✅ **done 2026-07-27** — and fixed two a11y bugs axe could never have found |
+| **5** | **item 6** — a11y to `'error'`, **AA minus contrast** | ⬅ **NEXT.** 49 violations measured; entirely invisible work; must precede any visual baseline |
 | 6 | **Workstream A Phase 1** — registry metadata | Delivers the de-duplication payoff alone; natural home for item 1's `client` flag |
 | 7 | **Workstream A Phase 2** — prop contracts | Now describes the *good* API |
 | 8 | **item 2** — API-surface validator | Now freezes the right thing |
