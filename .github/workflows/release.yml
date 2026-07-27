@@ -69,10 +69,30 @@ jobs:
       # fails the release before anything reaches the registry.
       - name: Consumer smoke test
         run: node scripts/smoke-consumer.mjs
+      # Diagnostics for the Trusted Publishing handshake. Prints only whether
+      # the OIDC variables EXIST — never their values (the request token is a
+      # credential). Remove once publishing is proven stable.
+      - name: Diagnose auth environment
+        if: ${{ !inputs.dry_run }}
+        working-directory: dist
+        run: |
+          echo "ACTIONS_ID_TOKEN_REQUEST_URL set:   ${ACTIONS_ID_TOKEN_REQUEST_URL:+yes}${ACTIONS_ID_TOKEN_REQUEST_URL:-NO}"
+          echo "ACTIONS_ID_TOKEN_REQUEST_TOKEN set: ${ACTIONS_ID_TOKEN_REQUEST_TOKEN:+yes}${ACTIONS_ID_TOKEN_REQUEST_TOKEN:-NO}"
+          echo "NODE_AUTH_TOKEN set:                ${NODE_AUTH_TOKEN:+yes}${NODE_AUTH_TOKEN:-NO}"
+          echo "npm version:  $(npm --version)"
+          echo "registry:     $(npm config get registry)"
+          echo "userconfig:   ${NPM_CONFIG_USERCONFIG:-<unset>}"
+          echo "--- .npmrc files npm can see ---"
+          for f in "$HOME/.npmrc" "$NPM_CONFIG_USERCONFIG" ./.npmrc ../.npmrc; do
+            [ -n "$f" ] && [ -f "$f" ] && { echo "== $f"; sed -E 's/(_authToken=).*/\1<redacted>/' "$f"; }
+          done
+          echo "--- package identity being published ---"
+          node -p "const p=require('./package.json'); p.name+'@'+p.version"
+
       - name: Publish to npm
         if: ${{ !inputs.dry_run }}
         working-directory: dist
-        run: npm publish --access public --provenance
+        run: npm publish --access public --provenance --loglevel verbose
       - name: Dry-run publish preview
         if: ${{ inputs.dry_run }}
         working-directory: dist
