@@ -476,7 +476,7 @@ Default icons (Material Symbols Rounded): `info`, `check_circle`, `warning`, `er
 
 ### Breadcrumb
 
-**`ds-breadcrumb`** — Location trail as a `<nav aria-label="Breadcrumb">` ordered list. Items are links in `--font-paragraph-sm-*` `--color-text-secondary` separated by `chevron_right` Material Symbols in `--color-text-tertiary`; the current (last) item is plain text in `--color-text-primary` at the `-em` weight. `maxItems` collapses the middle of long trails to an ellipsis, always keeping the first and the trailing items. Link focus rings use `--color-action-primary-bg`.
+**`ds-breadcrumb`** — Location trail as a `<nav aria-label="Breadcrumb">` ordered list. Items are links in `--font-paragraph-sm-*` `--color-text-secondary` separated by `chevron_right` Material Symbols at `--icon-size-sm` in `--color-text-tertiary` (the 20px step matches the 20px line-height of the labels either side, so the chevron centres on the trail); the current (last) item is plain text in `--color-text-primary` at the `-em` weight. `maxItems` collapses the middle of long trails to an ellipsis, always keeping the first and the trailing items. Link focus rings use `--color-action-primary-bg`.
 
 ### Tabs
 

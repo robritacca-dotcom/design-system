@@ -74,8 +74,16 @@
    SEPARATOR
    ============================================ */
 
+/*
+   Size via --icon-size, never font-size: .material-symbols-rounded derives
+   the glyph size AND the layout box from that one variable. Setting
+   font-size alone shrank the glyph but left a 24px box around it, so the
+   chevron floated above the text baseline. --icon-size-sm (20px) also
+   matches the 20px line-height of the paragraph-sm labels either side.
+*/
 .ds-breadcrumb__separator {
-  font-size: 18px;
+  --icon-size: var(--icon-size-sm);
+  flex: none;
   color: var(--color-text-tertiary);
   user-select: none;
 }
