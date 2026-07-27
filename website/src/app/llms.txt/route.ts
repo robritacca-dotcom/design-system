@@ -18,7 +18,10 @@ export const dynamic = "force-static";
 function section(title: string, intro: string, links: NavLink[]): string {
   const items = links
     .filter((link) => !link.disabled && link.label !== "Contents")
-    .map((link) => `- [${link.label}](${SITE_URL}${link.href})`)
+    .map(
+      (link) =>
+        `- [${link.label}](${SITE_URL}${link.href})${link.description ? `: ${link.description}` : ""}`
+    )
     .join("\n");
   return `## ${title}\n\n${intro}\n\n${items}`;
 }
@@ -66,6 +69,8 @@ export function GET() {
     "Raw markdown sources and machine-readable indexes.",
     "",
     `- [CLAUDE.md](${SITE_URL}/CLAUDE.md): the repo's agent instructions — architecture, registries, and workflows`,
+    `- [GitHub source](https://github.com/robritacca-dotcom/design-system): exact TypeScript prop types live in src/components/<Name>/<Name>.tsx`,
+    `- [npm package](https://www.npmjs.com/package/@robr0/design-system): \`npm install @robr0/design-system\` ships complete .d.ts type declarations for every component`,
     `- [design.md](${SITE_URL}/design.md): the full design specification — tokens, colours, typography, component rules`,
     `- [Sitemap](${SITE_URL}/sitemap.xml)`,
     "",
