@@ -178,10 +178,23 @@ export const DatePicker = React.forwardRef<HTMLDivElement, DatePickerProps>(
           </button>
         </div>
 
-        {/* Day headers */}
-        <div className={`${baseClass}__grid`} role="grid">
+        {/*
+          Deliberately NOT role="grid". A grid promises 2D arrow-key navigation
+          with a roving tabindex, and this component implements none of it —
+          claiming the role tells assistive technology a lie. gridcell and
+          columnheader also require a row parent, which the CSS-grid layout has
+          no element for. A labelled group of buttons is honest and, without
+          the keyboard model, more usable.
+        */}
+        <div
+          className={`${baseClass}__grid`}
+          role="group"
+          aria-label={`${MONTHS[viewMonth]} ${viewYear}`}
+        >
           {DAYS.map((day) => (
-            <div key={day} className={`${baseClass}__day-header`} role="columnheader">
+            // Each cell's aria-label already carries the full weekday name, so
+            // the visual column headers are redundant noise for a screen reader.
+            <div key={day} className={`${baseClass}__day-header`} aria-hidden="true">
               {day}
             </div>
           ))}
@@ -209,14 +222,17 @@ export const DatePicker = React.forwardRef<HTMLDivElement, DatePickerProps>(
                 className={cellClasses}
                 onClick={() => handleSelect(cell)}
                 disabled={isCellDisabled}
-                aria-label={cell.date.toLocaleDateString(undefined, {
+                // Selection is spoken as part of the name rather than via
+                // aria-selected, which is not permitted on role="button".
+                aria-label={`${cell.date.toLocaleDateString(undefined, {
                   weekday: 'long',
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric',
-                })}
-                aria-selected={isSelected || undefined}
-                role="gridcell"
+                })}${isSelected ? ', selected' : ''}`}
+                // "the current date within a collection of dates" — this is
+                // exactly what aria-current="date" is for.
+                aria-current={isToday ? 'date' : undefined}
               >
                 {cell.day}
               </button>

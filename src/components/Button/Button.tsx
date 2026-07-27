@@ -122,6 +122,13 @@ export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, Bu
       );
     };
 
+    // An icon-only button (text={false}, or no label) renders nothing a screen
+    // reader can announce. Fall back to the label as the accessible name
+    // unless the consumer supplied one explicitly.
+    const needsAccessibleName = !text || !label;
+    const fallbackAriaLabel =
+      needsAccessibleName && label && !rest['aria-label'] ? label : undefined;
+
     const content = (
       <>
         {leftIcon && renderIcon(leftIcon)}
@@ -140,6 +147,7 @@ export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, Bu
           target={target}
           rel={rel}
           aria-current={ariaCurrent ? 'page' : undefined}
+          aria-label={fallbackAriaLabel ?? rest['aria-label']}
         >
           {content}
         </a>
@@ -153,6 +161,7 @@ export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, Bu
         type="button"
         className={classes}
         disabled={isDisabled}
+        aria-label={fallbackAriaLabel ?? rest['aria-label']}
       >
         {content}
       </button>

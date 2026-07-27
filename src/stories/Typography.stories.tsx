@@ -1,9 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
+// This is a foundations documentation page that deliberately renders every
+// heading level side by side to show the scale. Skipped levels are the point of
+// the demo, not a defect, so heading-order is disabled here only.
+const a11yHeadingOrderOff = {
+  a11y: { config: { rules: [{ id: 'heading-order', enabled: false }] } },
+};
+
 const meta = {
   title: 'Foundations/Typography',
   tags: ['autodocs'],
   parameters: {
+    ...a11yHeadingOrderOff,
     layout: 'padded',
   },
 } satisfies Meta;

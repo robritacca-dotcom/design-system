@@ -108,7 +108,9 @@ export const Table = React.forwardRef<HTMLTableElement, TableProps>(
                   textAlign: col.align || 'left',
                 }}
               >
-                {col.header}
+                {/* An empty header cell is unannounced — fall back to the
+                    column key so the column is still identifiable. */}
+                {col.header || <span className={`${baseClass}__sr-only`}>{col.key}</span>}
               </th>
             ))}
           </tr>

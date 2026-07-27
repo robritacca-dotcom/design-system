@@ -78,6 +78,9 @@ export const Avatar = ({
       {status && (
         <span
           className={`${baseClass}__status ${baseClass}__status--${status}`}
+          // A bare <span> has no role, and aria-label is prohibited on roles
+          // that provide no semantics. role="img" is what this dot actually is.
+          role="img"
           aria-label={status}
         />
       )}

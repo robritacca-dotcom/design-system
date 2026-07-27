@@ -64,13 +64,17 @@ export const AllVariants: Story = {
   args: { items: [] },
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      {/* Each nav is a landmark, so several on one page need distinct names —
+          exactly what a consumer rendering more than one has to do. */}
       <Breadcrumb
+        ariaLabel="Two levels"
         items={[
           { label: 'Home', href: '/' },
           { label: 'Breadcrumb' },
         ]}
       />
       <Breadcrumb
+        ariaLabel="Three levels"
         items={[
           { label: 'Home', href: '/' },
           { label: 'Components', href: '/components' },
@@ -86,6 +90,7 @@ export const AllVariants: Story = {
           { label: 'Breadcrumb' },
         ]}
         maxItems={3}
+        ariaLabel="Collapsed to three"
       />
     </div>
   ),

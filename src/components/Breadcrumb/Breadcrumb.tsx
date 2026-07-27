@@ -15,6 +15,12 @@ export interface BreadcrumbProps {
   maxItems?: number;
   /** Additional CSS classes */
   className?: string;
+  /**
+   * Accessible name for the nav landmark. Override when more than one
+   * Breadcrumb can appear on a page — identically-named landmarks are
+   * indistinguishable to assistive technology.
+   */
+  ariaLabel?: string;
 }
 
 /**
@@ -25,6 +31,7 @@ export const Breadcrumb = ({
   items,
   maxItems,
   className = '',
+  ariaLabel,
 }: BreadcrumbProps) => {
   const baseClass = 'ds-breadcrumb';
   const classes = [baseClass, className].filter(Boolean).join(' ');
@@ -46,7 +53,7 @@ export const Breadcrumb = ({
   }
 
   return (
-    <nav className={classes} aria-label="Breadcrumb">
+    <nav className={classes} aria-label={ariaLabel || 'Breadcrumb'}>
       <ol className={`${baseClass}__list`}>
         {visibleItems.map((item, index) => {
           const isLast = index === visibleItems.length - 1;

@@ -10,7 +10,7 @@ Audited against the working tree on **2026-07-27** (57 components, 4 doc-only he
 
 # ▶ WHERE WE ARE — last updated 2026-07-27, end of session
 
-**Four of ten sequenced steps are done and on `main`.** `@robr0/design-system@0.2.0` is live on npm with signed provenance; CI green at `9696e60`.
+**Five of ten sequenced steps are done and on `main`.** `@robr0/design-system@0.2.0` is live on npm with signed provenance; CI green at `9696e60`.
 
 | # | Step | Status |
 |---|---|---|
@@ -18,8 +18,8 @@ Audited against the working tree on **2026-07-27** (57 components, 4 doc-only he
 | 2 | **item 3** — npm Trusted Publishing (OIDC) | ✅ **done** — no npm token exists any more |
 | 3 | **item 4-cheap** — Storybook install docs | ✅ **done** — and build-enforced |
 | 4 | **B3** — the `Field` primitive | ✅ **done** — 6 controls, −160 lines, 2 a11y bugs fixed |
-| **5** | **item 6** — a11y to `'error'` (AA minus contrast) | ⬅ **NEXT** — 49 violations already measured |
-| 6 | **Workstream A Phase 1** — registry metadata | not started |
+| 5 | **item 6** — a11y to `'error'` (AA minus contrast) | ✅ **done** — 49 fixed, 502/502 green |
+| **6** | **Workstream A Phase 1** — registry metadata | ⬅ **NEXT** |
 | 7 | **Workstream A Phase 2** — prop contracts | not started |
 | 8 | **item 2** — API-surface validator | not started — *must* follow 7 |
 | 9 | **item 5** — Chromatic | not started — *must* follow 5 |
@@ -452,7 +452,23 @@ This is the highest-leverage remaining test investment, because this system's wh
 - **Font FOUT** — Storybook loads Nunito Sans via a Google Fonts `<link>`; a slow fetch in CI reads as a diff. Chromatic's font-loading delay exists for exactly this.
 - Per the recharts hidden-pane note, chart DOM checks are unreliable in a hidden pane — visual snapshots are actually the *better* tool there, so prioritise chart stories once flake is handled.
 
-### ⬅ 6. Flip a11y from report-only to failing — `M` · **THIS IS NEXT**
+### ✅ 6. Flip a11y from report-only to failing — SHIPPED 2026-07-27
+
+**Outcome:** `a11y.test` is `'error'`; all 49 violations fixed; 502/502 stories pass with axe enforcing WCAG 2.1 AA minus contrast. An a11y regression now fails CI.
+
+**Nine were real component bugs, not lint noise:**
+- **DatePicker** claimed `role="grid"` — promising 2D arrow-key navigation it never implemented — with `gridcell`/`columnheader` that had no `row` parent. Replaced with a labelled group of buttons; selection moved into the accessible name, `aria-current="date"` marks today. **200 instances, one fix.**
+- **Button** icon-only variants (`text={false}`) had **no accessible name at all** — falls back to `label` now.
+- **DropdownMenu / Popover** wrapped a consumer's `<Button>` in `role="button" tabIndex=0`, nesting one control inside another. Now the popover semantics are cloned onto the real control; a synthesised button is used only when there is nothing valid to clone onto. Working *because* the B1 pass made every component spread `...rest`.
+- **FileInput** nested its `<input type="file">` inside the `role="button"` dropzone, and its label-less story left the real control unnamed.
+- **CodeBlock / Dialog / Drawer** had scrollable regions with no tab stop — **a keyboard user could not scroll them.** Dialog and Drawer's initial-focus query now prefers a real control so the new tab stop does not steal focus.
+- **Avatar** put `aria-label` on a role-less `<span>` (prohibited); **ProgressBar** had an optional name on a `role="progressbar"`; **Popover**'s `role="dialog"` panel had none; **Accordion** made every panel a landmark (the APG advises against this with many panels); **Breadcrumb** hardcoded one landmark name so two on a page were indistinguishable; **Table** rendered empty `<th>` cells.
+
+**One legitimate disable:** `heading-order` on the Typography *foundations doc* story, which deliberately demonstrates every heading level. Scoped to that story with a stated reason.
+
+**Two regressions I caused and caught:** `tabIndex` on CodeBlock's `<pre>` inside an `aria-hidden` panel (now `-1` while collapsed), and cloning `aria-expanded` onto a `<span>` in Popover (now gated on whether the element can legally carry it).
+
+**Still true:** axe catches roughly a third of WCAG issues. Meaningful alt text, sensible focus order, and whether a Dialog *actually* traps focus remain human judgment — which is what [item 7](#7-interaction-tests-play-functions--m) is for.
 
 `.storybook/preview.ts` has `a11y.test: 'todo'`. Axe runs on every story and reports, but nothing fails, so violations accumulate unmeasured.
 
@@ -634,7 +650,7 @@ Items **1** (`'use client'`), **B1** (refs / rest / native attrs), **B2** (`stat
 | 2 | **item 3** — Trusted Publishing | ✅ **done 2026-07-27** — took three attempts; causes recorded in the `release` skill |
 | 3 | **item 4-cheap** — Storybook install docs | ✅ **done 2026-07-27** — and build-enforced across both install surfaces |
 | 4 | **B3** — `Field` primitive | ✅ **done 2026-07-27** — and fixed two a11y bugs axe could never have found |
-| **5** | **item 6** — a11y to `'error'`, **AA minus contrast** | ⬅ **NEXT.** 49 violations measured; entirely invisible work; must precede any visual baseline |
+| 5 | **item 6** — a11y to `'error'`, **AA minus contrast** | ✅ **done 2026-07-27** — 49 fixed, 9 were real bugs; `'error'` now gates CI |
 | 6 | **Workstream A Phase 1** — registry metadata | Delivers the de-duplication payoff alone; natural home for item 1's `client` flag |
 | 7 | **Workstream A Phase 2** — prop contracts | Now describes the *good* API |
 | 8 | **item 2** — API-surface validator | Now freezes the right thing |

@@ -95,9 +95,9 @@ export const Dialog = React.forwardRef<HTMLDivElement, DialogProps>(
 
       const panel = panelRef.current;
       if (panel) {
-        const first = panel.querySelector<HTMLElement>(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
-        );
+        const first =
+          panel.querySelector<HTMLElement>('button, [href], input, select, textarea') ??
+          panel.querySelector<HTMLElement>('[tabindex]:not([tabindex="-1"])');
         (first ?? panel).focus();
       }
 
@@ -206,7 +206,14 @@ export const Dialog = React.forwardRef<HTMLDivElement, DialogProps>(
             )}
           </div>
 
-          {children && <div className={`${baseClass}__body`}>{children}</div>}
+          {children && (
+            // Scrollable when content is long; without a tab stop a keyboard
+            // user cannot reach that scroll. The initial-focus query below
+            // still prefers a real control, so this does not steal focus.
+            <div className={`${baseClass}__body`} tabIndex={0}>
+              {children}
+            </div>
+          )}
 
           {footer && <div className={`${baseClass}__footer`}>{footer}</div>}
         </div>

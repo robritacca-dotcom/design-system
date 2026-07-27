@@ -184,3 +184,22 @@
   line-height: var(--font-paragraph-sm-line-height);
   letter-spacing: var(--font-paragraph-sm-letter-spacing);
 }
+
+/* ============================================
+   SCREEN-READER-ONLY
+   Fallback text for header cells with no visible
+   label (checkbox / actions columns) — an empty
+   <th> is unannounced.
+   ============================================ */
+
+.ds-table__sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

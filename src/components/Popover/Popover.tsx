@@ -28,6 +28,16 @@ export interface PopoverProps {
  * positioned panel. Supports click and hover triggers
  * with automatic outside-click dismissal.
  */
+/**
+ * Whether an element may legally carry aria-expanded / aria-haspopup.
+ * Intrinsic tags are checked against the interactive set; a custom component
+ * is assumed to render a real control (every component in this library
+ * spreads unrecognised props onto its primary node).
+ */
+const INTERACTIVE_TAGS = new Set(['button', 'a', 'input', 'select', 'textarea', 'summary']);
+const canCarryPopoverSemantics = (el: React.ReactElement): boolean =>
+  typeof el.type === 'string' ? INTERACTIVE_TAGS.has(el.type) : true;
+
 export const Popover = ({
   children,
   content,
@@ -117,25 +127,41 @@ export const Popover = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <div
-        className={`${baseClass}__trigger`}
-        onClick={handleClick}
-        role={trigger === 'click' ? 'button' : undefined}
-        tabIndex={trigger === 'click' ? 0 : undefined}
-        aria-expanded={isOpen}
-        aria-label={ariaLabel}
-        aria-haspopup="dialog"
-        onKeyDown={(e) => {
-          if (trigger === 'click' && (e.key === 'Enter' || e.key === ' ')) {
-            e.preventDefault();
-            setOpen(!isOpen);
-          }
-        }}
-      >
-        {children}
+      {/*
+        The trigger content is consumer-supplied and is normally already a
+        control. Putting role="button" on the wrapper nested one interactive
+        element inside another — instead, clone the popover semantics onto the
+        real control, and only synthesise a button when there is nothing to
+        clone onto.
+      */}
+      <div className={`${baseClass}__trigger`} onClick={handleClick}>
+        {React.isValidElement(children) && canCarryPopoverSemantics(children) ? (
+          React.cloneElement(children as React.ReactElement<Record<string, unknown>>, {
+            'aria-expanded': isOpen,
+            'aria-haspopup': 'dialog',
+            ...(ariaLabel ? { 'aria-label': ariaLabel } : {}),
+          })
+        ) : trigger === 'click' ? (
+          <button
+            type="button"
+            aria-expanded={isOpen}
+            aria-haspopup="dialog"
+            aria-label={ariaLabel}
+          >
+            {children}
+          </button>
+        ) : (
+          children
+        )}
       </div>
 
-      <div className={panelClasses} role="dialog" aria-hidden={!isOpen}>
+      <div
+        className={panelClasses}
+        role="dialog"
+        // role="dialog" requires an accessible name.
+        aria-label={ariaLabel || 'Popover'}
+        aria-hidden={!isOpen}
+      >
         {content}
       </div>
     </div>

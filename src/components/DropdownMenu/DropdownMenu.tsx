@@ -449,16 +449,32 @@ export const DropdownMenu = ({
 
   return (
     <div className={classes} ref={rootRef}>
-      <div
-        className={`${baseClass}__trigger`}
-        role="button"
-        tabIndex={0}
-        aria-haspopup="menu"
-        aria-expanded={isOpen}
-        onClick={handleToggle}
-        onKeyDown={handleKeyDown}
-      >
-        {trigger}
+      {/*
+        The trigger is consumer-supplied and is virtually always already a
+        control (a Button). Wrapping it in role="button" tabIndex=0 put an
+        interactive element inside an interactive container. Put the menu
+        semantics on the real control instead, and only synthesise a button
+        when the trigger is not an element we can clone onto.
+      */}
+      <div className={`${baseClass}__trigger`}>
+        {React.isValidElement(trigger) ? (
+          React.cloneElement(trigger as React.ReactElement<Record<string, unknown>>, {
+            'aria-haspopup': 'menu',
+            'aria-expanded': isOpen,
+            onClick: handleToggle,
+            onKeyDown: handleKeyDown,
+          })
+        ) : (
+          <button
+            type="button"
+            aria-haspopup="menu"
+            aria-expanded={isOpen}
+            onClick={handleToggle}
+            onKeyDown={handleKeyDown}
+          >
+            {trigger}
+          </button>
+        )}
       </div>
       {isOpen && (
         <ul

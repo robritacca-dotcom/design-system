@@ -101,7 +101,10 @@ export const Drawer = React.forwardRef<HTMLDivElement, DrawerProps>(
 
       const panel = panelRef.current;
       if (panel) {
-        const first = panel.querySelector<HTMLElement>(FOCUSABLE);
+        const first =
+          panel.querySelector<HTMLElement>(
+            'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled])',
+          ) ?? panel.querySelector<HTMLElement>(FOCUSABLE);
         (first ?? panel).focus();
       }
 
@@ -209,7 +212,14 @@ export const Drawer = React.forwardRef<HTMLDivElement, DrawerProps>(
             )}
           </div>
 
-          {children && <div className={`${baseClass}__body`}>{children}</div>}
+          {children && (
+            // Scrollable when content is long; without a tab stop a keyboard
+            // user cannot reach that scroll. The initial-focus query below
+            // still prefers a real control, so this does not steal focus.
+            <div className={`${baseClass}__body`} tabIndex={0}>
+              {children}
+            </div>
+          )}
 
           {footer && <div className={`${baseClass}__footer`}>{footer}</div>}
         </div>

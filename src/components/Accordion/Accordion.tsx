@@ -79,8 +79,7 @@ export const Accordion = ({
             </button>
             <div
               id={`${baseClass}-panel-${item.id}`}
-              role="region"
-              aria-labelledby={`${baseClass}-header-${item.id}`}
+                            aria-labelledby={`${baseClass}-header-${item.id}`}
               className={`${baseClass}__panel`}
             >
               <div className={`${baseClass}__content`}>{item.content}</div>

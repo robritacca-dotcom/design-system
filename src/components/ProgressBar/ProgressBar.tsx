@@ -34,7 +34,7 @@ export const ProgressBar = ({
     .join(' ');
 
   return (
-    <div className={classes} role="progressbar" aria-valuenow={clamped} aria-valuemin={0} aria-valuemax={100} aria-label={ariaLabel}>
+    <div className={classes} role="progressbar" aria-valuenow={clamped} aria-valuemin={0} aria-valuemax={100} aria-label={ariaLabel || 'Progress'}>
       <div className={`${baseClass}__track`}>
         <div className={`${baseClass}__fill`} style={{ width: `${clamped}%` }} />
       </div>

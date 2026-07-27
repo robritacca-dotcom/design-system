@@ -120,7 +120,19 @@ export const CodeBlock = ({
       )}
       <div id={panelId} className={`${baseClass}__panel`} aria-hidden={collapsed || undefined}>
         <div className={`${baseClass}__panel-inner`}>
-          <pre className={`${baseClass}__pre`}>
+          {/*
+            tabIndex + an accessible name make the scroll container reachable:
+            long lines scroll horizontally, and without a tab stop a keyboard
+            user has no way to reach that scroll.
+          */}
+          <pre
+            className={`${baseClass}__pre`}
+            // -1 while collapsed: the panel is aria-hidden then, and a focusable
+            // element inside aria-hidden content is unreachable yet still tabbable.
+            tabIndex={collapsed ? -1 : 0}
+            role="region"
+            aria-label={filename ? `Code: ${filename}` : language ? `Code: ${language}` : 'Code'}
+          >
             <code className={`${baseClass}__code`}>{code}</code>
           </pre>
         </div>

@@ -190,21 +190,29 @@ export const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
           <span className={`${baseClass}__dropzone-text`}>{placeholder}</span>
           {accept && <span className={`${baseClass}__dropzone-hint`}>Accepts {accept}</span>}
 
-          <input
-            {...rest}
-            ref={setInputRef}
-            id={inputId}
-            name={name}
-            type="file"
-            className={`${baseClass}__native`}
-            accept={accept}
-            multiple={multiple}
-            disabled={disabled}
-            required={required}
-            tabIndex={-1}
-            onChange={handleChange}
-          />
         </div>
+
+        {/* Kept OUTSIDE the dropzone: an <input> inside a role="button"
+            container is a nested interactive control. It is visually hidden
+            either way, and the dropzone opens it programmatically. */}
+        <input
+          {...rest}
+          ref={setInputRef}
+          id={inputId}
+          name={name}
+          type="file"
+          className={`${baseClass}__native`}
+          accept={accept}
+          multiple={multiple}
+          disabled={disabled}
+          required={required}
+          tabIndex={-1}
+          // The native input is the real form control, so it needs its own
+          // name — Field's <label htmlFor> covers the labelled case, this
+          // covers the label-less one.
+          aria-label={label ? undefined : ariaLabel || rest['aria-label'] || placeholder}
+          onChange={handleChange}
+        />
 
         {files.length > 0 && (
           <ul className={`${baseClass}__list`}>
