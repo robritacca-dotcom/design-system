@@ -4,11 +4,19 @@ name: Release
 # default. The publish happens FROM dist/ (its generated package.json is
 # the one that ships; the root manifest stays private and never publishes).
 #
-# One-time setup before the first real run:
-#   1. Create the npm account/org that owns the @robr0 scope.
-#   2. Add an npm automation token as the NPM_TOKEN repo secret
-#      (Settings → Secrets and variables → Actions).
-# Bump PACKAGE_VERSION in scripts/package-manifest.mjs for each release.
+# Setup is complete: the @robr0 scope belongs to the robr0 npm account and
+# NPM_TOKEN is set as a repo secret. 0.1.0 shipped 2026-07-26.
+#
+# To cut a release, follow the `release` skill (.claude/skills/release):
+# bump PACKAGE_VERSION in scripts/package-manifest.mjs, dry-run, run for
+# real, then tag the published commit.
+#
+# NPM_TOKEN is a granular token WITH AN EXPIRY — when it lapses this
+# workflow fails at the publish step with a 401. npm is also deprecating
+# 2FA-bypass tokens for direct publishing (Jan 2027), so the durable fix is
+# Trusted Publishing (OIDC): `id-token: write` is already set below, so the
+# migration is mostly deleting the token and registering this workflow as a
+# trusted publisher on npmjs.com.
 
 on:
   workflow_dispatch:
