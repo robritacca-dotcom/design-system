@@ -437,6 +437,17 @@ export default function ComponentsPage() {
               </div>
             </TocCard>
 
+            {/* Field */}
+            <TocCard href="/components/field" title="Field">
+              <div style={{ display: "flex", flexDirection: "column", gap: "6px", width: "150px" }}>
+                <span style={{ fontSize: "11px", fontWeight: 600, color: "var(--color-text-primary)" }}>
+                  Email address <span style={{ color: "var(--color-core-accent-coral)" }}>*</span>
+                </span>
+                <div style={{ height: "26px", borderRadius: "10px", border: "1px solid var(--color-bg-container-border)", background: "var(--color-bg-container-primary)" }} />
+                <span style={{ fontSize: "10px", color: "var(--color-text-tertiary)" }}>We only use this to contact you.</span>
+              </div>
+            </TocCard>
+
             {/* Figure */}
             <TocCard href="/components/figure" title="Figure">
               <div style={{ width: "140px", borderRadius: "8px", overflow: "hidden", border: "1px solid var(--color-bg-container-border)" }}>

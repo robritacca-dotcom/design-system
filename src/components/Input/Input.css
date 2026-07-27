@@ -11,23 +11,6 @@
 }
 
 /* ============================================
-   LABEL
-   ============================================ */
-
-.ds-input__label {
-  font-family: var(--font-paragraph-em-family);
-  font-size: var(--font-paragraph-em-size);
-  font-weight: var(--font-paragraph-em-weight);
-  line-height: var(--font-paragraph-em-line-height);
-  letter-spacing: var(--font-paragraph-em-letter-spacing);
-  color: var(--color-text-primary);
-}
-
-.ds-input__required {
-  color: var(--color-core-accent-coral);
-}
-
-/* ============================================
    FIELD WRAPPER
    ============================================ */
 
@@ -104,20 +87,6 @@
 }
 
 /* ============================================
-   HELPER TEXT
-   ============================================ */
-
-.ds-input__helper {
-  font-family: var(--font-paragraph-sm-family);
-  font-size: var(--font-paragraph-sm-size);
-  font-weight: var(--font-paragraph-sm-weight);
-  line-height: var(--font-paragraph-sm-line-height);
-  letter-spacing: var(--font-paragraph-sm-letter-spacing);
-  color: var(--color-text-tertiary);
-  margin: 0;
-}
-
-/* ============================================
    ERROR STATE
    ============================================ */
 
@@ -129,17 +98,9 @@
   border-color: var(--color-status-error-border);
 }
 
-.ds-input--error .ds-input__helper {
-  color: var(--color-status-error-border);
-}
-
 /* ============================================
    DISABLED STATE
    ============================================ */
-
-.ds-input--disabled .ds-input__label {
-  color: var(--color-input-text-disabled);
-}
 
 .ds-input--disabled .ds-input__field {
   background-color: var(--color-input-bg-disabled);
@@ -187,7 +148,3 @@
   padding-right: calc(var(--padding-sm-md) + 20px + var(--gap-sm)); /* 12px + 20px icon + 8px gap */
 }
 
-.ds-input--compact .ds-input__label {
-  font-size: var(--font-paragraph-sm-size);
-  line-height: var(--font-paragraph-sm-line-height);
-}

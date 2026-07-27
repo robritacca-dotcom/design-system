@@ -32,6 +32,8 @@ export * from './components/Dropdown/Dropdown';
 export * from './components/DropdownMenu/DropdownMenu';
 export * from './components/EmptyState/EmptyState';
 export * from './components/EntityCard/EntityCard';
+export * from './components/Field/Field';
+export * from './components/Field/FieldContext';
 export * from './components/Figure/Figure';
 export * from './components/FileInput/FileInput';
 export * from './components/Input/Input';

@@ -18,7 +18,7 @@ The **live site** is the portfolio built on the design system. **Storybook** is 
 | Part | Description |
 |---|---|
 | **Portfolio website** (`/website`) | Next.js app with case studies, work history, writing, and about pages — all built exclusively with the design system components below. **[Live site →](https://robertritacca.com/)** |
-| **Design system** (`/src`) | <!-- component-count -->56<!-- /component-count --> React components, a three-tier token architecture, dark mode, and a full documentation site. Built to production standards. **[Storybook →](https://design-system-iota-one.vercel.app/?path=/docs/robr0-ds--docs)** |
+| **Design system** (`/src`) | <!-- component-count -->57<!-- /component-count --> React components, a three-tier token architecture, dark mode, and a full documentation site. Built to production standards. **[Storybook →](https://design-system-iota-one.vercel.app/?path=/docs/robr0-ds--docs)** |
 
 ---
 
@@ -27,7 +27,7 @@ The **live site** is the portfolio built on the design system. **Storybook** is 
 ### Components
 
 <!-- component-list:start -->
-Accordion · Alert · Alert dialog · App layout · App sidebar · Avatar · Badge · Breadcrumb · Button · Button group · Card · Carousel · Chart · Checkbox · Chip · Circular button · Code block · Combobox · Command palette · Contact card · Contribution graph · Date input · Date picker · Dialog · Divider · Drawer · Dropdown · Dropdown menu · Empty state · Entity card · Figure · File input · Input · Instructions · Link list · Nav · Pagination · Popover · Progress bar · Quote · Radio button · Section title · Segmented control · Selection card · Skeleton · Slider · Spinner · Stat · Table · Tabs · Textarea · Timeline · Toast · Toggle group · Toggle switch · Tooltip
+Accordion · Alert · Alert dialog · App layout · App sidebar · Avatar · Badge · Breadcrumb · Button · Button group · Card · Carousel · Chart · Checkbox · Chip · Circular button · Code block · Combobox · Command palette · Contact card · Contribution graph · Date input · Date picker · Dialog · Divider · Drawer · Dropdown · Dropdown menu · Empty state · Entity card · Field · Figure · File input · Input · Instructions · Link list · Nav · Pagination · Popover · Progress bar · Quote · Radio button · Section title · Segmented control · Selection card · Skeleton · Slider · Spinner · Stat · Table · Tabs · Textarea · Timeline · Toast · Toggle group · Toggle switch · Tooltip
 <!-- component-list:end -->
 
 ### Using the package

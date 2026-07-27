@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { Field } from '../Field/Field';
 import './Input.css';
 import '../../fonts/material-symbols.css';
 
@@ -88,21 +89,23 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       onValueChange?.(e.target.value);
     };
 
+    // Keep the historical id derivation — Field only generates one as a
+    // fallback, so an explicit id/name/label still wins and existing markup
+    // (and any consumer's own htmlFor) is unchanged.
     const inputId = id || name || label?.toLowerCase().replace(/\s+/g, '-');
+    const describedBy = helperText ? `${inputId}-helper` : rest['aria-describedby'];
 
     return (
-      <div className={classes}>
-        {label && (
-          <label className={`${baseClass}__label`} htmlFor={inputId}>
-            {label}
-            {required && (
-              <span className={`${baseClass}__required`} aria-hidden="true">
-                {' '}
-                *
-              </span>
-            )}
-          </label>
-        )}
+      <Field
+        className={classes}
+        label={label}
+        helperText={helperText}
+        error={error}
+        required={required}
+        disabled={disabled}
+        size={size}
+        id={inputId}
+      >
         <div className={`${baseClass}__field-wrapper`}>
           {iconLeft && (
             <span
@@ -125,7 +128,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             required={required}
             aria-label={ariaLabel || rest['aria-label'] || label}
             aria-invalid={error}
-            aria-describedby={helperText ? `${inputId}-helper` : rest['aria-describedby']}
+            aria-describedby={describedBy}
             onChange={handleChange}
           />
           {iconRight && (
@@ -137,12 +140,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             </span>
           )}
         </div>
-        {helperText && (
-          <p className={`${baseClass}__helper`} id={`${inputId}-helper`}>
-            {helperText}
-          </p>
-        )}
-      </div>
+      </Field>
     );
   },
 );

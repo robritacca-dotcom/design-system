@@ -31,6 +31,7 @@
     "DropdownMenu",
     "EmptyState",
     "EntityCard",
+    "Field",
     "Figure",
     "FileInput",
     "Input",

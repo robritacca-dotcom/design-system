@@ -542,6 +542,12 @@ Default icons (Material Symbols Rounded): `info`, `check_circle`, `warning`, `er
 
 **`ds-quote`** — Blockquote with optional attribution, two registers. `default`: body-size text in `--color-text-secondary` behind a `--border-md` left rule in `--color-bg-container-tertiary`. `pull`: `--font-sub-display-*` (30px/300) in `--color-text-primary`, no rule — the scale is the emphasis. Attribution: em-dash + `--font-paragraph-sm-em-*` primary; detail line: `--font-paragraph-sm-*` tertiary. Renders semantic `<figure>/<blockquote>/<figcaption>`.
 
+### Field
+
+**`ds-field`** — The scaffolding shared by every labelled form control, so the wiring exists once rather than per component. Renders the `<label>` (`--font-paragraph-em-*`, `--color-text-primary`) with its `htmlFor`, the required marker (`ds-field__required`, `--color-core-accent-coral`, `aria-hidden` — the control's real `required` attribute is what gets announced), the control itself as children, and the helper/error `<p>` (`ds-field__helper`, `--font-paragraph-sm-*`, `--color-text-tertiary`). Modifiers: `--error` recolours the helper to `--color-status-error-border`; `--disabled` dims the label to `--color-input-text-disabled`; `--compact` drops the label to `--font-paragraph-sm-*`.
+
+Field deliberately owns **no layout** — the flex column and gap stay on the consuming component's own root class, so adopting it changes no spacing. It generates the control id when one isn't supplied, derives the helper id from it, and exposes `{ controlId, describedBy, invalid, required, disabled }` through `useField()`, which returns `null` outside a Field so a control still renders standalone. Input, Textarea, DateInput, Dropdown, Combobox and FileInput compose inside it.
+
 ### Figure
 
 **`ds-figure`** — Image + caption in a `--radius-md` container with `--color-bg-container-secondary` fill. Accepts any image element as children (plain `<img>` or `next/image`); the media slot stretches it full-width. Caption: `--font-paragraph-sm-*` tertiary, `--padding-md`/`--padding-lg`, hairline top border. Passing `onClick` makes it zoomable: `cursor: zoom-in`, hover dims the image to 0.88, `role="button"` + Enter/Space activation, standard teal focus ring.

@@ -121,6 +121,7 @@ export const componentsSidebarLinks: NavLink[] = [
   { href: "/components/dropdown-menu", label: "Dropdown menu" },
   { href: "/components/empty-state", label: "Empty state" },
   { href: "/components/entity-card", label: "Entity card" },
+  { href: "/components/field", label: "Field" },
   { href: "/components/figure", label: "Figure" },
   { href: "/components/file-input", label: "File input" },
   { href: "/components/input", label: "Input" },
