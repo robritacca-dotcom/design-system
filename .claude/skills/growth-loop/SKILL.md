@@ -63,18 +63,17 @@ BRANCH=growth/$(date +%F)-<short-slug>
 git -C $REPO worktree add "$WT" -b "$BRANCH" main
 ```
 
-Make the copy edits in `$WT/website/src/...`, then verify the build without reinstalling deps:
+Make the copy edits in `$WT/website/src/...`, then verify the build (the repo is an npm workspace — one install at the worktree root wires everything, including the `@robr0/design-system` link back to the worktree's own `src/`; it's seconds thanks to the npm cache. Do **not** symlink `node_modules` from the main checkout — Turbopack rejects symlinks that point outside the project root):
 
 ```bash
-ln -s $REPO/node_modules "$WT/node_modules"
-ln -s $REPO/website/node_modules "$WT/website/node_modules"
+cd "$WT" && npm install --no-fund --no-audit
 cd "$WT/website" && npm run build
 ```
 
 If the build fails because of your edit, fix it. Then commit in the worktree (conventional message, e.g. `experiment(growth): reword /work CTA — hypothesis in loop report 2026-07-20`) and clean up:
 
 ```bash
-rm "$WT/node_modules" "$WT/website/node_modules"
+rm -rf "$WT/node_modules" "$WT/website/node_modules"
 git -C $REPO worktree remove "$WT"
 ```
 

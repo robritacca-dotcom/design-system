@@ -52,19 +52,18 @@ BRANCH=site-updates/$(date +%F)
 git -C $REPO worktree add "$WT" -b "$BRANCH" main
 ```
 
-In `$WT/website/src/data/site-updates.json`: prepend the new entry (or extend an arc), and set `asOf` to the current `main` HEAD sha + today's date. Validate and build without reinstalling deps:
+In `$WT/website/src/data/site-updates.json`: prepend the new entry (or extend an arc), and set `asOf` to the current `main` HEAD sha + today's date. Validate and build (the repo is an npm workspace — one install at the worktree root wires everything, including the `@robr0/design-system` link back to the worktree's own `src/`; it's seconds thanks to the npm cache. Do **not** symlink `node_modules` from the main checkout — Turbopack rejects symlinks that point outside the project root):
 
 ```bash
 node $WT/scripts/validate-site-updates.mjs
-ln -s $REPO/node_modules "$WT/node_modules"
-ln -s $REPO/website/node_modules "$WT/website/node_modules"
+cd "$WT" && npm install --no-fund --no-audit
 cd "$WT/website" && npm run build
 ```
 
 Fix anything your edit broke, then commit in the worktree (e.g. `content(site-updates): add "<entry title>" entry through YYYY-MM-DD`) and clean up:
 
 ```bash
-rm "$WT/node_modules" "$WT/website/node_modules"
+rm -rf "$WT/node_modules" "$WT/website/node_modules"
 git -C $REPO worktree remove "$WT"
 ```
 

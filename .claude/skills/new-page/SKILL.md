@@ -20,7 +20,7 @@ For a **component documentation page**, use the `component-doc-page` skill inste
 
 1. **Gather requirements** if not already provided:
    - Page URL path (e.g. `/foundations/motion`)
-   - Which section it belongs to — the sidebar arrays in `website/src/config/navigation.ts` are the authoritative list of sections (components, foundations, the about cluster, work; writing is fed dynamically from Substack)
+   - Which section it belongs to — the sidebar arrays in `website/src/config/navigation.ts` are the authoritative list of sections (components, foundations, customization, the docs cluster, work; writing is fed dynamically from Substack)
    - Page title, a short `subDisplay` tagline, and a 1–2 sentence description (for metadata and the intro block)
    - Figma URL and Storybook path (optional) — for `PageLinks`
 
@@ -41,6 +41,7 @@ For a **component documentation page**, use the `component-doc-page` skill inste
 ### File 2: `page.module.css`
 - Copy the exemplar's layout classes; add page-specific classes as needed
 - Semantic design tokens only — no hardcoded colours or magic values
+- No `ch`-based `max-width` on prose — doc paragraphs run the full content column; the layout column is the only width constraint (build-enforced by `scripts/validate-page-titles.mjs`)
 
 ### File 3: `layout.tsx`
 - Exports `metadata` via the shared helper: `export const metadata = pageMetadata("<your path>", "<one-line description>")` (import from `@/config/navigation`) — `scripts/validate-page-titles.mjs` fails the build if a page's layout doesn't derive its title this way

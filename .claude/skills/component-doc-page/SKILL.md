@@ -38,7 +38,7 @@ This is a more thorough, component-specific version of `new-page`. The Button pa
    - Invariants the exemplar can't teach:
      - `subDisplay` is a *tagline* for the component (e.g. Button's "The main action element") — not the word "Components"; the breadcrumb already shows the section
      - `introBody` is a clear 1–2 sentence description of the component's purpose, inferred from its props and JSDoc if available
-     - Import the component via the `@design-system` alias, never a relative path into `src/`
+     - Import the component through the package, never a relative path into `src/`: `import { X } from "@robr0/design-system/components/X/X"` (recharts-backed charts come from `@robr0/design-system/charts`) — the website is an npm-workspace consumer of the published package's exports
      - Include `PageLinks` with whichever Figma/Storybook URLs were provided
    - **Variant showcase grid**: render the component in every meaningful combination of its variants and states. For components with discrete variants × states (like Button), render a proper grid. For simpler components, render one example per meaningful state/variant.
 
@@ -58,6 +58,6 @@ This is a more thorough, component-specific version of `new-page`. The Button pa
    - If entry already exists, skip this step
 
 8. **Update `website/src/app/components/page.tsx`** (the components index):
-   - Add a `TocCard` in alphabetical order: `<TocCard href="/components/component-slug" title="Component Name">` wrapping a small preview — use the real component (imported via `@design-system`) where it reads well at miniature size, as most cards do, or a small inline-styled mockup where it doesn't (see the Accordion card)
+   - Add a `TocCard` in alphabetical order: `<TocCard href="/components/component-slug" title="Component Name">` wrapping a small preview — use the real component (imported from `@robr0/design-system`) where it reads well at miniature size, as most cards do, or a small inline-styled mockup where it doesn't (see the Accordion card)
 
 9. **Sitemap is automatic** — `website/src/app/sitemap.ts` derives its routes from the shared sidebar configs, so the navigation entry from step 7 is what puts the page in the sitemap. Do not edit `sitemap.ts` by hand. (All of steps 7–8, plus the `design.md` spec section, are build-enforced by `scripts/validate-website-surfaces.mjs`.)
