@@ -42,7 +42,12 @@ Be deliberate about breaking changes: components are exported both from the barr
 
 ### 3. Bump and commit
 
-Edit `PACKAGE_VERSION` in `scripts/package-manifest.mjs`, then:
+**Two files carry the version and nothing generates the second one — edit both:**
+
+1. `PACKAGE_VERSION` in `scripts/package-manifest.mjs` — the source of truth for what ships.
+2. `"version"` in the root `package.json` — **must be kept in sync by hand.** No generator writes it, and `scripts/validate-package-exports.mjs` fails the build when the two disagree (`package.json version is "x", manifest says "y"`). The root package.json stays `private: true` forever; only the generated `dist/package.json` is published, but the parity check still gates every build.
+
+Then:
 
 ```bash
 npm run validate-registry
@@ -102,7 +107,7 @@ Version published, the npm URL, the tagged commit, the release URL, and anything
 
 - **Never** publish from a local machine (`npm publish` by hand) — releases go through the workflow so every release is provenance-signed and smoke-tested
 - **Never** re-run the publish workflow after a successful publish, even if the registry 404s
-- **Never** bump the version in `package.json` — `scripts/package-manifest.mjs` is the source of truth
+- The version lives in **two** places and only one is authoritative: bump `PACKAGE_VERSION` in `scripts/package-manifest.mjs` *and* mirror it into the root `package.json`, which nothing generates. Never bump `package.json` alone — the manifest is what ships
 - Never publish from a dirty tree, an unpushed commit, or a red CI
 - **Auth is Trusted Publishing (OIDC) — there is no npm token to expire or rotate.** If the publish step fails to authenticate, the cause is one of: the `id-token: write` permission was dropped from `release.yml`; the workflow file was **renamed or moved** (the trusted-publisher registration on npmjs.com is keyed to the filename `release.yml`); the npm CLI on the runner is older than 11.5.1; or the registration itself was removed. Rob owns anything that has to change on npmjs.com.
 - **A dry run never authenticates**, so it cannot prove OIDC is working — it exercises the build and the tarball, nothing else. After any change to `release.yml`'s auth, permissions, or filename, the only real proof is a genuine publish. Treat that as a reason to make the *next* release a small patch, not a reason to skip the dry run.
