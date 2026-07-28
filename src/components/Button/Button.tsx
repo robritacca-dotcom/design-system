@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { Spinner } from '../Spinner/Spinner';
 import './Button.css';
 import '../../fonts/material-symbols.css';
 
@@ -18,6 +19,12 @@ type ButtonOwnProps = {
   size?: 'default' | 'compact';
   /** Whether the button is disabled */
   disabled?: boolean;
+  /**
+   * Shows a spinner in the left icon slot and blocks interaction while an
+   * async action runs. Keeps the variant's full-colour appearance (unlike
+   * `disabled`) and sets `aria-busy` on the rendered element.
+   */
+  loading?: boolean;
   /** Optional href — renders as <a> instead of <button> */
   href?: string;
   /** Optional target attribute for links */
@@ -68,6 +75,7 @@ export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, Bu
       variant,
       size = 'default',
       disabled,
+      loading,
       href,
       target,
       rel,
@@ -89,12 +97,14 @@ export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, Bu
     const isDisabled = disabled ?? state === 'disabled';
     // Keep the state modifier class so the disabled styling applies either way.
     const resolvedState = state ?? (isDisabled ? 'disabled' : 'default');
+    const isLoading = Boolean(loading);
 
     const classes = [
       baseClass,
       `${baseClass}--${resolvedVariant}`,
       `${baseClass}--${resolvedState}`,
       `${baseClass}--${size}`,
+      isLoading && `${baseClass}--loading`,
       className,
     ]
       .filter(Boolean)
@@ -103,8 +113,15 @@ export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, Bu
     // Material Symbols — rounded only
     const iconClass = 'material-symbols-rounded';
 
-    // Backwards compatibility: icon prop maps to iconLeft
-    const leftIcon = iconLeft || icon;
+    // Backwards compatibility: icon prop maps to iconLeft.
+    // While loading, the spinner takes over the left icon slot so the label
+    // keeps its position and the button doesn't change width.
+    const spinnerSize = size === 'compact' ? 'sm' : 'md';
+    const leftIcon = isLoading ? (
+      <Spinner size={spinnerSize} variant="inherit" />
+    ) : (
+      iconLeft || icon
+    );
 
     /** Render an icon slot — string → Material Symbol, ReactNode → custom element */
     const renderIcon = (iconProp: string | React.ReactNode) => {
@@ -137,7 +154,8 @@ export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, Bu
       </>
     );
 
-    if (href && !isDisabled) {
+    // A loading link renders the button branch so interaction is truly blocked.
+    if (href && !isDisabled && !isLoading) {
       return (
         <a
           {...(rest as React.ComponentPropsWithoutRef<'a'>)}
@@ -160,7 +178,8 @@ export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, Bu
         ref={ref as React.Ref<HTMLButtonElement>}
         type="button"
         className={classes}
-        disabled={isDisabled}
+        disabled={isDisabled || isLoading}
+        aria-busy={isLoading || undefined}
         aria-label={fallbackAriaLabel ?? rest['aria-label']}
       >
         {content}

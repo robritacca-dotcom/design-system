@@ -59,6 +59,17 @@
   stroke: var(--color-text-secondary);
 }
 
+/* Inherit — both circles draw in currentColor so the spinner matches the
+   text/icon colour of whatever control contains it (e.g. a loading Button) */
+.ds-spinner--inherit .ds-spinner__track {
+  stroke: currentColor;
+  opacity: 0.25;
+}
+
+.ds-spinner--inherit .ds-spinner__arc {
+  stroke: currentColor;
+}
+
 /* ============================================
    ANIMATION
    ============================================ */

@@ -3,8 +3,8 @@ import './Spinner.css';
 export interface SpinnerProps {
   /** Size of the spinner */
   size?: 'sm' | 'md' | 'lg';
-  /** Visual variant */
-  variant?: 'primary' | 'neutral';
+  /** Visual variant — `inherit` draws the spinner in `currentColor`, for use inside coloured controls */
+  variant?: 'primary' | 'neutral' | 'inherit';
   /** Accessible label */
   label?: string;
   /** Additional CSS classes */

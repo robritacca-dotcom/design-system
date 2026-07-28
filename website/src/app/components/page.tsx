@@ -25,6 +25,7 @@ import { Divider } from "@robr0/design-system/components/Divider/Divider";
 import { Dropdown } from "@robr0/design-system/components/Dropdown/Dropdown";
 import { Pagination } from "@robr0/design-system/components/Pagination/Pagination";
 import { Input } from "@robr0/design-system/components/Input/Input";
+import { Kbd } from "@robr0/design-system/components/Kbd/Kbd";
 import { ProgressBar } from "@robr0/design-system/components/ProgressBar/ProgressBar";
 import { RadioButton } from "@robr0/design-system/components/RadioButton/RadioButton";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
@@ -324,6 +325,22 @@ export default function ComponentsPage() {
               </div>
             </TocCard>
 
+            {/* Context menu */}
+            <TocCard href="/components/context-menu" title="Context menu">
+              <div style={{ display: "flex", flexDirection: "column", gap: "2px", width: "150px", padding: "4px", borderRadius: "10px", border: "1px solid var(--color-input-border-primary)", background: "var(--color-bg-page-primary)", boxShadow: "var(--shadow-floating)" }}>
+                {[
+                  { icon: "open_in_new", label: "Open", hover: false },
+                  { icon: "edit", label: "Rename", hover: true },
+                  { icon: "delete", label: "Delete", hover: false, destructive: true },
+                ].map((item) => (
+                  <div key={item.label} style={{ display: "flex", alignItems: "center", gap: "6px", padding: "4px 8px", borderRadius: "6px", background: item.hover ? "var(--color-action-passive-bg-hover)" : "transparent" }}>
+                    <span className="material-symbols-rounded" style={{ fontSize: "13px", color: item.destructive ? "var(--color-core-accent-coral)" : "var(--color-icon-secondary)" }}>{item.icon}</span>
+                    <span style={{ fontSize: "11px", fontWeight: 500, color: item.destructive ? "var(--color-core-accent-coral)" : "var(--color-text-primary)" }}>{item.label}</span>
+                  </div>
+                ))}
+              </div>
+            </TocCard>
+
             {/* Contribution graph */}
             <TocCard href="/components/contribution-graph" title="Contribution graph">
               {/* The graph is fluid (width: 100%) — constrain it so the
@@ -489,6 +506,15 @@ export default function ComponentsPage() {
                   <span className={styles.instructionBadge}>2</span>
                   <span className={styles.instructionLabel}>Second</span>
                 </div>
+              </div>
+            </TocCard>
+
+            {/* Kbd */}
+            <TocCard href="/components/kbd" title="Kbd">
+              <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                <Kbd>⌘</Kbd>
+                <Kbd>⇧</Kbd>
+                <Kbd>K</Kbd>
               </div>
             </TocCard>
 

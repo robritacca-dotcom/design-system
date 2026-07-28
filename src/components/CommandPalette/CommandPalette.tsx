@@ -10,6 +10,7 @@ import React, {
   useSyncExternalStore,
 } from 'react';
 import ReactDOM from 'react-dom';
+import { Kbd } from '../Kbd/Kbd';
 import './CommandPalette.css';
 import '../../fonts/material-symbols.css';
 
@@ -357,9 +358,9 @@ export const CommandPalette = ({
                       {command.shortcut && command.shortcut.length > 0 && (
                         <span className={`${baseClass}__shortcut`}>
                           {command.shortcut.map((key, i) => (
-                            <kbd key={i} className={`${baseClass}__key`}>
+                            <Kbd key={i} size="compact">
                               {key}
-                            </kbd>
+                            </Kbd>
                           ))}
                         </span>
                       )}
@@ -373,16 +374,16 @@ export const CommandPalette = ({
         {!hideFooter && (
           <div className={`${baseClass}__footer`}>
             <span className={`${baseClass}__hint`}>
-              <kbd className={`${baseClass}__key`}>↑</kbd>
-              <kbd className={`${baseClass}__key`}>↓</kbd>
+              <Kbd size="compact">↑</Kbd>
+              <Kbd size="compact">↓</Kbd>
               to navigate
             </span>
             <span className={`${baseClass}__hint`}>
-              <kbd className={`${baseClass}__key`}>↵</kbd>
+              <Kbd size="compact">↵</Kbd>
               to select
             </span>
             <span className={`${baseClass}__hint`}>
-              <kbd className={`${baseClass}__key`}>esc</kbd>
+              <Kbd size="compact">esc</Kbd>
               to close
             </span>
           </div>

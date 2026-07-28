@@ -1,3 +1,4 @@
+import { Spinner } from '../Spinner/Spinner';
 import './CircularButton.css';
 import '../../fonts/material-symbols.css';
 
@@ -10,6 +11,12 @@ export interface CircularButtonProps {
   state?: 'default' | 'hover' | 'active' | 'disabled';
   /** Button size */
   size?: 'default' | 'compact';
+  /**
+   * Shows a spinner in place of the icon and blocks interaction while an
+   * async action runs. Keeps the variant's full-colour appearance (unlike
+   * the disabled state) and sets `aria-busy` on the rendered element.
+   */
+  loading?: boolean;
   /** Accessible label */
   ariaLabel: string;
   /** Optional click handler */
@@ -36,6 +43,7 @@ export const CircularButton = ({
   priority = 'primary',
   state = 'default',
   size = 'default',
+  loading,
   ariaLabel,
   onClick,
   href,
@@ -49,19 +57,33 @@ export const CircularButton = ({
   const stateClass = `${baseClass}--${state}`;
   const sizeClass = `${baseClass}--${size}`;
 
-  const classes = [baseClass, variantClass, stateClass, sizeClass, className]
+  const isLoading = Boolean(loading);
+
+  const classes = [
+    baseClass,
+    variantClass,
+    stateClass,
+    sizeClass,
+    isLoading && `${baseClass}--loading`,
+    className,
+  ]
     .filter(Boolean)
     .join(' ');
 
   const isDisabled = state === 'disabled';
 
-  const children = (
+  const children = isLoading ? (
+    <span className={`${baseClass}__icon`} aria-hidden="true">
+      <Spinner size={size === 'compact' ? 'sm' : 'md'} variant="inherit" />
+    </span>
+  ) : (
     <span className={`${baseClass}__icon material-symbols-rounded`} aria-hidden="true">
       {icon}
     </span>
   );
 
-  if (href && !isDisabled) {
+  // A loading link renders the button branch so interaction is truly blocked.
+  if (href && !isDisabled && !isLoading) {
     return (
       <a
         className={classes}
@@ -82,7 +104,8 @@ export const CircularButton = ({
       type="button"
       className={classes}
       onClick={onClick}
-      disabled={isDisabled}
+      disabled={isDisabled || isLoading}
+      aria-busy={isLoading || undefined}
       aria-label={ariaLabel}
       aria-describedby={ariaDescribedby}
     >

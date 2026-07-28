@@ -372,6 +372,24 @@
 }
 
 /* ============================================
+   LOADING
+   Keeps the variant's full-colour appearance (no disabled dim);
+   the spinner occupies the left icon slot and inherits its colour.
+   ============================================ */
+
+.ds-button--loading {
+  cursor: progress;
+  pointer-events: none;
+}
+
+/* The generic icon-slot svg sizing must not distort the spinner —
+   it sizes itself from the Spinner size prop */
+.ds-button .ds-button__icon .ds-spinner__circle {
+  width: 100%;
+  height: 100%;
+}
+
+/* ============================================
    FOCUS
    ============================================ */
 

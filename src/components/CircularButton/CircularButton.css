@@ -197,6 +197,17 @@
 }
 
 /* ============================================
+   LOADING
+   Keeps the variant's full-colour appearance (no disabled dim);
+   the spinner replaces the icon and inherits its colour.
+   ============================================ */
+
+.ds-circular-button--loading {
+  cursor: progress;
+  pointer-events: none;
+}
+
+/* ============================================
    FOCUS
    ============================================ */
 

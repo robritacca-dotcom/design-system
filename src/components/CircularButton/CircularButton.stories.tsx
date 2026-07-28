@@ -26,6 +26,10 @@ const meta = {
       options: ['default', 'compact'],
       description: 'Button size',
     },
+    loading: {
+      control: 'boolean',
+      description: 'Show a spinner in place of the icon and block interaction',
+    },
     ariaLabel: { control: 'text', description: 'Accessible label' },
   },
   args: {
@@ -113,6 +117,23 @@ export const CompactTertiaryDefault: Story = {
 
 export const CompactTertiaryHover: Story = {
   args: { priority: 'tertiary', state: 'hover', size: 'compact', icon: 'more_vert', ariaLabel: 'More options' },
+};
+
+// Loading
+export const PrimaryLoading: Story = {
+  args: { priority: 'primary', icon: 'add', loading: true, ariaLabel: 'Saving' },
+};
+
+export const SecondaryLoading: Story = {
+  args: { priority: 'secondary', icon: 'edit', loading: true, ariaLabel: 'Saving' },
+};
+
+export const TertiaryLoading: Story = {
+  args: { priority: 'tertiary', icon: 'refresh', loading: true, ariaLabel: 'Refreshing' },
+};
+
+export const CompactLoading: Story = {
+  args: { priority: 'primary', size: 'compact', icon: 'add', loading: true, ariaLabel: 'Saving' },
 };
 
 // Common icon examples

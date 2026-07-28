@@ -112,6 +112,24 @@ export default function CircularButtonPage() {
             </div>
           </section>
 
+          {/* Loading */}
+          <section className={styles.section}>
+            <SectionTitle title="Loading" />
+            <p className={styles.introBody}>
+              Set <code>loading</code> while an async action runs — the spinner
+              replaces the icon in the variant&apos;s own colour and interaction
+              is blocked, without the dimmed disabled look.
+            </p>
+            <div className={styles.variantRow}>
+              <CircularButton icon="add" priority="primary" loading ariaLabel="Saving" />
+              <CircularButton icon="edit" priority="secondary" loading ariaLabel="Saving" />
+              <CircularButton icon="refresh" priority="tertiary" loading ariaLabel="Refreshing" />
+              <CircularButton icon="add" priority="primary" size="compact" loading ariaLabel="Saving" />
+              <CircularButton icon="edit" priority="secondary" size="compact" loading ariaLabel="Saving" />
+              <CircularButton icon="refresh" priority="tertiary" size="compact" loading ariaLabel="Refreshing" />
+            </div>
+          </section>
+
           {/* Compact */}
           <section className={styles.section}>
             <SectionTitle title="Compact" />

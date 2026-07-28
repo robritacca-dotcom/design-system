@@ -10,7 +10,7 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     size: { control: 'select', options: ['sm', 'md', 'lg'] },
-    variant: { control: 'select', options: ['primary', 'neutral'] },
+    variant: { control: 'select', options: ['primary', 'neutral', 'inherit'] },
     label: { control: 'text' },
   },
   args: {
@@ -35,6 +35,16 @@ export const Large: Story = {
 
 export const Neutral: Story = {
   args: { variant: 'neutral' },
+};
+
+/** `inherit` draws in `currentColor` — here it picks up the wrapping element's colour. */
+export const Inherit: Story = {
+  args: { variant: 'inherit' },
+  render: (args) => (
+    <span style={{ color: 'var(--color-text-secondary)' }}>
+      <Spinner {...args} />
+    </span>
+  ),
 };
 
 export const AllSizes: Story = {

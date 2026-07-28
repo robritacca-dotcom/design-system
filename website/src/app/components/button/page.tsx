@@ -139,6 +139,40 @@ export default function ButtonPage() {
               <ButtonGrid key={`${p}-${sz.value}`} priority={p} size={sz.value} />
             ))
           )}
+
+          {/* Loading state — spinner takes the left icon slot, interaction is blocked */}
+          <section className={styles.variantBlock}>
+            <SectionTitle title="Loading" />
+            <p className={styles.introBody}>
+              Set <code>loading</code> while an async action runs. The spinner
+              takes the left icon slot in the variant&apos;s own colour, the
+              label stays put, and clicks are blocked — without the dimmed
+              look of <code>disabled</code>.
+            </p>
+            <div className={styles.buttonGrid}>
+              <div className={styles.gridCorner} />
+              {priorities.map((p) => (
+                <span key={p} className={styles.gridColHeader}>
+                  {priorityLabels[p]}
+                </span>
+              ))}
+              {sizes.map((sz) => (
+                <React.Fragment key={sz.value}>
+                  <span className={styles.gridRowHeader}>{sz.label}</span>
+                  {priorities.map((p) => (
+                    <div key={`${sz.value}-${p}`} className={styles.gridCell}>
+                      <Button
+                        label="Saving…"
+                        priority={p}
+                        size={sz.value}
+                        loading
+                      />
+                    </div>
+                  ))}
+                </React.Fragment>
+              ))}
+            </div>
+          </section>
         </main>
       </div>
 

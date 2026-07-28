@@ -172,6 +172,14 @@
       "client": true
     },
     {
+      "name": "ContextMenu",
+      "label": "Context menu",
+      "slug": "context-menu",
+      "description": "Right-click menu at the pointer with groups, sub-menus, and shortcut hints.",
+      "category": "overlays",
+      "client": true
+    },
+    {
       "name": "ContributionGraph",
       "label": "Contribution graph",
       "slug": "contribution-graph",
@@ -292,6 +300,14 @@
       "client": false
     },
     {
+      "name": "Kbd",
+      "label": "Kbd",
+      "slug": "kbd",
+      "description": "A keyboard key rendered as a keycap, for shortcut hints in menus and prose.",
+      "category": "data-display",
+      "client": false
+    },
+    {
       "name": "LinkList",
       "label": "Link list",
       "slug": "link-list",
@@ -327,7 +343,7 @@
       "name": "ProgressBar",
       "label": "Progress bar",
       "slug": "progress-bar",
-      "description": "Horizontal bar indicating completion progress with status variants and optional label.",
+      "description": "Horizontal bar indicating completion progress, with an optional percentage label.",
       "category": "feedback",
       "client": false
     },
@@ -391,7 +407,7 @@
       "name": "Spinner",
       "label": "Spinner",
       "slug": "spinner",
-      "description": "Animated circular loading indicator available in three sizes and primary or neutral variants.",
+      "description": "Animated circular loading indicator in three sizes and primary, neutral, or inherit variants.",
       "category": "feedback",
       "client": false
     },

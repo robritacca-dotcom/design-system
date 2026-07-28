@@ -33,6 +33,10 @@ const meta = {
       control: 'boolean',
       description: 'Show text label',
     },
+    loading: {
+      control: 'boolean',
+      description: 'Show a spinner in the left icon slot and block interaction',
+    },
     iconLeft: {
       control: 'text',
       description: 'Material Symbol Rounded icon name for left side (e.g., "menu", "home")',
@@ -185,6 +189,51 @@ export const TertiaryDisabled: Story = {
     label: 'Button',
     text: true,
     iconRight: 'arrow_forward',
+  },
+};
+
+// ============================================
+// Loading
+// ============================================
+
+export const PrimaryLoading: Story = {
+  args: {
+    priority: 'primary',
+    label: 'Saving…',
+    loading: true,
+  },
+};
+
+export const SecondaryLoading: Story = {
+  args: {
+    priority: 'secondary',
+    label: 'Saving…',
+    loading: true,
+  },
+};
+
+export const TertiaryLoading: Story = {
+  args: {
+    priority: 'tertiary',
+    label: 'Saving…',
+    loading: true,
+  },
+};
+
+export const DestructiveLoading: Story = {
+  args: {
+    priority: 'destructive',
+    label: 'Deleting…',
+    loading: true,
+  },
+};
+
+export const CompactLoading: Story = {
+  args: {
+    priority: 'primary',
+    size: 'compact',
+    label: 'Saving…',
+    loading: true,
   },
 };
 
