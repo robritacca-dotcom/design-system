@@ -51,9 +51,10 @@ const PIPELINE: TimelineCompany[] = [
         title: "AI component generator",
         description: (
           <>
-            Builds production React from the written spec that lives in the repo:{" "}
+            Builds production React from the written specs that live in the repo:{" "}
             <Link href="/blueprints/design" className={styles.inlineLink}>design.md</Link> for the design language,{" "}
-            <Link href="/blueprints/claude" className={styles.inlineLink}>CLAUDE.md</Link> for the rules.
+            <Link href="/blueprints/claude" className={styles.inlineLink}>CLAUDE.md</Link> for the rules, and{" "}
+            <Link href="/blueprints/content-design" className={styles.inlineLink}>content-design.md</Link> for how every word reads.
           </>
         ),
         bullets: [
@@ -207,7 +208,8 @@ export default function AboutDsPage() {
             <p className={styles.introBody}>
               I&apos;m putting all of it on display because I think the system is the work. The pipeline below shows how the pieces fit. The rail beside it lists the key numbers and links. And if you want to lift any of it for your own project, everything is open:{" "}
               <Link href="/blueprints/claude" className={styles.inlineLink}>CLAUDE.md</Link>,{" "}
-              <Link href="/blueprints/design" className={styles.inlineLink}>design.md</Link>, the{" "}
+              <Link href="/blueprints/design" className={styles.inlineLink}>design.md</Link>,{" "}
+              <Link href="/blueprints/content-design" className={styles.inlineLink}>content-design.md</Link>, the{" "}
               <Link href="/skills" className={styles.inlineLink}>skills</Link>, and the{" "}
               <Link href="/loops" className={styles.inlineLink}>loops</Link> are ready to drop into your own codebase or AI tooling.
             </p>
