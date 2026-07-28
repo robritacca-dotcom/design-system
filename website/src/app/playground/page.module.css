@@ -114,11 +114,13 @@
   color: var(--color-text-primary);
 }
 
+/* Standalone group headings match the Field label the DS inputs render,
+   so hand-built controls (swatches, sliders) read as the same form */
 .controlHeading {
-  font-size: var(--font-title-body-size);
-  font-weight: var(--font-title-body-weight);
-  line-height: var(--font-title-body-line-height);
-  letter-spacing: var(--font-title-body-letter-spacing);
+  font-size: var(--font-paragraph-em-size);
+  font-weight: var(--font-paragraph-em-weight);
+  line-height: var(--font-paragraph-em-line-height);
+  letter-spacing: var(--font-paragraph-em-letter-spacing);
   color: var(--color-text-primary);
 }
 
@@ -129,6 +131,13 @@
   color: var(--color-text-tertiary);
 }
 
+/* The tint toggle doubles as its group's title — match the label weight
+   the other group headings use */
+.tintTitleToggle :global(.ds-toggle-switch__label) {
+  font-weight: var(--font-paragraph-em-weight);
+  letter-spacing: var(--font-paragraph-em-letter-spacing);
+}
+
 /* Preset action-colour swatches — one column per hue, one row per ramp step */
 .swatchGrid {
   display: grid;
@@ -137,78 +146,10 @@
   padding: var(--primitive-padding-xxxs) 0;
 }
 
-.swatch {
-  width: 24px;
-  height: 24px;
-  padding: 0;
-  border: none;
-  border-radius: var(--radius-full);
-  cursor: pointer;
-}
-
-.swatch[aria-pressed="true"] {
-  box-shadow:
-    0 0 0 var(--border-md) var(--color-bg-page-primary),
-    0 0 0 calc(var(--border-md) * 2) var(--color-text-primary);
-}
-
-.swatch:focus-visible {
-  outline: var(--border-md) solid var(--color-input-border-selected);
-  outline-offset: var(--border-md);
-}
-
-/* The Custom row — bordered like an input, lit up when the current colour
-   is not one of the preset swatches */
-.customColorRow {
-  display: flex;
-  align-items: center;
-  gap: var(--gap-sm-md);
-  padding: var(--padding-xxs) var(--padding-sm);
-  border: var(--border-xs) solid var(--color-input-border-primary);
-  border-radius: var(--radius-md);
-  cursor: pointer;
-}
-
-.customColorRow[data-active] {
+/* The custom ColorPicker stays lit while the current colour is not one of
+   the preset swatches */
+.customPickerActive :global(.ds-colorpicker__trigger) {
   border-color: var(--color-input-border-selected);
-}
-
-.customColorLabel {
-  font-size: var(--font-paragraph-sm-size);
-  font-weight: var(--font-paragraph-em-weight);
-  color: var(--color-text-primary);
-}
-
-/* Colour picker row — the native input carries the swatch */
-.colorRow {
-  display: flex;
-  align-items: center;
-  gap: var(--gap-sm-md);
-  cursor: pointer;
-}
-
-.colorInput {
-  width: 48px;
-  height: 32px;
-  padding: 0;
-  border: var(--border-xs) solid var(--color-input-border-primary);
-  border-radius: var(--radius-sm);
-  background: none;
-  cursor: pointer;
-}
-
-.colorInput::-webkit-color-swatch-wrapper {
-  padding: 2px;
-}
-
-.colorInput::-webkit-color-swatch {
-  border: none;
-  border-radius: var(--radius-xs);
-}
-
-.colorValue {
-  font-size: var(--font-paragraph-sm-size);
-  color: var(--color-text-secondary);
 }
 
 .sliderRow {

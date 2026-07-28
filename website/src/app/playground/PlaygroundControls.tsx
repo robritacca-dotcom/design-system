@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./page.module.css";
 import { Button } from "@robr0/design-system/components/Button/Button";
+import { ColorPicker } from "@robr0/design-system/components/ColorPicker/ColorPicker";
+import { Swatch } from "@robr0/design-system/components/Swatch/Swatch";
 import { Dropdown } from "@robr0/design-system/components/Dropdown/Dropdown";
 import { Input } from "@robr0/design-system/components/Input/Input";
 import { Slider } from "@robr0/design-system/components/Slider/Slider";
@@ -63,6 +65,13 @@ export default function PlaygroundControls({
     (p) => p.hex === brand.toUpperCase()
   );
 
+  /* "Custom" is a state you land in by touching a lever, not a look you
+     pick — it only appears in the list while it is the active value. */
+  const presetOptions =
+    preset === "custom"
+      ? PRESET_OPTIONS
+      : PRESET_OPTIONS.filter((o) => o.value !== "custom");
+
   const [copied, setCopied] = useState(false);
   const copiedTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -89,25 +98,17 @@ export default function PlaygroundControls({
       <h3 className={styles.railTitle}>Theme controls</h3>
 
       <div className={styles.controlGroup}>
-        <h4 className={styles.controlHeading}>Theme preset</h4>
-        <p className={styles.controlNote}>
-          Start from a saved look — any lever you touch turns it back into Custom.
-        </p>
         <Dropdown
-          aria-label="Theme preset"
+          label="Theme preset"
           value={preset}
-          options={PRESET_OPTIONS}
+          options={presetOptions}
           onValueChange={onPreset}
         />
       </div>
 
       <div className={styles.controlGroup}>
-        <h4 className={styles.controlHeading}>Product name</h4>
-        <p className={styles.controlNote}>
-          Renames this page&apos;s title as you type.
-        </p>
         <Input
-          aria-label="Product name"
+          label="Product name"
           placeholder="Playground"
           value={productName}
           onValueChange={onProductName}
@@ -116,57 +117,41 @@ export default function PlaygroundControls({
 
       <div className={styles.controlGroup}>
         <h4 className={styles.controlHeading}>Action colour</h4>
-        <p className={styles.controlNote}>
-          Rebuilds the whole teal ramp around your pick — hover and pressed states
-          included.
-        </p>
         <div className={styles.swatchGrid}>
           {ACTION_COLOR_PRESETS.map(({ label, hex }) => (
-            <button
+            <Swatch
               key={hex}
-              type="button"
-              className={styles.swatch}
-              style={{ background: hex }}
-              aria-label={label}
-              aria-pressed={brand.toUpperCase() === hex}
+              value={hex}
+              label={label}
+              selected={brand.toUpperCase() === hex}
               onClick={() => onBrand(hex)}
             />
           ))}
         </div>
-        <label
-          className={styles.customColorRow}
-          data-active={isCustomBrand || undefined}
-        >
-          <input
-            type="color"
-            className={styles.colorInput}
-            value={brand}
-            onChange={(e) => onBrand(e.target.value.toUpperCase())}
-            aria-label="Custom brand colour"
-          />
-          <span className={styles.customColorLabel}>Custom</span>
-          <code className={styles.colorValue}>{brand.toUpperCase()}</code>
-        </label>
+        <ColorPicker
+          value={brand}
+          onValueChange={onBrand}
+          showText
+          aria-label="Custom brand colour"
+          className={isCustomBrand ? styles.customPickerActive : ""}
+        />
       </div>
 
       <div className={styles.controlGroup}>
-        <h4 className={styles.controlHeading}>Neutral tint</h4>
-        <p className={styles.controlNote}>
-          Washes the neutral scale — page, containers, text — toward a seed colour.
-        </p>
-        <ToggleSwitch label="Tint neutrals" checked={tintOn} onChange={onTintOn} />
+        <ToggleSwitch
+          className={styles.tintTitleToggle}
+          label="Tint neutrals"
+          checked={tintOn}
+          onChange={onTintOn}
+        />
         {tintOn && (
           <>
-            <label className={styles.colorRow}>
-              <input
-                type="color"
-                className={styles.colorInput}
-                value={tintSeed}
-                onChange={(e) => onTintSeed(e.target.value.toUpperCase())}
-                aria-label="Neutral tint seed colour"
-              />
-              <code className={styles.colorValue}>{tintSeed.toUpperCase()}</code>
-            </label>
+            <ColorPicker
+              value={tintSeed}
+              onValueChange={onTintSeed}
+              showText
+              aria-label="Neutral tint seed colour"
+            />
             <div className={styles.sliderRow}>
               <Slider
                 value={tintStrength}
@@ -184,9 +169,6 @@ export default function PlaygroundControls({
 
       <div className={styles.controlGroup}>
         <h4 className={styles.controlHeading}>Corner radius</h4>
-        <p className={styles.controlNote}>
-          Scales the radius scale; pills can become rectangles.
-        </p>
         <div className={styles.sliderRow}>
           <Slider
             value={radiusScale}
@@ -202,13 +184,8 @@ export default function PlaygroundControls({
       </div>
 
       <div className={`${styles.controlGroup} ${styles.dropUp}`}>
-        <h4 className={styles.controlHeading}>Typeface</h4>
-        <p className={styles.controlNote}>
-          One token drives the entire type scale. Fonts load from Google Fonts on
-          demand.
-        </p>
         <Dropdown
-          aria-label="Typeface"
+          label="Typeface"
           value={fontLabel}
           options={FONT_OPTIONS.map((f) => ({ label: f.label, value: f.label }))}
           onValueChange={onFontLabel}

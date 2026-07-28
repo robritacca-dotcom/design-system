@@ -20,7 +20,7 @@ import {
   neutralOverrides,
   radiusOverrides,
 } from "./theme-overrides";
-import { THEME_PRESETS } from "./presets";
+import { THEME_PRESETS, type ThemePreset } from "./presets";
 import PlaygroundControls from "./PlaygroundControls";
 import ActionsSection from "./sections/ActionsSection";
 import FormsSection from "./sections/FormsSection";
@@ -54,10 +54,26 @@ export default function PlaygroundPage() {
   const [fontLabel, setFontLabel] = useState(FONT_OPTIONS[0].label);
   const [productName, setProductName] = useState("");
 
+  /** The last-chosen preset's non-lever state (mono's greyed accents, its
+      theme-dependent action colour). Kept separate from `preset` so Custom
+      inherits it — touching one lever must only change that lever, never
+      snap the rest of the look back to the shipped defaults. */
+  const [presetExtras, setPresetExtras] = useState<
+    Pick<ThemePreset, "brandDark" | "extraOverrides">
+  >({});
+
   /** Touching any individual lever means the state is no longer the preset. */
   const asCustom = <T,>(setter: (value: T) => void) => (value: T) => {
     setPreset("custom");
     setter(value);
+  };
+
+  /** Explicitly picking an action colour also retires the inherited
+      theme-dependent brand — the pick applies to both themes. */
+  const pickBrand = (value: string) => {
+    setPreset("custom");
+    setPresetExtras((e) => ({ ...e, brandDark: undefined }));
+    setBrand(value);
   };
 
   const applyPreset = (value: string) => {
@@ -68,6 +84,7 @@ export default function PlaygroundPage() {
     setPreset(value);
     const p = THEME_PRESETS[value];
     if (!p) return; // "custom" — keep the current levers
+    setPresetExtras({ brandDark: p.brandDark, extraOverrides: p.extraOverrides });
     setBrand(p.brand);
     setTintOn(p.tintOn);
     setTintSeed(p.tintSeed);
@@ -86,10 +103,10 @@ export default function PlaygroundPage() {
   );
 
   /* A preset can carry a theme-dependent action colour (black & white:
-     dark button on light, white button on dark). */
-  const activePreset = THEME_PRESETS[preset];
+     dark button on light, white button on dark). Read from presetExtras so
+     it survives the flip to Custom. */
   const effectiveBrand =
-    activePreset?.brandDark && theme === "dark" ? activePreset.brandDark : brand;
+    presetExtras.brandDark && theme === "dark" ? presetExtras.brandDark : brand;
 
   const overrides = useMemo<Overrides>(() => {
     const merged: Overrides = {};
@@ -102,11 +119,11 @@ export default function PlaygroundPage() {
     if (radiusScale !== 100 || !pill) {
       Object.assign(merged, radiusOverrides(radiusScale / 100, pill));
     }
-    if (activePreset?.extraOverrides) {
-      Object.assign(merged, activePreset.extraOverrides);
+    if (presetExtras.extraOverrides) {
+      Object.assign(merged, presetExtras.extraOverrides);
     }
     return merged;
-  }, [effectiveBrand, tintOn, tintSeed, tintStrength, radiusScale, pill, activePreset]);
+  }, [effectiveBrand, tintOn, tintSeed, tintStrength, radiusScale, pill, presetExtras]);
 
   /* ---------- apply to the whole page ----------
      Custom properties substitute var() where they are declared, and the
@@ -160,6 +177,7 @@ export default function PlaygroundPage() {
 
   const reset = () => {
     setPreset("default");
+    setPresetExtras({});
     setBrand(DEFAULT_BRAND);
     setTintOn(false);
     setTintSeed(DEFAULT_NEUTRAL_SEED);
@@ -172,8 +190,8 @@ export default function PlaygroundPage() {
   /* The copied CSS is theme-agnostic except a preset's dark-mode action
      colour, which ships as a [data-theme="dark"] block — so :root always
      carries the light-mode ramp regardless of the theme being previewed. */
-  const darkBrandBlock = activePreset?.brandDark
-    ? brandOverrides(activePreset.brandDark)
+  const darkBrandBlock = presetExtras.brandDark
+    ? brandOverrides(presetExtras.brandDark)
     : undefined;
   const snippetOverrides = darkBrandBlock
     ? { ...overrides, ...brandOverrides(brand) }
@@ -203,7 +221,7 @@ export default function PlaygroundPage() {
           isPristine={isPristine}
           cssSnippet={cssSnippet}
           onPreset={applyPreset}
-          onBrand={asCustom(setBrand)}
+          onBrand={pickBrand}
           onTintOn={asCustom(setTintOn)}
           onTintSeed={asCustom(setTintSeed)}
           onTintStrength={asCustom(setTintStrength)}
