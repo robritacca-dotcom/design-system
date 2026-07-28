@@ -11,6 +11,8 @@ Every word this project ships should be **consistent, human, clear, and neutral*
 
 This document governs all shipped prose: website page copy and metadata, journal entries, component descriptions, README and Storybook copy, release notes, commit bodies, and UI microcopy. It sits beside its two siblings with a clean split: `design.md` owns how things look, `CLAUDE.md` owns where facts live (one authoritative home per fact, point instead of enumerating, no counts outside registries), and this file owns how sentences read.
 
+Deliberately out of scope: the agent-facing markdown references. `CLAUDE.md`, `design.md`, `ROADMAP.md`, skill instruction bodies, and this file itself are written for AI agents to parse, and their format optimises for that job: dense sections, bold markers, tables, and em dashes as structural separators. Those are formatting tools there, not voice, and this guide does not restyle them. They appear on /blueprints as artefacts, shown deliberately as they are. What IS in scope on those pages is the shell copy around them (titles, taglines, intros, metadata), which is shipped prose like any other.
+
 One deliberate irony to note up front: the `##` headings in this file are Title Case because that is the file convention shared with `design.md`, while the rule for shipped copy is sentence case. The convention applies to the markdown spec files; the rule applies to what users read on the site.
 
 A word on the origin of this document. The prose in this project is written by AI agents, and unedited AI prose has recognisable habits: hedged claims, uniform sentence lengths, promotional adjectives, and stock phrases that could sit in any project's docs without changing a word. This guide exists to strip those habits out. The test of success is not an AI detector score (see The Detector Question below); it is whether the copy reads like it was written by one careful person who knows this system inside out.
@@ -25,7 +27,7 @@ A word on the origin of this document. The prose in this project is written by A
 
 **Sentence case everywhere.** Headings, buttons, nav labels, card titles: "Work experience", not "Work Experience". Title Case is reserved for proper nouns (Storybook, Material Symbols Rounded, Nunito Sans).
 
-**No em dashes.** The character ( — ) is banned in shipped copy; this sentence is the one place in the project that names it. The turns it used to carry survive by other means: a colon for "and here is the point", a comma or parentheses for an aside, or a full stop and a second sentence. Two short sentences are almost always stronger than one spliced long one.
+**No em dashes.** The character ( — ) is banned in shipped copy (the agent-facing markdown references are exempt; see Overview). The turns it used to carry survive by other means: a colon for "and here is the point", a comma or parentheses for an aside, or a full stop and a second sentence. Two short sentences are almost always stronger than one spliced long one.
 
 **Concrete numbers over adjectives.** "Both themes resolve from one token layer" beats "a powerful theming system". If a claim deserves emphasis, give it a number, a name, or a mechanism. If it has none of those, it is probably decoration; cut it.
 
@@ -220,6 +222,5 @@ The on-demand audit for all of this is the `content-audit` skill (`.claude/skill
 
 - **Alt text and accessibility copy**: image alt text, `aria-label` wording, and screen-reader-only text have no rules here yet. The a11y test suite enforces presence, not quality.
 - **The word lists are seeded, not exhaustive**: they cover the tells observed in AI prose as of mid-2026. Model habits shift; the Iteration Guide covers additions.
-- **`design.md` and `CLAUDE.md` still contain em dashes**: they are engineering references, not shipped copy, and rewriting them wholesale was out of scope when the ban landed. New writing in both follows the ban; existing prose migrates as sections get touched.
 - **No localisation stance**: the project ships in English only; nothing here addresses translation.
 - **Enforcement is by audit, not build**: the `content-audit` skill is on-demand. No validator fails the build on a banned word, deliberately: most style calls need a reader, and a regex that mangles good writing to appease itself would be worse than drift.
