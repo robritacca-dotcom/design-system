@@ -35,7 +35,7 @@ node -e "console.log(JSON.stringify(require('./package.json').exports, null, 2))
 git log --oneline -20
 ```
 
-(Heads-up: `validate-registry` **writes** — it regenerates the README regions, barrels, skills content, token registry, and blueprint copies. Check `git status` before and after, so regenerated output isn't mistaken for a finding.)
+(Heads-up: `validate-registry` **writes** — its leading generator scripts regenerate the derived surfaces; the script entry in the root `package.json` is the authoritative list of what. Check `git status` before and after, so regenerated output isn't mistaken for a finding.)
 
 Read the root `package.json` (scripts, dependency model, workspaces), the validator scripts named in `validate-registry`, and the recent commits. The recent commits tell you *what kind* of drift to hunt for — a dependency-model change implicates install instructions everywhere; a renamed route implicates nav, sitemap, and cross-links.
 

@@ -30,21 +30,23 @@ Use this skill when asked to ship completed work — phrases like "merge and pus
    ```
    This one script is the single source of truth for local checks and mirrors the CI jobs in `.github/workflows/ci.yml` — if CI gains a check (tests, a11y), it gets added to `verify`, never listed here separately. The registry validators run automatically via the builds' `prebuild` hooks. **If any step fails, stop** — fix the failure if it was caused by this session's work, otherwise report it. Never push red.
 
-   Note: the build regenerates several derived surfaces — `website/src/data/skills-content.generated.ts` (from the SKILL.md files), the marked component count/list sections of `README.md` (from `src/components/registry.json`), the package barrels `src/index.ts`/`src/charts.ts` (same registry), the token registry `src/tokens/registry.json` (from the token CSS), and the public blueprint copies `website/public/CLAUDE.md`/`design.md` (from the root files). If any changed after the builds, it changed because this session's work made it stale — treat it as in scope and commit it alongside the edits that caused it (the validators fail the build when generated content goes stale, so leaving it out breaks CI's drift guard).
+   Note: the build regenerates the derived surfaces owned by the `validate-registry` chain — the generator scripts at the front of the `validate-registry` entry in the root `package.json` are the authoritative list of what gets rewritten. If a generated file changed after the builds, it changed because this session's work made it stale — treat it as in scope and commit it alongside the edits that caused it (the validators fail the build when generated content goes stale, so leaving it out breaks CI's drift guard).
 
-3. **Group changes into logical commits** — one commit per concern, not one giant commit. Match the repo's conventional style (`feat(scope):`, `fix(scope):`, `chore(scope):`), with a 1–3 sentence body explaining the why. Check `git log --oneline -5` if unsure of the voice.
+3. **Delta-scoped prose check** — the step that keeps drift audits boring. For the identifiers this session's diff touched (component names, prop names, script names, moved/deleted paths), grep the prose surfaces — `.claude/skills/`, `CLAUDE.md`, `design.md`, `README.md` — and judge whether any claim just became false. Fix what did in the same push; `validate-doc-refs` catches dead references mechanically, but only a reader catches a sentence that is now wrong. If the diff completed a ROADMAP item, update its row in the tracking table **and delete the item body's stale "current state" prose** — the table carries status, the body describes intent.
 
-4. **Push**: `git push` on `main`. Remember: **a push to main deploys robertritacca.com via Vercel** — pushing is publishing.
+4. **Group changes into logical commits** — one commit per concern, not one giant commit. Match the repo's conventional style (`feat(scope):`, `fix(scope):`, `chore(scope):`), with a 1–3 sentence body explaining the why. Check `git log --oneline -5` if unsure of the voice.
+
+5. **Push**: `git push` on `main`. Remember: **a push to main deploys robertritacca.com via Vercel** — pushing is publishing.
 
    If the pushed work changed component CSS, anything under `src/tokens/`, or `.storybook/`, offer to dispatch Chromatic (`gh workflow run chromatic.yml`) — `verify` proves nothing about pixels, and this is the decision point pre-deploy's Chromatic rule exists for. It bills cloud snapshots, so it's an offer, not an automatic step.
 
-5. **Confirm CI went green**: after the push, watch the GitHub Actions run to completion:
+6. **Confirm CI went green**: after the push, watch the GitHub Actions run to completion:
    ```bash
    gh run watch $(gh run list --branch main --limit 1 --json databaseId --jq '.[0].databaseId')
    ```
    CI runs in parallel with the Vercel deploy — it gates nothing, but a red run on main means something the local verify missed (or an environment difference) and must be investigated, not left as a red X.
 
-6. **Report** in the final message:
+7. **Report** in the final message:
    - Each pushed commit (hash + subject), confirmation `npm run verify` passed locally, and the CI run result
    - Every file deliberately left out and why
    - Anything the deploy will visibly change on the live site

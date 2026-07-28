@@ -32,13 +32,12 @@ Use this skill when asked to check for hardcoded values, audit token usage, find
    - Pixel values for `padding`, `margin`, `gap`, `border-radius`, `font-size`, `line-height` that correspond to a known token (cross-reference the primitives file)
    - Hardcoded font weights (e.g. `font-weight: 600`) where a typography token exists
    - Icon sizing done wrong: `font-size` set directly on a Material Symbols icon, or raw 20/24/32/48px icon dimensions — the fix is `--icon-size: var(--icon-size-sm|md|lg|xl)` (the icon font reads that one property for size, width, and height)
-   - Hardcoded `transition`/`animation` durations and easings (`0.2s`, `ease`, literal cubic-beziers) where a `--motion-duration-*`/`--motion-ease-*` token matches — component and website CSS is fully migrated, so any literal timing is a violation. Sanctioned exceptions: Skeleton's shimmer `ease-in-out` (no token curve exists) and the website's decorative background-float durations/stagger `animation-delay`s in `globals.css`
+   - Hardcoded `transition`/`animation` durations and easings (`0.2s`, `ease`, literal cubic-beziers) where a `--motion-duration-*`/`--motion-ease-*` token matches — component and website CSS is fully migrated, so any literal timing is a violation unless a directive sanctions it
 
    **Do NOT flag:**
    - Files within `src/tokens/` themselves (these define the tokens)
    - `0px`, `0`, `100%`, `50%` — these are structural, not token-replaceable
-   - The documented off-scale icon exceptions (glyphs inside a control's geometry — ToggleSwitch/SelectionCard thumb checks, the component-index card mockups): each is commented in place; treat a matching in-place comment as the signal it's sanctioned
-   - ColorPicker's `hsl()` colour-mixing constants (the white/black overlay gradients on the saturation area, the hue-spectrum track, the white handle/thumbs): colour-space physics no theme token can represent — commented at the top of `ColorPicker.css` and documented in its design.md spec
+   - **Any value sanctioned by a `ds-allow` directive** — the one and only signal that an off-token value is deliberate. `/* ds-allow(<category>): <reason> */` inside a comment covers the declaration/rule/section it sits at; `/* ds-allow-file(<category>): <reason> */` in a file header covers the whole file for that category. Enumerate the current sanctions with `grep -rn "ds-allow" src/components src/stories website/src`; the category set and grammar are build-enforced by `scripts/validate-css-directives.mjs`. This skill deliberately names no components: an off-token value with **no** directive is a violation, and the fix is either a token or a new directive at the site (plus a design.md note) — never an exception added to this skill
    - `1px` border widths — acceptable
    - Values inside `calc()` that are genuine arithmetic, not replaceable with a single token
    - CSS variable declarations themselves (lines starting with `--`)

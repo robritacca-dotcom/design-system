@@ -67,29 +67,29 @@ Use this skill when asked to review component APIs, check prop naming consistenc
    - If one component accepts `iconLeft`/`iconRight`, siblings in the same family should follow the same pattern
    - Default values: if `size` defaults to `"default"` on Button, it should not default to `"medium"` on a related component
 
-5. **Output a grouped findings report:**
+5. **Output a grouped findings report.** The component names in this example are **fictional by design** — findings about real components go stale the moment someone fixes them, so this block only demonstrates the format:
 
    ```
    ## API Consistency Report
 
    ### Contract violations (highest impact)
-   - Carousel — no forwardRef; a consumer cannot take a ref
-   - Chip — props do not extend ComponentPropsWithoutRef<'span'>; data-* unreachable
-   - Stat — has 'use client' but no hooks or handlers; blocks Server Component rendering
+   - Gadget — no forwardRef; a consumer cannot take a ref
+   - Sprocket — props do not extend ComponentPropsWithoutRef<'span'>; data-* unreachable
+   - MetricPod — has 'use client' but no hooks or handlers; blocks Server Component rendering
 
    ### Boolean prop naming
-   - Button: uses `disabled` (plain adjective)
-   - ToggleSwitch: uses `isDisabled` (is* prefix)
+   - Gadget: uses `disabled` (plain adjective)
+   - Doodad: uses `isDisabled` (is* prefix)
    → Standardise to `disabled` across all interactive components
 
    ### Size enum values
-   - Button: "compact" | "default" | "large"
-   - Slider: "small" | "medium" | "large"
-   → Standardise to Button's enum (it is the most-used component)
+   - Gadget: "compact" | "default" | "large"
+   - Whatsit: "small" | "medium" | "large"
+   → Standardise to the enum of the most-used component in the family
 
    ### Missing className prop
-   - DatePicker — no className passthrough
-   - Carousel — no className passthrough
+   - Doodad — no className passthrough
+   - Gadget — no className passthrough
 
    ### Summary
    X naming inconsistencies · Y missing props · Z structural mismatches
