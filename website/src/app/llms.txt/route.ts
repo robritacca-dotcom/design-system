@@ -30,7 +30,7 @@ export function GET() {
   const body = [
     "# Robert Ritacca",
     "",
-    "> Portfolio of Robert Ritacca, Principal Product Designer — AI product case studies (Intuit, Meta, Augmenta) and robr0 DS, a fully documented one-person design system with an open React component library.",
+    "> Portfolio of Robert Ritacca, Principal Product Designer: AI product case studies (Intuit, Meta, Augmenta) and robr0 DS, a fully documented one-person design system with an open React component library.",
     "",
     section(
       "Work",
@@ -74,11 +74,11 @@ export function GET() {
     "",
     "Raw markdown sources and machine-readable indexes.",
     "",
-    `- [CLAUDE.md](${SITE_URL}/CLAUDE.md): the repo's agent instructions — architecture, registries, and workflows`,
+    `- [CLAUDE.md](${SITE_URL}/CLAUDE.md): the repo's agent instructions (architecture, registries, and workflows)`,
     `- [GitHub source](https://github.com/robritacca-dotcom/design-system): exact TypeScript prop types live in src/components/<Name>/<Name>.tsx`,
     `- [npm package](https://www.npmjs.com/package/@robr0/design-system): \`npm install @robr0/design-system\` ships complete .d.ts type declarations for every component`,
-    `- [design.md](${SITE_URL}/design.md): the full design specification — tokens, colours, typography, component rules`,
-    `- [content-design.md](${SITE_URL}/content-design.md): the writing rules — voice, register by surface, words and patterns the project never ships`,
+    `- [design.md](${SITE_URL}/design.md): the full design specification (tokens, colours, typography, component rules)`,
+    `- [content-design.md](${SITE_URL}/content-design.md): the writing rules (voice, register by surface, words and patterns the project never ships)`,
     `- [Sitemap](${SITE_URL}/sitemap.xml)`,
     "",
   ].join("\n");

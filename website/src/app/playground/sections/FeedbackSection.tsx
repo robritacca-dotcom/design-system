@@ -23,7 +23,7 @@ function ToastDemo() {
       onClick={() =>
         toast({
           title: "Saved",
-          description: "Status colours stay put — that's the point.",
+          description: "Status colours stay put; that's the point.",
           variant: "positive",
         })
       }
@@ -40,13 +40,13 @@ export default function FeedbackSection() {
       <p className={styles.sectionNote}>
         These are the one deliberate exception: status colours are a separate token
         set that keeps its meaning regardless of branding, so the brand lever
-        doesn&apos;t move them. Info stays blue, errors stay red — while radius,
+        doesn&apos;t move them. Info stays blue, errors stay red, while radius,
         tint, and typeface changes still apply.
       </p>
 
       <Alert
         title="Status colours are stable by design"
-        description="Re-brand all you like — warnings stay orange so users always recognise them."
+        description="Re-brand all you like: warnings stay orange so users always recognise them."
         variant="info"
       />
 

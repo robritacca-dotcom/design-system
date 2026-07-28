@@ -204,7 +204,7 @@ export function getNavLabel(href: string): string | undefined {
 /** The brand suffix appended to every page's browser-tab title. */
 export const TITLE_SUFFIX = "Robert Ritacca";
 /** Next.js title template — applied to child route segments' titles. */
-export const TITLE_TEMPLATE = `%s — ${TITLE_SUFFIX}`;
+export const TITLE_TEMPLATE = `%s · ${TITLE_SUFFIX}`;
 
 /**
  * Metadata for a section landing layout (Components, Foundations, Work). Sets

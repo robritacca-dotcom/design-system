@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Robert Ritacca — Principal Product Designer",
+    name: "Robert Ritacca · Principal Product Designer",
     short_name: "Robert Ritacca",
     description:
       "Principal Product Designer crafting AI-native products, systems, and experiences.",

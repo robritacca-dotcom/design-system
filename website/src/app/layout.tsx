@@ -23,8 +23,8 @@ const SITE_DESCRIPTION =
 
 export const metadata: Metadata = {
   title: {
-    default: "Robert Ritacca — Principal Product Designer",
-    template: "%s — Robert Ritacca",
+    default: "Robert Ritacca · Principal Product Designer",
+    template: "%s · Robert Ritacca",
   },
   description: SITE_DESCRIPTION,
   metadataBase: new URL(SITE_URL),
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   authors: [{ name: "Robert Ritacca" }],
   creator: "Robert Ritacca",
   openGraph: {
-    title: "Robert Ritacca — Principal Product Designer",
+    title: "Robert Ritacca · Principal Product Designer",
     description: SITE_DESCRIPTION,
     url: SITE_URL,
     siteName: "Robert Ritacca",
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Robert Ritacca — Principal Product Designer",
+    title: "Robert Ritacca · Principal Product Designer",
     description: SITE_DESCRIPTION,
   },
   robots: {

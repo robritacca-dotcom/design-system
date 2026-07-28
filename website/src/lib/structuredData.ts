@@ -99,7 +99,7 @@ export function buildDesignSystemJsonLd() {
     "@type": "SoftwareApplication",
     name: "robr0 DS",
     description:
-      "A one-person React design system — layered design tokens, a fully documented component library, and a docs website, built end to end.",
+      "A one-person React design system: layered design tokens, a fully documented component library, and a docs website, built end to end.",
     applicationCategory: "DeveloperApplication",
     operatingSystem: "Web",
     url: `${SITE_URL}/overview`,

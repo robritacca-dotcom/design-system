@@ -69,7 +69,7 @@ export default function CardPage() {
                 />
               </Card>
               <Card title="Toggle switch">
-                <ToggleSwitch checked={true} label="Dark Mode" onChange={() => {}} />
+                <ToggleSwitch checked={true} label="Dark mode" onChange={() => {}} />
               </Card>
               <Card title="Card" interactive>
                 <Button
@@ -89,7 +89,7 @@ export default function CardPage() {
             <div className={styles.caseStudyRow}>
               <Card
                 variant="case-study"
-                title="Designing Embedded AI Experiences Inside ChatGPT and Claude"
+                title="Designing embedded AI experiences inside ChatGPT and Claude"
                 dek="What I learned leading design for TurboTax's embedded AI experiences"
                 companyName="TurboTax"
                 companyLogo="/logos/turbotax.svg"
@@ -98,7 +98,7 @@ export default function CardPage() {
               />
               <Card
                 variant="case-study"
-                title="Intuit Agent Chat"
+                title="Intuit Agent Chat platform"
                 dek="Designing and shipping Intuit's official conversational AI platform from 0 → 1"
                 companyName="Intuit"
                 companyLogo="/logos/Intuit.svg"

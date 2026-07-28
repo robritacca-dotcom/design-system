@@ -50,7 +50,7 @@ const ACCORDION_ITEMS = [
     id: "tokens",
     title: "How the tint reaches this text",
     content:
-      "The neutral scale drives page backgrounds, container surfaces, borders, and every text colour — so the tint lever washes all of them toward the seed at once.",
+      "The neutral scale drives page backgrounds, container surfaces, borders, and every text colour, so the tint lever washes all of them toward the seed at once.",
   },
   {
     id: "radius",
@@ -67,7 +67,7 @@ export default function DataDisplaySection() {
     <section className={styles.demoSection} aria-label="Data display">
       <SectionTitle title="Data display" />
       <p className={styles.sectionNote}>
-        Surfaces, borders, and text all sit on the neutral scale — switch on the
+        Surfaces, borders, and text all sit on the neutral scale: switch on the
         neutral tint to watch every container in this section wash toward your seed
         colour.
       </p>

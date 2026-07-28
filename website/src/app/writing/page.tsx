@@ -43,7 +43,7 @@ export default async function WritingPage() {
             </p>
             <p className={styles.introBody}>
               Longer-form thinking I publish on Substack, mirrored here. Each
-              piece lives on its own page with a link back to the original — and
+              piece lives on its own page with a link back to the original, and
               this list updates itself whenever I publish something new.
             </p>
           </div>

@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Playground",
   description:
-    "Re-theme the design system live — pick a brand colour, tint the neutrals, reshape the radii, swap the typeface, then copy the CSS.",
+    "Re-theme the design system live: pick a brand colour, tint the neutrals, reshape the radii, swap the typeface, then copy the CSS.",
   alternates: { canonical: "/playground" },
 };
 

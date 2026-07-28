@@ -198,7 +198,7 @@ export default function PlaygroundPage() {
     ? { ...overrides, ...brandOverrides(brand) }
     : overrides;
   const cssSnippet = isPristine
-    ? "/* Everything is at its shipped default — move a lever to generate CSS. */"
+    ? "/* Everything is at its shipped default. Move a lever to generate CSS. */"
     : buildCssSnippet(snippetOverrides, font, darkBrandBlock);
 
   return (
@@ -245,13 +245,13 @@ export default function PlaygroundPage() {
           {/* Intro */}
           <div className={`${styles.introSection} animate-in animate-delay-1`}>
             <p className={styles.subDisplay}>
-              Move a lever — the whole site re-themes, live
+              Move a lever: the whole site re-themes, live
             </p>
             <p className={styles.introBody}>
               These controls override <code>--primitive-*</code> tokens on the page
               root, exactly the way a consumer of the package would in their own CSS.
               Because every semantic token chains to a primitive, one override cascades
-              through buttons, focus rings, surfaces, and both themes — try the
+              through buttons, focus rings, surfaces, and both themes: try the
               light/dark toggle in the header while a brand colour is applied. Leaving
               the page puts everything back.
             </p>
@@ -274,7 +274,7 @@ export default function PlaygroundPage() {
             <p className={styles.sectionNote}>
               Paste this after importing{" "}
               <code>@robr0/design-system/tokens/tokens.css</code> and your app matches
-              this page — both themes included. The install steps live on{" "}
+              this page, both themes included. The install steps live on{" "}
               <Link href="/docs/get-started" className={styles.inlineLink}>
                 Get started
               </Link>

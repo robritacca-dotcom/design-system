@@ -276,7 +276,7 @@ const meta = {
     docs: {
       description: {
         component: `
-Material Symbols 3 icon gallery — **Rounded** only.
+Material Symbols 3 icon gallery: **Rounded** only.
 
 ## Usage
 \`\`\`tsx
@@ -284,7 +284,7 @@ Material Symbols 3 icon gallery — **Rounded** only.
 \`\`\`
 
 ## Sizing
-Set \`--icon-size\` to a scale step — never \`font-size\`, which changes the
+Set \`--icon-size\` to a scale step, never \`font-size\`, which changes the
 glyph without changing its layout box.
 
 \`\`\`css
@@ -336,7 +336,7 @@ const SearchableIconGallery = () => {
       {/* Header */}
       <div style={{ marginBottom: 24 }}>
         <h2 style={{ marginBottom: 8, fontFamily: 'system-ui, sans-serif', fontSize: 24 }}>
-          Material Symbols — Rounded
+          Material Symbols Rounded
         </h2>
         <p style={{ color: '#6d6d6d', fontSize: 14, marginBottom: 16 }}>
           {totalFiltered} of {allIcons.length} icons
@@ -411,7 +411,7 @@ export const AllIcons: Story = {
 
 const ICON_SIZES = [
   { label: 'SM', px: '20px', token: '--icon-size-sm', use: 'Compact controls, inline affordances' },
-  { label: 'MD', px: '24px', token: '--icon-size-md', use: 'Default — most UI icons' },
+  { label: 'MD', px: '24px', token: '--icon-size-md', use: 'Default: most UI icons' },
   { label: 'LG', px: '32px', token: '--icon-size-lg', use: 'Feature icons, section headers' },
   { label: 'XL', px: '48px', token: '--icon-size-xl', use: 'Marketing and empty states' },
 ] as const;

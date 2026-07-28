@@ -28,7 +28,7 @@ export default function NavigationSection() {
       <SectionTitle title="Navigation" />
       <p className={styles.sectionNote}>
         Active indicators, current-page markers, and hover states all derive from the
-        same action tokens as the buttons above — one colour pick keeps wayfinding
+        same action tokens as the buttons above, so one colour pick keeps wayfinding
         consistent.
       </p>
 

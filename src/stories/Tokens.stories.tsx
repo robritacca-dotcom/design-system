@@ -212,7 +212,7 @@ export const Primitives: Story = {
         }}
       >
         Raw values that are the source of truth. Do not use these directly in
-        components — use semantic tokens instead.
+        components; use semantic tokens instead.
       </p>
 
       <TokenSection title="Neutral Scale">
@@ -672,7 +672,7 @@ export const Elevation: Story = {
           lineHeight: '1.5',
         }}
       >
-        Depth is colour-based — standard containers never carry shadows. These
+        Depth is colour-based: standard containers never carry shadows. These
         are the only two shadows in the system, plus the modal scrim. All three
         get stronger values in dark mode so they read against the near-black
         page floor.
@@ -825,14 +825,14 @@ export const Motion: Story = {
         under prefers-reduced-motion.
       </p>
 
-      <TokenSection title="Durations — Core">
+      <TokenSection title="Core durations">
         <MotionTokenRow name="Fast" value="--motion-duration-fast" />
         <MotionTokenRow name="Base" value="--motion-duration-base" />
         <MotionTokenRow name="Slow" value="--motion-duration-slow" />
         <MotionTokenRow name="Slower" value="--motion-duration-slower" />
       </TokenSection>
 
-      <TokenSection title="Durations — Extended">
+      <TokenSection title="Extended durations">
         <MotionTokenRow name="Deliberate" value="--motion-duration-deliberate" />
         <MotionTokenRow name="Loop spin" value="--motion-duration-loop-spin" />
         <MotionTokenRow name="Loop shimmer" value="--motion-duration-loop-shimmer" />

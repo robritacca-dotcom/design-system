@@ -49,7 +49,7 @@ export function buildOgImage(title: string, kicker = "Portfolio") {
         </div>
 
         <div style={{ display: "flex", fontSize: 28, fontWeight: 400, color: "#118AB2" }}>
-          Robert Ritacca — {kicker}
+          Robert Ritacca · {kicker}
         </div>
       </div>
     ),

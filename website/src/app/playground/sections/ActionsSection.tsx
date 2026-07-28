@@ -28,7 +28,7 @@ export default function ActionsSection() {
     <section className={styles.demoSection} aria-label="Actions">
       <SectionTitle title="Actions" />
       <p className={styles.sectionNote}>
-        Every action component draws from the brand ramp your colour pick rebuilds —
+        Every action component draws from the brand ramp your colour pick rebuilds:
         solid fills, hover and pressed states, and focus rings all move together.
         The radius lever decides whether these stay pills.
       </p>

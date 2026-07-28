@@ -24,7 +24,7 @@ export default function OverlaysSection() {
     <section className={styles.demoSection} aria-label="Overlays">
       <SectionTitle title="Overlays" />
       <p className={styles.sectionNote}>
-        Panels, menus, and tips share the container surfaces and radius scale —
+        Panels, menus, and tips share the container surfaces and radius scale:
         open any of these while a tint or radius change is active and the overlay
         matches the page beneath it.
       </p>
@@ -64,7 +64,7 @@ export default function OverlaysSection() {
         }
       >
         <p className={styles.sectionNote}>
-          Dialogs portal to the document body — and still re-theme, because the
+          Dialogs portal to the document body, and still re-theme, because the
           overrides land on the root element.
         </p>
       </Dialog>

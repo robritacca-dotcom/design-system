@@ -12,8 +12,8 @@ export default function SampleCaseStudyCard() {
         <h3 className={styles.heading}>This is a sample</h3>
         <p className={styles.body}>
           What you&apos;ve just read is an abbreviated version of this case study.
-          Some of the work — including details under NDA, full process, artifacts,
-          and outcomes — isn&apos;t shown publicly. Get in touch to see the full story.
+          Some of the work (including details under NDA, full process, artefacts,
+          and outcomes) isn&apos;t shown publicly. Get in touch to see the full story.
         </p>
       </div>
 

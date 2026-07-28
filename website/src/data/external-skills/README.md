@@ -1,4 +1,4 @@
-# External skills — published copies
+# External skills: published copies
 
 Published copies of skills that live *outside* this repo (Rob's personal
 `~/.claude/skills/` folder) but are shown on `/skills`. They're registered

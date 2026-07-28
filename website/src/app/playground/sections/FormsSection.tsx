@@ -47,7 +47,7 @@ export default function FormsSection() {
       <SectionTitle title="Forms & inputs" />
       <p className={styles.sectionNote}>
         Focused borders, selected states, and checked fills all follow the action
-        colour — focus any field to see it. The radius lever reshapes every input at
+        colour: focus any field to see it. The radius lever reshapes every input at
         once.
       </p>
 
@@ -56,7 +56,7 @@ export default function FormsSection() {
           label="Email"
           placeholder="you@example.com"
           type="email"
-          helperText="Focus me — the active border follows the brand colour."
+          helperText="Focus me: the active border follows the brand colour."
         />
         <Dropdown label="Role" value={role} options={ROLE_OPTIONS} onValueChange={setRole} />
         <Combobox
