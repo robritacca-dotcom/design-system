@@ -16,6 +16,8 @@ export interface PlaygroundControlsProps {
   preset: string;
   /** The action colour being previewed (theme-resolved). */
   brand: string;
+  /** Active site theme — resolves the theme-dependent neutral swatches. */
+  theme: string;
   tintOn: boolean;
   tintSeed: string;
   tintStrength: number;
@@ -26,7 +28,8 @@ export interface PlaygroundControlsProps {
   isPristine: boolean;
   cssSnippet: string;
   onPreset: (value: string) => void;
-  onBrand: (value: string) => void;
+  /** `darkValue` rides along for the theme-dependent neutral swatches. */
+  onBrand: (value: string, darkValue?: string) => void;
   onTintOn: (value: boolean) => void;
   onTintSeed: (value: string) => void;
   onTintStrength: (value: number) => void;
@@ -41,6 +44,7 @@ export interface PlaygroundControlsProps {
 export default function PlaygroundControls({
   preset,
   brand,
+  theme,
   tintOn,
   tintSeed,
   tintStrength,
@@ -61,8 +65,16 @@ export default function PlaygroundControls({
   onProductName,
   onReset,
 }: PlaygroundControlsProps) {
+  /* Theme-dependent entries (the neutrals) show and match their dark-mode
+     counterpart while dark mode is active. */
+  const dark = theme === "dark";
+  const presetHex = (p: (typeof ACTION_COLOR_PRESETS)[number]) =>
+    dark && p.hexDark ? p.hexDark : p.hex;
+  const presetLabel = (p: (typeof ACTION_COLOR_PRESETS)[number]) =>
+    dark && p.labelDark ? p.labelDark : p.label;
+
   const isCustomBrand = !ACTION_COLOR_PRESETS.some(
-    (p) => p.hex === brand.toUpperCase()
+    (p) => presetHex(p) === brand.toUpperCase()
   );
 
   /* "Custom" is a state you land in by touching a lever, not a look you
@@ -118,13 +130,13 @@ export default function PlaygroundControls({
       <div className={styles.controlGroup}>
         <h4 className={styles.controlHeading}>Action colour</h4>
         <div className={styles.swatchGrid}>
-          {ACTION_COLOR_PRESETS.map(({ label, hex }) => (
+          {ACTION_COLOR_PRESETS.map((p) => (
             <Swatch
-              key={hex}
-              value={hex}
-              label={label}
-              selected={brand.toUpperCase() === hex}
-              onClick={() => onBrand(hex)}
+              key={p.hex}
+              value={presetHex(p)}
+              label={presetLabel(p)}
+              selected={brand.toUpperCase() === presetHex(p)}
+              onClick={() => onBrand(p.hex, p.hexDark)}
             />
           ))}
         </div>

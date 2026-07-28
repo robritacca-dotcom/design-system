@@ -69,10 +69,11 @@ export default function PlaygroundPage() {
   };
 
   /** Explicitly picking an action colour also retires the inherited
-      theme-dependent brand — the pick applies to both themes. */
-  const pickBrand = (value: string) => {
+      theme-dependent brand — the pick applies to both themes. The neutral
+      swatches are the exception: they carry their own dark-mode value. */
+  const pickBrand = (value: string, darkValue?: string) => {
     setPreset("custom");
-    setPresetExtras((e) => ({ ...e, brandDark: undefined }));
+    setPresetExtras((e) => ({ ...e, brandDark: darkValue }));
     setBrand(value);
   };
 
@@ -211,6 +212,7 @@ export default function PlaygroundPage() {
         <PlaygroundControls
           preset={preset}
           brand={effectiveBrand}
+          theme={theme}
           tintOn={tintOn}
           tintSeed={tintSeed}
           tintStrength={tintStrength}

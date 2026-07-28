@@ -70,12 +70,21 @@ export const DEFAULT_BRAND = "#118AB2";
 
 /**
  * Preset action colours: steps 07 and 08 of every chromatic primitive ramp
- * (the values in tokens-primitives.css). Listed 07s-first so a 7-column
- * grid renders one row per step. Like NEUTRALS below, these are shipped
- * constants — reading them from the DOM would return their overridden
- * values once a brand is applied.
+ * (the values in tokens-primitives.css), plus a theme-dependent neutral per
+ * row — dark grey buttons in light mode that flip to light grey in dark
+ * mode (`hexDark`/`labelDark`), riding the same `brandDark` machinery as
+ * the black & white preset. Listed 07s-first so an 8-column grid renders
+ * one row per step. Like NEUTRALS below, these are shipped constants —
+ * reading them from the DOM would return their overridden values once a
+ * brand is applied.
  */
-export const ACTION_COLOR_PRESETS: ReadonlyArray<{ label: string; hex: string }> = [
+export const ACTION_COLOR_PRESETS: ReadonlyArray<{
+  label: string;
+  hex: string;
+  /** Dark-mode counterpart for theme-dependent entries (the neutrals). */
+  hexDark?: string;
+  labelDark?: string;
+}> = [
   { label: "Red 07", hex: "#EF476F" },
   { label: "Orange 07", hex: "#EF8247" },
   { label: "Yellow 07", hex: "#FFD166" },
@@ -83,6 +92,7 @@ export const ACTION_COLOR_PRESETS: ReadonlyArray<{ label: string; hex: string }>
   { label: "Teal 07", hex: "#118AB2" },
   { label: "Blue 07", hex: "#1E47B0" },
   { label: "Purple 07", hex: "#9E47EF" },
+  { label: "Neutral 07", hex: "#303030", labelDark: "Neutral 01", hexDark: "#F1F1F1" },
   { label: "Red 08", hex: "#C93A5C" },
   { label: "Orange 08", hex: "#C65E33" },
   { label: "Yellow 08", hex: "#C49A3E" },
@@ -90,6 +100,7 @@ export const ACTION_COLOR_PRESETS: ReadonlyArray<{ label: string; hex: string }>
   { label: "Teal 08", hex: "#0E6E8F" },
   { label: "Blue 08", hex: "#163789" },
   { label: "Purple 08", hex: "#7434B3" },
+  { label: "Neutral 08", hex: "#232323", labelDark: "Neutral 02", hexDark: "#D6D6D6" },
 ];
 
 /**

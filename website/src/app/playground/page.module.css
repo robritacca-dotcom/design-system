@@ -141,7 +141,7 @@
 /* Preset action-colour swatches — one column per hue, one row per ramp step */
 .swatchGrid {
   display: grid;
-  grid-template-columns: repeat(7, max-content);
+  grid-template-columns: repeat(8, max-content);
   gap: var(--gap-sm);
   padding: var(--primitive-padding-xxxs) 0;
 }
