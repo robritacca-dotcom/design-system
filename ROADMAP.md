@@ -2,7 +2,7 @@
 
 The single planning surface for this repo. Everything queued, deferred, parked, or deliberately rejected lives here — if it isn't in this file, it isn't planned.
 
-**This file is intentionally *not* in the `validate-registry` chain.** Every other doc in this repo is a generated or build-enforced surface because it states *facts about the system* (counts, lists, versions) that must never drift. This file states *intent*, which can't be validated — so it is hand-maintained, and any count in it is marked as an "as of" snapshot rather than pulled from a registry. Keep it that way: don't put a number here that a registry already owns.
+**This file is intentionally *not* in the `validate-registry` chain.** Every other doc in this repo is a generated or build-enforced surface because it states *facts about the system* (counts, lists, versions) that must never drift. This file states *intent*, which can't be validated — so it is hand-maintained, and any count in it is marked as an "as of" snapshot rather than pulled from a registry. Keep it that way: don't put a number here that a registry already owns. Same discipline for status: **the tracking tables are the status surface; item bodies state intent and history.** When an item ships, update its row *and* delete the body's now-stale "current state" prose — two answers to "is this done?" in one file is how this file drifts.
 
 Audited against the working tree on **2026-07-27, end of day** (59 components, 4 doc-only helpers — Kbd and ContextMenu shipped that afternoon).
 
@@ -157,15 +157,15 @@ Context that stays relevant: npm deprecates 2FA-bypass tokens for direct publish
 
 # Workstream A — Agent-Ready Design System
 
-**Status:** planned 2026-07-26, not started · **Effort:** `L` (three phases, independently shippable) · **Version impact:** additive API → `0.2.0` via the `release` skill.
+**Status:** planned 2026-07-26 · Phase 1 shipped 2026-07-27; Phases 2–3 parked (see the parking record above the legend) · **Effort:** `L` (three phases, independently shippable) · **Version impact:** additive API → `0.2.0` via the `release` skill.
 
 ## Context
 
-Compared to machine-readable design systems like Meta's Astryx, three gaps remain: the component registry is just 56 name strings; there is no machine-readable prop contract generated from the TypeScript; and agents must parse full HTML pages to learn a component. This workstream takes the highest-impact subset — richer registry metadata, generated prop contracts, dense per-component markdown — while keeping the system lightweight.
+Compared to machine-readable design systems like Meta's Astryx, three gaps stood at planning time (2026-07-26): the component registry was just 56 name strings; there was no machine-readable prop contract generated from the TypeScript; and agents had to parse full HTML pages to learn a component. This workstream takes the highest-impact subset — richer registry metadata (shipped, Phase 1), generated prop contracts, dense per-component markdown — while keeping the system lightweight.
 
 **Explicitly out of scope: an MCP server, and shipping extra docs in the npm tarball.** Dense `.md` docs served from the website are the chosen shape.
 
-**A major side benefit found during exploration:** per-component labels, slugs, and descriptions are currently duplicated in 4+ places — `slugOf` copied verbatim in two validators, `displayName()` in the README generator, 56 hand-typed sidebar labels in `navigation.ts`, 56 hand-written descriptions in `layout.tsx` files. Phase 1 collapses all of it into the registry.
+**A major side benefit found during exploration:** per-component labels, slugs, and descriptions were duplicated in 4+ places — `slugOf` copied verbatim in two validators, `displayName()` in the README generator, 56 hand-typed sidebar labels in `navigation.ts`, 56 hand-written descriptions in `layout.tsx` files. Phase 1 collapsed all of it into the registry.
 
 **Ground rules.** Everything follows the established pattern (see `scripts/generate-token-registry.mjs` / `validate-token-registry.mjs`): generators export pure derivation functions and only run side effects behind an `isMain` guard; validators import the same functions and deep-compare against committed JSON; writes are idempotent (string-compare, write only on change) so CI's `git diff --exit-code` drift guard works. **No new dependencies** — prop extraction uses the TS Compiler API (`typescript ~5.9.3` is already a direct devDep; do **not** rely on the transitive `react-docgen-typescript`).
 
@@ -632,14 +632,8 @@ Both render `<div role="checkbox">` / `<div role="radio">` with hand-rolled clic
 
 The fix is a visually-identical swap to a visually-hidden native input paired with the existing styled box (the standard pattern), which also gets keyboard behaviour, form participation, and `:checked` styling for free. Deferred out of the B1 pass because it changes DOM structure and therefore needs its own visual check.
 
-**26. Validate that skills reference real APIs and scripts — `S` · added 2026-07-27.**
-Two consecutive drift audits caught a skill that broke the moment its workflow changed, and both were mechanically checkable:
-- the `release` skill said "never bump the version in `package.json`" while `validate-package-exports.mjs` required it — would have blocked the next release at the first validation step;
-- `component-doc-page` prescribed `pageMetadata("/components/<slug>", "…")` after Phase 1 made `componentPageMetadata("<slug>")` mandatory — following it fails the build.
-
-Neither was caught by any validator, because skills are prose. But the *references inside* them are not: a script in `.claude/skills/**/SKILL.md` that greps for `npm run <script>` mentions, `` `path/to/file` `` references, and exported-symbol calls (`pageMetadata(`, `componentPageMetadata(`, `useField(`) and fails when the target does not exist would have caught both. It is the repo's own rule — *anything checkable gets build-enforced* — applied to the skills themselves.
-
-Deliberately narrow: it can only check that a referenced thing **exists**, not that the surrounding instruction is still correct. That residue is what `drift-audit` is for, and this would shrink its manual surface to genuine judgement calls.
+**✅ 26. Validate that skills reference real APIs and scripts — SHIPPED 2026-07-28.**
+Shipped as `scripts/validate-doc-refs.mjs` in the `validate-registry` chain, scoped wider than planned: backticked repo paths, `npm run` mentions, and documented symbol calls across the skills **and** `CLAUDE.md`/`README.md`/`design.md` fail the build when the target doesn't exist (this file stays exempt — it names planned files by design). Shipped alongside it: the `ds-allow` sanctioned-exception directive plus `scripts/validate-css-directives.mjs`, which ended the token-audit skill's hand-maintained exception list. The known residue stands: a reference can exist while the surrounding instruction is wrong — that judgement layer remains `drift-audit`'s job, now much smaller.
 
 **19. New AI-surface component patterns — `M`/`L` · new.** Nothing in the registry covers streaming text, citation chips, agent progress / step disclosure, confidence or uncertainty display, or reversible-action approval. No mainstream design system has good answers here yet, which makes it the most *differentiating* thing this system could add — and directly relevant to the work starting Aug 3. Distinct from Workstream A: that makes the system legible **to** agents; this is UI **for** agent-driven products.
 

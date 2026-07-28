@@ -41,6 +41,15 @@ When a new countable collection appears on the site (tokens, loops, case studies
 
 **Self-descriptions stay in sync.** The repo describes itself in prose in several places — `README.md`, `design.md`, this file, and the website's foundations/overview pages. Whenever a change makes a statement in any of them false (a new component category, a dropped dependency, a renamed part, a changed principle), update that prose in the same change — don't leave it for a future audit. If the drifting fact is *countable or mechanically checkable* (a count, a list, a version number), don't just fix the prose: route it through a registry + generator/validator in the `validate-registry` chain so it can never drift again (the README component section and Tech versions are the reference example).
 
+**Prose & skill authoring rules.** The registry principle generalized: **every fact has exactly one authoritative home** — all other mentions derive from it (generated), are checked against it (validated), or point at it. Never restate a fact a registry, script, or source file already owns. Concretely:
+
+- **Point, don't enumerate.** "The `validate-registry` entry in the root `package.json` is the authoritative list" beats a hand-copied list that goes stale.
+- **Examples in skills are fictional.** Example findings use made-up component names — a factual claim about a real component inside an example rots silently.
+- **No counts outside registries; no machine-local paths** — derive the repo root with `git rev-parse --show-toplevel`.
+- **Off-token CSS values are sanctioned at the site**, never in a skill: `/* ds-allow(<category>): <reason> */` (file-wide: `ds-allow-file`), categories owned by `scripts/validate-css-directives.mjs`. The token-audit skill reads directives; it maintains no list.
+- **References are build-checked**: `scripts/validate-doc-refs.mjs` fails the build when a skill or doc (this file, `README.md`, `design.md`) references a repo path, `npm run` script, or documented API symbol that doesn't exist. `ROADMAP.md` is exempt by design — it states intent and may name planned files.
+- **ROADMAP status lives in its tracking table**; item bodies are intent. Completing an item means updating its row *and* deleting the body's now-stale "current state" prose.
+
 ---
 
 ## Quick Start
@@ -138,7 +147,7 @@ Component CSS               background-color: var(--color-action-primary-bg)
 
 Key invariants:
 - Teal `--color-action-primary-bg` (#118AB2) is **only** for primary CTA buttons and focus rings. Never decorative.
-- Never hardcode hex values in component CSS — always a semantic token. (One sanctioned exception: ColorPicker's `hsl()` colour-mixing constants — colour-space physics, not theme; see its design.md spec.)
+- Never hardcode hex values in component CSS — always a semantic token. (Deliberate off-token values are sanctioned *in place* with a `/* ds-allow(<category>): <reason> */` directive — `ds-allow-file(...)` for file-wide cases like ColorPicker's `hsl()` colour physics. Grep `ds-allow` to enumerate them; `scripts/validate-css-directives.mjs` owns the category set and build-enforces the grammar.)
 - Never hardcode hex values in semantic colour tokens either: every `--color-*` value in `tokens-light/dark.css` must be a `var(--primitive-*)` (or `var(--color-*)`) reference — build-enforced by `scripts/validate-token-references.mjs`. This is what lets a consumer override a primitive and have it cascade through the whole system.
 - Buttons are always `--radius-full` (pill). Inputs are always `--radius-md` (12px). Card/EntityCard navigation tiles are the exception: `--radius-xl` (24px).
 
