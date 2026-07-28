@@ -42,7 +42,7 @@ const shadowTokens: ShadowToken[] = [
     tileClass: "elevationTileModal",
     light: "0 8px 32px rgba(0, 0, 0, 0.2)",
     dark: "0 8px 32px rgba(0, 0, 0, 0.6)",
-    usedBy: "Dialog and AlertDialog panels, Drawer, CommandPalette — paired with the --color-scrim backdrop",
+    usedBy: "Dialog and AlertDialog panels, Drawer, CommandPalette, paired with the --color-scrim backdrop",
   },
 ];
 
@@ -110,13 +110,13 @@ export default function ElevationPage() {
           {/* Intro */}
           <div className={`${styles.introSection} animate-in animate-delay-1`}>
             <p className={styles.subDisplay}>
-              Colour carries depth — shadows are the exception
+              Colour carries depth; shadows are the exception
             </p>
             <p className={styles.introBody}>
               Standard containers never carry a shadow. Depth comes from stepping through the
               container colour ramp, which keeps surfaces flat, crisp, and legible against the
-              page floor. Only surfaces that genuinely float above the page — anchored overlays
-              and modals — earn a shadow, and there are exactly two tokens for that. Never write a
+              page floor. Only surfaces that genuinely float above the page (anchored overlays
+              and modals) earn a shadow, and there are exactly two tokens for that. Never write a
               literal <code>box-shadow</code> value in component CSS.
             </p>
           </div>
@@ -181,7 +181,7 @@ export default function ElevationPage() {
             <SectionTitle title="The one exception" />
             <p className={styles.sectionNote}>
               Interactive Card and EntityCard navigation tiles lift on hover. That shadow is a
-              deliberate navigational affordance — a signal that the whole tile is clickable — not
+              deliberate navigational affordance, a signal that the whole tile is clickable, not
               an elevation pattern to copy onto static containers.
             </p>
           </section>

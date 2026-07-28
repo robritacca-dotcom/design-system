@@ -39,7 +39,7 @@ const logoCategories: LogoCategory[] = [
     ],
   },
   {
-    title: "Design & Prototyping",
+    title: "Design & prototyping",
     logos: [
       { label: "Figma", file: "Figma.svg" },
       { label: "sketch", file: "sketch.svg" },
@@ -58,7 +58,7 @@ const logoCategories: LogoCategory[] = [
     ],
   },
   {
-    title: "Development & Infrastructure",
+    title: "Development & infrastructure",
     logos: [
       { label: "React", file: "React.svg" },
       { label: "nextjs black", file: "nextjs black.svg" },
@@ -74,7 +74,7 @@ const logoCategories: LogoCategory[] = [
     ],
   },
   {
-    title: "AI & Tooling",
+    title: "AI & tooling",
     logos: [
       { label: "Claude", file: "Claude.svg" },
       { label: "ChatGPT", file: "ChatGPT.svg" },
@@ -84,7 +84,7 @@ const logoCategories: LogoCategory[] = [
     ],
   },
   {
-    title: "Productivity & Collaboration",
+    title: "Productivity & collaboration",
     logos: [
       { label: "Asana", file: "Asana.svg" },
       { label: "Atlassian", file: "Atlassian.svg" },
@@ -118,7 +118,7 @@ const logoCategories: LogoCategory[] = [
     ],
   },
   {
-    title: "Finance & Commerce",
+    title: "Finance & commerce",
     logos: [
       { label: "CIBC", file: "CIBC.svg" },
       { label: "stripe", file: "stripe.svg" },
@@ -127,7 +127,7 @@ const logoCategories: LogoCategory[] = [
     ],
   },
   {
-    title: "Social & Media",
+    title: "Social & media",
     logos: [
       { label: "meta", file: "meta.svg" },
       { label: "substack", file: "substack.svg" },
@@ -136,7 +136,7 @@ const logoCategories: LogoCategory[] = [
     ],
   },
   {
-    title: "Agencies & Consulting",
+    title: "Agencies & consulting",
     logos: [
       { label: "Cognizant", file: "Cognizant.svg" },
       { label: "Devbridge", file: "Devbridge.svg" },
@@ -148,7 +148,7 @@ const logoCategories: LogoCategory[] = [
     ],
   },
   {
-    title: "Education & Government",
+    title: "Education & government",
     logos: [
       { label: "uoft", file: "uoft.svg" },
       { label: "sheridan", file: "sheridan.svg" },

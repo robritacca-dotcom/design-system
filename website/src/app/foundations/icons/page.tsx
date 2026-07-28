@@ -28,7 +28,7 @@ interface IconCategory {
 /** The four steps of the icon-size scale, mirroring tokens-light.css. */
 const ICON_SIZES = [
   { label: "SM", px: "20px", token: "--icon-size-sm", use: "Compact controls, inline affordances" },
-  { label: "MD", px: "24px", token: "--icon-size-md", use: "Default — most UI icons" },
+  { label: "MD", px: "24px", token: "--icon-size-md", use: "Default: most UI icons" },
   { label: "LG", px: "32px", token: "--icon-size-lg", use: "Feature icons, section headers" },
   { label: "XL", px: "48px", token: "--icon-size-xl", use: "Marketing and empty states" },
 ] as const;
@@ -49,7 +49,7 @@ const iconCategories: IconCategory[] = [
     ],
   },
   {
-    title: "User & Account",
+    title: "User & account",
     icons: [
       "person", "account_circle", "face", "group", "people",
       "supervisor_account", "switch_account", "person_add", "person_remove",
@@ -71,7 +71,7 @@ const iconCategories: IconCategory[] = [
     ],
   },
   {
-    title: "Content & Files",
+    title: "Content & files",
     icons: [
       "folder", "folder_open", "create_new_folder", "snippet_folder",
       "folder_shared", "description", "article", "note", "sticky_note_2",
@@ -98,7 +98,7 @@ const iconCategories: IconCategory[] = [
     ],
   },
   {
-    title: "Editing & Formatting",
+    title: "Editing & formatting",
     icons: [
       "edit", "edit_note", "mode_edit", "draw", "create", "stylus",
       "border_color", "format_bold", "format_italic", "format_underlined",
@@ -110,7 +110,7 @@ const iconCategories: IconCategory[] = [
     ],
   },
   {
-    title: "Actions & Status",
+    title: "Actions & status",
     icons: [
       "add", "add_circle", "add_box", "remove", "remove_circle", "block",
       "do_not_disturb", "check", "check_circle", "check_box", "done",
@@ -126,7 +126,7 @@ const iconCategories: IconCategory[] = [
     ],
   },
   {
-    title: "Notifications & Alerts",
+    title: "Notifications & alerts",
     icons: [
       "notifications", "notifications_active", "notifications_none",
       "notifications_off", "notification_important", "add_alert", "error",
@@ -136,7 +136,7 @@ const iconCategories: IconCategory[] = [
     ],
   },
   {
-    title: "Settings & Security",
+    title: "Settings & security",
     icons: [
       "settings", "settings_suggest", "build", "construction", "handyman",
       "security", "privacy_tip", "shield", "vpn_key", "key", "password",
@@ -156,7 +156,7 @@ const iconCategories: IconCategory[] = [
     ],
   },
   {
-    title: "Time & Calendar",
+    title: "Time & calendar",
     icons: [
       "schedule", "access_time", "hourglass_empty", "hourglass_full",
       "calendar_today", "event", "event_available", "event_busy",
@@ -165,7 +165,7 @@ const iconCategories: IconCategory[] = [
     ],
   },
   {
-    title: "Location & Maps",
+    title: "Location & maps",
     icons: [
       "location_on", "place", "pin_drop", "add_location", "my_location",
       "gps_fixed", "gps_off", "map", "satellite", "layers", "terrain",
@@ -174,7 +174,7 @@ const iconCategories: IconCategory[] = [
     ],
   },
   {
-    title: "Travel & Transport",
+    title: "Travel & transport",
     icons: [
       "flight", "flight_takeoff", "flight_land", "local_airport",
       "connecting_airports", "directions_car", "directions_bus",
@@ -185,7 +185,7 @@ const iconCategories: IconCategory[] = [
     ],
   },
   {
-    title: "Devices & Hardware",
+    title: "Devices & hardware",
     icons: [
       "computer", "laptop", "phone_android", "phone_iphone", "tablet",
       "tablet_mac", "watch", "desktop_windows", "devices", "smartphone",
@@ -196,7 +196,7 @@ const iconCategories: IconCategory[] = [
     ],
   },
   {
-    title: "UI & Display",
+    title: "UI & display",
     icons: [
       "brightness_high", "brightness_low", "brightness_4",
       "brightness_auto", "dark_mode", "light_mode", "contrast",
@@ -207,7 +207,7 @@ const iconCategories: IconCategory[] = [
     ],
   },
   {
-    title: "Social & Sharing",
+    title: "Social & sharing",
     icons: [
       "share", "ios_share", "screen_share", "cast", "cast_connected",
       "rss_feed", "public", "language", "web", "alternate_email",
@@ -216,7 +216,7 @@ const iconCategories: IconCategory[] = [
     ],
   },
   {
-    title: "Data & Analytics",
+    title: "Data & analytics",
     icons: [
       "analytics", "insights", "assessment", "bar_chart", "pie_chart",
       "show_chart", "trending_up", "trending_down", "trending_flat",
@@ -235,7 +235,7 @@ const iconCategories: IconCategory[] = [
     ],
   },
   {
-    title: "Health & Wellness",
+    title: "Health & wellness",
     icons: [
       "local_hospital", "medical_services", "health_and_safety", "healing",
       "medication", "vaccines", "biotech", "coronavirus", "masks",
@@ -252,7 +252,7 @@ const iconCategories: IconCategory[] = [
     ],
   },
   {
-    title: "Food & Dining",
+    title: "Food & dining",
     icons: [
       "restaurant", "local_dining", "fastfood", "local_pizza",
       "lunch_dining", "dinner_dining", "breakfast_dining", "local_cafe",
@@ -260,7 +260,7 @@ const iconCategories: IconCategory[] = [
     ],
   },
   {
-    title: "Weather & Nature",
+    title: "Weather & nature",
     icons: [
       "wb_cloudy", "ac_unit", "grain", "thunderstorm", "water_drop",
       "air", "wind_power", "eco", "energy_savings_leaf", "park", "forest",
@@ -329,7 +329,7 @@ export default function IconsPage() {
             <SectionTitle title="Sizes" trailing={ICON_SIZES.length} />
 
             <p className={styles.sizeNote}>
-              Components set <code>--icon-size</code> to one of these steps —
+              Components set <code>--icon-size</code> to one of these steps,
               never a raw <code>font-size</code>. The scale starts at 20px
               because that is the floor of the font&rsquo;s optical-size axis
               (20–48); below it, stroke weight stops adapting and small icons

@@ -40,7 +40,7 @@ const coreDurations: DurationToken[] = [
     label: "Base",
     token: "--motion-duration-base",
     value: "200ms",
-    use: "The default — colour, opacity, and border transitions",
+    use: "The default: colour, opacity, and border transitions",
   },
   {
     label: "Slow",
@@ -97,25 +97,25 @@ const easings: EasingToken[] = [
     label: "Emphasized",
     token: "--motion-ease-emphasized",
     value: "cubic-bezier(0.4, 0, 0.2, 1)",
-    use: "Size and layout changes — sidebar width, accordion height",
+    use: "Size and layout changes: sidebar width, accordion height",
   },
   {
     label: "Entrance",
     token: "--motion-ease-entrance",
     value: "cubic-bezier(0.16, 1, 0.3, 1)",
-    use: "Expressive decelerate for enter animations — modals, dropdowns, toasts",
+    use: "Expressive decelerate for enter animations: modals, dropdowns, toasts",
   },
   {
     label: "Linear",
     token: "--motion-ease-linear",
     value: "linear",
-    use: "Continuous motion — spinner, progress bars",
+    use: "Continuous motion: spinner, progress bars",
   },
   {
     label: "Spring",
     token: "--motion-ease-spring",
     value: "cubic-bezier(0.34, 1.56, 0.64, 1)",
-    use: "Playful overshoot — toggle switch thumb",
+    use: "Playful overshoot: toggle switch thumb",
   },
 ];
 
@@ -144,14 +144,14 @@ export default function MotionPage() {
           {/* Intro */}
           <div className={`${styles.introSection} animate-in animate-delay-1`}>
             <p className={styles.subDisplay}>
-              Motion is quiet — a small scale, used sparingly
+              Motion is quiet: a small scale, used sparingly
             </p>
             <p className={styles.introBody}>
               Animation in this system is functional, not decorative: it confirms an
               interaction, reveals structure, or signals loading. The whole vocabulary is
               seven durations and five easing curves, defined once as{" "}
               <code>--motion-*</code> tokens and shared by the component library and this
-              site. Never write a literal <code>0.2s ease</code> in component CSS — compose
+              site. Never write a literal <code>0.2s ease</code> in component CSS. Compose
               a duration token with an easing token instead. Click any tile to replay its
               animation.
             </p>
@@ -159,9 +159,9 @@ export default function MotionPage() {
 
           {/* Core durations */}
           <section className={`${styles.section} animate-in animate-delay-2`}>
-            <SectionTitle title="Durations — core scale" />
+            <SectionTitle title="Durations: core scale" />
             <p className={styles.sectionNote}>
-              Four steps cover day-to-day UI. Base is the workhorse — the standard for
+              Four steps cover day-to-day UI. Base is the workhorse: the standard for
               colour, opacity, and border transitions. Step down to fast for hover
               feedback, up to slow for structural change, and reserve slower for page
               entrances. Each tile animates at its token&apos;s actual speed.
@@ -189,11 +189,11 @@ export default function MotionPage() {
 
           {/* Extended durations */}
           <section className={styles.section}>
-            <SectionTitle title="Durations — extended" />
+            <SectionTitle title="Durations: extended" />
             <p className={styles.sectionNote}>
               Special-purpose timings that would otherwise live as magic numbers. They are
-              named so they stay consistent, but they are not part of the day-to-day scale —
-              reach for the core four first.
+              named so they stay consistent, but they are not part of the day-to-day scale.
+              Reach for the core four first.
             </p>
             <div className={styles.swatchRow}>
               {extendedDurations.map((duration) => (
@@ -222,7 +222,7 @@ export default function MotionPage() {
             <SectionTitle title="Easing curves" />
             <p className={styles.sectionNote}>
               Five named curves, each with a distinct job. Every tile animates over the same
-              600ms so the shape of the curve is what you see — standard for everyday
+              600ms so the shape of the curve is what you see: standard for everyday
               transitions, emphasized for layout, entrance for anything appearing on screen,
               linear for loops, spring for the one sanctioned overshoot.
             </p>
@@ -254,7 +254,7 @@ export default function MotionPage() {
               The token layer respects <code>prefers-reduced-motion</code> at the source:
               when the preference is set, every duration token collapses to 0.01ms and a
               universal guard flattens any remaining hardcoded transitions and animations.
-              Components that use the tokens get accessibility for free — there is nothing
+              Components that use the tokens get accessibility for free: there is nothing
               to opt into, and no component-level media queries to write.
             </p>
           </section>

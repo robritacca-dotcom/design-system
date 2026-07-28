@@ -158,7 +158,7 @@ const colourRamps = [
   { title: "Teal", swatches: tealColours },
   { title: "Blue", swatches: blueColours },
   { title: "Purple", swatches: purpleColours },
-  { title: "True Black", swatches: trueBlackColours },
+  { title: "True black", swatches: trueBlackColours },
 ];
 
 /* ============================================
