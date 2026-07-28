@@ -25,6 +25,8 @@
 
   /* Interaction */
   transition: transform var(--motion-duration-slow) var(--motion-ease-standard), box-shadow var(--motion-duration-slow) var(--motion-ease-standard);
+  /* ds-allow(color): transparent resting state of the sanctioned Card
+     hover-lift shadow (see design.md — Do's and Don'ts). */
   box-shadow: 0 0 0 rgba(0, 0, 0, 0);
 }
 
@@ -34,6 +36,8 @@
 
 .ds-card--interactive:hover {
   transform: translateY(-4px);
+  /* ds-allow(color): the sanctioned Card hover-lift shadow — deliberately
+     heavier than --shadow-floating (see design.md — Do's and Don'ts). */
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
@@ -80,6 +84,8 @@
 
 .ds-card--case-study:hover {
   transform: translateY(-4px);
+  /* ds-allow(color): same sanctioned hover-lift shadow as the interactive
+     variant. */
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
