@@ -7,7 +7,7 @@ A React component library + design system + documentation website. It has two in
 1. **Component Library** (`/src`) — React components built with Vite + TypeScript, published to npm as **`@robr0/design-system`**. Each component has its own folder with implementation, scoped CSS, and Storybook stories. The website is an npm-workspace consumer: it depends on the package by name and imports through the same `exports` subpaths any consumer would (the in-repo exports point at `./src`, so it's live source — see **Registries** below for the generated barrel/exports surfaces). The official component list and count live in `src/components/registry.json`; never hardcode a count.
 2. **Documentation Website** (`/website`) — A separate Next.js app that showcases every component with live, interactive examples. Each component has its own page under `website/src/app/components/[component-name]/`.
 
-The design spec lives in [`design.md`](design.md) — read it before touching tokens, colors, or typography.
+The design spec lives in [`design.md`](design.md) — read it before touching tokens, colors, or typography. The content style guide lives in [`content-design.md`](content-design.md) — read it before writing or editing any shipped prose (page copy, journal entries, descriptions, README, release notes, microcopy).
 
 ---
 
@@ -37,7 +37,7 @@ The same script fails the build if its Tech section names a different major vers
 
 When a new countable collection appears on the site (tokens, loops, case studies…): create a registry file next to the collection, export the count from a small accessor module, add a validator script chained into `validate-registry`, and pull every displayed number from the export. When adding a skill: write `.claude/skills/<name>/SKILL.md` and register the name in `.claude/skills/registry.json` (`displayed` if it appears on `/skills`, `unlisted` if internal) — that's all. The `/skills` page is fully data-driven: it maps over `website/src/data/skills-content.generated.ts`, which `scripts/generate-skills-content.mjs` builds from the SKILL.md files in registry order, so **never hand-add a card to `website/src/app/skills/page.tsx`**. `scripts/validate-skills-registry.mjs` fails the build if a skill file and the registry drift.
 
-**The website's /blueprints pages are a generated surface too.** `scripts/sync-blueprints.mjs` (in the `validate-registry` chain) copies the root `CLAUDE.md` and `design.md` into `website/public/` on every build — never hand-edit those copies; edit the root files.
+**The website's /blueprints pages are a generated surface too.** `scripts/sync-blueprints.mjs` (in the `validate-registry` chain) copies the root `CLAUDE.md`, `design.md`, and `content-design.md` into `website/public/` on every build — never hand-edit those copies; edit the root files.
 
 **Self-descriptions stay in sync.** The repo describes itself in prose in several places — `README.md`, `design.md`, this file, and the website's foundations/overview pages. Whenever a change makes a statement in any of them false (a new component category, a dropped dependency, a renamed part, a changed principle), update that prose in the same change — don't leave it for a future audit. If the drifting fact is *countable or mechanically checkable* (a count, a list, a version number), don't just fix the prose: route it through a registry + generator/validator in the `validate-registry` chain so it can never drift again (the README component section and Tech versions are the reference example).
 
@@ -47,7 +47,7 @@ When a new countable collection appears on the site (tokens, loops, case studies
 - **Examples in skills are fictional.** Example findings use made-up component names — a factual claim about a real component inside an example rots silently.
 - **No counts outside registries; no machine-local paths** — derive the repo root with `git rev-parse --show-toplevel`.
 - **Off-token CSS values are sanctioned at the site**, never in a skill: `/* ds-allow(<category>): <reason> */` (file-wide: `ds-allow-file`), categories owned by `scripts/validate-css-directives.mjs`. The token-audit skill reads directives; it maintains no list.
-- **References are build-checked**: `scripts/validate-doc-refs.mjs` fails the build when a skill or doc (this file, `README.md`, `design.md`) references a repo path, `npm run` script, or documented API symbol that doesn't exist. `ROADMAP.md` is exempt by design — it states intent and may name planned files.
+- **References are build-checked**: `scripts/validate-doc-refs.mjs` fails the build when a skill or doc (this file, `README.md`, `design.md`, `content-design.md`) references a repo path, `npm run` script, or documented API symbol that doesn't exist. `ROADMAP.md` is exempt by design — it states intent and may name planned files.
 - **ROADMAP status lives in its tracking table**; item bodies are intent. Completing an item means updating its row *and* deleting the body's now-stale "current state" prose.
 
 ---
@@ -98,6 +98,7 @@ Two facts that bite on release day: **a published version can never be reused**,
 ```
 /
 ├── design.md                  # Design spec — source of truth for tokens, colors, typography
+├── content-design.md          # Content style guide — source of truth for voice, register, and prose rules
 ├── ROADMAP.md                 # The single planning surface (hand-maintained intent, not facts)
 ├── scripts/                   # Generators + validators (the validate-registry chain), release tooling
 ├── src/
@@ -116,13 +117,13 @@ Two facts that bite on release day: **a published version can never be reused**,
 │   └── fonts/                 # Material Symbols icon font (self-hosted); Nunito Sans is loaded via Google Fonts
 ├── .storybook/                # Storybook config (Storybook is the library's dev sandbox)
 └── website/                   # Next.js docs site (npm workspace; consumes @robr0/design-system by name)
-    ├── public/                # Includes GENERATED copies of CLAUDE.md + design.md (see /blueprints)
+    ├── public/                # Includes GENERATED copies of CLAUDE.md + design.md + content-design.md (see /blueprints)
     ├── src/app/
     │   ├── components/        # One folder per component, each with page.tsx + page.module.css
     │   ├── foundations/       # Design tokens & layout doc pages
     │   ├── docs/              # Docs hub: overview links, get-started (install + theming), skills, journal
     │   ├── playground/        # Live re-theming playground (standalone page, no sidebar)
-    │   ├── blueprints/        # Renders the public CLAUDE.md / design.md copies
+    │   ├── blueprints/        # Renders the public CLAUDE.md / design.md / content-design.md copies
     │   └── about/             # About/work pages
     └── src/components/        # Shared Next.js UI (Header, Sidebar, Footer, etc.)
 ```
@@ -250,6 +251,7 @@ Tokens also have multiple homes — a token that exists only in CSS is incomplet
 | File | Purpose |
 |---|---|
 | [`design.md`](design.md) | Full design spec — colors, typography, spacing, all component rules |
+| [`content-design.md`](content-design.md) | Content style guide — voice, register by surface, words and patterns to avoid |
 | [`src/tokens/tokens-primitives.css`](src/tokens/tokens-primitives.css) | Raw hex/px values |
 | [`src/tokens/tokens-light.css`](src/tokens/tokens-light.css) | Semantic token definitions (light) |
 | [`src/tokens/tokens-dark.css`](src/tokens/tokens-dark.css) | Semantic token overrides (dark) |

@@ -128,8 +128,9 @@ export const foundationsSidebarLinks: NavLink[] = [
 
 /**
  * Sidebar for the Docs cluster — the /docs index page, the system overview,
- * and the artifacts (Claude MD, Design MD, Skills, Loops) visitors can take
- * and reuse. (Sub-pages keep their original URLs; /docs is the landing.)
+ * and the artifacts (Claude MD, Design MD, Content MD, Skills, Loops)
+ * visitors can take and reuse. (Sub-pages keep their original URLs; /docs
+ * is the landing.)
  */
 export const docsSidebarLinks: NavLink[] = [
   { href: "/docs", label: "Contents" },
@@ -137,6 +138,7 @@ export const docsSidebarLinks: NavLink[] = [
   { href: "/docs/get-started", label: "Get started" },
   { href: "/blueprints/claude", label: "Claude MD" },
   { href: "/blueprints/design", label: "Design MD" },
+  { href: "/blueprints/content-design", label: "Content MD" },
   { href: "/skills", label: "Skills" },
   { href: "/loops", label: "Loops" },
   { href: "/project-journal", label: "Project journal" },

@@ -101,6 +101,18 @@ export default function DocsPage() {
               </div>
             </TocCard>
 
+            {/* Content MD */}
+            <TocCard href="/blueprints/content-design" title="Content MD">
+              <div className={`${styles.circlePreview} ${styles.circleNeutral}`}>
+                <div className={styles.docPreview}>
+                  <span className={styles.docHeading} />
+                  <span className={styles.docLine} style={{ width: "64px" }} />
+                  <span className={styles.docLine} style={{ width: "72px" }} />
+                  <span className={styles.docLine} style={{ width: "48px" }} />
+                </div>
+              </div>
+            </TocCard>
+
             {/* Skills */}
             <TocCard href="/skills" title="Skills">
               <div className={`${styles.circlePreview} ${styles.circleGreen}`}>

@@ -78,6 +78,7 @@ export function GET() {
     `- [GitHub source](https://github.com/robritacca-dotcom/design-system): exact TypeScript prop types live in src/components/<Name>/<Name>.tsx`,
     `- [npm package](https://www.npmjs.com/package/@robr0/design-system): \`npm install @robr0/design-system\` ships complete .d.ts type declarations for every component`,
     `- [design.md](${SITE_URL}/design.md): the full design specification — tokens, colours, typography, component rules`,
+    `- [content-design.md](${SITE_URL}/content-design.md): the writing rules — voice, register by surface, words and patterns the project never ships`,
     `- [Sitemap](${SITE_URL}/sitemap.xml)`,
     "",
   ].join("\n");

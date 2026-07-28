@@ -2,8 +2,9 @@
 /**
  * sync-blueprints.mjs
  *
- * The website's /blueprints pages serve CLAUDE.md and design.md from
- * website/public/ so visitors can read and download them. Those copies
+ * The website's /blueprints pages serve CLAUDE.md, design.md, and
+ * content-design.md from website/public/ so visitors can read and
+ * download them. Those copies
  * used to be hand-made snapshots and drifted (stale counts, missing
  * sections). This script makes them a generated surface: it copies the
  * root files into website/public/ on every build, so the published
@@ -19,7 +20,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
-const FILES = ['CLAUDE.md', 'design.md'];
+const FILES = ['CLAUDE.md', 'design.md', 'content-design.md'];
 
 let synced = 0;
 for (const name of FILES) {
@@ -35,5 +36,5 @@ for (const name of FILES) {
 }
 
 if (synced === 0) {
-  console.log('✓ Blueprints in sync — website/public copies match root CLAUDE.md and design.md.');
+  console.log('✓ Blueprints in sync — website/public copies match the root CLAUDE.md, design.md, and content-design.md.');
 }
