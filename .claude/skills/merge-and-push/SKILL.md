@@ -1,8 +1,8 @@
 ---
 name: merge-and-push
-description: Commit the session's work and push to main safely — builds green first, no unrelated files swept in, a clear report after. Use when asked to merge and push, commit and push, push this, or ship it.
+description: Commit the session's work and push to main safely. Builds green first, no unrelated files swept in, a clear report after. Use when asked to merge and push, commit and push, push this, or ship it.
 icon: publish
-displayDescription: "Ships completed work safely: surveys the tree so unrelated files never get swept into a commit, runs the full local verify (lint, story tests, and the library, package, Storybook, and website builds — mirroring CI) before anything is committed, groups changes into logical conventional commits, pushes, confirms the CI run goes green, and reports exactly what shipped and what was deliberately left out."
+displayDescription: "Ships completed work safely: surveys the tree so unrelated files never get swept into a commit, runs the full local verify (lint, story tests, and the library, package, Storybook, and website builds, mirroring CI) before anything is committed, groups changes into logical conventional commits, pushes, confirms the CI run goes green, and reports exactly what shipped and what was deliberately left out."
 invoke: ["merge and push","commit and push","push this","ship it"]
 ---
 

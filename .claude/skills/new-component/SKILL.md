@@ -2,7 +2,7 @@
 name: new-component
 description: Scaffold a new design system component with all required files and registration steps. Use when asked to add, create, or scaffold a new design system component.
 icon: widgets
-displayDescription: "Scaffolds a new design system component — a typed React component, a token-only CSS stylesheet, and a Storybook stories file — then registers it in the build-enforced component registry and design.md. Enforces the ds- BEM naming prefix, semantic token usage, and the correct stories format without needing reminders."
+displayDescription: "Scaffolds a new design system component (a typed React component, a token-only CSS stylesheet, and a Storybook stories file), then registers it in the build-enforced component registry and design.md. Enforces the ds- BEM naming prefix, semantic token usage, and the correct stories format without needing reminders."
 invoke: ["add a [Name] component","create a [Name] component","scaffold [Name]"]
 ---
 

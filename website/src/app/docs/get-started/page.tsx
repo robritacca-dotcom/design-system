@@ -71,7 +71,7 @@ const STACK_TOOLS: {
 }[] = [
   {
     name: "React",
-    desc: "UI library — the required peer dependency",
+    desc: "UI library, the required peer dependency",
     logo: "/logos/React.svg",
   },
   {
@@ -166,16 +166,16 @@ export default function GetStartedPage() {
               One package, one stylesheet, and every token is yours to override
             </p>
             <p className={styles.introBody}>
-              The design system ships as <code>@robr0/design-system</code> — the same
+              The design system ships as <code>@robr0/design-system</code>, the same
               package this site is built with. There is no configuration API or theme
               provider: theming is plain CSS custom properties. Import the token
               stylesheet, use the components, and re-theme by redefining tokens. (The
-              one provider in the library is <code>ToastProvider</code> — needed only
+              one provider in the library is <code>ToastProvider</code>, needed only
               if you use the toast queue via <code>useToast</code>.){" "}
               <Link href="/playground" className={styles.inlineLink}>
                 Try it live in the playground
-              </Link>{" "}
-              — it generates the exact CSS you would paste into your app.
+              </Link>
+              : it generates the exact CSS you would paste into your app.
             </p>
           </div>
 
@@ -186,8 +186,8 @@ export default function GetStartedPage() {
               <section className={`${styles.section} animate-in animate-delay-2`}>
                 <SectionTitle title="Install" />
                 <p className={styles.sectionNote}>
-                  React 19+ is a peer dependency. Everything else — component CSS, both
-                  themes, the Material Symbols icon font — is bundled. The package is
+                  React 19+ is a peer dependency. Everything else (component CSS, both
+                  themes, the Material Symbols icon font) is bundled. The package is
                   ESM-only: use a bundler that handles CSS and font imports (Vite,
                   Next.js, webpack), with TypeScript&apos;s{" "}
                   <code>moduleResolution</code> set to <code>&quot;bundler&quot;</code>{" "}
@@ -203,8 +203,8 @@ export default function GetStartedPage() {
                 <SectionTitle title="Dark mode" />
                 <p className={styles.sectionNote}>
                   Every semantic token has a light and a dark value. Set{" "}
-                  <code>data-theme=&quot;dark&quot;</code> on the root element to switch —
-                  there are no <code>prefers-color-scheme</code> queries in components, so
+                  <code>data-theme=&quot;dark&quot;</code> on the root element to switch.
+                  There are no <code>prefers-color-scheme</code> queries in components, so
                   your app decides when.
                 </p>
                 <CodeBlock code={DARK_MODE_SNIPPET} language="html" showCopy />
@@ -215,7 +215,7 @@ export default function GetStartedPage() {
                 <SectionTitle title="Bring your own font" />
                 <p className={styles.sectionNote}>
                   The system is designed for Nunito Sans but deliberately does not bundle
-                  it — load it (or any font) however your stack prefers and point one token
+                  it. Load it (or any font) however your stack prefers and point one token
                   at it. This site loads Nunito Sans with <code>next/font</code> and does
                   exactly this override in its global CSS.
                 </p>
@@ -229,7 +229,7 @@ export default function GetStartedPage() {
                   Tokens are three tiers: primitives hold the raw values, semantic tokens
                   reference primitives, components use semantic tokens. That chain is
                   build-enforced, which is what makes a primitive override cascade through
-                  the entire system — both themes included.
+                  the entire system, both themes included.
                 </p>
                 <CodeBlock code={PRIMITIVE_SNIPPET} language="css" showCopy />
                 <p className={styles.sectionNote}>
@@ -243,7 +243,7 @@ export default function GetStartedPage() {
               <section className={`${styles.section} animate-in animate-delay-6`}>
                 <SectionTitle title="See it live" />
                 <p className={styles.sectionNote}>
-                  The playground applies these overrides to this site in real time — pick a
+                  The playground applies these overrides to this site in real time: pick a
                   brand colour, tint the neutrals, reshape the radii, swap the font, then
                   copy the generated CSS.
                 </p>

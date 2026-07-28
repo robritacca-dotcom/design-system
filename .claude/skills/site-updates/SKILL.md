@@ -1,8 +1,8 @@
 ---
 name: site-updates
-description: Biweekly loop that keeps the /project-journal build-progression timeline current — read the git history since the last curated commit, consolidate it into thematic story entries (what/why/outcome, never commit digests), update the data file on a local branch, and report for approval. Use when asked to update the project journal or run the site updates loop. Never pushes, merges, or deploys.
+description: Biweekly loop that keeps the /project-journal build-progression timeline current. Read the git history since the last curated commit, consolidate it into thematic story entries (what/why/outcome, never commit digests), update the data file on a local branch, and report for approval. Use when asked to update the project journal or run the site updates loop. Never pushes, merges, or deploys.
 icon: history
-displayDescription: "Keeps the Project journal timeline evergreen: reads every commit since the last curated bookmark, clusters them into themes, and writes one story entry — what was built, why, and the outcome in plain English — extending an existing arc when the work continues one. Runs biweekly on a schedule, builds on a branch in a temporary worktree, and hands the new entry over for approval. Nothing is pushed without a human merge."
+displayDescription: "Keeps the Project journal timeline evergreen: reads every commit since the last curated bookmark, clusters them into themes, and writes one story entry (what was built, why, and the outcome in plain English), extending an existing arc when the work continues one. Runs biweekly on a schedule, builds on a branch in a temporary worktree, and hands the new entry over for approval. Nothing is pushed without a human merge."
 invoke: ["update the project journal","run the site updates loop","/site-updates"]
 ---
 

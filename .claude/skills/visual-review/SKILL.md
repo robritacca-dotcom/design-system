@@ -2,7 +2,7 @@
 name: visual-review
 description: Start the website dev server and screenshot pages in both light and dark mode to catch visual issues. Use when asked to visually review changes, check light and dark mode, or screenshot pages.
 icon: preview
-displayDescription: "Opens the site in a browser preview, drives each page through both light and dark mode, and screenshots them. Checks for invisible text, broken layouts, overflow, and stuck hover states — then reports findings or confirms all clear."
+displayDescription: "Opens the site in a browser preview, drives each page through both light and dark mode, and screenshots them. Checks for invisible text, broken layouts, overflow, and stuck hover states, then reports findings or confirms all clear."
 invoke: ["check how this looks","review light and dark","visual check","screenshot the page"]
 ---
 

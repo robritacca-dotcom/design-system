@@ -40,7 +40,7 @@ export default function ClaudeBlueprintPage() {
               The codebase context for builders
             </p>
             <p className={styles.introBody}>
-              Project structure, token architecture, component anatomy, and a step-by-step guide to adding new components. Hand this file to any builder — human or AI — and they can extend the system without exploring.
+              Project structure, token architecture, component anatomy, and a step-by-step guide to adding new components. Hand this file to any builder, human or AI, and they can extend the system without exploring.
             </p>
           </div>
 

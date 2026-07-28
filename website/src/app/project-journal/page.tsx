@@ -55,7 +55,7 @@ export default function SiteUpdatesPage() {
             <p className={styles.subDisplay}>The progression of the build</p>
             <p className={styles.introBody}>
               An evergreen record of the largest updates to robr0 DS and this
-              site — each entry consolidates the commits behind one theme into
+              site. Each entry consolidates the commits behind one theme into
               what was built, why, and what it changed. Curated from the full
               history and extended on a biweekly loop.
             </p>
@@ -67,7 +67,7 @@ export default function SiteUpdatesPage() {
               <h2 className={styles.contributionsTitle}>Contributions</h2>
             </div>
             <p className={styles.contributionsIntro}>
-              The system is built in public — every commit lands on GitHub. This is the real activity, pulled live from the account that builds robr0 DS.
+              The system is built in public: every commit lands on GitHub. This is the real activity, pulled live from the account that builds robr0 DS.
             </p>
             <GitHubContributions />
           </div>
@@ -100,7 +100,7 @@ export default function SiteUpdatesPage() {
                   </div>
                   <div className={styles.detailItem}>
                     <span className={styles.detailLabel}>Cadence</span>
-                    <span className={styles.detailValue}>Biweekly — 1st &amp; 15th</span>
+                    <span className={styles.detailValue}>Biweekly, 1st &amp; 15th</span>
                   </div>
                 </div>
               </div>

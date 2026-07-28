@@ -1,8 +1,8 @@
 ---
 name: drift-audit
-description: Comprehensive self-consistency audit after a structural or architectural change — verifies every skill, doc, and website surface still describes the repo as it actually is. Use after big changes, or when asked whether the docs and skills are up to date.
+description: Comprehensive self-consistency audit after a structural or architectural change. Verifies every skill, doc, and website surface still describes the repo as it actually is. Use after big changes, or when asked whether the docs and skills are up to date.
 icon: fact_check
-displayDescription: "Sweeps every place the repo describes itself — skills, CLAUDE.md, design.md, the README that ships to npm, and the website's own explanations of how it is built — and flags anything that no longer matches reality. Executes the commands and recipes the docs prescribe rather than just reading them, so a skill that would break on the next run is caught before someone runs it. Reports findings grouped by severity."
+displayDescription: "Sweeps every place the repo describes itself (skills, CLAUDE.md, design.md, the README that ships to npm, and the website's own explanations of how it is built) and flags anything that no longer matches reality. Executes the commands and recipes the docs prescribe rather than just reading them, so a skill that would break on the next run is caught before someone runs it. Reports findings grouped by severity."
 invoke: ["run a drift audit","are the docs and skills up to date","audit for gaps","check for structural drift"]
 ---
 
