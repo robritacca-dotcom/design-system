@@ -1,5 +1,11 @@
 /* ============================================
    COMPONENTS PAGE LAYOUT
+
+   ds-allow-file(mockup): the card previews on
+   this page are static artwork — miniature
+   drawings of components, not real UI — so
+   their raw px/shadow/font values are drawing
+   coordinates, not token candidates.
    ============================================ */
 .dsLayout {
   display: flex;

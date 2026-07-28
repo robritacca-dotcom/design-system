@@ -22,6 +22,8 @@
     var(--color-bg-container-primary) 50%,
     transparent 100%
   );
+  /* ds-allow(motion): the shimmer needs a symmetric in-out curve and no
+     --motion-ease-* token provides one — the duration is tokenized. */
   animation: ds-skeleton-shimmer var(--motion-duration-loop-shimmer) ease-in-out infinite;
 }
 

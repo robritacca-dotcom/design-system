@@ -232,8 +232,12 @@
 .ds-selection-card__toggle-icon {
   /* Intentionally off the --icon-size-* scale — same reason as ToggleSwitch:
      this glyph lives inside the 20x20 toggle thumb, and the smallest scale
-     step (20px) would fill it completely. */
-  font-size: 14px;
+     step (20px) would fill it completely. Sized via --icon-size, not
+     font-size, so the icon's box shrinks with the glyph (see ToggleSwitch).
+
+     ds-allow(icon-size): 14px glyph inside the 20px thumb — the smallest
+     scale step would fill it edge to edge. */
+  --icon-size: 14px;
   color: var(--color-action-primary-bg);
 }
 

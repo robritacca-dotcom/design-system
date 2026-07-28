@@ -59,7 +59,10 @@
      Set via --icon-size (not font-size): .material-symbols-rounded derives
      font-size, width, and height from it together. Overriding font-size
      alone leaves the box at the 24px default, so the glyph hangs off-centre
-     inside the thumb. */
+     inside the thumb.
+
+     ds-allow(icon-size): 14px glyph inside the 20px thumb — the smallest
+     scale step would fill it edge to edge. */
   --icon-size: 14px;
   color: var(--color-action-primary-bg);
 }
@@ -123,7 +126,9 @@
 
 .ds-toggle-switch--compact .ds-toggle-switch__thumb-icon {
   /* Off-scale for the same reason as the default size — the compact thumb
-     is only 16x16. */
+     is only 16x16.
+
+     ds-allow(icon-size): 12px glyph inside the 16px compact thumb. */
   --icon-size: 12px;
 }
 

@@ -125,6 +125,9 @@ a {
   background: var(--blob-color);
   filter: blur(80px);
   opacity: 0.15;
+  /* ds-allow(motion): decorative background-float timing — this and the
+     per-blob duration/delay staggers below are ambient scenery tuned by
+     eye, deliberately off the --motion-* interaction scale. */
   animation: floatCloud 16s ease-in-out infinite;
   will-change: transform;
 }
@@ -249,6 +252,8 @@ a {
   -webkit-backface-visibility: hidden;
 }
 
+/* ds-allow(motion): entrance stagger steps — cascade offsets between
+   elements, not an interaction duration, so no --motion-* token applies. */
 .animate-delay-1 { animation-delay: 0.1s; }
 .animate-delay-2 { animation-delay: 0.2s; }
 .animate-delay-3 { animation-delay: 0.3s; }

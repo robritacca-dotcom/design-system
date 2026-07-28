@@ -8,6 +8,10 @@
    they are written as hsl() literals because no
    semantic token can represent them. Everything
    themeable uses tokens as usual.
+
+   ds-allow-file(color): colour-space physics —
+   the gradients and spectrum cannot be theme
+   tokens.
    ============================================ */
 
 /* Base */
