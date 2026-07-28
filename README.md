@@ -32,11 +32,13 @@ Accordion · Alert · Alert dialog · App layout · App sidebar · Avatar · Bad
 
 ### Using the package
 
-The design system is published as [`@robr0/design-system`](https://www.npmjs.com/package/@robr0/design-system) (React 19+ is a peer dependency):
+The design system is published as [`@robr0/design-system`](https://www.npmjs.com/package/@robr0/design-system) (React 19+ is a peer dependency) — the **[full setup guide](https://www.robertritacca.com/docs/get-started)** covers install, dark mode, fonts, and re-theming:
 
 ```bash
 npm install @robr0/design-system
 ```
+
+The package is ESM-only and resolved via `exports` subpaths: use a bundler that handles CSS and font imports from `node_modules` (Vite, Next.js, webpack), and set TypeScript's `moduleResolution` to `"bundler"` (or `"nodenext"`).
 
 Import the token stylesheet once (it carries the primitives, semantic tokens, and both themes), then use components:
 
@@ -51,7 +53,7 @@ Deep imports work too (`@robr0/design-system/components/Button/Button`). Chart c
 import { BarChart, LineChart } from '@robr0/design-system/charts';
 ```
 
-**Theming and customization** happen through CSS variables — no configuration API:
+**Theming and customization** happen through CSS variables — no configuration API. Components are provider-free, with one exception: wrap your tree in `ToastProvider` if (and only if) you use the toast queue via `useToast`.
 
 - **Dark mode**: set `data-theme="dark"` on the root element (light is the default).
 - **Font**: the whole type scale chains to one token. Load any font you like and override it:

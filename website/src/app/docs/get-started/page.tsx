@@ -169,7 +169,9 @@ export default function GetStartedPage() {
               The design system ships as <code>@robr0/design-system</code> — the same
               package this site is built with. There is no configuration API or theme
               provider: theming is plain CSS custom properties. Import the token
-              stylesheet, use the components, and re-theme by redefining tokens.{" "}
+              stylesheet, use the components, and re-theme by redefining tokens. (The
+              one provider in the library is <code>ToastProvider</code> — needed only
+              if you use the toast queue via <code>useToast</code>.){" "}
               <Link href="/playground" className={styles.inlineLink}>
                 Try it live in the playground
               </Link>{" "}
@@ -185,7 +187,11 @@ export default function GetStartedPage() {
                 <SectionTitle title="Install" />
                 <p className={styles.sectionNote}>
                   React 19+ is a peer dependency. Everything else — component CSS, both
-                  themes, the Material Symbols icon font — is bundled.
+                  themes, the Material Symbols icon font — is bundled. The package is
+                  ESM-only: use a bundler that handles CSS and font imports (Vite,
+                  Next.js, webpack), with TypeScript&apos;s{" "}
+                  <code>moduleResolution</code> set to <code>&quot;bundler&quot;</code>{" "}
+                  (or <code>&quot;nodenext&quot;</code>).
                 </p>
                 <CodeBlock code={INSTALL_SNIPPET} language="bash" showCopy />
                 <CodeBlock code={USAGE_SNIPPET} language="tsx" filename="app.tsx" showCopy />
@@ -242,7 +248,7 @@ export default function GetStartedPage() {
                   copy the generated CSS.
                 </p>
                 <Link href="/playground" className={styles.ctaLink}>
-                  <Button label="Open the playground" priority="primary" iconRight="arrow_forward" />
+                  <Button label="Open the playground" variant="primary" iconRight="arrow_forward" />
                 </Link>
               </section>
             </div>

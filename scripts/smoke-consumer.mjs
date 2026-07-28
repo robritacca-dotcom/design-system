@@ -101,7 +101,7 @@ import { Alert } from '@robr0/design-system/components/Alert/Alert';
 
 createRoot(document.getElementById('root')!).render(
   <main>
-    <Button label={\`\${COMPONENT_COUNT} components\`} priority="primary" />
+    <Button label={\`\${COMPONENT_COUNT} components\`} variant="primary" />
     <Badge label="smoke" variant="positive" />
     <Alert variant="info" title="Deep import" description="works" />
   </main>
