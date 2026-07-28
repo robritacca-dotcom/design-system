@@ -283,7 +283,7 @@ The system uses **color-block first, shadow rare** philosophy. Depth is communic
 
 Standard containers never carry shadows. The only shadows in the system are two semantic elevation tokens, defined per theme (stronger opacity in dark mode so they read against the #050505 floor):
 
-- **`--shadow-floating`** (`0 4px 16px rgba(0,0,0,0.12)` light / `0.55` dark) — anchored floating surfaces: Popover, Dropdown menus, DropdownMenu, chart tooltips, Toast.
+- **`--shadow-floating`** (`0 4px 16px rgba(0,0,0,0.12)` light / `0.55` dark) — anchored floating surfaces: Popover, Dropdown menus, DropdownMenu, the ColorPicker panel, chart tooltips, Toast.
 - **`--shadow-modal`** (`0 8px 32px rgba(0,0,0,0.2)` light / `0.6` dark) — modal surfaces: Dialog and AlertDialog panels, paired with the `--color-scrim` backdrop.
 
 Never write a literal `box-shadow` value in component CSS — use one of these two tokens or no shadow at all. (One documented exception: the interactive Card hover lift — see Do's and Don'ts.)
@@ -408,6 +408,14 @@ Icon slots (Material Symbols Rounded): left icon at 16px from edge, right icon a
 ### Slider
 
 **`ds-slider`** — Range input styled with a two-tone track: `--color-action-primary-bg` fill up to the current value, `--color-bg-container-secondary` beyond it, with a `--radius-full` thumb that gains a `--color-action-primary-bg-hover` focus ring. Native `<input type="range">` underneath, so keyboard and screen-reader behaviour come for free (`min`/`max`/`step` props). Sizes: `default`, `compact`. Disabled: `opacity: 0.4`.
+
+### Swatch
+
+**`ds-swatch`** — Clickable colour tile: a 24px `<button>` (20px `compact`) whose background is the `value` colour, passed through the `--ds-swatch-color` custom property so the stylesheet stays data-free. Shapes: `circle` (default, `--radius-full`) and `square` (`--radius-sm`). A hairline `--color-bg-container-border` inset keeps light colours visible on the white floor; `selected` draws the theme-aware ring (`--color-bg-page-primary` gap + `--color-text-primary` outline) and sets `aria-pressed`. Purely presentational — no `'use client'`, so it renders from Server Components. Disabled: `opacity: 0.4`.
+
+### ColorPicker
+
+**`ds-colorpicker`** — Colour picker composed in `Field`: a bordered trigger (`--radius-md`, input border tokens) holding a checkerboard-backed swatch and optional hex text (`showText`), opening a `--shadow-floating` panel with a saturation/brightness area (2D `role="slider"`, pointer + arrow keys), a hue slider, an optional alpha slider (`showAlpha`, emits 8-digit hex below 100%), and a hex field. Works controlled (`value` + `onValueChange`, fires live while dragging) or uncontrolled (`defaultValue`); `name` renders a hidden input for native form submission. The white/black overlay gradients and hue spectrum are colour-space constants written as `hsl()` literals — the one sanctioned departure from hex-free component CSS, since no theme token can represent them. Sizes: `default`, `compact`. Disabled: `opacity: 0.4`.
 
 ### DateInput
 
@@ -626,7 +634,7 @@ The theme is activated by `data-theme="dark"` on the HTML root element. The `tok
 - Status border colors (`--color-status-*-border`) — same in both themes
 - Status background/text invert to their dark counterparts for contrast
 
-**Rule:** Never hardcode `color` or `background-color` with a hex value in a component. Always use a semantic token — the theme swap is the only mechanism for dark mode, no manual `prefers-color-scheme` queries in components.
+**Rule:** Never hardcode `color` or `background-color` with a hex value in a component. Always use a semantic token — the theme swap is the only mechanism for dark mode, no manual `prefers-color-scheme` queries in components. One sanctioned exception: ColorPicker's colour-mixing constants (the white/black overlay gradients, the hue spectrum, the picker-handle white) are colour-space physics no theme token can represent — they are written as `hsl()` literals, commented in place, and documented in the ColorPicker spec.
 
 ---
 

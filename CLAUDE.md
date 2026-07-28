@@ -138,7 +138,7 @@ Component CSS               background-color: var(--color-action-primary-bg)
 
 Key invariants:
 - Teal `--color-action-primary-bg` (#118AB2) is **only** for primary CTA buttons and focus rings. Never decorative.
-- Never hardcode hex values in component CSS — always a semantic token.
+- Never hardcode hex values in component CSS — always a semantic token. (One sanctioned exception: ColorPicker's `hsl()` colour-mixing constants — colour-space physics, not theme; see its design.md spec.)
 - Never hardcode hex values in semantic colour tokens either: every `--color-*` value in `tokens-light/dark.css` must be a `var(--primitive-*)` (or `var(--color-*)`) reference — build-enforced by `scripts/validate-token-references.mjs`. This is what lets a consumer override a primitive and have it cascade through the whole system.
 - Buttons are always `--radius-full` (pill). Inputs are always `--radius-md` (12px). Card/EntityCard navigation tiles are the exception: `--radius-xl` (24px).
 

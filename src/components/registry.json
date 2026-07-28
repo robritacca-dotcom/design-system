@@ -148,6 +148,14 @@
       "client": true
     },
     {
+      "name": "ColorPicker",
+      "label": "Colour picker",
+      "slug": "color-picker",
+      "description": "Swatch trigger opening a saturation area, hue and alpha sliders, and a hex field; controlled or uncontrolled.",
+      "category": "forms",
+      "client": true
+    },
+    {
       "name": "Combobox",
       "label": "Combobox",
       "slug": "combobox",
@@ -417,6 +425,14 @@
       "slug": "stat",
       "description": "Headline metrics with labels and trend deltas.",
       "category": "data-display",
+      "client": false
+    },
+    {
+      "name": "Swatch",
+      "label": "Swatch",
+      "slug": "swatch",
+      "description": "Clickable colour tile for preset palettes and picker triggers, with a theme-aware selection ring.",
+      "category": "forms",
       "client": false
     },
     {

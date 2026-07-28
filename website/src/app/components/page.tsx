@@ -19,6 +19,7 @@ import { CircularButton } from "@robr0/design-system/components/CircularButton/C
 import { CodeBlock } from "@robr0/design-system/components/CodeBlock/CodeBlock";
 import { Quote } from "@robr0/design-system/components/Quote/Quote";
 import { Stat } from "@robr0/design-system/components/Stat/Stat";
+import { Swatch } from "@robr0/design-system/components/Swatch/Swatch";
 import { Timeline } from "@robr0/design-system/components/Timeline/Timeline";
 import { ContributionGraph, type ContributionDay } from "@robr0/design-system/components/ContributionGraph/ContributionGraph";
 import { Divider } from "@robr0/design-system/components/Divider/Divider";
@@ -275,6 +276,14 @@ export default function ComponentsPage() {
             <TocCard href="/components/code-block" title="Code block">
               <div style={{ width: "180px" }}>
                 <CodeBlock code={`--radius-full: 999px;`} filename="tokens.css" showCopy={false} />
+              </div>
+            </TocCard>
+
+            {/* Colour picker */}
+            <TocCard href="/components/color-picker" title="Colour picker">
+              <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "4px 10px 4px 4px", borderRadius: "12px", border: "1px solid var(--color-input-border-selected)" }}>
+                <Swatch value="#118AB2" label="Teal 07" shape="square" tabIndex={-1} />
+                <span style={{ fontSize: "12px", color: "var(--color-text-primary)", fontVariantNumeric: "tabular-nums" }}>#118AB2</span>
               </div>
             </TocCard>
 
@@ -647,6 +656,16 @@ export default function ComponentsPage() {
             {/* Stat */}
             <TocCard href="/components/stat" title="Stat">
               <Stat value="~900%" label="Successful generations" trend="up" delta="+clash view" />
+            </TocCard>
+
+            {/* Swatch */}
+            <TocCard href="/components/swatch" title="Swatch">
+              <div style={{ display: "flex", gap: "8px" }}>
+                <Swatch value="#EF476F" label="Red 07" tabIndex={-1} />
+                <Swatch value="#FFD166" label="Yellow 07" tabIndex={-1} />
+                <Swatch value="#118AB2" label="Teal 07" selected tabIndex={-1} />
+                <Swatch value="#9E47EF" label="Purple 07" tabIndex={-1} />
+              </div>
             </TocCard>
 
             {/* Table */}
