@@ -210,23 +210,23 @@
 }
 
 .journalCellL0 {
-  background: var(--color-bg-container-primary);
+  background: var(--color-chart-contribution-0);
 }
 
 .journalCellL1 {
-  background: var(--primitive-teal-02);
+  background: var(--color-chart-contribution-1);
 }
 
 .journalCellL2 {
-  background: var(--primitive-teal-04);
+  background: var(--color-chart-contribution-2);
 }
 
 .journalCellL3 {
-  background: var(--primitive-teal-06);
+  background: var(--color-chart-contribution-3);
 }
 
 .journalCellL4 {
-  background: var(--primitive-teal-08);
+  background: var(--color-chart-contribution-4);
 }
 
 /* ============================================
