@@ -93,7 +93,7 @@ export default function CodeBlockPage() {
             <SectionTitle title="Collapsible" />
             <p className={styles.introBody}>
               With <code>collapsible</code>, a chevron beside the filename opens and closes
-              the code area — the same animation as Accordion. Add{' '}
+              the code area, the same animation as Accordion. Add{' '}
               <code>defaultCollapsed</code> to start closed.
             </p>
             <CodeBlock
@@ -128,7 +128,7 @@ export default function CodeBlockPage() {
 
           {/* Bare */}
           <section className={styles.section}>
-            <SectionTitle title="Bare — no header" />
+            <SectionTitle title="Bare (no header)" />
             <CodeBlock code="npm run storybook" showCopy={false} />
           </section>
         </main>

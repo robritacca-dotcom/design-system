@@ -76,7 +76,7 @@ export default function ContextMenuPage() {
             <p className={styles.introBody}>
               Right-click (or press the keyboard menu key) on the wrapped area
               and the panel opens at the pointer, clamped to the viewport. It
-              shares its entry model and styling with the dropdown menu —
+              shares its entry model and styling with the dropdown menu:
               items, sections, shortcut hints, destructive and disabled states,
               and sub-menus. Use a dropdown menu when the menu opens from a
               visible trigger; a context menu when it belongs to the content

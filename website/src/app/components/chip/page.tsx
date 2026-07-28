@@ -43,8 +43,8 @@ export default function ChipPage() {
               Compact pills for attributes, filters, and inline metadata
             </p>
             <p className={styles.introBody}>
-              Chips label, filter, or represent small pieces of information. Unlike a Badge — which
-              communicates status through colour — a chip is neutral by default and can be
+              Chips label, filter, or represent small pieces of information. Unlike a Badge, which
+              communicates status through colour, a chip is neutral by default and can be
               interactive: pass a click handler to make it a button, a selected state for
               filtering, or a remove handler for input-style chips.
             </p>
@@ -54,8 +54,8 @@ export default function ChipPage() {
           <section className={styles.section}>
             <SectionTitle title="Sizes" />
             <div className={styles.variantRow}>
-              <Chip label="Default — 32px" />
-              <Chip size="compact" label="Compact — 24px" />
+              <Chip label="Default (32px)" />
+              <Chip size="compact" label="Compact (24px)" />
             </div>
           </section>
 
@@ -72,10 +72,10 @@ export default function ChipPage() {
 
           {/* Clickable — filter chips */}
           <section className={styles.section}>
-            <SectionTitle title="Clickable — filter chips" />
+            <SectionTitle title="Clickable: filter chips" />
             <p className={styles.introBody}>
               With an <code>onClick</code> handler the chip renders as a real{" "}
-              <code>&lt;button&gt;</code>. Add <code>selected</code> for a filter-style toggle —
+              <code>&lt;button&gt;</code>. Add <code>selected</code> for a filter-style toggle:
               the teal active fill follows the same convention as the segmented control.
             </p>
             <div className={styles.variantRow}>
@@ -93,7 +93,7 @@ export default function ChipPage() {
 
           {/* Removable — input chips */}
           <section className={styles.section}>
-            <SectionTitle title="Removable — input chips" />
+            <SectionTitle title="Removable: input chips" />
             <p className={styles.introBody}>
               An <code>onRemove</code> handler adds a trailing close button with its own
               accessible label.
@@ -122,7 +122,7 @@ export default function ChipPage() {
           <section className={styles.section}>
             <SectionTitle title="Non-interactive and disabled" />
             <p className={styles.introBody}>
-              Without handlers a chip is a plain <code>&lt;span&gt;</code> — a quiet label for
+              Without handlers a chip is a plain <code>&lt;span&gt;</code>: a quiet label for
               metadata, like the run stages on the Loops page. Disabled chips drop to 40%
               opacity, matching every other control in the system.
             </p>

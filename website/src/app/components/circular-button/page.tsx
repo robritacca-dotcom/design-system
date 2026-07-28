@@ -116,7 +116,7 @@ export default function CircularButtonPage() {
           <section className={styles.section}>
             <SectionTitle title="Loading" />
             <p className={styles.introBody}>
-              Set <code>loading</code> while an async action runs — the spinner
+              Set <code>loading</code> while an async action runs. The spinner
               replaces the icon in the variant&apos;s own colour and interaction
               is blocked, without the dimmed disabled look.
             </p>

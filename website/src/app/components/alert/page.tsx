@@ -70,7 +70,7 @@ export default function AlertPage() {
             <div className={styles.variantStack}>
               <Alert variant="info" title="Dismissible" description="Click the close button to dismiss this alert." dismissible onDismiss={() => {}} />
               <Alert variant="positive" title="Title only" />
-              <Alert variant="warning" description="Description only — your session will expire in 5 minutes." />
+              <Alert variant="warning" description="Description only: your session will expire in 5 minutes." />
               <Alert variant="error" title="Dismissible compact" description="Something went wrong." size="compact" dismissible onDismiss={() => {}} />
             </div>
           </section>

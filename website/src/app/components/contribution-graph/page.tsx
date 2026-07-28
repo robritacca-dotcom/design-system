@@ -72,7 +72,7 @@ export default function ContributionGraphPage() {
               A year of activity, one cell per day
             </p>
             <p className={styles.introBody}>
-              The contribution graph renders a GitHub-style heatmap: weeks as columns, weekdays as rows, and a five-step green ramp (<code>--color-chart-contribution-0</code> through <code>-4</code>) mapping each day&apos;s activity level to colour. It takes a plain array of days, so the data can come from anywhere — the GitHub API, an internal tool, or generated demo data.
+              The contribution graph renders a GitHub-style heatmap: weeks as columns, weekdays as rows, and a five-step green ramp (<code>--color-chart-contribution-0</code> through <code>-4</code>) mapping each day&apos;s activity level to colour. It takes a plain array of days, so the data can come from anywhere: the GitHub API, an internal tool, or generated demo data.
             </p>
           </div>
 
@@ -98,7 +98,7 @@ export default function ContributionGraphPage() {
           <section className={styles.section}>
             <SectionTitle title="Grid only" />
             <p className={styles.introBody}>
-              Month labels, caption, and legend are all optional — the bare grid works as a compact activity strip.
+              Month labels, caption, and legend are all optional: the bare grid works as a compact activity strip.
             </p>
             <ContributionGraph
               days={demo.days}

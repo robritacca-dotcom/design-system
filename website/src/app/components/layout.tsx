@@ -3,7 +3,7 @@ import { sectionMetadata } from "@/config/navigation";
 
 export const metadata = sectionMetadata(
   "Components",
-  `${COMPONENT_COUNT} React components that make up robr0 DS — the design system I built for my own projects.`
+  `${COMPONENT_COUNT} React components that make up robr0 DS, the design system behind this site.`
 );
 
 export default function ComponentsLayout({

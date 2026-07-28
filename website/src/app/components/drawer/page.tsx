@@ -52,8 +52,8 @@ export default function DrawerPage() {
           <div className={`${styles.introSection} animate-in animate-delay-1`}>
             <p className={styles.subDisplay}>A panel anchored to an edge</p>
             <p className={styles.introBody}>
-              Drawer shares Dialog’s modal contract — focus trap, focus restore,
-              scroll lock, ESC and scrim dismissal — but slides in from a
+              Drawer shares Dialog’s modal contract (focus trap, focus restore,
+              scroll lock, ESC and scrim dismissal) but slides in from a
               viewport edge instead of scaling from the centre. That makes it
               the right home for filter panels, detail views, and mobile
               navigation, where keeping the page visible behind the panel is
@@ -82,7 +82,7 @@ export default function DrawerPage() {
               description="Everything about order #10482."
             >
               <p style={{ margin: 0 }}>
-                Any content can live in the drawer body — forms, lists, or other
+                Any content can live in the drawer body: forms, lists, or other
                 components.
               </p>
             </Drawer>
@@ -128,7 +128,7 @@ export default function DrawerPage() {
             <SectionTitle title="With a footer" />
             <p className={styles.demoCaption}>
               The footer right-aligns your Buttons and stays pinned while the
-              body scrolls — the standard shape for a filter panel.
+              body scrolls, the standard shape for a filter panel.
             </p>
             <div className={styles.demoRow}>
               <Button
@@ -170,10 +170,10 @@ export default function DrawerPage() {
               <Button label="Large" priority="secondary" onClick={() => setOpen("large")} />
             </div>
             <Drawer open={isOpen("small")} onOpenChange={close} size="sm" title="Small drawer">
-              <p style={{ margin: 0 }}>320px — enough for a compact detail panel.</p>
+              <p style={{ margin: 0 }}>320px: enough for a compact detail panel.</p>
             </Drawer>
             <Drawer open={isOpen("large")} onOpenChange={close} size="lg" title="Large drawer">
-              <p style={{ margin: 0 }}>560px — room for forms or side-by-side content.</p>
+              <p style={{ margin: 0 }}>560px: room for forms or side-by-side content.</p>
             </Drawer>
           </section>
 
@@ -196,7 +196,7 @@ export default function DrawerPage() {
               <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
                 {Array.from({ length: 30 }, (_, i) => (
                   <p key={i} style={{ margin: 0 }}>
-                    Event {i + 1} — the body scrolls while the header and footer stay put.
+                    Event {i + 1}: the body scrolls while the header and footer stay put.
                   </p>
                 ))}
               </div>
@@ -208,7 +208,7 @@ export default function DrawerPage() {
             <SectionTitle title="Non-dismissible" />
             <p className={styles.demoCaption}>
               With <code>dismissible=&#123;false&#125;</code>, ESC and the scrim
-              stop working and the close button is hidden — a footer action
+              stop working and the close button is hidden: a footer action
               becomes the only way out. Use it sparingly.
             </p>
             <div className={styles.demoRow}>

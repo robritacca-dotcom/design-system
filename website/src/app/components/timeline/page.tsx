@@ -17,20 +17,20 @@ const { sidebarLinks } = getSidebarLinks(componentsSidebarLinks, "/components/ti
 
 const CAREER = [
   {
-    meta: "May 2024 — Present",
-    title: "Intuit — Staff Product Designer",
+    meta: "May 2024 – Present",
+    title: "Intuit, Staff Product Designer",
     description:
       "Intuit Intelligence, the conversational AI platform powering 3.8M monthly customer interactions.",
   },
   {
-    meta: "Aug 2023 — May 2024",
-    title: "Augmenta — Lead Product Designer",
+    meta: "Aug 2023 – May 2024",
+    title: "Augmenta, Lead Product Designer",
     description:
-      "AI generation workflows for electrical routing — successful generations up ~900%.",
+      "AI generation workflows for electrical routing: successful generations up ~900%.",
   },
   {
-    meta: "2021 — 2023",
-    title: "Meta — Product Designer",
+    meta: "2021 – 2023",
+    title: "Meta, Product Designer",
     description: "Career Profile and Offer Creation platforms for global recruiting.",
   },
 ];
@@ -58,8 +58,8 @@ const EXPERIENCE = [
         bullets: [
           "Shipped TurboTax's embedded AI experiences inside ChatGPT and Claude.",
           <>
-            Designed the bidirectional filing checklist — full story in the{" "}
-            <Link href="/work/embedded-ai-turbotax">case study</Link>
+            Designed the bidirectional filing checklist (full story in the{" "}
+            <Link href="/work/embedded-ai-turbotax">case study</Link>)
           </>,
         ],
       },
@@ -113,27 +113,27 @@ export default function TimelinePage() {
 
           <div className={`${styles.introSection} animate-in animate-delay-1`}>
             <p className={styles.subDisplay}>
-              Ordered sequences — histories and steppers
+              Ordered sequences: histories and steppers
             </p>
             <p className={styles.introBody}>
               One component, two orientations. Vertical for histories and process
-              narratives — career entries, project phases. Horizontal for compact
+              narratives: career entries, project phases. Horizontal for compact
               steppers like a loop&apos;s run stages. Markers are dots by default,
               numbered circles with <code>numbered</code>, or Material Symbols per item.
               The <code>company</code> variant swaps the marker for a logo and groups one
-              or more roles — each with a right-aligned date — under a single entry.
+              or more roles (each with a right-aligned date) under a single entry.
             </p>
           </div>
 
           {/* Vertical */}
           <section className={styles.section}>
-            <SectionTitle title="Vertical — a history" />
+            <SectionTitle title="Vertical: a history" />
             <Timeline items={CAREER} />
           </section>
 
           {/* Numbered */}
           <section className={styles.section}>
-            <SectionTitle title="Vertical — numbered steps" />
+            <SectionTitle title="Vertical: numbered steps" />
             <Timeline numbered items={LOOP_RUN} />
           </section>
 
@@ -157,7 +157,7 @@ export default function TimelinePage() {
 
           {/* Company */}
           <section className={styles.section}>
-            <SectionTitle title="Company — grouped roles" />
+            <SectionTitle title="Company: grouped roles" />
             <Timeline variant="company" items={EXPERIENCE} />
           </section>
         </main>

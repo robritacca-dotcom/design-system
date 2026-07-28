@@ -51,7 +51,7 @@ export default function LinkListPage() {
                     label: "Read on Substack",
                     href: "https://substack.com",
                     logo: "/logos/substack.svg",
-                    sub: "Original post — same essay, longer form",
+                    sub: "Original post: same essay, longer form",
                   },
                   {
                     label: "ChatGPT Connector",
@@ -86,8 +86,8 @@ export default function LinkListPage() {
                     href: "https://webbyawards.com",
                     icon: "emoji_events",
                     sub: [
-                      "Winner — AI · Financial Services",
-                      "People's Voice Winner — AI · Financial Services",
+                      "Winner, AI · Financial Services",
+                      "People's Voice Winner, AI · Financial Services",
                     ],
                   },
                   {

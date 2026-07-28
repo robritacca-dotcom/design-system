@@ -37,7 +37,7 @@ export default function FileInputPage() {
             <p className={styles.subDisplay}>Drop a file, or browse for one</p>
             <p className={styles.introBody}>
               A dashed dropzone paired with a list of the chosen files. The list
-              is fully controlled — you pass <code>files</code> and handle{" "}
+              is fully controlled: you pass <code>files</code> and handle{" "}
               <code>onFilesSelected</code> and <code>onFileRemove</code>, so
               upload progress and per-file errors stay owned by your app. The
               real file input stays in the DOM for form semantics; the zone is
@@ -49,7 +49,7 @@ export default function FileInputPage() {
           <section className={styles.section}>
             <SectionTitle title="Try it" />
             <p className={styles.demoCaption}>
-              Drop files here or click to browse — this demo wires selection and
+              Drop files here or click to browse. This demo wires selection and
               removal to local state.
             </p>
             <div className={styles.demoBox}>
@@ -138,7 +138,7 @@ export default function FileInputPage() {
             <SectionTitle title="Per-file errors" />
             <p className={styles.demoCaption}>
               A file-level <code>error</code> swaps that row to the error tokens
-              and replaces the size line — the rest of the list is unaffected.
+              and replaces the size line. The rest of the list is unaffected.
             </p>
             <div className={styles.demoBox}>
               <FileInput

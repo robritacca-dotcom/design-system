@@ -40,7 +40,7 @@ export default function DividerPage() {
               Separates stacked content with a hairline rule in the divider
               colour. Horizontal by default, with an optional inline label and
               a vertical orientation for flex rows. Use it inside forms, lists,
-              and cards — page sections under an h2 heading already carry
+              and cards. Page sections under an h2 heading already carry
               their own divider.
             </p>
           </div>
@@ -98,13 +98,13 @@ export default function DividerPage() {
           <section className={styles.section}>
             <SectionTitle title="Spacing" />
             <div className={styles.demoBox}>
-              <p className={styles.demoText}>none — 0</p>
+              <p className={styles.demoText}>none: 0</p>
               <Divider spacing="none" />
-              <p className={styles.demoText}>sm — 8px</p>
+              <p className={styles.demoText}>sm: 8px</p>
               <Divider spacing="sm" />
-              <p className={styles.demoText}>md — 16px (default)</p>
+              <p className={styles.demoText}>md: 16px (default)</p>
               <Divider spacing="md" />
-              <p className={styles.demoText}>lg — 20px</p>
+              <p className={styles.demoText}>lg: 20px</p>
               <Divider spacing="lg" />
               <p className={styles.demoText}>End of scale.</p>
             </div>

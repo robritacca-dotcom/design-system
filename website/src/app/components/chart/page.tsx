@@ -129,7 +129,7 @@ export default function ChartPage() {
 
           <div className={`${styles.introSection} animate-in animate-delay-1`}>
             <p className={styles.subDisplay}>
-              Data brought to life
+              Bar, line, pie, radial, and area charts
             </p>
             <p className={styles.introBody}>
               Chart components visualise data sets using the design-system colour, spacing, and typography tokens. Built on Recharts for responsive SVG rendering, animations, and interactivity. The shared wrapper handles titles, subtitles, summary stats, and tooltips so every chart type looks and feels consistent.
@@ -143,9 +143,9 @@ export default function ChartPage() {
             <SectionTitle title="Bar chart" />
             <BarChart
               data={pageViewData}
-              title="Bar Chart - Interactive"
+              title="Bar chart (interactive)"
               subtitle="Showing total visitors for the last 3 months"
-              dataLabel="Page Views"
+              dataLabel="Page views"
               summaryItems={[
                 { label: "Desktop", value: 24828 },
                 { label: "Mobile", value: 25010 },
@@ -165,8 +165,8 @@ export default function ChartPage() {
                 { dataKey: "desktop", label: "Desktop", color: "#118AB2" },
                 { dataKey: "mobile", label: "Mobile", color: "#06D6A0" },
               ]}
-              title="Visitors by Device"
-              subtitle="January - June 2024"
+              title="Visitors by device"
+              subtitle="January to June 2024"
               summaryItems={[
                 { label: "Desktop", value: "1,224" },
                 { label: "Mobile", value: 860 },
@@ -182,13 +182,13 @@ export default function ChartPage() {
             <div className={styles.chartRow}>
               <PieChart
                 data={browserData}
-                title="Browser Share"
+                title="Browser share"
                 subtitle="Visitor distribution by browser"
                 height={380}
               />
               <PieChart
                 data={taskData}
-                title="Task Status — Donut"
+                title="Task status (donut)"
                 subtitle="Current sprint"
                 innerRadius={80}
                 height={380}
@@ -204,7 +204,7 @@ export default function ChartPage() {
             <div className={styles.chartRow}>
               <RadialChart
                 data={sprintData}
-                title="Sprint Progress"
+                title="Sprint progress"
                 subtitle="Completion by phase"
                 height={380}
               />
@@ -214,7 +214,7 @@ export default function ChartPage() {
                   { name: "Users", value: 92, color: "#118AB2" },
                   { name: "Retention", value: 55, color: "#FFD166" },
                 ]}
-                title="KPI Overview"
+                title="KPI overview"
                 subtitle="Q2 2024 targets"
                 height={380}
               />
@@ -233,8 +233,8 @@ export default function ChartPage() {
                 { dataKey: "organic", label: "Organic", color: "#118AB2" },
                 { dataKey: "paid", label: "Paid", color: "#9E47EF" },
               ]}
-              title="Traffic Sources"
-              subtitle="Organic vs paid visits — January to June 2024"
+              title="Traffic sources"
+              subtitle="Organic vs paid visits, January to June 2024"
               summaryItems={[
                 { label: "Organic", value: "1,335" },
                 { label: "Paid", value: 790 },
@@ -255,7 +255,7 @@ export default function ChartPage() {
                   { dataKey: "teamA", label: "Team Alpha", color: "#118AB2" },
                   { dataKey: "teamB", label: "Team Beta", color: "#06D6A0" },
                 ]}
-                title="Team Skills"
+                title="Team skills"
                 subtitle="Competency comparison across domains"
                 height={380}
               />
@@ -265,7 +265,7 @@ export default function ChartPage() {
                 series={[
                   { dataKey: "teamA", label: "Team Alpha", color: "#EF476F", fillOpacity: 0.4 },
                 ]}
-                title="Team Alpha Focus"
+                title="Team Alpha focus"
                 subtitle="Single-series radar"
                 height={380}
               />
@@ -299,7 +299,7 @@ export default function ChartPage() {
             <SectionTitle title="Treemap" />
             <Treemap
               data={treemapData}
-              title="Disk Usage"
+              title="Disk usage"
               subtitle="Storage breakdown by category (MB)"
               summaryItems={[
                 { label: "Total", value: "23.7 GB" },

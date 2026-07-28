@@ -95,7 +95,7 @@
       "name": "Card",
       "label": "Card",
       "slug": "card",
-      "description": "Card components for previews, navigation, and token documentation \u2014 from content cards to colour swatches and typography specimens.",
+      "description": "Card components for previews, navigation, and token documentation, from content cards to colour swatches and typography specimens.",
       "category": "data-display",
       "client": true
     },
@@ -159,7 +159,7 @@
       "name": "Combobox",
       "label": "Combobox",
       "slug": "combobox",
-      "description": "A filterable select that narrows options as you type, with multi-select chips, grouping, and async loading.",
+      "description": "A filterable select that narrows options as the user types, with multi-select chips, grouping, and async loading.",
       "category": "forms",
       "client": true
     },
@@ -255,7 +255,7 @@
       "name": "EmptyState",
       "label": "Empty state",
       "slug": "empty-state",
-      "description": "The placeholder for a list, table, or search with nothing to show \u2014 icon, headline, guidance, and a next action.",
+      "description": "The placeholder for a list, table, or search with nothing to show: icon, headline, guidance, and a next action.",
       "category": "feedback",
       "client": false
     },
@@ -263,7 +263,7 @@
       "name": "EntityCard",
       "label": "Entity card",
       "slug": "entity-card",
-      "description": "Compact display-only card with a centred icon or image and a label \u2014 powers the Icons and Logos galleries.",
+      "description": "Compact display-only card with a centred icon or image and a label, used in the Icons and Logos galleries.",
       "category": "data-display",
       "client": false
     },
@@ -271,7 +271,7 @@
       "name": "Field",
       "label": "Field",
       "slug": "field",
-      "description": "The shared scaffolding for labelled form controls \u2014 label, required marker, helper and error text, and the ARIA wiring that ties them together.",
+      "description": "The shared scaffolding for labelled form controls: label, required marker, helper and error text, and the ARIA wiring that ties them together.",
       "category": "forms",
       "client": true
     },
@@ -407,7 +407,7 @@
       "name": "Slider",
       "label": "Slider",
       "slug": "slider",
-      "description": "Range input for selecting a value within a given range with default and compact sizes.",
+      "description": "Range input for selecting a value between a minimum and maximum, in default and compact sizes.",
       "category": "forms",
       "client": true
     },
@@ -463,7 +463,7 @@
       "name": "Timeline",
       "label": "Timeline",
       "slug": "timeline",
-      "description": "Ordered sequences \u2014 histories and steppers.",
+      "description": "Ordered sequences: histories and steppers.",
       "category": "data-display",
       "client": false
     },

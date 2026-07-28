@@ -83,7 +83,7 @@ export default function CommandPalettePage() {
           </div>
 
           <div className={`${styles.introSection} animate-in animate-delay-1`}>
-            <p className={styles.subDisplay}>Every action, one keystroke away</p>
+            <p className={styles.subDisplay}>Search and run commands from the keyboard</p>
             <p className={styles.introBody}>
               A modal launcher that searches a grouped command list. Filtering
               matches labels, descriptions, and hidden keywords, so “changelog”
@@ -99,7 +99,7 @@ export default function CommandPalettePage() {
           <section className={styles.section}>
             <SectionTitle title="Default" />
             <p className={styles.demoCaption}>
-              Try the hotkey — it is bound globally on this page.
+              Try the hotkey. It is bound globally on this page.
             </p>
             <div className={styles.demoRow}>
               <Button
@@ -125,7 +125,7 @@ export default function CommandPalettePage() {
               Commands carry an optional icon, a label, a description line, and
               a <code>shortcut</code> array rendered as key chips on the right.
               Disabled commands stay visible for discoverability but are skipped
-              by the keyboard highlight — “Export tokens” in these examples.
+              by the keyboard highlight (“Export tokens” in these examples).
               Group headings are quiet by design; the labels do the work.
             </p>
           </section>
@@ -177,7 +177,7 @@ export default function CommandPalettePage() {
               onOpenChange={setEmptyOpen}
               groups={[]}
               hotkey={false}
-              emptyMessage="Nothing matched — try a different term."
+              emptyMessage="Nothing matched. Try a different term."
             />
             <CommandPalette
               open={loadingOpen}

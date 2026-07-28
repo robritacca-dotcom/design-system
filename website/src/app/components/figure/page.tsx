@@ -37,8 +37,8 @@ export default function FigurePage() {
               Images with captions, in the case-study frame
             </p>
             <p className={styles.introBody}>
-              A Figure wraps any image — a plain <code>&lt;img&gt;</code> or{" "}
-              <code>next/image</code> — in the system&apos;s rounded container with an
+              A Figure wraps any image (a plain <code>&lt;img&gt;</code> or{" "}
+              <code>next/image</code>) in the system&apos;s rounded container with an
               optional caption. Pass an <code>onClick</code> and it becomes zoomable:
               zoom cursor, hover dim, and keyboard activation for lightboxes.
             </p>
@@ -47,7 +47,7 @@ export default function FigurePage() {
           {/* With caption */}
           <section className={styles.section}>
             <SectionTitle title="With caption" />
-            <Figure caption="A Virtual Construction Designer working inside Augmenta — the target user for the redesign.">
+            <Figure caption="A Virtual Construction Designer working inside Augmenta, the target user for the redesign.">
               <Image
                 src="/images/augmenta/slide25-img02.png"
                 alt="A Virtual Construction Designer working inside the Augmenta platform"
@@ -61,11 +61,11 @@ export default function FigurePage() {
           <section className={styles.section}>
             <SectionTitle title="Zoomable" />
             <p className={styles.introBody}>
-              With <code>onClick</code> the figure gains the zoom affordance — on the work
+              With <code>onClick</code> the figure gains the zoom affordance: on the work
               pages this opens the lightbox.
             </p>
             <Figure
-              caption="Zoomable — click or press Enter to trigger the handler."
+              caption="Zoomable: click or press Enter to trigger the handler."
               onClick={() => window.alert("On a case-study page this opens the lightbox.")}
             >
               <Image

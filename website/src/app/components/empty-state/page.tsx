@@ -35,8 +35,8 @@ export default function EmptyStatePage() {
             <p className={styles.subDisplay}>Blank space that still says something</p>
             <p className={styles.introBody}>
               Every list, table, and search eventually has nothing to show.
-              EmptyState fills that space with an icon, a headline, and — most
-              importantly — the next action. Write the description as guidance,
+              EmptyState fills that space with an icon, a headline, and (most
+              importantly) the next action. Write the description as guidance,
               not as a statement of absence: “Create your first project” beats
               “No projects found”.
             </p>
@@ -157,7 +157,7 @@ export default function EmptyStatePage() {
           <section className={styles.section}>
             <SectionTitle title="Without an icon" />
             <p className={styles.demoCaption}>
-              The icon is optional — text alone suits dense layouts.
+              The icon is optional. Text alone suits dense layouts.
             </p>
             <div className={styles.demoBox}>
               <EmptyState

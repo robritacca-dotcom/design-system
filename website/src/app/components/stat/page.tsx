@@ -36,7 +36,7 @@ export default function StatPage() {
               Headline metrics with labels and trend deltas
             </p>
             <p className={styles.introBody}>
-              A Stat gives one number room to speak — display-weight numeral, quiet label,
+              A Stat gives one number room to speak: display-weight numeral, quiet label,
               and an optional trend annotation. Compose several in a row for the metrics
               band that opens a case study.
             </p>

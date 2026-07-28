@@ -135,7 +135,7 @@ export default function ToastPage() {
                 <Toast variant="positive" title="Title only" />
               </div>
               <div className={styles.toastDemo}>
-                <Toast variant="warning" description="Description only — your session will expire soon." />
+                <Toast variant="warning" description="Description only: your session will expire soon." />
               </div>
               <div className={styles.toastDemo}>
                 <Toast variant="info" title="Non-dismissible" description="Processing your request." dismissible={false} />

@@ -28,7 +28,7 @@ const faqItems = [
     title: "Why use design tokens?",
     content: (
       <p>
-        Tokens store design decisions — colours, spacing, typography — as named variables so every component stays in sync when values change.
+        Tokens store design decisions (colours, spacing, typography) as named variables so every component stays in sync when values change.
       </p>
     ),
   },

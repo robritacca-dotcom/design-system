@@ -33,7 +33,7 @@ export default function BreadcrumbPage() {
 
           <div className={`${styles.introSection} animate-in animate-delay-1`}>
             <p className={styles.subDisplay}>
-              Know where you are
+              The page&apos;s place in the hierarchy
             </p>
             <p className={styles.introBody}>
               A horizontal trail of links that shows the user&apos;s current location within the site hierarchy. Middle items collapse automatically when the path is long.

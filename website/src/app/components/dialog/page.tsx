@@ -46,8 +46,8 @@ export default function DialogPage() {
               A modal surface for focused tasks
             </p>
             <p className={styles.introBody}>
-              A general-purpose modal that holds arbitrary content — forms,
-              settings, previews — with an optional footer for actions. It
+              A general-purpose modal that holds arbitrary content (forms,
+              settings, previews) with an optional footer for actions. It
               traps focus, restores it on close, locks page scroll, and
               dismisses via ESC, backdrop click, or the close button. For
               simple confirm-or-cancel prompts, use AlertDialog instead.
@@ -71,7 +71,7 @@ export default function DialogPage() {
               description="Changes are saved when you press Save."
             >
               <p className={styles.dialogText}>
-                Any content can live in the dialog body — forms, text, lists,
+                Any content can live in the dialog body: forms, text, lists,
                 or other components from the system.
               </p>
             </Dialog>

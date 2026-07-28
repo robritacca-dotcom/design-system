@@ -64,7 +64,7 @@ export default function KbdPage() {
           <section className={styles.section}>
             <SectionTitle title="Chords" />
             <p className={styles.demoText}>
-              Compose one Kbd per key, separated by your own gap — the
+              Compose one Kbd per key, separated by your own gap. The
               component deliberately renders a single keycap.
             </p>
             <div className={styles.demoRow}>

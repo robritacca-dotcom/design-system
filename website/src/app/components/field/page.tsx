@@ -79,7 +79,7 @@ export default function FieldPage() {
               </Field>
             </div>
             <p className={styles.demoText}>
-              The asterisk is marked <code>aria-hidden</code> — it is a visual
+              The asterisk is marked <code>aria-hidden</code>: it is a visual
               cue only. The control carries the real <code>required</code>{" "}
               attribute, which is what assistive technology announces.
             </p>
@@ -119,7 +119,7 @@ export default function FieldPage() {
             </div>
             <p className={styles.demoText}>
               Disabled dims the label to the disabled input text colour. The
-              control is disabled independently — Field styles the scaffolding,
+              control is disabled independently: Field styles the scaffolding,
               it does not disable its children for you.
             </p>
           </section>

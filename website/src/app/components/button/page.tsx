@@ -146,7 +146,7 @@ export default function ButtonPage() {
             <p className={styles.introBody}>
               Set <code>loading</code> while an async action runs. The spinner
               takes the left icon slot in the variant&apos;s own colour, the
-              label stays put, and clicks are blocked — without the dimmed
+              label stays put, and clicks are blocked, without the dimmed
               look of <code>disabled</code>.
             </p>
             <div className={styles.buttonGrid}>

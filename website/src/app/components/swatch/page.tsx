@@ -49,7 +49,7 @@ export default function SwatchPage() {
             </p>
             <p className={styles.introBody}>
               A clickable colour tile for preset palettes and picker triggers. The colour is
-              plain data — pass any CSS colour as <code>value</code> — and the selected state
+              plain data (pass any CSS colour as <code>value</code>), and the selected state
               draws a theme-aware ring. Purely presentational, so it renders from Server
               Components; interactivity is whatever <code>onClick</code> you give it.
             </p>
