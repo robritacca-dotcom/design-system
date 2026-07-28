@@ -2,8 +2,8 @@ import { buildCaseStudyOgImage, ogImageSize, ogImageContentType } from "@/lib/og
 
 export const size = ogImageSize;
 export const contentType = ogImageContentType;
-export const alt = "CIBC FirstCaribbean — Banking Platform";
+export const alt = "CIBC FirstCaribbean: banking platform";
 
 export default function Image() {
-  return buildCaseStudyOgImage("CIBC FirstCaribbean — Banking Platform");
+  return buildCaseStudyOgImage("CIBC FirstCaribbean: banking platform");
 }

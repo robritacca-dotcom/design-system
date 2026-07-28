@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { buildCaseStudyJsonLd } from "@/lib/structuredData";
 
-const title = "Intuit Agent Chat Platform";
+const title = "Intuit Agent Chat platform";
 const description =
   "Case study: the official conversational AI platform for all of Intuit. Designed and built from 0 → 1 across web, iOS, and Android. Live in QuickBooks and TurboTax.";
 

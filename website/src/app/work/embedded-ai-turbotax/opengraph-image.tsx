@@ -2,8 +2,8 @@ import { buildCaseStudyOgImage, ogImageSize, ogImageContentType } from "@/lib/og
 
 export const size = ogImageSize;
 export const contentType = ogImageContentType;
-export const alt = "Designing Embedded AI Experiences Inside ChatGPT and Claude";
+export const alt = "Designing embedded AI experiences inside ChatGPT and Claude";
 
 export default function Image() {
-  return buildCaseStudyOgImage("Designing Embedded AI Experiences Inside ChatGPT and Claude");
+  return buildCaseStudyOgImage("Designing embedded AI experiences inside ChatGPT and Claude");
 }

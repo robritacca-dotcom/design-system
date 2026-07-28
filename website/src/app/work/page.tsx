@@ -14,15 +14,15 @@ const { sidebarLinks } = getSidebarLinks(workSidebarLinks, "/work");
 const caseStudies = [
   {
     href: "/work/embedded-ai-turbotax",
-    title: "TurboTax, Embedded in ChatGPT and Claude",
-    dek: "Leading design for a Webby-winning tax experience that runs natively inside two AI platforms — from December MVP to full launch in one tax season.",
+    title: "TurboTax, embedded in ChatGPT and Claude",
+    dek: "Leading design for a Webby-winning tax experience that runs natively inside two AI platforms: from December MVP to full launch in one tax season.",
     companyName: "TurboTax",
     companyLogo: "/logos/turbotax.svg",
     coverSrc: "/images/heroes/claude.png",
   },
   {
     href: "/work/intuit-agent-chat",
-    title: "Intuit Agent Chat Platform",
+    title: "Intuit Agent Chat platform",
     dek: "Designing and shipping Intuit's official conversational AI platform from 0 → 1",
     companyName: "Intuit",
     companyLogo: "/logos/Intuit.svg",
@@ -31,15 +31,15 @@ const caseStudies = [
   {
     href: "/work/augmenta-ai",
     title: "Augmenta Construction Platform",
-    dek: "Turning automation into usability — the redesign behind 42% faster outcomes",
+    dek: "Turning automation into usability: the redesign behind 42% faster outcomes",
     companyName: "Augmenta",
     companyLogo: "/logos/logo/Augmenta.png",
     coverSrc: "/images/heroes/augmenta.png",
   },
   {
     href: "/work/meta-career-profile",
-    title: "Career Profile Vision",
-    dek: "Turning the maze of tools Meta candidates face into one guided, personal journey through interviews, offers, and onboarding",
+    title: "Career Profile vision",
+    dek: "Turning the maze of tools Meta candidates face into one guided, personal path through interviews, offers, and onboarding",
     companyName: "Meta",
     companyLogo: "/logos/meta.svg",
     coverSrc: "/images/heroes/meta-vision.png",
@@ -54,7 +54,7 @@ const caseStudies = [
   },
   {
     href: "/work/robr0-ds",
-    title: "Building robr0 DS — a one-person design system, end to end",
+    title: "Building robr0 DS: a one-person design system, end to end",
     dek: "Why I built a personal design system and the AI-augmented pipeline behind this site",
     companyName: "Personal",
     companyLogo: "/logos/rr.svg",
@@ -62,7 +62,7 @@ const caseStudies = [
   },
   {
     href: "/work/cibc-firstcaribbean",
-    title: "CIBC FirstCaribbean — Banking Platform",
+    title: "CIBC FirstCaribbean: banking platform",
     dek: "Designing for multi-country, multi-currency international banking at Devbridge",
     companyName: "CIBC",
     companyLogo: "/logos/CIBC.svg",
@@ -91,7 +91,7 @@ export default function WorkPage() {
               Selected case studies on product, AI, and design systems
             </p>
             <p className={styles.introBody}>
-              Long-form write-ups on projects I&apos;ve led — what worked, what didn&apos;t, and what I changed my mind about. Each case study sits behind its own page with the full story, plus the tools, citations, and links that shaped it.
+              Long-form write-ups on projects I&apos;ve led: what worked, what didn&apos;t, and what I changed my mind about. Each case study sits behind its own page with the full story, plus the tools, citations, and links that shaped it.
             </p>
           </div>
 

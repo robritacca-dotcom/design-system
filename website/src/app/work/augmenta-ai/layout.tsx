@@ -3,7 +3,7 @@ import { buildCaseStudyJsonLd } from "@/lib/structuredData";
 
 const title = "Augmenta Construction Platform";
 const description =
-  "Case study: turning automation into usability — the redesign behind 42% faster outcomes for Augmenta's generative electrical raceway platform.";
+  "Case study: turning automation into usability, the redesign behind 42% faster outcomes for Augmenta's generative electrical raceway platform.";
 
 export const metadata: Metadata = {
   title,

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { buildCaseStudyJsonLd } from "@/lib/structuredData";
 
-const title = "Career Profile Vision — Meta";
+const title = "Career Profile vision at Meta";
 const description =
-  "Case study: how I redesigned the platform millions of Meta candidates use to interview, prep, and sign offers — turning a maze of disconnected tools into one guided, personal journey.";
+  "Case study: how I redesigned the platform millions of Meta candidates use to interview, prep, and sign offers, turning a maze of disconnected tools into one guided, personal path.";
 
 export const metadata: Metadata = {
   title,

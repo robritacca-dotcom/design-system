@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { buildCaseStudyJsonLd } from "@/lib/structuredData";
 
-const title = "Meta — Offer Creation Flow";
+const title = "Meta: Offer Creation Flow";
 const description =
   "Case study: improving the velocity between hire decision and offer extension at Meta. 9% faster overall offer velocity, 23.7% reduction in comp approval time, live since July 2022 to 8,000+ recruiters.";
 

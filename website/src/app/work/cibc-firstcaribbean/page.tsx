@@ -35,7 +35,7 @@ export default function CibcFirstCaribbeanCaseStudy() {
 
           {/* Subtitle / dek */}
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Banking Platform · iOS &amp; Android · 2017 · Devbridge
+            Banking platform · iOS &amp; Android · 2017 · Devbridge
           </p>
 
           {/* Hero video */}
@@ -43,7 +43,7 @@ export default function CibcFirstCaribbeanCaseStudy() {
             <div className={styles.videoFrame}>
               <iframe
                 src="https://www.youtube.com/embed/EVXBsqdIoMk"
-                title="CIBC FirstCaribbean Mobile Banking — case study video"
+                title="CIBC FirstCaribbean mobile banking case study video"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
                 className={styles.videoIframe}
@@ -66,17 +66,17 @@ export default function CibcFirstCaribbeanCaseStudy() {
                   </p>
 
                   <p>
-                    This project became a defining milestone in my career. It ultimately led to my promotion from Senior Product Designer to Product Design Manager — not because of visual polish alone, but because it taught me how to operate inside a highly complex, international product ecosystem.
+                    This project became a defining milestone in my career. It ultimately led to my promotion from Senior Product Designer to Product Design Manager, not because of visual polish alone, but because it taught me how to operate inside a highly complex international product environment.
                   </p>
 
                   <h2 id="the-context">The context</h2>
 
                   <p>
-                    CIBC had acquired FirstCaribbean, a banking organization operating across multiple Caribbean countries. Unlike traditional Canadian banking products, this was not a single-country banking experience.
+                    CIBC had acquired FirstCaribbean, a banking organisation operating across multiple Caribbean countries. Unlike traditional Canadian banking products, this was not a single-country banking experience.
                   </p>
 
                   <p>
-                    Customers often held accounts across different Caribbean nations, currencies, and financial systems simultaneously. The challenge was not simply designing a banking app. It was designing an experience that made international banking feel <strong>understandable and seamless</strong> for everyday users.
+                    Customers often held accounts across different Caribbean nations, currencies, and financial systems simultaneously. The challenge was not simply designing a banking app. It was designing an experience that made international banking feel <strong>understandable</strong> to everyday users.
                   </p>
 
                   <p>
@@ -100,7 +100,7 @@ export default function CibcFirstCaribbeanCaseStudy() {
                   <ul>
                     <li>One country</li>
                     <li>One primary currency</li>
-                    <li>Relatively standardized account relationships</li>
+                    <li>Relatively standardised account relationships</li>
                   </ul>
 
                   <p>
@@ -120,7 +120,7 @@ export default function CibcFirstCaribbeanCaseStudy() {
 
                   <ul>
                     <li>Country flags</li>
-                    <li>Localized account labeling</li>
+                    <li>Localised account labelling</li>
                     <li>Currency codes</li>
                     <li>Regional distinctions embedded directly into the UI</li>
                   </ul>

@@ -30,7 +30,7 @@ const peerFeedback = [
   },
   {
     quote:
-      "Did an amazing job leading design validation sessions with recruiters and the compensation team — presenting the new flow, gathering feedback, and quickly iterating.",
+      "Did an amazing job leading design validation sessions with recruiters and the compensation team: presenting the new flow, gathering feedback, and quickly iterating.",
     role: "PMM",
   },
   {
@@ -67,7 +67,7 @@ export default function MetaOffersCaseStudy() {
           <figure className={`${styles.cover} animate-in animate-delay-2`}>
             <Image
               src="/images/heroes/meta-offers.png"
-              alt="Offer Creation Flow — hero"
+              alt="Offer Creation Flow hero"
               width={1920}
               height={1080}
               priority
@@ -99,12 +99,12 @@ export default function MetaOffersCaseStudy() {
                   <p>Two types of offers, very different velocity profiles:</p>
 
                   <ul>
-                    <li><strong>Standard offers</strong> — ~40% of accepted offers. No comp approval required. Can extend in <strong>one business day</strong>. Lower overall comp ceiling.</li>
-                    <li><strong>Above-band / negotiation offers</strong> — ~60% of accepted offers. Candidate must provide evidence. Comp approval required. Extended <strong>5–13× slower</strong>. Higher overall comp ceiling.</li>
+                    <li><strong>Standard offers</strong>: ~40% of accepted offers. No comp approval required. Can extend in <strong>one business day</strong>. Lower overall comp ceiling.</li>
+                    <li><strong>Above-band / negotiation offers</strong>: ~60% of accepted offers. Candidate must provide evidence. Comp approval required. Extended <strong>5–13× slower</strong>. Higher overall comp ceiling.</li>
                   </ul>
 
                   <p>
-                    Slow offer-extension velocity correlated with declining acceptance rates, weaker candidate sentiment, and worse recruiter performance — all of it amplified by massive hiring volume.
+                    Slow offer-extension velocity correlated with declining acceptance rates, weaker candidate sentiment, and worse recruiter performance, all of it amplified by massive hiring volume.
                   </p>
 
                   <p><strong>Six reasons it was slow:</strong></p>
@@ -113,13 +113,13 @@ export default function MetaOffersCaseStudy() {
                     <li>Compensation is genuinely complex</li>
                     <li>Recruiters weren&apos;t great at collecting comp data</li>
                     <li>Candidates withheld important info</li>
-                    <li>Recruiter tooling was poor — missing fields, unstructured input</li>
+                    <li>Recruiter tooling was poor: missing fields, unstructured input</li>
                     <li>Compliance guidelines were unclear</li>
                     <li>For comp analysts: proposals lacked detailed evidence and unstructured prose was hard to parse</li>
                   </ul>
 
                   <p>
-                    To make the parsing problem concrete: two recruiters writing about the same candidate would produce wildly different free-text notes. A comp analyst then had to reconstruct structured fields — base salary, target bonus %, unvested equity, forfeited cash — from prose. Multiplied across thousands of offers, this produced <strong>repeating rejection loops</strong>: comp asks for more info, recruiter resubmits, comp asks again.
+                    To make the parsing problem concrete: two recruiters writing about the same candidate would produce wildly different free-text notes. A comp analyst then had to reconstruct structured fields (base salary, target bonus %, unvested equity, forfeited cash) from prose. Multiplied across thousands of offers, this produced <strong>repeating rejection loops</strong>: comp asks for more info, recruiter resubmits, comp asks again.
                   </p>
 
                   <h2 id="approach">Approach</h2>
@@ -143,18 +143,18 @@ export default function MetaOffersCaseStudy() {
                   <figure className={styles.figure}>
                     <Image
                       src="/images/meta-offers/comp-capture-modal.png"
-                      alt="Compensation capture — one structured modal per data type, with inline validation"
+                      alt="Compensation capture: one structured modal per data type, with inline validation"
                       width={1920}
                       height={1080}
                       className={styles.figureImage}
                     />
                     <figcaption className={styles.figureCaption}>
-                      Compensation capture — one structured modal per data type, with inline validation.
+                      Compensation capture: one structured modal per data type, with inline validation.
                     </figcaption>
                   </figure>
 
                   <p>
-                    <strong>Required, validated competing data.</strong> Where the old flow accepted free-form prose, the new flow enforced structured input with validation. A blank field could mean &ldquo;0%&rdquo;, &ldquo;didn&apos;t disclose&rdquo;, or &ldquo;not given by company&rdquo; — each ambiguity used to trigger a comp follow-up. With validation, that whole category of ambiguity disappeared.
+                    <strong>Required, validated competing data.</strong> Where the old flow accepted free-form prose, the new flow enforced structured input with validation. A blank field could mean &ldquo;0%&rdquo;, &ldquo;didn&apos;t disclose&rdquo;, or &ldquo;not given by company&rdquo;, and each ambiguity used to trigger a comp follow-up. With validation, that whole category of ambiguity disappeared.
                   </p>
 
                   <figure className={styles.figure}>
@@ -175,7 +175,7 @@ export default function MetaOffersCaseStudy() {
                   </p>
 
                   <p>
-                    <strong>Validation against the proposal.</strong> Competing data was now checked against the compensation proposal — ensuring proposals aligned with submitted evidence and removing whole classes of rejection loops.
+                    <strong>Validation against the proposal.</strong> Competing data was now checked against the compensation proposal, so proposals aligned with submitted evidence and whole classes of rejection loops disappeared.
                   </p>
 
                   <p>
@@ -185,31 +185,31 @@ export default function MetaOffersCaseStudy() {
                   <figure className={styles.figure}>
                     <Image
                       src="/images/meta-offers/design-matrix.png"
-                      alt="End-to-end design matrix — every comp data type, every scenario"
+                      alt="End-to-end design matrix: every comp data type, every scenario"
                       width={1920}
                       height={1080}
                       className={styles.figureImage}
                     />
                     <figcaption className={styles.figureCaption}>
-                      End-to-end design matrix — every comp data type, every scenario.
+                      End-to-end design matrix: every comp data type, every scenario.
                     </figcaption>
                   </figure>
 
                   <figure className={styles.figure}>
                     <Image
                       src="/images/meta-offers/comp-definitions.png"
-                      alt="Structured compensation definitions — every field has a type, allowed values, and an in-UI definition"
+                      alt="Structured compensation definitions: every field has a type, allowed values, and an in-UI definition"
                       width={1920}
                       height={1080}
                       className={styles.figureImage}
                     />
                     <figcaption className={styles.figureCaption}>
-                      Structured compensation definitions — every field has a type, allowed values, and an in-UI definition.
+                      Structured compensation definitions: every field has a type, allowed values, and an in-UI definition.
                     </figcaption>
                   </figure>
 
                   <p>
-                    <strong>Pre-launch rigor.</strong> Ran dogfooding with 30+ recruiters using real offers; led Design QA flagging critical UX/UI issues; collaborated with content design and saw through compliance reviews.
+                    <strong>Pre-launch rigour.</strong> Ran dogfooding with 30+ recruiters using real offers; led Design QA that flagged critical UX/UI issues; collaborated with content design and saw through compliance reviews.
                   </p>
 
                   <h2 id="impact-launched-july-2022-to-8k-users">Impact (launched July 2022 to 8k+ users)</h2>
@@ -221,13 +221,13 @@ export default function MetaOffersCaseStudy() {
                     <li><strong>12.2%</strong> reduction in overall compensation approval requests</li>
                   </ul>
 
-                  <h2 id="selected-peer-feedback-anonymized">Selected peer feedback (anonymized)</h2>
+                  <h2 id="selected-peer-feedback-anonymized">Selected peer feedback (anonymised)</h2>
 
                   <div className={styles.peerQuotes}>
                     {peerFeedback.map((q, i) => (
                       <blockquote key={i} className={styles.peerQuote}>
                         <p className={styles.peerQuoteText}>&ldquo;{q.quote}&rdquo;</p>
-                        <footer className={styles.peerQuoteFooter}>— {q.role}</footer>
+                        <footer className={styles.peerQuoteFooter}>{q.role}</footer>
                       </blockquote>
                     ))}
                   </div>
@@ -252,7 +252,7 @@ export default function MetaOffersCaseStudy() {
                   </div>
                   <div className={styles.detailItem}>
                     <span className={styles.detailLabel}>Role</span>
-                    <span className={styles.detailValue}>Product Designer · Recruiting Products — Offers team</span>
+                    <span className={styles.detailValue}>Product Designer · Recruiting Products · Offers team</span>
                   </div>
                   <div className={styles.detailItem}>
                     <span className={styles.detailLabel}>Location</span>

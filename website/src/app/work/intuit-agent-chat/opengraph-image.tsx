@@ -2,8 +2,8 @@ import { buildCaseStudyOgImage, ogImageSize, ogImageContentType } from "@/lib/og
 
 export const size = ogImageSize;
 export const contentType = ogImageContentType;
-export const alt = "Intuit Agent Chat Platform";
+export const alt = "Intuit Agent Chat platform";
 
 export default function Image() {
-  return buildCaseStudyOgImage("Intuit Agent Chat Platform");
+  return buildCaseStudyOgImage("Intuit Agent Chat platform");
 }

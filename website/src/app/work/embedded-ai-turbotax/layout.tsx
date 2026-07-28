@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { buildCaseStudyJsonLd } from "@/lib/structuredData";
 
-const title = "Designing Embedded AI Experiences Inside ChatGPT and Claude";
+const title = "Designing embedded AI experiences inside ChatGPT and Claude";
 const description =
   "Case study: leading design for TurboTax's embedded AI experiences during one of the first large-scale launches inside major AI platforms.";
 

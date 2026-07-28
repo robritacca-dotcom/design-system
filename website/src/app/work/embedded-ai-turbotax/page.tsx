@@ -46,7 +46,7 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
           {/* Page header */}
           <div className={`${styles.pageHeader} animate-in`}>
             <h1 className={styles.pageTitle}>
-              Designing Embedded AI Experiences Inside ChatGPT and Claude
+              Designing embedded AI experiences inside ChatGPT and Claude
             </h1>
           </div>
 
@@ -60,7 +60,7 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
           <div className={`${styles.cover} ${styles.videoWrapper} animate-in animate-delay-2`}>
             <iframe
               src="https://www.youtube.com/embed/V0K3CDb-8QM"
-              title="Designing Embedded AI Experiences Inside ChatGPT and Claude"
+              title="Designing embedded AI experiences inside ChatGPT and Claude"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
             />
@@ -87,24 +87,24 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                   <p>Users could:</p>
                   <ul>
                     <li>Connect accounts</li>
-                    <li>Go through personalized conversational tax interviews</li>
+                    <li>Go through personalised conversational tax interviews</li>
                     <li>Upload and extract tax documents</li>
                     <li>Generate dynamic filing checklists</li>
-                    <li>Synchronize data directly back into the core TurboTax experience</li>
+                    <li>Synchronise data directly back into the core TurboTax experience</li>
                   </ul>
 
                   <p>
-                    It was one of the first times TurboTax had operated natively inside major consumer AI ecosystems at this level of depth, and the work ultimately went on to win a Webby Award. More importantly, though, it gave our team an unusually early look into what designing embedded AI applications inside systems like ChatGPT and Claude actually feels like in practice.
+                    It was one of the first times TurboTax had operated natively inside major consumer AI platforms at this level of depth, and the work ultimately went on to win a Webby Award. More importantly, though, it gave our team an unusually early look into what designing embedded AI applications inside systems like ChatGPT and Claude actually feels like in practice.
                   </p>
 
                   <h2 id="one-product-many-environments">One product, many environments</h2>
 
                   <p>
-                    One of the most interesting aspects of the work was that we were not designing a traditional standalone product. We were designing an embedded application that had to exist coherently across multiple AI ecosystems simultaneously. Using the UI kits and platform guidance provided by OpenAI and Anthropic, we built what was effectively a centralized MCP-powered application layer for TurboTax. The core experience remained structurally similar regardless of where it launched, but through tokens, platform-specific theming, and custom component layers, the application could dynamically adapt itself to feel native inside ChatGPT or native inside Claude while still operating from the same underlying system architecture.
+                    One of the most interesting aspects of the work was that we were not designing a traditional standalone product. We were designing an embedded application that had to exist coherently across multiple AI platforms simultaneously. Using the UI kits and platform guidance provided by OpenAI and Anthropic, we built what was effectively a centralised MCP-powered application layer for TurboTax. The core experience remained structurally similar regardless of where it launched, but through tokens, platform-specific theming, and custom component layers, the application could dynamically adapt itself to feel native inside ChatGPT or native inside Claude while still operating from the same underlying system architecture.
                   </p>
 
                   <p>
-                    In practice, it was one product with multiple deployments, multiple orchestration environments, and multiple interaction models depending on where the user entered the experience. The application also had to support bidirectional data synchronization between systems. Users were authorizing secure connections between TurboTax and the AI platforms themselves, allowing conversational workflows to persist information, extract documents, generate preparation states, and synchronize that information back into the primary TurboTax product.
+                    In practice, it was one product with multiple deployments, multiple orchestration environments, and multiple interaction models depending on where the user entered the experience. The application also had to support bidirectional data synchronisation between systems. Users were authorising secure connections between TurboTax and the AI platforms themselves, allowing conversational workflows to persist information, extract documents, generate preparation states, and synchronise that information back into the primary TurboTax product.
                   </p>
 
                   <figure
@@ -119,13 +119,13 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                       className={styles.articleImage}
                       style={{ width: "100%", height: "auto" }}
                     />
-                    <figcaption className={styles.articleCaption}>The TurboTax connector in the ChatGPT app directory — users could connect directly before entering the embedded experience.</figcaption>
+                    <figcaption className={styles.articleCaption}>The TurboTax connector in the ChatGPT app directory: users could connect directly before entering the embedded experience.</figcaption>
                   </figure>
 
                   <h2 id="building-at-the-speed-of-the-platforms">Building at the speed of the platforms</h2>
 
                   <p>
-                    The pace of the work was unlike anything I had shipped before. A first release was in market within weeks of kicking off, followed by two major expansions before the end of tax season. Moving that fast required rethinking how design and engineering operated together — and it meant the team had to adopt the same kind of agentic workflow we were building products on top of.
+                    The pace of the work was unlike anything I had shipped before. A first release was in market within weeks of kicking off, followed by two major expansions before the end of tax season. Moving that fast required rethinking how design and engineering operated together, and it meant the team had to adopt the same kind of agentic workflow we were building products on top of.
                   </p>
 
                   <p>
@@ -144,45 +144,45 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                       className={styles.articleImage}
                       style={{ width: "100%", height: "auto" }}
                     />
-                    <figcaption className={styles.articleCaption}>The loop, summarized — Gather, Prompt / iterate, Build / publish, Share / align. The same agentic model we were designing for became the way we worked.</figcaption>
+                    <figcaption className={styles.articleCaption}>The loop, summarised: Gather, Prompt / iterate, Build / publish, Share / align. The same agentic model we were designing for became the way we worked.</figcaption>
                   </figure>
 
                   <p>
-                    Figma became more than a design tool — it became the MCP entry point. By connecting the component library directly via Figma MCP, live components and tokens became queryable context. No exporting, no redlining, no translation layer between what was designed and what could be generated. The library was both the source material and the generation scaffold.
+                    Figma became more than a design tool: it became the MCP entry point. By connecting the component library directly via Figma MCP, live components and tokens became queryable context. No exporting, no redlining, no translation layer between what was designed and what could be generated. The library was both the source material and the generation scaffold.
                   </p>
 
                   <p>
-                    I also contributed front-end components directly to the build. Rather than handing off specs and waiting, I worked alongside the engineering team in code — writing and shipping real widgets for the Claude MCP app, not concepts for someone else to implement. The line between design and engineering stopped being meaningful. What mattered was that the right artifact shipped.
+                    I also contributed front-end components directly to the build. Rather than handing off specs and waiting, I worked alongside the engineering team in code, writing and shipping real widgets for the Claude MCP app, not concepts for someone else to implement. The line between design and engineering stopped being meaningful. What mattered was that the right artifact shipped.
                   </p>
 
                   <figure
                     className={styles.articleFigure}
-                    onClick={() => setLightbox({ src: "/images/embedded-ai/process-figma-mcp.png", alt: "TurboTax patterns connected to Claude via Figma MCP — the design library as source material and generation scaffold" })}
+                    onClick={() => setLightbox({ src: "/images/embedded-ai/process-figma-mcp.png", alt: "TurboTax patterns connected to Claude via Figma MCP: the design library as source material and generation scaffold" })}
                   >
                     <Image
                       src="/images/embedded-ai/process-figma-mcp.png"
-                      alt="TurboTax patterns connected to Claude via Figma MCP — the design library as source material and generation scaffold"
+                      alt="TurboTax patterns connected to Claude via Figma MCP: the design library as source material and generation scaffold"
                       width={1280}
                       height={720}
                       className={styles.articleImage}
                       style={{ width: "100%", height: "auto" }}
                     />
-                    <figcaption className={styles.articleCaption}>TT Patterns → Claude via Figma MCP. Live components and tokens as queryable context — no exporting needed. The library is both the source material and the MCP entry point for generation.</figcaption>
+                    <figcaption className={styles.articleCaption}>TT Patterns → Claude via Figma MCP. Live components and tokens as queryable context, no exporting needed. The library is both the source material and the MCP entry point for generation.</figcaption>
                   </figure>
 
                   <p>
-                    One structural decision that made this possible was building a single Figma component that combined both the ChatGPT and Claude platform patterns simultaneously. Rather than maintaining two separate design files that would inevitably drift apart, I unified the UI kit into one component set with platform-aware theming baked in — so any change propagated to both deployments at once, and both platforms could be designed for and reviewed side by side.
+                    One structural decision that made this possible was building a single Figma component that combined both the ChatGPT and Claude platform patterns simultaneously. Rather than maintaining two separate design files that would inevitably drift apart, I unified the UI kit into one component set with platform-aware theming baked in, so any change propagated to both deployments at once, and both platforms could be designed for and reviewed side by side.
                   </p>
 
                   <figure className={styles.articleFigure}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src="/images/NVIDIA_Overlay_0lJCFbk46w.gif"
-                      alt="Figma component combining ChatGPT and Claude platform patterns — a single component set that adapts to both platforms simultaneously"
+                      alt="Figma component combining ChatGPT and Claude platform patterns: a single component set that adapts to both platforms simultaneously"
                       className={styles.articleImage}
                       style={{ width: "100%", height: "auto" }}
                     />
-                    <figcaption className={styles.articleCaption}>A single Figma component set covering both ChatGPT and Claude patterns — one change, both platforms updated at once.</figcaption>
+                    <figcaption className={styles.articleCaption}>A single Figma component set covering both ChatGPT and Claude patterns: one change, both platforms updated at once.</figcaption>
                   </figure>
 
                   <h2 id="when-the-platform-owns-the-orchestrator">When the platform owns the orchestrator</h2>
@@ -192,19 +192,19 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                   </p>
 
                   <p>
-                    Traditional software assumes a relatively controlled environment. Product teams usually own the interface, the navigation model, the interaction sequencing, and most of the surrounding system behavior. Inside AI ecosystems, many of those assumptions no longer hold. The conversation itself becomes the navigation layer. The AI platform partially controls discovery, invocation, memory, rendering behavior, and context retention. Your application stops behaving like a standalone destination and instead becomes one capability among many inside a much larger intelligence environment.
+                    Traditional software assumes a relatively controlled environment. Product teams usually own the interface, the navigation model, the interaction sequencing, and most of the surrounding system behaviour. Inside AI platforms, many of those assumptions no longer hold. The conversation itself becomes the navigation layer. The AI platform partially controls discovery, invocation, memory, rendering behaviour, and context retention. Your application stops behaving like a standalone destination and instead becomes one capability among many inside a much larger intelligence environment.
                   </p>
 
                   <p>
-                    That fundamentally changes the nature of the design problem. Users fluidly move between the native model, embedded applications, uploaded documents, conversational context, generated outputs, and external systems without necessarily perceiving hard boundaries between them. As a result, the work starts looking less like traditional screen design and more like designing orchestration systems. You are shaping continuity, conversational state transitions, interoperability, dynamic interfaces, and trust boundaries that exist across ecosystems you do not fully control.
+                    That fundamentally changes the nature of the design problem. Users fluidly move between the native model, embedded applications, uploaded documents, conversational context, generated outputs, and external systems without necessarily perceiving hard boundaries between them. As a result, the work starts looking less like traditional screen design and more like designing orchestration systems. You are shaping continuity, conversational state transitions, interoperability, dynamic interfaces, and trust boundaries that exist across platforms you do not fully control.
                   </p>
 
                   <p>
-                    One of the largest conceptual shifts for me personally was realizing how much the orchestrator itself becomes part of the user experience. In traditional software, if you carefully design a workflow, users generally experience that workflow consistently. Inside AI ecosystems, orchestration itself becomes probabilistic. The same user intent may surface differently depending on conversational history, memory state, model interpretation, invocation timing, or competing tools inside the ecosystem. Product teams are no longer designing fully deterministic flows. They are designing adaptive systems that cooperate with another intelligence layer operating above them.
+                    One of the largest conceptual shifts for me personally was realising how much the orchestrator itself becomes part of the user experience. In traditional software, if you carefully design a workflow, users generally experience that workflow consistently. Inside AI platforms, orchestration itself becomes probabilistic. The same user intent may surface differently depending on conversational history, memory state, model interpretation, invocation timing, or competing tools on the platform. Product teams are no longer designing fully deterministic flows. They are designing adaptive systems that cooperate with another intelligence layer operating above them.
                   </p>
 
                   <blockquote>
-                    Designing inside these ecosystems increasingly feels less like designing software and more like designing protocols between multiple layers of intelligence.
+                    Designing inside these platforms increasingly feels less like designing software and more like designing protocols between multiple layers of intelligence.
                   </blockquote>
 
                   <p>
@@ -218,7 +218,7 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                   </p>
                   <ul>
                     <li>
-                      <strong>In ChatGPT</strong>, product teams do not fully control the canvas behavior if a user opens it. If there is critical information you always want visible up front, there may not be a deterministic way to guarantee its visibility — the platform ultimately controls how the canvas is rendered and expanded.
+                      <strong>In ChatGPT</strong>, product teams do not fully control the canvas behaviour if a user opens it. If there is critical information you always want visible up front, there may not be a deterministic way to guarantee its visibility: the platform ultimately controls how the canvas is rendered and expanded.
                     </li>
                     <li>
                       <strong>In Claude</strong>, the now-familiar &ldquo;human in the loop&rdquo; approval cards are similarly orchestrator-controlled. As a product team, you do not fully own how or when those interaction patterns appear.
@@ -226,7 +226,7 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                   </ul>
 
                   <p>
-                    There are moments where you cannot deterministically control how users answer certain questions or progress through sensitive workflows, even when those workflows are deeply connected to your application logic. Those constraints fundamentally change how you think about product design. A large part of the work becomes designing around platform restrictions, orchestration constraints, and interaction systems you do not entirely own. Instead of fully controlling experiences, you are often designing resilient systems that can adapt to different orchestration behaviors while still maintaining continuity and trust.
+                    There are moments where you cannot deterministically control how users answer certain questions or progress through sensitive workflows, even when those workflows are deeply connected to your application logic. Those constraints fundamentally change how you think about product design. A large part of the work becomes designing around platform restrictions, orchestration constraints, and interaction systems you do not entirely own. Instead of fully controlling experiences, you are often designing resilient systems that can adapt to different orchestration behaviours while still maintaining continuity and trust.
                   </p>
 
                   <figure
@@ -241,13 +241,13 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                       className={styles.articleImage}
                       style={{ width: "100%", height: "auto" }}
                     />
-                    <figcaption className={styles.articleCaption}>Document upload embedded inside Claude — drag-and-drop, document recognition, and live progress within a single artifact the platform controls.</figcaption>
+                    <figcaption className={styles.articleCaption}>Document upload embedded inside Claude: drag-and-drop, document recognition, and live progress within a single artifact the platform controls.</figcaption>
                   </figure>
 
                   <h2 id="conversation-didnt-replace-interfaces">Conversation didn&apos;t replace interfaces</h2>
 
                   <p>
-                    One of the biggest assumptions I changed my mind about during this work was the idea that conversational interfaces alone would simply replace traditional interfaces outright. Conversation is incredibly effective for onboarding, ambiguity reduction, contextual intake, organization, and guidance. Users naturally prefer conversational interaction when they are uncertain, unfamiliar with a workflow, or trying to navigate complexity. But once workflows become denser, more stateful, more document-heavy, or more verification-oriented, users begin demanding structure again.
+                    One of the biggest assumptions I changed my mind about during this work was the idea that conversational interfaces alone would simply replace traditional interfaces outright. Conversation is incredibly effective for onboarding, ambiguity reduction, contextual intake, organisation, and guidance. Users naturally prefer conversational interaction when they are uncertain, unfamiliar with a workflow, or trying to navigate complexity. But once workflows become denser, more stateful, more document-heavy, or more verification-oriented, users begin demanding structure again.
                   </p>
 
                   <p>
@@ -274,21 +274,21 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                       className={styles.articleImage}
                       style={{ width: "100%", height: "auto" }}
                     />
-                    <figcaption className={styles.articleCaption}>Dynamic filing checklist — empty state alongside a populated state. Users wanted structured verification, not just conversation.</figcaption>
+                    <figcaption className={styles.articleCaption}>Dynamic filing checklist: empty state alongside a populated state. Users wanted structured verification, not just conversation.</figcaption>
                   </figure>
 
                   <p>
-                    One of the strongest patterns we observed was that users loved conversational intake but still wanted highly structured verification before committing actions — especially in workflows involving money, legal implications, identity, or irreversible outcomes. The future likely is not &ldquo;everything becomes chat.&rdquo; It feels much more likely that conversational orchestration will coexist with interfaces that dynamically materialize around the conversation itself depending on context and intent.
+                    One of the strongest patterns we observed was that users loved conversational intake but still wanted highly structured verification before committing actions, especially in workflows involving money, legal implications, identity, or irreversible outcomes. The future likely is not &ldquo;everything becomes chat.&rdquo; It feels much more likely that conversational orchestration will coexist with interfaces that dynamically materialise around the conversation itself depending on context and intent.
                   </p>
 
                   <h2 id="continuity-is-the-new-expectation">Continuity is the new expectation</h2>
 
                   <p>
-                    Another thing that became immediately obvious during research was how quickly embedded AI systems change user expectations around continuity. As soon as the system begins remembering context, organizing information, understanding intent, and reducing friction, users start expecting that continuity everywhere. The moment the system loses context or breaks continuity, the experience suddenly feels fragmented — not necessarily because the technology is broken, but because the user&apos;s mental model has already shifted from &ldquo;I&apos;m using tools&rdquo; to &ldquo;I&apos;m operating inside an intelligent environment.&rdquo;
+                    Another thing that became immediately obvious during research was how quickly embedded AI systems change user expectations around continuity. As soon as the system begins remembering context, organizing information, understanding intent, and reducing friction, users start expecting that continuity everywhere. The moment the system loses context or breaks continuity, the experience suddenly feels fragmented: not necessarily because the technology is broken, but because the user&apos;s mental model has already shifted from &ldquo;I&apos;m using tools&rdquo; to &ldquo;I&apos;m operating inside an intelligent environment.&rdquo;
                   </p>
 
                   <p>
-                    That transition happens remarkably fast. One of the biggest UX challenges we encountered was not whether users liked the AI interactions themselves. Most did. The challenge was what happened when continuity stopped. Users expected the intelligence layer to persist across onboarding, uploads, interviews, transitions, filing workflows, and product boundaries. From a technical perspective, those boundaries are understandable. From a user perspective, they increasingly feel artificial because the intelligence layer creates an expectation of seamlessness that traditional systems were never designed to support.
+                    That transition happens remarkably fast. One of the biggest UX challenges we encountered was not whether users liked the AI interactions themselves. Most did. The challenge was what happened when continuity stopped. Users expected the intelligence layer to persist across onboarding, uploads, interviews, transitions, filing workflows, and product boundaries. From a technical perspective, those boundaries are understandable. From a user perspective, they increasingly feel artificial because the intelligence layer sets an expectation of unbroken continuity that traditional systems were never designed to support.
                   </p>
 
                   <h2 id="trust-in-probabilistic-systems">Trust in probabilistic systems</h2>
@@ -333,26 +333,26 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                   <h2 id="a-new-design-category">A new design category</h2>
 
                   <p>
-                    After spending the last year working in this space, I genuinely believe embedded AI application design is becoming its own category. It sits somewhere between systems design, conversational UX, orchestration design, platform design, and traditional product design, but it is not fully any one of them. The work increasingly involves orchestrating intelligence, managing probabilistic systems, designing continuity, balancing automation with oversight, shaping trust boundaries, and coordinating dynamic interfaces across ecosystems you do not fully control.
+                    After spending the last year working in this space, I genuinely believe embedded AI application design is becoming its own category. It sits somewhere between systems design, conversational UX, orchestration design, platform design, and traditional product design, but it is not fully any one of them. The work increasingly involves orchestrating intelligence, managing probabilistic systems, designing continuity, balancing automation with oversight, shaping trust boundaries, and coordinating dynamic interfaces across platforms you do not fully control.
                   </p>
 
                   <figure
                     className={styles.articleFigure}
-                    onClick={() => setLightbox({ src: "/images/embedded-ai/Delivery.png", alt: "Full design delivery — component specifications and screen flows across both AI platforms" })}
+                    onClick={() => setLightbox({ src: "/images/embedded-ai/Delivery.png", alt: "Full design delivery: component specifications and screen flows across both AI platforms" })}
                   >
                     <Image
                       src="/images/embedded-ai/Delivery.png"
-                      alt="Full design delivery — component specifications and screen flows across both AI platforms"
+                      alt="Full design delivery: component specifications and screen flows across both AI platforms"
                       width={700}
                       height={264}
                       className={styles.articleImage}
                       style={{ width: "100%", height: "auto" }}
                     />
-                    <figcaption className={styles.articleCaption}>Design delivery overview — component specifications and screen flows across ChatGPT and Claude. One system, two platform deployments.</figcaption>
+                    <figcaption className={styles.articleCaption}>Design delivery overview: component specifications and screen flows across ChatGPT and Claude. One system, two platform deployments.</figcaption>
                   </figure>
 
                   <p>
-                    What makes this moment particularly exciting is that very few established patterns exist yet. Most teams are still discovering these interaction models in real time. It feels far less like optimizing mature UX conventions and much more like helping define an entirely new computing paradigm while it is still forming.
+                    What makes this moment particularly exciting is that very few established patterns exist yet. Most teams are still discovering these interaction models in real time. It feels far less like optimising mature UX conventions and much more like helping define an entirely new model of computing while it is still forming.
                   </p>
                 </article>
               </section>
@@ -428,7 +428,7 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                         <span>Read on Substack</span>
                         <span className="material-symbols-rounded" aria-hidden="true">open_in_new</span>
                       </div>
-                      <span className={styles.linkSub}>Original post — same essay, longer form</span>
+                      <span className={styles.linkSub}>Original post: same essay, longer form</span>
                     </div>
                   </a>
 
@@ -447,8 +447,8 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                         <span>Webby Awards 2026</span>
                         <span className="material-symbols-rounded" aria-hidden="true">open_in_new</span>
                       </div>
-                      <span className={styles.linkSub}>Winner — AI · Financial Services</span>
-                      <span className={styles.linkSub}>People&apos;s Voice Winner — AI · Financial Services</span>
+                      <span className={styles.linkSub}>Winner: AI · Financial Services</span>
+                      <span className={styles.linkSub}>People&apos;s Voice Winner: AI · Financial Services</span>
                     </div>
                   </a>
 
