@@ -66,16 +66,16 @@ export const dsMegaItems: MegaItem[] = [
     icon: "widgets",
   },
   {
-    href: "/customization",
-    label: "Customization",
-    description: "Install @robr0/design-system, swap the font, re-theme it live",
+    href: "/playground",
+    label: "Playground",
+    description: "Re-theme the whole system live and copy the CSS it generates",
     icon: "tune",
   },
 ];
 
 /** URL prefixes that should mark the "Design system" mega trigger as active */
 export const dsActiveMatchers = [
-  (path: string) => path === "/docs",
+  (path: string) => path.startsWith("/docs"),
   (path: string) => path === "/overview", // the DS overview; /about (personal bio) is NOT under Design system
   (path: string) => path.startsWith("/blueprints"),
   (path: string) => path.startsWith("/skills"),
@@ -83,7 +83,7 @@ export const dsActiveMatchers = [
   (path: string) => path.startsWith("/project-journal"),
   (path: string) => path.startsWith("/foundations"),
   (path: string) => path.startsWith("/components"),
-  (path: string) => path.startsWith("/customization"),
+  (path: string) => path === "/playground",
 ];
 
 export function isDesignSystemPath(pathname: string): boolean {
@@ -134,6 +134,7 @@ export const foundationsSidebarLinks: NavLink[] = [
 export const docsSidebarLinks: NavLink[] = [
   { href: "/docs", label: "Contents" },
   { href: "/overview", label: "Overview" },
+  { href: "/docs/get-started", label: "Get started" },
   { href: "/blueprints/claude", label: "Claude MD" },
   { href: "/blueprints/design", label: "Design MD" },
   { href: "/skills", label: "Skills" },
@@ -153,12 +154,6 @@ export function buildWritingSidebarLinks(
     ...articles.map((a) => ({ href: `/writing/${a.slug}`, label: a.title })),
   ];
 }
-
-export const customizationSidebarLinks: NavLink[] = [
-  { href: "/customization", label: "Contents" },
-  { href: "/customization/playground", label: "Playground" },
-  { href: "/customization/get-started", label: "Get started" },
-];
 
 export const workSidebarLinks: NavLink[] = [
   { href: "/work", label: "Contents" },
@@ -195,7 +190,6 @@ export function getSidebarLinks(links: NavLink[], activeHref: string) {
 const allSidebarLinks: NavLink[] = [
   ...componentsSidebarLinks,
   ...foundationsSidebarLinks,
-  ...customizationSidebarLinks,
   ...docsSidebarLinks,
   ...workSidebarLinks,
 ];
@@ -288,7 +282,6 @@ const breadcrumbSections: SectionConfig[] = [
   // Other DS sections
   { base: "/foundations", label: "Foundations", parent: "Design system", sidebar: foundationsSidebarLinks },
   { base: "/components", label: "Components", parent: "Design system", sidebar: componentsSidebarLinks },
-  { base: "/customization", label: "Customization", parent: "Design system", sidebar: customizationSidebarLinks },
   { base: "/work", label: "Work", parent: null, sidebar: workSidebarLinks },
   // Writing — article sub-labels resolve from the slug (feed is dynamic)
   { base: "/writing", label: "Writing", parent: null, sidebar: null },
@@ -308,6 +301,12 @@ export function getBreadcrumbs(pathname: string): BreadcrumbItem[] {
   // Top-level pages with no breadcrumb
   if (path === "/" || path === "/contact" || path === "/about") {
     return [];
+  }
+
+  // Playground — a standalone page under the Design system umbrella (it lives
+  // in no sidebar array, so the generic section loop can't resolve it).
+  if (path === "/playground") {
+    return [{ label: "Design system" }, { label: "Playground" }];
   }
 
   // Docs cluster — the landing lives at /docs but sub-pages keep their

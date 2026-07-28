@@ -112,7 +112,7 @@ const PIPELINE: TimelineCompany[] = [
           <>
             A manual release workflow ships the library to npm as{" "}
             <code>@robr0/design-system</code> — see{" "}
-            <Link href="/customization/get-started" className={styles.inlineLink}>how to install and customize it</Link>.
+            <Link href="/docs/get-started" className={styles.inlineLink}>how to install and customize it</Link>.
           </>
         ),
         bullets: [
@@ -127,7 +127,7 @@ const PIPELINE: TimelineCompany[] = [
           "Every push and PR runs an automated quality gate before anything is trusted.",
         bullets: [
           "Lints the codebase and builds the library, Storybook, and the website on every change",
-          "Renders every Storybook story in headless Chrome and runs an axe accessibility audit on each — a render error or a WCAG AA violation fails the build",
+          "Renders every Storybook story in headless Chrome and runs an axe accessibility audit on each — a render error or a WCAG AA violation fails the build (the contrast criteria are deliberately deferred while the action colour is redesigned)",
           "Chromatic visual regression, run on demand: every story snapshotted in light and dark against an accepted baseline, so a token change that shifts pixels anywhere in the system is caught before it ships",
           "Drift guard fails the build if generated docs (component counts, skills, blueprints) go stale",
           "The same checklist runs locally as a single command, so local and CI can never disagree",
@@ -200,8 +200,9 @@ export default function AboutDsPage() {
               robr0 DS is the system I built — by myself — to make every page you see here. The foundation was designed in{" "}
               <a href="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26?node-id=246-5864" target="_blank" rel="noopener noreferrer" className={styles.inlineLink}>Figma</a>. The system itself lives in{" "}
               <a href="https://github.com/robritacca-dotcom/design-system" target="_blank" rel="noopener noreferrer" className={styles.inlineLink}>the repo</a>: a{" "}
-              <Link href="/blueprints/design" className={styles.inlineLink}>written spec</Link>, tokens as layered CSS, components in React. Claude Code builds from the spec, so a design change reaches production in under a minute. None of it is theoretical: the buttons, the colours, the type, the layout — they&apos;re all running on the same system this page describes. It ships as the npm package <code>@robr0/design-system</code>, and this site installs that package like any other consumer would —{" "}
-              <Link href="/customization" className={styles.inlineLink}>you can install and re-theme it yourself</Link>.
+              <Link href="/blueprints/design" className={styles.inlineLink}>written spec</Link>, tokens as layered CSS, components in React. Claude Code builds from the spec, so a design change reaches production in under a minute. None of it is theoretical: the buttons, the colours, the type, the layout — they&apos;re all running on the same system this page describes. It ships as the npm package <code>@robr0/design-system</code>, and this site installs that package like any other consumer would — you can{" "}
+              <Link href="/docs/get-started" className={styles.inlineLink}>install it yourself</Link> and{" "}
+              <Link href="/playground" className={styles.inlineLink}>re-theme it live</Link>.
             </p>
             <p className={styles.introBody}>
               I&apos;m putting all of it on display because I think the system is the work. The pipeline below shows how the pieces fit. The rail beside it lists the key numbers and links. And if you want to lift any of it for your own project, everything is open —{" "}

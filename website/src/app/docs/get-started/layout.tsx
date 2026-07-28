@@ -1,7 +1,7 @@
 import { pageMetadata } from "@/config/navigation";
 
 export const metadata = pageMetadata(
-  "/customization/get-started",
+  "/docs/get-started",
   "Install @robr0/design-system, import the tokens, bring your own font, and re-theme the system by overriding primitive tokens."
 );
 

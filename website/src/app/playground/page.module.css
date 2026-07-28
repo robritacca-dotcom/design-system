@@ -1,5 +1,7 @@
 /* ============================================
-   CUSTOMIZATION PLAYGROUND PAGE LAYOUT
+   PLAYGROUND PAGE LAYOUT
+   Standard 1440px shell — but the left column is
+   the theme-control rail instead of the nav Sidebar.
    ============================================ */
 .dsLayout {
   display: flex;
@@ -35,6 +37,7 @@
   line-height: var(--font-display-2-line-height);
   letter-spacing: var(--font-display-2-letter-spacing);
   color: var(--color-text-primary);
+  overflow-wrap: anywhere;
 }
 
 .subDisplay {
@@ -71,32 +74,18 @@
 }
 
 /* ============================================
-   PLAYGROUND GRID — controls | sampler
+   CONTROL RAIL — the Sidebar's slot, made sticky
    ============================================ */
-.playgroundGrid {
-  display: grid;
-  grid-template-columns: 320px 1fr;
-  gap: var(--primitive-gap-lg);
-  align-items: start;
-  /* .animate-in gives every section its own stacking context (will-change:
-     transform), so without this the later copy-CSS section paints over the
-     controls' open Dropdown menu — its internal z-index can't escape. */
-  position: relative;
-  z-index: 1;
-}
-
-@media (max-width: 959px) {
-  .playgroundGrid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ============================================
-   CONTROLS PANEL
-   ============================================ */
-.controls {
+.controlRail {
+  /* Same offset as Sidebar: header height + body padding + layout gap */
+  --rail-top: calc(78px + var(--primitive-padding-lg) * 2 + var(--primitive-gap-xl));
+  width: var(--layout-sidebar-width);
+  flex-shrink: 0;
   position: sticky;
-  top: var(--primitive-gap-lg);
+  top: var(--rail-top);
+  align-self: flex-start;
+  max-height: calc(100vh - var(--rail-top) - var(--primitive-gap-lg));
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: var(--primitive-gap-lg);
@@ -104,12 +93,10 @@
   background-color: var(--color-bg-container-primary);
   border: var(--border-xs) solid var(--color-bg-container-border);
   border-radius: var(--radius-xl);
-}
-
-@media (max-width: 959px) {
-  .controls {
-    position: static;
-  }
+  /* .animate-in gives sections their own stacking context (will-change:
+     transform), so without this a later section would paint over the
+     rail's open Dropdown menu — its internal z-index can't escape. */
+  z-index: 1;
 }
 
 .controlGroup {
@@ -184,43 +171,29 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* ============================================
-   COMPONENT SAMPLER CANVAS
-   ============================================ */
-.canvas {
+/* The Typeface dropdown sits at the bottom of the rail, which is an
+   overflow-y scroll container — a downward menu gets clipped at the rail's
+   edge. Opening it upward keeps the menu inside the scrollable content,
+   where the controls above give it plenty of room. */
+.dropUp :global(.ds-dropdown__menu) {
+  top: auto;
+  bottom: 100%;
+  margin-top: 0;
+  margin-bottom: var(--gap-xxs);
+}
+
+/* Copy CSS + Reset, pinned at the end of the rail */
+.railFooter {
   display: flex;
   flex-direction: column;
-  gap: var(--primitive-gap-xl);
-  padding: var(--padding-lg);
-  background-color: var(--color-bg-container-primary);
-  border: var(--border-xs) solid var(--color-bg-container-border);
-  border-radius: var(--radius-xl);
-  min-width: 0;
-}
-
-/* The mock product's own title — renamed live from the controls panel */
-.canvasTitle {
-  font-family: var(--font-heading-1-family);
-  font-size: var(--font-heading-1-size);
-  font-weight: var(--font-heading-1-weight);
-  line-height: var(--font-heading-1-line-height);
-  letter-spacing: var(--font-heading-1-letter-spacing);
-  color: var(--color-text-primary);
-  overflow-wrap: anywhere;
-  margin-bottom: calc(var(--primitive-gap-lg) - var(--primitive-gap-xl));
-}
-
-.canvasRow {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
   gap: var(--gap-sm-md);
 }
 
 /* ============================================
-   COPY-CSS SECTION
+   DEMO SECTIONS — full content-column width,
+   divided by SectionTitle headers
    ============================================ */
-.section {
+.demoSection {
   display: flex;
   flex-direction: column;
   gap: var(--primitive-gap-lg);
@@ -235,4 +208,43 @@
 
 .sectionNote code {
   color: var(--color-text-primary);
+}
+
+.demoRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gap-sm-md);
+}
+
+/* Two-up grid for form fields — collapses to one column when narrow */
+.demoColumns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--primitive-gap-lg);
+  align-items: start;
+}
+
+@media (max-width: 1151px) {
+  .demoColumns {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================
+   RESPONSIVE — the rail must NOT disappear the
+   way the nav Sidebar does under 960px; it stacks
+   above the content instead.
+   ============================================ */
+@media (max-width: 959px) {
+  .dsLayout {
+    flex-direction: column;
+  }
+
+  .controlRail {
+    position: static;
+    width: 100%;
+    max-height: none;
+    overflow-y: visible;
+  }
 }

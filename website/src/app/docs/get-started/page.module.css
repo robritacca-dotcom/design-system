@@ -1,5 +1,5 @@
 /* ============================================
-   CUSTOMIZATION — GET STARTED PAGE LAYOUT
+   DOCS — GET STARTED PAGE LAYOUT
    ============================================ */
 .dsLayout {
   display: flex;
@@ -75,6 +75,93 @@
 }
 
 /* ============================================
+   CONTENT + BUILT-WITH RAIL
+   ============================================ */
+.railLayout {
+  display: flex;
+  gap: var(--layout-column-gap);
+  width: 100%;
+}
+
+.railMain {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-xxxl);
+}
+
+.railSidebar {
+  width: var(--layout-rail-width);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-xxxl);
+}
+
+.railSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-lg);
+}
+
+.toolList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-lg);
+}
+
+.toolItem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--primitive-gap-md);
+  text-decoration: none;
+  color: inherit;
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
+}
+
+a.toolItem:hover {
+  opacity: 0.8;
+}
+
+.toolGlyph {
+  /* 24px glyph padded to match the 28px logo images beside it */
+  --icon-size: var(--icon-size-md);
+  padding: 2px;
+  color: var(--color-text-secondary);
+  flex-shrink: 0;
+}
+
+.toolLinkIcon {
+  font-size: 16px;
+  color: var(--color-text-tertiary);
+  margin-left: auto;
+  flex-shrink: 0;
+  padding-top: 4px;
+}
+
+.toolDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.toolName {
+  font-size: var(--font-title-body-size);
+  font-weight: var(--font-title-body-weight);
+  line-height: var(--font-title-body-line-height);
+  letter-spacing: -0.16px;
+  color: var(--color-text-primary);
+}
+
+.toolDesc {
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  color: var(--color-text-tertiary);
+}
+
+/* ============================================
    SECTIONS
    ============================================ */
 .section {
@@ -97,4 +184,17 @@
 .ctaLink {
   align-self: flex-start;
   text-decoration: none;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 1151px) {
+  .railLayout {
+    flex-direction: column;
+  }
+
+  .railSidebar {
+    width: 100%;
+  }
 }

@@ -44,7 +44,7 @@ export default function DocsPage() {
               The system, explained and ready to reuse
             </p>
             <p className={styles.introBody}>
-              Everything that makes robr0 DS run, documented in one place. Start with the overview for the pipeline behind the system, read the two spec files that drive every build, or take the skills and loops that automate the work. The project journal keeps a running record of how it all came together.
+              Everything that makes robr0 DS run, documented in one place. Start with the overview for the pipeline behind the system, get started with installing and theming the package, read the two spec files that drive every build, or take the skills and loops that automate the work. The project journal keeps a running record of how it all came together.
             </p>
           </div>
 
@@ -58,6 +58,18 @@ export default function DocsPage() {
                   <span className={styles.pipelineDot} />
                   <span className={styles.pipelineBar} />
                   <span className={styles.pipelineDot} />
+                </div>
+              </div>
+            </TocCard>
+
+            {/* Get started */}
+            <TocCard href="/docs/get-started" title="Get started">
+              <div className={`${styles.circlePreview} ${styles.circleDashed}`}>
+                <div className={styles.installPreview}>
+                  <span className="material-symbols-rounded" aria-hidden="true" style={{ color: "var(--color-text-secondary)" }}>
+                    terminal
+                  </span>
+                  <code className={styles.previewInstall}>npm install</code>
                 </div>
               </div>
             </TocCard>

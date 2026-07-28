@@ -43,6 +43,11 @@ const nextConfig: NextConfig = {
       { source: "/design-system", destination: "/foundations", permanent: true },
       { source: "/design-md", destination: "/blueprints/design", permanent: true },
       { source: "/blueprints", destination: "/docs", permanent: true },
+      // The Customization section became the top-level /playground, and its
+      // install guide moved into the Docs cluster.
+      { source: "/customization", destination: "/playground", permanent: true },
+      { source: "/customization/playground", destination: "/playground", permanent: true },
+      { source: "/customization/get-started", destination: "/docs/get-started", permanent: true },
     ];
   },
   // The design system arrives as a real (workspace-linked) package whose

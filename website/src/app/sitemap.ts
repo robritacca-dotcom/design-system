@@ -4,13 +4,13 @@ import path from "node:path";
 import { getArticles } from "@/lib/substack";
 import {
   componentsSidebarLinks,
-  customizationSidebarLinks,
   docsSidebarLinks,
   foundationsSidebarLinks,
   workSidebarLinks,
 } from "@/config/navigation";
+import { SITE_URL } from "@/lib/structuredData";
 
-const baseUrl = "https://robertritacca.com";
+const baseUrl = SITE_URL;
 const appDir = path.join(process.cwd(), "src", "app");
 
 // Fallback when git history is unavailable. Evaluated once at module load —
@@ -77,11 +77,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/about",
     "/writing",
     "/contact",
+    "/playground",
     ...workSidebarLinks.map((l) => l.href),
     ...docsSidebarLinks.map((l) => l.href),
     ...foundationsSidebarLinks.map((l) => l.href),
     ...componentsSidebarLinks.map((l) => l.href),
-    ...customizationSidebarLinks.map((l) => l.href),
   ];
 
   const staticEntries: MetadataRoute.Sitemap = staticRoutes.map((route) => ({

@@ -56,6 +56,12 @@ export function GET() {
       componentsSidebarLinks
     ),
     "",
+    "## Playground",
+    "",
+    "Interactive theming for the design system.",
+    "",
+    `- [Playground](${SITE_URL}/playground): re-theme the design system live and copy the generated CSS`,
+    "",
     "## About & writing",
     "",
     "The person behind the work, and long-form writing on design and AI.",

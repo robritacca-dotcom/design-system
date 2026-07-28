@@ -269,3 +269,23 @@
     min-height: 120px;
   }
 }
+
+/* ============================================
+   GET STARTED CARD PREVIEW
+   ============================================ */
+.installPreview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--primitive-gap-xs);
+}
+
+.installPreview > :global(.material-symbols-rounded) {
+  --icon-size: var(--icon-size-lg);
+  color: var(--color-text-secondary);
+}
+
+.previewInstall {
+  font-size: var(--font-paragraph-sm-size);
+  color: var(--color-text-secondary);
+}

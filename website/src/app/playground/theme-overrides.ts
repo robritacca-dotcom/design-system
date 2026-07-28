@@ -1,5 +1,5 @@
 /**
- * Pure colour/radius math for the customization playground.
+ * Pure colour/radius math for the playground.
  *
  * Everything here produces `--primitive-*` override values: the Phase-1
  * token invariant (every semantic colour token references a primitive)
