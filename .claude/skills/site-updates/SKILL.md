@@ -46,10 +46,10 @@ Cluster the new commits into themes and draft the entry (usually one, at most tw
 Work in a temporary worktree so the user's working tree is untouched:
 
 ```bash
-REPO=~/Documents/Projects/design-system
+REPO=$(git rev-parse --show-toplevel)
 WT=$REPO/../.site-updates-worktree
 BRANCH=site-updates/$(date +%F)
-git -C $REPO worktree add "$WT" -b "$BRANCH" main
+git -C "$REPO" worktree add "$WT" -b "$BRANCH" main
 ```
 
 In `$WT/website/src/data/site-updates.json`: prepend the new entry (or extend an arc), and set `asOf` to the current `main` HEAD sha + today's date. Validate and build (the repo is an npm workspace — one install at the worktree root wires everything, including the `@robr0/design-system` link back to the worktree's own `src/`; it's seconds thanks to the npm cache. Do **not** symlink `node_modules` from the main checkout — Turbopack rejects symlinks that point outside the project root):

@@ -30,14 +30,14 @@ Read the newest report in `ga-analysis/loop-reports/` (git-ignored, local-only).
 ### 1. Pull the data
 
 ```bash
-cd ~/Documents/Projects/design-system/ga-analysis && ./.venv/bin/python pull_ga.py --days 28
+cd "$(git rev-parse --show-toplevel)/ga-analysis" && ./.venv/bin/python pull_ga.py --days 28
 ```
 
 Output lands in `ga-analysis/output/all.json`. If the venv is missing: `python3 -m venv .venv && ./.venv/bin/pip install -q -r requirements.txt`. FutureWarnings are harmless.
 
 ### 2. Analyze — with the ga-report skill's judgment calls
 
-Apply every gotcha from the `ga-report` skill (`~/.claude/skills/ga-report/SKILL.md`):
+Apply every gotcha from the `ga-report` skill (`~/.claude/skills/ga-report/SKILL.md` — installed only on Rob's Mac, like the GA venv and credentials; this loop runs there, not on the Windows machine):
 - Subtract bot traffic (historically Singapore at ~4% engagement; spam referrers `ddvvff.org`, `snucm.com`) before drawing conclusions.
 - Sum pages by `pagePath`, not `pageTitle` (titles are fragmented from past SEO edits).
 - High Direct (~75%) is normal dark social, not a problem.
@@ -57,10 +57,10 @@ If the data doesn't support a confident copy hypothesis this week, **say so and 
 Work in a temporary worktree so the user's working tree is untouched:
 
 ```bash
-REPO=~/Documents/Projects/design-system
+REPO=$(git rev-parse --show-toplevel)
 WT=$REPO/../.growth-loop-worktree
 BRANCH=growth/$(date +%F)-<short-slug>
-git -C $REPO worktree add "$WT" -b "$BRANCH" main
+git -C "$REPO" worktree add "$WT" -b "$BRANCH" main
 ```
 
 Make the copy edits in `$WT/website/src/...`, then verify the build (the repo is an npm workspace — one install at the worktree root wires everything, including the `@robr0/design-system` link back to the worktree's own `src/`; it's seconds thanks to the npm cache. Do **not** symlink `node_modules` from the main checkout — Turbopack rejects symlinks that point outside the project root):

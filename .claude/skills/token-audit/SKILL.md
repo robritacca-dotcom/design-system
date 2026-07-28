@@ -38,6 +38,7 @@ Use this skill when asked to check for hardcoded values, audit token usage, find
    - Files within `src/tokens/` themselves (these define the tokens)
    - `0px`, `0`, `100%`, `50%` — these are structural, not token-replaceable
    - The documented off-scale icon exceptions (glyphs inside a control's geometry — ToggleSwitch/SelectionCard thumb checks, the component-index card mockups): each is commented in place; treat a matching in-place comment as the signal it's sanctioned
+   - ColorPicker's `hsl()` colour-mixing constants (the white/black overlay gradients on the saturation area, the hue-spectrum track, the white handle/thumbs): colour-space physics no theme token can represent — commented at the top of `ColorPicker.css` and documented in its design.md spec
    - `1px` border widths — acceptable
    - Values inside `calc()` that are genuine arithmetic, not replaceable with a single token
    - CSS variable declarations themselves (lines starting with `--`)
