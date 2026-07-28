@@ -127,8 +127,9 @@ for (const [what, list] of [
   ['Prose referencing npm scripts that don\'t exist', unknownScripts],
   ['Prose referencing API symbols that are no longer exported', missingSymbols],
 ]) {
-  if (list.length > 0) {
-    fail(`${what}:\n` + list.map((l) => `    - ${l}`).join('\n'));
+  const unique = [...new Set(list)];
+  if (unique.length > 0) {
+    fail(`${what}:\n` + unique.map((l) => `    - ${l}`).join('\n'));
   }
 }
 
