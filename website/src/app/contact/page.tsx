@@ -99,7 +99,7 @@ function ContactContent() {
         <div className={`${styles.heading} animate-in`}>
           <h1 className={styles.title}>Contact</h1>
           <p className={styles.subtitle}>
-            The easiest ways to reach me — pick whichever fits the conversation.
+            The easiest ways to reach me. Pick whichever fits the conversation.
           </p>
         </div>
 
@@ -129,7 +129,7 @@ function ContactContent() {
           <h2 className={styles.sectionTitle}>Book a consultation</h2>
           <ContactCard
             label="Pay via Stripe"
-            value="Secure checkout — book a design consultation"
+            value="Book a design consultation, secure checkout via Stripe"
             href="https://buy.stripe.com/28o7vb5NBaSJ3NC5kn"
             logo="/logos/stripe-new.png"
             external

@@ -24,12 +24,12 @@ const EXPERIENCE: TimelineCompany[] = [
         start: "Jan 2026",
         present: true,
         bullets: [
-          "Shipped TurboTax's embedded AI experiences inside ChatGPT and Claude in time for tax season — surfacing TurboTax to nearly 1 billion users on those platforms",
+          "Shipped TurboTax's embedded AI experiences inside ChatGPT and Claude in time for tax season, putting TurboTax in front of nearly 1 billion users on those platforms",
           <>
-            Designed the bidirectional filing checklist that lets users prep their taxes inside an AI chat and finish the return in TurboTax — full story in the{" "}
+            Designed the bidirectional filing checklist that lets users prep their taxes inside an AI chat and finish the return in TurboTax. Full story in the{" "}
             <Link href="/work/embedded-ai-turbotax">case study</Link>
           </>,
-          "Driving the operationalization of agentic solutions across TurboTax and the broader consumer platform including Credit Karma",
+          "Taking agentic workflows into production across TurboTax and the broader consumer platform, including Credit Karma",
           "Designing action-oriented financial workflows that turn AI into real outcomes, not just answers",
         ],
       },
@@ -39,7 +39,7 @@ const EXPERIENCE: TimelineCompany[] = [
         end: "Jan 2026",
         bullets: [
           <>
-            Led design of Intuit Intelligence — Intuit&apos;s end-to-end conversational AI platform enabling domain teams to inject agents and dynamic UI into products through a consistent, scalable, and extensible contextual capability — full story in the{" "}
+            Led design of Intuit Intelligence, Intuit&apos;s end-to-end conversational AI platform: domain teams inject agents and dynamic UI into their own products through one shared, extensible capability. Full story in the{" "}
             <Link href="/work/intuit-agent-chat">case study</Link>
           </>,
           "Onboarded 150+ teams end-to-end with 58 teams in production, including TurboTax, QuickBooks, Credit Karma, and Mailchimp",
@@ -61,9 +61,9 @@ const EXPERIENCE: TimelineCompany[] = [
         description:
           "Led end-to-end UX for a 0 to 1 Generative AI tool enabling engineers to create constructible, code-compliant electrical raceway designs, as the sole designer supporting 30+ engineers.",
         bullets: [
-          "Drove continuous product improvement through user research, testing, and iterative design — shaping workflows and building new capabilities like 4x expanded signal visibility across 3D and tabular views",
+          "Shaped workflows through user research, testing, and iteration, and built new capabilities like 4x expanded signal visibility across 3D and tabular views",
           <>
-            Reduced the time-to-value metric from 14 to 5 days by streamlining generation workflows and cutting required cycles from 12 to 5 through clearer feedback and improved anomaly detection — full story in the{" "}
+            Reduced time-to-value from 14 days to 5 by simplifying generation workflows, and cut required cycles from 12 to 5 with clearer feedback and better anomaly detection. Full story in the{" "}
             <Link href="/work/augmenta-ai">case study</Link>
           </>,
           "Improved solution quality by reducing anomalies per output by 60% and cutting engineering intervention from 13+ to ~1 per project through better tooling, visualization, and in-product guidance",
@@ -80,14 +80,14 @@ const EXPERIENCE: TimelineCompany[] = [
         start: "Sep 2021",
         end: "Jul 2023",
         description:
-          "Directed and executed on design initiatives rooted in evidence across a horizontal portfolio of Recruiting Products, supporting Meta in the mission to discover, develop and hire the best talent in the world.",
+          "Led evidence-driven design across a horizontal portfolio of Recruiting Products, supporting how Meta discovers, develops, and hires talent.",
         bullets: [
           <>
-            Redesigned the Job Offer tool within Meta&apos;s Applicant Tracking System, improving offer extension velocity by over 10%, compensation approval velocity by 25%, and volume of data points by 50% — full story in the{" "}
+            Redesigned the Job Offer tool within Meta&apos;s Applicant Tracking System, improving offer extension velocity by over 10%, compensation approval velocity by 25%, and volume of data points by 50%. Full story in the{" "}
             <Link href="/work/meta-offers">case study</Link>
           </>,
           "Redesigned the Internal Mobility transfer and eligibility tool, resulting in a 58% increase in data accuracy and a 33% reduction in processing time to earn an estimated savings of 2000 hours/year of productivity",
-          "Led design direction for a mixed-reality initiative of 40+ people across 6 organizations, including Recruiting Products and an external XR development shop. Drove the creation of a Design Brief, overcoming challenges around hardware logistics, digital onboarding. Successfully implemented a pilot program for our target users to participate in an immersive experience within a VR environment.",
+          "Led design direction for a mixed-reality initiative of 40+ people across 6 organizations, including Recruiting Products and an external XR development shop. Wrote the design brief, worked through hardware logistics and digital onboarding, and ran a pilot that put target users through an immersive VR experience.",
         ],
       },
     ],
@@ -101,7 +101,7 @@ const EXPERIENCE: TimelineCompany[] = [
         start: "Sep 2018",
         end: "Sep 2021",
         description:
-          "Managed the performance, career development, and utilization of a team of 4 Product Designers within the Toronto business unit. Directed all design phases across a broad portfolio of multi-product/multi-phase delivery engagements worth $25m over 4 years.",
+          "Managed a team of 4 product designers in the Toronto business unit, from performance to career development. Directed all design phases across a broad portfolio of multi-product delivery engagements worth $25m over 4 years.",
         bullets: [
           "Led design for mySCP, a cross-platform healthcare application suite used by 8,000+ clinicians across desktop, iOS, and Android",
           <>
@@ -191,7 +191,7 @@ export default function AboutMePage() {
 
             {/* Bio */}
             <p className={`${styles.introBody} animate-in animate-delay-2`}>
-              Experienced product designer, specializing in AI-native products, agentic experiences, and complex workflows. Versatile background across big tech, startups, and consulting. I partner with engineering, product, and leadership to transform ambiguous problems into intuitive, scalable products that deliver value for users and the business. Experienced in 0&rarr;1 product development, enterprise applications, and the design systems and platforms that enable teams to build faster.
+              Product designer specialising in AI-native products, agentic experiences, and complex workflows, with a background across big tech, startups, and consulting. I partner with engineering, product, and leadership to turn ambiguous problems into products people can actually use. Much of that work has been 0&rarr;1: enterprise applications, and the design systems and platforms that let teams build faster.
             </p>
           </div>
 

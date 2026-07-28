@@ -31,7 +31,7 @@ const PIPELINE: TimelineCompany[] = [
       {
         title: "Design foundation",
         description:
-          "Where the system's foundation was designed — the token architecture, the colour ramps, the component vocabulary. Today it's the sketchpad for visual exploration; the source of truth has moved into the repo.",
+          "Where the system's foundation was designed: the token architecture, the colour ramps, the component vocabulary. Today it's the sketchpad for visual exploration; the source of truth has moved into the repo.",
         bullets: [
           "Designed the token architecture as variables: 7 color ramps + spatial tokens (gap, padding, radius, border)",
           "Designed the original components with variants and light/dark semantic mappings",
@@ -51,7 +51,7 @@ const PIPELINE: TimelineCompany[] = [
         title: "AI component generator",
         description: (
           <>
-            Builds production React from the written spec that lives in the repo —{" "}
+            Builds production React from the written spec that lives in the repo:{" "}
             <Link href="/blueprints/design" className={styles.inlineLink}>design.md</Link> for the design language,{" "}
             <Link href="/blueprints/claude" className={styles.inlineLink}>CLAUDE.md</Link> for the rules.
           </>
@@ -97,7 +97,7 @@ const PIPELINE: TimelineCompany[] = [
           <>
             npm-workspace monorepo: the library publishes as{" "}
             <code>@robr0/design-system</code>, and this site installs that same
-            package — every page dogfoods the exact import surface a consumer gets
+            package, so every page dogfoods the exact import surface a consumer gets
           </>,
           "Triggers Vercel deployment on every push to main",
           <>
@@ -111,13 +111,13 @@ const PIPELINE: TimelineCompany[] = [
         description: (
           <>
             A manual release workflow ships the library to npm as{" "}
-            <code>@robr0/design-system</code> — see{" "}
-            <Link href="/docs/get-started" className={styles.inlineLink}>how to install and customize it</Link>.
+            <code>@robr0/design-system</code>. See{" "}
+            <Link href="/docs/get-started" className={styles.inlineLink}>how to install and customise it</Link>.
           </>
         ),
         bullets: [
           "Builds the distributable package: per-module JS + type declarations, token CSS, and the icon font",
-          "Before anything reaches the registry, the tarball is installed into a scratch Vite app and built — a real consumer smoke test",
+          "Before anything reaches the registry, the tarball is installed into a scratch Vite app and built: a real consumer smoke test",
           "Publishes with npm provenance; dry-run by default",
         ],
       },
@@ -127,7 +127,7 @@ const PIPELINE: TimelineCompany[] = [
           "Every push and PR runs an automated quality gate before anything is trusted.",
         bullets: [
           "Lints the codebase and builds the library, Storybook, and the website on every change",
-          "Renders every Storybook story in headless Chrome and runs an axe accessibility audit on each — a render error or a WCAG AA violation fails the build (the contrast criteria are deliberately deferred while the action colour is redesigned)",
+          "Renders every Storybook story in headless Chrome and runs an axe accessibility audit on each: a render error or a WCAG AA violation fails the build (the contrast criteria are deliberately deferred while the action colour is redesigned)",
           "Chromatic visual regression, run on demand: every story snapshotted in light and dark against an accepted baseline, so a token change that shifts pixels anywhere in the system is caught before it ships",
           "Drift guard fails the build if generated docs (component counts, skills, blueprints) go stale",
           "The same checklist runs locally as a single command, so local and CI can never disagree",
@@ -158,13 +158,13 @@ const PIPELINE: TimelineCompany[] = [
       {
         title: "Domain & delivery",
         description:
-          "How the site actually reaches you — the domain, the fonts, the icons, and the measurement.",
+          "How the site actually reaches you: the domain, the fonts, the icons, and the measurement.",
         bullets: [
           <>
             <code>robertritacca.com</code> is registered at GoDaddy, whose DNS points
             at the Vercel deployment
           </>,
-          "Nunito Sans is self-hosted: next/font fetches it from Google Fonts at build time and serves it from this domain — no runtime Google request",
+          "Nunito Sans is self-hosted: next/font fetches it from Google Fonts at build time and serves it from this domain, with no runtime Google request",
           "Material Symbols icons ship as a self-hosted woff2 inside the npm package itself; the playground's typeface picker is the one place fonts load from Google at runtime",
           "Google Analytics (GA4) measures traffic via the standard gtag snippet in the root layout",
         ],
@@ -197,15 +197,15 @@ export default function AboutDsPage() {
               A personal design system, built to make this site
             </p>
             <p className={styles.introBody}>
-              robr0 DS is the system I built — by myself — to make every page you see here. The foundation was designed in{" "}
+              robr0 DS is the system I built, by myself, to make every page you see here. The foundation was designed in{" "}
               <a href="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26?node-id=246-5864" target="_blank" rel="noopener noreferrer" className={styles.inlineLink}>Figma</a>. The system itself lives in{" "}
               <a href="https://github.com/robritacca-dotcom/design-system" target="_blank" rel="noopener noreferrer" className={styles.inlineLink}>the repo</a>: a{" "}
-              <Link href="/blueprints/design" className={styles.inlineLink}>written spec</Link>, tokens as layered CSS, components in React. Claude Code builds from the spec, so a design change reaches production in under a minute. None of it is theoretical: the buttons, the colours, the type, the layout — they&apos;re all running on the same system this page describes. It ships as the npm package <code>@robr0/design-system</code>, and this site installs that package like any other consumer would — you can{" "}
+              <Link href="/blueprints/design" className={styles.inlineLink}>written spec</Link>, tokens as layered CSS, components in React. Claude Code builds from the spec, so a design change reaches production in under a minute. None of it is theoretical: the buttons, the colours, the type, and the layout are all running on the same system this page describes. It ships as the npm package <code>@robr0/design-system</code>, and this site installs that package like any other consumer would. You can{" "}
               <Link href="/docs/get-started" className={styles.inlineLink}>install it yourself</Link> and{" "}
               <Link href="/playground" className={styles.inlineLink}>re-theme it live</Link>.
             </p>
             <p className={styles.introBody}>
-              I&apos;m putting all of it on display because I think the system is the work. The pipeline below shows how the pieces fit. The rail beside it lists the key numbers and links. And if you want to lift any of it for your own project, everything is open —{" "}
+              I&apos;m putting all of it on display because I think the system is the work. The pipeline below shows how the pieces fit. The rail beside it lists the key numbers and links. And if you want to lift any of it for your own project, everything is open:{" "}
               <Link href="/blueprints/claude" className={styles.inlineLink}>CLAUDE.md</Link>,{" "}
               <Link href="/blueprints/design" className={styles.inlineLink}>design.md</Link>, the{" "}
               <Link href="/skills" className={styles.inlineLink}>skills</Link>, and the{" "}
