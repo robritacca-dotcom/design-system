@@ -52,7 +52,7 @@ export const THEME_PRESETS: Record<string, ThemePreset> = {
     },
   },
   contrast: {
-    label: "High contrast (AAA)",
+    label: "Modern blue tint",
     brand: "#1E40AF",
     tintOn: true,
     tintSeed: "#1E40AF",
@@ -64,6 +64,7 @@ export const THEME_PRESETS: Record<string, ThemePreset> = {
 };
 
 export const PRESET_OPTIONS = [
+  { label: "robr0 DS default", value: "default" },
   { label: "Custom", value: "custom" },
   ...Object.entries(THEME_PRESETS).map(([value, p]) => ({ label: p.label, value })),
 ];

@@ -44,7 +44,7 @@ function subscribeToTheme(callback: () => void) {
 
 export default function PlaygroundPage() {
   /* ---------- levers ---------- */
-  const [preset, setPreset] = useState("custom");
+  const [preset, setPreset] = useState("default");
   const [brand, setBrand] = useState(DEFAULT_BRAND);
   const [tintOn, setTintOn] = useState(false);
   const [tintSeed, setTintSeed] = useState(DEFAULT_NEUTRAL_SEED);
@@ -61,6 +61,10 @@ export default function PlaygroundPage() {
   };
 
   const applyPreset = (value: string) => {
+    if (value === "default") {
+      reset(); // the shipped look — put every lever back
+      return;
+    }
     setPreset(value);
     const p = THEME_PRESETS[value];
     if (!p) return; // "custom" — keep the current levers
@@ -155,7 +159,7 @@ export default function PlaygroundPage() {
   const isPristine = Object.keys(overrides).length === 0 && !font.family;
 
   const reset = () => {
-    setPreset("custom");
+    setPreset("default");
     setBrand(DEFAULT_BRAND);
     setTintOn(false);
     setTintSeed(DEFAULT_NEUTRAL_SEED);

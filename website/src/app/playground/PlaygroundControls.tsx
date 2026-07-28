@@ -7,7 +7,7 @@ import { Dropdown } from "@robr0/design-system/components/Dropdown/Dropdown";
 import { Input } from "@robr0/design-system/components/Input/Input";
 import { Slider } from "@robr0/design-system/components/Slider/Slider";
 import { ToggleSwitch } from "@robr0/design-system/components/ToggleSwitch/ToggleSwitch";
-import { FONT_OPTIONS } from "./theme-overrides";
+import { ACTION_COLOR_PRESETS, FONT_OPTIONS } from "./theme-overrides";
 import { PRESET_OPTIONS } from "./presets";
 
 export interface PlaygroundControlsProps {
@@ -59,6 +59,10 @@ export default function PlaygroundControls({
   onProductName,
   onReset,
 }: PlaygroundControlsProps) {
+  const isCustomBrand = !ACTION_COLOR_PRESETS.some(
+    (p) => p.hex === brand.toUpperCase()
+  );
+
   const [copied, setCopied] = useState(false);
   const copiedTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -82,8 +86,10 @@ export default function PlaygroundControls({
 
   return (
     <aside className={`${styles.controlRail} animate-in`} aria-label="Theme controls">
+      <h3 className={styles.railTitle}>Theme controls</h3>
+
       <div className={styles.controlGroup}>
-        <h3 className={styles.controlHeading}>Theme preset</h3>
+        <h4 className={styles.controlHeading}>Theme preset</h4>
         <p className={styles.controlNote}>
           Start from a saved look — any lever you touch turns it back into Custom.
         </p>
@@ -96,7 +102,7 @@ export default function PlaygroundControls({
       </div>
 
       <div className={styles.controlGroup}>
-        <h3 className={styles.controlHeading}>Product name</h3>
+        <h4 className={styles.controlHeading}>Product name</h4>
         <p className={styles.controlNote}>
           Renames this page&apos;s title as you type.
         </p>
@@ -109,25 +115,42 @@ export default function PlaygroundControls({
       </div>
 
       <div className={styles.controlGroup}>
-        <h3 className={styles.controlHeading}>Action colour</h3>
+        <h4 className={styles.controlHeading}>Action colour</h4>
         <p className={styles.controlNote}>
           Rebuilds the whole teal ramp around your pick — hover and pressed states
           included.
         </p>
-        <label className={styles.colorRow}>
+        <div className={styles.swatchGrid}>
+          {ACTION_COLOR_PRESETS.map(({ label, hex }) => (
+            <button
+              key={hex}
+              type="button"
+              className={styles.swatch}
+              style={{ background: hex }}
+              aria-label={label}
+              aria-pressed={brand.toUpperCase() === hex}
+              onClick={() => onBrand(hex)}
+            />
+          ))}
+        </div>
+        <label
+          className={styles.customColorRow}
+          data-active={isCustomBrand || undefined}
+        >
           <input
             type="color"
             className={styles.colorInput}
             value={brand}
             onChange={(e) => onBrand(e.target.value.toUpperCase())}
-            aria-label="Brand colour"
+            aria-label="Custom brand colour"
           />
+          <span className={styles.customColorLabel}>Custom</span>
           <code className={styles.colorValue}>{brand.toUpperCase()}</code>
         </label>
       </div>
 
       <div className={styles.controlGroup}>
-        <h3 className={styles.controlHeading}>Neutral tint</h3>
+        <h4 className={styles.controlHeading}>Neutral tint</h4>
         <p className={styles.controlNote}>
           Washes the neutral scale — page, containers, text — toward a seed colour.
         </p>
@@ -160,7 +183,7 @@ export default function PlaygroundControls({
       </div>
 
       <div className={styles.controlGroup}>
-        <h3 className={styles.controlHeading}>Corner radius</h3>
+        <h4 className={styles.controlHeading}>Corner radius</h4>
         <p className={styles.controlNote}>
           Scales the radius scale; pills can become rectangles.
         </p>
@@ -179,7 +202,7 @@ export default function PlaygroundControls({
       </div>
 
       <div className={`${styles.controlGroup} ${styles.dropUp}`}>
-        <h3 className={styles.controlHeading}>Typeface</h3>
+        <h4 className={styles.controlHeading}>Typeface</h4>
         <p className={styles.controlNote}>
           One token drives the entire type scale. Fonts load from Google Fonts on
           demand.

@@ -69,6 +69,30 @@ const BRAND_RAMP_WEIGHTS: ReadonlyArray<[step: string, weight: number]> = [
 export const DEFAULT_BRAND = "#118AB2";
 
 /**
+ * Preset action colours: steps 07 and 08 of every chromatic primitive ramp
+ * (the values in tokens-primitives.css). Listed 07s-first so a 7-column
+ * grid renders one row per step. Like NEUTRALS below, these are shipped
+ * constants — reading them from the DOM would return their overridden
+ * values once a brand is applied.
+ */
+export const ACTION_COLOR_PRESETS: ReadonlyArray<{ label: string; hex: string }> = [
+  { label: "Red 07", hex: "#EF476F" },
+  { label: "Orange 07", hex: "#EF8247" },
+  { label: "Yellow 07", hex: "#FFD166" },
+  { label: "Green 07", hex: "#06D6A0" },
+  { label: "Teal 07", hex: "#118AB2" },
+  { label: "Blue 07", hex: "#1E47B0" },
+  { label: "Purple 07", hex: "#9E47EF" },
+  { label: "Red 08", hex: "#C93A5C" },
+  { label: "Orange 08", hex: "#C65E33" },
+  { label: "Yellow 08", hex: "#C49A3E" },
+  { label: "Green 08", hex: "#05A67C" },
+  { label: "Teal 08", hex: "#0E6E8F" },
+  { label: "Blue 08", hex: "#163789" },
+  { label: "Purple 08", hex: "#7434B3" },
+];
+
+/**
  * Overrides for the full teal ramp, rebuilt around a picked brand colour.
  *
  * The shipped ramp assumes a mid-dark base: tint steps (01–06) head toward

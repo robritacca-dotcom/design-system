@@ -88,7 +88,7 @@
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: var(--primitive-gap-lg);
+  gap: var(--gap-lg);
   padding: var(--padding-lg);
   background-color: var(--color-bg-container-primary);
   border: var(--border-xs) solid var(--color-bg-container-border);
@@ -102,15 +102,23 @@
 .controlGroup {
   display: flex;
   flex-direction: column;
-  gap: var(--gap-sm-md);
-  padding-bottom: var(--primitive-gap-lg);
+  gap: var(--gap-sm);
+  padding-bottom: var(--gap-md);
   border-bottom: var(--border-xs) solid var(--color-divider);
 }
 
-.controlHeading {
+.railTitle {
   font-size: var(--font-heading-3-size);
   font-weight: var(--font-heading-3-weight);
   line-height: var(--font-heading-3-line-height);
+  color: var(--color-text-primary);
+}
+
+.controlHeading {
+  font-size: var(--font-title-body-size);
+  font-weight: var(--font-title-body-weight);
+  line-height: var(--font-title-body-line-height);
+  letter-spacing: var(--font-title-body-letter-spacing);
   color: var(--color-text-primary);
 }
 
@@ -119,6 +127,56 @@
   font-weight: var(--font-paragraph-sm-weight);
   line-height: var(--font-paragraph-sm-line-height);
   color: var(--color-text-tertiary);
+}
+
+/* Preset action-colour swatches — one column per hue, one row per ramp step */
+.swatchGrid {
+  display: grid;
+  grid-template-columns: repeat(7, max-content);
+  gap: var(--gap-sm);
+  padding: var(--primitive-padding-xxxs) 0;
+}
+
+.swatch {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+}
+
+.swatch[aria-pressed="true"] {
+  box-shadow:
+    0 0 0 var(--border-md) var(--color-bg-page-primary),
+    0 0 0 calc(var(--border-md) * 2) var(--color-text-primary);
+}
+
+.swatch:focus-visible {
+  outline: var(--border-md) solid var(--color-input-border-selected);
+  outline-offset: var(--border-md);
+}
+
+/* The Custom row — bordered like an input, lit up when the current colour
+   is not one of the preset swatches */
+.customColorRow {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm-md);
+  padding: var(--padding-xxs) var(--padding-sm);
+  border: var(--border-xs) solid var(--color-input-border-primary);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+
+.customColorRow[data-active] {
+  border-color: var(--color-input-border-selected);
+}
+
+.customColorLabel {
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-em-weight);
+  color: var(--color-text-primary);
 }
 
 /* Colour picker row — the native input carries the swatch */
