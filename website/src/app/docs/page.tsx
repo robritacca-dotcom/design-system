@@ -105,8 +105,9 @@ export default function DocsPage() {
             <TocCard href="/blueprints/content-design" title="Content MD">
               <div className={`${styles.circlePreview} ${styles.circleNeutral}`}>
                 <div className={styles.docPreview}>
-                  <span className={styles.docHeading} />
-                  <span className={styles.docLine} style={{ width: "64px" }} />
+                  <span className={styles.docType} aria-hidden="true">
+                    A<span className={styles.docTypeBold}>a</span>
+                  </span>
                   <span className={styles.docLine} style={{ width: "72px" }} />
                   <span className={styles.docLine} style={{ width: "48px" }} />
                 </div>
