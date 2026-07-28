@@ -4,13 +4,13 @@ The single planning surface for this repo. Everything queued, deferred, parked, 
 
 **This file is intentionally *not* in the `validate-registry` chain.** Every other doc in this repo is a generated or build-enforced surface because it states *facts about the system* (counts, lists, versions) that must never drift. This file states *intent*, which can't be validated — so it is hand-maintained, and any count in it is marked as an "as of" snapshot rather than pulled from a registry. Keep it that way: don't put a number here that a registry already owns.
 
-Audited against the working tree on **2026-07-27** (57 components, 4 doc-only helpers).
+Audited against the working tree on **2026-07-27, end of day** (59 components, 4 doc-only helpers — Kbd and ContextMenu shipped that afternoon).
 
 ---
 
 # ▶ WHERE WE ARE — last updated 2026-07-27, end of session
 
-**Six of ten sequenced steps are done and on `main`.** `@robr0/design-system@0.2.0` is live with signed provenance; CI green at `8301bbc`.
+**Seven of ten sequenced steps are done and on `main`.** `@robr0/design-system@0.2.0` is live with signed provenance; CI green as of `80b1ec8` (2026-07-27).
 
 | # | Step | Status |
 |---|---|---|
@@ -20,12 +20,12 @@ Audited against the working tree on **2026-07-27** (57 components, 4 doc-only he
 | 4 | **B3** — the `Field` primitive | ✅ **done** — 6 controls, −160 lines, 2 a11y bugs fixed |
 | 5 | **item 6** — a11y to `'error'` (AA minus contrast) | ✅ **done** — 49 fixed, 502/502 green, axe now gates CI |
 | 6 | **Workstream A Phase 1** — registry metadata | ✅ **done** — 4 duplications collapsed; found 16 missing `'use client'` |
-| 7 | **Workstream A Phase 2** — generated prop contracts | ⏸ **PARKED 2026-07-28** — see the parking record below |
+| 7 | **Workstream A Phase 2** — generated prop contracts | ⏸ **PARKED 2026-07-27** — see the parking record below |
 | 8 | **item 2** — API-surface validator | ⏸ **parked with 7** (only cheap if 7 exists) |
 | 9 | **item 5** — Chromatic | ✅ **done 2026-07-27** — baseline: 502 stories × 2 themes, 1,004 snapshots |
 | 10 | **Workstream A Phase 3** — dense `.md` docs | ⏸ **parked with 7** (its props tables come from 7) |
 
-## ⏸ PARKED 2026-07-28: Phase 2 / item 2 / Phase 3 (the props.json bundle)
+## ⏸ PARKED 2026-07-27: Phase 2 / item 2 / Phase 3 (the props.json bundle)
 
 **Decision:** parked as a bundle, on Rob's call, after a deliberate re-examination. Not rejected — the reasoning is recorded so it is never re-litigated from scratch.
 
@@ -113,20 +113,16 @@ Publishing turned every props interface into a contract. Because deep imports (`
 
 ### ✅ 3. npm Trusted Publishing (OIDC) migration — SHIPPED 2026-07-27
 
-**RESUME HERE (2026-07-27).** Trusted publisher registered on npmjs.com; workflow, skill and docs shipped; `0.2.0` bumped, committed (`1129d84`), pushed, CI green; dry run green with a tarball identical in shape to `0.1.0` (223 files, ~5.8 MB unpacked). The only step left is the real publish — `gh workflow run release.yml -f dry_run=false` — which is also the first and only test of whether OIDC auth works.
+**Outcome:** published 2026-07-27 via OIDC — the real `dry_run=false` run was the first and only auth test, and it passed. The published commit `1129d84` is tagged `v0.2.0`, the GitHub Release documents the `onChange` → `onValueChange` migration, the `NPM_TOKEN` secret and the granular token on npmjs.com are deleted, and CLAUDE.md's release line now reads "0.1.0 shipped 2026-07-26, 0.2.0 on 2026-07-27 (the first release via Trusted Publishing)".
 
-After it goes green: verify propagation (a 404 for a few minutes is normal — **never re-run**), tag the published commit `1129d84` as `v0.2.0`, write the GitHub Release with the `onChange` → `onValueChange` migration spelled out for consumers, then delete the `NPM_TOKEN` secret and the granular token on npmjs.com. Finally update CLAUDE.md's "0.1.0 shipped 2026-07-26" line, which goes stale the moment this publishes.
+Context that stays relevant: npm deprecates 2FA-bypass tokens for direct publishing in **Jan 2027**, and the retired granular `NPM_TOKEN` had an expiry that would have eventually failed the publish step with a 401 — OIDC removes that failure mode entirely.
 
-If auth fails, nothing is burned — npm only consumes a version on a successful upload, so fix and retry on `0.2.0`.
-
-npm deprecates 2FA-bypass tokens for direct publishing in **Jan 2027**, and the granular `NPM_TOKEN` had an expiry that would have failed the publish step with a 401.
-
-**Done in-repo (uncommitted):**
+**What shipped in-repo:**
 - `.github/workflows/release.yml` — `NODE_AUTH_TOKEN` env removed from the publish step; header comment rewritten to document the OIDC contract; added a step pinning npm forward (`npm install -g npm@latest`) because **Trusted Publishing requires npm ≥ 11.5.1 and Node 24 does not ship a new enough npm on every patch** — an older CLI fails the token exchange rather than degrading gracefully.
 - `.claude/skills/release/SKILL.md` — the 401/token-rotation guardrail replaced with the four real OIDC failure modes.
 - `CLAUDE.md` — release-auth prose updated.
 
-**Rob's steps, in this order** (the sequence matters — do not delete the secret first):
+**The registration, recorded for the next package or scope** (the sequence matters — do not delete the secret first):
 1. On npmjs.com → the package → Settings → Trusted Publisher → GitHub Actions. Exact values (the GitHub owner is **not** the npm scope — that's the easiest way to get this wrong):
 
    | Field | Value |
@@ -552,7 +548,7 @@ Failing stories by component: FileInput 9, Popover 8, DatePicker 7, DropdownMenu
 
 **Axe catches roughly a third of WCAG issues — passing it is not conformance.** Whether alt text is *meaningful*, whether focus order is sensible, whether a Dialog actually traps focus: all human judgment. That is why [item 7](#7-interaction-tests-play-functions--m) does real accessibility work despite not being labelled as such.
 
-**Current state:** `test` is `'todo'` and `color-contrast` is disabled in `.storybook/preview.ts`. Flip to `'error'` as the last step, once the list above is clear.
+**Current state:** done — all 49 violations fixed and `test` flipped to `'error'` in `.storybook/preview.ts` on 2026-07-27; `color-contrast` stays disabled by design (item 23). Axe now gates CI.
 
 ### 7. Interaction tests (play functions) — `M`
 
@@ -574,7 +570,7 @@ The render tests prove ~488 stories mount. Nothing proves a Dialog traps focus, 
 
 **10. No dependency automation — `S`.** No `dependabot.yml`, no Renovate. With item 11, security drift is entirely manual.
 
-**11. 11 high-severity dev-tooling advisories — `M`.** eslint and vite-plugin-dts; the only offered fixes are semver-major downgrades of next/eslint. Needs a considered look, not `npm audit fix`. Dev-only, so it doesn't reach consumers — but it lights up any org's scanner.
+**11. 11 high-severity dev-tooling advisories — `M` · investigated 2026-07-27.** All eleven are one root cause: `brace-expansion` DoS (GHSA-mh99-v99m-4gvg, range `<=5.0.7`) reached through minimatch in the eslint and vite-plugin-dts chains. Tested and ruled out: `npm audit fix` changes nothing, and a root `overrides` pin to `^5.0.8` (the only patched release — no 1.x/2.x backport exists) breaks eslint at runtime (`expand is not a function`; brace-expansion 5 changed its export shape, minimatch@3 requires the old one). The only real fixes are the semver-major eslint 10 upgrade or waiting for upstream backports/minimatch bumps. Dev-only — the published package has zero runtime deps affected — so accepted for now; re-check on the next eslint major or when `npm audit` output changes.
 
 **12. No Node version pinning — `S`.** No `engines` field, no `.nvmrc`. CI runs Node 24; a contributor on an older Node gets a confusing failure instead of a clear one.
 
@@ -586,7 +582,7 @@ The render tests prove ~488 stories mount. Nothing proves a Dialog traps focus, 
 
 **15. `Table` has no sorting, selection, or row-expansion props — `L`.** Flagged in the Astryx gap analysis as *arguably higher impact than any new component*, being an enhancement to something already used rather than a new registry entry. Especially relevant to payroll/HR-shaped products, which are mostly dense tables.
 
-**16. Remaining component gaps — `M` each.** From the 2026-07-23 re-rank, after the top 5 shipped: Stepper/Wizard, NumberInput, AvatarGroup, Kbd, Toolbar. Honorable mentions: StatusDot, DateRangeInput, TreeList, HoverCard, VisuallyHidden.
+**16. Remaining component gaps — `M` each.** Re-ranked 2026-07-27 against the Radix Themes playground (Kbd and ContextMenu shipped that day, plus the Button/CircularButton `loading` state): DataList, HoverCard, inline Code, ScrollArea, then the Astryx leftovers Stepper/Wizard, NumberInput, AvatarGroup, Toolbar. Honorable mentions: StatusDot, DateRangeInput, TreeList, VisuallyHidden. Deliberate skips (recorded so they aren't re-proposed): AspectRatio, Inset, typography primitives, ghost/soft variant families.
 
 **17. JS-driven motion timings still hardcoded — `S`.** CSS motion is fully tokenized (`--motion-*`, passes 1+2 done 2026-07-23), but Tooltip delays, Toast auto-dismiss, and Carousel autoplay remain TS constants. The remaining pass exports durations from a TS module reading the same scale, so the two can't diverge. (The `.animate-in` reduced-motion rule is **not** redundant — keep it.)
 

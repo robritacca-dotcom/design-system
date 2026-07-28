@@ -60,7 +60,7 @@ npm run build:lib       # build the publishable package into dist/ (vite lib bui
 npm run lint            # ESLint
 npm run build-storybook # export static Storybook
 npm run test            # run every Storybook story as a render test (headless Chromium)
-npm run verify          # full local quality gate: lint + tests + all three builds (mirrors CI)
+npm run verify          # full local quality gate: lint + tests + the library, package, Storybook and website builds (mirrors CI)
 ```
 
 ---
@@ -78,7 +78,7 @@ Two facts that bite on release day: **a published version can never be reused**,
 **Infrastructure** (the facts the /overview pipeline describes — keep them in sync):
 - **Domain**: `robertritacca.com` is registered at GoDaddy; GoDaddy DNS points at the Vercel deployment (`www` CNAMEs to Vercel's DNS). Storybook deploys as a second Vercel project.
 - **Analytics**: Google Analytics 4 via the gtag snippet in `website/src/app/layout.tsx` (`GA_ID` is the public G-… measurement ID — safe to commit; it is visible in every page's source by design). GA *credentials* (service-account key, property ID) live only in the local, gitignored `ga-analysis/` data used by the `ga-report` skill — never in the repo or the site.
-- **Fonts**: Nunito Sans is **not** bundled anywhere — the website self-hosts it via `next/font/google` (fetched from Google Fonts at build time), Storybook loads it via a Google Fonts `<link>`, and package consumers bring their own (override `--font-family-primary`). Material Symbols Rounded ships as a self-hosted woff2 **inside the npm package** (`src/fonts/`). The customization playground is the one surface that loads fonts from Google at runtime.
+- **Fonts**: Nunito Sans is **not** bundled anywhere — the website self-hosts it via `next/font/google` (fetched from Google Fonts at build time), Storybook loads it via a Google Fonts `<link>`, and package consumers bring their own (override `--font-family-primary`). Material Symbols Rounded ships as a self-hosted woff2 **inside the npm package** (`src/fonts/`). The playground (`/playground`) is the one surface that loads fonts from Google at runtime.
 
 `npm run verify` is the **single local mirror of CI**: lint, library build, story tests, Storybook build, website lint, website build, in that order. The rule that keeps them in sync: **when CI gains a check (a11y is the worked example), add it to `verify` in the same change** — skills and docs reference `verify`, never individual commands, so nothing else needs updating. **One deliberate exception: Chromatic** (`.github/workflows/chromatic.yml`, visual regression). Every run bills cloud snapshots against a monthly budget, so it is `workflow_dispatch`-only, never part of `verify`, and never a reason to treat a green `verify` as proof the pixels are unchanged.
 
@@ -89,20 +89,31 @@ Two facts that bite on release day: **a published version can never be reused**,
 ```
 /
 ├── design.md                  # Design spec — source of truth for tokens, colors, typography
+├── ROADMAP.md                 # The single planning surface (hand-maintained intent, not facts)
+├── scripts/                   # Generators + validators (the validate-registry chain), release tooling
 ├── src/
+│   ├── index.ts               # GENERATED barrel — never hand-edit
+│   ├── charts.ts              # GENERATED recharts barrel — never hand-edit
 │   ├── components/            # Component folders (each self-contained) + registry.json (official list/count)
+│   ├── stories/               # Storybook foundation docs (tokens, typography, icons, logos, landing page)
 │   ├── tokens/
+│   │   ├── tokens.css               # Aggregate entry point consumers import
 │   │   ├── tokens-primitives.css    # Raw hex/px values — never use directly in components
 │   │   ├── tokens-light.css         # Semantic tokens, light theme
 │   │   ├── tokens-dark.css          # Semantic tokens, dark theme
 │   │   ├── tokens-typography.css    # Font size/weight/line-height scale
-│   │   └── tokens-motion.css        # Duration/easing scale + reduced-motion guard
+│   │   ├── tokens-motion.css        # Duration/easing scale + reduced-motion guard
+│   │   └── registry.json            # GENERATED token registry — never hand-edit
 │   └── fonts/                 # Material Symbols icon font (self-hosted); Nunito Sans is loaded via Google Fonts
 ├── .storybook/                # Storybook config (Storybook is the library's dev sandbox)
 └── website/                   # Next.js docs site (npm workspace; consumes @robr0/design-system by name)
+    ├── public/                # Includes GENERATED copies of CLAUDE.md + design.md (see /blueprints)
     ├── src/app/
     │   ├── components/        # One folder per component, each with page.tsx + page.module.css
     │   ├── foundations/       # Design tokens & layout doc pages
+    │   ├── docs/              # Docs hub: overview links, get-started (install + theming), skills, journal
+    │   ├── playground/        # Live re-theming playground (standalone page, no sidebar)
+    │   ├── blueprints/        # Renders the public CLAUDE.md / design.md copies
     │   └── about/             # About/work pages
     └── src/components/        # Shared Next.js UI (Header, Sidebar, Footer, etc.)
 ```
@@ -177,7 +188,7 @@ A new component is not done until it appears in **every** place the system docum
    - `website/src/app/components/page.tsx` — add a `TocCard` with a small live preview to the components index grid (alphabetical). This is the one surface still hand-maintained, because each card contains a bespoke preview.
 7. **Document it in `design.md`**: add a short component spec section (class name, tokens used, key behaviours).
 
-Steps 5–7 are build-enforced by two validators: `scripts/validate-website-surfaces.mjs` fails the build if any public component is missing its showcase page, nav entry, `TocCard`, or `design.md` spec, or if the sidebar falls out of alphabetical order; `scripts/validate-page-titles.mjs` fails it if the page has no `layout.tsx`, or if that layout does not derive its title from `pageMetadata()`.
+Steps 5–7 are build-enforced by two validators: `scripts/validate-website-surfaces.mjs` fails the build if any public component is missing its showcase page, `TocCard`, or `design.md` spec (the nav entry and its order are derived from the registry, so they cannot drift); `scripts/validate-page-titles.mjs` fails it if the page has no `layout.tsx`, or if that layout does not derive its title via `componentPageMetadata("<slug>")`.
 
 Checklist before shipping a component:
 - [ ] Props follow the published-contract shape (own-props split, `forwardRef` + `displayName`, `{...rest}`, native event signatures)
@@ -187,7 +198,7 @@ Checklist before shipping a component:
 - [ ] Disabled state at `opacity: 0.4`, `cursor: not-allowed`
 - [ ] Interactive elements have ARIA roles and keyboard navigation
 - [ ] At least one Storybook story per variant
-- [ ] Website showcase page added, with a `layout.tsx` title via `pageMetadata()` (build-enforced)
+- [ ] Website showcase page added, with a `layout.tsx` title via `componentPageMetadata("<slug>")` (build-enforced)
 - [ ] Added to `src/components/registry.json` with complete metadata, `client` matching whether the file declares `'use client'` (build-enforced)
 - [ ] `TocCard` added to the components index grid (build-enforced). The sidebar nav, sitemap and breadcrumbs derive from the registry — nothing to add
 - [ ] Spec section added to `design.md` (build-enforced)
@@ -236,7 +247,7 @@ Tokens also have multiple homes — a token that exists only in CSS is incomplet
 | [`src/tokens/tokens-typography.css`](src/tokens/tokens-typography.css) | Font size/weight/line-height scale |
 | [`src/tokens/tokens-motion.css`](src/tokens/tokens-motion.css) | Duration/easing tokens + reduced-motion guard |
 | [`src/components/Button/Button.tsx`](src/components/Button/Button.tsx) | Reference implementation for a component |
-| [`src/components/Button/Button.stories.ts`](src/components/Button/Button.stories.ts) | Reference for Storybook story structure |
+| [`src/components/Button/Button.stories.ts`](src/components/Button/Button.stories.ts) | Reference for story structure (`.ts` because it holds no JSX — `.tsx` is the library-wide convention) |
 | [`website/src/app/components/button/page.tsx`](website/src/app/components/button/page.tsx) | Reference for a website showcase page |
 | [`website/src/config/navigation.ts`](website/src/config/navigation.ts) | Nav links — update when adding pages |
 | [`.storybook/main.ts`](.storybook/main.ts) | Storybook config (addons, stories glob) |

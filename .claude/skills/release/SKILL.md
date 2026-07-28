@@ -81,11 +81,13 @@ Watch it the same way. The publish step runs `npm publish --access public --prov
 
 **The registry lags a successful publish by several minutes.** A `404` from `npm view` right after a green workflow is propagation, not failure. Confirm the workflow's publish step actually ran (`gh run view <id> --json jobs`) and look for `+ @robr0/design-system@<version>` in its log — if that line is there, it published. **Never re-run the workflow on a 404**; the version is already consumed and the rerun will fail with `EPUBLISHCONFLICT`.
 
-Once it propagates, verify like a consumer rather than trusting the logs — install from the registry into a scratch directory and build a real app with it (bare `node` can't import the barrel because components import their own CSS; that needs a bundler):
+Once it propagates, confirm the registry serves the new version:
 
 ```bash
 npm view @robr0/design-system version --prefer-online
 ```
+
+The real consumer-shaped check already ran before publish: `scripts/smoke-consumer.mjs` packs the tarball into a scratch Vite app and builds it (bare `node` can't import the barrel because components import their own CSS; that needs a bundler). To repeat it against the *published* artifact rather than the local tarball, scaffold a scratch Vite app, `npm install @robr0/design-system@<version>`, import the barrel plus `tokens/tokens.css`, and run its build.
 
 ### 7. Tag the published commit
 

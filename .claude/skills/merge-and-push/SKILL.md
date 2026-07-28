@@ -16,6 +16,8 @@ Use this skill when asked to ship completed work — phrases like "merge and pus
 
 ## Instructions
 
+0. **Check the branch first**: `git branch --show-current`. The steps below assume `main`, where **a push deploys robertritacca.com**. On any other branch (loop branches, experiments), pushing publishes nothing — push to the same-named remote branch, skip the Vercel warning, and say plainly in the report that the work is on a branch, not deployed. Never silently switch branches to get to `main`.
+
 1. **Survey the tree before touching anything**: run `git status --short` and classify every entry:
    - **In scope** — files created or modified as part of the work just completed in this session
    - **Out of scope** — anything untracked or modified that predates the session, or that wasn't part of the requested work
@@ -24,15 +26,17 @@ Use this skill when asked to ship completed work — phrases like "merge and pus
 
 2. **Run the full verify before committing**:
    ```bash
-   npm run verify   # lint + library type-check + package build + story tests + Storybook build + website build
+   npm run verify   # lint + library type-check + package build + story tests + Storybook build + website lint + build
    ```
    This one script is the single source of truth for local checks and mirrors the CI jobs in `.github/workflows/ci.yml` — if CI gains a check (tests, a11y), it gets added to `verify`, never listed here separately. The registry validators run automatically via the builds' `prebuild` hooks. **If any step fails, stop** — fix the failure if it was caused by this session's work, otherwise report it. Never push red.
 
-   Note: the build regenerates several derived surfaces — `website/src/data/skills-content.generated.ts` (from the SKILL.md files), the marked component count/list sections of `README.md` (from `src/components/registry.json`), the package barrels `src/index.ts`/`src/charts.ts` (same registry), and the public blueprint copies `website/public/CLAUDE.md`/`design.md` (from the root files). If any changed after the builds, it changed because this session's work made it stale — treat it as in scope and commit it alongside the edits that caused it (the validators fail the build when generated content goes stale, so leaving it out breaks CI's drift guard).
+   Note: the build regenerates several derived surfaces — `website/src/data/skills-content.generated.ts` (from the SKILL.md files), the marked component count/list sections of `README.md` (from `src/components/registry.json`), the package barrels `src/index.ts`/`src/charts.ts` (same registry), the token registry `src/tokens/registry.json` (from the token CSS), and the public blueprint copies `website/public/CLAUDE.md`/`design.md` (from the root files). If any changed after the builds, it changed because this session's work made it stale — treat it as in scope and commit it alongside the edits that caused it (the validators fail the build when generated content goes stale, so leaving it out breaks CI's drift guard).
 
 3. **Group changes into logical commits** — one commit per concern, not one giant commit. Match the repo's conventional style (`feat(scope):`, `fix(scope):`, `chore(scope):`), with a 1–3 sentence body explaining the why. Check `git log --oneline -5` if unsure of the voice.
 
 4. **Push**: `git push` on `main`. Remember: **a push to main deploys robertritacca.com via Vercel** — pushing is publishing.
+
+   If the pushed work changed component CSS, anything under `src/tokens/`, or `.storybook/`, offer to dispatch Chromatic (`gh workflow run chromatic.yml`) — `verify` proves nothing about pixels, and this is the decision point pre-deploy's Chromatic rule exists for. It bills cloud snapshots, so it's an offer, not an automatic step.
 
 5. **Confirm CI went green**: after the push, watch the GitHub Actions run to completion:
    ```bash

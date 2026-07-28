@@ -22,7 +22,7 @@ Use this skill when asked to check for hardcoded values, audit token usage, find
    - `website` → scans all `website/src/**/*.css` and `website/src/**/*.module.css`
    - A specific file path
 
-2. **Read the token files in `src/tokens/` first** to know what tokens are available and what raw values they map to — primitives (raw hex/px), the light *and* dark semantic files, typography (font size, weight, line-height), and motion (`tokens-motion.css` — durations and easings).
+2. **Read the token files in `src/tokens/` first** to know what tokens are available and what raw values they map to — primitives (raw hex/px), the light *and* dark semantic files, typography (font size, weight, line-height), and motion (`tokens-motion.css` — durations and easings). The fastest authoritative index is the **generated** `src/tokens/registry.json` — every semantic token with its category and per-theme values, machine-readable; read it instead of parsing the CSS by hand (never edit it — it regenerates from the CSS).
 
 3. **Scan each CSS file** in scope for violations:
 

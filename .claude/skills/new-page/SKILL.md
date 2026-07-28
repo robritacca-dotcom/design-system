@@ -20,7 +20,7 @@ For a **component documentation page**, use the `component-doc-page` skill inste
 
 1. **Gather requirements** if not already provided:
    - Page URL path (e.g. `/foundations/motion`)
-   - Which section it belongs to — the sidebar arrays in `website/src/config/navigation.ts` are the authoritative list of sections (foundations, customization, the docs cluster, work; writing is fed dynamically from Substack). **Components are the exception**: `componentsSidebarLinks` is derived from `src/components/registry.json`, so a component page is registered by adding a registry entry, not by editing the array — use the `component-doc-page` skill for those.
+   - Which section it belongs to — the sidebar arrays in `website/src/config/navigation.ts` are the authoritative list of sections (foundations, the docs cluster, work; writing is fed dynamically from Substack; standalone pages like `/playground` and `/contact` live in no sidebar array and declare their metadata as a literal). **Components are the exception**: `componentsSidebarLinks` is derived from `src/components/registry.json`, so a component page is registered by adding a registry entry, not by editing the array — use the `component-doc-page` skill for those.
    - Page title, a short `subDisplay` tagline, and a 1–2 sentence description (for metadata and the intro block)
    - Figma URL and Storybook path (optional) — for `PageLinks`
 
@@ -44,12 +44,15 @@ For a **component documentation page**, use the `component-doc-page` skill inste
 - No `ch`-based `max-width` on prose — doc paragraphs run the full content column; the layout column is the only width constraint (build-enforced by `scripts/validate-page-titles.mjs`)
 
 ### File 3: `layout.tsx`
-- Exports `metadata` via the shared helper: `export const metadata = pageMetadata("<your path>", "<one-line description>")` (import from `@/config/navigation`) — `scripts/validate-page-titles.mjs` fails the build if a page's layout doesn't derive its title this way
+- Sidebar-registered pages export `metadata` via the shared helper: `export const metadata = pageMetadata("<your path>", "<one-line description>")` (import from `@/config/navigation`)
+- Standalone pages (`/playground`, `/contact` — pages in no sidebar array) export a literal `Metadata` object instead, with an explicit `alternates.canonical` — see `website/src/app/playground/layout.tsx`
+- Only **component** pages are build-enforced (`scripts/validate-page-titles.mjs` requires `componentPageMetadata("<slug>")` there); for everything else the helper is convention, not a gate — follow it anyway
 - Default export wraps `{children}` in a fragment
 
 4. **Register the page everywhere the site tracks pages:**
-   - **Sidebar**: add `{ href, label }` to the section's array in `website/src/config/navigation.ts`, matching that array's existing order convention (components and foundations are alphabetical; work and about are curated)
-   - **Sitemap**: automatic — it derives from the sidebar configs, so the entry above covers it; never edit `website/src/app/sitemap.ts` by hand
+   - **Sidebar** (only if the page belongs to a section): add `{ href, label }` to the section's array in `website/src/config/navigation.ts`, matching that array's existing order convention (components and foundations are alphabetical; work and about are curated)
+   - **Standalone pages** (no sidebar section): no array to edit — but the sitemap then knows nothing about the route, so add it as a top-level literal in `website/src/app/sitemap.ts` (the `/playground` entry is the pattern), and extend `dsActiveMatchers`/`dsMegaItems` only if it belongs under the Design system umbrella
+   - **Sitemap** for sidebar-registered pages: automatic — it derives from the sidebar configs, so the entry above covers it
    - **Breadcrumbs**: sub-pages of an existing section resolve automatically from the sidebar entry. Only if the page starts a *new* section: add a `breadcrumbSections` entry, and if it lives under the Design system umbrella, extend `dsActiveMatchers` (and `dsMegaItems` if it should appear in the mega menu)
 
 5. **Verify**: load the page in the browser and confirm the sidebar highlights it, the breadcrumb trail is correct, and both themes render properly.

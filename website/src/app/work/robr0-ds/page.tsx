@@ -445,10 +445,16 @@ export default function Robr0DsCaseStudy() {
                   <h2 id="the-artifacts-im-leaving-open">The artifacts I&apos;m leaving open</h2>
 
                   <p>
-                    The whole system is on GitHub. Three artifacts make the approach reusable on any project you start tomorrow:
+                    The whole system is on GitHub. Five artifacts make the approach reusable on any project you start tomorrow:
                   </p>
 
                   <ul>
+                    <li>
+                      <a href="https://www.npmjs.com/package/@robr0/design-system" target="_blank" rel="noopener noreferrer" className={styles.inlineLink}>The npm package</a> — <code>@robr0/design-system</code>, published with provenance; this site installs it like any other consumer. <Link href="/docs/get-started" className={styles.inlineLink}>Get started</Link> covers install and theming.
+                    </li>
+                    <li>
+                      <Link href="/playground" className={styles.inlineLink}>The playground</Link> — re-theme the whole system live and copy the CSS it generates straight into your own project.
+                    </li>
                     <li>
                       <Link href="/blueprints/claude" className={styles.inlineLink}>Claude MD</Link> — the codebase context any AI agent can read to understand the project.
                     </li>
@@ -461,13 +467,13 @@ export default function Robr0DsCaseStudy() {
                   </ul>
 
                   <p>
-                    Each one is a markdown file. Download it, drop it into your project, point Claude at it. The pipeline isn&apos;t magic — it&apos;s a stack of small written agreements an AI can act on.
+                    The last three are plain markdown files. Download one, drop it into your project, point Claude at it. The pipeline isn&apos;t magic — it&apos;s a stack of small written agreements an AI can act on.
                   </p>
 
                   <h2 id="whats-next">What&apos;s next</h2>
 
                   <p>
-                    The direction is more of what July started: hardening and autonomy. On the hardening side, promoting the accessibility checks from report-only to build-blocking, and adding visual regression coverage so a stray pixel fails CI the way a broken story already does. On the autonomy side, more <Link href="/loops" className={styles.inlineLink}>loops</Link> that don&apos;t wait to be asked — the weekly copy experiments and the biweekly journal are the first two, not the last. The experiment continues, and so far the answer to the original question is yes: one designer really can run the whole lifecycle — as long as the system helps.
+                    The hardening July started has landed: the accessibility checks are now build-blocking (an axe violation fails CI, with the colour-contrast criteria deliberately deferred while the action colour is redesigned), and Chromatic visual regression snapshots every story in both themes against an accepted baseline — run on demand, a budget choice rather than an unfinished state. What&apos;s left is autonomy: more <Link href="/loops" className={styles.inlineLink}>loops</Link> that don&apos;t wait to be asked — the weekly copy experiments and the biweekly journal are the first two, not the last. The experiment continues, and so far the answer to the original question is yes: one designer really can run the whole lifecycle — as long as the system helps.
                   </p>
                 </article>
               </section>

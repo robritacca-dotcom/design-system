@@ -338,13 +338,15 @@ Hover: primary → `--color-action-primary-bg-hover`; secondary/destructive → 
 
 Sizes: `default` (padding 8px × 20px), `compact` (padding 6px × 12px).
 
+Loading state: `loading` puts a `variant="inherit"` Spinner in the left icon slot (24px default / 16px compact), keeps the variant's full-colour appearance (no disabled dim), blocks interaction (`pointer-events: none`, `cursor: progress`, `disabled` attribute), and sets `aria-busy`. A loading `href` button renders the `<button>` branch so the link is truly inert.
+
 ### ButtonGroup
 
 **`ds-button-group`** — Inline container that composes Buttons for nav and subnav contexts. Two orientations: `horizontal` (default — `--gap-lg` between buttons, used in top navigation) and `vertical` (`--gap-xxs`, left-aligned hug-content column for subnav/mobile). Purely compositional: each entry is a full `ButtonProps` config passed straight through to Button, so priorities and states mix freely. `role="group"` with an optional `ariaLabel`.
 
 ### CircularButton
 
-**`ds-circular-button`** — Round icon-only button, 40px (default) or 32px (compact), always `--radius-full`. Same three priorities as Button — `primary` (`--color-action-primary-bg` fill), `secondary` (outlined, `--border-xs` + action border tokens), `tertiary` (ghost, `--color-action-passive-bg-hover` on hover) — with the same state set (`default`/`hover`/`active`/`disabled`). Icon is a single Material Symbol at 24px default / 20px compact. Renders as `<a>` when `href` is set. `ariaLabel` is required — there is no visible label.
+**`ds-circular-button`** — Round icon-only button, 40px (default) or 32px (compact), always `--radius-full`. Same three priorities as Button — `primary` (`--color-action-primary-bg` fill), `secondary` (outlined, `--border-xs` + action border tokens), `tertiary` (ghost, `--color-action-passive-bg-hover` on hover) — with the same state set (`default`/`hover`/`active`/`disabled`). Icon is a single Material Symbol at 24px default / 20px compact. Renders as `<a>` when `href` is set. `ariaLabel` is required — there is no visible label. `loading` swaps the icon for a `variant="inherit"` Spinner, keeps full-colour appearance, blocks interaction, and sets `aria-busy` — same contract as Button.
 
 ### SegmentedControl
 
@@ -443,7 +445,7 @@ Default icons (Material Symbols Rounded): `info`, `check_circle`, `warning`, `er
 
 ### Spinner
 
-**`ds-spinner`** — Indeterminate loading indicator: an SVG circle with a `--color-bg-container-secondary` track and a rotating arc in `--color-action-primary-bg` (`variant="primary"`) or `--color-text-secondary` (`variant="neutral"`). Sizes `sm`/`md`/`lg` (16/24/36px). `role="status"` with a configurable `label`. Use Spinner for indeterminate waits and ProgressBar when the completion fraction is known.
+**`ds-spinner`** — Indeterminate loading indicator: an SVG circle with a `--color-bg-container-secondary` track and a rotating arc in `--color-action-primary-bg` (`variant="primary"`) or `--color-text-secondary` (`variant="neutral"`); `variant="inherit"` draws both circles in `currentColor` (track at 0.25 opacity) so the spinner matches the surrounding control — it's what Button and CircularButton use for their `loading` state. Sizes `sm`/`md`/`lg` (16/24/36px). `role="status"` with a configurable `label`. Use Spinner for indeterminate waits and ProgressBar when the completion fraction is known.
 
 ### EmptyState
 
@@ -508,7 +510,7 @@ Default icons (Material Symbols Rounded): `info`, `check_circle`, `warning`, `er
 
 ### CommandPalette
 
-**`ds-command-palette`** — Modal Cmd+K launcher over a grouped command list. Panel is a 560px `--radius-md` surface on `--color-bg-page-primary` with `--shadow-modal`, pinned 10vh from the top over a `--color-scrim` backdrop, capped at 60vh. A search row (24px `search` icon, borderless input, 32px ghost close) sits above a scrolling list of `--radius-sm` command rows; each row takes an optional 20px icon, a `--font-paragraph-em-*` label, an optional tertiary description line, and a `shortcut` array rendered as `<kbd>` chips (`--radius-xs`, `--color-bg-container-primary`, hairline border). Group headings use `--font-paragraph-sm-*` tertiary; the active row takes `--color-action-passive-bg-hover`. Filtering matches label, description, and `keywords`; disabled commands stay visible but are skipped by the highlight. Keyboard: arrows wrap through the flattened list, Home/End jump to the ends, Enter runs, Escape closes, and `hotkey` binds Cmd/Ctrl+K globally (set false when the host app owns the shortcut). A footer hint row documents those keys and hides under 480px. Closed state uses `visibility: hidden` so the input never enters the tab order.
+**`ds-command-palette`** — Modal Cmd+K launcher over a grouped command list. Panel is a 560px `--radius-md` surface on `--color-bg-page-primary` with `--shadow-modal`, pinned 10vh from the top over a `--color-scrim` backdrop, capped at 60vh. A search row (24px `search` icon, borderless input, 32px ghost close) sits above a scrolling list of `--radius-sm` command rows; each row takes an optional 20px icon, a `--font-paragraph-em-*` label, an optional tertiary description line, and a `shortcut` array rendered as compact Kbd keycaps (see Kbd). Group headings use `--font-paragraph-sm-*` tertiary; the active row takes `--color-action-passive-bg-hover`. Filtering matches label, description, and `keywords`; disabled commands stay visible but are skipped by the highlight. Keyboard: arrows wrap through the flattened list, Home/End jump to the ends, Enter runs, Escape closes, and `hotkey` binds Cmd/Ctrl+K globally (set false when the host app owns the shortcut). A footer hint row documents those keys and hides under 480px. Closed state uses `visibility: hidden` so the input never enters the tab order.
 
 ### Popover
 
@@ -517,6 +519,10 @@ Default icons (Material Symbols Rounded): `info`, `check_circle`, `warning`, `er
 ### DropdownMenu
 
 **`ds-dropdown-menu`** — Action menu opened from a trigger element (contrast with Dropdown, which is a form select). The panel is `--radius-md` on `--color-bg-page-primary` with a `--border-xs` `--color-input-border-primary` hairline and `--shadow-floating`, `--padding-xxs` inset, aligned `start` or `end`. Entries are a typed tree: items (label, optional Material Symbol icon, keyboard `shortcut` hint, `disabled`, `destructive` — red via the error/coral tokens), `separator`s, labelled `group`s, and nested sub-menus via `children`. Full keyboard navigation across the flattened item list; hover uses `--color-action-passive-bg-hover`. Sizes: `default`, `compact`.
+
+### ContextMenu
+
+**`ds-context-menu`** — Right-click (and keyboard ContextMenu / Shift+F10) menu anchored at the pointer position. Wraps its `children` as the right-clickable area; the panel is `position: fixed` at the event coordinates, clamped inside the viewport, and closes on outside click, scroll, resize, Escape, or item activation. Entries reuse DropdownMenu's typed tree (`DropdownMenuEntry`: items with icon/`shortcut`/`disabled`/`destructive`, `separator`s, labelled `group`s, one level of `children` sub-menus) and the exact same panel recipe — `--radius-md` on `--color-bg-page-primary`, `--border-xs` `--color-input-border-primary` hairline, `--shadow-floating`, `--padding-xxs` inset, `--motion-duration-fast` appear. Keyboard: the panel takes focus on open; Arrow keys move, Enter activates, Escape closes. Sizes: `default`, `compact`. Use DropdownMenu when the menu opens from a visible trigger; ContextMenu when it opens on the content itself.
 
 ### Tooltip
 
@@ -537,6 +543,10 @@ Default icons (Material Symbols Rounded): `info`, `check_circle`, `warning`, `er
 ### CodeBlock
 
 **`ds-code-block`** — Monospace code in a `--color-bg-container-primary` container with `--radius-md` and a hairline border. The one sanctioned monospace context in the system (system mono stack — Nunito Sans everywhere else). Optional header row: filename (mono, `--color-text-secondary`), uppercase language tag (`--color-text-tertiary`, 0.08em tracking), and a copy button that confirms with a check for 2s. Code text is 14px/20px, `--color-text-primary`; long lines scroll horizontally. An optional `maxHeight` prop caps the block: the code area scrolls vertically inside while the header stays pinned. An optional `collapsible` prop adds a chevron beside the filename (`--color-icon-primary`, 20px, rotates −90° when closed) that collapses the code area with the same 0fr/1fr grid animation as Accordion; `defaultCollapsed` starts it closed. No syntax highlighting — monochrome by design, no dependencies.
+
+### Kbd
+
+**`ds-kbd`** — A single keyboard key rendered as a keycap, for shortcut hints in menus and docs prose. A semantic `<kbd>` on a `--color-bg-container-primary` chip with a `--border-xs` `--color-bg-container-border` border at `--radius-xs`; legend in `--font-paragraph-sm-*` at em weight, `--color-text-tertiary`, centred with a min-width so single letters stay square-ish (24px default, 20px compact). Sizes: `default`, `compact` (the compact size matches CommandPalette's shortcut hints, which render through Kbd). Purely presentational — no `'use client'`; compose several for a chord: `⌘` + `K`.
 
 ### Quote
 

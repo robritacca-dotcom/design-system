@@ -8,7 +8,7 @@ import "@robr0/design-system/tokens/tokens.css";
 import "@robr0/design-system/fonts/material-symbols.css";
 import { Nunito_Sans } from "next/font/google";
 import "./globals.css";
-import { buildPersonJsonLd, buildWebsiteJsonLd } from "@/lib/structuredData";
+import { buildPersonJsonLd, buildWebsiteJsonLd, SITE_URL } from "@/lib/structuredData";
 
 const GA_ID = "G-RCSFYMD51K";
 
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     template: "%s — Robert Ritacca",
   },
   description: SITE_DESCRIPTION,
-  metadataBase: new URL("https://robertritacca.com"),
+  metadataBase: new URL(SITE_URL),
   // No root `alternates.canonical` — it would be inherited by every page,
   // canonicalising the whole site to the homepage. Each page sets its own
   // canonical (via pageMetadata/sectionMetadata or an explicit alternates
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Robert Ritacca — Principal Product Designer",
     description: SITE_DESCRIPTION,
-    url: "https://robertritacca.com",
+    url: SITE_URL,
     siteName: "Robert Ritacca",
     locale: "en_US",
     type: "website",

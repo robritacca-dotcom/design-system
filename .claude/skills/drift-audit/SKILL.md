@@ -35,6 +35,8 @@ node -e "console.log(JSON.stringify(require('./package.json').exports, null, 2))
 git log --oneline -20
 ```
 
+(Heads-up: `validate-registry` **writes** — it regenerates the README regions, barrels, skills content, token registry, and blueprint copies. Check `git status` before and after, so regenerated output isn't mistaken for a finding.)
+
 Read the root `package.json` (scripts, dependency model, workspaces), the validator scripts named in `validate-registry`, and the recent commits. The recent commits tell you *what kind* of drift to hunt for — a dependency-model change implicates install instructions everywhere; a renamed route implicates nav, sitemap, and cross-links.
 
 If `validate-registry` fails, stop and report that first — the automated layer is broken and everything downstream is unreliable.
@@ -46,7 +48,7 @@ These are checkable by grep and should be exhaustive. For each, the question is 
 - **Every command referenced in prose exists.** Collect `npm run <script>` mentions across `*.md`, `.claude/skills/**`, and `website/src/**`, and diff against the real script list. A referenced-but-missing script is a broken instruction. **Check every workspace's scripts, not just the root** — a mention may be workspace-scoped (`--workspace <name>`, or preceded by a `cd`), which a naive grep reports as missing when it is perfectly valid.
 - **Every file path referenced in prose exists.** Extract path-looking strings from CLAUDE.md, design.md, README.md, and every SKILL.md, and test each one. Moved or deleted files leave dangling references. Expect noise and filter it before reporting: bare filenames used conversationally (`globals.css`), scaffolding placeholders (`ComponentName.tsx`, `my-component/page.tsx`), date placeholders (`YYYY-MM-DD.md`), and shorthand for a pair (`tokens-light/dark.css`) are all fine. Only a path that *claims* to point at something real and doesn't is a finding.
 - **Every import specifier in docs matches the real exports map.** Any `import … from "…"` in documentation or example code should resolve against the package's current `exports` (or be an obvious third-party import). Renamed aliases and scopes hide here.
-- **Internal links resolve.** Route strings in website prose (`/foundations/...`, `/customization/...`) should correspond to real app directories, and the nav config should agree.
+- **Internal links resolve.** Route strings in website prose (`/foundations/...`, `/playground`) should correspond to real app directories, and the nav config should agree.
 - **Counts come from registries, never literals.** Grep displayed numbers near countable nouns; each should be an imported constant.
 - **Config still applies where it is declared.** A restructure can leave a config block sitting somewhere the tool no longer reads, and nothing warns you — it just silently stops taking effect. Check that declared intent matches installed reality: dependency `overrides`/`resolutions` (npm honours these **only** in the workspace root), engine constraints, lint and TS config inheritance, and bundler aliases. For dependency pins specifically, compare the declared range against what is actually installed (`npm ls <pkg>`) and run `npm audit` — pins are usually security fixes, so one that stops applying is a silent regression, not a style issue.
 
@@ -57,6 +59,7 @@ For each surface, the test is: *if a stranger followed this exactly, would it wo
 - **README.md** — highest stakes: it ships inside the npm tarball, so its install and usage instructions reach every consumer. Verify the install command, import examples, customization recipes, and local-dev steps against the real package.
 - **CLAUDE.md** — the project's operating manual: structure diagram, quick start, command list, registries/generated surfaces, architecture invariants, infrastructure facts. Every generated surface must be listed with its markers and its generator.
 - **design.md** — design language claims and per-component specs. Check that stated invariants are still enforced and that specs match the components.
+- **ROADMAP.md** — status tables and per-item "current state" paragraphs. A completed item's body often still describes the pre-completion state (a stale "RESUME HERE", a gap list naming something that has since shipped, a "current state" contradicting the status table in the same file).
 - **Website self-descriptions** — any page that explains how the system is built (the overview/pipeline, get-started and docs pages, foundations pages). These are public claims; treat inaccuracy as a bug.
 - **Blueprint copies** — if the repo publishes copies of its own docs, confirm they are generated rather than hand-maintained, and that they regenerated.
 
