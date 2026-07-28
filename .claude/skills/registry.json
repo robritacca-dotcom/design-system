@@ -5,6 +5,7 @@
     "new-page",
     "visual-review",
     "token-audit",
+    "content-audit",
     "pre-deploy",
     "merge-and-push",
     "release",

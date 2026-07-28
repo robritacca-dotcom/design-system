@@ -99,7 +99,7 @@ git push origin v<version>
 gh release create v<version> --verify-tag --title "v<version> — <short title>" --notes-file <notes>
 ```
 
-Write the notes for a consumer, not a maintainer: what's new, anything breaking with the migration step spelled out, and the install snippet. The previous release is the format reference.
+Write the notes for a consumer, not a maintainer: what's new, anything breaking with the migration step spelled out, and the install snippet. The previous release is the format reference; the prose follows `content-design.md`.
 
 ### 8. Report
 

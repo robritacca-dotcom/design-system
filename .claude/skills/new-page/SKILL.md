@@ -35,6 +35,7 @@ For a **component documentation page**, use the `component-doc-page` skill inste
 - Copy the exemplar's shell exactly — same components, same nesting, same class names. Don't improvise structure.
 - Invariants the exemplar can't teach:
   - `subDisplay` is a *tagline* inside the intro block (e.g. the Skills page's "Reusable AI instructions, tuned for this project") — not the section name; the breadcrumb already shows where you are
+  - All copy on the page (tagline, intro, body, metadata description) follows `content-design.md` — voice, register, and the words-to-avoid tables
   - Sidebar links come from `getSidebarLinks(<section>SidebarLinks, "<your path>")`
   - Include `PageLinks` only if Figma/Storybook URLs exist
 

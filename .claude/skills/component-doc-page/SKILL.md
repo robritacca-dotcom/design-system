@@ -38,6 +38,7 @@ This is a more thorough, component-specific version of `new-page`. The Button pa
    - Invariants the exemplar can't teach:
      - `subDisplay` is a *tagline* for the component (e.g. Button's "The main action element") — not the word "Components"; the breadcrumb already shows the section
      - `introBody` is a clear 1–2 sentence description of the component's purpose, inferred from its props and JSDoc if available
+     - All copy on the page (tagline, intro, section labels) follows `content-design.md` — neutral, sentence case, no em dashes
      - Import the component through the package, never a relative path into `src/`: `import { X } from "@robr0/design-system/components/X/X"` (recharts-backed charts come from `@robr0/design-system/charts`) — the website is an npm-workspace consumer of the published package's exports
      - Include `PageLinks` with whichever Figma/Storybook URLs were provided
    - **Variant showcase grid**: render the component in every meaningful combination of its variants and states. For components with discrete variants × states (like Button), render a proper grid. For simpler components, render one example per meaningful state/variant.

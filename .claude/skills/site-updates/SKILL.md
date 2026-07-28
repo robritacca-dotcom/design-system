@@ -24,6 +24,7 @@ Entries are **thematic stories, not commit digests**:
 - **A reader who has never seen the repo** should be able to read the timeline top to bottom and follow the build. Spell out names and stakes; write like the existing entries.
 - **Omit themeless chores.** Typo fixes, dependency bumps, tiny tweaks with no story simply don't appear. The page shows the *largest* updates, not all of them.
 - Point-in-time numbers inside a dated entry ("all 434 stories at the time") are fine; never write a *live* count that will drift — live counts belong to registries (see `CLAUDE.md`).
+- **Sentence-level style follows `content-design.md`** — this section owns the story *shape* (themes, what/why/outcome); the content guide owns voice, banned words, and rhythm. Run its Self-Review Tests on each drafted entry.
 
 ## The loop
 

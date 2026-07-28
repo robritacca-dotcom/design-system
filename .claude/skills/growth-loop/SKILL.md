@@ -63,7 +63,7 @@ BRANCH=growth/$(date +%F)-<short-slug>
 git -C "$REPO" worktree add "$WT" -b "$BRANCH" main
 ```
 
-Make the copy edits in `$WT/website/src/...`, then verify the build (the repo is an npm workspace — one install at the worktree root wires everything, including the `@robr0/design-system` link back to the worktree's own `src/`; it's seconds thanks to the npm cache. Do **not** symlink `node_modules` from the main checkout — Turbopack rejects symlinks that point outside the project root):
+Make the copy edits in `$WT/website/src/...` — new copy follows `content-design.md` (voice, register, banned words) — then verify the build (the repo is an npm workspace — one install at the worktree root wires everything, including the `@robr0/design-system` link back to the worktree's own `src/`; it's seconds thanks to the npm cache. Do **not** symlink `node_modules` from the main checkout — Turbopack rejects symlinks that point outside the project root):
 
 ```bash
 cd "$WT" && npm install --no-fund --no-audit
