@@ -74,20 +74,8 @@ for (const [label, , src] of skillSources) {
   }
 }
 
-// Backtick-quoted repo paths in skill bodies must exist — catches skills
-// whose reference files were renamed or deleted. Placeholder-ish mentions
-// (globs, <slug> templates, ComponentName examples) are skipped.
-const pathPrefix = /^(src|website|scripts|\.claude|\.storybook|design\.md)(\/|$)/;
-const placeholder = /[<>*{}[\] ]|ComponentName|MyComponent|component-slug/;
-const deadPaths = [];
-for (const [label, , src] of skillSources) {
-  for (const [, candidate] of src.matchAll(/`([^`\n]+)`/g)) {
-    if (!pathPrefix.test(candidate) || placeholder.test(candidate)) continue;
-    if (!existsSync(join(repoRoot, candidate))) {
-      deadPaths.push(`${label}: \`${candidate}\` does not exist`);
-    }
-  }
-}
+// (Backticked-path existence used to be checked here; it lives in
+// scripts/validate-doc-refs.mjs now, which covers the docs as well.)
 
 // The generated page data must match what the skill files produce.
 let staleGenerated = null;
@@ -134,13 +122,6 @@ if (badFrontmatter.length > 0) {
     `Skill files with incomplete frontmatter (name/description for Claude Code ` +
       `discovery; icon/displayDescription/invoke for the /skills page):\n` +
       badFrontmatter.map((f) => `    - ${f}`).join('\n')
-  );
-}
-
-if (deadPaths.length > 0) {
-  fail(
-    `Skill files referencing repo paths that don't exist (stale instructions):\n` +
-      deadPaths.map((p) => `    - ${p}`).join('\n')
   );
 }
 
