@@ -127,7 +127,8 @@ const PIPELINE: TimelineCompany[] = [
           "Every push and PR runs an automated quality gate before anything is trusted.",
         bullets: [
           "Lints the codebase and builds the library, Storybook, and the website on every change",
-          "Renders every Storybook story as an automated smoke test in headless Chrome — every variant, every run",
+          "Renders every Storybook story in headless Chrome and runs an axe accessibility audit on each — a render error or a WCAG AA violation fails the build",
+          "Chromatic visual regression, run on demand: every story snapshotted in light and dark against an accepted baseline, so a token change that shifts pixels anywhere in the system is caught before it ships",
           "Drift guard fails the build if generated docs (component counts, skills, blueprints) go stale",
           "The same checklist runs locally as a single command, so local and CI can never disagree",
         ],
