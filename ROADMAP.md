@@ -466,7 +466,9 @@ A `scripts/validate-component-api.mjs` in the `validate-registry` chain turns a 
 
 Approved 2026-07-21 as phases 3–5 of the robustness roadmap, still open. Phases 1 (CI) and 2 (story render tests) shipped.
 
-### 5. Visual regression via Chromatic — `M` · **requested 2026-07-27**
+### ✅ 5. Visual regression via Chromatic — SHIPPED 2026-07-27
+
+**Outcome:** see the full record at the top of this file — Build 1 baseline, 1,004 snapshots across both themes, `workflow_dispatch`-only by deliberate budget decision. The paragraphs below are the original rationale, kept for context; their claims about missing tokens/workflows describe the pre-ship state.
 
 `@chromatic-com/storybook` is **already a devDependency** — it ships with Storybook — but there is no project token, no `chromatic.config.json`, and no workflow. Today: zero pixel coverage. Story render tests prove a component *doesn't throw*; they say nothing about it looking right. Every CSS change to a shared token is currently unverifiable except by eye.
 
@@ -688,10 +690,10 @@ Items **1** (`'use client'`), **B1** (refs / rest / native attrs), **B2** (`stat
 | 3 | **item 4-cheap** — Storybook install docs | ✅ **done 2026-07-27** — and build-enforced across both install surfaces |
 | 4 | **B3** — `Field` primitive | ✅ **done 2026-07-27** — and fixed two a11y bugs axe could never have found |
 | 5 | **item 6** — a11y to `'error'`, **AA minus contrast** | ✅ **done 2026-07-27** — 49 fixed, 9 were real bugs; `'error'` now gates CI |
-| 6 | **Workstream A Phase 1** — registry metadata | Delivers the de-duplication payoff alone; natural home for item 1's `client` flag |
+| 6 | **Workstream A Phase 1** — registry metadata | ✅ **done 2026-07-27** — and its `client` field caught 16 components missing `'use client'` |
 | 7 | **Workstream A Phase 2** — prop contracts | Now describes the *good* API |
 | 8 | **item 2** — API-surface validator | Now freezes the right thing |
-| 9 | **item 5** — Chromatic | After a11y, so baselines survive |
+| 9 | **item 5** — Chromatic | ✅ **done 2026-07-27** — baseline accepted after a11y, so it survives |
 | 10 | **Workstream A Phase 3** — dense `.md` docs | Last; generated from settled contracts |
 
 **B4** (`children` over `label`) and **B6** (`asChild`) are larger and can run in parallel or slip — but adopt B4's rule for any *new* component starting now.
