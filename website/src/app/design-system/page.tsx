@@ -114,6 +114,15 @@ const SAVINGS_GOALS = [
   { label: "House deposit", target: "$85,000 target", value: 38 },
 ];
 
+/* One-line hints sized for the "Where to next" card — the mega menu keeps
+   the longer descriptions */
+const SECTION_HINTS: Record<string, string> = {
+  "/docs": "Guides, and the artifacts to take",
+  "/foundations": "Colour, type, spacing, and motion",
+  "/components": "The full library, one page each",
+  "/playground": "Re-theme the system live",
+};
+
 const SCHEDULE_OPTIONS = [
   { value: "weekly", label: "Weekly", description: "Every Friday, balances over $10" },
   { value: "monthly", label: "Monthly", description: "On the 15th of each month" },
@@ -244,7 +253,9 @@ export default function DesignSystemPage() {
                       </span>
                       <span className={styles.exploreText}>
                         <span className={styles.rowTitle}>{item.label}</span>
-                        <span className={styles.rowHint}>{item.description}</span>
+                        <span className={styles.rowHint}>
+                          {SECTION_HINTS[item.href] ?? item.description}
+                        </span>
                       </span>
                       <span className={`material-symbols-rounded ${styles.exploreArrow}`} aria-hidden="true">
                         arrow_forward
@@ -264,7 +275,7 @@ export default function DesignSystemPage() {
                     </span>
                     <span className={styles.exploreText}>
                       <span className={styles.rowTitle}>Storybook</span>
-                      <span className={styles.rowHint}>Every component and variant in the dev sandbox</span>
+                      <span className={styles.rowHint}>Every variant, in the dev sandbox</span>
                     </span>
                     <span className={`material-symbols-rounded ${styles.exploreArrow}`} aria-hidden="true">
                       open_in_new

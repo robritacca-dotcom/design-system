@@ -136,6 +136,11 @@
   border-radius: var(--radius-sm);
 }
 
+/* Keep the first footer tag's text flush with the card's left edge */
+.cardLink:first-child {
+  margin-left: calc(-1 * var(--padding-xxs));
+}
+
 .cardLink:hover {
   color: var(--color-text-primary);
   background: var(--color-bg-container-secondary);
@@ -170,17 +175,28 @@
   padding: var(--padding-xxs) 0;
 }
 
+.navList > li:first-child {
+  padding-top: 0;
+}
+
+.navList > li:last-child {
+  padding-bottom: 0;
+}
+
 .navList > li + li {
   border-top: 1px solid var(--color-bg-container-border);
 }
 
-/* Rows inside the Explore card — the same shape as the mega menu items */
+/* Rows inside the "Where to next" card — the same shape as the mega menu
+   items. The hover pill bleeds past the text column (negative inline
+   margin) so the labels stay aligned with the card's other content. */
 
 .exploreRow {
   display: flex;
   align-items: center;
   gap: var(--gap-sm);
-  padding: var(--padding-xs) var(--padding-xxs);
+  padding: var(--padding-xs) var(--padding-sm);
+  margin: 0 calc(-1 * var(--padding-sm));
   border-radius: var(--radius-md);
   text-decoration: none;
   transition: background-color var(--motion-duration-fast) var(--motion-ease-standard);
@@ -207,6 +223,12 @@
   gap: 2px;
   min-width: 0;
   flex: 1;
+}
+
+/* Section descriptions wrap instead of cutting off mid-sentence */
+.exploreText .rowHint {
+  white-space: normal;
+  overflow: visible;
 }
 
 .exploreArrow {
@@ -325,6 +347,14 @@
   padding: var(--padding-xs) 0;
 }
 
+.rowList > li:first-child {
+  padding-top: 0;
+}
+
+.rowList > li:last-child {
+  padding-bottom: 0;
+}
+
 .rowList > li + li {
   border-top: 1px solid var(--color-bg-container-border);
 }
@@ -421,10 +451,6 @@
   gap: var(--gap-xs);
 }
 
-.goal + .goal {
-  margin-top: var(--gap-sm);
-}
-
 .goalHead {
   display: flex;
   align-items: baseline;
@@ -476,7 +502,6 @@
   display: flex;
   justify-content: space-between;
   gap: var(--gap-sm);
-  padding: 0 var(--padding-xs);
 }
 
 .quickAction {
