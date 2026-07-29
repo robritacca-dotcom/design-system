@@ -42,10 +42,13 @@ Be deliberate about breaking changes: components are exported both from the barr
 
 ### 3. Bump and commit
 
-**Two files carry the version and nothing generates the second one — edit both:**
+**Three files carry the version — edit the first two, regenerate the third:**
 
 1. `PACKAGE_VERSION` in `scripts/package-manifest.mjs` — the source of truth for what ships.
-2. `"version"` in the root `package.json` — **must be kept in sync by hand.** No generator writes it, and `scripts/validate-package-exports.mjs` fails the build when the two disagree (`package.json version is "x", manifest says "y"`). The root package.json stays `private: true` forever; only the generated `dist/package.json` is published, but the parity check still gates every build.
+2. `"version"` in the root `package.json` — **must be kept in sync by hand.** No generator writes it. The root package.json stays `private: true` forever; only the generated `dist/package.json` is published, but the parity check still gates every build.
+3. `package-lock.json` — npm records the version there too. Refresh it with `npm install --package-lock-only` and commit it with the bump; a stale lockfile dirties every later plain `npm install` (the 0.3.0 bump shipped without this and broke the worktree-based skills' cleanup).
+
+`scripts/validate-package-exports.mjs` fails the build when any of the three disagree.
 
 Then:
 
@@ -109,7 +112,7 @@ Version published, the npm URL, the tagged commit, the release URL, and anything
 
 - **Never** publish from a local machine (`npm publish` by hand) — releases go through the workflow so every release is provenance-signed and smoke-tested
 - **Never** re-run the publish workflow after a successful publish, even if the registry 404s
-- The version lives in **two** places and only one is authoritative: bump `PACKAGE_VERSION` in `scripts/package-manifest.mjs` *and* mirror it into the root `package.json`, which nothing generates. Never bump `package.json` alone — the manifest is what ships
+- The version lives in **three** places and only one is authoritative: bump `PACKAGE_VERSION` in `scripts/package-manifest.mjs`, mirror it into the root `package.json` (nothing generates it), and refresh `package-lock.json` with `npm install --package-lock-only`. Never bump `package.json` alone — the manifest is what ships
 - Never publish from a dirty tree, an unpushed commit, or a red CI
 - **Auth is Trusted Publishing (OIDC) — there is no npm token to expire or rotate.** If the publish step fails to authenticate, the cause is one of: `actions/setup-node` was given a **`registry-url:`** (see below); the `id-token: write` permission was dropped from `release.yml`; the workflow file was **renamed or moved** (the trusted-publisher registration on npmjs.com is keyed to the filename `release.yml`); the npm CLI on the runner is older than 11.5.1; or the registration itself was removed. Rob owns anything that has to change on npmjs.com.
 - **A `404` on `PUT` during publish is an AUTH failure, not a missing package.** npm returns 404 instead of 403 so it doesn't leak whether a package exists — the message even says "or you do not have permission to access it". Do not go hunting for a missing package; check the auth path.

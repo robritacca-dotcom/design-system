@@ -5,6 +5,12 @@
  *      (the exports field is generated — never hand-edit it).
  *   2. Every non-wildcard export target exists on disk; wildcard
  *      targets' base directories exist and contain at least one match.
+ *   3. package-lock.json's root version matches too. npm records the
+ *      version there on install, and a release bump that skips the
+ *      lockfile (0.3.0 shipped that way) leaves every later plain
+ *      `npm install` dirtying the tree — which breaks the worktree
+ *      recipes in the site-updates and growth-loop skills. Fix with
+ *      `npm install --package-lock-only` and commit the lockfile.
  *
  * Part of the validate-registry chain, so the public import surface the
  * website dogfoods can never drift from what the package declares.
@@ -24,6 +30,19 @@ if (pkg.name !== PACKAGE_NAME) {
 }
 if (pkg.version !== PACKAGE_VERSION) {
   errors.push(`package.json version is "${pkg.version}", manifest says "${PACKAGE_VERSION}"`);
+}
+
+const lock = JSON.parse(readFileSync(join(repoRoot, 'package-lock.json'), 'utf8'));
+for (const [where, v] of [
+  ['root', lock.version],
+  ['packages[""]', lock.packages?.['']?.version],
+]) {
+  if (v !== PACKAGE_VERSION) {
+    errors.push(
+      `package-lock.json ${where} version is "${v}", manifest says "${PACKAGE_VERSION}" — ` +
+        `run \`npm install --package-lock-only\` and commit the lockfile`
+    );
+  }
 }
 
 const expected = sourceExports();

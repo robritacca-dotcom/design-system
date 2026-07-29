@@ -8,9 +8,9 @@ Audited against the working tree on **2026-07-27, end of day** (59 components, 4
 
 ---
 
-# ▶ WHERE WE ARE — last updated 2026-07-27, end of session
+# ▶ WHERE WE ARE — last updated 2026-07-28, end of session
 
-**Seven of ten sequenced steps are done and on `main`.** `@robr0/design-system@0.2.0` is live with signed provenance; CI green as of `80b1ec8` (2026-07-27).
+**Seven of ten sequenced steps are done and on `main`.** `@robr0/design-system@0.3.0` is live with signed provenance (0.3.0 shipped 2026-07-28; 61 components after Swatch and ColorPicker). Since the last audit: `content-design.md` landed as the third root spec (blueprints page, validators, content-audit skill), and a seven-batch copy sweep brought every shipped prose surface under it — that arc is on local `main`, not yet pushed.
 
 | # | Step | Status |
 |---|---|---|
