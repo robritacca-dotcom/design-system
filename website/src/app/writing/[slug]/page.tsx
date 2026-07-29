@@ -88,7 +88,7 @@ export default async function ArticlePage({ params }: PageProps) {
         <Sidebar links={sidebarLinks} />
 
         <main className={styles.dsContent} id="main-content">
-          <PageBreadcrumb />
+          <PageBreadcrumb currentLabel={article.title} />
 
           <div className={`${styles.pageHeader} animate-in`}>
             <h1 className={styles.pageTitle}>{article.title}</h1>
