@@ -75,6 +75,7 @@ export const dsMegaItems: MegaItem[] = [
 
 /** URL prefixes that should mark the "Design system" mega trigger as active */
 export const dsActiveMatchers = [
+  (path: string) => path === "/design-system", // the DS landing the mega trigger links to
   (path: string) => path.startsWith("/docs"),
   (path: string) => path === "/overview", // the DS overview; /about (personal bio) is NOT under Design system
   (path: string) => path.startsWith("/blueprints"),
@@ -300,8 +301,9 @@ export function getBreadcrumbs(pathname: string): BreadcrumbItem[] {
   // Strip trailing slash (but keep "/")
   const path = pathname.length > 1 ? pathname.replace(/\/$/, "") : pathname;
 
-  // Top-level pages with no breadcrumb
-  if (path === "/" || path === "/contact" || path === "/about") {
+  // Top-level pages with no breadcrumb (/design-system is the DS landing —
+  // it opens with a full-bleed hero, not a doc shell)
+  if (path === "/" || path === "/contact" || path === "/about" || path === "/design-system") {
     return [];
   }
 

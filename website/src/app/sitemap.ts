@@ -78,6 +78,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/writing",
     "/contact",
     "/playground",
+    "/design-system",
     ...workSidebarLinks.map((l) => l.href),
     ...docsSidebarLinks.map((l) => l.href),
     ...foundationsSidebarLinks.map((l) => l.href),

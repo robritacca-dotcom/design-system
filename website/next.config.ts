@@ -36,11 +36,12 @@ const nextConfig: NextConfig = {
   },
   // Preserve inbound links after the IA cleanup: the DS overview moved to
   // /overview (so /about now serves the personal bio, formerly /about/me), and
-  // the /design-system, /design-md, and bare /blueprints stub pages were retired.
+  // the /design-md and bare /blueprints stub pages were retired.
+  // /design-system used to redirect to /foundations after its stub was retired;
+  // that redirect is gone because the path is a real page again (the DS landing).
   async redirects() {
     return [
       { source: "/about/me", destination: "/about", permanent: true },
-      { source: "/design-system", destination: "/foundations", permanent: true },
       { source: "/design-md", destination: "/blueprints/design", permanent: true },
       { source: "/blueprints", destination: "/docs", permanent: true },
       // The Customization section became the top-level /playground, and its

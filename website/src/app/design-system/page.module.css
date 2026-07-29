@@ -1,0 +1,558 @@
+/* ============================================
+   DESIGN SYSTEM LANDING — centred title + live collage
+   Demo cards and navigation cards share one masonry grid.
+   ============================================ */
+
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 1280px;
+  min-width: 0; /* a flex-item main must not grow to the chart's intrinsic width */
+  margin: 0 auto;
+  padding: 72px 32px 96px;
+}
+
+/* ---------- page header (site-standard treatment) ---------- */
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--gap-md);
+  max-width: 760px;
+  margin: 0 auto 56px;
+}
+
+.pageTitle {
+  font-size: var(--font-display-2-size);
+  font-weight: var(--font-display-2-weight);
+  line-height: var(--font-display-2-line-height);
+  letter-spacing: var(--font-display-2-letter-spacing);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.subDisplay {
+  font-family: var(--font-sub-display-family);
+  font-size: var(--font-sub-display-size);
+  font-weight: var(--font-sub-display-weight);
+  line-height: var(--font-sub-display-line-height);
+  letter-spacing: var(--font-sub-display-letter-spacing);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.introBody {
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+/* ---------- collage ---------- */
+
+/* Three curated stacks rather than auto-flow columns, so specific cards can
+   hold specific positions (pages top-left, install top-middle). */
+.collage {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gap-md);
+  align-items: start;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  min-width: 0;
+}
+
+.card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  padding: var(--padding-lg);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-bg-container-border);
+  background: var(--color-bg-container-primary);
+}
+
+.cardHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xxs);
+}
+
+.cardTitle {
+  font-size: var(--font-title-body-size);
+  font-weight: var(--font-title-body-weight);
+  line-height: var(--font-title-body-line-height);
+  letter-spacing: var(--font-title-body-letter-spacing);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.cardSub {
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+  margin: 0;
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm-md);
+}
+
+.cardLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-xs);
+  padding-top: var(--padding-xs);
+  border-top: 1px solid var(--color-bg-container-border);
+}
+
+.cardLink {
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+  text-decoration: none;
+  padding: 2px var(--padding-xxs);
+  border-radius: var(--radius-sm);
+}
+
+.cardLink:hover {
+  color: var(--color-text-primary);
+  background: var(--color-bg-container-secondary);
+  text-decoration: underline;
+}
+
+.cardHint {
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+  margin: 0;
+}
+
+/* Wide fixed-size content (the contribution graph's day cells) scrolls
+   inside its card instead of widening the page. */
+.scrollX {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+/* ---------- navigation cards ---------- */
+
+.navList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.navList > li {
+  padding: var(--padding-xxs) 0;
+}
+
+.navList > li + li {
+  border-top: 1px solid var(--color-bg-container-border);
+}
+
+/* Rows inside the Explore card — the same shape as the mega menu items */
+
+.exploreRow {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  padding: var(--padding-xs) var(--padding-xxs);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: background-color var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.exploreRow:hover {
+  background: var(--color-bg-container-secondary);
+}
+
+.exploreRow:hover .exploreArrow {
+  opacity: 1;
+  transform: translateX(2px);
+}
+
+.exploreIcon {
+  font-size: var(--icon-size-sm);
+  color: var(--color-icon-primary);
+  flex-shrink: 0;
+}
+
+.exploreText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.exploreArrow {
+  font-size: var(--icon-size-sm);
+  color: var(--color-icon-secondary);
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity var(--motion-duration-fast) var(--motion-ease-standard),
+    transform var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+/* ---------- card internals ---------- */
+
+.statGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap-md) var(--gap-sm);
+}
+
+.settingRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-md);
+}
+
+.settingText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.settingLabel {
+  font-size: var(--font-paragraph-sm-em-size);
+  font-weight: var(--font-paragraph-sm-em-weight);
+  line-height: var(--font-paragraph-sm-em-line-height);
+  color: var(--color-text-primary);
+}
+
+.settingHint {
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+}
+
+.chartToolbar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* The chart component ships as its own bordered panel; inside a collage
+   card that chrome doubles up, so flatten it to bare axes and bars. */
+.chartFlush :global(.ds-chart) {
+  padding: 0;
+  border: none;
+  background: transparent;
+  border-radius: 0;
+}
+
+.formStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm-md);
+}
+
+.formStack > :last-child {
+  align-self: flex-start;
+  margin-top: var(--gap-xxs);
+}
+
+.controlColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--gap-sm-md);
+}
+
+.buttonRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-xs);
+}
+
+.thresholdReadout {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--gap-sm);
+}
+
+.thresholdLabel {
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-secondary);
+}
+
+.thresholdValue {
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  color: var(--color-text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Shared row-list scaffolding (invoices, activity, statements) */
+
+.rowList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.rowList > li {
+  padding: var(--padding-xs) 0;
+}
+
+.rowList > li + li {
+  border-top: 1px solid var(--color-bg-container-border);
+}
+
+.rowTitle {
+  font-size: var(--font-paragraph-sm-em-size);
+  font-weight: var(--font-paragraph-sm-em-weight);
+  line-height: var(--font-paragraph-sm-em-line-height);
+  color: var(--color-text-primary);
+}
+
+.rowHint {
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.invoiceRow {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+}
+
+.invoiceText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.invoiceAmount {
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-secondary);
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+.activityRow {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+}
+
+.activityText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.activityWhen {
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+
+.statementRow {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+}
+
+.statementIcon {
+  font-size: var(--icon-size-sm);
+  color: var(--color-icon-secondary);
+  flex-shrink: 0;
+}
+
+.statementText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.statementDownload {
+  font-size: var(--icon-size-sm);
+  color: var(--color-icon-secondary);
+  flex-shrink: 0;
+}
+
+.goal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+}
+
+.goal + .goal {
+  margin-top: var(--gap-sm);
+}
+
+.goalHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--gap-sm);
+}
+
+.searchTrigger {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  padding: var(--padding-xs) var(--padding-sm);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-bg-container-border);
+  background: var(--color-bg-page-primary);
+}
+
+.searchIcon {
+  font-size: var(--icon-size-sm);
+  color: var(--color-icon-secondary);
+  flex-shrink: 0;
+}
+
+.searchPlaceholder {
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+  flex: 1;
+}
+
+.kbdKeys {
+  display: flex;
+  gap: var(--gap-xxs);
+}
+
+.loadingRow {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+}
+
+.quickActions {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--gap-sm);
+  padding: 0 var(--padding-xs);
+}
+
+.quickAction {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gap-xs);
+}
+
+.quickActionLabel {
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-secondary);
+}
+
+.calendarWrap {
+  display: flex;
+  justify-content: center;
+}
+
+/* Payment-success pattern: centred check, amount, and stacked actions */
+
+.successPanel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--gap-xs);
+  padding: var(--padding-sm) 0;
+}
+
+.successBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--icon-size-xl);
+  height: var(--icon-size-xl);
+  border-radius: var(--radius-full);
+  background: var(--color-status-positive-bg);
+  border: 1px solid var(--color-status-positive-border);
+  margin-bottom: var(--gap-xxs);
+}
+
+.successBadge .material-symbols-rounded,
+.successBadge > span {
+  font-size: var(--icon-size-md);
+  color: var(--color-status-positive-text);
+}
+
+.successAmount {
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  color: var(--color-text-primary);
+}
+
+.successHint {
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+}
+
+.successActions {
+  display: flex;
+  gap: var(--gap-xs);
+  margin-top: var(--gap-sm);
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 1023px) {
+  .collage {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .page {
+    padding: 48px 20px 64px;
+  }
+
+  .hero {
+    margin-bottom: 40px;
+  }
+
+  .pageTitle {
+    font-size: var(--font-sub-display-size);
+    line-height: var(--font-sub-display-line-height);
+  }
+
+  .subDisplay {
+    font-size: 24px;
+    line-height: 36px;
+  }
+
+}

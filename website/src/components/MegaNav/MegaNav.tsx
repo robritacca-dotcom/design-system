@@ -42,9 +42,9 @@ export default function MegaNav() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isStuck, setIsStuck] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-  const triggerRef = useRef<HTMLButtonElement>(null);
+  const triggerRef = useRef<HTMLAnchorElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
-  const stickyTriggerRef = useRef<HTMLButtonElement>(null);
+  const stickyTriggerRef = useRef<HTMLAnchorElement>(null);
   const stickyMenuRef = useRef<HTMLDivElement>(null);
   const inFlowHeaderRef = useRef<HTMLElement>(null);
 
@@ -175,16 +175,19 @@ export default function MegaNav() {
               onMouseEnter={openMenu}
               onMouseLeave={scheduleClose}
             >
-              <button
+              {/* The trigger is a link: hover or focus opens the mega panel,
+                  a click lands on the /design-system landing page. */}
+              <Link
                 ref={triggerRef}
-                type="button"
+                href="/design-system"
                 className={`${styles.navLink} ${styles.dsTrigger} ${
                   open || isDsActive ? styles.navLinkActive : ""
                 }`}
                 aria-expanded={open}
                 aria-haspopup="true"
                 aria-controls="ds-mega"
-                onClick={() => setOpen((v) => !v)}
+                onFocus={openMenu}
+                onClick={() => setOpen(false)}
               >
                 <span>Design system</span>
                 <svg
@@ -194,7 +197,7 @@ export default function MegaNav() {
                 >
                   <path d="M1 1L4 4L7 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
-              </button>
+              </Link>
             </div>
 
             <Link
@@ -304,16 +307,17 @@ export default function MegaNav() {
                 onMouseEnter={openMenu}
                 onMouseLeave={scheduleClose}
               >
-                <button
+                <Link
                   ref={stickyTriggerRef}
-                  type="button"
+                  href="/design-system"
                   className={`${styles.navLink} ${styles.dsTrigger} ${
                     open || isDsActive ? styles.navLinkActive : ""
                   }`}
                   aria-expanded={open}
                   aria-haspopup="true"
                   aria-controls="ds-mega-sticky"
-                  onClick={() => setOpen((v) => !v)}
+                  onFocus={openMenu}
+                  onClick={() => setOpen(false)}
                   tabIndex={isStuck ? 0 : -1}
                 >
                   <span>Design system</span>
@@ -324,7 +328,7 @@ export default function MegaNav() {
                   >
                     <path d="M1 1L4 4L7 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
-                </button>
+                </Link>
               </div>
               <Link
                 href="/contact"
@@ -427,7 +431,13 @@ export default function MegaNav() {
             Writing
           </Link>
           <div className={styles.mobileSection}>
-            <div className={styles.mobileSectionLabel}>Design system</div>
+            <Link
+              href="/design-system"
+              className={styles.mobileSectionLabel}
+              onClick={() => setMobileOpen(false)}
+            >
+              Design system
+            </Link>
             {dsMegaItems.map((item) => {
               const itemActive = pathname === item.href || pathname.startsWith(item.href + "/");
               return (
