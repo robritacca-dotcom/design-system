@@ -320,7 +320,7 @@ export default function IconsPage() {
               Material Symbols 3, rounded variant only
             </p>
             <p className={styles.introBody}>
-              One weight across the entire set, on a four-step size scale, so icons stay visually consistent next to text and inside components. Optical size tracks each step automatically, keeping stroke weight even from 20px to 48px. 389 icons are included.
+              One weight across the entire set, on a four-step size scale, so icons stay visually consistent next to text and inside components. Optical size tracks each step automatically, keeping stroke weight even from 20px to 48px. {totalIcons} icons are included.
             </p>
           </div>
 
