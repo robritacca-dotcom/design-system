@@ -383,7 +383,10 @@ export default function DesignSystemPage() {
             <DemoCard
               heading="Search"
               sub="Find any transaction, client, or invoice."
-              links={[{ label: "Kbd", href: "/components/kbd" }]}
+              links={[
+                { label: "Kbd", href: "/components/kbd" },
+                { label: "Chip", href: "/components/chip" },
+              ]}
             >
               <div className={styles.searchTrigger}>
                 <span className={`material-symbols-rounded ${styles.searchIcon}`} aria-hidden="true">
@@ -394,6 +397,11 @@ export default function DesignSystemPage() {
                   <Kbd>⌘</Kbd>
                   <Kbd>K</Kbd>
                 </span>
+              </div>
+              <div className={styles.recentRow}>
+                <span className={styles.cardHint}>Recent</span>
+                <Chip label="Acme Ltd" />
+                <Chip label="#3461" />
               </div>
             </DemoCard>
           </div>
@@ -445,7 +453,31 @@ export default function DesignSystemPage() {
                 />
               </div>
               <div className={styles.chartFlush}>
-                <BarChart data={chartData} dataLabel="Revenue" height={180} />
+                <BarChart data={chartData} dataLabel="Revenue" height={210} />
+              </div>
+            </DemoCard>
+
+            <DemoCard
+              heading="Quick actions"
+              links={[{ label: "Circular button", href: "/components/circular-button" }]}
+            >
+              <div className={styles.quickActions}>
+                <div className={styles.quickAction}>
+                  <CircularButton icon="arrow_upward" priority="primary" ariaLabel="Send money" />
+                  <span className={styles.quickActionLabel}>Send</span>
+                </div>
+                <div className={styles.quickAction}>
+                  <CircularButton icon="arrow_downward" priority="secondary" ariaLabel="Request money" />
+                  <span className={styles.quickActionLabel}>Request</span>
+                </div>
+                <div className={styles.quickAction}>
+                  <CircularButton icon="add" priority="secondary" ariaLabel="Top up balance" />
+                  <span className={styles.quickActionLabel}>Top up</span>
+                </div>
+                <div className={styles.quickAction}>
+                  <CircularButton icon="more_horiz" priority="tertiary" ariaLabel="More actions" />
+                  <span className={styles.quickActionLabel}>More</span>
+                </div>
               </div>
             </DemoCard>
 
@@ -519,7 +551,7 @@ export default function DesignSystemPage() {
                 <Spinner size="sm" label="Loading positions" />
                 <span className={styles.cardHint}>Fetching the latest prices</span>
               </div>
-              <Skeleton variant="text" lines={3} />
+              <Skeleton variant="text" lines={6} />
             </DemoCard>
           </div>
 
@@ -540,30 +572,6 @@ export default function DesignSystemPage() {
                   ]}
                   height={180}
                 />
-              </div>
-            </DemoCard>
-
-            <DemoCard
-              heading="Quick actions"
-              links={[{ label: "Circular button", href: "/components/circular-button" }]}
-            >
-              <div className={styles.quickActions}>
-                <div className={styles.quickAction}>
-                  <CircularButton icon="arrow_upward" priority="primary" ariaLabel="Send money" />
-                  <span className={styles.quickActionLabel}>Send</span>
-                </div>
-                <div className={styles.quickAction}>
-                  <CircularButton icon="arrow_downward" priority="secondary" ariaLabel="Request money" />
-                  <span className={styles.quickActionLabel}>Request</span>
-                </div>
-                <div className={styles.quickAction}>
-                  <CircularButton icon="add" priority="secondary" ariaLabel="Top up balance" />
-                  <span className={styles.quickActionLabel}>Top up</span>
-                </div>
-                <div className={styles.quickAction}>
-                  <CircularButton icon="more_horiz" priority="tertiary" ariaLabel="More actions" />
-                  <span className={styles.quickActionLabel}>More</span>
-                </div>
               </div>
             </DemoCard>
 

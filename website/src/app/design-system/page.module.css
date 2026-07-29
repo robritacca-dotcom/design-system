@@ -59,7 +59,7 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--gap-md);
-  align-items: start;
+  align-items: stretch;
 }
 
 .col {
@@ -67,6 +67,17 @@
   flex-direction: column;
   gap: var(--gap-md);
   min-width: 0;
+}
+
+/* The columns are balanced to within a few pixels by their content; the
+   last card in each stretches to absorb the remainder so all three end
+   on the same line. Its footer pins to the card's bottom edge. */
+.col > article:last-child {
+  flex-grow: 1;
+}
+
+.card > footer {
+  margin-top: auto;
 }
 
 .card {
@@ -453,6 +464,12 @@
   display: flex;
   align-items: center;
   gap: var(--gap-sm);
+}
+
+.recentRow {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-xs);
 }
 
 .quickActions {
