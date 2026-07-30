@@ -145,18 +145,12 @@
   );
 }
 
-/* Company logo chip pinned to the cover's top-left corner */
+/* Company logo pinned to the cover's top-left corner */
 .coverBadge {
   position: absolute;
   top: var(--padding-sm);
   left: var(--padding-sm);
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--padding-xxs);
-  border-radius: var(--radius-md);
-  background: var(--color-bg-container-primary-semi);
-  border: 1px solid var(--color-bg-container-border);
 }
 
 .coverLogo {
