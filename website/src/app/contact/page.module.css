@@ -8,7 +8,10 @@
   gap: var(--primitive-gap-xxxl);
   width: 100%;
   max-width: 720px;
-  padding: var(--primitive-gap-xxxl) var(--primitive-padding-xl);
+  /* Top offset matches the 40px every other page puts above its title,
+     so the h1 sits at the same height site-wide */
+  padding: var(--primitive-gap-xl) var(--primitive-padding-xl)
+    var(--primitive-gap-xxxl);
 }
 
 .heading {
@@ -35,9 +38,23 @@
   font-weight: var(--font-sub-display-weight);
   line-height: var(--font-sub-display-line-height);
   letter-spacing: var(--font-sub-display-letter-spacing);
-  color: var(--color-text-secondary);
+  color: var(--color-text-primary);
   margin: 0;
-  max-width: 560px;
+  max-width: 760px;
+}
+
+/* Same step-down the design-system hero uses, so the two centred
+   headers keep an identical treatment on small screens */
+@media (max-width: 767px) {
+  .title {
+    font-size: var(--font-sub-display-size);
+    line-height: var(--font-sub-display-line-height);
+  }
+
+  .subtitle {
+    font-size: 24px;
+    line-height: 36px;
+  }
 }
 
 /* ============================================
