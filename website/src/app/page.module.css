@@ -1,5 +1,5 @@
 /* ============================================
-   HOME PAGE — four clean cards
+   HOME PAGE — three uniform cards
    ============================================ */
 .homeContainer {
   display: flex;
@@ -43,14 +43,14 @@
 }
 
 /* ============================================
-   CARD GRID — 2 × 2
+   CARD GRID — three across
    ============================================ */
 .cardGrid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--gap-lg);
   width: 100%;
-  max-width: 1120px;
+  max-width: 1200px;
 }
 
 .card {
@@ -62,10 +62,6 @@
   border-radius: var(--radius-xl);
   border: 1px solid var(--color-bg-container-border);
   background: var(--color-bg-container-primary-semi);
-}
-
-.card > footer {
-  margin-top: auto;
 }
 
 .cardHeader {
@@ -112,18 +108,9 @@
 }
 
 /* ============================================
-   FEATURED — work case study / latest essay
+   COVER — the card's key image
    ============================================ */
-.featuredWork,
-.featuredWriting {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-xs);
-  text-decoration: none;
-  border-radius: var(--radius-md);
-}
-
-.featuredCover {
+.cardCover {
   position: relative;
   display: block;
   width: 100%;
@@ -131,45 +118,19 @@
   border-radius: var(--radius-md);
   overflow: hidden;
   border: 1px solid var(--color-bg-container-border);
-  margin-bottom: var(--gap-xxs);
 }
 
-.featuredCoverImg {
+.cardCoverImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   transition: transform var(--motion-duration-slow) var(--motion-ease-standard);
 }
 
-.featuredWork:hover .featuredCoverImg {
+.cardCover:hover .cardCoverImg {
   transform: scale(1.02);
-}
-
-.featuredTitle {
-  font-size: var(--font-title-body-size);
-  font-weight: var(--font-title-body-weight);
-  line-height: var(--font-title-body-line-height);
-  letter-spacing: var(--font-title-body-letter-spacing);
-  color: var(--color-text-primary);
-}
-
-.featuredWork:hover .featuredTitle,
-.featuredWriting:hover .featuredTitle {
-  text-decoration: underline;
-}
-
-.featuredDek {
-  font-size: var(--font-paragraph-sm-size);
-  line-height: var(--font-paragraph-sm-line-height);
-  color: var(--color-text-tertiary);
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.featuredDate {
-  font-size: var(--font-paragraph-sm-size);
-  line-height: var(--font-paragraph-sm-line-height);
-  color: var(--color-text-tertiary);
 }
 
 /* ============================================
@@ -209,20 +170,6 @@
   transform: translateX(2px);
 }
 
-.rowIcon {
-  font-size: var(--icon-size-sm);
-  color: var(--color-icon-primary);
-  flex-shrink: 0;
-}
-
-.rowText {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
-  flex: 1;
-}
-
 .rowTitle {
   flex: 1;
   min-width: 0;
@@ -230,16 +177,6 @@
   font-weight: var(--font-paragraph-sm-em-weight);
   line-height: var(--font-paragraph-sm-em-line-height);
   color: var(--color-text-primary);
-}
-
-.rowText .rowTitle {
-  flex: none;
-}
-
-.rowHint {
-  font-size: var(--font-paragraph-sm-size);
-  line-height: var(--font-paragraph-sm-line-height);
-  color: var(--color-text-tertiary);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -252,74 +189,6 @@
   opacity: 0;
   transition: opacity var(--motion-duration-fast) var(--motion-ease-standard),
     transform var(--motion-duration-fast) var(--motion-ease-standard);
-}
-
-/* ============================================
-   ABOUT CARD
-   ============================================ */
-.aboutBody {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--gap-md);
-}
-
-.aboutAvatar {
-  border-radius: var(--radius-full);
-  flex-shrink: 0;
-  object-fit: cover;
-}
-
-.aboutText {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-xxs);
-  min-width: 0;
-}
-
-.aboutLocation {
-  font-size: var(--font-paragraph-sm-em-size);
-  font-weight: var(--font-paragraph-sm-em-weight);
-  line-height: var(--font-paragraph-sm-em-line-height);
-  color: var(--color-text-primary);
-  margin: 0;
-}
-
-.aboutBio {
-  font-size: var(--font-paragraph-sm-size);
-  line-height: var(--font-paragraph-sm-line-height);
-  color: var(--color-text-tertiary);
-  margin: 0;
-}
-
-.brandRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--gap-xs);
-  padding-top: var(--padding-sm);
-  border-top: 1px solid var(--color-bg-container-border);
-}
-
-.brandLink {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--gap-xs);
-  font-size: var(--font-paragraph-sm-size);
-  line-height: var(--font-paragraph-sm-line-height);
-  color: var(--color-text-secondary);
-  text-decoration: none;
-  padding: var(--padding-xxs) var(--padding-xs);
-  border-radius: var(--radius-full);
-  transition: background-color var(--motion-duration-fast) var(--motion-ease-standard);
-}
-
-.brandLink:hover {
-  color: var(--color-text-primary);
-  background: var(--color-bg-container-secondary);
-}
-
-.brandLink svg {
-  width: var(--icon-size-sm);
-  height: var(--icon-size-sm);
 }
 
 /* ============================================
@@ -338,6 +207,7 @@
 
   .cardGrid {
     grid-template-columns: minmax(0, 1fr);
+    max-width: 560px;
   }
 }
 
