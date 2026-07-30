@@ -1,33 +1,27 @@
 /* ============================================
-   HOME PAGE
+   HOME PAGE — four clean cards
    ============================================ */
 .homeContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   width: 100%;
   max-width: 1440px;
   flex: 1;
   position: relative;
+  gap: var(--primitive-gap-xxxl);
+  padding: var(--primitive-gap-xxxl) var(--padding-xl);
 }
 
 /* ============================================
-   HEADING — centred title + subtitle + links
+   HEADING — centred title + subtitle
    ============================================ */
 .homeHeading {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--primitive-gap-xxxl);
+  gap: var(--primitive-gap-lg);
   text-align: center;
-}
-
-.homeNameTitle {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--primitive-gap-xl);
 }
 
 .homeTitle {
@@ -49,38 +43,289 @@
 }
 
 /* ============================================
-   DIVIDER
+   CARD GRID — 2 × 2
    ============================================ */
-.homeDivider {
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap-lg);
   width: 100%;
-  height: 1px;
-  background: linear-gradient(
-    to right,
-    var(--color-bg-container-primary-transparent),
-    var(--color-divider),
-    var(--color-bg-container-primary-transparent)
-  );
+  max-width: 1120px;
+}
+
+.card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  padding: var(--padding-lg);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-bg-container-border);
+  background: var(--color-bg-container-primary-semi);
+}
+
+.card > footer {
+  margin-top: auto;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--gap-sm);
+}
+
+.cardTitle {
+  font-size: var(--font-title-body-size);
+  font-weight: var(--font-title-body-weight);
+  line-height: var(--font-title-body-line-height);
+  letter-spacing: var(--font-title-body-letter-spacing);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.cardAll {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-xxs);
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+}
+
+.cardAll :global(.material-symbols-rounded) {
+  font-size: var(--icon-size-sm);
+}
+
+.cardAll:hover {
+  color: var(--color-text-primary);
+  text-decoration: underline;
+}
+
+.cardHint {
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+  margin: 0;
 }
 
 /* ============================================
-   HOME LINKS — Figma / Storybook / GitHub
+   FEATURED — work case study / latest essay
    ============================================ */
-.homeLinks {
+.featuredWork,
+.featuredWriting {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+}
+
+.featuredCover {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--color-bg-container-border);
+  margin-bottom: var(--gap-xxs);
+}
+
+.featuredCoverImg {
+  object-fit: cover;
+  transition: transform var(--motion-duration-slow) var(--motion-ease-standard);
+}
+
+.featuredWork:hover .featuredCoverImg {
+  transform: scale(1.02);
+}
+
+.featuredTitle {
+  font-size: var(--font-title-body-size);
+  font-weight: var(--font-title-body-weight);
+  line-height: var(--font-title-body-line-height);
+  letter-spacing: var(--font-title-body-letter-spacing);
+  color: var(--color-text-primary);
+}
+
+.featuredWork:hover .featuredTitle,
+.featuredWriting:hover .featuredTitle {
+  text-decoration: underline;
+}
+
+.featuredDek {
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.featuredDate {
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+}
+
+/* ============================================
+   ROW LISTS — links inside cards
+   ============================================ */
+.rowList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.rowList > li + li {
+  border-top: 1px solid var(--color-bg-container-border);
+}
+
+/* The hover pill bleeds past the text column (negative inline margin) so
+   labels stay aligned with the card's other content. */
+.row {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: var(--gap-sm);
+  padding: var(--padding-xs) var(--padding-sm);
+  margin: 0 calc(-1 * var(--padding-sm));
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: background-color var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.row:hover {
+  background: var(--color-bg-container-secondary);
+}
+
+.row:hover .rowArrow {
+  opacity: 1;
+  transform: translateX(2px);
+}
+
+.rowIcon {
+  font-size: var(--icon-size-sm);
+  color: var(--color-icon-primary);
+  flex-shrink: 0;
+}
+
+.rowText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.rowTitle {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--font-paragraph-sm-em-size);
+  font-weight: var(--font-paragraph-sm-em-weight);
+  line-height: var(--font-paragraph-sm-em-line-height);
+  color: var(--color-text-primary);
+}
+
+.rowText .rowTitle {
+  flex: none;
+}
+
+.rowHint {
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rowArrow {
+  font-size: var(--icon-size-sm);
+  color: var(--color-icon-secondary);
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity var(--motion-duration-fast) var(--motion-ease-standard),
+    transform var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+/* ============================================
+   ABOUT CARD
+   ============================================ */
+.aboutBody {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap-md);
+}
+
+.aboutAvatar {
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+.aboutText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xxs);
+  min-width: 0;
+}
+
+.aboutLocation {
+  font-size: var(--font-paragraph-sm-em-size);
+  font-weight: var(--font-paragraph-sm-em-weight);
+  line-height: var(--font-paragraph-sm-em-line-height);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.aboutBio {
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+  margin: 0;
+}
+
+.brandRow {
+  display: flex;
   flex-wrap: wrap;
-  gap: var(--primitive-gap-xl);
+  gap: var(--gap-xs);
+  padding-top: var(--padding-sm);
+  border-top: 1px solid var(--color-bg-container-border);
+}
+
+.brandLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-xs);
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  padding: var(--padding-xxs) var(--padding-xs);
+  border-radius: var(--radius-full);
+  transition: background-color var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.brandLink:hover {
+  color: var(--color-text-primary);
+  background: var(--color-bg-container-secondary);
+}
+
+.brandLink svg {
+  width: var(--icon-size-sm);
+  height: var(--icon-size-sm);
 }
 
 /* ============================================
    RESPONSIVE
    ============================================ */
 @media (max-width: 959px) {
-  .homeHeading {
-    gap: var(--primitive-gap-xxl);
-  }
-
   .homeTitle {
     font-size: 64px;
     line-height: 1;
@@ -90,11 +335,16 @@
     font-size: 24px;
     line-height: 36px;
   }
+
+  .cardGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 @media (max-width: 600px) {
-  .homeHeading {
-    gap: var(--primitive-gap-xl);
+  .homeContainer {
+    gap: var(--primitive-gap-xxl);
+    padding: var(--padding-xl) var(--padding-md);
   }
 
   .homeTitle {
@@ -105,9 +355,5 @@
   .homeSubtitle {
     font-size: 20px;
     line-height: 30px;
-  }
-
-  .homeLinks {
-    gap: var(--primitive-gap-md);
   }
 }
