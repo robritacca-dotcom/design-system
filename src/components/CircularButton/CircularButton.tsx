@@ -5,7 +5,9 @@ import '../../fonts/material-symbols.css';
 export interface CircularButtonProps {
   /** Material Symbol icon name */
   icon: string;
-  /** Button priority/variant */
+  /** Visual treatment */
+  variant?: 'primary' | 'secondary' | 'tertiary';
+  /** @deprecated Use `variant` instead. */
   priority?: 'primary' | 'secondary' | 'tertiary';
   /** Button state */
   state?: 'default' | 'hover' | 'active' | 'disabled';
@@ -36,11 +38,12 @@ export interface CircularButtonProps {
 /**
  * Circular icon button component.
  * A round button containing a single icon, available in
- * primary and secondary variants with default and compact sizes.
+ * primary, secondary and tertiary variants with default and compact sizes.
  */
 export const CircularButton = ({
   icon,
-  priority = 'primary',
+  variant,
+  priority,
   state = 'default',
   size = 'default',
   loading,
@@ -53,7 +56,9 @@ export const CircularButton = ({
   className = '',
 }: CircularButtonProps) => {
   const baseClass = 'ds-circular-button';
-  const variantClass = `${baseClass}--${priority}`;
+  // `priority` is the deprecated spelling of `variant`; `variant` wins when both are set.
+  const resolvedVariant = variant ?? priority ?? 'primary';
+  const variantClass = `${baseClass}--${resolvedVariant}`;
   const stateClass = `${baseClass}--${state}`;
   const sizeClass = `${baseClass}--${size}`;
 

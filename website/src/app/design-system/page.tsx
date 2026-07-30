@@ -492,19 +492,19 @@ export default function DesignSystemPage() {
             >
               <div className={styles.quickActions}>
                 <div className={styles.quickAction}>
-                  <CircularButton icon="arrow_upward" priority="primary" ariaLabel="Send money" />
+                  <CircularButton icon="arrow_upward" variant="primary" ariaLabel="Send money" />
                   <span className={styles.quickActionLabel}>Send</span>
                 </div>
                 <div className={styles.quickAction}>
-                  <CircularButton icon="arrow_downward" priority="secondary" ariaLabel="Request money" />
+                  <CircularButton icon="arrow_downward" variant="secondary" ariaLabel="Request money" />
                   <span className={styles.quickActionLabel}>Request</span>
                 </div>
                 <div className={styles.quickAction}>
-                  <CircularButton icon="add" priority="secondary" ariaLabel="Top up balance" />
+                  <CircularButton icon="add" variant="secondary" ariaLabel="Top up balance" />
                   <span className={styles.quickActionLabel}>Top up</span>
                 </div>
                 <div className={styles.quickAction}>
-                  <CircularButton icon="more_horiz" priority="tertiary" ariaLabel="More actions" />
+                  <CircularButton icon="more_horiz" variant="tertiary" ariaLabel="More actions" />
                   <span className={styles.quickActionLabel}>More</span>
                 </div>
               </div>

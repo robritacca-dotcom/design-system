@@ -346,7 +346,7 @@ Loading state: `loading` puts a `variant="inherit"` Spinner in the left icon slo
 
 ### CircularButton
 
-**`ds-circular-button`** — Round icon-only button, 40px (default) or 32px (compact), always `--radius-full`. Same three priorities as Button — `primary` (`--color-action-primary-bg` fill), `secondary` (outlined, `--border-xs` + action border tokens), `tertiary` (ghost, `--color-action-passive-bg-hover` on hover) — with the same state set (`default`/`hover`/`active`/`disabled`). Icon is a single Material Symbol at 24px default / 20px compact. Renders as `<a>` when `href` is set. `ariaLabel` is required — there is no visible label. `loading` swaps the icon for a `variant="inherit"` Spinner, keeps full-colour appearance, blocks interaction, and sets `aria-busy` — same contract as Button.
+**`ds-circular-button`** — Round icon-only button, 40px (default) or 32px (compact), always `--radius-full`. Same three variants as Button — `primary` (`--color-action-primary-bg` fill), `secondary` (outlined, `--border-xs` + action border tokens), `tertiary` (ghost, `--color-action-passive-bg-hover` on hover) — with the same state set (`default`/`hover`/`active`/`disabled`). Icon is a single Material Symbol at 24px default / 20px compact. Renders as `<a>` when `href` is set. `ariaLabel` is required — there is no visible label. `loading` swaps the icon for a `variant="inherit"` Spinner, keeps full-colour appearance, blocks interaction, and sets `aria-busy` — same contract as Button.
 
 ### SegmentedControl
 

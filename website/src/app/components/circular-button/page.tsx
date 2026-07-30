@@ -62,7 +62,7 @@ export default function CircularButtonPage() {
                   <span className={styles.gridRowHeader}>{icon}</span>
                   {states.map((s) => (
                     <div key={s.value} className={styles.gridCell}>
-                      <CircularButton icon={icon} priority="primary" state={s.value} ariaLabel={icon} />
+                      <CircularButton icon={icon} variant="primary" state={s.value} ariaLabel={icon} />
                     </div>
                   ))}
                 </React.Fragment>
@@ -83,7 +83,7 @@ export default function CircularButtonPage() {
                   <span className={styles.gridRowHeader}>{icon}</span>
                   {states.map((s) => (
                     <div key={s.value} className={styles.gridCell}>
-                      <CircularButton icon={icon} priority="secondary" state={s.value} ariaLabel={icon} />
+                      <CircularButton icon={icon} variant="secondary" state={s.value} ariaLabel={icon} />
                     </div>
                   ))}
                 </React.Fragment>
@@ -104,7 +104,7 @@ export default function CircularButtonPage() {
                   <span className={styles.gridRowHeader}>{icon}</span>
                   {states.map((s) => (
                     <div key={s.value} className={styles.gridCell}>
-                      <CircularButton icon={icon} priority="tertiary" state={s.value} ariaLabel={icon} />
+                      <CircularButton icon={icon} variant="tertiary" state={s.value} ariaLabel={icon} />
                     </div>
                   ))}
                 </React.Fragment>
@@ -121,12 +121,12 @@ export default function CircularButtonPage() {
               is blocked, without the dimmed disabled look.
             </p>
             <div className={styles.variantRow}>
-              <CircularButton icon="add" priority="primary" loading ariaLabel="Saving" />
-              <CircularButton icon="edit" priority="secondary" loading ariaLabel="Saving" />
-              <CircularButton icon="refresh" priority="tertiary" loading ariaLabel="Refreshing" />
-              <CircularButton icon="add" priority="primary" size="compact" loading ariaLabel="Saving" />
-              <CircularButton icon="edit" priority="secondary" size="compact" loading ariaLabel="Saving" />
-              <CircularButton icon="refresh" priority="tertiary" size="compact" loading ariaLabel="Refreshing" />
+              <CircularButton icon="add" variant="primary" loading ariaLabel="Saving" />
+              <CircularButton icon="edit" variant="secondary" loading ariaLabel="Saving" />
+              <CircularButton icon="refresh" variant="tertiary" loading ariaLabel="Refreshing" />
+              <CircularButton icon="add" variant="primary" size="compact" loading ariaLabel="Saving" />
+              <CircularButton icon="edit" variant="secondary" size="compact" loading ariaLabel="Saving" />
+              <CircularButton icon="refresh" variant="tertiary" size="compact" loading ariaLabel="Refreshing" />
             </div>
           </section>
 
@@ -134,14 +134,14 @@ export default function CircularButtonPage() {
           <section className={styles.section}>
             <SectionTitle title="Compact" />
             <div className={styles.variantRow}>
-              <CircularButton icon="add" priority="primary" size="compact" ariaLabel="Add" />
-              <CircularButton icon="delete" priority="primary" size="compact" ariaLabel="Delete" />
-              <CircularButton icon="add" priority="secondary" size="compact" ariaLabel="Add" />
-              <CircularButton icon="close" priority="secondary" size="compact" ariaLabel="Close" />
-              <CircularButton icon="edit" priority="tertiary" size="compact" ariaLabel="Edit" />
-              <CircularButton icon="more_vert" priority="tertiary" size="compact" ariaLabel="More" />
-              <CircularButton icon="search" priority="tertiary" size="compact" ariaLabel="Search" />
-              <CircularButton icon="settings" priority="tertiary" size="compact" ariaLabel="Settings" />
+              <CircularButton icon="add" variant="primary" size="compact" ariaLabel="Add" />
+              <CircularButton icon="delete" variant="primary" size="compact" ariaLabel="Delete" />
+              <CircularButton icon="add" variant="secondary" size="compact" ariaLabel="Add" />
+              <CircularButton icon="close" variant="secondary" size="compact" ariaLabel="Close" />
+              <CircularButton icon="edit" variant="tertiary" size="compact" ariaLabel="Edit" />
+              <CircularButton icon="more_vert" variant="tertiary" size="compact" ariaLabel="More" />
+              <CircularButton icon="search" variant="tertiary" size="compact" ariaLabel="Search" />
+              <CircularButton icon="settings" variant="tertiary" size="compact" ariaLabel="Settings" />
             </div>
           </section>
         </main>
