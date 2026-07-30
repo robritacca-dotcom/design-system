@@ -196,7 +196,7 @@ export default async function HomePage() {
                 </span>
                 </span>
               </span>
-              <span className={`${styles.featuredTitle} ${styles.titleShimmer}`}>
+              <span className={styles.featuredTitle}>
                 robr0 DS, the system this website is built on
               </span>
             </Link>
