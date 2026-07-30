@@ -10,11 +10,33 @@ import styles from "./page.module.css";
 // Re-fetch the Substack feed at most once an hour, same as /writing.
 export const revalidate = 3600;
 
+const featuredWork = {
+  href: "/work/embedded-ai-turbotax",
+  title: "TurboTax, embedded in ChatGPT and Claude",
+  logo: "/logos/turbotax.svg",
+  company: "TurboTax",
+  cover: "/images/heroes/claude.png",
+};
+
 const workItems = [
-  { href: "/work/embedded-ai-turbotax", title: "TurboTax, embedded in ChatGPT and Claude" },
-  { href: "/work/intuit-agent-chat", title: "Intuit Agent Chat platform" },
-  { href: "/work/augmenta-ai", title: "Augmenta Construction Platform" },
-  { href: "/work/meta-career-profile", title: "Meta Career Profile vision" },
+  {
+    href: "/work/intuit-agent-chat",
+    title: "Intuit Agent Chat platform",
+    logo: "/logos/Intuit.svg",
+    company: "Intuit",
+  },
+  {
+    href: "/work/augmenta-ai",
+    title: "Augmenta Construction Platform",
+    logo: "/logos/logo/Augmenta.png",
+    company: "Augmenta",
+  },
+  {
+    href: "/work/meta-career-profile",
+    title: "Meta Career Profile vision",
+    logo: "/logos/meta.svg",
+    company: "Meta",
+  },
 ];
 
 /* Section order for the DS card; labels and hrefs stay derived from the
@@ -27,7 +49,7 @@ const dsItems = dsSectionOrder
 export default async function HomePage() {
   const articles = await getArticles();
   const latest = articles[0];
-  const writingItems = articles.slice(0, 4);
+  const moreWriting = articles.slice(1, 4);
 
   return (
     <>
@@ -46,16 +68,6 @@ export default async function HomePage() {
         <div className={`${styles.cardGrid} animate-in animate-delay-1`}>
           {/* ── Work ── */}
           <section className={styles.card} aria-labelledby="home-work">
-            <Link href="/work/embedded-ai-turbotax" className={styles.cardCover}>
-              <Image
-                src="/images/heroes/claude.png"
-                alt="TurboTax, embedded in ChatGPT and Claude"
-                fill
-                sizes="(max-width: 959px) 100vw, 370px"
-                className={styles.cardCoverImg}
-              />
-            </Link>
-
             <header className={styles.cardHeader}>
               <h2 className={styles.cardTitle} id="home-work">Work</h2>
               <Link href="/work" className={styles.cardAll}>
@@ -64,10 +76,37 @@ export default async function HomePage() {
               </Link>
             </header>
 
+            <Link href={featuredWork.href} className={styles.cardCover}>
+              <Image
+                src={featuredWork.cover}
+                alt=""
+                fill
+                sizes="(max-width: 959px) 100vw, 370px"
+                className={styles.cardCoverImg}
+              />
+              <span className={styles.coverCaption}>
+                <Image
+                  src={featuredWork.logo}
+                  alt={featuredWork.company}
+                  width={20}
+                  height={20}
+                  className={styles.coverLogo}
+                />
+                <span className={styles.coverTitle}>{featuredWork.title}</span>
+              </span>
+            </Link>
+
             <ul className={styles.rowList}>
               {workItems.map((work) => (
                 <li key={work.href}>
                   <Link href={work.href} className={styles.row}>
+                    <Image
+                      src={work.logo}
+                      alt={work.company}
+                      width={20}
+                      height={20}
+                      className={styles.rowLogo}
+                    />
                     <span className={styles.rowTitle}>{work.title}</span>
                     <span className={`material-symbols-rounded ${styles.rowArrow}`} aria-hidden="true">
                       arrow_forward
@@ -80,19 +119,6 @@ export default async function HomePage() {
 
           {/* ── Writing ── */}
           <section className={styles.card} aria-labelledby="home-writing">
-            {latest && (
-              <Link href={`/writing/${latest.slug}`} className={styles.cardCover}>
-                {/* Substack CDN covers aren't in next/image's allowlist; the
-                    plain img matches how /writing renders them. */}
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={latest.coverImage ?? coverPlaceholder(latest.slug)}
-                  alt={latest.title}
-                  className={styles.cardCoverImg}
-                />
-              </Link>
-            )}
-
             <header className={styles.cardHeader}>
               <h2 className={styles.cardTitle} id="home-writing">Writing</h2>
               <Link href="/writing" className={styles.cardAll}>
@@ -101,19 +127,35 @@ export default async function HomePage() {
               </Link>
             </header>
 
-            {writingItems.length > 0 ? (
-              <ul className={styles.rowList}>
-                {writingItems.map((article) => (
-                  <li key={article.slug}>
-                    <Link href={`/writing/${article.slug}`} className={styles.row}>
-                      <span className={styles.rowTitle}>{article.title}</span>
-                      <span className={`material-symbols-rounded ${styles.rowArrow}`} aria-hidden="true">
-                        arrow_forward
-                      </span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+            {latest ? (
+              <>
+                <Link href={`/writing/${latest.slug}`} className={styles.cardCover}>
+                  {/* Substack CDN covers aren't in next/image's allowlist; the
+                      plain img matches how /writing renders them. */}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={latest.coverImage ?? coverPlaceholder(latest.slug)}
+                    alt=""
+                    className={styles.cardCoverImg}
+                  />
+                  <span className={styles.coverCaption}>
+                    <span className={styles.coverTitle}>{latest.title}</span>
+                  </span>
+                </Link>
+
+                <ul className={styles.rowList}>
+                  {moreWriting.map((article) => (
+                    <li key={article.slug}>
+                      <Link href={`/writing/${article.slug}`} className={styles.row}>
+                        <span className={styles.rowTitle}>{article.title}</span>
+                        <span className={`material-symbols-rounded ${styles.rowArrow}`} aria-hidden="true">
+                          arrow_forward
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </>
             ) : (
               <p className={styles.cardHint}>
                 Essays are taking a moment to load. Read them on{" "}
@@ -124,23 +166,35 @@ export default async function HomePage() {
 
           {/* ── Design system ── */}
           <section className={styles.card} aria-labelledby="home-ds">
-            <Link href="/design-system" className={styles.cardCover}>
-              <Image
-                src="/images/ds-hero.png"
-                alt="robr0 DS"
-                fill
-                sizes="(max-width: 959px) 100vw, 370px"
-                className={styles.cardCoverImg}
-              />
-            </Link>
-
             <header className={styles.cardHeader}>
-              <h2 className={styles.cardTitle} id="home-ds">robr0 DS</h2>
+              <h2 className={styles.cardTitle} id="home-ds">Design system</h2>
               <Link href="/design-system" className={styles.cardAll}>
                 Overview
                 <span className="material-symbols-rounded" aria-hidden="true">arrow_forward</span>
               </Link>
             </header>
+
+            <Link href="/design-system" className={styles.cardCover}>
+              {/* The DS landing collage, captured per theme so the cover
+                  matches the active colour mode. */}
+              <Image
+                src="/images/ds-landing-light.png"
+                alt=""
+                fill
+                sizes="(max-width: 959px) 100vw, 370px"
+                className={`${styles.cardCoverImg} ${styles.coverLight}`}
+              />
+              <Image
+                src="/images/ds-landing-dark.png"
+                alt=""
+                fill
+                sizes="(max-width: 959px) 100vw, 370px"
+                className={`${styles.cardCoverImg} ${styles.coverDark}`}
+              />
+              <span className={styles.coverCaption}>
+                <span className={styles.coverTitle}>robr0 DS</span>
+              </span>
+            </Link>
 
             <ul className={styles.rowList}>
               {dsItems.map((item) => (
