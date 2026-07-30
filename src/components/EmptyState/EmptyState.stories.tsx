@@ -41,7 +41,7 @@ export const WithAction: Story = {
     icon: 'folder_open',
     title: 'No projects',
     description: 'Create your first project to start organising work.',
-    action: <Button label="New project" priority="primary" iconLeft="add" />,
+    action: <Button label="New project" variant="primary" iconLeft="add" />,
   },
 };
 
@@ -52,8 +52,8 @@ export const WithTwoActions: Story = {
     description: 'Invite people to collaborate, or import them from your directory.',
     action: (
       <>
-        <Button label="Invite people" priority="primary" />
-        <Button label="Import" priority="secondary" />
+        <Button label="Invite people" variant="primary" />
+        <Button label="Import" variant="secondary" />
       </>
     ),
   },
@@ -64,7 +64,7 @@ export const NoResults: Story = {
     icon: 'search_off',
     title: 'No results for “quarterly”',
     description: 'Check the spelling, or try a broader search term.',
-    action: <Button label="Clear search" priority="secondary" />,
+    action: <Button label="Clear search" variant="secondary" />,
   },
 };
 
@@ -74,7 +74,7 @@ export const Bordered: Story = {
     icon: 'table_rows',
     title: 'This table is empty',
     description: 'Rows you add will appear here.',
-    action: <Button label="Add row" priority="primary" iconLeft="add" />,
+    action: <Button label="Add row" variant="primary" iconLeft="add" />,
   },
 };
 
@@ -83,7 +83,7 @@ export const ErrorRecovery: Story = {
     icon: 'cloud_off',
     title: 'Could not load your data',
     description: 'Something went wrong on our end. Try again in a moment.',
-    action: <Button label="Retry" priority="primary" iconLeft="refresh" />,
+    action: <Button label="Retry" variant="primary" iconLeft="refresh" />,
   },
 };
 

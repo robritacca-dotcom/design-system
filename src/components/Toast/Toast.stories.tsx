@@ -125,7 +125,7 @@ const ToastTriggers = () => {
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
       <Button
         label="Info toast"
-        priority="secondary"
+        variant="secondary"
         onClick={() =>
           toast({
             variant: 'info',
@@ -136,7 +136,7 @@ const ToastTriggers = () => {
       />
       <Button
         label="Success toast"
-        priority="secondary"
+        variant="secondary"
         onClick={() =>
           toast({
             variant: 'positive',
@@ -147,7 +147,7 @@ const ToastTriggers = () => {
       />
       <Button
         label="Warning toast"
-        priority="secondary"
+        variant="secondary"
         onClick={() =>
           toast({
             variant: 'warning',
@@ -158,7 +158,7 @@ const ToastTriggers = () => {
       />
       <Button
         label="Error toast"
-        priority="secondary"
+        variant="secondary"
         onClick={() =>
           toast({
             variant: 'error',
@@ -169,7 +169,7 @@ const ToastTriggers = () => {
       />
       <Button
         label="Neutral toast"
-        priority="tertiary"
+        variant="tertiary"
         onClick={() =>
           toast({
             variant: 'neutral',

@@ -183,8 +183,8 @@ export const WithButtons: Story = {
           email: 'alice@example.com',
           actions: (
             <span style={{ display: 'inline-flex', gap: '8px' }}>
-              <Button label="Edit" priority="tertiary" size="compact" />
-              <Button label="Delete" priority="secondary" size="compact" />
+              <Button label="Edit" variant="tertiary" size="compact" />
+              <Button label="Delete" variant="secondary" size="compact" />
             </span>
           ),
         },
@@ -196,8 +196,8 @@ export const WithButtons: Story = {
           email: 'bob@example.com',
           actions: (
             <span style={{ display: 'inline-flex', gap: '8px' }}>
-              <Button label="Edit" priority="tertiary" size="compact" />
-              <Button label="Delete" priority="secondary" size="compact" />
+              <Button label="Edit" variant="tertiary" size="compact" />
+              <Button label="Delete" variant="secondary" size="compact" />
             </span>
           ),
         },
@@ -209,8 +209,8 @@ export const WithButtons: Story = {
           email: 'carol@example.com',
           actions: (
             <span style={{ display: 'inline-flex', gap: '8px' }}>
-              <Button label="Edit" priority="tertiary" size="compact" />
-              <Button label="Delete" priority="secondary" size="compact" />
+              <Button label="Edit" variant="tertiary" size="compact" />
+              <Button label="Delete" variant="secondary" size="compact" />
             </span>
           ),
         },
@@ -235,9 +235,9 @@ export const WithCircularButtons: Story = {
           role: 'Designer',
           actions: (
             <span style={{ display: 'inline-flex', gap: '4px' }}>
-              <CircularButton icon="edit" ariaLabel="Edit" priority="tertiary" size="compact" />
-              <CircularButton icon="delete" ariaLabel="Delete" priority="tertiary" size="compact" />
-              <CircularButton icon="more_vert" ariaLabel="More" priority="tertiary" size="compact" />
+              <CircularButton icon="edit" ariaLabel="Edit" variant="tertiary" size="compact" />
+              <CircularButton icon="delete" ariaLabel="Delete" variant="tertiary" size="compact" />
+              <CircularButton icon="more_vert" ariaLabel="More" variant="tertiary" size="compact" />
             </span>
           ),
         },
@@ -249,9 +249,9 @@ export const WithCircularButtons: Story = {
           role: 'Engineer',
           actions: (
             <span style={{ display: 'inline-flex', gap: '4px' }}>
-              <CircularButton icon="edit" ariaLabel="Edit" priority="tertiary" size="compact" />
-              <CircularButton icon="delete" ariaLabel="Delete" priority="tertiary" size="compact" />
-              <CircularButton icon="more_vert" ariaLabel="More" priority="tertiary" size="compact" />
+              <CircularButton icon="edit" ariaLabel="Edit" variant="tertiary" size="compact" />
+              <CircularButton icon="delete" ariaLabel="Delete" variant="tertiary" size="compact" />
+              <CircularButton icon="more_vert" ariaLabel="More" variant="tertiary" size="compact" />
             </span>
           ),
         },
@@ -263,9 +263,9 @@ export const WithCircularButtons: Story = {
           role: 'Product Manager',
           actions: (
             <span style={{ display: 'inline-flex', gap: '4px' }}>
-              <CircularButton icon="edit" ariaLabel="Edit" priority="tertiary" size="compact" />
-              <CircularButton icon="delete" ariaLabel="Delete" priority="tertiary" size="compact" />
-              <CircularButton icon="more_vert" ariaLabel="More" priority="tertiary" size="compact" />
+              <CircularButton icon="edit" ariaLabel="Edit" variant="tertiary" size="compact" />
+              <CircularButton icon="delete" ariaLabel="Delete" variant="tertiary" size="compact" />
+              <CircularButton icon="more_vert" ariaLabel="More" variant="tertiary" size="compact" />
             </span>
           ),
         },
@@ -332,8 +332,8 @@ export const MixedContent: Story = {
           email: 'alice@example.com',
           actions: (
             <span style={{ display: 'inline-flex', gap: '4px' }}>
-              <CircularButton icon="edit" ariaLabel="Edit" priority="tertiary" size="compact" />
-              <CircularButton icon="delete" ariaLabel="Delete" priority="tertiary" size="compact" />
+              <CircularButton icon="edit" ariaLabel="Edit" variant="tertiary" size="compact" />
+              <CircularButton icon="delete" ariaLabel="Delete" variant="tertiary" size="compact" />
             </span>
           ),
         },
@@ -352,8 +352,8 @@ export const MixedContent: Story = {
           email: 'bob@example.com',
           actions: (
             <span style={{ display: 'inline-flex', gap: '4px' }}>
-              <CircularButton icon="edit" ariaLabel="Edit" priority="tertiary" size="compact" />
-              <CircularButton icon="delete" ariaLabel="Delete" priority="tertiary" size="compact" />
+              <CircularButton icon="edit" ariaLabel="Edit" variant="tertiary" size="compact" />
+              <CircularButton icon="delete" ariaLabel="Delete" variant="tertiary" size="compact" />
             </span>
           ),
         },
@@ -372,7 +372,7 @@ export const MixedContent: Story = {
           email: 'carol@example.com',
           actions: (
             <span style={{ display: 'inline-flex', gap: '8px' }}>
-              <Button label="Invite" priority="secondary" size="compact" />
+              <Button label="Invite" variant="secondary" size="compact" />
             </span>
           ),
         },

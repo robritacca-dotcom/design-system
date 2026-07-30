@@ -84,7 +84,7 @@ export const Interactive: Story = {
 
     return (
       <>
-        <Button label="Open dialog" priority="secondary" onClick={() => setOpen(true)} />
+        <Button label="Open dialog" variant="secondary" onClick={() => setOpen(true)} />
         <AlertDialog
           open={open}
           onOpenChange={setOpen}
@@ -109,7 +109,7 @@ export const InteractiveDestructive: Story = {
 
     return (
       <>
-        <Button label="Delete item" priority="destructive" onClick={() => setOpen(true)} />
+        <Button label="Delete item" variant="destructive" onClick={() => setOpen(true)} />
         <AlertDialog
           open={open}
           onOpenChange={setOpen}

@@ -38,7 +38,7 @@ export const Top: Story = {
   },
   render: (args) => (
     <Tooltip {...args}>
-      <Button label="Hover me" priority="secondary" />
+      <Button label="Hover me" variant="secondary" />
     </Tooltip>
   ),
 };
@@ -50,7 +50,7 @@ export const Bottom: Story = {
   },
   render: (args) => (
     <Tooltip {...args}>
-      <Button label="Hover me" priority="secondary" />
+      <Button label="Hover me" variant="secondary" />
     </Tooltip>
   ),
 };
@@ -62,7 +62,7 @@ export const Left: Story = {
   },
   render: (args) => (
     <Tooltip {...args}>
-      <Button label="Hover me" priority="secondary" />
+      <Button label="Hover me" variant="secondary" />
     </Tooltip>
   ),
 };
@@ -74,7 +74,7 @@ export const Right: Story = {
   },
   render: (args) => (
     <Tooltip {...args}>
-      <Button label="Hover me" priority="secondary" />
+      <Button label="Hover me" variant="secondary" />
     </Tooltip>
   ),
 };
@@ -86,7 +86,7 @@ export const OnIconButton: Story = {
   },
   render: (args) => (
     <Tooltip {...args}>
-      <CircularButton icon="settings" ariaLabel="Settings" priority="tertiary" />
+      <CircularButton icon="settings" ariaLabel="Settings" variant="tertiary" />
     </Tooltip>
   ),
 };
@@ -98,7 +98,7 @@ export const LongText: Story = {
   },
   render: (args) => (
     <Tooltip {...args}>
-      <Button label="Hover for details" priority="secondary" />
+      <Button label="Hover for details" variant="secondary" />
     </Tooltip>
   ),
 };
@@ -112,7 +112,7 @@ export const NoDelay: Story = {
   },
   render: (args) => (
     <Tooltip {...args}>
-      <Button label="Instant" priority="tertiary" />
+      <Button label="Instant" variant="tertiary" />
     </Tooltip>
   ),
 };
@@ -124,16 +124,16 @@ export const AllPositions: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: '40px', padding: '60px' }}>
       <Tooltip content="Top" position="top">
-        <Button label="Top" priority="secondary" />
+        <Button label="Top" variant="secondary" />
       </Tooltip>
       <Tooltip content="Bottom" position="bottom">
-        <Button label="Bottom" priority="secondary" />
+        <Button label="Bottom" variant="secondary" />
       </Tooltip>
       <Tooltip content="Left" position="left">
-        <Button label="Left" priority="secondary" />
+        <Button label="Left" variant="secondary" />
       </Tooltip>
       <Tooltip content="Right" position="right">
-        <Button label="Right" priority="secondary" />
+        <Button label="Right" variant="secondary" />
       </Tooltip>
     </div>
   ),

@@ -39,7 +39,7 @@ const DialogDemo = (props: Omit<React.ComponentProps<typeof Dialog>, 'open' | 'o
   const [open, setOpen] = useState(false);
   return (
     <>
-      <Button label="Open dialog" priority="secondary" onClick={() => setOpen(true)} />
+      <Button label="Open dialog" variant="secondary" onClick={() => setOpen(true)} />
       <Dialog {...props} open={open} onOpenChange={setOpen} />
     </>
   );
@@ -66,7 +66,7 @@ export const WithFooter: Story = {
       const [open, setOpen] = useState(false);
       return (
         <>
-          <Button label="Open dialog" priority="secondary" onClick={() => setOpen(true)} />
+          <Button label="Open dialog" variant="secondary" onClick={() => setOpen(true)} />
           <Dialog
             {...args}
             open={open}
@@ -74,8 +74,8 @@ export const WithFooter: Story = {
             title="Rename project"
             footer={
               <>
-                <Button label="Cancel" priority="tertiary" onClick={() => setOpen(false)} />
-                <Button label="Save" priority="primary" onClick={() => setOpen(false)} />
+                <Button label="Cancel" variant="tertiary" onClick={() => setOpen(false)} />
+                <Button label="Save" variant="primary" onClick={() => setOpen(false)} />
               </>
             }
           >
@@ -113,7 +113,7 @@ export const NonDismissible: Story = {
       const [open, setOpen] = useState(false);
       return (
         <>
-          <Button label="Open dialog" priority="secondary" onClick={() => setOpen(true)} />
+          <Button label="Open dialog" variant="secondary" onClick={() => setOpen(true)} />
           <Dialog
             {...args}
             open={open}
@@ -121,7 +121,7 @@ export const NonDismissible: Story = {
             title="Action required"
             description="This dialog only closes through the footer action."
             dismissible={false}
-            footer={<Button label="Acknowledge" priority="primary" onClick={() => setOpen(false)} />}
+            footer={<Button label="Acknowledge" variant="primary" onClick={() => setOpen(false)} />}
           >
             <p style={{ margin: 0 }}>
               ESC, backdrop clicks, and the close button are disabled.

@@ -26,20 +26,14 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
       aria-label={ariaLabel}
     >
       {/* Spread the whole config so every ButtonProps field (target, rel,
-          disabled, …) reaches the Button — enumerating silently dropped them */}
+          disabled, …) reaches the Button — enumerating silently dropped them.
+          Entries default to tertiary; the deprecated priority spelling still
+          counts as an explicit choice. */}
       {buttons.map((button, index) => (
         <Button
           key={index}
           {...button}
-          priority={button.priority || 'tertiary'}
-          state={button.state || 'default'}
-          label={button.label}
-          iconLeft={button.iconLeft}
-          iconRight={button.iconRight}
-          icon={button.icon}
-          onClick={button.onClick}
-          href={button.href}
-          ariaCurrent={button.ariaCurrent}
+          variant={button.variant ?? button.priority ?? 'tertiary'}
         />
       ))}
     </div>

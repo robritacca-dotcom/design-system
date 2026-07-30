@@ -81,7 +81,7 @@ const PaletteDemo = (
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
-      <Button label="Open palette (⌘K)" priority="secondary" onClick={() => setOpen(true)} />
+      <Button label="Open palette (⌘K)" variant="secondary" onClick={() => setOpen(true)} />
       {lastRun && (
         <p style={{ margin: 0, fontSize: '14px', color: 'var(--color-text-tertiary)' }}>
           Last command: {lastRun}

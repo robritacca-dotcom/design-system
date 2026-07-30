@@ -55,7 +55,7 @@ const DrawerDemo = ({
   const [open, setOpen] = useState(false);
   return (
     <>
-      <Button label={triggerLabel} priority="secondary" onClick={() => setOpen(true)} />
+      <Button label={triggerLabel} variant="secondary" onClick={() => setOpen(true)} />
       <Drawer
         {...props}
         open={open}
@@ -109,8 +109,8 @@ export const WithFooter: Story = {
       description="Narrow the results list."
       renderFooter={(close) => (
         <>
-          <Button label="Reset" priority="secondary" onClick={close} />
-          <Button label="Apply" priority="primary" onClick={close} />
+          <Button label="Reset" variant="secondary" onClick={close} />
+          <Button label="Apply" variant="primary" onClick={close} />
         </>
       )}
     >
@@ -145,7 +145,7 @@ export const LongContent: Story = {
     <DrawerDemo
       {...args}
       title="Activity log"
-      renderFooter={(close) => <Button label="Close" priority="secondary" onClick={close} />}
+      renderFooter={(close) => <Button label="Close" variant="secondary" onClick={close} />}
     >
       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
         {Array.from({ length: 30 }, (_, i) => (
@@ -166,7 +166,7 @@ export const NonDismissible: Story = {
       description="Complete these steps before continuing."
       dismissible={false}
       triggerLabel="Open non-dismissible"
-      renderFooter={(close) => <Button label="Done" priority="primary" onClick={close} />}
+      renderFooter={(close) => <Button label="Done" variant="primary" onClick={close} />}
     >
       <p style={{ margin: 0 }}>
         ESC, the scrim, and the close button are all disabled — the footer action is
