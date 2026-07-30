@@ -264,6 +264,17 @@
 }
 
 /* ============================================
+   HOME LINKS — Substack / Figma / Storybook / GitHub
+   ============================================ */
+.homeLinks {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--primitive-gap-xl);
+}
+
+/* ============================================
    RESPONSIVE
    ============================================ */
 @media (max-width: 959px) {
@@ -297,5 +308,9 @@
   .homeSubtitle {
     font-size: 20px;
     line-height: 30px;
+  }
+
+  .homeLinks {
+    gap: var(--primitive-gap-md);
   }
 }

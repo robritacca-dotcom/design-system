@@ -3,6 +3,13 @@ import Image from "next/image";
 import MegaNav from "../components/MegaNav/MegaNav";
 import BlurBackground from "../components/BlurBackground/BlurBackground";
 import Footer from "../components/Footer/Footer";
+import { Button } from "@robr0/design-system/components/Button/Button";
+import {
+  FigmaIcon,
+  GitHubIcon,
+  StorybookIcon,
+  SubstackIcon,
+} from "../components/BrandIcons/BrandIcons";
 import { dsMegaItems } from "@/config/navigation";
 import { getArticles, coverPlaceholder } from "@/lib/substack";
 import styles from "./page.module.css";
@@ -218,6 +225,45 @@ export default async function HomePage() {
               ))}
             </ul>
           </section>
+        </div>
+
+        <div className={`${styles.homeLinks} animate-in animate-delay-2`}>
+          <Button
+            label="Substack"
+            priority="tertiary"
+            iconLeft={<SubstackIcon />}
+            iconRight="open_in_new"
+            href="https://robertritacca1.substack.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          />
+          <Button
+            label="Figma"
+            priority="tertiary"
+            iconLeft={<FigmaIcon />}
+            iconRight="open_in_new"
+            href="https://www.figma.com/@robr0"
+            target="_blank"
+            rel="noopener noreferrer"
+          />
+          <Button
+            label="Storybook"
+            priority="tertiary"
+            iconLeft={<StorybookIcon />}
+            iconRight="open_in_new"
+            href="https://design-system-iota-one.vercel.app"
+            target="_blank"
+            rel="noopener noreferrer"
+          />
+          <Button
+            label="GitHub"
+            priority="tertiary"
+            iconLeft={<GitHubIcon />}
+            iconRight="open_in_new"
+            href="https://github.com/robritacca-dotcom/design-system"
+            target="_blank"
+            rel="noopener noreferrer"
+          />
         </div>
       </main>
 
