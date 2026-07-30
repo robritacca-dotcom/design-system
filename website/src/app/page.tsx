@@ -190,22 +190,44 @@ export default async function HomePage() {
             </header>
 
             <Link href="/design-system" className={styles.cardCover}>
-              {/* The DS landing collage, captured per theme so the cover
-                  matches the active colour mode. */}
-              <Image
-                src="/images/ds-landing-light.png"
-                alt=""
-                fill
-                sizes="(max-width: 959px) 100vw, 370px"
-                className={`${styles.cardCoverImg} ${styles.coverLight}`}
-              />
-              <Image
-                src="/images/ds-landing-dark.png"
-                alt=""
-                fill
-                sizes="(max-width: 959px) 100vw, 370px"
-                className={`${styles.cardCoverImg} ${styles.coverDark}`}
-              />
+              {/* A live mini-bento rendered from the tokens themselves, so
+                  the cover re-themes with the toggle instead of being a
+                  static screenshot. Purely decorative. */}
+              <span className={styles.dsBoard} aria-hidden="true">
+                <span className={styles.dsTile}>
+                  <span className={styles.dsType}>Aa</span>
+                </span>
+                <span className={styles.dsTile}>
+                  <span className={styles.dsSwatchRow}>
+                    <span className={`${styles.dsSwatch} ${styles.dsSwatchInfo}`} />
+                    <span className={`${styles.dsSwatch} ${styles.dsSwatchPositive}`} />
+                    <span className={`${styles.dsSwatch} ${styles.dsSwatchWarning}`} />
+                    <span className={`${styles.dsSwatch} ${styles.dsSwatchError}`} />
+                  </span>
+                </span>
+                <span className={styles.dsTile}>
+                  <span className={styles.dsBars}>
+                    <span className={styles.dsBar1} />
+                    <span className={styles.dsBar2} />
+                    <span className={styles.dsBar3} />
+                    <span className={styles.dsBar4} />
+                  </span>
+                </span>
+                <span className={styles.dsTile}>
+                  <span className={styles.dsButton} />
+                  <span className={styles.dsButtonSecondary} />
+                </span>
+                <span className={styles.dsTile}>
+                  <span className={styles.dsToggle}>
+                    <span className={styles.dsToggleThumb} />
+                  </span>
+                </span>
+                <span className={styles.dsTile}>
+                  <span className={`material-symbols-rounded ${styles.dsGlyph}`}>
+                    widgets
+                  </span>
+                </span>
+              </span>
               <span className={styles.coverCaption}>
                 <span className={styles.coverTitle}>robr0 DS</span>
               </span>

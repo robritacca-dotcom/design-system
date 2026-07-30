@@ -141,7 +141,7 @@
   background: linear-gradient(
     to top,
     var(--primitive-true-black-strong),
-    transparent 55%
+    transparent 45%
   );
 }
 
@@ -186,17 +186,142 @@
   transform: scale(1.02);
 }
 
-/* Theme-matched covers: one capture per colour mode, swapped by data-theme. */
-.coverDark {
-  display: none;
+/* ============================================
+   DS BOARD — a live mini-bento rendered from
+   the tokens, standing in for a screenshot.
+   ds-allow(mockup): the fixed px dimensions in
+   this block draw miniature component shapes at
+   cover scale; no token maps to depiction sizes.
+   ============================================ */
+.dsBoard {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: var(--gap-xs);
+  padding: var(--padding-sm);
+  background: var(--color-bg-container-secondary);
 }
 
-:global([data-theme="dark"]) .coverLight {
-  display: none;
+.dsTile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-xs);
+  min-height: 0;
+  background: var(--color-bg-container-primary);
+  border: 1px solid var(--color-bg-container-border);
+  border-radius: var(--radius-md);
 }
 
-:global([data-theme="dark"]) .coverDark {
-  display: block;
+.dsType {
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  color: var(--color-text-primary);
+}
+
+.dsSwatchRow {
+  display: flex;
+  gap: var(--gap-xxs);
+}
+
+/* ds-allow(mockup): miniature palette chips */
+.dsSwatch {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-sm);
+}
+
+.dsSwatchInfo {
+  background: var(--color-status-info-border);
+}
+
+.dsSwatchPositive {
+  background: var(--color-status-positive-border);
+}
+
+.dsSwatchWarning {
+  background: var(--color-status-warning-border);
+}
+
+.dsSwatchError {
+  background: var(--color-status-error-border);
+}
+
+.dsBars {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--gap-xxs);
+}
+
+/* ds-allow(mockup): miniature chart bars */
+.dsBar1,
+.dsBar2,
+.dsBar3,
+.dsBar4 {
+  width: 8px;
+  border-radius: var(--radius-xs);
+}
+
+.dsBar1 {
+  height: 12px;
+  background: var(--color-chart-contribution-1);
+}
+
+.dsBar2 {
+  height: 20px;
+  background: var(--color-chart-contribution-2);
+}
+
+.dsBar3 {
+  height: 16px;
+  background: var(--color-chart-contribution-3);
+}
+
+.dsBar4 {
+  height: 26px;
+  background: var(--color-chart-contribution-4);
+}
+
+/* ds-allow(mockup): miniature button pills */
+.dsButton {
+  width: 40px;
+  height: 14px;
+  border-radius: var(--radius-full);
+  background: var(--color-action-primary-bg);
+}
+
+.dsButtonSecondary {
+  width: 24px;
+  height: 14px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-divider);
+  background: var(--color-bg-container-primary);
+}
+
+/* ds-allow(mockup): miniature switch track and thumb */
+.dsToggle {
+  width: 32px;
+  height: 18px;
+  border-radius: var(--radius-full);
+  background: var(--color-action-primary-bg);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 2px;
+}
+
+.dsToggleThumb {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+  background: var(--color-bg-container-primary);
+}
+
+.dsGlyph {
+  font-size: var(--icon-size-md);
+  color: var(--color-icon-primary);
 }
 
 /* ============================================
