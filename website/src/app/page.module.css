@@ -196,6 +196,12 @@
   gap: var(--gap-xs);
   padding: var(--padding-sm);
   background: var(--color-bg-container-secondary);
+  transition: transform var(--motion-duration-slow) var(--motion-ease-standard);
+}
+
+/* Same hover lift as the image covers on the other cards */
+.cardCover:hover .dsBoard {
+  transform: scale(1.02);
 }
 
 .dsTile {
