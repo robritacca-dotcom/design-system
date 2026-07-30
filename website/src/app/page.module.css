@@ -162,6 +162,46 @@
   overflow: hidden;
 }
 
+/* A slow gradient sweep across the DS title — mostly the normal text
+   colour, with a soft blue-to-purple pass drifting through. Echoes the
+   BlurBackground gradient language; teal stays out (action-only). */
+.titleShimmer {
+  background: linear-gradient(
+    100deg,
+    var(--color-text-primary) 0%,
+    var(--color-text-primary) 38%,
+    var(--primitive-blue-07) 48%,
+    var(--primitive-purple-07) 54%,
+    var(--color-text-primary) 64%,
+    var(--color-text-primary) 100%
+  );
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  /* ds-allow(motion): decorative shimmer loop — far slower than any UI
+     motion token, same precedent as the background-float timing. */
+  animation: title-shimmer 9s var(--motion-ease-standard) infinite;
+}
+
+@keyframes title-shimmer {
+  0%,
+  55% {
+    background-position: 115% 0;
+  }
+  100% {
+    background-position: -35% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .titleShimmer {
+    animation: none;
+    background: none;
+    color: var(--color-text-primary);
+  }
+}
+
 .cardCoverImg {
   position: absolute;
   inset: 0;
