@@ -378,11 +378,13 @@ The signature pass is done across **18 components**: Button, Input, Textarea, Sl
 
 **Follow-up worth its own commit:** six components now carry a byte-identical ref-merge block (FileInput, Dropdown, Dialog, Drawer, Combobox, plus the pattern in Checkbox/Radio). Extract a `useMergedRef` helper.
 
-**Still open in Workstream B:** [B3](#b3--a-field-primitive-for-form-composition--m), [B4](#b4--children-for-content-props-for-configuration--ml), [B6](#b6--composition-escape-hatch-aschild-or-as--sm).
+**Still open in Workstream B:** [B4](#b4--children-for-content-props-for-configuration--ml), [B6](#b6--composition-escape-hatch-aschild-or-as--sm), [B7](#b7--make-the-component-api-contract-build-enforced--sm--added-2026-07-27). (B3 shipped 2026-07-27 — see its section below.)
 
 ---
 
-## B1 — Escape hatches: refs, rest props, native attributes — `M` · **highest value**
+## B1 — original plan (kept for context) — `M` · shipped in the signature pass
+
+The prose below describes the API as it stood before 0.2.0 — the closed prop surfaces and the `(value: string) => void` `onChange` are gone; see the shipped section above for what replaced them.
 
 Closed prop surfaces mean a consumer cannot attach a ref, pass `data-testid`, set `autoComplete` / `inputMode` / `maxLength` / `pattern`, add an `onKeyDown`, or hand the component to a form library. `Input.onChange` is `(value: string) => void` — not React's `ChangeEvent` — so **react-hook-form, Formik, and TanStack Form cannot register an Input without an adapter.** For form-dense products this is the difference between a library that can be adopted and one that can only be demoed.
 
@@ -394,9 +396,9 @@ Closed prop surfaces mean a consumer cannot attach a ref, pass `data-testid`, se
 
 **Additive.** Nothing existing breaks.
 
-## B2 — Retire Figma variants from the code API — `S` · **most diagnostic**
+## B2 — original plan (kept for context) — `S` · shipped in the signature pass
 
-`ButtonProps` currently has:
+The `state` enum and `text` flag described below are deprecated-and-mapped since 0.2.0. `ButtonProps` had:
 ```ts
 state?: 'default' | 'hover' | 'active' | 'disabled';
 text?: boolean;   // "show text label"
@@ -435,9 +437,9 @@ Content props outnumber `children` **207 `label` + 191 `title` to 46 `children`*
 
 Not a rewrite. Adopt the rule for **new** components immediately, and migrate the top offenders additively (accept `children`, keep `label` working, mark it deprecated).
 
-## B5 — One word per concept — `S`
+## B5 — original plan (kept for context) — `S` · shipped in the signature pass
 
-`variant` (74) vs `kind` (7) vs `priority` (3) vs `status` (13) all name "which visual treatment." `size` (103) is already consistent — good. Pick one (`variant` wins on usage), alias the others with deprecations. The existing `api-consistency` skill is exactly the tool for this; it should be run and its findings enforced, not just reported.
+The counts below are the 2026-07-27 audit snapshot; `variant` won and the others became deprecated aliases (Button in the 0.2.0 pass, CircularButton on 2026-07-29). `variant` (74) vs `kind` (7) vs `priority` (3) vs `status` (13) all named "which visual treatment." `size` (103) was already consistent. The plan: pick one (`variant` wins on usage), alias the others with deprecations, running the `api-consistency` skill with its findings enforced, not just reported.
 
 ## B7 — Make the component API contract build-enforced — `S`/`M` · **added 2026-07-27**
 
@@ -570,7 +572,7 @@ The render tests prove ~488 stories mount. Nothing proves a Dialog traps focus, 
 
 **10. No dependency automation — `S`.** No `dependabot.yml`, no Renovate. With item 11, security drift is entirely manual.
 
-**11. 11 high-severity dev-tooling advisories — `M` · investigated 2026-07-27.** All eleven are one root cause: `brace-expansion` DoS (GHSA-mh99-v99m-4gvg, range `<=5.0.7`) reached through minimatch in the eslint and vite-plugin-dts chains. Tested and ruled out: `npm audit fix` changes nothing, and a root `overrides` pin to `^5.0.8` (the only patched release — no 1.x/2.x backport exists) breaks eslint at runtime (`expand is not a function`; brace-expansion 5 changed its export shape, minimatch@3 requires the old one). The only real fixes are the semver-major eslint 10 upgrade or waiting for upstream backports/minimatch bumps. Dev-only — the published package has zero runtime deps affected — so accepted for now; re-check on the next eslint major or when `npm audit` output changes.
+**11. 11 high-severity dev-tooling advisories — `M` · investigated 2026-07-27.** All eleven are one root cause: `brace-expansion` DoS (GHSA-mh99-v99m-4gvg, range `<=5.0.7`) reached through minimatch in the eslint and vite-plugin-dts chains. Tested and ruled out: `npm audit fix` changes nothing, and a root `overrides` pin to `^5.0.8` (the only patched release — no 1.x/2.x backport exists) breaks eslint at runtime (`expand is not a function`; brace-expansion 5 changed its export shape, minimatch@3 requires the old one). The only real fixes are the semver-major eslint 10 upgrade or waiting for upstream backports/minimatch bumps. Dev-only — the published package has zero runtime deps affected — so accepted for now; re-check on the next eslint major or when `npm audit` output changes. Re-verified 2026-07-30: still 11 high, and 5.0.9's CJS export is still object-shaped, so the override remains unsafe.
 
 **12. No Node version pinning — `S`.** No `engines` field, no `.nvmrc`. CI runs Node 24; a contributor on an older Node gets a confusing failure instead of a clear one.
 

@@ -342,7 +342,7 @@ Loading state: `loading` puts a `variant="inherit"` Spinner in the left icon slo
 
 ### ButtonGroup
 
-**`ds-button-group`** — Inline container that composes Buttons for nav and subnav contexts. Two orientations: `horizontal` (default — `--gap-lg` between buttons, used in top navigation) and `vertical` (`--gap-xxs`, left-aligned hug-content column for subnav/mobile). Purely compositional: each entry is a full `ButtonProps` config passed straight through to Button, so priorities and states mix freely. `role="group"` with an optional `ariaLabel`.
+**`ds-button-group`** — Inline container that composes Buttons for nav and subnav contexts. Two orientations: `horizontal` (default — `--gap-lg` between buttons, used in top navigation) and `vertical` (`--gap-xxs`, left-aligned hug-content column for subnav/mobile). Purely compositional: each entry is a full `ButtonProps` config passed straight through to Button, so variants and disabled states mix freely. `role="group"` with an optional `ariaLabel`.
 
 ### CircularButton
 
