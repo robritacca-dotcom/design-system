@@ -97,14 +97,16 @@ export default async function HomePage() {
                 sizes="(max-width: 959px) 100vw, 370px"
                 className={styles.cardCoverImg}
               />
-              <span className={styles.coverCaption}>
+              <span className={styles.coverBadge}>
                 <Image
                   src={featuredWork.logo}
                   alt={featuredWork.company}
-                  width={20}
-                  height={20}
+                  width={24}
+                  height={24}
                   className={styles.coverLogo}
                 />
+              </span>
+              <span className={styles.coverCaption}>
                 <span className={styles.coverTitle}>{featuredWork.title}</span>
               </span>
             </Link>
