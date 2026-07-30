@@ -9,7 +9,9 @@
   max-width: 1280px;
   min-width: 0; /* a flex-item main must not grow to the chart's intrinsic width */
   margin: 0 auto;
-  padding: 72px 32px 96px;
+  /* 40px top — the same offset the doc-page layouts use, so the title sits
+     at the same height as the other pages' headers */
+  padding: 40px 32px 96px;
 }
 
 /* ---------- page header (site-standard treatment) ---------- */
@@ -580,7 +582,7 @@
 
 @media (max-width: 767px) {
   .page {
-    padding: 48px 20px 64px;
+    padding: 40px 20px 64px;
   }
 
   .hero {

@@ -10,6 +10,12 @@ import { dsMegaItems } from "@/config/navigation";
 import { Avatar } from "@robr0/design-system/components/Avatar/Avatar";
 import { Badge } from "@robr0/design-system/components/Badge/Badge";
 import { Button } from "@robr0/design-system/components/Button/Button";
+import { ButtonGroup } from "@robr0/design-system/components/ButtonGroup/ButtonGroup";
+import {
+  FigmaIcon,
+  GitHubIcon,
+  StorybookIcon,
+} from "../../components/BrandIcons/BrandIcons";
 import { Checkbox } from "@robr0/design-system/components/Checkbox/Checkbox";
 import { Chip } from "@robr0/design-system/components/Chip/Chip";
 import { CircularButton } from "@robr0/design-system/components/CircularButton/CircularButton";
@@ -234,6 +240,38 @@ export default function DesignSystemPage() {
             and the navigation cards link into every part of the system. Flip
             the theme toggle and it all re-colours from one token layer.
           </p>
+          <ButtonGroup
+            ariaLabel="External resources"
+            buttons={[
+              {
+                label: "Figma",
+                priority: "tertiary",
+                iconLeft: <FigmaIcon />,
+                iconRight: "open_in_new",
+                href: "https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26",
+                target: "_blank",
+                rel: "noopener noreferrer",
+              },
+              {
+                label: "Storybook",
+                priority: "tertiary",
+                iconLeft: <StorybookIcon />,
+                iconRight: "open_in_new",
+                href: "https://design-system-iota-one.vercel.app",
+                target: "_blank",
+                rel: "noopener noreferrer",
+              },
+              {
+                label: "GitHub",
+                priority: "tertiary",
+                iconLeft: <GitHubIcon />,
+                iconRight: "open_in_new",
+                href: "https://github.com/robritacca-dotcom/design-system",
+                target: "_blank",
+                rel: "noopener noreferrer",
+              },
+            ]}
+          />
         </section>
 
         {/* ---------- collage: three curated columns of live demos + nav ---------- */}
@@ -263,25 +301,6 @@ export default function DesignSystemPage() {
                     </Link>
                   </li>
                 ))}
-                <li>
-                  <a
-                    href="https://design-system-iota-one.vercel.app"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.exploreRow}
-                  >
-                    <span className={`material-symbols-rounded ${styles.exploreIcon}`} aria-hidden="true">
-                      auto_stories
-                    </span>
-                    <span className={styles.exploreText}>
-                      <span className={styles.rowTitle}>Storybook</span>
-                      <span className={styles.rowHint}>Every variant, in the dev sandbox</span>
-                    </span>
-                    <span className={`material-symbols-rounded ${styles.exploreArrow}`} aria-hidden="true">
-                      open_in_new
-                    </span>
-                  </a>
-                </li>
               </ul>
             </NavCard>
 
@@ -347,7 +366,6 @@ export default function DesignSystemPage() {
                 icon="task_alt"
                 title="Nothing overdue"
                 description="Every invoice is paid or inside its terms."
-                size="compact"
                 variant="bordered"
               />
             </DemoCard>

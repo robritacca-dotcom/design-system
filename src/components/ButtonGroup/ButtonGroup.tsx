@@ -25,9 +25,12 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
       role="group"
       aria-label={ariaLabel}
     >
+      {/* Spread the whole config so every ButtonProps field (target, rel,
+          disabled, …) reaches the Button — enumerating silently dropped them */}
       {buttons.map((button, index) => (
         <Button
           key={index}
+          {...button}
           priority={button.priority || 'tertiary'}
           state={button.state || 'default'}
           label={button.label}
