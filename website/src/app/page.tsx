@@ -12,52 +12,18 @@ import {
 } from "../components/BrandIcons/BrandIcons";
 import { dsMegaItems } from "@/config/navigation";
 import { getArticles, coverPlaceholder } from "@/lib/substack";
+import { caseStudies } from "@/data/case-studies";
 import styles from "./page.module.css";
 
 // Re-fetch the Substack feed at most once an hour, same as /writing.
 export const revalidate = 3600;
 
-const featuredWork = {
-  href: "/work/embedded-ai-turbotax",
-  title: "TurboTax, embedded in ChatGPT and Claude",
-  logo: "/logos/turbotax.svg",
-  company: "TurboTax",
-  cover: "/images/heroes/claude.png",
-};
-
-const workItems = [
-  {
-    href: "/work/intuit-agent-chat",
-    title: "Intuit Agent Chat platform",
-    logo: "/logos/Intuit.svg",
-    company: "Intuit",
-  },
-  {
-    href: "/work/augmenta-ai",
-    title: "Augmenta Construction Platform",
-    logo: "/logos/logo/Augmenta.png",
-    company: "Augmenta",
-  },
-  {
-    href: "/work/meta-career-profile",
-    title: "Meta Career Profile vision",
-    logo: "/logos/meta.svg",
-    company: "Meta",
-  },
-  {
-    href: "/work/meta-offers",
-    title: "Meta Offer Creation Flow",
-    logo: "/logos/meta.svg",
-    company: "Meta",
-  },
-];
-
-/* Section order for the DS card; labels and hrefs stay derived from the
-   shared nav config. */
-const dsSectionOrder = ["/foundations", "/components", "/docs", "/playground"];
-const dsItems = dsSectionOrder
-  .map((href) => dsMegaItems.find((item) => item.href === href))
-  .filter((item) => item !== undefined);
+/* Everything below derives from a registry: case studies from
+   case-studies.json (newest first — the top entry is the featured cover),
+   writing from the Substack feed, DS sections from the shared nav config.
+   Adding a case study or publishing a post reflows this page by itself. */
+const [featuredWork, ...moreWork] = caseStudies;
+const workItems = moreWork.slice(0, 4);
 
 export default async function HomePage() {
   const articles = await getArticles();
@@ -91,7 +57,7 @@ export default async function HomePage() {
 
             <Link href={featuredWork.href} className={styles.cardCover}>
               <Image
-                src={featuredWork.cover}
+                src={featuredWork.coverSrc}
                 alt=""
                 fill
                 sizes="(max-width: 959px) 100vw, 370px"
@@ -99,8 +65,8 @@ export default async function HomePage() {
               />
               <span className={styles.coverBadge}>
                 <Image
-                  src={featuredWork.logo}
-                  alt={featuredWork.company}
+                  src={featuredWork.companyLogo}
+                  alt={featuredWork.companyName}
                   width={24}
                   height={24}
                   className={styles.coverLogo}
@@ -116,8 +82,8 @@ export default async function HomePage() {
                 <li key={work.href}>
                   <Link href={work.href} className={styles.row}>
                     <Image
-                      src={work.logo}
-                      alt={work.company}
+                      src={work.companyLogo}
+                      alt={work.companyName}
                       width={20}
                       height={20}
                       className={styles.rowLogo}
@@ -234,7 +200,7 @@ export default async function HomePage() {
             </Link>
 
             <ul className={styles.rowList}>
-              {dsItems.map((item) => (
+              {dsMegaItems.map((item) => (
                 <li key={item.href}>
                   <Link href={item.href} className={styles.row}>
                     <span className={`material-symbols-rounded ${styles.rowIcon}`} aria-hidden="true">

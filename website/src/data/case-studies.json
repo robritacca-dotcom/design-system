@@ -1,0 +1,60 @@
+{
+  "caseStudies": [
+    {
+      "href": "/work/embedded-ai-turbotax",
+      "title": "TurboTax, embedded in ChatGPT and Claude",
+      "dek": "Leading design for a Webby-winning tax experience that runs natively inside two AI platforms: from December MVP to full launch in one tax season.",
+      "companyName": "TurboTax",
+      "companyLogo": "/logos/turbotax.svg",
+      "coverSrc": "/images/heroes/claude.png"
+    },
+    {
+      "href": "/work/intuit-agent-chat",
+      "title": "Intuit Agent Chat platform",
+      "dek": "Designing and shipping Intuit's official conversational AI platform from 0 → 1",
+      "companyName": "Intuit",
+      "companyLogo": "/logos/Intuit.svg",
+      "coverSrc": "/images/heroes/agent-chat.png"
+    },
+    {
+      "href": "/work/augmenta-ai",
+      "title": "Augmenta Construction Platform",
+      "dek": "Turning automation into usability: the redesign behind 42% faster outcomes",
+      "companyName": "Augmenta",
+      "companyLogo": "/logos/logo/Augmenta.png",
+      "coverSrc": "/images/heroes/augmenta.png"
+    },
+    {
+      "href": "/work/meta-career-profile",
+      "title": "Career Profile vision",
+      "dek": "Turning the maze of tools Meta candidates face into one guided, personal path through interviews, offers, and onboarding",
+      "companyName": "Meta",
+      "companyLogo": "/logos/meta.svg",
+      "coverSrc": "/images/heroes/meta-vision.png"
+    },
+    {
+      "href": "/work/meta-offers",
+      "title": "Offer Creation Flow",
+      "dek": "Improving the velocity between hire decision and offer extension at recruiting scale",
+      "companyName": "Meta",
+      "companyLogo": "/logos/meta.svg",
+      "coverSrc": "/images/heroes/meta-offers.png"
+    },
+    {
+      "href": "/work/robr0-ds",
+      "title": "Building robr0 DS: a one-person design system, end to end",
+      "dek": "Why I built a personal design system and the AI-augmented pipeline behind this site",
+      "companyName": "Personal",
+      "companyLogo": "/logos/rr.svg",
+      "coverSrc": "/images/heroes/robr0-ds.png"
+    },
+    {
+      "href": "/work/cibc-firstcaribbean",
+      "title": "CIBC FirstCaribbean: banking platform",
+      "dek": "Designing for multi-country, multi-currency international banking at Devbridge",
+      "companyName": "CIBC",
+      "companyLogo": "/logos/CIBC.svg",
+      "coverSrc": "/images/cibc-firstcaribbean-cover.jpg"
+    }
+  ]
+}
