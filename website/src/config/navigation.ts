@@ -279,6 +279,14 @@ interface SectionConfig {
   sidebar: NavLink[] | null;
 }
 
+/** The "Design system" crumb links to the /design-system landing page. */
+const DS_CRUMB: BreadcrumbItem = { label: "Design system", href: "/design-system" };
+
+/** Parent crumbs resolve to a linked crumb when a landing page exists. */
+function parentCrumb(parent: string): BreadcrumbItem {
+  return parent === "Design system" ? DS_CRUMB : { label: parent };
+}
+
 const breadcrumbSections: SectionConfig[] = [
   // Docs cluster pages are handled directly in getBreadcrumbs (driven by
   // docsSidebarLinks) since their URLs don't share a /docs prefix.
@@ -310,18 +318,18 @@ export function getBreadcrumbs(pathname: string): BreadcrumbItem[] {
   // Playground — a standalone page under the Design system umbrella (it lives
   // in no sidebar array, so the generic section loop can't resolve it).
   if (path === "/playground") {
-    return [{ label: "Design system" }, { label: "Playground" }];
+    return [DS_CRUMB, { label: "Playground" }];
   }
 
   // Docs cluster — the landing lives at /docs but sub-pages keep their
   // original URLs, so match against the sidebar links (no shared prefix).
   if (path === "/docs") {
-    return [{ label: "Design system" }, { label: "Docs" }];
+    return [DS_CRUMB, { label: "Docs" }];
   }
   const docsLink = docsSidebarLinks.find((l) => l.href === path && l.href !== "/docs");
   if (docsLink) {
     return [
-      { label: "Design system" },
+      DS_CRUMB,
       { label: "Docs", href: "/docs" },
       { label: docsLink.label },
     ];
@@ -331,7 +339,7 @@ export function getBreadcrumbs(pathname: string): BreadcrumbItem[] {
     // Exact match → section landing (e.g. /components, /about)
     if (path === section.base) {
       const items: BreadcrumbItem[] = [];
-      if (section.parent) items.push({ label: section.parent });
+      if (section.parent) items.push(parentCrumb(section.parent));
       items.push({ label: section.label });
       // Skip if only one item — no real hierarchy
       return items.length >= 2 ? items : [];
@@ -340,7 +348,7 @@ export function getBreadcrumbs(pathname: string): BreadcrumbItem[] {
     // Sub-page within a section (e.g. /components/button)
     if (path.startsWith(section.base + "/")) {
       const items: BreadcrumbItem[] = [];
-      if (section.parent) items.push({ label: section.parent });
+      if (section.parent) items.push(parentCrumb(section.parent));
       items.push({ label: section.label, href: section.base });
 
       const subLink = section.sidebar?.find((l) => l.href === path);
