@@ -33,7 +33,7 @@ const PIPELINE: TimelineCompany[] = [
         description:
           "Where the system's foundation was designed: the token architecture, the colour ramps, the component vocabulary. Today it's the sketchpad for visual exploration; the source of truth has moved into the repo.",
         bullets: [
-          "Designed the token architecture as variables: 7 color ramps + spatial tokens (gap, padding, radius, border)",
+          "Designed the token architecture as variables: the colour ramps + spatial tokens (gap, padding, radius, border)",
           "Designed the original components with variants and light/dark semantic mappings",
           <>
             Still where bigger visual changes get explored before they land in{" "}
@@ -130,7 +130,7 @@ const PIPELINE: TimelineCompany[] = [
           "Lints the codebase and builds the library, Storybook, and the website on every change",
           "Renders every Storybook story in headless Chrome and runs an axe accessibility audit on each: a render error or a WCAG AA violation fails the build (the contrast criteria are deliberately deferred while the action colour is redesigned)",
           "Chromatic visual regression, run on demand: every story snapshotted in light and dark against an accepted baseline, so a token change that shifts pixels anywhere in the system is caught before it ships",
-          "Drift guard fails the build if generated docs (component counts, skills, blueprints) go stale",
+          "Drift guard fails the build if any registry-backed content — counts, skills, blueprints, case studies, journal entries — goes stale",
           "The same checklist runs locally as a single command, so local and CI can never disagree",
         ],
       },
@@ -166,7 +166,7 @@ const PIPELINE: TimelineCompany[] = [
             at the Vercel deployment
           </>,
           "Nunito Sans is self-hosted: next/font fetches it from Google Fonts at build time and serves it from this domain, with no runtime Google request",
-          "Material Symbols icons ship as a self-hosted woff2 inside the npm package itself; the playground's typeface picker is the one place fonts load from Google at runtime",
+          "Material Symbols icons ship as a self-hosted woff2 inside the npm package itself; on this site, the playground's typeface picker is the one place fonts load from Google at runtime",
           "Google Analytics (GA4) measures traffic via the standard gtag snippet in the root layout",
         ],
       },

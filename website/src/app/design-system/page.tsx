@@ -245,7 +245,7 @@ export default function DesignSystemPage() {
             buttons={[
               {
                 label: "Figma",
-                priority: "tertiary",
+                variant: "tertiary",
                 iconLeft: <FigmaIcon />,
                 iconRight: "open_in_new",
                 href: "https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26",
@@ -254,7 +254,7 @@ export default function DesignSystemPage() {
               },
               {
                 label: "Storybook",
-                priority: "tertiary",
+                variant: "tertiary",
                 iconLeft: <StorybookIcon />,
                 iconRight: "open_in_new",
                 href: "https://design-system-iota-one.vercel.app",
@@ -263,7 +263,7 @@ export default function DesignSystemPage() {
               },
               {
                 label: "GitHub",
-                priority: "tertiary",
+                variant: "tertiary",
                 iconLeft: <GitHubIcon />,
                 iconRight: "open_in_new",
                 href: "https://github.com/robritacca-dotcom/design-system",
@@ -335,7 +335,7 @@ export default function DesignSystemPage() {
                   onValueChange={setCurrency}
                 />
                 <DateInput label="Due date" value={dueDate} onValueChange={setDueDate} />
-                <Button label="Create invoice" priority="primary" iconLeft="receipt_long" />
+                <Button label="Create invoice" variant="primary" iconLeft="receipt_long" />
               </div>
             </DemoCard>
 
@@ -443,10 +443,10 @@ export default function DesignSystemPage() {
             >
               <CodeBlock code="npm install @robr0/design-system" language="bash" />
               <div className={styles.buttonRow}>
-                <Button label="Get started" priority="primary" size="compact" href="/docs/get-started" />
+                <Button label="Get started" variant="primary" size="compact" href="/docs/get-started" />
                 <Button
                   label="GitHub"
-                  priority="tertiary"
+                  variant="tertiary"
                   size="compact"
                   iconRight="open_in_new"
                   href="https://github.com/robritacca-dotcom/design-system"
@@ -525,8 +525,8 @@ export default function DesignSystemPage() {
                   Invoice #3463 settled. A receipt went to accounting@example.com.
                 </span>
                 <div className={styles.successActions}>
-                  <Button label="Next invoice" priority="primary" size="compact" />
-                  <Button label="Done" priority="secondary" size="compact" />
+                  <Button label="Next invoice" variant="primary" size="compact" />
+                  <Button label="Done" variant="secondary" size="compact" />
                 </div>
               </div>
             </DemoCard>
@@ -728,7 +728,7 @@ export default function DesignSystemPage() {
                 onValueChange={setThreshold}
                 ariaLabel="Minimum payout amount"
               />
-              <Button label="Save threshold" priority="secondary" size="compact" />
+              <Button label="Save threshold" variant="secondary" size="compact" />
             </DemoCard>
 
             <DemoCard

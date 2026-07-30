@@ -53,6 +53,7 @@ Each surface has its own shape. The full standard for a surface lives in one pla
 | Journal entries (`website/src/data/site-updates.json`) | None | Story paragraphs: what, why, outcome | Thematic stories, never commit digests; readable by someone who has never seen the repo | `.claude/skills/site-updates/SKILL.md` |
 | Website page copy + metadata | None | Short paragraphs under sentence-case headings | The system is the subject; specifics over adjectives | This file |
 | Case studies and about pages | "I" / "we" | Narrative prose with real numbers | A person tells their own story; claims carry evidence | This file |
+| Case-study registry entries (`website/src/data/case-studies.json`) | None | `title` a name, `dek` one summary line | Shipped copy on /work and the home page; the dek makes one concrete claim | This file + case-studies validator |
 | Component descriptions (`src/components/registry.json`) | None | One verbless fragment, ≤160 chars, ends in a full stop | One authoritative home: sidebar, metadata, and README all derive from it | This file + registry validator |
 | README + `src/stories/Configure.mdx` | "You" for instructions | Install and usage copy | Production copy: the README ships in the npm tarball | `CLAUDE.md` (Registries section) |
 | `design.md` spec sections | None | Bold BEM class opener, then prose and tables | Specs state rules, not sales points | `design.md` |

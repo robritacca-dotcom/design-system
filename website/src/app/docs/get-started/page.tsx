@@ -33,7 +33,7 @@ import { BarChart, LineChart } from '@robr0/design-system/charts';`;
 const DARK_MODE_SNIPPET = `<!-- Light is the default; flip the whole system with one attribute -->
 <html data-theme="dark">`;
 
-const FONT_SNIPPET = `/* The entire 14-step type scale chains to one token.
+const FONT_SNIPPET = `/* The whole type scale chains to one token.
    Load any font (Google Fonts, next/font, self-hosted), then: */
 :root {
   --font-family-primary: 'Inter', sans-serif;

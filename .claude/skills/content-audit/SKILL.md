@@ -20,6 +20,7 @@ Use this skill when asked to audit copy, check prose quality, find AI-writing te
    - A specific file path (a page, a data file, a markdown doc)
    - `site-updates` → `website/src/data/site-updates.json` (titles + story bodies)
    - `registry` → the `description` fields in `src/components/registry.json`
+   - `case-studies` → the `title` and `dek` fields in `website/src/data/case-studies.json` (shipped copy on /work and the home page)
    - `readme` → `README.md` prose plus `src/stories/Configure.mdx`
    - `skills` → the `displayDescription` frontmatter strings across `.claude/skills/` (they render on /skills, so they are published copy; skill instruction *bodies* are out of scope)
    - `website` → user-visible strings in `website/src/app/**` page files; a page slug (e.g. `about`) scopes to that page folder

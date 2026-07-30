@@ -222,7 +222,7 @@ export default async function HomePage() {
         <div className={`${styles.homeLinks} animate-in animate-delay-2`}>
           <Button
             label="Substack"
-            priority="tertiary"
+            variant="tertiary"
             iconLeft={<SubstackIcon />}
             iconRight="open_in_new"
             href="https://robertritacca1.substack.com/"
@@ -231,7 +231,7 @@ export default async function HomePage() {
           />
           <Button
             label="Figma"
-            priority="tertiary"
+            variant="tertiary"
             iconLeft={<FigmaIcon />}
             iconRight="open_in_new"
             href="https://www.figma.com/@robr0"
@@ -240,7 +240,7 @@ export default async function HomePage() {
           />
           <Button
             label="Storybook"
-            priority="tertiary"
+            variant="tertiary"
             iconLeft={<StorybookIcon />}
             iconRight="open_in_new"
             href="https://design-system-iota-one.vercel.app"
@@ -249,7 +249,7 @@ export default async function HomePage() {
           />
           <Button
             label="GitHub"
-            priority="tertiary"
+            variant="tertiary"
             iconLeft={<GitHubIcon />}
             iconRight="open_in_new"
             href="https://github.com/robritacca-dotcom/design-system"

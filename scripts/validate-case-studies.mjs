@@ -12,6 +12,9 @@
  *    that never reaches the registry (and therefore the /work index and
  *    home page) fails the build
  *  - logo and cover paths point at real files under website/public
+ *  - the hand-curated workSidebarLinks array in navigation.ts lists exactly
+ *    the registered studies — the sidebar, breadcrumbs, and sitemap derive
+ *    from it, so a study missing there is invisible to all three
  */
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -88,10 +91,46 @@ for (const folder of folders) {
   }
 }
 
+// Sidebar parity: workSidebarLinks in navigation.ts is a second, hand-curated
+// list of the same studies, and the sidebar, breadcrumbs, and sitemap all
+// derive from it. Extract its /work/<slug> hrefs and require set-equality
+// with the registry, so a study can't reach /work and the home page while
+// silently missing from navigation.
+const navPath = join(repoRoot, 'website', 'src', 'config', 'navigation.ts');
+const navSource = readFileSync(navPath, 'utf8');
+const sidebarBlock = navSource.match(
+  /export const workSidebarLinks[^=]*=\s*\[([\s\S]*?)\];/
+);
+if (!sidebarBlock) {
+  errors.push('Could not find workSidebarLinks in website/src/config/navigation.ts.');
+} else {
+  const sidebarHrefs = new Set(
+    [...sidebarBlock[1].matchAll(/href:\s*"(\/work\/[a-z0-9-]+)"/g)].map((m) => m[1])
+  );
+  for (const href of seenHrefs) {
+    if (!sidebarHrefs.has(href)) {
+      errors.push(
+        `${href} is registered but missing from workSidebarLinks in navigation.ts — ` +
+          'add it so the sidebar, breadcrumbs, and sitemap know the page exists.'
+      );
+    }
+  }
+  for (const href of sidebarHrefs) {
+    if (!seenHrefs.has(href)) {
+      errors.push(
+        `${href} is in workSidebarLinks but not in case-studies.json — ` +
+          'register it or remove the sidebar entry.'
+      );
+    }
+  }
+}
+
 if (errors.length > 0) {
   console.error('✗ Case-study registry validation failed:\n');
   for (const e of errors) console.error(`  - ${e}`);
   process.exit(1);
 }
 
-console.log(`✓ Case-study registry valid (${entries.length} entries, all pages and assets present).`);
+console.log(
+  `✓ Case-study registry valid (${entries.length} entries — pages, assets, and sidebar parity all check out).`
+);

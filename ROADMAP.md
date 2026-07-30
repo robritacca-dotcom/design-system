@@ -10,7 +10,7 @@ Audited against the working tree on **2026-07-27, end of day** (59 components, 4
 
 # ▶ WHERE WE ARE — last updated 2026-07-28, end of session
 
-**Seven of ten sequenced steps are done and on `main`.** `@robr0/design-system@0.3.0` is live with signed provenance (0.3.0 shipped 2026-07-28; 61 components after Swatch and ColorPicker). Since the last audit: `content-design.md` landed as the third root spec (blueprints page, validators, content-audit skill), and a seven-batch copy sweep brought every shipped prose surface under it — that arc is on local `main`, not yet pushed.
+**Seven of ten sequenced steps are done and on `main`.** `@robr0/design-system@0.3.0` is live with signed provenance (0.3.0 shipped 2026-07-28; 61 components after Swatch and ColorPicker). Since the last audit: `content-design.md` landed as the third root spec (blueprints page, validators, content-audit skill), and a seven-batch copy sweep brought every shipped prose surface under it.
 
 | # | Step | Status |
 |---|---|---|
@@ -496,7 +496,7 @@ This is the highest-leverage remaining test investment, because this system's wh
 
 **Still true:** axe catches roughly a third of WCAG issues. Meaningful alt text, sensible focus order, and whether a Dialog *actually* traps focus remain human judgment — which is what [item 7](#7-interaction-tests-play-functions--m) is for.
 
-`.storybook/preview.ts` has `a11y.test: 'todo'`. Axe runs on every story and reports, but nothing fails, so violations accumulate unmeasured.
+*(What follows is the pre-ship record — the target decision, config, and measured violation list — kept for context. The outcome is in **Current state** at the end of this item.)*
 
 ### Target — decided 2026-07-27
 
@@ -622,7 +622,7 @@ The `release` skill opens by saying this is the one workflow where a mistake is 
 
 Turning it on means: tick `Allow npm stage publish` on the trusted-publisher registration (currently `npm publish` only — deliberately, since the workflow doesn't use it), swap the publish step, and add a promote step plus a decision point. The `release` skill's step 5 would gain an inspect-then-promote beat.
 
-Worth doing before any release that changes the public API, which is exactly the shape of `0.2.0`. Deferred out of [item 3](#3-npm-trusted-publishing-oidc-migration--s--code-done-2026-07-27-blocked-on-rob) to keep the OIDC migration a single-variable change — proving OIDC and changing the publish command at the same time would make a failure ambiguous.
+Worth doing before the next release that changes the public API. Deferred out of [item 3](#3-npm-trusted-publishing-oidc-migration--s--code-done-2026-07-27-blocked-on-rob) to keep the OIDC migration a single-variable change — proving OIDC and changing the publish command at the same time would make a failure ambiguous.
 
 **24. Checkbox and RadioButton are divs, not native inputs — `M` · found 2026-07-27 during the B1 pass.**
 Both render `<div role="checkbox">` / `<div role="radio">` with hand-rolled click and keydown handlers rather than `<input type="checkbox">` / `<input type="radio">`. Consequences:
@@ -707,6 +707,6 @@ The website currently carries ~14 top-level surfaces serving three different job
 - **The portfolio** — work, writing, about, contact, rr-animated
 - **The build meta** — project-journal, loops, skills, overview
 
-Two audiences with opposite needs are interleaved: someone evaluating *the component library* and someone evaluating *the person who built it*. Neither gets a clean path, and the front door doesn't declare which one it serves.
+Two audiences with opposite needs are interleaved: someone evaluating *the component library* and someone evaluating *the person who built it*.
 
-This isn't a defect to fix — it's a decision to make deliberately. The strongest version is probably: the system **is** the portfolio piece, so let it own the front door and put the personal surfaces behind a single clearly-named entrance. Recorded here so it gets decided rather than accreted.
+The front-door half of this got answered by the 2026-07-30 home redesign: the home page now declares all three jobs as registry-driven cards (Work / Writing / Design system), and `/design-system` gives the system its own landing page behind the mega-nav trigger. What remains open is the deeper IA question — whether the personal surfaces (about, contact, rr-animated) and the build-meta surfaces (project-journal, loops, skills, overview) should regroup under fewer clearly-named entrances. Recorded here so it gets decided rather than accreted.

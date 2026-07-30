@@ -24,6 +24,7 @@ name: Release
 #
 # 0.1.0 shipped 2026-07-26 using a granular NPM_TOKEN; that token is retired.
 # 0.2.0 shipped 2026-07-27 — the first release authenticated by OIDC.
+# 0.3.0 shipped 2026-07-28.
 
 on:
   workflow_dispatch:

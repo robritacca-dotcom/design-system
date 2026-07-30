@@ -61,6 +61,7 @@ export function GET() {
     "Interactive theming for the design system.",
     "",
     `- [Playground](${SITE_URL}/playground): re-theme the design system live and copy the generated CSS`,
+    `- [Design system landing](${SITE_URL}/design-system): the whole system working on one page, with live component demos`,
     "",
     "## About & writing",
     "",
