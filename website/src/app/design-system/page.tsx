@@ -44,7 +44,7 @@ import { Timeline } from "@robr0/design-system/components/Timeline/Timeline";
 import { ToggleSwitch } from "@robr0/design-system/components/ToggleSwitch/ToggleSwitch";
 import { COMPONENT_COUNT } from "@robr0/design-system/components/registry";
 import { TOKEN_COUNT } from "@robr0/design-system/tokens/registry";
-import { BarChart, LineChart } from "@robr0/design-system/charts";
+import { BarChart, LineChart, PieChart } from "@robr0/design-system/charts";
 
 /* ---------- fixed demo data (all mock — a small finance product) ---------- */
 
@@ -120,14 +120,14 @@ const SAVINGS_GOALS = [
   { label: "House deposit", target: "$85,000 target", value: 38 },
 ];
 
-/* One-line hints sized for the "Where to next" card — the mega menu keeps
-   the longer descriptions */
-const SECTION_HINTS: Record<string, string> = {
-  "/docs": "Guides, and the artifacts to take",
-  "/foundations": "Colour, type, spacing, and motion",
-  "/components": "The full library, one page each",
-  "/playground": "Re-theme the system live",
-};
+/* Spending mix for the donut card — sums to a plausible month */
+const SPENDING_DATA = [
+  { name: "Housing", value: 2150 },
+  { name: "Groceries", value: 640 },
+  { name: "Transport", value: 310 },
+  { name: "Dining", value: 280 },
+  { name: "Subscriptions", value: 120 },
+];
 
 const SCHEDULE_OPTIONS = [
   { value: "weekly", label: "Weekly", description: "Every Friday, balances over $10" },
@@ -237,9 +237,19 @@ export default function DesignSystemPage() {
           <p className={styles.introBody}>
             A React component library and the design language behind it. Each
             card below is a piece of product UI rendered live from the package,
-            and the navigation cards link into every part of the system. Flip
-            the theme toggle and it all re-colours from one token layer.
+            and the links above lead into every part of the system. Flip the
+            theme toggle and it all re-colours from one token layer.
           </p>
+          <ButtonGroup
+            ariaLabel="Design system sections"
+            buttons={dsMegaItems.map((item) => ({
+              label: item.label,
+              variant: "tertiary" as const,
+              iconLeft: item.icon,
+              href: item.href,
+            }))}
+          />
+          <div className={styles.heroDivider} aria-hidden="true" />
           <ButtonGroup
             ariaLabel="External resources"
             buttons={[
@@ -281,28 +291,21 @@ export default function DesignSystemPage() {
         >
           {/* -------- left column -------- */}
           <div className={styles.col}>
-            <NavCard heading="Where to next" sub="Every section of the design system.">
-              <ul className={styles.navList}>
-                {dsMegaItems.map((item) => (
-                  <li key={item.href}>
-                    <Link href={item.href} className={styles.exploreRow}>
-                      <span className={`material-symbols-rounded ${styles.exploreIcon}`} aria-hidden="true">
-                        {item.icon}
-                      </span>
-                      <span className={styles.exploreText}>
-                        <span className={styles.rowTitle}>{item.label}</span>
-                        <span className={styles.rowHint}>
-                          {SECTION_HINTS[item.href] ?? item.description}
-                        </span>
-                      </span>
-                      <span className={`material-symbols-rounded ${styles.exploreArrow}`} aria-hidden="true">
-                        arrow_forward
-                      </span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </NavCard>
+            <DemoCard
+              heading="Spending by category"
+              sub="Where this month's money went."
+              links={[{ label: "Chart", href: "/components/chart" }]}
+            >
+              <div className={styles.chartFlush}>
+                <PieChart
+                  data={SPENDING_DATA}
+                  innerRadius={52}
+                  outerRadius={80}
+                  height={230}
+                  showLegend
+                />
+              </div>
+            </DemoCard>
 
             <DemoCard
               heading="Financial performance"
