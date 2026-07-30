@@ -146,16 +146,19 @@
 }
 
 .coverLogo {
-  width: var(--icon-size-sm);
-  height: var(--icon-size-sm);
+  width: var(--icon-size-md);
+  height: var(--icon-size-md);
   object-fit: contain;
   flex-shrink: 0;
+  /* Optically align the logo with the first caption line */
+  margin-bottom: 2px;
 }
 
 .coverTitle {
-  font-size: var(--font-paragraph-sm-em-size);
-  font-weight: var(--font-paragraph-sm-em-weight);
-  line-height: var(--font-paragraph-sm-em-line-height);
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  letter-spacing: var(--font-heading-3-letter-spacing);
   color: var(--primitive-neutral-01);
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -224,6 +227,12 @@
 .row:hover .rowArrow {
   opacity: 1;
   transform: translateX(2px);
+}
+
+.rowIcon {
+  font-size: var(--icon-size-sm);
+  color: var(--color-icon-primary);
+  flex-shrink: 0;
 }
 
 .rowLogo {

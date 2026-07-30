@@ -37,6 +37,12 @@ const workItems = [
     logo: "/logos/meta.svg",
     company: "Meta",
   },
+  {
+    href: "/work/meta-offers",
+    title: "Meta Offer Creation Flow",
+    logo: "/logos/meta.svg",
+    company: "Meta",
+  },
 ];
 
 /* Section order for the DS card; labels and hrefs stay derived from the
@@ -49,7 +55,7 @@ const dsItems = dsSectionOrder
 export default async function HomePage() {
   const articles = await getArticles();
   const latest = articles[0];
-  const moreWriting = articles.slice(1, 4);
+  const moreWriting = articles.slice(1, 5);
 
   return (
     <>
@@ -200,6 +206,9 @@ export default async function HomePage() {
               {dsItems.map((item) => (
                 <li key={item.href}>
                   <Link href={item.href} className={styles.row}>
+                    <span className={`material-symbols-rounded ${styles.rowIcon}`} aria-hidden="true">
+                      {item.icon}
+                    </span>
                     <span className={styles.rowTitle}>{item.label}</span>
                     <span className={`material-symbols-rounded ${styles.rowArrow}`} aria-hidden="true">
                       arrow_forward
