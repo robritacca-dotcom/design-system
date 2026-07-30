@@ -114,10 +114,16 @@
 }
 
 /* ============================================
-   COVER — the card's key image, its own entity:
-   framed tile with the featured title captioned
-   bottom-left over a legibility gradient
+   FEATURED — the card's key image as its own
+   entity, with the title on plain text below
    ============================================ */
+.featured {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+  text-decoration: none;
+}
+
 .cardCover {
   position: relative;
   display: block;
@@ -126,23 +132,6 @@
   border-radius: var(--radius-lg);
   overflow: hidden;
   border: 1px solid var(--color-bg-container-border);
-}
-
-.coverCaption {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: flex-end;
-  gap: var(--gap-xs);
-  padding: var(--padding-sm);
-  /* ds-allow(color): legibility scrim + caption text over arbitrary cover
-     imagery — always dark-on-image regardless of theme, built from the
-     true-black/neutral primitives. */
-  background: linear-gradient(
-    to top,
-    var(--primitive-true-black-strong),
-    transparent 45%
-  );
 }
 
 /* Company logo pinned to the cover's top-left corner */
@@ -161,12 +150,12 @@
   display: block;
 }
 
-.coverTitle {
+.featuredTitle {
   font-size: var(--font-heading-3-size);
   font-weight: var(--font-heading-3-weight);
   line-height: var(--font-heading-3-line-height);
   letter-spacing: var(--font-heading-3-letter-spacing);
-  color: var(--primitive-neutral-01);
+  color: var(--color-text-primary);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;

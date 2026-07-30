@@ -55,26 +55,26 @@ export default async function HomePage() {
               </Link>
             </header>
 
-            <Link href={featuredWork.href} className={styles.cardCover}>
-              <Image
-                src={featuredWork.coverSrc}
-                alt=""
-                fill
-                sizes="(max-width: 959px) 100vw, 370px"
-                className={styles.cardCoverImg}
-              />
-              <span className={styles.coverBadge}>
+            <Link href={featuredWork.href} className={styles.featured}>
+              <span className={styles.cardCover}>
                 <Image
-                  src={featuredWork.companyLogo}
-                  alt={featuredWork.companyName}
-                  width={24}
-                  height={24}
-                  className={styles.coverLogo}
+                  src={featuredWork.coverSrc}
+                  alt=""
+                  fill
+                  sizes="(max-width: 959px) 100vw, 370px"
+                  className={styles.cardCoverImg}
                 />
+                <span className={styles.coverBadge}>
+                  <Image
+                    src={featuredWork.companyLogo}
+                    alt={featuredWork.companyName}
+                    width={24}
+                    height={24}
+                    className={styles.coverLogo}
+                  />
+                </span>
               </span>
-              <span className={styles.coverCaption}>
-                <span className={styles.coverTitle}>{featuredWork.title}</span>
-              </span>
+              <span className={styles.featuredTitle}>{featuredWork.title}</span>
             </Link>
 
             <ul className={styles.rowList}>
@@ -110,18 +110,18 @@ export default async function HomePage() {
 
             {latest ? (
               <>
-                <Link href={`/writing/${latest.slug}`} className={styles.cardCover}>
-                  {/* Substack CDN covers aren't in next/image's allowlist; the
-                      plain img matches how /writing renders them. */}
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={latest.coverImage ?? coverPlaceholder(latest.slug)}
-                    alt=""
-                    className={styles.cardCoverImg}
-                  />
-                  <span className={styles.coverCaption}>
-                    <span className={styles.coverTitle}>{latest.title}</span>
+                <Link href={`/writing/${latest.slug}`} className={styles.featured}>
+                  <span className={styles.cardCover}>
+                    {/* Substack CDN covers aren't in next/image's allowlist; the
+                        plain img matches how /writing renders them. */}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={latest.coverImage ?? coverPlaceholder(latest.slug)}
+                      alt=""
+                      className={styles.cardCoverImg}
+                    />
                   </span>
+                  <span className={styles.featuredTitle}>{latest.title}</span>
                 </Link>
 
                 <ul className={styles.rowList}>
@@ -155,11 +155,12 @@ export default async function HomePage() {
               </Link>
             </header>
 
-            <Link href="/design-system" className={styles.cardCover}>
-              {/* A live mini-bento rendered from the tokens themselves, so
-                  the cover re-themes with the toggle instead of being a
-                  static screenshot. Purely decorative. */}
-              <span className={styles.dsBoard} aria-hidden="true">
+            <Link href="/design-system" className={styles.featured}>
+              <span className={styles.cardCover}>
+                {/* A live mini-bento rendered from the tokens themselves, so
+                    the cover re-themes with the toggle instead of being a
+                    static screenshot. Purely decorative. */}
+                <span className={styles.dsBoard} aria-hidden="true">
                 <span className={styles.dsTile}>
                   <span className={styles.dsType}>Aa</span>
                 </span>
@@ -193,9 +194,10 @@ export default async function HomePage() {
                     widgets
                   </span>
                 </span>
+                </span>
               </span>
-              <span className={styles.coverCaption}>
-                <span className={styles.coverTitle}>robr0 DS</span>
+              <span className={styles.featuredTitle}>
+                robr0 DS: the whole system, working on one page
               </span>
             </Link>
 
