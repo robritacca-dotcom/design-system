@@ -1,16 +1,21 @@
 /* ============================================
    HOME PAGE — three uniform cards
    ============================================ */
+/* flex: 1 makes this fill the space between nav and footer, and
+   justify-content centres the content in it — so the page balances
+   itself against the browser height instead of stacking from the top.
+   When the viewport is shorter than the content, it scrolls as normal. */
 .homeContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 100%;
   max-width: 1440px;
   flex: 1;
   position: relative;
-  gap: var(--primitive-gap-xxxl);
-  padding: var(--primitive-gap-xxxl) var(--padding-xl);
+  gap: var(--primitive-gap-xxl);
+  padding: var(--padding-xl);
 }
 
 /* ============================================
