@@ -32,7 +32,7 @@ Accordion · Alert · Alert dialog · App layout · App sidebar · Avatar · Bad
 
 ### Using the package
 
-The design system is published as [`@robr0/design-system`](https://www.npmjs.com/package/@robr0/design-system) (React 19+ is a peer dependency). The **[full setup guide](https://www.robertritacca.com/docs/get-started)** covers install, dark mode, fonts, and re-theming:
+The design system is published as [`@robr0/design-system`](https://www.npmjs.com/package/@robr0/design-system) (React 19+ is a peer dependency). The **[full setup guide](https://robertritacca.com/docs/get-started)** covers install, dark mode, fonts, and re-theming:
 
 ```bash
 npm install @robr0/design-system

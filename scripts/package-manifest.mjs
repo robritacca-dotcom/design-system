@@ -19,7 +19,7 @@
 export const PACKAGE_NAME = '@robr0/design-system';
 export const PACKAGE_VERSION = '0.3.0';
 export const PACKAGE_DESCRIPTION =
-  'A token-driven React design system — accessible components, light/dark theming, and CSS-variable customization.';
+  'A token-driven React design system: accessible components, light/dark theming, and CSS-variable customization.';
 export const REPOSITORY_URL = 'https://github.com/robritacca-dotcom/design-system';
 
 /**
@@ -70,7 +70,7 @@ export function distManifest(rootPkg) {
     description: PACKAGE_DESCRIPTION,
     license: rootPkg.license,
     repository: { type: 'git', url: `git+${REPOSITORY_URL}.git` },
-    homepage: 'https://www.robertritacca.com',
+    homepage: 'https://robertritacca.com',
     keywords: [
       'react',
       'design-system',
