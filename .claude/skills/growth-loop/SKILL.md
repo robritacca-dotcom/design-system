@@ -70,7 +70,7 @@ cd "$WT" && npm install --no-fund --no-audit
 cd "$WT/website" && npm run build
 ```
 
-If the build fails because of your edit, fix it. Then commit in the worktree (conventional message, e.g. `experiment(growth): reword /work CTA — hypothesis in loop report 2026-07-20`) and clean up:
+If the build fails because of your edit, fix it. Then commit in the worktree (conventional message, e.g. `experiment(growth): reword /work CTA — hypothesis in loop report 2026-07-20`) — commit **only your copy edits**: the website `prebuild` regenerates tracked files (`website/src/data/skills-content.generated.ts`, `website/public/*.md`), and those regenerated copies stay out of the commit unless your edit is what changed them. Then clean up:
 
 ```bash
 rm -rf "$WT/node_modules" "$WT/website/node_modules"
@@ -104,4 +104,4 @@ If we ..., then ... should ..., because ...
 
 ### 6. Hand off for approval
 
-End by telling the user: the branch name, that the build passed, and that nothing is pushed or deployed. To approve they merge the branch (or ask Claude to open a PR); to reject they delete the branch. That's the whole approval step.
+End by telling the user: the branch name, that the build passed, and that nothing is pushed or deployed. To approve they merge the branch (or say `ship` on it); to reject they delete the branch. That's the whole approval step.

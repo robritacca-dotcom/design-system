@@ -64,7 +64,7 @@ cd "$WT/website" && npm run build
 Fix anything your edit broke, then commit in the worktree (e.g. `content(site-updates): add "<entry title>" entry through YYYY-MM-DD`) and clean up:
 
 ```bash
-rm -rf "$WT/node_modules" "$WT/website/node_modules"
+rm -rf "$WT/node_modules"   # website deps hoist to the workspace root; there is no second real install tree
 git -C $REPO worktree remove "$WT"
 ```
 
@@ -77,4 +77,4 @@ The final message to the user IS the report — plain English:
 - The full text of the new/extended entry (so approval needs no file-opening).
 - Which commits it consolidates (date range and count, not a hash list).
 - The branch name, that the validator and website build passed, and that nothing is pushed or deployed.
-- To approve: merge the branch (or ask Claude to merge and push). To reject: delete the branch.
+- To approve: merge the branch (or say `ship` on it). To reject: delete the branch.
