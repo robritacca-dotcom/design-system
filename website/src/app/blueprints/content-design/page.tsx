@@ -40,7 +40,7 @@ export default function ContentDesignBlueprintPage() {
               The writing rules in one file
             </p>
             <p className={styles.introBody}>
-              Voice, register by surface, the words and patterns this project never ships, and the tests every piece of copy passes first. This is the source of truth for how the system reads.
+              Voice, register by surface, the words and patterns this project never ships, and the tests every piece of copy passes first. The source of truth for how the system reads, copied verbatim from the repo on every build.
             </p>
           </div>
 

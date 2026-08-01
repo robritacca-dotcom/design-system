@@ -248,8 +248,9 @@ export default function PlaygroundPage() {
               Move a lever: the whole site re-themes, live
             </p>
             <p className={styles.introBody}>
-              These controls override <code>--primitive-*</code> tokens on the page
-              root, exactly the way a consumer of the package would in their own CSS.
+              These controls override <code>--primitive-*</code> tokens (plus the
+              font token) on the page root, exactly the way a consumer of the package
+              would in their own CSS.
               Because every semantic token chains to a primitive, one override cascades
               through buttons, focus rings, surfaces, and both themes: try the
               light/dark toggle in the header while a brand colour is applied. Leaving

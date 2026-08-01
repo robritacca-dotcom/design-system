@@ -350,7 +350,7 @@ export default function SemanticColoursPage() {
             </div>
             <div className={styles.exampleItem}>
               <Image src="/images/coded semantic tokens.png" alt="Coded semantic tokens" width={500} height={300} className={styles.exampleImage} />
-              <p className={styles.exampleCaption}>Code: tokens-mode.css</p>
+              <p className={styles.exampleCaption}>Code: tokens-light.css / tokens-dark.css</p>
             </div>
           </div>
 

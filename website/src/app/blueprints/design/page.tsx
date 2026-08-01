@@ -40,7 +40,7 @@ export default function DesignBlueprintPage() {
               The design language in one file
             </p>
             <p className={styles.introBody}>
-              Tokens, typography, colours, and every component spec in a downloadable markdown reference. This is the source of truth for how the system looks and behaves.
+              Tokens, typography, colours, and every component spec in a downloadable markdown reference. The source of truth for how the system looks and behaves, copied verbatim from the repo on every build.
             </p>
           </div>
 

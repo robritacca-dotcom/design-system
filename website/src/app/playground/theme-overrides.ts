@@ -4,7 +4,9 @@
  * Everything here produces `--primitive-*` override values: the Phase-1
  * token invariant (every semantic colour token references a primitive)
  * means overriding primitives re-themes both light and dark modes at
- * once — the playground never touches semantic tokens.
+ * once. Two deliberate exceptions ride the same pipeline: the typeface
+ * lever sets `--font-family-primary`, and the mono preset's
+ * extraOverrides set semantic `--color-core-accent-*` values.
  */
 
 export interface Overrides {

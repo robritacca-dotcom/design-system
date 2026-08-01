@@ -184,8 +184,8 @@ function DemoCard({
   );
 }
 
-/** A navigation panel: same shell as a demo card, without the footer of
-    component links. */
+/** A plain content panel: same shell as a demo card, without the footer of
+    component links. Sole current use is the Install card. */
 function NavCard({
   heading,
   sub,
@@ -287,7 +287,7 @@ export default function DesignSystemPage() {
         {/* ---------- collage: three curated columns of live demos + nav ---------- */}
         <section
           className={`${styles.collage} animate-in animate-delay-1`}
-          aria-label="Live component examples and site sections"
+          aria-label="Live component examples"
         >
           {/* -------- left column -------- */}
           <div className={styles.col}>

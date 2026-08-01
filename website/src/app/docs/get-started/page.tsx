@@ -24,7 +24,11 @@ import '@robr0/design-system/tokens/tokens.css';
 import { Button, Card, Badge } from '@robr0/design-system';
 
 // …or by deep path (what this site does):
-import { Button } from '@robr0/design-system/components/Button/Button';`;
+import { Button } from '@robr0/design-system/components/Button/Button';
+
+// Optional: only if you render raw .material-symbols-rounded spans —
+// any component import already loads the icon font for you.
+import '@robr0/design-system/fonts/material-symbols.css';`;
 
 const CHARTS_SNIPPET = `// Charts live behind their own entry so the recharts peer
 // dependency stays optional — install recharts only if you use them.
@@ -186,7 +190,8 @@ export default function GetStartedPage() {
               <section className={`${styles.section} animate-in animate-delay-2`}>
                 <SectionTitle title="Install" />
                 <p className={styles.sectionNote}>
-                  React 19+ is a peer dependency. Everything else (component CSS, both
+                  React 19+ is the only required peer dependency (recharts is an
+                  optional second, for charts). Everything else (component CSS, both
                   themes, the Material Symbols icon font) is bundled. The package is
                   ESM-only: use a bundler that handles CSS and font imports (Vite,
                   Next.js, webpack), with TypeScript&apos;s{" "}
