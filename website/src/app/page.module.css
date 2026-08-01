@@ -1,21 +1,88 @@
 /* ============================================
-   HOME PAGE — three uniform cards
+   HOME PAGE — full-viewport hero, cards below
    ============================================ */
-/* flex: 1 makes this fill the space between nav and footer, and
-   justify-content centres the content in it — so the page balances
-   itself against the browser height instead of stacking from the top.
-   When the viewport is shorter than the content, it scrolls as normal. */
 .homeContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   width: 100%;
   max-width: 1440px;
   flex: 1;
   position: relative;
   gap: var(--primitive-gap-xxl);
-  padding: var(--padding-xl);
+  padding: 0 var(--padding-xl) var(--padding-xl);
+}
+
+/* ============================================
+   HERO — fills the first viewport so the title
+   centres against the browser height; the cards
+   live below the fold.
+   ============================================ */
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--primitive-gap-xxl);
+  width: 100%;
+  /* Fill what remains of the first viewport after the in-flow chrome
+     above this element: the body's top padding, the 78px MegaNav bar
+     (MegaNav.module.css), and the body's nav→main gap. svh keeps the
+     scroll cue above mobile browser bars; vh is the fallback. */
+  min-height: calc(100vh - 78px - var(--primitive-padding-lg) - var(--primitive-gap-xxxl));
+  min-height: calc(100svh - 78px - var(--primitive-padding-lg) - var(--primitive-gap-xxxl));
+}
+
+/* ============================================
+   SCROLL CUE — pinned to the bottom of the fold,
+   out of the centring math (absolute), smooth-
+   scrolls to the card grid.
+   ============================================ */
+.scrollCue {
+  position: absolute;
+  bottom: var(--padding-lg);
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-xs);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-bg-container-border);
+  background: var(--color-bg-container-primary-semi);
+  color: var(--color-icon-primary);
+  transition: background-color var(--motion-duration-fast) var(--motion-ease-standard),
+    color var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.scrollCue:hover {
+  background: var(--color-bg-container-secondary);
+  color: var(--color-text-primary);
+}
+
+.scrollCue :global(.material-symbols-rounded) {
+  font-size: var(--icon-size-md);
+  /* ds-allow(motion): ambient nudge inviting the scroll — far slower
+     than any UI motion token, same decorative-timing precedent as the
+     DS-board bar breathing below. */
+  animation: scroll-cue-nudge 2.4s var(--motion-ease-standard) infinite;
+}
+
+@keyframes scroll-cue-nudge {
+  0%,
+  100% {
+    transform: translateY(-2px);
+  }
+  50% {
+    transform: translateY(2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrollCue :global(.material-symbols-rounded) {
+    animation: none;
+  }
 }
 
 /* ============================================
@@ -56,6 +123,9 @@
   gap: var(--gap-lg);
   width: 100%;
   max-width: 1200px;
+  /* Land the smooth-scroll from the hero cue clear of the 78px sticky
+     nav that slides in once the in-flow header scrolls away. */
+  scroll-margin-top: calc(78px + var(--primitive-gap-lg));
 }
 
 .card {
@@ -485,7 +555,7 @@
 @media (max-width: 600px) {
   .homeContainer {
     gap: var(--primitive-gap-xxl);
-    padding: var(--padding-xl) var(--padding-md);
+    padding: 0 var(--padding-md) var(--padding-xl);
   }
 
   .homeTitle {

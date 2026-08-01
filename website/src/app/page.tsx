@@ -37,14 +37,68 @@ export default async function HomePage() {
       <MegaNav />
 
       <main className={styles.homeContainer} id="main-content">
-        <div className={`${styles.homeHeading} animate-in`}>
-          <h1 className={styles.homeTitle}>Robert Ritacca</h1>
-          <p className={styles.homeSubtitle}>
-            Designing and building AI-native products, systems, and experiences.
-          </p>
-        </div>
+        {/* First viewport: just the name, one line, and the outbound links,
+            centred against the browser height. Everything else lives below
+            the fold, reached by the scroll cue. */}
+        <section className={styles.hero} aria-label="Introduction">
+          <div className={`${styles.homeHeading} animate-in`}>
+            <h1 className={styles.homeTitle}>Robert Ritacca</h1>
+            <p className={styles.homeSubtitle}>
+              Designing and building AI-native products, systems, and experiences.
+            </p>
+          </div>
 
-        <div className={`${styles.cardGrid} animate-in animate-delay-1`}>
+          <div className={`${styles.homeLinks} animate-in animate-delay-1`}>
+            <Button
+              label="Substack"
+              variant="tertiary"
+              iconLeft={<SubstackIcon />}
+              iconRight="open_in_new"
+              href="https://robertritacca1.substack.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            />
+            <Button
+              label="Figma"
+              variant="tertiary"
+              iconLeft={<FigmaIcon />}
+              iconRight="open_in_new"
+              href="https://www.figma.com/@robr0"
+              target="_blank"
+              rel="noopener noreferrer"
+            />
+            <Button
+              label="Storybook"
+              variant="tertiary"
+              iconLeft={<StorybookIcon />}
+              iconRight="open_in_new"
+              href="https://design-system-iota-one.vercel.app"
+              target="_blank"
+              rel="noopener noreferrer"
+            />
+            <Button
+              label="GitHub"
+              variant="tertiary"
+              iconLeft={<GitHubIcon />}
+              iconRight="open_in_new"
+              href="https://github.com/robritacca-dotcom/design-system"
+              target="_blank"
+              rel="noopener noreferrer"
+            />
+          </div>
+
+          <a
+            href="#home-sections"
+            className={`${styles.scrollCue} animate-in animate-delay-2`}
+            aria-label="Scroll down to work, writing, and the design system"
+          >
+            <span className="material-symbols-rounded" aria-hidden="true">
+              keyboard_arrow_down
+            </span>
+          </a>
+        </section>
+
+        <div className={styles.cardGrid} id="home-sections">
           {/* ── Work ── */}
           <section className={styles.card} aria-labelledby="home-work">
             <header className={styles.cardHeader}>
@@ -217,45 +271,6 @@ export default async function HomePage() {
               ))}
             </ul>
           </section>
-        </div>
-
-        <div className={`${styles.homeLinks} animate-in animate-delay-2`}>
-          <Button
-            label="Substack"
-            variant="tertiary"
-            iconLeft={<SubstackIcon />}
-            iconRight="open_in_new"
-            href="https://robertritacca1.substack.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-          />
-          <Button
-            label="Figma"
-            variant="tertiary"
-            iconLeft={<FigmaIcon />}
-            iconRight="open_in_new"
-            href="https://www.figma.com/@robr0"
-            target="_blank"
-            rel="noopener noreferrer"
-          />
-          <Button
-            label="Storybook"
-            variant="tertiary"
-            iconLeft={<StorybookIcon />}
-            iconRight="open_in_new"
-            href="https://design-system-iota-one.vercel.app"
-            target="_blank"
-            rel="noopener noreferrer"
-          />
-          <Button
-            label="GitHub"
-            variant="tertiary"
-            iconLeft={<GitHubIcon />}
-            iconRight="open_in_new"
-            href="https://github.com/robritacca-dotcom/design-system"
-            target="_blank"
-            rel="noopener noreferrer"
-          />
         </div>
       </main>
 
