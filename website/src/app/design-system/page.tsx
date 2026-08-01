@@ -225,7 +225,7 @@ export default function DesignSystemPage() {
 
   return (
     <>
-      <BlurBackground fullHeight />
+      <BlurBackground />
 
       <MegaNav />
 

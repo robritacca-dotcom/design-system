@@ -91,7 +91,7 @@ function ContactContent() {
 
   return (
     <>
-      <BlurBackground fullHeight />
+      <BlurBackground />
 
       <MegaNav />
 
