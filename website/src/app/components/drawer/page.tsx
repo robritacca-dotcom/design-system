@@ -71,7 +71,7 @@ export default function DrawerPage() {
             <div className={styles.demoRow}>
               <Button
                 label="Open drawer"
-                priority="secondary"
+                variant="secondary"
                 onClick={() => setOpen("default")}
               />
             </div>
@@ -96,11 +96,11 @@ export default function DrawerPage() {
               as a fraction of viewport height.
             </p>
             <div className={styles.demoRow}>
-              <Button label="From left" priority="secondary" onClick={() => setOpen("left")} />
-              <Button label="From top" priority="secondary" onClick={() => setOpen("top")} />
+              <Button label="From left" variant="secondary" onClick={() => setOpen("left")} />
+              <Button label="From top" variant="secondary" onClick={() => setOpen("top")} />
               <Button
                 label="From bottom"
-                priority="secondary"
+                variant="secondary"
                 onClick={() => setOpen("bottom")}
               />
             </div>
@@ -133,7 +133,7 @@ export default function DrawerPage() {
             <div className={styles.demoRow}>
               <Button
                 label="Open filters"
-                priority="secondary"
+                variant="secondary"
                 onClick={() => setOpen("filters")}
               />
             </div>
@@ -144,8 +144,8 @@ export default function DrawerPage() {
               description="Narrow the results list."
               footer={
                 <>
-                  <Button label="Reset" priority="secondary" onClick={close} />
-                  <Button label="Apply" priority="primary" onClick={close} />
+                  <Button label="Reset" variant="secondary" onClick={close} />
+                  <Button label="Apply" variant="primary" onClick={close} />
                 </>
               }
             >
@@ -166,8 +166,8 @@ export default function DrawerPage() {
               full-width below 480px.
             </p>
             <div className={styles.demoRow}>
-              <Button label="Small" priority="secondary" onClick={() => setOpen("small")} />
-              <Button label="Large" priority="secondary" onClick={() => setOpen("large")} />
+              <Button label="Small" variant="secondary" onClick={() => setOpen("small")} />
+              <Button label="Large" variant="secondary" onClick={() => setOpen("large")} />
             </div>
             <Drawer open={isOpen("small")} onOpenChange={close} size="sm" title="Small drawer">
               <p style={{ margin: 0 }}>320px: enough for a compact detail panel.</p>
@@ -183,7 +183,7 @@ export default function DrawerPage() {
             <div className={styles.demoRow}>
               <Button
                 label="Open activity log"
-                priority="secondary"
+                variant="secondary"
                 onClick={() => setOpen("long")}
               />
             </div>
@@ -191,7 +191,7 @@ export default function DrawerPage() {
               open={isOpen("long")}
               onOpenChange={close}
               title="Activity log"
-              footer={<Button label="Close" priority="secondary" onClick={close} />}
+              footer={<Button label="Close" variant="secondary" onClick={close} />}
             >
               <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
                 {Array.from({ length: 30 }, (_, i) => (
@@ -214,7 +214,7 @@ export default function DrawerPage() {
             <div className={styles.demoRow}>
               <Button
                 label="Open locked drawer"
-                priority="secondary"
+                variant="secondary"
                 onClick={() => setOpen("locked")}
               />
             </div>
@@ -224,7 +224,7 @@ export default function DrawerPage() {
               title="Finish setup"
               description="Complete these steps before continuing."
               dismissible={false}
-              footer={<Button label="Done" priority="primary" onClick={close} />}
+              footer={<Button label="Done" variant="primary" onClick={close} />}
             >
               <p style={{ margin: 0 }}>
                 The footer action is the only way to close this drawer.

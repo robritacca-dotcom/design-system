@@ -22,7 +22,7 @@ const states = [
   { label: "Active", value: "active" as const },
 ];
 
-const priorities = ["primary", "secondary", "tertiary", "destructive"] as const;
+const variants = ["primary", "secondary", "tertiary", "destructive"] as const;
 
 const sizes = [
   { label: "Default", value: "default" as const },
@@ -36,7 +36,7 @@ const iconVariants = [
   { label: "Both icons", iconLeft: "grid_view", iconRight: "arrow_forward" },
 ] as const;
 
-const priorityLabels: Record<string, string> = {
+const variantLabels: Record<string, string> = {
   primary: "Primary",
   secondary: "Secondary",
   tertiary: "Tertiary",
@@ -47,17 +47,17 @@ const priorityLabels: Record<string, string> = {
    BUTTON GRID — 5-column layout per variant
    col 1: state label
    cols 2–5: icon variants (no icon / left / right / both)
-   One grid per priority × size combination, stacked vertically.
+   One grid per variant × size combination, stacked vertically.
    ============================================ */
 
 function ButtonGrid({
-  priority,
+  variant,
   size,
 }: {
-  priority: "primary" | "secondary" | "tertiary" | "destructive";
+  variant: "primary" | "secondary" | "tertiary" | "destructive";
   size: "default" | "compact";
 }) {
-  const heading = `${priorityLabels[priority]}${size === "compact" ? ", compact" : ""}`;
+  const heading = `${variantLabels[variant]}${size === "compact" ? ", compact" : ""}`;
 
   return (
     <section className={styles.variantBlock}>
@@ -80,7 +80,7 @@ function ButtonGrid({
               <div key={`${st.value}-${iv.label}`} className={styles.gridCell}>
                 <Button
                   label="Button"
-                  priority={priority}
+                  variant={variant}
                   state={st.value}
                   size={size}
                   iconLeft={iv.iconLeft}
@@ -133,10 +133,10 @@ export default function ButtonPage() {
             </p>
           </div>
 
-          {/* Variant grids — one per priority × size */}
+          {/* Variant grids — one per variant × size */}
           {sizes.map((sz) =>
-            priorities.map((p) => (
-              <ButtonGrid key={`${p}-${sz.value}`} priority={p} size={sz.value} />
+            variants.map((p) => (
+              <ButtonGrid key={`${p}-${sz.value}`} variant={p} size={sz.value} />
             ))
           )}
 
@@ -151,19 +151,19 @@ export default function ButtonPage() {
             </p>
             <div className={styles.buttonGrid}>
               <div className={styles.gridCorner} />
-              {priorities.map((p) => (
+              {variants.map((p) => (
                 <span key={p} className={styles.gridColHeader}>
-                  {priorityLabels[p]}
+                  {variantLabels[p]}
                 </span>
               ))}
               {sizes.map((sz) => (
                 <React.Fragment key={sz.value}>
                   <span className={styles.gridRowHeader}>{sz.label}</span>
-                  {priorities.map((p) => (
+                  {variants.map((p) => (
                     <div key={`${sz.value}-${p}`} className={styles.gridCell}>
                       <Button
                         label="Saving…"
-                        priority={p}
+                        variant={p}
                         size={sz.value}
                         loading
                       />

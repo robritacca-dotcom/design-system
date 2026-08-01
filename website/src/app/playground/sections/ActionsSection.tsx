@@ -34,23 +34,23 @@ export default function ActionsSection() {
       </p>
 
       <div className={styles.demoRow}>
-        <Button label="Primary action" priority="primary" />
-        <Button label="Secondary" priority="secondary" />
-        <Button label="Tertiary" priority="tertiary" />
-        <Button label="Primary" priority="primary" size="compact" iconRight="arrow_forward" />
+        <Button label="Primary action" variant="primary" />
+        <Button label="Secondary" variant="secondary" />
+        <Button label="Tertiary" variant="tertiary" />
+        <Button label="Primary" variant="primary" size="compact" iconRight="arrow_forward" />
       </div>
 
       <div className={styles.demoRow}>
         <ButtonGroup
           ariaLabel="Pager"
           buttons={[
-            { label: "Back", priority: "secondary", iconLeft: "arrow_back" },
-            { label: "Next", priority: "primary", iconRight: "arrow_forward" },
+            { label: "Back", variant: "secondary", iconLeft: "arrow_back" },
+            { label: "Next", variant: "primary", iconRight: "arrow_forward" },
           ]}
         />
-        <CircularButton icon="add" priority="primary" ariaLabel="Add item" />
-        <CircularButton icon="edit" priority="secondary" ariaLabel="Edit item" />
-        <CircularButton icon="favorite" priority="tertiary" ariaLabel="Favourite item" />
+        <CircularButton icon="add" variant="primary" ariaLabel="Add item" />
+        <CircularButton icon="edit" variant="secondary" ariaLabel="Edit item" />
+        <CircularButton icon="favorite" variant="tertiary" ariaLabel="Favourite item" />
       </div>
 
       <div className={styles.demoRow}>

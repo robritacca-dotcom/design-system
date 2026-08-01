@@ -32,22 +32,22 @@ export default function OverlaysSection() {
       <div className={styles.demoRow}>
         <Button
           label="Open dialog"
-          priority="secondary"
+          variant="secondary"
           iconLeft="open_in_full"
           onClick={() => setDialogOpen(true)}
         />
         <DropdownMenu
-          trigger={<Button label="Actions" priority="secondary" iconRight="expand_more" />}
+          trigger={<Button label="Actions" variant="secondary" iconRight="expand_more" />}
           items={MENU_ITEMS}
         />
         <Popover
           content="Popovers ride the floating-shadow token and the container surface."
           ariaLabel="About popovers"
         >
-          <Button label="Popover" priority="tertiary" />
+          <Button label="Popover" variant="tertiary" />
         </Popover>
         <Tooltip content="Tooltips follow the same surfaces">
-          <CircularButton icon="help" priority="tertiary" ariaLabel="Tooltip demo" />
+          <CircularButton icon="help" variant="tertiary" ariaLabel="Tooltip demo" />
         </Tooltip>
       </div>
 
@@ -58,8 +58,8 @@ export default function OverlaysSection() {
         description="The panel, scrim, and buttons all follow your levers."
         footer={
           <>
-            <Button label="Cancel" priority="secondary" onClick={() => setDialogOpen(false)} />
-            <Button label="Confirm" priority="primary" onClick={() => setDialogOpen(false)} />
+            <Button label="Cancel" variant="secondary" onClick={() => setDialogOpen(false)} />
+            <Button label="Confirm" variant="primary" onClick={() => setDialogOpen(false)} />
           </>
         }
       >

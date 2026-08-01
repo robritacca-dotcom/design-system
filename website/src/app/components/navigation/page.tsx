@@ -20,28 +20,28 @@ import styles from "./page.module.css";
    ============================================ */
 
 const demoNavButtons: ButtonProps[] = [
-  { label: "Home", priority: "tertiary", state: "default" },
-  { label: "About", priority: "tertiary", state: "default" },
-  { label: "Components", priority: "tertiary", state: "active" },
-  { label: "Foundations", priority: "tertiary", state: "default" },
+  { label: "Home", variant: "tertiary", state: "default" },
+  { label: "About", variant: "tertiary", state: "default" },
+  { label: "Components", variant: "tertiary", state: "active" },
+  { label: "Foundations", variant: "tertiary", state: "default" },
 ];
 
 const demoMobileMenuTopLinks: ButtonProps[] = [
-  { label: "Home", priority: "tertiary", state: "default" },
-  { label: "About", priority: "tertiary", state: "disabled" },
-  { label: "Work", priority: "tertiary", state: "disabled" },
-  { label: "robr0 DS", priority: "tertiary", state: "active" },
+  { label: "Home", variant: "tertiary", state: "default" },
+  { label: "About", variant: "tertiary", state: "disabled" },
+  { label: "Work", variant: "tertiary", state: "disabled" },
+  { label: "robr0 DS", variant: "tertiary", state: "active" },
 ];
 
 const demoMobileSubnavLinks: ButtonProps[] = [
-  { label: "Contents", priority: "tertiary", state: "active" },
-  { label: "Menu item", priority: "tertiary", state: "default" },
-  { label: "Menu item", priority: "tertiary", state: "default" },
-  { label: "Menu item", priority: "tertiary", state: "default" },
-  { label: "Menu item", priority: "tertiary", state: "default" },
-  { label: "Colour", priority: "tertiary", state: "default" },
-  { label: "Menu item", priority: "tertiary", state: "default" },
-  { label: "Menu item", priority: "tertiary", state: "default" },
+  { label: "Contents", variant: "tertiary", state: "active" },
+  { label: "Menu item", variant: "tertiary", state: "default" },
+  { label: "Menu item", variant: "tertiary", state: "default" },
+  { label: "Menu item", variant: "tertiary", state: "default" },
+  { label: "Menu item", variant: "tertiary", state: "default" },
+  { label: "Colour", variant: "tertiary", state: "default" },
+  { label: "Menu item", variant: "tertiary", state: "default" },
+  { label: "Menu item", variant: "tertiary", state: "default" },
 ];
 
 /* ============================================

@@ -207,14 +207,14 @@ export default function PlaygroundControls({
       <div className={styles.railFooter}>
         <Button
           label={copied ? "Copied" : "Copy CSS"}
-          priority="primary"
+          variant="primary"
           iconLeft={copied ? "check" : "content_copy"}
           state={isPristine ? "disabled" : "default"}
           onClick={copyCss}
         />
         <Button
           label="Reset everything"
-          priority="secondary"
+          variant="secondary"
           iconLeft="restart_alt"
           state={isPristine ? "disabled" : "default"}
           onClick={onReset}

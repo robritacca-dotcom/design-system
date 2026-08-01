@@ -62,7 +62,7 @@ export default function SidebarSearch({ links, listLabel = "Components" }: Sideb
             href={pinned.disabled ? undefined : pinned.href}
             state={pinned.active ? "active" : "default"}
             ariaCurrent={pinned.active}
-            priority="tertiary"
+            variant="tertiary"
           />
         </div>
       )}
@@ -91,7 +91,7 @@ export default function SidebarSearch({ links, listLabel = "Components" }: Sideb
             No matches for &ldquo;{query}&rdquo;
           </p>
           <Button
-            priority="tertiary"
+            variant="tertiary"
             size="compact"
             label="Clear search"
             onClick={clear}

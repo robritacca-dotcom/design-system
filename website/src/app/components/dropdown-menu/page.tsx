@@ -124,7 +124,7 @@ export default function DropdownMenuPage() {
             <div className={styles.variantRow}>
               <div className={styles.variantItem}>
                 <DropdownMenu
-                  trigger={<Button label="Open menu" priority="secondary" state="default" />}
+                  trigger={<Button label="Open menu" variant="secondary" state="default" />}
                   items={simpleItems}
                 />
               </div>
@@ -137,7 +137,7 @@ export default function DropdownMenuPage() {
             <div className={styles.variantRow}>
               <div className={styles.variantItem}>
                 <DropdownMenu
-                  trigger={<Button label="My account" priority="secondary" state="default" />}
+                  trigger={<Button label="My account" variant="secondary" state="default" />}
                   items={groupedItems}
                 />
               </div>
@@ -150,7 +150,7 @@ export default function DropdownMenuPage() {
             <div className={styles.variantRow}>
               <div className={styles.variantItem}>
                 <DropdownMenu
-                  trigger={<Button label="Actions" priority="secondary" state="default" />}
+                  trigger={<Button label="Actions" variant="secondary" state="default" />}
                   items={subMenuItems}
                 />
               </div>
@@ -163,7 +163,7 @@ export default function DropdownMenuPage() {
             <div className={styles.variantRow}>
               <div className={styles.variantItem}>
                 <DropdownMenu
-                  trigger={<Button label="Edit" priority="secondary" state="default" />}
+                  trigger={<Button label="Edit" variant="secondary" state="default" />}
                   items={shortcutItems}
                 />
               </div>
@@ -176,7 +176,7 @@ export default function DropdownMenuPage() {
             <div className={styles.variantRow}>
               <div className={styles.variantItem}>
                 <DropdownMenu
-                  trigger={<Button label="Compact" priority="secondary" state="default" size="compact" />}
+                  trigger={<Button label="Compact" variant="secondary" state="default" size="compact" />}
                   items={simpleItems}
                   size="compact"
                 />

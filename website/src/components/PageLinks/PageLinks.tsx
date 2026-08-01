@@ -84,7 +84,7 @@ export default function PageLinks({ figmaUrl, storybookPath, githubUrl, substack
       {linkedinUrl && (
         <Button
           label="LinkedIn"
-          priority="tertiary"
+          variant="tertiary"
           size="compact"
           iconLeft={<LinkedInIcon />}
           iconRight="open_in_new"
@@ -97,7 +97,7 @@ export default function PageLinks({ figmaUrl, storybookPath, githubUrl, substack
       {xUrl && (
         <Button
           label="X"
-          priority="tertiary"
+          variant="tertiary"
           size="compact"
           iconLeft={<XIcon />}
           iconRight="open_in_new"
@@ -110,7 +110,7 @@ export default function PageLinks({ figmaUrl, storybookPath, githubUrl, substack
       {instagramUrl && (
         <Button
           label="Instagram"
-          priority="tertiary"
+          variant="tertiary"
           size="compact"
           iconLeft={<InstagramIcon />}
           iconRight="open_in_new"
@@ -123,7 +123,7 @@ export default function PageLinks({ figmaUrl, storybookPath, githubUrl, substack
       {substackUrl && (
         <Button
           label="Substack"
-          priority="tertiary"
+          variant="tertiary"
           size="compact"
           iconLeft={<SubstackIcon />}
           iconRight="open_in_new"
@@ -136,7 +136,7 @@ export default function PageLinks({ figmaUrl, storybookPath, githubUrl, substack
       {figmaUrl && (
         <Button
           label="Figma"
-          priority="tertiary"
+          variant="tertiary"
           size="compact"
           iconLeft={<FigmaIcon />}
           iconRight="open_in_new"
@@ -149,7 +149,7 @@ export default function PageLinks({ figmaUrl, storybookPath, githubUrl, substack
       {storybookPath && (
         <Button
           label="Storybook"
-          priority="tertiary"
+          variant="tertiary"
           size="compact"
           iconLeft={<StorybookIcon />}
           iconRight="open_in_new"
@@ -162,7 +162,7 @@ export default function PageLinks({ figmaUrl, storybookPath, githubUrl, substack
       {githubUrl && (
         <Button
           label="GitHub"
-          priority="tertiary"
+          variant="tertiary"
           size="compact"
           iconLeft={<GitHubIcon />}
           iconRight="open_in_new"

@@ -21,7 +21,7 @@ function ToastTriggers() {
     <div className={styles.variantRow}>
       <Button
         label="Info toast"
-        priority="secondary"
+        variant="secondary"
         onClick={() =>
           toast({
             variant: "info",
@@ -32,7 +32,7 @@ function ToastTriggers() {
       />
       <Button
         label="Success toast"
-        priority="secondary"
+        variant="secondary"
         onClick={() =>
           toast({
             variant: "positive",
@@ -43,7 +43,7 @@ function ToastTriggers() {
       />
       <Button
         label="Warning toast"
-        priority="secondary"
+        variant="secondary"
         onClick={() =>
           toast({
             variant: "warning",
@@ -54,7 +54,7 @@ function ToastTriggers() {
       />
       <Button
         label="Error toast"
-        priority="destructive"
+        variant="destructive"
         onClick={() =>
           toast({
             variant: "error",
@@ -65,7 +65,7 @@ function ToastTriggers() {
       />
       <Button
         label="Neutral toast"
-        priority="tertiary"
+        variant="tertiary"
         onClick={() =>
           toast({
             variant: "neutral",

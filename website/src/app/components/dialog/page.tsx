@@ -60,7 +60,7 @@ export default function DialogPage() {
             <div className={styles.demoRow}>
               <Button
                 label="Open dialog"
-                priority="secondary"
+                variant="secondary"
                 onClick={() => setDefaultOpen(true)}
               />
             </div>
@@ -83,7 +83,7 @@ export default function DialogPage() {
             <div className={styles.demoRow}>
               <Button
                 label="Rename project"
-                priority="secondary"
+                variant="secondary"
                 onClick={() => setFooterOpen(true)}
               />
             </div>
@@ -95,12 +95,12 @@ export default function DialogPage() {
                 <>
                   <Button
                     label="Cancel"
-                    priority="tertiary"
+                    variant="tertiary"
                     onClick={() => setFooterOpen(false)}
                   />
                   <Button
                     label="Save"
-                    priority="primary"
+                    variant="primary"
                     onClick={() => setFooterOpen(false)}
                   />
                 </>
@@ -116,12 +116,12 @@ export default function DialogPage() {
             <div className={styles.demoRow}>
               <Button
                 label="Small (400px)"
-                priority="secondary"
+                variant="secondary"
                 onClick={() => setSmallOpen(true)}
               />
               <Button
                 label="Large (720px)"
-                priority="secondary"
+                variant="secondary"
                 onClick={() => setLargeOpen(true)}
               />
             </div>
@@ -154,7 +154,7 @@ export default function DialogPage() {
             <div className={styles.demoRow}>
               <Button
                 label="Open locked dialog"
-                priority="secondary"
+                variant="secondary"
                 onClick={() => setLockedOpen(true)}
               />
             </div>
@@ -167,7 +167,7 @@ export default function DialogPage() {
               footer={
                 <Button
                   label="Acknowledge"
-                  priority="primary"
+                  variant="primary"
                   onClick={() => setLockedOpen(false)}
                 />
               }
@@ -184,7 +184,7 @@ export default function DialogPage() {
             <div className={styles.demoRow}>
               <Button
                 label="Open long dialog"
-                priority="secondary"
+                variant="secondary"
                 onClick={() => setScrollOpen(true)}
               />
             </div>

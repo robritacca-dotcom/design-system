@@ -190,14 +190,14 @@ export default function ComponentsPage() {
 
             {/* Button */}
             <TocCard href="/components/button" title="Button">
-              <Button label="Button" priority="secondary" state="default" />
+              <Button label="Button" variant="secondary" state="default" />
             </TocCard>
 
             {/* Button group */}
             <TocCard href="/components/button-group" title="Button group">
               <div className={styles.previewRow} style={{ gap: "10px" }}>
-                <Button label="Active" priority="tertiary" state="active" />
-                <Button label="Inactive" priority="tertiary" state="default" />
+                <Button label="Active" variant="tertiary" state="active" />
+                <Button label="Inactive" variant="tertiary" state="default" />
               </div>
             </TocCard>
 
@@ -267,8 +267,8 @@ export default function ComponentsPage() {
             {/* Circular button */}
             <TocCard href="/components/circular-button" title="Circular button">
               <div className={styles.previewRow} style={{ gap: "12px" }}>
-                <CircularButton icon="search" ariaLabel="Search" priority="secondary" />
-                <CircularButton icon="settings" ariaLabel="Settings" priority="tertiary" />
+                <CircularButton icon="search" ariaLabel="Search" variant="secondary" />
+                <CircularButton icon="settings" ariaLabel="Settings" variant="tertiary" />
               </div>
             </TocCard>
 

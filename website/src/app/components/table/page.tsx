@@ -169,8 +169,8 @@ export default function TablePage() {
                       email: "alice@example.com",
                       actions: (
                         <span style={{ display: "inline-flex", gap: "4px" }}>
-                          <CircularButton icon="edit" ariaLabel="Edit" priority="tertiary" size="compact" />
-                          <CircularButton icon="delete" ariaLabel="Delete" priority="tertiary" size="compact" />
+                          <CircularButton icon="edit" ariaLabel="Edit" variant="tertiary" size="compact" />
+                          <CircularButton icon="delete" ariaLabel="Delete" variant="tertiary" size="compact" />
                         </span>
                       ),
                     },
@@ -189,8 +189,8 @@ export default function TablePage() {
                       email: "bob@example.com",
                       actions: (
                         <span style={{ display: "inline-flex", gap: "4px" }}>
-                          <CircularButton icon="edit" ariaLabel="Edit" priority="tertiary" size="compact" />
-                          <CircularButton icon="delete" ariaLabel="Delete" priority="tertiary" size="compact" />
+                          <CircularButton icon="edit" ariaLabel="Edit" variant="tertiary" size="compact" />
+                          <CircularButton icon="delete" ariaLabel="Delete" variant="tertiary" size="compact" />
                         </span>
                       ),
                     },
@@ -209,7 +209,7 @@ export default function TablePage() {
                       email: "carol@example.com",
                       actions: (
                         <span style={{ display: "inline-flex", gap: "8px" }}>
-                          <Button label="Invite" priority="secondary" size="compact" />
+                          <Button label="Invite" variant="secondary" size="compact" />
                         </span>
                       ),
                     },

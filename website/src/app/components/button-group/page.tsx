@@ -17,37 +17,37 @@ import styles from "./page.module.css";
    ============================================ */
 
 const horizontalDefault: ButtonProps[] = [
-  { label: "Home", priority: "tertiary", state: "default" },
-  { label: "About", priority: "tertiary", state: "default" },
-  { label: "Components", priority: "tertiary", state: "active" },
-  { label: "Foundations", priority: "tertiary", state: "default" },
+  { label: "Home", variant: "tertiary", state: "default" },
+  { label: "About", variant: "tertiary", state: "default" },
+  { label: "Components", variant: "tertiary", state: "active" },
+  { label: "Foundations", variant: "tertiary", state: "default" },
 ];
 
 const horizontalWithIcons: ButtonProps[] = [
-  { label: "Home", priority: "tertiary", state: "default", iconLeft: "home" },
-  { label: "Settings", priority: "tertiary", state: "default", iconLeft: "settings" },
-  { label: "Profile", priority: "tertiary", state: "active", iconLeft: "person" },
+  { label: "Home", variant: "tertiary", state: "default", iconLeft: "home" },
+  { label: "Settings", variant: "tertiary", state: "default", iconLeft: "settings" },
+  { label: "Profile", variant: "tertiary", state: "active", iconLeft: "person" },
 ];
 
 const verticalDefault: ButtonProps[] = [
-  { label: "Overview", priority: "tertiary", state: "active" },
-  { label: "Button", priority: "tertiary", state: "default" },
-  { label: "Button group", priority: "tertiary", state: "default" },
-  { label: "Card", priority: "tertiary", state: "default" },
-  { label: "Navigation", priority: "tertiary", state: "default" },
-  { label: "Toggle switch", priority: "tertiary", state: "default" },
+  { label: "Overview", variant: "tertiary", state: "active" },
+  { label: "Button", variant: "tertiary", state: "default" },
+  { label: "Button group", variant: "tertiary", state: "default" },
+  { label: "Card", variant: "tertiary", state: "default" },
+  { label: "Navigation", variant: "tertiary", state: "default" },
+  { label: "Toggle switch", variant: "tertiary", state: "default" },
 ];
 
 const verticalWithIcons: ButtonProps[] = [
-  { label: "Dashboard", priority: "tertiary", state: "default", iconLeft: "dashboard" },
-  { label: "Analytics", priority: "tertiary", state: "active", iconLeft: "bar_chart" },
-  { label: "Settings", priority: "tertiary", state: "default", iconLeft: "settings" },
-  { label: "Help", priority: "tertiary", state: "default", iconLeft: "help" },
+  { label: "Dashboard", variant: "tertiary", state: "default", iconLeft: "dashboard" },
+  { label: "Analytics", variant: "tertiary", state: "active", iconLeft: "bar_chart" },
+  { label: "Settings", variant: "tertiary", state: "default", iconLeft: "settings" },
+  { label: "Help", variant: "tertiary", state: "default", iconLeft: "help" },
 ];
 
 const primaryGroup: ButtonProps[] = [
-  { label: "Cancel", priority: "tertiary", state: "default" },
-  { label: "Save", priority: "secondary", state: "default", iconRight: "arrow_forward" },
+  { label: "Cancel", variant: "tertiary", state: "default" },
+  { label: "Save", variant: "secondary", state: "default", iconRight: "arrow_forward" },
 ];
 
 /* ============================================

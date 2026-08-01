@@ -24,7 +24,7 @@ export default function SidebarLinks({ links, ariaLabel = "Components" }: Sideba
         ? ("active" as const)
         : ("default" as const),
     ariaCurrent: link.active,
-    priority: "tertiary" as const,
+    variant: "tertiary" as const,
     iconLeft: link.logo ? (
       <Image
         src={link.logo}

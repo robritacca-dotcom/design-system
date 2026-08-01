@@ -49,7 +49,7 @@ export default function AlertDialogPage() {
           <section className={styles.section}>
             <SectionTitle title="Default" />
             <div className={styles.variantRow}>
-              <Button label="Open dialog" priority="secondary" onClick={() => setDefaultOpen(true)} />
+              <Button label="Open dialog" variant="secondary" onClick={() => setDefaultOpen(true)} />
               <AlertDialog
                 open={defaultOpen}
                 onOpenChange={setDefaultOpen}
@@ -64,7 +64,7 @@ export default function AlertDialogPage() {
           <section className={styles.section}>
             <SectionTitle title="Destructive" />
             <div className={styles.variantRow}>
-              <Button label="Delete item" priority="destructive" onClick={() => setDestructiveOpen(true)} />
+              <Button label="Delete item" variant="destructive" onClick={() => setDestructiveOpen(true)} />
               <AlertDialog
                 open={destructiveOpen}
                 onOpenChange={setDestructiveOpen}
@@ -81,7 +81,7 @@ export default function AlertDialogPage() {
           <section className={styles.section}>
             <SectionTitle title="Custom labels" />
             <div className={styles.variantRow}>
-              <Button label="Publish" priority="secondary" onClick={() => setCustomOpen(true)} />
+              <Button label="Publish" variant="secondary" onClick={() => setCustomOpen(true)} />
               <AlertDialog
                 open={customOpen}
                 onOpenChange={setCustomOpen}

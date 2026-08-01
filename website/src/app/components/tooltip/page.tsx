@@ -47,16 +47,16 @@ export default function TooltipPage() {
             <SectionTitle title="Positions" />
             <div className={styles.variantRow} style={{ gap: "40px", padding: "40px 0" }}>
               <Tooltip content="Tooltip on top" position="top">
-                <Button label="Top" priority="secondary" />
+                <Button label="Top" variant="secondary" />
               </Tooltip>
               <Tooltip content="Tooltip on bottom" position="bottom">
-                <Button label="Bottom" priority="secondary" />
+                <Button label="Bottom" variant="secondary" />
               </Tooltip>
               <Tooltip content="Tooltip on left" position="left">
-                <Button label="Left" priority="secondary" />
+                <Button label="Left" variant="secondary" />
               </Tooltip>
               <Tooltip content="Tooltip on right" position="right">
-                <Button label="Right" priority="secondary" />
+                <Button label="Right" variant="secondary" />
               </Tooltip>
             </div>
           </section>
@@ -66,16 +66,16 @@ export default function TooltipPage() {
             <SectionTitle title="On icon buttons" />
             <div className={styles.variantRow} style={{ gap: "20px", padding: "20px 0" }}>
               <Tooltip content="Search" position="bottom">
-                <CircularButton icon="search" ariaLabel="Search" priority="secondary" />
+                <CircularButton icon="search" ariaLabel="Search" variant="secondary" />
               </Tooltip>
               <Tooltip content="Settings" position="bottom">
-                <CircularButton icon="settings" ariaLabel="Settings" priority="secondary" />
+                <CircularButton icon="settings" ariaLabel="Settings" variant="secondary" />
               </Tooltip>
               <Tooltip content="Notifications" position="bottom">
-                <CircularButton icon="notifications" ariaLabel="Notifications" priority="secondary" />
+                <CircularButton icon="notifications" ariaLabel="Notifications" variant="secondary" />
               </Tooltip>
               <Tooltip content="Profile" position="bottom">
-                <CircularButton icon="person" ariaLabel="Profile" priority="secondary" />
+                <CircularButton icon="person" ariaLabel="Profile" variant="secondary" />
               </Tooltip>
             </div>
           </section>
@@ -85,13 +85,13 @@ export default function TooltipPage() {
             <SectionTitle title="Delay options" />
             <div className={styles.variantRow} style={{ gap: "20px", padding: "20px 0" }}>
               <Tooltip content="No delay" position="top" showDelay={0} hideDelay={0}>
-                <Button label="Instant" priority="tertiary" />
+                <Button label="Instant" variant="tertiary" />
               </Tooltip>
               <Tooltip content="Default delay (300ms)" position="top">
-                <Button label="Default" priority="tertiary" />
+                <Button label="Default" variant="tertiary" />
               </Tooltip>
               <Tooltip content="Slow delay (800ms)" position="top" showDelay={800}>
-                <Button label="Slow" priority="tertiary" />
+                <Button label="Slow" variant="tertiary" />
               </Tooltip>
             </div>
           </section>

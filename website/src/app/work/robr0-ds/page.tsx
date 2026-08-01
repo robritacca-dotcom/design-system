@@ -352,9 +352,9 @@ export default function Robr0DsCaseStudy() {
                   <div className={styles.liveDemo} aria-label="Live components from robr0 DS">
                     {/* Controls */}
                     <div className={styles.demoRow}>
-                      <Button label="Primary" priority="primary" size="compact" />
-                      <Button label="Secondary" priority="secondary" size="compact" />
-                      <Button label="Tertiary" priority="tertiary" size="compact" />
+                      <Button label="Primary" variant="primary" size="compact" />
+                      <Button label="Secondary" variant="secondary" size="compact" />
+                      <Button label="Tertiary" variant="tertiary" size="compact" />
                     </div>
                     <div className={styles.demoRow}>
                       <Badge variant="info" label="Info" />

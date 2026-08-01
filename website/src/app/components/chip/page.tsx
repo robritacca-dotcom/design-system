@@ -110,7 +110,7 @@ export default function ChipPage() {
               {tags.length < DEFAULT_TAGS.length && (
                 <Button
                   label="Reset"
-                  priority="tertiary"
+                  variant="tertiary"
                   size="compact"
                   onClick={() => setTags(DEFAULT_TAGS)}
                 />

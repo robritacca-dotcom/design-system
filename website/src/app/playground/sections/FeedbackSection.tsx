@@ -18,7 +18,7 @@ function ToastDemo() {
   return (
     <Button
       label="Show toast"
-      priority="secondary"
+      variant="secondary"
       iconLeft="notifications"
       onClick={() =>
         toast({
@@ -60,7 +60,7 @@ export default function FeedbackSection() {
         <ProgressBar value={progress} showLabel ariaLabel="Demo progress" />
         <Button
           label="Advance"
-          priority="tertiary"
+          variant="tertiary"
           size="compact"
           onClick={() => setProgress((p) => (p >= 100 ? 8 : p + 12))}
         />

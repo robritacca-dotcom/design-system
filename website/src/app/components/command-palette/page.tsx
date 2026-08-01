@@ -104,7 +104,7 @@ export default function CommandPalettePage() {
             <div className={styles.demoRow}>
               <Button
                 label="Open palette"
-                priority="secondary"
+                variant="secondary"
                 iconLeft="search"
                 onClick={() => setDefaultOpen(true)}
               />
@@ -140,7 +140,7 @@ export default function CommandPalettePage() {
             <div className={styles.demoRow}>
               <Button
                 label="Open without hotkey"
-                priority="secondary"
+                variant="secondary"
                 onClick={() => setNoHotkeyOpen(true)}
               />
             </div>
@@ -163,12 +163,12 @@ export default function CommandPalettePage() {
             <div className={styles.demoRow}>
               <Button
                 label="No results"
-                priority="secondary"
+                variant="secondary"
                 onClick={() => setEmptyOpen(true)}
               />
               <Button
                 label="Loading"
-                priority="secondary"
+                variant="secondary"
                 onClick={() => setLoadingOpen(true)}
               />
             </div>
