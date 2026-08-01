@@ -254,10 +254,8 @@
   letter-spacing: var(--font-paragraph-sm-em-letter-spacing);
 }
 
-.ds-dropdown--compact .ds-dropdown__group-label {
-  font-size: var(--font-caption-size);
-  line-height: var(--font-caption-line-height);
-}
+/* Compact group labels keep the base --font-paragraph-sm-* type — the
+   scale has no smaller step. */
 
 .ds-dropdown--compact .ds-dropdown__check {
   --icon-size: var(--icon-size-sm);

@@ -71,10 +71,6 @@
   margin: var(--padding-xxs) var(--padding-sm-md);
 }
 
-.ds-context-menu__panel--compact .ds-context-menu__shortcut {
-  font-size: var(--font-caption-size);
-}
-
 /* ============================================
    SUB-MENU PANEL
    Positioned relative to its parent item.

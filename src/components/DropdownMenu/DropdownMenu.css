@@ -96,10 +96,8 @@
   margin: var(--padding-xxs) var(--padding-sm-md);
 }
 
-/* Compact shortcuts */
-.ds-dropdown-menu__panel--compact .ds-dropdown-menu__shortcut {
-  font-size: var(--font-caption-size);
-}
+/* Compact shortcuts keep the base --font-paragraph-sm-* size — the scale
+   has no smaller step. */
 
 /* ============================================
    SUB-MENU PANEL
