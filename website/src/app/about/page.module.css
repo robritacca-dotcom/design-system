@@ -18,21 +18,16 @@
 }
 
 /* ============================================
-   PAGE HEADER + LOCATION ROW
-   Title first, location byline beneath — the h1 starts at the same
-   offset as every other page's title.
+   LOCATION ROW + PAGE HEADER
+   The location byline occupies the breadcrumb slot, so it copies the
+   breadcrumb's typography and spacing, and the h1 lands at the same
+   offset as the doc pages' titles.
    ============================================ */
-.headerBlock {
-  display: flex;
-  flex-direction: column;
-  gap: var(--primitive-gap-md);
-  width: 100%;
-}
-
 .locationRow {
   display: flex;
   align-items: center;
   gap: var(--primitive-gap-xs);
+  padding-bottom: var(--primitive-gap-md);
   font-family: var(--font-paragraph-sm-family);
   font-size: var(--font-paragraph-sm-size);
   font-weight: var(--font-paragraph-sm-weight);
@@ -45,6 +40,7 @@
    PAGE HEADER
    ============================================ */
 .pageHeader {
+  margin-top: calc(var(--primitive-gap-xl) - var(--primitive-gap-xxxl));
   display: flex;
   align-items: baseline;
   justify-content: space-between;

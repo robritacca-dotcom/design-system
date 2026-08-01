@@ -167,20 +167,18 @@ export default function AboutMePage() {
         </div>
 
         <main className={styles.dsContent} id="main-content">
-          {/* Page Title + location */}
-          <div className={`${styles.headerBlock} animate-in`}>
-            <div className={styles.pageHeader}>
-              <h1 className={styles.pageTitle}>Robert Ritacca</h1>
-              <PageLinks
-                linkedinUrl="https://www.linkedin.com/in/robertritacca/"
-                xUrl="https://x.com/robr0"
-                instagramUrl="https://www.instagram.com/robr0designs/"
-              />
-            </div>
-            <div className={styles.locationRow}>
-              <Image src="/logos/Canada.svg" alt="" width={20} height={20} />
-              <span>Based in Toronto, Canada</span>
-            </div>
+          {/* Location byline sits in the breadcrumb slot, title below it at the shared offset */}
+          <div className={`${styles.locationRow} animate-in`}>
+            <Image src="/logos/Canada.svg" alt="" width={20} height={20} />
+            <span>Based in Toronto, Canada</span>
+          </div>
+          <div className={`${styles.pageHeader} animate-in`}>
+            <h1 className={styles.pageTitle}>Robert Ritacca</h1>
+            <PageLinks
+              linkedinUrl="https://www.linkedin.com/in/robertritacca/"
+              xUrl="https://x.com/robr0"
+              instagramUrl="https://www.instagram.com/robr0designs/"
+            />
           </div>
 
           {/* Page Description */}
