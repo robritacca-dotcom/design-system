@@ -34,55 +34,23 @@
   min-height: calc(100svh - 78px - var(--primitive-padding-lg) - var(--primitive-gap-xxxl));
 }
 
+/* The scroll cue itself lives in components/ScrollCue — it positions
+   against this hero's position: relative. */
+
 /* ============================================
-   SCROLL CUE — pinned to the bottom of the fold,
-   out of the centring math (absolute), smooth-
-   scrolls to the card grid.
+   HERO DIVIDER — same fading hairline the DS
+   landing page draws between its link rows.
    ============================================ */
-.scrollCue {
-  position: absolute;
-  bottom: var(--padding-lg);
-  left: 50%;
-  transform: translateX(-50%);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--padding-xs);
-  border-radius: var(--radius-full);
-  border: 1px solid var(--color-bg-container-border);
-  background: var(--color-bg-container-primary-semi);
-  color: var(--color-icon-primary);
-  transition: background-color var(--motion-duration-fast) var(--motion-ease-standard),
-    color var(--motion-duration-fast) var(--motion-ease-standard);
-}
-
-.scrollCue:hover {
-  background: var(--color-bg-container-secondary);
-  color: var(--color-text-primary);
-}
-
-.scrollCue :global(.material-symbols-rounded) {
-  font-size: var(--icon-size-md);
-  /* ds-allow(motion): ambient nudge inviting the scroll — far slower
-     than any UI motion token, same decorative-timing precedent as the
-     DS-board bar breathing below. */
-  animation: scroll-cue-nudge 2.4s var(--motion-ease-standard) infinite;
-}
-
-@keyframes scroll-cue-nudge {
-  0%,
-  100% {
-    transform: translateY(-2px);
-  }
-  50% {
-    transform: translateY(2px);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .scrollCue :global(.material-symbols-rounded) {
-    animation: none;
-  }
+.heroDivider {
+  width: 100%;
+  max-width: 640px;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    var(--color-bg-container-primary-transparent),
+    var(--color-divider),
+    var(--color-bg-container-primary-transparent)
+  );
 }
 
 /* ============================================
@@ -117,15 +85,41 @@
 /* ============================================
    CARD GRID — three across
    ============================================ */
+/* ============================================
+   SECTIONS — title + card grid below the fold
+   ============================================ */
+.sections {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--primitive-gap-xxl);
+  width: 100%;
+  /* Same vertical balance as the hero: the section is its own full
+     viewport and centres the title + cards in it, so the smooth-scroll
+     from the cue lands on a balanced screen (no scroll-margin — the
+     section top aligns with the viewport top). */
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+/* Site-standard index-page title treatment (display-2, light). */
+.sectionsTitle {
+  font-size: var(--font-display-2-size);
+  font-weight: var(--font-display-2-weight);
+  line-height: var(--font-display-2-line-height);
+  letter-spacing: var(--font-display-2-letter-spacing);
+  color: var(--color-text-primary);
+  text-align: center;
+  margin: 0;
+}
+
 .cardGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--gap-lg);
   width: 100%;
   max-width: 1200px;
-  /* Land the smooth-scroll from the hero cue clear of the 78px sticky
-     nav that slides in once the in-flow header scrolls away. */
-  scroll-margin-top: calc(78px + var(--primitive-gap-lg));
 }
 
 .card {

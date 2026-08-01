@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import MegaNav from "../components/MegaNav/MegaNav";
+import ScrollCue from "../components/ScrollCue/ScrollCue";
 import BlurBackground from "../components/BlurBackground/BlurBackground";
 import Footer from "../components/Footer/Footer";
 import { Button } from "@robr0/design-system/components/Button/Button";
@@ -48,6 +49,11 @@ export default async function HomePage() {
             </p>
           </div>
 
+          <div
+            className={`${styles.heroDivider} animate-in animate-delay-1`}
+            aria-hidden="true"
+          />
+
           <div className={`${styles.homeLinks} animate-in animate-delay-1`}>
             <Button
               label="Substack"
@@ -87,18 +93,23 @@ export default async function HomePage() {
             />
           </div>
 
-          <a
+          <ScrollCue
             href="#home-sections"
-            className={`${styles.scrollCue} animate-in animate-delay-2`}
             aria-label="Scroll down to work, writing, and the design system"
-          >
-            <span className="material-symbols-rounded" aria-hidden="true">
-              keyboard_arrow_down
-            </span>
-          </a>
+            className="animate-in animate-delay-2"
+          />
         </section>
 
-        <div className={styles.cardGrid} id="home-sections">
+        <section
+          className={styles.sections}
+          id="home-sections"
+          aria-labelledby="home-sections-title"
+        >
+          <h2 className={styles.sectionsTitle} id="home-sections-title">
+            Explore
+          </h2>
+
+          <div className={styles.cardGrid}>
           {/* ── Work ── */}
           <section className={styles.card} aria-labelledby="home-work">
             <header className={styles.cardHeader}>
@@ -271,7 +282,8 @@ export default async function HomePage() {
               ))}
             </ul>
           </section>
-        </div>
+          </div>
+        </section>
       </main>
 
       <Footer />
