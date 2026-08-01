@@ -22,7 +22,7 @@
   align-items: center;
   text-align: center;
   gap: var(--gap-md);
-  max-width: 760px;
+  max-width: 1080px;
   margin: 0 auto 56px;
 }
 
@@ -42,15 +42,9 @@
   line-height: var(--font-sub-display-line-height);
   letter-spacing: var(--font-sub-display-letter-spacing);
   color: var(--color-text-primary);
-  margin: 0;
-}
-
-.introBody {
-  font-size: var(--font-paragraph-size);
-  font-weight: var(--font-paragraph-weight);
-  line-height: var(--font-paragraph-line-height);
-  color: var(--color-text-primary);
-  margin: 0;
+  /* Together with the hero gap, the spacing above and below matches the
+     Work page's section gap (--primitive-gap-xxxl) */
+  margin: calc(var(--primitive-gap-xxxl) - var(--gap-md)) 0;
 }
 
 /* Both hero link rows wrap and stay centred on narrow screens */

@@ -17,7 +17,8 @@
 .heading {
   display: flex;
   flex-direction: column;
-  gap: var(--primitive-gap-md);
+  /* Title-to-subtitle spacing matches the Work page's section gap */
+  gap: var(--primitive-gap-xxxl);
   align-items: center;
   text-align: center;
 }

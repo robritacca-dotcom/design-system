@@ -233,12 +233,8 @@ export default function DesignSystemPage() {
         {/* ---------- page header (standard treatment: title, tagline, intro) ---------- */}
         <section className={`${styles.hero} animate-in`} aria-label="About the design system">
           <h1 className={styles.pageTitle}>robr0 DS</h1>
-          <p className={styles.subDisplay}>The whole system, working on one page</p>
-          <p className={styles.introBody}>
-            A React component library and the design language behind it. Each
-            card below is a piece of product UI rendered live from the package,
-            and the links above lead into every part of the system. Flip the
-            theme toggle and it all re-colours from one token layer.
+          <p className={styles.subDisplay}>
+            A React component library and the design language behind it.
           </p>
           <ButtonGroup
             ariaLabel="Design system sections"

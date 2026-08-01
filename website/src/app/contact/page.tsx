@@ -99,7 +99,7 @@ function ContactContent() {
         <div className={`${styles.heading} animate-in`}>
           <h1 className={styles.title}>Contact</h1>
           <p className={styles.subtitle}>
-            The easiest ways to reach me. Pick whichever fits the conversation.
+            The easiest ways to reach me.
           </p>
         </div>
 
