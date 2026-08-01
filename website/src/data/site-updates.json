@@ -1,9 +1,25 @@
 {
   "asOf": {
-    "commit": "000059fd1b7b67176d7806e9fcd749cc76afa521",
-    "date": "2026-07-26"
+    "commit": "4b59f5d21197dec2b13e52e3b6b8e72a5c3c6912",
+    "date": "2026-08-01"
   },
   "entries": [
+    {
+      "meta": "July 28–August 1, 2026",
+      "title": "A house style, and a new front door",
+      "body": [
+        "The prose on this site is written by AI agents, and unedited AI prose has habits: hedged claims, sentences of uniform length, phrases that would sit unchanged in any project’s documentation. content-design.md is now the one place that says how the writing should read. It sits beside its two siblings with a clean split: design.md owns how things look, CLAUDE.md owns where facts live, the new file owns how sentences read. It sets four goals (consistent, human, clear, neutral), bans the em dash outright, and names the words and patterns to cut. Every public surface was rewritten against it, from the foundations pages to the README that ships inside the npm package. References in prose are build-checked now too, so a guide that names a script or a file that no longer exists fails the build.",
+        "The front door changed at the same time. /design-system had been a redirect; it is now a page, a three-column collage of product panels rendered live from the published package rather than captured as screenshots. The home page was rebuilt eight times in a single day and settled on three cards, each with a cover image and a live miniature of the design system drawn from real tokens. The case studies behind those cards come from a registry, so the home page and /work read from one list. The re-theming playground moved to its own top-level address."
+      ]
+    },
+    {
+      "meta": "July 27–August 1, 2026",
+      "title": "Built for someone else’s application",
+      "body": [
+        "Publishing to npm exposed something the library could hide while it had exactly one consumer: it was built for this site. Of the 68 components at the time, four forwarded a ref and none extended their native element’s props, so nobody could attach a ref, pass a data attribute, or register a field with a form library. Eighteen components were rebuilt to do all of it. One breaking change came with the work: onChange on Input, Textarea, Slider and DateInput now carries the native React event instead of a bare value, which is what lets react-hook-form and its peers drive them at all. Everything else was additive.",
+        "Accessibility went from reported to enforced. 49 violations were fixed, nine of them real component bugs: DatePicker claimed a grid role it had never implemented, and icon-only buttons had no accessible name at all. Axe now runs across every story at WCAG 2.1 AA, contrast aside, and a regression fails the build. A new Field component absorbed the label, required marker, and error wiring that six form controls had each been reimplementing and quietly diverging on. Two releases followed, 0.2.0 and 0.3.0, authenticated by npm’s Trusted Publishing rather than a token that can expire. Kbd, ContextMenu, Swatch and ColorPicker joined the library in the same stretch."
+      ]
+    },
     {
       "meta": "July 26, 2026",
       "title": "Customization, made live",
