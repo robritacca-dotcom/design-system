@@ -26,7 +26,7 @@ Existing registries:
 | Case studies | `website/src/data/case-studies.json` (curated order, newest first — `/work` maps over all of it, the home page features entry `[0]` and lists the next few) | `caseStudies` from `website/src/data/case-studies.ts` | `scripts/validate-case-studies.mjs` — every entry has a `/work/<slug>` page, unique href, complete fields, and existing logo/cover assets; every case-study folder is registered; the hand-curated `workSidebarLinks` in navigation.ts must list exactly the registered studies |
 | Semantic tokens | `src/tokens/registry.json` — **generated** from the semantic token CSS (`tokens-light.css` + `tokens-typography.css` + `tokens-motion.css`) by `scripts/generate-token-registry.mjs`, never hand-edited | `TOKEN_COUNT` + `TOKEN_COUNTS` (per category) from `src/tokens/registry.ts` | `scripts/validate-token-registry.mjs` — registry matches the CSS, light/dark colour parity; a token with an unknown prefix fails generation until its category is added deliberately |
 
-The `/project-journal` page renders this data as the build-progression timeline; entries are agent-curated stories (one theme consolidating many commits — what/why/outcome prose), appended by the `site-updates` skill. All validators run before every build (`npm run validate-registry`, wired into `prebuild`/`prestorybook`/`prebuild-storybook` and the website's `prebuild`).
+The `/project-journal` page renders this data as the build-progression timeline; entries are agent-curated stories (one theme consolidating many commits — what/why/outcome prose), appended by the `site-updates` skill. The full chain (`npm run validate-registry`) runs before every root build via `prebuild`/`prestorybook`/`prebuild-storybook`. The website's own `prebuild` runs a deliberate subset — the website-relevant generators and validators, skipping the library-only ones (barrel, token references, CSS directives, package exports) — and `website/package.json` is authoritative for which; CI and the root builds always run the full chain.
 
 **The package barrels and exports map are generated surfaces.** `scripts/generate-library-barrel.mjs` (validate-registry chain) writes `src/index.ts` and `src/charts.ts` from `src/components/registry.json` — never hand-edit them. Modules that import recharts land in `charts.ts` automatically (recharts is an optional peer dependency; the main barrel must never force a bundler to resolve it). The `exports` field in package.json is owned by `scripts/package-manifest.mjs` (single source for the package name, version, and subpaths — in-repo exports point at `./src` for workspace dogfooding, `npm run build:lib` writes the dist-form manifest that ships to npm); `scripts/validate-package-exports.mjs` fails the build if they drift.
 
@@ -90,7 +90,14 @@ Two facts that bite on release day: **a published version can never be reused**,
 - **Analytics**: Google Analytics 4 via the gtag snippet in `website/src/app/layout.tsx` (`GA_ID` is the public G-… measurement ID — safe to commit; it is visible in every page's source by design). GA *credentials* (service-account key, property ID) live only in local `ga-analysis/` files that its own `.gitignore` excludes from the repo (the directory's tooling — `pull_ga.py`, `README.md` — is tracked and secret-free); they never reach the repo or the site.
 - **Fonts**: Nunito Sans is **not** bundled anywhere — the website self-hosts it via `next/font/google` (fetched from Google Fonts at build time), Storybook loads it via a Google Fonts `<link>`, and package consumers bring their own (override `--font-family-primary`). Material Symbols Rounded ships as a self-hosted woff2 **inside the npm package** (`src/fonts/`). The playground (`/playground`) is the one surface that loads fonts from Google at runtime.
 
-`npm run verify` is the **single local mirror of CI**: lint, library build, story tests, Storybook build, website lint, website build, in that order. The rule that keeps them in sync: **when CI gains a check (a11y is the worked example), add it to `verify` in the same change** — skills and docs reference `verify`, never individual commands, so nothing else needs updating. **One deliberate exception: Chromatic** (`.github/workflows/chromatic.yml`, visual regression). Every run bills cloud snapshots against a monthly budget, so it is `workflow_dispatch`-only, never part of `verify`, and never a reason to treat a green `verify` as proof the pixels are unchanged.
+`npm run verify` is the **single local mirror of CI**: lint, library build, package build, story tests, Storybook build, website lint, website build, in that order. The rule that keeps them in sync: **when CI gains a check (a11y is the worked example), add it to `verify` in the same change** — skills and docs reference `verify`, never individual commands, so nothing else needs updating. **One deliberate exception: Chromatic** (`.github/workflows/chromatic.yml`, visual regression). Every run bills cloud snapshots against a monthly budget, so it is `workflow_dispatch`-only, never part of `verify`, and never a reason to treat a green `verify` as proof the pixels are unchanged.
+
+**Shipping vocabulary** — three skills, named for their end state, because a push to `main` always deploys robertritacca.com:
+- **`ship`** — make it live. Full verify, merge branch work into `main` if needed, push, watch CI. Always ends deployed.
+- **`checkpoint`** — save progress to a remote branch and keep working. Never touches `main`, never deploys; if invoked on `main` it moves the work to a `wip/<topic>` branch first.
+- **`park`** — checkpoint, then return to a clean `main`. The branch name is the resume handle.
+
+The old `merge-and-push` skill is retired because its name didn't say which of these it meant. If asked to "merge and push", confirm ship vs checkpoint instead of guessing.
 
 ---
 
@@ -122,8 +129,13 @@ Two facts that bite on release day: **a published version can never be reused**,
     ├── src/app/
     │   ├── components/        # One folder per component, each with page.tsx + page.module.css
     │   ├── foundations/       # Design tokens & layout doc pages
-    │   ├── design-system/     # DS landing page (live component collage behind the mega trigger)
-    │   ├── docs/              # Docs hub: overview links, get-started (install + theming), skills, journal
+    │   ├── design-system/     # DS landing page (hero with section-link buttons + live component collage)
+    │   ├── docs/              # Docs hub: links out to overview/skills/journal; owns get-started (install + theming)
+    │   ├── overview/          # How-it's-built pipeline page
+    │   ├── skills/            # Skills page (data-driven from the generated skills content)
+    │   ├── project-journal/   # Build-progression timeline (site-updates registry)
+    │   ├── loops/             # The recurring agent loops page
+    │   ├── contact/           # Contact page
     │   ├── playground/        # Live re-theming playground (standalone page, no sidebar)
     │   ├── blueprints/        # Renders the public CLAUDE.md / design.md / content-design.md copies
     │   ├── work/              # Case-study pages, one folder per study (see the case-study registry)
@@ -148,13 +160,14 @@ Component CSS               background-color: var(--color-action-primary-bg)
 ```
 
 - **Primitives** (`--primitive-*`) — raw values. Source of truth. Never referenced in components.
-- **Semantic tokens** (`--color-*`, `--radius-*`, `--gap-*`, `--padding-*`, `--font-*`, `--motion-*`, `--icon-size-*`, `--shadow-*`) — always use these in components.
+- **Semantic tokens** (`--color-*`, `--radius-*`, `--gap-*`, `--padding-*`, `--border-*`, `--font-*`, `--motion-*`, `--icon-size-*`, `--shadow-*` — `CATEGORY_PREFIXES` in `scripts/generate-token-registry.mjs` is the authoritative list) — always use these in components.
 - **Dark mode** is driven by `data-theme="dark"` on the root element. Every semantic token has a light and dark value — no `prefers-color-scheme` queries in components.
 
 Key invariants:
 - Teal `--color-action-primary-bg` (#118AB2) is **only** for primary CTA buttons and focus rings. Never decorative.
 - Never hardcode hex values in component CSS — always a semantic token. (Deliberate off-token values are sanctioned *in place* with a `/* ds-allow(<category>): <reason> */` directive — `ds-allow-file(...)` for file-wide cases like ColorPicker's `hsl()` colour physics. Grep `ds-allow` to enumerate them; `scripts/validate-css-directives.mjs` owns the category set and build-enforces the grammar.)
 - Never hardcode hex values in semantic colour tokens either: every `--color-*` value in `tokens-light/dark.css` must be a `var(--primitive-*)` (or `var(--color-*)`) reference — build-enforced by `scripts/validate-token-references.mjs`. This is what lets a consumer override a primitive and have it cascade through the whole system.
+- Every `var(--…)` a component references must actually resolve: `scripts/validate-token-usage.mjs` fails the build on a reference to a custom property nothing defines (a fallback value marks a deliberate consumer-override hook and is exempt). This is the guard that would have caught Dialog styling its title with a token family that never existed.
 - Buttons are always `--radius-full` (pill). Inputs are always `--radius-md` (12px). Card/EntityCard navigation tiles are the exception: `--radius-xl` (24px).
 
 ---
@@ -234,7 +247,7 @@ Tokens also have multiple homes — a token that exists only in CSS is incomplet
    - Typography → `website/src/app/foundations/typography/page.tsx`
    - Icon sizes → `website/src/app/foundations/icons/page.tsx` (the `--icon-size-*` scale table)
    - Motion (durations/easings) → `website/src/app/foundations/motion/page.tsx` (add a `MotionSwatch` entry to the matching token array)
-4. **Update the Storybook token docs**: `src/stories/Tokens.stories.tsx` documents semantic tokens by category (colors, status, chart, spacing) — add the new token to the matching story, or a new story if it's a new category. (`src/stories/` also holds `Typography`, `Icons`, and `Logos` foundation docs.)
+4. **Update the Storybook token docs**: `src/stories/Tokens.stories.tsx` documents tokens by category (primitives, colours, status, chart, elevation, spacing, motion) — add the new token to the matching story, or a new story if it's a new category. (`src/stories/` also holds `Typography`, `Icons`, and `Logos` foundation docs.)
 5. **Counts take care of themselves**: `src/tokens/registry.json` is regenerated from the token CSS on every build (see **Registries**), so displayed token counts update automatically — never hardcode one. If the token introduces a *new prefix*, generation fails until you add the prefix to `CATEGORY_PREFIXES` in `scripts/generate-token-registry.mjs` and give the category a home wherever counts are shown.
 
 ---

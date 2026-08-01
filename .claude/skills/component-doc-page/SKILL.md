@@ -25,7 +25,7 @@ This is a more thorough, component-specific version of `new-page`. The Button pa
 
 2. **Read the source component** `src/components/ComponentName/ComponentName.tsx`:
    - Extract all props from the TypeScript interface
-   - Identify all variant enumerations (e.g. `type`, `size`, `status` props with union types)
+   - Identify all variant enumerations (e.g. `variant`, `size`, `status` props with union types)
    - Understand the component's states (default, hover, active, disabled, loading, etc.)
    - Note the BEM class names used for each variant/state
 
@@ -34,7 +34,7 @@ This is a more thorough, component-specific version of `new-page`. The Button pa
    - `website/src/app/components/button/page.module.css` — CSS module structure
 
 4. **Create `website/src/app/components/<component-slug>/page.tsx`:**
-   - Mirror the Button page's layout shell exactly — same components, same nesting, same class names, with your slug in the `getSidebarLinks` call. Don't improvise structure.
+   - Mirror the Button page's layout shell exactly — same components, same nesting, same class names, with your slug in the `getSidebarLinks` call. Don't improvise structure. Mirror the *structure*, not deprecated APIs: if an existing page still uses a prop marked `@deprecated` in the component source (the `priority` → `variant` rename is the precedent), write the current prop name.
    - Invariants the exemplar can't teach:
      - `subDisplay` is a *tagline* for the component (e.g. Button's "The main action element") — not the word "Components"; the breadcrumb already shows the section
      - `introBody` is a clear 1–2 sentence description of the component's purpose, inferred from its props and JSDoc if available
@@ -67,4 +67,4 @@ This is a more thorough, component-specific version of `new-page`. The Button pa
 8. **Update `website/src/app/components/page.tsx`** (the components index) — the one surface still hand-maintained, because each card holds a bespoke preview:
    - Add a `TocCard` in alphabetical order: `<TocCard href="/components/component-slug" title="Component Name">` wrapping a small preview — use the real component (imported from `@robr0/design-system`) where it reads well at miniature size, as most cards do, or a small inline-styled mockup where it doesn't (see the Accordion card)
 
-9. **Sitemap is automatic** — `website/src/app/sitemap.ts` derives its routes from the shared sidebar configs, which for components derive from the registry. Do not edit `sitemap.ts` by hand. `scripts/validate-website-surfaces.mjs` build-enforces the showcase page, the step-8 `TocCard`, and the `design.md` spec section; the sidebar entry and its ordering are no longer checked because they can no longer drift.
+9. **Sitemap is automatic** — `website/src/app/sitemap.ts` derives its routes from the shared sidebar configs, which for components derive from the registry. Do not edit `sitemap.ts` by hand. `scripts/validate-website-surfaces.mjs` build-enforces the showcase page, the step-8 `TocCard`, and the `design.md` spec section; the sidebar entry and its ordering are no longer checked because they can no longer drift. If the component has no `design.md` spec section yet, add one before building — see the `new-component` skill's spec step for the expected shape.

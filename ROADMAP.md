@@ -8,9 +8,9 @@ Audited against the working tree on **2026-07-27, end of day** (59 components, 4
 
 ---
 
-# ▶ WHERE WE ARE — last updated 2026-07-28, end of session
+# ▶ WHERE WE ARE — last updated 2026-08-01
 
-**Seven of ten sequenced steps are done and on `main`.** `@robr0/design-system@0.3.0` is live with signed provenance (0.3.0 shipped 2026-07-28; 61 components after Swatch and ColorPicker). Since the last audit: `content-design.md` landed as the third root spec (blueprints page, validators, content-audit skill), and a seven-batch copy sweep brought every shipped prose surface under it.
+**Seven of ten sequenced steps are done and on `main`.** `@robr0/design-system@0.3.0` is live with signed provenance (0.3.0 shipped 2026-07-28; 61 components after Swatch and ColorPicker). Since the last audit: `content-design.md` landed as the third root spec (blueprints page, validators, content-audit skill), and a seven-batch copy sweep brought every shipped prose surface under it. Then 07-29 → 08-01: CircularButton and ButtonGroup adopted `variant` (`priority` deprecated), the home clean-cards redesign shipped to `main` with the build-validated case-study registry (07-30), the `/design-system` landing experiment (hero section-link buttons, donut card) landed, and the `merge-and-push` skill was retired for the ship/checkpoint/park split (08-01, resolving item 21).
 
 | # | Step | Status |
 |---|---|---|
@@ -58,7 +58,7 @@ Audited against the working tree on **2026-07-27, end of day** (59 components, 4
 
 ### Standing rule adopted this session
 
-After each major step, check whether the change invalidated anything in `.claude/skills/*/SKILL.md`, `CLAUDE.md` or `design.md`, and fix it in the same stretch — **do not wait to be asked.** It has now caught six real drifts, twice catching a skill that broke the instant its workflow changed: the `release` skill's "never bump the version in package.json" (would have blocked the next release outright), and `component-doc-page` prescribing `pageMetadata()` after Phase 1 made `componentPageMetadata()` mandatory. Where the rule is mechanically checkable, prefer converting it to a validator — see [B7](#b7--make-the-component-api-contract-build-enforced--sm--added-2026-07-27) and [item 26](#later--real-unscheduled).
+After each major step, check whether the change invalidated anything in `.claude/skills/*/SKILL.md`, `CLAUDE.md` or `design.md`, and fix it in the same stretch — **do not wait to be asked.** It keeps catching real drifts (six as of 2026-07-27, more in every audit since), twice catching a skill that broke the instant its workflow changed: the `release` skill's "never bump the version in package.json" (would have blocked the next release outright), and `component-doc-page` prescribing `pageMetadata()` after Phase 1 made `componentPageMetadata()` mandatory. Where the rule is mechanically checkable, prefer converting it to a validator — see [B7](#b7--make-the-component-api-contract-build-enforced--sm--added-2026-07-27) and [item 26](#later--real-unscheduled).
 
 ---
 
@@ -82,23 +82,23 @@ After each major step, check whether the change invalidated anything in `.claude
 
 **Outcome:** 17 of the 18 components in scope now declare `'use client'`. `Table` deliberately does **not** — it is purely presentational, so it stays renderable from a Server Component. The problem statement below is kept as the record of *why*.
 
-> **Still open from this item:** the second smoke consumer (a Next App Router app importing a client component from a **server** page) was never built. The directives are correct, but nothing yet *proves* they are — the existing smoke test is a Vite SPA with no RSC boundary. Worth folding into [item 9's](#later--real-unscheduled) smoke-test work, or doing standalone.
+> **Still open from this item:** the second smoke consumer (a Next App Router app importing a client component from a **server** page) was never built. The directives are correct, but nothing yet *proves* they are — the existing smoke test is a Vite SPA with no RSC boundary. Worth doing standalone, or alongside item 9 (the bundle-size budget) since both extend the same `smoke-consumer.mjs` tooling — but note item 9 itself is about size, not RSC.
 
 **Found:** 2026-07-27 audit
 
 35 components under `src/components/` use React hooks or event handlers. **Zero** files in the library declare `'use client'`. A Next.js App Router consumer who does `import { Button } from '@robr0/design-system'` inside a server component gets a build/runtime error — hooks in a server component, or "event handlers cannot be passed to Client Component props."
 
 Two things hide this today, which is why it survived a release:
-- The website has `"use client"` at the top of **85 of its 90 pages**, so it never renders a library component from a server component. It cannot catch this.
+- The website has `"use client"` at the top of nearly every page (85 of 90 at the 07-27 snapshot), so it never renders a library component from a server component. It cannot catch this.
 - `scripts/smoke-consumer.mjs` builds a **Vite SPA**. No RSC boundary exists there, so it cannot catch it either.
 
 The consumer environment most likely to be used — Next App Router, the same framework this repo's own site runs on — is the one environment never tested.
 
 **Done when:** interactive components carry the directive (per-file, or a build banner in `vite.lib.config.ts` / `scripts/build-package.mjs`), *and* a second smoke consumer builds a minimal Next App Router app importing a client-side component from a **server** page without a directive of its own. Wire it into `verify` alongside the existing smoke test.
 
-**Watch for:** don't blanket-apply the directive. Purely presentational components (Badge, Divider) are better left server-renderable; marking them client-only silently costs consumers RSC benefits. → **The client/server split is per-component data, so it belongs in the registry — see [Workstream A, Phase 1](#phase-1--richer-registry-metadata).** Record the rule in `design.md` too.
+**Watch for:** don't blanket-apply the directive. Purely presentational components (Badge, Divider) are better left server-renderable; marking them client-only silently costs consumers RSC benefits. → **The client/server split is per-component data, so it belongs in the registry — see Workstream A, Phase 1.** Record the rule in `design.md` too.
 
-### 2. Public API-surface validator — `M` · **still open — do not start before Workstream A Phase 2**
+### 2. Public API-surface validator — `M` · **⏸ parked 2026-07-27 with the props.json bundle (see the parking record)**
 **Scheduled 2026-07-26 for ~07-27**
 
 Publishing turned every props interface into a contract. Because deep imports (`./components/*`) are supported, renaming a component *folder* is breaking even when the barrel still exports the old name — and nothing flags it at edit time. The `release` skill only asks patch/minor/major at release, by which point the break is already written.
@@ -113,7 +113,7 @@ Publishing turned every props interface into a contract. Because deep imports (`
 
 ### ✅ 3. npm Trusted Publishing (OIDC) migration — SHIPPED 2026-07-27
 
-**Outcome:** published 2026-07-27 via OIDC — the real `dry_run=false` run was the first and only auth test, and it passed. The published commit `1129d84` is tagged `v0.2.0`, the GitHub Release documents the `onChange` → `onValueChange` migration, the `NPM_TOKEN` secret and the granular token on npmjs.com are deleted, and CLAUDE.md's release line now reads "0.1.0 shipped 2026-07-26, 0.2.0 on 2026-07-27 (the first release via Trusted Publishing)".
+**Outcome:** published 2026-07-27 via OIDC — the real `dry_run=false` run was the first and only auth test, and it passed. The published commit `1129d84` is tagged `v0.2.0`, the GitHub Release documents the `onChange` → `onValueChange` migration, the `NPM_TOKEN` secret and the granular token on npmjs.com are deleted, and CLAUDE.md's release line was updated to record it ("0.2.0 on 2026-07-27, the first release via Trusted Publishing" — since extended for 0.3.0).
 
 Context that stays relevant: npm deprecates 2FA-bypass tokens for direct publishing in **Jan 2027**, and the retired granular `NPM_TOKEN` had an expiry that would have eventually failed the publish step with a 401 — OIDC removes that failure mode entirely.
 
@@ -146,12 +146,12 @@ Context that stays relevant: npm deprecates 2FA-bypass tokens for direct publish
 
 > **Thorough tier still open:** extracting the shared facts into `src/content/system-facts.ts` consumed by Configure.mdx, the README generator, and Get Started. The name check now guards the package name; it cannot tell whether the *snippet* is still correct.
 
-**Scheduled for ~07-27**
+**The pre-ship problem statement, kept for context** (the cheap tier below shipped 2026-07-27):
 
-`src/stories/Configure.mdx` has zero mentions of npm / install / `@robr0`; its intro still describes the pre-publish world ("consumed by a live Next.js reference site"). Storybook deploys as its own Vercel project and is where people evaluating the system land — so a visitor who likes a component has **no path to installing it**. (Counts there are already safe; it imports `COMPONENT_COUNT`.)
+`src/stories/Configure.mdx` had zero mentions of npm / install / `@robr0`; its intro still described the pre-publish world. Storybook deploys as its own Vercel project and is where people evaluating the system land — a visitor who liked a component had **no path to installing it**.
 
-- **Cheap, do first:** install block (`npm install` + `tokens.css` import + one component import), a clause in the intro, a link to the site's Get Started page. Then extend `scripts/generate-readme-content.mjs`'s package-name check so **both** README.md and Configure.mdx must mention `PACKAGE_NAME` — a scope rename becomes impossible to half-apply.
-- **Thorough:** extract the ~40 genuinely shared, drift-prone facts (principles, three-tier token architecture, theming contract, install snippet) into `src/content/system-facts.ts`, imported by Configure.mdx (the import pattern is already proven there), injected into README by its generator, and imported by the website's Get Started page.
+- **Cheap tier (✅ shipped 2026-07-27):** install block, intro clause, Get Started link, and the extended `generate-readme-content.mjs` check requiring both README.md and Configure.mdx to mention `PACKAGE_NAME`.
+- **Thorough (still open):** extract the ~40 genuinely shared, drift-prone facts (principles, three-tier token architecture, theming contract, install snippet) into `src/content/system-facts.ts`, imported by Configure.mdx (the import pattern is already proven there), injected into README by its generator, and imported by the website's Get Started page.
 
 ---
 
@@ -201,7 +201,7 @@ Convert `components` from `string[]` to `object[]`. (A sibling metadata key woul
 
 - `slug`/`label` are **stored, not derived** — the `Nav → navigation` exception becomes plain data.
 - Seed the 56 `description` values mechanically from the 2nd arg of `pageMetadata(...)` in each `website/src/app/components/<slug>/layout.tsx` (one-off scratchpad script, not committed). Labels seed from the current `displayName()` output.
-- **Add a `client: boolean` field here too** — see [item 1](#1-use-client-boundary-for-the-published-package--sm--new-highest-severity). The client/server split is per-component data with no other home, the generator can then emit the `'use client'` banner from the registry, and a validator can assert that any component importing React hooks is marked `client: true`. This turns a one-off fix into a permanent invariant.
+- **Add a `client: boolean` field here too** — see item 1. The client/server split is per-component data with no other home, the generator can then emit the `'use client'` banner from the registry, and a validator can assert that any component importing React hooks is marked `client: true`. This turns a one-off fix into a permanent invariant.
 
 **Categories** (proposed; confirm the judgment calls in review):
 
@@ -242,13 +242,13 @@ All existing consumers use only `COMPONENT_COUNT` (navigation.ts, components/lay
 ### Absorb website duplication (the payoff)
 
 1. **Sidebar derives from registry** — replace the 56 hand-typed entries in `website/src/config/navigation.ts` `componentsSidebarLinks` with a map over `componentMetadata` (already imported there for `COMPONENT_COUNT`), sorted by label. Sitemap, mega-nav, breadcrumbs, and llms.txt already derive from this config, so they follow automatically. Then in `validate-website-surfaces.mjs` drop checks 2 (nav entry) and 4 (alphabetical order) — now structurally guaranteed; keep 1 (page exists), 3 (TocCard), 5 (design.md spec). Update its header comment.
-2. **Page descriptions single-sourced** — add `componentPageMetadata(slug)` next to `pageMetadata` in navigation.ts (looks up label + description from `componentMetadata`); mechanically rewrite all 56 `layout.tsx` files to `export const metadata = componentPageMetadata("<slug>");`. Update `validate-page-titles.mjs` to require `componentPageMetadata(` on component pages.
+2. **Page descriptions single-sourced** — add `componentPageMetadata(slug)` next to `pageMetadata` in navigation.ts (looks up label + description from `componentMetadata`); mechanically rewrite every component `layout.tsx` (56 at the time of this plan) to `export const metadata = componentPageMetadata("<slug>");`. Update `validate-page-titles.mjs` to require `componentPageMetadata(` on component pages.
 3. **Cheap win (include):** pass `description` into the derived component `NavLink`s so the Sidebar's existing `searchable` filter can match description text.
 
 ### Prose/docs updates (same change — CLAUDE.md convention)
 
 - `CLAUDE.md`: Registries table row for Components; "How to Add a New Component" step 6 (registry entry is now an object with metadata; the sidebar-nav bullet goes away) + the checklist.
-- Skills referencing the flow: `.claude/skills/new-component/SKILL.md`, `.claude/skills/component-doc-page/SKILL.md`, `.claude/skills/merge-and-push/SKILL.md`.
+- Skills referencing the flow: `.claude/skills/new-component/SKILL.md`, `.claude/skills/component-doc-page/SKILL.md`, `.claude/skills/ship/SKILL.md`.
 - README markers regenerate identically (labels == old `displayName()` output).
 
 ---
@@ -291,7 +291,7 @@ JSON shape per component: `{ modules: [{ module, importPath, chartsOnly, compone
 
 ## Phase 3 — Dense per-component markdown + llms.txt
 
-### New: `scripts/generate-component-docs.mjs` → `website/public/components/<slug>.md` (56 files, committed)
+### New: `scripts/generate-component-docs.mjs` → `website/public/components/<slug>.md` (one file per registered component, committed)
 
 Precedent: `website/public/CLAUDE.md` / `design.md` are git-tracked generated copies served statically. No route conflict with the 56 `app/components/<slug>/page.tsx` folders (the `.md` extension differs). The generator also deletes stale `.md` files for removed or renamed components.
 
@@ -427,7 +427,7 @@ This is the clearest "designed-in-Figma-then-translated" artifact in the codebas
 
 Label, required marker, helper text, error text, id generation, and `aria-describedby` wiring are reimplemented independently in every form component (only 11 of 68 files wire `aria-describedby` at all). That means accessibility correctness is per-component rather than systemic.
 
-**Do this before [item 6](#6-flip-a11y-from-report-only-to-failing--m).** Flipping a11y to `'error'` without it means fixing the same label/description bug eleven times; with it, one fix propagates.
+**Do this before item 6.** Flipping a11y to `'error'` without it means fixing the same label/description bug eleven times; with it, one fix propagates.
 
 **Done when:** a `Field` component owns label / description / error / generated ids / aria wiring, and the form controls compose inside it rather than each re-implementing it.
 
@@ -502,7 +502,7 @@ This is the highest-leverage remaining test investment, because this system's wh
 
 ### Target — decided 2026-07-27
 
-**WCAG 2.1 Level AA, minus the contrast criteria (1.4.3 Contrast Minimum, 1.4.11 Non-text Contrast).** Contrast is deferred to [item 23](#23-action-colour-contrast--the-deferred-aa-criteria--m--design-decision), where it gets treated as the design change it is.
+**WCAG 2.1 Level AA, minus the contrast criteria (1.4.3 Contrast Minimum, 1.4.11 Non-text Contrast).** Contrast is deferred to item 23, where it gets treated as the design change it is.
 
 The reasoning: contrast is the *only* part of AA that moves pixels. Everything else in scope — programmatic labels, semantic structure, keyboard operability, focus order, name/role/value, status messages — is invisible DOM work with zero visual risk. Deferring contrast costs nothing except contrast; targeting Level A instead would have thrown away the free half of AA for no benefit (Level A has no contrast requirement at all, so it would not have made this any cheaper).
 
@@ -546,7 +546,7 @@ Full axe run with `color-contrast` disabled: **49 failing stories out of 495 (~9
 
 Failing stories by component: FileInput 9, Popover 8, DatePicker 7, DropdownMenu 7, Avatar 6, ProgressBar 4, Typography 3, then Accordion / Breadcrumb / CodeBlock / Dialog / Table at 1 each.
 
-**Correction to an earlier assumption:** the API audit suggested widespread label-association failures across the form components. Axe found exactly **one** (`FileInput`). Input, Textarea, Checkbox, Dropdown and the rest wire their labels correctly today. [B3](#b3--a-field-primitive-for-form-composition--m) is still worth building — for consistency and for helper-text/error `aria-describedby` association, which axe has no rule for and therefore cannot see — but it is **not** a prerequisite for clearing this list. The B3-before-item-6 ordering is now a preference, not a dependency.
+**Correction to an earlier assumption:** the API audit suggested widespread label-association failures across the form components. Axe found exactly **one** (`FileInput`). Input, Textarea, Checkbox, Dropdown and the rest wire their labels correctly today. B3 is still worth building — for consistency and for helper-text/error `aria-describedby` association, which axe has no rule for and therefore cannot see — but it is **not** a prerequisite for clearing this list. The B3-before-item-6 ordering is now a preference, not a dependency.
 
 **Axe catches roughly a third of WCAG issues — passing it is not conformance.** Whether alt text is *meaningful*, whether focus order is sensible, whether a Dialog actually traps focus: all human judgment. That is why [item 7](#7-interaction-tests-play-functions--m) does real accessibility work despite not being labelled as such.
 
@@ -566,7 +566,7 @@ The render tests prove ~488 stories mount. Nothing proves a Dialog traps focus, 
 
 ### Package & release hygiene
 
-**8. No CHANGELOG.md — `S`.** A published package with no changelog; a consumer upgrading has no way to know what changed. Should be generated, not hand-written: `PACKAGE_VERSION` already owns the version, so a generator + validator pairing is the on-pattern fix — and it composes with [item 2](#2-public-api-surface-validator--m), which will already know what changed.
+**8. No CHANGELOG.md — `S`.** A published package with no changelog; a consumer upgrading has no way to know what changed. Should be generated, not hand-written: `PACKAGE_VERSION` already owns the version, so a generator + validator pairing is the on-pattern fix — and it composes with item 2, which will already know what changed.
 
 **9. No bundle-size budget — `S`.** `scripts/smoke-consumer.mjs` builds a consumer app but never inspects output size. A dependency or heavy import could double the package's cost invisibly. A size assertion in the existing smoke test is nearly free, and it keeps "the main barrel must never force a bundler to resolve recharts" honest over time.
 
@@ -591,7 +591,7 @@ The render tests prove ~488 stories mount. Nothing proves a Dialog traps focus, 
 **18. No `--chart-series-{n}` token set — `M`.** Ordered chart series colours have no formal token set, so a chart author picks by hand. The last unsystematised corner of the colour system.
 
 **23. Action-colour contrast — the deferred AA criteria — `M` · design decision.**
-Split out of [item 6](#6-flip-a11y-from-report-only-to-failing--m) on 2026-07-27 because it is the only part of AA that changes how the site looks, and it deserves unhurried iteration rather than being rushed under a red build.
+Split out of item 6 on 2026-07-27 because it is the only part of AA that changes how the site looks, and it deserves unhurried iteration rather than being rushed under a red build.
 
 Measured 2026-07-27, light theme:
 
@@ -615,7 +615,7 @@ Options when this comes up:
 
 The tertiary-on-tertiary failure (2.72) has no design tension — straight fix, and likely a rare combination. It could ship with item 6 rather than waiting.
 
-**Sequence before [item 5](#5-visual-regression-via-chromatic--m--requested-2026-07-27) if possible** — darkening the teal after visual baselines are accepted means re-accepting every snapshot containing a button.
+**Sequence before item 5 if possible** — darkening the teal after visual baselines are accepted means re-accepting every snapshot containing a button.
 
 *Scope: 13 hand-picked pairs, light theme only. Axe evaluates the combinations that actually render, so expect pairs not listed here once `color-contrast` is re-enabled.*
 
@@ -624,7 +624,7 @@ The `release` skill opens by saying this is the one workflow where a mistake is 
 
 Turning it on means: tick `Allow npm stage publish` on the trusted-publisher registration (currently `npm publish` only — deliberately, since the workflow doesn't use it), swap the publish step, and add a promote step plus a decision point. The `release` skill's step 5 would gain an inspect-then-promote beat.
 
-Worth doing before the next release that changes the public API. Deferred out of [item 3](#3-npm-trusted-publishing-oidc-migration--s--code-done-2026-07-27-blocked-on-rob) to keep the OIDC migration a single-variable change — proving OIDC and changing the publish command at the same time would make a failure ambiguous.
+Worth doing before the next release that changes the public API. Deferred out of item 3 to keep the OIDC migration a single-variable change — proving OIDC and changing the publish command at the same time would make a failure ambiguous.
 
 **24. Checkbox and RadioButton are divs, not native inputs — `M` · found 2026-07-27 during the B1 pass.**
 Both render `<div role="checkbox">` / `<div role="radio">` with hand-rolled click and keydown handlers rather than `<input type="checkbox">` / `<input type="radio">`. Consequences:
@@ -643,7 +643,7 @@ Shipped as `scripts/validate-doc-refs.mjs` in the `validate-registry` chain, sco
 
 **20. RadialChart legend never renders — `S` · verify first.** Found 2026-07-21 (Recharts v3 + custom Legend payload). May already be fixed; may also be a hidden-pane false negative. Confirm with a screenshot before spending time on it.
 
-**21. `merge-and-push` masks verify failures — `S`.** The skill pipes verify through `tail`, so it captures `tail`'s exit code, not verify's. This masked two red builds on 2026-07-26.
+**21. `merge-and-push` masks verify failures — `S` · ✅ resolved 2026-08-01.** merge-and-push was retired in the ship/checkpoint/park skill split; the `ship` skill now requires running verify plainly and taking its own exit status — piping through `tail` (which masked two red builds on 2026-07-26) is explicitly forbidden in its instructions.
 
 **22. No web-vitals or Lighthouse budget on the website — `M`.** The site is the system's shopfront and has no performance regression guard.
 
@@ -651,12 +651,12 @@ Shipped as `scripts/validate-doc-refs.mjs` in the `validate-registry` chain, sco
 
 ## PARKED
 
-**`fix/resize-flicker-2`** — resize-flicker branch on hold; round-4 leads recorded in the blur-flicker notes. The related scroll-blanking fix (pixel-matched gradient swap for `blur(80px)`, ≥1280px only) shipped to `main` on 2026-07-21 and still awaits a scroll verdict.
+**Resize-flicker work** — on hold; the `fix/resize-flicker-2` branch was deleted in the 2026-07-28 cleanup, and the round-4 leads survive only in the blur-flicker session notes (agent memory), not in git. The related scroll-blanking fix (pixel-matched gradient swap for `blur(80px)`, ≥1280px only) shipped to `main` on 2026-07-21 and still awaits a scroll verdict.
 
 ## REJECTED — kept so they aren't re-proposed
 
 - **A full `/docs` section** — too large and duplicative; the naming-only rename shipped 2026-07-20 instead.
-- **Mirroring `design.md` wholesale onto the Storybook homepage** — wrong shape. 687 lines / 68K with 82 per-component spec sections Storybook already covers via autodocs; the two files do different jobs (authoring spec vs. visitor orientation), and `sync-blueprints.mjs` already publishes `design.md` verbatim at `/blueprints/design`. The salvageable instinct became the thorough tier of item 4.
+- **Mirroring `design.md` wholesale onto the Storybook homepage** — wrong shape. A large spec file (687 lines / 82 component sections at the 07-27 decision, larger since) whose per-component content Storybook already covers via autodocs; the two files do different jobs (authoring spec vs. visitor orientation), and `sync-blueprints.mjs` already publishes `design.md` verbatim at `/blueprints/design`. The salvageable instinct became the thorough tier of item 4.
 - **MCP server for the design system** — dense `.md` endpoints + package subpaths cover the need (Workstream A).
 - **i18n / RTL support** — out of scope for a personal system.
 - **Multi-framework ports** (Vue, Svelte) — out of scope.
@@ -683,10 +683,10 @@ Items **1** (`'use client'`), **B1** (refs / rest / native attrs), **B2** (`stat
 | 4 | **B3** — `Field` primitive | ✅ **done 2026-07-27** — and fixed two a11y bugs axe could never have found |
 | 5 | **item 6** — a11y to `'error'`, **AA minus contrast** | ✅ **done 2026-07-27** — 49 fixed, 9 were real bugs; `'error'` now gates CI |
 | 6 | **Workstream A Phase 1** — registry metadata | ✅ **done 2026-07-27** — and its `client` field caught 16 components missing `'use client'` |
-| 7 | **Workstream A Phase 2** — prop contracts | Now describes the *good* API |
-| 8 | **item 2** — API-surface validator | Now freezes the right thing |
+| 7 | **Workstream A Phase 2** — prop contracts | ⏸ parked 2026-07-27 — see the parking record; would now describe the *good* API |
+| 8 | **item 2** — API-surface validator | ⏸ parked with 7 — would now freeze the right thing |
 | 9 | **item 5** — Chromatic | ✅ **done 2026-07-27** — baseline accepted after a11y, so it survives |
-| 10 | **Workstream A Phase 3** — dense `.md` docs | Last; generated from settled contracts |
+| 10 | **Workstream A Phase 3** — dense `.md` docs | ⏸ parked with 7 — last if un-parked; generated from settled contracts |
 
 **B4** (`children` over `label`) and **B6** (`asChild`) are larger and can run in parallel or slip — but adopt B4's rule for any *new* component starting now.
 

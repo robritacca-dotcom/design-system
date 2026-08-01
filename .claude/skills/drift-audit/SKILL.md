@@ -18,7 +18,7 @@ Use this skill after any structural or architectural change (a new build step, a
 
 Build validators already catch everything *mechanically checkable*. This audit exists for the layer beneath them: **prose that asserts something about the system, and instructions that only fail when someone follows them.** A skill telling you to run a deleted npm script passes every validator and every build — it fails silently, months later, for whoever runs it.
 
-**Do not trust this file's own description of the architecture.** It deliberately contains no facts about how the repo is currently structured, because those would rot too. Derive the current shape from the sources of truth (package.json scripts, registries, the validator chain, the exports map) every time.
+**Do not trust this file's own description of the architecture.** It deliberately contains no *inventory* facts — no counts, paths, component lists, or versions, only the command entry points needed to derive them — because inventory facts would rot too. Derive the current shape from the sources of truth (package.json scripts, registries, the validator chain, the exports map) every time.
 
 **Verify by executing, not by reading.** The most valuable findings come from actually running what a doc prescribes. Reading a worktree recipe looks fine; running it surfaces that the bundler now rejects it.
 

@@ -12,7 +12,7 @@ Cut a new npm release of `@robr0/design-system` — bump, dry-run, publish, tag.
 
 ## When invoked
 
-Use this skill when asked to cut a release, publish a new version, or ship the package to npm — phrases like "cut a release", "publish 0.2.0", "ship the package".
+Use this skill when asked to cut a release, publish a new version, or ship the package to npm — phrases like "cut a release", "publish the next version", "ship the package".
 
 **This is the one workflow in this repo where a mistake is permanent.** npm never lets a version number be reused, even after unpublishing, so a botched publish burns that version forever. Read the guardrails before starting.
 
@@ -20,7 +20,7 @@ Use this skill when asked to cut a release, publish a new version, or ship the p
 
 ### 1. Decide the version
 
-Read `PACKAGE_VERSION` in `scripts/package-manifest.mjs` — that constant is the *only* place the version lives (the root package.json version is a workspace artifact; `dist/package.json` is generated from the manifest). Then pick the next version from what actually changed since the last release:
+Read `PACKAGE_VERSION` in `scripts/package-manifest.mjs` — that constant is the *authoritative* version; two other files mirror it (see step 3) and `validate-package-exports.mjs` fails the build when they disagree (the root package.json version is a hand-maintained mirror; `dist/package.json` is generated from the manifest). Then pick the next version from what actually changed since the last release:
 
 - **patch** — bug fixes, internal refactors, docs
 - **minor** — new components, new exports, new tokens (additive)
@@ -56,7 +56,7 @@ Then:
 npm run validate-registry
 ```
 
-This regenerates the surfaces that carry the version and re-checks that the package exports still match the manifest. Commit the bump on its own (`chore(release): 0.2.0`) and push — the commit you push here is the commit that will be published and tagged.
+This regenerates the surfaces that carry the version and re-checks that the package exports still match the manifest. Commit the bump on its own (`chore(release): <version>`) and push — the commit you push here is the commit that will be published and tagged.
 
 ### 4. Dry run — never skip this
 

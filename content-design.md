@@ -56,10 +56,11 @@ Each surface has its own shape. The full standard for a surface lives in one pla
 | Case-study registry entries (`website/src/data/case-studies.json`) | None | `title` a name, `dek` one summary line | Shipped copy on /work and the home page; the dek makes one concrete claim | This file + case-studies validator |
 | Component descriptions (`src/components/registry.json`) | None | One verbless fragment, ≤160 chars, ends in a full stop | One authoritative home: sidebar, metadata, and README all derive from it | This file + registry validator |
 | README + `src/stories/Configure.mdx` | "You" for instructions | Install and usage copy | Production copy: the README ships in the npm tarball | `CLAUDE.md` (Registries section) |
+| npm package description (`PACKAGE_DESCRIPTION` in `scripts/package-manifest.mjs`, mirrored in root `package.json`) | None | One fragment | Renders on the npmjs.com package page: production copy, same bar as the README | This file |
 | `design.md` spec sections | None | Bold BEM class opener, then prose and tables | Specs state rules, not sales points | `design.md` |
 | Skill `displayDescription` frontmatter | None | 1–3 factual sentences | Renders on the public /skills page; describe what it does, not how clever it is | This file |
 | Release notes | "You" allowed | What's new, what breaks, how to install | Written for a consumer, not a maintainer | `.claude/skills/release/SKILL.md` |
-| Commit bodies | None | 1–3 sentences of why | The diff shows what; the body explains why | `.claude/skills/merge-and-push/SKILL.md` |
+| Commit bodies | None | 1–3 sentences of why | The diff shows what; the body explains why | `.claude/skills/ship/SKILL.md` |
 | Audit and loop reports | None | Findings in plain English | The reader is a designer, not an analyst | The invoking skill |
 | UI microcopy (labels, empty states, errors) | Imperative | A few words | Describe the next action, not the current state | Microcopy section below |
 

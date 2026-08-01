@@ -20,7 +20,7 @@ Use the browser/preview tools available in the current environment for every ste
 
 1. **Determine which URLs to review.** If not specified, default to the page(s) most recently modified in the current conversation. Ask if unclear.
 
-2. **Open the website's Next.js dev server** (the `website/` project, port 3000) in the browser preview and wait for it to be ready.
+2. **Open the website's Next.js dev server** (the `website` configuration in `.claude/launch.json`; port 3000 by default, but the config sets `autoPort`, so read the URL the preview actually reports rather than assuming 3000) in the browser preview and wait for it to be ready.
 
 3. **For each URL, check both themes.** The site's theme is driven by the `data-theme` attribute on `<html>` — not by `prefers-color-scheme`, so forcing the browser's colour scheme does nothing. To switch: click the theme toggle in the top nav (`MegaNav`, top-right), or set the attribute programmatically. Verify the attribute actually changed before screenshotting, then take a screenshot in each theme.
 

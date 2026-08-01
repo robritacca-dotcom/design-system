@@ -15,7 +15,7 @@ The system is **light/dark-first**: every semantic color token has a light-theme
 
 **Key Characteristics:**
 - White page floor (`--color-bg-page-primary` — #FFFFFF) with near-black primary text (`--color-text-primary` — #050505 light / #F1F1F1 dark).
-- Teal primary action (`--color-action-primary-bg` — #118AB2). Used exclusively on primary CTA buttons and focus rings. Never decorative.
+- Teal primary action (`--color-action-primary-bg` — #118AB2). Used exclusively on primary CTA buttons and focus rings, with one sanctioned data-viz exception: teal leads the default chart series palette. Never decorative elsewhere.
 - Nunito Sans single-family system. Weight 300 for Mega/Display (marketing), 600 for headings, 500/400 for body and UI labels.
 - Container hierarchy as depth signal — standard containers carry no drop shadows. Depth is conveyed by stepping through `--color-bg-container-primary` → `secondary` → `tertiary`; the only shadows are the `--shadow-floating`/`--shadow-modal` tokens on floating surfaces and the interactive-card hover lift.
 - Five semantic status variants running through every feedback component: `info` (blue), `positive` (green), `warning` (orange), `error` (red), `neutral` (gray).
@@ -283,10 +283,10 @@ The system uses **color-block first, shadow rare** philosophy. Depth is communic
 
 Standard containers never carry shadows. The only shadows in the system are two semantic elevation tokens, defined per theme (stronger opacity in dark mode so they read against the #050505 floor):
 
-- **`--shadow-floating`** (`0 4px 16px rgba(0,0,0,0.12)` light / `0.55` dark) — anchored floating surfaces: Popover, Dropdown menus, DropdownMenu, the ColorPicker panel, chart tooltips, Toast.
-- **`--shadow-modal`** (`0 8px 32px rgba(0,0,0,0.2)` light / `0.6` dark) — modal surfaces: Dialog and AlertDialog panels, paired with the `--color-scrim` backdrop.
+- **`--shadow-floating`** (`0 4px 16px rgba(0,0,0,0.12)` light / `0.55` dark) — anchored floating surfaces: Popover, Dropdown menus, DropdownMenu, ContextMenu, Combobox's list, the ColorPicker panel, chart tooltips, Toast.
+- **`--shadow-modal`** (`0 8px 32px rgba(0,0,0,0.2)` light / `0.6` dark) — modal surfaces: Dialog, AlertDialog, Drawer, and CommandPalette panels, paired with the `--color-scrim` backdrop.
 
-Never write a literal `box-shadow` value in component CSS — use one of these two tokens or no shadow at all. (One documented exception: the interactive Card hover lift — see Do's and Don'ts.)
+Never write a literal *elevation* shadow in component CSS — use one of these two tokens or no shadow at all. Hairline inset rings and focus halos built with `box-shadow` are not elevation and are permitted: Swatch and ColorPicker use inset rings to keep pale swatches legible, and Slider's thumb carries a `box-shadow` focus halo. (One documented elevation exception: the interactive Card hover lift — see Do's and Don'ts.)
 
 ---
 
@@ -342,15 +342,15 @@ Loading state: `loading` puts a `variant="inherit"` Spinner in the left icon slo
 
 ### ButtonGroup
 
-**`ds-button-group`** — Inline container that composes Buttons for nav and subnav contexts. Two orientations: `horizontal` (default — `--gap-lg` between buttons, used in top navigation) and `vertical` (`--gap-xxs`, left-aligned hug-content column for subnav/mobile). Purely compositional: each entry is a full `ButtonProps` config passed straight through to Button, so variants and disabled states mix freely. `role="group"` with an optional `ariaLabel`.
+**`ds-button-group`** — Inline container that composes Buttons for nav and subnav contexts. Two orientations: `horizontal` (default — `--gap-lg` between buttons, used in top navigation) and `vertical` (`--gap-xxs`, left-aligned hug-content column for subnav/mobile). Purely compositional: each entry is a full `ButtonProps` config passed straight through to Button, so variants and disabled states mix freely — except that an entry with no `variant` defaults to `tertiary`, not Button's own `primary`, so nav groups read as passive by default. `role="group"` with an optional `ariaLabel`.
 
 ### CircularButton
 
-**`ds-circular-button`** — Round icon-only button, 40px (default) or 32px (compact), always `--radius-full`. Same three variants as Button — `primary` (`--color-action-primary-bg` fill), `secondary` (outlined, `--border-xs` + action border tokens), `tertiary` (ghost, `--color-action-passive-bg-hover` on hover) — with the same state set (`default`/`hover`/`active`/`disabled`). Icon is a single Material Symbol at 24px default / 20px compact. Renders as `<a>` when `href` is set. `ariaLabel` is required — there is no visible label. `loading` swaps the icon for a `variant="inherit"` Spinner, keeps full-colour appearance, blocks interaction, and sets `aria-busy` — same contract as Button.
+**`ds-circular-button`** — Round icon-only button, 40px (default) or 32px (compact), always `--radius-full`. The same variants as Button minus `destructive` — `primary` (`--color-action-primary-bg` fill), `secondary` (outlined, `--border-xs` + action border tokens), `tertiary` (ghost, `--color-action-passive-bg-hover` on hover) — with the same state set (`default`/`hover`/`active`/`disabled`). Icon is a single Material Symbol at 24px default / 20px compact. Renders as `<a>` when `href` is set. `ariaLabel` is required — there is no visible label. `loading` swaps the icon for a `variant="inherit"` Spinner, keeps full-colour appearance, blocks interaction, and sets `aria-busy` — same contract as Button.
 
 ### SegmentedControl
 
-**`ds-segmented-control`** — Horizontal set of mutually exclusive options on a `--color-bg-container-primary` track with a `--radius-full` pill silhouette. The active segment takes `--color-action-primary-bg` with `--color-action-primary-text`; idle segments use `--font-paragraph-em-*` in `--color-text-secondary` with `--color-action-passive-bg-hover` on hover. Segments accept an optional Material Symbol icon and per-segment `disabled`. Sizes: `default`, `compact`; `fullWidth` stretches segments across the container. Keyboard: Arrow keys cycle enabled segments, Home/End jump to the ends.
+**`ds-segmented-control`** — Horizontal set of mutually exclusive options on a `--color-bg-container-primary` track with a `--radius-full` pill silhouette. The active segment takes `--color-action-primary-bg` with `--color-action-primary-text`; idle segments use `--font-paragraph-em-*` in `--color-text-secondary` with `--color-action-passive-bg-hover` on hover. Segments accept an optional Material Symbol icon and per-segment `disabled`. The track carries a `--border-xs` `--color-bg-container-border` hairline. Sizes: `default`, `compact`; `fullWidth` stretches segments across the container. Announces as a tablist (`role="tablist"`, segments are `role="tab"` with `aria-selected`). Keyboard: Arrow keys cycle enabled segments, Home/End jump to the ends.
 
 ### ToggleGroup
 
@@ -506,7 +506,7 @@ Default icons (Material Symbols Rounded): `info`, `check_circle`, `warning`, `er
 
 ### Dialog
 
-**`ds-dialog`** — General-purpose modal for arbitrary content; for confirm/cancel prompts use AlertDialog. Panel: `--radius-md`, `--color-bg-page-primary`, hairline `--color-bg-container-border` border, `--shadow-modal`, over a `--color-scrim` backdrop; opens with the standard base-duration scale + fade (`--motion-duration-base` / `--motion-ease-standard`). Header: `--font-heading-6-*` title with optional `--font-paragraph-sm-*` tertiary description and a 32px ghost close button. Body slot scrolls (`overflow-y: auto`) when content exceeds the viewport-capped panel height; optional footer slot right-aligns consumer-provided Buttons. Sizes: `sm` 400px / `md` 560px (default) / `lg` 720px max-width. Behaviour: portal to `<body>`, focus trap with Tab cycling, focus restore on close, body scroll lock, `role="dialog" aria-modal="true"`; `dismissible={false}` disables ESC, backdrop click, and hides the close button.
+**`ds-dialog`** — General-purpose modal for arbitrary content; for confirm/cancel prompts use AlertDialog. Panel: `--radius-md`, `--color-bg-page-primary`, hairline `--color-bg-container-border` border, `--shadow-modal`, over a `--color-scrim` backdrop; opens with the standard base-duration scale + fade (`--motion-duration-base` / `--motion-ease-standard`). Header: `--font-heading-3-*` title with optional `--font-paragraph-sm-*` tertiary description and a 32px ghost close button. Body slot scrolls (`overflow-y: auto`) when content exceeds the viewport-capped panel height; optional footer slot right-aligns consumer-provided Buttons. Sizes: `sm` 400px / `md` 560px (default) / `lg` 720px max-width. Behaviour: portal to `<body>`, focus trap with Tab cycling, focus restore on close, body scroll lock, `role="dialog" aria-modal="true"`; `dismissible={false}` disables ESC, backdrop click, and hides the close button.
 
 ### AlertDialog
 
@@ -562,9 +562,9 @@ Default icons (Material Symbols Rounded): `info`, `check_circle`, `warning`, `er
 
 ### Field
 
-**`ds-field`** — The scaffolding shared by every labelled form control, so the wiring exists once rather than per component. Renders the `<label>` (`--font-paragraph-em-*`, `--color-text-primary`) with its `htmlFor`, the required marker (`ds-field__required`, `--color-core-accent-coral`, `aria-hidden` — the control's real `required` attribute is what gets announced), the control itself as children, and the helper/error `<p>` (`ds-field__helper`, `--font-paragraph-sm-*`, `--color-text-tertiary`). Modifiers: `--error` recolours the helper to `--color-status-error-border`; `--disabled` dims the label to `--color-input-text-disabled`; `--compact` drops the label to `--font-paragraph-sm-*`.
+**`ds-field`** — The scaffolding shared by every labelled form control, so the wiring exists once rather than per component. Renders the `<label>` (`--font-paragraph-em-*`, `--color-text-primary`) with its `htmlFor`, the required marker (`ds-field__required`, `--color-core-accent-coral`, `aria-hidden` — the control's real `required` attribute is what gets announced), the control itself as children, the helper/error `<p>` (`ds-field__helper`, `--font-paragraph-sm-*`, `--color-text-tertiary`), and an optional `aside` slot (character counters, units) in a `ds-field__footer` wrapper. Modifiers: `--error` recolours the helper to `--color-status-error-border`; `--disabled` dims the label to `--color-input-text-disabled`; `--compact` drops the label to `--font-paragraph-sm-*`.
 
-Field deliberately owns **no layout** — the flex column and gap stay on the consuming component's own root class, so adopting it changes no spacing. It generates the control id when one isn't supplied, derives the helper id from it, and exposes `{ controlId, describedBy, invalid, required, disabled }` through `useField()`, which returns `null` outside a Field so a control still renders standalone. Input, Textarea, DateInput, Dropdown, Combobox and FileInput compose inside it.
+Field deliberately owns **no layout** — the flex column and gap stay on the consuming component's own root class, so adopting it changes no spacing. It generates the control id when one isn't supplied, derives the helper id from it, and exposes `{ controlId, labelId, describedBy, invalid, required, disabled }` through `useField()`, which returns `null` outside a Field so a control still renders standalone. Input, Textarea, DateInput, Dropdown, Combobox, FileInput and ColorPicker compose inside it.
 
 ### Figure
 
@@ -598,7 +598,7 @@ Field deliberately owns **no layout** — the flex column and gap stay on the co
 
 ### Chart
 
-Recharts wrapper exposing: `AreaChart`, `BarChart`, `LineChart`, `PieChart`, `RadarChart`, `RadialChart`, `ScatterChart`, `StackedBarChart`, `Treemap`. Uses core accent colors for data series. Tooltips and legends use system typography tokens. Axes text in `--color-text-tertiary`.
+Recharts wrapper exposing: `AreaChart`, `BarChart`, `LineChart`, `PieChart`, `RadarChart`, `RadialChart`, `ScatterChart`, `StackedBarChart`, `Treemap`. Series colours: teal (`--color-action-primary-bg`) leads the default palette — the sanctioned data-viz exception to the action-only rule — with `--color-core-accent-*` tokens filling the remaining slots. Tooltips and legends use system typography tokens. Axes text in `--color-text-tertiary`.
 
 ### Contribution graph
 
@@ -642,7 +642,7 @@ The theme is activated by `data-theme="dark"` on the HTML root element. The `tok
 
 ### Do
 - Use semantic tokens (`--color-*`, `--radius-*`, `--gap-*`, `--padding-*`, `--font-*`, `--motion-*`, `--icon-size-*`) in every component. Never use `--primitive-*` tokens directly.
-- Reserve `--color-action-primary-bg` (teal) for primary CTA buttons, focus rings, and active input states. Nowhere else.
+- Reserve `--color-action-primary-bg` (teal) for primary CTA buttons, focus rings, and active input states. The one other sanctioned use is as the lead series colour in charts; nowhere else.
 - Use Nunito Sans weight 300 for display/marketing text and weight 600 for in-app headings. The weight split is intentional.
 - Apply `--radius-full` to all buttons, `--radius-md` to all inputs and standard containers, and `--radius-xl` to Card/EntityCard navigation tiles. This contrast is the system's shape signature.
 - Map all feedback UI to the five-variant status system (`info`/`positive`/`warning`/`error`/`neutral`) — Badge, Alert, Toast, ProgressBar all share the same semantic tokens.
@@ -652,7 +652,7 @@ The theme is activated by `data-theme="dark"` on the HTML root element. The `tok
 
 ### Don't
 - Don't use primitive tokens (`--primitive-neutral-05`, `--primitive-teal-07`, etc.) in components or page styles.
-- Don't use teal decoratively — it is the primary action color. Using it on text or illustrations dilutes its CTA signal.
+- Don't use teal decoratively — it is the primary action color. Using it on text or illustrations dilutes its CTA signal. (Chart series are the one sanctioned exception: teal leads the default palette.)
 - Don't set `display` size typography (Mega/Display tokens) inside app UI pages — reserve them for the marketing homepage hero only.
 - Don't bold display sizes. Weight 300 is non-negotiable for Mega/Display; weight 600 is the max for in-app headings.
 - Don't invent a fourth surface tone outside page / container-primary / container-secondary / container-tertiary. The neutral ramp is intentionally short.
@@ -708,4 +708,4 @@ The website's docs shell (left nav rail + main column + right details rail) step
 - **Breakpoint tokens** — The docs-shell column widths are tokenized (`--layout-*` in the website's `globals.css`), but the media-query thresholds themselves (1279 / 1151 / 959 / 768px) remain raw values repeated across CSS files — CSS custom properties cannot drive `@media` conditions.
 - **Form validation patterns** — Error state on Input is documented, but multi-field form-level validation patterns (inline error summaries, field grouping) are not in scope here.
 - **Code/monospace** — CodeBlock (the one sanctioned monospace context) uses a raw system mono stack; no `--font-code-*` token is defined in the typography layer. If monospace spreads beyond CodeBlock, codify the stack (or a dedicated face like JetBrains Mono) as a token first.
-- **Chart theming** — Recharts chart components use `--color-core-accent-*` tokens for data series, but a formal `--chart-series-{n}` token set for ordered series colors has not been codified.
+- **Chart theming** — chart series colours are hardcoded per component (teal first, then `--color-core-accent-*` values); a formal `--chart-series-{n}` token set for ordered series colors has not been codified.
