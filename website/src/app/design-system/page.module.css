@@ -59,49 +59,17 @@
   justify-content: center;
 }
 
-/* ---------- hero divider — the home page's old gradient glow line ---------- */
+/* ---------- hero divider ---------- */
 
 .heroDivider {
   width: 100%;
   height: 1px;
-  position: relative;
   background: linear-gradient(
-    90deg,
-    transparent,
-    var(--color-core-accent-cobalt),
-    var(--color-core-accent-violet),
-    var(--color-core-ui-secondary),
-    var(--color-core-accent-mint),
-    var(--color-core-accent-cobalt),
-    transparent
+    to right,
+    var(--color-bg-container-primary-transparent),
+    var(--color-divider),
+    var(--color-bg-container-primary-transparent)
   );
-  background-size: 200% 100%;
-  /* ds-allow(motion): decorative 8s glow drift — far beyond the motion
-     token scale, tuned by eye on the original home page divider */
-  animation: dividerGlow 8s ease-in-out infinite;
-  border-radius: 1px;
-}
-
-.heroDivider::after {
-  content: "";
-  position: absolute;
-  inset: -3px 0;
-  background: inherit;
-  background-size: inherit;
-  animation: inherit;
-  filter: blur(6px);
-  opacity: 0.5;
-  border-radius: inherit;
-}
-
-@keyframes dividerGlow {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
 }
 
 /* ---------- collage ---------- */
