@@ -35,9 +35,9 @@ nothing reads primitives directly.
 
 ## Teal is the action colour, and nothing else
 
-`--color-action-primary-bg` marks primary calls to action and focus rings. Using
-it for decoration, headings, or illustration dilutes the one signal that tells
-someone where to click.
+`--color-action-primary-bg` (teal, `#118AB2`) marks primary buttons, focus rings,
+and active input borders. Using it for decoration, headings, or illustration
+dilutes the one signal that tells someone where to click.
 
 ## Shape is fixed by element type
 
@@ -48,16 +48,19 @@ make it match a mockup.
 
 ## There are five status variants
 
-`info`, `positive`, `warning`, `error`, and `neutral`. Badge, Alert, Toast, and
-ProgressBar all read the same `--color-status-*` set, so a status means the same
-thing everywhere. If you need a sixth, you need a different pattern.
+`info` (blue), `positive` (green), `warning` (orange), `error` (red), and
+`neutral` (grey). Badge, Alert, Toast, and ProgressBar all read the same
+`--color-status-*` set, so a status means the same thing everywhere. If you need
+a sixth, you need a different pattern.
 
 ## Depth comes from colour, not shadow
 
-The page floor is white and containers step through a neutral ramp
-(`container-primary`, then `secondary`, then `tertiary`). Do not add box shadows
-to ordinary containers. The system defines only two: `--shadow-floating` for
-popovers, dropdowns, chart tooltips and toasts, and `--shadow-modal` for dialogs.
+The page floor is pure white (`#FFFFFF` light, `#050505` dark) and containers
+step through a neutral ramp (`container-primary`, then `secondary`, then
+`tertiary`). Do not add box shadows to ordinary containers. The system defines
+only two: `--shadow-floating` for popovers, dropdowns, chart tooltips and toasts,
+and `--shadow-modal` for dialogs, paired with `--color-scrim`. One sanctioned
+exception: interactive Card tiles lift on hover.
 
 ## Size icons with the scale
 
@@ -68,9 +71,14 @@ sizing below 20px.
 
 ## One typeface, weight carries hierarchy
 
-The system uses a single typeface across everything. Consecutive heading levels
-never share a weight: `h2` is light at 30px, `h3` is semibold at 22px. If two
-heading levels look alike, change the weight rather than the size.
+Nunito Sans, and nothing else: weight 300 for display and marketing, 600 for
+in-app headings, 500 and 400 for body. It is not bundled, so load it yourself or
+override `--font-family-primary`. Inter is an acceptable substitute while
+prototyping; avoid Arial and Helvetica.
+
+Consecutive heading levels never share a weight: `h2` is light at 30px, `h3` is
+semibold at 22px. If two heading levels look alike, change the weight rather than
+the size.
 
 ## Dark mode is a data attribute
 

@@ -260,15 +260,13 @@ Tokens also have multiple homes — a token that exists only in CSS is incomplet
 
 ---
 
-## Design Principles (distilled from design.md)
+## Design Principles
 
-- **Single typeface**: Nunito Sans only. Weight 300 for display/marketing, 600 for in-app headings, 500/400 for body. Inter is an acceptable prototype substitute; avoid Arial/Helvetica.
-- **White-floor UI**: page background is pure white (#FFFFFF light / #050505 dark). Depth comes from the container color ramp (`container-primary` → `secondary` → `tertiary`) — not shadows.
-- **Teal (#118AB2) is the action color**: primary buttons, focus rings, active input borders. Using it decoratively on text or illustrations dilutes its CTA signal.
-- **Five status variants — no more**: `info` (blue), `positive` (green), `warning` (orange), `error` (red), `neutral` (gray). Badge, Alert, Toast, and ProgressBar all share the same `--color-status-*` token set.
-- **No box shadows on standard containers**: the elevation system is color-based. The only shadows are the semantic tokens `--shadow-floating` (popovers, dropdowns, chart tooltips, toasts) and `--shadow-modal` (Dialog/AlertDialog, paired with `--color-scrim`), plus one sanctioned exception: interactive Card tiles lift on hover (see design.md).
-- **Material Symbols Rounded** for all icons, on the four-step `--icon-size-*` scale (20/24/32/48px; 24px default, 20px compact). Components set `--icon-size` to a scale step — never `font-size` directly on an icon.
-- **Weight contrast is the heading hierarchy rule**: `h2` is 30px/300 (light), `h3` is 22px/600 (bold). Never use the same weight for consecutive heading levels.
+**The distilled rules live in [`USAGE.md`](USAGE.md) — read it before writing component CSS.** Single typeface, teal as the action colour and nothing else, shape fixed by element type, five status variants, depth from colour rather than shadow, the icon scale, weight contrast for heading hierarchy: all of it is stated there once, with the values.
+
+This file used to restate those rules, which made three copies of the same facts (the full spec in `design.md`, a distillation here, another in `USAGE.md`). `USAGE.md` is now the single distillation, because it is the copy that ships in the npm tarball and publishes at `/blueprints/usage` — so it has to be right, and keeping a second version here only gave it something to drift from. `design.md` remains the source of truth and carries the full reasoning plus every per-component spec.
+
+Note the audience split when editing either: `USAGE.md` addresses someone building *with* the package and must never mention this repo's registries, validators, or build chain. Those belong here.
 
 ---
 
