@@ -20,7 +20,7 @@ const EXPERIENCE: TimelineCompany[] = [
     logo: companyLogo("/logos/gusto.svg", "Gusto"),
     roles: [
       {
-        title: "Principal Product Designer | AI and Core Experiences",
+        title: "Principal Product Designer | CoreX AI",
         start: "Aug 2026",
         present: true,
         description:
