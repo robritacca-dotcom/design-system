@@ -54,7 +54,7 @@
 }
 
 .scrollCue :global(.material-symbols-rounded) {
-  font-size: var(--icon-size-md);
+  --icon-size: var(--icon-size-md);
   /* ds-allow(motion): ambient nudge inviting the scroll — far slower
      than any UI motion token, same decorative-timing precedent as the
      home page's DS-board bar breathing. */

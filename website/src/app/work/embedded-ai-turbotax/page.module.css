@@ -389,7 +389,9 @@
 }
 
 .linkIconSymbol {
-  font-size: 28px;
+  /* Off-scale on purpose: matches the 28px .linkLogo images that share
+     these rows. */
+  --icon-size: 28px;
   flex-shrink: 0;
   color: var(--color-text-secondary);
   line-height: 1;

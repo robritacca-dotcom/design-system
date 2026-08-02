@@ -104,7 +104,9 @@ a.toolItem:hover {
 }
 
 .toolLinkIcon {
-  font-size: 16px;
+  /* Off-scale below the 20px opsz floor on purpose: a quiet trailing
+     affordance sized to read as metadata, not an action. */
+  --icon-size: 16px;
   color: var(--color-text-tertiary);
   margin-left: auto;
   flex-shrink: 0;

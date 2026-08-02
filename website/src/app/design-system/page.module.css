@@ -362,7 +362,7 @@
 }
 
 .statementIcon {
-  font-size: var(--icon-size-sm);
+  --icon-size: var(--icon-size-sm);
   color: var(--color-icon-secondary);
   flex-shrink: 0;
 }
@@ -376,7 +376,7 @@
 }
 
 .statementDownload {
-  font-size: var(--icon-size-sm);
+  --icon-size: var(--icon-size-sm);
   color: var(--color-icon-secondary);
   flex-shrink: 0;
 }
@@ -405,7 +405,7 @@
 }
 
 .searchIcon {
-  font-size: var(--icon-size-sm);
+  --icon-size: var(--icon-size-sm);
   color: var(--color-icon-secondary);
   flex-shrink: 0;
 }
@@ -481,9 +481,8 @@
   margin-bottom: var(--gap-xxs);
 }
 
-.successBadge .material-symbols-rounded,
 .successBadge > span {
-  font-size: var(--icon-size-md);
+  --icon-size: var(--icon-size-md);
   color: var(--color-status-positive-text);
 }
 

@@ -167,7 +167,7 @@
 }
 
 .cardAll :global(.material-symbols-rounded) {
-  font-size: var(--icon-size-sm);
+  --icon-size: var(--icon-size-sm);
 }
 
 .cardAll:hover {
@@ -430,7 +430,7 @@
 }
 
 .dsGlyph {
-  font-size: var(--icon-size-md);
+  --icon-size: var(--icon-size-md);
   color: var(--color-icon-primary);
 }
 
@@ -482,7 +482,7 @@
 }
 
 .rowIcon {
-  font-size: var(--icon-size-sm);
+  --icon-size: var(--icon-size-sm);
   color: var(--color-icon-primary);
   flex-shrink: 0;
 }
@@ -507,7 +507,7 @@
 }
 
 .rowArrow {
-  font-size: var(--icon-size-sm);
+  --icon-size: var(--icon-size-sm);
   color: var(--color-icon-secondary);
   flex-shrink: 0;
   opacity: 0;
