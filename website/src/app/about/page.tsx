@@ -24,11 +24,11 @@ const EXPERIENCE: TimelineCompany[] = [
         start: "Aug 2026",
         present: true,
         description:
-          "Defining how AI works, behaves, and earns trust across Gusto's platform for payroll, benefits, and HR.",
+          "Defining how AI works, behaves, and earns trust across Gusto's payroll, benefits, and HR platform.",
         bullets: [
-          "Shaping the interaction model, UX principles, and product direction for AI across the platform, starting with Gus, Gusto's conversational assistant",
-          "Expanding AI beyond conversation into workflows embedded in payroll, benefits, and HR",
-          "Partnering with senior product and engineering leaders to define the AI portfolio and ship customer-facing capabilities",
+          "Shaping the interaction model, UX principles, and product direction for AI, starting with Gus, the conversational assistant",
+          "Expanding AI from conversation into embedded workflows",
+          "Partnering with product and engineering leadership to ship customer-facing AI",
         ],
       },
     ],
