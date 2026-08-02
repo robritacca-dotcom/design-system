@@ -108,7 +108,7 @@
 }
 
 .skillIcon {
-  font-size: 20px;
+  --icon-size: var(--icon-size-sm);
   color: var(--color-icon-primary);
   flex-shrink: 0;
 }
