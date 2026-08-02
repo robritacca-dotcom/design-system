@@ -58,8 +58,5 @@ const rootPkg = JSON.parse(readFileSync(join(repoRoot, 'package.json'), 'utf8'))
 writeFileSync(join(distDir, 'package.json'), JSON.stringify(distManifest(rootPkg), null, 2) + '\n');
 copyFileSync(join(repoRoot, 'LICENSE'), join(distDir, 'LICENSE'));
 copyFileSync(join(repoRoot, 'README.md'), join(distDir, 'README.md'));
-// USAGE.md travels with the package so the design rules reach a consumer
-// (or their AI assistant) without a trip to the website.
-copyFileSync(join(repoRoot, 'USAGE.md'), join(distDir, 'USAGE.md'));
 
 console.log('✓ Package built — publish from dist/ (npm publish --access public).');

@@ -2,9 +2,9 @@
 /**
  * sync-blueprints.mjs
  *
- * The website's /blueprints pages serve CLAUDE.md, design.md,
- * content-design.md, and USAGE.md from website/public/ so visitors can
- * read and download them. Those copies
+ * The website's /blueprints pages serve CLAUDE.md, design.md, and
+ * content-design.md from website/public/ so visitors can read and
+ * download them. Those copies
  * used to be hand-made snapshots and drifted (stale counts, missing
  * sections). This script makes them a generated surface: it copies the
  * root files into website/public/ on every build, so the published
@@ -26,7 +26,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
  * it on, so a spec cannot be synced as a raw download and then be
  * unreachable from the site.
  */
-export const FILES = ['CLAUDE.md', 'design.md', 'content-design.md', 'USAGE.md'];
+export const FILES = ['CLAUDE.md', 'design.md', 'content-design.md'];
 
 /** The /blueprints route segment for a spec file. */
 export const blueprintSlug = (name) => name.replace(/\.md$/, '').toLowerCase();

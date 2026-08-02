@@ -34,7 +34,7 @@ The `/project-journal` page renders this data as the build-progression timeline;
 - `<!-- component-count -->` and `<!-- component-list:start/end -->` — from `src/components/registry.json`
 - `<!-- npm-badge:start/end -->` — the npm version badge, built from `PACKAGE_NAME` in `scripts/package-manifest.mjs`, so a scope change can never leave the badge pointing at a package that doesn't exist
 
-The same script fails the build if its Tech section names a different major version of React, Next.js, Storybook, or Vite than package.json, and if **either** install surface stops mentioning the package name — `README.md` or `src/stories/Configure.mdx` (the Storybook landing page). Both tell a stranger how to install the package, and they deploy separately, so a scope rename that reaches one but not the other leaves a live install snippet pointing at a package that does not exist. **The README ships inside the npm tarball**, and so does `USAGE.md` (see below), so anything inaccurate in either reaches every consumer — treat all of this install/usage prose as production copy.
+The same script fails the build if its Tech section names a different major version of React, Next.js, Storybook, or Vite than package.json, and if **either** install surface stops mentioning the package name — `README.md` or `src/stories/Configure.mdx` (the Storybook landing page). Both tell a stranger how to install the package, and they deploy separately, so a scope rename that reaches one but not the other leaves a live install snippet pointing at a package that does not exist. **The README also ships inside the npm tarball**, so anything inaccurate there reaches every consumer — treat both files' install/usage prose as production copy.
 
 When a new countable collection appears on the site (tokens, loops, case studies…): create a registry file next to the collection, export the count from a small accessor module, add a validator script chained into `validate-registry`, and pull every displayed number from the export. When adding a skill: write `.claude/skills/<name>/SKILL.md` and register the name in `.claude/skills/registry.json` (`displayed` if it appears on `/skills`, `unlisted` if internal) — that's all. The `/skills` page is fully data-driven: it maps over `website/src/data/skills-content.generated.ts`, which `scripts/generate-skills-content.mjs` builds from the SKILL.md files in registry order, so **never hand-add a card to `website/src/app/skills/page.tsx`**. `scripts/validate-skills-registry.mjs` fails the build if a skill file and the registry drift.
 
@@ -107,7 +107,6 @@ The old `merge-and-push` skill is retired because its name didn't say which of t
 /
 ├── design.md                  # Design spec — source of truth for tokens, colors, typography
 ├── content-design.md          # Content style guide — source of truth for voice, register, and prose rules
-├── USAGE.md                   # Consumer rules for building WITH the package — ships in the npm tarball
 ├── ROADMAP.md                 # The single planning surface (hand-maintained intent, not facts)
 ├── scripts/                   # Generators + validators (the validate-registry chain), release tooling
 ├── src/
@@ -262,11 +261,14 @@ Tokens also have multiple homes — a token that exists only in CSS is incomplet
 
 ## Design Principles
 
-**The distilled rules live in [`USAGE.md`](USAGE.md) — read it before writing component CSS.** Single typeface, teal as the action colour and nothing else, shape fixed by element type, five status variants, depth from colour rather than shadow, the icon scale, weight contrast for heading hierarchy: all of it is stated there once, with the values.
+These are stated at the level of **token roles**, deliberately: which colour, radius, typeface, or shadow a role resolves to is the theme owner's decision, lives in `design.md` and the token files, and can change without any of these sentences becoming false.
 
-This file used to restate those rules, which made three copies of the same facts (the full spec in `design.md`, a distillation here, another in `USAGE.md`). `USAGE.md` is now the single distillation, because it is the copy that ships in the npm tarball and publishes at `/blueprints/usage` — so it has to be right, and keeping a second version here only gave it something to drift from. `design.md` remains the source of truth and carries the full reasoning plus every per-component spec.
-
-Note the audience split when editing either: `USAGE.md` addresses someone building *with* the package and must never mention this repo's registries, validators, or build chain. Those belong here.
+- **One typeface**, with heading hierarchy carried by weight contrast — consecutive heading levels never share a weight.
+- **The primary-action token is reserved for actions**: primary CTAs, focus rings, active input borders. Never decorative, or it stops meaning "click here".
+- **Shape is a per-element-type token, never a per-instance choice**: all buttons share one radius role, all inputs another. Change the token, not the component.
+- **Five status roles** (`info`, `positive`, `warning`, `error`, `neutral`), shared by every status-bearing component through the same `--color-status-*` set.
+- **Depth is token-owned**: surfaces step through the container ramp, and the only shadows are the elevation tokens the system defines. Components never add their own.
+- **Icons sit on the `--icon-size-*` scale** — set the scale variable, never `font-size` on an icon.
 
 ---
 
@@ -276,7 +278,6 @@ Note the audience split when editing either: `USAGE.md` addresses someone buildi
 |---|---|
 | [`design.md`](design.md) | Full design spec — colors, typography, spacing, all component rules |
 | [`content-design.md`](content-design.md) | Content style guide — voice, register by surface, words and patterns to avoid |
-| [`USAGE.md`](USAGE.md) | The rules for building *with* the package — ships in the npm tarball and serves at `/blueprints/usage`. This is the consumer counterpart to this file; never send a package user here |
 | [`src/tokens/tokens-primitives.css`](src/tokens/tokens-primitives.css) | Raw hex/px values |
 | [`src/tokens/tokens-light.css`](src/tokens/tokens-light.css) | Semantic token definitions (light) |
 | [`src/tokens/tokens-dark.css`](src/tokens/tokens-dark.css) | Semantic token overrides (dark) |

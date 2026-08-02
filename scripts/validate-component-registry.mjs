@@ -122,6 +122,28 @@ for (const c of registry.components) {
   }
 }
 
+/*
+ * Every public component needs at least one stories file. Stories are not
+ * just docs here: `npm run test` renders every story headlessly and runs
+ * axe against it, so a component without one silently gets zero render
+ * tests, zero a11y coverage, and no Storybook page — and nothing else in
+ * the chain would notice.
+ */
+const missingStories = registry.components
+  .filter(
+    (c) =>
+      !readdirSync(join(componentsDir, c.name)).some((f) =>
+        f.includes('.stories.')
+      )
+  )
+  .map((c) => c.name);
+if (missingStories.length > 0) {
+  metaErrors.push(
+    `no stories file — these components get no render tests, no a11y ` +
+      `coverage, and no Storybook page: ${missingStories.join(', ')}`
+  );
+}
+
 const sortedNames = [...componentNames].sort();
 if (JSON.stringify(componentNames) !== JSON.stringify(sortedNames)) {
   metaErrors.push('components must be sorted alphabetically by name');

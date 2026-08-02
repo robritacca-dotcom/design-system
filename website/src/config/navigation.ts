@@ -140,7 +140,6 @@ export const docsSidebarLinks: NavLink[] = [
   { href: "/blueprints/claude", label: "Claude MD" },
   { href: "/blueprints/design", label: "Design MD" },
   { href: "/blueprints/content-design", label: "Content MD" },
-  { href: "/blueprints/usage", label: "Usage MD" },
   { href: "/skills", label: "Skills" },
   { href: "/loops", label: "Loops" },
   { href: "/project-journal", label: "Project journal" },

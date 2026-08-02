@@ -53,8 +53,6 @@ Deep imports work too (`@robr0/design-system/components/Button/Button`). Chart c
 import { BarChart, LineChart } from '@robr0/design-system/charts';
 ```
 
-**The design rules ship with the package.** `USAGE.md` sits next to this file in the tarball (and at [robertritacca.com/blueprints/usage](https://robertritacca.com/blueprints/usage)): semantic tokens, the action colour, shape by element type, the status set, dark mode, and the prop contract every component shares. Hand it to a teammate or an AI assistant and they can build interfaces that match the system without reading the source.
-
 **Theming and customisation** happen through CSS variables; there is no configuration API. Components are provider-free, with one exception: wrap your tree in `ToastProvider` if (and only if) you use the toast queue via `useToast`.
 
 - **Dark mode**: set `data-theme="dark"` on the root element (light is the default).
@@ -88,13 +86,16 @@ Dark mode is driven by `data-theme="dark"` on the root element, with no `prefers
 
 ### Design principles
 
-- **Single typeface**: Nunito Sans (weight 300 for display, 600 for headings, 400/500 for body)
-- **White-floor UI**: depth comes from a container colour ramp, not box shadows
-- **Teal is the action colour**: primary buttons and focus rings only, never decorative
-- **Five status variants**: info, positive, warning, error, neutral, with shared tokens across Badge, Alert, Toast, ProgressBar
-- **Material Symbols Rounded** for all icons
+Stated as token roles on purpose — what each role resolves to is the theme, and yours to override:
 
-Full spec in [`design.md`](design.md).
+- **Style with semantic tokens, never raw values** — that is what makes one primitive override cascade through everything
+- **One typeface**, hierarchy carried by weight contrast
+- **The primary-action token means "click here"**: CTAs and focus only, never decoration
+- **Shape is a per-element-type token**, not a per-instance choice
+- **Five status roles** (info, positive, warning, error, neutral) shared by every status-bearing component
+- **Depth is token-owned**: the container ramp plus the system's elevation tokens — components don't bring their own shadows
+
+The defaults behind each role, and every component spec, live in [`design.md`](design.md).
 
 ---
 

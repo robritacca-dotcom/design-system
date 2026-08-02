@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/docs" },
   title: { default: "Docs", template: TITLE_TEMPLATE },
   description:
-    "Documentation for robr0 DS: the system overview, the spec files that drive the build, the rules for building with the package, reusable skills, autonomous loops, and the project journal.",
+    "Documentation for robr0 DS: the system overview, the spec files that drive the build, reusable skills, autonomous loops, and the project journal.",
 };
 
 export default function DocsLayout({
