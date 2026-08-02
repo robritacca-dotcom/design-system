@@ -9,8 +9,8 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    title: { control: 'text', description: 'Section heading text' },
-    trailing: { control: 'text', description: 'Optional trailing content (count, badge, metadata)' },
+    title: { control: 'text' },
+    trailing: { control: 'text' },
   },
   args: {
     title: 'Section heading',

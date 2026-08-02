@@ -32,13 +32,12 @@ const meta = {
     size: {
       control: 'radio',
       options: ['default', 'compact'],
-      description: 'Component size',
     },
-    multiple: { control: 'boolean', description: 'Allow multiple selections' },
-    disabled: { control: 'boolean', description: 'Disable the combobox' },
-    error: { control: 'boolean', description: 'Error state' },
-    loading: { control: 'boolean', description: 'Show the loading affordance' },
-    clearable: { control: 'boolean', description: 'Show a clear button' },
+    multiple: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+    error: { control: 'boolean' },
+    loading: { control: 'boolean' },
+    clearable: { control: 'boolean' },
   },
   args: {
     label: 'Country',

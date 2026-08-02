@@ -17,19 +17,15 @@ const meta = {
     size: {
       control: 'select',
       options: ['default', 'compact'],
-      description: 'Table size',
     },
     striped: {
       control: 'boolean',
-      description: 'Alternating row backgrounds',
     },
     bordered: {
       control: 'boolean',
-      description: 'Outer border container + tinted thead + divider row lines',
     },
     caption: {
       control: 'text',
-      description: 'Accessible table caption',
     },
   },
   args: {

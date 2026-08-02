@@ -31,8 +31,7 @@
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import ts from 'typescript';
-import { withCompilerOptions } from 'react-docgen-typescript';
+import { withCustomConfig } from 'react-docgen-typescript';
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
 const componentsDir = join(repoRoot, 'src', 'components');
@@ -55,22 +54,24 @@ const sourceFiles = registry.components.flatMap((component) =>
   sourceFilesFor(component.name)
 );
 
-const parser = withCompilerOptions(
-  {
-    jsx: ts.JsxEmit.ReactJSX,
-    module: ts.ModuleKind.ESNext,
-    moduleResolution: ts.ModuleResolutionKind.Bundler,
-    target: ts.ScriptTarget.ESNext,
-    esModuleInterop: true,
-    skipLibCheck: true,
-  },
-  {
-    savePropValueAsString: true,
-    // Own props only — native pass-through attributes are React's to document.
-    propFilter: (prop) =>
-      !(prop.parent && prop.parent.fileName.includes('node_modules')),
-  }
-);
+// These settings mirror .storybook/main.ts exactly, so this validator sees
+// what the rendered props table sees. Two of them are load-bearing:
+//   - tsconfig.app.json, because the root tsconfig.json is solution-style
+//     ("files": [] plus references) and yields a program with no files
+//   - shouldIncludePropTagMap, because it moves an `@deprecated` tag out of
+//     `description` and into `tags`. A prop documented *only* with the tag
+//     therefore has an empty description and renders as a blank cell, which
+//     is exactly the hole this validator exists to catch. Put a sentence
+//     before the tag so both survive.
+const parser = withCustomConfig(join(repoRoot, 'tsconfig.app.json'), {
+  savePropValueAsString: true,
+  shouldExtractLiteralValuesFromEnum: true,
+  shouldRemoveUndefinedFromOptional: true,
+  shouldIncludePropTagMap: true,
+  // Own props only — native pass-through attributes are React's to document.
+  propFilter: (prop) =>
+    !(prop.parent && prop.parent.fileName.includes('node_modules')),
+});
 
 // One parse call builds a single TypeScript program for the whole
 // library; parsing file-by-file rebuilds it each time and is far slower.

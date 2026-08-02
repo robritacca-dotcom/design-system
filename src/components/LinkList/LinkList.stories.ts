@@ -9,9 +9,6 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    items: {
-      description: 'Array of link items. Each item has a label, href, optional logo or icon, and optional subtitle(s).',
-    },
   },
 } satisfies Meta<typeof LinkList>;
 

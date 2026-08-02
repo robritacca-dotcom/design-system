@@ -28,9 +28,17 @@ type ToggleGroupOwnProps = {
   onValueChange?: (value: string | string[]) => void;
   /** Additional CSS classes */
   className?: string;
-  /** @deprecated Use `onValueChange` instead. */
+  /**
+   * Legacy change handler, kept for backwards compatibility.
+   *
+   * @deprecated Use `onValueChange` instead.
+   */
   onChange?: (value: string | string[]) => void;
-  /** @deprecated Pass the native `aria-label` attribute instead. */
+  /**
+   * Legacy accessible-name prop.
+   *
+   * @deprecated Pass the native `aria-label` attribute instead.
+   */
   ariaLabel?: string;
 };
 

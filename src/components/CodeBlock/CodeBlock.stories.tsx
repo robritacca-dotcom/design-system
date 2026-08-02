@@ -19,21 +19,18 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    code: { control: 'text', description: 'Code string to display' },
-    language: { control: 'text', description: 'Language tag in the header' },
-    filename: { control: 'text', description: 'Filename in the header' },
-    showCopy: { control: 'boolean', description: 'Show the copy button' },
+    code: { control: 'text' },
+    language: { control: 'text' },
+    filename: { control: 'text' },
+    showCopy: { control: 'boolean' },
     maxHeight: {
       control: 'number',
-      description: 'Max height of the block; code scrolls vertically inside (numbers are px)',
     },
     collapsible: {
       control: 'boolean',
-      description: 'Chevron beside the filename collapses/expands the code area',
     },
     defaultCollapsed: {
       control: 'boolean',
-      description: 'Start collapsed (only applies when collapsible)',
     },
   },
   args: {

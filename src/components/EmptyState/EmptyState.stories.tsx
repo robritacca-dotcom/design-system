@@ -10,18 +10,16 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    icon: { control: 'text', description: 'Material Symbol name or custom element' },
-    title: { control: 'text', description: 'Short headline' },
-    description: { control: 'text', description: 'Supporting copy' },
+    icon: { control: 'text' },
+    title: { control: 'text' },
+    description: { control: 'text' },
     variant: {
       control: 'radio',
       options: ['plain', 'bordered'],
-      description: 'Visual treatment',
     },
     size: {
       control: 'radio',
       options: ['default', 'compact'],
-      description: 'Component size',
     },
   },
   args: {

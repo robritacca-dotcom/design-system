@@ -12,15 +12,14 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    open: { control: 'boolean', description: 'Whether the dialog is open' },
-    title: { control: 'text', description: 'Dialog title' },
-    description: { control: 'text', description: 'Dialog description / body text' },
-    confirmLabel: { control: 'text', description: 'Confirm button label' },
-    cancelLabel: { control: 'text', description: 'Cancel button label' },
+    open: { control: 'boolean' },
+    title: { control: 'text' },
+    description: { control: 'text' },
+    confirmLabel: { control: 'text' },
+    cancelLabel: { control: 'text' },
     variant: {
       control: 'select',
       options: ['default', 'destructive'],
-      description: 'Dialog variant',
     },
   },
   args: {

@@ -12,18 +12,15 @@ const meta = {
     orientation: {
       control: 'select',
       options: ['horizontal', 'vertical'],
-      description: 'Divider direction',
     },
-    label: { control: 'text', description: 'Optional inline label (horizontal only)' },
+    label: { control: 'text' },
     labelPosition: {
       control: 'select',
       options: ['start', 'center'],
-      description: 'Label placement along the line',
     },
     spacing: {
       control: 'select',
       options: ['none', 'sm', 'md', 'lg'],
-      description: 'Margin around the divider',
     },
   },
 } satisfies Meta<typeof Divider>;

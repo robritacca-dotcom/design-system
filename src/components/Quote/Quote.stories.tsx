@@ -9,13 +9,12 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    children: { control: 'text', description: 'Quote text' },
-    attribution: { control: 'text', description: 'Who said it' },
-    detail: { control: 'text', description: 'Context under the attribution' },
+    children: { control: 'text' },
+    attribution: { control: 'text' },
+    detail: { control: 'text' },
     variant: {
       control: 'select',
       options: ['default', 'pull'],
-      description: 'Inline blockquote or large pull-quote',
     },
   },
   args: {

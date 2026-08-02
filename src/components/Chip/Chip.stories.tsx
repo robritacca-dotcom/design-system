@@ -10,17 +10,14 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    label: { control: 'text', description: 'Chip label' },
-    icon: { control: 'text', description: 'Leading Material Symbol name' },
-    selected: { control: 'boolean', description: 'Selected (filter) state' },
-    disabled: { control: 'boolean', description: 'Disabled state' },
+    label: { control: 'text' },
+    icon: { control: 'text' },
+    selected: { control: 'boolean' },
+    disabled: { control: 'boolean' },
     size: {
       control: 'select',
       options: ['default', 'compact'],
-      description: 'Chip size',
     },
-    onClick: { description: 'Presence makes the chip an interactive <button>' },
-    onRemove: { description: 'Presence adds a trailing close button' },
   },
   args: {
     label: 'Chip',

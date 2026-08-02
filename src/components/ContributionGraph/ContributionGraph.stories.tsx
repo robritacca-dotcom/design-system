@@ -41,10 +41,10 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    days: { control: false, description: 'One entry per day, ordered oldest to newest' },
-    caption: { control: 'text', description: 'Summary line shown under the grid' },
-    showMonthLabels: { control: 'boolean', description: 'Show month labels above the grid' },
-    showLegend: { control: 'boolean', description: 'Show the Less → More legend' },
+    days: { control: false },
+    caption: { control: 'text' },
+    showMonthLabels: { control: 'boolean' },
+    showLegend: { control: 'boolean' },
   },
   args: {
     days: yearData.days,

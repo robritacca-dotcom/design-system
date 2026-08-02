@@ -7,7 +7,11 @@ export interface CircularButtonProps {
   icon: string;
   /** Visual treatment */
   variant?: 'primary' | 'secondary' | 'tertiary';
-  /** @deprecated Use `variant` instead. */
+  /**
+   * Legacy alias for `variant`.
+   *
+   * @deprecated Use `variant` instead.
+   */
   priority?: 'primary' | 'secondary' | 'tertiary';
   /** Button state */
   state?: 'default' | 'hover' | 'active' | 'disabled';

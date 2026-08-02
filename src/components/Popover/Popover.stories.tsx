@@ -13,19 +13,16 @@ const meta = {
     position: {
       control: 'select',
       options: ['top', 'bottom', 'left', 'right'],
-      description: 'Preferred position',
     },
     trigger: {
       control: 'select',
       options: ['click', 'hover'],
-      description: 'Trigger mode',
     },
     size: {
       control: 'select',
       options: ['default', 'compact'],
-      description: 'Component size',
     },
-    open: { control: 'boolean', description: 'Open state (controlled)' },
+    open: { control: 'boolean' },
   },
   args: {
     onOpenChange: fn(),

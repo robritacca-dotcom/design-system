@@ -28,11 +28,11 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    showDots: { control: 'boolean', description: 'Show dot indicators' },
-    showArrows: { control: 'boolean', description: 'Show navigation arrows' },
-    autoPlay: { control: 'boolean', description: 'Auto-play slides' },
-    autoPlayInterval: { control: 'number', description: 'Auto-play interval (ms)' },
-    loop: { control: 'boolean', description: 'Loop navigation' },
+    showDots: { control: 'boolean' },
+    showArrows: { control: 'boolean' },
+    autoPlay: { control: 'boolean' },
+    autoPlayInterval: { control: 'number' },
+    loop: { control: 'boolean' },
   },
   args: {
     onSlideChange: fn(),

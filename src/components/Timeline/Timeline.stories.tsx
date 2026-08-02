@@ -101,9 +101,8 @@ const meta = {
     orientation: {
       control: 'select',
       options: ['vertical', 'horizontal'],
-      description: 'Vertical timeline or horizontal stepper',
     },
-    numbered: { control: 'boolean', description: 'Number the markers 1..n' },
+    numbered: { control: 'boolean' },
   },
   args: {
     items: CAREER_ITEMS,

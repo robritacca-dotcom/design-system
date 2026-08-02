@@ -11,23 +11,18 @@ const meta = {
   argTypes: {
     name: {
       control: 'text',
-      description: 'Display name rendered as preview text',
     },
     weight: {
       control: 'text',
-      description: 'Font weight label',
     },
     size: {
       control: 'text',
-      description: 'Font size value',
     },
     lineHeight: {
       control: 'text',
-      description: 'Line height value',
     },
     letterSpacing: {
       control: 'text',
-      description: 'Letter spacing value',
     },
   },
   decorators: [

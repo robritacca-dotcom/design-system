@@ -19,11 +19,21 @@ type CheckboxOwnProps = {
   onCheckedChange?: (checked: boolean) => void;
   /** Additional CSS classes */
   className?: string;
-  /** @deprecated Use `onCheckedChange` instead. */
+  /**
+   * Legacy change handler, kept for backwards compatibility.
+   *
+   * @deprecated Use `onCheckedChange` instead.
+   */
   onChange?: (checked: boolean) => void;
-  /** @deprecated Pass the native `aria-label` attribute instead. */
+  /**
+   * Legacy accessible-name prop.
+   *
+   * @deprecated Pass the native `aria-label` attribute instead.
+   */
   ariaLabel?: string;
   /**
+   * Legacy form-field name.
+   *
    * @deprecated No-op. This component renders a `<div role="checkbox">`, not a
    * native `<input>`, so it cannot participate in native form submission.
    * Declared only so the attribute is not forwarded to an element that rejects it.
@@ -163,7 +173,11 @@ type CheckboxGroupOwnProps = {
   onValuesChange?: (values: string[]) => void;
   /** Additional CSS classes */
   className?: string;
-  /** @deprecated Use `onValuesChange` instead. */
+  /**
+   * Legacy change handler, kept for backwards compatibility.
+   *
+   * @deprecated Use `onValuesChange` instead.
+   */
   onChange?: (values: string[]) => void;
 };
 

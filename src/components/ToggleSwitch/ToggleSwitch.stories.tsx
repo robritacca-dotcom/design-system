@@ -12,19 +12,15 @@ const meta = {
   argTypes: {
     checked: {
       control: 'boolean',
-      description: 'Whether the toggle is on (checked)',
     },
     label: {
       control: 'text',
-      description: 'Label text displayed next to the toggle',
     },
     showLabel: {
       control: 'boolean',
-      description: 'Whether to show the label',
     },
     disabled: {
       control: 'boolean',
-      description: 'Whether the toggle is disabled',
     },
   },
   args: {

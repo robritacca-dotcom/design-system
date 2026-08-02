@@ -11,24 +11,19 @@ const meta = {
   argTypes: {
     label: {
       control: 'text',
-      description: 'Display label for the swatch',
     },
     cssVar: {
       control: 'text',
-      description: 'CSS custom property used as background colour',
     },
     theme: {
       control: 'radio',
       options: ['dark', 'light'],
-      description: 'Which theme values to display',
     },
     status: {
       control: 'boolean',
-      description: 'Render as a status swatch with left border accent',
     },
     borderVar: {
       control: 'text',
-      description: 'CSS custom property for the status left border colour',
     },
   },
   decorators: [

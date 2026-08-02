@@ -10,27 +10,23 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    icon: { control: 'text', description: 'Material Symbol icon name' },
+    icon: { control: 'text' },
     variant: {
       control: 'select',
       options: ['primary', 'secondary', 'tertiary'],
-      description: 'Button variant — primary (solid), secondary (outlined), or tertiary (ghost)',
     },
     state: {
       control: 'select',
       options: ['default', 'hover', 'active', 'disabled'],
-      description: 'Button state',
     },
     size: {
       control: 'select',
       options: ['default', 'compact'],
-      description: 'Button size',
     },
     loading: {
       control: 'boolean',
-      description: 'Show a spinner in place of the icon and block interaction',
     },
-    ariaLabel: { control: 'text', description: 'Accessible label' },
+    ariaLabel: { control: 'text' },
   },
   args: {
     onClick: fn(),

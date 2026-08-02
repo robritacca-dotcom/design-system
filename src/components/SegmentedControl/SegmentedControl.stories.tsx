@@ -10,13 +10,12 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    activeSegment: { control: 'text', description: 'Currently active segment value' },
+    activeSegment: { control: 'text' },
     size: {
       control: 'select',
       options: ['default', 'compact'],
-      description: 'Component size',
     },
-    fullWidth: { control: 'boolean', description: 'Segments fill container width' },
+    fullWidth: { control: 'boolean' },
   },
   args: {
     onSegmentChange: fn(),

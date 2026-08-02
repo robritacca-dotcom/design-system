@@ -10,16 +10,14 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    page: { control: 'number', description: 'Current page (1-based)' },
-    pageCount: { control: 'number', description: 'Total number of pages' },
+    page: { control: 'number' },
+    pageCount: { control: 'number' },
     siblingCount: {
       control: 'number',
-      description: 'Pages shown on each side of the current page',
     },
     size: {
       control: 'select',
       options: ['default', 'compact'],
-      description: 'Compact swaps the numbers for a prev/next readout',
     },
   },
   args: {

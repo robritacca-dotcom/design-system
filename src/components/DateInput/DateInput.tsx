@@ -29,7 +29,11 @@ type DateInputOwnProps = {
   onValueChange?: (value: string) => void;
   /** Additional CSS classes — applied to the wrapper, not the <input> */
   className?: string;
-  /** @deprecated Pass the native `aria-label` attribute instead. */
+  /**
+   * Legacy accessible-name prop.
+   *
+   * @deprecated Pass the native `aria-label` attribute instead.
+   */
   ariaLabel?: string;
 };
 

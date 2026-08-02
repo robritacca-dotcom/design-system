@@ -55,11 +55,9 @@ import { ButtonGroup } from './components/ButtonGroup/ButtonGroup';
     orientation: {
       control: 'select',
       options: ['horizontal', 'vertical'],
-      description: 'Layout direction of the button group',
     },
     buttons: {
       control: 'object',
-      description: 'Array of button configurations',
     },
   },
 } satisfies Meta<typeof ButtonGroup>;

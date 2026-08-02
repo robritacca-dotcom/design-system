@@ -9,18 +9,16 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    value: { control: 'text', description: 'Headline number' },
-    label: { control: 'text', description: 'What the number measures' },
-    delta: { control: 'text', description: 'Change annotation' },
+    value: { control: 'text' },
+    label: { control: 'text' },
+    delta: { control: 'text' },
     trend: {
       control: 'select',
       options: ['up', 'down', 'neutral'],
-      description: 'Direction of the delta',
     },
     size: {
       control: 'select',
       options: ['default', 'large'],
-      description: 'Stat size',
     },
   },
   args: {

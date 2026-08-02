@@ -11,25 +11,20 @@ const meta = {
   argTypes: {
     label: {
       control: 'text',
-      description: 'Token name label (e.g. "Fast", "Standard")',
     },
     token: {
       control: 'text',
-      description: 'CSS custom property being demonstrated',
     },
     value: {
       control: 'text',
-      description: 'Resolved value to display',
     },
     kind: {
       control: 'radio',
       options: ['duration', 'easing'],
-      description: 'Whether the token is a duration or an easing curve',
     },
     demo: {
       control: 'radio',
       options: ['slide', 'spin', 'shimmer'],
-      description: 'Which preview animation to render',
     },
   },
   decorators: [

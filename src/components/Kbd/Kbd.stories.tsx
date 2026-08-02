@@ -12,11 +12,9 @@ const meta = {
     size: {
       control: 'select',
       options: ['default', 'compact'],
-      description: 'Key size — default or compact',
     },
     children: {
       control: 'text',
-      description: 'The key legend',
     },
   },
   args: {

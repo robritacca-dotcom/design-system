@@ -9,11 +9,10 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    label: { control: 'text', description: 'Badge label text' },
+    label: { control: 'text' },
     variant: {
       control: 'select',
       options: ['info', 'positive', 'warning', 'error', 'neutral'],
-      description: 'Badge variant determines colour',
     },
   },
   args: {

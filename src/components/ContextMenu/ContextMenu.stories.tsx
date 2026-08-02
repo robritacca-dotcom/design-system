@@ -58,7 +58,6 @@ const meta = {
     size: {
       control: 'select',
       options: ['default', 'compact'],
-      description: 'Menu size — default or compact',
     },
   },
   args: {

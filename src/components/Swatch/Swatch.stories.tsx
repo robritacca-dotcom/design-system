@@ -9,9 +9,9 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    value: { control: 'color', description: 'The colour the swatch shows' },
-    label: { control: 'text', description: 'Accessible name (defaults to the value)' },
-    selected: { control: 'boolean', description: 'Selection ring + aria-pressed' },
+    value: { control: 'color' },
+    label: { control: 'text' },
+    selected: { control: 'boolean' },
     size: { control: 'select', options: ['default', 'compact'] },
     shape: { control: 'select', options: ['circle', 'square'] },
     disabled: { control: 'boolean' },

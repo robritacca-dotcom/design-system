@@ -12,7 +12,6 @@ const meta = {
   argTypes: {
     brandText: {
       control: 'text',
-      description: 'Brand/logo text',
     },
   },
   decorators: [

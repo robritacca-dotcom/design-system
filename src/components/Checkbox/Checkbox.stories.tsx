@@ -10,10 +10,10 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    label: { control: 'text', description: 'Label text' },
-    checked: { control: 'boolean', description: 'Whether the checkbox is checked' },
-    indeterminate: { control: 'boolean', description: 'Indeterminate state' },
-    disabled: { control: 'boolean', description: 'Whether the checkbox is disabled' },
+    label: { control: 'text' },
+    checked: { control: 'boolean' },
+    indeterminate: { control: 'boolean' },
+    disabled: { control: 'boolean' },
   },
   args: {
     onChange: fn(),

@@ -9,18 +9,16 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    title: { control: 'text', description: 'Instructions title' },
+    title: { control: 'text' },
     direction: {
       control: 'select',
       options: ['vertical', 'horizontal'],
-      description: 'Layout direction',
     },
     size: {
       control: 'select',
       options: ['default', 'compact'],
-      description: 'Component size',
     },
-    numbered: { control: 'boolean', description: 'Show step numbers' },
+    numbered: { control: 'boolean' },
   },
   args: {
     size: 'default',

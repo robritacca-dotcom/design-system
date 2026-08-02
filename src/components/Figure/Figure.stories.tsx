@@ -15,8 +15,7 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    caption: { control: 'text', description: 'Caption below the image' },
-    onClick: { description: 'Makes the figure zoomable (cursor, hover dim, keyboard)' },
+    caption: { control: 'text' },
   },
   args: {
     children: <img src={placeholder('Process image')} alt="Process placeholder" />,

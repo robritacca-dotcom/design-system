@@ -32,7 +32,11 @@ type SelectionCardOwnProps = {
   name?: string;
   /** Additional CSS classes */
   className?: string;
-  /** @deprecated Use `onValueChange` instead. */
+  /**
+   * Legacy change handler, kept for backwards compatibility.
+   *
+   * @deprecated Use `onValueChange` instead.
+   */
   onChange?: (value: string | string[]) => void;
 };
 

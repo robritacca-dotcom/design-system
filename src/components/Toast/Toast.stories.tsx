@@ -14,15 +14,14 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    title: { control: 'text', description: 'Toast title text' },
-    description: { control: 'text', description: 'Toast description / body text' },
+    title: { control: 'text' },
+    description: { control: 'text' },
     variant: {
       control: 'select',
       options: ['info', 'positive', 'warning', 'error', 'neutral'],
-      description: 'Toast variant',
     },
-    dismissible: { control: 'boolean', description: 'Whether the toast can be dismissed' },
-    icon: { control: 'text', description: 'Custom icon override — Material Symbol name' },
+    dismissible: { control: 'boolean' },
+    icon: { control: 'text' },
   },
   args: {
     dismissible: true,

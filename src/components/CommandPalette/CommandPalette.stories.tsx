@@ -56,11 +56,11 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    placeholder: { control: 'text', description: 'Search field placeholder' },
-    emptyMessage: { control: 'text', description: 'Shown when nothing matches' },
-    loading: { control: 'boolean', description: 'Show the loading affordance' },
-    hotkey: { control: 'boolean', description: 'Bind Cmd+K / Ctrl+K globally' },
-    hideFooter: { control: 'boolean', description: 'Hide the keyboard hint row' },
+    placeholder: { control: 'text' },
+    emptyMessage: { control: 'text' },
+    loading: { control: 'boolean' },
+    hotkey: { control: 'boolean' },
+    hideFooter: { control: 'boolean' },
   },
   args: {
     open: false,

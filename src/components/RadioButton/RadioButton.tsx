@@ -17,11 +17,21 @@ type RadioButtonOwnProps = {
   onValueChange?: (value: string) => void;
   /** Additional CSS classes */
   className?: string;
-  /** @deprecated Use `onValueChange` instead. */
+  /**
+   * Legacy change handler, kept for backwards compatibility.
+   *
+   * @deprecated Use `onValueChange` instead.
+   */
   onChange?: (value: string) => void;
-  /** @deprecated Pass the native `aria-label` attribute instead. */
+  /**
+   * Legacy accessible-name prop.
+   *
+   * @deprecated Pass the native `aria-label` attribute instead.
+   */
   ariaLabel?: string;
   /**
+   * Legacy form-field name.
+   *
    * @deprecated No-op. This component renders a `<div role="radio">`, not a
    * native `<input type="radio">`, so it does not group by name or participate
    * in native form submission — `RadioGroup` handles grouping in React state.
@@ -125,7 +135,11 @@ type RadioGroupOwnProps = {
   onValueChange?: (value: string) => void;
   /** Additional CSS classes */
   className?: string;
-  /** @deprecated Use `onValueChange` instead. */
+  /**
+   * Legacy change handler, kept for backwards compatibility.
+   *
+   * @deprecated Use `onValueChange` instead.
+   */
   onChange?: (value: string) => void;
 };
 

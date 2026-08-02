@@ -14,10 +14,10 @@ const radioMeta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    label: { control: 'text', description: 'Label text' },
-    checked: { control: 'boolean', description: 'Whether the radio is selected' },
-    disabled: { control: 'boolean', description: 'Whether the radio is disabled' },
-    value: { control: 'text', description: 'Radio value' },
+    label: { control: 'text' },
+    checked: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+    value: { control: 'text' },
   },
   args: {
     onChange: fn(),

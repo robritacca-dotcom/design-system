@@ -10,13 +10,12 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    activeTab: { control: 'text', description: 'Currently active tab value' },
+    activeTab: { control: 'text' },
     size: {
       control: 'select',
       options: ['default', 'compact'],
-      description: 'Tab size',
     },
-    fullWidth: { control: 'boolean', description: 'Whether tabs fill available width' },
+    fullWidth: { control: 'boolean' },
   },
   args: {
     onTabChange: fn(),

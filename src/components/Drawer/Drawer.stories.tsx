@@ -13,21 +13,18 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    title: { control: 'text', description: 'Drawer title' },
-    description: { control: 'text', description: 'Optional subtitle under the title' },
+    title: { control: 'text' },
+    description: { control: 'text' },
     side: {
       control: 'select',
       options: ['left', 'right', 'top', 'bottom'],
-      description: 'Edge the panel slides in from',
     },
     size: {
       control: 'select',
       options: ['sm', 'md', 'lg'],
-      description: 'Panel size along the slide axis',
     },
     dismissible: {
       control: 'boolean',
-      description: 'Whether ESC, scrim click, and the close button can dismiss',
     },
   },
   args: {

@@ -35,9 +35,15 @@ type ButtonOwnProps = {
   ariaCurrent?: boolean;
   /** Additional CSS classes */
   className?: string;
-  /** @deprecated Use `variant` instead. */
+  /**
+   * Legacy alias for `variant`.
+   *
+   * @deprecated Use `variant` instead.
+   */
   priority?: 'primary' | 'secondary' | 'tertiary' | 'destructive';
   /**
+   * Documentation-only interaction state.
+   *
    * @deprecated Use `disabled` for the disabled state.
    *
    * Documentation-only affordance for rendering a *static* interaction state in
@@ -45,9 +51,15 @@ type ButtonOwnProps = {
    * pseudo-classes and needs no prop — for docs, prefer `className="ds-button--hover"`.
    */
   state?: 'default' | 'hover' | 'active' | 'disabled';
-  /** @deprecated Use `iconLeft` instead. */
+  /**
+   * Legacy alias for `iconLeft`.
+   *
+   * @deprecated Use `iconLeft` instead.
+   */
   icon?: string;
   /**
+   * Legacy toggle for showing the text label.
+   *
    * @deprecated Will be removed once `label` loses its default in the next major;
    * an icon-only button will simply omit `label`.
    */

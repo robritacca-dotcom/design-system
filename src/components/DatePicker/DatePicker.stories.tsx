@@ -10,15 +10,14 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    value: { control: 'text', description: 'Selected date (YYYY-MM-DD)' },
+    value: { control: 'text' },
     size: {
       control: 'select',
       options: ['default', 'compact'],
-      description: 'Component size',
     },
-    disabled: { control: 'boolean', description: 'Whether disabled' },
-    min: { control: 'text', description: 'Min selectable date (YYYY-MM-DD)' },
-    max: { control: 'text', description: 'Max selectable date (YYYY-MM-DD)' },
+    disabled: { control: 'boolean' },
+    min: { control: 'text' },
+    max: { control: 'text' },
   },
   args: {
     onDateSelect: fn(),

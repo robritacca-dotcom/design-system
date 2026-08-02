@@ -12,16 +12,14 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    title: { control: 'text', description: 'Dialog title' },
-    description: { control: 'text', description: 'Optional subtitle under the title' },
+    title: { control: 'text' },
+    description: { control: 'text' },
     size: {
       control: 'select',
       options: ['sm', 'md', 'lg'],
-      description: 'Panel width',
     },
     dismissible: {
       control: 'boolean',
-      description: 'Whether ESC, backdrop click, and the close button can dismiss',
     },
   },
   args: {

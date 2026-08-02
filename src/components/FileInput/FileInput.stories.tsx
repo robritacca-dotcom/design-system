@@ -11,17 +11,16 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    label: { control: 'text', description: 'Field label' },
-    placeholder: { control: 'text', description: 'Dropzone instruction copy' },
-    accept: { control: 'text', description: "Accept list, e.g. 'image/*,.pdf'" },
-    multiple: { control: 'boolean', description: 'Allow multiple files' },
+    label: { control: 'text' },
+    placeholder: { control: 'text' },
+    accept: { control: 'text' },
+    multiple: { control: 'boolean' },
     size: {
       control: 'radio',
       options: ['default', 'compact'],
-      description: 'Component size',
     },
-    disabled: { control: 'boolean', description: 'Disable the input' },
-    error: { control: 'boolean', description: 'Error state' },
+    disabled: { control: 'boolean' },
+    error: { control: 'boolean' },
   },
   args: {
     label: 'Attachments',

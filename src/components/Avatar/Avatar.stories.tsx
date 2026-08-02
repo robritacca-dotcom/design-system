@@ -10,18 +10,16 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    src: { control: 'text', description: 'Image source URL' },
-    alt: { control: 'text', description: 'Alt text for the image' },
-    name: { control: 'text', description: "User's name — used for initials fallback" },
+    src: { control: 'text' },
+    alt: { control: 'text' },
+    name: { control: 'text' },
     size: {
       control: 'select',
       options: ['sm', 'md', 'lg'],
-      description: 'Avatar size',
     },
     status: {
       control: 'select',
       options: [undefined, 'online', 'away', 'offline', 'busy'],
-      description: 'Online status indicator',
     },
   },
   args: {

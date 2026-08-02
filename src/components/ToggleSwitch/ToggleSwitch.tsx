@@ -18,9 +18,17 @@ type ToggleSwitchOwnProps = {
   onCheckedChange?: (checked: boolean) => void;
   /** Additional CSS classes */
   className?: string;
-  /** @deprecated Use `onCheckedChange` instead. */
+  /**
+   * Legacy change handler, kept for backwards compatibility.
+   *
+   * @deprecated Use `onCheckedChange` instead.
+   */
   onChange?: (checked: boolean) => void;
-  /** @deprecated Pass the native `aria-label` attribute instead. */
+  /**
+   * Legacy accessible-name prop.
+   *
+   * @deprecated Pass the native `aria-label` attribute instead.
+   */
   ariaLabel?: string;
 };
 

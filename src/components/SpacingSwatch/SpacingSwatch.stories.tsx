@@ -11,20 +11,16 @@ const meta = {
   argTypes: {
     label: {
       control: 'text',
-      description: 'Size label (e.g. "XS", "MD")',
     },
     value: {
       control: 'text',
-      description: 'Pixel value to display',
     },
     px: {
       control: 'number',
-      description: 'Numeric pixel amount for the preview',
     },
     variant: {
       control: 'radio',
       options: ['border', 'radius', 'gap', 'padding'],
-      description: 'Which type of spatial preview to render',
     },
   },
   decorators: [

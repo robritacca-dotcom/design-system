@@ -13,19 +13,15 @@ const meta = {
     variant: {
       control: 'select',
       options: ['default', 'case-study'],
-      description: 'Card variant — default (preview + title) or case-study (cover image + eyebrow + title + dek)',
     },
     title: {
       control: 'text',
-      description: 'Card title',
     },
     interactive: {
       control: 'boolean',
-      description: 'Whether the card is hoverable/clickable (default variant)',
     },
     placeholder: {
       control: 'boolean',
-      description: 'Render as a dimmed, non-interactive placeholder (case-study variant)',
     },
   },
   args: {

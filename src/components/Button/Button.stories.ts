@@ -13,41 +13,32 @@ const meta = {
     priority: {
       control: 'select',
       options: ['primary', 'secondary', 'tertiary', 'destructive'],
-      description: 'Button variant — primary (solid), secondary (outlined), tertiary (ghost), or destructive',
     },
     state: {
       control: 'select',
       options: ['default', 'hover', 'active', 'disabled'],
-      description: 'Button state for design system documentation',
     },
     size: {
       control: 'select',
       options: ['default', 'compact'],
-      description: 'Button size — default or compact',
     },
     label: {
       control: 'text',
-      description: 'Button text content',
     },
     text: {
       control: 'boolean',
-      description: 'Show text label',
     },
     loading: {
       control: 'boolean',
-      description: 'Show a spinner in the left icon slot and block interaction',
     },
     iconLeft: {
       control: 'text',
-      description: 'Material Symbol Rounded icon name for left side (e.g., "menu", "home")',
     },
     iconRight: {
       control: 'text',
-      description: 'Material Symbol Rounded icon name for right side (e.g., "arrow_forward")',
     },
     icon: {
       control: 'text',
-      description: 'Deprecated - use iconLeft instead',
     },
   },
   args: {

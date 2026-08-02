@@ -11,14 +11,13 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    content: { control: 'text', description: 'Tooltip text content' },
+    content: { control: 'text' },
     position: {
       control: 'select',
       options: ['top', 'bottom', 'left', 'right'],
-      description: 'Preferred position',
     },
-    showDelay: { control: 'number', description: 'Delay before showing (ms)' },
-    hideDelay: { control: 'number', description: 'Delay before hiding (ms)' },
+    showDelay: { control: 'number' },
+    hideDelay: { control: 'number' },
   },
   args: {
     content: 'Tooltip text',
