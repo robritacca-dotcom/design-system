@@ -162,7 +162,7 @@ export const workSidebarLinks: NavLink[] = [
   { href: "/work", label: "Contents" },
   { href: "/work/embedded-ai-turbotax", label: "TurboTax in ChatGPT & Claude", logo: "/logos/turbotax.svg" },
   { href: "/work/intuit-agent-chat", label: "Agent Chat Platform", logo: "/logos/Intuit.svg" },
-  { href: "/work/augmenta-ai", label: "Construction Platform", logo: "/logos/logo/Augmenta.png" },
+  { href: "/work/augmenta-ai", label: "Construction Platform", logo: "/logos/Augmenta-2026.svg" },
   { href: "/work/meta-career-profile", label: "Career Profile", logo: "/logos/meta.svg" },
   { href: "/work/meta-offers", label: "Offer Creation Flow", logo: "/logos/meta.svg" },
   { href: "/work/robr0-ds", label: "Building robr0 DS", logo: "/logos/rr.svg" },

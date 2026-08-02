@@ -124,6 +124,7 @@ const logoCategories: LogoCategory[] = [
       { label: "stripe", file: "stripe.svg" },
       { label: "Instacart", file: "Instacart.svg" },
       { label: "GoDaddy", file: "GoDaddy.svg" },
+      { label: "gusto", file: "gusto.svg" },
     ],
   },
   {
@@ -141,7 +142,7 @@ const logoCategories: LogoCategory[] = [
       { label: "Cognizant", file: "Cognizant.svg" },
       { label: "Devbridge", file: "Devbridge.svg" },
       { label: "AdParlor", file: "AdParlor.svg" },
-      { label: "Augmenta", file: "logo/Augmenta.png" },
+      { label: "Augmenta", file: "Augmenta-2026.svg" },
       { label: "Fengate", file: "Fengate.svg" },
       { label: "slii", file: "slii.svg" },
       { label: "Deque", file: "Deque.svg" },
