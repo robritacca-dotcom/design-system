@@ -16,21 +16,39 @@ const companyLogo = (src: string, alt: string) => (
 
 const EXPERIENCE: TimelineCompany[] = [
   {
+    name: "Gusto",
+    logo: companyLogo("/logos/gusto.svg", "Gusto"),
+    roles: [
+      {
+        title: "Principal Product Designer | AI and Core Experiences",
+        start: "Aug 2026",
+        present: true,
+        description:
+          "Defining how AI works, behaves, and earns trust across Gusto's platform for payroll, benefits, and HR.",
+        bullets: [
+          "Shaping the interaction model, UX principles, and product direction for AI across the platform, starting with Gus, Gusto's conversational assistant",
+          "Expanding AI beyond conversation into workflows embedded in payroll, benefits, and HR",
+          "Partnering with senior product and engineering leaders to define the AI portfolio and ship customer-facing capabilities",
+        ],
+      },
+    ],
+  },
+  {
     name: "Intuit",
     logo: companyLogo("/logos/Intuit.svg", "Intuit"),
     roles: [
       {
         title: "Principal Product Designer, Consumer AI",
         start: "Jan 2026",
-        present: true,
+        end: "Jul 2026",
         bullets: [
           "Shipped TurboTax's embedded AI experiences inside ChatGPT and Claude in time for tax season, putting TurboTax in front of nearly 1 billion users on those platforms",
           <>
             Designed the bidirectional filing checklist that lets users prep their taxes inside an AI chat and finish the return in TurboTax. Full story in the{" "}
             <Link href="/work/embedded-ai-turbotax">case study</Link>
           </>,
-          "Taking agentic workflows into production across TurboTax and the broader consumer platform, including Credit Karma",
-          "Designing action-oriented financial workflows that turn AI into real outcomes, not just answers",
+          "Took agentic workflows into production across TurboTax and the broader consumer platform, including Credit Karma",
+          "Designed action-oriented financial workflows that turn AI into real outcomes, not just answers",
         ],
       },
       {
@@ -52,7 +70,7 @@ const EXPERIENCE: TimelineCompany[] = [
   },
   {
     name: "Augmenta",
-    logo: companyLogo("/logos/logo/Augmenta.png", "Augmenta"),
+    logo: companyLogo("/logos/Augmenta-2026.svg", "Augmenta"),
     roles: [
       {
         title: "Principal Product Designer",
