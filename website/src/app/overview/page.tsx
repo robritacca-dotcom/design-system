@@ -23,6 +23,14 @@ const pipelineLogo = (src: string, alt: string) => (
   <Image src={src} alt={alt} width={32} height={32} />
 );
 
+// Same geometry as public/vercel.svg, but filled with a content token so the
+// mark stays visible when the theme flips (the file hardcodes #fff).
+const vercelLogo = (
+  <svg width="32" height="32" viewBox="0 0 1155 1000" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Vercel">
+    <path d="m577.3 0 577.4 1000H0z" fill="var(--color-text-primary)" />
+  </svg>
+);
+
 const PIPELINE: TimelineCompany[] = [
   {
     name: "Figma",
@@ -140,7 +148,7 @@ const PIPELINE: TimelineCompany[] = [
   },
   {
     name: "Vercel",
-    logo: pipelineLogo("/vercel.svg", "Vercel"),
+    logo: vercelLogo,
     roles: [
       {
         title: "Auto-deployment",
