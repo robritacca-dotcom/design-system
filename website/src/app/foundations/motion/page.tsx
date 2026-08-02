@@ -74,8 +74,14 @@ const extendedDurations: DurationToken[] = [
     label: "Loop shimmer",
     token: "--motion-duration-loop-shimmer",
     value: "1800ms",
-    use: "Skeleton shimmer",
+    use: "Skeleton shimmer, agent label sweep",
     demo: "shimmer",
+  },
+  {
+    label: "Loop matrix",
+    token: "--motion-duration-loop-matrix",
+    value: "1400ms",
+    use: "Agent dot-matrix cycle (twelve slots)",
   },
 ];
 

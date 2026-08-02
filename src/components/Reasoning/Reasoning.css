@@ -1,0 +1,152 @@
+/* ============================================
+   REASONING COMPONENT
+   A model's thinking, disclosed behind a
+   one-line summary. Quiet by construction: the
+   trace is secondary text on a rail, never
+   competing with the answer beside it.
+   ============================================ */
+
+.ds-reasoning {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* ============================================
+   TRIGGER
+   ============================================ */
+
+.ds-reasoning__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-xs);
+  align-self: flex-start;
+  padding: var(--padding-xxs) var(--padding-xs);
+  margin-left: calc(var(--padding-xs) * -1);
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-tertiary);
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  cursor: pointer;
+  transition: color var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.ds-reasoning__trigger:hover {
+  color: var(--color-text-secondary);
+}
+
+.ds-reasoning__trigger:focus-visible {
+  outline: 2px solid var(--color-action-primary-bg);
+  outline-offset: -2px;
+}
+
+.ds-reasoning__chevron {
+  --icon-size: var(--icon-size-sm);
+
+  flex: none;
+  transition: transform var(--motion-duration-slow) var(--motion-ease-standard);
+}
+
+.ds-reasoning--open .ds-reasoning__chevron {
+  transform: rotate(180deg);
+}
+
+/* ============================================
+   SUMMARY
+   While the trace streams, a highlight sweeps
+   the summary left to right — the same treatment
+   AgentStatus uses, so "the model is working"
+   looks the same wherever it appears.
+   ============================================ */
+
+.ds-reasoning__summary {
+  white-space: nowrap;
+}
+
+.ds-reasoning--streaming .ds-reasoning__summary {
+  background-image: linear-gradient(
+    100deg,
+    var(--color-text-tertiary) 40%,
+    var(--color-text-primary) 50%,
+    var(--color-text-tertiary) 60%
+  );
+  background-size: 250% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: ds-reasoning-shimmer var(--motion-duration-loop-shimmer)
+    var(--motion-ease-linear) infinite;
+}
+
+@keyframes ds-reasoning-shimmer {
+  from {
+    background-position-x: 100%;
+  }
+
+  to {
+    background-position-x: 0%;
+  }
+}
+
+/* ============================================
+   PANEL
+   ============================================ */
+
+.ds-reasoning__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition:
+    grid-template-rows var(--motion-duration-slow) var(--motion-ease-standard),
+    visibility var(--motion-duration-slow) var(--motion-ease-standard);
+}
+
+.ds-reasoning--open .ds-reasoning__panel {
+  grid-template-rows: 1fr;
+  visibility: visible;
+}
+
+.ds-reasoning__content {
+  overflow: hidden;
+  min-height: 0;
+  transition: padding-block var(--motion-duration-slow) var(--motion-ease-standard);
+  padding-left: var(--padding-sm-md);
+  /* The rail sits flush with the summary's left edge — the trigger's own
+     padding is cancelled by its negative margin, so both start at zero */
+  border-left: var(--border-md) solid var(--color-divider);
+  color: var(--color-text-secondary);
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+}
+
+.ds-reasoning--open .ds-reasoning__content {
+  padding-block: var(--padding-xs);
+}
+
+.ds-reasoning__content > :first-child {
+  margin-top: 0;
+}
+
+.ds-reasoning__content > :last-child {
+  margin-bottom: 0;
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-reasoning--streaming .ds-reasoning__summary {
+    background-image: none;
+    color: var(--color-text-tertiary);
+    animation: none;
+  }
+}

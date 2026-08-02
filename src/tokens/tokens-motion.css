@@ -26,7 +26,8 @@
 
   --motion-duration-deliberate: 400ms;    /* Carousel slide */
   --motion-duration-loop-spin: 1000ms;    /* Spinner rotation */
-  --motion-duration-loop-shimmer: 1800ms; /* Skeleton shimmer */
+  --motion-duration-loop-shimmer: 1800ms; /* Skeleton shimmer, agent label sweep */
+  --motion-duration-loop-matrix: 1400ms;  /* Agent dot-matrix cycle (twelve slots) */
 
   /* ============================================
      EASINGS
@@ -55,6 +56,7 @@
     --motion-duration-deliberate: 0.01ms;
     --motion-duration-loop-spin: 0.01ms;
     --motion-duration-loop-shimmer: 0.01ms;
+    --motion-duration-loop-matrix: 0.01ms;
   }
 
   *,

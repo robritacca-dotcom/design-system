@@ -8,6 +8,7 @@ import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import Footer from "../../components/Footer/Footer";
 import TocCard from "../../components/TocCard/TocCard";
 import { Accordion } from "@robr0/design-system/components/Accordion/Accordion";
+import { AgentStatus } from "@robr0/design-system/components/AgentStatus/AgentStatus";
 import { Alert } from "@robr0/design-system/components/Alert/Alert";
 import { Avatar } from "@robr0/design-system/components/Avatar/Avatar";
 import { Badge } from "@robr0/design-system/components/Badge/Badge";
@@ -18,6 +19,8 @@ import { Chip } from "@robr0/design-system/components/Chip/Chip";
 import { CircularButton } from "@robr0/design-system/components/CircularButton/CircularButton";
 import { CodeBlock } from "@robr0/design-system/components/CodeBlock/CodeBlock";
 import { Quote } from "@robr0/design-system/components/Quote/Quote";
+import { Reasoning } from "@robr0/design-system/components/Reasoning/Reasoning";
+import { ToolCall } from "@robr0/design-system/components/ToolCall/ToolCall";
 import { Stat } from "@robr0/design-system/components/Stat/Stat";
 import { Swatch } from "@robr0/design-system/components/Swatch/Swatch";
 import { Timeline } from "@robr0/design-system/components/Timeline/Timeline";
@@ -105,6 +108,11 @@ export default function ComponentsPage() {
                   <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-icon-primary)" }}>expand_more</span>
                 </div>
               </div>
+            </TocCard>
+
+            {/* Agent status */}
+            <TocCard href="/components/agent-status" title="Agent status">
+              <AgentStatus state="working" label="Working" pattern="orbit" />
             </TocCard>
 
             {/* Alert */}
@@ -594,6 +602,16 @@ export default function ComponentsPage() {
               </div>
             </TocCard>
 
+            {/* Reasoning */}
+            <TocCard href="/components/reasoning" title="Reasoning">
+              <div style={{ width: "160px" }}>
+                <Reasoning duration={12}>
+                  Converted both regions to USD at the invoice-date rate before
+                  summing.
+                </Reasoning>
+              </div>
+            </TocCard>
+
             {/* Section title */}
             <TocCard href="/components/section-title" title="Section title">
               <div className={styles.sectionTitlePreview}>
@@ -742,6 +760,13 @@ export default function ComponentsPage() {
                     </span>
                   </div>
                 </div>
+              </div>
+            </TocCard>
+
+            {/* Tool call */}
+            <TocCard href="/components/tool-call" title="Tool call">
+              <div style={{ width: "200px" }}>
+                <ToolCall name="grep" duration="0.4s" />
               </div>
             </TocCard>
 

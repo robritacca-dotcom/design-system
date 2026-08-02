@@ -2,6 +2,7 @@
   "$comment": "SINGLE SOURCE OF TRUTH for the public component count. Every folder in src/components must appear in exactly one of these lists; scripts/validate-component-registry.mjs enforces this at build time. Import COMPONENT_COUNT from src/components/registry.ts wherever a count is displayed - never hardcode the number.",
   "categories": [
     "actions",
+    "ai",
     "charts",
     "data-display",
     "feedback",
@@ -17,6 +18,14 @@
       "slug": "accordion",
       "description": "Collapsible content sections for organising related information.",
       "category": "data-display",
+      "client": true
+    },
+    {
+      "name": "AgentStatus",
+      "label": "Agent status",
+      "slug": "agent-status",
+      "description": "A dot-matrix indicator and status line reporting what an agent is doing right now.",
+      "category": "ai",
       "client": true
     },
     {
@@ -372,6 +381,14 @@
       "client": true
     },
     {
+      "name": "Reasoning",
+      "label": "Reasoning",
+      "slug": "reasoning",
+      "description": "A model's thinking, disclosed behind a one-line summary and collapsed once it finishes.",
+      "category": "ai",
+      "client": true
+    },
+    {
       "name": "SectionTitle",
       "label": "Section title",
       "slug": "section-title",
@@ -489,6 +506,14 @@
       "slug": "toggle-switch",
       "description": "Binary on/off toggle control with sliding thumb and check indicator, used for settings like theme switching.",
       "category": "forms",
+      "client": true
+    },
+    {
+      "name": "ToolCall",
+      "label": "Tool call",
+      "slug": "tool-call",
+      "description": "The record of one tool invocation, with its arguments and result behind a disclosure.",
+      "category": "ai",
       "client": true
     },
     {

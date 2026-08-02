@@ -303,7 +303,7 @@ Motion is quiet and functional — it confirms an interaction, reveals structure
 | `--motion-duration-slow` | 300ms | Structural change: accordion, sidebar width, toast enter |
 | `--motion-duration-slower` | 600ms | Deliberate page-entrance reveals |
 
-**Durations — extended** (special-purpose; named so they stop being magic numbers, but reach for the core four first): `--motion-duration-deliberate` (400ms, carousel slide), `--motion-duration-loop-spin` (1000ms, spinner rotation), `--motion-duration-loop-shimmer` (1800ms, skeleton shimmer).
+**Durations — extended** (special-purpose; named so they stop being magic numbers, but reach for the core four first): `--motion-duration-deliberate` (400ms, carousel slide), `--motion-duration-loop-spin` (1000ms, spinner rotation), `--motion-duration-loop-shimmer` (1800ms, skeleton shimmer and the agent label sweep), `--motion-duration-loop-matrix` (1400ms, the twelve-slot cycle every AgentStatus dot pattern shares).
 
 **Easings:**
 
@@ -608,6 +608,30 @@ Recharts wrapper exposing: `AreaChart`, `BarChart`, `LineChart`, `PieChart`, `Ra
 - `--color-chart-contribution-1` → `-4` — increasing activity, green primitives (light: green-02 → 04 → 07 → 09; dark: green-10 → 09 → 08 → 07, so the brightest cell is mint #06D6A0)
 
 Month labels, caption, and Less→More legend use `--font-paragraph-sm-*` in `--color-text-tertiary`/`--color-text-secondary`. The grid scrolls horizontally inside its own container on narrow screens. This ramp is for activity intensity only — ordered multi-series chart colors remain an open gap (see below).
+
+### AgentStatus
+
+**`ds-agent-status`** — What an agent is doing right now: a dot-matrix indicator beside a line of status text. The matrix is a 4×3 grid of 12 `--radius-full` dots sized off the icon scale (`--icon-size-sm` wide at `sm`, `--icon-size-md` at `md`) with `--gap-xxs` between them, so the dots derive their size from the grid rather than carrying pixel values of their own.
+
+Fifteen named patterns — `braille`, `orbit`, `breathe`, `snake`, `fill-sweep`, `pulse`, `columns`, `checkerboard`, `scan`, `rain`, `cascade`, `sparkle`, `wave-rows`, `helix`, `diagonal-swipe` — are choreography over that one grid. Every pattern runs on the same twelve-slot cycle (`--motion-duration-loop-matrix`, 1400ms): each dot is told which slot it lights in via `--ds-agent-step`, and dots a pattern never lights opt out of the animation. One grid and one cycle length means changing pattern never changes the indicator's footprint or its rhythm.
+
+Six states: `idle`, `thinking`, `working`, `waiting`, `done`, `error`. The three working states are deliberately monochrome (`--color-text-secondary`, `--color-text-tertiary` when idle) — colour is reserved for the states where it carries meaning, taking `--color-status-warning-text`, `--color-status-positive-text` and `--color-status-error-text` respectively. The terminal states fill the matrix solid so the shape itself reads as finished. While active, a highlight sweeps the label left to right (`--motion-duration-loop-shimmer` over a `background-clip: text` gradient between `--color-text-primary` and the label colour); `shimmer` overrides the default.
+
+`variant="bar"` wraps the row in a full-width `--color-bg-container-secondary` container at `--radius-md` for the top of a panel. The root is a `role="status"` live region, and the matrix is `aria-hidden`, so the state change is announced once as text rather than as twelve dots. Under `prefers-reduced-motion` the matrix parks at a legible static opacity and the shimmer resolves to flat text — the global guard would otherwise collapse every dot to its dark final frame.
+
+### Reasoning
+
+**`ds-reasoning`** — A model's thinking, disclosed behind a one-line summary. The trigger is a borderless `--font-paragraph-sm-*` button in `--color-text-tertiary` with an `expand_more` chevron *after* the summary — trailing, like ToolCall's, so the summary line starts at the same left edge as everything around it — rotating 180° when open. The panel collapses with the `grid-template-rows: 0fr → 1fr` technique over `--motion-duration-slow`, and toggles `visibility` alongside it so collapsed content leaves the accessibility tree. The trace sits on a `--border-md` `--color-divider` rail in `--color-text-secondary`, the rail flush with the summary's left edge, quiet enough never to compete with the answer beside it.
+
+`streaming` opens the panel and shimmers the summary with the same treatment AgentStatus uses, so "the model is working" looks the same wherever it appears; when the stream ends the panel collapses to `Thought for {duration}s`. That auto-collapse yields to the reader — once someone has toggled the panel themselves, the stream ending no longer moves it. Only the summary is a `role="status"` live region: a trace announced token by token floods a screen reader, so the body stays ordinary expandable content and the announcement covers the boundaries.
+
+### ToolCall
+
+**`ds-tool-call`** — The record of one tool invocation. A skimmable header row — status indicator, monospace tool name (the same sanctioned monospace context CodeBlock uses), summary, status word, `tabular-nums` duration, chevron — over a collapsible body holding the arguments and result. Container is `--color-bg-container-primary` at `--radius-md` with a `--border-xs` `--color-bg-container-border`; the panel uses the same `0fr → 1fr` collapse and `visibility` handling as Reasoning.
+
+Four statuses: `pending`, `running`, `success`, `error`, mapping to the warning, info, positive and error `--color-status-*-text` tokens. The container stays neutral so a long run reads as a list rather than a wall of tinted cards; only the two states a person has to act on — `pending` and `error` — also take a coloured border. `running` renders a `Spinner` at `variant="inherit"`, the rest a Material Symbol (`pause_circle`, `check_circle`, `error`) at `--icon-size-sm`.
+
+The `actions` slot — allow, deny, always allow — renders in a `--color-bg-container-secondary` footer *outside* the collapsible panel, so answering an approval request never requires expanding the call first. With no children the header renders as a plain `div` rather than a button, so a row with nothing to disclose does not look pressable.
 
 ---
 

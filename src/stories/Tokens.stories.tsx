@@ -836,6 +836,7 @@ export const Motion: Story = {
         <MotionTokenRow name="Deliberate" value="--motion-duration-deliberate" />
         <MotionTokenRow name="Loop spin" value="--motion-duration-loop-spin" />
         <MotionTokenRow name="Loop shimmer" value="--motion-duration-loop-shimmer" />
+        <MotionTokenRow name="Loop matrix" value="--motion-duration-loop-matrix" />
       </TokenSection>
 
       <TokenSection title="Easings">

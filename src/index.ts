@@ -4,6 +4,8 @@
  * (validate-registry chain). recharts-backed modules live in charts.ts, not here — recharts is an optional peer.
  */
 export * from './components/Accordion/Accordion';
+export * from './components/AgentStatus/AgentStatus';
+export * from './components/AgentStatus/AgentStatusPatterns';
 export * from './components/Alert/Alert';
 export * from './components/AlertDialog/AlertDialog';
 export * from './components/AppLayout/AppLayout';
@@ -48,6 +50,7 @@ export * from './components/Popover/Popover';
 export * from './components/ProgressBar/ProgressBar';
 export * from './components/Quote/Quote';
 export * from './components/RadioButton/RadioButton';
+export * from './components/Reasoning/Reasoning';
 export * from './components/SectionTitle/SectionTitle';
 export * from './components/SegmentedControl/SegmentedControl';
 export * from './components/SelectionCard/SelectionCard';
@@ -63,6 +66,7 @@ export * from './components/Timeline/Timeline';
 export * from './components/Toast/Toast';
 export * from './components/ToggleGroup/ToggleGroup';
 export * from './components/ToggleSwitch/ToggleSwitch';
+export * from './components/ToolCall/ToolCall';
 export * from './components/Tooltip/Tooltip';
 
 export {

@@ -189,6 +189,7 @@
       "--motion-duration-base",
       "--motion-duration-deliberate",
       "--motion-duration-fast",
+      "--motion-duration-loop-matrix",
       "--motion-duration-loop-shimmer",
       "--motion-duration-loop-spin",
       "--motion-duration-slow",
