@@ -17,6 +17,7 @@ export interface LinkListItem {
 }
 
 export interface LinkListProps {
+  /** Links to render, in display order — each opens in a new tab */
   items: LinkListItem[];
   /** Additional CSS classes */
   className?: string;

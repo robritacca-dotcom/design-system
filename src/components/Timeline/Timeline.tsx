@@ -41,6 +41,7 @@ export interface TimelineCompany {
 
 /** Default variant — a flat sequence of steps/events with dot, badge, or icon markers. */
 export interface TimelineDefaultProps {
+  /** Selects the flat step/event layout — the default when omitted */
   variant?: 'default';
   /** Ordered list of steps/events */
   items: TimelineItem[];
@@ -54,6 +55,7 @@ export interface TimelineDefaultProps {
 
 /** Company variant — grouped roles under a logo, for résumé/pipeline histories. */
 export interface TimelineCompanyProps {
+  /** Selects the grouped layout: roles nested under a company logo */
   variant: 'company';
   /** Ordered list of company/tool entries */
   items: TimelineCompany[];

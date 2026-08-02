@@ -195,7 +195,7 @@ export default function AboutDsPage() {
           {/* Intro */}
           <div className={`${styles.introSection} animate-in animate-delay-1`}>
             <p className={styles.subDisplay}>
-              A personal design system, built to make this site
+              An AI-ready design system, built to make this site
             </p>
             <p className={styles.introBody}>
               robr0 DS is the system I built, by myself, to make every page you see here. The foundation was designed in{" "}

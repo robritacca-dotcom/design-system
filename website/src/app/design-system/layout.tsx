@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Design system",
   description:
-    "The robr0 DS landing: live components rendered from the package, the token layer behind them, and links to every part of the system.",
+    "The robr0 DS landing: live components rendered from the npm package, the specs Claude Code builds them from, and links to every part of the system.",
   alternates: { canonical: "/design-system" },
 };
 

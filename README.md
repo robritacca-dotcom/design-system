@@ -1,11 +1,11 @@
-# robr0: portfolio + design system
+# robr0: portfolio + AI-ready design system
 
 [![CI](https://github.com/robritacca-dotcom/design-system/actions/workflows/ci.yml/badge.svg)](https://github.com/robritacca-dotcom/design-system/actions/workflows/ci.yml)
 <!-- npm-badge:start -->
 [![npm](https://img.shields.io/npm/v/@robr0%2Fdesign-system?logo=npm&color=CB3837)](https://www.npmjs.com/package/@robr0/design-system)
 <!-- npm-badge:end -->
 
-A personal portfolio site built on a custom React design system, designed and engineered from scratch. The design system is not a side project: it is the backbone every portfolio page is built on, so the work is presented consistently and to the same craft standards throughout.
+A personal portfolio site built on an AI-ready React design system, designed and engineered from scratch. Claude Code builds the components from the written specs in this repo (`CLAUDE.md` for the rules, `design.md` for the design language, `content-design.md` for how every word reads), and generated registries keep this README and the docs site from drifting. The design system is the backbone every portfolio page is built on, so the work is presented consistently and to the same craft standards throughout.
 
 **[→ Live site](https://robertritacca.com/)** · **[→ Storybook](https://design-system-iota-one.vercel.app/?path=/docs/robr0-ds--docs)**
 
@@ -18,7 +18,7 @@ The **live site** is the portfolio built on the design system. **Storybook** is 
 | Part | Description |
 |---|---|
 | **Portfolio website** (`/website`) | Next.js app with case studies, work history, writing, and about pages, all built exclusively with the design system components below. **[Live site →](https://robertritacca.com/)** |
-| **Design system** (`/src`) | <!-- component-count -->61<!-- /component-count --> React components, a three-tier token architecture, dark mode, and a full documentation site. Built to production standards. **[Storybook →](https://design-system-iota-one.vercel.app/?path=/docs/robr0-ds--docs)** |
+| **Design system** (`/src`) | <!-- component-count -->64<!-- /component-count --> React components, a three-tier token architecture, dark mode, and a full documentation site. Built to production standards. **[Storybook →](https://design-system-iota-one.vercel.app/?path=/docs/robr0-ds--docs)** |
 
 ---
 
@@ -27,7 +27,7 @@ The **live site** is the portfolio built on the design system. **Storybook** is 
 ### Components
 
 <!-- component-list:start -->
-Accordion · Alert · Alert dialog · App layout · App sidebar · Avatar · Badge · Breadcrumb · Button · Button group · Card · Carousel · Chart · Checkbox · Chip · Circular button · Code block · Colour picker · Combobox · Command palette · Contact card · Context menu · Contribution graph · Date input · Date picker · Dialog · Divider · Drawer · Dropdown · Dropdown menu · Empty state · Entity card · Field · Figure · File input · Input · Instructions · Kbd · Link list · Navigation · Pagination · Popover · Progress bar · Quote · Radio button · Section title · Segmented control · Selection card · Skeleton · Slider · Spinner · Stat · Swatch · Table · Tabs · Textarea · Timeline · Toast · Toggle group · Toggle switch · Tooltip
+Accordion · Agent status · Alert · Alert dialog · App layout · App sidebar · Avatar · Badge · Breadcrumb · Button · Button group · Card · Carousel · Chart · Checkbox · Chip · Circular button · Code block · Colour picker · Combobox · Command palette · Contact card · Context menu · Contribution graph · Date input · Date picker · Dialog · Divider · Drawer · Dropdown · Dropdown menu · Empty state · Entity card · Field · Figure · File input · Input · Instructions · Kbd · Link list · Navigation · Pagination · Popover · Progress bar · Quote · Radio button · Reasoning · Section title · Segmented control · Selection card · Skeleton · Slider · Spinner · Stat · Swatch · Table · Tabs · Textarea · Timeline · Toast · Toggle group · Toggle switch · Tool call · Tooltip
 <!-- component-list:end -->
 
 ### Using the package

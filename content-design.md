@@ -56,6 +56,7 @@ Each surface has its own shape. The full standard for a surface lives in one pla
 | Case-study registry entries (`website/src/data/case-studies.json`) | None | `title` a name, `dek` one summary line | Shipped copy on /work and the home page; the dek makes one concrete claim | This file + case-studies validator |
 | Component descriptions (`src/components/registry.json`) | None | One verbless fragment, ≤160 chars, ends in a full stop | One authoritative home: sidebar, metadata, and README all derive from it | This file + registry validator |
 | README + `src/stories/Configure.mdx` | "You" for instructions | Install and usage copy | Production copy: the README ships in the npm tarball | `CLAUDE.md` (Registries section) |
+| `USAGE.md` | "You" for instructions | Rule per heading, then the reason it exists | Production copy: ships in the npm tarball and serves at `/USAGE.md`. States the design rules for building *with* the package, never how to maintain the repo | This file |
 | npm package description (`PACKAGE_DESCRIPTION` in `scripts/package-manifest.mjs`, mirrored in root `package.json`) | None | One fragment | Renders on the npmjs.com package page: production copy, same bar as the README | This file |
 | `design.md` spec sections | None | Bold BEM class opener, then prose and tables | Specs state rules, not sales points | `design.md` |
 | Skill `displayDescription` frontmatter | None | 1–3 factual sentences | Renders on the public /skills page; describe what it does, not how clever it is | This file |

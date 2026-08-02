@@ -262,7 +262,7 @@ export default async function HomePage() {
                 </span>
               </span>
               <span className={styles.featuredTitle}>
-                robr0 DS, the system this website is built on
+                robr0 DS, the AI-ready design system this website is built on
               </span>
             </Link>
 

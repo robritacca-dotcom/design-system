@@ -30,7 +30,7 @@ export function GET() {
   const body = [
     "# Robert Ritacca",
     "",
-    "> Portfolio of Robert Ritacca, Principal Product Designer: AI product case studies (Intuit, Meta, Augmenta) and robr0 DS, a fully documented one-person design system with an open React component library.",
+    "> Portfolio of Robert Ritacca, Principal Product Designer: AI product case studies (Intuit, Meta, Augmenta) and robr0 DS, an AI-ready design system built by Claude Code from published specs (CLAUDE.md, design.md, content-design.md) and shipped to npm as an open React component library.",
     "",
     section(
       "Work",
@@ -75,9 +75,11 @@ export function GET() {
     "",
     "Raw markdown sources and machine-readable indexes.",
     "",
-    `- [CLAUDE.md](${SITE_URL}/CLAUDE.md): the repo's agent instructions (architecture, registries, and workflows)`,
-    `- [GitHub source](https://github.com/robritacca-dotcom/design-system): exact TypeScript prop types live in src/components/<Name>/<Name>.tsx`,
-    `- [npm package](https://www.npmjs.com/package/@robr0/design-system): \`npm install @robr0/design-system\` ships complete .d.ts type declarations for every component`,
+    `- [USAGE.md](${SITE_URL}/USAGE.md): the rules for building *with* the package (tokens, colour, shape, status, dark mode, the shared prop contract). Start here to write code that matches the system`,
+    `- [Storybook](https://design-system-iota-one.vercel.app): the rendered API reference. Every component has a props table with types, defaults, and deprecations`,
+    `- [npm package](https://www.npmjs.com/package/@robr0/design-system): \`npm install @robr0/design-system\` ships complete .d.ts type declarations, and USAGE.md, inside the tarball`,
+    `- [CLAUDE.md](${SITE_URL}/CLAUDE.md): how this repository is *maintained* (architecture, registries, workflows). Written for contributors to the system itself, not for people using the package: for that, read USAGE.md above`,
+    `- [GitHub source](https://github.com/robritacca-dotcom/design-system): the full source, if you want to read the implementation`,
     `- [design.md](${SITE_URL}/design.md): the full design specification (tokens, colours, typography, component rules)`,
     `- [content-design.md](${SITE_URL}/content-design.md): the writing rules (voice, register by surface, words and patterns the project never ships)`,
     `- [Sitemap](${SITE_URL}/sitemap.xml)`,

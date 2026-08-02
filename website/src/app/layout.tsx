@@ -19,7 +19,7 @@ const nunitoSans = Nunito_Sans({
 });
 
 const SITE_DESCRIPTION =
-  "Principal Product Designer crafting AI-native products, systems, and experiences. Selected case studies, a personal design system (robr0 DS), and writing on design and AI.";
+  "Principal Product Designer crafting AI-native products, systems, and experiences. Selected case studies, an AI-ready design system (robr0 DS), and writing on design and AI.";
 
 export const metadata: Metadata = {
   title: {

@@ -234,7 +234,8 @@ export default function DesignSystemPage() {
         <section className={`${styles.hero} animate-in`} aria-label="About the design system">
           <h1 className={styles.pageTitle}>robr0 DS</h1>
           <p className={styles.subDisplay}>
-            A React component library and the design language behind it.
+            An AI-ready design system: Claude Code builds the components from
+            written specs, and every token chains to a primitive you can override.
           </p>
           <ButtonGroup
             ariaLabel="Design system sections"

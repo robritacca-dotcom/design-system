@@ -19,7 +19,7 @@
 export const PACKAGE_NAME = '@robr0/design-system';
 export const PACKAGE_VERSION = '0.3.0';
 export const PACKAGE_DESCRIPTION =
-  'A token-driven React design system: accessible components, light/dark theming, and CSS-variable customization.';
+  'An AI-ready React design system: accessible components on composable tokens, light/dark theming, and CSS-variable overrides.';
 export const REPOSITORY_URL = 'https://github.com/robritacca-dotcom/design-system';
 
 /**
@@ -79,6 +79,10 @@ export function distManifest(rootPkg) {
       'css-variables',
       'dark-mode',
       'typescript',
+      'ai-ready',
+      'ai-agents',
+      'claude-code',
+      'composable',
     ],
     type: 'module',
     sideEffects: ['**/*.css'],
