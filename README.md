@@ -53,6 +53,8 @@ Deep imports work too (`@robr0/design-system/components/Button/Button`). Chart c
 import { BarChart, LineChart } from '@robr0/design-system/charts';
 ```
 
+**The design rules ship with the package.** `USAGE.md` sits next to this file in the tarball (and at [robertritacca.com/blueprints/usage](https://robertritacca.com/blueprints/usage)): semantic tokens, the action colour, shape by element type, the status set, dark mode, and the prop contract every component shares. Hand it to a teammate or an AI assistant and they can build interfaces that match the system without reading the source.
+
 **Theming and customisation** happen through CSS variables; there is no configuration API. Components are provider-free, with one exception: wrap your tree in `ToastProvider` if (and only if) you use the toast queue via `useToast`.
 
 - **Dark mode**: set `data-theme="dark"` on the root element (light is the default).

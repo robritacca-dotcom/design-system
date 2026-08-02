@@ -16,25 +16,39 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
-const FILES = ['CLAUDE.md', 'design.md', 'content-design.md', 'USAGE.md'];
+/**
+ * The specs published to /blueprints. Exported because
+ * scripts/validate-website-surfaces.mjs checks each one has a page to read
+ * it on, so a spec cannot be synced as a raw download and then be
+ * unreachable from the site.
+ */
+export const FILES = ['CLAUDE.md', 'design.md', 'content-design.md', 'USAGE.md'];
 
-let synced = 0;
-for (const name of FILES) {
-  const src = path.join(root, name);
-  const dest = path.join(root, 'website', 'public', name);
-  const content = fs.readFileSync(src, 'utf-8');
-  const existing = fs.existsSync(dest) ? fs.readFileSync(dest, 'utf-8') : null;
-  if (existing !== content) {
-    fs.writeFileSync(dest, content);
-    synced++;
-    console.log(`✓ Synced ${name} → website/public/${name}`);
+/** The /blueprints route segment for a spec file. */
+export const blueprintSlug = (name) => name.replace(/\.md$/, '').toLowerCase();
+
+// Side effects only when run directly, so validators can import FILES and
+// blueprintSlug without triggering a sync.
+const isMain = import.meta.url === pathToFileURL(process.argv[1]).href;
+if (isMain) {
+  let synced = 0;
+  for (const name of FILES) {
+    const src = path.join(root, name);
+    const dest = path.join(root, 'website', 'public', name);
+    const content = fs.readFileSync(src, 'utf-8');
+    const existing = fs.existsSync(dest) ? fs.readFileSync(dest, 'utf-8') : null;
+    if (existing !== content) {
+      fs.writeFileSync(dest, content);
+      synced++;
+      console.log(`✓ Synced ${name} → website/public/${name}`);
+    }
   }
-}
 
-if (synced === 0) {
-  console.log(`✓ Blueprints in sync — website/public copies match the root ${FILES.join(', ')}.`);
+  if (synced === 0) {
+    console.log(`✓ Blueprints in sync — website/public copies match the root ${FILES.join(', ')}.`);
+  }
 }

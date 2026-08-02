@@ -209,7 +209,8 @@ export default function AboutDsPage() {
               I&apos;m putting all of it on display because I think the system is the work. The pipeline below shows how the pieces fit. The rail beside it lists the key numbers and links. And if you want to lift any of it for your own project, everything is open:{" "}
               <Link href="/blueprints/claude" className={styles.inlineLink}>CLAUDE.md</Link>,{" "}
               <Link href="/blueprints/design" className={styles.inlineLink}>design.md</Link>,{" "}
-              <Link href="/blueprints/content-design" className={styles.inlineLink}>content-design.md</Link>, the{" "}
+              <Link href="/blueprints/content-design" className={styles.inlineLink}>content-design.md</Link>,{" "}
+              <Link href="/blueprints/usage" className={styles.inlineLink}>USAGE.md</Link>, the{" "}
               <Link href="/skills" className={styles.inlineLink}>skills</Link>, and the{" "}
               <Link href="/loops" className={styles.inlineLink}>loops</Link> are ready to drop into your own codebase or AI tooling.
             </p>

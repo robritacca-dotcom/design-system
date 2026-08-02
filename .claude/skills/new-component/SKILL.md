@@ -77,7 +77,23 @@ Use this skill any time you are asked to add or create a new component to the de
 
 7. **Discard props that would be invalid on the rendered node** rather than spreading them — e.g. `name` on a `<div role="radio">`. Destructure with a `_` prefix (`name: _name`) and document why in the JSDoc; the ESLint config allows `^_`.
 
-8. **Deprecate, never remove.** Keep the old prop working and mark it `@deprecated` with the replacement named. `className` stays wherever it already is (usually the wrapper) — moving it is a silent visual break.
+8. **Deprecate, never remove.** Keep the old prop working and mark it `@deprecated` with the replacement named — and put a description sentence **before** the tag, or the prop renders as a blank cell (see 9). `className` stays wherever it already is (usually the wrapper) — moving it is a silent visual break.
+
+9. **Give every own prop a JSDoc description — this is build-enforced.** That JSDoc is the single source for Storybook's props table and for the `.d.ts` consumers get; `scripts/validate-prop-docs.mjs` fails the build on a prop without one. Two traps it catches:
+
+   ```ts
+   /** Visual treatment */
+   variant?: 'primary' | 'secondary';
+
+   /**
+    * Legacy alias for `variant`.      ← without this line the row renders blank:
+    *                                     the parser moves the tag and everything
+    * @deprecated Use `variant` instead.  after it into a separate `tags` field
+    */
+   priority?: 'primary' | 'secondary';
+   ```
+
+   And **never write a prop `description` into the story's `argTypes`.** Those entries override docgen, so a description there shadows the JSDoc and drifts from it. Stories set `control` and `options` only; the source owns the words.
 
 **If the component is a labelled form control, compose it inside `Field`** (`src/components/Field/Field.tsx`) rather than re-implementing the scaffolding. Field owns the label and its `htmlFor`, the required marker, the helper/error text, the generated ids, and the `aria-describedby` / `aria-invalid` wiring — six components each rolled their own before it existed, and two of them silently diverged (Dropdown announced neither its helper text nor its error state). Pass `className` (your own root classes), `label`, `helperText`, `error`, `required`, `disabled`, `size` and `id`; render the control as children. Field owns no layout, so your root class keeps its own flex/gap.
 

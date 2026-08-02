@@ -34,11 +34,11 @@ The `/project-journal` page renders this data as the build-progression timeline;
 - `<!-- component-count -->` and `<!-- component-list:start/end -->` — from `src/components/registry.json`
 - `<!-- npm-badge:start/end -->` — the npm version badge, built from `PACKAGE_NAME` in `scripts/package-manifest.mjs`, so a scope change can never leave the badge pointing at a package that doesn't exist
 
-The same script fails the build if its Tech section names a different major version of React, Next.js, Storybook, or Vite than package.json, and if **either** install surface stops mentioning the package name — `README.md` or `src/stories/Configure.mdx` (the Storybook landing page). Both tell a stranger how to install the package, and they deploy separately, so a scope rename that reaches one but not the other leaves a live install snippet pointing at a package that does not exist. **The README also ships inside the npm tarball**, so anything inaccurate there reaches every consumer — treat both files' install/usage prose as production copy.
+The same script fails the build if its Tech section names a different major version of React, Next.js, Storybook, or Vite than package.json, and if **either** install surface stops mentioning the package name — `README.md` or `src/stories/Configure.mdx` (the Storybook landing page). Both tell a stranger how to install the package, and they deploy separately, so a scope rename that reaches one but not the other leaves a live install snippet pointing at a package that does not exist. **The README ships inside the npm tarball**, and so does `USAGE.md` (see below), so anything inaccurate in either reaches every consumer — treat all of this install/usage prose as production copy.
 
 When a new countable collection appears on the site (tokens, loops, case studies…): create a registry file next to the collection, export the count from a small accessor module, add a validator script chained into `validate-registry`, and pull every displayed number from the export. When adding a skill: write `.claude/skills/<name>/SKILL.md` and register the name in `.claude/skills/registry.json` (`displayed` if it appears on `/skills`, `unlisted` if internal) — that's all. The `/skills` page is fully data-driven: it maps over `website/src/data/skills-content.generated.ts`, which `scripts/generate-skills-content.mjs` builds from the SKILL.md files in registry order, so **never hand-add a card to `website/src/app/skills/page.tsx`**. `scripts/validate-skills-registry.mjs` fails the build if a skill file and the registry drift.
 
-**The website's /blueprints pages are a generated surface too.** `scripts/sync-blueprints.mjs` (in the `validate-registry` chain) copies the root `CLAUDE.md`, `design.md`, and `content-design.md` into `website/public/` on every build — never hand-edit those copies; edit the root files.
+**The website's /blueprints pages are a generated surface too.** `scripts/sync-blueprints.mjs` (in the `validate-registry` chain) copies the root markdown specs into `website/public/` on every build — never hand-edit those copies; edit the root files. Its `FILES` array is the authoritative list, and `scripts/validate-website-surfaces.mjs` imports it to check every synced file has a `/blueprints/<name>` page, so a spec cannot be published as a raw download with no page to read it on.
 
 **Self-descriptions stay in sync.** The repo describes itself in prose in several places — `README.md`, `design.md`, this file, and the website's foundations/overview pages. Whenever a change makes a statement in any of them false (a new component category, a dropped dependency, a renamed part, a changed principle), update that prose in the same change — don't leave it for a future audit. If the drifting fact is *countable or mechanically checkable* (a count, a list, a version number), don't just fix the prose: route it through a registry + generator/validator in the `validate-registry` chain so it can never drift again (the README component section and Tech versions are the reference example).
 
@@ -107,6 +107,7 @@ The old `merge-and-push` skill is retired because its name didn't say which of t
 /
 ├── design.md                  # Design spec — source of truth for tokens, colors, typography
 ├── content-design.md          # Content style guide — source of truth for voice, register, and prose rules
+├── USAGE.md                   # Consumer rules for building WITH the package — ships in the npm tarball
 ├── ROADMAP.md                 # The single planning surface (hand-maintained intent, not facts)
 ├── scripts/                   # Generators + validators (the validate-registry chain), release tooling
 ├── src/
@@ -200,6 +201,13 @@ CSS class naming: `ds-{component}` base class, `ds-{component}--{modifier}` for 
 - `variant` not `priority`/`kind`; `disabled` as a real boolean. **Figma variant properties are not code props** — `hover`/`active` are CSS pseudo-classes, not state a consumer sets.
 - Deprecate, never remove. Document intentional native-name collisions (`size`, `title`) in the prop's JSDoc.
 
+**Prop documentation is build-enforced.** Every own prop needs a JSDoc description: it is the single source for Storybook's props tables and for the `.d.ts` that ships to consumers, and `scripts/validate-prop-docs.mjs` fails the build on a prop without one. Two rules follow from how that pipeline works:
+
+- **Never put a prop description in a story's `argTypes`.** `argTypes` entries override docgen, so a description there shadows the JSDoc and silently drifts from it. Stories set `control` and `options`; the source owns the words.
+- **On a deprecated prop, put a sentence *before* the `@deprecated` tag.** The docgen parser moves the tag and everything after it into a separate `tags` field, so a prop documented *only* with the tag has an empty description and renders as a blank cell. `/** Legacy alias for \`variant\`. @deprecated Use \`variant\` instead. */` keeps both.
+
+The parser settings in `.storybook/main.ts` and in `validate-prop-docs.mjs` are deliberately identical, so the validator sees exactly what the rendered table sees. Two of them are load-bearing and easy to break: `tsconfigPath` must point at `tsconfig.app.json`, because the root `tsconfig.json` is solution-style (`"files": []` plus references) and yields a program containing no files; and the parser must be `react-docgen-typescript`, because plain `react-docgen` finds no component at all in one that returns `createPortal(...)` with no direct JSX (AlertDialog, CommandPalette).
+
 ---
 
 ## How to Add a New Component
@@ -270,6 +278,7 @@ Tokens also have multiple homes — a token that exists only in CSS is incomplet
 |---|---|
 | [`design.md`](design.md) | Full design spec — colors, typography, spacing, all component rules |
 | [`content-design.md`](content-design.md) | Content style guide — voice, register by surface, words and patterns to avoid |
+| [`USAGE.md`](USAGE.md) | The rules for building *with* the package — ships in the npm tarball and serves at `/blueprints/usage`. This is the consumer counterpart to this file; never send a package user here |
 | [`src/tokens/tokens-primitives.css`](src/tokens/tokens-primitives.css) | Raw hex/px values |
 | [`src/tokens/tokens-light.css`](src/tokens/tokens-light.css) | Semantic token definitions (light) |
 | [`src/tokens/tokens-dark.css`](src/tokens/tokens-dark.css) | Semantic token overrides (dark) |
@@ -279,7 +288,7 @@ Tokens also have multiple homes — a token that exists only in CSS is incomplet
 | [`src/components/Button/Button.stories.ts`](src/components/Button/Button.stories.ts) | Reference for story structure (`.ts` because it holds no JSX — `.tsx` is the library-wide convention) |
 | [`website/src/app/components/button/page.tsx`](website/src/app/components/button/page.tsx) | Reference for a website showcase page |
 | [`website/src/config/navigation.ts`](website/src/config/navigation.ts) | Nav links — update when adding pages |
-| [`.storybook/main.ts`](.storybook/main.ts) | Storybook config (addons, stories glob) |
+| [`.storybook/main.ts`](.storybook/main.ts) | Storybook config: addons, stories glob, and the docgen settings that generate every props table (see **Prop documentation** below) |
 
 ---
 

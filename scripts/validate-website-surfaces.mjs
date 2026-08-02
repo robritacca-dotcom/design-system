@@ -20,6 +20,7 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { FILES as BLUEPRINT_FILES, blueprintSlug } from './sync-blueprints.mjs';
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -77,10 +78,20 @@ const fail = (msg) => {
   console.error(`✗ ${msg}`);
 };
 
+// Every spec synced to website/public needs a page to read it on, or it is
+// published as a raw download nothing links to.
+const missingBlueprintPage = BLUEPRINT_FILES.filter(
+  (name) =>
+    !existsSync(
+      join(repoRoot, 'website', 'src', 'app', 'blueprints', blueprintSlug(name), 'page.tsx')
+    )
+).map((name) => `${name} → website/src/app/blueprints/${blueprintSlug(name)}/page.tsx`);
+
 for (const [what, list] of [
   ['Registry components with no website showcase page', missingPage],
   ['Registry components missing an index-grid TocCard', missingTocCard],
   ['Registry components with no design.md spec section', missingSpec],
+  ['Blueprint specs synced to website/public with no page to read them on', missingBlueprintPage],
 ]) {
   if (list.length > 0) {
     fail(`${what}:\n` + list.map((l) => `    - ${l}`).join('\n'));
@@ -93,6 +104,7 @@ if (failed) {
 
 console.log(
   `✓ Website surfaces in sync — ${registry.components.length} components each have ` +
-    `a page, TocCard, and design.md spec (the nav entry and its ordering are ` +
-    `derived from the registry, so they cannot drift).`
+    `a page, TocCard, and design.md spec, and ${BLUEPRINT_FILES.length} blueprint specs ` +
+    `each have a page (the nav entry and its ordering are derived from the registry, ` +
+    `so they cannot drift).`
 );
