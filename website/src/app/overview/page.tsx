@@ -61,6 +61,7 @@ const PIPELINE: TimelineCompany[] = [
           "Maintains the layered CSS token architecture (primitives → semantics → components)",
           "Generates React components with TypeScript and token-based CSS from the spec",
           "Builds Storybook documentation automatically for every component",
+          "Maintains the system as well as building it: skills audit token usage, prose, and accessibility on demand, and recurring loops keep the project journal current",
         ],
       },
     ],
@@ -80,6 +81,7 @@ const PIPELINE: TimelineCompany[] = [
         ),
         bullets: [
           "Component playground with live controls for all props and states",
+          "The props tables are generated from the component source itself: each prop is described once, next to the code, and a build check fails if any description is missing, so the docs cannot drift from what ships",
           "Token docs (colors, spacing, typography), icon gallery, logo library",
           "Auto-deploys on every code push",
         ],
@@ -119,7 +121,7 @@ const PIPELINE: TimelineCompany[] = [
         bullets: [
           "Builds the distributable package: per-module JS + type declarations, token CSS, and the icon font",
           "Before anything reaches the registry, the tarball is installed into a scratch Vite app and built: a real consumer smoke test",
-          "Publishes with npm provenance; dry-run by default",
+          "Publishes through a trust link between GitHub and npm, so there is no stored password or token to leak; every release carries provenance, a verifiable record of which code produced it. Dry-run by default",
         ],
       },
       {
@@ -130,7 +132,7 @@ const PIPELINE: TimelineCompany[] = [
           "Lints the codebase and builds the library, Storybook, and the website on every change",
           "Renders every Storybook story in headless Chrome and runs an axe accessibility audit on each: a render error or a WCAG AA violation fails the build (the contrast criteria are deliberately deferred while the action colour is redesigned)",
           "Chromatic visual regression, run on demand: every story snapshotted in light and dark against an accepted baseline, so a token change that shifts pixels anywhere in the system is caught before it ships",
-          "Drift guard fails the build if any registry-backed content — counts, skills, blueprints, case studies, journal entries — goes stale",
+          "Drift guard fails the build if any registry-backed content (counts, skills, blueprints, case studies, journal entries) goes stale; the numbers in the rail beside this pipeline come straight from those registries, never typed by hand",
           "The same checklist runs locally as a single command, so local and CI can never disagree",
         ],
       },
