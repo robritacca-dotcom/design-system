@@ -1,0 +1,67 @@
+import fs from "fs";
+import path from "path";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import MegaNav from "../../../components/MegaNav/MegaNav";
+import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
+import Sidebar from "../../../components/Sidebar/Sidebar";
+import BlurBackground from "../../../components/BlurBackground/BlurBackground";
+import Footer from "../../../components/Footer/Footer";
+import DownloadButton from "./DownloadButton";
+import { getSidebarLinks, docsSidebarLinks } from "@/config/navigation";
+import styles from "./page.module.css";
+
+const { sidebarLinks } = getSidebarLinks(docsSidebarLinks, "/blueprints/usage");
+
+export default function UsageBlueprintPage() {
+  const filePath = path.join(process.cwd(), "public", "USAGE.md");
+  const raw = fs.readFileSync(filePath, "utf-8");
+
+  const content = raw.replace(/^#\s+.+\r?\n/, "");
+
+  return (
+    <>
+      <BlurBackground />
+
+      <MegaNav />
+
+      <div className={styles.dsLayout}>
+        <Sidebar links={sidebarLinks} />
+
+        <main className={styles.dsContent} id="main-content">
+          <PageBreadcrumb />
+          <div className={`${styles.pageHeader} animate-in`}>
+            <h1 className={styles.pageTitle}>Usage MD</h1>
+            <DownloadButton />
+          </div>
+
+          <div className={`${styles.introSection} animate-in animate-delay-1`}>
+            <p className={styles.subDisplay}>
+              The rules for building with the package
+            </p>
+            <p className={styles.introBody}>
+              Semantic tokens, the action colour, shape by element type, the status set, dark mode, and the prop contract every component shares. This is the file to hand a teammate or an AI assistant working in another codebase: it ships inside the npm package, and is copied verbatim from the repo on every build.
+            </p>
+          </div>
+
+          <div className={`${styles.markdownBody} animate-in animate-delay-2`}>
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={{
+                table: ({ ...props }) => (
+                  <div className={styles.tableWrapper}>
+                    <table {...props} />
+                  </div>
+                ),
+              }}
+            >
+              {content}
+            </ReactMarkdown>
+          </div>
+        </main>
+      </div>
+
+      <Footer />
+    </>
+  );
+}

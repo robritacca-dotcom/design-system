@@ -44,7 +44,7 @@ export default function DocsPage() {
               The system, explained and ready to reuse
             </p>
             <p className={styles.introBody}>
-              Everything that makes robr0 DS run, documented in one place. Start with the overview for the pipeline behind the system, get started with installing and theming the package, read the spec files that drive every build, or take the skills and loops that automate the work. The project journal keeps a running record of how it all came together.
+              Everything that makes robr0 DS run, documented in one place. Start with the overview for the pipeline behind the system, get started with installing and theming the package, read the spec files Claude Code builds from, or take the skills and loops that automate the work. Usage MD is the one to take with you: it states the rules for building with the package in your own project. The project journal keeps a running record of how it all came together.
             </p>
           </div>
 
@@ -107,6 +107,19 @@ export default function DocsPage() {
                 <div className={styles.docPreview}>
                   <span className={styles.docType} aria-hidden="true">
                     A<span className={styles.docTypeBold}>a</span>
+                  </span>
+                  <span className={styles.docLine} style={{ width: "72px" }} />
+                  <span className={styles.docLine} style={{ width: "48px" }} />
+                </div>
+              </div>
+            </TocCard>
+
+            {/* Usage MD */}
+            <TocCard href="/blueprints/usage" title="Usage MD">
+              <div className={`${styles.circlePreview} ${styles.circleBlue}`}>
+                <div className={styles.docPreview}>
+                  <span className={styles.docType} aria-hidden="true">
+                    {"{ }"}
                   </span>
                   <span className={styles.docLine} style={{ width: "72px" }} />
                   <span className={styles.docLine} style={{ width: "48px" }} />
