@@ -4,13 +4,6 @@ import MegaNav from "../components/MegaNav/MegaNav";
 import ScrollCue from "../components/ScrollCue/ScrollCue";
 import BlurBackground from "../components/BlurBackground/BlurBackground";
 import Footer from "../components/Footer/Footer";
-import { Button } from "@robr0/design-system/components/Button/Button";
-import {
-  FigmaIcon,
-  GitHubIcon,
-  StorybookIcon,
-  SubstackIcon,
-} from "../components/BrandIcons/BrandIcons";
 import { dsMegaItems } from "@/config/navigation";
 import { getArticles, coverPlaceholder } from "@/lib/substack";
 import { caseStudies } from "@/data/case-studies";
@@ -26,6 +19,16 @@ export const revalidate = 3600;
 const [featuredWork, ...moreWork] = caseStudies;
 const workItems = moreWork.slice(0, 4);
 
+/* The employer strip is hand-curated, current role first, same as the
+   timeline on /about that owns the full history — keep the two in step
+   when a role changes. */
+const companies = [
+  { name: "Gusto", logo: "/logos/gusto.svg" },
+  { name: "Intuit", logo: "/logos/Intuit.svg" },
+  { name: "Meta", logo: "/logos/meta.svg" },
+  { name: "Augmenta.ai", logo: "/logos/Augmenta-2026.svg" },
+];
+
 export default async function HomePage() {
   const articles = await getArticles();
   const latest = articles[0];
@@ -38,14 +41,24 @@ export default async function HomePage() {
       <MegaNav />
 
       <main className={styles.homeContainer} id="main-content">
-        {/* First viewport: just the name, one line, and the outbound links,
-            centred against the browser height. Everything else lives below
-            the fold, reached by the scroll cue. */}
+        {/* First viewport: the name, one line, a role-and-place byline, and
+            the employer strip, centred against the browser height. Everything
+            else lives below the fold, reached by the scroll cue. */}
         <section className={styles.hero} aria-label="Introduction">
           <div className={`${styles.homeHeading} animate-in`}>
             <h1 className={styles.homeTitle}>Robert Ritacca</h1>
             <p className={styles.homeSubtitle}>
               Designing and building AI-native products, systems, and experiences.
+            </p>
+            <p className={styles.homeByline}>
+              <span>Principal Product Designer</span>
+              <span className={styles.bylineDot} aria-hidden="true">
+                &middot;
+              </span>
+              <span className={styles.bylinePlace}>
+                <Image src="/logos/Canada.svg" alt="" width={24} height={24} />
+                Toronto, Canada
+              </span>
             </p>
           </div>
 
@@ -54,43 +67,19 @@ export default async function HomePage() {
             aria-hidden="true"
           />
 
-          <div className={`${styles.homeLinks} animate-in animate-delay-1`}>
-            <Button
-              label="Substack"
-              variant="tertiary"
-              iconLeft={<SubstackIcon />}
-              iconRight="open_in_new"
-              href="https://robertritacca1.substack.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-            />
-            <Button
-              label="Figma"
-              variant="tertiary"
-              iconLeft={<FigmaIcon />}
-              iconRight="open_in_new"
-              href="https://www.figma.com/@robr0"
-              target="_blank"
-              rel="noopener noreferrer"
-            />
-            <Button
-              label="Storybook"
-              variant="tertiary"
-              iconLeft={<StorybookIcon />}
-              iconRight="open_in_new"
-              href="https://design-system-iota-one.vercel.app"
-              target="_blank"
-              rel="noopener noreferrer"
-            />
-            <Button
-              label="GitHub"
-              variant="tertiary"
-              iconLeft={<GitHubIcon />}
-              iconRight="open_in_new"
-              href="https://github.com/robritacca-dotcom/design-system"
-              target="_blank"
-              rel="noopener noreferrer"
-            />
+          <div className={`${styles.homeCompanies} animate-in animate-delay-1`}>
+            {companies.map((company) => (
+              <span key={company.name} className={styles.company}>
+                <Image
+                  src={company.logo}
+                  alt=""
+                  width={24}
+                  height={24}
+                  className={styles.companyLogo}
+                />
+                {company.name}
+              </span>
+            ))}
           </div>
 
           <ScrollCue

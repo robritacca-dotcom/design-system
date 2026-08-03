@@ -69,8 +69,8 @@ const EXPERIENCE: TimelineCompany[] = [
     ],
   },
   {
-    name: "Augmenta",
-    logo: companyLogo("/logos/Augmenta-2026.svg", "Augmenta"),
+    name: "Augmenta.ai",
+    logo: companyLogo("/logos/Augmenta-2026.svg", "Augmenta.ai"),
     roles: [
       {
         title: "Principal Product Designer",

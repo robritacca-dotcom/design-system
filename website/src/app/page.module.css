@@ -32,6 +32,9 @@
      scroll cue above mobile browser bars; vh is the fallback. */
   min-height: calc(100vh - 78px - var(--primitive-padding-lg) - var(--primitive-gap-xxxl));
   min-height: calc(100svh - 78px - var(--primitive-padding-lg) - var(--primitive-gap-xxxl));
+  /* Optical centring: pad the bottom so the block sits a touch above true
+     centre and the first screen reads centre-weighted, not bottom-heavy. */
+  padding-bottom: 10vh;
 }
 
 /* The scroll cue itself lives in components/ScrollCue — it positions
@@ -80,6 +83,31 @@
   line-height: var(--font-sub-display-line-height);
   letter-spacing: var(--font-sub-display-letter-spacing);
   color: var(--color-text-primary);
+}
+
+/* Role and place, one quiet line under the subtitle. Heading-3 size at
+   paragraph weight: byline scale without reading as a heading. */
+.homeByline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--gap-sm);
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-heading-3-line-height);
+  letter-spacing: var(--font-heading-3-letter-spacing);
+  color: var(--color-text-tertiary);
+}
+
+.bylineDot {
+  color: var(--color-text-tertiary);
+}
+
+.bylinePlace {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-xs);
 }
 
 /* ============================================
@@ -516,14 +544,32 @@
 }
 
 /* ============================================
-   HOME LINKS — Substack / Figma / Storybook / GitHub
+   HOME COMPANIES — employer strip, current role
+   first: the at-a-glance career line
    ============================================ */
-.homeLinks {
+.homeCompanies {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: var(--primitive-gap-xl);
+  gap: var(--gap-md) var(--gap-xl);
+}
+
+.company {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-xs);
+  font-size: var(--font-paragraph-em-size);
+  font-weight: var(--font-paragraph-em-weight);
+  line-height: var(--font-paragraph-em-line-height);
+  color: var(--color-text-primary);
+}
+
+.companyLogo {
+  width: var(--icon-size-md);
+  height: var(--icon-size-md);
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
 /* ============================================
@@ -562,7 +608,12 @@
     line-height: 30px;
   }
 
-  .homeLinks {
-    gap: var(--primitive-gap-md);
+  .homeByline {
+    font-size: var(--font-paragraph-sm-size);
+    line-height: var(--font-paragraph-sm-line-height);
+  }
+
+  .homeCompanies {
+    gap: var(--gap-sm) var(--gap-lg);
   }
 }
