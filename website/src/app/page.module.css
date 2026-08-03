@@ -555,22 +555,25 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: var(--gap-md) var(--gap-xl);
+  gap: var(--gap-md) var(--primitive-gap-xxl);
 }
 
+/* Same optical weight as the tertiary link buttons this strip replaced:
+   heading-3 scale text, lg logos, a button-like gap between logo and name. */
 .company {
   display: inline-flex;
   align-items: center;
-  gap: var(--gap-xs);
-  font-size: var(--font-paragraph-em-size);
+  gap: var(--gap-sm);
+  font-size: var(--font-heading-3-size);
   font-weight: var(--font-paragraph-em-weight);
-  line-height: var(--font-paragraph-em-line-height);
+  line-height: var(--font-heading-3-line-height);
+  letter-spacing: var(--font-paragraph-em-letter-spacing);
   color: var(--color-text-primary);
 }
 
 .companyLogo {
-  width: var(--icon-size-md);
-  height: var(--icon-size-md);
+  width: var(--icon-size-lg);
+  height: var(--icon-size-lg);
   object-fit: contain;
   flex-shrink: 0;
 }
@@ -617,6 +620,6 @@
   }
 
   .homeCompanies {
-    gap: var(--gap-sm) var(--gap-lg);
+    gap: var(--gap-sm) var(--gap-xl);
   }
 }
