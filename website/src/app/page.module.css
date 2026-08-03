@@ -558,22 +558,22 @@
   gap: var(--gap-md) var(--primitive-gap-xxl);
 }
 
-/* Same optical weight as the tertiary link buttons this strip replaced:
-   heading-3 scale text, lg logos, a button-like gap between logo and name. */
+/* Same metrics as the tertiary link buttons this strip replaced:
+   paragraph-em labels, md icons, the button's icon-to-label gap. */
 .company {
   display: inline-flex;
   align-items: center;
   gap: var(--gap-sm);
-  font-size: var(--font-heading-3-size);
+  font-size: var(--font-paragraph-em-size);
   font-weight: var(--font-paragraph-em-weight);
-  line-height: var(--font-heading-3-line-height);
+  line-height: var(--font-paragraph-em-line-height);
   letter-spacing: var(--font-paragraph-em-letter-spacing);
   color: var(--color-text-primary);
 }
 
 .companyLogo {
-  width: var(--icon-size-lg);
-  height: var(--icon-size-lg);
+  width: var(--icon-size-md);
+  height: var(--icon-size-md);
   object-fit: contain;
   flex-shrink: 0;
 }

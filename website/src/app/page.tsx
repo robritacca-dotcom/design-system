@@ -73,8 +73,8 @@ export default async function HomePage() {
                 <Image
                   src={company.logo}
                   alt=""
-                  width={32}
-                  height={32}
+                  width={24}
+                  height={24}
                   className={styles.companyLogo}
                 />
                 {company.name}
