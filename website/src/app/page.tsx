@@ -41,24 +41,24 @@ export default async function HomePage() {
       <MegaNav />
 
       <main className={styles.homeContainer} id="main-content">
-        {/* First viewport: the name, one line, a role-and-place byline, and
-            the employer strip, centred against the browser height. Everything
-            else lives below the fold, reached by the scroll cue. */}
+        {/* First viewport: the name over a hairline, the one-liner and
+            byline, then a second hairline and the employer strip, centred
+            against the browser height (figma: Index - Desktop, 860:2831).
+            Everything else lives below the fold, reached by the scroll cue. */}
         <section className={styles.hero} aria-label="Introduction">
+          <h1 className={`${styles.homeTitle} animate-in`}>Robert Ritacca</h1>
+
+          <div
+            className={`${styles.heroDivider} animate-in animate-delay-1`}
+            aria-hidden="true"
+          />
+
           <div className={`${styles.homeHeading} animate-in`}>
-            <h1 className={styles.homeTitle}>Robert Ritacca</h1>
             <p className={styles.homeSubtitle}>
               Designing and building AI-native products, systems, and experiences.
             </p>
             <p className={styles.homeByline}>
-              <span>Principal Product Designer</span>
-              <span className={styles.bylineDot} aria-hidden="true">
-                &middot;
-              </span>
-              <span className={styles.bylinePlace}>
-                <Image src="/logos/Canada.svg" alt="" width={24} height={24} />
-                Toronto, Canada
-              </span>
+              Principal Product Designer, based in Toronto, Canada
             </p>
           </div>
 
