@@ -76,7 +76,7 @@ const EXPERIENCE = [
   },
   {
     name: "Augmenta",
-    logo: companyLogo("/logos/logo/Augmenta.png", "Augmenta"),
+    logo: companyLogo("/logos/Augmenta-2026.svg", "Augmenta"),
     roles: [
       {
         title: "Principal Product Designer",

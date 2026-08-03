@@ -328,7 +328,7 @@ export default function AugmentaCaseStudy() {
                   <div className={styles.detailItem}>
                     <span className={styles.detailLabel}>Company</span>
                     <span className={styles.detailValue} style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                      <Image src="/logos/logo/Augmenta.png" alt="" width={20} height={20} style={{ objectFit: "contain", flexShrink: 0 }} />
+                      <Image src="/logos/Augmenta-2026.svg" alt="" width={20} height={20} style={{ objectFit: "contain", flexShrink: 0 }} />
                       <span>Augmenta.ai (seed-stage)</span>
                     </span>
                   </div>
@@ -386,7 +386,7 @@ export default function AugmentaCaseStudy() {
                     rel="noopener noreferrer"
                     className={styles.linkItem}
                   >
-                    <Image src="/logos/logo/Augmenta.png" alt="" width={28} height={28} className={styles.linkLogo} />
+                    <Image src="/logos/Augmenta-2026.svg" alt="" width={28} height={28} className={styles.linkLogo} />
                     <div className={styles.linkContent}>
                       <div className={styles.linkTitle}>
                         <span>Augmenta.ai</span>

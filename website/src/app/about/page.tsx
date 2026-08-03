@@ -16,21 +16,39 @@ const companyLogo = (src: string, alt: string) => (
 
 const EXPERIENCE: TimelineCompany[] = [
   {
+    name: "Gusto",
+    logo: companyLogo("/logos/gusto.svg", "Gusto"),
+    roles: [
+      {
+        title: "Principal Product Designer | CoreX AI",
+        start: "Aug 2026",
+        present: true,
+        description:
+          "Defining how AI works, behaves, and earns trust across Gusto's payroll, benefits, and HR platform.",
+        bullets: [
+          "Shaping the interaction model, UX principles, and product direction for AI, starting with Gus, the conversational assistant",
+          "Expanding AI from conversation into embedded workflows",
+          "Partnering with product and engineering leadership to ship customer-facing AI",
+        ],
+      },
+    ],
+  },
+  {
     name: "Intuit",
     logo: companyLogo("/logos/Intuit.svg", "Intuit"),
     roles: [
       {
         title: "Principal Product Designer, Consumer AI",
         start: "Jan 2026",
-        present: true,
+        end: "Jul 2026",
         bullets: [
           "Shipped TurboTax's embedded AI experiences inside ChatGPT and Claude in time for tax season, putting TurboTax in front of nearly 1 billion users on those platforms",
           <>
             Designed the bidirectional filing checklist that lets users prep their taxes inside an AI chat and finish the return in TurboTax. Full story in the{" "}
             <Link href="/work/embedded-ai-turbotax">case study</Link>
           </>,
-          "Taking agentic workflows into production across TurboTax and the broader consumer platform, including Credit Karma",
-          "Designing action-oriented financial workflows that turn AI into real outcomes, not just answers",
+          "Took agentic workflows into production across TurboTax and the broader consumer platform, including Credit Karma",
+          "Designed action-oriented financial workflows that turn AI into real outcomes, not just answers",
         ],
       },
       {
@@ -52,7 +70,7 @@ const EXPERIENCE: TimelineCompany[] = [
   },
   {
     name: "Augmenta",
-    logo: companyLogo("/logos/logo/Augmenta.png", "Augmenta"),
+    logo: companyLogo("/logos/Augmenta-2026.svg", "Augmenta"),
     roles: [
       {
         title: "Principal Product Designer",
