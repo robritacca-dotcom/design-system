@@ -83,6 +83,9 @@
   line-height: var(--font-sub-display-line-height);
   letter-spacing: var(--font-sub-display-letter-spacing);
   color: var(--color-text-primary);
+  /* Extra room after the display-scale name; the heading's own gap suits
+     the subtitle-to-byline pair but crowds the name. */
+  margin-top: var(--gap-md);
 }
 
 /* Role and place, one quiet line under the subtitle. Heading-3 size at
@@ -97,7 +100,7 @@
   font-weight: var(--font-paragraph-weight);
   line-height: var(--font-heading-3-line-height);
   letter-spacing: var(--font-heading-3-letter-spacing);
-  color: var(--color-text-tertiary);
+  color: var(--color-text-secondary);
 }
 
 .bylineDot {
