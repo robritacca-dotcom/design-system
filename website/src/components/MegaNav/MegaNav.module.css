@@ -427,6 +427,13 @@
    RESPONSIVE
    ============================================ */
 @media (max-width: 959px) {
+  /* body carries the page's 20px inset on mobile, so the in-flow
+     header must not add its own — only the fixed sticky header,
+     which escapes body padding, keeps the inner padding. */
+  .header > .headerInner {
+    padding: 0;
+  }
+
   .navCenter,
   .desktopThemeToggle {
     display: none !important;
