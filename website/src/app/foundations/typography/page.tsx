@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
@@ -8,6 +8,7 @@ import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
 import { TypographySwatch } from "@robr0/design-system/components/TypographySwatch/TypographySwatch";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
+import { Tabs } from "@robr0/design-system/components/Tabs/Tabs";
 import PageLinks from "../../../components/PageLinks/PageLinks";
 import { getSidebarLinks, foundationsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
@@ -18,6 +19,9 @@ const { sidebarLinks } = getSidebarLinks(foundationsSidebarLinks, "/foundations/
    TYPOGRAPHY DATA
    Real values from tokens-typography.css.
    previewStyle uses CSS vars for live rendering.
+   Display-tier styles carry a `mobile` variant — the values the tokens
+   resolve to below 768px. Mobile previews use literal px (a CSS var would
+   resolve against the visitor's actual viewport, not the toggle).
    ============================================ */
 
 interface TypeStyleData {
@@ -27,6 +31,11 @@ interface TypeStyleData {
   lineHeight: string;
   letterSpacing: string;
   previewStyle: React.CSSProperties;
+  mobile?: {
+    size: string;
+    lineHeight: string;
+    previewStyle: React.CSSProperties;
+  };
 }
 
 const megaStyles: TypeStyleData[] = [
@@ -43,6 +52,11 @@ const megaStyles: TypeStyleData[] = [
       lineHeight: "var(--font-mega-1-line-height)",
       letterSpacing: "var(--font-mega-1-letter-spacing)",
     },
+    mobile: {
+      size: "64px",
+      lineHeight: "54px",
+      previewStyle: { fontSize: "64px", lineHeight: 0.85 },
+    },
   },
   {
     name: "Mega 2",
@@ -56,6 +70,11 @@ const megaStyles: TypeStyleData[] = [
       fontWeight: "var(--font-mega-2-weight)" as unknown as number,
       lineHeight: "var(--font-mega-2-line-height)",
       letterSpacing: "var(--font-mega-2-letter-spacing)",
+    },
+    mobile: {
+      size: "56px",
+      lineHeight: "48px",
+      previewStyle: { fontSize: "56px", lineHeight: 0.85 },
     },
   },
 ];
@@ -74,6 +93,11 @@ const displayStyles: TypeStyleData[] = [
       lineHeight: "var(--font-display-1-line-height)",
       letterSpacing: "var(--font-display-1-letter-spacing)",
     },
+    mobile: {
+      size: "48px",
+      lineHeight: "48px",
+      previewStyle: { fontSize: "48px", lineHeight: 1 },
+    },
   },
   {
     name: "Display 2",
@@ -88,6 +112,11 @@ const displayStyles: TypeStyleData[] = [
       lineHeight: "var(--font-display-2-line-height)",
       letterSpacing: "var(--font-display-2-letter-spacing)",
     },
+    mobile: {
+      size: "40px",
+      lineHeight: "42px",
+      previewStyle: { fontSize: "40px", lineHeight: 1.05 },
+    },
   },
   {
     name: "Sub display",
@@ -101,6 +130,11 @@ const displayStyles: TypeStyleData[] = [
       fontWeight: "var(--font-sub-display-weight)" as unknown as number,
       lineHeight: "var(--font-sub-display-line-height)",
       letterSpacing: "var(--font-sub-display-letter-spacing)",
+    },
+    mobile: {
+      size: "24px",
+      lineHeight: "36px",
+      previewStyle: { fontSize: "24px", lineHeight: "36px" },
     },
   },
 ];
@@ -234,7 +268,15 @@ const typeSections = [
    PAGE
    ============================================ */
 
+const viewportTabs = [
+  { value: "desktop", label: "Desktop", icon: "desktop_windows" },
+  { value: "mobile", label: "Mobile", icon: "smartphone" },
+];
+
 export default function TypographyPage() {
+  const [viewport, setViewport] = useState("desktop");
+  const isMobileView = viewport === "mobile";
+
   return (
     <>
 
@@ -274,6 +316,22 @@ export default function TypographyPage() {
             </p>
           </div>
 
+          {/* Viewport toggle — Mega/Display/Sub-display step down below
+              768px; headings and body hold at every size. */}
+          <div className={`${styles.viewportToggle} animate-in animate-delay-2`}>
+            <Tabs
+              tabs={viewportTabs}
+              activeTab={viewport}
+              onTabChange={setViewport}
+              ariaLabel="Token values by viewport"
+            />
+            <p className={styles.viewportNote}>
+              {isMobileView
+                ? "Below 768px the display tier steps down automatically. Headings and body never step."
+                : "Above 768px every style renders at its full size."}
+            </p>
+          </div>
+
           {/* Type Sections */}
           {typeSections.map((section, idx) => (
             <section
@@ -283,17 +341,22 @@ export default function TypographyPage() {
               <SectionTitle title={section.title} />
 
               <div className={styles.typeStyles}>
-                {section.styles.map((t) => (
-                  <TypographySwatch
-                    key={t.name}
-                    name={t.name}
-                    weight={t.weight}
-                    size={t.size}
-                    lineHeight={t.lineHeight}
-                    letterSpacing={t.letterSpacing}
-                    previewStyle={t.previewStyle}
-                  />
-                ))}
+                {section.styles.map((t) => {
+                  const m = isMobileView ? t.mobile : undefined;
+                  return (
+                    <TypographySwatch
+                      key={t.name}
+                      name={t.name}
+                      weight={t.weight}
+                      size={m?.size ?? t.size}
+                      lineHeight={m?.lineHeight ?? t.lineHeight}
+                      letterSpacing={t.letterSpacing}
+                      previewStyle={
+                        m ? { ...t.previewStyle, ...m.previewStyle } : t.previewStyle
+                      }
+                    />
+                  );
+                })}
               </div>
             </section>
           ))}

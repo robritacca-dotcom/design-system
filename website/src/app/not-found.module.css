@@ -49,6 +49,8 @@
 
 /* ============================================
    RESPONSIVE
+   Deliberately overrides the token collapse: the mega-1 error code uses
+   the same two-stage ramp as the home hero (64 @959 → 40 @600).
    ============================================ */
 @media (max-width: 959px) {
   .errorCode {

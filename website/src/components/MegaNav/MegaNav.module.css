@@ -22,7 +22,15 @@
   width: 100%;
   max-width: 1440px;
   height: 78px;
-  padding: 0 var(--primitive-padding-lg);
+  /* No horizontal padding: the in-flow header sits inside the body, whose
+     side gutters already align it with the page content. The sticky
+     overlay is viewport-fixed, so it re-adds matching gutters below. */
+}
+
+.stickyHeader .headerInner {
+  /* Mirrors the body gutters in globals.css (40px → 20px @959 → 16px @600)
+     so the logo lands in the same place when the overlay slides in. */
+  padding: 0 var(--primitive-padding-xl);
 }
 
 .logoSlot {
@@ -363,6 +371,9 @@
   background: var(--color-bg-page-primary);
   box-shadow: 5px 0px 30px 0px rgba(0, 0, 0, 0.15);
   padding: var(--primitive-padding-xl);
+  /* The section accordions (Components alone is ~60 links) can exceed the
+     viewport, so the drawer scrolls its own content. */
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -398,24 +409,73 @@
   color: var(--color-text-secondary);
 }
 
+/* Second nesting level — sidebar links inside an expanded section of the
+   Design-system group. Slightly smaller and denser: these lists are long. */
+.mobileLinkNested2 {
+  padding: var(--primitive-padding-sm) var(--primitive-padding-md);
+  padding-left: calc(var(--primitive-padding-xl) + var(--primitive-gap-lg));
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: 400;
+  color: var(--color-text-secondary);
+}
+
+/* An expandable drawer section: label link + chevron toggle on one row */
+.mobileNavGroup {
+  width: 100%;
+}
+
+.mobileNavRow {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.mobileNavRow .mobileLink {
+  flex: 1;
+  min-width: 0;
+}
+
+.mobileChevronBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  color: var(--color-text-secondary);
+}
+
+.mobileChevronBtn:hover {
+  background: var(--color-bg-container-secondary);
+}
+
+.mobileSubList {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* display: flex above would otherwise override the UA's [hidden] rule and
+   leave collapsed sections visible. */
+.mobileSubList[hidden] {
+  display: none;
+}
+
+/* The desktop caret carries a margin-left that off-centers it inside the
+   40px toggle button. */
+.mobileChevronBtn .caret {
+  margin-left: 0;
+}
+
 .mobileSection {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 4px;
-}
-
-.mobileSectionLabel {
-  display: block;
-  text-decoration: none;
-  font-family: var(--font-paragraph-sm-family);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--color-text-tertiary);
-  padding: var(--primitive-padding-md);
-  padding-bottom: 4px;
 }
 
 .mobileThemeToggle {
@@ -449,5 +509,15 @@
 
   .rightSlot {
     width: auto;
+  }
+
+  .stickyHeader .headerInner {
+    padding: 0 var(--primitive-padding-lg);
+  }
+}
+
+@media (max-width: 600px) {
+  .stickyHeader .headerInner {
+    padding: 0 var(--primitive-padding-md);
   }
 }

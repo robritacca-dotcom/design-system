@@ -13,14 +13,14 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: var(--primitive-gap-xxxl);
+  gap: var(--gap-xxxl);
 }
 
 /* ============================================
    PAGE TITLE - Display 2
    ============================================ */
 .pageHeader {
-  margin-top: calc(var(--primitive-gap-xl) - var(--primitive-gap-xxxl));
+  margin-top: calc(var(--primitive-gap-xl) - var(--gap-xxxl));
   display: flex;
   align-items: baseline;
   justify-content: space-between;
@@ -69,7 +69,7 @@
 .iconSection {
   display: flex;
   flex-direction: column;
-  gap: var(--primitive-gap-xxl);
+  gap: var(--gap-xxl);
   width: 100%;
 }
 
@@ -85,7 +85,7 @@
   line-height: var(--font-paragraph-sm-line-height);
   letter-spacing: var(--font-paragraph-sm-letter-spacing);
   color: var(--color-text-tertiary);
-  margin: calc(var(--primitive-gap-xxl) * -1 + var(--primitive-gap-lg)) 0 0;
+  margin: calc(var(--gap-xxl) * -1 + var(--primitive-gap-lg)) 0 0;
 }
 
 .sizeNote code {
@@ -183,10 +183,6 @@
     min-width: 0;
   }
 
-  .subDisplay {
-    font-size: 24px;
-    line-height: 36px;
-  }
 
   .iconGrid {
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));

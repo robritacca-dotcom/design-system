@@ -9,7 +9,7 @@
   max-width: 1440px;
   flex: 1;
   position: relative;
-  gap: var(--primitive-gap-xxl);
+  gap: var(--gap-xxl);
   padding: 0 var(--padding-xl) var(--padding-xl);
 }
 
@@ -565,6 +565,9 @@
 
 /* ============================================
    RESPONSIVE
+   The hero deliberately overrides the token collapse: mega-1 needs a
+   two-stage ramp (132 → 64 @959 → 40 @600) that the single 768px token
+   step can't provide at this size.
    ============================================ */
 @media (max-width: 959px) {
   .homeTitle {
@@ -585,7 +588,7 @@
 
 @media (max-width: 600px) {
   .homeContainer {
-    gap: var(--primitive-gap-xxl);
+    gap: var(--gap-xxl);
     padding: 0 var(--padding-md) var(--padding-xl);
   }
 

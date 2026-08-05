@@ -98,7 +98,7 @@
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--primitive-gap-xxxl);
+  gap: var(--gap-xxxl);
 }
 
 .resumeSection {
@@ -269,7 +269,7 @@
 .statBand {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--primitive-gap-xl) var(--primitive-gap-xxl);
+  gap: var(--primitive-gap-xl) var(--gap-xxl);
   margin-top: var(--primitive-gap-lg);
 }
 
@@ -388,17 +388,6 @@
   }
 }
 
-@media (max-width: 768px) {
-  .pageTitle {
-    font-size: 40px;
-    line-height: 1.05;
-  }
-
-  .subDisplay {
-    font-size: 22px;
-    line-height: 32px;
-  }
-}
 
 /* ============================================
    TOOLS LIST (right rail)

@@ -13,7 +13,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: var(--primitive-gap-xxxl);
+  gap: var(--gap-xxxl);
   min-width: 0;
 }
 
@@ -47,7 +47,7 @@
    PAGE HEADER
    ============================================ */
 .pageHeader {
-  margin-top: calc(var(--primitive-gap-xl) - var(--primitive-gap-xxxl));
+  margin-top: calc(var(--primitive-gap-xl) - var(--gap-xxxl));
   display: flex;
   align-items: baseline;
   justify-content: space-between;
@@ -89,7 +89,7 @@
   color: var(--color-text-primary);
   padding-bottom: var(--primitive-padding-sm);
   border-bottom: 1px solid var(--color-divider);
-  margin-top: var(--primitive-gap-xxl);
+  margin-top: var(--gap-xxl);
   margin-bottom: var(--primitive-gap-md);
 }
 
@@ -291,10 +291,6 @@
     min-width: 0;
   }
 
-  .subDisplay {
-    font-size: 24px;
-    line-height: 36px;
-  }
 
   .markdownBody {
     max-width: 100%;

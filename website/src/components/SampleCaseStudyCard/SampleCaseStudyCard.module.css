@@ -87,7 +87,7 @@
 }
 
 /* Stack on narrow viewports */
-@media (max-width: 720px) {
+@media (max-width: 768px) {
   .card {
     flex-direction: column;
     align-items: flex-start;
