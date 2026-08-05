@@ -27,6 +27,7 @@ import { Timeline } from "@robr0/design-system/components/Timeline/Timeline";
 import { ContributionGraph, type ContributionDay } from "@robr0/design-system/components/ContributionGraph/ContributionGraph";
 import { Divider } from "@robr0/design-system/components/Divider/Divider";
 import { Dropdown } from "@robr0/design-system/components/Dropdown/Dropdown";
+import { NavList } from "@robr0/design-system/components/NavList/NavList";
 import { Pagination } from "@robr0/design-system/components/Pagination/Pagination";
 import { Input } from "@robr0/design-system/components/Input/Input";
 import { Kbd } from "@robr0/design-system/components/Kbd/Kbd";
@@ -548,6 +549,20 @@ export default function ComponentsPage() {
                     <span className="material-symbols-rounded" style={{ fontSize: "12px", color: "var(--color-text-tertiary)", marginLeft: "auto" }}>open_in_new</span>
                   </div>
                 ))}
+              </div>
+            </TocCard>
+
+            {/* Navigation */}
+            <TocCard href="/components/nav-list" title="Nav list">
+              <div style={{ width: "180px" }}>
+                <NavList
+                  items={[
+                    { label: "Overview", href: "#overview" },
+                    { label: "Guides", href: "#guides", items: [{ label: "Theming", href: "#theming" }] },
+                  ]}
+                  currentHref="#overview"
+                  aria-label="Nav list preview"
+                />
               </div>
             </TocCard>
 

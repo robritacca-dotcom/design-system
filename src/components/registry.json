@@ -336,9 +336,17 @@
       "name": "Nav",
       "label": "Navigation",
       "slug": "navigation",
-      "description": "Desktop and mobile navigation components including top-level nav bar, collapsed mobile bar, and hamburger slide-out menu.",
+      "description": "Desktop top navigation bar with a brand slot, horizontal button group, and optional trailing content.",
       "category": "navigation",
       "client": false
+    },
+    {
+      "name": "NavList",
+      "label": "Nav list",
+      "slug": "nav-list",
+      "description": "Vertical list of navigation links for drawers and menus, with three indent levels and per-row expand toggles.",
+      "category": "navigation",
+      "client": true
     },
     {
       "name": "Pagination",

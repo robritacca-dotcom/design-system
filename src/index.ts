@@ -45,6 +45,7 @@ export * from './components/Instructions/Instructions';
 export * from './components/Kbd/Kbd';
 export * from './components/LinkList/LinkList';
 export * from './components/Nav/Nav';
+export * from './components/NavList/NavList';
 export * from './components/Pagination/Pagination';
 export * from './components/Popover/Popover';
 export * from './components/ProgressBar/ProgressBar';
