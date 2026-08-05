@@ -174,6 +174,14 @@
   background: var(--color-action-passive-bg-hover);
 }
 
+/* While the drawer is open the header's own button sits under the overlay
+   scrim (the header stacking context caps at z-index 10, the overlay is
+   1000), so it hides and the overlay renders its own close button on the
+   top layer instead. */
+.mobileMenuBtnHidden {
+  visibility: hidden;
+}
+
 /* ============================================
    MEGA MENU PANEL
    Inset floating panel with rounded corners.
@@ -361,6 +369,35 @@
   visibility: visible;
 }
 
+/* Close control on the scrim itself — the one place that can sit above the
+   drawer panel. Always light: the scrim stays dark in both themes. It sits
+   exactly where the hidden header button is, as if replacing it: below the
+   body's top padding for the in-flow header, at the viewport top when the
+   drawer was opened from the sticky header (78px bar, matching gutters). */
+.mobileMenuClose {
+  position: absolute;
+  top: calc(var(--primitive-padding-lg) + (78px - 40px) / 2);
+  right: var(--primitive-padding-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  border-radius: var(--radius-full);
+  color: var(--primitive-neutral-01);
+  cursor: pointer;
+}
+
+.mobileMenuClose:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.mobileMenuCloseStuck {
+  top: calc((78px - 40px) / 2);
+}
+
 .mobileMenu {
   position: absolute;
   top: 0;
@@ -519,5 +556,9 @@
 @media (max-width: 600px) {
   .stickyHeader .headerInner {
     padding: 0 var(--primitive-padding-md);
+  }
+
+  .mobileMenuClose {
+    right: var(--primitive-padding-md);
   }
 }

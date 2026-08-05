@@ -297,13 +297,13 @@ export default function MegaNav() {
           <ThemeToggle className={styles.desktopThemeToggle} />
           <button
             type="button"
-            className={styles.mobileMenuBtn}
+            className={`${styles.mobileMenuBtn} ${mobileOpen ? styles.mobileMenuBtnHidden : ""}`}
             onClick={() => setMobileOpen((v) => !v)}
-            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-label="Open menu"
             aria-expanded={mobileOpen}
           >
             <span className="material-symbols-rounded" aria-hidden="true">
-              {mobileOpen ? "close" : "menu"}
+              menu
             </span>
           </button>
         </div>
@@ -428,14 +428,14 @@ export default function MegaNav() {
             <ThemeToggle className={styles.desktopThemeToggle} />
             <button
               type="button"
-              className={styles.mobileMenuBtn}
+              className={`${styles.mobileMenuBtn} ${mobileOpen ? styles.mobileMenuBtnHidden : ""}`}
               onClick={() => setMobileOpen((v) => !v)}
-              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+              aria-label="Open menu"
               aria-expanded={mobileOpen}
               tabIndex={isStuck ? 0 : -1}
             >
               <span className="material-symbols-rounded" aria-hidden="true">
-                {mobileOpen ? "close" : "menu"}
+                menu
               </span>
             </button>
           </div>
@@ -488,7 +488,25 @@ export default function MegaNav() {
         }}
         aria-hidden={!mobileOpen}
       >
+        <button
+          type="button"
+          className={`${styles.mobileMenuClose} ${isStuck ? styles.mobileMenuCloseStuck : ""}`}
+          onClick={() => setMobileOpen(false)}
+          aria-label="Close menu"
+        >
+          <span className="material-symbols-rounded" aria-hidden="true">
+            close
+          </span>
+        </button>
         <nav className={styles.mobileMenu} aria-label="Mobile navigation">
+          <Link
+            href="/"
+            className={styles.mobileLink}
+            onClick={() => setMobileOpen(false)}
+            aria-current={pathname === "/" ? "page" : undefined}
+          >
+            Home
+          </Link>
           <Link
             href="/about"
             className={styles.mobileLink}
