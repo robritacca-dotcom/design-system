@@ -135,9 +135,13 @@
   gap: 2px;
 }
 
+/* Material Symbol expand_more — the same glyph NavList and Accordion use,
+   at the scale floor (the opsz axis bottoms out at 20). */
 .caret {
   flex-shrink: 0;
-  margin-left: 4px;
+  margin-left: 2px;
+  --icon-size: var(--icon-size-sm);
+  line-height: 1;
   color: var(--color-text-secondary);
   transition: transform var(--motion-duration-base) var(--motion-ease-standard);
 }
@@ -424,96 +428,8 @@
   transform: translateX(0);
 }
 
-.mobileLink {
-  display: block;
-  width: 100%;
-  padding: var(--primitive-padding-md);
-  font-family: var(--font-title-body-family);
-  font-size: var(--font-title-body-size);
-  font-weight: var(--font-title-body-weight);
-  color: var(--color-text-primary);
-  text-decoration: none;
-  border-radius: var(--radius-md);
-}
-
-.mobileLink:hover {
-  background: var(--color-bg-container-secondary);
-}
-
-.mobileLinkNested {
-  padding-left: var(--primitive-padding-xl);
-  font-weight: 400;
-  color: var(--color-text-secondary);
-}
-
-/* Second nesting level — sidebar links inside an expanded section of the
-   Design-system group. Slightly smaller and denser: these lists are long. */
-.mobileLinkNested2 {
-  padding: var(--primitive-padding-sm) var(--primitive-padding-md);
-  padding-left: calc(var(--primitive-padding-xl) + var(--primitive-gap-lg));
-  font-size: var(--font-paragraph-sm-size);
-  font-weight: 400;
-  color: var(--color-text-secondary);
-}
-
-/* An expandable drawer section: label link + chevron toggle on one row */
-.mobileNavGroup {
-  width: 100%;
-}
-
-.mobileNavRow {
-  display: flex;
-  align-items: center;
-  width: 100%;
-}
-
-.mobileNavRow .mobileLink {
-  flex: 1;
-  min-width: 0;
-}
-
-.mobileChevronBtn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 40px;
-  height: 40px;
-  background: none;
-  border: none;
-  border-radius: var(--radius-full);
-  cursor: pointer;
-  color: var(--color-text-secondary);
-}
-
-.mobileChevronBtn:hover {
-  background: var(--color-bg-container-secondary);
-}
-
-.mobileSubList {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-/* display: flex above would otherwise override the UA's [hidden] rule and
-   leave collapsed sections visible. */
-.mobileSubList[hidden] {
-  display: none;
-}
-
-/* The desktop caret carries a margin-left that off-centers it inside the
-   40px toggle button. */
-.mobileChevronBtn .caret {
-  margin-left: 0;
-}
-
-.mobileSection {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
+/* The drawer's rows are a NavList (@robr0/design-system) — no row styling
+   lives here anymore. */
 
 .mobileThemeToggle {
   margin-top: auto;

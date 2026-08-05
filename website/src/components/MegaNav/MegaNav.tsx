@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
+import { NavList, type NavListItem } from "@robr0/design-system/components/NavList/NavList";
 import {
   componentsSidebarLinks,
   docsSidebarLinks,
@@ -14,6 +15,19 @@ import {
   type NavLink,
 } from "@/config/navigation";
 import styles from "./MegaNav.module.css";
+
+/** Strip sidebar-only fields down to NavList's {label, href} shape. */
+const toNavItems = (links: NavLink[]): NavListItem[] =>
+  links.map(({ label, href }) => ({ label, href }));
+
+/** The drawer section (if any) whose sub-list contains the given path. */
+const sectionForPath = (path: string): string | null => {
+  if (path.startsWith("/work")) return "work";
+  if (path.startsWith("/docs")) return "docs";
+  if (path.startsWith("/foundations")) return "foundations";
+  if (path.startsWith("/components")) return "components";
+  return null;
+};
 
 /** Inline SVG logo — matches the production Header */
 function LogoIcon({ className }: { className?: string }) {
@@ -44,77 +58,6 @@ function LogoIcon({ className }: { className?: string }) {
   );
 }
 
-/**
- * One expandable section in the mobile drawer: the label stays a real link
- * (tap navigates), a separate chevron button toggles the sub-list — the same
- * per-section links the desktop sidebar shows, which is otherwise hidden
- * below 960px.
- */
-function MobileDrawerSection({
-  id,
-  label,
-  href,
-  links,
-  nested,
-  expanded,
-  pathname,
-  onToggle,
-  onNavigate,
-}: {
-  id: string;
-  label: string;
-  href: string;
-  links: NavLink[];
-  nested?: boolean;
-  expanded: boolean;
-  pathname: string;
-  onToggle: () => void;
-  onNavigate: () => void;
-}) {
-  return (
-    <div className={styles.mobileNavGroup}>
-      <div className={styles.mobileNavRow}>
-        <Link
-          href={href}
-          className={`${styles.mobileLink} ${nested ? styles.mobileLinkNested : ""}`}
-          onClick={onNavigate}
-          aria-current={pathname === href ? "page" : undefined}
-        >
-          {label}
-        </Link>
-        <button
-          type="button"
-          className={styles.mobileChevronBtn}
-          aria-expanded={expanded}
-          aria-controls={id}
-          aria-label={`${expanded ? "Collapse" : "Expand"} ${label} pages`}
-          onClick={onToggle}
-        >
-          <svg
-            className={`${styles.caret} ${expanded ? styles.caretOpen : ""}`}
-            width="8" height="5" viewBox="0 0 8 5"
-            aria-hidden="true" fill="none"
-          >
-            <path d="M1 1L4 4L7 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </button>
-      </div>
-      <div id={id} className={styles.mobileSubList} hidden={!expanded}>
-        {links.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            className={`${styles.mobileLink} ${nested ? styles.mobileLinkNested2 : styles.mobileLinkNested}`}
-            onClick={onNavigate}
-            aria-current={pathname === link.href ? "page" : undefined}
-          >
-            {link.label}
-          </Link>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 export default function MegaNav() {
   const pathname = usePathname() ?? "/";
@@ -135,6 +78,51 @@ export default function MegaNav() {
   const isWorkActive = pathname === "/work" || pathname.startsWith("/work/");
   const isWritingActive = pathname === "/writing" || pathname.startsWith("/writing/");
   const isContactActive = pathname === "/contact";
+
+  // The drawer's whole tree, fed to NavList — the same per-section links the
+  // desktop sidebar shows, which is otherwise hidden below 960px. Work and
+  // Writing stay current on their child routes via the prefix matchers.
+  const drawerItems: NavListItem[] = [
+    { label: "Home", href: "/" },
+    { label: "About", href: "/about" },
+    {
+      label: "Work",
+      href: "/work",
+      id: "work",
+      current: isWorkActive || undefined,
+      items: toNavItems(workSidebarLinks.slice(1)),
+    },
+    { label: "Writing", href: "/writing", current: isWritingActive || undefined },
+    {
+      label: "Design system",
+      href: "/design-system",
+      collapsible: false,
+      items: [
+        { label: "Docs", href: "/docs", id: "docs", items: toNavItems(docsSidebarLinks.slice(1)) },
+        {
+          label: "Foundations",
+          href: "/foundations",
+          id: "foundations",
+          items: toNavItems(foundationsSidebarLinks.slice(1)),
+        },
+        {
+          label: "Components",
+          href: "/components",
+          id: "components",
+          items: toNavItems(componentsSidebarLinks.slice(1)),
+        },
+        { label: "Playground", href: "/playground" },
+      ],
+    },
+    { label: "Contact", href: "/contact" },
+  ];
+
+  // Opening the drawer pre-expands the section holding the current page.
+  const toggleMobileMenu = () => {
+    const next = !mobileOpen;
+    if (next) setExpandedSection(sectionForPath(pathname));
+    setMobileOpen(next);
+  };
 
   const openMenu = useCallback(() => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
@@ -273,13 +261,12 @@ export default function MegaNav() {
                 onClick={() => setOpen(false)}
               >
                 <span>Design system</span>
-                <svg
-                  className={`${styles.caret} ${open ? styles.caretOpen : ""}`}
-                  width="8" height="5" viewBox="0 0 8 5"
-                  aria-hidden="true" fill="none"
+                <span
+                  className={`${styles.caret} ${open ? styles.caretOpen : ""} material-symbols-rounded`}
+                  aria-hidden="true"
                 >
-                  <path d="M1 1L4 4L7 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+                  expand_more
+                </span>
               </Link>
             </div>
 
@@ -298,7 +285,7 @@ export default function MegaNav() {
           <button
             type="button"
             className={`${styles.mobileMenuBtn} ${mobileOpen ? styles.mobileMenuBtnHidden : ""}`}
-            onClick={() => setMobileOpen((v) => !v)}
+            onClick={toggleMobileMenu}
             aria-label="Open menu"
             aria-expanded={mobileOpen}
           >
@@ -404,13 +391,12 @@ export default function MegaNav() {
                   tabIndex={isStuck ? 0 : -1}
                 >
                   <span>Design system</span>
-                  <svg
-                    className={`${styles.caret} ${open ? styles.caretOpen : ""}`}
-                    width="8" height="5" viewBox="0 0 8 5"
-                    aria-hidden="true" fill="none"
+                  <span
+                    className={`${styles.caret} ${open ? styles.caretOpen : ""} material-symbols-rounded`}
+                    aria-hidden="true"
                   >
-                    <path d="M1 1L4 4L7 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                    expand_more
+                  </span>
                 </Link>
               </div>
               <Link
@@ -429,7 +415,7 @@ export default function MegaNav() {
             <button
               type="button"
               className={`${styles.mobileMenuBtn} ${mobileOpen ? styles.mobileMenuBtnHidden : ""}`}
-              onClick={() => setMobileOpen((v) => !v)}
+              onClick={toggleMobileMenu}
               aria-label="Open menu"
               aria-expanded={mobileOpen}
               tabIndex={isStuck ? 0 : -1}
@@ -499,99 +485,13 @@ export default function MegaNav() {
           </span>
         </button>
         <nav className={styles.mobileMenu} aria-label="Mobile navigation">
-          <Link
-            href="/"
-            className={styles.mobileLink}
-            onClick={() => setMobileOpen(false)}
-            aria-current={pathname === "/" ? "page" : undefined}
-          >
-            Home
-          </Link>
-          <Link
-            href="/about"
-            className={styles.mobileLink}
-            onClick={() => setMobileOpen(false)}
-            aria-current={isAboutActive ? "page" : undefined}
-          >
-            About
-          </Link>
-          <MobileDrawerSection
-            id="drawer-work"
-            label="Work"
-            href="/work"
-            links={workSidebarLinks.slice(1)}
-            expanded={expandedSection === "work"}
-            pathname={pathname}
-            onToggle={() => setExpandedSection((v) => (v === "work" ? null : "work"))}
+          <NavList
+            items={drawerItems}
+            currentHref={pathname}
+            expandedIds={expandedSection ? [expandedSection] : []}
+            onExpandedChange={(ids) => setExpandedSection(ids[0] ?? null)}
             onNavigate={() => setMobileOpen(false)}
           />
-          <Link
-            href="/writing"
-            className={styles.mobileLink}
-            onClick={() => setMobileOpen(false)}
-            aria-current={isWritingActive ? "page" : undefined}
-          >
-            Writing
-          </Link>
-          <div className={styles.mobileSection}>
-            <Link
-              href="/design-system"
-              className={styles.mobileLink}
-              onClick={() => setMobileOpen(false)}
-              aria-current={pathname === "/design-system" ? "page" : undefined}
-            >
-              Design system
-            </Link>
-            <MobileDrawerSection
-              id="drawer-docs"
-              label="Docs"
-              href="/docs"
-              links={docsSidebarLinks.slice(1)}
-              nested
-              expanded={expandedSection === "docs"}
-              pathname={pathname}
-              onToggle={() => setExpandedSection((v) => (v === "docs" ? null : "docs"))}
-              onNavigate={() => setMobileOpen(false)}
-            />
-            <MobileDrawerSection
-              id="drawer-foundations"
-              label="Foundations"
-              href="/foundations"
-              links={foundationsSidebarLinks.slice(1)}
-              nested
-              expanded={expandedSection === "foundations"}
-              pathname={pathname}
-              onToggle={() => setExpandedSection((v) => (v === "foundations" ? null : "foundations"))}
-              onNavigate={() => setMobileOpen(false)}
-            />
-            <MobileDrawerSection
-              id="drawer-components"
-              label="Components"
-              href="/components"
-              links={componentsSidebarLinks.slice(1)}
-              nested
-              expanded={expandedSection === "components"}
-              pathname={pathname}
-              onToggle={() => setExpandedSection((v) => (v === "components" ? null : "components"))}
-              onNavigate={() => setMobileOpen(false)}
-            />
-            <Link
-              href="/playground"
-              className={`${styles.mobileLink} ${styles.mobileLinkNested}`}
-              onClick={() => setMobileOpen(false)}
-              aria-current={pathname === "/playground" ? "page" : undefined}
-            >
-              Playground
-            </Link>
-          </div>
-          <Link
-            href="/contact"
-            className={styles.mobileLink}
-            onClick={() => setMobileOpen(false)}
-            aria-current={isContactActive ? "page" : undefined}
-          >
-            Contact
-          </Link>
           <div className={styles.mobileThemeToggle}>
             <ThemeToggle />
           </div>
