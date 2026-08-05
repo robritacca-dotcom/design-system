@@ -99,21 +99,23 @@ Nunito Sans is a rounded humanist sans-serif. The rounded terminals give UI elem
 
 ### Hierarchy
 
-| Token prefix | Size | Weight | Line Height | Letter Spacing | Use |
-|---|---|---|---|---|---|
-| `--font-mega-1-*` | 132px | 300 | 0.85 | +2% | Marketing hero — never in app UI |
-| `--font-mega-2-*` | 116px | 300 | 0.85 | +2% | Marketing hero — never in app UI |
-| `--font-display-1-*` | 96px | 300 | 1.0 | +2% | Large marketing section heads |
-| `--font-display-2-*` | 64px | 300 | 1.0 | +1.5% | Marketing section heads |
-| `--font-sub-display-*` | 30px | 300 | 44px | +1.5% | Sub-section heads on marketing pages |
-| `--font-heading-1-*` | 30px | 600 | 44px | +1.5% | Page-level h1 in app/docs |
-| `--font-heading-2-*` | 26px | 600 | 32px | +1.5% | Section headings in app/docs |
-| `--font-heading-3-*` | 22px | 600 | 28px | +1.5% | Sub-section headings in app/docs |
-| `--font-title-body-*` | 16px | 600 | 24px | −1% | Card titles, table column heads, bold labels |
-| `--font-paragraph-em-*` | 16px | 500 | 24px | −1% | Emphasized body, button labels, input labels |
-| `--font-paragraph-*` | 16px | 400 | 24px | 0 | Default running text |
-| `--font-paragraph-sm-em-*` | 14px | 500 | 20px | 0 | Compact button labels, badge text, form helpers (emphasized) |
-| `--font-paragraph-sm-*` | 14px | 400 | 20px | 0 | Secondary body, helper text, captions |
+| Token prefix | Size | ≤768px | Weight | Line Height | Letter Spacing | Use |
+|---|---|---|---|---|---|---|
+| `--font-mega-1-*` | 132px | 64px | 300 | 0.85 | +2% | Marketing hero — never in app UI |
+| `--font-mega-2-*` | 116px | 56px | 300 | 0.85 | +2% | Marketing hero — never in app UI |
+| `--font-display-1-*` | 96px | 48px | 300 | 1.0 | +2% | Large marketing section heads |
+| `--font-display-2-*` | 64px | 40px | 300 | 1.0 (1.05 ≤768px) | +1.5% | Marketing section heads |
+| `--font-sub-display-*` | 30px | 24px | 300 | 44px (36px ≤768px) | +1.5% | Sub-section heads on marketing pages |
+| `--font-heading-1-*` | 30px | — | 600 | 44px | +1.5% | Page-level h1 in app/docs |
+| `--font-heading-2-*` | 26px | — | 600 | 32px | +1.5% | Section headings in app/docs |
+| `--font-heading-3-*` | 22px | — | 600 | 28px | +1.5% | Sub-section headings in app/docs |
+| `--font-title-body-*` | 16px | — | 600 | 24px | −1% | Card titles, table column heads, bold labels |
+| `--font-paragraph-em-*` | 16px | — | 500 | 24px | −1% | Emphasized body, button labels, input labels |
+| `--font-paragraph-*` | 16px | — | 400 | 24px | 0 | Default running text |
+| `--font-paragraph-sm-em-*` | 14px | — | 500 | 20px | 0 | Compact button labels, badge text, form helpers (emphasized) |
+| `--font-paragraph-sm-*` | 14px | — | 400 | 20px | 0 | Secondary body, helper text, captions |
+
+The ≤768px column is not a separate token set: the same `--font-*-size` tokens re-resolve inside a single `@media (max-width: 768px)` block at the bottom of `tokens-typography.css`. Anything set in display-tier tokens collapses automatically on mobile; the heading and body tiers never step (marked —).
 
 ### Principles
 - Mega and Display sizes (Mega 1/2, Display 1/2, Sub Display) are **marketing-only** — they belong on the documentation homepage and landing pages, never inside application UI or component pages.
@@ -181,10 +183,11 @@ When a page renders markdown (via `react-markdown` or similar), apply these head
 
 ### Responsive Collapse
 
-Below 959px:
-- `h2` → 26px (from 30px)
-- `h3` → 18px (from 22px)
+The display tier collapses **in the token layer**, once, at 768px (see the Hierarchy table): page titles (`--font-display-2-*`) go 64px → 40px and section heads (`--font-sub-display-*`) go 30px → 24px with no per-page CSS. Pages that reference the tokens are responsive by default — never re-hardcode a mobile font size in a page module.
+
+- Headings 1–3 and the body tiers do **not** step; 22–30px headings stay readable on phones.
 - The weight contrast rule still applies; do not change weights at any breakpoint.
+- The one sanctioned exception: a mega-1 hero (home page, 404) may keep a hand-tuned two-stage ramp (132 → 64 → 40) in its own module, commented as a deliberate override.
 
 ---
 
@@ -205,9 +208,11 @@ Below 959px:
 | `--gap-md` | 16px | Card internal element spacing |
 | `--gap-lg` | 20px | Section element spacing |
 | `--gap-xl` | 40px | Card-to-card spacing, major internal gaps |
-| `--gap-xxl` | 60px | Between component groups |
-| `--gap-xxxl` | 80px | Between major page sections |
-| `--gap-xxxxl` | 120px | Page-level section breaks |
+| `--gap-xxl` | 60px (40px ≤768px) | Between component groups |
+| `--gap-xxxl` | 80px (60px ≤768px) | Between major page sections |
+| `--gap-xxxxl` | 120px (80px ≤768px) | Page-level section breaks |
+
+The three section-rhythm steps (`xxl`–`xxxxl`) compress one notch down the primitive scale below 768px, in a `@media` block at the bottom of `tokens-light.css` — the same single token-layer breakpoint typography uses. Steps `xl` and below never change.
 
 ### Padding Scale
 | Token | Value | Typical Use |
@@ -220,7 +225,7 @@ Below 959px:
 | `--padding-md` | 16px | Standard input horizontal, card inner padding baseline |
 | `--padding-lg` | 20px | Standard button horizontal |
 | `--padding-xl` | 40px | Large card insets |
-| `--padding-xxl` | 60px | Section-level insets |
+| `--padding-xxl` | 60px (40px ≤768px) | Section-level insets |
 
 ### Layout Philosophy
 Whitespace communicates hierarchy. Dense elements use micro-gaps (2–8px); comfortable reading areas use md/lg gaps (16–20px); major layout regions use xl–xxxxl (40–120px). The system relies on spacing contrast rather than dividers — overuse of `--color-divider` is a design smell.
@@ -666,16 +671,19 @@ The theme is activated by `data-theme="dark"` on the HTML root element. The `tok
 ## Responsive Behavior
 
 ### Breakpoints
-The website's docs shell (left nav rail + main column + right details rail) steps down at four widths. The rail widths and column gap live as `--layout-*` custom properties in `globals.css`, so the mid-breakpoint narrowing applies to every page at once:
+The canonical set is **1279 / 1151 / 959 / 768 / 600**, all `max-width`. The rail widths and column gap live as `--layout-*` custom properties in `globals.css`, so the mid-breakpoint narrowing applies to every page at once:
 - **≥ 1280px** — full shell: 291px left nav (`--layout-sidebar-width`), 320px right rail (`--layout-rail-width`), 60px column gaps (`--layout-column-gap`).
 - **≤ 1279px (mid)** — both rails narrow (nav 240px, rail 280px) and the column gap tightens to 40px, keeping the center column at a readable measure.
 - **≤ 1151px** — the right details rail stacks below the main content (per-page media query on the `resumeLayout`/`updatesLayout` flex row); the left nav stays.
-- **≤ 959px (mobile)** — the left nav hides and pages collapse to a single column.
-- **≤ 768px** — typography collapse (page titles and sub-display sizes step down).
+- **≤ 959px (tablet)** — the left nav hides (its links move into the header drawer's section accordions) and pages collapse to a single column.
+- **≤ 768px (mobile)** — **the token layer's only breakpoint**: display-tier typography and section-rhythm spacing collapse (see Typography → Hierarchy and Spacing → Gap Scale).
+- **≤ 600px (phone)** — body side gutters tighten; dense grids switch to horizontal scroll inside their own blocks.
+
+A section-specific threshold outside this set is allowed only when it is content-driven (a bespoke grid that breaks at its own natural width) and commented in place; everything else uses the canonical five.
 
 ### Typography Collapse
-- Mega / Display sizes are marketing-only and should scale down significantly on mobile (e.g. Display 2 at 64px → ~36–40px).
-- In-app headings (H1–H3, 30–22px) generally hold; avoid reducing below 20px for H3.
+- Handled by the token layer at ≤768px — Display 2 64px → 40px, Sub Display 30px → 24px, Mega/Display 1 proportional. No per-page overrides.
+- In-app headings (H1–H3, 30–22px) hold at every viewport; never reduce H3 below 20px.
 
 ### Layout Collapse
 - `AppLayout` sidebar collapses to off-canvas/drawer on mobile.
@@ -705,7 +713,7 @@ The website's docs shell (left nav rail + main column + right details rail) step
 
 - **Motion (JS timings)** — CSS motion is fully tokenized, but JS-driven timings (Tooltip's 300/150ms show/hide delays, Toast's 5000ms auto-dismiss, Carousel's autoplay interval) remain hardcoded constants in component TypeScript — tokenizing them needs shared TS constants, a separate follow-up.
 - **Figma parity** — The system originates in Figma ([robr0-ds26](https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26)), and foundation/component pages deep-link to specific frames via `figmaUrl`. Keeping the Figma file and the coded tokens in sync is still a manual process — there is no automated export pipeline.
-- **Breakpoint tokens** — The docs-shell column widths are tokenized (`--layout-*` in the website's `globals.css`), but the media-query thresholds themselves (1279 / 1151 / 959 / 768px) remain raw values repeated across CSS files — CSS custom properties cannot drive `@media` conditions.
+- **Breakpoint tokens** — The docs-shell column widths are tokenized (`--layout-*` in the website's `globals.css`), but the media-query thresholds themselves (the canonical 1279 / 1151 / 959 / 768 / 600px set) remain raw values repeated across CSS files by design — CSS custom properties cannot drive `@media` conditions, and a preprocessor dependency isn't worth it for five documented literals.
 - **Form validation patterns** — Error state on Input is documented, but multi-field form-level validation patterns (inline error summaries, field grouping) are not in scope here.
 - **Code/monospace** — CodeBlock (the one sanctioned monospace context) uses a raw system mono stack; no `--font-code-*` token is defined in the typography layer. If monospace spreads beyond CodeBlock, codify the stack (or a dedicated face like JetBrains Mono) as a token first.
 - **Chart theming** — Recharts chart components use `--color-core-accent-*` tokens for data series, but a formal `--chart-series-{n}` token set for ordered series colors has not been codified.

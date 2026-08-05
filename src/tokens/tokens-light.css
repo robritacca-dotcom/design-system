@@ -156,4 +156,29 @@
   --gap-md: var(--primitive-gap-md);
   --gap-lg: var(--primitive-gap-lg);
   --gap-xl: var(--primitive-gap-xl);
+
+  /* Section rhythm — page-level spacing between major blocks. These are
+     the only spacing tokens with a responsive step (see the collapse
+     block at the bottom of this file). */
+  --gap-xxl: var(--primitive-gap-xxl);       /* 60px */
+  --gap-xxxl: var(--primitive-gap-xxxl);     /* 80px */
+  --gap-xxxxl: var(--primitive-gap-xxxxl);   /* 120px */
+  --padding-xxl: var(--primitive-padding-xxl); /* 60px */
+}
+
+/* ============================================
+   RESPONSIVE COLLAPSE
+   Section-rhythm spacing steps one notch down the primitive scale at
+   768px — the token layer's only breakpoint (typography collapses at the
+   same threshold in tokens-typography.css). Component-level spacing
+   (gap/padding xl and below) never steps.
+   ============================================ */
+
+@media (max-width: 768px) {
+  [data-theme="light"], :root {
+    --gap-xxl: var(--primitive-gap-xl);        /* 60 → 40 */
+    --gap-xxxl: var(--primitive-gap-xxl);      /* 80 → 60 */
+    --gap-xxxxl: var(--primitive-gap-xxxl);    /* 120 → 80 */
+    --padding-xxl: var(--primitive-padding-xl); /* 60 → 40 */
+  }
 }

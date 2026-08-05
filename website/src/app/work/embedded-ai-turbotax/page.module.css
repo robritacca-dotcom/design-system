@@ -229,7 +229,7 @@
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--primitive-gap-xxxl);
+  gap: var(--gap-xxxl);
 }
 
 /* ============================================
@@ -446,15 +446,7 @@
     align-items: flex-start;
   }
 
-  .pageTitle {
-    font-size: 40px;
-    line-height: 1.05;
-  }
 
-  .subDisplay {
-    font-size: 22px;
-    line-height: 32px;
-  }
 
   .pageActions {
     padding-top: 0;

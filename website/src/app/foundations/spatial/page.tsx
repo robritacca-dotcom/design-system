@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
@@ -11,6 +12,7 @@ import PageLinks from "../../../components/PageLinks/PageLinks";
 import { getSidebarLinks, foundationsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
+import { Tabs } from "@robr0/design-system/components/Tabs/Tabs";
 
 const { sidebarLinks } = getSidebarLinks(foundationsSidebarLinks, "/foundations/spatial");
 
@@ -25,6 +27,9 @@ interface SpacingToken {
   value: string;
   px: number;
   variant: SpacingSwatchVariant;
+  /** Values the token resolves to below 768px — section-rhythm tokens only */
+  mobileValue?: string;
+  mobilePx?: number;
 }
 
 const borderTokens: SpacingToken[] = [
@@ -49,9 +54,9 @@ const gapTokens: SpacingToken[] = [
   { label: "MD", value: "16px", px: 16, variant: "gap" },
   { label: "LG", value: "20px", px: 20, variant: "gap" },
   { label: "XL", value: "40px", px: 40, variant: "gap" },
-  { label: "XXL", value: "60px", px: 60, variant: "gap" },
-  { label: "XXXL", value: "80px", px: 80, variant: "gap" },
-  { label: "XXXXL", value: "120px", px: 120, variant: "gap" },
+  { label: "XXL", value: "60px", px: 60, variant: "gap", mobileValue: "40px", mobilePx: 40 },
+  { label: "XXXL", value: "80px", px: 80, variant: "gap", mobileValue: "60px", mobilePx: 60 },
+  { label: "XXXXL", value: "120px", px: 120, variant: "gap", mobileValue: "80px", mobilePx: 80 },
 ];
 
 const paddingTokens: SpacingToken[] = [
@@ -62,7 +67,7 @@ const paddingTokens: SpacingToken[] = [
   { label: "MD", value: "16px", px: 16, variant: "padding" },
   { label: "LG", value: "20px", px: 20, variant: "padding" },
   { label: "XL", value: "40px", px: 40, variant: "padding" },
-  { label: "XXL", value: "60px", px: 60, variant: "padding" },
+  { label: "XXL", value: "60px", px: 60, variant: "padding", mobileValue: "40px", mobilePx: 40 },
 ];
 
 const spacingSections = [
@@ -76,7 +81,15 @@ const spacingSections = [
    PAGE
    ============================================ */
 
+const viewportTabs = [
+  { value: "desktop", label: "Desktop", icon: "desktop_windows" },
+  { value: "mobile", label: "Mobile", icon: "smartphone" },
+];
+
 export default function SemanticSpacingPage() {
+  const [viewport, setViewport] = useState("desktop");
+  const isMobileView = viewport === "mobile";
+
   return (
     <>
 
@@ -108,6 +121,22 @@ export default function SemanticSpacingPage() {
             </p>
           </div>
 
+          {/* Viewport toggle — section-rhythm tokens (gap XXL–XXXXL,
+              padding XXL) step one notch down below 768px. */}
+          <div className={`${styles.viewportToggle} animate-in animate-delay-2`}>
+            <Tabs
+              tabs={viewportTabs}
+              activeTab={viewport}
+              onTabChange={setViewport}
+              ariaLabel="Token values by viewport"
+            />
+            <p className={styles.viewportNote}>
+              {isMobileView
+                ? "Below 768px the section-rhythm steps (gap XXL–XXXXL, padding XXL) compress one notch. Everything else holds."
+                : "Above 768px every step renders at its full size."}
+            </p>
+          </div>
+
           {/* Sections */}
           {spacingSections.map((section, idx) => (
             <section
@@ -120,8 +149,8 @@ export default function SemanticSpacingPage() {
                   <SpacingSwatch
                     key={`${section.title}-${t.label}`}
                     label={t.label}
-                    value={t.value}
-                    px={t.px}
+                    value={isMobileView && t.mobileValue ? t.mobileValue : t.value}
+                    px={isMobileView && t.mobilePx ? t.mobilePx : t.px}
                     variant={t.variant}
                   />
                 ))}

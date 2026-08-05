@@ -114,3 +114,22 @@
   --font-paragraph-sm-em-line-height: 20px;
   --font-paragraph-sm-em-letter-spacing: 0;
 }
+
+/* ============================================
+   RESPONSIVE COLLAPSE
+   The display tier steps down once, at 768px — the token layer's only
+   breakpoint. Headings and body never step; weights and letter-spacing
+   never change at any breakpoint (weight contrast is the hierarchy rule).
+   ============================================ */
+
+@media (max-width: 768px) {
+  :root {
+    --font-mega-1-size: 64px;
+    --font-mega-2-size: 56px;
+    --font-display-1-size: 48px;
+    --font-display-2-size: 40px;
+    --font-display-2-line-height: 1.05;
+    --font-sub-display-size: 24px;
+    --font-sub-display-line-height: 36px;
+  }
+}

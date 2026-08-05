@@ -713,7 +713,9 @@ export const SemanticSpacing: Story = {
         }}
       >
         Semantic spacing tokens that reference primitives. Use these in
-        components.
+        components. The section-rhythm steps (gap XXL–XXXXL, padding XXL)
+        compress one notch below 768px — the values shown here resolve at
+        the current viewport.
       </p>
 
       <TokenSection title="Border Radius">
@@ -736,6 +738,7 @@ export const SemanticSpacing: Story = {
         <SpacingToken name="MD" value="--padding-md" />
         <SpacingToken name="LG" value="--padding-lg" />
         <SpacingToken name="XL" value="--padding-xl" />
+        <SpacingToken name="XXL" value="--padding-xxl" />
       </TokenSection>
 
       <TokenSection title="Border Width">
@@ -751,6 +754,9 @@ export const SemanticSpacing: Story = {
         <SpacingToken name="MD" value="--gap-md" />
         <SpacingToken name="LG" value="--gap-lg" />
         <SpacingToken name="XL" value="--gap-xl" />
+        <SpacingToken name="XXL" value="--gap-xxl" />
+        <SpacingToken name="XXXL" value="--gap-xxxl" />
+        <SpacingToken name="XXXXL" value="--gap-xxxxl" />
       </TokenSection>
     </div>
   ),

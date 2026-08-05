@@ -31,7 +31,7 @@ html.theme-ready {
      the mid-breakpoint override below reaches all of them at once. */
   --layout-sidebar-width: 291px;
   --layout-rail-width: 320px;
-  --layout-column-gap: var(--primitive-gap-xxl);
+  --layout-column-gap: var(--gap-xxl);
 }
 
 /* Mid breakpoint (960–1279px): narrow both rails and tighten the column
@@ -59,11 +59,10 @@ body {
   color: var(--color-text-primary);
   background: var(--color-bg-page-primary);
   min-height: 100vh;
-  min-width: 440px;
   padding: var(--primitive-padding-lg) var(--primitive-padding-xl);
   display: flex;
   flex-direction: column;
-  gap: var(--primitive-gap-xxxl);
+  gap: var(--gap-xxxl);
   align-items: center;
   transition: background-color var(--motion-duration-slow) var(--motion-ease-standard), color var(--motion-duration-slow) var(--motion-ease-standard);
   -webkit-font-smoothing: antialiased;
@@ -340,5 +339,13 @@ a {
 @media (max-width: 959px) {
   body {
     padding: var(--primitive-padding-lg);
+  }
+}
+
+/* Phones: tighten the side gutters so the content column keeps a usable
+   measure at 375–430px viewports. */
+@media (max-width: 600px) {
+  body {
+    padding: var(--primitive-padding-lg) var(--primitive-padding-md);
   }
 }

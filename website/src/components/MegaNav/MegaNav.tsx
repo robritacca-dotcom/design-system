@@ -4,7 +4,15 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
-import { dsMegaItems, isDesignSystemPath } from "@/config/navigation";
+import {
+  componentsSidebarLinks,
+  docsSidebarLinks,
+  dsMegaItems,
+  foundationsSidebarLinks,
+  isDesignSystemPath,
+  workSidebarLinks,
+  type NavLink,
+} from "@/config/navigation";
 import styles from "./MegaNav.module.css";
 
 /** Inline SVG logo — matches the production Header */
@@ -36,10 +44,84 @@ function LogoIcon({ className }: { className?: string }) {
   );
 }
 
+/**
+ * One expandable section in the mobile drawer: the label stays a real link
+ * (tap navigates), a separate chevron button toggles the sub-list — the same
+ * per-section links the desktop sidebar shows, which is otherwise hidden
+ * below 960px.
+ */
+function MobileDrawerSection({
+  id,
+  label,
+  href,
+  links,
+  nested,
+  expanded,
+  pathname,
+  onToggle,
+  onNavigate,
+}: {
+  id: string;
+  label: string;
+  href: string;
+  links: NavLink[];
+  nested?: boolean;
+  expanded: boolean;
+  pathname: string;
+  onToggle: () => void;
+  onNavigate: () => void;
+}) {
+  return (
+    <div className={styles.mobileNavGroup}>
+      <div className={styles.mobileNavRow}>
+        <Link
+          href={href}
+          className={`${styles.mobileLink} ${nested ? styles.mobileLinkNested : ""}`}
+          onClick={onNavigate}
+          aria-current={pathname === href ? "page" : undefined}
+        >
+          {label}
+        </Link>
+        <button
+          type="button"
+          className={styles.mobileChevronBtn}
+          aria-expanded={expanded}
+          aria-controls={id}
+          aria-label={`${expanded ? "Collapse" : "Expand"} ${label} pages`}
+          onClick={onToggle}
+        >
+          <svg
+            className={`${styles.caret} ${expanded ? styles.caretOpen : ""}`}
+            width="8" height="5" viewBox="0 0 8 5"
+            aria-hidden="true" fill="none"
+          >
+            <path d="M1 1L4 4L7 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
+      </div>
+      <div id={id} className={styles.mobileSubList} hidden={!expanded}>
+        {links.map((link) => (
+          <Link
+            key={link.href}
+            href={link.href}
+            className={`${styles.mobileLink} ${nested ? styles.mobileLinkNested2 : styles.mobileLinkNested}`}
+            onClick={onNavigate}
+            aria-current={pathname === link.href ? "page" : undefined}
+          >
+            {link.label}
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function MegaNav() {
   const pathname = usePathname() ?? "/";
   const [open, setOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  // Drawer accordions are closed by default; one open at a time.
+  const [expandedSection, setExpandedSection] = useState<string | null>(null);
   const [isStuck, setIsStuck] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const triggerRef = useRef<HTMLAnchorElement>(null);
@@ -101,6 +183,7 @@ export default function MegaNav() {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setOpen(false);
     setMobileOpen(false);
+    setExpandedSection(null);
   }, [pathname]);
 
   // Toggle the sticky overlay header when the in-flow header scrolls out of view
@@ -414,14 +497,16 @@ export default function MegaNav() {
           >
             About
           </Link>
-          <Link
+          <MobileDrawerSection
+            id="drawer-work"
+            label="Work"
             href="/work"
-            className={styles.mobileLink}
-            onClick={() => setMobileOpen(false)}
-            aria-current={isWorkActive ? "page" : undefined}
-          >
-            Work
-          </Link>
+            links={workSidebarLinks.slice(1)}
+            expanded={expandedSection === "work"}
+            pathname={pathname}
+            onToggle={() => setExpandedSection((v) => (v === "work" ? null : "work"))}
+            onNavigate={() => setMobileOpen(false)}
+          />
           <Link
             href="/writing"
             className={styles.mobileLink}
@@ -433,25 +518,53 @@ export default function MegaNav() {
           <div className={styles.mobileSection}>
             <Link
               href="/design-system"
-              className={styles.mobileSectionLabel}
+              className={styles.mobileLink}
               onClick={() => setMobileOpen(false)}
+              aria-current={pathname === "/design-system" ? "page" : undefined}
             >
               Design system
             </Link>
-            {dsMegaItems.map((item) => {
-              const itemActive = pathname === item.href || pathname.startsWith(item.href + "/");
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`${styles.mobileLink} ${styles.mobileLinkNested}`}
-                  onClick={() => setMobileOpen(false)}
-                  aria-current={itemActive ? "page" : undefined}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
+            <MobileDrawerSection
+              id="drawer-docs"
+              label="Docs"
+              href="/docs"
+              links={docsSidebarLinks.slice(1)}
+              nested
+              expanded={expandedSection === "docs"}
+              pathname={pathname}
+              onToggle={() => setExpandedSection((v) => (v === "docs" ? null : "docs"))}
+              onNavigate={() => setMobileOpen(false)}
+            />
+            <MobileDrawerSection
+              id="drawer-foundations"
+              label="Foundations"
+              href="/foundations"
+              links={foundationsSidebarLinks.slice(1)}
+              nested
+              expanded={expandedSection === "foundations"}
+              pathname={pathname}
+              onToggle={() => setExpandedSection((v) => (v === "foundations" ? null : "foundations"))}
+              onNavigate={() => setMobileOpen(false)}
+            />
+            <MobileDrawerSection
+              id="drawer-components"
+              label="Components"
+              href="/components"
+              links={componentsSidebarLinks.slice(1)}
+              nested
+              expanded={expandedSection === "components"}
+              pathname={pathname}
+              onToggle={() => setExpandedSection((v) => (v === "components" ? null : "components"))}
+              onNavigate={() => setMobileOpen(false)}
+            />
+            <Link
+              href="/playground"
+              className={`${styles.mobileLink} ${styles.mobileLinkNested}`}
+              onClick={() => setMobileOpen(false)}
+              aria-current={pathname === "/playground" ? "page" : undefined}
+            >
+              Playground
+            </Link>
           </div>
           <Link
             href="/contact"

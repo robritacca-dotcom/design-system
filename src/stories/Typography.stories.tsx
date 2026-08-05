@@ -220,7 +220,9 @@ export const DisplayStyles: Story = {
         }}
       >
         Large display text for hero sections, marketing pages, and major
-        headlines. All styles use Nunito Sans Light (300 weight).
+        headlines. All styles use Nunito Sans Light (300 weight). The display
+        tier steps down automatically below 768px — the sizes shown resolve at
+        the current viewport.
       </p>
 
       <TypographyStyle

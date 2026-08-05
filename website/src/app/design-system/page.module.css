@@ -514,13 +514,15 @@
 
 /* ---------- responsive ---------- */
 
+/* Content-driven threshold: the three-column collage needs ~1024px to
+   breathe, so it collapses here rather than at a canonical layout tier. */
 @media (max-width: 1023px) {
   .collage {
     grid-template-columns: minmax(0, 1fr);
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .page {
     padding: var(--primitive-gap-xl) 20px 64px;
   }
@@ -528,15 +530,4 @@
   .hero {
     margin-bottom: 40px;
   }
-
-  .pageTitle {
-    font-size: var(--font-sub-display-size);
-    line-height: var(--font-sub-display-line-height);
-  }
-
-  .subDisplay {
-    font-size: 24px;
-    line-height: 36px;
-  }
-
 }
