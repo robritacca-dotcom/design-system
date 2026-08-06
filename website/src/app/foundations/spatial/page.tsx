@@ -49,8 +49,10 @@ const radiusTokens: SpacingToken[] = [
 ];
 
 const gapTokens: SpacingToken[] = [
-  { label: "XS", value: "2px", px: 2, variant: "gap" },
+  { label: "XXS", value: "2px", px: 2, variant: "gap" },
+  { label: "XS", value: "4px", px: 4, variant: "gap" },
   { label: "SM", value: "8px", px: 8, variant: "gap" },
+  { label: "SM-MD", value: "12px", px: 12, variant: "gap" },
   { label: "MD", value: "16px", px: 16, variant: "gap" },
   { label: "LG", value: "20px", px: 20, variant: "gap" },
   { label: "XL", value: "40px", px: 40, variant: "gap" },
@@ -60,10 +62,11 @@ const gapTokens: SpacingToken[] = [
 ];
 
 const paddingTokens: SpacingToken[] = [
-  { label: "XXS", value: "2px", px: 2, variant: "padding" },
-  { label: "XS", value: "4px", px: 4, variant: "padding" },
-  { label: "SM2", value: "6px", px: 6, variant: "padding" },
+  { label: "XXXS", value: "2px", px: 2, variant: "padding" },
+  { label: "XXS", value: "4px", px: 4, variant: "padding" },
+  { label: "XS", value: "6px", px: 6, variant: "padding" },
   { label: "SM", value: "8px", px: 8, variant: "padding" },
+  { label: "SM-MD", value: "12px", px: 12, variant: "padding" },
   { label: "MD", value: "16px", px: 16, variant: "padding" },
   { label: "LG", value: "20px", px: 20, variant: "padding" },
   { label: "XL", value: "40px", px: 40, variant: "padding" },

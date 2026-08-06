@@ -155,7 +155,8 @@ export default function MotionPage() {
             <p className={styles.introBody}>
               Animation in this system is functional, not decorative: it confirms an
               interaction, reveals structure, or signals loading. The whole vocabulary is
-              seven durations and five easing curves, defined once as{" "}
+              {" "}{coreDurations.length + extendedDurations.length} durations and{" "}
+              {easings.length} easing curves, defined once as{" "}
               <code>--motion-*</code> tokens and shared by the component library and this
               site. Never write a literal <code>0.2s ease</code> in component CSS. Compose
               a duration token with an easing token instead. Click any tile to replay its

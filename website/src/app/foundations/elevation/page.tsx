@@ -34,7 +34,7 @@ const shadowTokens: ShadowToken[] = [
     tileClass: "elevationTileFloating",
     light: "0 4px 16px rgba(0, 0, 0, 0.12)",
     dark: "0 4px 16px rgba(0, 0, 0, 0.55)",
-    usedBy: "Popover, Dropdown menus, DropdownMenu, chart tooltips, Toast",
+    usedBy: "Popover, Dropdown and DropdownMenu, Combobox, ContextMenu, ColorPicker, chart tooltips, Toast",
   },
   {
     label: "Modal",

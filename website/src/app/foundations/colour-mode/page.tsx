@@ -12,6 +12,7 @@ import PageLinks from "../../../components/PageLinks/PageLinks";
 import { getSidebarLinks, foundationsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
+import { TOKEN_COUNTS } from "@robr0/design-system/tokens/registry";
 
 const { sidebarLinks } = getSidebarLinks(foundationsSidebarLinks, "/foundations/colour-mode");
 
@@ -338,7 +339,7 @@ export default function SemanticColoursPage() {
               Semantic roles that map to primitives per mode
             </p>
             <p className={styles.introBody}>
-              Each colour here has a role, like &quot;page background&quot; or &quot;error border&quot;, and maps to a different primitive value depending on whether the UI is in light or dark mode. Components only reference these roles, so switching themes is just swapping which primitives each role points to. Toggle the mode above to see the values change.
+              Each colour here has a role, like &quot;page background&quot; or &quot;error border&quot;, and maps to a different primitive value depending on whether the UI is in light or dark mode. Components only reference these roles, so switching themes is just swapping which primitives each role points to. Toggle the mode above to see the values change. This page shows the most-used roles; the full set of {TOKEN_COUNTS.colour} colour tokens lives in the token registry and the Storybook token docs.
             </p>
           </div>
 
