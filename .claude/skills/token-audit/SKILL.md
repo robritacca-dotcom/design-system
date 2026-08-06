@@ -31,7 +31,7 @@ Use this skill when asked to check for hardcoded values, audit token usage, find
    - Raw `rgb()` or `rgba()` calls that could map to a semantic colour token
    - Pixel values for `padding`, `margin`, `gap`, `border-radius`, `font-size`, `line-height` that correspond to a known token (cross-reference the primitives file)
    - Hardcoded font weights (e.g. `font-weight: 600`) where a typography token exists
-   - Icon sizing done wrong: `font-size` set directly on a Material Symbols icon, or raw 20/24/32/48px icon dimensions — the fix is `--icon-size: var(--icon-size-sm|md|lg|xl)` (the icon font reads that one property for size, width, and height)
+   - Icon sizing done wrong: `font-size` set directly on a Material Symbols icon, or raw pixel icon dimensions matching an `--icon-size-*` step — the fix is `--icon-size: var(--icon-size-sm|md|lg|xl)` (the icon font reads that one property for size, width, and height; the scale's values live in the token files)
    - Hardcoded `transition`/`animation` durations and easings (`0.2s`, `ease`, literal cubic-beziers) where a `--motion-duration-*`/`--motion-ease-*` token matches — component and website CSS is fully migrated, so any literal timing is a violation unless a directive sanctions it
 
    **Do NOT flag:**

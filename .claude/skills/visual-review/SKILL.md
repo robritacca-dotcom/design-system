@@ -1,14 +1,14 @@
 ---
 name: visual-review
-description: Start the website dev server and screenshot pages in both light and dark mode to catch visual issues. Use when asked to visually review changes, check light and dark mode, or screenshot pages.
+description: Start the website dev server and screenshot pages in both light and dark mode, at desktop and mobile widths, to catch visual issues. Use when asked to visually review changes, check light and dark mode, or screenshot pages.
 icon: preview
-displayDescription: "Opens the site in a browser preview, drives each page through both light and dark mode, and screenshots them. Checks for invisible text, broken layouts, overflow, and stuck hover states, then reports findings or confirms all clear."
+displayDescription: "Opens the site in a browser preview, drives each page through both light and dark mode at desktop and mobile widths, and screenshots them. Checks for invisible text, broken layouts, overflow, and stuck hover states, then reports findings or confirms all clear."
 invoke: ["check how this looks","review light and dark","visual check","screenshot the page"]
 ---
 
 # visual-review
 
-Start the website dev server and screenshot pages in both light and dark mode to catch visual issues.
+Start the website dev server and screenshot pages in both light and dark mode, at desktop and mobile widths, to catch visual issues.
 
 ## When invoked
 
@@ -22,7 +22,7 @@ Use the browser/preview tools available in the current environment for every ste
 
 2. **Open the website's Next.js dev server** (the `website` configuration in `.claude/launch.json`; port 3000 by default, but the config sets `autoPort`, so read the URL the preview actually reports rather than assuming 3000) in the browser preview and wait for it to be ready.
 
-3. **For each URL, check both themes.** The site's theme is driven by the `data-theme` attribute on `<html>` — not by `prefers-color-scheme`, so forcing the browser's colour scheme does nothing. To switch: click the theme toggle in the top nav (`MegaNav`, top-right), or set the attribute programmatically. Verify the attribute actually changed before screenshotting, then take a screenshot in each theme.
+3. **For each URL, check both themes at both viewports.** The site's theme is driven by the `data-theme` attribute on `<html>` — not by `prefers-color-scheme`, so forcing the browser's colour scheme does nothing. To switch: click the theme toggle in the top nav (`MegaNav`, top-right), or set the attribute programmatically. Verify the attribute actually changed before screenshotting, then take a screenshot in each theme. Repeat at a mobile viewport (~375px wide — mobile is a first-class surface: type and spacing collapse at the token layer, and navigation moves into a drawer): screenshot both themes there too, and on at least one page open the drawer nav, expand a section, and screenshot it open.
 
 4. **Examine each screenshot for:**
    - Text that is invisible or the same colour as its background
@@ -31,10 +31,11 @@ Use the browser/preview tools available in the current environment for every ste
    - Hover/focus states that appear stuck in an active state
    - Images or assets that failed to load (broken image icons)
    - Any layout that differs unexpectedly between light and dark
+   - At mobile width: horizontal overflow (a page that scrolls sideways), content clipped by the viewport, and drawer navigation that fails to open, scroll, or close
 
 5. **Report findings** concisely:
-   - Format: `[URL] [dark|light] — description of issue`
-   - If no issues found, say: `[URL] — looks correct in both themes`
+   - Format: `[URL] [dark|light] [desktop|mobile] — description of issue`
+   - If no issues found, say: `[URL] — looks correct in both themes at both widths`
 
 6. **Stop the preview server** when all pages are reviewed, unless the session is still using it.
 

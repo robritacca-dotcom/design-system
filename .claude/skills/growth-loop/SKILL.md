@@ -37,11 +37,7 @@ Output lands in `ga-analysis/output/all.json`. If the venv is missing: `python3 
 
 ### 2. Analyze — with the ga-report skill's judgment calls
 
-Apply every gotcha from the `ga-report` skill (`~/.claude/skills/ga-report/SKILL.md` — installed only on Rob's Mac, like the GA venv and credentials; this loop runs there, not on the Windows machine):
-- Subtract bot traffic (historically Singapore at ~4% engagement; spam referrers `ddvvff.org`, `snucm.com`) before drawing conclusions.
-- Sum pages by `pagePath`, not `pageTitle` (titles are fragmented from past SEO edits).
-- High Direct (~75%) is normal dark social, not a problem.
-- Component gallery pages naturally have short dwell — don't flag that.
+Apply every gotcha from the `ga-report` skill (`~/.claude/skills/ga-report/SKILL.md` — installed only on Rob's Mac, like the GA venv and credentials; this loop runs there, not on the Windows machine). That skill owns the bot-traffic list, the pagePath-vs-pageTitle rule, and the traffic-mix baselines — read it fresh each run rather than trusting a remembered copy, and subtract the bots it names before drawing conclusions.
 
 Look for **copy-shaped problems**, e.g.: a high-traffic landing page with weak engagement or dwell; strong entry pages that don't lead anywhere (missing/weak CTA copy); case studies with good dwell but low reach (weak titles/descriptions); a mismatch between what a traffic source promises and what the page's headline says.
 

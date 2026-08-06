@@ -103,7 +103,7 @@ Two details worth knowing before you reach for it:
 
 ### File 2: `ComponentName.css`
 - CSS custom properties exclusively — **no hardcoded hex colours**, no raw `rgb()`/`rgba()`
-- Icons are sized by setting `--icon-size: var(--icon-size-sm|md|lg|xl)` (20/24/32/48px) on the icon element — never `font-size` or raw pixel dimensions on an icon
+- Icons are sized by setting `--icon-size: var(--icon-size-sm|md|lg|xl)` on the icon element — never `font-size` or raw pixel dimensions on an icon (the scale's values live in the token files)
 - Transitions/animations compose `--motion-duration-*` with `--motion-ease-*` from `tokens-motion.css` — never literal timings like `0.2s ease` (new code must use the motion tokens from the start)
 - All other spacing, padding, gap, border-radius, font sizes must use semantic tokens from `tokens-light.css` / `tokens-typography.css`
 - **If a value genuinely cannot use a token** (colour-space physics, a glyph inside a control's geometry, decorative timing tuned by eye), sanction it *at the site*: a `/* ds-allow(<category>): <reason> */` line inside a comment at the value (`ds-allow-file(...)` in the header for file-wide cases), plus a sentence in the component's design.md spec. The category set is the closed list in `scripts/validate-css-directives.mjs` (grammar is build-enforced). **Never add an exception to the token-audit skill** — it reads the directives; it maintains no list

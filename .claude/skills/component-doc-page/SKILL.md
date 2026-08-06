@@ -47,6 +47,7 @@ This is a more thorough, component-specific version of `new-page`. The Button pa
    - Standard layout classes: `dsLayout`, `dsContent`, `pageHeader`, `pageTitle`, `subDisplay`, `introSection`, `introBody`
    - Any additional classes needed for the variant showcase grid
    - CSS custom properties only
+   - Mobile type and section rhythm collapse at the **token layer** (768px, system-wide) — do not add per-page `@media` overrides for tokenized values; when the showcase grid genuinely needs a breakpoint, use the canonical set in `design.md`'s responsive spec
 
 6. **Create `website/src/app/components/<component-slug>/layout.tsx`** — it is exactly this, with no description of its own:
 

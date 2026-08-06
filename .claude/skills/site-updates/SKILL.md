@@ -64,7 +64,7 @@ cd "$WT/website" && npm run build
 Fix anything your edit broke, then commit in the worktree (e.g. `content(site-updates): add "<entry title>" entry through YYYY-MM-DD`) and clean up:
 
 ```bash
-rm -rf "$WT/node_modules"   # website deps hoist to the workspace root; there is no second real install tree
+rm -rf "$WT/node_modules" "$WT/website/node_modules"   # npm nests version-conflicting deps under website/, so both trees exist
 git -C $REPO worktree remove "$WT"
 ```
 

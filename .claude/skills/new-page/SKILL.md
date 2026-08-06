@@ -43,6 +43,7 @@ For a **component documentation page**, use the `component-doc-page` skill inste
 - Copy the exemplar's layout classes; add page-specific classes as needed
 - Semantic design tokens only — no hardcoded colours or magic values
 - No `ch`-based `max-width` on prose — doc paragraphs run the full content column; the layout column is the only width constraint (build-enforced by `scripts/validate-page-titles.mjs`)
+- Mobile type and section rhythm collapse at the **token layer** (display sizes and section-gap tokens step down at 768px system-wide) — do not add per-page `@media` overrides for tokenized values; when a page genuinely needs a breakpoint, use the canonical set in `design.md`'s responsive spec
 
 ### File 3: `layout.tsx`
 - Sidebar-registered pages export `metadata` via the shared helper: `export const metadata = pageMetadata("<your path>", "<one-line description>")` (import from `@/config/navigation`)
