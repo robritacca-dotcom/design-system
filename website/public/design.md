@@ -8,7 +8,7 @@ The system runs a **single typeface throughout**: **Nunito Sans** at weight 300 
 
 The **three-tier token architecture** is the defining structural rule:
 1. **Primitives** (`--primitive-*`) — raw hex/px values. Source of truth. Never used directly in components.
-2. **Semantic tokens** (`--color-*`, `--radius-*`, `--gap-*`, `--padding-*`, `--font-*`, `--motion-*`, `--icon-size-*`, `--shadow-*`) — usage-intent variables consumed by components. Always use these.
+2. **Semantic tokens** (`--color-*`, `--radius-*`, `--gap-*`, `--padding-*`, `--border-*`, `--font-*`, `--motion-*`, `--icon-size-*`, `--shadow-*` — `CATEGORY_PREFIXES` in `scripts/generate-token-registry.mjs` is the authoritative list) — usage-intent variables consumed by components. Always use these.
 3. **Component CSS classes** (`.ds-button`, `.ds-badge`, etc.) — per-component scope, referencing semantic tokens.
 
 The system is **light/dark-first**: every semantic color token has a light-theme value and a dark-theme override. The switch is driven by `data-theme="dark"` on the root element. Status colors (positive, warning, error, info) stay perceptually stable across themes; surfaces and text invert.
@@ -297,7 +297,7 @@ Never write a literal *elevation* shadow in component CSS — use one of these t
 
 ## Motion
 
-Motion is quiet and functional — it confirms an interaction, reveals structure, or signals loading, never decorates. The whole vocabulary is defined in `tokens-motion.css` (theme-agnostic, single `:root` like typography): seven `--motion-duration-*` tokens and five `--motion-ease-*` curves. Compose a duration with an easing instead of writing literal values — never hardcode `0.2s ease` in component CSS.
+Motion is quiet and functional — it confirms an interaction, reveals structure, or signals loading, never decorates. The whole vocabulary is defined in `tokens-motion.css` (theme-agnostic, single `:root` like typography): eight `--motion-duration-*` tokens and five `--motion-ease-*` curves. Compose a duration with an easing instead of writing literal values — never hardcode `0.2s ease` in component CSS.
 
 **Durations — core scale** (day-to-day UI):
 
@@ -511,7 +511,7 @@ Default icons (Material Symbols Rounded): `info`, `check_circle`, `warning`, `er
 
 ### Table
 
-**`ds-table`** — Data table with header row, body rows, optional sorting. Header: `--font-title-body-*` (weight 600). Body: `--font-paragraph-*`. Row dividers: `--color-divider`. Background: `--color-bg-page-primary` or `--color-bg-container-primary` depending on context.
+**`ds-table`** — Data table with header row and body rows; presentational only (no sorting, selection, or row expansion). Header: `--font-title-body-*` (weight 600). Body: `--font-paragraph-*`. Row dividers: `--color-divider`. Background: `--color-bg-page-primary` or `--color-bg-container-primary` depending on context. `bordered` wraps the table in a `--color-bg-container-border` container with `--radius-md`.
 
 ### Dialog
 
@@ -674,7 +674,7 @@ The theme is activated by `data-theme="dark"` on the HTML root element. The `tok
 ## Do's and Don'ts
 
 ### Do
-- Use semantic tokens (`--color-*`, `--radius-*`, `--gap-*`, `--padding-*`, `--font-*`, `--motion-*`, `--icon-size-*`) in every component. Never use `--primitive-*` tokens directly.
+- Use semantic tokens (every `CATEGORY_PREFIXES` category — `--color-*`, `--radius-*`, `--gap-*`, `--padding-*`, `--border-*`, `--font-*`, `--motion-*`, `--icon-size-*`, `--shadow-*`) in every component. Never use `--primitive-*` tokens directly.
 - Reserve `--color-action-primary-bg` (teal) for primary CTA buttons, focus rings, and active input states. The one other sanctioned use is as the lead series colour in charts; nowhere else.
 - Use Nunito Sans weight 300 for display/marketing text and weight 600 for in-app headings. The weight split is intentional.
 - Apply `--radius-full` to all buttons, `--radius-md` to all inputs and standard containers, and `--radius-xl` to Card/EntityCard navigation tiles. This contrast is the system's shape signature.

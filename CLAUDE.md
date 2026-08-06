@@ -48,8 +48,7 @@ When a new countable collection appears on the site (tokens, loops, case studies
 - **Examples in skills are fictional.** Example findings use made-up component names — a factual claim about a real component inside an example rots silently.
 - **No counts outside registries; no machine-local paths** — derive the repo root with `git rev-parse --show-toplevel`.
 - **Off-token CSS values are sanctioned at the site**, never in a skill: `/* ds-allow(<category>): <reason> */` (file-wide: `ds-allow-file`), categories owned by `scripts/validate-css-directives.mjs`. The token-audit skill reads directives; it maintains no list.
-- **References are build-checked**: `scripts/validate-doc-refs.mjs` fails the build when a skill or doc (this file, `README.md`, `design.md`, `content-design.md`) references a repo path, `npm run` script, or documented API symbol that doesn't exist. `ROADMAP.md` is exempt by design — it states intent and may name planned files.
-- **ROADMAP status lives in its tracking table**; item bodies are intent. Completing an item means updating its row *and* deleting the body's now-stale "current state" prose.
+- **References are build-checked**: `scripts/validate-doc-refs.mjs` fails the build when a skill or doc (this file, `README.md`, `design.md`, `content-design.md`) references a repo path, `npm run` script, or documented API symbol that doesn't exist.
 
 ---
 
@@ -79,7 +78,7 @@ npm run verify          # full local quality gate: lint + tests + the library, p
 
 Every push to `main` and every PR runs `.github/workflows/ci.yml` (four jobs: library lint + build, story tests, Storybook build, website lint + build). The library job ends with a **drift guard** — `git diff --exit-code` after the generators run — so a registry change that lands without its regenerated README/skills/blueprint content fails CI.
 
-**Story tests**: `npm run test` runs every Storybook story as a render test in headless Chromium (Vitest + `@storybook/addon-vitest`, configured in `vite.config.ts`). A story that throws on render fails the suite — so every component variant is smoke-tested on every change. **A11y checks run alongside in `'error'` mode — an axe violation fails the suite** (see `.storybook/preview.ts`). The target is WCAG 2.1 AA *minus* the contrast criteria: `color-contrast` is deliberately disabled, because the action colour fails behind its own label and fixing it is a design decision, not a lint fix (ROADMAP item 23). Everything else in AA is enforced.
+**Story tests**: `npm run test` runs every Storybook story as a render test in headless Chromium (Vitest + `@storybook/addon-vitest`, configured in `vite.config.ts`). A story that throws on render fails the suite — so every component variant is smoke-tested on every change. **A11y checks run alongside in `'error'` mode — an axe violation fails the suite** (see `.storybook/preview.ts`). The target is WCAG 2.1 AA *minus* the contrast criteria: `color-contrast` is deliberately disabled, because the action colour fails behind its own label and fixing it is a design decision, not a lint fix — the deferral is recorded where the rule is disabled, in `.storybook/preview.ts`. Everything else in AA is enforced.
 
 **Releases** are manual and follow the `release` skill (`.claude/skills/release`). The `Release` workflow (`.github/workflows/release.yml`, workflow_dispatch, dry-run by default) builds `dist/`, runs `scripts/smoke-consumer.mjs` (packs the tarball into a scratch Vite consumer and builds it without recharts), then publishes **from `dist/`** with `npm publish --access public --provenance`. The root package.json stays `private` forever — only the generated dist manifest ships. **The version lives in three places and all must move together:** `PACKAGE_VERSION` in `scripts/package-manifest.mjs` is authoritative for what ships; the root package.json's `version` must be mirrored by hand; and `package-lock.json` records it too — refresh it with `npm install --package-lock-only` after a bump. `validate-package-exports.mjs` fails the build when any of the three disagree (a stale lockfile also dirties every fresh checkout's tree on plain `npm install`). `@robr0/design-system` is published; 0.1.0 shipped 2026-07-26, 0.2.0 on 2026-07-27 (the first release via Trusted Publishing), 0.3.0 on 2026-07-28, 0.4.0 on 2026-08-01 (the ai category).
 
@@ -107,7 +106,6 @@ The old `merge-and-push` skill is retired because its name didn't say which of t
 /
 ├── design.md                  # Design spec — source of truth for tokens, colors, typography
 ├── content-design.md          # Content style guide — source of truth for voice, register, and prose rules
-├── ROADMAP.md                 # The single planning surface (hand-maintained intent, not facts)
 ├── scripts/                   # Generators + validators (the validate-registry chain), release tooling
 ├── src/
 │   ├── index.ts               # GENERATED barrel — never hand-edit
@@ -140,9 +138,11 @@ The old `merge-and-push` skill is retired because its name didn't say which of t
     │   ├── blueprints/        # Renders the public CLAUDE.md / design.md / content-design.md copies
     │   ├── work/              # Case-study pages, one folder per study (see the case-study registry)
     │   ├── writing/           # Essay pages, mirrored from the Substack feed
-    │   └── about/             # About page
+    │   ├── about/             # About page
+    │   ├── rr-animated/       # Standalone animated-logo page
+    │   └── api/               # Route handlers (github-contributions, backing ContributionGraph)
     ├── src/data/              # Data registries: case-studies.json, site-updates.json, skills accessors
-    └── src/components/        # Shared Next.js UI (Header, Sidebar, Footer, etc.)
+    └── src/components/        # Shared Next.js UI (MegaNav header, Sidebar, Footer, etc.)
 ```
 
 ---
@@ -247,7 +247,7 @@ Tokens also have multiple homes — a token that exists only in CSS is incomplet
 1. **Both theme files, always**: define it in `src/tokens/tokens-light.css` **and** `src/tokens/tokens-dark.css` (every semantic token needs a value in each). Add a primitive to `tokens-primitives.css` first if no suitable one exists; semantic colour tokens **must** reference primitives via `var()` (build-enforced by `scripts/validate-token-references.mjs`).
 2. **Document it in `design.md`**: it's the source of truth for the design language — record the token's role and its light/dark values.
 3. **Add it to the foundations doc pages** on the website, in the section matching its type:
-   - Semantic colors → `website/src/app/foundations/colour-mode/page.tsx` (add a swatch data entry with per-theme primitive name/hex/RGB, and a new `SectionTitle` group if it's a new category)
+   - Semantic colors → `website/src/app/foundations/colour-mode/page.tsx` (add a swatch data entry with per-theme primitive name/hex/RGB, and a new `SectionTitle` group if it's a new category — the page is a stated curated subset, so a niche internal role may be skipped; the registry and Storybook docs carry the full set)
    - New primitives → `website/src/app/foundations/colour-primitives/page.tsx`
    - Spacing/radius/border → `website/src/app/foundations/spatial/page.tsx`
    - Shadows/depth → `website/src/app/foundations/elevation/page.tsx`
@@ -296,4 +296,4 @@ These are stated at the level of **token roles**, deliberately: which colour, ra
 - CSS motion is fully tokenized (`--motion-*`), but JS-driven timings (Tooltip delays, Toast auto-dismiss, Carousel autoplay) remain hardcoded TS constants — tokenizing them is a pending follow-up
 - No `--chart-series-{n}` formal token set for ordered chart series colors
 - Figma source file documented: [robr0-ds26](https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26) — foundation/component pages deep-link to specific frames via `figmaUrl`
-- Visual regression runs via Chromatic (`.github/workflows/chromatic.yml`, dispatch-only — see **CI & Local Verify** for why it is not part of `verify`); baseline accepted 2026-07-27 across both themes. A11y is enforced at AA-minus-contrast; the contrast criteria remain deferred (ROADMAP item 23), and axe only catches roughly a third of WCAG issues, so keyboard order and meaningful alt text still need human review
+- Visual regression runs via Chromatic (`.github/workflows/chromatic.yml`, dispatch-only — see **CI & Local Verify** for why it is not part of `verify`); baseline accepted 2026-07-27 across both themes. A11y is enforced at AA-minus-contrast; the contrast criteria remain deliberately deferred (recorded in `.storybook/preview.ts`), and axe only catches roughly a third of WCAG issues, so keyboard order and meaningful alt text still need human review
