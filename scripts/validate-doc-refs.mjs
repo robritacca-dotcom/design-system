@@ -5,9 +5,8 @@
  * API symbols. A skill prescribing a deleted script or a moved file passes
  * every build and fails silently, months later, for whoever follows it —
  * two drift audits in a row (2026-07) found exactly that class of rot
- * (ROADMAP item 26 specified this validator; the release skill's stale
- * verify block and component-doc-page's dead pageMetadata() reference were
- * the motivating incidents).
+ * (the release skill's stale verify block and component-doc-page's dead
+ * pageMetadata() reference were the motivating incidents).
  *
  * Scans an EXPLICIT file list, never a glob:
  *   - .claude/skills/<name>/SKILL.md          (repo skills)
@@ -15,8 +14,6 @@
  *   - CLAUDE.md, README.md, design.md, content-design.md
  *
  * Deliberately excluded:
- *   - ROADMAP.md — it is intent, not fact (its own preamble records this);
- *     it legitimately references planned files that do not exist yet.
  *   - website/src/data/skills-content.generated.ts and the website/public
  *     blueprint copies — generated mirrors of the files above; scanning
  *     them would double-report every finding.
@@ -52,7 +49,7 @@ const sources = [
 // here is fixed by extending the placeholder pattern, not by deleting the
 // reference.
 const pathPrefix =
-  /^(src|website|scripts|\.claude|\.storybook|\.github|design\.md|content-design\.md|CLAUDE\.md|README\.md|ROADMAP\.md)(\/|$)/;
+  /^(src|website|scripts|\.claude|\.storybook|\.github|design\.md|content-design\.md|CLAUDE\.md|README\.md)(\/|$)/;
 const placeholder = /[<>*{}[\] $~]|ComponentName|MyComponent|my-component|component-slug|YYYY/;
 const deadPaths = [];
 let pathCount = 0;

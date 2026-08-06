@@ -34,9 +34,12 @@ const preview: Preview = {
       // regression now fails CI rather than being reported and ignored.
       test: 'error',
       config: {
-        // Target is WCAG 2.1 AA minus the contrast criteria — see ROADMAP item 6.
-        // Contrast is deferred to ROADMAP item 23 (action-colour design decision).
-        // Delete this rule override when item 23 lands.
+        // Target is WCAG 2.1 AA minus the contrast criteria. Contrast is
+        // deliberately deferred: the action colour fails behind its own label
+        // (primary CTA label, teal-as-text on white, tertiary-on-tertiary),
+        // and fixing it is a design decision, not a lint fix. This comment is
+        // the authoritative record of that deferral — delete the rule override
+        // when the action-colour decision lands.
         rules: [{ id: 'color-contrast', enabled: false }]
       }
     }

@@ -60,7 +60,6 @@ For each surface, the test is: *if a stranger followed this exactly, would it wo
 - **CLAUDE.md** — the project's operating manual: structure diagram, quick start, command list, registries/generated surfaces, architecture invariants, infrastructure facts. Every generated surface must be listed with its markers and its generator.
 - **design.md** — design language claims and per-component specs. Check that stated invariants are still enforced and that specs match the components.
 - **content-design.md** — the content style guide. Check that its Register by Surface table still lists every prose surface that exists, that its pointers at skill-owned standards still land, and that no rule in it duplicates one CLAUDE.md owns (fact-architecture rules live in CLAUDE.md, style rules here — a rule restated in both is drift).
-- **ROADMAP.md** — status tables and per-item "current state" paragraphs. A completed item's body often still describes the pre-completion state (a stale "RESUME HERE", a gap list naming something that has since shipped, a "current state" contradicting the status table in the same file).
 - **Website self-descriptions** — any page that explains how the system is built (the overview/pipeline, get-started and docs pages, foundations pages). These are public claims; treat inaccuracy as a bug.
 - **Blueprint copies** — if the repo publishes copies of its own docs, confirm they are generated rather than hand-maintained, and that they regenerated.
 
