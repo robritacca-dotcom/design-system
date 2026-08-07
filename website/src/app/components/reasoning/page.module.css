@@ -62,7 +62,6 @@
   font-weight: var(--font-paragraph-weight);
   line-height: var(--font-paragraph-line-height);
   color: var(--color-text-primary);
-  max-width: 640px;
 }
 
 /* ============================================
@@ -91,7 +90,6 @@
   line-height: var(--font-paragraph-sm-line-height);
   color: var(--color-text-secondary);
   margin: 0;
-  max-width: 640px;
 }
 
 .code {
