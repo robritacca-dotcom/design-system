@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageOpenGraph } from "@/config/navigation";
 import { buildCaseStudyJsonLd } from "@/lib/structuredData";
 
 const title = "Meta: Offer Creation Flow";
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: "/work/meta-offers" },
+  openGraph: pageOpenGraph(title, description, "/work/meta-offers", "article"),
 };
 
 export default function MetaOffersLayout({ children }: { children: React.ReactNode }) {

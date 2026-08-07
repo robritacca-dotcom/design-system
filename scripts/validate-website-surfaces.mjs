@@ -17,7 +17,7 @@
  * (AppLayout/EntityCard shipped for months with no page, nav entry, or
  * spec). Runs in the validate-registry chain before every build.
  */
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { FILES as BLUEPRINT_FILES, blueprintSlug } from './sync-blueprints.mjs';
@@ -78,6 +78,45 @@ const fail = (msg) => {
   console.error(`✗ ${msg}`);
 };
 
+// SECTION_OG_IMAGE_SEGMENTS in navigation.ts names the sections whose own
+// opengraph-image.tsx is re-stated on every sub-page's Open Graph block (a
+// segment that declares `openGraph` replaces the inherited images). Both
+// directions are checked: a listed section must have the image file, and a
+// section-level image file must be listed — otherwise sub-page share cards
+// silently fall back to the root card.
+const appDir = join(repoRoot, 'website', 'src', 'app');
+const navSource = read(join(repoRoot, 'website', 'src', 'config', 'navigation.ts'));
+const listMatch = navSource.match(
+  /SECTION_OG_IMAGE_SEGMENTS\s*=\s*\[([^\]]*)\]/
+);
+const listedSegments = listMatch
+  ? [...listMatch[1].matchAll(/"([^"]+)"/g)].map(([, s]) => s)
+  : [];
+const sectionsWithOgImage = readdirSync(appDir, { withFileTypes: true })
+  .filter(
+    (e) =>
+      e.isDirectory() &&
+      existsSync(join(appDir, e.name, 'opengraph-image.tsx')) &&
+      // Sections only: a segment with sub-pages. Leaf pages (e.g. /overview)
+      // declare metadata and the file image in the same segment, where the
+      // file already wins — they don't need listing.
+      readdirSync(join(appDir, e.name), { withFileTypes: true }).some(
+        (c) => c.isDirectory() && existsSync(join(appDir, e.name, c.name, 'page.tsx'))
+      )
+  )
+  .map((e) => `/${e.name}`);
+const ogListStale = [
+  ...listedSegments
+    .filter((s) => !existsSync(join(appDir, s.slice(1), 'opengraph-image.tsx')))
+    .map((s) => `${s} is listed but has no website/src/app${s}/opengraph-image.tsx`),
+  ...sectionsWithOgImage
+    .filter((s) => !listedSegments.includes(s))
+    .map(
+      (s) =>
+        `${s} has a section opengraph-image.tsx but is missing from SECTION_OG_IMAGE_SEGMENTS in navigation.ts`
+    ),
+];
+
 // Every spec synced to website/public needs a page to read it on, or it is
 // published as a raw download nothing links to.
 const missingBlueprintPage = BLUEPRINT_FILES.filter(
@@ -92,6 +131,7 @@ for (const [what, list] of [
   ['Registry components missing an index-grid TocCard', missingTocCard],
   ['Registry components with no design.md spec section', missingSpec],
   ['Blueprint specs synced to website/public with no page to read them on', missingBlueprintPage],
+  ['SECTION_OG_IMAGE_SEGMENTS out of sync with section opengraph-image files', ogListStale],
 ]) {
   if (list.length > 0) {
     fail(`${what}:\n` + list.map((l) => `    - ${l}`).join('\n'));

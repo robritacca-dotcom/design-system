@@ -59,9 +59,10 @@ export const metadata: Metadata = {
     // so every page gets a branded 1200×630 card, not one static Thumbnail.
   },
   twitter: {
+    // Card type only, inherited by every page. No title/description here:
+    // Twitter falls back to each page's og:title/og:description, so pages get
+    // their own card text instead of inheriting the homepage's.
     card: "summary_large_image",
-    title: "Robert Ritacca · Principal Product Designer",
-    description: SITE_DESCRIPTION,
   },
   robots: {
     index: true,
