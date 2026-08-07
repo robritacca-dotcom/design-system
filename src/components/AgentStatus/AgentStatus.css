@@ -22,6 +22,8 @@
 .ds-agent-status {
   --ds-agent-color: var(--color-text-secondary);
   --ds-agent-label-color: var(--color-text-secondary);
+  --ds-agent-shimmer-base: var(--color-text-primary);
+  --ds-agent-shimmer-sweep: var(--color-text-tertiary);
   --ds-agent-dot-dim: 0.2;
   --ds-agent-dot-rest: 0.82;
   --ds-agent-cycle: var(--motion-duration-loop-matrix);
@@ -67,16 +69,16 @@
   min-width: 0;
 }
 
-/* A gradient between the secondary text colour the label already sits at and
-   the primary text colour, sweeping left to right: with an oversized
-   background image, background-position 100% shows its right edge, 0% its
-   left, so counting down walks the bright band across the text. */
+/* A gradient between the shimmer base and sweep colours, moving left to
+   right: with an oversized background image, background-position 100% shows
+   its right edge, 0% its left, so counting down walks the sweep band across
+   the text. */
 .ds-agent-status__label--shimmer {
   background-image: linear-gradient(
     100deg,
-    var(--ds-agent-label-color) 35%,
-    var(--color-text-primary) 50%,
-    var(--ds-agent-label-color) 65%
+    var(--ds-agent-shimmer-base) 35%,
+    var(--ds-agent-shimmer-sweep) 50%,
+    var(--ds-agent-shimmer-base) 65%
   );
   background-size: 250% 100%;
   background-clip: text;
@@ -102,6 +104,11 @@
 .ds-agent-status--waiting {
   --ds-agent-color: var(--color-status-warning-text);
   --ds-agent-label-color: var(--color-status-warning-text);
+
+  /* Waiting keeps its warning colour through the shimmer — colour is the
+     signal, so the sweep only brightens it rather than going monochrome. */
+  --ds-agent-shimmer-base: var(--color-status-warning-text);
+  --ds-agent-shimmer-sweep: var(--color-text-primary);
 }
 
 .ds-agent-status--done {
