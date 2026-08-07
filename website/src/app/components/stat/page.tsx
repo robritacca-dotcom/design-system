@@ -7,6 +7,7 @@ import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
 import { Stat } from "@robr0/design-system/components/Stat/Stat";
+import { COMPONENT_COUNT } from "@robr0/design-system/components/registry";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
 import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
@@ -57,7 +58,7 @@ export default function StatPage() {
             <div className={styles.variantRow}>
               <Stat value="~900%" label="Successful generations" trend="up" delta="after clash visualisation" />
               <Stat value="42%" label="Time to outcome" trend="down" delta="faster than baseline" />
-              <Stat value="43" label="Components in the library" trend="neutral" delta="and counting" />
+              <Stat value={String(COMPONENT_COUNT)} label="Components in the library" trend="neutral" delta="and counting" />
             </div>
           </section>
 
