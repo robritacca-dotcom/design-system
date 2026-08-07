@@ -22,6 +22,16 @@ const { sidebarLinks } = getSidebarLinks(
 const prettyPattern = (pattern: string) =>
   pattern.charAt(0).toUpperCase() + pattern.slice(1).replace(/-/g, " ");
 
+/** The core accent ramps, in the order design.md lists them. */
+const accentRamps = [
+  ["coral", "Coral"],
+  ["amber", "Amber"],
+  ["gold", "Gold"],
+  ["mint", "Mint"],
+  ["cobalt", "Cobalt"],
+  ["violet", "Violet"],
+] as const;
+
 export default function AgentStatusPage() {
   return (
     <>
@@ -123,6 +133,31 @@ export default function AgentStatusPage() {
               label="Running the test suite"
               pattern="scan"
             />
+          </section>
+
+          {/* Accents */}
+          <section className={styles.section}>
+            <SectionTitle title="Accents" />
+            <p className={styles.demoText}>
+              The working colours are deliberately quiet, and the status
+              colours are spoken for. Every colour on the component routes
+              through a custom property, though, so when several agents share
+              a surface each row can take its identity from one of the core
+              accent ramps: set{" "}
+              <code className={styles.code}>--ds-agent-color</code> and its
+              label and sweep companions on the row, and the dots, the label,
+              and the sweep all follow the accent.
+            </p>
+            <div className={styles.stack}>
+              {accentRamps.map(([name, label]) => (
+                <AgentStatus
+                  key={name}
+                  className={`${styles.accent} ${styles[name]}`}
+                  state="working"
+                  label={label}
+                />
+              ))}
+            </div>
           </section>
 
           {/* Accessibility */}
