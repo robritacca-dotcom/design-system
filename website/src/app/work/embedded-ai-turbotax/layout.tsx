@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageOpenGraph } from "@/config/navigation";
 import { buildCaseStudyJsonLd } from "@/lib/structuredData";
 
 const title = "Designing embedded AI experiences inside ChatGPT and Claude";
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: "/work/embedded-ai-turbotax" },
+  openGraph: pageOpenGraph(title, description, "/work/embedded-ai-turbotax", "article"),
 };
 
 export default function EmbeddedAiTurbotaxLayout({ children }: { children: React.ReactNode }) {

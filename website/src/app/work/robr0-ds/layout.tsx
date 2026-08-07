@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageOpenGraph } from "@/config/navigation";
 import { buildCaseStudyJsonLd } from "@/lib/structuredData";
 
 const title = "Building robr0 DS: a one-person design system, end to end";
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: "/work/robr0-ds" },
+  openGraph: pageOpenGraph(title, description, "/work/robr0-ds", "article"),
 };
 
 export default function Robr0DsLayout({ children }: { children: React.ReactNode }) {

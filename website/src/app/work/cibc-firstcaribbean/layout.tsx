@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageOpenGraph } from "@/config/navigation";
 import { buildCaseStudyJsonLd } from "@/lib/structuredData";
 
 const title = "CIBC FirstCaribbean: banking platform";
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: "/work/cibc-firstcaribbean" },
+  openGraph: pageOpenGraph(title, description, "/work/cibc-firstcaribbean", "article"),
 };
 
 export default function CibcFirstCaribbeanLayout({ children }: { children: React.ReactNode }) {

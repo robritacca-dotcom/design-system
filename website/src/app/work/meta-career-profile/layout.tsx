@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageOpenGraph } from "@/config/navigation";
 import { buildCaseStudyJsonLd } from "@/lib/structuredData";
 
 const title = "Career Profile vision at Meta";
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: "/work/meta-career-profile" },
+  openGraph: pageOpenGraph(title, description, "/work/meta-career-profile", "article"),
 };
 
 export default function MetaCareerProfileLayout({ children }: { children: React.ReactNode }) {

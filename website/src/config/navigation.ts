@@ -208,6 +208,54 @@ export const TITLE_SUFFIX = "Robert Ritacca";
 export const TITLE_TEMPLATE = `%s · ${TITLE_SUFFIX}`;
 
 /**
+ * Sections whose layout segment ships its own `opengraph-image.tsx`. Sub-pages
+ * of these sections use the section's card, not the root one — a segment that
+ * declares `openGraph` replaces the inherited block wholesale (images
+ * included), so the nearest ancestor card has to be re-stated per page rather
+ * than inherited. Checked against the filesystem by
+ * scripts/validate-website-surfaces.mjs, so an added or removed section image
+ * can't leave this list stale.
+ */
+export const SECTION_OG_IMAGE_SEGMENTS = ["/components", "/foundations"];
+
+/** The og:image for a page: its section's own card when one exists, else the root card. */
+function ogImageForPath(path?: string): string {
+  const section = SECTION_OG_IMAGE_SEGMENTS.find((s) => path?.startsWith(`${s}/`));
+  return `${section ?? ""}/opengraph-image`;
+}
+
+/**
+ * Open Graph block for one page, so shares and link unfurls carry the page's
+ * own title and description. Without this, every page inherits the root
+ * layout's `openGraph` wholesale (Next merges metadata per top-level key, not
+ * per nested field) and unfurls as the homepage. The bare title is deliberate:
+ * `og:site_name` carries the brand, so unfurlers don't render the suffix twice.
+ * `path` is resolved against `metadataBase`; omit it on section layouts, where
+ * an inherited `og:url` would mislabel every sub-page (same reasoning as the
+ * canonical rule on `sectionMetadata`).
+ */
+export function pageOpenGraph(
+  title: string,
+  description?: string,
+  path?: string,
+  type: "website" | "article" = "website"
+): NonNullable<Metadata["openGraph"]> {
+  return {
+    title,
+    ...(description ? { description } : {}),
+    ...(path ? { url: path } : {}),
+    siteName: TITLE_SUFFIX,
+    locale: "en_US",
+    type,
+    // Branded card fallback — without this, pages that declare `openGraph`
+    // would render no og:image at all (see SECTION_OG_IMAGE_SEGMENTS). A
+    // file-convention image in the page's own segment (a case study's
+    // opengraph-image.tsx) still outranks this field.
+    images: ogImageForPath(path),
+  };
+}
+
+/**
  * Metadata for a section landing layout (Components, Foundations, Work). Sets
  * the section's own suffixed title AND re-declares the title template so the
  * suffix cascades to the section's sub-pages — Next only applies a template to
@@ -224,7 +272,10 @@ export function sectionMetadata(label: string, description?: string): Metadata {
   // `default` is the bare label — the root layout's template adds the suffix to
   // it once. `template` carries the suffix down to this section's sub-pages.
   const title = { default: label, template: TITLE_TEMPLATE };
-  return description ? { title, description } : { title };
+  // No `url` in the Open Graph block — see pageOpenGraph. Sub-pages override
+  // the whole block via pageMetadata, so this only renders on the landing.
+  const openGraph = pageOpenGraph(label, description);
+  return description ? { title, description, openGraph } : { title, openGraph };
 }
 
 /**
@@ -244,7 +295,10 @@ export function pageMetadata(href: string, description?: string): Metadata {
     );
   }
   const alternates = { canonical: href };
-  return description ? { title, description, alternates } : { title, alternates };
+  const openGraph = pageOpenGraph(title, description, href);
+  return description
+    ? { title, description, alternates, openGraph }
+    : { title, alternates, openGraph };
 }
 
 /**

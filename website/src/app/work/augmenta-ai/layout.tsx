@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageOpenGraph } from "@/config/navigation";
 import { buildCaseStudyJsonLd } from "@/lib/structuredData";
 
 const title = "Augmenta Construction Platform";
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: "/work/augmenta-ai" },
+  openGraph: pageOpenGraph(title, description, "/work/augmenta-ai", "article"),
 };
 
 export default function AugmentaLayout({ children }: { children: React.ReactNode }) {
