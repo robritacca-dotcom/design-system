@@ -17,7 +17,8 @@
     "accessibility-audit",
     "api-consistency",
     "growth-loop",
-    "site-updates"
+    "site-updates",
+    "seo-audit"
   ],
   "external": [
     "ga-report"
