@@ -17,9 +17,14 @@
   list-style: none;
 }
 
+/* Every row reserves the toggle's 40px height, so leaf rows (compact
+   Buttons, ~32px) and rows carrying a 40px chevron toggle sit on the same
+   vertical rhythm instead of producing uneven gaps down the list. */
 .ds-nav-list__item {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  min-height: 40px;
 }
 
 /* ============================================
@@ -110,11 +115,17 @@
 .ds-nav-list__panel {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows var(--motion-duration-slow) var(--motion-ease-emphasized);
+  margin-top: 0;
+  transition:
+    grid-template-rows var(--motion-duration-slow) var(--motion-ease-emphasized),
+    margin-top var(--motion-duration-slow) var(--motion-ease-emphasized);
 }
 
+/* Open panels take the list's item gap above them, so the first child sits
+   the same distance from its parent row as any two siblings do. */
 .ds-nav-list__panel--open {
   grid-template-rows: 1fr;
+  margin-top: var(--gap-xxs);
 }
 
 /* ============================================
@@ -135,4 +146,10 @@
 
 .ds-nav-list__sublist .ds-nav-list__sublist {
   padding-left: var(--gap-lg);
+}
+
+/* Permanent (non-collapsible) groups render their sublist directly under the
+   row, with no panel — give it the same item gap the panel carries when open. */
+.ds-nav-list__item > .ds-nav-list__sublist {
+  margin-top: var(--gap-xxs);
 }
