@@ -555,7 +555,7 @@ Default icons (Material Symbols Rounded): `info`, `check_circle`, `warning`, `er
 
 ### Stat
 
-**`ds-stat`** — A single headline metric: display-weight numeral over a quiet label, with an optional trend delta. Value uses `--font-sub-display-*` (30px/300) by default, `--font-display-2-*` (64px/300) at `large` — the weight-contrast rule applied to numerals. Label: `--font-paragraph-sm-*` in `--color-text-tertiary`. Delta: `--font-paragraph-sm-em-*` with a 16px Material arrow; colours by trend — `up` → `--color-status-positive-text`, `down` → `--color-status-error-text`, `neutral` → `--color-text-tertiary`. Compose several in a flex row for a case-study metrics band.
+**`ds-stat`** — A single headline metric: display-weight numeral over a quiet label, with an optional trend delta. Value uses `--font-sub-display-*` (30px/300) by default, `--font-display-2-*` (64px/300) at `large` — the weight-contrast rule applied to numerals. Label: `--font-paragraph-sm-*` in `--color-text-tertiary`. Delta: `--font-paragraph-sm-em-*` with a 16px Material arrow; colours by trend — `up` → `--color-core-accent-mint`, `down` → `--color-core-accent-coral` (the vivid accents, stable across themes — the muted status text tokens read too subtle at this size), `neutral` → `--color-text-tertiary`. Compose several in a flex row for a case-study metrics band.
 
 ### CodeBlock
 

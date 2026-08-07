@@ -66,11 +66,11 @@
 }
 
 .ds-stat__delta--up {
-  color: var(--color-status-positive-text);
+  color: var(--color-core-accent-mint);
 }
 
 .ds-stat__delta--down {
-  color: var(--color-status-error-text);
+  color: var(--color-core-accent-coral);
 }
 
 .ds-stat__delta--neutral {
