@@ -101,8 +101,12 @@
 /* One AgentStatus row per core accent ramp: the component's colour custom
    properties all resolve from a single local --accent, so each variation is
    one declaration. The sweep keeps the accent as its base and passes a
-   text-primary band across it, the same shape the waiting state uses. */
-.accent {
+   text-primary band across it, the same shape the waiting state uses.
+   The class is doubled because the production build orders the library
+   stylesheet after page modules: at equal specificity the component's own
+   defaults would win the tie there, while the dev server orders them the
+   other way around. */
+.accent.accent {
   --ds-agent-color: var(--accent);
   --ds-agent-label-color: var(--accent);
   --ds-agent-shimmer-base: var(--accent);
