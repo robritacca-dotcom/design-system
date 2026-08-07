@@ -46,7 +46,7 @@ export default function StatPage() {
           <section className={styles.section}>
             <SectionTitle title="Sizes" />
             <div className={styles.variantRow}>
-              <Stat value="3.8M" label="Monthly interactions" />
+              <Stat value="~50M" label="Sessions served" />
               <Stat size="large" value="95%+" label="Modelling effort reduced" />
             </div>
           </section>

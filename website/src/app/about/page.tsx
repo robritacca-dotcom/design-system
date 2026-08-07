@@ -60,10 +60,10 @@ const EXPERIENCE: TimelineCompany[] = [
             Led design of Intuit Intelligence, Intuit&apos;s end-to-end conversational AI platform: domain teams inject agents and dynamic UI into their own products through one shared, extensible capability. Full story in the{" "}
             <Link href="/work/intuit-agent-chat">case study</Link>
           </>,
-          "Onboarded 150+ teams end-to-end with 58 teams in production, including TurboTax, QuickBooks, Credit Karma, and Mailchimp",
-          "Powering 3.8M monthly customer interactions across Intuit's consumer and small-business platforms",
-          "2.8M component instantiations from the shared AI-native UI library spanning chat, documents, memory, and dynamic UI",
-          "Supported 600+ designers and thousands of engineers shipping with the platform",
+          "Scaled to 70+ agents live in production across TurboTax, QuickBooks, Mailchimp, and internal teams",
+          "Serving ~50M sessions in production across Intuit's consumer and small-business platforms",
+          "2.8M component instantiations in the last year from the shared AI-native UI library spanning chat, documents, memory, and dynamic UI",
+          "Grew an organic community of 600+ developers shipping with the platform, adopted as the company-wide standard by unanimous executive vote",
         ],
       },
     ],

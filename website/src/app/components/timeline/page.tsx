@@ -20,7 +20,7 @@ const CAREER = [
     meta: "May 2024 – Present",
     title: "Intuit, Staff Product Designer",
     description:
-      "Intuit Intelligence, the conversational AI platform powering 3.8M monthly customer interactions.",
+      "Agent Chat, the conversational AI platform serving ~50M sessions in production.",
   },
   {
     meta: "Aug 2023 – May 2024",
@@ -69,7 +69,7 @@ const EXPERIENCE = [
         end: "Jan 2026",
         bullets: [
           "Led design of Intuit's end-to-end conversational AI platform.",
-          "Onboarded 150+ teams, 58 in production.",
+          "Scaled to 70+ agents in production.",
         ],
       },
     ],
