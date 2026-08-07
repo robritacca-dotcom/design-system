@@ -14,6 +14,7 @@ import {
   workSidebarLinks,
   type NavLink,
 } from "@/config/navigation";
+import { useWritingNav } from "./WritingNavContext";
 import styles from "./MegaNav.module.css";
 
 /** Strip sidebar-only fields down to NavList's {label, href} shape. */
@@ -23,6 +24,7 @@ const toNavItems = (links: NavLink[]): NavListItem[] =>
 /** The drawer section (if any) whose sub-list contains the given path. */
 const sectionForPath = (path: string): string | null => {
   if (path.startsWith("/work")) return "work";
+  if (path.startsWith("/writing")) return "writing";
   if (path.startsWith("/docs")) return "docs";
   if (path.startsWith("/foundations")) return "foundations";
   if (path.startsWith("/components")) return "components";
@@ -61,6 +63,7 @@ function LogoIcon({ className }: { className?: string }) {
 
 export default function MegaNav() {
   const pathname = usePathname() ?? "/";
+  const writingNavItems = useWritingNav();
   const [open, setOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   // Drawer accordions are closed by default; one open at a time.
@@ -92,7 +95,16 @@ export default function MegaNav() {
       current: isWorkActive || undefined,
       items: toNavItems(workSidebarLinks.slice(1)),
     },
-    { label: "Writing", href: "/writing", current: isWritingActive || undefined },
+    {
+      label: "Writing",
+      href: "/writing",
+      id: "writing",
+      current: isWritingActive || undefined,
+      // Article links from the Substack feed via the root layout (see
+      // WritingNavContext). Empty when the feed is unreachable — the row
+      // then renders as a plain link, matching its old behaviour.
+      items: writingNavItems,
+    },
     {
       label: "Design system",
       href: "/design-system",

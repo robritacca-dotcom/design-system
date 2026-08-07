@@ -9,6 +9,8 @@ import "@robr0/design-system/fonts/material-symbols.css";
 import { Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import { buildPersonJsonLd, buildWebsiteJsonLd, SITE_URL } from "@/lib/structuredData";
+import { getArticles } from "@/lib/substack";
+import { WritingNavProvider } from "@/components/MegaNav/WritingNavContext";
 
 const GA_ID = "G-RCSFYMD51K";
 
@@ -98,11 +100,19 @@ const themeScript = `
 })();
 `;
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Article links for the mobile drawer's Writing accordion (see
+  // WritingNavContext). Fetched here because the layout is the one server
+  // component every page shares; the feed fetch is ISR-cached and returns
+  // [] on failure, so it never blocks or breaks a page.
+  const writingNavItems = (await getArticles()).map((a) => ({
+    label: a.title,
+    href: `/writing/${a.slug}`,
+  }));
   // The next/font variable class lives on <html>, not <body>: globals.css
   // feeds var(--font-nunito-sans) into the design system's
   // --font-family-primary token at :root, and a custom property resolves its
@@ -158,7 +168,7 @@ export default function RootLayout({
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
-        {children}
+        <WritingNavProvider items={writingNavItems}>{children}</WritingNavProvider>
       </body>
     </html>
   );
