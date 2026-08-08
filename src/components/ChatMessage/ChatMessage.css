@@ -97,6 +97,11 @@
   font-weight: var(--font-paragraph-weight);
   line-height: var(--font-paragraph-line-height);
   letter-spacing: var(--font-paragraph-letter-spacing);
+  /* Content never pushes the turn wider than its container — an unbroken
+     run (a URL, a token) wraps inside the bubble or column instead. */
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 /* Plain — the assistant default: no surface, full width, primary text */

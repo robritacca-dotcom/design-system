@@ -1,3 +1,4 @@
+import React from 'react';
 import { Spinner } from '../Spinner/Spinner';
 import './CircularButton.css';
 import '../../fonts/material-symbols.css';
@@ -43,22 +44,31 @@ export interface CircularButtonProps {
  * Circular icon button component.
  * A round button containing a single icon, available in
  * primary, secondary and tertiary variants with default and compact sizes.
+ *
+ * Forwards a ref to whichever element it renders (`<button>`, or `<a>` when
+ * `href` is supplied).
  */
-export const CircularButton = ({
-  icon,
-  variant,
-  priority,
-  state = 'default',
-  size = 'default',
-  loading,
-  ariaLabel,
-  onClick,
-  href,
-  target,
-  rel,
-  'aria-describedby': ariaDescribedby,
-  className = '',
-}: CircularButtonProps) => {
+export const CircularButton = React.forwardRef<
+  HTMLButtonElement | HTMLAnchorElement,
+  CircularButtonProps
+>(function CircularButton(
+  {
+    icon,
+    variant,
+    priority,
+    state = 'default',
+    size = 'default',
+    loading,
+    ariaLabel,
+    onClick,
+    href,
+    target,
+    rel,
+    'aria-describedby': ariaDescribedby,
+    className = '',
+  },
+  ref,
+) {
   const baseClass = 'ds-circular-button';
   // `priority` is the deprecated spelling of `variant`; `variant` wins when both are set.
   const resolvedVariant = variant ?? priority ?? 'primary';
@@ -95,6 +105,7 @@ export const CircularButton = ({
   if (href && !isDisabled && !isLoading) {
     return (
       <a
+        ref={ref as React.Ref<HTMLAnchorElement>}
         className={classes}
         href={href}
         target={target}
@@ -110,6 +121,7 @@ export const CircularButton = ({
 
   return (
     <button
+      ref={ref as React.Ref<HTMLButtonElement>}
       type="button"
       className={classes}
       onClick={onClick}
@@ -121,4 +133,6 @@ export const CircularButton = ({
       {children}
     </button>
   );
-};
+});
+
+CircularButton.displayName = 'CircularButton';

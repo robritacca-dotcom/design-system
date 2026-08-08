@@ -139,6 +139,15 @@ export const Composer = React.forwardRef<HTMLTextAreaElement, ComposerProps>(
       }
     };
 
+    /* The whole shell is the input affordance: clicking anywhere that is not
+       a control focuses the textarea, so the click target is the visible
+       shape rather than the text line inside it. */
+    const handleShellClick = (e: React.MouseEvent<HTMLDivElement>) => {
+      const target = e.target as HTMLElement;
+      if (target.closest('button, a, textarea, input, select, [role="button"]')) return;
+      textareaRef.current?.focus();
+    };
+
     const classes = [baseClass, disabled ? `${baseClass}--disabled` : '', className]
       .filter(Boolean)
       .join(' ');
@@ -152,6 +161,7 @@ export const Composer = React.forwardRef<HTMLTextAreaElement, ComposerProps>(
       <div
         className={classes}
         style={{ '--ds-composer-max-rows': maxRows } as React.CSSProperties}
+        onClick={handleShellClick}
       >
         {attachments && <div className={`${baseClass}__attachments`}>{attachments}</div>}
 
