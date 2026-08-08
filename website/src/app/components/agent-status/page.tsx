@@ -119,8 +119,8 @@ export default function AgentStatusPage() {
           <section className={styles.section}>
             <SectionTitle title="Sizes and variants" />
             <div className={styles.stack}>
-              <AgentStatus size="sm" label="Small, inline" />
-              <AgentStatus size="md" label="Medium, inline" />
+              <AgentStatus label="Default, matching message text" />
+              <AgentStatus size="compact" label="Compact, matching compact message text" />
             </div>
             <p className={styles.demoText}>
               The bar variant is a full-width row for the top of a panel, where

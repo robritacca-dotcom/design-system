@@ -122,7 +122,7 @@ export default function ComponentsPage() {
 
             {/* Agent status */}
             <TocCard href="/components/agent-status" title="Agent status">
-              <AgentStatus state="working" label="Working" pattern="orbit" />
+              <AgentStatus state="working" label="Working" pattern="orbit" size="compact" />
             </TocCard>
 
             {/* Alert */}

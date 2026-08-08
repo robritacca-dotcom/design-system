@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { AgentStatus } from './AgentStatus';
 import { agentStatusPatterns } from './AgentStatusPatterns';
@@ -13,7 +14,7 @@ const meta = {
       options: ['idle', 'thinking', 'working', 'waiting', 'done', 'error'],
     },
     pattern: { control: 'select', options: agentStatusPatterns },
-    size: { control: 'inline-radio', options: ['sm', 'md'] },
+    size: { control: 'inline-radio', options: ['default', 'compact'] },
     variant: { control: 'inline-radio', options: ['inline', 'bar'] },
   },
 } satisfies Meta<typeof AgentStatus>;
@@ -54,11 +55,39 @@ export const Bar: Story = {
   parameters: { layout: 'padded' },
 };
 
-export const Medium: Story = {
-  args: { size: 'md', state: 'thinking', label: 'Planning the migration' },
+/** Compact matches compact ChatMessage text, for dense transcripts. */
+export const Compact: Story = {
+  args: { size: 'compact', state: 'thinking', label: 'Planning the migration' },
 };
 
 /** The shimmer is on by default while active; turn it off for a quieter row. */
 export const NoShimmer: Story = {
   args: { state: 'working', label: 'Indexing the repository', shimmer: false },
+};
+
+const CYCLING_LABELS = [
+  'Reading the brief',
+  'Comparing the options',
+  'Drafting the answer',
+];
+
+const LabelTransitionsDemo = () => {
+  const [step, setStep] = useState(0);
+  useEffect(() => {
+    const id = setInterval(
+      () => setStep((s) => (s + 1) % CYCLING_LABELS.length),
+      1600,
+    );
+    return () => clearInterval(id);
+  }, []);
+  return <AgentStatus state="working" label={CYCLING_LABELS[step]} />;
+};
+
+/**
+ * A changing `label` crossfades: the old text fades up and out while the
+ * new one fades up and in. The shimmer pauses for the swap and resumes on
+ * the settled text.
+ */
+export const LabelTransitions: Story = {
+  render: () => <LabelTransitionsDemo />,
 };

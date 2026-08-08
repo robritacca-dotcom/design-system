@@ -28,16 +28,16 @@
   --ds-agent-dot-rest: 0.82;
   --ds-agent-cycle: var(--motion-duration-loop-matrix);
   --ds-agent-slot: calc(var(--ds-agent-cycle) / 12);
-  --ds-agent-matrix-size: var(--icon-size-sm);
+  --ds-agent-matrix-size: var(--icon-size-md);
 
   display: inline-flex;
   align-items: center;
-  gap: var(--gap-sm);
-  font-family: var(--font-paragraph-sm-family);
-  font-size: var(--font-paragraph-sm-size);
-  font-weight: var(--font-paragraph-sm-weight);
-  line-height: var(--font-paragraph-sm-line-height);
-  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  gap: var(--gap-sm-md);
+  font-family: var(--font-paragraph-family);
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  letter-spacing: var(--font-paragraph-letter-spacing);
 }
 
 /* ============================================
@@ -65,8 +65,48 @@
    ============================================ */
 
 .ds-agent-status__label {
+  position: relative;
   color: var(--ds-agent-label-color);
   min-width: 0;
+}
+
+/* Label crossfade: when the label string changes, the outgoing copy sits
+   absolutely over the incoming one and fades up and out while the new one
+   fades up and in — one continuous upward motion. */
+.ds-agent-status__label-text {
+  display: inline-block;
+}
+
+/* The animations live only on the modifier classes, and the modifiers come
+   off once the swap settles: a filled animation can pin the span to its
+   own compositor layer, which would escape the shimmer's text clip and
+   leave the label invisible for good. */
+.ds-agent-status__label-text--in {
+  animation: ds-agent-label-in var(--motion-duration-slow) var(--motion-ease-entrance) both;
+  animation-delay: calc(var(--motion-duration-slow) / 2);
+}
+
+.ds-agent-status__label-text--out {
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: nowrap;
+  animation: ds-agent-label-out var(--motion-duration-slow) var(--motion-ease-standard) both;
+  animation-delay: 0s;
+}
+
+@keyframes ds-agent-label-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@keyframes ds-agent-label-out {
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
 }
 
 /* A gradient between the shimmer base and sweep colours, moving left to
@@ -86,6 +126,16 @@
   color: transparent;
   animation: ds-agent-shimmer var(--motion-duration-loop-shimmer)
     var(--motion-ease-linear) infinite;
+}
+
+/* While a label crossfade runs, the shimmer's text clip stands down: an
+   animated descendant composites on its own layer, which escapes
+   background-clip: text and renders the text invisible. The swap motion
+   covers the pause; the sweep resumes on the settled text. */
+.ds-agent-status__label--shimmer.ds-agent-status__label--swapping {
+  background-image: none;
+  animation: none;
+  color: var(--ds-agent-label-color);
 }
 
 /* ============================================
@@ -130,17 +180,20 @@
 
 /* ============================================
    SIZES
+   The scale pairs with ChatMessage: default
+   matches default message text, compact
+   matches compact message text.
    ============================================ */
 
-.ds-agent-status--md {
-  --ds-agent-matrix-size: var(--icon-size-md);
+.ds-agent-status--compact {
+  --ds-agent-matrix-size: var(--icon-size-sm);
 
-  gap: var(--gap-sm-md);
-  font-family: var(--font-paragraph-family);
-  font-size: var(--font-paragraph-size);
-  font-weight: var(--font-paragraph-weight);
-  line-height: var(--font-paragraph-line-height);
-  letter-spacing: var(--font-paragraph-letter-spacing);
+  gap: var(--gap-sm);
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
 }
 
 /* ============================================

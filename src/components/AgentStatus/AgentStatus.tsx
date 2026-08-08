@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import type { AgentStatusPattern, AgentStatusState } from './AgentStatusPatterns';
 import './AgentStatus.css';
 
@@ -33,8 +33,12 @@ type AgentStatusOwnProps = {
    * on for `thinking`, `working` and `waiting`, off for the resting states.
    */
   shimmer?: boolean;
-  /** Indicator and text scale. */
-  size?: 'sm' | 'md';
+  /**
+   * Indicator and text scale, paired with ChatMessage's sizes: `default`
+   * matches default message text, `compact` matches compact message text.
+   * `sm` and `md` are legacy aliases for `compact` and `default`.
+   */
+  size?: 'default' | 'compact' | 'sm' | 'md';
   /** `inline` sits in a line of content; `bar` is a full-width row for the top of a panel. */
   variant?: 'inline' | 'bar';
   /** Additional CSS classes */
@@ -63,7 +67,7 @@ export const AgentStatus = React.forwardRef<HTMLDivElement, AgentStatusProps>(
       label,
       pattern = 'orbit',
       shimmer,
-      size = 'sm',
+      size = 'default',
       variant = 'inline',
       className = '',
       children,
@@ -74,12 +78,30 @@ export const AgentStatus = React.forwardRef<HTMLDivElement, AgentStatusProps>(
     const baseClass = 'ds-agent-status';
     const isActive = ACTIVE_STATES.includes(state);
     const isShimmering = shimmer ?? isActive;
+    // Legacy aliases: sm/md predate the chat set settling on ChatMessage's names.
+    const resolvedSize = size === 'sm' ? 'compact' : size === 'md' ? 'default' : size;
+
+    /* When the label string changes, the old text fades up and out while
+       the new one fades up and in — a status that narrates progress should
+       glide between steps, not snap. Only string labels transition;
+       `children` are consumer-owned markup and render as-is. */
+    const resolvedLabel = label ?? DEFAULT_LABELS[state];
+    const [outgoing, setOutgoing] = useState<string | null>(null);
+    const lastLabel = useRef(resolvedLabel);
+    useEffect(() => {
+      if (children != null) return;
+      if (lastLabel.current !== resolvedLabel) {
+        setOutgoing(lastLabel.current);
+        lastLabel.current = resolvedLabel;
+      }
+    }, [resolvedLabel, children]);
+    const isSwapping = outgoing !== null;
 
     const classes = [
       baseClass,
       `${baseClass}--${state}`,
       `${baseClass}--${pattern}`,
-      `${baseClass}--${size}`,
+      `${baseClass}--${resolvedSize}`,
       `${baseClass}--${variant}`,
       isActive ? `${baseClass}--animated` : '',
       className,
@@ -97,9 +119,31 @@ export const AgentStatus = React.forwardRef<HTMLDivElement, AgentStatusProps>(
         <span
           className={`${baseClass}__label${
             isShimmering ? ` ${baseClass}__label--shimmer` : ''
-          }`}
+          }${isSwapping ? ` ${baseClass}__label--swapping` : ''}`}
         >
-          {children ?? label ?? DEFAULT_LABELS[state]}
+          {children ?? (
+            <>
+              {isSwapping && (
+                <span
+                  className={`${baseClass}__label-text ${baseClass}__label-text--out`}
+                  aria-hidden="true"
+                >
+                  {outgoing}
+                </span>
+              )}
+              <span
+                key={resolvedLabel}
+                className={`${baseClass}__label-text${
+                  isSwapping ? ` ${baseClass}__label-text--in` : ''
+                }`}
+                onAnimationEnd={(e) => {
+                  if (e.target === e.currentTarget) setOutgoing(null);
+                }}
+              >
+                {resolvedLabel}
+              </span>
+            </>
+          )}
         </span>
       </div>
     );
