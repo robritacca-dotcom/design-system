@@ -109,7 +109,7 @@
    whole row; the fallback is the sanctioned consumer-override hook */
 .ds-chat-message--bubble .ds-chat-message__content {
   max-width: var(--ds-chat-message-max-width, 75%);
-  padding: var(--padding-sm) var(--padding-md);
+  padding: var(--padding-sm-md) var(--padding-lg);
   border-radius: var(--radius-xl);
 }
 
@@ -227,6 +227,10 @@
   display: flex;
   align-items: center;
   gap: var(--gap-xs);
+  /* The row hides with opacity, not display, so this offset is always
+     reserved — the body's own gap plus this margin sets the row a full
+     --gap-md off the content without loosening the meta stack above. */
+  margin-top: var(--gap-sm-md);
   opacity: 0;
   visibility: hidden;
   transition:
