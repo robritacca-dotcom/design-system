@@ -125,6 +125,14 @@
       "client": false
     },
     {
+      "name": "ChatHeader",
+      "label": "Chat header",
+      "slug": "chat-header",
+      "description": "The top row of a chat surface, with the conversation title and its controls.",
+      "category": "ai",
+      "client": false
+    },
+    {
       "name": "ChatMarker",
       "label": "Chat marker",
       "slug": "chat-marker",
@@ -139,6 +147,14 @@
       "description": "A single chat turn with avatar, author, timestamp, and bubble or plain content aligned by role.",
       "category": "ai",
       "client": false
+    },
+    {
+      "name": "ChatThread",
+      "label": "Chat thread",
+      "slug": "chat-thread",
+      "description": "A scrollable conversation column with edge fades, send anchoring, and a subtle scrollbar.",
+      "category": "ai",
+      "client": true
     },
     {
       "name": "Checkbox",
