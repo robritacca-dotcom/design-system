@@ -20,7 +20,7 @@ const CAREER = [
     meta: "May 2024 – Present",
     title: "Intuit, Staff Product Designer",
     description:
-      "Agent Chat, the conversational AI platform serving ~50M sessions in production.",
+      "Intuit Agent Chat, the conversational AI platform serving ~50M sessions in production.",
   },
   {
     meta: "Aug 2023 – May 2024",

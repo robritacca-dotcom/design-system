@@ -57,7 +57,7 @@ const EXPERIENCE: TimelineCompany[] = [
         end: "Jan 2026",
         bullets: [
           <>
-            Led design of Intuit Intelligence, Intuit&apos;s end-to-end conversational AI platform: domain teams inject agents and dynamic UI into their own products through one shared, extensible capability. Full story in the{" "}
+            Led design of Intuit Agent Chat, the white-labelled capability behind the Intuit Intelligence brand: domain teams inject agents and dynamic UI into their own products through one shared, extensible conversational AI platform. Full story in the{" "}
             <Link href="/work/intuit-agent-chat">case study</Link>
           </>,
           "Scaled to 70+ agents live in production across TurboTax, QuickBooks, Mailchimp, and internal teams",

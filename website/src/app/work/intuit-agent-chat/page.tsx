@@ -63,7 +63,7 @@ export default function IntuitAgentChatCaseStudy() {
                   <h2 id="context">Context</h2>
 
                   <p>
-                    Intuit operates four cornerstone brands (QuickBooks, TurboTax, Credit Karma, Mailchimp) serving 100M+ customers, with 600+ designers and 8,000+ developers building on a shared platform. GenUX is Intuit&apos;s AI agent development platform: the layer that gives every Intuit app and agentic experience consistent, performant UX at scale. Agent Chat is the conversational surface that ships on top of it.
+                    Intuit operates four cornerstone brands (QuickBooks, TurboTax, Credit Karma, Mailchimp) serving 100M+ customers, with 600+ designers and 8,000+ developers building on a shared platform. GenUX is Intuit&apos;s AI agent development platform: the layer that gives every Intuit app and agentic experience consistent, performant UX at scale. Intuit Agent Chat is the white-labelled conversational surface that ships on top of it; Intuit Intelligence is the brand customers see.
                   </p>
 
                   <p>
@@ -226,7 +226,7 @@ export default function IntuitAgentChatCaseStudy() {
                   <h3 id="quickbooks">QuickBooks</h3>
 
                   <p>
-                    <strong>Started with Project Clarity</strong>: a mission team embedded with the QuickBooks Business Intelligence org. Customers were exporting QB data into third-party AI tools because QuickBooks didn&apos;t support analysis natively. The QB Analytics Agent changed that: ask about your revenue, profit and loss, cash flow, and payroll directly in the product. Launched as <a href="https://quickbooks.intuit.com/intuit-intelligence/" target="_blank" rel="noopener noreferrer">Intuit Intelligence</a> to 200k+ customers.
+                    <strong>Started with Project Clarity</strong>: a mission team embedded with the QuickBooks Business Intelligence org. Customers were exporting QB data into third-party AI tools because QuickBooks didn&apos;t support analysis natively. The QB Analytics Agent changed that: ask about your revenue, profit and loss, cash flow, and payroll directly in the product. Launched to 200k+ customers under the <a href="https://quickbooks.intuit.com/intuit-intelligence/" target="_blank" rel="noopener noreferrer">Intuit Intelligence</a> brand.
                   </p>
 
                   <p>
