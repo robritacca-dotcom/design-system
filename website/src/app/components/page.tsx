@@ -9,8 +9,10 @@ import Footer from "../../components/Footer/Footer";
 import TocCard from "../../components/TocCard/TocCard";
 import { Accordion } from "@robr0/design-system/components/Accordion/Accordion";
 import { AgentStatus } from "@robr0/design-system/components/AgentStatus/AgentStatus";
+import { ChatHeader } from "@robr0/design-system/components/ChatHeader/ChatHeader";
 import { ChatMarker } from "@robr0/design-system/components/ChatMarker/ChatMarker";
 import { ChatMessage } from "@robr0/design-system/components/ChatMessage/ChatMessage";
+import { ChatThread } from "@robr0/design-system/components/ChatThread/ChatThread";
 import { Alert } from "@robr0/design-system/components/Alert/Alert";
 import { Avatar } from "@robr0/design-system/components/Avatar/Avatar";
 import { Badge } from "@robr0/design-system/components/Badge/Badge";
@@ -265,6 +267,21 @@ export default function ComponentsPage() {
               </svg>
             </TocCard>
 
+            {/* Chat header */}
+            <TocCard href="/components/chat-header" title="Chat header">
+              <div style={{ width: "100%", border: "1px solid var(--color-bg-container-border)", borderRadius: "16px" }}>
+                <ChatHeader
+                  title="Assistant"
+                  actions={
+                    <>
+                      <CircularButton icon="edit_square" variant="tertiary" ariaLabel="New chat" />
+                      <CircularButton icon="close" variant="tertiary" ariaLabel="Close chat" />
+                    </>
+                  }
+                />
+              </div>
+            </TocCard>
+
             {/* Chat marker */}
             <TocCard href="/components/chat-marker" title="Chat marker">
               <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: "12px" }}>
@@ -282,6 +299,20 @@ export default function ComponentsPage() {
                 <ChatMessage role="assistant" size="compact">
                   Yes, the queue is clear.
                 </ChatMessage>
+              </div>
+            </TocCard>
+
+            {/* Chat thread */}
+            <TocCard href="/components/chat-thread" title="Chat thread">
+              <div style={{ width: "100%", height: "150px", display: "flex", flexDirection: "column", border: "1px solid var(--color-bg-container-border)", borderRadius: "16px", overflow: "hidden" }}>
+                <ChatThread anchor={false} style={{ flex: 1, "--ds-chat-thread-padding-inline": "var(--padding-sm-md)" } as React.CSSProperties}>
+                  <ChatMessage role="user" size="compact">
+                    Where do the fades come from?
+                  </ChatMessage>
+                  <ChatMessage role="assistant" size="compact">
+                    A CSS mask at either end. Content scrolls out through it, and the scrollbar only appears while scrolling.
+                  </ChatMessage>
+                </ChatThread>
               </div>
             </TocCard>
 
