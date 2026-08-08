@@ -1,0 +1,164 @@
+/* ============================================
+   INTERRUPT CARD COMPONENT
+   A human-in-the-loop checkpoint: a question
+   from the agent, a detail slot, and option
+   buttons in a footer.
+
+   ToolCall's pending language promoted to a
+   card — the warning pair on icon and border
+   while a decision is owed, routed through a
+   local custom-property pair so the answered
+   state repoints two variables and the whole
+   card drops to monochrome.
+   ============================================ */
+
+.ds-interrupt-card {
+  --ds-interrupt-card-color: var(--color-status-warning-text);
+  --ds-interrupt-card-border: var(--color-status-warning-border);
+
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: var(--color-bg-container-primary);
+  border: var(--border-xs) solid var(--ds-interrupt-card-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+/* Decision made — no signal needed */
+.ds-interrupt-card--answered {
+  --ds-interrupt-card-color: var(--color-text-secondary);
+  --ds-interrupt-card-border: var(--color-bg-container-border);
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+
+.ds-interrupt-card__header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap-sm);
+  padding: var(--padding-sm) var(--padding-sm-md);
+}
+
+.ds-interrupt-card__icon {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  color: var(--ds-interrupt-card-color);
+}
+
+.ds-interrupt-card__icon .material-symbols-rounded {
+  --icon-size: var(--icon-size-sm);
+}
+
+.ds-interrupt-card__heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xxs);
+  min-width: 0;
+}
+
+/* The question is the card's one heading, so it takes the title tier
+   rather than an emphasised paragraph */
+.ds-interrupt-card__title {
+  font-family: var(--font-title-body-family);
+  font-size: var(--font-title-body-size);
+  font-weight: var(--font-title-body-weight);
+  line-height: var(--font-title-body-line-height);
+  letter-spacing: var(--font-title-body-letter-spacing);
+  color: var(--color-text-primary);
+}
+
+.ds-interrupt-card__description {
+  margin: 0;
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  color: var(--color-text-secondary);
+}
+
+/* ============================================
+   DETAIL SLOT
+   Typically a pending ToolCall showing what
+   wants to run.
+   ============================================ */
+
+.ds-interrupt-card__detail {
+  padding: 0 var(--padding-sm-md) var(--padding-sm);
+}
+
+.ds-interrupt-card__detail > :first-child {
+  margin-top: 0;
+}
+
+.ds-interrupt-card__detail > :last-child {
+  margin-bottom: 0;
+}
+
+/* ============================================
+   OPTIONS
+   Mirrors ToolCall's actions footer exactly, so
+   a decision on a card and an approval on a
+   call read as the same row.
+   ============================================ */
+
+.ds-interrupt-card__options {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--gap-sm);
+  padding: var(--padding-sm) var(--padding-sm-md);
+  border-top: var(--border-xs) solid var(--color-divider);
+  background-color: var(--color-bg-container-secondary);
+}
+
+/* ============================================
+   ANSWERED ECHO
+   Same footer geometry, quiet text where the
+   buttons were.
+   ============================================ */
+
+.ds-interrupt-card__answer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--gap-xs);
+  padding: var(--padding-sm) var(--padding-sm-md);
+  border-top: var(--border-xs) solid var(--color-divider);
+  background-color: var(--color-bg-container-secondary);
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  color: var(--color-text-secondary);
+}
+
+.ds-interrupt-card__answer-icon {
+  --icon-size: var(--icon-size-sm);
+
+  flex: none;
+  color: var(--ds-interrupt-card-color);
+}
+
+/* ============================================
+   VISUALLY HIDDEN
+   The waiting announcement is for screen
+   readers only.
+   ============================================ */
+
+.ds-interrupt-card__sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

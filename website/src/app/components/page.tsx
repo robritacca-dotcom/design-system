@@ -33,6 +33,7 @@ import { Dropdown } from "@robr0/design-system/components/Dropdown/Dropdown";
 import { NavList } from "@robr0/design-system/components/NavList/NavList";
 import { Pagination } from "@robr0/design-system/components/Pagination/Pagination";
 import { Input } from "@robr0/design-system/components/Input/Input";
+import { InterruptCard } from "@robr0/design-system/components/InterruptCard/InterruptCard";
 import { Kbd } from "@robr0/design-system/components/Kbd/Kbd";
 import { ProgressBar } from "@robr0/design-system/components/ProgressBar/ProgressBar";
 import { PromptSuggestions } from "@robr0/design-system/components/PromptSuggestions/PromptSuggestions";
@@ -560,6 +561,19 @@ export default function ComponentsPage() {
                   <span className={styles.instructionBadge}>2</span>
                   <span className={styles.instructionLabel}>Second</span>
                 </div>
+              </div>
+            </TocCard>
+
+            {/* Interrupt card */}
+            <TocCard href="/components/interrupt-card" title="Interrupt card">
+              <div style={{ width: "100%", maxWidth: "220px" }}>
+                <InterruptCard
+                  title="Allow file edit?"
+                  options={[
+                    { value: "allow", label: "Allow", variant: "primary" },
+                    { value: "deny", label: "Deny" },
+                  ]}
+                />
               </div>
             </TocCard>
 

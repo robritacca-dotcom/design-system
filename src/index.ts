@@ -45,6 +45,7 @@ export * from './components/Figure/Figure';
 export * from './components/FileInput/FileInput';
 export * from './components/Input/Input';
 export * from './components/Instructions/Instructions';
+export * from './components/InterruptCard/InterruptCard';
 export * from './components/Kbd/Kbd';
 export * from './components/LinkList/LinkList';
 export * from './components/MessageActions/MessageActions';

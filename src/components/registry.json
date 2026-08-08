@@ -341,6 +341,14 @@
       "client": false
     },
     {
+      "name": "InterruptCard",
+      "label": "Interrupt card",
+      "slug": "interrupt-card",
+      "description": "A human-in-the-loop checkpoint with a question from the agent and option buttons to decide.",
+      "category": "ai",
+      "client": false
+    },
+    {
       "name": "Kbd",
       "label": "Kbd",
       "slug": "kbd",
