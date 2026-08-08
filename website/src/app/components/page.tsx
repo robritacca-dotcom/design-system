@@ -10,6 +10,7 @@ import TocCard from "../../components/TocCard/TocCard";
 import { Accordion } from "@robr0/design-system/components/Accordion/Accordion";
 import { AgentStatus } from "@robr0/design-system/components/AgentStatus/AgentStatus";
 import { ChatMarker } from "@robr0/design-system/components/ChatMarker/ChatMarker";
+import { ChatMessage } from "@robr0/design-system/components/ChatMessage/ChatMessage";
 import { Alert } from "@robr0/design-system/components/Alert/Alert";
 import { Avatar } from "@robr0/design-system/components/Avatar/Avatar";
 import { Badge } from "@robr0/design-system/components/Badge/Badge";
@@ -265,6 +266,18 @@ export default function ComponentsPage() {
               <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: "12px" }}>
                 <ChatMarker>Today</ChatMarker>
                 <ChatMarker icon="history">Conversation resumed</ChatMarker>
+              </div>
+            </TocCard>
+
+            {/* Chat message */}
+            <TocCard href="/components/chat-message" title="Chat message">
+              <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: "8px" }}>
+                <ChatMessage role="user" size="compact">
+                  Ready to review?
+                </ChatMessage>
+                <ChatMessage role="assistant" size="compact">
+                  Yes, the queue is clear.
+                </ChatMessage>
               </div>
             </TocCard>
 

@@ -133,6 +133,14 @@
       "client": false
     },
     {
+      "name": "ChatMessage",
+      "label": "Chat message",
+      "slug": "chat-message",
+      "description": "A single chat turn with avatar, author, timestamp, and bubble or plain content aligned by role.",
+      "category": "ai",
+      "client": false
+    },
+    {
       "name": "Checkbox",
       "label": "Checkbox",
       "slug": "checkbox",
