@@ -381,6 +381,14 @@
       "client": false
     },
     {
+      "name": "Prose",
+      "label": "Prose",
+      "slug": "prose",
+      "description": "Token-styled typography for rendered markdown and rich agent output.",
+      "category": "ai",
+      "client": false
+    },
+    {
       "name": "Quote",
       "label": "Quote",
       "slug": "quote",

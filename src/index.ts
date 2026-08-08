@@ -50,6 +50,7 @@ export * from './components/NavList/NavList';
 export * from './components/Pagination/Pagination';
 export * from './components/Popover/Popover';
 export * from './components/ProgressBar/ProgressBar';
+export * from './components/Prose/Prose';
 export * from './components/Quote/Quote';
 export * from './components/RadioButton/RadioButton';
 export * from './components/Reasoning/Reasoning';

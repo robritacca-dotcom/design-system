@@ -33,6 +33,7 @@ import { Pagination } from "@robr0/design-system/components/Pagination/Paginatio
 import { Input } from "@robr0/design-system/components/Input/Input";
 import { Kbd } from "@robr0/design-system/components/Kbd/Kbd";
 import { ProgressBar } from "@robr0/design-system/components/ProgressBar/ProgressBar";
+import { Prose } from "@robr0/design-system/components/Prose/Prose";
 import { RadioButton } from "@robr0/design-system/components/RadioButton/RadioButton";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import { SegmentedControl } from "@robr0/design-system/components/SegmentedControl/SegmentedControl";
@@ -604,6 +605,19 @@ export default function ComponentsPage() {
             <TocCard href="/components/progress-bar" title="Progress bar">
               <div style={{ width: "120px" }}>
                 <ProgressBar value={65} size="compact" />
+              </div>
+            </TocCard>
+
+            {/* Prose */}
+            <TocCard href="/components/prose" title="Prose">
+              <div style={{ width: "100%", maxWidth: "220px", textAlign: "left" }}>
+                <Prose size="sm">
+                  <h4>Release notes</h4>
+                  <p>
+                    Rendered markdown picks up the token scale, down to inline{" "}
+                    <code>code</code>.
+                  </p>
+                </Prose>
               </div>
             </TocCard>
 
