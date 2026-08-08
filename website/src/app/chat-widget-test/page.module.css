@@ -1,0 +1,111 @@
+/* Standalone chat-widget test stage. The two widths are review targets
+   (desktop 768, mobile 390), not layout tokens. */
+
+.stage {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-md);
+  padding: var(--padding-lg);
+  background: var(--color-bg-page-primary);
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--gap-md);
+}
+
+.group {
+  display: flex;
+  gap: var(--gap-xs);
+}
+
+.widget {
+  display: flex;
+  flex-direction: column;
+  width: min(768px, 100%);
+  height: min(860px, calc(100dvh - 112px));
+  background: var(--color-bg-container-primary);
+  border: var(--border-xs) solid var(--color-bg-container-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-floating);
+  overflow: hidden;
+  transition: width var(--motion-duration-base) var(--motion-ease-standard);
+}
+
+.widgetMobile {
+  width: min(390px, 100%);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--padding-xs) var(--padding-md);
+}
+
+.headerTitle {
+  font-family: var(--font-title-body-family);
+  font-size: var(--font-title-body-size);
+  font-weight: var(--font-title-body-weight);
+  line-height: var(--font-title-body-line-height);
+  color: var(--color-text-primary);
+}
+
+/* Spacing mirrors the reference transcript: --gap-xl (40px) between turns,
+   --padding-lg gutters on desktop, --padding-sm-md on mobile. */
+.messages {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xl);
+  padding: var(--padding-lg);
+}
+
+.widgetMobile .messages {
+  padding-inline: var(--padding-sm-md);
+}
+
+/* The list scrolls; entries never shrink. Without this, children that clip
+   their own overflow (InterruptCard) collapse when the column overflows. */
+.messages > * {
+  flex-shrink: 0;
+}
+
+.responseStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-lg);
+}
+
+.responseText {
+  margin: 0;
+  font-family: var(--font-paragraph-family);
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  color: var(--color-text-primary);
+}
+
+/* The simulation's status crossfade, trace-node styling and live→done
+   handoff all live in the AgentStatus and Reasoning components now — the
+   page only drives the timeline. */
+
+/* No divider — the composer floats free of the transcript, like the
+   reference. The messages area's bottom padding provides the separation. */
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+  padding: 0 var(--padding-md) var(--padding-md);
+}
+
+.widgetMobile .footer {
+  padding-inline: var(--padding-sm-md);
+}
