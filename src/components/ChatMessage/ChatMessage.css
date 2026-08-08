@@ -221,6 +221,14 @@
    Hidden until the row is hovered or holds
    keyboard focus; touch has no hover, so there
    they stay visible.
+
+   Opacity only, never visibility: hidden would
+   drop the buttons from the tab order, so a
+   message with no other focusable child could
+   never match :focus-within and keyboard users
+   could never reach the actions. Invisible-but-
+   tabbable is the point — the first Tab into a
+   button reveals the row.
    ============================================ */
 
 .ds-chat-message__actions {
@@ -232,22 +240,17 @@
      --gap-md off the content without loosening the meta stack above. */
   margin-top: var(--gap-sm-md);
   opacity: 0;
-  visibility: hidden;
-  transition:
-    opacity var(--motion-duration-fast) var(--motion-ease-standard),
-    visibility var(--motion-duration-fast) var(--motion-ease-standard);
+  transition: opacity var(--motion-duration-fast) var(--motion-ease-standard);
 }
 
 .ds-chat-message:hover .ds-chat-message__actions,
 .ds-chat-message:focus-within .ds-chat-message__actions {
   opacity: 1;
-  visibility: visible;
 }
 
 @media (hover: none) {
   .ds-chat-message__actions {
     opacity: 1;
-    visibility: visible;
   }
 }
 
