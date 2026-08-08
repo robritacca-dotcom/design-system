@@ -148,7 +148,11 @@ export const Pending: Story = {
   },
 };
 
-/** Actions reveal on hover or keyboard focus; the footer is always present. */
+/**
+ * Actions reveal on hover or keyboard focus; the footer is always present.
+ * The buttons stay in the tab order while hidden, so Tab reaches them
+ * directly and the first focus reveals the row.
+ */
 export const WithActionsAndFooter: Story = {
   render: () => (
     <div style={{ maxWidth: '560px' }}>
