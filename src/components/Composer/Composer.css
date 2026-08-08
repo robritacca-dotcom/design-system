@@ -8,10 +8,15 @@
   flex-direction: column;
   gap: var(--gap-xs);
   width: 100%;
-  padding: var(--padding-sm) var(--padding-sm-md);
+  /* Equal padding on all four sides, and a corner concentric with the
+     compact CircularButton it wraps: the button is 32px (16px radius),
+     so radius-xl (24px) = 16px + the 8px padding-sm ring around it.
+     border-radius applies to the border's outer edge, so the border
+     width joins the sum to keep both curve surfaces concentric. */
+  padding: var(--padding-sm);
   background-color: var(--color-input-bg-primary);
   border: var(--border-xs) solid var(--color-input-border-primary);
-  border-radius: var(--radius-md);
+  border-radius: calc(var(--radius-xl) + var(--border-xs));
   transition: border-color var(--motion-duration-fast) var(--motion-ease-standard);
 }
 
