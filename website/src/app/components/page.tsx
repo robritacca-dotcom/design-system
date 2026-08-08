@@ -27,6 +27,7 @@ import { Swatch } from "@robr0/design-system/components/Swatch/Swatch";
 import { Timeline } from "@robr0/design-system/components/Timeline/Timeline";
 import { ContributionGraph, type ContributionDay } from "@robr0/design-system/components/ContributionGraph/ContributionGraph";
 import { Divider } from "@robr0/design-system/components/Divider/Divider";
+import { DocumentChip } from "@robr0/design-system/components/DocumentChip/DocumentChip";
 import { Dropdown } from "@robr0/design-system/components/Dropdown/Dropdown";
 import { NavList } from "@robr0/design-system/components/NavList/NavList";
 import { Pagination } from "@robr0/design-system/components/Pagination/Pagination";
@@ -418,6 +419,14 @@ export default function ComponentsPage() {
               <div style={{ width: "120px" }}>
                 <Divider spacing="sm" />
                 <Divider label="or" spacing="sm" />
+              </div>
+            </TocCard>
+
+            {/* Document chip */}
+            <TocCard href="/components/document-chip" title="Document chip">
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "var(--gap-xs)" }}>
+                <DocumentChip name="brief.pdf" fileType="pdf" meta="1.2 MB" />
+                <DocumentChip name="budget.xlsx" fileType="sheet" size="compact" />
               </div>
             </TocCard>
 

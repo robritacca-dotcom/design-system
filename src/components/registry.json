@@ -245,6 +245,14 @@
       "client": false
     },
     {
+      "name": "DocumentChip",
+      "label": "Document chip",
+      "slug": "document-chip",
+      "description": "A compact file reference with a type icon, name, metadata, and optional remove.",
+      "category": "ai",
+      "client": false
+    },
+    {
       "name": "Drawer",
       "label": "Drawer",
       "slug": "drawer",

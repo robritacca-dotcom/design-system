@@ -32,6 +32,7 @@ export * from './components/DateInput/DateInput';
 export * from './components/DatePicker/DatePicker';
 export * from './components/Dialog/Dialog';
 export * from './components/Divider/Divider';
+export * from './components/DocumentChip/DocumentChip';
 export * from './components/Drawer/Drawer';
 export * from './components/Dropdown/Dropdown';
 export * from './components/DropdownMenu/DropdownMenu';
