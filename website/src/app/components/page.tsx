@@ -48,6 +48,7 @@ import { Textarea } from "@robr0/design-system/components/Textarea/Textarea";
 import { ToggleGroup } from "@robr0/design-system/components/ToggleGroup/ToggleGroup";
 import PageLinks from "../../components/PageLinks/PageLinks";
 import { LinkList } from "@robr0/design-system/components/LinkList/LinkList";
+import { MessageActions } from "@robr0/design-system/components/MessageActions/MessageActions";
 import { MessageCard } from "@robr0/design-system/components/MessageCard/MessageCard";
 import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
@@ -584,6 +585,18 @@ export default function ComponentsPage() {
                   </div>
                 ))}
               </div>
+            </TocCard>
+
+            {/* Message actions */}
+            <TocCard href="/components/message-actions" title="Message actions">
+              <MessageActions
+                showTooltips={false}
+                items={[
+                  { id: "copy", icon: "content_copy", label: "Copy" },
+                  { id: "retry", icon: "refresh", label: "Retry" },
+                  { id: "thumb-up", icon: "thumb_up", label: "Good response" },
+                ]}
+              />
             </TocCard>
 
             {/* Message card */}

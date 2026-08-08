@@ -47,6 +47,7 @@ export * from './components/Input/Input';
 export * from './components/Instructions/Instructions';
 export * from './components/Kbd/Kbd';
 export * from './components/LinkList/LinkList';
+export * from './components/MessageActions/MessageActions';
 export * from './components/MessageCard/MessageCard';
 export * from './components/Nav/Nav';
 export * from './components/NavList/NavList';
