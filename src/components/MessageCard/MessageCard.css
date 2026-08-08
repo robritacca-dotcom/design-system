@@ -1,0 +1,112 @@
+/* ============================================
+   MESSAGE CARD COMPONENT
+   Structured rich content inside a chat turn:
+   media on top, a title/meta/description body,
+   and an actions footer.
+
+   Not the navigation Card — this is content
+   furniture inside a conversation, --radius-md
+   like the other chat primitives, sized by the
+   bubble or turn that holds it.
+   ============================================ */
+
+.ds-message-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: var(--ds-message-card-max-width, 100%);
+  background-color: var(--color-bg-container-primary);
+  border: var(--border-xs) solid var(--color-bg-container-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+/* ============================================
+   MEDIA
+   Full bleed — the card's overflow clip rounds
+   the corners, so the slot carries no padding.
+   ============================================ */
+
+.ds-message-card__media {
+  display: block;
+}
+
+.ds-message-card__media img {
+  display: block;
+  width: 100%;
+}
+
+/* ============================================
+   BODY
+   ============================================ */
+
+.ds-message-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  padding: var(--padding-sm-md) var(--padding-md);
+}
+
+.ds-message-card__title-row {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-xs);
+  min-width: 0;
+}
+
+.ds-message-card__icon {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  color: var(--color-icon-primary);
+}
+
+.ds-message-card__icon .material-symbols-rounded {
+  --icon-size: var(--icon-size-sm);
+}
+
+.ds-message-card__title {
+  min-width: 0;
+  font-family: var(--font-title-body-family);
+  font-size: var(--font-title-body-size);
+  font-weight: var(--font-title-body-weight);
+  line-height: var(--font-title-body-line-height);
+  letter-spacing: var(--font-title-body-letter-spacing);
+  color: var(--color-text-primary);
+}
+
+.ds-message-card__meta {
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  color: var(--color-text-tertiary);
+}
+
+.ds-message-card__description {
+  margin: 0;
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  color: var(--color-text-secondary);
+}
+
+/* ============================================
+   ACTIONS
+   Mirrors ToolCall's actions footer exactly, so
+   approvals on a tool call and link actions on
+   a card read as the same row.
+   ============================================ */
+
+.ds-message-card__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--gap-sm);
+  padding: var(--padding-sm) var(--padding-sm-md);
+  border-top: var(--border-xs) solid var(--color-divider);
+  background-color: var(--color-bg-container-secondary);
+}

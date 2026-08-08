@@ -357,6 +357,14 @@
       "client": false
     },
     {
+      "name": "MessageCard",
+      "label": "Message card",
+      "slug": "message-card",
+      "description": "A structured rich-content card embedded in a chat message, with media, title, body, and actions.",
+      "category": "ai",
+      "client": false
+    },
+    {
       "name": "Nav",
       "label": "Navigation",
       "slug": "navigation",

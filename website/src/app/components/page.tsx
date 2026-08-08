@@ -48,6 +48,7 @@ import { Textarea } from "@robr0/design-system/components/Textarea/Textarea";
 import { ToggleGroup } from "@robr0/design-system/components/ToggleGroup/ToggleGroup";
 import PageLinks from "../../components/PageLinks/PageLinks";
 import { LinkList } from "@robr0/design-system/components/LinkList/LinkList";
+import { MessageCard } from "@robr0/design-system/components/MessageCard/MessageCard";
 import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 const { sidebarLinks } = getSidebarLinks(componentsSidebarLinks, "/components");
@@ -582,6 +583,17 @@ export default function ComponentsPage() {
                     <span className="material-symbols-rounded" style={{ fontSize: "12px", color: "var(--color-text-tertiary)", marginLeft: "auto" }}>open_in_new</span>
                   </div>
                 ))}
+              </div>
+            </TocCard>
+
+            {/* Message card */}
+            <TocCard href="/components/message-card" title="Message card">
+              <div style={{ width: "100%", maxWidth: "220px" }}>
+                <MessageCard
+                  icon="language"
+                  title="Harbour Line timetable"
+                  meta="transit.harbourline.example"
+                />
               </div>
             </TocCard>
 
