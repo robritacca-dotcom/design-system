@@ -197,6 +197,14 @@
       "client": true
     },
     {
+      "name": "Composer",
+      "label": "Composer",
+      "slug": "composer",
+      "description": "An auto-growing message input with send and stop states, an attachment slot, and Enter-to-send.",
+      "category": "ai",
+      "client": true
+    },
+    {
       "name": "ContactCard",
       "label": "Contact card",
       "slug": "contact-card",

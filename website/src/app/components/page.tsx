@@ -356,6 +356,19 @@ export default function ComponentsPage() {
               </div>
             </TocCard>
 
+            {/* Composer */}
+            <TocCard href="/components/composer" title="Composer">
+              <div style={{ display: "flex", flexDirection: "column", gap: "8px", width: "160px", padding: "8px 10px", borderRadius: "12px", border: "1px solid var(--color-input-border-primary)", background: "var(--color-input-bg-primary)" }}>
+                <span style={{ fontSize: "10px", color: "var(--color-input-text-placeholder)" }}>Message the agent</span>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-icon-primary)" }}>add</span>
+                  <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "20px", height: "20px", borderRadius: "50%", background: "var(--color-action-primary-bg)" }}>
+                    <span className="material-symbols-rounded" style={{ fontSize: "12px", color: "var(--color-action-primary-text)" }}>arrow_upward</span>
+                  </span>
+                </div>
+              </div>
+            </TocCard>
+
             {/* Contact card */}
             <TocCard href="/components/contact-card" title="Contact card">
               <div style={{ display: "flex", flexDirection: "column", gap: "6px", width: "160px" }}>

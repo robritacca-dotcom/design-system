@@ -1,0 +1,111 @@
+/* ============================================
+   COMPOSER COMPONENT
+   The chat input shell: attachments, auto-growing textarea, send/stop
+   ============================================ */
+
+.ds-composer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  width: 100%;
+  padding: var(--padding-sm) var(--padding-sm-md);
+  background-color: var(--color-input-bg-primary);
+  border: var(--border-xs) solid var(--color-input-border-primary);
+  border-radius: var(--radius-md);
+  transition: border-color var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+/* The shell carries the input focus/hover treatment — the textarea inside
+   is borderless, so the whole surface reads as one control */
+.ds-composer:hover:not(:focus-within) {
+  border-color: var(--color-input-border-hover);
+}
+
+.ds-composer:focus-within {
+  border-color: var(--color-input-border-selected);
+}
+
+/* ============================================
+   ATTACHMENTS ROW
+   ============================================ */
+
+.ds-composer__attachments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-xs);
+}
+
+/* ============================================
+   TEXTAREA
+   ============================================ */
+
+.ds-composer__textarea {
+  width: 100%;
+  padding: 0;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  resize: none;
+  font-family: var(--font-paragraph-family);
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  letter-spacing: var(--font-paragraph-letter-spacing);
+  color: var(--color-input-text-primary);
+  /* Growth cap: the shell owns the block padding, so the cap is rows × line-height.
+     --ds-composer-max-rows is set inline from the maxRows prop. */
+  max-height: calc(var(--ds-composer-max-rows, 8) * var(--font-paragraph-line-height));
+  overflow-y: auto;
+}
+
+.ds-composer__textarea::placeholder {
+  color: var(--color-input-text-placeholder);
+}
+
+/* Native auto-grow where supported; the JS measurement path stands down
+   (it checks the same capability) */
+@supports (field-sizing: content) {
+  .ds-composer__textarea {
+    field-sizing: content;
+  }
+}
+
+/* ============================================
+   FOOTER ROW
+   ============================================ */
+
+.ds-composer__footer {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-xs);
+}
+
+.ds-composer__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-xs);
+}
+
+.ds-composer__send {
+  margin-left: auto;
+}
+
+/* ============================================
+   DISABLED
+   ============================================ */
+
+.ds-composer--disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background-color: var(--color-input-bg-disabled);
+}
+
+.ds-composer--disabled:hover:not(:focus-within),
+.ds-composer--disabled:focus-within {
+  border-color: var(--color-input-border-disabled);
+}
+
+.ds-composer--disabled .ds-composer__textarea {
+  cursor: not-allowed;
+  color: var(--color-input-text-disabled);
+}

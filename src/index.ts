@@ -26,6 +26,7 @@ export * from './components/CodeBlock/CodeBlock';
 export * from './components/ColorPicker/ColorPicker';
 export * from './components/Combobox/Combobox';
 export * from './components/CommandPalette/CommandPalette';
+export * from './components/Composer/Composer';
 export * from './components/ContactCard/ContactCard';
 export * from './components/ContextMenu/ContextMenu';
 export * from './components/ContributionGraph/ContributionGraph';
