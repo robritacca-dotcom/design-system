@@ -123,6 +123,30 @@ const containerColours: SwatchData[] = [
   },
 ];
 
+/* --- Chat bubbles --- */
+const chatBubbleColours: SwatchData[] = [
+  {
+    label: "Sent bg", cssVar: "--color-chat-bubble-sent-bg",
+    dark: { primitive: "--neutral--07--", hex: "#303030", rgb: "48 / 48 / 48" },
+    light: { primitive: "--neutral--02--", hex: "#D6D6D6", rgb: "214 / 214 / 214" },
+  },
+  {
+    label: "Sent text", cssVar: "--color-chat-bubble-sent-text",
+    dark: { primitive: "--neutral--01--", hex: "#F1F1F1", rgb: "241 / 241 / 241" },
+    light: { primitive: "--neutral--10--", hex: "#050505", rgb: "5 / 5 / 5" },
+  },
+  {
+    label: "Received bg", cssVar: "--color-chat-bubble-received-bg",
+    dark: { primitive: "--neutral--07--", hex: "#303030", rgb: "48 / 48 / 48" },
+    light: { primitive: "--neutral--02--", hex: "#D6D6D6", rgb: "214 / 214 / 214" },
+  },
+  {
+    label: "Received text", cssVar: "--color-chat-bubble-received-text",
+    dark: { primitive: "--neutral--01--", hex: "#F1F1F1", rgb: "241 / 241 / 241" },
+    light: { primitive: "--neutral--10--", hex: "#050505", rgb: "5 / 5 / 5" },
+  },
+];
+
 /* --- Text --- */
 const textColours: SwatchData[] = [
   {
@@ -390,6 +414,16 @@ export default function SemanticColoursPage() {
             <SectionTitle title="Container" />
             <div className={styles.colourSwatches}>
               {containerColours.map((s) => (
+                <ColourSwatch key={s.label} label={s.label} cssVar={s.cssVar} dark={s.dark} light={s.light} theme={theme} />
+              ))}
+            </div>
+          </section>
+
+          {/* Chat bubbles */}
+          <section className={styles.colourGroup}>
+            <SectionTitle title="Chat bubbles" />
+            <div className={styles.colourSwatches}>
+              {chatBubbleColours.map((s) => (
                 <ColourSwatch key={s.label} label={s.label} cssVar={s.cssVar} dark={s.dark} light={s.light} theme={theme} />
               ))}
             </div>

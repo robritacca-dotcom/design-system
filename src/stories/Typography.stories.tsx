@@ -339,6 +339,52 @@ export const BodyTextStyles: Story = {
   ),
 };
 
+// Code Style Story — the one sanctioned monospace context
+export const CodeStyle: Story = {
+  render: () => (
+    <div style={{ maxWidth: '1200px' }}>
+      <h2
+        style={{
+          fontSize: '24px',
+          fontWeight: 700,
+          color: 'var(--color-text-primary)',
+          marginBottom: '12px',
+        }}
+      >
+        Code Typography
+      </h2>
+      <p
+        style={{
+          fontSize: '14px',
+          color: 'var(--color-text-secondary)',
+          marginBottom: '48px',
+          lineHeight: '1.5',
+        }}
+      >
+        The system mono stack, codified as <code>--font-family-code</code>.
+        Used by CodeBlock, ToolCall names, and Prose inline code — Nunito Sans
+        everywhere else. Sizing rides the Paragraph SM scale; only the family
+        changes.
+      </p>
+
+      <div
+        style={{
+          fontFamily: 'var(--font-family-code)',
+          fontSize: 'var(--font-paragraph-sm-size)',
+          fontWeight: 'var(--font-paragraph-sm-weight)',
+          lineHeight: 'var(--font-paragraph-sm-line-height)',
+          color: 'var(--color-text-primary)',
+          padding: '16px',
+          backgroundColor: 'var(--color-bg-container-primary)',
+          borderRadius: '8px',
+        }}
+      >
+        const tokens = generateRegistry(&apos;src/tokens/tokens-light.css&apos;);
+      </div>
+    </div>
+  ),
+};
+
 // All Typography Styles
 export const AllStyles: Story = {
   render: () => (

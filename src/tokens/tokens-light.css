@@ -34,6 +34,15 @@
   /* Divider */
   --color-divider: var(--primitive-neutral-02-semi);
 
+  /* Chat bubbles — sent (the person) and received (the agent). Both alias
+     the container-secondary / text-primary pair today; they exist as their
+     own roles so chat surfaces can be re-themed later without touching the
+     container ramp. */
+  --color-chat-bubble-sent-bg: var(--color-bg-container-secondary);
+  --color-chat-bubble-sent-text: var(--color-text-primary);
+  --color-chat-bubble-received-bg: var(--color-bg-container-secondary);
+  --color-chat-bubble-received-text: var(--color-text-primary);
+
   /* Overlay & controls */
   --color-scrim: var(--primitive-true-black-semi);
   --color-control-thumb: var(--primitive-neutral-00);

@@ -4,7 +4,7 @@
 
 This design system is a **cool-professional, teal-anchored** component library and documentation website. The base atmosphere is a **pure white page floor** (`--color-bg-page-primary` — #FFFFFF) lifted by a **neutral container hierarchy** (light gray #F1F1F1 → mid gray #D6D6D6 → deep gray #BCBCBC) — clinical, precise, never warm. The brand voltage comes from **signature teal** (`--color-action-primary-bg` — #118AB2), a mid-depth cyan-blue that reads trustworthy and technical without corporate-blue flatness.
 
-The system runs a **single typeface throughout**: **Nunito Sans** at weight 300 (display/hero) → 600 (headings) → 500/400 (body/UI). There is no serif face and no monospace split — the typographic personality is clean, rounded, and approachable rather than editorial.
+The system runs a **single typeface throughout**: **Nunito Sans** at weight 300 (display/hero) → 600 (headings) → 500/400 (body/UI). There is no serif face, and monospace appears only in sanctioned code contexts through `--font-family-code` — the typographic personality is clean, rounded, and approachable rather than editorial.
 
 The **three-tier token architecture** is the defining structural rule:
 1. **Primitives** (`--primitive-*`) — raw hex/px values. Source of truth. Never used directly in components.
@@ -54,6 +54,15 @@ Never reference `--primitive-*` tokens inside components. Always use the semanti
 - **Container inverse** (`--color-bg-container-inverse` — #0E0E0E light / #F1F1F1 dark): High-contrast inverted surface — the tooltip bubble. Always paired with `--color-text-on-inverse`.
 - **Divider** (`--color-divider` — rgba(214,214,214,0.8) light / rgba(35,35,35,0.8) dark): Horizontal/vertical rule between sections.
 
+### Chat bubbles
+Message bubbles get their own colour roles so chat surfaces can be re-themed without touching the container ramp. All four currently alias the container-secondary / text-primary pair — deliberately identical today, separable later.
+- **Sent bg** (`--color-chat-bubble-sent-bg` → `--color-bg-container-secondary`): Fill of the person's outgoing bubble.
+- **Sent text** (`--color-chat-bubble-sent-text` → `--color-text-primary`): Text inside the sent bubble.
+- **Received bg** (`--color-chat-bubble-received-bg` → `--color-bg-container-secondary`): Fill of a received bubble, when the agent's turn renders as a bubble at all.
+- **Received text** (`--color-chat-bubble-received-text` → `--color-text-primary`): Text inside the received bubble.
+
+ChatMessage consumes only these four — never the container tokens directly. Teal is never a bubble fill; the action colour keeps its CTA meaning.
+
 ### Overlay & Controls
 - **Scrim** (`--color-scrim` — rgba(0,0,0,0.5) light / rgba(0,0,0,0.7) dark): Modal backdrop behind Dialog and AlertDialog. Darker in dark mode so the modal still separates from the near-black floor.
 - **Control thumb** (`--color-control-thumb` — #FFFFFF light / #F1F1F1 dark): The circular thumb inside toggle switches (ToggleSwitch, SelectionCard's toggle indicator).
@@ -91,7 +100,7 @@ Never reference `--primitive-*` tokens inside components. Always use the semanti
 ## Typography
 
 ### Font Family
-The system uses **Nunito Sans** exclusively. No serif face. No monospace face. The font stack is `'Nunito Sans', sans-serif` via `--font-family-primary`.
+The system uses **Nunito Sans** exclusively. No serif face, and no bundled monospace face — code contexts (CodeBlock, ToolCall names, Prose inline code) use the system mono stack codified as `--font-family-code`. The main font stack is `'Nunito Sans', sans-serif` via `--font-family-primary`.
 
 Nunito Sans is a rounded humanist sans-serif. The rounded terminals give UI elements a friendly, approachable quality without sacrificing technical clarity. Inter is an acceptable substitute for prototyping; avoid Helvetica or Arial, which strip the rounded character.
 
@@ -559,7 +568,7 @@ Default icons (Material Symbols Rounded): `info`, `check_circle`, `warning`, `er
 
 ### CodeBlock
 
-**`ds-code-block`** — Monospace code in a `--color-bg-container-primary` container with `--radius-md` and a hairline border. The one sanctioned monospace context in the system (system mono stack — Nunito Sans everywhere else). Optional header row: filename (mono, `--color-text-secondary`), uppercase language tag (`--color-text-tertiary`, 0.08em tracking), and a copy button that confirms with a check for 2s. Code text is 14px/20px, `--color-text-primary`; long lines scroll horizontally. An optional `maxHeight` prop caps the block: the code area scrolls vertically inside while the header stays pinned. An optional `collapsible` prop adds a chevron beside the filename (`--color-icon-primary`, 20px, rotates −90° when closed) that collapses the code area with the same 0fr/1fr grid animation as Accordion; `defaultCollapsed` starts it closed. No syntax highlighting — monochrome by design, no dependencies.
+**`ds-code-block`** — Monospace code in a `--color-bg-container-primary` container with `--radius-md` and a hairline border. The original sanctioned monospace context in the system, set in `--font-family-code` (Nunito Sans everywhere outside code contexts). Optional header row: filename (mono, `--color-text-secondary`), uppercase language tag (`--color-text-tertiary`, 0.08em tracking), and a copy button that confirms with a check for 2s. Code text is 14px/20px, `--color-text-primary`; long lines scroll horizontally. An optional `maxHeight` prop caps the block: the code area scrolls vertically inside while the header stays pinned. An optional `collapsible` prop adds a chevron beside the filename (`--color-icon-primary`, 20px, rotates −90° when closed) that collapses the code area with the same 0fr/1fr grid animation as Accordion; `defaultCollapsed` starts it closed. No syntax highlighting — monochrome by design, no dependencies.
 
 ### Kbd
 
@@ -636,7 +645,7 @@ Six states: `idle`, `thinking`, `working`, `waiting`, `done`, `error`. The three
 
 ### ToolCall
 
-**`ds-tool-call`** — The record of one tool invocation. A skimmable header row — status indicator, monospace tool name (the same sanctioned monospace context CodeBlock uses), summary, status word, `tabular-nums` duration, chevron — over a collapsible body holding the arguments and result. Container is `--color-bg-container-primary` at `--radius-md` with a `--border-xs` `--color-bg-container-border`; the panel uses the same `0fr → 1fr` collapse and `visibility` handling as Reasoning.
+**`ds-tool-call`** — The record of one tool invocation. A skimmable header row — status indicator, monospace tool name (`--font-family-code`, the same sanctioned monospace context CodeBlock uses), summary, status word, `tabular-nums` duration, chevron — over a collapsible body holding the arguments and result. Container is `--color-bg-container-primary` at `--radius-md` with a `--border-xs` `--color-bg-container-border`; the panel uses the same `0fr → 1fr` collapse and `visibility` handling as Reasoning.
 
 Four statuses: `pending`, `running`, `success`, `error`, mapping to the warning, info, positive and error `--color-status-*-text` tokens. The container stays neutral so a long run reads as a list rather than a wall of tinted cards; only the two states a person has to act on — `pending` and `error` — also take a coloured border. `running` renders a `Spinner` at `variant="inherit"`, the rest a Material Symbol (`pause_circle`, `check_circle`, `error`) at `--icon-size-sm`.
 
@@ -743,5 +752,4 @@ A section-specific threshold outside this set is allowed only when it is content
 - **Figma parity** — The system originates in Figma ([robr0-ds26](https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26)), and foundation/component pages deep-link to specific frames via `figmaUrl`. Keeping the Figma file and the coded tokens in sync is still a manual process — there is no automated export pipeline.
 - **Breakpoint tokens** — The docs-shell column widths are tokenized (`--layout-*` in the website's `globals.css`), but the media-query thresholds themselves (the canonical 1279 / 1151 / 959 / 768 / 600px set) remain raw values repeated across CSS files by design — CSS custom properties cannot drive `@media` conditions, and a preprocessor dependency isn't worth it for five documented literals.
 - **Form validation patterns** — Error state on Input is documented, but multi-field form-level validation patterns (inline error summaries, field grouping) are not in scope here.
-- **Code/monospace** — CodeBlock (the one sanctioned monospace context) uses a raw system mono stack; no `--font-code-*` token is defined in the typography layer. If monospace spreads beyond CodeBlock, codify the stack (or a dedicated face like JetBrains Mono) as a token first.
 - **Chart theming** — chart series colours are hardcoded per component (teal first, then `--color-core-accent-*` values); a formal `--chart-series-{n}` token set for ordered series colors has not been codified.

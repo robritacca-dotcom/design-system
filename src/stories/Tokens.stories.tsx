@@ -431,6 +431,19 @@ export const SemanticColors: Story = {
         <ColorToken name="Border" value="--color-bg-container-border" />
       </TokenSection>
 
+      <TokenSection title="Chat Bubbles">
+        <ColorToken name="Sent Background" value="--color-chat-bubble-sent-bg" />
+        <ColorToken name="Sent Text" value="--color-chat-bubble-sent-text" />
+        <ColorToken
+          name="Received Background"
+          value="--color-chat-bubble-received-bg"
+        />
+        <ColorToken
+          name="Received Text"
+          value="--color-chat-bubble-received-text"
+        />
+      </TokenSection>
+
       <TokenSection title="Action - Primary">
         <ColorToken name="Background" value="--color-action-primary-bg" />
         <ColorToken

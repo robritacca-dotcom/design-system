@@ -72,11 +72,11 @@
   --icon-size: var(--icon-size-sm);
 }
 
-/* The tool name is an identifier, so it takes the same monospace
-   context CodeBlock uses — the one place the system leaves Nunito Sans */
+/* The tool name is an identifier, so it takes the code stack —
+   the one place the system leaves Nunito Sans */
 .ds-tool-call__name {
   flex: none;
-  font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+  font-family: var(--font-family-code);
   font-size: var(--font-paragraph-sm-size);
   line-height: var(--font-paragraph-sm-line-height);
   color: var(--color-text-primary);

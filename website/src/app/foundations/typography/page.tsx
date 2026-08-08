@@ -257,11 +257,31 @@ const bodyStyles: TypeStyleData[] = [
   },
 ];
 
+/* Code — the one sanctioned monospace context (--font-family-code).
+   Sizing rides the Paragraph SM scale; only the family changes. */
+const codeStyles = [
+  {
+    name: "Code",
+    weight: "Regular",
+    size: "14px",
+    lineHeight: "20px",
+    letterSpacing: "0",
+    previewStyle: {
+      fontFamily: "var(--font-family-code)",
+      fontSize: "var(--font-paragraph-sm-size)",
+      fontWeight: "var(--font-paragraph-sm-weight)" as unknown as number,
+      lineHeight: "var(--font-paragraph-sm-line-height)",
+      letterSpacing: "var(--font-paragraph-sm-letter-spacing)",
+    },
+  },
+];
+
 const typeSections = [
   { title: "Mega", styles: megaStyles },
   { title: "Display", styles: displayStyles },
   { title: "Heading", styles: headingStyles },
   { title: "Body", styles: bodyStyles },
+  { title: "Code", styles: codeStyles },
 ];
 
 /* ============================================
