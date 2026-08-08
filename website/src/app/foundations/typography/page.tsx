@@ -259,7 +259,7 @@ const bodyStyles: TypeStyleData[] = [
 
 /* Code — the one sanctioned monospace context (--font-family-code).
    Sizing rides the Paragraph SM scale; only the family changes. */
-const codeStyles = [
+const codeStyles: TypeStyleData[] = [
   {
     name: "Code",
     weight: "Regular",
