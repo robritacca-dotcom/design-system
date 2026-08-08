@@ -187,7 +187,7 @@ export const Composer = React.forwardRef<HTMLTextAreaElement, ComposerProps>(
                 icon="stop"
                 variant="primary"
                 ariaLabel={stopLabel}
-                state={disabled ? 'disabled' : 'default'}
+                disabled={disabled}
                 onClick={onStop}
               />
             ) : (
@@ -195,7 +195,7 @@ export const Composer = React.forwardRef<HTMLTextAreaElement, ComposerProps>(
                 icon="arrow_upward"
                 variant="primary"
                 ariaLabel={sendLabel}
-                state={canSend ? 'default' : 'disabled'}
+                disabled={!canSend}
                 onClick={submit}
               />
             )}

@@ -402,7 +402,7 @@ export default function ChatWidgetTestPage() {
                         icon="add"
                         variant="tertiary"
                         ariaLabel="Add attachment"
-                        state="disabled"
+                        disabled
                       />
                       <Button
                         variant="tertiary"
