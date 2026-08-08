@@ -461,6 +461,14 @@
       "client": true
     },
     {
+      "name": "SourceChip",
+      "label": "Source chip",
+      "slug": "source-chip",
+      "description": "A numbered citation pill linking a claim to its source.",
+      "category": "ai",
+      "client": false
+    },
+    {
       "name": "Spinner",
       "label": "Spinner",
       "slug": "spinner",

@@ -663,6 +663,12 @@ Inline code and `pre` both use `--font-family-code`: inline code sits on `--colo
 
 `streaming` opens the panel and shimmers the summary with the same treatment AgentStatus uses, so "the model is working" looks the same wherever it appears; when the stream ends the panel collapses to `Thought for {duration}s`. That auto-collapse yields to the reader — once someone has toggled the panel themselves, the stream ending no longer moves it. Only the summary is a `role="status"` live region: a trace announced token by token floods a screen reader, so the body stays ordinary expandable content and the announcement covers the boundaries.
 
+### SourceChip
+
+**`ds-source-chip`** — A numbered citation pill linking a claim to its source: a borderless `--radius-full` pill on `--color-bg-container-secondary` holding a leading slot and a source title in `--font-paragraph-sm-*` `--color-text-secondary`, the title truncating with an ellipsis at `24ch`. The leading slot is either the citation number — a `--font-paragraph-sm-em-*` `tabular-nums` numeral in `--color-text-tertiary`, centred in its own `--icon-size-sm` `--color-bg-container-tertiary` circle — or a Material Symbol at `--icon-size-sm` `--color-icon-primary`; when both `index` and `icon` are passed, the index wins.
+
+The root is an `<a>` when `href` is set and a plain `<span>` otherwise. Only the link gets interaction styling: on hover the background steps to `--color-bg-container-tertiary` and the text to `--color-text-primary` over `--motion-duration-fast` `--motion-ease-standard`, with `text-decoration: none` throughout — the pill shape is the affordance — and focus draws the house `--color-action-primary-bg` ring. The non-link span keeps `cursor: default` and no hover. It renders inline after a sentence or in a wrapping sources row under an assistant answer, pairing with ChatMessage's footer slot once that ships.
+
 ### ToolCall
 
 **`ds-tool-call`** — The record of one tool invocation. A skimmable header row — status indicator, monospace tool name (`--font-family-code`, the same sanctioned monospace context CodeBlock uses), summary, status word, `tabular-nums` duration, chevron — over a collapsible body holding the arguments and result. Container is `--color-bg-container-primary` at `--radius-md` with a `--border-xs` `--color-bg-container-border`; the panel uses the same `0fr → 1fr` collapse and `visibility` handling as Reasoning.

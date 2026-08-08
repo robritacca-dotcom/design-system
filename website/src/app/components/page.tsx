@@ -40,6 +40,7 @@ import { SectionTitle } from "@robr0/design-system/components/SectionTitle/Secti
 import { SegmentedControl } from "@robr0/design-system/components/SegmentedControl/SegmentedControl";
 import { Skeleton } from "@robr0/design-system/components/Skeleton/Skeleton";
 import { Slider } from "@robr0/design-system/components/Slider/Slider";
+import { SourceChip } from "@robr0/design-system/components/SourceChip/SourceChip";
 import { Spinner } from "@robr0/design-system/components/Spinner/Spinner";
 import { Tabs } from "@robr0/design-system/components/Tabs/Tabs";
 import { Textarea } from "@robr0/design-system/components/Textarea/Textarea";
@@ -710,6 +711,14 @@ export default function ComponentsPage() {
             <TocCard href="/components/slider" title="Slider">
               <div style={{ width: "120px" }}>
                 <Slider value={60} />
+              </div>
+            </TocCard>
+
+            {/* Source chip */}
+            <TocCard href="/components/source-chip" title="Source chip">
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", justifyContent: "center" }}>
+                <SourceChip index={1} title="Design tokens quarterly" />
+                <SourceChip index={2} title="Theming layered systems" />
               </div>
             </TocCard>
 

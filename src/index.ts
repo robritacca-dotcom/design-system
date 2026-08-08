@@ -60,6 +60,7 @@ export * from './components/SegmentedControl/SegmentedControl';
 export * from './components/SelectionCard/SelectionCard';
 export * from './components/Skeleton/Skeleton';
 export * from './components/Slider/Slider';
+export * from './components/SourceChip/SourceChip';
 export * from './components/Spinner/Spinner';
 export * from './components/Stat/Stat';
 export * from './components/Swatch/Swatch';
