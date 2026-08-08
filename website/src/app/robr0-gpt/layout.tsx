@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 
-// Standalone scratch page for reviewing the chat primitives stacked as a
-// widget. Linked from nowhere, kept out of search, and safe to delete once
-// the real chat widget exists.
+// robr0 GPT — the standalone chat-widget test bench. The full widget runs
+// here on simulated responses while the interactions are tuned; the real
+// LLM backend arrives in Build 2. Linked from nowhere and kept out of
+// search until it ships as a site pattern.
 export const metadata: Metadata = {
-  title: "Chat widget test",
+  title: "robr0 GPT",
   robots: { index: false, follow: false },
 };
 

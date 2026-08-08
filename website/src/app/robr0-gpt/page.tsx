@@ -1,258 +1,430 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import Image from "next/image";
+import ReactMarkdown from "react-markdown";
 import styles from "./page.module.css";
 import { AgentStatus } from "@robr0/design-system/components/AgentStatus/AgentStatus";
-import { Avatar } from "@robr0/design-system/components/Avatar/Avatar";
 import { Button } from "@robr0/design-system/components/Button/Button";
+import { ChatHeader } from "@robr0/design-system/components/ChatHeader/ChatHeader";
 import { ChatMessage } from "@robr0/design-system/components/ChatMessage/ChatMessage";
+import { ChatThread } from "@robr0/design-system/components/ChatThread/ChatThread";
 import { CircularButton } from "@robr0/design-system/components/CircularButton/CircularButton";
 import { Composer } from "@robr0/design-system/components/Composer/Composer";
-import { MessageCard } from "@robr0/design-system/components/MessageCard/MessageCard";
+import { PromptSuggestions } from "@robr0/design-system/components/PromptSuggestions/PromptSuggestions";
+import { Prose } from "@robr0/design-system/components/Prose/Prose";
 import { Reasoning } from "@robr0/design-system/components/Reasoning/Reasoning";
+import { useChat, type ChatTurn, type LiveResponse } from "@/hooks/useChat";
+import { createSimTransport } from "@/lib/chat-sim";
 
-type WidgetSize = "desktop" | "mobile";
-type ResponseMode = "response" | "live" | "sim";
-type SimPhase = "running" | "done";
+type StageSize = "desktop" | "mobile";
+type WidgetView = "panel" | "full";
+type Theme = "light" | "dark";
+type ResizeAxis = "x" | "y" | "both";
 
-/* Each status is a concise summary of one reasoning step; the trace builds
-   one point per status. */
-const SIM_STEPS = [
-  {
-    status: "Reading the readiness tracks",
-    point: "Pull the four readiness tracks and their owners.",
-  },
-  {
-    status: "Checking sign-offs",
-    point: "Design QA and docs both have sign-off this week.",
-  },
-  {
-    status: "Reviewing the legal blocker",
-    point: "Pricing copy is still sitting in legal review.",
-  },
-  {
-    status: "Weighing the launch date",
-    point: "The legal review gates the pricing rollout, so it drives the date.",
-  },
-  {
-    status: "Drafting the answer",
-    point: "Lead with the overall status, then flag the one real risk.",
-  },
+/* The html root's data-theme attribute is the theme store (the site
+   convention) — subscribe to it rather than mirroring it into state. */
+const subscribeTheme = (onChange: () => void) => {
+  const observer = new MutationObserver(onChange);
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["data-theme"],
+  });
+  return () => observer.disconnect();
+};
+const readTheme = (): Theme =>
+  document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
+const applyTheme = (next: Theme) => {
+  document.documentElement.setAttribute("data-theme", next);
+  window.localStorage.setItem("theme", next);
+};
+
+/* The welcome screen's conversation starters. Tapping one sends it. */
+const STARTERS = [
+  { id: "philosophy", label: "Describe Rob's design philosophy" },
+  { id: "recent", label: "What has Rob shipped recently?" },
+  { id: "system", label: "How does this design system work?" },
 ];
 
-const SIM_RESPONSE =
-  "The launch is on track overall. Three of the four readiness tracks are " +
-  "green, and the one item I would watch is the legal review, since it " +
-  "gates the pricing rollout.";
+/* MVP presentation: default size, no tails, no avatars, no message details —
+   bare bubbles and bare text. The choreography is the deliverable. */
 
-const STATUS_MS = 1600;
-const HANDOFF_MS = 350; /* beat for the components' live→done handoff */
-const STREAM_MS = 30;
+/* One component for the assistant turn in both states. The live turn and
+   its committed form share an id (and so a key), so React reconciles the
+   finished response in place — separate components remounted the whole
+   subtree at commit, which read as a flicker after the response rendered. */
+function AssistantTurn({ turn, live }: { turn?: ChatTurn; live?: LiveResponse }) {
+  const thinking = live?.phase === "thinking";
+  const tracePoints = live ? live.tracePoints : (turn?.tracePoints ?? []);
+  const durationSeconds = live ? live.durationSeconds : turn?.durationSeconds;
+  const text = live ? live.text : (turn?.text ?? "");
 
-const TRACE_NODES = (
-  <ul>
-    {SIM_STEPS.map((s) => (
-      <li key={s.status}>{s.point}</li>
-    ))}
-  </ul>
-);
+  return (
+    <ChatMessage role="assistant">
+      <div className={styles.responseStack}>
+        {/* While thinking the disclosure carries the live status; once
+            streaming, it stays only if a trace actually accumulated —
+            an empty collapsed panel is noise. */}
+        {(thinking || tracePoints.length > 0) && (
+          <Reasoning
+            streaming={thinking}
+            duration={durationSeconds}
+            summary={
+              thinking && live ? (
+                <AgentStatus state="working" label={live.statusLabel} />
+              ) : undefined
+            }
+          >
+            {tracePoints.length > 0 && (
+              <ul>
+                {tracePoints.map((point, index) => (
+                  <li key={`${index}-${point.slice(0, 24)}`}>{point}</li>
+                ))}
+              </ul>
+            )}
+          </Reasoning>
+        )}
+        {text !== "" && (
+          <Prose>
+            <ReactMarkdown>{text}</ReactMarkdown>
+          </Prose>
+        )}
+      </div>
+    </ChatMessage>
+  );
+}
 
 export default function ChatWidgetTestPage() {
-  const [size, setSize] = useState<WidgetSize>("desktop");
-  const [showAvatar, setShowAvatar] = useState(false);
-  const [showDetails, setShowDetails] = useState(false);
-  const [mode, setMode] = useState<ResponseMode>("response");
+  const [size, setSize] = useState<StageSize>("desktop");
+  const [view, setView] = useState<WidgetView>("panel");
+  const [open, setOpen] = useState(true);
+  const [draft, setDraft] = useState("");
 
-  const [simRun, setSimRun] = useState(0);
-  const [simStep, setSimStep] = useState(0);
-  const [simPhase, setSimPhase] = useState<SimPhase>("running");
-  const [simSeconds, setSimSeconds] = useState(8);
-  const [streamed, setStreamed] = useState("");
+  const theme = useSyncExternalStore(subscribeTheme, readTheme, () => "dark");
 
-  useEffect(() => {
-    if (mode !== "sim") return;
-    const startedAt = Date.now();
-    const timers: number[] = [];
+  /* Manual resize via the edge handles. The stage centres the widget, so a
+     drag moves both opposing edges — deltas are doubled to keep the grabbed
+     edge under the cursor. Sizes are clamped by the CSS min/max, and any
+     size or view toggle clears the manual override. */
+  const widgetRef = useRef<HTMLDivElement | null>(null);
+  const dragRef = useRef<{
+    axis: ResizeAxis;
+    xSign: number;
+    startX: number;
+    startY: number;
+    width: number;
+    height: number;
+  } | null>(null);
+  const [manual, setManual] = useState<{ w?: number; h?: number }>({});
+  const [resizing, setResizing] = useState(false);
 
-    // The page owns only the timeline; AgentStatus crossfades its own
-    // label changes and Reasoning animates the live→done handoff.
-    SIM_STEPS.forEach((_, i) => {
-      if (i === 0) return;
-      timers.push(window.setTimeout(() => setSimStep(i), i * STATUS_MS));
-    });
-    timers.push(
-      window.setTimeout(() => {
-        setSimPhase("done");
-        setSimSeconds(Math.max(1, Math.round((Date.now() - startedAt) / 1000)));
-      }, SIM_STEPS.length * STATUS_MS),
-    );
-    timers.push(
-      window.setTimeout(() => {
-        const words = SIM_RESPONSE.split(" ");
-        let shown = 0;
-        const streamId = window.setInterval(() => {
-          shown += 1;
-          setStreamed(words.slice(0, shown).join(" "));
-          if (shown >= words.length) window.clearInterval(streamId);
-        }, STREAM_MS);
-        timers.push(streamId);
-      }, SIM_STEPS.length * STATUS_MS + HANDOFF_MS),
-    );
-
-    return () => {
-      timers.forEach((t) => {
-        window.clearTimeout(t);
-        window.clearInterval(t);
-      });
+  const beginResize = (e: React.PointerEvent<HTMLDivElement>) => {
+    // Primary button only, one drag at a time — a second concurrent
+    // pointer must not hijack an in-flight drag's baseline.
+    if ((e.pointerType === "mouse" && e.button !== 0) || dragRef.current) return;
+    const axis = e.currentTarget.dataset.axis as ResizeAxis;
+    const rect = widgetRef.current?.getBoundingClientRect();
+    if (!axis || !rect) return;
+    dragRef.current = {
+      axis,
+      // Dragging the left edge outward means a negative pointer delta.
+      xSign: e.currentTarget.dataset.edge === "left" ? -1 : 1,
+      startX: e.clientX,
+      startY: e.clientY,
+      width: rect.width,
+      height: rect.height,
     };
-  }, [mode, simRun]);
+    e.currentTarget.setPointerCapture(e.pointerId);
+    setResizing(true);
+  };
 
-  const userAvatar = showAvatar ? <Avatar name="Mara Voss" size="sm" /> : undefined;
-  const agentAvatar = showAvatar ? <Avatar name="A I" size="sm" /> : undefined;
+  /* The stage centres the widget, so a drag moves both opposing edges;
+     doubling the delta keeps the grabbed edge under the cursor. */
+  const CENTERED_DRAG_FACTOR = 2;
+
+  const moveResize = (e: React.PointerEvent<HTMLDivElement>) => {
+    const drag = dragRef.current;
+    if (!drag) return;
+    const next: { w?: number; h?: number } = {};
+    if (drag.axis !== "y")
+      next.w = Math.round(
+        drag.width + (e.clientX - drag.startX) * CENTERED_DRAG_FACTOR * drag.xSign
+      );
+    if (drag.axis !== "x")
+      next.h = Math.round(drag.height + (e.clientY - drag.startY) * CENTERED_DRAG_FACTOR);
+    setManual((m) => ({ ...m, ...next }));
+  };
+
+  const endResize = () => {
+    dragRef.current = null;
+    setResizing(false);
+  };
+
+  const transport = useMemo(() => createSimTransport(), []);
+  const { turns, live, streaming, send, stop, reset } = useChat(transport);
+
+  /* The text field is ready to type into whenever a conversation can start:
+     on open, on new chat, and again after every send. Closing hands focus
+     to the launcher so the keyboard never lands on <body>. */
+  const composerRef = useRef<HTMLTextAreaElement | null>(null);
+  const launcherRef = useRef<HTMLButtonElement | HTMLAnchorElement | null>(null);
+  const focusComposer = () => composerRef.current?.focus();
+  useEffect(() => {
+    if (open) focusComposer();
+    else launcherRef.current?.focus();
+  }, [open]);
+
+  const handleSubmit = (value: string) => {
+    // send() reports acceptance; an ignored submit keeps the draft.
+    if (send(value)) setDraft("");
+    focusComposer();
+  };
+
+  const isMobile = size === "mobile";
+  const isFull = view === "full" && !isMobile;
+  const isEmpty = turns.length === 0 && !live;
+
+  const widgetClasses = [
+    styles.widget,
+    isMobile ? styles.widgetMobile : "",
+    isFull ? styles.widgetFull : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
     <main className={styles.stage}>
+      {/* Fullscreen covers the stage — its controls leave the tab order
+          entirely rather than lurking reachable behind the overlay. */}
+      {!isFull && (
       <div className={styles.controls}>
-        <div className={styles.group} role="group" aria-label="Widget size">
+        <div className={styles.group} role="group" aria-label="Stage size">
           <Button
             size="compact"
             variant={size === "desktop" ? "secondary" : "tertiary"}
             aria-pressed={size === "desktop"}
-            onClick={() => setSize("desktop")}
-            label="Desktop (768px)"
+            onClick={() => {
+              setSize("desktop");
+              setManual({});
+            }}
+            label="Desktop"
           />
           <Button
             size="compact"
-            variant={size === "mobile" ? "secondary" : "tertiary"}
-            aria-pressed={size === "mobile"}
-            onClick={() => setSize("mobile")}
+            variant={isMobile ? "secondary" : "tertiary"}
+            aria-pressed={isMobile}
+            onClick={() => {
+              setSize("mobile");
+              setManual({});
+            }}
             label="Mobile (390px)"
           />
         </div>
 
-        <div className={styles.group} role="group" aria-label="Message props">
+        <div className={styles.group} role="group" aria-label="Theme">
           <Button
             size="compact"
-            variant={showAvatar ? "secondary" : "tertiary"}
-            aria-pressed={showAvatar}
-            onClick={() => setShowAvatar((v) => !v)}
-            label="Avatar"
+            variant={theme === "light" ? "secondary" : "tertiary"}
+            aria-pressed={theme === "light"}
+            onClick={() => applyTheme("light")}
+            label="Light"
           />
           <Button
             size="compact"
-            variant={showDetails ? "secondary" : "tertiary"}
-            aria-pressed={showDetails}
-            onClick={() => setShowDetails((v) => !v)}
-            label="Details"
+            variant={theme === "dark" ? "secondary" : "tertiary"}
+            aria-pressed={theme === "dark"}
+            onClick={() => applyTheme("dark")}
+            label="Dark"
           />
         </div>
+      </div>
+      )}
 
-        <div className={styles.group} role="group" aria-label="Agent turn state">
-          <Button
-            size="compact"
-            variant={mode === "response" ? "secondary" : "tertiary"}
-            aria-pressed={mode === "response"}
-            onClick={() => setMode("response")}
-            label="Response"
-          />
-          <Button
-            size="compact"
-            variant={mode === "live" ? "secondary" : "tertiary"}
-            aria-pressed={mode === "live"}
-            onClick={() => setMode("live")}
-            label="Live status"
-          />
-          <Button
-            size="compact"
-            variant={mode === "sim" ? "secondary" : "tertiary"}
-            aria-pressed={mode === "sim"}
-            onClick={() => {
-              setMode("sim");
-              setSimRun((r) => r + 1);
-              setSimStep(0);
-              setSimPhase("running");
-              setStreamed("");
+      {open ? (
+        <div className={`${styles.widgetFrame} ${resizing ? styles.resizing : ""}`}>
+          <div
+            ref={widgetRef}
+            className={widgetClasses}
+            /* Full screen owns its size; the manual size survives in state
+               so collapsing returns to the previous footprint. */
+            style={isFull ? undefined : { width: manual.w, height: manual.h }}
+            /* Escape is the keyboard way out of the fullscreen takeover. */
+            onKeyDown={(e) => {
+              if (e.key === "Escape" && isFull) setView("panel");
             }}
-            label="Simulation"
+          >
+          {/* The top region: header + thread. Zero-basis, like the bottom
+              region, so in welcome mode the two split the height exactly
+              and the composer sits at the widget's true centre — with
+              nothing ever changing positioning mode on send. */}
+          <div className={styles.topRegion}>
+          <ChatHeader
+            title={
+              <span className={styles.brand}>
+                <Image src="/rr.svg" alt="" width={20} height={20} />
+                <span className={styles.brandName}>robr0 GPT</span>
+              </span>
+            }
+            actions={
+              <>
+                <CircularButton
+                  icon="edit_square"
+                  variant="tertiary"
+                  ariaLabel="New chat"
+                  onClick={() => {
+                    reset();
+                    setDraft("");
+                    focusComposer();
+                  }}
+                />
+                {/* Mobile is always a full takeover, so the switch hides there. */}
+                {!isMobile && (
+                  <CircularButton
+                    icon={isFull ? "close_fullscreen" : "open_in_full"}
+                    variant="tertiary"
+                    ariaLabel={isFull ? "Exit full screen" : "Enter full screen"}
+                    onClick={() => setView(isFull ? "panel" : "full")}
+                  />
+                )}
+                <CircularButton
+                  icon="close"
+                  variant="tertiary"
+                  ariaLabel="Close chat"
+                  onClick={() => setOpen(false)}
+                />
+              </>
+            }
+          />
+
+            <div className={styles.body}>
+              <ChatThread className={styles.thread}>
+                {/* One array, so the live turn and its committed form match
+                    by key — split expressions are separate children slots
+                    and React would remount across them. */}
+                {[
+                  ...turns.map((turn) =>
+                    turn.role === "user" ? (
+                      <ChatMessage key={turn.id} role="user">
+                        {turn.text}
+                      </ChatMessage>
+                    ) : (
+                      <AssistantTurn key={turn.id} turn={turn} />
+                    )
+                  ),
+                  ...(live ? [<AssistantTurn key={live.id} live={live} />] : []),
+                ]}
+              </ChatThread>
+
+              {/* Welcome greeting — an overlay on the empty thread, sitting
+                  just above the centred composer. */}
+              {isEmpty && (
+                <div className={styles.welcomeTop}>
+                  <div className={styles.welcomeGreeting}>
+                    <p className={styles.welcomeHello}>Hello, Robert</p>
+                    <p className={styles.welcomeAsk}>How can I help you today?</p>
+                  </div>
+                </div>
+              )}
+            </div>
+            </div>
+
+            <footer className={styles.footer}>
+              <div className={styles.composerColumn}>
+                <Composer
+                  ref={composerRef}
+                  placeholder="Message the agent"
+                  sendLabel="Send"
+                  value={draft}
+                  onValueChange={setDraft}
+                  onSubmit={handleSubmit}
+                  streaming={streaming}
+                  onStop={stop}
+                  actions={
+                    /* Attachments and the model picker are out of MVP scope —
+                       both affordances are shown, disabled, so the bar's
+                       final shape reads now. */
+                    <>
+                      <CircularButton
+                        icon="add"
+                        variant="tertiary"
+                        ariaLabel="Add attachment"
+                        state="disabled"
+                      />
+                      <Button
+                        variant="tertiary"
+                        size="compact"
+                        label="Sonnet"
+                        disabled
+                      />
+                    </>
+                  }
+                />
+              </div>
+            </footer>
+
+            {/* The bottom region: starters at its top, disclaimer pinned to
+                its bottom in every state. Grown while the chat is empty
+                (centring the composer), collapsing on the first utterance —
+                only flex-grow ever animates, so the flow-down is seamless. */}
+            <div className={`${styles.bottomRegion} ${isEmpty ? styles.bottomRegionWelcome : ""}`}>
+              {isEmpty && (
+                <div className={styles.startersColumn}>
+                  <PromptSuggestions
+                    wrap
+                    ariaLabel="Conversation starters"
+                    suggestions={STARTERS}
+                    onValueChange={(id) => {
+                      const starter = STARTERS.find((s) => s.id === id);
+                      if (starter && send(starter.label)) focusComposer();
+                    }}
+                  />
+                </div>
+              )}
+              <div className={styles.disclaimerRow}>
+                <p className={styles.disclaimer}>The agent can make mistakes.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Resize grips — review tooling, straddling the widget edges so
+              they stay clear of the thread's scrollbar. Mouse-driven only;
+              the size and view toggles remain the accessible path. Full
+              screen owns the whole viewport, so the grips disappear there.
+              pointercancel ends a drag too, or an interrupted drag would
+              leave transitions and text selection disabled. */}
+          {!isFull &&
+            (
+              [
+                { cls: styles.handleLeft, axis: "x", edge: "left" },
+                { cls: styles.handleRight, axis: "x", edge: undefined },
+                { cls: styles.handleBottom, axis: "y", edge: undefined },
+                { cls: styles.handleCorner, axis: "both", edge: undefined },
+              ] as const
+            ).map(({ cls, axis, edge }) => (
+              <div
+                key={axis + (edge ?? "")}
+                className={`${styles.handle} ${cls}`}
+                aria-hidden="true"
+                data-axis={axis}
+                data-edge={edge}
+                onPointerDown={beginResize}
+                onPointerMove={moveResize}
+                onPointerUp={endResize}
+                onPointerCancel={endResize}
+              />
+            ))}
+        </div>
+      ) : (
+        <div className={styles.launcherSlot}>
+          <CircularButton
+            ref={launcherRef}
+            icon="chat_bubble"
+            variant="primary"
+            ariaLabel="Open chat"
+            onClick={() => setOpen(true)}
           />
         </div>
-      </div>
-
-      <div
-        className={`${styles.widget} ${size === "mobile" ? styles.widgetMobile : ""}`}
-      >
-        <header className={styles.header}>
-          <span className={styles.headerTitle}>Assistant</span>
-          <CircularButton icon="close" variant="tertiary" ariaLabel="Close chat" />
-        </header>
-
-        <div className={styles.messages}>
-          <ChatMessage
-            role="user"
-            tail
-            avatar={userAvatar}
-            author={showDetails ? "Mara Voss" : undefined}
-            timestamp={showDetails ? "2:41 PM" : undefined}
-          >
-            Where does the Q3 launch stand right now?
-          </ChatMessage>
-
-          <ChatMessage
-            role="assistant"
-            avatar={agentAvatar}
-            author={showDetails ? "Assistant" : undefined}
-            timestamp={showDetails ? "2:42 PM" : undefined}
-          >
-            {mode === "response" && (
-              <div className={styles.responseStack}>
-                <Reasoning duration={12}>{TRACE_NODES}</Reasoning>
-                <MessageCard title="Q3 launch readiness">
-                  Three of the four readiness tracks are green. Pricing copy is
-                  still in legal review.
-                </MessageCard>
-                <p className={styles.responseText}>
-                  The launch is on track overall. The one item I would watch is
-                  the legal review, since it gates the pricing rollout.
-                </p>
-              </div>
-            )}
-            {mode === "live" && (
-              <Reasoning streaming summary={<AgentStatus state="working" />}>
-                {TRACE_NODES}
-              </Reasoning>
-            )}
-            {mode === "sim" && (
-              <div className={styles.responseStack}>
-                <Reasoning
-                  streaming={simPhase !== "done"}
-                  duration={simSeconds}
-                  summary={
-                    simPhase !== "done" ? (
-                      <AgentStatus
-                        state="working"
-                        label={SIM_STEPS[simStep].status}
-                      />
-                    ) : undefined
-                  }
-                >
-                  <ul>
-                    {SIM_STEPS.slice(0, simStep + 1).map((s) => (
-                      <li key={s.status}>{s.point}</li>
-                    ))}
-                  </ul>
-                </Reasoning>
-                {simPhase === "done" && streamed && (
-                  <p className={styles.responseText}>{streamed}</p>
-                )}
-              </div>
-            )}
-          </ChatMessage>
-        </div>
-
-        <footer className={styles.footer}>
-          <Composer placeholder="Message the agent" sendLabel="Send" />
-        </footer>
-      </div>
+      )}
     </main>
   );
 }

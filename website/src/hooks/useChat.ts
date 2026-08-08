@@ -1,0 +1,327 @@
+"use client";
+
+import { useCallback, useEffect, useRef, useState } from "react";
+
+/* ============================================
+   The chat event contract.
+
+   A transport turns a conversation into a stream of these events. The sim
+   transport scripts them; the real /api/chat transport (Build 2) will parse
+   the same shapes off an NDJSON response — swapping transports is the whole
+   integration.
+   ============================================ */
+
+export type ChatEvent =
+  /** A live status step: the AgentStatus label, with an optional reasoning trace point. */
+  | { type: "status"; label: string; point?: string }
+  /** A chunk of response text. The first delta ends the thinking phase. */
+  | { type: "delta"; text: string }
+  /** Terminal: the response is complete. */
+  | { type: "done" }
+  /** A guardrail response (rate limit, circuit breaker): rendered as a normal assistant message. */
+  | { type: "notice"; text: string }
+  /** A failure the user should see, phrased for humans. */
+  | { type: "error"; message: string };
+
+export interface ChatTransportMessage {
+  role: "user" | "assistant";
+  content: string;
+}
+
+/**
+ * A transport streams events for one exchange. Abort the signal to stop it.
+ *
+ * Contract notes for implementations:
+ * - The consumer `break`s out of its `for await` loop on `done` (and on
+ *   abort), which invokes the iterator's `return()` — close any underlying
+ *   reader or connection in a `try/finally`.
+ * - Check the signal between yields; the consumer also guards its own loop,
+ *   but a transport that ignores abort keeps its own work running.
+ * - There is no first-event timeout on the consumer side: a transport that
+ *   can hang before its first yield should implement its own watchdog.
+ */
+export type ChatTransport = (
+  messages: ChatTransportMessage[],
+  signal: AbortSignal
+) => AsyncIterable<ChatEvent>;
+
+/* ============================================
+   Conversation state
+   ============================================ */
+
+/** One committed turn. Assistant turns keep their reasoning for the collapsed disclosure. */
+export interface ChatTurn {
+  id: string;
+  role: "user" | "assistant";
+  text: string;
+  /** Reasoning trace points gathered while the response was live (assistant turns). */
+  tracePoints?: string[];
+  /** Seconds spent before the first response text (assistant turns). */
+  durationSeconds?: number;
+}
+
+export type LivePhase = "thinking" | "streaming";
+
+/** The assistant turn currently in flight, rendered after the committed turns. */
+export interface LiveResponse {
+  /**
+   * The turn's stable id, minted at send time and kept when the turn
+   * commits — so the rendered element keeps its identity and React
+   * reconciles the finished response in place instead of remounting it.
+   */
+  id: string;
+  phase: LivePhase;
+  /** Current AgentStatus label while thinking. */
+  statusLabel: string;
+  tracePoints: string[];
+  text: string;
+  durationSeconds?: number;
+}
+
+let nextId = 0;
+const makeId = () => `turn-${++nextId}`;
+
+/**
+ * useChat owns the conversation: the committed turns, the assistant turn in
+ * flight, and the phase machine that drives the AgentStatus → Reasoning →
+ * streamed-text choreography. It knows nothing about rendering or about
+ * where events come from — the transport decides that.
+ */
+export function useChat(transport: ChatTransport) {
+  const [turns, setTurns] = useState<ChatTurn[]>([]);
+  const [live, setLive] = useState<LiveResponse | null>(null);
+
+  const abortRef = useRef<AbortController | null>(null);
+  const busyRef = useRef(false);
+  /* The transport-facing history, maintained in event handlers only so it
+     can be read synchronously when a send starts. UI-only placeholder text
+     (stop/error/empty fallbacks) never enters it — the real model must not
+     receive our apologies as its own prior speech. */
+  const historyRef = useRef<ChatTransportMessage[]>([]);
+  /* Bumped on reset. A send whose generation is stale must not touch state —
+     otherwise new-chat during a stream repaints the aborted turn into the
+     fresh conversation. */
+  const generationRef = useRef(0);
+
+  /* Leaving the page mid-stream: abort so a real transport's connection
+     does not run to completion against an unmounted consumer. */
+  useEffect(() => () => abortRef.current?.abort(), []);
+
+  const streaming = live !== null;
+
+  /**
+   * Move the finished live response into the committed turns.
+   * `historyText` is what the transport history records — null when the
+   * turn is a UI-only placeholder that must not reach the model.
+   */
+  const commit = useCallback(
+    (finished: LiveResponse, startedAt: number, historyText: string | null) => {
+      if (historyText !== null && historyText !== "") {
+        historyRef.current = [
+          ...historyRef.current,
+          { role: "assistant", content: historyText },
+        ];
+      }
+      setLive(null);
+      setTurns((prev) => [
+        ...prev,
+        {
+          id: finished.id,
+          role: "assistant",
+          text: finished.text,
+          tracePoints: finished.tracePoints,
+          durationSeconds:
+            finished.durationSeconds ??
+            Math.max(1, Math.round((Date.now() - startedAt) / 1000)),
+        },
+      ]);
+    },
+    []
+  );
+
+  /**
+   * Send a message. Returns whether the send was accepted — false while a
+   * response is in flight or for an empty draft, so the caller knows not to
+   * clear its input.
+   */
+  const send = useCallback(
+    (text: string): boolean => {
+      const trimmed = text.trim();
+      if (trimmed === "" || busyRef.current) return false;
+      busyRef.current = true;
+
+      const controller = new AbortController();
+      abortRef.current = controller;
+      const generation = generationRef.current;
+      const startedAt = Date.now();
+
+      const history: ChatTransportMessage[] = [
+        ...historyRef.current,
+        { role: "user", content: trimmed },
+      ];
+      historyRef.current = history;
+
+      // The user turn and the live assistant turn appear in the same update,
+      // so ChatThread anchors the user turn to the top of the viewport.
+      const userTurnId = makeId();
+      setTurns((prev) => [...prev, { id: userTurnId, role: "user", text: trimmed }]);
+
+      let current: LiveResponse = {
+        id: makeId(),
+        phase: "thinking",
+        statusLabel: "Thinking",
+        tracePoints: [],
+        text: "",
+      };
+      setLive(current);
+
+      /* Deltas can arrive far faster than a frame; coalesce their renders
+         so a fast real stream does not re-parse the markdown per token. */
+      let rafId: number | null = null;
+      const cancelFlush = () => {
+        if (rafId != null) {
+          cancelAnimationFrame(rafId);
+          rafId = null;
+        }
+      };
+      const update = (next: LiveResponse, coalesce = false) => {
+        current = next;
+        if (coalesce) {
+          if (rafId == null) {
+            rafId = requestAnimationFrame(() => {
+              rafId = null;
+              setLive(current);
+            });
+          }
+        } else {
+          cancelFlush();
+          setLive(next);
+        }
+      };
+
+      const run = async () => {
+        try {
+          for await (const event of transport(history, controller.signal)) {
+            /* A transport may deliver one more event after an abort or
+               reset resolves — never let it touch the fresh conversation. */
+            if (generation !== generationRef.current || controller.signal.aborted) break;
+            switch (event.type) {
+              case "status":
+                update({
+                  ...current,
+                  statusLabel: event.label,
+                  tracePoints: event.point
+                    ? [...current.tracePoints, event.point]
+                    : current.tracePoints,
+                });
+                break;
+              case "delta":
+                update(
+                  {
+                    ...current,
+                    phase: "streaming",
+                    // Thinking ends at the first delta; freeze the duration then.
+                    durationSeconds:
+                      current.durationSeconds ??
+                      Math.max(1, Math.round((Date.now() - startedAt) / 1000)),
+                    text: current.text + event.text,
+                  },
+                  true
+                );
+                break;
+              case "notice":
+                update({
+                  ...current,
+                  phase: "streaming",
+                  durationSeconds: current.durationSeconds ?? 1,
+                  text: event.text,
+                });
+                break;
+              case "error":
+                update({
+                  ...current,
+                  phase: "streaming",
+                  durationSeconds: current.durationSeconds ?? 1,
+                  text: event.message,
+                });
+                break;
+              case "done":
+                break;
+            }
+            if (event.type === "done") break;
+          }
+          cancelFlush();
+          if (generation !== generationRef.current) return;
+          if (current.text === "") {
+            // A completion that never produced text is a failure, not a reply.
+            commit(
+              { ...current, text: "The reply came back empty. Try sending that again." },
+              startedAt,
+              null
+            );
+          } else {
+            commit(current, startedAt, current.text);
+          }
+        } catch (err) {
+          cancelFlush();
+          if (generation !== generationRef.current) {
+            // The conversation was reset out from under this send — drop it.
+          } else if (controller.signal.aborted) {
+            // Stopped by the reader: keep whatever streamed in; the partial
+            // is real assistant speech, so it belongs in the history too.
+            if (current.text === "") {
+              commit(
+                { ...current, text: "Stopped before a reply arrived." },
+                startedAt,
+                null
+              );
+            } else {
+              commit(current, startedAt, current.text);
+            }
+          } else {
+            // Keep any partial (it is real); placeholder only when empty.
+            if (current.text === "") {
+              commit(
+                {
+                  ...current,
+                  text: "Something went wrong while replying. Try sending that again.",
+                },
+                startedAt,
+                null
+              );
+            } else {
+              commit(current, startedAt, current.text);
+            }
+            // Surface the real cause for the person building, not the visitor.
+            console.error(err);
+          }
+        } finally {
+          if (generation === generationRef.current) busyRef.current = false;
+        }
+      };
+
+      void run();
+      return true;
+    },
+    [transport, commit]
+  );
+
+  /** Stop the in-flight response, keeping the text that already arrived. */
+  const stop = useCallback(() => {
+    abortRef.current?.abort();
+  }, []);
+
+  /** New chat: abort anything in flight and clear the conversation. */
+  const reset = useCallback(() => {
+    generationRef.current += 1;
+    abortRef.current?.abort();
+    // The generation guard makes the old stream inert, so the fresh
+    // conversation accepts sends immediately.
+    busyRef.current = false;
+    historyRef.current = [];
+    setTurns([]);
+    setLive(null);
+  }, []);
+
+  return { turns, live, streaming, send, stop, reset };
+}

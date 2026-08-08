@@ -1,7 +1,10 @@
-/* Standalone chat-widget test stage. The two widths are review targets
-   (desktop 768, mobile 390), not layout tokens. */
+/* Standalone chat-widget test stage. The widget sizes are review targets
+   (panel 440x956 - the iPhone 18 Pro Max viewport - mobile 390, full-screen
+   content column 768), not layout tokens. */
 
 .stage {
+  /* Vertical room the stage reserves around the widget (controls + gaps). */
+  --stage-clearance: 112px;
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
@@ -24,58 +27,218 @@
   gap: var(--gap-xs);
 }
 
+/* ============================================
+   THE WIDGET — header / thread / composer
+   ============================================ */
+
+/* The frame shrink-wraps the widget and hosts the resize grips, which
+   straddle the edges — outside the widget's own overflow clip. */
+.widgetFrame {
+  position: relative;
+  display: flex;
+  max-width: 100%;
+}
+
+.resizing {
+  user-select: none;
+}
+
+/* Panel view is the default: a docked-widget footprint. The minimums are
+   review targets too: the widget is locked to its set size — it never
+   collapses below a usable chat, never exceeds the stage, and content
+   wraps inside rather than pushing the sides out. */
 .widget {
   display: flex;
   flex-direction: column;
-  width: min(768px, 100%);
-  height: min(860px, calc(100dvh - 112px));
+  /* Fixed widths, not min(…,100%): a cyclic percentage would make the
+     shrink-wrapping frame size itself from the text's unwrapped
+     max-content. The vw-based max-width below owns the small-screen cap. */
+  width: 440px;
+  height: min(956px, calc(100dvh - var(--stage-clearance)));
+  min-width: 320px;
+  min-height: 480px;
+  max-width: calc(100vw - var(--padding-lg) * 2);
+  max-height: calc(100dvh - var(--stage-clearance));
   background: var(--color-bg-container-primary);
   border: var(--border-xs) solid var(--color-bg-container-border);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-floating);
   overflow: hidden;
-  transition: width var(--motion-duration-base) var(--motion-ease-standard);
+  transition:
+    width var(--motion-duration-base) var(--motion-ease-standard),
+    height var(--motion-duration-base) var(--motion-ease-standard);
 }
 
+/* A drag tracks the pointer; the view-switch glide comes back after. */
+.resizing .widget {
+  transition: none;
+}
+
+/* Full-screen view: a true viewport takeover — no chrome, no radius, no
+   grips. The stage controls sit behind it; the header's collapse button
+   is the way back, returning to the previous (possibly dragged) size. */
+.widgetFull {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  z-index: 10;
+}
+
+/* Mobile: always a full takeover — the view switch hides. */
 .widgetMobile {
-  width: min(390px, 100%);
+  width: 390px;
+  height: min(860px, calc(100dvh - var(--stage-clearance)));
 }
 
-.header {
-  display: flex;
+/* The header brand: the RR mark beside the chat name. A node title renders
+   as-is, so the name restates the header's title treatment. */
+.brand {
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  padding: var(--padding-xs) var(--padding-md);
+  gap: var(--gap-sm);
+  min-width: 0;
 }
 
-.headerTitle {
+.brand img {
+  flex-shrink: 0;
+}
+
+.brandName {
   font-family: var(--font-title-body-family);
   font-size: var(--font-title-body-size);
   font-weight: var(--font-title-body-weight);
   line-height: var(--font-title-body-line-height);
   color: var(--color-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-/* Spacing mirrors the reference transcript: --gap-xl (40px) between turns,
-   --padding-lg gutters on desktop, --padding-sm-md on mobile. */
-.messages {
-  flex: 1;
+/* The top region: header + thread. Zero basis so welcome mode splits the
+   height exactly with the bottom region, centring the composer. */
+.topRegion {
+  flex: 1 1 0;
   min-height: 0;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: var(--gap-xl);
-  padding: var(--padding-lg);
 }
 
-.widgetMobile .messages {
+/* The body hosts the thread, with the welcome greeting overlaid while the
+   conversation is empty. */
+.body {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* The thread owns scrolling, gutters, fades, and send anchoring. However
+   wide the container gets, the conversation column caps at 768px and
+   centres; the header above is the one row that spans the full width. */
+.thread {
+  flex: 1;
+  --ds-chat-thread-content-max-width: 768px;
+  /* Match the composer and header inset, so bubbles, composer edge, and
+     the header controls all share one right rail. */
+  --ds-chat-thread-padding-inline: var(--padding-md);
+}
+
+/* ============================================
+   WELCOME — the new-chat empty state
+   The composer sits centred, greeting above it
+   and starters below; the first utterance flows
+   everything down to the docked position.
+   ============================================ */
+
+.welcomeTop {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+  max-width: 768px;
+  margin-inline: auto;
+  padding: var(--padding-lg) var(--padding-md);
+  pointer-events: none;
+}
+
+.welcomeGreeting {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xxs);
+}
+
+/* One heading level below the ask line, so the pair reads dynamically.
+   The action-text token is a deliberate flourish here: the greeting is the
+   one place the widget spends the primary colour outside a control. */
+.welcomeHello {
+  margin: 0;
+  font-family: var(--font-heading-3-family);
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  letter-spacing: var(--font-heading-3-letter-spacing);
+  color: var(--color-action-primary-text-tertiary);
+}
+
+.welcomeAsk {
+  margin: 0;
+  font-family: var(--font-heading-2-family);
+  font-size: var(--font-heading-2-size);
+  font-weight: var(--font-heading-2-weight);
+  line-height: var(--font-heading-2-line-height);
+  letter-spacing: var(--font-heading-2-letter-spacing);
+  color: var(--color-text-secondary);
+}
+
+.widgetMobile .welcomeTop {
   padding-inline: var(--padding-sm-md);
 }
 
-/* The list scrolls; entries never shrink. Without this, children that clip
-   their own overflow (InterruptCard) collapse when the column overflows. */
-.messages > * {
-  flex-shrink: 0;
+/* The bottom region: starters at its top, disclaimer pinned to its
+   bottom. Grown while the chat is empty (centring the composer against
+   the zero-basis top region), collapsing to the disclaimer's height on
+   the first utterance. Basis stays 0 in both states so only flex-grow
+   ever animates — the flow-down is one continuous glide with no layout
+   mode changing underneath it. Reduced motion zeroes it via the token. */
+.bottomRegion {
+  display: flex;
+  flex-direction: column;
+  flex: 0 1 0;
+  transition: flex-grow var(--motion-duration-slower) var(--motion-ease-entrance);
+}
+
+.bottomRegionWelcome {
+  flex-grow: 1;
+}
+
+.startersColumn {
+  width: 100%;
+  max-width: 768px;
+  margin-inline: auto;
+  padding: var(--gap-lg) var(--padding-md) 0;
+}
+
+.widgetMobile .startersColumn {
+  padding-inline: var(--padding-sm-md);
+}
+
+/* Locked to the bottom of the widget, in every state. */
+.disclaimerRow {
+  margin-top: auto;
+  padding: var(--gap-xs) var(--padding-md) var(--padding-sm);
+}
+
+.widgetMobile .thread {
+  --ds-chat-thread-padding-inline: var(--padding-sm-md);
 }
 
 .responseStack {
@@ -84,28 +247,126 @@
   gap: var(--gap-lg);
 }
 
-.responseText {
-  margin: 0;
-  font-family: var(--font-paragraph-family);
-  font-size: var(--font-paragraph-size);
-  font-weight: var(--font-paragraph-weight);
-  line-height: var(--font-paragraph-line-height);
-  color: var(--color-text-primary);
-}
-
-/* The simulation's status crossfade, trace-node styling and live→done
-   handoff all live in the AgentStatus and Reasoning components now — the
-   page only drives the timeline. */
-
 /* No divider — the composer floats free of the transcript, like the
-   reference. The messages area's bottom padding provides the separation. */
+   reference. The thread's bottom padding provides the separation above;
+   the disclaimer row provides it below. */
 .footer {
   display: flex;
   flex-direction: column;
-  gap: var(--gap-sm);
-  padding: 0 var(--padding-md) var(--padding-md);
+  padding: 0 var(--padding-md);
+}
+
+/* The composer shares the conversation column's cap and centre. */
+.composerColumn {
+  width: 100%;
+  max-width: 768px;
+  margin-inline: auto;
+}
+
+/* One quiet line, centred with the composer column. */
+.disclaimer {
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  color: var(--color-text-tertiary);
 }
 
 .widgetMobile .footer {
   padding-inline: var(--padding-sm-md);
+}
+
+/* ============================================
+   RESIZE GRIPS
+   Review tooling: hover reveals a pill grip;
+   drag resizes the widget to stress the layout.
+   ============================================ */
+
+.handle {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+  z-index: 1;
+}
+
+.handle::after {
+  content: "";
+  border-radius: var(--radius-full);
+  background: transparent;
+  transition: background var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.handle:hover::after,
+.resizing .handle::after {
+  background: var(--color-text-tertiary);
+}
+
+.handle:active::after {
+  background: var(--color-text-secondary);
+}
+
+.handleLeft {
+  top: 0;
+  left: -10px;
+  width: 20px;
+  height: 100%;
+  cursor: ew-resize;
+}
+
+.handleLeft::after {
+  width: 4px;
+  height: 48px;
+}
+
+.handleRight {
+  top: 0;
+  right: -10px;
+  width: 20px;
+  height: 100%;
+  cursor: ew-resize;
+}
+
+.handleRight::after {
+  width: 4px;
+  height: 48px;
+}
+
+.handleBottom {
+  left: 0;
+  bottom: -10px;
+  width: 100%;
+  height: 20px;
+  cursor: ns-resize;
+}
+
+.handleBottom::after {
+  width: 48px;
+  height: 4px;
+}
+
+.handleCorner {
+  right: -10px;
+  bottom: -10px;
+  width: 24px;
+  height: 24px;
+  cursor: nwse-resize;
+}
+
+.handleCorner::after {
+  width: 14px;
+  height: 4px;
+  transform: rotate(-45deg);
+}
+
+/* Where the closed widget's entry point sits on the test stage. */
+.launcherSlot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: min(956px, calc(100dvh - var(--stage-clearance)));
 }
