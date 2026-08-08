@@ -38,8 +38,13 @@ type ComposerOwnProps = {
    * controlled by the caller — Composer never owns the list.
    */
   attachments?: React.ReactNode;
-  /** Leading actions beside the send button (attach button, model picker). */
+  /** Leading actions on the left of the action bar (attach button, model picker). */
   actions?: React.ReactNode;
+  /**
+   * Trailing actions on the right of the action bar, just before the send
+   * button (dictation, voice mode).
+   */
+  trailingActions?: React.ReactNode;
   /** Accessible label for the send button. */
   sendLabel?: string;
   /** Accessible label for the stop button. */
@@ -78,6 +83,7 @@ export const Composer = React.forwardRef<HTMLTextAreaElement, ComposerProps>(
       maxRows = 8,
       attachments,
       actions,
+      trailingActions,
       sendLabel = 'Send message',
       stopLabel = 'Stop generating',
       className = '',
@@ -149,25 +155,27 @@ export const Composer = React.forwardRef<HTMLTextAreaElement, ComposerProps>(
       >
         {attachments && <div className={`${baseClass}__attachments`}>{attachments}</div>}
 
-        <textarea
-          {...rest}
-          ref={setTextareaRef}
-          className={`${baseClass}__textarea`}
-          rows={1}
-          value={currentValue}
-          aria-label={ariaLabel}
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-        />
+        <div className={`${baseClass}__content`}>
+          <textarea
+            {...rest}
+            ref={setTextareaRef}
+            className={`${baseClass}__textarea`}
+            rows={1}
+            value={currentValue}
+            aria-label={ariaLabel}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+          />
+        </div>
 
         <div className={`${baseClass}__footer`}>
           {actions && <div className={`${baseClass}__actions`}>{actions}</div>}
-          <div className={`${baseClass}__send`}>
+          <div className={`${baseClass}__trailing`}>
+            {trailingActions}
             {streaming ? (
               <CircularButton
                 icon="stop"
                 variant="primary"
-                size="compact"
                 ariaLabel={stopLabel}
                 state={disabled ? 'disabled' : 'default'}
                 onClick={onStop}
@@ -176,7 +184,6 @@ export const Composer = React.forwardRef<HTMLTextAreaElement, ComposerProps>(
               <CircularButton
                 icon="arrow_upward"
                 variant="primary"
-                size="compact"
                 ariaLabel={sendLabel}
                 state={canSend ? 'default' : 'disabled'}
                 onClick={submit}

@@ -135,8 +135,7 @@ function FullFooterDemo() {
         actions={
           <CircularButton
             icon="add"
-            variant="secondary"
-            size="compact"
+            variant="tertiary"
             ariaLabel="Attach a file"
           />
         }

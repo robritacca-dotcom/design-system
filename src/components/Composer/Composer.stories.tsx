@@ -71,10 +71,14 @@ export const WithAttachments: Story = {
   render: () => <AttachmentsDemo />,
 };
 
-/** The leading actions slot: an attach button, a model picker, whatever the product needs. */
+/**
+ * Both action slots: leading actions on the left of the bar, trailing
+ * actions on the right beside the send button.
+ */
 export const WithActions: Story = {
   args: {
-    actions: <CircularButton icon="add" variant="secondary" size="compact" ariaLabel="Attach a file" />,
+    actions: <CircularButton icon="add" variant="tertiary" ariaLabel="Attach a file" />,
+    trailingActions: <CircularButton icon="mic" variant="tertiary" ariaLabel="Dictate" />,
   },
 };
 
