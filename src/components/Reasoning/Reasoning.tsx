@@ -12,6 +12,18 @@ type ReasoningOwnProps = {
   duration?: number;
   /** Override the summary line. By default it reports the streaming state and the duration. */
   label?: string;
+  /**
+   * Replace the summary text with custom content — typically an AgentStatus,
+   * pairing the live indicator with the trace disclosure. The node owns its
+   * own appearance and announcement, so Reasoning's shimmer and live region
+   * stand down.
+   */
+  summary?: React.ReactNode;
+  /**
+   * Text scale, paired with ChatMessage's sizes: `default` matches default
+   * message text, `compact` matches compact message text.
+   */
+  size?: 'default' | 'compact';
   /** Open state for controlled use. Pair with `onOpenChange`. */
   open?: boolean;
   /** Open state for uncontrolled use. Defaults to open while `streaming`. */
@@ -46,6 +58,8 @@ export const Reasoning = React.forwardRef<HTMLDivElement, ReasoningProps>(
       streaming = false,
       duration,
       label,
+      summary,
+      size = 'default',
       open,
       defaultOpen,
       onOpenChange,
@@ -63,6 +77,19 @@ export const Reasoning = React.forwardRef<HTMLDivElement, ReasoningProps>(
     const isControlled = open !== undefined;
     const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen ?? streaming);
     const isOpen = isControlled ? open : uncontrolledOpen;
+
+    /* The live→done handoff: when a node summary (an AgentStatus) is
+       removed, it fades out in place while the text summary slides left
+       into the position the indicator vacated. Consumers just drop the
+       `summary` prop; the transition is the component's job. */
+    const [leaving, setLeaving] = useState<React.ReactNode>(null);
+    const prevSummary = useRef<React.ReactNode>(summary);
+    useEffect(() => {
+      if (prevSummary.current != null && summary == null) {
+        setLeaving(prevSummary.current);
+      }
+      prevSummary.current = summary;
+    }, [summary]);
 
     /* Once the reader has taken a position on the panel, stop moving it for them */
     const readerDecided = useRef(false);
@@ -84,7 +111,7 @@ export const Reasoning = React.forwardRef<HTMLDivElement, ReasoningProps>(
       onOpenChange?.(next);
     }, [isOpen, isControlled, onOpenChange]);
 
-    const summary =
+    const summaryText =
       label ??
       (streaming
         ? 'Thinking'
@@ -94,6 +121,7 @@ export const Reasoning = React.forwardRef<HTMLDivElement, ReasoningProps>(
 
     const classes = [
       baseClass,
+      `${baseClass}--${size}`,
       isOpen ? `${baseClass}--open` : '',
       streaming ? `${baseClass}--streaming` : '',
       className,
@@ -111,8 +139,21 @@ export const Reasoning = React.forwardRef<HTMLDivElement, ReasoningProps>(
           aria-controls={panelId}
           onClick={toggle}
         >
-          <span className={`${baseClass}__summary`} role="status">
-            {summary}
+          <span
+            className={`${baseClass}__summary${summary ? ` ${baseClass}__summary--node` : ''}${
+              leaving != null && summary == null ? ` ${baseClass}__summary--entering` : ''
+            }`}
+            role={summary ? undefined : 'status'}
+            onAnimationEnd={(e) => {
+              if (e.target === e.currentTarget) setLeaving(null);
+            }}
+          >
+            {leaving != null && summary == null && (
+              <span className={`${baseClass}__summary-leaving`} aria-hidden="true">
+                {leaving}
+              </span>
+            )}
+            {summary ?? summaryText}
           </span>
           <span className={`${baseClass}__chevron material-symbols-rounded`} aria-hidden="true">
             expand_more

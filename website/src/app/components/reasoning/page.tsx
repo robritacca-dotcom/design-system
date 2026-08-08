@@ -125,6 +125,26 @@ export default function ReasoningPage() {
             </Reasoning>
           </section>
 
+          {/* Sizes */}
+          <section className={styles.section}>
+            <SectionTitle title="Sizes" />
+            <p className={styles.demoText}>
+              The scale pairs with ChatMessage: the default size matches
+              default message text, and{" "}
+              <code className={styles.code}>size=&quot;compact&quot;</code>{" "}
+              matches compact message text, so the trace never outweighs the
+              answer beside it.
+            </p>
+            <div className={styles.stack}>
+              <Reasoning duration={12} defaultOpen>
+                {TRACE}
+              </Reasoning>
+              <Reasoning size="compact" duration={12} defaultOpen>
+                {TRACE}
+              </Reasoning>
+            </div>
+          </section>
+
           {/* Behaviour */}
           <section className={styles.section}>
             <SectionTitle title="Two decisions worth knowing" />
