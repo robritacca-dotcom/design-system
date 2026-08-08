@@ -637,6 +637,12 @@ Six states: `idle`, `thinking`, `working`, `waiting`, `done`, `error`. The three
 
 `variant="bar"` wraps the row in a full-width `--color-bg-container-secondary` container at `--radius-md` for the top of a panel. The root is a `role="status"` live region, and the matrix is `aria-hidden`, so the state change is announced once as text rather than as twelve dots. Under `prefers-reduced-motion` the matrix parks at a legible static opacity and the shimmer resolves to flat text — the global guard would otherwise collapse every dot to its dark final frame.
 
+### ChatMarker
+
+**`ds-chat-marker`** — The inline separator a conversation uses for anything that is not a turn: date breaks, joins, mode changes, system notes. A `--font-paragraph-sm-*` label in `--color-text-tertiary` sits between two flanking `--border-xs` lines in `--color-divider` (`--gap-sm-md` off the text), so the row reads as furniture rather than as a message. An optional leading Material Symbol renders at `--icon-size-sm` and is `aria-hidden` — the label carries the meaning. `line={false}` keeps the flanking segments as transparent spacers, so a bare note stays centred on the same geometry.
+
+The root is `role="separator"` with the label as its content: screen readers treat it as a boundary, not a message, matching how the eye skips it while scanning turns. System *events* belong here; system *messages* with content are ChatMessage's job.
+
 ### Reasoning
 
 **`ds-reasoning`** — A model's thinking, disclosed behind a one-line summary. The trigger is a borderless `--font-paragraph-sm-*` button in `--color-text-tertiary` with an `expand_more` chevron *after* the summary — trailing, like ToolCall's, so the summary line starts at the same left edge as everything around it — rotating 180° when open. The panel collapses with the `grid-template-rows: 0fr → 1fr` technique over `--motion-duration-slow`, and toggles `visibility` alongside it so collapsed content leaves the accessibility tree. The trace sits on a `--border-md` `--color-divider` rail in `--color-text-secondary`, the rail flush with the summary's left edge, quiet enough never to compete with the answer beside it.

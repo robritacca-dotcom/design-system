@@ -9,6 +9,7 @@ import Footer from "../../components/Footer/Footer";
 import TocCard from "../../components/TocCard/TocCard";
 import { Accordion } from "@robr0/design-system/components/Accordion/Accordion";
 import { AgentStatus } from "@robr0/design-system/components/AgentStatus/AgentStatus";
+import { ChatMarker } from "@robr0/design-system/components/ChatMarker/ChatMarker";
 import { Alert } from "@robr0/design-system/components/Alert/Alert";
 import { Avatar } from "@robr0/design-system/components/Avatar/Avatar";
 import { Badge } from "@robr0/design-system/components/Badge/Badge";
@@ -254,6 +255,14 @@ export default function ComponentsPage() {
                 ))}
                 <line x1="0" y1="63.5" x2="120" y2="63.5" stroke="var(--color-bg-container-border)" strokeWidth="1" />
               </svg>
+            </TocCard>
+
+            {/* Chat marker */}
+            <TocCard href="/components/chat-marker" title="Chat marker">
+              <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: "12px" }}>
+                <ChatMarker>Today</ChatMarker>
+                <ChatMarker icon="history">Conversation resumed</ChatMarker>
+              </div>
             </TocCard>
 
             {/* Checkbox */}

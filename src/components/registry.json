@@ -125,6 +125,14 @@
       "client": false
     },
     {
+      "name": "ChatMarker",
+      "label": "Chat marker",
+      "slug": "chat-marker",
+      "description": "An inline conversation separator for date breaks and system notes.",
+      "category": "ai",
+      "client": false
+    },
+    {
       "name": "Checkbox",
       "label": "Checkbox",
       "slug": "checkbox",

@@ -17,6 +17,7 @@ export * from './components/Button/Button';
 export * from './components/ButtonGroup/ButtonGroup';
 export * from './components/Card/Card';
 export * from './components/Carousel/Carousel';
+export * from './components/ChatMarker/ChatMarker';
 export * from './components/Checkbox/Checkbox';
 export * from './components/Chip/Chip';
 export * from './components/CircularButton/CircularButton';
