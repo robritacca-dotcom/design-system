@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import styles from "./page.module.css";
 import { AgentStatus } from "@robr0/design-system/components/AgentStatus/AgentStatus";
 import { Button } from "@robr0/design-system/components/Button/Button";
@@ -16,8 +17,11 @@ import { Prose } from "@robr0/design-system/components/Prose/Prose";
 import { Reasoning } from "@robr0/design-system/components/Reasoning/Reasoning";
 import { useChat, type ChatTurn, type LiveResponse } from "@/hooks/useChat";
 import { createSimTransport } from "@/lib/chat-sim";
+import { createFetchTransport } from "@/lib/chat-transport";
 
 type StageSize = "desktop" | "mobile";
+/** Which transport the widget runs on. Live talks to /api/chat. */
+type TransportMode = "live" | "sim";
 type WidgetView = "panel" | "full";
 type Theme = "light" | "dark";
 type ResizeAxis = "x" | "y" | "both";
@@ -48,6 +52,19 @@ const STARTERS = [
 
 /* MVP presentation: default size, no tails, no avatars, no message details —
    bare bubbles and bare text. The choreography is the deliverable. */
+
+/* A markdown table has a natural minimum width that a 420px panel cannot
+   meet, and the browser resolves that by breaking headings one letter per
+   line. Scrolling the table sideways inside the message keeps it readable.
+   Prose styles the table itself; this only supplies the scroll container,
+   which Prose cannot add because it styles markup it does not render. */
+const markdownComponents = {
+  table: ({ children, ...props }: React.ComponentPropsWithoutRef<"table">) => (
+    <div className={styles.tableScroll}>
+      <table {...props}>{children}</table>
+    </div>
+  ),
+};
 
 /* One component for the assistant turn in both states. The live turn and
    its committed form share an id (and so a key), so React reconciles the
@@ -86,7 +103,11 @@ function AssistantTurn({ turn, live }: { turn?: ChatTurn; live?: LiveResponse })
         )}
         {text !== "" && (
           <Prose>
-            <ReactMarkdown>{text}</ReactMarkdown>
+            {/* gfm: a real model emits tables and strikethrough, which plain
+                CommonMark renders as literal pipes and tildes. */}
+            <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
+              {text}
+            </ReactMarkdown>
           </Prose>
         )}
       </div>
@@ -96,6 +117,7 @@ function AssistantTurn({ turn, live }: { turn?: ChatTurn; live?: LiveResponse })
 
 export default function ChatWidgetTestPage() {
   const [size, setSize] = useState<StageSize>("desktop");
+  const [transportMode, setTransportMode] = useState<TransportMode>("live");
   const [view, setView] = useState<WidgetView>("panel");
   const [open, setOpen] = useState(true);
   const [draft, setDraft] = useState("");
@@ -160,7 +182,10 @@ export default function ChatWidgetTestPage() {
     setResizing(false);
   };
 
-  const transport = useMemo(() => createSimTransport(), []);
+  const transport = useMemo(
+    () => (transportMode === "live" ? createFetchTransport() : createSimTransport()),
+    [transportMode]
+  );
   const { turns, live, streaming, send, stop, reset } = useChat(transport);
 
   /* The text field is ready to type into whenever a conversation can start:
@@ -235,6 +260,33 @@ export default function ChatWidgetTestPage() {
             aria-pressed={theme === "dark"}
             onClick={() => applyTheme("dark")}
             label="Dark"
+          />
+        </div>
+
+        {/* Swapping transports resets the conversation: a stream from the old
+            one would otherwise keep writing into the new transcript. */}
+        <div className={styles.group} role="group" aria-label="Transport">
+          <Button
+            size="compact"
+            variant={transportMode === "live" ? "secondary" : "tertiary"}
+            aria-pressed={transportMode === "live"}
+            onClick={() => {
+              if (transportMode === "live") return;
+              setTransportMode("live");
+              reset();
+            }}
+            label="Live"
+          />
+          <Button
+            size="compact"
+            variant={transportMode === "sim" ? "secondary" : "tertiary"}
+            aria-pressed={transportMode === "sim"}
+            onClick={() => {
+              if (transportMode === "sim") return;
+              setTransportMode("sim");
+              reset();
+            }}
+            label="Simulated"
           />
         </div>
       </div>
@@ -320,8 +372,10 @@ export default function ChatWidgetTestPage() {
               {isEmpty && (
                 <div className={styles.welcomeTop}>
                   <div className={styles.welcomeGreeting}>
-                    <p className={styles.welcomeHello}>Hello, Robert</p>
-                    <p className={styles.welcomeAsk}>How can I help you today?</p>
+                    {/* Nameless by design: visitors are anonymous, so the
+                        widget cannot know who it is greeting. */}
+                    <p className={styles.welcomeHello}>Hello</p>
+                    <p className={styles.welcomeAsk}>Ask about Rob&rsquo;s work or the design system</p>
                   </div>
                 </div>
               )}

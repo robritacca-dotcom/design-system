@@ -247,6 +247,18 @@
   gap: var(--gap-lg);
 }
 
+/* Scroll container for markdown tables. Without it a table wider than the
+   panel is squeezed until headings wrap one character per line. min-content
+   holds the table at its natural width so the scroll has something to do. */
+.tableScroll {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.tableScroll > table {
+  min-width: min-content;
+}
+
 /* No divider — the composer floats free of the transcript, like the
    reference. The thread's bottom padding provides the separation above;
    the disclaimer row provides it below. */
