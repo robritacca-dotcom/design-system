@@ -35,6 +35,7 @@ import { Pagination } from "@robr0/design-system/components/Pagination/Paginatio
 import { Input } from "@robr0/design-system/components/Input/Input";
 import { Kbd } from "@robr0/design-system/components/Kbd/Kbd";
 import { ProgressBar } from "@robr0/design-system/components/ProgressBar/ProgressBar";
+import { PromptSuggestions } from "@robr0/design-system/components/PromptSuggestions/PromptSuggestions";
 import { Prose } from "@robr0/design-system/components/Prose/Prose";
 import { RadioButton } from "@robr0/design-system/components/RadioButton/RadioButton";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
@@ -654,6 +655,18 @@ export default function ComponentsPage() {
               <div style={{ width: "120px" }}>
                 <ProgressBar value={65} size="compact" />
               </div>
+            </TocCard>
+
+            {/* Prompt suggestions */}
+            <TocCard href="/components/prompt-suggestions" title="Prompt suggestions">
+              <PromptSuggestions
+                wrap
+                style={{ justifyContent: "center" }}
+                suggestions={[
+                  { id: "ideas", label: "Brainstorm ideas", icon: "lightbulb" },
+                  { id: "trip", label: "Plan a trip" },
+                ]}
+              />
             </TocCard>
 
             {/* Prose */}

@@ -1,0 +1,156 @@
+"use client";
+
+import React from "react";
+import MegaNav from "../../../components/MegaNav/MegaNav";
+import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
+import Sidebar from "../../../components/Sidebar/Sidebar";
+import BlurBackground from "../../../components/BlurBackground/BlurBackground";
+import Footer from "../../../components/Footer/Footer";
+import { PromptSuggestions } from "@robr0/design-system/components/PromptSuggestions/PromptSuggestions";
+import { ChatMessage } from "@robr0/design-system/components/ChatMessage/ChatMessage";
+import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
+import PageLinks from "../../../components/PageLinks/PageLinks";
+import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
+import styles from "./page.module.css";
+
+const { sidebarLinks } = getSidebarLinks(
+  componentsSidebarLinks,
+  "/components/prompt-suggestions"
+);
+
+export default function PromptSuggestionsPage() {
+  return (
+    <>
+      <BlurBackground />
+      <MegaNav />
+
+      <div className={styles.dsLayout}>
+        <Sidebar links={sidebarLinks} searchable />
+
+        <main className={styles.dsContent} id="main-content">
+          <PageBreadcrumb />
+          <div className={`${styles.pageHeader} animate-in`}>
+            <h1 className={styles.pageTitle}>Prompt suggestions</h1>
+            <PageLinks storybookPath="/?path=/docs/components-promptsuggestions--docs" />
+          </div>
+
+          <div className={`${styles.introSection} animate-in animate-delay-1`}>
+            <p className={styles.subDisplay}>
+              A row of tappable prompts to start or steer a conversation
+            </p>
+            <p className={styles.introBody}>
+              Each suggestion is a clickable chip, so one component owns the
+              pill look. The row scrolls sideways with pure CSS edge fades,
+              or wraps into a block for empty-state hero placements. Tapping
+              a suggestion fires a callback with its stable id, never its
+              display text.
+            </p>
+          </div>
+
+          {/* The row */}
+          <section className={styles.section}>
+            <SectionTitle title="The row" />
+            <p className={styles.demoText}>
+              A single line of suggestions. Icons are optional and the label
+              carries the meaning; keep each prompt short enough to read in
+              a glance.
+            </p>
+            <div className={styles.stack}>
+              <PromptSuggestions
+                suggestions={[
+                  { id: "trip", label: "Plan a weekend trip" },
+                  { id: "recipe", label: "Suggest a dinner recipe" },
+                  { id: "email", label: "Draft a polite follow-up" },
+                ]}
+              />
+              <PromptSuggestions
+                suggestions={[
+                  { id: "ideas", label: "Brainstorm ideas", icon: "lightbulb" },
+                  { id: "summarise", label: "Summarise a document", icon: "description" },
+                  { id: "translate", label: "Translate a phrase", icon: "translate" },
+                ]}
+              />
+            </div>
+          </section>
+
+          {/* Overflow and fades */}
+          <section className={styles.section}>
+            <SectionTitle title="Overflow and fades" />
+            <p className={styles.demoText}>
+              When the row overflows, a CSS mask fades the edges out as the
+              hint that there is more to scroll. No scroll listeners, no
+              measurement: the gradient does all the work.
+            </p>
+            <div className={styles.narrow}>
+              <PromptSuggestions
+                suggestions={[
+                  { id: "trip", label: "Plan a weekend trip" },
+                  { id: "recipe", label: "Suggest a dinner recipe" },
+                  { id: "quiz", label: "Quiz me on capitals" },
+                  { id: "poem", label: "Write a short poem" },
+                  { id: "budget", label: "Sketch a monthly budget" },
+                  { id: "workout", label: "Build a workout plan" },
+                ]}
+              />
+            </div>
+          </section>
+
+          {/* Wrapped */}
+          <section className={styles.section}>
+            <SectionTitle title="Wrapped" />
+            <p className={styles.demoText}>
+              The wrap variant trades scrolling for multiple lines. Use it in
+              an empty conversation, where the suggestions are the main event
+              and everything should be visible at once.
+            </p>
+            <div className={styles.hero}>
+              <p className={styles.heroPrompt}>
+                What would you like to do today?
+              </p>
+              <PromptSuggestions
+                wrap
+                style={{ justifyContent: "center" }}
+                suggestions={[
+                  { id: "ideas", label: "Brainstorm ideas", icon: "lightbulb" },
+                  { id: "summarise", label: "Summarise a document", icon: "description" },
+                  { id: "translate", label: "Translate a phrase", icon: "translate" },
+                  { id: "trip", label: "Plan a weekend trip", icon: "flight" },
+                  { id: "recipe", label: "Suggest a dinner recipe", icon: "restaurant" },
+                ]}
+              />
+            </div>
+          </section>
+
+          {/* Steering mid-conversation */}
+          <section className={styles.section}>
+            <SectionTitle title="Steering mid-conversation" />
+            <p className={styles.demoText}>
+              After an answer, a short row of follow-ups keeps the thread
+              moving without making anyone type. The chips read as options,
+              not as messages, because the list sits outside the transcript.
+            </p>
+            <div className={styles.conversation}>
+              <ChatMessage role="user" author="You" timestamp="2:41 PM">
+                Compare the two routes for the morning commute.
+              </ChatMessage>
+              <ChatMessage author="Assistant" timestamp="2:41 PM">
+                The riverside route is two minutes slower but far more
+                reliable in the rain. The highway route wins only on dry
+                days with light traffic.
+              </ChatMessage>
+              <PromptSuggestions
+                suggestions={[
+                  { id: "rain", label: "Which is better in the rain?" },
+                  { id: "cycle", label: "Add a cycling option" },
+                  { id: "save", label: "Save this comparison" },
+                ]}
+              />
+            </div>
+          </section>
+        </main>
+      </div>
+
+      <Footer />
+    </>
+  );
+}

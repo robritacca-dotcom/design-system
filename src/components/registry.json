@@ -413,6 +413,14 @@
       "client": false
     },
     {
+      "name": "PromptSuggestions",
+      "label": "Prompt suggestions",
+      "slug": "prompt-suggestions",
+      "description": "A horizontal row of tappable prompt suggestions to start or steer a conversation.",
+      "category": "ai",
+      "client": false
+    },
+    {
       "name": "Prose",
       "label": "Prose",
       "slug": "prose",

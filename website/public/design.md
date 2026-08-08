@@ -669,6 +669,12 @@ Every button carries its item's `label` as `aria-label`, and by default a compos
 
 The `actions` footer mirrors ToolCall's actions footer exactly — `--color-bg-container-secondary` behind a `--border-xs` `--color-divider` border-top, flex-end at `--gap-sm` — so approvals on a tool call and link actions on a card read as the same row across the ai components.
 
+### PromptSuggestions
+
+**`ds-prompt-suggestions`** — A horizontal row of tappable prompt suggestions to start or steer a conversation. Each suggestion renders as a clickable Chip, so one component owns the pill look — the row adds only layout (flex at `--gap-sm`) and never restyles the pills. By default it is a single scrollable line (`overflow-x: auto`) whose edges fade out through a pure-CSS `mask-image` gradient with `--gap-lg` stops: the fade is the overflow hint, with no scroll listeners and no JS measurement. `padding-block: var(--padding-xxxs)` keeps chip focus rings clear of the scroll clip. `wrap` trades the scroll-and-fade row for `flex-wrap` across multiple lines — the empty-state hero placement, where everything is visible and there is no overflow to hint at.
+
+The root is `role="list"` (named by `ariaLabel`, default "Suggested prompts") with each chip in a `role="listitem"` wrapper, so a screen reader announces how many suggestions there are before reading any. The chips themselves are real buttons — Chip's clickable mode — which also keeps the scrollable region keyboard-reachable. Tapping one fires `onValueChange` with the suggestion's stable `id`, never its display text.
+
 ### Prose
 
 **`ds-prose`** — Token-styled typography for rendered markdown and rich agent output. The package ships no markdown renderer: consumers render markdown with whatever library they already use and wrap the output in Prose, which styles the descendant elements through scoped selectors. Body text sits on the `--font-paragraph-*` scale in `--color-text-primary` with `--gap-md` between blocks, edges trimmed (`first-child`/`last-child` margins zeroed) so it slots into bubbles and cards cleanly. Headings step down the token tiers — `--font-heading-1-*` through `--font-heading-3-*`, then `--font-title-body-*` for `h4` — each applying its full five-property set, so the weight-contrast principle holds without Prose restating it. Links use `--color-action-primary-text-tertiary` with an underline; `strong` takes `--font-paragraph-em-weight`; lists indent by `--padding-md` with `--gap-xs` between items.

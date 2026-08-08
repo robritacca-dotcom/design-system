@@ -1,0 +1,52 @@
+/* ============================================
+   PROMPT SUGGESTIONS COMPONENT
+   Horizontal row of tappable prompt chips.
+   Scrolls with pure-CSS edge fades by default;
+   wraps for empty-state hero placements.
+   ============================================ */
+
+.ds-prompt-suggestions {
+  display: flex;
+  gap: var(--gap-sm);
+  overflow-x: auto;
+  /* Breathing room so chip focus rings aren't clipped by the scroll box */
+  padding-block: var(--padding-xxxs);
+}
+
+/* Edge fades — scroll variant only. A CSS mask, not a scroll listener:
+   content near either edge fades out, hinting there is more to scroll.
+   ds-allow(color): mask alpha keywords (black/transparent), not palette colours */
+.ds-prompt-suggestions:not(.ds-prompt-suggestions--wrap) {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black var(--gap-lg),
+    black calc(100% - var(--gap-lg)),
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black var(--gap-lg),
+    black calc(100% - var(--gap-lg)),
+    transparent
+  );
+}
+
+/* ============================================
+   WRAP — multi-line hero variant, no fades
+   ============================================ */
+
+.ds-prompt-suggestions--wrap {
+  flex-wrap: wrap;
+  overflow-x: visible;
+}
+
+/* ============================================
+   ITEMS
+   ============================================ */
+
+.ds-prompt-suggestions__item {
+  display: flex;
+  flex-shrink: 0;
+}
