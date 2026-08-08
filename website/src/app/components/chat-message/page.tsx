@@ -8,6 +8,8 @@ import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
 import { ChatMessage } from "@robr0/design-system/components/ChatMessage/ChatMessage";
 import { ChatMarker } from "@robr0/design-system/components/ChatMarker/ChatMarker";
+import { MessageActions } from "@robr0/design-system/components/MessageActions/MessageActions";
+import { SourceChip } from "@robr0/design-system/components/SourceChip/SourceChip";
 import { Avatar } from "@robr0/design-system/components/Avatar/Avatar";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
@@ -164,6 +166,54 @@ export default function ChatMessagePage() {
                 avatar={<Avatar name="A I" size="sm" />}
               >
                 The summary file is in the shared folder.
+              </ChatMessage>
+            </div>
+          </section>
+
+          {/* Actions and footer */}
+          <section className={styles.section}>
+            <SectionTitle title="Actions and footer" />
+            <p className={styles.demoText}>
+              Two slots hang under the content. The actions slot reveals on
+              hover and keyboard focus, and stays visible on touch, so copy
+              and retry wait out of the way. The footer is always visible,
+              which makes it the home for a sources row. Message actions and
+              source chips are built to fill them.
+            </p>
+            <div className={styles.stack}>
+              <ChatMessage
+                role="assistant"
+                author="Assistant"
+                timestamp="4:18 PM"
+                avatar={<Avatar name="A I" size="sm" />}
+                actions={
+                  <MessageActions
+                    items={[
+                      { id: "copy", icon: "content_copy", label: "Copy" },
+                      { id: "retry", icon: "refresh", label: "Retry" },
+                      { id: "thumb-up", icon: "thumb_up", label: "Good response" },
+                      { id: "thumb-down", icon: "thumb_down", label: "Bad response" },
+                    ]}
+                  />
+                }
+                footer={
+                  <div className={styles.sourcesRow}>
+                    <SourceChip
+                      index={1}
+                      title="Design tokens quarterly"
+                      href="https://example.com/design-tokens-quarterly"
+                    />
+                    <SourceChip
+                      index={2}
+                      title="Theming layered systems"
+                      href="https://example.com/theming-layered-systems"
+                    />
+                  </div>
+                }
+              >
+                Semantic tokens resolve to primitives, so overriding a single
+                primitive cascades through every component that references
+                it. Hover this turn, or tab into it, to reveal the actions.
               </ChatMessage>
             </div>
           </section>

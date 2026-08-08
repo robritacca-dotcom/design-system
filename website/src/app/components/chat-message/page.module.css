@@ -92,6 +92,13 @@
   margin: 0;
 }
 
+/* A wrapping row of source chips inside the footer slot */
+.sourcesRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-xs);
+}
+
 /* A framed transcript: messages and markers on a quiet panel */
 .conversation {
   display: flex;
