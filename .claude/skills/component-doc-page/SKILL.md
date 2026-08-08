@@ -14,7 +14,7 @@ Create a full-quality documentation page for a design system component on the we
 
 Use this skill when asked to document a component on the website, add a component page, or create docs for a component — phrases like "document [X] on the website", "add a docs page for [X]", "create the website page for [X]".
 
-This is a more thorough, component-specific version of `new-page`. The Button page is the quality benchmark.
+This is a more thorough, component-specific version of `new-page`. The Button page is the quality benchmark for static variant grids; for components whose value is interaction or streaming state (the `ai` category), the chat-message page (`website/src/app/components/chat-message/page.tsx`) is the exemplar — a `"use client"` page with small stateful demos instead of a grid.
 
 ## Instructions
 

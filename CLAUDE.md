@@ -140,8 +140,12 @@ The old `merge-and-push` skill is retired because its name didn't say which of t
     │   ├── writing/           # Essay pages, mirrored from the Substack feed
     │   ├── about/             # About page
     │   ├── rr-animated/       # Standalone animated-logo page
+    │   ├── robr0-gpt/         # Chat widget test bench — deliberately noindexed, nav-less, sitemap-less
     │   └── api/               # Route handlers (github-contributions, backing ContributionGraph)
+    ├── src/config/            # navigation.ts — nav/sidebar/breadcrumb source of truth
     ├── src/data/              # Data registries: case-studies.json, site-updates.json, skills accessors
+    ├── src/hooks/             # Client hooks (useChat — the chat widget's transport-agnostic state machine)
+    ├── src/lib/               # Non-UI modules (chat-sim transport, Substack feed, OG image, structured data)
     └── src/components/        # Shared Next.js UI (MegaNav header, Sidebar, Footer, etc.)
 ```
 
@@ -293,7 +297,7 @@ These are stated at the level of **token roles**, deliberately: which colour, ra
 
 ## Known Gaps
 
-- CSS motion is fully tokenized (`--motion-*`), but JS-driven timings (Tooltip delays, Toast auto-dismiss, Carousel autoplay) remain hardcoded TS constants — tokenizing them is a pending follow-up
+- CSS motion is fully tokenized (`--motion-*`), but JS-driven timings (Tooltip delays, Toast auto-dismiss, Carousel autoplay, ChatThread's scrollbar settle delay — a non-exhaustive list) remain hardcoded TS constants — tokenizing them is a pending follow-up
 - No `--chart-series-{n}` formal token set for ordered chart series colors
 - Figma source file documented: [robr0-ds26](https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26) — foundation/component pages deep-link to specific frames via `figmaUrl`
 - Visual regression runs via Chromatic (`.github/workflows/chromatic.yml`, dispatch-only — see **CI & Local Verify** for why it is not part of `verify`); baseline accepted 2026-07-27 across both themes. A11y is enforced at AA-minus-contrast; the contrast criteria remain deliberately deferred (recorded in `.storybook/preview.ts`), and axe only catches roughly a third of WCAG issues, so keyboard order and meaningful alt text still need human review
