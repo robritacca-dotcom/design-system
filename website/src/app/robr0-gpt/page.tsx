@@ -13,11 +13,13 @@ import { ChatThread } from "@robr0/design-system/components/ChatThread/ChatThrea
 import { CircularButton } from "@robr0/design-system/components/CircularButton/CircularButton";
 import { Composer } from "@robr0/design-system/components/Composer/Composer";
 import { PromptSuggestions } from "@robr0/design-system/components/PromptSuggestions/PromptSuggestions";
+import { SegmentedControl } from "@robr0/design-system/components/SegmentedControl/SegmentedControl";
 import { Prose } from "@robr0/design-system/components/Prose/Prose";
 import { Reasoning } from "@robr0/design-system/components/Reasoning/Reasoning";
 import { useChat, type ChatTurn, type LiveResponse } from "@/hooks/useChat";
 import { createSimTransport } from "@/lib/chat-sim";
 import { createFetchTransport } from "@/lib/chat-transport";
+import BlurBackground from "@/components/BlurBackground/BlurBackground";
 
 type StageSize = "desktop" | "mobile";
 /** Which transport the widget runs on. Live talks to /api/chat. */
@@ -241,80 +243,82 @@ export default function ChatWidgetTestPage() {
     .join(" ");
 
   return (
-    <main className={styles.stage}>
-      {/* Fullscreen covers the stage — its controls leave the tab order
-          entirely rather than lurking reachable behind the overlay. */}
-      {!isFull && (
-      <div className={styles.controls}>
-        <div className={styles.group} role="group" aria-label="Stage size">
-          <Button
-            size="compact"
-            variant={size === "desktop" ? "secondary" : "tertiary"}
-            aria-pressed={size === "desktop"}
-            onClick={() => {
-              setSize("desktop");
-              setManual({});
-            }}
-            label="Desktop"
-          />
-          <Button
-            size="compact"
-            variant={isMobile ? "secondary" : "tertiary"}
-            aria-pressed={isMobile}
-            onClick={() => {
-              setSize("mobile");
-              setManual({});
-            }}
-            label="Mobile (390px)"
-          />
-        </div>
+    <>
+      {/* The site's own backdrop, so the widget is reviewed floating over the
+          surface it will actually sit on rather than a flat fill. */}
+      <BlurBackground fullHeight />
 
-        <div className={styles.group} role="group" aria-label="Theme">
-          <Button
-            size="compact"
-            variant={theme === "light" ? "secondary" : "tertiary"}
-            aria-pressed={theme === "light"}
-            onClick={() => applyTheme("light")}
-            label="Light"
-          />
-          <Button
-            size="compact"
-            variant={theme === "dark" ? "secondary" : "tertiary"}
-            aria-pressed={theme === "dark"}
-            onClick={() => applyTheme("dark")}
-            label="Dark"
-          />
+    <main className={styles.stage}>
+      {/* Fullscreen covers the stage — the whole left panel leaves the tab
+          order entirely rather than lurking reachable behind the overlay. */}
+      {!isFull && (
+      <div className={styles.panel}>
+      <header className={styles.pageHeader}>
+        <h1 className={styles.pageTitle}>robr0 GPT</h1>
+        <div className={styles.introSection}>
+          <p className={styles.subDisplay}>
+            A test bench for the design system&rsquo;s chat widget
+          </p>
+          <p className={styles.introBody}>
+            Answers are generated live by Claude Sonnet through this
+            site&rsquo;s own API route, which gives the model a corpus built
+            from the published pages and nothing else. Switch to Simulated to
+            replay a scripted exchange and check the choreography without
+            calling the model.
+          </p>
         </div>
+      </header>
+
+      <div className={styles.controls}>
+        {/* A manual drag is a size of its own, so switching stage size
+            discards it rather than resizing around it. */}
+        <SegmentedControl
+          size="compact"
+          ariaLabel="Stage size"
+          activeSegment={size}
+          onSegmentChange={(value) => {
+            setSize(value as StageSize);
+            setManual({});
+          }}
+          segments={[
+            { value: "desktop", label: "Desktop", icon: "desktop_windows" },
+            { value: "mobile", label: "Mobile (390px)", icon: "smartphone" },
+          ]}
+        />
+
+        <SegmentedControl
+          size="compact"
+          ariaLabel="Theme"
+          activeSegment={theme}
+          onSegmentChange={(value) => applyTheme(value as Theme)}
+          segments={[
+            { value: "light", label: "Light", icon: "light_mode" },
+            { value: "dark", label: "Dark", icon: "dark_mode" },
+          ]}
+        />
 
         {/* Swapping transports resets the conversation: a stream from the old
-            one would otherwise keep writing into the new transcript. */}
-        <div className={styles.group} role="group" aria-label="Transport">
-          <Button
-            size="compact"
-            variant={transportMode === "live" ? "secondary" : "tertiary"}
-            aria-pressed={transportMode === "live"}
-            onClick={() => {
-              if (transportMode === "live") return;
-              setTransportMode("live");
-              reset();
-            }}
-            label="Live"
-          />
-          <Button
-            size="compact"
-            variant={transportMode === "sim" ? "secondary" : "tertiary"}
-            aria-pressed={transportMode === "sim"}
-            onClick={() => {
-              if (transportMode === "sim") return;
-              setTransportMode("sim");
-              reset();
-            }}
-            label="Simulated"
-          />
-        </div>
+            one would otherwise keep writing into the new transcript. Picking
+            the mode already running is not a swap, so it costs nothing. */}
+        <SegmentedControl
+          size="compact"
+          ariaLabel="Transport"
+          activeSegment={transportMode}
+          onSegmentChange={(value) => {
+            if (value === transportMode) return;
+            setTransportMode(value as TransportMode);
+            reset();
+          }}
+          segments={[
+            { value: "live", label: "Live", icon: "sensors" },
+            { value: "sim", label: "Simulated", icon: "science" },
+          ]}
+        />
+      </div>
       </div>
       )}
 
+      <div className={styles.viewport}>
       {open ? (
         <div className={`${styles.widgetFrame} ${resizing ? styles.resizing : ""}`}>
           <div
@@ -372,7 +376,7 @@ export default function ChatWidgetTestPage() {
           />
 
             <div className={styles.body}>
-              <ChatThread className={styles.thread} streaming={streaming}>
+              <ChatThread className={styles.thread}>
                 {/* One array, so the live turn and its committed form match
                     by key — split expressions are separate children slots
                     and React would remount across them. */}
@@ -447,7 +451,7 @@ export default function ChatWidgetTestPage() {
               {isEmpty && (
                 <div className={styles.startersColumn}>
                   <PromptSuggestions
-                    wrap
+                    layout="stack"
                     ariaLabel="Conversation starters"
                     suggestions={STARTERS}
                     onValueChange={(id) => {
@@ -502,6 +506,8 @@ export default function ChatWidgetTestPage() {
           />
         </div>
       )}
+      </div>
     </main>
+    </>
   );
 }

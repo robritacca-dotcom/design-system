@@ -2,29 +2,108 @@
    (panel 440x956 - the iPhone 18 Pro Max viewport - mobile 390, full-screen
    content column 768), not layout tokens. */
 
+/* Two columns: what this is on the left, the thing itself on the right.
+   The copy and controls read as a column of their own, which keeps the
+   widget at full height instead of pushing it down the page. */
 .stage {
-  /* Vertical room the stage reserves around the widget (controls + gaps). */
+  /* Vertical room the stage reserves around the widget (its own padding,
+     plus a little air), so the widget always fits the viewport. */
   --stage-clearance: 112px;
-  min-height: 100dvh;
+  /* The body already pads the page by --padding-lg top and bottom; a flat
+     100dvh here would add that on top and scroll the centred layout by
+     exactly that much. */
+  min-height: calc(100dvh - var(--padding-lg) * 2);
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: center;
+  gap: var(--gap-xl);
+  padding: var(--padding-lg);
+  /* No fill of its own: the page's blur backdrop sits behind the stage at
+     z-index -1, and an opaque background here would paint straight over it. */
+}
+
+/* The left third. Everything in it shares one left edge. */
+.panel {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  gap: var(--gap-xl);
+}
+
+/* The right two thirds. */
+.viewport {
+  display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--gap-md);
-  padding: var(--padding-lg);
-  background: var(--color-bg-page-primary);
+  min-width: 0;
 }
 
+/* One column on narrow screens: the panel reads above the widget rather
+   than squeezing it into a third of a phone. */
+@media (max-width: 899px) {
+  .stage {
+    grid-template-columns: 1fr;
+    gap: var(--gap-lg);
+  }
+
+  .panel {
+    padding-top: var(--gap-lg);
+  }
+}
+
+/* What this page is, above the controls that drive it. Title, air, then the
+   sub-display line and the body paragraph: the same three-step opening the
+   component pages use, so the bench reads as part of the same docs set. The
+   column caps the measure, so no max-width of its own. */
+.pageHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xl);
+}
+
+.pageTitle {
+  margin: 0;
+  font-family: var(--font-display-2-family);
+  font-size: var(--font-display-2-size);
+  font-weight: var(--font-display-2-weight);
+  line-height: var(--font-display-2-line-height);
+  letter-spacing: var(--font-display-2-letter-spacing);
+  color: var(--color-text-primary);
+}
+
+.introSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-lg);
+}
+
+.subDisplay {
+  margin: 0;
+  font-family: var(--font-sub-display-family);
+  font-size: var(--font-sub-display-size);
+  font-weight: var(--font-sub-display-weight);
+  line-height: var(--font-sub-display-line-height);
+  letter-spacing: var(--font-sub-display-letter-spacing);
+  color: var(--color-text-primary);
+}
+
+.introBody {
+  margin: 0;
+  font-family: var(--font-paragraph-family);
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  letter-spacing: var(--font-paragraph-letter-spacing);
+  color: var(--color-text-primary);
+}
+
+/* Stacked, each control hugging its own segments rather than stretching to
+   a shared width: they are three separate choices, not one control. */
 .controls {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--gap-md);
-}
-
-.group {
-  display: flex;
-  gap: var(--gap-xs);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--gap-sm);
 }
 
 /* ============================================
