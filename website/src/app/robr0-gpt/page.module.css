@@ -1,6 +1,8 @@
 /* Standalone chat-widget test stage. The widget sizes are review targets
-   (panel 440x956 - the iPhone 18 Pro Max viewport - mobile 390, full-screen
-   content column 768), not layout tokens. */
+   (panel 880x956, mobile 390 - the narrow-phone viewport - full-screen
+   content column 768), not layout tokens. The panel is deliberately wider
+   than a docked widget: this page reviews the thing at the size it gets
+   used, and the grips are there for anyone who wants a narrower one. */
 
 /* Two columns: what this is on the left, the thing itself on the right.
    The copy and controls read as a column of their own, which keeps the
@@ -14,7 +16,7 @@
      exactly that much. */
   min-height: calc(100dvh - var(--padding-lg) * 2);
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr 3fr;
   align-items: center;
   gap: var(--gap-xl);
   padding: var(--padding-lg);
@@ -131,8 +133,12 @@
   flex-direction: column;
   /* Fixed widths, not min(…,100%): a cyclic percentage would make the
      shrink-wrapping frame size itself from the text's unwrapped
-     max-content. The vw-based max-width below owns the small-screen cap. */
-  width: 440px;
+     max-content. The frame's own max-width lets flex shrink this below the
+     default when the column is narrower; the vw-based cap below is the
+     small-screen floor under that. Wide enough to hold the thread's 768px
+     conversation column with its gutters, so the default reads as an app
+     window rather than a docked panel. */
+  width: 880px;
   height: min(956px, calc(100dvh - var(--stage-clearance)));
   min-width: 320px;
   min-height: 480px;
