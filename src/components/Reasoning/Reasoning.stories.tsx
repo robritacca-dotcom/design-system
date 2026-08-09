@@ -69,6 +69,20 @@ export const LiveAgentStatus: Story = {
   },
 };
 
+/**
+ * A model that reports what it is doing but produces no trace to read. With
+ * nothing behind the line, the chevron and the panel go: the status is just
+ * a status, not a disclosure that opens onto nothing.
+ */
+export const SummaryOnly: Story = {
+  args: {
+    streaming: true,
+    summaryOnly: true,
+    summary: <AgentStatus state="working" label="Reading the site" />,
+    children: undefined,
+  },
+};
+
 const HandoffDemo = () => {
   const [live, setLive] = useState(true);
   return (

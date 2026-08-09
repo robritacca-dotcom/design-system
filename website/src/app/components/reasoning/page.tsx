@@ -7,6 +7,7 @@ import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import Footer from "../../../components/Footer/Footer";
 import { Reasoning } from "@robr0/design-system/components/Reasoning/Reasoning";
+import { AgentStatus } from "@robr0/design-system/components/AgentStatus/AgentStatus";
 import { Button } from "@robr0/design-system/components/Button/Button";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
@@ -143,6 +144,26 @@ export default function ReasoningPage() {
                 {TRACE}
               </Reasoning>
             </div>
+          </section>
+
+          {/* Summary only */}
+          <section className={styles.section}>
+            <SectionTitle title="When there is no trace" />
+            <p className={styles.demoText}>
+              Not every model hands back reasoning to read. With nothing
+              behind the line,{" "}
+              <code className={styles.code}>summaryOnly</code>{" "}
+              drops the chevron, the trigger, and the panel: a disclosure that opens
+              onto nothing is a promise the component cannot keep. The line
+              keeps the trigger&rsquo;s own geometry, so a trace arriving
+              mid-response promotes it to a real disclosure without moving
+              anything.
+            </p>
+            <Reasoning
+              streaming
+              summaryOnly
+              summary={<AgentStatus state="working" label="Reading the site" />}
+            />
           </section>
 
           {/* Behaviour */}

@@ -44,20 +44,35 @@
   color: var(--color-text-primary);
 }
 
+/* Summary-only: the same line, minus every affordance that would promise a
+   panel behind it. Not a button, so there is nothing to focus or press. */
+.ds-reasoning__trigger--static {
+  cursor: default;
+}
+
+.ds-reasoning__trigger--static:hover {
+  color: var(--color-text-secondary);
+}
+
 .ds-reasoning__trigger:focus-visible {
   outline: 2px solid var(--color-action-primary-bg);
   outline-offset: -2px;
 }
 
+/* Closed the chevron points at the collapsed trace; open it points down the
+   way the panel expands. The glyph itself points down, so closed is the
+   rotated state — and the quarter turn to open runs clockwise, following
+   the panel as it opens. */
 .ds-reasoning__chevron {
   --icon-size: var(--icon-size-sm);
 
   flex: none;
+  transform: rotate(-90deg);
   transition: transform var(--motion-duration-slow) var(--motion-ease-standard);
 }
 
 .ds-reasoning--open .ds-reasoning__chevron {
-  transform: rotate(180deg);
+  transform: rotate(0deg);
 }
 
 /* ============================================

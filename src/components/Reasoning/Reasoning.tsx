@@ -20,6 +20,13 @@ type ReasoningOwnProps = {
    */
   summary?: React.ReactNode;
   /**
+   * Render the summary line alone, with no chevron, no trigger, and no
+   * panel — for a model that reports what it is doing but produces no trace
+   * to read. A disclosure that opens onto nothing is a promise the component
+   * cannot keep, so it stops being one.
+   */
+  summaryOnly?: boolean;
+  /**
    * Text scale, paired with ChatMessage's sizes: `default` matches default
    * message text, `compact` matches compact message text.
    */
@@ -59,6 +66,7 @@ export const Reasoning = React.forwardRef<HTMLDivElement, ReasoningProps>(
       duration,
       label,
       summary,
+      summaryOnly = false,
       size = 'default',
       open,
       defaultOpen,
@@ -129,6 +137,38 @@ export const Reasoning = React.forwardRef<HTMLDivElement, ReasoningProps>(
       .filter(Boolean)
       .join(' ');
 
+    const summaryLine = (
+      <span
+        className={`${baseClass}__summary${summary ? ` ${baseClass}__summary--node` : ''}${
+          leaving != null && summary == null ? ` ${baseClass}__summary--entering` : ''
+        }`}
+        role={summary ? undefined : 'status'}
+        onAnimationEnd={(e) => {
+          if (e.target === e.currentTarget) setLeaving(null);
+        }}
+      >
+        {leaving != null && summary == null && (
+          <span className={`${baseClass}__summary-leaving`} aria-hidden="true">
+            {leaving}
+          </span>
+        )}
+        {summary ?? summaryText}
+      </span>
+    );
+
+    /* Summary-only keeps the trigger class, so the line sits in exactly the
+       same place as it would in a real disclosure — a trace arriving mid
+       response promotes it without moving anything. */
+    if (summaryOnly) {
+      return (
+        <div {...rest} ref={ref} className={classes}>
+          <span className={`${baseClass}__trigger ${baseClass}__trigger--static`}>
+            {summaryLine}
+          </span>
+        </div>
+      );
+    }
+
     return (
       <div {...rest} ref={ref} className={classes}>
         <button
@@ -139,22 +179,7 @@ export const Reasoning = React.forwardRef<HTMLDivElement, ReasoningProps>(
           aria-controls={panelId}
           onClick={toggle}
         >
-          <span
-            className={`${baseClass}__summary${summary ? ` ${baseClass}__summary--node` : ''}${
-              leaving != null && summary == null ? ` ${baseClass}__summary--entering` : ''
-            }`}
-            role={summary ? undefined : 'status'}
-            onAnimationEnd={(e) => {
-              if (e.target === e.currentTarget) setLeaving(null);
-            }}
-          >
-            {leaving != null && summary == null && (
-              <span className={`${baseClass}__summary-leaving`} aria-hidden="true">
-                {leaving}
-              </span>
-            )}
-            {summary ?? summaryText}
-          </span>
+          {summaryLine}
           <span className={`${baseClass}__chevron material-symbols-rounded`} aria-hidden="true">
             expand_more
           </span>
