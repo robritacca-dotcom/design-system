@@ -113,11 +113,10 @@ export default function ChatThreadPage() {
             <p className={styles.demoText}>
               Sending appends a turn and scrolls it to the top. A trailing
               spacer grows so even a short newest exchange can reach the top,
-              and reduced motion makes the glide instant. That spacer is
-              anchor space, not resting space: tell the thread when the
-              response has landed and it collapses, so the finished
-              conversation settles just above the composer rather than
-              leaving a void under the last answer.
+              and reduced motion makes the glide instant. The spacer holds
+              exactly the room the anchor still needs and no more, giving it
+              back as a response grows into it, so the space is gone by the
+              time the answer lands instead of leaving a void under it.
             </p>
             <AnchoringDemo />
           </section>

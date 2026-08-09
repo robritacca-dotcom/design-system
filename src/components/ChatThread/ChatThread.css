@@ -88,18 +88,11 @@
   flex-shrink: 0;
 }
 
-/* Trailing spacer — sized by the component on append so the newest turn can
-   always reach the top of the viewport. */
+/* Trailing spacer — sized by the component so the newest turn can always
+   reach the top of the viewport, and holds no more room than that: it
+   shrinks away as a response grows into the space it was reserving. */
 .ds-chat-thread__spacer {
   height: 0;
-}
-
-/* Only while the space is being released at the end of an exchange. Sizing
-   for an anchor stays instant — an animated grow would leave the anchored
-   turn chasing its own scroll. The reduced-motion guard zeroes the duration,
-   which lands the transcript in the same place without the glide. */
-.ds-chat-thread__spacer--releasing {
-  transition: height var(--motion-duration-slower) var(--motion-ease-standard);
 }
 
 /* Scroll-to-bottom — a sticky, zero-height slot pinned just above the

@@ -23,15 +23,6 @@ type ChatThreadOwnProps = {
    * edit-last-turn) neither re-anchors nor resizes the spacer.
    */
   anchor?: boolean;
-  /**
-   * Whether a response is in flight. While true the trailing spacer keeps
-   * the anchored turn's position reachable; when it flips false that space
-   * is released, so a finished conversation rests just above the composer
-   * instead of leaving a void under the last answer. Leave it unset and the
-   * space is never released — the thread cannot tell on its own that an
-   * exchange has ended.
-   */
-  streaming?: boolean;
   /** Accessible name for the scrollable conversation region. */
   ariaLabel?: string;
   /** Accessible name for the scroll-to-bottom control. */
@@ -66,7 +57,6 @@ export const ChatThread = React.forwardRef<HTMLDivElement, ChatThreadProps>(
   (
     {
       anchor = true,
-      streaming,
       ariaLabel = 'Conversation',
       jumpLabel = 'Scroll to the latest message',
       className = '',
@@ -89,57 +79,32 @@ export const ChatThread = React.forwardRef<HTMLDivElement, ChatThreadProps>(
        the spacer for the whole exchange — not just at send time. */
     const anchorTop = useRef<number | null>(null);
 
-    /* Size the trailing spacer so the anchor position stays scrollable.
-       Content shrinking mid-exchange (a reasoning trace collapsing at the
-       handoff) would otherwise pull the scroll range below the anchor and
-       the browser would clamp the pinned turn back down — most visibly in
-       tall, full-screen containers.
+    /* Size the trailing spacer so the anchor position stays scrollable, and
+       so it holds no more room than that. The spacer is exactly the shortfall
+       between the anchor and what the content can already reach, which makes
+       the scroll range end precisely at the anchor: the pinned turn stays
+       reachable, and nothing below it is reachable that should not be.
 
-       Mid-exchange the spacer only ever GROWS: shrinking it as content
-       streams in reopens the clamp window for a frame every time animated
-       content shrinks, and those clamped pixels accumulate as a visible
-       sag. Each new anchor re-sizes it exactly. */
-    const sizeSpacer = (exact: boolean) => {
+       Tracking the shortfall in both directions is what keeps the dead space
+       honest. Sized once at send — when the response is still empty — the
+       spacer would hold a viewport of room forever, long after a growing
+       answer had filled that room itself, leaving a void under the last
+       line. It shrinks to nothing as the answer grows, with no jump at the
+       end, because the range it defines never moves.
+
+       Growing it back is the direction that needs the clamp guard below:
+       content shrinking mid-exchange (the reasoning row unmounting at the
+       handoff) pulls the range under the anchor a frame before this can
+       react. */
+    const sizeSpacer = () => {
       const container = scrollRef.current;
       const content = contentRef.current;
       const spacer = spacerRef.current;
       const top = anchorTop.current;
       if (!container || !content || !spacer || top == null) return;
       const needed = Math.max(0, top + container.clientHeight - content.offsetHeight);
-      if (exact ? Math.abs(needed - spacer.offsetHeight) > 1 : needed > spacer.offsetHeight + 1) {
-        // Sizing for an anchor is instant, always: a spacer still gliding
-        // from a previous release would drag the anchored turn with it.
-        spacer.classList.remove(`${baseClass}__spacer--releasing`);
-        spacer.style.height = `${needed}px`;
-      }
+      if (Math.abs(needed - spacer.offsetHeight) > 1) spacer.style.height = `${needed}px`;
     };
-
-    /* The exchange is over, so the spacer has no position left to keep
-       reachable — and at full height it is just a void under the last
-       answer. Collapse it over a transition rather than all at once: the
-       scroll range shrinks frame by frame and the browser clamps the scroll
-       position to follow, so the transcript settles down into place instead
-       of snapping there the instant the answer lands. */
-    const release = () => {
-      const spacer = spacerRef.current;
-      if (!spacer) return;
-      // Drop the anchor first, or the clamp guard above spends the whole
-      // transition undoing it.
-      anchorTop.current = null;
-      if (spacer.offsetHeight === 0) return;
-      spacer.classList.add(`${baseClass}__spacer--releasing`);
-      spacer.style.height = '0px';
-    };
-
-    /* Only the transition into "not streaming" releases. Reacting to the
-       value itself would collapse the space a thread mounted with a restored
-       transcript just measured for itself. */
-    const wasStreaming = useRef(streaming);
-    useEffect(() => {
-      if (streaming === wasStreaming.current) return;
-      wasStreaming.current = streaming;
-      if (streaming === false) release();
-    });
 
     useEffect(() => {
       const container = scrollRef.current;
@@ -174,7 +139,7 @@ export const ChatThread = React.forwardRef<HTMLDivElement, ChatThreadProps>(
           top != null &&
           container.scrollTop < top &&
           container.scrollTop >= container.scrollHeight - container.clientHeight - 1;
-        sizeSpacer(false);
+        sizeSpacer();
         // Instant: this is undoing a jump, not performing one.
         if (top != null && wasClamped) container.scrollTo({ top, behavior: 'instant' });
         updateJump();
@@ -248,7 +213,7 @@ export const ChatThread = React.forwardRef<HTMLDivElement, ChatThreadProps>(
         if (childCount > 0 && anchor) {
           const target = Math.max(0, content.offsetHeight - container.clientHeight);
           anchorTop.current = target;
-          sizeSpacer(true);
+          sizeSpacer();
           container.scrollTo({ top: target, behavior: 'instant' });
           updateJump();
         }
@@ -267,7 +232,7 @@ export const ChatThread = React.forwardRef<HTMLDivElement, ChatThreadProps>(
         const target = content.children[0] as HTMLElement | undefined;
         if (!target) return;
         anchorTop.current = 0;
-        sizeSpacer(true);
+        sizeSpacer();
         const paddingBottom = parseFloat(contentStyle.paddingBottom) || 0;
         const rise = Math.max(
           0,
@@ -290,7 +255,7 @@ export const ChatThread = React.forwardRef<HTMLDivElement, ChatThreadProps>(
          the earlier conversation before the new turn scrolls up. */
       const targetTop = target.offsetTop - paddingTop;
       anchorTop.current = targetTop;
-      sizeSpacer(true);
+      sizeSpacer();
 
       // No behavior option: the element's CSS scroll-behavior decides, so
       // the reduced-motion guard makes this instant without any JS branch.
