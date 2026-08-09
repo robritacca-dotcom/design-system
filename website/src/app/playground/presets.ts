@@ -61,6 +61,36 @@ export const THEME_PRESETS: Record<string, ThemePreset> = {
     pill: true,
     fontLabel: "IBM Plex Sans",
   },
+  grape: {
+    label: "Deep purple",
+    brand: "#7434B3",
+    tintOn: true,
+    tintSeed: "#9E47EF",
+    tintStrength: 5,
+    radiusScale: 60,
+    pill: false,
+    fontLabel: "Space Grotesk",
+  },
+  candy: {
+    label: "Playful pink",
+    brand: "#EF476F",
+    tintOn: true,
+    tintSeed: "#EF476F",
+    tintStrength: 6,
+    radiusScale: 160,
+    pill: true,
+    fontLabel: "Poppins",
+  },
+  terminal: {
+    label: "Terminal green",
+    brand: "#05A67C",
+    tintOn: true,
+    tintSeed: "#06D6A0",
+    tintStrength: 4,
+    radiusScale: 0,
+    pill: false,
+    fontLabel: "IBM Plex Mono",
+  },
 };
 
 export const PRESET_OPTIONS = [
