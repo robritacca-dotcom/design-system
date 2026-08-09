@@ -95,6 +95,12 @@
   --color-status-neutral-border: var(--primitive-neutral-06);
   --color-status-neutral-text: var(--primitive-neutral-01);
 
+  /* AI - The gradient accent, one step brighter than light mode so the ring
+     stays luminous on dark surfaces. */
+  --color-ai-gradient-start: var(--primitive-purple-05);
+  --color-ai-gradient-mid: var(--primitive-blue-05);
+  --color-ai-gradient-end: var(--primitive-teal-05);
+
   /* Chart - Contribution heatmap ramp (level 0 = none → level 4 = most) */
   --color-chart-contribution-0: var(--primitive-neutral-08);
   --color-chart-contribution-1: var(--primitive-green-10);

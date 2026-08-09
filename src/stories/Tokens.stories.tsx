@@ -444,6 +444,12 @@ export const SemanticColors: Story = {
         />
       </TokenSection>
 
+      <TokenSection title="AI Gradient">
+        <ColorToken name="Start" value="--color-ai-gradient-start" />
+        <ColorToken name="Mid" value="--color-ai-gradient-mid" />
+        <ColorToken name="End" value="--color-ai-gradient-end" />
+      </TokenSection>
+
       <TokenSection title="Action - Primary">
         <ColorToken name="Background" value="--color-action-primary-bg" />
         <ColorToken

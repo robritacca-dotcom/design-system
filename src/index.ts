@@ -6,6 +6,7 @@
 export * from './components/Accordion/Accordion';
 export * from './components/AgentStatus/AgentStatus';
 export * from './components/AgentStatus/AgentStatusPatterns';
+export * from './components/AiButton/AiButton';
 export * from './components/Alert/Alert';
 export * from './components/AlertDialog/AlertDialog';
 export * from './components/AppLayout/AppLayout';

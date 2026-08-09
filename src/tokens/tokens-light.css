@@ -108,6 +108,14 @@
   --color-status-neutral-border: var(--primitive-neutral-07);
   --color-status-neutral-text: var(--primitive-neutral-08);
 
+  /* AI - The gradient accent reserved for AI entry points and surfaces.
+     Purple → blue → teal, so the AI affordance is its own signature and the
+     flat action teal keeps meaning "click here". Used as gradient stops
+     (AiButton's ring and glow), never as fills for ordinary chrome. */
+  --color-ai-gradient-start: var(--primitive-purple-06);
+  --color-ai-gradient-mid: var(--primitive-blue-06);
+  --color-ai-gradient-end: var(--primitive-teal-06);
+
   /* Chart - Contribution heatmap ramp (level 0 = none → level 4 = most) */
   --color-chart-contribution-0: var(--color-bg-container-primary);
   --color-chart-contribution-1: var(--primitive-green-02);

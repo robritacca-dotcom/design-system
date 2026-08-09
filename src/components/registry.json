@@ -29,6 +29,14 @@
       "client": true
     },
     {
+      "name": "AiButton",
+      "label": "AI button",
+      "slug": "ai-button",
+      "description": "The AI entry point: icon and label on a transparent field, ringed by a slowly turning gradient and a soft glow.",
+      "category": "ai",
+      "client": true
+    },
+    {
       "name": "Alert",
       "label": "Alert",
       "slug": "alert",

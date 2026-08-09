@@ -1,0 +1,163 @@
+/* ============================================
+   AI BUTTON
+   The AI entry point: transparent field, slowly
+   rotating gradient ring, soft glow of the same
+   gradient. The ring is the system's "a model
+   answers here" signal — ordinary actions keep
+   the flat action teal.
+   ============================================ */
+
+/* The rotation animates a registered custom property: a conic gradient's
+   angle cannot tween otherwise. Browsers without @property render the ring
+   at its initial angle, static — a correct, quieter fallback. */
+@property --ds-ai-button-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* Base */
+.ds-ai-button {
+  /* Layout */
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-sm);
+
+  /* Spacing — matches Button so the two sit on one control scale */
+  padding: var(--padding-sm) var(--padding-lg);
+
+  /* Buttons are always pill-shaped (design.md invariant) */
+  border-radius: var(--radius-full);
+
+  /* Typography — the clickable-control face, same as Button */
+  font-family: var(--font-paragraph-em-family);
+  font-weight: var(--font-paragraph-em-weight);
+  font-size: var(--font-paragraph-em-size);
+  line-height: var(--font-paragraph-em-line-height);
+  letter-spacing: var(--font-paragraph-em-letter-spacing);
+  text-align: center;
+
+  /* The field is transparent by design: the ring and glow are the button */
+  background: transparent;
+  color: var(--color-text-primary);
+
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
+
+  /* Reset */
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+}
+
+/* The gradient ring: a conic gradient painted across the whole button, then
+   masked to the border band (two fills, exclude-composited, inset by the
+   border width). The gradient repeats back to its start colour so the seam
+   at 360° is invisible while it turns. */
+.ds-ai-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: var(--border-xs);
+  background: conic-gradient(
+    from var(--ds-ai-button-angle),
+    var(--color-ai-gradient-start),
+    var(--color-ai-gradient-mid),
+    var(--color-ai-gradient-end),
+    var(--color-ai-gradient-mid),
+    var(--color-ai-gradient-start)
+  );
+  /* Standard properties only — the build pipeline prefixes per its browser
+     targets, and hand-written -webkit- duplicates confuse its merging. */
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  /* ds-allow(motion): ambient signature rotation, tuned by eye — deliberately
+     far slower than the interaction-scale motion tokens */
+  animation: ds-ai-button-turn 7s linear infinite;
+}
+
+/* The glow: the same gradient, blurred behind the button at low opacity.
+   A colour effect, not an elevation shadow — depth stays token-owned. */
+.ds-ai-button::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--ds-ai-button-angle),
+    var(--color-ai-gradient-start),
+    var(--color-ai-gradient-mid),
+    var(--color-ai-gradient-end),
+    var(--color-ai-gradient-mid),
+    var(--color-ai-gradient-start)
+  );
+  /* The glow's spread; a length with no token family, chosen by eye. */
+  --ds-ai-button-glow: 14px;
+  filter: blur(var(--ds-ai-button-glow));
+  opacity: 0.3;
+  z-index: -1;
+  pointer-events: none;
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
+  /* ds-allow(motion): same ambient rotation as the ring, kept in phase */
+  animation: ds-ai-button-turn 7s linear infinite;
+}
+
+@keyframes ds-ai-button-turn {
+  to {
+    --ds-ai-button-angle: 360deg;
+  }
+}
+
+/* Icon rides the icon-size scale */
+.ds-ai-button__icon {
+  --icon-size: var(--icon-size-md);
+  line-height: 1;
+}
+
+/* States */
+.ds-ai-button:hover::after {
+  opacity: 0.55;
+}
+
+.ds-ai-button:focus-visible {
+  outline: var(--border-md) solid var(--color-action-primary-bg);
+  outline-offset: 2px;
+}
+
+.ds-ai-button--disabled,
+.ds-ai-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.ds-ai-button--disabled::before,
+.ds-ai-button--disabled::after,
+.ds-ai-button:disabled::before,
+.ds-ai-button:disabled::after {
+  animation-play-state: paused;
+}
+
+/* Sizes */
+.ds-ai-button--compact {
+  padding: var(--padding-xs) var(--padding-sm-md);
+  font-size: var(--font-paragraph-sm-em-size);
+  line-height: var(--font-paragraph-sm-em-line-height);
+  letter-spacing: var(--font-paragraph-sm-em-letter-spacing);
+}
+
+.ds-ai-button--compact .ds-ai-button__icon {
+  --icon-size: var(--icon-size-sm);
+}
+
+/* Reduced motion: the ring and glow stay, the turning stops. */
+@media (prefers-reduced-motion: reduce) {
+  .ds-ai-button::before,
+  .ds-ai-button::after {
+    animation: none;
+  }
+}

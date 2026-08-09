@@ -9,6 +9,7 @@ import Footer from "../../components/Footer/Footer";
 import TocCard from "../../components/TocCard/TocCard";
 import { Accordion } from "@robr0/design-system/components/Accordion/Accordion";
 import { AgentStatus } from "@robr0/design-system/components/AgentStatus/AgentStatus";
+import { AiButton } from "@robr0/design-system/components/AiButton/AiButton";
 import { ChatHeader } from "@robr0/design-system/components/ChatHeader/ChatHeader";
 import { ChatMarker } from "@robr0/design-system/components/ChatMarker/ChatMarker";
 import { ChatMessage } from "@robr0/design-system/components/ChatMessage/ChatMessage";
@@ -125,6 +126,11 @@ export default function ComponentsPage() {
             {/* Agent status */}
             <TocCard href="/components/agent-status" title="Agent status">
               <AgentStatus state="working" label="Working" pattern="orbit" size="compact" />
+            </TocCard>
+
+            {/* AI button */}
+            <TocCard href="/components/ai-button" title="AI button">
+              <AiButton size="compact" />
             </TocCard>
 
             {/* Alert */}
