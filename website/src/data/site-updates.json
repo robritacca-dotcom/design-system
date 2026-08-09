@@ -1,9 +1,19 @@
 {
   "asOf": {
-    "commit": "4b59f5d21197dec2b13e52e3b6b8e72a5c3c6912",
-    "date": "2026-08-01"
+    "commit": "2357099a5d311db0dbbb6c7c26b8ebbe9dfe57c6",
+    "date": "2026-08-09"
   },
   "entries": [
+    {
+      "meta": "August 8–9, 2026",
+      "title": "The site learns to answer for itself",
+      "body": [
+        "Two days, three builds. First the chat primitives were composed into a widget on a test bench, running on scripted responses so the streaming choreography (the status line, the reasoning trace, the pacing of the reveal) could be judged without a model attached. Then the backend: an API route that streams a real Claude answer from a corpus generated out of the published site, behind layered rate limits and a daily spend breaker. Then the part that turns a demo into a feature: the widget mounted on every page as a floating glass panel, opened by a new AI button whose slowly turning gradient ring is now the design system’s signal that a model answers here.",
+        "The interesting problem was never the widget. It was what the model could see. The first corpus held the specification files and almost none of the site’s own words: asked for Rob’s email, the chat would say the site does not publish one, while the address sat in plain text on the contact page. The fix was structural rather than editorial. Page prose now flows into the corpus straight from the filesystem, so a new page reaches the chat on its next build with no registration step; data a page publishes as structure, like the contact channels and the career timeline, opts in through a directive; the essays embed word for word from a committed registry. The old screen that banned every email address became an allowlist: nothing reaches the model that a page did not deliberately publish, and the build fails on anything that tries another way in.",
+        "Whether any of this made the answers better is measured, not assumed. A golden set of questions, written from the seats of the people who actually visit (a recruiter, a designer, a developer), runs through the real chat route with assertions a machine can check: the facts a question needs must be present in the corpus, every path an answer cites must exist on the site, and the house style must hold. The before-and-after run went from 71 of 78 passes to 77 of 78, and the last failure was its own find: the corpus had been teaching the model a page that does not exist.",
+        "The chat also learned where its knowledge ends. Facts about Rob come only from the site and are never invented; established design craft, the usability heuristics and accessibility standards a visiting designer might ask about, is answered freely and kept visibly separate from what the site says. Conversations are kept for thirty days to improve the answers, disclosed in the widget itself. The whole pipeline is now told on the overview page, with the original test bench linked from it as the place to see the widget exercised."
+      ]
+    },
     {
       "meta": "July 28–August 1, 2026",
       "title": "A house style, and a new front door",
