@@ -282,6 +282,25 @@ const statusColours: StatusSwatchData[] = [
   },
 ];
 
+/* --- AI gradient --- */
+const aiGradientColours: SwatchData[] = [
+  {
+    label: "Start", cssVar: "--color-ai-gradient-start",
+    dark: { primitive: "--purple--05--", hex: "#A86AE8", rgb: "168 / 106 / 232" },
+    light: { primitive: "--purple--06--", hex: "#9754DC", rgb: "151 / 84 / 220" },
+  },
+  {
+    label: "Mid", cssVar: "--color-ai-gradient-mid",
+    dark: { primitive: "--blue--05--", hex: "#5475D4", rgb: "84 / 117 / 212" },
+    light: { primitive: "--blue--06--", hex: "#345AC4", rgb: "52 / 90 / 196" },
+  },
+  {
+    label: "End", cssVar: "--color-ai-gradient-end",
+    dark: { primitive: "--teal--05--", hex: "#3CA5C6", rgb: "60 / 165 / 198" },
+    light: { primitive: "--teal--06--", hex: "#2C9AB9", rgb: "44 / 154 / 185" },
+  },
+];
+
 /* --- Chart / Contribution --- */
 const chartContributionColours: SwatchData[] = [
   {
@@ -475,6 +494,16 @@ export default function SemanticColoursPage() {
             <div className={styles.colourSwatches}>
               {statusColours.map((s) => (
                 <ColourSwatch key={s.label} label={s.label} cssVar={s.bgVar} dark={s.dark} light={s.light} theme={theme} status borderVar={s.borderVar} />
+              ))}
+            </div>
+          </section>
+
+          {/* AI gradient */}
+          <section className={styles.colourGroup}>
+            <SectionTitle title="AI gradient" />
+            <div className={styles.colourSwatches}>
+              {aiGradientColours.map((s) => (
+                <ColourSwatch key={s.label} label={s.label} cssVar={s.cssVar} dark={s.dark} light={s.light} theme={theme} />
               ))}
             </div>
           </section>

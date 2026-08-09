@@ -95,6 +95,17 @@ ChatMessage consumes only these four — never the container tokens directly. Te
 - Cobalt: `--color-core-accent-cobalt` #1E47B0
 - Violet: `--color-core-accent-violet` #9E47EF
 
+### AI Gradient (reserved for AI entry points and surfaces)
+The purple → blue → teal gradient is the system's "a model answers here" signal, the AI counterpart to the action teal: ordinary actions keep the flat `--color-action-primary-bg`, AI affordances carry the gradient, and neither is ever used for the other's job — or decoratively. Always used as gradient stops (AiButton's ring and glow are the reference), never as flat fills for ordinary chrome.
+
+| Stop | Light | Dark |
+|---|---|---|
+| `--color-ai-gradient-start` | `purple-06` #9754DC | `purple-05` #A86AE8 |
+| `--color-ai-gradient-mid` | `blue-06` #345AC4 | `blue-05` #5475D4 |
+| `--color-ai-gradient-end` | `teal-06` #2C9AB9 | `teal-05` #3CA5C6 |
+
+Dark mode runs one primitive step brighter so the gradient stays luminous on dark surfaces.
+
 ---
 
 ## Typography
@@ -643,7 +654,7 @@ Six states: `idle`, `thinking`, `working`, `waiting`, `done`, `error`. The three
 
 **`ds-ai-button`** — The AI entry point: icon and label on a transparent field, ringed by the AI gradient and backed by a soft glow of the same gradient. The ring is the system's signal for "a model answers here": ordinary actions keep the flat `--color-action-primary-bg` teal, and this treatment is reserved for AI surfaces so neither affordance dilutes the other. It is a pill (`--radius-full`, the button invariant) on Button's control scale — same padding tokens, same `--font-paragraph-em-*` face, `default` and `compact` sizes, icon on `--icon-size-md`/`sm`.
 
-The three stops are defined in both themes: `--color-ai-gradient-start` (purple-06 light / purple-05 dark), `--color-ai-gradient-mid` (blue-06 / blue-05), `--color-ai-gradient-end` (teal-06 / teal-05) — one step brighter in dark so the ring stays luminous. The ring paints a conic gradient of the three stops (start → mid → end → back to start, so the seam at 360° is invisible) across a `::before`, masked to a `--border-xs` band with an exclude-composited two-fill mask. Rotation animates a registered `@property` angle over a deliberately off-scale 7s (sanctioned in place with `ds-allow(motion)`: ambient signature motion, far slower than the interaction tokens); browsers without `@property` get a static ring. The glow is a `::after` of the same gradient blurred (a component-local `--ds-ai-button-glow` length, chosen by eye) at 0.3 opacity, rising to 0.55 on hover — a colour effect, not an elevation shadow, so depth stays token-owned. Focus is the standard `--color-action-primary-bg` ring; disabled drops to 0.4 opacity and pauses the rotation; `prefers-reduced-motion` stops the turning and keeps the ring and glow. Renders `<button>` or, with `href`, `<a>`.
+The three stops are the AI Gradient tokens (see **AI Gradient** in the Colors chapter for the role and its per-theme values). The ring paints a conic gradient of the three stops (start → mid → end → back to start, so the seam at 360° is invisible) across a `::before`, masked to a `--border-xs` band with an exclude-composited two-fill mask. Rotation animates a registered `@property` angle over a deliberately off-scale 7s (sanctioned in place with `ds-allow(motion)`: ambient signature motion, far slower than the interaction tokens); browsers without `@property` get a static ring. The glow is a `::after` of the same gradient blurred (a component-local `--ds-ai-button-glow` length, chosen by eye) at 0.3 opacity, rising to 0.55 on hover — a colour effect, not an elevation shadow, so depth stays token-owned. Focus is the standard `--color-action-primary-bg` ring; disabled drops to 0.4 opacity and pauses the rotation; `prefers-reduced-motion` stops the turning and keeps the ring and glow. Renders `<button>` or, with `href`, `<a>`.
 
 ### ChatHeader
 
