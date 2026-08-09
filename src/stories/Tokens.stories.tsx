@@ -334,6 +334,7 @@ export const Primitives: Story = {
         <RadiusToken name="MD" value="--primitive-radius-md" />
         <RadiusToken name="LG" value="--primitive-radius-lg" />
         <RadiusToken name="XL" value="--primitive-radius-xl" />
+        <RadiusToken name="Composer" value="--primitive-radius-composer" />
         <RadiusToken name="XXL" value="--primitive-radius-xxl" />
         <RadiusToken name="Full" value="--primitive-radius-full" />
       </TokenSection>
@@ -744,6 +745,7 @@ export const SemanticSpacing: Story = {
         <RadiusToken name="MD" value="--radius-md" />
         <RadiusToken name="LG" value="--radius-lg" />
         <RadiusToken name="XL" value="--radius-xl" />
+        <RadiusToken name="Composer" value="--radius-composer" />
         <RadiusToken name="XXL" value="--radius-xxl" />
         <RadiusToken name="Full" value="--radius-full" />
       </TokenSection>

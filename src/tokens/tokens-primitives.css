@@ -136,6 +136,11 @@
   --primitive-radius-xl: 24px;
   --primitive-radius-xxl: 48px;
   --primitive-radius-full: 999px;
+  /* The composer shell's corner: concentric with the 40px send button it
+     wraps (half the button + the padding-sm ring + the border width).
+     Held as a resolved constant so consumers re-theme it like any other
+     radius step. */
+  --primitive-radius-composer: 29px;
 
   /* Padding */
   --primitive-padding-xxxs: 2px;

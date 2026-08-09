@@ -13,12 +13,11 @@
   --ds-composer-send-size: 40px;
   background-color: var(--color-input-bg-primary);
   border: var(--border-xs) solid var(--color-input-border-primary);
-  /* Corner concentric with the send button it wraps: half the button,
-     plus the action bar's padding-sm ring, plus the border width
-     (border-radius applies to the border's outer edge). */
-  border-radius: calc(
-    var(--ds-composer-send-size) / 2 + var(--padding-sm) + var(--border-xs)
-  );
+  /* The token's default is concentric with the send button: half the
+     button, plus the action bar's padding-sm ring, plus the border width
+     (border-radius applies to the border's outer edge). A token rather
+     than the calc so radius re-theming reaches this corner too. */
+  border-radius: var(--radius-composer);
   box-shadow: var(--shadow-floating);
   transition: border-color var(--motion-duration-fast) var(--motion-ease-standard);
   /* The whole shell is the input affordance — clicking anywhere that is

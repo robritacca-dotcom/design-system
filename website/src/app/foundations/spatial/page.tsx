@@ -44,6 +44,7 @@ const radiusTokens: SpacingToken[] = [
   { label: "MD", value: "12px", px: 12, variant: "radius" },
   { label: "LG", value: "16px", px: 16, variant: "radius" },
   { label: "XL", value: "24px", px: 24, variant: "radius" },
+  { label: "Composer", value: "29px", px: 29, variant: "radius" },
   { label: "XXL", value: "48px", px: 48, variant: "radius" },
   { label: "Full", value: "999px", px: 999, variant: "radius" },
 ];

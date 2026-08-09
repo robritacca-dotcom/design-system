@@ -186,6 +186,8 @@ const RADIUS_STEPS: ReadonlyArray<[step: string, px: number]> = [
   ["lg", 16],
   ["xl", 24],
   ["xxl", 48],
+  // The composer shell's concentric corner (see tokens-primitives.css).
+  ["composer", 29],
 ];
 
 /**

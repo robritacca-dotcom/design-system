@@ -144,6 +144,7 @@
   --radius-xl: var(--primitive-radius-xl);
   --radius-xxl: var(--primitive-radius-xxl);
   --radius-full: var(--primitive-radius-full);
+  --radius-composer: var(--primitive-radius-composer);
 
   --padding-xxxs: var(--primitive-padding-xxxs);
   --padding-xxs: var(--primitive-padding-xxs);
