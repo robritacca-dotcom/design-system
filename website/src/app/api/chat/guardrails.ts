@@ -162,10 +162,15 @@ export async function checkGuardrails(request: Request): Promise<GuardrailVerdic
     ]);
 
     if ((messages ?? 0) >= DAILY_MESSAGE_CAP || (spendTenths ?? 0) >= DAILY_SPEND_CAP_TENTHS) {
+      // The degraded response, not a dead end: a breaker most likely trips on
+      // the site's busiest-ever day, so the fallback still routes people.
       return {
         allowed: false,
         notice:
-          "This chat has hit its budget for today and is paused until midnight UTC. The contact page at /contact still works, and the case studies cover most of what people ask.",
+          "This chat has hit its budget for today and is paused until midnight UTC. " +
+          "The site itself answers most of what people ask: the case studies are at /work, " +
+          "Rob's background and career history are at /about, and his email and profiles " +
+          "are at /contact.",
       };
     }
 
@@ -207,5 +212,48 @@ export async function recordSpend(usage: TokenUsage): Promise<void> {
     if (total === tenths) await redis.expire(spendKey(), COUNTER_TTL_SECONDS);
   } catch (error) {
     console.error("[chat] recording spend failed:", error);
+  }
+}
+
+/* ============================================
+   Exchange log
+
+   One line per exchange: what was asked, what came back, and the numbers
+   (tokens, cache, latency). This is the ground truth the eval's golden set
+   grows from — questions not logged in week one are gone — and the site
+   discloses it: 30-day retention, stated in the widget's disclaimer and on
+   /contact. The visitor field is the salted hash above, never an address.
+   ============================================ */
+
+export interface ExchangeLog {
+  question: string;
+  answer: string;
+  path: string | null;
+  usage?: TokenUsage;
+  /** Milliseconds from request to the stream closing. */
+  latencyMs: number;
+  /** Milliseconds to the first response text — what the visitor feels. */
+  firstTextMs: number | null;
+  /** True when the answer is a guardrail notice, not a model response. */
+  notice: boolean;
+  visitor: string;
+}
+
+const LOG_TTL_SECONDS = 60 * 60 * 24 * 30;
+const logKey = () => `chat:log:${dayKey()}`;
+
+/** Appends one exchange to the day's log. Never throws; a lost log line is
+    worth less than a failed response. */
+export async function recordExchange(entry: ExchangeLog): Promise<void> {
+  const redis = getRedis();
+  if (!redis) return;
+
+  try {
+    const line = JSON.stringify({ at: new Date().toISOString(), ...entry });
+    const length = await redis.rpush(logKey(), line);
+    // The whole day's list expires together, 30 days after its first line.
+    if (length === 1) await redis.expire(logKey(), LOG_TTL_SECONDS);
+  } catch (error) {
+    console.error("[chat] recording exchange failed:", error);
   }
 }

@@ -1,0 +1,294 @@
+/* ============================================
+   THE WIDGET INTERNALS — header / thread / composer.
+   Hosted by the bench's resizable stage widget or the site's docked panel;
+   fills whichever container it is given. Compact hosts (phone-width panels)
+   set data-compact for the narrower insets.
+   ============================================ */
+
+.chat {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+/* The header brand: the RR mark beside the chat name. A node title renders
+   as-is, so the name restates the header's title treatment. */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  min-width: 0;
+}
+
+.brand img {
+  flex-shrink: 0;
+}
+
+.brandName {
+  font-family: var(--font-title-body-family);
+  font-size: var(--font-title-body-size);
+  font-weight: var(--font-title-body-weight);
+  line-height: var(--font-title-body-line-height);
+  color: var(--color-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* The top region: header + thread. Zero basis so welcome mode splits the
+   height exactly with the bottom region, centring the composer. */
+.topRegion {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* The body hosts the thread, with the welcome greeting overlaid while the
+   conversation is empty. */
+.body {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* The thread owns scrolling, gutters, fades, and send anchoring. However
+   wide the container gets, the conversation column caps at 768px and
+   centres; the header above is the one row that spans the full width. */
+.thread {
+  flex: 1;
+  --ds-chat-thread-content-max-width: 768px;
+  /* Match the composer and header inset, so bubbles, composer edge, and
+     the header controls all share one right rail. */
+  --ds-chat-thread-padding-inline: var(--padding-md);
+}
+
+.chat[data-compact] .thread {
+  --ds-chat-thread-padding-inline: var(--padding-sm-md);
+}
+
+/* ============================================
+   WELCOME — the new-chat empty state
+   ============================================ */
+
+.welcomeTop {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+  max-width: 768px;
+  margin-inline: auto;
+  /* The block-end padding is the gap between the greeting and the composer;
+     block-start is inert, since the overlay bottom-aligns its content. */
+  padding: var(--padding-lg) var(--padding-md) var(--gap-xl);
+  pointer-events: none;
+}
+
+.chat[data-compact] .welcomeTop {
+  padding-inline: var(--padding-sm-md);
+}
+
+.welcomeGreeting {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xxs);
+}
+
+/* One heading level below the ask line, so the pair reads dynamically.
+   The action-text token is a deliberate flourish here: the greeting is the
+   one place the widget spends the primary colour outside a control. */
+.welcomeHello {
+  margin: 0;
+  /* The greeting is read from the visitor's clock after mount, so this line
+     is empty for the first paint. An empty block has no line box at all —
+     reserve the height, or the ask line below jumps up a row and back. */
+  min-height: var(--font-heading-3-line-height);
+  font-family: var(--font-heading-3-family);
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  letter-spacing: var(--font-heading-3-letter-spacing);
+  color: var(--color-action-primary-text-tertiary);
+}
+
+.welcomeAsk {
+  margin: 0;
+  font-family: var(--font-heading-2-family);
+  font-size: var(--font-heading-2-size);
+  font-weight: var(--font-heading-2-weight);
+  line-height: var(--font-heading-2-line-height);
+  letter-spacing: var(--font-heading-2-letter-spacing);
+  color: var(--color-text-secondary);
+}
+
+/* The bottom region: starters at its top, disclaimer pinned to its
+   bottom. Grown while the chat is empty (centring the composer against
+   the zero-basis top region), collapsing to the disclaimer's height on
+   the first utterance. Basis stays 0 in both states so only flex-grow
+   ever animates — the flow-down is one continuous glide with no layout
+   mode changing underneath it. Reduced motion zeroes it via the token. */
+.bottomRegion {
+  display: flex;
+  flex-direction: column;
+  flex: 0 1 0;
+  transition: flex-grow var(--motion-duration-slower) var(--motion-ease-entrance);
+}
+
+.bottomRegionWelcome {
+  flex-grow: 1;
+}
+
+.startersColumn {
+  width: 100%;
+  max-width: 768px;
+  margin-inline: auto;
+  padding: var(--gap-xl) var(--padding-md) 0;
+}
+
+.chat[data-compact] .startersColumn {
+  padding-inline: var(--padding-sm-md);
+}
+
+/* Locked to the bottom of the widget, in every state. */
+.disclaimerRow {
+  margin-top: auto;
+  padding: var(--gap-xs) var(--padding-md) var(--padding-sm);
+}
+
+.responseStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-lg);
+}
+
+/* Scroll container for markdown tables. Without it a table wider than the
+   panel is squeezed until headings wrap one character per line. min-content
+   holds the table at its natural width so the scroll has something to do. */
+.tableScroll {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.tableScroll > table {
+  min-width: min-content;
+}
+
+/* No divider — the composer floats free of the transcript, like the
+   reference. The thread's bottom padding provides the separation above;
+   the disclaimer row provides it below. */
+.footer {
+  display: flex;
+  flex-direction: column;
+  padding: 0 var(--padding-md);
+}
+
+.chat[data-compact] .footer {
+  padding-inline: var(--padding-sm-md);
+}
+
+/* The composer shares the conversation column's cap and centre. */
+.composerColumn {
+  width: 100%;
+  max-width: 768px;
+  margin-inline: auto;
+}
+
+/* One quiet line, centred with the composer column. */
+.disclaimer {
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  color: var(--color-text-tertiary);
+}
+
+/* ============================================
+   THE SITE PANEL — SiteChatMount's chrome.
+   A floating card inset from the viewport edges, docked above the threshold
+   (content slides over via the body inset that html[data-chat="docked"]
+   applies in globals.css); an overlay with a scrim below it; a blurred full
+   takeover in fullscreen view. On phones it fills the viewport.
+   ============================================ */
+
+.panel {
+  position: fixed;
+  top: var(--layout-chat-inset);
+  right: var(--layout-chat-inset);
+  height: calc(100dvh - var(--layout-chat-inset) * 2);
+  width: var(--layout-chat-width);
+  max-width: calc(100vw - var(--layout-chat-inset) * 2);
+  display: flex;
+  flex-direction: column;
+  /* Deliberately translucent in both themes (light's container token is
+     opaque), so the page's colours reach the glass; the blur is what keeps
+     the transcript readable over them. */
+  background: color-mix(in srgb, var(--color-bg-container-primary) 82%, transparent);
+  border: var(--border-xs) solid var(--color-bg-container-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-floating);
+  overflow: hidden;
+  backdrop-filter: blur(24px);
+  z-index: 1100;
+}
+
+/* Fullscreen view: a true viewport takeover. The stronger blur is what
+   keeps the transcript readable while the page's colours still shine
+   through the translucent surface. */
+.panelFull {
+  top: 0;
+  right: 0;
+  height: 100dvh;
+  width: 100vw;
+  max-width: 100vw;
+  border: none;
+  border-radius: 0;
+  backdrop-filter: blur(40px);
+}
+
+/* Below the dock threshold the panel overlays the page behind a scrim. */
+.scrim {
+  position: fixed;
+  inset: 0;
+  background: var(--color-scrim);
+  z-index: 1090;
+}
+
+@media (max-width: 719px) {
+  .panel {
+    top: 0;
+    right: 0;
+    height: 100dvh;
+    width: 100vw;
+    max-width: 100vw;
+    border: none;
+    border-radius: 0;
+  }
+}
+
+/* ============================================
+   THE FAB — the chat's persistent entry point,
+   bottom right on every page. Hidden while the
+   panel is open; the panel's close returns here.
+   ============================================ */
+
+.fab {
+  position: fixed;
+  right: var(--layout-chat-inset);
+  bottom: var(--layout-chat-inset);
+  z-index: 1080;
+  /* The glassy backing keeps the transparent-field button legible over
+     whatever content scrolls beneath it. */
+  border-radius: var(--radius-full);
+  background: var(--color-bg-container-primary);
+  backdrop-filter: blur(16px);
+  box-shadow: var(--shadow-floating);
+}

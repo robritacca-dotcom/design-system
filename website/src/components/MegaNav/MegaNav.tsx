@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
+import { lockBodyScroll, unlockBodyScroll } from "@/lib/scroll-lock";
 import { NavList, type NavListItem } from "@robr0/design-system/components/NavList/NavList";
 import {
   componentsSidebarLinks,
@@ -207,15 +208,17 @@ export default function MegaNav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Lock body scroll while mobile menu is open
+  // Lock body scroll while mobile menu is open. The counted lock is shared
+  // with the chat panel: whichever overlay closes first must not unlock the
+  // page while the other still covers it.
   useEffect(() => {
     if (mobileOpen) {
-      document.body.style.overflow = "hidden";
+      lockBodyScroll("mega-nav");
     } else {
-      document.body.style.overflow = "";
+      unlockBodyScroll("mega-nav");
     }
     return () => {
-      document.body.style.overflow = "";
+      unlockBodyScroll("mega-nav");
     };
   }, [mobileOpen]);
 

@@ -32,6 +32,13 @@ html.theme-ready {
   --layout-sidebar-width: 291px;
   --layout-rail-width: 320px;
   --layout-column-gap: var(--gap-xxl);
+
+  /* The docked site-chat panel: its width, and the gap it floats off the
+     viewport edges (top, right, bottom — and the FAB's corner offset).
+     Only applied above 1440px, where a fourth column fits beside
+     sidebar + content + rail. */
+  --layout-chat-width: 420px;
+  --layout-chat-inset: 20px;
 }
 
 /* Mid breakpoint (960–1279px): narrow both rails and tighten the column
@@ -64,9 +71,22 @@ body {
   flex-direction: column;
   gap: var(--gap-xxxl);
   align-items: center;
-  transition: background-color var(--motion-duration-slow) var(--motion-ease-standard), color var(--motion-duration-slow) var(--motion-ease-standard);
+  transition: background-color var(--motion-duration-slow) var(--motion-ease-standard), color var(--motion-duration-slow) var(--motion-ease-standard), padding-right var(--motion-duration-base) var(--motion-ease-standard);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* The docked chat panel: SiteChatMount sets data-chat="docked" on <html>
+   while the panel is docked (open, wide viewport, panel view). The body is
+   itself the page container (a centred flex column), so right padding
+   slides every page's content over instead of letting the fixed panel
+   cover it — zero per-page layout changes. The fixed sticky header is not
+   inset by body padding; MegaNav.module.css offsets it under the same
+   attribute. Reduced motion zeroes the glide via the motion tokens. */
+html[data-chat="docked"] body {
+  padding-right: calc(
+    var(--primitive-padding-xl) + var(--layout-chat-width) + var(--layout-chat-inset)
+  );
 }
 
 a {

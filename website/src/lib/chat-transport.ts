@@ -42,6 +42,10 @@ export function createFetchTransport(endpoint = "/api/chat"): ChatTransport {
     messages: ChatTransportMessage[],
     signal: AbortSignal
   ): AsyncGenerator<ChatEvent> {
+    /* The page the visitor is on, read at send time so a conversation that
+       spans several pages sends each question with the page it was asked
+       from. The route treats it as untrusted input and sanitises it. */
+    const path = typeof window !== "undefined" ? window.location.pathname : undefined;
     // One controller for both stop conditions: the caller aborting, and the
     // watchdog firing. The fetch only ever sees this composed signal.
     const controller = new AbortController();
@@ -67,7 +71,7 @@ export function createFetchTransport(endpoint = "/api/chat"): ChatTransport {
         response = await fetch(endpoint, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ messages: messages.slice(-MAX_TURNS) }),
+          body: JSON.stringify({ messages: messages.slice(-MAX_TURNS), path }),
           signal: controller.signal,
         });
       } catch {

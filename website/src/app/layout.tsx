@@ -11,6 +11,9 @@ import "./globals.css";
 import { buildPersonJsonLd, buildWebsiteJsonLd, SITE_URL } from "@/lib/structuredData";
 import { getArticles } from "@/lib/substack";
 import { WritingNavProvider } from "@/components/MegaNav/WritingNavContext";
+import { SiteChatProvider } from "@/components/SiteChat/ChatContext";
+import { SiteChatMount } from "@/components/SiteChat/SiteChatMount";
+import { ClientNav } from "@/components/ClientNav/ClientNav";
 
 const GA_ID = "G-RCSFYMD51K";
 
@@ -169,7 +172,17 @@ export default async function RootLayout({
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
-        <WritingNavProvider items={writingNavItems}>{children}</WritingNavProvider>
+        {/* The chat provider lives here because the root layout never
+            remounts on client-side navigation: the transcript, a stream in
+            flight, and the draft all survive route changes. The panel mounts
+            after {children} so it sits last in the tab order. */}
+        <SiteChatProvider>
+          {/* Internal plain-anchor clicks become client-side navigations, so
+              the providers above (and an open chat) survive card links. */}
+          <ClientNav />
+          <WritingNavProvider items={writingNavItems}>{children}</WritingNavProvider>
+          <SiteChatMount />
+        </SiteChatProvider>
       </body>
     </html>
   );

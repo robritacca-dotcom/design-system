@@ -478,3 +478,15 @@
     right: var(--primitive-padding-md);
   }
 }
+
+/* The docked chat panel insets the page via body padding, but this header
+   is position: fixed and escapes it. The bar itself stays full-width so its
+   gradient runs continuously behind the floating panel (the panel sits
+   above it at z-index 1100) — only the header's CONTENT insets, by the same
+   amount as the body, so the nav controls stay clear of the panel and line
+   up with the shifted page below. */
+:global(html[data-chat="docked"]) .stickyHeader .headerInner {
+  padding-right: calc(
+    var(--primitive-padding-xl) + var(--layout-chat-width) + var(--layout-chat-inset)
+  );
+}

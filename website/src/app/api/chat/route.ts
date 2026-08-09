@@ -25,7 +25,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { siteCorpus } from "@/data/site-corpus.generated";
 import type { ChatEvent, ChatTransportMessage } from "@/hooks/useChat";
 
-import { checkGuardrails, recordSpend } from "./guardrails";
+import { checkGuardrails, recordExchange, recordSpend, visitorKey } from "./guardrails";
 import { PERSONA } from "./persona";
 
 export const runtime = "nodejs";
@@ -84,15 +84,32 @@ function ndjson(...events: ChatEvent[]): Response {
    ============================================ */
 
 type ParsedBody =
-  | { ok: true; messages: ChatTransportMessage[] }
+  | { ok: true; messages: ChatTransportMessage[]; path: string | null }
   | { ok: false; status: number; reason: string };
+
+/**
+ * The visitor's current page, sanitised as untrusted input. A crafted URL
+ * would otherwise be visitor-controlled text landing in a system block — a
+ * stronger position than the user turn the persona already defends. The
+ * charset does the guarding: lowercase slug segments only, no spaces, no
+ * uppercase, no punctuation beyond `/` and `-`, capped short. Nothing
+ * expressible in that alphabet can carry an instruction. A junk-but-clean
+ * path ("/nonexistent") is inert: the model is told a page name, not given
+ * a command. Anything else is dropped, never rejected — page context is a
+ * nicety, not a requirement.
+ */
+function sanitisePath(path: unknown): string | null {
+  if (typeof path !== "string") return null;
+  if (path === "/") return "/";
+  return /^\/[a-z0-9-]+(?:\/[a-z0-9-]+){0,3}$/.test(path) && path.length <= 64 ? path : null;
+}
 
 function parseBody(payload: unknown): ParsedBody {
   if (typeof payload !== "object" || payload === null) {
     return { ok: false, status: 400, reason: "body must be an object" };
   }
 
-  const { messages } = payload as { messages?: unknown };
+  const { messages, path } = payload as { messages?: unknown; path?: unknown };
   if (!Array.isArray(messages) || messages.length === 0) {
     return { ok: false, status: 400, reason: "messages must be a non-empty array" };
   }
@@ -124,7 +141,7 @@ function parseBody(payload: unknown): ParsedBody {
     return { ok: false, status: 400, reason: "no user message in the recent turns" };
   }
 
-  return { ok: true, messages: trimmed };
+  return { ok: true, messages: trimmed, path: sanitisePath(path) };
 }
 
 /* ============================================
@@ -218,8 +235,23 @@ export async function POST(request: Request): Promise<Response> {
     );
   }
 
+  const startedAt = Date.now();
+  const visitor = visitorKey(request);
+  const question = latest.content;
+
   const verdict = await checkGuardrails(request);
   if (!verdict.allowed) {
+    // Guardrail notices are logged too: how often the limits fire, and what
+    // people were asking when they did, is exactly what tunes the caps.
+    void recordExchange({
+      question,
+      answer: verdict.notice,
+      path: parsed.path,
+      latencyMs: Date.now() - startedAt,
+      firstTextMs: null,
+      notice: true,
+      visitor,
+    });
     return ndjson({ type: "notice", text: verdict.notice }, { type: "done" });
   }
 
@@ -243,6 +275,9 @@ export async function POST(request: Request): Promise<Response> {
       };
 
       let streamedText = false;
+      let answerText = "";
+      let noticeText: string | null = null;
+      let firstTextMs: number | null = null;
 
       try {
         // First line out. It proves the stream opened, which is what clears
@@ -262,13 +297,25 @@ export async function POST(request: Request): Promise<Response> {
             output_config: { effort: EFFORT },
             system: [
               { type: "text", text: PERSONA },
-              // The cache breakpoint sits on the last block, so persona and
+              // The cache breakpoint sits on this block, so persona and
               // corpus cache together. Nothing volatile may precede it.
               {
                 type: "text",
                 text: siteCorpus,
                 cache_control: { type: "ephemeral" },
               },
+              // Page context rides AFTER the breakpoint: it changes per
+              // request, and a trailing uncached block leaves the cached
+              // prefix untouched. The path is sanitised to a slug charset
+              // in parseBody — see sanitisePath for why that is the guard.
+              ...(parsed.path
+                ? [
+                    {
+                      type: "text" as const,
+                      text: `The visitor is currently on the page ${parsed.path} of the site.`,
+                    },
+                  ]
+                : []),
             ],
             messages: parsed.messages,
           },
@@ -283,7 +330,9 @@ export async function POST(request: Request): Promise<Response> {
             if (!streamedText) {
               reasoning.close();
               streamedText = true;
+              firstTextMs = Date.now() - startedAt;
             }
+            answerText += event.delta.text;
             send({ type: "delta", text: event.delta.text });
           } else if (event.delta.type === "thinking_delta") {
             reasoning.push(event.delta.thinking);
@@ -293,16 +342,26 @@ export async function POST(request: Request): Promise<Response> {
         const final = await stream.finalMessage();
 
         if (final.stop_reason === "refusal" && !streamedText) {
-          send({
-            type: "notice",
-            text: "That one is outside what this chat covers. Ask about Rob's work, the case studies, or the design system and it can help.",
-          });
+          noticeText =
+            "That one is outside what this chat covers. Ask about Rob's work, the case studies, or the design system and it can help.";
+          send({ type: "notice", text: noticeText });
         } else if (final.stop_reason === "max_tokens") {
           send({ type: "delta", text: "\n\n(Cut off at the length limit.)" });
         }
 
         // Real token counts, so the daily breaker tracks actual spend.
         await recordSpend(final.usage);
+        // The exchange log: the ground truth the golden set grows from.
+        await recordExchange({
+          question,
+          answer: noticeText ?? answerText,
+          path: parsed.path,
+          usage: final.usage,
+          latencyMs: Date.now() - startedAt,
+          firstTextMs,
+          notice: noticeText !== null,
+          visitor,
+        });
       } catch (error) {
         const aborted =
           upstream.signal.aborted ||

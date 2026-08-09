@@ -2,7 +2,11 @@
    (panel 880x956, mobile 390 - the narrow-phone viewport - full-screen
    content column 768), not layout tokens. The panel is deliberately wider
    than a docked widget: this page reviews the thing at the size it gets
-   used, and the grips are there for anyone who wants a narrower one. */
+   used, and the grips are there for anyone who wants a narrower one.
+
+   The widget internals (header, thread, composer) live in
+   @/components/SiteChat — the same component the site mounts as its docked
+   panel. This file styles only the stage around it. */
 
 /* Two columns: what this is on the left, the thing itself on the right.
    The copy and controls read as a column of their own, which keeps the
@@ -109,7 +113,7 @@
 }
 
 /* ============================================
-   THE WIDGET — header / thread / composer
+   THE STAGE WIDGET — the container SiteChat fills
    ============================================ */
 
 /* The frame shrink-wraps the widget and hosts the resize grips, which
@@ -144,11 +148,14 @@
   min-height: 480px;
   max-width: calc(100vw - var(--padding-lg) * 2);
   max-height: calc(100dvh - var(--stage-clearance));
-  background: var(--color-bg-container-primary);
+  /* Same glass treatment as the site panel: a deliberately translucent
+     surface over the page gradient, blurred into legibility. */
+  background: color-mix(in srgb, var(--color-bg-container-primary) 82%, transparent);
   border: var(--border-xs) solid var(--color-bg-container-border);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-floating);
   overflow: hidden;
+  backdrop-filter: blur(24px);
   transition:
     width var(--motion-duration-base) var(--motion-ease-standard),
     height var(--motion-duration-base) var(--motion-ease-standard);
@@ -172,6 +179,8 @@
   border: none;
   border-radius: 0;
   box-shadow: none;
+  /* Stronger in the takeover, where readability matters most. */
+  backdrop-filter: blur(40px);
   z-index: 10;
 }
 
@@ -179,207 +188,6 @@
 .widgetMobile {
   width: 390px;
   height: min(860px, calc(100dvh - var(--stage-clearance)));
-}
-
-/* The header brand: the RR mark beside the chat name. A node title renders
-   as-is, so the name restates the header's title treatment. */
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--gap-sm);
-  min-width: 0;
-}
-
-.brand img {
-  flex-shrink: 0;
-}
-
-.brandName {
-  font-family: var(--font-title-body-family);
-  font-size: var(--font-title-body-size);
-  font-weight: var(--font-title-body-weight);
-  line-height: var(--font-title-body-line-height);
-  color: var(--color-text-primary);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/* The top region: header + thread. Zero basis so welcome mode splits the
-   height exactly with the bottom region, centring the composer. */
-.topRegion {
-  flex: 1 1 0;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-/* The body hosts the thread, with the welcome greeting overlaid while the
-   conversation is empty. */
-.body {
-  flex: 1;
-  min-height: 0;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-
-/* The thread owns scrolling, gutters, fades, and send anchoring. However
-   wide the container gets, the conversation column caps at 768px and
-   centres; the header above is the one row that spans the full width. */
-.thread {
-  flex: 1;
-  --ds-chat-thread-content-max-width: 768px;
-  /* Match the composer and header inset, so bubbles, composer edge, and
-     the header controls all share one right rail. */
-  --ds-chat-thread-padding-inline: var(--padding-md);
-}
-
-/* ============================================
-   WELCOME — the new-chat empty state
-   The composer sits centred, greeting above it
-   and starters below; the first utterance flows
-   everything down to the docked position.
-   ============================================ */
-
-.welcomeTop {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  width: 100%;
-  max-width: 768px;
-  margin-inline: auto;
-  /* The block-end padding is the gap between the greeting and the composer;
-     block-start is inert, since the overlay bottom-aligns its content. */
-  padding: var(--padding-lg) var(--padding-md) var(--gap-xl);
-  pointer-events: none;
-}
-
-.welcomeGreeting {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-xxs);
-}
-
-/* One heading level below the ask line, so the pair reads dynamically.
-   The action-text token is a deliberate flourish here: the greeting is the
-   one place the widget spends the primary colour outside a control. */
-.welcomeHello {
-  margin: 0;
-  /* The greeting is read from the visitor's clock after mount, so this line
-     is empty for the first paint. An empty block has no line box at all —
-     reserve the height, or the ask line below jumps up a row and back. */
-  min-height: var(--font-heading-3-line-height);
-  font-family: var(--font-heading-3-family);
-  font-size: var(--font-heading-3-size);
-  font-weight: var(--font-heading-3-weight);
-  line-height: var(--font-heading-3-line-height);
-  letter-spacing: var(--font-heading-3-letter-spacing);
-  color: var(--color-action-primary-text-tertiary);
-}
-
-.welcomeAsk {
-  margin: 0;
-  font-family: var(--font-heading-2-family);
-  font-size: var(--font-heading-2-size);
-  font-weight: var(--font-heading-2-weight);
-  line-height: var(--font-heading-2-line-height);
-  letter-spacing: var(--font-heading-2-letter-spacing);
-  color: var(--color-text-secondary);
-}
-
-.widgetMobile .welcomeTop {
-  padding-inline: var(--padding-sm-md);
-}
-
-/* The bottom region: starters at its top, disclaimer pinned to its
-   bottom. Grown while the chat is empty (centring the composer against
-   the zero-basis top region), collapsing to the disclaimer's height on
-   the first utterance. Basis stays 0 in both states so only flex-grow
-   ever animates — the flow-down is one continuous glide with no layout
-   mode changing underneath it. Reduced motion zeroes it via the token. */
-.bottomRegion {
-  display: flex;
-  flex-direction: column;
-  flex: 0 1 0;
-  transition: flex-grow var(--motion-duration-slower) var(--motion-ease-entrance);
-}
-
-.bottomRegionWelcome {
-  flex-grow: 1;
-}
-
-.startersColumn {
-  width: 100%;
-  max-width: 768px;
-  margin-inline: auto;
-  padding: var(--gap-xl) var(--padding-md) 0;
-}
-
-.widgetMobile .startersColumn {
-  padding-inline: var(--padding-sm-md);
-}
-
-/* Locked to the bottom of the widget, in every state. */
-.disclaimerRow {
-  margin-top: auto;
-  padding: var(--gap-xs) var(--padding-md) var(--padding-sm);
-}
-
-.widgetMobile .thread {
-  --ds-chat-thread-padding-inline: var(--padding-sm-md);
-}
-
-.responseStack {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-lg);
-}
-
-/* Scroll container for markdown tables. Without it a table wider than the
-   panel is squeezed until headings wrap one character per line. min-content
-   holds the table at its natural width so the scroll has something to do. */
-.tableScroll {
-  overflow-x: auto;
-  max-width: 100%;
-}
-
-.tableScroll > table {
-  min-width: min-content;
-}
-
-/* No divider — the composer floats free of the transcript, like the
-   reference. The thread's bottom padding provides the separation above;
-   the disclaimer row provides it below. */
-.footer {
-  display: flex;
-  flex-direction: column;
-  padding: 0 var(--padding-md);
-}
-
-/* The composer shares the conversation column's cap and centre. */
-.composerColumn {
-  width: 100%;
-  max-width: 768px;
-  margin-inline: auto;
-}
-
-/* One quiet line, centred with the composer column. */
-.disclaimer {
-  margin: 0;
-  text-align: center;
-  font-family: var(--font-paragraph-sm-family);
-  font-size: var(--font-paragraph-sm-size);
-  font-weight: var(--font-paragraph-sm-weight);
-  line-height: var(--font-paragraph-sm-line-height);
-  letter-spacing: var(--font-paragraph-sm-letter-spacing);
-  color: var(--color-text-tertiary);
-}
-
-.widgetMobile .footer {
-  padding-inline: var(--padding-sm-md);
 }
 
 /* ============================================
