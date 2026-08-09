@@ -7,10 +7,11 @@
  * agreeing with a hostile premise to be agreeable, volunteering opinions about
  * named people or companies. Those are the rules below.
  *
- * Sent as the first system block, ahead of the site corpus. The cache
- * breakpoint sits on the corpus, so both blocks cache together and editing
- * this file invalidates the cache on the next request. That is fine: persona
- * edits are rare, and the first request after one pays a single cache write.
+ * Sent as the first system block, ahead of the easter eggs and the site
+ * corpus. The cache breakpoint sits on the corpus, so all three blocks cache
+ * together and editing this file invalidates the cache on the next request.
+ * That is fine: persona edits are rare, and the first request after one pays
+ * a single cache write.
  *
  * Changing conduct rules means re-running the adversarial pass in the plan's
  * Phase E. Prompt rules interact, so a fix in one section can loosen another.

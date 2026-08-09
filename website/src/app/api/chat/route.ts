@@ -25,6 +25,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { siteCorpus } from "@/data/site-corpus.generated";
 import type { ChatEvent, ChatTransportMessage } from "@/hooks/useChat";
 
+import { EASTER_EGGS } from "./easter-eggs";
 import { checkGuardrails, recordExchange, recordSpend, visitorKey } from "./guardrails";
 import { PERSONA } from "./persona";
 
@@ -297,8 +298,10 @@ export async function POST(request: Request): Promise<Response> {
             output_config: { effort: EFFORT },
             system: [
               { type: "text", text: PERSONA },
-              // The cache breakpoint sits on this block, so persona and
-              // corpus cache together. Nothing volatile may precede it.
+              { type: "text", text: EASTER_EGGS },
+              // The cache breakpoint sits on this block, so the persona and
+              // easter eggs cache together with the corpus. Nothing volatile
+              // may precede it.
               {
                 type: "text",
                 text: siteCorpus,
