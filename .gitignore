@@ -40,3 +40,6 @@ ga-analysis/loop-reports/
 # validator also fails the build on these so they get deleted, not shipped
 * [2-9]
 * [2-9].*
+
+# Chat eval transcripts — evidence, not source
+evals/chat/runs/

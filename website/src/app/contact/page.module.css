@@ -74,3 +74,15 @@
   width: 100%;
 }
 
+
+/* The chat's logging disclosure: one quiet paragraph after the methods. */
+.chatNote {
+  margin: 0;
+  max-width: 760px;
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  color: var(--color-text-tertiary);
+}

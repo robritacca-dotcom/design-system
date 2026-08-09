@@ -9,6 +9,13 @@
       "autoPort": true
     },
     {
+      "name": "website-eval",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "website", "run", "dev:eval"],
+      "port": 3000,
+      "autoPort": true
+    },
+    {
       "name": "website-prod",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["--prefix", "website", "run", "start", "--", "--port", "4310"],

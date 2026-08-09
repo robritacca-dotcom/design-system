@@ -11,7 +11,9 @@
  *
  *   2. No leaked details — the corpus is read aloud by a model to strangers,
  *      so a local path or an analytics id in it is worse than the same string
- *      sitting in a source file. Same patterns the skills validator uses.
+ *      sitting in a source file. Contact-shaped details (email addresses) are
+ *      allowlisted against corpus-facts() blocks: a page may deliberately
+ *      publish them, and nothing else may.
  *
  *   3. Budget — the corpus is billed on every chat message. Generation already
  *      refuses to write an over-budget corpus; this catches a file that was
@@ -22,7 +24,7 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { buildSiteCorpus, assembleCorpus, outputPath } from './generate-site-corpus.mjs';
+import { buildSiteCorpus, assembleCorpus, sanctionedFacts, outputPath } from './generate-site-corpus.mjs';
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
 const relative = (path) => path.replace(repoRoot + '/', '');
@@ -53,21 +55,31 @@ try {
 }
 
 // 2. Leaked details. The corpus text itself, not the generated wrapper.
+//
+// The email screen is an allowlist, not a blanket ban: a page can deliberately
+// publish an address through a corpus-facts() block (contact does), and only
+// those sanctioned values may appear. An address that arrived any other way —
+// pasted into prose, leaked through a new extraction path — still fails the
+// build. The boundary is "nothing reaches the model that a page did not
+// deliberately publish", enforced, not remembered.
 const leakPatterns = [
-  [/\/Users\/[A-Za-z]/, 'local absolute path (/Users/…)'],
-  [/property[\s_-]?(?:id)?\W{0,3}\d{6,}/i, 'GA property id'],
-  [/sk-ant-[A-Za-z0-9-]/, 'Anthropic API key'],
-  [/\b[A-Za-z0-9._%+-]+@(?!example\.)[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/, 'email address'],
+  [/\/Users\/[A-Za-z]/g, 'local absolute path (/Users/…)', false],
+  [/property[\s_-]?(?:id)?\W{0,3}\d{6,}/gi, 'GA property id', false],
+  [/sk-ant-[A-Za-z0-9-]/g, 'Anthropic API key', false],
+  [/\b[A-Za-z0-9._%+-]+@(?!example\.)[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/g, 'email address', true],
 ];
 
 try {
   const { corpus } = assembleCorpus();
-  for (const [pattern, what] of leakPatterns) {
-    const match = corpus.match(pattern);
-    if (match) {
+  const sanctioned = [...sanctionedFacts()];
+  for (const [pattern, what, sanctionable] of leakPatterns) {
+    for (const match of corpus.matchAll(pattern)) {
+      if (sanctionable && sanctioned.some((value) => value.includes(match[0]))) continue;
       fail(
-        `The site corpus contains a ${what} (${JSON.stringify(match[0].slice(0, 40))}).\n` +
-          `    It is sent to the model and can be repeated to any visitor — remove it at the source.`
+        `The site corpus contains a ${what} (${JSON.stringify(match[0].slice(0, 40))}) ` +
+          `that no corpus-facts() block sanctions.\n` +
+          `    It is sent to the model and can be repeated to any visitor — remove it at ` +
+          `the source, or publish it deliberately with a corpus-facts directive.`
       );
     }
   }

@@ -14,6 +14,7 @@ const companyLogo = (src: string, alt: string) => (
   <Image src={src} alt={alt} width={32} height={32} />
 );
 
+/* corpus-facts(Career timeline, employers and dates): the timeline renders this data on the page; without the directive only the bullet prose reaches the site chat and every role loses its employer and dates */
 const EXPERIENCE: TimelineCompany[] = [
   {
     name: "Gusto",

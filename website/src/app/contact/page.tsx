@@ -22,6 +22,7 @@ interface ContactMethod {
   copyOnClick?: boolean;
 }
 
+/* corpus-facts(Ways to reach Rob directly): published on this page, so the site chat may answer with them */
 const connectMethods: ContactMethod[] = [
   {
     label: "Email",
@@ -39,6 +40,7 @@ const connectMethods: ContactMethod[] = [
   },
 ];
 
+/* corpus-facts(Where to follow Rob): published on this page, so the site chat may answer with them */
 const followMethods: ContactMethod[] = [
   {
     label: "X",
@@ -156,6 +158,14 @@ function ContactContent() {
             ))}
           </div>
         </div>
+
+        {/* The site chat's logging disclosure — the widget's disclaimer says
+            the same thing in one line. Both change together. */}
+        <p className={`${styles.chatNote} animate-in animate-delay-3`}>
+          The site chat can answer most questions about my work directly. Its
+          conversations are kept for 30 days to improve the answers, tied to no
+          name or address, then deleted.
+        </p>
       </main>
 
       <Footer />

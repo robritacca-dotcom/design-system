@@ -32,6 +32,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import ts from 'typescript';
+import { siteRoutes, isDynamicSegment } from './site-routes.mjs';
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
 const websiteApp = join(repoRoot, 'website', 'src', 'app');
@@ -92,7 +93,7 @@ const ENTITIES = {
   '&apos;': "'", '&rsquo;': '’', '&lsquo;': '‘', '&quot;': '"',
   '&ldquo;': '“', '&rdquo;': '”', '&amp;': '&', '&nbsp;': ' ',
   '&mdash;': '—', '&ndash;': '–', '&hellip;': '…', '&times;': '×',
-  '&lt;': '<', '&gt;': '>',
+  '&lt;': '<', '&gt;': '>', '&rarr;': '→', '&larr;': '←', '&harr;': '↔',
 };
 
 const decode = (text) =>
@@ -209,6 +210,216 @@ const pageProse = (...segments) => {
 };
 
 /* ============================================================
+   Published facts — the corpus-facts directive
+
+   isProse() deliberately drops short data strings, which is exactly what
+   loses an email address or a job title stored in a data array. A page opts
+   its data in *in place*, with a comment above a module-scope declaration:
+
+     /* corpus-facts(Ways to reach Rob): published on /contact *​/
+     const connectMethods: ContactMethod[] = [ … ];
+
+   The initializer is serialised as a labelled fact block. The label becomes
+   the heading; the reason is for the repo reader. Same convention as the CSS
+   ds-allow() directive: the sanction lives next to the thing it sanctions.
+
+   These blocks are also the leak-screen allowlist: validate-site-corpus.mjs
+   permits a contact-shaped detail (an email address) in the corpus only when
+   it arrived through a corpus-facts block — i.e. only when a page deliberately
+   published it. A malformed directive fails generation outright.
+   ============================================================ */
+
+const FACTS_DIRECTIVE = /corpus-facts\(([^)]*)\)/;
+
+/** Property names that never carry visitor-facing facts. */
+const DROP_PROPS = new Set(['icon', 'logo', 'image', 'avatar', 'cover']);
+
+/** Asset references (`/logos/x.svg`) are chrome, not facts. */
+const isAssetPath = (text) => /^\/[\w./-]+\.[a-z0-9]{2,4}$/i.test(text);
+
+/** All human-readable text inside a JSX value, flattened to one line. */
+function jsxToText(node) {
+  const parts = [];
+  const walk = (current) => {
+    if (ts.isJsxText(current)) {
+      parts.push(decode(current.text));
+      return;
+    }
+    if (ts.isJsxAttributes(current) || ts.isJsxAttribute(current)) return;
+    if (ts.isStringLiteral(current) && ts.isJsxExpression(current.parent)) {
+      parts.push(decode(current.text));
+      return;
+    }
+    current.forEachChild(walk);
+  };
+  walk(node);
+  return parts.join('').replace(/\s+/g, ' ').trim();
+}
+
+/**
+ * Serialise an opted-in initializer to fact lines. Property names become
+ * labels; a `{label, value}` pair collapses to `Label: value`; arrays of
+ * strings become bullets; booleans stay (`present: true` is how the timeline
+ * marks a current role); asset paths and DROP_PROPS are chrome and dropped.
+ * Every emitted value string is collected for the leak-screen allowlist.
+ */
+function factsLines(node, values) {
+  const text = (n) => {
+    const t = decode(n.text).replace(/\s+/g, ' ').trim();
+    values.add(t);
+    return t;
+  };
+
+  if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) {
+    return [text(node)];
+  }
+  if (ts.isJsxElement(node) || ts.isJsxSelfClosingElement(node) || ts.isJsxFragment(node)) {
+    const t = jsxToText(node);
+    if (t) values.add(t);
+    return t ? [t] : [];
+  }
+  if (ts.isArrayLiteralExpression(node)) {
+    const lines = [];
+    for (const element of node.elements) {
+      if (ts.isObjectLiteralExpression(element) || ts.isArrayLiteralExpression(element)) {
+        if (lines.length > 0) lines.push('');
+        lines.push(...factsLines(element, values));
+      } else {
+        const inner = factsLines(element, values);
+        lines.push(...inner.map((line) => `- ${line}`));
+      }
+    }
+    return lines;
+  }
+  if (ts.isObjectLiteralExpression(node)) {
+    const props = node.properties.filter((p) => ts.isPropertyAssignment(p));
+    const named = new Map(
+      props.map((p) => [p.name && ts.isIdentifier(p.name) ? p.name.text : p.name?.getText(), p])
+    );
+    const lines = [];
+    const emitted = new Set();
+
+    // `{label, value}` is the common published-channel shape — collapse it.
+    const labelProp = named.get('label');
+    const valueProp = named.get('value');
+    if (
+      labelProp && valueProp &&
+      ts.isStringLiteral(labelProp.initializer) && ts.isStringLiteral(valueProp.initializer)
+    ) {
+      lines.push(`${text(labelProp.initializer)}: ${text(valueProp.initializer)}`);
+      emitted.add('label');
+      emitted.add('value');
+    }
+
+    for (const prop of props) {
+      const name = prop.name && ts.isIdentifier(prop.name) ? prop.name.text : prop.name?.getText();
+      if (!name || emitted.has(name) || DROP_PROPS.has(name)) continue;
+      const value = prop.initializer;
+      if (ts.isStringLiteral(value) || ts.isNoSubstitutionTemplateLiteral(value)) {
+        const t = decode(value.text).replace(/\s+/g, ' ').trim();
+        if (isAssetPath(t)) continue;
+        values.add(t);
+        lines.push(`${name}: ${t}`);
+      } else if (value.kind === ts.SyntaxKind.TrueKeyword) {
+        lines.push(`${name}: true`);
+      } else if (value.kind === ts.SyntaxKind.FalseKeyword) {
+        lines.push(`${name}: false`);
+      } else if (ts.isNumericLiteral(value)) {
+        lines.push(`${name}: ${value.text}`);
+      } else if (ts.isJsxElement(value) || ts.isJsxSelfClosingElement(value) || ts.isJsxFragment(value)) {
+        const t = jsxToText(value);
+        if (t) {
+          values.add(t);
+          lines.push(`${name}: ${t}`);
+        }
+      } else if (ts.isArrayLiteralExpression(value) || ts.isObjectLiteralExpression(value)) {
+        lines.push(...factsLines(value, values));
+      }
+      // Anything else (call expressions, identifiers) is code, not a fact.
+    }
+    return lines;
+  }
+  return [];
+}
+
+/**
+ * Fact blocks declared in one page file: `[{label, lines, values}]`.
+ * Throws when a `corpus-facts` marker exists that did not parse as a
+ * directive on a module-scope declaration — a sanction that silently fails
+ * open would defeat the point of having one.
+ */
+function extractFacts(source, fileName) {
+  const sourceFile = ts.createSourceFile(
+    fileName, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX
+  );
+
+  const blocks = [];
+  for (const statement of sourceFile.statements) {
+    if (!ts.isVariableStatement(statement)) continue;
+    const ranges = ts.getLeadingCommentRanges(source, statement.getFullStart()) ?? [];
+    for (const range of ranges) {
+      const comment = source.slice(range.pos, range.end);
+      const match = comment.match(FACTS_DIRECTIVE);
+      if (!match) continue;
+      const label = match[1].trim();
+      if (!label) {
+        throw new Error(`${fileName}: corpus-facts directive has an empty label`);
+      }
+      const declaration = statement.declarationList.declarations[0];
+      if (!declaration?.initializer) {
+        throw new Error(
+          `${fileName}: corpus-facts(${label}) sits on a declaration with no initializer`
+        );
+      }
+      const values = new Set();
+      const lines = factsLines(declaration.initializer, values);
+      if (lines.length === 0) {
+        throw new Error(`${fileName}: corpus-facts(${label}) produced no facts — check the shape`);
+      }
+      blocks.push({ label, lines, values });
+    }
+  }
+
+  const markers = source.split('corpus-facts(').length - 1;
+  if (markers !== blocks.length) {
+    throw new Error(
+      `${fileName}: ${markers} corpus-facts marker(s) but ${blocks.length} parsed — ` +
+        `a directive is malformed or not attached to a module-scope declaration`
+    );
+  }
+  return blocks;
+}
+
+/** Prose plus rendered fact blocks for one page. */
+function pageContent(...segments) {
+  const path = join(websiteApp, ...segments, 'page.tsx');
+  const source = read(path);
+  const facts = extractFacts(source, path);
+  const factsMarkdown = facts
+    .map(({ label, lines }) => `#### ${label}\n\n${lines.join('\n')}`)
+    .join('\n\n');
+  return { prose: extractProse(source, path), factsMarkdown, facts };
+}
+
+/**
+ * Every value string published through a corpus-facts block, across all
+ * static pages. This is the leak-screen allowlist: a detail may appear in
+ * the corpus only if a page deliberately published it.
+ */
+export function sanctionedFacts() {
+  const values = new Set();
+  for (const route of siteRoutes()) {
+    if (route.split('/').some(isDynamicSegment)) continue;
+    const segments = route === '/' ? [] : route.slice(1).split('/');
+    const path = join(websiteApp, ...segments, 'page.tsx');
+    for (const block of extractFacts(read(path), path)) {
+      for (const value of block.values) values.add(value);
+    }
+  }
+  return values;
+}
+
+/* ============================================================
    Navigation
 
    navigation.ts is TypeScript importing from the package workspace, so this
@@ -244,6 +455,20 @@ const linkLines = (links) =>
     .map((l) => `- ${l.label} (${l.href})${l.description ? `: ${l.description}` : ''}`)
     .join('\n');
 
+/**
+ * Component doc paths come from the registry, not from navigation.ts:
+ * componentsSidebarLinks is *derived* from the registry in code, so the
+ * textual parse above sees only its hardcoded overview entry — which once
+ * left the model a "complete" site map with one component path in it.
+ */
+function componentDocLines() {
+  const registry = JSON.parse(read(join(repoRoot, 'src', 'components', 'registry.json')));
+  return registry.components
+    .map((c) => `- ${c.label} (/components/${c.slug})`)
+    .sort((a, b) => a.localeCompare(b))
+    .join('\n');
+}
+
 /* ============================================================
    design.md
 
@@ -264,26 +489,18 @@ function condenseDesignSpec(source) {
     throw new Error('design.md: "## Components" is the final section — the trim needs updating');
   }
 
-  const components = source
-    .slice(componentsStart, after)
-    .split(/\n### /)
-    .slice(1)
-    .map((block) => {
-      const [heading, ...rest] = block.split('\n');
-      // First non-empty paragraph: the "**`ds-x`** — what it is" line.
-      const summary = rest.join('\n').split(/\n\s*\n/).map((p) => p.trim()).find(Boolean);
-      return summary ? `### ${heading.trim()}\n\n${summary}` : `### ${heading.trim()}`;
-    })
-    .join('\n\n');
-
+  // The per-component blocks are dropped entirely: the Component library
+  // section already carries every component's registry description and doc
+  // path, and each page goes deeper than a spec paragraph could. The freed
+  // budget is what pays for the essays.
   return [
     source.slice(0, componentsStart),
     '\n## Components\n',
-    '\nOne paragraph per component. Full token-level specs (variant tables, ',
-    'state rules, measurements) live in the design.md download at /blueprints/design ',
-    'and in Storybook.\n\n',
-    components,
-    '\n',
+    '\nComponent-level specs are deliberately not repeated here. The Component ',
+    'library section of this document lists every component with its ',
+    'description and documentation path (/components/<slug>); the full ',
+    'token-level specs live in the design.md download at /blueprints/design ',
+    'and in Storybook.\n',
     source.slice(after),
   ].join('');
 }
@@ -322,7 +539,8 @@ ${linkLines(navLinks(nav, 'foundationsSidebarLinks'))}
 
 ### Component documentation
 
-${linkLines(navLinks(nav, 'componentsSidebarLinks'))}
+- Components overview (/components)
+${componentDocLines()}
 
 ### Elsewhere
 
@@ -332,17 +550,113 @@ ${linkLines(navLinks(nav, 'componentsSidebarLinks'))}
 }
 
 function sectionAbout() {
+  const about = pageContent('about');
+  const contact = pageContent('contact');
+  const withFacts = ({ prose, factsMarkdown }) =>
+    factsMarkdown ? `${prose}\n\n${factsMarkdown}` : prose;
+
   return `## About Rob, and how to reach him
 
-Prose extracted from /about and /contact.
+Prose and published facts from /about and /contact.
 
 ### /about
 
-${pageProse('about')}
+${withFacts(about)}
 
 ### /contact
 
-${pageProse('contact')}`;
+${withFacts(contact)}`;
+}
+
+/* ============================================================
+   Site pages — every other route's prose, automatically
+
+   The page list is the filesystem (scripts/site-routes.mjs), the same
+   authority the sitemap uses, so a new page's prose reaches the corpus on
+   the next build with no registration step. Routes covered by a dedicated
+   section (About, Case studies, Blueprints…) are mapped to it; routes that
+   must NOT be included are excluded here with a written reason.
+   validate-chat-coverage.mjs holds this map honest against the disk.
+   ============================================================ */
+
+/** Routes whose content already lives in a dedicated section. */
+function coveredElsewhere() {
+  const map = new Map([
+    ['/about', 'About'],
+    ['/contact', 'About'],
+    ['/writing', 'Writing'],
+    // The essays themselves: full text from the committed registry.
+    ['/writing/[slug]', 'Writing'],
+    ['/components', 'Components'],
+    ['/blueprints/claude', 'Blueprints'],
+    ['/blueprints/design', 'Blueprints'],
+    ['/blueprints/content-design', 'Blueprints'],
+  ]);
+  const { caseStudies: studies } = JSON.parse(
+    read(join(repoRoot, 'website', 'src', 'data', 'case-studies.json'))
+  );
+  for (const study of studies) map.set(study.href, 'Case studies');
+  return map;
+}
+
+/**
+ * Routes deliberately absent from the corpus. Every entry needs a reason a
+ * stranger could audit; the coverage validator fails on stale entries.
+ */
+const EXCLUDED_ROUTES = new Map([
+  ['/rr-animated',
+    'a standalone animated-logo page with no informational prose'],
+  ['/design-system',
+    'the landing collage — its prose is demo filler for the live components, not information; the sections it links to are all covered'],
+]);
+
+/** Component showcase pages: excluded as a class, with one shared reason. */
+const COMPONENT_PAGE_EXCLUSION =
+  'component showcase pages are demo shells; each component’s facts are carried by the ' +
+  'Component library section (registry description + path) and the design.md spec paragraph';
+
+/** The routes whose prose the Site pages section includes, in sorted order. */
+function sitePageRoutes() {
+  const covered = coveredElsewhere();
+  return siteRoutes().filter((route) => {
+    if (route.split('/').some(isDynamicSegment)) return false;
+    if (covered.has(route)) return false;
+    if (EXCLUDED_ROUTES.has(route)) return false;
+    if (/^\/components\//.test(route)) return false;
+    return true;
+  });
+}
+
+/**
+ * Coverage declaration for validate-chat-coverage.mjs: every disk route is
+ * either covered by a section or excluded with a reason.
+ */
+export function routeCoverage() {
+  const covered = new Map(coveredElsewhere());
+  for (const route of sitePageRoutes()) covered.set(route, 'Site pages');
+  const excluded = new Map(EXCLUDED_ROUTES);
+  for (const route of siteRoutes()) {
+    if (/^\/components\//.test(route)) excluded.set(route, COMPONENT_PAGE_EXCLUSION);
+  }
+  return { covered, excluded };
+}
+
+function sectionSitePages() {
+  const pages = sitePageRoutes()
+    .map((route) => {
+      const segments = route === '/' ? [] : route.slice(1).split('/');
+      const { prose, factsMarkdown } = pageContent(...segments);
+      const body = [prose, factsMarkdown].filter(Boolean).join('\n\n');
+      return body ? `### ${route === '/' ? '/ (home)' : route}\n\n${body}` : null;
+    })
+    .filter(Boolean)
+    .join('\n\n');
+
+  return `## Site pages
+
+Prose from the site's pages, by route. About, contact, the case studies and the blueprints have their own sections.
+
+${pages}`;
 }
 
 function sectionCaseStudies() {
@@ -369,16 +683,51 @@ ${summaries}
 ${full}`;
 }
 
+/**
+ * CLAUDE.md, minus the procedural body. A visitor asks *why* the system works
+ * the way it does — the registry principle, the token tiers, the shipping
+ * vocabulary — never how to run the seventh validator. The step-by-step
+ * checklists and file tables are dead weight in a conversation, and the
+ * Project Structure tree advertised the unlisted /robr0-gpt bench.
+ * Throws when an expected heading disappears, so a doc restructure fails
+ * loudly instead of silently shipping a mangled corpus.
+ */
+const CLAUDE_MD_DROPPED_SECTIONS = [
+  'Quick Start',
+  'Project Structure',
+  'How to Add a New Component',
+  'How to Add a New Token',
+  'Key Files',
+];
+
+function condenseClaudeMd(source) {
+  let condensed = source;
+  for (const heading of CLAUDE_MD_DROPPED_SECTIONS) {
+    const start = condensed.indexOf(`\n## ${heading}\n`);
+    if (start === -1) {
+      throw new Error(`CLAUDE.md: no "## ${heading}" section — the corpus trim needs updating`);
+    }
+    const after = condensed.indexOf('\n## ', start + 1);
+    condensed =
+      after === -1
+        ? condensed.slice(0, start)
+        : condensed.slice(0, start) + condensed.slice(after);
+  }
+  return condensed;
+}
+
 function sectionBlueprints() {
-  const claude = read(join(repoRoot, 'CLAUDE.md'));
+  const claude = condenseClaudeMd(read(join(repoRoot, 'CLAUDE.md')));
   const design = condenseDesignSpec(read(join(repoRoot, 'design.md')));
   const content = read(join(repoRoot, 'content-design.md'));
 
   return `## Blueprints: the specs this project is built from
 
-These three published specifications are how the site and design system get built. They are downloadable at /blueprints.
+These three published specifications are how the site and design system get built. Each is readable on its own page: /blueprints/claude, /blueprints/design, and /blueprints/content-design. There is no /blueprints index page, so always link the specific document.
 
 ### CLAUDE.md: how the repository is maintained
+
+Condensed to the architecture: the step-by-step contributor checklists live in the full document at /blueprints/claude.
 
 ${claude}
 
@@ -456,9 +805,34 @@ ${entries}`;
 }
 
 function sectionWriting() {
+  // The committed essays registry (website/src/data/essays.json), refreshed
+  // by scripts/sync-essays.mjs — the same committed-data pattern as the
+  // project journal, which is what keeps this generator deterministic while
+  // still carrying the full essay text. The essays are Rob's own words,
+  // published word for word on /writing, so both halves of the corpus
+  // boundary (public, authored by Rob) hold.
+  const { essays } = JSON.parse(
+    read(join(repoRoot, 'website', 'src', 'data', 'essays.json'))
+  );
+
+  const list = essays
+    .map((e) => `- ${e.title} (/writing/${e.slug}), ${e.date}`)
+    .join('\n');
+
+  const full = essays
+    .map(
+      (e) =>
+        `### ${e.title} (/writing/${e.slug})\n\n${e.date}${e.subtitle ? ` — ${e.subtitle}` : ''}\n\n${e.text}`
+    )
+    .join('\n\n');
+
   return `## Writing
 
-Rob publishes essays on design and AI. They are mirrored from Substack onto /writing, which is the current list. The essays themselves are not included here, so point people at /writing rather than describing or summarising individual pieces.`;
+Rob's essays on design and AI, mirrored from Substack onto /writing. The full text of each is below — quote and discuss them freely, and link the essay's page. Newest first.
+
+${list}
+
+${full}`;
 }
 
 /* ============================================================
@@ -468,6 +842,7 @@ Rob publishes essays on design and AI. They are mirrored from Substack onto /wri
 const SECTIONS = [
   ['Site map', sectionSiteMap],
   ['About', sectionAbout],
+  ['Site pages', sectionSitePages],
   ['Case studies', sectionCaseStudies],
   ['Blueprints', sectionBlueprints],
   ['Components', sectionComponents],
