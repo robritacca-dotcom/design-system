@@ -262,6 +262,43 @@
   z-index: 1090;
 }
 
+/* The widen grip — the bench page's left resize handle (robr0-gpt's
+   page.module.css), transplanted to the docked panel: same 20px grab zone
+   straddling the edge, same hover-revealed 4×48px pill. A fixed sibling of
+   the panel, positioned from the same variables, so it tracks the edge as
+   the drag rewrites --layout-chat-width. */
+.dockHandle {
+  position: fixed;
+  top: var(--layout-chat-inset);
+  height: calc(100dvh - var(--layout-chat-inset) * 2);
+  right: calc(var(--layout-chat-inset) + var(--layout-chat-width) - 10px);
+  width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: ew-resize;
+  touch-action: none;
+  z-index: 1101;
+}
+
+.dockHandle::after {
+  content: "";
+  width: 4px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  background: transparent;
+  transition: background var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.dockHandle:hover::after,
+.dockHandleResizing::after {
+  background: var(--color-text-tertiary);
+}
+
+.dockHandle:active::after {
+  background: var(--color-text-secondary);
+}
+
 @media (max-width: 719px) {
   .panel {
     top: 0;

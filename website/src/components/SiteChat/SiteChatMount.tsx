@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { usePathname } from "next/navigation";
 import { AiButton } from "@robr0/design-system/components/AiButton/AiButton";
 import { lockBodyScroll, unlockBodyScroll } from "@/lib/scroll-lock";
@@ -18,6 +18,14 @@ const DENIED_ROUTES = new Set(["/robr0-gpt", "/rr-animated"]);
    pages that already run sidebar + content + right rail keep a readable
    main column — see the build plan's geometry notes. */
 const DOCK_QUERY = "(min-width: 1440px)";
+
+/* The docked panel's drag-to-widen range. The minimum mirrors the
+   --layout-chat-width default in globals.css (the resting width); the
+   maximum is 30% wider. The drag writes the variable back onto <html>, so
+   the body inset and the MegaNav content inset — both derived from the same
+   variable — slide with the panel edge for free. */
+const PANEL_MIN_WIDTH = 420;
+const PANEL_MAX_WIDTH = 546;
 
 const subscribeDock = (onChange: () => void) => {
   const media = window.matchMedia(DOCK_QUERY);
@@ -78,6 +86,43 @@ export function SiteChatMount() {
   }, [open, returnFocusRef]);
 
   const panelRef = useRef<HTMLDivElement | null>(null);
+
+  /* Drag-to-widen, docked view only. Same pointer choreography as the
+     bench's grips (pointer capture, primary button, cancel-safe); the panel's
+     right edge is fixed, so the width delta is simply the inverted pointer
+     delta — no centred doubling. Mouse-driven review affordance like the
+     bench's; the panel stays fully usable at its resting width without it. */
+  const dragRef = useRef<{ startX: number; width: number } | null>(null);
+  const [resizing, setResizing] = useState(false);
+
+  const beginResize = (e: React.PointerEvent<HTMLDivElement>) => {
+    if ((e.pointerType === "mouse" && e.button !== 0) || dragRef.current) return;
+    const rect = panelRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    dragRef.current = { startX: e.clientX, width: rect.width };
+    e.currentTarget.setPointerCapture(e.pointerId);
+    setResizing(true);
+    /* Suppresses the body inset's glide and page text selection while the
+       pointer drives the width frame by frame (globals.css). */
+    document.documentElement.setAttribute("data-chat-resizing", "");
+  };
+
+  const moveResize = (e: React.PointerEvent<HTMLDivElement>) => {
+    const drag = dragRef.current;
+    if (!drag) return;
+    const width = Math.round(
+      Math.min(PANEL_MAX_WIDTH, Math.max(PANEL_MIN_WIDTH, drag.width + (drag.startX - e.clientX)))
+    );
+    /* The chosen width survives close/reopen for the session; everything
+       sized from the variable follows it. */
+    document.documentElement.style.setProperty("--layout-chat-width", `${width}px`);
+  };
+
+  const endResize = () => {
+    dragRef.current = null;
+    setResizing(false);
+    document.documentElement.removeAttribute("data-chat-resizing");
+  };
 
   if (denied) return null;
 
@@ -146,6 +191,19 @@ export function SiteChatMount() {
       >
         <SiteChat fullscreenEnabled compact={!isFull} />
       </div>
+      {/* The widen grip — the bench's left handle, docked form only. It
+          rides the panel's left edge as a fixed sibling (the panel clips its
+          own overflow, so a straddling child would be cut in half). */}
+      {docked && !isFull && (
+        <div
+          className={`${styles.dockHandle} ${resizing ? styles.dockHandleResizing : ""}`}
+          aria-hidden="true"
+          onPointerDown={beginResize}
+          onPointerMove={moveResize}
+          onPointerUp={endResize}
+          onPointerCancel={endResize}
+        />
+      )}
     </>
   );
 }

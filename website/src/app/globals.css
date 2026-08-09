@@ -36,7 +36,9 @@ html.theme-ready {
   /* The docked site-chat panel: its width, and the gap it floats off the
      viewport edges (top, right, bottom — and the FAB's corner offset).
      Only applied above 1440px, where a fourth column fits beside
-     sidebar + content + rail. */
+     sidebar + content + rail. The width is the resting minimum: the panel's
+     widen grip (SiteChatMount) rewrites it inline on <html>, capped 30%
+     wider — keep its PANEL_MIN/MAX constants in step with this value. */
   --layout-chat-width: 420px;
   --layout-chat-inset: 20px;
 }
@@ -87,6 +89,17 @@ html[data-chat="docked"] body {
   padding-right: calc(
     var(--primitive-padding-xl) + var(--layout-chat-width) + var(--layout-chat-inset)
   );
+}
+
+/* While the panel's widen grip is being dragged (SiteChatMount sets the
+   attribute): the pointer drives --layout-chat-width frame by frame, so the
+   body inset must follow instantly rather than glide after it, and the drag
+   crossing page text must not select it. */
+html[data-chat-resizing] {
+  user-select: none;
+}
+html[data-chat-resizing] body {
+  transition: none;
 }
 
 a {
