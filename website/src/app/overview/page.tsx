@@ -182,6 +182,46 @@ const PIPELINE: TimelineCompany[] = [
       },
     ],
   },
+  {
+    name: "robr0 GPT",
+    logo: pipelineLogo("/rr.svg", "robr0 GPT"),
+    roles: [
+      {
+        title: "Site-aware chat",
+        description: (
+          <>
+            The chat behind the floating button on every page. It answers from
+            the published site, and from established design knowledge, through
+            Claude Sonnet. The same widget runs on{" "}
+            <Link href="/robr0-gpt" className={styles.inlineLink}>the chat bench</Link>,
+            where it can be resized, re-themed, and exercised.
+          </>
+        ),
+        bullets: [
+          "The model's context is generated at build time from the site itself: every page's prose, the data registries, the three specs, and the full text of the essays, assembled into one document. A new page reaches the chat on the next build with no registration step",
+          "The boundary is enforced, not remembered: only published, self-authored content can enter the context. An email address gets in only when a page deliberately publishes it, and a validator fails the build on any other route in",
+          "Two lanes with different rules: facts about Rob and this system come only from the site content and are never invented, while general design knowledge (usability heuristics, accessibility standards, classic principles) is answered freely and kept visibly separate",
+          "The widget is composed from the design system's own ai components (ChatThread, Composer, Reasoning, AgentStatus, AiButton) and mounted once in the root layout, so an answer keeps streaming while you move between pages",
+        ],
+      },
+      {
+        title: "Guardrails and evals",
+        description:
+          "Answer quality and spend are held by the same kind of machinery as the rest of the system: build gates and measurements.",
+        bullets: [
+          "A golden set of questions runs through the real chat route, asserting that every path an answer cites exists and every fact a question needs is present; a coverage validator fails the build the moment the context loses a fact the eval depends on",
+          "Layered spend protection: per-visitor rate limits, a daily budget breaker that degrades to a routing answer instead of going dark, and a hard spend cap behind everything",
+          "Conversations are kept for 30 days to improve answers, tied to no name or address, then deleted; the widget discloses this in its footer",
+          <>
+            The{" "}
+            <Link href="/robr0-gpt" className={styles.inlineLink}>bench</Link>{" "}
+            doubles as the QA surface, with a simulated transport for checking
+            the streaming choreography without calling the model
+          </>,
+        ],
+      },
+    ],
+  },
 ];
 
 export default function AboutDsPage() {

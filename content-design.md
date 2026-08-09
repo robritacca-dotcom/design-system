@@ -63,6 +63,7 @@ Each surface has its own shape. The full standard for a surface lives in one pla
 | Commit bodies | None | 1–3 sentences of why | The diff shows what; the body explains why | `.claude/skills/ship/SKILL.md` |
 | Audit and loop reports | None | Findings in plain English | The reader is a designer, not an analyst | The invoking skill |
 | UI microcopy (labels, empty states, errors) | Imperative | A few words | Describe the next action, not the current state | Microcopy section below |
+| Site-chat answers (generated at runtime) | Third person about Rob | Short paragraphs; markdown headings only in walkthroughs | The assistant is not Rob; site facts and general design knowledge stay visibly separate | `website/src/app/api/chat/persona.ts` |
 
 ---
 
