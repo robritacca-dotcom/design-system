@@ -74,6 +74,7 @@ npm run lint            # ESLint
 npm run build-storybook # export static Storybook
 npm run test            # run every Storybook story as a render test (headless Chromium)
 npm run verify          # full local quality gate: lint + tests + the library, package, Storybook and website builds (mirrors CI)
+npm run eval:chat       # site-chat answer-quality eval against a running dev server (see evals/chat/README.md — costs real API calls, never in CI)
 ```
 
 ---
@@ -111,6 +112,7 @@ The old `merge-and-push` skill is retired because its name didn't say which of t
 ├── design.md                  # Design spec — source of truth for tokens, colors, typography
 ├── content-design.md          # Content style guide — source of truth for voice, register, and prose rules
 ├── scripts/                   # Generators + validators (the validate-registry chain), release tooling
+├── evals/chat/                # Site-chat eval: golden set, promptfoo config, README (runs on demand via `npm run eval:chat`, never in CI)
 ├── src/
 │   ├── index.ts               # GENERATED barrel — never hand-edit
 │   ├── charts.ts              # GENERATED recharts barrel — never hand-edit
