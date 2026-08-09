@@ -2,10 +2,11 @@
 
 ## What This Is
 
-A React component library + design system + documentation website. It has two interconnected parts:
+A React component library + design system + documentation website. It has three interconnected parts:
 
 1. **Component Library** (`/src`) — React components built with Vite + TypeScript, published to npm as **`@robr0/design-system`**. Each component has its own folder with implementation, scoped CSS, and Storybook stories. The website is an npm-workspace consumer: it depends on the package by name and imports through the same `exports` subpaths any consumer would (the in-repo exports point at `./src`, so it's live source — see **Registries** below for the generated barrel/exports surfaces). The official component list and count live in `src/components/registry.json`; never hardcode a count.
 2. **Documentation Website** (`/website`) — A separate Next.js app that showcases every component with live, interactive examples. Each component has its own page under `website/src/app/components/[component-name]/`.
+3. **AI Layer** (spans both) — the site answering questions about itself: the library's `ai` component category, the site-wide chat (`SiteChat` in the root layout, the `useChat` hook, the Claude-backed `/api/chat` route), the build-generated site corpus it reads (see the corpus rows and security boundary in **Registries** below), and the answer-quality eval in `evals/chat`.
 
 The design spec lives in [`design.md`](design.md) — read it before touching tokens, colors, or typography. The content style guide lives in [`content-design.md`](content-design.md) — read it before writing or editing any shipped prose (page copy, journal entries, descriptions, README, release notes, microcopy).
 
