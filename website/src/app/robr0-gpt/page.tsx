@@ -43,6 +43,24 @@ const applyTheme = (next: Theme) => {
   window.localStorage.setItem("theme", next);
 };
 
+/* The welcome greeting, by the visitor's own clock. Evening runs through
+   the small hours: at 2am "good evening" is closer to true than "good
+   morning", which belongs to a day that has not started yet.
+
+   Read as a store rather than during render, like the theme above: the page
+   is prerendered, so computing the hour on the server would bake the build
+   machine's clock into the HTML. The server snapshot is empty and the real
+   greeting lands on hydration; the line reserves its height in the CSS so
+   nothing moves when the words arrive. The clock needs no subscription —
+   nobody is watching a widget at the moment noon turns. */
+const greetingFor = (hour: number) => {
+  if (hour >= 5 && hour < 12) return "Good morning";
+  if (hour >= 12 && hour < 17) return "Good afternoon";
+  return "Good evening";
+};
+const subscribeClock = () => () => {};
+const readGreeting = () => greetingFor(new Date().getHours());
+
 /* The welcome screen's conversation starters. Tapping one sends it. */
 const STARTERS = [
   { id: "philosophy", label: "Describe Rob's design philosophy" },
@@ -81,10 +99,13 @@ function AssistantTurn({ turn, live }: { turn?: ChatTurn; live?: LiveResponse })
       <div className={styles.responseStack}>
         {/* While thinking the disclosure carries the live status; once
             streaming, it stays only if a trace actually accumulated —
-            an empty collapsed panel is noise. */}
+            an empty collapsed panel is noise. Until a trace point arrives
+            there is nothing behind the line either, so it renders as a
+            plain status: no chevron, nothing to open. */}
         {(thinking || tracePoints.length > 0) && (
           <Reasoning
             streaming={thinking}
+            summaryOnly={tracePoints.length === 0}
             duration={durationSeconds}
             summary={
               thinking && live ? (
@@ -123,6 +144,8 @@ export default function ChatWidgetTestPage() {
   const [draft, setDraft] = useState("");
 
   const theme = useSyncExternalStore(subscribeTheme, readTheme, () => "dark");
+
+  const greeting = useSyncExternalStore(subscribeClock, readGreeting, () => "");
 
   /* Manual resize via the edge handles. The stage centres the widget, so a
      drag moves both opposing edges — deltas are doubled to keep the grabbed
@@ -349,7 +372,7 @@ export default function ChatWidgetTestPage() {
           />
 
             <div className={styles.body}>
-              <ChatThread className={styles.thread}>
+              <ChatThread className={styles.thread} streaming={streaming}>
                 {/* One array, so the live turn and its committed form match
                     by key — split expressions are separate children slots
                     and React would remount across them. */}
@@ -373,8 +396,8 @@ export default function ChatWidgetTestPage() {
                 <div className={styles.welcomeTop}>
                   <div className={styles.welcomeGreeting}>
                     {/* Nameless by design: visitors are anonymous, so the
-                        widget cannot know who it is greeting. */}
-                    <p className={styles.welcomeHello}>Hello</p>
+                        widget cannot know who it is greeting — only when. */}
+                    <p className={styles.welcomeHello}>{greeting}</p>
                     <p className={styles.welcomeAsk}>Ask about Rob&rsquo;s work or the design system</p>
                   </div>
                 </div>

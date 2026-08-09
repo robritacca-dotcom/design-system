@@ -166,7 +166,9 @@
   width: 100%;
   max-width: 768px;
   margin-inline: auto;
-  padding: var(--padding-lg) var(--padding-md);
+  /* The block-end padding is the gap between the greeting and the composer;
+     block-start is inert, since the overlay bottom-aligns its content. */
+  padding: var(--padding-lg) var(--padding-md) var(--gap-xl);
   pointer-events: none;
 }
 
@@ -181,6 +183,10 @@
    one place the widget spends the primary colour outside a control. */
 .welcomeHello {
   margin: 0;
+  /* The greeting is read from the visitor's clock after mount, so this line
+     is empty for the first paint. An empty block has no line box at all —
+     reserve the height, or the ask line below jumps up a row and back. */
+  min-height: var(--font-heading-3-line-height);
   font-family: var(--font-heading-3-family);
   font-size: var(--font-heading-3-size);
   font-weight: var(--font-heading-3-weight);
@@ -224,7 +230,7 @@
   width: 100%;
   max-width: 768px;
   margin-inline: auto;
-  padding: var(--gap-lg) var(--padding-md) 0;
+  padding: var(--gap-xl) var(--padding-md) 0;
 }
 
 .widgetMobile .startersColumn {
