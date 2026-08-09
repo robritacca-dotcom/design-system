@@ -16,7 +16,7 @@ const meta = {
     disabled: { control: 'boolean' },
     size: {
       control: 'select',
-      options: ['default', 'compact'],
+      options: ['large', 'default', 'compact'],
     },
   },
   args: {
@@ -38,6 +38,14 @@ export const WithIcon: Story = {
   args: {
     label: 'Analytics',
     icon: 'monitoring',
+  },
+};
+
+export const Large: Story = {
+  args: {
+    label: 'Large',
+    icon: 'bolt',
+    size: 'large',
   },
 };
 
@@ -127,6 +135,14 @@ export const InputGroup: Story = {
 export const AllVariants: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
+        <Chip size="large" label="Label" />
+        <Chip size="large" label="With icon" icon="monitoring" />
+        <Chip size="large" label="Clickable" onClick={() => {}} />
+        <Chip size="large" label="Selected" icon="check" selected onClick={() => {}} />
+        <Chip size="large" label="Removable" onRemove={() => {}} />
+        <Chip size="large" label="Disabled" disabled onClick={() => {}} />
+      </div>
       <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
         <Chip label="Label" />
         <Chip label="With icon" icon="monitoring" />

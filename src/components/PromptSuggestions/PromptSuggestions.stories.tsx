@@ -13,6 +13,10 @@ const meta = {
     wrap: {
       control: 'boolean',
     },
+    size: {
+      control: 'inline-radio',
+      options: ['default', 'compact'],
+    },
     ariaLabel: {
       control: 'text',
     },
@@ -39,6 +43,18 @@ export const WithIcons: Story = {
       { id: 'summarise', label: 'Summarise a document', icon: 'description' },
       { id: 'translate', label: 'Translate a phrase', icon: 'translate' },
       { id: 'code', label: 'Write a script', icon: 'code' },
+    ],
+  },
+};
+
+/** The quieter row, for placements alongside a live conversation. */
+export const Compact: Story = {
+  args: {
+    size: 'compact',
+    suggestions: [
+      { id: 'shorter', label: 'Make it shorter' },
+      { id: 'formal', label: 'More formal' },
+      { id: 'example', label: 'Give an example' },
     ],
   },
 };

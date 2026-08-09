@@ -13,6 +13,22 @@
   padding-block: var(--padding-xxxs);
 }
 
+/* ============================================
+   SIZE
+   The pill scale itself is Chip's — the row only
+   picks which size to ask for. What belongs here
+   is the gutter between pills, which opens up a
+   step at the larger size.
+   ============================================ */
+
+.ds-prompt-suggestions--default {
+  gap: var(--gap-sm-md);
+}
+
+.ds-prompt-suggestions--compact {
+  /* Base gap applies. */
+}
+
 /* Edge fades — scroll variant only. A CSS mask, not a scroll listener:
    content near either edge fades out, hinting there is more to scroll.
    ds-allow(color): mask alpha keywords (black/transparent), not palette colours */

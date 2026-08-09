@@ -53,7 +53,14 @@ export default function ChipPage() {
           {/* Sizes */}
           <section className={styles.section}>
             <SectionTitle title="Sizes" />
+            <p className={styles.demoText}>
+              Large takes the default button&rsquo;s box and the body text
+              scale. Reach for it when the pill is a primary tap target, the
+              way a prompt suggestion is, rather than metadata about
+              something else.
+            </p>
             <div className={styles.variantRow}>
+              <Chip size="large" label="Large (40px)" />
               <Chip label="Default (32px)" />
               <Chip size="compact" label="Compact (24px)" />
             </div>

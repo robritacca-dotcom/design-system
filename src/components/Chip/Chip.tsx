@@ -11,8 +11,8 @@ export interface ChipProps {
   selected?: boolean;
   /** Disabled state */
   disabled?: boolean;
-  /** Chip size */
-  size?: 'default' | 'compact';
+  /** Chip size — `large` matches the default Button and paragraph body scale, for pills that are a primary tap target rather than metadata */
+  size?: 'large' | 'default' | 'compact';
   /** Click handler — presence makes the chip an interactive <button> */
   onClick?: () => void;
   /** Remove handler — renders a trailing close button (input-style chips) */

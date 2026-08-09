@@ -73,6 +73,34 @@ export default function PromptSuggestionsPage() {
             </div>
           </section>
 
+          {/* Size */}
+          <section className={styles.section}>
+            <SectionTitle title="Size" />
+            <p className={styles.demoText}>
+              The default row sits at the body-paragraph scale, so a
+              suggestion reads at the same weight as the message it will
+              become. Compact drops a step for rows that sit alongside a live
+              conversation, where the suggestions are a side offer rather
+              than the main event.
+            </p>
+            <div className={styles.stack}>
+              <PromptSuggestions
+                suggestions={[
+                  { id: "trip", label: "Plan a weekend trip" },
+                  { id: "recipe", label: "Suggest a dinner recipe" },
+                ]}
+              />
+              <PromptSuggestions
+                size="compact"
+                suggestions={[
+                  { id: "shorter", label: "Make it shorter" },
+                  { id: "formal", label: "More formal" },
+                  { id: "example", label: "Give an example" },
+                ]}
+              />
+            </div>
+          </section>
+
           {/* Overflow and fades */}
           <section className={styles.section}>
             <SectionTitle title="Overflow and fades" />
@@ -139,6 +167,7 @@ export default function PromptSuggestionsPage() {
                 days with light traffic.
               </ChatMessage>
               <PromptSuggestions
+                size="compact"
                 suggestions={[
                   { id: "rain", label: "Which is better in the rain?" },
                   { id: "cycle", label: "Add a cycling option" },

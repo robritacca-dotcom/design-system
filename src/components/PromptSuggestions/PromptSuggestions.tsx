@@ -24,6 +24,12 @@ type PromptSuggestionsOwnProps = {
    * has no overflow to hint at.
    */
   wrap?: boolean;
+  /**
+   * Row scale. `default` sits at the body-paragraph scale, so a suggestion
+   * reads at the same weight as the messages it will become; `compact` is
+   * the quieter row for placements alongside a live conversation.
+   */
+  size?: 'default' | 'compact';
   /** Accessible name for the list. */
   ariaLabel?: string;
   /** Additional CSS classes */
@@ -47,6 +53,7 @@ export const PromptSuggestions = React.forwardRef<HTMLDivElement, PromptSuggesti
       suggestions,
       onValueChange,
       wrap = false,
+      size = 'default',
       ariaLabel = 'Suggested prompts',
       className = '',
       ...rest
@@ -55,7 +62,17 @@ export const PromptSuggestions = React.forwardRef<HTMLDivElement, PromptSuggesti
   ) => {
     const baseClass = 'ds-prompt-suggestions';
 
-    const classes = [baseClass, wrap ? `${baseClass}--wrap` : '', className]
+    /* The row sits one step above Chip's own scale: a conversation starter is
+       something to tap, not metadata about something else. Chip still owns
+       the pill look — the row only picks which of its sizes to ask for. */
+    const chipSize = size === 'compact' ? 'default' : 'large';
+
+    const classes = [
+      baseClass,
+      `${baseClass}--${size}`,
+      wrap ? `${baseClass}--wrap` : '',
+      className,
+    ]
       .filter(Boolean)
       .join(' ');
 
@@ -66,6 +83,7 @@ export const PromptSuggestions = React.forwardRef<HTMLDivElement, PromptSuggesti
             <Chip
               label={suggestion.label}
               icon={suggestion.icon}
+              size={chipSize}
               onClick={() => onValueChange?.(suggestion.id)}
             />
           </div>

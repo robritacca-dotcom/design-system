@@ -33,6 +33,33 @@
 }
 
 /* ============================================
+   SIZE — LARGE (40px tall)
+   The default Button's footprint and the body
+   paragraph scale, so a chip used as a primary
+   tap target reads at the same weight as the
+   text around it.
+   ============================================ */
+
+.ds-chip--large {
+  padding: var(--padding-sm) var(--padding-lg); /* 8px 20px */
+  font-family: var(--font-paragraph-em-family);
+  font-size: var(--font-paragraph-em-size);
+  font-weight: var(--font-paragraph-em-weight);
+  line-height: var(--font-paragraph-em-line-height);
+  letter-spacing: var(--font-paragraph-em-letter-spacing);
+}
+
+.ds-chip--large .ds-chip__icon,
+.ds-chip--large .ds-chip__remove .material-symbols-rounded {
+  --icon-size: var(--icon-size-md);
+}
+
+.ds-chip--large .ds-chip__icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* ============================================
    SIZE — COMPACT (24px tall)
    ============================================ */
 
