@@ -94,6 +94,14 @@
   height: 0;
 }
 
+/* Only while the space is being released at the end of an exchange. Sizing
+   for an anchor stays instant — an animated grow would leave the anchored
+   turn chasing its own scroll. The reduced-motion guard zeroes the duration,
+   which lands the transcript in the same place without the glide. */
+.ds-chat-thread__spacer--releasing {
+  transition: height var(--motion-duration-slower) var(--motion-ease-standard);
+}
+
 /* Scroll-to-bottom — a sticky, zero-height slot pinned just above the
    bottom fade, so the control floats centred over the transcript right
    on top of the composer. */

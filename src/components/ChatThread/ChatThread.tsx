@@ -23,6 +23,15 @@ type ChatThreadOwnProps = {
    * edit-last-turn) neither re-anchors nor resizes the spacer.
    */
   anchor?: boolean;
+  /**
+   * Whether a response is in flight. While true the trailing spacer keeps
+   * the anchored turn's position reachable; when it flips false that space
+   * is released, so a finished conversation rests just above the composer
+   * instead of leaving a void under the last answer. Leave it unset and the
+   * space is never released — the thread cannot tell on its own that an
+   * exchange has ended.
+   */
+  streaming?: boolean;
   /** Accessible name for the scrollable conversation region. */
   ariaLabel?: string;
   /** Accessible name for the scroll-to-bottom control. */
@@ -57,6 +66,7 @@ export const ChatThread = React.forwardRef<HTMLDivElement, ChatThreadProps>(
   (
     {
       anchor = true,
+      streaming,
       ariaLabel = 'Conversation',
       jumpLabel = 'Scroll to the latest message',
       className = '',
@@ -97,9 +107,39 @@ export const ChatThread = React.forwardRef<HTMLDivElement, ChatThreadProps>(
       if (!container || !content || !spacer || top == null) return;
       const needed = Math.max(0, top + container.clientHeight - content.offsetHeight);
       if (exact ? Math.abs(needed - spacer.offsetHeight) > 1 : needed > spacer.offsetHeight + 1) {
+        // Sizing for an anchor is instant, always: a spacer still gliding
+        // from a previous release would drag the anchored turn with it.
+        spacer.classList.remove(`${baseClass}__spacer--releasing`);
         spacer.style.height = `${needed}px`;
       }
     };
+
+    /* The exchange is over, so the spacer has no position left to keep
+       reachable — and at full height it is just a void under the last
+       answer. Collapse it over a transition rather than all at once: the
+       scroll range shrinks frame by frame and the browser clamps the scroll
+       position to follow, so the transcript settles down into place instead
+       of snapping there the instant the answer lands. */
+    const release = () => {
+      const spacer = spacerRef.current;
+      if (!spacer) return;
+      // Drop the anchor first, or the clamp guard above spends the whole
+      // transition undoing it.
+      anchorTop.current = null;
+      if (spacer.offsetHeight === 0) return;
+      spacer.classList.add(`${baseClass}__spacer--releasing`);
+      spacer.style.height = '0px';
+    };
+
+    /* Only the transition into "not streaming" releases. Reacting to the
+       value itself would collapse the space a thread mounted with a restored
+       transcript just measured for itself. */
+    const wasStreaming = useRef(streaming);
+    useEffect(() => {
+      if (streaming === wasStreaming.current) return;
+      wasStreaming.current = streaming;
+      if (streaming === false) release();
+    });
 
     useEffect(() => {
       const container = scrollRef.current;
@@ -117,7 +157,26 @@ export const ChatThread = React.forwardRef<HTMLDivElement, ChatThreadProps>(
       };
       const observer = new ResizeObserver(() => {
         syncGutter();
+        /* Growing the spacer restores the scroll RANGE, but never in time:
+           the browser clamps the scroll POSITION during the same layout pass
+           that shrank the content, and a ResizeObserver only runs afterwards.
+           So the anchored turn sags by whatever height the content just gave
+           up — most visibly when the reasoning disclosure unmounts at the
+           thinking-to-streaming handoff, taking its row out from under a
+           pinned turn.
+
+           Put the position back as well. Only when the scroll was sitting at
+           the very bottom of the range, which is the signature of a clamp: a
+           reader who scrolled up on purpose is somewhere inside the range,
+           and is left where they are. */
+        const top = anchorTop.current;
+        const wasClamped =
+          top != null &&
+          container.scrollTop < top &&
+          container.scrollTop >= container.scrollHeight - container.clientHeight - 1;
         sizeSpacer(false);
+        // Instant: this is undoing a jump, not performing one.
+        if (top != null && wasClamped) container.scrollTo({ top, behavior: 'instant' });
         updateJump();
       });
       observer.observe(container);
