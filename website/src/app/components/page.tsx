@@ -718,7 +718,7 @@ export default function ComponentsPage() {
             {/* Prompt suggestions */}
             <TocCard href="/components/prompt-suggestions" title="Prompt suggestions">
               <PromptSuggestions
-                wrap
+                layout="wrap"
                 style={{ justifyContent: "center" }}
                 suggestions={[
                   { id: "ideas", label: "Brainstorm ideas", icon: "lightbulb" },

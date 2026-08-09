@@ -19,9 +19,16 @@ type PromptSuggestionsOwnProps = {
   /** Fires with the tapped suggestion's `id`. */
   onValueChange?: (id: string) => void;
   /**
-   * Wrap onto multiple lines instead of scrolling — for empty-state hero
-   * placements. The scrolling row keeps its edge fades; the wrapped one
-   * has no overflow to hint at.
+   * How the suggestions are arranged. `scroll` is one line that scrolls
+   * sideways behind edge fades. `wrap` runs them across as many lines as
+   * they need, for empty-state hero placements. `stack` gives each one its
+   * own line, for narrow columns where a wrapped row breaks unevenly and
+   * the ragged right edge reads as an accident.
+   */
+  layout?: 'scroll' | 'wrap' | 'stack';
+  /**
+   * Legacy alias for `layout="wrap"`; ignored when `layout` is set.
+   * @deprecated Use `layout` instead, which also covers `stack`.
    */
   wrap?: boolean;
   /**
@@ -52,6 +59,7 @@ export const PromptSuggestions = React.forwardRef<HTMLDivElement, PromptSuggesti
     {
       suggestions,
       onValueChange,
+      layout,
       wrap = false,
       size = 'default',
       ariaLabel = 'Suggested prompts',
@@ -62,17 +70,16 @@ export const PromptSuggestions = React.forwardRef<HTMLDivElement, PromptSuggesti
   ) => {
     const baseClass = 'ds-prompt-suggestions';
 
+    // `layout` wins outright, so a caller migrating off `wrap` never has to
+    // remove it in the same edit to get the arrangement they asked for.
+    const arrangement = layout ?? (wrap ? 'wrap' : 'scroll');
+
     /* The row sits one step above Chip's own scale: a conversation starter is
        something to tap, not metadata about something else. Chip still owns
        the pill look — the row only picks which of its sizes to ask for. */
     const chipSize = size === 'compact' ? 'default' : 'large';
 
-    const classes = [
-      baseClass,
-      `${baseClass}--${size}`,
-      wrap ? `${baseClass}--wrap` : '',
-      className,
-    ]
+    const classes = [baseClass, `${baseClass}--${size}`, `${baseClass}--${arrangement}`, className]
       .filter(Boolean)
       .join(' ');
 

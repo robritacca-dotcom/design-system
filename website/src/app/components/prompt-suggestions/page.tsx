@@ -41,9 +41,9 @@ export default function PromptSuggestionsPage() {
             <p className={styles.introBody}>
               Each suggestion is a clickable chip, so one component owns the
               pill look. The row scrolls sideways with pure CSS edge fades,
-              or wraps into a block for empty-state hero placements. Tapping
-              a suggestion fires a callback with its stable id, never its
-              display text.
+              wraps into a block for empty-state hero placements, or stacks
+              one per line for narrow columns. Tapping a suggestion fires a
+              callback with its stable id, never its display text.
             </p>
           </div>
 
@@ -136,7 +136,7 @@ export default function PromptSuggestionsPage() {
                 What would you like to do today?
               </p>
               <PromptSuggestions
-                wrap
+                layout="wrap"
                 style={{ justifyContent: "center" }}
                 suggestions={[
                   { id: "ideas", label: "Brainstorm ideas", icon: "lightbulb" },
@@ -144,6 +144,28 @@ export default function PromptSuggestionsPage() {
                   { id: "translate", label: "Translate a phrase", icon: "translate" },
                   { id: "trip", label: "Plan a weekend trip", icon: "flight" },
                   { id: "recipe", label: "Suggest a dinner recipe", icon: "restaurant" },
+                ]}
+              />
+            </div>
+          </section>
+
+          {/* Stacked */}
+          <section className={styles.section}>
+            <SectionTitle title="Stacked" />
+            <p className={styles.demoText}>
+              One suggestion per line. In a narrow column a wrapped row
+              breaks wherever the labels happen to run out of room, and the
+              ragged edge reads as an accident rather than a list. The pills
+              still hug their labels: stretching them to a shared width would
+              make a set of prompts look like a set of buttons.
+            </p>
+            <div className={styles.narrow}>
+              <PromptSuggestions
+                layout="stack"
+                suggestions={[
+                  { id: "philosophy", label: "Describe Rob's design philosophy" },
+                  { id: "recent", label: "What has Rob shipped recently?" },
+                  { id: "system", label: "How does this design system work?" },
                 ]}
               />
             </div>

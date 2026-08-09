@@ -10,8 +10,9 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    wrap: {
-      control: 'boolean',
+    layout: {
+      control: 'inline-radio',
+      options: ['scroll', 'wrap', 'stack'],
     },
     size: {
       control: 'inline-radio',
@@ -82,10 +83,33 @@ export const Overflowing: Story = {
   ],
 };
 
+/**
+ * One suggestion per line. For a narrow column, where a wrapped row breaks
+ * wherever the labels run out of room and the ragged edge reads as an
+ * accident rather than a list.
+ */
+export const Stacked: Story = {
+  args: {
+    layout: 'stack',
+    suggestions: [
+      { id: 'philosophy', label: "Describe Rob's design philosophy" },
+      { id: 'recent', label: 'What has Rob shipped recently?' },
+      { id: 'system', label: 'How does this design system work?' },
+    ],
+  },
+  decorators: [
+    (Story) => (
+      <div style={{ maxWidth: '420px' }}>
+        <Story />
+      </div>
+    ),
+  ],
+};
+
 /** The hero variant: wrapped and centred for an empty conversation. */
 export const Wrapped: Story = {
   args: {
-    wrap: true,
+    layout: 'wrap',
     suggestions: [
       { id: 'ideas', label: 'Brainstorm ideas', icon: 'lightbulb' },
       { id: 'summarise', label: 'Summarise a document', icon: 'description' },
