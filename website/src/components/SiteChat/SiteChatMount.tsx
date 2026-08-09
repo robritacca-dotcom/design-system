@@ -16,8 +16,10 @@ const DENIED_ROUTES = new Set(["/robr0-gpt", "/rr-animated"]);
 /* Above this the panel docks and the page slides over (the body inset in
    globals.css); below it the panel overlays behind a scrim. Chosen so the
    pages that already run sidebar + content + right rail keep a readable
-   main column — see the build plan's geometry notes. */
-const DOCK_QUERY = "(min-width: 1440px)";
+   main column — see the build plan's geometry notes. Exported for pages
+   that auto-open the panel (the playground), which must only do so when
+   the panel docks beside the page rather than covering it. */
+export const DOCK_QUERY = "(min-width: 1440px)";
 
 /* The docked panel's drag-to-widen range. The minimum mirrors the
    --layout-chat-width default in globals.css (the resting width); the

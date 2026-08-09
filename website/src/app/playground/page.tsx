@@ -23,12 +23,15 @@ import {
 import { THEME_PRESETS, type ThemePreset } from "./presets";
 import PlaygroundControls from "./PlaygroundControls";
 import ActionsSection from "./sections/ActionsSection";
+import AiSection from "./sections/AiSection";
 import FormsSection from "./sections/FormsSection";
 import NavigationSection from "./sections/NavigationSection";
 import DataDisplaySection from "./sections/DataDisplaySection";
 import ChartsSection from "./sections/ChartsSection";
 import OverlaysSection from "./sections/OverlaysSection";
 import FeedbackSection from "./sections/FeedbackSection";
+import { useSiteChat } from "@/components/SiteChat/ChatContext";
+import { DOCK_QUERY } from "@/components/SiteChat/SiteChatMount";
 
 /* Live theme tracking (same pattern as foundations/colour-mode) so
    theme-dependent presets re-derive their overrides when the site's
@@ -43,6 +46,16 @@ function subscribeToTheme(callback: () => void) {
 }
 
 export default function PlaygroundPage() {
+  /* The playground opens with the chat panel already docked: the chat is
+     part of the system being re-themed, so it belongs on screen. Only when
+     the panel docks beside the page, though — below the dock breakpoint the
+     panel is a modal overlay, and auto-opening one over the controls would
+     bury the page it is meant to demonstrate. */
+  const { setOpen: setChatOpen } = useSiteChat();
+  useEffect(() => {
+    if (window.matchMedia(DOCK_QUERY).matches) setChatOpen(true);
+  }, [setChatOpen]);
+
   /* ---------- levers ---------- */
   const [preset, setPreset] = useState("default");
   const [brand, setBrand] = useState(DEFAULT_BRAND);
@@ -262,6 +275,7 @@ export default function PlaygroundPage() {
               creates a stacking context per section, which would let later
               sections paint over an open Dropdown/Popover in an earlier one. */}
           <ActionsSection />
+          <AiSection />
           <FormsSection />
           <NavigationSection />
           <DataDisplaySection />
