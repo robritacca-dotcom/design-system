@@ -129,7 +129,7 @@ Every push and pull request runs a GitHub Actions pipeline ([`ci.yml`](.github/w
 npm run verify   # lint + library type-check + package build + story tests + Storybook build + website lint + build
 ```
 
-CI also guards against documentation drift: generated surfaces (this README's component count and list, the website's skills pages, the published CLAUDE.md, design.md, and content-design.md blueprints) are rebuilt from their source registries on every build, and CI fails if the committed copies are stale. The numbers on the site are never hand-written.
+CI also guards against documentation drift: generated surfaces (this README's component count and list, the website's skills pages, the published blueprint copies of the root markdown specs) are rebuilt from their source registries on every build, and CI fails if the committed copies are stale. The numbers on the site are never hand-written.
 
 ---
 

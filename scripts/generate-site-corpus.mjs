@@ -591,6 +591,7 @@ function coveredElsewhere() {
     ['/blueprints/claude', 'Blueprints'],
     ['/blueprints/design', 'Blueprints'],
     ['/blueprints/content-design', 'Blueprints'],
+    ['/blueprints/porting-guide', 'Blueprints'],
   ]);
   const { caseStudies: studies } = JSON.parse(
     read(join(repoRoot, 'website', 'src', 'data', 'case-studies.json'))
@@ -723,7 +724,11 @@ function sectionBlueprints() {
 
   return `## Blueprints: the specs this project is built from
 
-These three published specifications are how the site and design system get built. Each is readable on its own page: /blueprints/claude, /blueprints/design, and /blueprints/content-design. There is no /blueprints index page, so always link the specific document.
+These published markdown documents are how the site and design system get built. Each is readable on its own page: /blueprints/claude, /blueprints/design, /blueprints/content-design, and /blueprints/porting-guide. There is no /blueprints index page, so always link the specific document.
+
+### porting-guide.md: rebuilding the chat elsewhere
+
+Summarised here; the full document is at /blueprints/porting-guide, with a raw markdown download at /porting-guide.md. It describes this site's chat implementation abstractly enough for a coding agent to rebuild it natively inside a different design system: the four-layer decomposition (UI primitives, the transport-agnostic state machine, the backend, the eval), the numbered behavioural invariants a port must preserve, the recorded traps behind them, and a two-phase protocol where the agent delivers a viability report before writing any code.
 
 ### CLAUDE.md: how the repository is maintained
 

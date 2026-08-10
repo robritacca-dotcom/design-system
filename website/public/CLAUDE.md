@@ -27,7 +27,7 @@ Existing registries:
 | Essays | `website/src/data/essays.json` (full text, slug, title, date) — **synced** from the Substack feed by `scripts/sync-essays.mjs`, run deliberately after publishing (the build never touches the network); the site-chat corpus embeds the full text so the chat can quote and discuss the essays | — | `scripts/validate-essays.mjs` — structure only: complete fields, unique site-matching slugs, non-trivial HTML-free text; freshness is the sync script's job, never the build's |
 | Case studies | `website/src/data/case-studies.json` (curated order, newest first — `/work` maps over all of it, the home page features entry `[0]` and lists the next few) | `caseStudies` from `website/src/data/case-studies.ts` | `scripts/validate-case-studies.mjs` — every entry has a `/work/<slug>` page, unique href, complete fields, and existing logo/cover assets; every case-study folder is registered; the hand-curated `workSidebarLinks` in navigation.ts must list exactly the registered studies |
 | Semantic tokens | `src/tokens/registry.json` — **generated** from the semantic token CSS (`tokens-light.css` + `tokens-typography.css` + `tokens-motion.css`) by `scripts/generate-token-registry.mjs`, never hand-edited | `TOKEN_COUNT` + `TOKEN_COUNTS` (per category) from `src/tokens/registry.ts` | `scripts/validate-token-registry.mjs` — registry matches the CSS, light/dark colour parity; a token with an unknown prefix fails generation until its category is added deliberately |
-| Site chat corpus | `website/src/data/site-corpus.generated.ts` — **generated** from the published site (every page's prose via the TypeScript AST, `corpus-facts()` data blocks, the data registries above, and the three root specs, with CLAUDE.md and design.md condensed) by `scripts/generate-site-corpus.mjs`, never hand-edited. **Page coverage is automatic**: the page list is the filesystem (`scripts/site-routes.mjs`), so a new page's prose reaches the corpus on the next build; deliberate absences live in `EXCLUDED_ROUTES` with a written reason | `siteCorpus` + `siteCorpusApproxTokens` from the same file | `scripts/validate-site-corpus.mjs` — regenerates in memory and byte-compares, checks for leaked details (local paths, analytics ids, keys; email addresses are allowlisted against `corpus-facts()` blocks and otherwise fail), and re-checks the token budget. `scripts/validate-chat-coverage.mjs` — every golden-set fact in `evals/chat/golden-set.json` must be in the corpus, and every route must be covered by a section or excluded with a reason |
+| Site chat corpus | `website/src/data/site-corpus.generated.ts` — **generated** from the published site (every page's prose via the TypeScript AST, `corpus-facts()` data blocks, the data registries above, and the root specs — CLAUDE.md and design.md condensed, content-design.md in full, porting-guide.md as a short hand-written summary) by `scripts/generate-site-corpus.mjs`, never hand-edited. **Page coverage is automatic**: the page list is the filesystem (`scripts/site-routes.mjs`), so a new page's prose reaches the corpus on the next build; deliberate absences live in `EXCLUDED_ROUTES` with a written reason | `siteCorpus` + `siteCorpusApproxTokens` from the same file | `scripts/validate-site-corpus.mjs` — regenerates in memory and byte-compares, checks for leaked details (local paths, analytics ids, keys; email addresses are allowlisted against `corpus-facts()` blocks and otherwise fail), and re-checks the token budget. `scripts/validate-chat-coverage.mjs` — every golden-set fact in `evals/chat/golden-set.json` must be in the corpus, and every route must be covered by a section or excluded with a reason |
 
 The `/project-journal` page renders this data as the build-progression timeline; entries are agent-curated stories (one theme consolidating many commits — what/why/outcome prose), appended by the `site-updates` skill. The full chain (`npm run validate-registry`) runs before every root build via `prebuild`/`prestorybook`/`prebuild-storybook`. The website's own `prebuild` runs a deliberate subset — the website-relevant generators and validators, skipping the library-only ones (barrel, token references, CSS directives, package exports) — and `website/package.json` is authoritative for which; CI and the root builds always run the full chain.
 
@@ -53,7 +53,7 @@ When a new countable collection appears on the site (tokens, loops, case studies
 - **Examples in skills are fictional.** Example findings use made-up component names — a factual claim about a real component inside an example rots silently.
 - **No counts outside registries; no machine-local paths** — derive the repo root with `git rev-parse --show-toplevel`.
 - **Off-token CSS values are sanctioned at the site**, never in a skill: `/* ds-allow(<category>): <reason> */` (file-wide: `ds-allow-file`), categories owned by `scripts/validate-css-directives.mjs`. The token-audit skill reads directives; it maintains no list.
-- **References are build-checked**: `scripts/validate-doc-refs.mjs` fails the build when a skill or doc (this file, `README.md`, `design.md`, `content-design.md`) references a repo path, `npm run` script, or documented API symbol that doesn't exist.
+- **References are build-checked**: `scripts/validate-doc-refs.mjs` fails the build when a skill or doc (this file, `README.md`, `design.md`, `content-design.md`, `porting-guide.md`) references a repo path, `npm run` script, or documented API symbol that doesn't exist.
 
 ---
 
@@ -130,7 +130,7 @@ The old `merge-and-push` skill is retired because its name didn't say which of t
 │   └── fonts/                 # Material Symbols icon font (self-hosted); Nunito Sans is loaded via Google Fonts
 ├── .storybook/                # Storybook config (Storybook is the library's dev sandbox)
 └── website/                   # Next.js docs site (npm workspace; consumes @robr0/design-system by name)
-    ├── public/                # Includes GENERATED copies of CLAUDE.md + design.md + content-design.md (see /blueprints)
+    ├── public/                # Includes GENERATED copies of the root markdown specs (see /blueprints)
     ├── src/app/
     │   ├── components/        # One folder per component, each with page.tsx + page.module.css
     │   ├── foundations/       # Design tokens & layout doc pages
@@ -142,7 +142,7 @@ The old `merge-and-push` skill is retired because its name didn't say which of t
     │   ├── loops/             # The recurring agent loops page
     │   ├── contact/           # Contact page
     │   ├── playground/        # Live re-theming playground (standalone page, no sidebar)
-    │   ├── blueprints/        # Renders the public CLAUDE.md / design.md / content-design.md copies
+    │   ├── blueprints/        # Renders the public root-spec copies (CLAUDE.md, design.md, content-design.md, porting-guide.md)
     │   ├── work/              # Case-study pages, one folder per study (see the case-study registry)
     │   ├── writing/           # Essay pages, mirrored from the Substack feed
     │   ├── about/             # About page

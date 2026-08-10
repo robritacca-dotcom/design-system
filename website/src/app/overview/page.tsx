@@ -198,7 +198,7 @@ const PIPELINE: TimelineCompany[] = [
           </>
         ),
         bullets: [
-          "The model's context is generated at build time from the site itself: every page's prose, the data registries, the three specs, and the full text of the essays, assembled into one document. A new page reaches the chat on the next build with no registration step",
+          "The model's context is generated at build time from the site itself: every page's prose, the data registries, the root specs, and the full text of the essays, assembled into one document. A new page reaches the chat on the next build with no registration step",
           "The boundary is enforced, not remembered: only published, self-authored content can enter the context. An email address gets in only when a page deliberately publishes it, and a validator fails the build on any other route in",
           "Two lanes with different rules: facts about Rob and this system come only from the site content and are never invented, while general design knowledge (usability heuristics, accessibility standards, classic principles) is answered freely and kept visibly separate",
           "The widget is composed from the design system's own ai components (ChatThread, Composer, Reasoning, AgentStatus, AiButton) and mounted once in the root layout, so an answer keeps streaming while you move between pages",

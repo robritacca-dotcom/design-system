@@ -81,6 +81,7 @@ export function GET() {
     `- [GitHub source](https://github.com/robritacca-dotcom/design-system): the full source, if you want to read the implementation`,
     `- [design.md](${SITE_URL}/design.md): the full design specification (tokens, colours, typography, component rules)`,
     `- [content-design.md](${SITE_URL}/content-design.md): the writing rules (voice, register by surface, words and patterns the project never ships)`,
+    `- [porting-guide.md](${SITE_URL}/porting-guide.md): the site chat described abstractly enough to rebuild in another design system, with a two-phase protocol for a coding agent`,
     `- [Sitemap](${SITE_URL}/sitemap.xml)`,
     "",
   ].join("\n");

@@ -11,7 +11,7 @@
  * Scans an EXPLICIT file list, never a glob:
  *   - .claude/skills/<name>/SKILL.md          (repo skills)
  *   - website/src/data/external-skills/*.md   (published external copies)
- *   - CLAUDE.md, README.md, design.md, content-design.md
+ *   - CLAUDE.md, README.md, design.md, content-design.md, porting-guide.md
  *
  * Deliberately excluded:
  *   - website/src/data/skills-content.generated.ts and the website/public
@@ -38,7 +38,7 @@ const sources = [
   ...readdirSync(externalDir)
     .filter((f) => f.endsWith('.md'))
     .map((f) => [`website/src/data/external-skills/${f}`, join(externalDir, f)]),
-  ...['CLAUDE.md', 'README.md', 'design.md', 'content-design.md'].map((f) => [f, join(repoRoot, f)]),
+  ...['CLAUDE.md', 'README.md', 'design.md', 'content-design.md', 'porting-guide.md'].map((f) => [f, join(repoRoot, f)]),
 ].map(([label, path]) => [label, read(path)]);
 
 // ---------------------------------------------------------------------------
@@ -49,7 +49,7 @@ const sources = [
 // here is fixed by extending the placeholder pattern, not by deleting the
 // reference.
 const pathPrefix =
-  /^(src|website|scripts|\.claude|\.storybook|\.github|design\.md|content-design\.md|CLAUDE\.md|README\.md)(\/|$)/;
+  /^(src|website|scripts|\.claude|\.storybook|\.github|design\.md|content-design\.md|CLAUDE\.md|README\.md|porting-guide\.md)(\/|$)/;
 const placeholder = /[<>*{}[\] $~]|ComponentName|MyComponent|my-component|component-slug|YYYY/;
 const deadPaths = [];
 let pathCount = 0;
