@@ -267,7 +267,7 @@ Whitespace communicates hierarchy. Dense elements use micro-gaps (2–8px); comf
 | `--radius-full` | 999px | All buttons (primary, secondary, tertiary, destructive), toggle thumbs |
 | `--radius-composer` | 29px | The Composer shell only — concentric with the 40px send button it wraps (half the button + the padding-sm ring + the border width), held as a resolved constant so consumer re-theming reaches it |
 
-**Key rule:** Buttons are always `--radius-full` (pill shape). Inputs are always `--radius-md` (12px). Card and EntityCard — the navigational tiles — use the larger `--radius-xl` (24px) to read as destinations rather than form surfaces. This contrast — rounded pill CTAs vs softer-cornered inputs vs generously rounded tiles — is intentional and consistent.
+**Key rule:** Buttons are always `--radius-full` (pill shape). Inputs are always `--radius-md` (12px), with one sanctioned departure: the Composer shell uses `--radius-composer` for concentric geometry with its send button (see the Composer spec). Card and EntityCard — the navigational tiles — use the larger `--radius-xl` (24px) to read as destinations rather than form surfaces. This contrast — rounded pill CTAs vs softer-cornered inputs vs generously rounded tiles — is intentional and consistent.
 
 ### Icon Size Scale
 
