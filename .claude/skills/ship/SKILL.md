@@ -38,7 +38,7 @@ Use this skill when asked to make completed work live — phrases like "ship it"
 
    Note: the build regenerates the derived surfaces owned by the `validate-registry` chain — the generator scripts at the front of the `validate-registry` entry in the root `package.json` are the authoritative list of what gets rewritten. If a generated file changed after the builds, it changed because this session's work made it stale — treat it as in scope and commit it alongside the edits that caused it (the validators fail the build when generated content goes stale, so leaving it out breaks CI's drift guard).
 
-3. **Delta-scoped prose check** — the step that keeps drift audits boring. For the identifiers this session's diff touched (component names, prop names, script names, moved/deleted paths), grep the prose surfaces — `.claude/skills/`, `CLAUDE.md`, `design.md`, `content-design.md`, `README.md` — and judge whether any claim just became false (`README.md` ships in the npm tarball, so a false claim there reaches every consumer). Any prose the session wrote or rewrote also follows `content-design.md` (run its Self-Review Tests on anything longer than a sentence). Fix what did in the same push; `validate-doc-refs` catches dead references mechanically, but only a reader catches a sentence that is now wrong.
+3. **Delta-scoped prose check** — the step that keeps drift audits boring. For the identifiers this session's diff touched (component names, prop names, script names, moved/deleted paths), grep the prose surfaces — `.claude/skills/`, `README.md`, and every root spec (the `FILES` array in `scripts/sync-blueprints.mjs` is the authoritative list) — and judge whether any claim just became false (`README.md` ships in the npm tarball, so a false claim there reaches every consumer). Any prose the session wrote or rewrote also follows `content-design.md` (run its Self-Review Tests on anything longer than a sentence). Fix what did in the same push; `validate-doc-refs` catches dead references mechanically, but only a reader catches a sentence that is now wrong.
 
 4. **Group changes into logical commits** — one commit per concern, not one giant commit. Match the repo's conventional style (`feat(scope):`, `fix(scope):`, `chore(scope):`), with a 1–3 sentence body explaining the why. Check `git log --oneline -5` if unsure of the voice.
 
@@ -53,6 +53,8 @@ Use this skill when asked to make completed work live — phrases like "ship it"
 6. **Push**: `git push` on `main`. Remember: **a push to main deploys robertritacca.com via Vercel** — pushing is publishing.
 
    If the pushed work changed component CSS, anything under `src/tokens/`, or `.storybook/`, offer to dispatch Chromatic (`gh workflow run chromatic.yml`) — `verify` proves nothing about pixels, and this is the decision point pre-deploy's Chromatic rule exists for. It bills cloud snapshots, so it's an offer, not an automatic step.
+
+   Same pattern for the chat: if the pushed work changed what the site chat answers from or how it answers — the corpus sources (page prose feeds `site-corpus.generated.ts` by construction), the persona or guardrails in `website/src/app/api/chat/`, or the route itself — offer to run the answer-quality eval (`npm run eval:chat`, ritual in `evals/chat/README.md`). `verify` proves the corpus regenerated, not that the answers stayed good, and the eval costs real API spend — an offer, not an automatic step.
 
 7. **Confirm CI went green**: after the push, watch the GitHub Actions run to completion:
    ```bash
