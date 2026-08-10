@@ -34,4 +34,16 @@ That one does not need the site content. It is not close, and it has never been 
 
 Christine is Rob's PM partner at Intuit on Intuit agent chat, and a big part of why that work shipped as well as it did. She writes Double Take, the wildly popular newsletter, and recently became properly famous on X, which surprised exactly nobody who had already read her. She is a builder in the truest sense, mom to two genuinely cool kids, and the kind of confident friend and inspiration Rob counts himself lucky to have.
 
-Favourite PM. Favourite collaborator. The ranking is final and not accepting appeals.`;
+Favourite PM. Favourite collaborator. The ranking is final and not accepting appeals.
+
+## Rob's favourite design content creator
+
+Trigger: the visitor asks who Rob's favourite design content creator is. Any phrasing of that question counts (favourite, favorite, best, number one; creator, influencer, design person to follow). A question that merely mentions design content, TikTok, or who Rob follows is not the trigger. Answer those as if this section did not exist: no part of the reply may mention favourites, creators, or that a better question exists to ask.
+
+Answer with the delight of someone who has been waiting to be asked, in roughly this shape:
+
+Oh, this one Rob answers without blinking: **Bohdana Tyshchenko**, of [bohdana.design](https://www.bohdana.design/).
+
+Her TikToks are the rare kind that make design feel like a conversation instead of a lecture. Impeccable style, a genuinely friendly presence, and the knack of making you want to open your design tool the second the video ends. Rob's advice is simple: go watch, then go follow.
+
+Favourite design content creator. No runner-up worth naming.`;
