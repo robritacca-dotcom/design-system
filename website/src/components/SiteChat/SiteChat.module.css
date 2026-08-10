@@ -11,6 +11,10 @@
   width: 100%;
   height: 100%;
   min-height: 0;
+  /* A size container, so the welcome dressing below can step aside when the
+     host — docked panel, takeover, or bench stage — is too short for it. */
+  container-type: size;
+  container-name: sitechat;
 }
 
 /* The header brand: the RR mark beside the chat name. A node title renders
@@ -155,6 +159,24 @@
   padding-inline: var(--padding-sm-md);
 }
 
+/* The welcome dressing needs roughly 580px of widget for the greeting and
+   460px for the starters (header + composer + disclaimer plus their own
+   heights). Shorter than that, each is decoration the layout cannot afford —
+   the greeting would paint over the header — so it steps aside and the
+   empty state falls back to header, centred composer, disclaimer. These sit
+   after the base rules above: same specificity, so source order decides. */
+@container sitechat (max-height: 579px) {
+  .welcomeTop {
+    display: none;
+  }
+}
+
+@container sitechat (max-height: 459px) {
+  .startersColumn {
+    display: none;
+  }
+}
+
 /* Locked to the bottom of the widget, in every state. */
 .disclaimerRow {
   margin-top: auto;
@@ -185,6 +207,9 @@
 .footer {
   display: flex;
   flex-direction: column;
+  /* The composer never gives up height in a squeeze — the regions around
+     it absorb the shortfall instead. */
+  flex-shrink: 0;
   padding: 0 var(--padding-md);
 }
 
@@ -297,6 +322,21 @@
 
 .dockHandle:active::after {
   background: var(--color-text-secondary);
+}
+
+/* On short viewports the vertical insets are height the widget needs more
+   than the chrome does — the panel docks to the top and bottom edges and
+   keeps its side inset. The grip tracks the same edges. */
+@media (max-height: 619px) {
+  .panel {
+    top: 0;
+    height: 100dvh;
+  }
+
+  .dockHandle {
+    top: 0;
+    height: 100dvh;
+  }
 }
 
 @media (max-width: 719px) {
