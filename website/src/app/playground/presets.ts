@@ -1,4 +1,8 @@
-import { DEFAULT_NEUTRAL_SEED, type Overrides } from "./theme-overrides";
+import {
+  DEFAULT_NEUTRAL_SEED,
+  type AdvancedColorState,
+  type Overrides,
+} from "./theme-overrides";
 
 /** A preset is just a saved position for every lever. Font labels must
     match FONT_OPTIONS entries. */
@@ -14,9 +18,20 @@ export interface ThemePreset {
   radiusScale: number;
   pill: boolean;
   fontLabel: string;
+  /** Hand-tuned adjacent ramp keys: every chromatic ramp re-keyed to sit
+      in the theme (the action colour's own family is left to the action
+      lever). Loads into the Advanced colours state. */
+  advanced?: AdvancedColorState;
   /** Preset-specific extras beyond the levers (e.g. greyscale accents). */
   extraOverrides?: Overrides;
 }
+
+/** Shorthand: an AdvancedColorState that only sets ramp keys. */
+const bases = (b: Record<string, string>): AdvancedColorState => ({
+  hueShift: 0,
+  satScale: 100,
+  bases: b,
+});
 
 export const THEME_PRESETS: Record<string, ThemePreset> = {
   warm: {
@@ -28,17 +43,40 @@ export const THEME_PRESETS: Record<string, ThemePreset> = {
     radiusScale: 100,
     pill: true,
     fontLabel: "Lora (serif)",
+    // Earthy neighbours: every hue muted and pulled a few degrees toward
+    // the terracotta key. Orange is the action family, left alone.
+    advanced: bases({
+      red: "#D45B66",
+      yellow: "#EAC57B",
+      green: "#44A87D",
+      teal: "#28929B",
+      blue: "#3D4E9E",
+      purple: "#9B67BE",
+    }),
   },
   mono: {
     label: "Black & white",
-    brand: "#171717",
-    brandDark: "#F5F5F5",
+    // Real neutral primitives (08 / 01), so the action colour applies as
+    // semantic re-pointing at the neutral ramp instead of a rewritten teal.
+    brand: "#232323",
+    brandDark: "#F1F1F1",
     tintOn: false,
     tintSeed: DEFAULT_NEUTRAL_SEED,
     tintStrength: 6,
     radiusScale: 40,
     pill: false,
     fontLabel: "Inter",
+    // Ink-wash chromatics: hue and value hold, saturation drops hard, so
+    // any colour that does appear reads as a tinted grey.
+    advanced: bases({
+      red: "#BB7B8A",
+      orange: "#BB927B",
+      yellow: "#D0BE95",
+      green: "#469681",
+      teal: "#437180",
+      blue: "#4B5B83",
+      purple: "#9C7BBB",
+    }),
     // Grey out the decorative accents (they colour the background glow
     // blobs, among other things). Status colours are a separate token set
     // and deliberately keep their meaning.
@@ -60,26 +98,16 @@ export const THEME_PRESETS: Record<string, ThemePreset> = {
     radiusScale: 100,
     pill: true,
     fontLabel: "IBM Plex Sans",
-  },
-  grape: {
-    label: "Deep purple",
-    brand: "#7434B3",
-    tintOn: true,
-    tintSeed: "#9E47EF",
-    tintStrength: 5,
-    radiusScale: 60,
-    pill: false,
-    fontLabel: "Space Grotesk",
-  },
-  candy: {
-    label: "Playful pink",
-    brand: "#EF476F",
-    tintOn: true,
-    tintSeed: "#EF476F",
-    tintStrength: 6,
-    radiusScale: 160,
-    pill: true,
-    fontLabel: "Poppins",
+    // Cool neighbours: every hue eased toward the cobalt key and slightly
+    // calmed. Blue is the action family, left alone.
+    advanced: bases({
+      red: "#E25489",
+      orange: "#E27354",
+      yellow: "#F4BB71",
+      green: "#16C6AB",
+      teal: "#1D7DA6",
+      purple: "#9354E2",
+    }),
   },
   terminal: {
     label: "Terminal green",
@@ -90,6 +118,16 @@ export const THEME_PRESETS: Record<string, ThemePreset> = {
     radiusScale: 0,
     pill: false,
     fontLabel: "IBM Plex Mono",
+    // Phosphor neighbours: hues lean toward the emerald key, slightly
+    // softened. Green is the action family, left alone.
+    advanced: bases({
+      red: "#E05665",
+      orange: "#E09956",
+      yellow: "#F1DC74",
+      teal: "#1F8AA4",
+      blue: "#2B59A3",
+      purple: "#7E5BC8",
+    }),
   },
 };
 
