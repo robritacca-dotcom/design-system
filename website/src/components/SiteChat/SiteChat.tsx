@@ -17,6 +17,33 @@ import { readGreeting, serverGreeting, subscribeClock } from "./greeting";
 import { startersForPath } from "./starters";
 import styles from "./SiteChat.module.css";
 
+/** Claude-style starburst for the model label — currentColor, so it takes the button's grey. */
+const claudeGlyph = (
+  <svg
+    viewBox="0 0 24 24"
+    width="20"
+    height="20"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.2"
+    strokeLinecap="round"
+    aria-hidden="true"
+  >
+    <line x1={12} y1={12} x2={12.0} y2={2.0} />
+    <line x1={12} y1={12} x2={16.35} y2={5.05} />
+    <line x1={12} y1={12} x2={20.55} y2={7.64} />
+    <line x1={12} y1={12} x2={19.96} y2={12.84} />
+    <line x1={12} y1={12} x2={19.72} y2={18.03} />
+    <line x1={12} y1={12} x2={15.01} y2={19.84} />
+    <line x1={12} y1={12} x2={10.07} y2={21.1} />
+    <line x1={12} y1={12} x2={6.44} y2={17.75} />
+    <line x1={12} y1={12} x2={2.63} y2={14.51} />
+    <line x1={12} y1={12} x2={4.2} y2={9.47} />
+    <line x1={12} y1={12} x2={5.89} y2={4.72} />
+    <line x1={12} y1={12} x2={10.82} y2={3.58} />
+  </svg>
+);
+
 /**
  * The chat widget's internals: header, thread, composer, starters,
  * disclaimer. It fills whatever container hosts it — the bench's resizable
@@ -167,7 +194,7 @@ export function SiteChat({
             actions={
               /* The model picker is out of scope — the label is shown,
                  disabled, so the bar's final shape reads now. */
-              <Button variant="tertiary" size="compact" iconLeft="auto_awesome" label="Sonnet 5" disabled />
+              <Button variant="tertiary" size="compact" iconLeft={claudeGlyph} label="Sonnet 5" disabled />
             }
           />
         </div>
