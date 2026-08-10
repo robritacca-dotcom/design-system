@@ -24,6 +24,7 @@ import Anthropic from "@anthropic-ai/sdk";
 
 import { siteCorpus } from "@/data/site-corpus.generated";
 import type { ChatEvent, ChatTransportMessage } from "@/hooks/useChat";
+import { CHAT_MODEL, modelLabel } from "@/lib/chat-model";
 
 import { EASTER_EGGS } from "./easter-eggs";
 import { checkGuardrails, recordExchange, recordSpend, visitorKey } from "./guardrails";
@@ -33,7 +34,9 @@ export const runtime = "nodejs";
 export const maxDuration = 60;
 export const dynamic = "force-dynamic";
 
-const MODEL = "claude-sonnet-5";
+// The model constant lives in @/lib/chat-model, shared with the composer's
+// label — one home, so the label can never drift from what actually runs.
+const MODEL = CHAT_MODEL;
 
 /** Caps thinking and response text together, so leave room for both. */
 const MAX_TOKENS = 3000;
@@ -285,6 +288,11 @@ export async function POST(request: Request): Promise<Response> {
         // the client's first-byte watchdog, and it replaces the hook's default
         // label with one that is true.
         send({ type: "status", label: "Reading the site" });
+        // Which model is serving, for the composer's label. Derived from
+        // MODEL (not the shared constant) and sent per exchange, so a
+        // future per-request model choice (a budget tier, an A/B) reaches
+        // the label with no client change.
+        send({ type: "model", label: modelLabel(MODEL) });
 
         const reasoning = createReasoningBuffer((point) =>
           send({ type: "status", label: "Thinking", point })
@@ -301,11 +309,16 @@ export async function POST(request: Request): Promise<Response> {
               { type: "text", text: EASTER_EGGS },
               // The cache breakpoint sits on this block, so the persona and
               // easter eggs cache together with the corpus. Nothing volatile
-              // may precede it.
+              // may precede it. The 1-hour TTL matches how visitors actually
+              // arrive: most gaps between exchanges are 10-50 minutes, which
+              // the default 5-minute cache never survives — so nearly every
+              // visitor was paying a full corpus rewrite. Writes cost 2x
+              // instead of 1.25x, but there are far fewer of them; the
+              // guardrails price table must agree (cacheWrite = 2x input).
               {
                 type: "text",
                 text: siteCorpus,
-                cache_control: { type: "ephemeral" },
+                cache_control: { type: "ephemeral", ttl: "1h" },
               },
               // Page context rides AFTER the breakpoint: it changes per
               // request, and a trailing uncached block leaves the cached

@@ -33,7 +33,9 @@ const DAILY_SPEND_CAP_TENTHS = Number(process.env.CHAT_DAILY_SPEND_CAP_CENTS ?? 
 
 /**
  * claude-sonnet-5 list price in USD per million tokens, with cache writes at
- * 1.25x input and cache reads at 0.1x.
+ * 2x input (the route caches the corpus with a 1-hour TTL — see the
+ * cache_control block in route.ts; this constant must move with it) and
+ * cache reads at 0.1x.
  *
  * Deliberately the standard rate rather than the promotional one: over-
  * estimating spend trips the breaker early, which is the safe direction to be
@@ -42,7 +44,7 @@ const DAILY_SPEND_CAP_TENTHS = Number(process.env.CHAT_DAILY_SPEND_CAP_CENTS ?? 
 const PRICE_PER_MTOK = {
   input: 3.0,
   output: 15.0,
-  cacheWrite: 3.75,
+  cacheWrite: 6.0,
   cacheRead: 0.3,
 };
 
