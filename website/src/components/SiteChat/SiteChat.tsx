@@ -11,6 +11,7 @@ import { Composer } from "@robr0/design-system/components/Composer/Composer";
 import { PromptSuggestions } from "@robr0/design-system/components/PromptSuggestions/PromptSuggestions";
 import { usePathname } from "next/navigation";
 import { getNavLabel } from "@/config/navigation";
+import { CHAT_MODEL_LABEL } from "@/lib/chat-model";
 import { AssistantTurn } from "./AssistantTurn";
 import { useSiteChat } from "./ChatContext";
 import { readGreeting, serverGreeting, subscribeClock } from "./greeting";
@@ -59,8 +60,21 @@ export function SiteChat({
   /** Narrow insets for phone-width hosts. */
   compact?: boolean;
 }) {
-  const { turns, live, streaming, send, stop, reset, open, setOpen, view, setView, draft, setDraft } =
-    useSiteChat();
+  const {
+    turns,
+    live,
+    streaming,
+    modelLabel,
+    send,
+    stop,
+    reset,
+    open,
+    setOpen,
+    view,
+    setView,
+    draft,
+    setDraft,
+  } = useSiteChat();
 
   const greeting = useSyncExternalStore(subscribeClock, readGreeting, serverGreeting);
 
@@ -193,8 +207,16 @@ export function SiteChat({
             onStop={stop}
             actions={
               /* The model picker is out of scope — the label is shown,
-                 disabled, so the bar's final shape reads now. */
-              <Button variant="tertiary" size="compact" iconLeft={claudeGlyph} label="Sonnet 5" disabled />
+                 disabled, so the bar's final shape reads now. The name is
+                 dynamic: the configured model until the server first
+                 reports, then whatever the server says actually served. */
+              <Button
+                variant="tertiary"
+                size="compact"
+                iconLeft={claudeGlyph}
+                label={modelLabel ?? CHAT_MODEL_LABEL}
+                disabled
+              />
             }
           />
         </div>

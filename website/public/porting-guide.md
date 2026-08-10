@@ -47,6 +47,7 @@ What is deliberately reference-specific: every colour, radius, shadow, spacing, 
 The seam that makes everything else replaceable. A transport is one function: it takes the conversation so far plus an abort signal, and returns an async stream of typed events. The reference's event union, which has proven sufficient:
 
 - `status` — a live progress label, optionally carrying one reasoning trace point
+- `model` — the model serving the exchange, as a display label, so the composer reports what actually ran
 - `delta` — a chunk of answer text
 - `notice` — a guardrail outcome, rendered as a normal assistant message
 - `error` — a failure phrased for humans, replacing anything shown so far

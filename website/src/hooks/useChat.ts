@@ -14,6 +14,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 export type ChatEvent =
   /** A live status step: the AgentStatus label, with an optional reasoning trace point. */
   | { type: "status"; label: string; point?: string }
+  /** The model serving this exchange, as a display label ("Sonnet 5").
+      Reported by the server so the composer's model label follows what
+      actually ran, not what the client assumes. */
+  | { type: "model"; label: string }
   /** A chunk of response text. The first delta ends the thinking phase. */
   | { type: "delta"; text: string }
   /** Terminal: the response is complete. */
@@ -111,6 +115,10 @@ const REVEAL_DRAIN_MS = 250;
 export function useChat(transport: ChatTransport) {
   const [turns, setTurns] = useState<ChatTurn[]>([]);
   const [live, setLive] = useState<LiveResponse | null>(null);
+  /* The model label the server last reported, null until a first exchange.
+     Survives reset on purpose: the serving model is a fact about the
+     backend, not about one conversation. */
+  const [modelLabel, setModelLabel] = useState<string | null>(null);
 
   const abortRef = useRef<AbortController | null>(null);
   const busyRef = useRef(false);
@@ -262,6 +270,9 @@ export function useChat(transport: ChatTransport) {
                reset resolves — never let it touch the fresh conversation. */
             if (generation !== generationRef.current || controller.signal.aborted) break;
             switch (event.type) {
+              case "model":
+                setModelLabel(event.label);
+                break;
               case "status":
                 update({
                   ...current,
@@ -391,5 +402,5 @@ export function useChat(transport: ChatTransport) {
     setLive(null);
   }, []);
 
-  return { turns, live, streaming, send, stop, reset };
+  return { turns, live, streaming, modelLabel, send, stop, reset };
 }

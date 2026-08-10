@@ -19,6 +19,8 @@ interface SiteChatContextValue {
   turns: ReturnType<typeof useChat>["turns"];
   live: ReturnType<typeof useChat>["live"];
   streaming: boolean;
+  /** Display label of the model last reported by the server, null before the first exchange. */
+  modelLabel: string | null;
   send: (text: string) => boolean;
   stop: () => void;
   reset: () => void;
