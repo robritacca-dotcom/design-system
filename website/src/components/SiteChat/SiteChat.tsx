@@ -165,13 +165,9 @@ export function SiteChat({
             streaming={streaming}
             onStop={stop}
             actions={
-              /* Attachments and the model picker are out of scope — both
-                 affordances are shown, disabled, so the bar's final shape
-                 reads now. */
-              <>
-                <CircularButton icon="add" variant="tertiary" ariaLabel="Add attachment" disabled />
-                <Button variant="tertiary" size="compact" label="Sonnet" disabled />
-              </>
+              /* The model picker is out of scope — the label is shown,
+                 disabled, so the bar's final shape reads now. */
+              <Button variant="tertiary" size="compact" iconLeft="auto_awesome" label="Sonnet 5" disabled />
             }
           />
         </div>
