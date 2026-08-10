@@ -47,7 +47,7 @@ Build and serve the site (`npm run build` then `npm run start` in `website/`), t
 
 ### 4. Fix, verify, hand off
 
-Apply the mechanical, clearly-safe fixes in one coherent batch on the branch; leave judgment calls (crawl policy, new structured-data strategy, description rewrites that change meaning) as proposals in the report. Verify the website build passes in the worktree before committing, then remove the worktree (the branch survives).
+Apply the mechanical, clearly-safe fixes in one coherent batch on the branch; leave judgment calls (crawl policy, new structured-data strategy, description rewrites that change meaning) as proposals in the report. Verify the website build passes in the worktree before committing. Metadata edits are page prose, so the build regenerates the site chat's corpus (`website/src/data/site-corpus.generated.ts`) — commit the regenerated file in the same batch (see the commit-scope rule in the growth-loop recipe), then remove the worktree (the branch survives).
 
 Where a finding is deliberately not a bug — a page intentionally out of the sitemap, an intentionally bare head — record why in a short comment at the site of the decision, so future runs read the reason instead of re-flagging it.
 

@@ -61,7 +61,7 @@ cd "$WT" && npm install --no-fund --no-audit
 cd "$WT/website" && npm run build
 ```
 
-Fix anything your edit broke, then commit in the worktree (e.g. `content(site-updates): add "<entry title>" entry through YYYY-MM-DD`) and clean up:
+Fix anything your edit broke, then commit in the worktree (e.g. `content(site-updates): add "<entry title>" entry through YYYY-MM-DD`). The build regenerates tracked files, and your edit always changes one of them: the site chat's corpus (`website/src/data/site-corpus.generated.ts`) embeds the journal entries, so a new entry regenerates it by construction. Commit the regenerated corpus (and any other tracked file the build regenerated because of your edit) in the same commit — a branch without it fails CI's drift guard, and `git worktree remove` refuses a worktree with modified tracked files. Then clean up:
 
 ```bash
 rm -rf "$WT/node_modules" "$WT/website/node_modules"   # npm nests version-conflicting deps under website/, so both trees exist
