@@ -121,7 +121,7 @@ export default function SemanticSpacingPage() {
               Four categories of spacing tokens from Figma variables
             </p>
             <p className={styles.introBody}>
-              Border controls stroke thickness. Radius sets corner rounding, from subtle (4px) to full pill shapes. Gap is the space between sibling elements like buttons in a group or items in a list. Padding is the breathing room inside a container, like the space between a card edge and its content.
+              Border controls stroke thickness. Radius sets corner rounding, from subtle (2px) to full pill shapes. Gap is the space between sibling elements like buttons in a group or items in a list. Padding is the breathing room inside a container, like the space between a card edge and its content.
             </p>
           </div>
 
