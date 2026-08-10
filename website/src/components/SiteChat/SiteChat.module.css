@@ -263,28 +263,59 @@
   overflow: hidden;
   backdrop-filter: blur(24px);
   z-index: 1100;
+  /* The panel-to-takeover glide: the same card grows to fill the viewport,
+     so every property that differs between the two views animates together.
+     Structural size change, so the emphasized pair. Reduced motion zeroes
+     it via the tokens. */
+  transition:
+    top var(--motion-duration-slow) var(--motion-ease-emphasized),
+    right var(--motion-duration-slow) var(--motion-ease-emphasized),
+    width var(--motion-duration-slow) var(--motion-ease-emphasized),
+    height var(--motion-duration-slow) var(--motion-ease-emphasized),
+    max-width var(--motion-duration-slow) var(--motion-ease-emphasized),
+    border-radius var(--motion-duration-slow) var(--motion-ease-emphasized),
+    border-color var(--motion-duration-slow) var(--motion-ease-emphasized),
+    backdrop-filter var(--motion-duration-slow) var(--motion-ease-emphasized);
+}
+
+/* The widen grip drives --layout-chat-width frame by frame; the width glide
+   above would ease each frame's value and drag rubber-band behind the
+   pointer, so resizing suspends it (the body inset does the same). */
+:global(html[data-chat-resizing]) .panel {
+  transition: none;
 }
 
 /* Fullscreen view: a true viewport takeover. The stronger blur is what
    keeps the transcript readable while the page's colours still shine
-   through the translucent surface. */
+   through the translucent surface. The border fades rather than vanishing —
+   border: none would change border-width and snap the geometry mid-glide. */
 .panelFull {
   top: 0;
   right: 0;
   height: 100dvh;
   width: 100vw;
   max-width: 100vw;
-  border: none;
+  border-color: transparent;
   border-radius: 0;
   backdrop-filter: blur(40px);
 }
 
-/* Below the dock threshold the panel overlays the page behind a scrim. */
+/* Below the dock threshold the panel overlays the page behind a scrim.
+   It mounts and unmounts with the view, so entrance is an animation, not a
+   transition — without it, leaving fullscreen pops the scrim in while the
+   panel above it is still gliding back to its card shape. */
 .scrim {
   position: fixed;
   inset: 0;
   background: var(--color-scrim);
   z-index: 1090;
+  animation: scrimIn var(--motion-duration-slow) var(--motion-ease-standard);
+}
+
+@keyframes scrimIn {
+  from {
+    opacity: 0;
+  }
 }
 
 /* The widen grip — the bench page's left resize handle (robr0-gpt's
