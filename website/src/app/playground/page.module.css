@@ -231,6 +231,108 @@
 }
 
 /* ============================================
+   ADVANCED COLOURS DIALOG — mini primitive ramps
+   ============================================ */
+.advBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+}
+
+.advGlobal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+  padding-bottom: var(--gap-md);
+  border-bottom: var(--border-xs) solid var(--color-divider);
+}
+
+.advSliderLabel {
+  min-width: 72px;
+  font-size: var(--font-paragraph-sm-size);
+  color: var(--color-text-secondary);
+}
+
+/* The label column must not absorb the sliderRow's flex:1 first-child rule */
+.advGlobal .sliderRow > :first-child {
+  flex: 0 0 auto;
+}
+
+.advGlobal .sliderRow > :nth-child(2) {
+  flex: 1;
+}
+
+.advRamps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+}
+
+.advRampRow {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm-md);
+}
+
+.advRampLabel {
+  min-width: 72px;
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-em-weight);
+  color: var(--color-text-primary);
+}
+
+.advRamp {
+  display: flex;
+  flex: 1;
+  gap: var(--gap-xxs);
+}
+
+.advCell {
+  flex: 1;
+  height: 24px;
+  border-radius: var(--radius-xxs);
+  border: var(--border-xs) solid var(--color-bg-container-border);
+}
+
+/* Step 07 is the ramp's key colour — the one the row's picker sets */
+.advCellKey {
+  outline: var(--border-md) solid var(--color-input-border-selected);
+  outline-offset: 1px;
+}
+
+/* The row's picker sits at the dialog's right edge — its panel must open
+   leftward or it clips against the panel/scroll container */
+.advRampPicker :global(.ds-colorpicker__panel) {
+  left: auto;
+  right: 0;
+}
+
+.advRampReset {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-full);
+  background: none;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  --icon-size: var(--icon-size-sm);
+}
+
+.advRampReset:hover:not(:disabled) {
+  background-color: var(--color-bg-container-secondary);
+  color: var(--color-text-primary);
+}
+
+.advRampReset:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ============================================
    RESPONSIVE — the rail must NOT disappear the
    way the nav Sidebar does under 960px; it stacks
    above the content instead.

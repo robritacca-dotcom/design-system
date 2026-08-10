@@ -10,18 +10,23 @@ import styles from "./page.module.css";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import { CodeBlock } from "@robr0/design-system/components/CodeBlock/CodeBlock";
 import {
+  DEFAULT_ADVANCED,
   DEFAULT_BRAND,
   DEFAULT_NEUTRAL_SEED,
   FONT_OPTIONS,
+  type AdvancedColorState,
   type Overrides,
-  brandOverrides,
+  actionColorPlan,
+  advancedColorOverrides,
   buildCssSnippet,
   googleFontHref,
+  isAdvancedPristine,
   neutralOverrides,
   radiusOverrides,
 } from "./theme-overrides";
 import { THEME_PRESETS, type ThemePreset } from "./presets";
 import PlaygroundControls from "./PlaygroundControls";
+import AdvancedColorsDialog from "./AdvancedColorsDialog";
 import ActionsSection from "./sections/ActionsSection";
 import AiSection from "./sections/AiSection";
 import FormsSection from "./sections/FormsSection";
@@ -66,6 +71,8 @@ export default function PlaygroundPage() {
   const [pill, setPill] = useState(true);
   const [fontLabel, setFontLabel] = useState(FONT_OPTIONS[0].label);
   const [productName, setProductName] = useState("");
+  const [advOpen, setAdvOpen] = useState(false);
+  const [advColors, setAdvColors] = useState<AdvancedColorState>(DEFAULT_ADVANCED);
 
   /** The last-chosen preset's non-lever state (mono's greyed accents, its
       theme-dependent action colour). Kept separate from `preset` so Custom
@@ -90,6 +97,17 @@ export default function PlaygroundPage() {
     setBrand(value);
   };
 
+  /** Advanced levers flip to Custom like any other lever; explicitly
+      rebasing teal also retires an inherited theme-dependent brand, the
+      same way picking an action colour does. */
+  const changeAdvColors = (next: AdvancedColorState) => {
+    setPreset("custom");
+    if (next.bases.teal && !advColors.bases.teal) {
+      setPresetExtras((e) => ({ ...e, brandDark: undefined }));
+    }
+    setAdvColors(next);
+  };
+
   const applyPreset = (value: string) => {
     if (value === "default") {
       reset(); // the shipped look — put every lever back
@@ -98,6 +116,7 @@ export default function PlaygroundPage() {
     setPreset(value);
     const p = THEME_PRESETS[value];
     if (!p) return; // "custom" — keep the current levers
+    setAdvColors(p.advanced ?? DEFAULT_ADVANCED); // harmonized ramp keys
     setPresetExtras({ brandDark: p.brandDark, extraOverrides: p.extraOverrides });
     setBrand(p.brand);
     setTintOn(p.tintOn);
@@ -122,10 +141,20 @@ export default function PlaygroundPage() {
   const effectiveBrand =
     presetExtras.brandDark && theme === "dark" ? presetExtras.brandDark : brand;
 
+  /* How the action colour applies, honestly: a hex that names a real
+     primitive repoints the semantic action tokens at its ramp; a custom
+     hex rebases its nearest ramp family (a warm orange reshapes the
+     orange ramp, never teal) and points at that; a grey points at the
+     shipped neutral scale. Null means the shipped default. */
+  const actionPlan = useMemo(
+    () => actionColorPlan(effectiveBrand, theme === "dark" ? "dark" : "light"),
+    [effectiveBrand, theme]
+  );
+
   const overrides = useMemo<Overrides>(() => {
     const merged: Overrides = {};
-    if (effectiveBrand.toUpperCase() !== DEFAULT_BRAND) {
-      Object.assign(merged, brandOverrides(effectiveBrand));
+    if (actionPlan) {
+      Object.assign(merged, actionPlan.primitives, actionPlan.semantics);
     }
     if (tintOn && tintStrength > 0) {
       Object.assign(merged, neutralOverrides(tintSeed, tintStrength / 100));
@@ -136,8 +165,11 @@ export default function PlaygroundPage() {
     if (presetExtras.extraOverrides) {
       Object.assign(merged, presetExtras.extraOverrides);
     }
+    if (!isAdvancedPristine(advColors)) {
+      Object.assign(merged, advancedColorOverrides(advColors, merged));
+    }
     return merged;
-  }, [effectiveBrand, tintOn, tintSeed, tintStrength, radiusScale, pill, presetExtras]);
+  }, [actionPlan, tintOn, tintSeed, tintStrength, radiusScale, pill, presetExtras, advColors]);
 
   /* ---------- apply to the whole page ----------
      Custom properties substitute var() where they are declared, and the
@@ -192,6 +224,7 @@ export default function PlaygroundPage() {
   const reset = () => {
     setPreset("default");
     setPresetExtras({});
+    setAdvColors(DEFAULT_ADVANCED);
     setBrand(DEFAULT_BRAND);
     setTintOn(false);
     setTintSeed(DEFAULT_NEUTRAL_SEED);
@@ -201,18 +234,38 @@ export default function PlaygroundPage() {
     setFontLabel(FONT_OPTIONS[0].label);
   };
 
-  /* The copied CSS is theme-agnostic except a preset's dark-mode action
-     colour, which ships as a [data-theme="dark"] block — so :root always
-     carries the light-mode ramp regardless of the theme being previewed. */
-  const darkBrandBlock = presetExtras.brandDark
-    ? brandOverrides(presetExtras.brandDark)
-    : undefined;
-  const snippetOverrides = darkBrandBlock
-    ? { ...overrides, ...brandOverrides(brand) }
-    : overrides;
+  /* The copied CSS always puts the light-mode values in :root, whatever
+     theme is being previewed. Any non-default action colour ships a
+     [data-theme="dark"] block too, because the two themes point a few
+     roles at different steps; a theme-dependent preset brand (black &
+     white) swaps in its own dark plan there. Rebased primitives are
+     theme-agnostic and stay in :root unless the dark brand differs. */
+  const darkHex = presetExtras.brandDark ?? brand;
+  const lightPlan = actionColorPlan(brand, "light");
+  const darkPlan = actionColorPlan(darkHex, "dark");
+
+  let snippetOverrides = overrides;
+  let snippetDarkBlock: Overrides | undefined;
+  if (lightPlan || darkPlan) {
+    /* Primitives first, then the applied overrides: a rebased ramp may
+       have been further transformed by the all-ramps levers, and those
+       final values are the accurate ones. Only the semantic pointers are
+       forced back to the light-theme map. */
+    snippetOverrides = {
+      ...(lightPlan?.primitives ?? {}),
+      ...overrides,
+      ...(lightPlan?.semantics ?? {}),
+    };
+    snippetDarkBlock = darkPlan
+      ? {
+          ...(darkHex !== brand ? darkPlan.primitives : {}),
+          ...darkPlan.semantics,
+        }
+      : undefined;
+  }
   const cssSnippet = isPristine
     ? "/* Everything is at its shipped default. Move a lever to generate CSS. */"
-    : buildCssSnippet(snippetOverrides, font, darkBrandBlock);
+    : buildCssSnippet(snippetOverrides, font, snippetDarkBlock);
 
   return (
     <>
@@ -233,6 +286,13 @@ export default function PlaygroundPage() {
           pill={pill}
           fontLabel={fontLabel}
           productName={productName}
+          actionModeNote={
+            actionPlan
+              ? Object.keys(actionPlan.primitives).length === 0
+                ? `Pointing the action tokens at the ${actionPlan.ramp} ramp; the primitives stay untouched.`
+                : `Custom hex: rebasing the ${actionPlan.ramp} ramp around it and pointing the action tokens there. Teal stays teal.`
+              : null
+          }
           isPristine={isPristine}
           cssSnippet={cssSnippet}
           onPreset={applyPreset}
@@ -245,6 +305,16 @@ export default function PlaygroundPage() {
           onFontLabel={asCustom(setFontLabel)}
           onProductName={setProductName}
           onReset={reset}
+          onOpenAdvanced={() => setAdvOpen(true)}
+        />
+
+        <AdvancedColorsDialog
+          open={advOpen}
+          onOpenChange={setAdvOpen}
+          state={advColors}
+          overrides={overrides}
+          onChange={changeAdvColors}
+          onResetColors={() => setAdvColors(DEFAULT_ADVANCED)}
         />
 
         <main className={styles.dsContent} id="main-content">
@@ -261,9 +331,11 @@ export default function PlaygroundPage() {
               Move a lever: the whole site re-themes, live
             </p>
             <p className={styles.introBody}>
-              These controls override <code>--primitive-*</code> tokens (plus the
-              font token) on the page root, exactly the way a consumer of the package
-              would in their own CSS.
+              These controls re-theme the page exactly the way a consumer of the
+              package would in their own CSS. An action colour that matches another
+              primitive ramp repoints the semantic action tokens at that ramp;
+              everything else overrides <code>--primitive-*</code> tokens (plus the
+              font token) on the page root.
               Because every semantic token chains to a primitive, one override cascades
               through buttons, focus rings, surfaces, and both themes: try the
               light/dark toggle in the header while a brand colour is applied. Leaving

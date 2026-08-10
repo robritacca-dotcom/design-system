@@ -25,6 +25,8 @@ export interface PlaygroundControlsProps {
   pill: boolean;
   fontLabel: string;
   productName: string;
+  /** One-line explanation of how the current action colour is applied. */
+  actionModeNote: string | null;
   isPristine: boolean;
   cssSnippet: string;
   onPreset: (value: string) => void;
@@ -38,6 +40,8 @@ export interface PlaygroundControlsProps {
   onFontLabel: (value: string) => void;
   onProductName: (value: string) => void;
   onReset: () => void;
+  /** Opens the advanced-mode dialog (every primitive ramp). */
+  onOpenAdvanced: () => void;
 }
 
 /** The sticky theme-control rail — presentational; all state lives in the page. */
@@ -52,6 +56,7 @@ export default function PlaygroundControls({
   pill,
   fontLabel,
   productName,
+  actionModeNote,
   isPristine,
   cssSnippet,
   onPreset,
@@ -64,6 +69,7 @@ export default function PlaygroundControls({
   onFontLabel,
   onProductName,
   onReset,
+  onOpenAdvanced,
 }: PlaygroundControlsProps) {
   /* Theme-dependent entries (the neutrals) show and match their dark-mode
      counterpart while dark mode is active. */
@@ -146,6 +152,13 @@ export default function PlaygroundControls({
           showText
           aria-label="Custom brand colour"
           className={isCustomBrand ? styles.customPickerActive : ""}
+        />
+        {actionModeNote && <p className={styles.controlNote}>{actionModeNote}</p>}
+        <Button
+          label="All colour ramps"
+          variant="tertiary"
+          iconLeft="palette"
+          onClick={onOpenAdvanced}
         />
       </div>
 

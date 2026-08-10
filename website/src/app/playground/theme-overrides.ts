@@ -106,22 +106,261 @@ export const ACTION_COLOR_PRESETS: ReadonlyArray<{
 ];
 
 /**
- * Overrides for the full teal ramp, rebuilt around a picked brand colour.
- *
- * The shipped ramp assumes a mid-dark base: tint steps (01–06) head toward
- * white — step 02 is the text ON the primary fill — and shade steps (08–10)
- * toward black for hover/pressed. For a LIGHT brand (a white button), both
- * jobs invert: text and hover states must contrast toward black, so every
- * step mixes darker instead. Without this, white buttons get white text.
+ * The ideal ramp around a key colour, as rgb per teal-weight step — the
+ * role intents pointer mode matches against real steps. The shipped
+ * weights assume a mid-dark key: tint steps (01–06) head toward white —
+ * step 02 is the text ON the primary fill — and shade steps (08–10)
+ * toward black for hover/pressed. For a LIGHT key (a white button), both
+ * jobs invert toward black, so white buttons never get white text.
  */
-export function brandOverrides(brandHex: string): Overrides {
+function brandRampValues(brandHex: string): Record<string, [number, number, number]> {
   const base = hexToRgb(brandHex);
   const lightBrand = luminance(base) > 0.5;
-  const overrides: Overrides = {};
+  const values: Record<string, [number, number, number]> = {};
   for (const [step, weight] of BRAND_RAMP_WEIGHTS) {
     const pole = lightBrand ? BLACK : weight > 0 ? WHITE : BLACK;
-    const value = weight === 0 ? base : mix(base, pole, Math.abs(weight));
-    overrides[`--primitive-teal-${step}`] = rgbToHex(value);
+    values[step] = weight === 0 ? base : mix(base, pole, Math.abs(weight));
+  }
+  return values;
+}
+
+/* ---------- advanced mode: every chromatic ramp ---------- */
+
+const RAMP_BASE_STEP = "07";
+
+/**
+ * The shipped chromatic primitives (the values in tokens-primitives.css).
+ * Like NEUTRALS and ACTION_COLOR_PRESETS these are constants on purpose:
+ * once an override is applied, the DOM no longer knows the originals.
+ * Neutral stays out — its alpha variants and the tint lever already own it.
+ */
+export const CHROMATIC_RAMPS: ReadonlyArray<{
+  name: string;
+  label: string;
+  steps: ReadonlyArray<[step: string, hex: string]>;
+}> = [
+  {
+    name: "red",
+    label: "Red",
+    steps: [
+      ["01", "#FDEFF3"], ["02", "#FAD3DD"], ["03", "#F8B7C7"], ["04", "#F69BB1"],
+      ["05", "#F37F9B"], ["06", "#F16385"], ["07", "#EF476F"], ["08", "#C93A5C"],
+      ["09", "#8E2641"], ["10", "#571727"],
+    ],
+  },
+  {
+    name: "orange",
+    label: "Orange",
+    steps: [
+      ["01", "#FFF3EC"], ["02", "#FBD9C5"], ["03", "#F6B794"], ["04", "#F1996E"],
+      ["05", "#E98256"], ["06", "#E07045"], ["07", "#EF8247"], ["08", "#C65E33"],
+      ["09", "#8F4324"], ["10", "#552716"],
+    ],
+  },
+  {
+    name: "yellow",
+    label: "Yellow",
+    steps: [
+      ["01", "#FFF9EA"], ["02", "#FFF0C9"], ["03", "#FFE5A3"], ["04", "#FFD97F"],
+      ["05", "#F2C55E"], ["06", "#E0B654"], ["07", "#FFD166"], ["08", "#C49A3E"],
+      ["09", "#8A6B2A"], ["10", "#544016"],
+    ],
+  },
+  {
+    name: "green",
+    label: "Green",
+    steps: [
+      ["01", "#ECFCF7"], ["02", "#CEF6E8"], ["03", "#9DEBD4"], ["04", "#6DE0C0"],
+      ["05", "#3ED4AA"], ["06", "#1FCB9A"], ["07", "#06D6A0"], ["08", "#05A67C"],
+      ["09", "#03765A"], ["10", "#024336"],
+    ],
+  },
+  {
+    name: "teal",
+    label: "Teal",
+    steps: [
+      ["01", "#ECF7FB"], ["02", "#CFEAF3"], ["03", "#9ED4E5"], ["04", "#6DBCD6"],
+      ["05", "#3CA5C6"], ["06", "#2C9AB9"], ["07", "#118AB2"], ["08", "#0E6E8F"],
+      ["09", "#0A4E66"], ["10", "#052F3E"],
+    ],
+  },
+  {
+    name: "blue",
+    label: "Blue",
+    steps: [
+      ["01", "#EEF3FD"], ["02", "#D3DDF8"], ["03", "#AABCEF"], ["04", "#7F99E3"],
+      ["05", "#5475D4"], ["06", "#345AC4"], ["07", "#1E47B0"], ["08", "#163789"],
+      ["09", "#0F265E"], ["10", "#081633"],
+    ],
+  },
+  {
+    name: "purple",
+    label: "Purple",
+    steps: [
+      ["01", "#F7F0FE"], ["02", "#E6D2FB"], ["03", "#CFABF7"], ["04", "#B785F0"],
+      ["05", "#A86AE8"], ["06", "#9754DC"], ["07", "#9E47EF"], ["08", "#7434B3"],
+      ["09", "#52247D"], ["10", "#31164A"],
+    ],
+  },
+];
+
+/* HSL round-trip for the all-ramps levers. h in degrees, s/l in 0..1. */
+
+const rgbToHsl = ([r, g, b]: [number, number, number]): [number, number, number] => {
+  const rn = r / 255, gn = g / 255, bn = b / 255;
+  const max = Math.max(rn, gn, bn), min = Math.min(rn, gn, bn);
+  const l = (max + min) / 2;
+  if (max === min) return [0, 0, l];
+  const d = max - min;
+  const s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+  let h: number;
+  if (max === rn) h = ((gn - bn) / d + (gn < bn ? 6 : 0)) * 60;
+  else if (max === gn) h = ((bn - rn) / d + 2) * 60;
+  else h = ((rn - gn) / d + 4) * 60;
+  return [h, s, l];
+};
+
+const hslToRgb = ([h, s, l]: [number, number, number]): [number, number, number] => {
+  const c = (1 - Math.abs(2 * l - 1)) * s;
+  const hp = ((h % 360) + 360) % 360 / 60;
+  const x = c * (1 - Math.abs((hp % 2) - 1));
+  const m = l - c / 2;
+  const [r, g, b] =
+    hp < 1 ? [c, x, 0] :
+    hp < 2 ? [x, c, 0] :
+    hp < 3 ? [0, c, x] :
+    hp < 4 ? [0, x, c] :
+    hp < 5 ? [x, 0, c] : [c, 0, x];
+  return [(r + m) * 255, (g + m) * 255, (b + m) * 255];
+};
+
+/**
+ * Per-step mix weight (toward white if positive, black if negative) that
+ * best reproduces `target` from `base` — the same model brandOverrides
+ * uses, but derived per ramp instead of hardcoded for teal, so each ramp
+ * keeps its own tint/shade geometry when rebuilt from a new base.
+ */
+const stepWeight = (
+  base: [number, number, number],
+  target: [number, number, number]
+): number => {
+  const towardWhite = luminance(target) > luminance(base);
+  const pole = towardWhite ? 255 : 0;
+  let sum = 0;
+  let n = 0;
+  for (let i = 0; i < 3; i++) {
+    const denom = pole - base[i];
+    if (Math.abs(denom) < 8) continue;
+    sum += (target[i] - base[i]) / denom;
+    n++;
+  }
+  const w = Math.min(1, Math.max(0, n ? sum / n : 0));
+  return towardWhite ? w : -w;
+};
+
+const rampWeights = new Map<string, ReadonlyArray<[string, number]>>();
+
+const weightsFor = (ramp: (typeof CHROMATIC_RAMPS)[number]) => {
+  let weights = rampWeights.get(ramp.name);
+  if (!weights) {
+    const base = hexToRgb(ramp.steps.find(([s]) => s === RAMP_BASE_STEP)![1]);
+    weights = ramp.steps.map(([step, hex]) => [step, stepWeight(base, hexToRgb(hex))]);
+    rampWeights.set(ramp.name, weights);
+  }
+  return weights;
+};
+
+/** A chromatic ramp rebuilt around a new key (step 07) colour, using the
+    ramp's own derived tint/shade geometry. */
+export function rampRebaseSteps(
+  rampName: string,
+  keyHex: string
+): Array<[step: string, hex: string]> {
+  const ramp = CHROMATIC_RAMPS.find((r) => r.name === rampName)!;
+  const key = hexToRgb(keyHex);
+  return ramp.steps.map(([step]) => {
+    const weight = weightsFor(ramp).find(([s]) => s === step)![1];
+    const rgb =
+      weight === 0 ? key : mix(key, weight > 0 ? WHITE : BLACK, Math.abs(weight));
+    return [step, rgbToHex(rgb)];
+  });
+}
+
+/**
+ * The ramp family a colour belongs to, by hue distance to each chromatic
+ * key. Greys (and near-black/near-white) belong to neutral. This is what
+ * keeps a custom action colour honest: a warm orange brand reshapes the
+ * orange ramp, never the teal one.
+ */
+export function nearestRampFor(hex: string): string {
+  const [h, s, l] = rgbToHsl(hexToRgb(hex));
+  if (s < 0.1 || l < 0.04 || l > 0.97) return "neutral";
+  let best = "teal";
+  let bestD = Infinity;
+  for (const ramp of CHROMATIC_RAMPS) {
+    const [rampHue] = rgbToHsl(
+      hexToRgb(ramp.steps.find(([step]) => step === RAMP_BASE_STEP)![1])
+    );
+    const d = Math.abs(h - rampHue);
+    const dist = Math.min(d, 360 - d);
+    if (dist < bestD) {
+      bestD = dist;
+      best = ramp.name;
+    }
+  }
+  return best;
+}
+
+export interface AdvancedColorState {
+  /** Degrees added to every chromatic hue (-180..180). */
+  hueShift: number;
+  /** Saturation multiplier as a percentage (100 = shipped). */
+  satScale: number;
+  /** Per-ramp replacement base (step 07) colours, keyed by ramp name. */
+  bases: Record<string, string>;
+}
+
+export const DEFAULT_ADVANCED: AdvancedColorState = {
+  hueShift: 0,
+  satScale: 100,
+  bases: {},
+};
+
+export const isAdvancedPristine = (s: AdvancedColorState): boolean =>
+  s.hueShift === 0 && s.satScale === 100 && Object.keys(s.bases).length === 0;
+
+/**
+ * Overrides for the advanced-mode levers. Per-ramp bases rebuild that
+ * ramp with its own derived weights; the hue/saturation levers then
+ * transform every chromatic step. `current` is the overrides already
+ * computed by the simpler levers (the action-colour ramp, mostly) so the
+ * global levers start from what is on screen, not the shipped values.
+ */
+export function advancedColorOverrides(
+  state: AdvancedColorState,
+  current: Overrides
+): Overrides {
+  const overrides: Overrides = {};
+  const global = state.hueShift !== 0 || state.satScale !== 100;
+  for (const ramp of CHROMATIC_RAMPS) {
+    const pickedBase = state.bases[ramp.name];
+    if (!pickedBase && !global) continue;
+    const rebased = pickedBase
+      ? new Map(rampRebaseSteps(ramp.name, pickedBase))
+      : null;
+    for (const [step, shippedHex] of ramp.steps) {
+      const varName = `--primitive-${ramp.name}-${step}`;
+      let rgb: [number, number, number] = hexToRgb(
+        rebased ? rebased.get(step)! : (current[varName] ?? shippedHex)
+      );
+      if (global) {
+        const hsl = rgbToHsl(rgb);
+        hsl[0] += state.hueShift;
+        hsl[1] = Math.min(1, Math.max(0, hsl[1] * (state.satScale / 100)));
+        rgb = hslToRgb(hsl);
+      }
+      overrides[varName] = rgbToHex(rgb);
+    }
   }
   return overrides;
 }
@@ -174,6 +413,203 @@ export function neutralOverrides(seedHex: string, strength: number): Overrides {
     }
   }
   return overrides;
+}
+
+/* ---------- pointer mode: repoint semantics at a real ramp ---------- */
+
+/**
+ * Every semantic token the shipped themes point at the teal (action) ramp,
+ * with the step each theme uses. Mirrors tokens-light/dark.css by hand —
+ * if those files repoint a role, update this map. `dark: null` means the
+ * dark theme doesn't reference teal for that role; `darkRestore` is the
+ * shipped dark value, re-asserted so a consumer's :root override can't
+ * leak into their dark theme by load order.
+ */
+const ACTION_SEMANTIC_REFS: ReadonlyArray<{
+  cssVar: string;
+  light: string;
+  dark: string | null;
+  darkRestore?: string;
+}> = [
+  { cssVar: "--color-action-primary-bg", light: "07", dark: "07" },
+  { cssVar: "--color-action-primary-bg-hover", light: "08", dark: "08" },
+  { cssVar: "--color-action-primary-bg-active", light: "09", dark: "09" },
+  { cssVar: "--color-action-primary-text", light: "02", dark: "02" },
+  { cssVar: "--color-action-primary-text-secondary", light: "10", dark: "10" },
+  { cssVar: "--color-action-primary-text-tertiary", light: "07", dark: "07" },
+  { cssVar: "--color-action-primary-border", light: "09", dark: "09" },
+  { cssVar: "--color-action-primary-border-secondary", light: "06", dark: "06" },
+  { cssVar: "--color-action-primary-border-tertiary", light: "04", dark: "04" },
+  {
+    cssVar: "--color-action-icon-active",
+    light: "02",
+    dark: null,
+    darkRestore: "var(--primitive-neutral-01)",
+  },
+  { cssVar: "--color-core-ui-primary", light: "07", dark: "07" },
+  { cssVar: "--color-core-ui-secondary", light: "10", dark: "09" },
+  { cssVar: "--color-input-border-hover", light: "04", dark: "09" },
+  { cssVar: "--color-input-border-selected", light: "06", dark: "06" },
+  { cssVar: "--color-ai-gradient-end", light: "06", dark: "05" },
+];
+
+/** Steps of any primitive ramp, the neutral scale included. */
+const rampStepsOf = (ramp: string): ReadonlyArray<[string, string]> =>
+  ramp === "neutral"
+    ? NEUTRALS.map(({ step, hex }) => [step, hex] as [string, string])
+    : CHROMATIC_RAMPS.find((r) => r.name === ramp)!.steps;
+
+/**
+ * The primitive a hex value is, if it is one. This is what decides pointer
+ * mode: an action colour that names a real primitive (every preset swatch
+ * does) can be expressed as semantic re-pointing instead of a rewritten
+ * teal ramp.
+ */
+export function findPrimitive(
+  hex: string
+): { ramp: string; step: string } | null {
+  const target = hex.toUpperCase();
+  for (const ramp of CHROMATIC_RAMPS) {
+    for (const [step, stepHex] of ramp.steps) {
+      if (stepHex === target) return { ramp: ramp.name, step };
+    }
+  }
+  for (const { step, hex: stepHex } of NEUTRALS) {
+    if (stepHex === target) return { ramp: "neutral", step };
+  }
+  return null;
+}
+
+const distSq = (
+  a: [number, number, number],
+  b: [number, number, number]
+): number => (a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2 + (a[2] - b[2]) ** 2;
+
+/**
+ * Semantic overrides that repoint the action roles at a real ramp — the
+ * honest version of brandOverrides. Each role's intended colour (key
+ * shifted by the shipped tint/shade weight) is matched to the nearest
+ * actual step of the target ramp, so the output is pure
+ * `var(--primitive-…)` references and the teal primitives stay teal.
+ * A light key (a white or yellow button) shifts every supporting role
+ * toward the dark end via the same inversion brandOverrides uses.
+ */
+export function actionPointerOverrides(
+  ramp: string,
+  keyHex: string,
+  theme: "light" | "dark",
+  /** Match against these step values instead of the shipped ramp — used
+      when the target ramp is itself being rebased around the key. */
+  candidateSteps?: ReadonlyArray<[string, string]>
+): Overrides {
+  const ideal = brandRampValues(keyHex);
+  const steps = candidateSteps ?? rampStepsOf(ramp);
+  const order = steps.map(([s]) => s);
+  const rgbByStep = new Map(steps.map(([s, h]) => [s, hexToRgb(h)]));
+
+  const nearest = (
+    target: [number, number, number],
+    preferred: string
+  ): string => {
+    let best = order[0];
+    let bestD = Infinity;
+    for (const [step, rgb] of rgbByStep) {
+      const d = distSq(rgb, target);
+      if (d < bestD) {
+        bestD = d;
+        best = step;
+      }
+    }
+    /* Ties happen on irregular ramps (a rebased step can duplicate the
+       key) — prefer the canonical step the shipped theme uses. */
+    const preferredRgb = rgbByStep.get(preferred);
+    if (preferredRgb && distSq(preferredRgb, target) === bestD) return preferred;
+    return best;
+  };
+
+  const picked: Record<string, string> = {};
+  const overrides: Overrides = {};
+  for (const ref of ACTION_SEMANTIC_REFS) {
+    const tealStep = theme === "light" ? ref.light : ref.dark;
+    if (!tealStep) {
+      if (theme === "dark" && ref.darkRestore) overrides[ref.cssVar] = ref.darkRestore;
+      continue;
+    }
+    picked[ref.cssVar] = nearest(ideal[tealStep], tealStep);
+  }
+
+  /* Nearest-match can collapse bg/hover/active onto one step, which would
+     erase the interaction states — force them onto distinct, deepening
+     steps (both ramp directions run light to dark, and hover/active always
+     deepen, whichever way the key leans). */
+  const idx = (s: string) => order.indexOf(s);
+  const deeper = (s: string) => order[Math.min(order.length - 1, idx(s) + 1)];
+  const bg = "--color-action-primary-bg";
+  const hover = "--color-action-primary-bg-hover";
+  const active = "--color-action-primary-bg-active";
+  if (idx(picked[hover]) <= idx(picked[bg])) picked[hover] = deeper(picked[bg]);
+  if (idx(picked[active]) <= idx(picked[hover])) picked[active] = deeper(picked[hover]);
+
+  for (const [cssVar, step] of Object.entries(picked)) {
+    overrides[cssVar] = `var(--primitive-${ramp}-${step})`;
+  }
+  return overrides;
+}
+
+/**
+ * Everything the action-colour lever does for one hex in one theme.
+ * `primitives` is theme-agnostic (a custom hex rebases its nearest ramp);
+ * `semantics` is the theme's pointer map. Null for the shipped default.
+ */
+export interface ActionColorPlan {
+  /** The ramp the action tokens point at. */
+  ramp: string;
+  /** True when the hex names a real primitive — nothing is rewritten. */
+  isPrimitive: boolean;
+  /** Rebased `--primitive-*` values for a custom hex; empty otherwise. */
+  primitives: Overrides;
+  /** Semantic `var(--primitive-…)` pointers for the requested theme. */
+  semantics: Overrides;
+}
+
+export function actionColorPlan(
+  hex: string,
+  theme: "light" | "dark"
+): ActionColorPlan | null {
+  const upper = hex.toUpperCase();
+  if (upper === DEFAULT_BRAND) return null;
+  const prim = findPrimitive(upper);
+  if (prim) {
+    if (prim.ramp === "teal" && prim.step === "07") return null;
+    return {
+      ramp: prim.ramp,
+      isPrimitive: true,
+      primitives: {},
+      semantics: actionPointerOverrides(prim.ramp, upper, theme),
+    };
+  }
+  const ramp = nearestRampFor(upper);
+  if (ramp === "neutral") {
+    /* A grey custom hex points at the shipped neutral scale — rebasing
+       the neutral primitives would drag every page surface with it. */
+    return {
+      ramp,
+      isPrimitive: false,
+      primitives: {},
+      semantics: actionPointerOverrides(ramp, upper, theme),
+    };
+  }
+  const rebased = rampRebaseSteps(ramp, upper);
+  const primitives: Overrides = {};
+  for (const [step, stepHex] of rebased) {
+    primitives[`--primitive-${ramp}-${step}`] = stepHex;
+  }
+  return {
+    ramp,
+    isPrimitive: false,
+    primitives,
+    semantics: actionPointerOverrides(ramp, upper, theme, rebased),
+  };
 }
 
 /* ---------- radius ---------- */
