@@ -25,8 +25,13 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
  * scripts/validate-website-surfaces.mjs checks each one has a page to read
  * it on, so a spec cannot be synced as a raw download and then be
  * unreachable from the site.
+ *
+ * porting-guide.md is deliberately absent: unpublished from the site in
+ * August 2026 (the old route redirects to /docs), it stays a repo-only
+ * agent doc, still scanned by scripts/validate-doc-refs.mjs. Do not
+ * re-add it here without a decision to republish.
  */
-export const FILES = ['CLAUDE.md', 'design.md', 'content-design.md', 'porting-guide.md'];
+export const FILES = ['CLAUDE.md', 'design.md', 'content-design.md'];
 
 /** The /blueprints route segment for a spec file. */
 export const blueprintSlug = (name) => name.replace(/\.md$/, '').toLowerCase();

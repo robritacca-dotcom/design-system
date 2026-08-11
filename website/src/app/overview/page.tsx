@@ -259,7 +259,6 @@ export default function AboutDsPage() {
               <Link href="/blueprints/claude" className={styles.inlineLink}>CLAUDE.md</Link>,{" "}
               <Link href="/blueprints/design" className={styles.inlineLink}>design.md</Link>,{" "}
               <Link href="/blueprints/content-design" className={styles.inlineLink}>content-design.md</Link>, the{" "}
-              <Link href="/blueprints/porting-guide" className={styles.inlineLink}>porting guide</Link>, the{" "}
               <Link href="/skills" className={styles.inlineLink}>skills</Link>, and the{" "}
               <Link href="/loops" className={styles.inlineLink}>loops</Link> are ready to drop into your own codebase or AI tooling.
             </p>

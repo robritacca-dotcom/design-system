@@ -113,19 +113,6 @@ export default function DocsPage() {
               </div>
             </TocCard>
 
-            {/* Porting guide */}
-            <TocCard href="/blueprints/porting-guide" title="Porting guide">
-              <div className={`${styles.circlePreview} ${styles.circleNeutral}`}>
-                <div className={styles.docPreview}>
-                  <span className="material-symbols-rounded" aria-hidden="true" style={{ color: "var(--color-text-secondary)" }}>
-                    swap_horiz
-                  </span>
-                  <span className={styles.docLine} style={{ width: "72px" }} />
-                  <span className={styles.docLine} style={{ width: "52px" }} />
-                </div>
-              </div>
-            </TocCard>
-
             {/* Skills */}
             <TocCard href="/skills" title="Skills">
               <div className={`${styles.circlePreview} ${styles.circleGreen}`}>
