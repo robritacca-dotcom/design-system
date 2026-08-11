@@ -332,8 +332,16 @@
   bottom: calc(8px - var(--gap-lg)); /* stop 8px above the next logo */
 }
 
-/* Last entry has no following logo — stop the bar at its own content */
+/* Last entry has no following logo — the bar runs to its own content's end
+   and fades out: the hairline treatment (1px, dissolving to the transparent
+   container colour) that marks the end of the timeline. */
 .ds-timeline--company .ds-timeline__item:last-child::before {
   display: block;
   bottom: 0;
+  width: var(--border-xs);
+  background: linear-gradient(
+    to bottom,
+    var(--color-divider),
+    var(--color-bg-container-primary-transparent)
+  );
 }
