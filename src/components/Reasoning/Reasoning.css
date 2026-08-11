@@ -183,7 +183,18 @@
      the thought-for line never shifts the trace. */
   margin-left: calc(var(--icon-size-md) / 2 - var(--border-md) / 2);
   padding-left: calc(var(--icon-size-md) / 2 + var(--gap-sm-md) - var(--border-md) / 2);
-  border-left: var(--border-md) solid var(--color-divider);
+  /* The rail dissolves at its foot — the Timeline's end-of-line treatment.
+     A border can't carry a gradient, so the border only reserves the
+     geometry (transparent, same width) and the stripe is painted under it:
+     a border-box background sized to the border's own column. */
+  border-left: var(--border-md) solid transparent;
+  background:
+    linear-gradient(
+        to bottom,
+        var(--color-divider) calc(100% - var(--gap-lg) * 2),
+        var(--color-bg-container-primary-transparent)
+      )
+      left top / var(--border-md) 100% no-repeat border-box;
   color: var(--color-text-secondary);
   font-family: var(--font-paragraph-family);
   font-size: var(--font-paragraph-size);
