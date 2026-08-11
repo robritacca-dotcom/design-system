@@ -49,7 +49,13 @@
 /* A floating palette: fixed to the left edge, vertically centred, hugging
    its content's height (the max-height turns a too-short viewport into an
    internal scroll). The same glass treatment as the widget, so the two
-   read as one bench. */
+   read as one bench.
+
+   The shell and the scroller are separate elements deliberately: a scroll
+   container draws its scrollbar square to the very edge of its box, poking
+   past a border-radius — so the shell owns the radius and clips, and the
+   scrolling (with the padding) happens one level in. (clip-path on a single
+   element would also work, but it clips the drop shadow away.) */
 .rail {
   position: fixed;
   left: var(--padding-lg);
@@ -57,23 +63,31 @@
   transform: translateY(-50%);
   width: var(--rail-width);
   max-height: calc(100dvh - var(--padding-lg) * 2);
+  z-index: 15;
+  display: flex;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--color-bg-container-primary) 82%, transparent);
+  border: var(--border-xs) solid var(--color-bg-container-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-floating);
+  backdrop-filter: blur(24px);
+}
+
+.railScroll {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
   overflow-y: auto;
   /* The chat thread's scrollbar treatment: thin, gutter reserved, the
      divider grey for a thumb — not the browser's chrome. */
   scrollbar-width: thin;
   scrollbar-gutter: stable;
   scrollbar-color: var(--color-divider) transparent;
-  z-index: 15;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: var(--gap-md);
   padding: var(--padding-md);
-  background: color-mix(in srgb, var(--color-bg-container-primary) 82%, transparent);
-  border: var(--border-xs) solid var(--color-bg-container-border);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-floating);
-  backdrop-filter: blur(24px);
 }
 
 .railTitle {

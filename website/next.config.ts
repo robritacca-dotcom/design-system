@@ -15,10 +15,8 @@ const contentSecurityPolicy = [
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com",
   // substackcdn.com serves the article cover images and in-post images
-  // surfaced on /writing from the Substack RSS feed. blob: is the chat
-  // bench's throwaway logo preview — an in-memory object URL a page script
-  // created itself, never a remote fetch.
-  "img-src 'self' data: blob: https://substackcdn.com https://www.googletagmanager.com https://*.google-analytics.com",
+  // surfaced on /writing from the Substack RSS feed.
+  "img-src 'self' data: https://substackcdn.com https://www.googletagmanager.com https://*.google-analytics.com",
   "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com",
   // The /work case-study pages embed YouTube videos in iframes.
   "frame-src https://www.youtube.com https://www.youtube-nocookie.com",

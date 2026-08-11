@@ -6,7 +6,6 @@ import styles from "./page.module.css";
 import { Button } from "@robr0/design-system/components/Button/Button";
 import { CircularButton } from "@robr0/design-system/components/CircularButton/CircularButton";
 import { ColorPicker } from "@robr0/design-system/components/ColorPicker/ColorPicker";
-import { FileInput } from "@robr0/design-system/components/FileInput/FileInput";
 import { Input } from "@robr0/design-system/components/Input/Input";
 import { RadioGroup } from "@robr0/design-system/components/RadioButton/RadioButton";
 import { Swatch } from "@robr0/design-system/components/Swatch/Swatch";
@@ -130,33 +129,6 @@ function BenchStage({
   const [placeholderText, setPlaceholderText] = useState("");
   const [showStarters, setShowStarters] = useState(true);
 
-  /* ---------- logo ----------
-     A custom logo is a session-only object URL: it lives in this tab's
-     memory, never uploads anywhere, and dies on reload. Replacing or
-     clearing one revokes it so a long review session doesn't leak blobs. */
-  const [logoOn, setLogoOn] = useState(true);
-  const [customLogo, setCustomLogo] = useState<{ url: string; name: string } | null>(
-    null
-  );
-  const pickLogo = (files: File[]) => {
-    const file = files[0];
-    if (!file) return;
-    setCustomLogo((prev) => {
-      if (prev) URL.revokeObjectURL(prev.url);
-      return { url: URL.createObjectURL(file), name: file.name };
-    });
-  };
-  const clearLogo = () =>
-    setCustomLogo((prev) => {
-      if (prev) URL.revokeObjectURL(prev.url);
-      return null;
-    });
-  /* No unmount revoke, deliberately: dev-mode remounts (Fast Refresh,
-     StrictMode) re-run effect cleanups while state survives, which would
-     kill the blob under a live preview. The replace/clear revokes above
-     bound the leak at one small image per session, and the document's end
-     reclaims that. */
-
   /* ---------- manual resize via the edge handles ----------
      The stage centres the widget, so a drag moves both opposing edges —
      deltas are doubled to keep the grabbed edge under the cursor. Sizes are
@@ -238,8 +210,9 @@ function BenchStage({
   const isCompact = preset.w < 500;
   const isFull = view === "full" && !isDevice;
 
-  /* The bench is chromeless, so the X is the way back to wherever the
-     visitor came from; opened cold (a shared link), it goes home. */
+  /* The page carries no site chrome — the immersive format's deliberate
+     trade — so the X is the way back to wherever the visitor came from;
+     opened cold (a shared link), it goes home. */
   const leaveBench = () => {
     if (window.history.length > 2) router.back();
     else router.push("/");
@@ -253,8 +226,6 @@ function BenchStage({
     setAppName("");
     setPlaceholderText("");
     setShowStarters(true);
-    setLogoOn(true);
-    clearLogo();
     if (transportMode !== "sim") {
       onTransportChange("sim");
       reset();
@@ -289,7 +260,7 @@ function BenchStage({
         title={appName.trim() === "" ? "robr0 GPT" : appName}
         placeholder={placeholderText.trim() === "" ? "Ask anything" : placeholderText}
         showStarters={showStarters}
-        logo={logoOn ? (customLogo?.url ?? "/rr.svg") : null}
+        logo="/rr.svg"
       />
     </div>
   );
@@ -311,133 +282,117 @@ function BenchStage({
           </div>
 
           <div className={styles.rail}>
-            <h1 className={styles.railTitle}>Chat bench</h1>
+            <div className={styles.railScroll}>
+              <h1 className={styles.railTitle}>Chat bench</h1>
 
-            <div className={styles.controlGroup}>
-              <RadioGroup
-                label="Stage size"
-                name="stage-size"
-                value={size}
-                options={Object.entries(STAGE_SIZES).map(([value, s]) => ({
-                  value,
-                  label: s.label,
-                }))}
-                onValueChange={(value) => {
-                  /* A manual drag is a size of its own, so switching stage
-                     size discards it rather than resizing around it. */
-                  onSizeChange(value as StageSize);
-                  setManual({});
-                }}
-              />
-              <p className={styles.controlNote}>
-                Mobile renders edge-to-edge in a bezel, the way the site panel
-                ships on phones.
-              </p>
-            </div>
-
-            <div className={styles.controlGroup}>
-              <RadioGroup
-                label="Theme"
-                name="bench-theme"
-                value={theme}
-                options={[
-                  { value: "light", label: "Light" },
-                  { value: "dark", label: "Dark" },
-                ]}
-                onValueChange={(value) => applyTheme(value as Theme)}
-              />
-            </div>
-
-            <div className={styles.controlGroup}>
-              {/* Swapping transports resets the conversation: a stream from
-                  the old one would otherwise keep writing into the new
-                  transcript. Picking the mode already running is not a swap. */}
-              <RadioGroup
-                label="Transport"
-                name="bench-transport"
-                value={transportMode}
-                options={[
-                  { value: "sim", label: "Simulated" },
-                  { value: "live", label: "Live" },
-                ]}
-                onValueChange={(value) => {
-                  if (value === transportMode) return;
-                  onTransportChange(value as TransportMode);
-                  reset();
-                }}
-              />
-              <p className={styles.controlNote}>
-                Simulated replays a scripted exchange without calling the
-                model. Live answers through the site&rsquo;s API route.
-              </p>
-            </div>
-
-            <div className={styles.controlGroup}>
-              <h4 className={styles.controlHeading}>Action colour</h4>
-              <div className={styles.swatchGrid}>
-                {ACTION_COLOR_PRESETS.map((p) => (
-                  <Swatch
-                    key={p.hex}
-                    value={presetHex(p)}
-                    label={presetLabel(p)}
-                    selected={effectiveBrand.toUpperCase() === presetHex(p)}
-                    onClick={() => pickBrand(p.hex, p.hexDark)}
-                  />
-                ))}
+              <div className={styles.controlGroup}>
+                <RadioGroup
+                  label="Stage size"
+                  name="stage-size"
+                  value={size}
+                  options={Object.entries(STAGE_SIZES).map(([value, s]) => ({
+                    value,
+                    label: s.label,
+                  }))}
+                  onValueChange={(value) => {
+                    /* A manual drag is a size of its own, so switching stage
+                       size discards it rather than resizing around it. */
+                    onSizeChange(value as StageSize);
+                    setManual({});
+                  }}
+                />
+                <p className={styles.controlNote}>
+                  Mobile renders edge-to-edge in a bezel, the way the site panel
+                  ships on phones.
+                </p>
               </div>
-              <ColorPicker
-                value={brand}
-                onValueChange={pickBrand}
-                showText
-                aria-label="Custom action colour"
-                className={isCustomBrand ? styles.customPickerActive : ""}
+
+              <div className={styles.controlGroup}>
+                <RadioGroup
+                  label="Theme"
+                  name="bench-theme"
+                  value={theme}
+                  options={[
+                    { value: "light", label: "Light" },
+                    { value: "dark", label: "Dark" },
+                  ]}
+                  onValueChange={(value) => applyTheme(value as Theme)}
+                />
+              </div>
+
+              <div className={styles.controlGroup}>
+                {/* Swapping transports resets the conversation: a stream from
+                    the old one would otherwise keep writing into the new
+                    transcript. Picking the mode already running is not a swap. */}
+                <RadioGroup
+                  label="Transport"
+                  name="bench-transport"
+                  value={transportMode}
+                  options={[
+                    { value: "sim", label: "Simulated" },
+                    { value: "live", label: "Live" },
+                  ]}
+                  onValueChange={(value) => {
+                    if (value === transportMode) return;
+                    onTransportChange(value as TransportMode);
+                    reset();
+                  }}
+                />
+                <p className={styles.controlNote}>
+                  Simulated replays a scripted exchange without calling the
+                  model. Live answers through the site&rsquo;s API route.
+                </p>
+              </div>
+
+              <div className={styles.controlGroup}>
+                <h4 className={styles.controlHeading}>Action colour</h4>
+                <div className={styles.swatchGrid}>
+                  {ACTION_COLOR_PRESETS.map((p) => (
+                    <Swatch
+                      key={p.hex}
+                      value={presetHex(p)}
+                      label={presetLabel(p)}
+                      selected={effectiveBrand.toUpperCase() === presetHex(p)}
+                      onClick={() => pickBrand(p.hex, p.hexDark)}
+                    />
+                  ))}
+                </div>
+                <ColorPicker
+                  value={brand}
+                  onValueChange={pickBrand}
+                  showText
+                  aria-label="Custom action colour"
+                  className={isCustomBrand ? styles.customPickerActive : ""}
+                />
+              </div>
+
+              <div className={styles.controlGroup}>
+                <Input
+                  label="App name"
+                  placeholder="robr0 GPT"
+                  value={appName}
+                  onValueChange={setAppName}
+                />
+                <Input
+                  label="Composer placeholder"
+                  placeholder="Ask anything"
+                  value={placeholderText}
+                  onValueChange={setPlaceholderText}
+                />
+                <ToggleSwitch
+                  label="Starter prompts"
+                  checked={showStarters}
+                  onChange={setShowStarters}
+                />
+              </div>
+
+              <Button
+                label="Reset bench"
+                variant="tertiary"
+                iconLeft="restart_alt"
+                onClick={resetBench}
               />
             </div>
-
-            <div className={styles.controlGroup}>
-              <Input
-                label="App name"
-                placeholder="robr0 GPT"
-                value={appName}
-                onValueChange={setAppName}
-              />
-              <Input
-                label="Composer placeholder"
-                placeholder="Ask anything"
-                value={placeholderText}
-                onValueChange={setPlaceholderText}
-              />
-              <ToggleSwitch
-                label="Starter prompts"
-                checked={showStarters}
-                onChange={setShowStarters}
-              />
-              <ToggleSwitch label="Logo" checked={logoOn} onChange={setLogoOn} />
-              {logoOn && (
-                <>
-                  <FileInput
-                    label="Custom logo"
-                    size="compact"
-                    placeholder="Drop an image or browse"
-                    accept="image/*"
-                    files={customLogo ? [{ id: "logo", name: customLogo.name }] : []}
-                    onFilesSelected={pickLogo}
-                    onFileRemove={clearLogo}
-                  />
-                  <p className={styles.controlNote}>
-                    The logo stays in this tab and is gone on reload. Nothing
-                    uploads.
-                  </p>
-                </>
-              )}
-            </div>
-
-            <Button
-              label="Reset bench"
-              variant="tertiary"
-              iconLeft="restart_alt"
-              onClick={resetBench}
-            />
           </div>
         </>
       )}
