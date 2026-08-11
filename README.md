@@ -33,7 +33,7 @@ Accordion · Agent status · AI button · Alert · Alert dialog · App layout ·
 
 ### Using the package
 
-The design system is published as [`@robr0/design-system`](https://www.npmjs.com/package/@robr0/design-system) (React 19+ is a peer dependency). The **[full setup guide](https://robertritacca.com/docs/get-started)** covers install, dark mode, fonts, and re-theming:
+The design system is published as [`@robr0/design-system`](https://www.npmjs.com/package/@robr0/design-system) (React 19+ is a peer dependency). The **[full setup guide](https://robertritacca.com/docs/get-started)** expands on everything in this section:
 
 ```bash
 npm install @robr0/design-system
@@ -102,7 +102,7 @@ The defaults behind each role, and every component spec, live in [`design.md`](d
 
 ## AI layer
 
-The library's `ai` category is the interface half: chat primitives (Chat thread, Chat message, Composer) and agent-state components (Tool call, Reasoning, Agent status) that ship in the npm package like any other category. The site's own chat, robr0 GPT, is built from them, so it doubles as a live demo of the components it is made of.
+The library's `ai` category is the interface half: chat primitives (Chat thread, Chat message, Composer) and agent-state components (Tool call, Reasoning, Agent status). Those components ship in the npm package; the rest of the chat does not. The conversation state hook, the streaming transport, the backend route, and the corpus are this site's own code under `website/`, and a consumer builds their own equivalents, with their LLM API key held server-side, never in the client. The site's own chat, robr0 GPT, is built from the shipped primitives, so it doubles as a live demo of the components it is made of.
 
 The answering half is a Claude-backed route (`website/src/app/api/chat/route.ts`) with a persona and guardrails. There is no retrieval step: `scripts/generate-site-corpus.mjs` compiles every published page's prose, the data registries, and the root specs into one corpus at build time, and the model reads it whole. The corpus is public-only, and a validator enforces that boundary. Nothing reaches the model that is not already on the site, so a prompt injection has nothing private to leak. The route also deploys ahead of its keys, so an unconfigured deploy answers with a polite notice rather than throwing.
 

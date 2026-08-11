@@ -11,6 +11,7 @@ import styles from "./page.module.css";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import { CodeBlock } from "@robr0/design-system/components/CodeBlock/CodeBlock";
 import { Button } from "@robr0/design-system/components/Button/Button";
+import { OpenChatLink } from "./OpenChatLink";
 
 const { sidebarLinks } = getSidebarLinks(docsSidebarLinks, "/docs/get-started");
 
@@ -241,6 +242,31 @@ export default function GetStartedPage() {
                   without touching the ramp it comes from:
                 </p>
                 <CodeBlock code={SEMANTIC_SNIPPET} language="css" showCopy />
+              </section>
+
+              {/* Chat and agent UI */}
+              <section className={`${styles.section} animate-in animate-delay-6`}>
+                <SectionTitle title="Chat and agent UI" />
+                <p className={styles.sectionNote}>
+                  The <code>ai</code> category installs with the rest of the package:
+                  chat surface primitives (Chat thread, Chat message, Composer, Chat
+                  header), agent-state components (Agent status, Reasoning, Tool
+                  call), and supporting pieces such as Prose and the citation chips.
+                  They are components like any other here, themed by the same tokens,
+                  and they render whatever conversation you hand them.
+                </p>
+                <p className={styles.sectionNote}>
+                  What the package does not ship is the conversation itself. You
+                  bring the state (the transcript, which turn is streaming), a
+                  transport that talks to your backend, and a server-side endpoint
+                  holding your LLM API key. Keys stay on the server; nothing in the
+                  package or your client code ever holds one. This site&apos;s chat
+                  is the reference implementation:{" "}
+                  <OpenChatLink className={styles.inlineLinkButton}>
+                    open robr0 GPT
+                  </OpenChatLink>{" "}
+                  and you are looking at those components at work.
+                </p>
               </section>
 
               {/* Playground CTA */}

@@ -74,6 +74,18 @@
   text-underline-offset: 3px;
 }
 
+/* .inlineLink's visuals on a button element (the open-chat launcher). */
+.inlineLinkButton {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  color: var(--color-action-primary-text-tertiary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 /* ============================================
    CONTENT + BUILT-WITH RAIL
    ============================================ */
