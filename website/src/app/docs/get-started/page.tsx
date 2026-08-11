@@ -273,9 +273,10 @@ export default function GetStartedPage() {
               <section className={`${styles.section} animate-in animate-delay-6`}>
                 <SectionTitle title="See it live" />
                 <p className={styles.sectionNote}>
-                  The playground applies these overrides to this site in real time: pick a
-                  brand colour, tint the neutrals, reshape the radii, swap the font, then
-                  copy the generated CSS.
+                  The playground applies these overrides to a full page in real time
+                  (navigation, components, and the chat widget): pick a brand colour,
+                  tint the neutrals, reshape the radii, swap the font, then copy the
+                  generated CSS.
                 </p>
                 <Link href="/playground" className={styles.ctaLink}>
                   <Button label="Open the playground" variant="primary" iconRight="arrow_forward" />

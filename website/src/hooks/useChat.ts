@@ -22,8 +22,8 @@ export type ChatEvent =
   | { type: "delta"; text: string }
   /** The server-side log id for this exchange. Feedback references it, so a
       thumbs verdict can be joined back to the logged question and answer.
-      The sim transport never sends one, which is what hides the thumbs on
-      the bench. */
+      The sim transport never sends one, which is what hides the thumbs in
+      the playground's Chat view. */
   | { type: "exchange"; id: string }
   /** Terminal: the response is complete. */
   | { type: "done" }

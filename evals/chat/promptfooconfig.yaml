@@ -1,7 +1,7 @@
 # Chat answer-quality eval. Runs against the real route — persona, corpus,
 # guardrails and all — never the raw Anthropic API. See README.md in this
 # directory for how to run it and how to read it.
-description: robr0-gpt chat — golden set through /api/chat
+description: robr0 GPT chat — golden set through /api/chat
 
 prompts:
   - '{{question}}'

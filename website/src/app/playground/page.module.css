@@ -1,10 +1,9 @@
 /* ============================================
    PLAYGROUND PAGE LAYOUT
-   The chat bench's rig, shared: a floating control
-   rail on the left, the content centred in the
-   space between the rail's edge and the viewport's
-   right edge — an immersive surface, not the
-   standard page shell.
+   An immersive tool, not the standard page shell:
+   an edge control panel on the left, the workspace
+   centred in the space between the panel's edge
+   and the viewport's right edge.
    ============================================ */
 .dsLayout {
   /* The edge panel's width — the workspace centres in what remains. */
@@ -40,10 +39,9 @@
 }
 
 /* ============================================
-   CONTROL RAIL — the bench's edge panel,
-   positioned and dressed identically: flush to
-   the left edge, from the toolbar to the bottom
-   of the viewport, everything scrolling inside
+   CONTROL RAIL — an edge panel: flush to the
+   left edge, from the toolbar to the bottom of
+   the viewport, everything scrolling inside
    (the shell clips, the scroller carries the
    padding and the thin scrollbar).
    ============================================ */
@@ -321,10 +319,10 @@
 }
 
 /* ============================================
-   RESPONSIVE — the bench's breakpoint: the rail
-   rejoins the flow above the content rather than
-   floating over it. It must NOT disappear the way
-   the nav Sidebar does.
+   RESPONSIVE — below the tool's breakpoint the
+   panel rejoins the flow above the content
+   rather than floating over it. It must NOT
+   disappear the way the nav Sidebar does.
    ============================================ */
 @media (max-width: 1099px) {
   .dsLayout {
