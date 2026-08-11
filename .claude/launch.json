@@ -18,8 +18,9 @@
     {
       "name": "website-prod",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["--prefix", "website", "run", "start", "--", "--port", "4310"],
-      "port": 4310
+      "runtimeArgs": ["--prefix", "website", "run", "start"],
+      "port": 4310,
+      "autoPort": true
     },
     {
       "name": "storybook",
