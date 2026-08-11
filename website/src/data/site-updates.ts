@@ -10,7 +10,7 @@ export interface SiteUpdateEntry {
 }
 
 /**
- * Single source of truth for the Site updates timeline (/site-updates).
+ * Single source of truth for the project-journal timeline (/project-journal).
  * Entries are curated stories consolidating many commits into one theme —
  * appended by the site-updates skill on its biweekly run, validated by
  * scripts/validate-site-updates.mjs. Never hardcode an update count —

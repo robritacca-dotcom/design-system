@@ -7,8 +7,9 @@ import FadeDivider from "../FadeDivider/FadeDivider";
 import styles from "./SiteFooter.module.css";
 
 /**
- * SiteFooter — the sitemap footer: five link columns derived from the nav
- * config, then a quiet bottom row with the social icons and copyright.
+ * SiteFooter — the sitemap footer: five link columns (Site hand-curated
+ * below, three from the nav config, Elsewhere from social.ts), then a
+ * quiet bottom row with the social icons and copyright.
  * Server component; column data resolves once at module scope.
  */
 

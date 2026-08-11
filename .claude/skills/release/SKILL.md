@@ -50,13 +50,15 @@ Be deliberate about breaking changes: components are exported both from the barr
 
 `scripts/validate-package-exports.mjs` fails the build when any of the three disagree.
 
+**Two hand-maintained release-history mentions ride along with the bump** — nothing generates or validates either, so this step is the only thing keeping them true: the release-history sentence in `CLAUDE.md` (CI & Local Verify section) and the history comment at the top of `.github/workflows/release.yml`. Add the new version, date, and a short what-shipped clause to both in the bump commit.
+
 Then:
 
 ```bash
 npm run validate-registry
 ```
 
-This regenerates the surfaces that carry the version and re-checks that the package exports still match the manifest. Commit the bump on its own (`chore(release): <version>`) and push — the commit you push here is the commit that will be published and tagged.
+This re-runs the three-way version parity check and regenerates the derived surfaces (no generated surface embeds the version literal itself, but the corpus mirrors any prose the bump edited, including that CLAUDE.md sentence). Commit the bump on its own (`chore(release): <version>`) and push — the commit you push here is the commit that will be published and tagged.
 
 ### 4. Dry run — never skip this
 
@@ -64,10 +66,12 @@ This regenerates the surfaces that carry the version and re-checks that the pack
 gh workflow run release.yml -f dry_run=true
 ```
 
-Watch it to completion:
+Watch it to completion — but confirm you are watching the run you just dispatched, not the previous one. Registration lags the dispatch by a few seconds, so `--limit 1` immediately after `gh workflow run` can return the prior run (at step 5 that prior run is the green dry run, and watching it reads as a successful publish):
 
 ```bash
-gh run watch $(gh run list --workflow=release.yml --limit 1 --json databaseId --jq '.[0].databaseId') --exit-status
+sleep 10
+gh run list --workflow=release.yml --limit 3 --json databaseId,createdAt,displayTitle   # newest first — check createdAt is after your dispatch
+gh run watch <the-new-databaseId> --exit-status
 ```
 
 The dry run does everything except upload: builds `dist/`, packs the tarball, installs it into a scratch Vite + React app and **builds that app without recharts installed** (the optional-peer path — the regression this catches), then prints the publish preview. It needs no npm token, so it is free to run as often as you like. Read the preview's file count and package size and sanity-check them against the previous release; a sudden jump means something got swept into the tarball. Expect `LICENSE` and `README.md` alongside the build output; anything else new is not deliberate.
@@ -78,7 +82,7 @@ The dry run does everything except upload: builds `dist/`, packs the tarball, in
 gh workflow run release.yml -f dry_run=false
 ```
 
-Watch it the same way. The publish step runs `npm publish --access public --provenance` from `dist/`, which signs a provenance attestation tying the tarball to this repo, commit, and workflow run.
+Watch it the same way (the same watch-the-right-run caution applies, and matters more here). The publish step runs `npm publish --access public --provenance --loglevel verbose` from `dist/` — the verbose flag is deliberate, because its log lines are the only visible evidence of the OIDC token exchange the auth guardrails below tell you to look for — and signs a provenance attestation tying the tarball to this repo, commit, and workflow run.
 
 ### 6. Verify — and do not panic at a 404
 

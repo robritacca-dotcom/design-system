@@ -126,11 +126,31 @@ const missingBlueprintPage = BLUEPRINT_FILES.filter(
     )
 ).map((name) => `${name} → website/src/app/blueprints/${blueprintSlug(name)}/page.tsx`);
 
+// The llms.txt route hand-lists a raw-markdown download per published spec.
+// Both directions: every synced spec must be advertised, and every
+// advertised root .md must be synced — an unsynced advert is a public link
+// to a 404 (the drift class the porting-guide unpublish nearly created).
+const llmsSource = read(
+  join(repoRoot, 'website', 'src', 'app', 'llms.txt', 'route.ts')
+);
+const advertisedSpecs = [
+  ...llmsSource.matchAll(/\$\{SITE_URL\}\/([\w-]+\.md)\b/g),
+].map(([, f]) => f);
+const llmsStale = [
+  ...BLUEPRINT_FILES.filter((f) => !advertisedSpecs.includes(f)).map(
+    (f) => `${f} is synced to website/public but not offered as a download in llms.txt`
+  ),
+  ...advertisedSpecs.filter((f) => !BLUEPRINT_FILES.includes(f)).map(
+    (f) => `llms.txt advertises ${f}, which is not in sync-blueprints FILES — that link 404s`
+  ),
+];
+
 for (const [what, list] of [
   ['Registry components with no website showcase page', missingPage],
   ['Registry components missing an index-grid TocCard', missingTocCard],
   ['Registry components with no design.md spec section', missingSpec],
   ['Blueprint specs synced to website/public with no page to read them on', missingBlueprintPage],
+  ['llms.txt spec downloads out of sync with sync-blueprints FILES', llmsStale],
   ['SECTION_OG_IMAGE_SEGMENTS out of sync with section opengraph-image files', ogListStale],
 ]) {
   if (list.length > 0) {
