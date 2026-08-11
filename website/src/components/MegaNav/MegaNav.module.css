@@ -251,7 +251,11 @@
   text-decoration: none;
   color: inherit;
   transition: background var(--motion-duration-fast) var(--motion-ease-standard);
-  flex: 0 1 280px;
+  /* A zero flex-basis keeps every tile on one row however many there are —
+     they share the width equally and shrink together, capped so a short
+     list doesn't produce billboard tiles. */
+  flex: 1 1 0;
+  max-width: 280px;
   min-width: 0;
 }
 

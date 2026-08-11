@@ -687,8 +687,7 @@ ${full}`;
  * CLAUDE.md, minus the procedural body. A visitor asks *why* the system works
  * the way it does — the registry principle, the token tiers, the shipping
  * vocabulary — never how to run the seventh validator. The step-by-step
- * checklists and file tables are dead weight in a conversation, and the
- * Project Structure tree advertised the unlisted /robr0-gpt bench.
+ * checklists and file tables are dead weight in a conversation.
  * Throws when an expected heading disappears, so a doc restructure fails
  * loudly instead of silently shipping a mangled corpus.
  */

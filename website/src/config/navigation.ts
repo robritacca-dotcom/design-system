@@ -50,26 +50,32 @@ export const dsMegaItems: MegaItem[] = [
   {
     href: "/docs",
     label: "Docs",
-    description: "How robr0 DS works, plus the artifacts you can take and reuse",
+    description: "How robr0 DS works, and what you can reuse",
     icon: "menu_book",
   },
   {
     href: "/foundations",
     label: "Foundations",
-    description: "Colours, type, spacing, motion, icons, and logos",
+    description: "Colours, type, spacing, motion, and icons",
     icon: "category",
   },
   {
     href: "/components",
     label: "Components",
-    description: `${COMPONENT_COUNT} React components with full Storybook docs`,
+    description: `${COMPONENT_COUNT} React components with Storybook docs`,
     icon: "widgets",
   },
   {
     href: "/playground",
     label: "Playground",
-    description: "Re-theme the whole system live and copy the CSS it generates",
+    description: "Re-theme the whole system live and copy the CSS",
     icon: "tune",
+  },
+  {
+    href: "/robr0-gpt",
+    label: "Chat bench",
+    description: "Exercise the chat widget at review sizes and themes",
+    icon: "chat_bubble",
   },
 ];
 
@@ -85,6 +91,7 @@ export const dsActiveMatchers = [
   (path: string) => path.startsWith("/foundations"),
   (path: string) => path.startsWith("/components"),
   (path: string) => path === "/playground",
+  (path: string) => path === "/robr0-gpt",
 ];
 
 export function isDesignSystemPath(pathname: string): boolean {
@@ -368,11 +375,8 @@ export function getBreadcrumbs(pathname: string): BreadcrumbItem[] {
     return [];
   }
 
-  // Playground — a standalone page under the Design system umbrella (it lives
-  // in no sidebar array, so the generic section loop can't resolve it).
-  if (path === "/playground") {
-    return [DS_CRUMB, { label: "Playground" }];
-  }
+  // The playground and the chat bench are immersive pages: no site chrome,
+  // no breadcrumb — the fixed X is the way out — so no cases for them here.
 
   // Docs cluster — the landing lives at /docs but sub-pages keep their
   // original URLs, so match against the sidebar links (no shared prefix).

@@ -125,6 +125,7 @@ export default function MegaNav() {
           items: toNavItems(componentsSidebarLinks.slice(1)),
         },
         { label: "Playground", href: "/playground" },
+        { label: "Chat bench", href: "/robr0-gpt" },
       ],
     },
     { label: "Contact", href: "/contact" },
