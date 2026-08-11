@@ -242,12 +242,17 @@ export async function POST(request: Request): Promise<Response> {
   const startedAt = Date.now();
   const visitor = visitorKey(request);
   const question = latest.content;
+  /* The exchange's log id. Minted before the guardrails so every logged
+     line carries one, streamed to the client (model path only) so the
+     thumbs buttons can reference the line they are rating. */
+  const exchangeId = crypto.randomUUID();
 
   const verdict = await checkGuardrails(request);
   if (!verdict.allowed) {
     // Guardrail notices are logged too: how often the limits fire, and what
     // people were asking when they did, is exactly what tunes the caps.
     void recordExchange({
+      id: exchangeId,
       question,
       answer: verdict.notice,
       path: parsed.path,
@@ -369,6 +374,7 @@ export async function POST(request: Request): Promise<Response> {
         await recordSpend(final.usage);
         // The exchange log: the ground truth the golden set grows from.
         await recordExchange({
+          id: exchangeId,
           question,
           answer: noticeText ?? answerText,
           path: parsed.path,
@@ -378,6 +384,10 @@ export async function POST(request: Request): Promise<Response> {
           notice: noticeText !== null,
           visitor,
         });
+        // After the log line exists, so a verdict can never dangle. Not sent
+        // on the guardrail path: thumbs on a rate-limit notice rate the
+        // guardrail copy, not an answer.
+        send({ type: "exchange", id: exchangeId });
       } catch (error) {
         const aborted =
           upstream.signal.aborted ||

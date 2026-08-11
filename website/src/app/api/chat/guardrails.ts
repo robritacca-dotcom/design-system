@@ -228,6 +228,9 @@ export async function recordSpend(usage: TokenUsage): Promise<void> {
    ============================================ */
 
 export interface ExchangeLog {
+  /** Minted per request by the route and streamed to the client, so a
+      feedback verdict can be joined back to this line. */
+  id: string;
   question: string;
   answer: string;
   path: string | null;
@@ -257,5 +260,60 @@ export async function recordExchange(entry: ExchangeLog): Promise<void> {
     if (length === 1) await redis.expire(logKey(), LOG_TTL_SECONDS);
   } catch (error) {
     console.error("[chat] recording exchange failed:", error);
+  }
+}
+
+/* ============================================
+   Feedback
+
+   One key per exchange id, so a verdict is idempotent and switchable: tap
+   thumbs down after thumbs up and the later write simply wins. The TTL
+   matches the exchange log, because a verdict outliving the line it rates
+   is noise. Joining `chat:feedback:*` against the day logs is what turns a
+   dislike into a golden-set candidate for the eval.
+   ============================================ */
+
+export type FeedbackVerdict = "up" | "down";
+
+const feedbackKey = (id: string) => `chat:feedback:${id}`;
+
+const feedbackLimiter = (redis: Redis) =>
+  new Ratelimit({
+    redis,
+    limiter: Ratelimit.slidingWindow(30, "60 s"),
+    prefix: "chat:rl:feedback",
+    analytics: false,
+  });
+
+/** Per-IP limit for the feedback route. Fail-open, like every guardrail. */
+export async function checkFeedbackLimit(request: Request): Promise<boolean> {
+  const redis = getRedis();
+  if (!redis) return true;
+  try {
+    const { success } = await feedbackLimiter(redis).limit(visitorKey(request));
+    return success;
+  } catch (error) {
+    console.error("[chat] feedback limit check failed, allowing:", error);
+    return true;
+  }
+}
+
+/** Stores one verdict per exchange id, last write wins. Never throws. */
+export async function recordFeedback(
+  id: string,
+  verdict: FeedbackVerdict,
+  visitor: string
+): Promise<void> {
+  const redis = getRedis();
+  if (!redis) return;
+
+  try {
+    await redis.set(
+      feedbackKey(id),
+      JSON.stringify({ at: new Date().toISOString(), verdict, visitor }),
+      { ex: LOG_TTL_SECONDS }
+    );
+  } catch (error) {
+    console.error("[chat] recording feedback failed:", error);
   }
 }

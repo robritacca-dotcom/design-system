@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { AgentStatus } from "@robr0/design-system/components/AgentStatus/AgentStatus";
@@ -7,7 +8,38 @@ import { ChatMessage } from "@robr0/design-system/components/ChatMessage/ChatMes
 import { Prose } from "@robr0/design-system/components/Prose/Prose";
 import { Reasoning } from "@robr0/design-system/components/Reasoning/Reasoning";
 import type { ChatTurn, LiveResponse } from "@/hooks/useChat";
+import { DOCK_QUERY, useSiteChat } from "./ChatContext";
+import { ResponseActions } from "./ResponseActions";
 import styles from "./SiteChat.module.css";
+
+/* Model output is untrusted, so an href becomes a link only when it is a
+   same-site path: the slug charset sanitisePath enforces on the way in,
+   optionally rooted at "/". Anything else — external hosts, protocols,
+   fragments — renders as plain text. A hallucinated-but-clean path is
+   inert: it lands on the site's 404 page. */
+const INTERNAL_PATH = /^\/(?:[a-z0-9-]+(?:\/[a-z0-9-]+){0,3})?$/;
+
+/**
+ * Internal links navigate client-side, so the panel — mounted from the root
+ * layout — survives the trip and the conversation keeps going beside the new
+ * page. When the panel covers the page (fullscreen view, or any viewport
+ * below the dock threshold), navigating behind it would be invisible, so
+ * following a link closes the chat first.
+ */
+function MarkdownLink({ href, children }: React.ComponentPropsWithoutRef<"a">) {
+  const { view, setOpen } = useSiteChat();
+  if (!href || !INTERNAL_PATH.test(href)) return <>{children}</>;
+  return (
+    <Link
+      href={href}
+      onClick={() => {
+        if (view === "full" || !window.matchMedia(DOCK_QUERY).matches) setOpen(false);
+      }}
+    >
+      {children}
+    </Link>
+  );
+}
 
 /* A markdown table has a natural minimum width that a docked panel cannot
    meet, and the browser resolves that by breaking headings one letter per
@@ -15,6 +47,7 @@ import styles from "./SiteChat.module.css";
    Prose styles the table itself; this only supplies the scroll container,
    which Prose cannot add because it styles markup it does not render. */
 const markdownComponents = {
+  a: MarkdownLink,
   table: ({ children, ...props }: React.ComponentPropsWithoutRef<"table">) => (
     <div className={styles.tableScroll}>
       <table {...props}>{children}</table>
@@ -33,7 +66,15 @@ export function AssistantTurn({ turn, live }: { turn?: ChatTurn; live?: LiveResp
   const text = live ? live.text : (turn?.text ?? "");
 
   return (
-    <ChatMessage role="assistant">
+    <ChatMessage
+      role="assistant"
+      /* Only a committed turn gets the row: while streaming there is nothing
+         final to copy or judge, and an empty turn has nothing to act on.
+         Pinned visible — in a chat panel the actions are part of the
+         response, not a hover affordance to discover. */
+      showActions
+      actions={turn && turn.text !== "" ? <ResponseActions turn={turn} /> : undefined}
+    >
       <div className={styles.responseStack}>
         {/* While thinking the disclosure carries the live status; once
             streaming, it stays only if a trace actually accumulated —

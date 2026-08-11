@@ -69,3 +69,10 @@ Every failure found in the wild becomes a golden-set case **before** it is
 fixed. Add the question, its `requiredFacts`, and the cheapest assertion that
 would have caught it. That is what turns this file from a question list into
 a regression suite.
+
+The widget's thumbs are the queue for that rule. Every logged exchange
+carries an id, and a visitor's verdict lands at `chat:feedback:<id>` in the
+same Redis the exchange log uses (30-day TTL, matching the log). Joining
+`chat:feedback:*` against the `chat:log:<day>` lists surfaces every disliked
+answer verbatim: question, answer, and the page it was asked from — each one
+a golden-set candidate.

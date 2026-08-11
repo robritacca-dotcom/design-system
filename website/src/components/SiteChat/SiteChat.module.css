@@ -237,6 +237,83 @@
 }
 
 /* ============================================
+   MESSAGE ACTIONS — the copy and thumbs row a
+   committed assistant turn passes into
+   ChatMessage's actions slot, pinned permanently
+   visible via showActions; these style only the
+   buttons themselves.
+   ============================================ */
+
+.actionButton {
+  display: grid;
+  place-items: center;
+  padding: var(--padding-xxs);
+  border: none;
+  border-radius: var(--radius-full);
+  background: transparent;
+  cursor: pointer;
+  transition: background-color var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.actionButton:hover {
+  background-color: var(--color-action-passive-bg-hover);
+}
+
+.actionButton:active {
+  background-color: var(--color-action-passive-bg-active);
+}
+
+.actionIcon {
+  /* Both of the copy button's icons share this single grid cell, so the
+     swap happens in place rather than reflowing the row. */
+  grid-area: 1 / 1;
+  --icon-size: var(--icon-size-sm);
+  color: var(--color-icon-secondary);
+  transition:
+    opacity var(--motion-duration-fast) var(--motion-ease-standard),
+    transform var(--motion-duration-fast) var(--motion-ease-standard),
+    color var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.actionButton:hover .actionIcon {
+  color: var(--color-icon-primary);
+}
+
+/* The hidden half of the copy swap: faded and slightly shrunk, so the
+   arriving icon reads as popping in rather than teleporting. */
+.actionIconHidden {
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+/* The tick wears the positive status role while it shows — the border-level
+   value, which is what Alert uses for a status icon on a plain surface. */
+.actionIconTick,
+.actionButton:hover .actionIconTick {
+  color: var(--color-status-positive-border);
+}
+
+/* A chosen thumb: filled glyph, full-strength colour, no hover needed. */
+.actionButton[aria-pressed="true"] .actionIcon {
+  --material-symbols-fill: 1;
+  color: var(--color-icon-primary);
+}
+
+/* Sidebar.module.css's srOnly, repeated here because CSS modules scope
+   class names per file. Visually hidden, still announced. */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ============================================
    THE SITE PANEL — SiteChatMount's chrome.
    A floating card inset from the viewport edges, docked above the threshold
    (content slides over via the body inset that html[data-chat="docked"]

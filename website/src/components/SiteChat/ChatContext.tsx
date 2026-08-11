@@ -15,6 +15,17 @@ import { createFetchTransport } from "@/lib/chat-transport";
 /** Panel is the docked rail; full is the viewport takeover. */
 export type ChatView = "panel" | "full";
 
+/* Above this the panel docks and the page slides over (the body inset in
+   globals.css); below it the panel overlays behind a scrim. Chosen so the
+   pages that already run sidebar + content + right rail keep a readable
+   main column — see the build plan's geometry notes. Lives here rather than
+   in SiteChatMount so consumers deeper in the widget tree (the markdown
+   link renderer, which closes an overlaying panel on navigation) can read
+   it without importing the mount and its component graph. Also used by
+   pages that auto-open the panel (the playground), which must only do so
+   when the panel docks beside the page rather than covering it. */
+export const DOCK_QUERY = "(min-width: 1440px)";
+
 interface SiteChatContextValue {
   turns: ReturnType<typeof useChat>["turns"];
   live: ReturnType<typeof useChat>["live"];
@@ -24,6 +35,7 @@ interface SiteChatContextValue {
   send: (text: string) => boolean;
   stop: () => void;
   reset: () => void;
+  setTurnFeedback: ReturnType<typeof useChat>["setTurnFeedback"];
   open: boolean;
   setOpen: (open: boolean) => void;
   toggleOpen: () => void;

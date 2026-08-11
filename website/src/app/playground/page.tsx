@@ -36,7 +36,7 @@ import ChartsSection from "./sections/ChartsSection";
 import OverlaysSection from "./sections/OverlaysSection";
 import FeedbackSection from "./sections/FeedbackSection";
 import { useSiteChat } from "@/components/SiteChat/ChatContext";
-import { DOCK_QUERY } from "@/components/SiteChat/SiteChatMount";
+import { DOCK_QUERY } from "@/components/SiteChat/ChatContext";
 
 /* Live theme tracking (same pattern as foundations/colour-mode) so
    theme-dependent presets re-derive their overrides when the site's

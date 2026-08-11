@@ -20,6 +20,11 @@ export type ChatEvent =
   | { type: "model"; label: string }
   /** A chunk of response text. The first delta ends the thinking phase. */
   | { type: "delta"; text: string }
+  /** The server-side log id for this exchange. Feedback references it, so a
+      thumbs verdict can be joined back to the logged question and answer.
+      The sim transport never sends one, which is what hides the thumbs on
+      the bench. */
+  | { type: "exchange"; id: string }
   /** Terminal: the response is complete. */
   | { type: "done" }
   /** A guardrail response (rate limit, circuit breaker): rendered as a normal assistant message. */
@@ -62,6 +67,10 @@ export interface ChatTurn {
   tracePoints?: string[];
   /** Seconds spent before the first response text (assistant turns). */
   durationSeconds?: number;
+  /** The server's log id for the exchange, absent on sim and placeholder turns. */
+  exchangeId?: string;
+  /** The visitor's thumbs verdict on this turn, kept for the session only. */
+  feedback?: "up" | "down";
 }
 
 export type LivePhase = "thinking" | "streaming";
@@ -80,6 +89,8 @@ export interface LiveResponse {
   tracePoints: string[];
   text: string;
   durationSeconds?: number;
+  /** Carried from the transport's `exchange` event into the committed turn. */
+  exchangeId?: string;
 }
 
 let nextId = 0;
@@ -159,6 +170,7 @@ export function useChat(transport: ChatTransport) {
           role: "assistant",
           text: finished.text,
           tracePoints: finished.tracePoints,
+          exchangeId: finished.exchangeId,
           durationSeconds:
             finished.durationSeconds ??
             Math.max(1, Math.round((Date.now() - startedAt) / 1000)),
@@ -273,6 +285,11 @@ export function useChat(transport: ChatTransport) {
               case "model":
                 setModelLabel(event.label);
                 break;
+              case "exchange":
+                /* A fact about the turn, not about what is on screen — no
+                   render needed; commit carries it into the turn. */
+                current = { ...current, exchangeId: event.id };
+                break;
               case "status":
                 update({
                   ...current,
@@ -385,6 +402,16 @@ export function useChat(transport: ChatTransport) {
     [transport, commit]
   );
 
+  /**
+   * Record the visitor's thumbs verdict on a committed turn. State only —
+   * the caller owns telling the server, because only it knows the endpoint.
+   */
+  const setTurnFeedback = useCallback((turnId: string, feedback: "up" | "down") => {
+    setTurns((prev) =>
+      prev.map((turn) => (turn.id === turnId ? { ...turn, feedback } : turn))
+    );
+  }, []);
+
   /** Stop the in-flight response, keeping the text that already arrived. */
   const stop = useCallback(() => {
     abortRef.current?.abort();
@@ -402,5 +429,5 @@ export function useChat(transport: ChatTransport) {
     setLive(null);
   }, []);
 
-  return { turns, live, streaming, modelLabel, send, stop, reset };
+  return { turns, live, streaming, modelLabel, send, stop, reset, setTurnFeedback };
 }

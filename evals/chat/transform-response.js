@@ -1,8 +1,9 @@
 /**
  * promptfoo transformResponse for /api/chat.
  *
- * The route streams NDJSON, one ChatEvent per line ({status|delta|done|notice|
- * error} — the union in website/src/hooks/useChat.ts is authoritative). The
+ * The route streams NDJSON, one ChatEvent per line — the union in
+ * website/src/hooks/useChat.ts is authoritative; types this file does not
+ * read (status, model, exchange, done) fall through the chain unhandled. The
  * eval's output is the assembled answer text. Notices and errors are prefixed
  * with a marker instead of being dropped, so a rate-limit or breaker response
  * fails assertions loudly rather than being scored as a strange answer.
