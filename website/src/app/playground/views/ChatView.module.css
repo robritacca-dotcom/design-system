@@ -1,0 +1,275 @@
+/* The Chat view's stage: centres the widget in the content column at a
+   height that fits the viewport under the toolbar. Preset sizes and the
+   bezel dimensions are review targets and set dressing, not layout
+   tokens. */
+.stage {
+  /* Everything vertical the page stacks around the widget: the toolbar,
+     the layout's top gap, and the body's + layout's padding pairs. */
+  --chat-clearance: calc(var(--layout-toolbar-height) + var(--primitive-gap-xl) + var(--padding-lg) * 4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100dvh - var(--chat-clearance));
+}
+
+/* The frame shrink-wraps the widget and hosts the resize grips, which
+   straddle the edges — outside the widget's own overflow clip. No width
+   cap: a dragged widget may outgrow the content column, overflowing the
+   centred stage evenly on both sides. */
+.widgetFrame {
+  position: relative;
+  display: flex;
+}
+
+.resizing {
+  user-select: none;
+}
+
+/* The site panel's footprint, as a stage widget: glass card, sized inline
+   (resting or dragged). It never collapses below a usable chat; the one
+   hard wall is the workspace itself — the edge panel stays clear. */
+.widget {
+  display: flex;
+  flex-direction: column;
+  min-width: 320px;
+  min-height: 480px;
+  max-width: calc(100vw - var(--rail-width, 300px) - var(--gap-xl) * 2);
+  background: color-mix(in srgb, var(--color-bg-container-primary) 82%, transparent);
+  border: var(--border-xs) solid var(--color-bg-container-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-floating);
+  overflow: hidden;
+  backdrop-filter: blur(24px);
+  transition:
+    width var(--motion-duration-base) var(--motion-ease-standard),
+    height var(--motion-duration-base) var(--motion-ease-standard);
+}
+
+/* A drag tracks the pointer; the glide comes back after. */
+.resizing .widget {
+  transition: none;
+}
+
+/* Resting fit: until a drag says otherwise, the widget stays inside the
+   content column and the viewport. A manual size drops the matching clamp
+   — the user asked to go bigger, so the page is allowed to scroll and the
+   card to outgrow the column. */
+.widgetFitW {
+  max-width: 100%;
+}
+
+.widgetFitH {
+  max-height: calc(100dvh - var(--chat-clearance));
+}
+
+/* ============================================
+   PHONE PRESET — what a phone visitor actually
+   gets, shown inside a bezel so the mode is
+   unmistakable. The bezel follows the theme,
+   with a hairline to hold its edge against the
+   matching backdrop.
+   ============================================ */
+.deviceShell {
+  padding: 12px;
+  border-radius: 44px;
+  background: var(--color-bg-page-primary);
+  border: var(--border-xs) solid var(--color-bg-container-border);
+  box-shadow: var(--shadow-floating);
+}
+
+/* The screen is one glass surface — OS chrome strips and widget share it,
+   so the seams between them are invisible. The corner radius is concentric
+   with the bezel padding, standing in for a handset's screen corners. */
+.deviceScreen {
+  display: flex;
+  flex-direction: column;
+  border-radius: 32px;
+  overflow: hidden;
+  max-width: 100%;
+  max-height: calc(100dvh - var(--chat-clearance) - 24px);
+  background: color-mix(in srgb, var(--color-bg-container-primary) 82%, transparent);
+  backdrop-filter: blur(24px);
+}
+
+/* Inside a device the screen owns size, chrome, and glass; the widget is
+   just the app filling the space between the OS strips. */
+.widgetDevice {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  max-width: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+  backdrop-filter: none;
+}
+
+/* The OS status bar: time, cutout, signal — set dressing sized to the real
+   thing (a 390pt iPhone status area is ~54pt tall). */
+.statusBar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 54px;
+  padding: var(--padding-xs) var(--padding-md) 0;
+  flex-shrink: 0;
+  color: var(--color-text-primary);
+}
+
+.statusTime {
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-em-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ds-allow(color): the Dynamic Island is a camera cutout — true-black
+   hardware in both themes, not a themeable surface */
+.dynamicIsland {
+  position: absolute;
+  left: 50%;
+  top: 12px;
+  transform: translateX(-50%);
+  width: 118px;
+  height: 34px;
+  border-radius: var(--radius-full);
+  background: #000000;
+}
+
+.statusIcons {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-xxs);
+  --icon-size: var(--icon-size-sm);
+}
+
+/* The home-indicator strip (the swipe-up bar). */
+.homeBar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 24px;
+  padding-bottom: var(--padding-xs);
+  flex-shrink: 0;
+}
+
+.homeIndicator {
+  width: 134px;
+  height: 5px;
+  border-radius: var(--radius-full);
+  background: var(--color-text-primary);
+}
+
+/* The devtools-style size label, shown while a grip is being dragged. */
+.sizeReadout {
+  position: absolute;
+  left: 50%;
+  bottom: -36px;
+  transform: translateX(-50%);
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-tertiary);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* ============================================
+   RESIZE GRIPS
+   Review tooling: hover reveals a pill grip;
+   drag resizes the widget to stress the layout.
+   ============================================ */
+
+.handle {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+  z-index: 1;
+}
+
+.handle::after {
+  content: "";
+  border-radius: var(--radius-full);
+  background: transparent;
+  transition: background var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.handle:hover::after,
+.resizing .handle::after {
+  background: var(--color-text-tertiary);
+}
+
+.handle:active::after {
+  background: var(--color-text-secondary);
+}
+
+.handleLeft {
+  top: 0;
+  left: -10px;
+  width: 20px;
+  height: 100%;
+  cursor: ew-resize;
+}
+
+.handleLeft::after {
+  width: 4px;
+  height: 48px;
+}
+
+.handleRight {
+  top: 0;
+  right: -10px;
+  width: 20px;
+  height: 100%;
+  cursor: ew-resize;
+}
+
+.handleRight::after {
+  width: 4px;
+  height: 48px;
+}
+
+.handleBottom {
+  left: 0;
+  bottom: -10px;
+  width: 100%;
+  height: 20px;
+  cursor: ns-resize;
+}
+
+.handleBottom::after {
+  width: 48px;
+  height: 4px;
+}
+
+.handleCorner {
+  right: -10px;
+  bottom: -10px;
+  width: 24px;
+  height: 24px;
+  cursor: nwse-resize;
+}
+
+.handleCorner::after {
+  width: 14px;
+  height: 4px;
+  transform: rotate(-45deg);
+}
+
+/* The closed widget's entry point, centred where the widget was, on the
+   site FAB's glassy pill backing so the transparent-field button stays
+   legible over the blur field. */
+.launcher {
+  border-radius: var(--radius-full);
+  background: var(--color-bg-container-primary);
+  backdrop-filter: blur(16px);
+  box-shadow: var(--shadow-floating);
+}

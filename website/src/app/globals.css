@@ -33,6 +33,11 @@ html.theme-ready {
   --layout-rail-width: 320px;
   --layout-column-gap: var(--gap-xxl);
 
+  /* The immersive surfaces' slim toolbar (StageToolbar): one height
+     constant shared by the bar itself and the pages that reserve room
+     beneath it, so the two can never drift apart. */
+  --layout-toolbar-height: 56px;
+
   /* The docked site-chat panel: its width, and the gap it floats off the
      viewport edges (top, right, bottom — and the FAB's corner offset).
      Only applied above 1440px, where a fourth column fits beside

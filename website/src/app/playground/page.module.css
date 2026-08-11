@@ -7,26 +7,19 @@
    standard page shell.
    ============================================ */
 .dsLayout {
-  /* The horizontal zone the floating rail owns — the same clearance the
-     bench's stage reserves, so the two rails sit identically. */
+  /* The edge panel's width — the workspace centres in what remains. */
   --rail-width: 300px;
-  --rail-clearance: calc(var(--rail-width) + var(--padding-lg) + var(--gap-xl));
   display: flex;
   justify-content: center;
-  width: 100%;
-  padding-left: var(--rail-clearance);
-  /* The immersive page starts lower than a doc page would — the title
-     gets air instead of hugging the viewport's top edge. */
-  padding-top: calc(var(--primitive-gap-xxl) * 2);
-}
-
-/* The immersive format's exit — no header, so the X holds the corner the
-   way the chat bench's does, however far the page scrolls. */
-.closeSlot {
-  position: fixed;
-  top: var(--padding-lg);
-  right: var(--padding-lg);
-  z-index: 20;
+  /* Stretch across the body's own side padding so the centring zone is
+     exactly [panel edge → viewport edge] — the workspace's left and right
+     margins come out identical, not skewed by the body inset. */
+  width: calc(100% + var(--primitive-padding-xl) * 2);
+  margin-inline: calc(-1 * var(--primitive-padding-xl));
+  padding-left: var(--rail-width);
+  /* Clear the fixed toolbar, then the immersive page still starts lower
+     than a doc page would — the title gets air, not a viewport edge. */
+  padding-top: calc(var(--layout-toolbar-height) + var(--primitive-gap-xl));
 }
 
 .dsContent {
@@ -40,54 +33,6 @@
   gap: var(--gap-xxxl);
 }
 
-/* ============================================
-   PAGE TITLE - Display 2
-   ============================================ */
-.pageHeader {
-  margin-top: calc(var(--primitive-gap-xl) - var(--gap-xxxl));
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--primitive-gap-lg);
-  width: 100%;
-}
-
-.pageTitle {
-  font-size: var(--font-display-2-size);
-  font-weight: var(--font-display-2-weight);
-  line-height: var(--font-display-2-line-height);
-  letter-spacing: var(--font-display-2-letter-spacing);
-  color: var(--color-text-primary);
-  overflow-wrap: anywhere;
-}
-
-.subDisplay {
-  font-family: var(--font-sub-display-family);
-  font-size: var(--font-sub-display-size);
-  font-weight: var(--font-sub-display-weight);
-  line-height: var(--font-sub-display-line-height);
-  letter-spacing: var(--font-sub-display-letter-spacing);
-  color: var(--color-text-primary);
-  margin-bottom: 0;
-}
-
-.introSection {
-  display: flex;
-  flex-direction: column;
-  gap: var(--primitive-gap-lg);
-}
-
-.introBody {
-  font-size: var(--font-paragraph-size);
-  font-weight: var(--font-paragraph-weight);
-  line-height: var(--font-paragraph-line-height);
-  color: var(--color-text-secondary);
-}
-
-.introBody code {
-  color: var(--color-text-primary);
-}
-
 .inlineLink {
   color: var(--color-action-primary-text-tertiary);
   text-decoration: underline;
@@ -95,32 +40,26 @@
 }
 
 /* ============================================
-   CONTROL RAIL — the bench's floating palette,
-   positioned and dressed identically: fixed to
-   the left edge, vertically centred, the same
-   glass treatment, an internal scroll when the
-   viewport runs short.
+   CONTROL RAIL — the bench's edge panel,
+   positioned and dressed identically: flush to
+   the left edge, from the toolbar to the bottom
+   of the viewport, everything scrolling inside
+   (the shell clips, the scroller carries the
+   padding and the thin scrollbar).
    ============================================ */
 .controlRail {
   position: fixed;
-  left: var(--padding-lg);
-  top: 50%;
-  transform: translateY(-50%);
+  top: var(--layout-toolbar-height);
+  bottom: 0;
+  left: 0;
   width: var(--rail-width);
-  max-height: calc(100dvh - var(--padding-lg) * 2);
   /* Above the showcase sections' animate-in stacking contexts, so the
      rail's open Dropdown menu can never be painted over. */
   z-index: 15;
   display: flex;
-  /* The shell clips its scroller, so the scrollbar can never poke past
-     the rounded corners (a scroll container draws its scrollbar square to
-     its box edge); the padding lives on the scroller inside. clip-path
-     would do it in one element but clips the drop shadow away. */
   overflow: hidden;
   background: color-mix(in srgb, var(--color-bg-container-primary) 82%, transparent);
-  border: var(--border-xs) solid var(--color-bg-container-border);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-floating);
+  border-right: var(--border-xs) solid var(--color-bg-container-border);
   backdrop-filter: blur(24px);
 }
 
@@ -222,11 +161,19 @@
   margin-bottom: var(--gap-xxs);
 }
 
-/* Copy CSS + Reset, pinned at the end of the rail */
+/* Copy CSS + View CSS + Reset, pinned at the end of the rail */
 .railFooter {
   display: flex;
   flex-direction: column;
   gap: var(--gap-sm-md);
+}
+
+/* The generated-CSS dialog's body: the install note over the code. */
+.cssDialogBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  min-width: 0;
 }
 
 /* ============================================
@@ -385,13 +332,17 @@
     align-items: stretch;
     gap: var(--gap-lg);
     padding-left: 0;
+    /* The panel is in the flow here — no centring zone to correct. */
+    width: 100%;
+    margin-inline: 0;
   }
 
+  /* In the flow, the panel becomes a plain glass block above the content —
+     the edge treatment moves to a bottom hairline. */
   .controlRail {
     position: static;
-    transform: none;
     width: 100%;
-    max-height: none;
-    overflow-y: visible;
+    border-right: none;
+    border-bottom: var(--border-xs) solid var(--color-bg-container-border);
   }
 }

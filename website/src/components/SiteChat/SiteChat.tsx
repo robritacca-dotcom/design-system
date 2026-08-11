@@ -15,7 +15,7 @@ import { CHAT_MODEL_LABEL } from "@/lib/chat-model";
 import { AssistantTurn } from "./AssistantTurn";
 import { useSiteChat } from "./ChatContext";
 import { readGreeting, serverGreeting, subscribeClock } from "./greeting";
-import { startersForPath } from "./starters";
+import { startersForPath, type Starter } from "./starters";
 import styles from "./SiteChat.module.css";
 
 /** Claude-style starburst for the model label — currentColor, so it takes the button's grey. */
@@ -58,6 +58,8 @@ export function SiteChat({
   placeholder = "Ask anything",
   showStarters = true,
   logo = "/rr.svg",
+  tagline,
+  starters: startersOverride,
 }: {
   /** Show the expand toggle. The bench's mobile stage is always a takeover, so it hides there. */
   fullscreenEnabled?: boolean;
@@ -72,6 +74,12 @@ export function SiteChat({
   /** The header mark's image src; null hides it. The bench feeds it
       session-only blob URLs for throwaway logo previews. */
   logo?: string | null;
+  /** The welcome screen's line under the greeting. The playground overrides
+      it to preview a consumer's own copy; the site default stays. */
+  tagline?: string;
+  /** Replaces the route-aware conversation starters wholesale — again the
+      playground's lever, so its preview isn't robr0-specific. */
+  starters?: Starter[];
 }) {
   const {
     turns,
@@ -97,7 +105,8 @@ export function SiteChat({
      reactive, so navigating with the welcome screen showing swaps the
      suggestions to match where the visitor now stands. */
   const pathname = usePathname();
-  const starters = startersForPath(pathname, pathname ? getNavLabel(pathname) : null);
+  const starters =
+    startersOverride ?? startersForPath(pathname, pathname ? getNavLabel(pathname) : null);
 
   /* The text field is ready to type into whenever a conversation can start:
      on open, on new chat, and again after every send. The host restores
@@ -206,7 +215,7 @@ export function SiteChat({
                     widget cannot know who it is greeting — only when. */}
                 <p className={styles.welcomeHello}>{greeting}</p>
                 <p className={styles.welcomeAsk}>
-                  Ask about Rob&rsquo;s work, or anything design
+                  {tagline ?? "Ask about Rob’s work, or anything design"}
                 </p>
                 {/* The placeholder below stays a plain action ("Ask anything")
                     so this line and the composer don't say the same sentence

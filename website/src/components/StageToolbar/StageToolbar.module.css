@@ -1,0 +1,43 @@
+/* A full-screen view's toolbar: one slim fixed glass strip across the
+   top of an immersive surface. Height comes from --layout-toolbar-height
+   (globals.css), shared with the pages that reserve room beneath it. */
+.toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--layout-toolbar-height);
+  display: flex;
+  align-items: center;
+  gap: var(--gap-md);
+  padding: 0 var(--padding-lg);
+  z-index: 30;
+  /* The rails' glass, thinned for a bar this slim: enough backing that
+     content scrolling beneath stays quiet, not so much that it reads as
+     a card. */
+  background: color-mix(in srgb, var(--color-bg-container-primary) 70%, transparent);
+  backdrop-filter: blur(16px);
+  border-bottom: var(--border-xs) solid var(--color-divider);
+}
+
+/* The side zones flex equally so the surface switch sits dead centre. */
+.trail {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--gap-md);
+  min-width: 0;
+}
+
+.actions {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}

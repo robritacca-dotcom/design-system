@@ -395,11 +395,11 @@
   }
 }
 
-/* The widen grip — the bench page's left resize handle (robr0-gpt's
-   page.module.css), transplanted to the docked panel: same 20px grab zone
-   straddling the edge, same hover-revealed 4×48px pill. A fixed sibling of
-   the panel, positioned from the same variables, so it tracks the edge as
-   the drag rewrites --layout-chat-width. */
+/* The widen grip — the playground Chat view's left resize handle
+   (views/ChatView.module.css), transplanted to the docked panel: same 20px
+   grab zone straddling the edge, same hover-revealed 4×48px pill. A fixed
+   sibling of the panel, positioned from the same variables, so it tracks
+   the edge as the drag rewrites --layout-chat-width. */
 .dockHandle {
   position: fixed;
   top: var(--layout-chat-inset);

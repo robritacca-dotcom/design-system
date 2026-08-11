@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import styles from "./page.module.css";
 import { Button } from "@robr0/design-system/components/Button/Button";
 import { ColorPicker } from "@robr0/design-system/components/ColorPicker/ColorPicker";
@@ -33,6 +33,11 @@ export interface PlaygroundControlsProps {
   actionModeNote: string | null;
   isPristine: boolean;
   cssSnippet: string;
+  /** View-specific control groups (e.g. the chat view's transport picker),
+      slotted after the shared levers so those never shift between views —
+      the rail stays consistent where the views agree and contextual where
+      they differ. */
+  contextual?: ReactNode;
   onPreset: (value: string) => void;
   /** `darkValue` rides along for the theme-dependent neutral swatches. */
   onBrand: (value: string, darkValue?: string) => void;
@@ -46,6 +51,8 @@ export interface PlaygroundControlsProps {
   onReset: () => void;
   /** Opens the advanced-mode dialog (every primitive ramp). */
   onOpenAdvanced: () => void;
+  /** Opens the generated-CSS dialog (the Copy button's contents, visible). */
+  onViewCss: () => void;
 }
 
 /** The sticky theme-control rail — presentational; all state lives in the page. */
@@ -64,6 +71,7 @@ export default function PlaygroundControls({
   actionModeNote,
   isPristine,
   cssSnippet,
+  contextual,
   onPreset,
   onBrand,
   onTintOn,
@@ -75,6 +83,7 @@ export default function PlaygroundControls({
   onProductName,
   onReset,
   onOpenAdvanced,
+  onViewCss,
 }: PlaygroundControlsProps) {
   /* Theme-dependent entries (the neutrals) show and match their dark-mode
      counterpart while dark mode is active. */
@@ -148,15 +157,9 @@ export default function PlaygroundControls({
           />
         </div>
 
-        <div className={styles.controlGroup}>
-          <Input
-            label="Product name"
-            placeholder="Playground"
-            value={productName}
-            onValueChange={onProductName}
-          />
-        </div>
-
+        {/* Colour sits high and every shared lever keeps one fixed slot in
+            all views — the contextual groups render at the bottom, so
+            nothing above them ever shifts. */}
         <div className={styles.controlGroup}>
           <h4 className={styles.controlHeading}>Action colour</h4>
           <div className={styles.swatchGrid}>
@@ -183,6 +186,15 @@ export default function PlaygroundControls({
             variant="tertiary"
             iconLeft="palette"
             onClick={onOpenAdvanced}
+          />
+        </div>
+
+        <div className={styles.controlGroup}>
+          <Input
+            label="Product name"
+            placeholder="Acme Corp"
+            value={productName}
+            onValueChange={onProductName}
           />
         </div>
 
@@ -241,6 +253,8 @@ export default function PlaygroundControls({
           />
         </div>
 
+        {contextual}
+
         <div className={styles.railFooter}>
           <Button
             label={copied ? "Copied" : "Copy CSS"}
@@ -248,6 +262,12 @@ export default function PlaygroundControls({
             iconLeft={copied ? "check" : "content_copy"}
             state={isPristine ? "disabled" : "default"}
             onClick={copyCss}
+          />
+          <Button
+            label="View CSS"
+            variant="tertiary"
+            iconLeft="code"
+            onClick={onViewCss}
           />
           <Button
             label="Reset everything"

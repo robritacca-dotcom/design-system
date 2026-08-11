@@ -2,12 +2,11 @@
 
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import StageToolbar from "@/components/StageToolbar/StageToolbar";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import styles from "./page.module.css";
-import { CircularButton } from "@robr0/design-system/components/CircularButton/CircularButton";
-import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import { CodeBlock } from "@robr0/design-system/components/CodeBlock/CodeBlock";
+import { Dialog } from "@robr0/design-system/components/Dialog/Dialog";
 import {
   DEFAULT_ADVANCED,
   DEFAULT_BRAND,
@@ -26,6 +25,15 @@ import {
 import { THEME_PRESETS, type ThemePreset } from "./presets";
 import PlaygroundControls from "./PlaygroundControls";
 import AdvancedColorsDialog from "./AdvancedColorsDialog";
+import ChatView, {
+  STAGE_SIZES,
+  type StageSize,
+  type TransportMode,
+} from "./views/ChatView";
+import MockNav from "./views/MockNav";
+import { Input } from "@robr0/design-system/components/Input/Input";
+import { RadioGroup } from "@robr0/design-system/components/RadioButton/RadioButton";
+import { ToggleSwitch } from "@robr0/design-system/components/ToggleSwitch/ToggleSwitch";
 import ActionsSection from "./sections/ActionsSection";
 import AiSection from "./sections/AiSection";
 import FormsSection from "./sections/FormsSection";
@@ -34,6 +42,14 @@ import DataDisplaySection from "./sections/DataDisplaySection";
 import ChartsSection from "./sections/ChartsSection";
 import OverlaysSection from "./sections/OverlaysSection";
 import FeedbackSection from "./sections/FeedbackSection";
+
+/* The tool's two lenses on the same theme state. One page, one set of
+   levers — switching views never resets what you've styled. */
+type View = "components" | "chat";
+const VIEWS = [
+  { value: "components", label: "Components", icon: "widgets" },
+  { value: "chat", label: "Chat", icon: "chat_bubble" },
+];
 
 /* Live theme tracking (same pattern as foundations/colour-mode) so
    theme-dependent presets re-derive their overrides when the site's
@@ -48,6 +64,37 @@ function subscribeToTheme(callback: () => void) {
 }
 
 export default function PlaygroundPage() {
+  /* ---------- the active view ----------
+     Local state (the levers must survive a switch), mirrored into ?view=
+     so a specific view can be linked. Read once on mount rather than via
+     useSearchParams, which would force a Suspense boundary on a fully
+     client-rendered page. */
+  const [view, setView] = useState<View>("components");
+  useEffect(() => {
+    // The setState here is intentional — a once-on-mount sync from the
+    // URL, which the server prerender can't see (same pattern as
+    // MegaNav's navigation effect).
+    const q = new URLSearchParams(window.location.search).get("view");
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (q === "chat") setView(q);
+  }, []);
+  const pickView = (value: string) => {
+    setView(value as View);
+    const url = new URL(window.location.href);
+    if (value === "components") url.searchParams.delete("view");
+    else url.searchParams.set("view", value);
+    window.history.replaceState(null, "", url);
+  };
+
+  /* Chat view's contextual levers, held here so they survive a view
+     switch like everything else. Sim by default: reviewing choreography
+     should cost nothing — Live is the deliberate opt-in (the chat cost
+     policy on record). */
+  const [transportMode, setTransportMode] = useState<TransportMode>("sim");
+  const [stageSize, setStageSize] = useState<StageSize>("desktop");
+  const [chatPlaceholder, setChatPlaceholder] = useState("");
+  const [showStarters, setShowStarters] = useState(true);
+
   /* ---------- levers ---------- */
   const [preset, setPreset] = useState("default");
   const [brand, setBrand] = useState(DEFAULT_BRAND);
@@ -59,6 +106,7 @@ export default function PlaygroundPage() {
   const [fontLabel, setFontLabel] = useState(FONT_OPTIONS[0].label);
   const [productName, setProductName] = useState("");
   const [advOpen, setAdvOpen] = useState(false);
+  const [cssOpen, setCssOpen] = useState(false);
   const [advColors, setAdvColors] = useState<AdvancedColorState>(DEFAULT_ADVANCED);
 
   /** The last-chosen preset's non-lever state (mono's greyed accents, its
@@ -128,14 +176,6 @@ export default function PlaygroundPage() {
   const applyTheme = (next: string) => {
     document.documentElement.setAttribute("data-theme", next);
     window.localStorage.setItem("theme", next);
-  };
-
-  /* No header also means no nav out — the X is the way back to wherever
-     the visitor came from; opened cold (a shared link), it goes home. */
-  const router = useRouter();
-  const leavePlayground = () => {
-    if (window.history.length > 2) router.back();
-    else router.push("/");
   };
 
   /* A preset can carry a theme-dependent action colour (black & white:
@@ -274,16 +314,15 @@ export default function PlaygroundPage() {
     <>
       <BlurBackground />
 
-      {/* The immersive format's exit — the page carries no site chrome at
-          the top, so the X holds the corner the way the chat bench's does. */}
-      <div className={styles.closeSlot}>
-        <CircularButton
-          icon="close"
-          variant="tertiary"
-          ariaLabel="Close the playground"
-          onClick={leavePlayground}
-        />
-      </div>
+      {/* Not the site's full navigation — a full-screen view's slim
+          toolbar: brand mark, breadcrumb trail, the view tabs, and the X
+          out. (Footer and the site chat still skip this route.) */}
+      <StageToolbar
+        segments={VIEWS}
+        activeSegment={view}
+        onSegmentChange={pickView}
+        switchLabel="Switch the playground view"
+      />
 
       <div className={styles.dsLayout}>
         {/* The control rail lives where the nav sidebar sits on doc pages */}
@@ -319,6 +358,60 @@ export default function PlaygroundPage() {
           onProductName={setProductName}
           onReset={reset}
           onOpenAdvanced={() => setAdvOpen(true)}
+          onViewCss={() => setCssOpen(true)}
+          contextual={
+            view === "chat" ? (
+              <>
+                <div className={styles.controlGroup}>
+                  <RadioGroup
+                    label="Stage size"
+                    name="playground-chat-stage"
+                    value={stageSize}
+                    options={Object.entries(STAGE_SIZES).map(([value, s]) => ({
+                      value,
+                      label: s.label,
+                    }))}
+                    onValueChange={(value) => setStageSize(value as StageSize)}
+                  />
+                  <p className={styles.controlNote}>
+                    Mobile renders edge-to-edge in a bezel, the way the site
+                    panel ships on phones.
+                  </p>
+                </div>
+
+                <div className={styles.controlGroup}>
+                  <RadioGroup
+                    label="Transport"
+                    name="playground-chat-transport"
+                    value={transportMode}
+                    options={[
+                      { value: "sim", label: "Simulated" },
+                      { value: "live", label: "Live" },
+                    ]}
+                    onValueChange={(value) => setTransportMode(value as TransportMode)}
+                  />
+                  <p className={styles.controlNote}>
+                    Simulated replays a scripted exchange without calling the
+                    model. Live answers through the site&rsquo;s API route.
+                  </p>
+                </div>
+
+                <div className={styles.controlGroup}>
+                  <Input
+                    label="Composer placeholder"
+                    placeholder="Ask anything"
+                    value={chatPlaceholder}
+                    onValueChange={setChatPlaceholder}
+                  />
+                  <ToggleSwitch
+                    label="Starter prompts"
+                    checked={showStarters}
+                    onChange={setShowStarters}
+                  />
+                </div>
+              </>
+            ) : undefined
+          }
         />
 
         <AdvancedColorsDialog
@@ -330,56 +423,65 @@ export default function PlaygroundPage() {
           onResetColors={() => setAdvColors(DEFAULT_ADVANCED)}
         />
 
-        <main className={styles.dsContent} id="main-content">
-          {/* Page Title — renamed live from the Product name control */}
-          <div className={`${styles.pageHeader} animate-in`}>
-            <h1 className={styles.pageTitle}>{productName.trim() || "Playground"}</h1>
-          </div>
-
-          {/* Intro */}
-          <div className={`${styles.introSection} animate-in animate-delay-1`}>
-            <p className={styles.subDisplay}>
-              Move a lever: the whole site re-themes, live
-            </p>
-            <p className={styles.introBody}>
-              These controls re-theme the page exactly the way a consumer of the
-              package would in their own CSS. An action colour that matches another
-              primitive ramp repoints the semantic action tokens at that ramp;
-              everything else overrides <code>--primitive-*</code> tokens (plus the
-              font token) on the page root.
-              Because every semantic token chains to a primitive, one override cascades
-              through buttons, focus rings, surfaces, and both themes: flip the
-              theme control in the rail while a brand colour is applied. Leaving
-              the page puts everything back.
-            </p>
-          </div>
-
-          {/* Component showcase — no animate-in on the sections: the class
-              creates a stacking context per section, which would let later
-              sections paint over an open Dropdown/Popover in an earlier one. */}
-          <ActionsSection />
-          <AiSection />
-          <FormsSection />
-          <NavigationSection />
-          <DataDisplaySection />
-          <ChartsSection brand={effectiveBrand} />
-          <OverlaysSection />
-          <FeedbackSection />
-
-          {/* Copy the CSS */}
-          <section className={styles.demoSection}>
-            <SectionTitle title="Copy the CSS" />
+        {/* The generated CSS, inspectable from any view — the rail's Copy
+            button grabs it without opening this. */}
+        <Dialog
+          open={cssOpen}
+          onOpenChange={setCssOpen}
+          title="Your theme as CSS"
+          size="lg"
+        >
+          <div className={styles.cssDialogBody}>
             <p className={styles.sectionNote}>
               Paste this after importing{" "}
-              <code>@robr0/design-system/tokens/tokens.css</code> and your app matches
-              this page, both themes included. The install steps live on{" "}
+              <code>@robr0/design-system/tokens/tokens.css</code> and your app
+              matches this page, both themes included. The install steps live on{" "}
               <Link href="/docs/get-started" className={styles.inlineLink}>
                 Get started
               </Link>
               .
             </p>
-            <CodeBlock code={cssSnippet} language="css" filename="theme-overrides.css" showCopy />
-          </section>
+            <CodeBlock
+              code={cssSnippet}
+              language="css"
+              filename="theme-overrides.css"
+              showCopy
+            />
+          </div>
+        </Dialog>
+
+        <main className={styles.dsContent} id="main-content">
+          {view === "components" && (
+            <>
+              {/* A white-label site header opens the view, so the theme
+                  reads the way it does on a real page — navigation first.
+                  No animate-in on the sections: the class creates a
+                  stacking context per section, which would let later
+                  sections paint over an open Dropdown/Popover in an
+                  earlier one. */}
+              <MockNav brandName={productName.trim() || "Acme Corp"} />
+              <ActionsSection />
+              <AiSection />
+              <FormsSection />
+              <NavigationSection />
+              <DataDisplaySection />
+              <ChartsSection brand={effectiveBrand} />
+              <OverlaysSection />
+              <FeedbackSection />
+            </>
+          )}
+
+          {/* The Chat view: the widget on its stage, same levers, plus the
+              contextual transport control in the rail. */}
+          {view === "chat" && (
+            <ChatView
+              transportMode={transportMode}
+              title={productName.trim() || "Acme Corp"}
+              size={stageSize}
+              placeholder={chatPlaceholder}
+              showStarters={showStarters}
+            />
+          )}
         </main>
       </div>
 
