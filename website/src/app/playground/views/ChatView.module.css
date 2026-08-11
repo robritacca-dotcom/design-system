@@ -34,6 +34,10 @@
   min-width: 320px;
   min-height: 480px;
   max-width: calc(100vw - var(--rail-width, 300px) - var(--gap-xl) * 2);
+  /* The tall wall: a drag may push past the viewport fit (the page
+     scrolls), but never past this — a review target just over the
+     resting 956px footprint. */
+  max-height: 960px;
   background: color-mix(in srgb, var(--color-bg-container-primary) 82%, transparent);
   border: var(--border-xs) solid var(--color-bg-container-border);
   border-radius: var(--radius-xl);
@@ -50,6 +54,45 @@
   transition: none;
 }
 
+/* Full-screen view: a true viewport takeover — no radius, no grips, no
+   height cap. The toolbar (z-index 30) and the edge panel sit behind it;
+   the widget header's collapse button and Escape are the ways back,
+   returning to the previous (possibly dragged) size.
+
+   The geometry here is the OPEN state; the pinned phases override it
+   inline with the card's rect, and the transition — the live panel's
+   takeover glide, same duration and easing — carries the card between
+   the two. The border fades rather than vanishing: border: none would
+   change border-width and snap the geometry mid-glide. */
+.widgetFull {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  border-color: transparent;
+  border-radius: 0;
+  /* Stronger in the takeover, where readability matters most. */
+  backdrop-filter: blur(40px);
+  z-index: 40;
+  transition:
+    top var(--motion-duration-slow) var(--motion-ease-emphasized),
+    left var(--motion-duration-slow) var(--motion-ease-emphasized),
+    width var(--motion-duration-slow) var(--motion-ease-emphasized),
+    height var(--motion-duration-slow) var(--motion-ease-emphasized),
+    border-radius var(--motion-duration-slow) var(--motion-ease-emphasized),
+    border-color var(--motion-duration-slow) var(--motion-ease-emphasized),
+    backdrop-filter var(--motion-duration-slow) var(--motion-ease-emphasized);
+}
+
+/* Holds the card's slot in the frame while the widget is off being the
+   takeover — the stage keeps its shape, and the glide home has a target. */
+.spacer {
+  flex-shrink: 0;
+}
+
 /* Resting fit: until a drag says otherwise, the widget stays inside the
    content column and the viewport. A manual size drops the matching clamp
    — the user asked to go bigger, so the page is allowed to scroll and the
@@ -59,7 +102,7 @@
 }
 
 .widgetFitH {
-  max-height: calc(100dvh - var(--chat-clearance));
+  max-height: min(960px, calc(100dvh - var(--chat-clearance)));
 }
 
 /* ============================================
@@ -195,20 +238,22 @@
   z-index: 1;
 }
 
+/* Always visible — the grips are an affordance to find, not a secret to
+   hover for. Hover and drag deepen them. */
 .handle::after {
   content: "";
   border-radius: var(--radius-full);
-  background: transparent;
+  background: var(--color-text-tertiary);
   transition: background var(--motion-duration-fast) var(--motion-ease-standard);
 }
 
 .handle:hover::after,
 .resizing .handle::after {
-  background: var(--color-text-tertiary);
+  background: var(--color-text-secondary);
 }
 
 .handle:active::after {
-  background: var(--color-text-secondary);
+  background: var(--color-text-primary);
 }
 
 .handleLeft {

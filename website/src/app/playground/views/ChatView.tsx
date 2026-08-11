@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { AiButton } from "@robr0/design-system/components/AiButton/AiButton";
 import { createSimTransport } from "@/lib/chat-sim";
 import { createFetchTransport } from "@/lib/chat-transport";
@@ -11,12 +11,12 @@ import styles from "./ChatView.module.css";
 export type TransportMode = "live" | "sim";
 type ResizeAxis = "x" | "y" | "both";
 
-/* Review targets, not layout tokens. The mobile preset carries a real phone
-   viewport and renders edge-to-edge in a bezel — the presentation a phone
-   visitor actually gets (the site panel drops its card chrome below 720px). */
+/* Review targets, not layout tokens. Two footprints are enough: the
+   desktop card, and the mobile preset — a real phone viewport rendered
+   edge-to-edge in a bezel, the presentation a phone visitor actually gets
+   (the site panel drops its card chrome below 720px). */
 export const STAGE_SIZES = {
   desktop: { label: "Desktop (880px)", w: 880, h: 956, device: false, notch: false },
-  tablet: { label: "Tablet (768px)", w: 768, h: 956, device: false, notch: false },
   mobile: { label: "Mobile (390px)", w: 390, h: 844, device: true, notch: true },
 } as const;
 export type StageSize = keyof typeof STAGE_SIZES;
@@ -25,12 +25,21 @@ export interface ChatViewProps {
   transportMode: TransportMode;
   /** The widget's header brand — follows the Product name lever. */
   title: string;
-  /** The review footprint: desktop/tablet as a resizable card, mobile in a bezel. */
+  /** The review footprint: desktop as a resizable card, mobile in a bezel. */
   size: StageSize;
   /** The composer's placeholder copy; empty falls back to "Ask anything". */
   placeholder: string;
   /** Show the conversation starters on the welcome screen. */
   showStarters: boolean;
+  /** The dragged size, held by the page so it survives a switch to the
+      Components view and back — and dies with the playground, like every
+      other lever. */
+  manual: { w?: number; h?: number };
+  /** Reports a drag's partial size; the page merges it functionally. */
+  onManual: (next: { w?: number; h?: number }) => void;
+  /** The takeover is a desktop affordance — compact screens are already
+      edge-to-edge, so the page withholds it there. */
+  allowFullscreen: boolean;
 }
 
 /**
@@ -47,6 +56,9 @@ export default function ChatView({
   size,
   placeholder,
   showStarters,
+  manual,
+  onManual,
+  allowFullscreen,
 }: ChatViewProps) {
   const transport = useMemo(
     () => (transportMode === "live" ? createFetchTransport() : createSimTransport()),
@@ -62,6 +74,9 @@ export default function ChatView({
         size={size}
         placeholder={placeholder}
         showStarters={showStarters}
+        manual={manual}
+        onManual={onManual}
+        allowFullscreen={allowFullscreen}
       />
     </SiteChatProvider>
   );
@@ -72,8 +87,11 @@ function ChatStage({
   size,
   placeholder,
   showStarters,
+  manual,
+  onManual,
+  allowFullscreen,
 }: Omit<ChatViewProps, "transportMode">) {
-  const { open, setOpen, returnFocusRef } = useSiteChat();
+  const { open, setOpen, view, returnFocusRef } = useSiteChat();
 
   /* The provider defaults to closed (the site's resting state); the view
      exists to look at the widget, so it opens on arrival. */
@@ -102,16 +120,7 @@ function ChatStage({
     width: number;
     height: number;
   } | null>(null);
-  const [manual, setManual] = useState<{ w?: number; h?: number }>({});
   const [resizing, setResizing] = useState(false);
-
-  /* A manual drag is a size of its own, so switching the stage size
-     discards it rather than resizing around it. (The lever lives in the
-     rail, outside this component — hence an effect, not a handler.) */
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setManual({});
-  }, [size]);
 
   const beginResize = (e: React.PointerEvent<HTMLDivElement>) => {
     // Primary button only, one drag at a time — a second concurrent
@@ -147,7 +156,7 @@ function ChatStage({
       );
     if (drag.axis !== "x")
       next.h = Math.round(drag.height + (e.clientY - drag.startY) * CENTERED_DRAG_FACTOR);
-    setManual((m) => ({ ...m, ...next }));
+    onManual(next);
   };
 
   const endResize = () => {
@@ -168,6 +177,77 @@ function ChatStage({
   const preset = STAGE_SIZES[size];
   const isDevice = preset.device;
   const isCompact = preset.w < 500;
+  /* The takeover: SiteChat's own expand button drives the view; the stage
+     just dresses the widget as a full-viewport surface while it lasts. */
+  const isFull = allowFullscreen && !isDevice && view === "full";
+
+  /* ---------- the takeover glide (the live panel's animation) ----------
+     The site panel glides because it is always fixed — only animatable
+     properties change. The stage widget is in-flow, so the same feel
+     needs a FLIP: pin the card as fixed at its current rect, let the
+     transition carry it to the viewport, and reverse on the way out. A
+     spacer holds the card's slot meanwhile, and is also the measured
+     return target, so a scroll during fullscreen can't strand the card. */
+  type FullPhase = "closed" | "pinned" | "open" | "closing";
+  const [fullPhase, setFullPhase] = useState<FullPhase>("closed");
+  /* State, not a ref: the rect is read during render (the pinned style,
+     the spacer's footprint), and it only changes at phase transitions. */
+  const [flipRect, setFlipRect] = useState<{
+    x: number;
+    y: number;
+    w: number;
+    h: number;
+  } | null>(null);
+  const spacerRef = useRef<HTMLDivElement | null>(null);
+
+  /* The phase machine reacts to the context's view flipping, and each
+     step must measure the DOM the previous step produced. */
+  useLayoutEffect(() => {
+    if (isFull && fullPhase === "closed") {
+      const r = widgetRef.current?.getBoundingClientRect();
+      if (r) setFlipRect({ x: r.x, y: r.y, w: r.width, h: r.height });
+      setFullPhase("pinned");
+    } else if (!isFull && (fullPhase === "open" || fullPhase === "pinned")) {
+      const r = spacerRef.current?.getBoundingClientRect();
+      if (r) setFlipRect({ x: r.x, y: r.y, w: r.width, h: r.height });
+      setFullPhase("closing");
+    }
+  }, [isFull, fullPhase]);
+
+  /* Two frames between pin and release, so the transition has a starting
+     geometry to leave from. */
+  useEffect(() => {
+    if (fullPhase !== "pinned") return;
+    const raf = requestAnimationFrame(() =>
+      requestAnimationFrame(() => setFullPhase("open"))
+    );
+    return () => cancelAnimationFrame(raf);
+  }, [fullPhase]);
+
+  /* The glide home ends on transitionend; the timeout is the reduced-motion
+     fallback (zeroed durations fire no event). */
+  useEffect(() => {
+    if (fullPhase !== "closing") return;
+    const el = widgetRef.current;
+    const done = () => setFullPhase("closed");
+    el?.addEventListener("transitionend", done, { once: true });
+    const fallback = setTimeout(done, 600);
+    return () => {
+      el?.removeEventListener("transitionend", done);
+      clearTimeout(fallback);
+    };
+  }, [fullPhase]);
+
+  const takeover = fullPhase !== "closed";
+  const pinnedStyle =
+    (fullPhase === "pinned" || fullPhase === "closing") && flipRect
+      ? {
+          top: flipRect.y,
+          left: flipRect.x,
+          width: flipRect.w,
+          height: flipRect.h,
+        }
+      : undefined;
 
   const widgetEl = (
     <div
@@ -177,23 +257,28 @@ function ChatStage({
         isDevice ? styles.widgetDevice : "",
         /* Resting sizes stay fitted to the column and viewport; a manual
            drag drops the matching clamp so the card can grow past both —
-           the workspace edge is the one wall that remains. */
-        !isDevice && manual.w == null ? styles.widgetFitW : "",
-        !isDevice && manual.h == null ? styles.widgetFitH : "",
+           the workspace edge is the one wall that remains. The takeover
+           carries no fit clamps at all, or they would cap it. */
+        !takeover && !isDevice && manual.w == null ? styles.widgetFitW : "",
+        !takeover && !isDevice && manual.h == null ? styles.widgetFitH : "",
+        takeover ? styles.widgetFull : "",
       ]
         .filter(Boolean)
         .join(" ")}
-      /* In device mode the screen wrapper owns the size and the widget
-         fills it; otherwise the manual size wins over the preset, with
-         the CSS min/max clamps over both. */
+      /* Pinned phases hold the card's rect so the glide has somewhere to
+         start and land; open lets the class's viewport geometry rule; in
+         device mode the screen wrapper owns the size; otherwise the manual
+         size wins over the preset, with the CSS clamps over both. */
       style={
-        isDevice
-          ? undefined
-          : { width: manual.w ?? preset.w, height: manual.h ?? preset.h }
+        takeover
+          ? pinnedStyle
+          : isDevice
+            ? undefined
+            : { width: manual.w ?? preset.w, height: manual.h ?? preset.h }
       }
     >
       <SiteChat
-        fullscreenEnabled={false}
+        fullscreenEnabled={allowFullscreen && !isDevice}
         compact={isCompact}
         title={title}
         placeholder={placeholder.trim() === "" ? "Ask anything" : placeholder}
@@ -214,6 +299,17 @@ function ChatStage({
     <div className={styles.stage}>
       {open ? (
         <div className={`${styles.widgetFrame} ${resizing ? styles.resizing : ""}`}>
+          {/* Holds the card's slot while the widget is off being the
+              takeover — the stage doesn't collapse, and coming back has a
+              measurable target. */}
+          {takeover && (
+            <div
+              ref={spacerRef}
+              className={styles.spacer}
+              style={{ width: flipRect?.w, height: flipRect?.h }}
+              aria-hidden="true"
+            />
+          )}
           {isDevice ? (
             <div className={styles.deviceShell}>
               {/* The screen: OS chrome above and below the widget, one
@@ -251,6 +347,7 @@ function ChatStage({
               interrupted drag would leave transitions and text selection
               disabled. */}
           {!isDevice &&
+            fullPhase === "closed" &&
             (
               [
                 { cls: styles.handleLeft, axis: "x", edge: "left" },

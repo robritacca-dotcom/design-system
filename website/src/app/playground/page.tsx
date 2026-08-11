@@ -105,6 +105,9 @@ export default function PlaygroundPage() {
      policy on record). */
   const [transportMode, setTransportMode] = useState<TransportMode>("sim");
   const [stageSize, setStageSize] = useState<StageSize>("desktop");
+  /* The dragged widget size lives here so it survives a switch to the
+     Components view and back; like every lever, it dies with the page. */
+  const [chatManual, setChatManual] = useState<{ w?: number; h?: number }>({});
   const [chatPlaceholder, setChatPlaceholder] = useState("");
   const [showStarters, setShowStarters] = useState(true);
 
@@ -379,7 +382,13 @@ export default function PlaygroundPage() {
                           value,
                           label: s.label,
                         }))}
-                        onValueChange={(value) => setStageSize(value as StageSize)}
+                        onValueChange={(value) => {
+                      /* A manual drag is a size of its own — switching the
+                         stage size discards it rather than resizing around
+                         it. */
+                      setStageSize(value as StageSize);
+                      setChatManual({});
+                    }}
                       />
                       <p className={styles.controlNote}>
                         Mobile renders edge-to-edge in a bezel, the way the site
@@ -534,6 +543,9 @@ export default function PlaygroundPage() {
               size={compact ? "desktop" : stageSize}
               placeholder={chatPlaceholder}
               showStarters={showStarters}
+              manual={chatManual}
+              onManual={(next) => setChatManual((m) => ({ ...m, ...next }))}
+              allowFullscreen={!compact}
             />
           )}
         </main>
