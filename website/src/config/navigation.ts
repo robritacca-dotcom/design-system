@@ -68,14 +68,8 @@ export const dsMegaItems: MegaItem[] = [
   {
     href: "/playground",
     label: "Playground",
-    description: "Re-theme the whole system live and copy the CSS",
+    description: "Re-theme the whole system live — components, chat and all",
     icon: "tune",
-  },
-  {
-    href: "/robr0-gpt",
-    label: "Chat bench",
-    description: "Exercise the chat widget at review sizes and themes",
-    icon: "chat_bubble",
   },
 ];
 
@@ -91,7 +85,6 @@ export const dsActiveMatchers = [
   (path: string) => path.startsWith("/foundations"),
   (path: string) => path.startsWith("/components"),
   (path: string) => path === "/playground",
-  (path: string) => path === "/robr0-gpt",
 ];
 
 export function isDesignSystemPath(pathname: string): boolean {
@@ -375,8 +368,12 @@ export function getBreadcrumbs(pathname: string): BreadcrumbItem[] {
     return [];
   }
 
-  // The playground and the chat bench are immersive pages: no site chrome,
-  // no breadcrumb — the fixed X is the way out — so no cases for them here.
+  // The playground is an immersive surface: its slim StageToolbar renders
+  // this trail (it lives in no sidebar array, so the generic section loop
+  // can't resolve it).
+  if (path === "/playground") {
+    return [DS_CRUMB, { label: "Playground" }];
+  }
 
   // Docs cluster — the landing lives at /docs but sub-pages keep their
   // original URLs, so match against the sidebar links (no shared prefix).

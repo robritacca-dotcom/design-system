@@ -141,13 +141,12 @@ The old `merge-and-push` skill is retired because its name didn't say which of t
     │   ├── project-journal/   # Build-progression timeline (site-updates registry)
     │   ├── loops/             # The recurring agent loops page
     │   ├── contact/           # Contact page
-    │   ├── playground/        # Live re-theming playground (standalone page, no sidebar)
+    │   ├── playground/        # The immersive re-theming tool: Components + Chat views over one set of levers (chromeless; absorbed the old /robr0-gpt chat bench, which now redirects here)
     │   ├── blueprints/        # Renders the public root-spec copies (CLAUDE.md, design.md, content-design.md)
     │   ├── work/              # Case-study pages, one folder per study (see the case-study registry)
     │   ├── writing/           # Essay pages, mirrored from the Substack feed
     │   ├── about/             # About page
     │   ├── rr-animated/       # Standalone animated-logo page
-    │   ├── robr0-gpt/         # Chat bench — the playground-style rig for the site's chat widget; a first-class page in the Design system nav (indexed, in the sitemap), also linked from /overview's pipeline
     │   ├── llms.txt/          # Serves the public llms.txt agent index (a prose surface — see content-design.md's register table)
     │   └── api/               # Route handlers (github-contributions; chat, the widget's LLM backend)
     ├── src/config/            # navigation.ts (nav/sidebar/breadcrumb source of truth), chromeless.ts (routes with no shared chrome), social.ts (canonical profile + project links)

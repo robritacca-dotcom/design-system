@@ -191,9 +191,11 @@ const PIPELINE: TimelineCompany[] = [
           <>
             The chat behind the floating button in the corner of the site. It
             answers from the published site through Claude Sonnet; the same
-            widget runs on{" "}
-            <Link href="/robr0-gpt" className={styles.inlineLink}>the chat bench</Link>,
-            where it can be resized and re-themed.
+            widget runs in{" "}
+            <Link href="/playground?view=chat" className={styles.inlineLink}>
+              the playground&rsquo;s Chat view
+            </Link>
+            , where it can be resized and re-themed.
           </>
         ),
         bullets: [
@@ -212,7 +214,9 @@ const PIPELINE: TimelineCompany[] = [
           <>
             Conversations are kept for 30 days, tied to no name or address, then
             deleted. The{" "}
-            <Link href="/robr0-gpt" className={styles.inlineLink}>bench</Link>{" "}
+            <Link href="/playground?view=chat" className={styles.inlineLink}>
+              playground&rsquo;s Chat view
+            </Link>{" "}
             doubles as the QA surface, with a simulated transport that exercises
             the streaming without calling the model
           </>,

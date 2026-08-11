@@ -53,6 +53,9 @@ const nextConfig: NextConfig = {
       { source: "/customization", destination: "/playground", permanent: true },
       { source: "/customization/playground", destination: "/playground", permanent: true },
       { source: "/customization/get-started", destination: "/docs/get-started", permanent: true },
+      // The chat bench merged into the playground as its Chat view
+      // (August 2026) — one tool, one link; the old QA URL lands there.
+      { source: "/robr0-gpt", destination: "/playground?view=chat", permanent: true },
     ];
   },
   // The design system arrives as a real (workspace-linked) package whose
