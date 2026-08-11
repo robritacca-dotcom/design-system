@@ -1,0 +1,148 @@
+/* SiteFooter — sitemap footer. Super minimal: a hairline, five link
+   columns with generous rhythm, then a quiet bottom row (social icons +
+   copyright, left-clustered so the fixed chat button never covers a
+   link). Matches the MegaNav 1440px shell width; body owns the outer
+   gutters and the docked-chat inset, so the footer never goes
+   full-bleed. */
+
+.footer {
+  width: 100%;
+  max-width: 1440px;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xxl);
+}
+
+/* ---- Link columns ---- */
+
+.columns {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--gap-xl);
+  row-gap: var(--gap-xxl);
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-lg);
+}
+
+.columnTitle {
+  font-family: var(--font-title-body-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-title-body-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-primary);
+}
+
+.columnList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-xxs);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+  text-decoration: none;
+  transition: color var(--motion-duration-base) var(--motion-ease-standard);
+}
+
+.link:hover {
+  color: var(--color-text-primary);
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--color-action-primary-bg);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.externalIcon {
+  --icon-size: var(--icon-size-sm);
+  color: inherit;
+}
+
+/* ---- Bottom row ---- */
+
+.bottomBar {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-lg);
+  flex-wrap: wrap;
+  padding-bottom: var(--gap-md);
+}
+
+.socialRow {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-xs);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.socialLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-tertiary);
+  transition: color var(--motion-duration-base) var(--motion-ease-standard);
+}
+
+.socialLink:hover {
+  color: var(--color-text-primary);
+}
+
+.socialLink:focus-visible {
+  outline: 2px solid var(--color-action-primary-bg);
+  outline-offset: 2px;
+}
+
+.socialLink svg {
+  width: var(--icon-size-sm);
+  height: var(--icon-size-sm);
+}
+
+.bottomText {
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+}
+
+/* ---- Responsive ---- */
+
+@media (max-width: 959px) {
+  .columns {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .bottomBar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--gap-sm);
+    /* Clear the fixed chat button, which spans the bottom edge on
+       small screens. */
+    padding-bottom: var(--gap-xxxl);
+  }
+}

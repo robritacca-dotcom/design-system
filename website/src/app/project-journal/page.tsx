@@ -4,7 +4,6 @@ import MegaNav from "../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
-import Footer from "../../components/Footer/Footer";
 import GitHubContributions from "../../components/GitHubContributions/GitHubContributions";
 import { Timeline } from "@robr0/design-system/components/Timeline/Timeline";
 import { getSidebarLinks, docsSidebarLinks } from "@/config/navigation";
@@ -186,7 +185,6 @@ export default function SiteUpdatesPage() {
         </main>
       </div>
 
-      <Footer />
     </>
   );
 }

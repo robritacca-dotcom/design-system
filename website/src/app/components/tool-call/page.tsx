@@ -5,7 +5,6 @@ import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
-import Footer from "../../../components/Footer/Footer";
 import { ToolCall } from "@robr0/design-system/components/ToolCall/ToolCall";
 import { Button } from "@robr0/design-system/components/Button/Button";
 import { CodeBlock } from "@robr0/design-system/components/CodeBlock/CodeBlock";
@@ -157,7 +156,6 @@ export default function ToolCallPage() {
         </main>
       </div>
 
-      <Footer />
     </>
   );
 }

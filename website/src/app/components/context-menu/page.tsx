@@ -5,7 +5,6 @@ import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
-import Footer from "../../../components/Footer/Footer";
 import { ContextMenu } from "@robr0/design-system/components/ContextMenu/ContextMenu";
 import { DropdownMenuEntry } from "@robr0/design-system/components/DropdownMenu/DropdownMenu";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
@@ -122,7 +121,6 @@ export default function ContextMenuPage() {
         </main>
       </div>
 
-      <Footer />
     </>
   );
 }

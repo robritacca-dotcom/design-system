@@ -5,7 +5,6 @@ import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
-import Footer from "../../../components/Footer/Footer";
 import { ChatMessage } from "@robr0/design-system/components/ChatMessage/ChatMessage";
 import { ChatMarker } from "@robr0/design-system/components/ChatMarker/ChatMarker";
 import { MessageActions } from "@robr0/design-system/components/MessageActions/MessageActions";
@@ -257,7 +256,6 @@ export default function ChatMessagePage() {
         </main>
       </div>
 
-      <Footer />
     </>
   );
 }

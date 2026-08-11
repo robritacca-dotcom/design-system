@@ -6,7 +6,6 @@ import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
-import Footer from "../../../components/Footer/Footer";
 import SampleCaseStudyCard from "../../../components/SampleCaseStudyCard/SampleCaseStudyCard";
 import { Figure } from "@robr0/design-system/components/Figure/Figure";
 import { Stat } from "@robr0/design-system/components/Stat/Stat";
@@ -422,7 +421,6 @@ export default function AugmentaCaseStudy() {
         </main>
       </div>
 
-      <Footer />
 
       {lightbox && (
         <div className={styles.lightboxOverlay} onClick={closeLightbox} role="dialog" aria-modal="true" aria-label="Image preview">

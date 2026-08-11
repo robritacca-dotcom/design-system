@@ -5,7 +5,6 @@ import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
-import Footer from "../../../components/Footer/Footer";
 import { MessageActions } from "@robr0/design-system/components/MessageActions/MessageActions";
 import { ChatMessage } from "@robr0/design-system/components/ChatMessage/ChatMessage";
 import { Avatar } from "@robr0/design-system/components/Avatar/Avatar";
@@ -153,7 +152,6 @@ export default function MessageActionsPage() {
         </main>
       </div>
 
-      <Footer />
     </>
   );
 }

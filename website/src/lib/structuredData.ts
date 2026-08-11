@@ -1,4 +1,5 @@
 import type { BreadcrumbItem } from "@/config/navigation";
+import { SOCIAL_PROFILES } from "@/config/social";
 
 export const SITE_URL = "https://robertritacca.com";
 
@@ -9,11 +10,10 @@ export function buildPersonJsonLd() {
     name: "Robert Ritacca",
     url: SITE_URL,
     jobTitle: "Principal Product Designer",
-    sameAs: [
-      "https://www.linkedin.com/in/robertritacca/",
-      "https://x.com/robr0",
-      "https://github.com/robritacca-dotcom",
-    ],
+    /* The same profiles the footer advertises (mailto is not a sameAs). */
+    sameAs: SOCIAL_PROFILES.filter((p) => p.href.startsWith("http")).map(
+      (p) => p.href
+    ),
   };
 }
 

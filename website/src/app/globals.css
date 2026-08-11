@@ -324,30 +324,8 @@ a {
   outline-offset: 2px;
 }
 
-/* ============================================
-   FOOTER
-   ============================================ */
-.footer {
-  width: 100%;
-  max-width: 1440px;
-  border-radius: var(--primitive-radius-md);
-  padding: var(--primitive-radius-md) var(--primitive-radius-lg);
-  display: flex;
-  align-items: center;
-  margin-top: auto;
-}
-
-.footer-inner {
-  max-width: 1400px;
-  flex: 1;
-}
-
-.footer-text {
-  font-size: var(--font-paragraph-size);
-  font-weight: var(--font-paragraph-weight);
-  line-height: var(--font-paragraph-line-height);
-  color: var(--color-text-tertiary);
-}
+/* The footer is components/SiteFooter, mounted once from the root
+   layout; its styles live in its own CSS module. */
 
 /* ============================================
    MATERIAL SYMBOLS

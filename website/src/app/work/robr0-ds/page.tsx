@@ -9,7 +9,6 @@ import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
-import Footer from "../../../components/Footer/Footer";
 import { Button } from "@robr0/design-system/components/Button/Button";
 import { Badge } from "@robr0/design-system/components/Badge/Badge";
 import { Alert } from "@robr0/design-system/components/Alert/Alert";
@@ -616,7 +615,6 @@ export default function Robr0DsCaseStudy() {
         </main>
       </div>
 
-      <Footer />
     </>
   );
 }

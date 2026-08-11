@@ -5,7 +5,6 @@ import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
-import Footer from "../../../components/Footer/Footer";
 import { Toast, ToastProvider, useToast } from "@robr0/design-system/components/Toast/Toast";
 import { Button } from "@robr0/design-system/components/Button/Button";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
@@ -151,7 +150,6 @@ export default function ToastPage() {
         </main>
       </div>
 
-      <Footer />
     </ToastProvider>
   );
 }

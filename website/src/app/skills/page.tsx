@@ -5,7 +5,6 @@ import MegaNav from "../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
-import Footer from "../../components/Footer/Footer";
 import { Badge } from "@robr0/design-system/components/Badge/Badge";
 import { CodeBlock } from "@robr0/design-system/components/CodeBlock/CodeBlock";
 import { getSidebarLinks, docsSidebarLinks } from "@/config/navigation";
@@ -91,7 +90,6 @@ export default function SkillsPage() {
         </main>
       </div>
 
-      <Footer />
     </>
   );
 }

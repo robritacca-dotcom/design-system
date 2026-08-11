@@ -4,7 +4,6 @@ import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
-import Footer from "../../../components/Footer/Footer";
 import { getSidebarLinks, buildWritingSidebarLinks } from "@/config/navigation";
 import { getArticles, getArticle, formatArticleDate } from "@/lib/substack";
 import { buildArticleJsonLd } from "@/lib/structuredData";
@@ -163,7 +162,6 @@ export default async function ArticlePage({ params }: PageProps) {
         </main>
       </div>
 
-      <Footer />
     </>
   );
 }

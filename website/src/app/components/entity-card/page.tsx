@@ -4,7 +4,6 @@ import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
-import Footer from "../../../components/Footer/Footer";
 import { EntityCard } from "@robr0/design-system/components/EntityCard/EntityCard";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
@@ -78,7 +77,6 @@ export default function EntityCardPage() {
         </main>
       </div>
 
-      <Footer />
     </>
   );
 }

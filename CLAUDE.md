@@ -153,7 +153,7 @@ The old `merge-and-push` skill is retired because its name didn't say which of t
     ├── src/data/              # Data registries: case-studies.json, site-updates.json, skills accessors
     ├── src/hooks/             # Client hooks (useChat — the chat widget's transport-agnostic state machine)
     ├── src/lib/               # Non-UI modules (chat-sim + chat-transport, scroll lock, Substack feed, OG image, structured data)
-    └── src/components/        # Shared Next.js UI (MegaNav header, Sidebar, Footer, SiteChat — the site-wide chat panel, mounted from the root layout)
+    └── src/components/        # Shared Next.js UI (MegaNav header, Sidebar, SiteFooter + SiteChat — both mounted once from the root layout, skipping the chromeless routes in src/config/chromeless.ts)
 ```
 
 ---

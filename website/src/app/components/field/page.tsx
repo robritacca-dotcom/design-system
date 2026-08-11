@@ -5,7 +5,6 @@ import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
-import Footer from "../../../components/Footer/Footer";
 import { Field } from "@robr0/design-system/components/Field/Field";
 import { Input } from "@robr0/design-system/components/Input/Input";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
@@ -164,7 +163,6 @@ export default function FieldPage() {
             />
           </section>
 
-          <Footer />
         </main>
       </div>
     </>

@@ -3,7 +3,7 @@ import Image from "next/image";
 import MegaNav from "../components/MegaNav/MegaNav";
 import ScrollCue from "../components/ScrollCue/ScrollCue";
 import BlurBackground from "../components/BlurBackground/BlurBackground";
-import Footer from "../components/Footer/Footer";
+import FadeDivider from "../components/FadeDivider/FadeDivider";
 import { dsMegaItems } from "@/config/navigation";
 import { getArticles, coverPlaceholder } from "@/lib/substack";
 import { caseStudies } from "@/data/case-studies";
@@ -48,10 +48,7 @@ export default async function HomePage() {
         <section className={styles.hero} aria-label="Introduction">
           <h1 className={`${styles.homeTitle} animate-in`}>Robert Ritacca</h1>
 
-          <div
-            className={`${styles.heroDivider} animate-in animate-delay-1`}
-            aria-hidden="true"
-          />
+          <FadeDivider className="animate-in animate-delay-1" />
 
           <div className={`${styles.homeHeading} animate-in`}>
             <p className={styles.homeSubtitle}>
@@ -62,10 +59,7 @@ export default async function HomePage() {
             </p>
           </div>
 
-          <div
-            className={`${styles.heroDivider} animate-in animate-delay-1`}
-            aria-hidden="true"
-          />
+          <FadeDivider className="animate-in animate-delay-1" />
 
           <div className={`${styles.homeCompanies} animate-in animate-delay-1`}>
             {companies.map((company) => (
@@ -275,7 +269,6 @@ export default async function HomePage() {
         </section>
       </main>
 
-      <Footer />
     </>
   );
 }

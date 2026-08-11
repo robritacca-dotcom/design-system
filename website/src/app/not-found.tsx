@@ -2,7 +2,6 @@
 
 import MegaNav from "../components/MegaNav/MegaNav";
 import BlurBackground from "../components/BlurBackground/BlurBackground";
-import Footer from "../components/Footer/Footer";
 import { Button } from "@robr0/design-system/components/Button/Button";
 import styles from "./not-found.module.css";
 
@@ -31,7 +30,6 @@ export default function NotFound() {
         </div>
       </main>
 
-      <Footer />
     </>
   );
 }

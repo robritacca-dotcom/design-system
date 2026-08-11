@@ -5,7 +5,6 @@ import Link from "next/link";
 import MegaNav from "../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
-import Footer from "../../components/Footer/Footer";
 import styles from "./page.module.css";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import { CodeBlock } from "@robr0/design-system/components/CodeBlock/CodeBlock";
@@ -372,7 +371,6 @@ export default function PlaygroundPage() {
         </main>
       </div>
 
-      <Footer />
     </>
   );
 }

@@ -5,7 +5,6 @@ import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
-import Footer from "../../../components/Footer/Footer";
 import { Dialog } from "@robr0/design-system/components/Dialog/Dialog";
 import { Button } from "@robr0/design-system/components/Button/Button";
 import { Input } from "@robr0/design-system/components/Input/Input";
@@ -207,7 +206,6 @@ export default function DialogPage() {
         </main>
       </div>
 
-      <Footer />
     </>
   );
 }

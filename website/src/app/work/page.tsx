@@ -4,7 +4,6 @@ import MegaNav from "../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
-import Footer from "../../components/Footer/Footer";
 import { Card } from "@robr0/design-system/components/Card/Card";
 import { getSidebarLinks, workSidebarLinks } from "@/config/navigation";
 import { caseStudies } from "@/data/case-studies";
@@ -54,7 +53,6 @@ export default function WorkPage() {
         </main>
       </div>
 
-      <Footer />
     </>
   );
 }

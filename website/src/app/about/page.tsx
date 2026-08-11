@@ -6,7 +6,6 @@ import { LinkList } from "@robr0/design-system/components/LinkList/LinkList";
 import { Timeline, type TimelineCompany } from "@robr0/design-system/components/Timeline/Timeline";
 import MegaNav from "../../components/MegaNav/MegaNav";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
-import Footer from "../../components/Footer/Footer";
 import PageLinks from "../../components/PageLinks/PageLinks";
 import styles from "./page.module.css";
 
@@ -346,7 +345,6 @@ export default function AboutMePage() {
         </main>
       </div>
 
-      <Footer />
     </>
   );
 }

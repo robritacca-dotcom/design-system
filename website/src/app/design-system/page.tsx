@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import MegaNav from "../../components/MegaNav/MegaNav";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
-import Footer from "../../components/Footer/Footer";
+import FadeDivider from "../../components/FadeDivider/FadeDivider";
 import styles from "./page.module.css";
 import { dsMegaItems } from "@/config/navigation";
 import { Avatar } from "@robr0/design-system/components/Avatar/Avatar";
@@ -246,7 +246,7 @@ export default function DesignSystemPage() {
               href: item.href,
             }))}
           />
-          <div className={styles.heroDivider} aria-hidden="true" />
+          <FadeDivider />
           <ButtonGroup
             ariaLabel="External resources"
             buttons={[
@@ -748,7 +748,6 @@ export default function DesignSystemPage() {
         </section>
       </main>
 
-      <Footer />
     </>
   );
 }

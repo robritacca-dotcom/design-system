@@ -13,6 +13,8 @@ import { getArticles } from "@/lib/substack";
 import { WritingNavProvider } from "@/components/MegaNav/WritingNavContext";
 import { SiteChatProvider } from "@/components/SiteChat/ChatContext";
 import { SiteChatMount } from "@/components/SiteChat/SiteChatMount";
+import SiteFooter from "@/components/SiteFooter/SiteFooter";
+import { SiteFooterMount } from "@/components/SiteFooter/SiteFooterMount";
 import { ClientNav } from "@/components/ClientNav/ClientNav";
 
 const GA_ID = "G-RCSFYMD51K";
@@ -181,6 +183,11 @@ export default async function RootLayout({
               the providers above (and an open chat) survive card links. */}
           <ClientNav />
           <WritingNavProvider items={writingNavItems}>{children}</WritingNavProvider>
+          {/* The footer is site chrome, mounted once here rather than per
+              page. The chat panel stays after it, last in the tab order. */}
+          <SiteFooterMount>
+            <SiteFooter />
+          </SiteFooterMount>
           <SiteChatMount />
         </SiteChatProvider>
       </body>

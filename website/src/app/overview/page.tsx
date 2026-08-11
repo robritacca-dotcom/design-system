@@ -7,7 +7,6 @@ import MegaNav from "../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
-import Footer from "../../components/Footer/Footer";
 import { getSidebarLinks, docsSidebarLinks } from "@/config/navigation";
 import { COMPONENT_COUNT } from "@robr0/design-system/components/registry";
 import { TOKEN_COUNT, TOKEN_COUNTS } from "@robr0/design-system/tokens/registry";
@@ -363,7 +362,6 @@ export default function AboutDsPage() {
         </main>
       </div>
 
-      <Footer />
     </>
   );
 }

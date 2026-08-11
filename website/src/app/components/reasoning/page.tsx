@@ -5,7 +5,6 @@ import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
-import Footer from "../../../components/Footer/Footer";
 import { Reasoning } from "@robr0/design-system/components/Reasoning/Reasoning";
 import { AgentStatus } from "@robr0/design-system/components/AgentStatus/AgentStatus";
 import { Button } from "@robr0/design-system/components/Button/Button";
@@ -186,7 +185,6 @@ export default function ReasoningPage() {
         </main>
       </div>
 
-      <Footer />
     </>
   );
 }

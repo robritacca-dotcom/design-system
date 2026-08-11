@@ -2,7 +2,6 @@ import MegaNav from "../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
-import Footer from "../../components/Footer/Footer";
 import { Card } from "@robr0/design-system/components/Card/Card";
 import PageLinks from "../../components/PageLinks/PageLinks";
 import { getSidebarLinks, buildWritingSidebarLinks } from "@/config/navigation";
@@ -72,7 +71,6 @@ export default async function WritingPage() {
         </main>
       </div>
 
-      <Footer />
     </>
   );
 }

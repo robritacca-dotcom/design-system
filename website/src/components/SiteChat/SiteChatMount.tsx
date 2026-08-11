@@ -4,14 +4,10 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { usePathname } from "next/navigation";
 import { AiButton } from "@robr0/design-system/components/AiButton/AiButton";
 import { lockBodyScroll, unlockBodyScroll } from "@/lib/scroll-lock";
+import { CHROMELESS_ROUTES } from "@/config/chromeless";
 import { DOCK_QUERY, useSiteChat } from "./ChatContext";
 import { SiteChat } from "./SiteChat";
 import styles from "./SiteChat.module.css";
-
-/* Routes where the panel never renders: the bench hosts its own copy of the
-   widget (two live widgets would double-bill and confuse QA), and the
-   animated-logo page is a full-viewport piece with no room for chrome. */
-const DENIED_ROUTES = new Set(["/robr0-gpt", "/rr-animated"]);
 
 /* The docked panel's drag-to-widen range. The minimum mirrors the
    --layout-chat-width default in globals.css (the resting width); the
@@ -44,7 +40,7 @@ export function SiteChatMount() {
   const pathname = usePathname();
   const docked = useSyncExternalStore(subscribeDock, readDocked, () => false);
 
-  const denied = DENIED_ROUTES.has(pathname);
+  const denied = CHROMELESS_ROUTES.has(pathname);
   const isFull = view === "full";
   const modal = open && !denied && (isFull || !docked);
   const showPanel = open && !denied;

@@ -5,7 +5,6 @@ import MegaNav from "../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
-import Footer from "../../components/Footer/Footer";
 import TocCard from "../../components/TocCard/TocCard";
 import PageLinks from "../../components/PageLinks/PageLinks";
 import { getSidebarLinks, foundationsSidebarLinks } from "@/config/navigation";
@@ -119,7 +118,6 @@ export default function FoundationsPage() {
         </main>
       </div>
 
-      <Footer />
     </>
   );
 }

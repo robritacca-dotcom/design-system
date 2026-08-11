@@ -5,7 +5,6 @@ import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
-import Footer from "../../../components/Footer/Footer";
 import SampleCaseStudyCard from "../../../components/SampleCaseStudyCard/SampleCaseStudyCard";
 import { Quote } from "@robr0/design-system/components/Quote/Quote";
 import { getSidebarLinks, workSidebarLinks } from "@/config/navigation";
@@ -380,7 +379,6 @@ export default function MetaCareerProfileCaseStudy() {
         </main>
       </div>
 
-      <Footer />
     </>
   );
 }

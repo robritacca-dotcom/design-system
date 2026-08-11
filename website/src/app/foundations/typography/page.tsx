@@ -5,7 +5,6 @@ import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
-import Footer from "../../../components/Footer/Footer";
 import { TypographySwatch } from "@robr0/design-system/components/TypographySwatch/TypographySwatch";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import { Tabs } from "@robr0/design-system/components/Tabs/Tabs";
@@ -383,7 +382,6 @@ export default function TypographyPage() {
         </main>
       </div>
 
-      <Footer />
     </>
   );
 }

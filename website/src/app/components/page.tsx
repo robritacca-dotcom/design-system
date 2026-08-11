@@ -5,7 +5,6 @@ import MegaNav from "../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
-import Footer from "../../components/Footer/Footer";
 import TocCard from "../../components/TocCard/TocCard";
 import { Accordion } from "@robr0/design-system/components/Accordion/Accordion";
 import { AgentStatus } from "@robr0/design-system/components/AgentStatus/AgentStatus";
@@ -954,7 +953,6 @@ export default function ComponentsPage() {
         </main>
       </div>
 
-      <Footer />
     </>
   );
 }

@@ -5,7 +5,6 @@ import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import BlurBackground from "../../../components/BlurBackground/BlurBackground";
-import Footer from "../../../components/Footer/Footer";
 import { Table } from "@robr0/design-system/components/Table/Table";
 import { Button } from "@robr0/design-system/components/Button/Button";
 import { CircularButton } from "@robr0/design-system/components/CircularButton/CircularButton";
@@ -258,7 +257,6 @@ export default function TablePage() {
         </main>
       </div>
 
-      <Footer />
     </>
   );
 }

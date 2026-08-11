@@ -42,20 +42,7 @@
 /* The scroll cue itself lives in components/ScrollCue — it positions
    against this hero's position: relative. */
 
-/* ============================================
-   HERO DIVIDER — same fading hairline the DS
-   landing page draws between its link rows.
-   ============================================ */
-.heroDivider {
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(
-    to right,
-    var(--color-bg-container-primary-transparent),
-    var(--color-divider),
-    var(--color-bg-container-primary-transparent)
-  );
-}
+/* The fading hairlines are components/FadeDivider now. */
 
 /* ============================================
    HEADING — centred title + subtitle
