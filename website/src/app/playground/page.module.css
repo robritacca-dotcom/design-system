@@ -1,19 +1,40 @@
 /* ============================================
    PLAYGROUND PAGE LAYOUT
-   Standard 1440px shell — but the left column is
-   the theme-control rail instead of the nav Sidebar.
+   The chat bench's rig, shared: a floating control
+   rail on the left, the content centred in the
+   space between the rail's edge and the viewport's
+   right edge — an immersive surface, not the
+   standard page shell.
    ============================================ */
 .dsLayout {
+  /* The horizontal zone the floating rail owns — the same clearance the
+     bench's stage reserves, so the two rails sit identically. */
+  --rail-width: 300px;
+  --rail-clearance: calc(var(--rail-width) + var(--padding-lg) + var(--gap-xl));
   display: flex;
-  gap: var(--layout-column-gap);
+  justify-content: center;
   width: 100%;
-  max-width: 1440px;
-  padding-top: var(--primitive-gap-xl);
+  padding-left: var(--rail-clearance);
+  /* The immersive page starts lower than a doc page would — the title
+     gets air instead of hugging the viewport's top edge. */
+  padding-top: calc(var(--primitive-gap-xxl) * 2);
+}
+
+/* The immersive format's exit — no header, so the X holds the corner the
+   way the chat bench's does, however far the page scrolls. */
+.closeSlot {
+  position: fixed;
+  top: var(--padding-lg);
+  right: var(--padding-lg);
+  z-index: 20;
 }
 
 .dsContent {
   flex: 1;
   min-width: 0;
+  /* A review-width column, centred in the space right of the rail — the
+     showcase reads as a stage, not a stretched doc page. */
+  max-width: 960px;
   display: flex;
   flex-direction: column;
   gap: var(--gap-xxxl);
@@ -74,29 +95,49 @@
 }
 
 /* ============================================
-   CONTROL RAIL — the Sidebar's slot, made sticky
+   CONTROL RAIL — the bench's floating palette,
+   positioned and dressed identically: fixed to
+   the left edge, vertically centred, the same
+   glass treatment, an internal scroll when the
+   viewport runs short.
    ============================================ */
 .controlRail {
-  /* Same offset as Sidebar: header height + body padding + layout gap */
-  --rail-top: calc(78px + var(--primitive-padding-lg) * 2 + var(--primitive-gap-xl));
-  width: var(--layout-sidebar-width);
-  flex-shrink: 0;
-  position: sticky;
-  top: var(--rail-top);
-  align-self: flex-start;
-  max-height: calc(100vh - var(--rail-top) - var(--primitive-gap-lg));
-  overflow-y: auto;
+  position: fixed;
+  left: var(--padding-lg);
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--rail-width);
+  max-height: calc(100dvh - var(--padding-lg) * 2);
+  /* Above the showcase sections' animate-in stacking contexts, so the
+     rail's open Dropdown menu can never be painted over. */
+  z-index: 15;
   display: flex;
-  flex-direction: column;
-  gap: var(--gap-lg);
-  padding: var(--padding-lg);
-  background-color: var(--color-bg-container-primary);
+  /* The shell clips its scroller, so the scrollbar can never poke past
+     the rounded corners (a scroll container draws its scrollbar square to
+     its box edge); the padding lives on the scroller inside. clip-path
+     would do it in one element but clips the drop shadow away. */
+  overflow: hidden;
+  background: color-mix(in srgb, var(--color-bg-container-primary) 82%, transparent);
   border: var(--border-xs) solid var(--color-bg-container-border);
   border-radius: var(--radius-xl);
-  /* .animate-in gives sections their own stacking context (will-change:
-     transform), so without this a later section would paint over the
-     rail's open Dropdown menu — its internal z-index can't escape. */
-  z-index: 1;
+  box-shadow: var(--shadow-floating);
+  backdrop-filter: blur(24px);
+}
+
+.railScroll {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  overflow-y: auto;
+  /* The chat thread's scrollbar treatment: thin, gutter reserved, the
+     divider grey for a thumb — not the browser's chrome. */
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
+  scrollbar-color: var(--color-divider) transparent;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  padding: var(--padding-md);
 }
 
 .controlGroup {
@@ -333,17 +374,22 @@
 }
 
 /* ============================================
-   RESPONSIVE — the rail must NOT disappear the
-   way the nav Sidebar does under 960px; it stacks
-   above the content instead.
+   RESPONSIVE — the bench's breakpoint: the rail
+   rejoins the flow above the content rather than
+   floating over it. It must NOT disappear the way
+   the nav Sidebar does.
    ============================================ */
-@media (max-width: 959px) {
+@media (max-width: 1099px) {
   .dsLayout {
     flex-direction: column;
+    align-items: stretch;
+    gap: var(--gap-lg);
+    padding-left: 0;
   }
 
   .controlRail {
     position: static;
+    transform: none;
     width: 100%;
     max-height: none;
     overflow-y: visible;

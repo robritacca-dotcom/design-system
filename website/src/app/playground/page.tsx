@@ -2,10 +2,10 @@
 
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
-import MegaNav from "../../components/MegaNav/MegaNav";
-import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
+import { useRouter } from "next/navigation";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import styles from "./page.module.css";
+import { CircularButton } from "@robr0/design-system/components/CircularButton/CircularButton";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import { CodeBlock } from "@robr0/design-system/components/CodeBlock/CodeBlock";
 import {
@@ -34,8 +34,6 @@ import DataDisplaySection from "./sections/DataDisplaySection";
 import ChartsSection from "./sections/ChartsSection";
 import OverlaysSection from "./sections/OverlaysSection";
 import FeedbackSection from "./sections/FeedbackSection";
-import { useSiteChat } from "@/components/SiteChat/ChatContext";
-import { DOCK_QUERY } from "@/components/SiteChat/ChatContext";
 
 /* Live theme tracking (same pattern as foundations/colour-mode) so
    theme-dependent presets re-derive their overrides when the site's
@@ -50,16 +48,6 @@ function subscribeToTheme(callback: () => void) {
 }
 
 export default function PlaygroundPage() {
-  /* The playground opens with the chat panel already docked: the chat is
-     part of the system being re-themed, so it belongs on screen. Only when
-     the panel docks beside the page, though — below the dock breakpoint the
-     panel is a modal overlay, and auto-opening one over the controls would
-     bury the page it is meant to demonstrate. */
-  const { setOpen: setChatOpen } = useSiteChat();
-  useEffect(() => {
-    if (window.matchMedia(DOCK_QUERY).matches) setChatOpen(true);
-  }, [setChatOpen]);
-
   /* ---------- levers ---------- */
   const [preset, setPreset] = useState("default");
   const [brand, setBrand] = useState(DEFAULT_BRAND);
@@ -133,6 +121,22 @@ export default function PlaygroundPage() {
     () => document.documentElement.getAttribute("data-theme") ?? "dark",
     () => "dark"
   );
+
+  /* The immersive format drops the site header, and the header owned the
+     light/dark toggle — so the rail carries one instead. Same store the
+     header toggle writes: the root attribute plus the persisted choice. */
+  const applyTheme = (next: string) => {
+    document.documentElement.setAttribute("data-theme", next);
+    window.localStorage.setItem("theme", next);
+  };
+
+  /* No header also means no nav out — the X is the way back to wherever
+     the visitor came from; opened cold (a shared link), it goes home. */
+  const router = useRouter();
+  const leavePlayground = () => {
+    if (window.history.length > 2) router.back();
+    else router.push("/");
+  };
 
   /* A preset can carry a theme-dependent action colour (black & white:
      dark button on light, white button on dark). Read from presetExtras so
@@ -270,7 +274,16 @@ export default function PlaygroundPage() {
     <>
       <BlurBackground />
 
-      <MegaNav />
+      {/* The immersive format's exit — the page carries no site chrome at
+          the top, so the X holds the corner the way the chat bench's does. */}
+      <div className={styles.closeSlot}>
+        <CircularButton
+          icon="close"
+          variant="tertiary"
+          ariaLabel="Close the playground"
+          onClick={leavePlayground}
+        />
+      </div>
 
       <div className={styles.dsLayout}>
         {/* The control rail lives where the nav sidebar sits on doc pages */}
@@ -278,6 +291,7 @@ export default function PlaygroundPage() {
           preset={preset}
           brand={effectiveBrand}
           theme={theme}
+          onTheme={applyTheme}
           tintOn={tintOn}
           tintSeed={tintSeed}
           tintStrength={tintStrength}
@@ -317,8 +331,6 @@ export default function PlaygroundPage() {
         />
 
         <main className={styles.dsContent} id="main-content">
-          <PageBreadcrumb />
-
           {/* Page Title — renamed live from the Product name control */}
           <div className={`${styles.pageHeader} animate-in`}>
             <h1 className={styles.pageTitle}>{productName.trim() || "Playground"}</h1>
@@ -336,8 +348,8 @@ export default function PlaygroundPage() {
               everything else overrides <code>--primitive-*</code> tokens (plus the
               font token) on the page root.
               Because every semantic token chains to a primitive, one override cascades
-              through buttons, focus rings, surfaces, and both themes: try the
-              light/dark toggle in the header while a brand colour is applied. Leaving
+              through buttons, focus rings, surfaces, and both themes: flip the
+              theme control in the rail while a brand colour is applied. Leaving
               the page puts everything back.
             </p>
           </div>

@@ -7,6 +7,7 @@ import { ColorPicker } from "@robr0/design-system/components/ColorPicker/ColorPi
 import { Swatch } from "@robr0/design-system/components/Swatch/Swatch";
 import { Dropdown } from "@robr0/design-system/components/Dropdown/Dropdown";
 import { Input } from "@robr0/design-system/components/Input/Input";
+import { RadioGroup } from "@robr0/design-system/components/RadioButton/RadioButton";
 import { Slider } from "@robr0/design-system/components/Slider/Slider";
 import { ToggleSwitch } from "@robr0/design-system/components/ToggleSwitch/ToggleSwitch";
 import { ACTION_COLOR_PRESETS, FONT_OPTIONS } from "./theme-overrides";
@@ -18,6 +19,9 @@ export interface PlaygroundControlsProps {
   brand: string;
   /** Active site theme — resolves the theme-dependent neutral swatches. */
   theme: string;
+  /** Sets the site theme — the rail owns the toggle now that the immersive
+      format drops the header that used to carry it. */
+  onTheme: (value: string) => void;
   tintOn: boolean;
   tintSeed: string;
   tintStrength: number;
@@ -49,6 +53,7 @@ export default function PlaygroundControls({
   preset,
   brand,
   theme,
+  onTheme,
   tintOn,
   tintSeed,
   tintStrength,
@@ -112,126 +117,146 @@ export default function PlaygroundControls({
   };
 
   return (
-    <aside className={`${styles.controlRail} animate-in`} aria-label="Theme controls">
-      <h3 className={styles.railTitle}>Theme controls</h3>
+    /* No animate-in here: the rail centres itself with a translateY
+       transform, and the entrance animation would fight it. The inner
+       wrapper scrolls; the shell owns the radius and clips (see the CSS). */
+    <aside className={styles.controlRail} aria-label="Theme controls">
+      <div className={styles.railScroll}>
+        <h3 className={styles.railTitle}>Theme controls</h3>
 
-      <div className={styles.controlGroup}>
-        <Dropdown
-          label="Theme preset"
-          value={preset}
-          options={presetOptions}
-          onValueChange={onPreset}
-        />
-      </div>
-
-      <div className={styles.controlGroup}>
-        <Input
-          label="Product name"
-          placeholder="Playground"
-          value={productName}
-          onValueChange={onProductName}
-        />
-      </div>
-
-      <div className={styles.controlGroup}>
-        <h4 className={styles.controlHeading}>Action colour</h4>
-        <div className={styles.swatchGrid}>
-          {ACTION_COLOR_PRESETS.map((p) => (
-            <Swatch
-              key={p.hex}
-              value={presetHex(p)}
-              label={presetLabel(p)}
-              selected={brand.toUpperCase() === presetHex(p)}
-              onClick={() => onBrand(p.hex, p.hexDark)}
-            />
-          ))}
-        </div>
-        <ColorPicker
-          value={brand}
-          onValueChange={onBrand}
-          showText
-          aria-label="Custom brand colour"
-          className={isCustomBrand ? styles.customPickerActive : ""}
-        />
-        {actionModeNote && <p className={styles.controlNote}>{actionModeNote}</p>}
-        <Button
-          label="All colour ramps"
-          variant="tertiary"
-          iconLeft="palette"
-          onClick={onOpenAdvanced}
-        />
-      </div>
-
-      <div className={styles.controlGroup}>
-        <ToggleSwitch
-          className={styles.tintTitleToggle}
-          label="Tint neutrals"
-          checked={tintOn}
-          onChange={onTintOn}
-        />
-        {tintOn && (
-          <>
-            <ColorPicker
-              value={tintSeed}
-              onValueChange={onTintSeed}
-              showText
-              aria-label="Neutral tint seed colour"
-            />
-            <div className={styles.sliderRow}>
-              <Slider
-                value={tintStrength}
-                min={0}
-                max={16}
-                step={1}
-                onValueChange={onTintStrength}
-                ariaLabel="Tint strength"
-              />
-              <span className={styles.sliderValue}>{tintStrength}%</span>
-            </div>
-          </>
-        )}
-      </div>
-
-      <div className={styles.controlGroup}>
-        <h4 className={styles.controlHeading}>Corner radius</h4>
-        <div className={styles.sliderRow}>
-          <Slider
-            value={radiusScale}
-            min={0}
-            max={200}
-            step={10}
-            onValueChange={onRadiusScale}
-            ariaLabel="Radius scale"
+        <div className={styles.controlGroup}>
+          <Dropdown
+            label="Theme preset"
+            value={preset}
+            options={presetOptions}
+            onValueChange={onPreset}
           />
-          <span className={styles.sliderValue}>{radiusScale}%</span>
         </div>
-        <ToggleSwitch label="Pill buttons" checked={pill} onChange={onPill} />
-      </div>
 
-      <div className={`${styles.controlGroup} ${styles.dropUp}`}>
-        <Dropdown
-          label="Typeface"
-          value={fontLabel}
-          options={FONT_OPTIONS.map((f) => ({ label: f.label, value: f.label }))}
-          onValueChange={onFontLabel}
-        />
-      </div>
+        <div className={styles.controlGroup}>
+          {/* A site-level toggle, not a theme lever — flipping it must not
+              flip the preset to Custom, so it bypasses asCustom. */}
+          <RadioGroup
+            label="Theme"
+            name="playground-theme"
+            value={theme}
+            options={[
+              { value: "light", label: "Light" },
+              { value: "dark", label: "Dark" },
+            ]}
+            onValueChange={onTheme}
+          />
+        </div>
 
-      <div className={styles.railFooter}>
-        <Button
-          label={copied ? "Copied" : "Copy CSS"}
-          variant="primary"
-          iconLeft={copied ? "check" : "content_copy"}
-          state={isPristine ? "disabled" : "default"}
-          onClick={copyCss}
-        />
-        <Button
-          label="Reset everything"
-          variant="secondary"
-          iconLeft="restart_alt"
-          state={isPristine ? "disabled" : "default"}
-          onClick={onReset}
-        />
+        <div className={styles.controlGroup}>
+          <Input
+            label="Product name"
+            placeholder="Playground"
+            value={productName}
+            onValueChange={onProductName}
+          />
+        </div>
+
+        <div className={styles.controlGroup}>
+          <h4 className={styles.controlHeading}>Action colour</h4>
+          <div className={styles.swatchGrid}>
+            {ACTION_COLOR_PRESETS.map((p) => (
+              <Swatch
+                key={p.hex}
+                value={presetHex(p)}
+                label={presetLabel(p)}
+                selected={brand.toUpperCase() === presetHex(p)}
+                onClick={() => onBrand(p.hex, p.hexDark)}
+              />
+            ))}
+          </div>
+          <ColorPicker
+            value={brand}
+            onValueChange={onBrand}
+            showText
+            aria-label="Custom brand colour"
+            className={isCustomBrand ? styles.customPickerActive : ""}
+          />
+          {actionModeNote && <p className={styles.controlNote}>{actionModeNote}</p>}
+          <Button
+            label="All colour ramps"
+            variant="tertiary"
+            iconLeft="palette"
+            onClick={onOpenAdvanced}
+          />
+        </div>
+
+        <div className={styles.controlGroup}>
+          <ToggleSwitch
+            className={styles.tintTitleToggle}
+            label="Tint neutrals"
+            checked={tintOn}
+            onChange={onTintOn}
+          />
+          {tintOn && (
+            <>
+              <ColorPicker
+                value={tintSeed}
+                onValueChange={onTintSeed}
+                showText
+                aria-label="Neutral tint seed colour"
+              />
+              <div className={styles.sliderRow}>
+                <Slider
+                  value={tintStrength}
+                  min={0}
+                  max={16}
+                  step={1}
+                  onValueChange={onTintStrength}
+                  ariaLabel="Tint strength"
+                />
+                <span className={styles.sliderValue}>{tintStrength}%</span>
+              </div>
+            </>
+          )}
+        </div>
+
+        <div className={styles.controlGroup}>
+          <h4 className={styles.controlHeading}>Corner radius</h4>
+          <div className={styles.sliderRow}>
+            <Slider
+              value={radiusScale}
+              min={0}
+              max={200}
+              step={10}
+              onValueChange={onRadiusScale}
+              ariaLabel="Radius scale"
+            />
+            <span className={styles.sliderValue}>{radiusScale}%</span>
+          </div>
+          <ToggleSwitch label="Pill buttons" checked={pill} onChange={onPill} />
+        </div>
+
+        <div className={`${styles.controlGroup} ${styles.dropUp}`}>
+          <Dropdown
+            label="Typeface"
+            value={fontLabel}
+            options={FONT_OPTIONS.map((f) => ({ label: f.label, value: f.label }))}
+            onValueChange={onFontLabel}
+          />
+        </div>
+
+        <div className={styles.railFooter}>
+          <Button
+            label={copied ? "Copied" : "Copy CSS"}
+            variant="primary"
+            iconLeft={copied ? "check" : "content_copy"}
+            state={isPristine ? "disabled" : "default"}
+            onClick={copyCss}
+          />
+          <Button
+            label="Reset everything"
+            variant="secondary"
+            iconLeft="restart_alt"
+            state={isPristine ? "disabled" : "default"}
+            onClick={onReset}
+          />
+        </div>
       </div>
     </aside>
   );
