@@ -253,6 +253,12 @@
   opacity: 1;
 }
 
+/* showActions pins the row on: the actions are part of the response, not a
+   secondary affordance to discover. */
+.ds-chat-message--show-actions .ds-chat-message__actions {
+  opacity: 1;
+}
+
 @media (hover: none) {
   .ds-chat-message__actions {
     opacity: 1;

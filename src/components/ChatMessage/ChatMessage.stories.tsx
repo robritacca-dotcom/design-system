@@ -175,6 +175,29 @@ export const WithActionsAndFooter: Story = {
   ),
 };
 
+/** `showActions` pins the row on for surfaces where the actions are part of the response, not an affordance to discover. */
+export const AlwaysVisibleActions: Story = {
+  render: () => (
+    <div style={{ maxWidth: '560px' }}>
+      <ChatMessage
+        role="assistant"
+        author="Assistant"
+        timestamp="4:18 PM"
+        showActions
+        actions={
+          <>
+            <button type="button">Copy</button>
+            <button type="button">Retry</button>
+          </>
+        }
+      >
+        With showActions the row needs no hover to find: it is on screen the
+        moment the response commits.
+      </ChatMessage>
+    </div>
+  ),
+};
+
 /** The surface is a default, not a rule: an assistant turn can take a bubble and a user turn can go plain. */
 export const BubbleOverride: Story = {
   render: () => (

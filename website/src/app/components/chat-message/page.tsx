@@ -176,9 +176,11 @@ export default function ChatMessagePage() {
             <p className={styles.demoText}>
               Two slots hang under the content. The actions slot reveals on
               hover and keyboard focus, and stays visible on touch, so copy
-              and retry wait out of the way. The footer is always visible,
-              which makes it the home for a sources row. Message actions and
-              source chips are built to fill them.
+              and retry wait out of the way. When the actions are part of the
+              response rather than a secondary affordance, showActions pins
+              the row on permanently. The footer is always visible, which
+              makes it the home for a sources row. Message actions and source
+              chips are built to fill them.
             </p>
             <div className={styles.stack}>
               <ChatMessage

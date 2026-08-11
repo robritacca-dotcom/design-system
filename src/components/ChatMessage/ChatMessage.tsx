@@ -43,8 +43,14 @@ type ChatMessageOwnProps = {
   pending?: boolean;
   /** Accessible text announced for the pending state. */
   pendingLabel?: string;
-  /** Action row under the content, revealed on hover and keyboard focus (always visible on touch). */
+  /** Action row under the content, revealed on hover and keyboard focus (always visible on touch) — `showActions` pins it on. */
   actions?: React.ReactNode;
+  /**
+   * Always show the action row instead of revealing it on hover and focus.
+   * For surfaces where the actions are part of the response — a copy or
+   * feedback row — rather than a secondary affordance.
+   */
+  showActions?: boolean;
   /** Footer slot under the content — a sources row, an edited note. */
   footer?: React.ReactNode;
   /** Additional CSS classes */
@@ -84,6 +90,7 @@ export const ChatMessage = React.forwardRef<HTMLDivElement, ChatMessageProps>(
       pending = false,
       pendingLabel = 'Waiting for a reply',
       actions,
+      showActions = false,
       footer,
       className = '',
       children,
@@ -103,6 +110,7 @@ export const ChatMessage = React.forwardRef<HTMLDivElement, ChatMessageProps>(
       grouped ? `${baseClass}--grouped` : '',
       size === 'compact' ? `${baseClass}--compact` : '',
       pending ? `${baseClass}--pending` : '',
+      showActions ? `${baseClass}--show-actions` : '',
       className,
     ]
       .filter(Boolean)
