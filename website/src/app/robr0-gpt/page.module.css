@@ -1,115 +1,165 @@
-/* Standalone chat-widget test stage. The widget sizes are review targets
-   (panel 880x956, mobile 390 - the narrow-phone viewport - full-screen
-   content column 768), not layout tokens. The panel is deliberately wider
-   than a docked widget: this page reviews the thing at the size it gets
-   used, and the grips are there for anyone who wants a narrower one.
+/* Standalone chat-widget test stage, shaped like a playground: a control
+   rail on the left, the widget on the right. The widget sizes are review
+   targets (desktop 880x956, phone viewports 390x844 and 320x568, full-screen
+   content column 768), not layout tokens — they are set inline by the page
+   and clamped here.
 
    The widget internals (header, thread, composer) live in
    @/components/SiteChat — the same component the site mounts as its docked
    panel. This file styles only the stage around it. */
 
-/* Two columns: what this is on the left, the thing itself on the right.
-   The copy and controls read as a column of their own, which keeps the
-   widget at full height instead of pushing it down the page. */
+/* The rail floats on the left, hugging its content; the widget centres in
+   the space between the rail's edge and the right edge of the browser. */
 .stage {
   /* Vertical room the stage reserves around the widget (its own padding,
      plus a little air), so the widget always fits the viewport. */
   --stage-clearance: 112px;
+  /* The horizontal zone the floating rail owns. The stage's left padding
+     reserves it, so the viewport — and the widget centred in it — starts
+     where the rail ends. Collapsed to the page padding when the rail
+     rejoins the flow on narrow screens. */
+  --rail-width: 300px;
+  --rail-clearance: calc(var(--rail-width) + var(--padding-lg) + var(--gap-xl));
   /* The body already pads the page by --padding-lg top and bottom; a flat
      100dvh here would add that on top and scroll the centred layout by
      exactly that much. */
   min-height: calc(100dvh - var(--padding-lg) * 2);
-  display: grid;
-  grid-template-columns: 1fr 3fr;
+  display: flex;
   align-items: center;
-  gap: var(--gap-xl);
+  justify-content: center;
   padding: var(--padding-lg);
+  padding-left: var(--rail-clearance);
   /* No fill of its own: the page's blur backdrop sits behind the stage at
      z-index -1, and an opaque background here would paint straight over it. */
 }
 
-/* The left third. Everything in it shares one left edge. */
-.panel {
+/* The way out of a chromeless page — back to wherever the visitor came
+   from. Fixed, so it holds the corner however the stage scrolls. */
+.closeSlot {
+  position: fixed;
+  top: var(--padding-lg);
+  right: var(--padding-lg);
+  z-index: 20;
+}
+
+/* ============================================
+   THE CONTROL RAIL
+   ============================================ */
+
+/* A floating palette: fixed to the left edge, vertically centred, hugging
+   its content's height (the max-height turns a too-short viewport into an
+   internal scroll). The same glass treatment as the widget, so the two
+   read as one bench. */
+.rail {
+  position: fixed;
+  left: var(--padding-lg);
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--rail-width);
+  max-height: calc(100dvh - var(--padding-lg) * 2);
+  overflow-y: auto;
+  /* The chat thread's scrollbar treatment: thin, gutter reserved, the
+     divider grey for a thumb — not the browser's chrome. */
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
+  scrollbar-color: var(--color-divider) transparent;
+  z-index: 15;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: var(--gap-xl);
+  align-items: stretch;
+  gap: var(--gap-md);
+  padding: var(--padding-md);
+  background: color-mix(in srgb, var(--color-bg-container-primary) 82%, transparent);
+  border: var(--border-xs) solid var(--color-bg-container-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-floating);
+  backdrop-filter: blur(24px);
 }
 
-/* The right two thirds. */
-.viewport {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 0;
-}
-
-/* One column on narrow screens: the panel reads above the widget rather
-   than squeezing it into a third of a phone. */
-@media (max-width: 899px) {
-  .stage {
-    grid-template-columns: 1fr;
-    gap: var(--gap-lg);
-  }
-
-  .panel {
-    padding-top: var(--gap-lg);
-  }
-}
-
-/* What this page is, above the controls that drive it. Title, air, then the
-   sub-display line and the body paragraph: the same three-step opening the
-   component pages use, so the bench reads as part of the same docs set. The
-   column caps the measure, so no max-width of its own. */
-.pageHeader {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-xl);
-}
-
-.pageTitle {
+.railTitle {
   margin: 0;
-  font-family: var(--font-display-2-family);
-  font-size: var(--font-display-2-size);
-  font-weight: var(--font-display-2-weight);
-  line-height: var(--font-display-2-line-height);
-  letter-spacing: var(--font-display-2-letter-spacing);
+  font-family: var(--font-heading-3-family);
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  letter-spacing: var(--font-heading-3-letter-spacing);
   color: var(--color-text-primary);
 }
 
-.introSection {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-lg);
-}
-
-.subDisplay {
-  margin: 0;
-  font-family: var(--font-sub-display-family);
-  font-size: var(--font-sub-display-size);
-  font-weight: var(--font-sub-display-weight);
-  line-height: var(--font-sub-display-line-height);
-  letter-spacing: var(--font-sub-display-letter-spacing);
-  color: var(--color-text-primary);
-}
-
-.introBody {
-  margin: 0;
-  font-family: var(--font-paragraph-family);
-  font-size: var(--font-paragraph-size);
-  font-weight: var(--font-paragraph-weight);
-  line-height: var(--font-paragraph-line-height);
-  letter-spacing: var(--font-paragraph-letter-spacing);
-  color: var(--color-text-primary);
-}
-
-/* Stacked, each control hugging its own segments rather than stretching to
-   a shared width: they are three separate choices, not one control. */
-.controls {
+.controlGroup {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: var(--gap-sm);
+  padding-bottom: var(--gap-md);
+  border-bottom: var(--border-xs) solid var(--color-divider);
+}
+
+.controlHeading {
+  margin: 0;
+  font-size: var(--font-paragraph-em-size);
+  font-weight: var(--font-paragraph-em-weight);
+  line-height: var(--font-paragraph-em-line-height);
+  letter-spacing: var(--font-paragraph-em-letter-spacing);
+  color: var(--color-text-primary);
+}
+
+.controlNote {
+  margin: 0;
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  color: var(--color-text-tertiary);
+}
+
+.swatchGrid {
+  display: grid;
+  grid-template-columns: repeat(8, max-content);
+  gap: var(--gap-xs);
+  padding: var(--padding-xxs) 0;
+}
+
+/* The custom ColorPicker stays lit while the current colour is not one of
+   the preset swatches. */
+.customPickerActive :global(.ds-colorpicker__trigger) {
+  border-color: var(--color-input-border-selected);
+}
+
+/* Fills everything right of the rail; its centre is the column's centre. */
+.viewport {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: calc(100dvh - var(--padding-lg) * 2);
+}
+
+/* Narrow screens: the rail rejoins the flow above the widget rather than
+   floating over it, and the widget's clearance falls back to the page
+   padding. */
+@media (max-width: 1099px) {
+  .stage {
+    --rail-clearance: var(--padding-lg);
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--gap-lg);
+    justify-content: flex-start;
+    padding-left: var(--padding-lg);
+  }
+
+  .rail {
+    position: static;
+    transform: none;
+    width: auto;
+    max-height: none;
+  }
+
+  .viewport {
+    flex: none;
+    min-height: 0;
+  }
 }
 
 /* ============================================
@@ -128,25 +178,17 @@
   user-select: none;
 }
 
-/* Panel view is the default: a docked-widget footprint. The minimums are
-   review targets too: the widget is locked to its set size — it never
-   collapses below a usable chat, never exceeds the stage, and content
-   wraps inside rather than pushing the sides out. */
+/* The widget's footprint is set inline per preset (or per drag); these
+   clamps are review targets too: it never collapses below a usable chat,
+   never exceeds the stage, and content wraps inside rather than pushing
+   the sides out. */
 .widget {
   display: flex;
   flex-direction: column;
-  /* Fixed widths, not min(…,100%): a cyclic percentage would make the
-     shrink-wrapping frame size itself from the text's unwrapped
-     max-content. The frame's own max-width lets flex shrink this below the
-     default when the column is narrower; the vw-based cap below is the
-     small-screen floor under that. Wide enough to hold the thread's 768px
-     conversation column with its gutters, so the default reads as an app
-     window rather than a docked panel. */
-  width: 880px;
-  height: min(956px, calc(100dvh - var(--stage-clearance)));
   min-width: 320px;
   min-height: 480px;
-  max-width: calc(100vw - var(--padding-lg) * 2);
+  /* Never wider than the column right of the rail. */
+  max-width: calc(100vw - var(--rail-clearance) - var(--padding-lg));
   max-height: calc(100dvh - var(--stage-clearance));
   /* Same glass treatment as the site panel: a deliberately translucent
      surface over the page gradient, blurred into legibility. */
@@ -184,10 +226,119 @@
   z-index: 10;
 }
 
-/* Mobile: always a full takeover — the view switch hides. */
-.widgetMobile {
-  width: 390px;
-  height: min(860px, calc(100dvh - var(--stage-clearance)));
+/* Phone presets: what a phone visitor actually gets — the site panel below
+   720px is edge-to-edge with no card chrome — shown inside a bezel so the
+   mode is unmistakable. The bezel follows the theme (a light frame on the
+   light page, a dark one on the dark), with a hairline to hold its edge
+   against the matching backdrop. */
+.deviceShell {
+  padding: 12px;
+  border-radius: 44px;
+  background: var(--color-bg-page-primary);
+  border: var(--border-xs) solid var(--color-bg-container-border);
+  box-shadow: var(--shadow-floating);
+}
+
+/* The screen is one glass surface — OS chrome strips and widget share it,
+   so the seams between them are invisible. The corner radius is concentric
+   with the bezel padding, standing in for a handset's screen corners. */
+.deviceScreen {
+  display: flex;
+  flex-direction: column;
+  border-radius: 32px;
+  overflow: hidden;
+  max-width: 100%;
+  max-height: calc(100dvh - var(--stage-clearance) - 24px);
+  background: color-mix(in srgb, var(--color-bg-container-primary) 82%, transparent);
+  backdrop-filter: blur(24px);
+}
+
+/* Inside a device the screen owns size, chrome, and glass; the widget is
+   just the app filling the space between the OS strips. */
+.widgetDevice {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+  backdrop-filter: none;
+}
+
+/* The OS status bar: time, cutout, signal — set dressing sized to the real
+   thing (a 390pt iPhone status area is ~54pt tall). */
+.statusBar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 54px;
+  padding: var(--padding-xs) var(--padding-md) 0;
+  flex-shrink: 0;
+  color: var(--color-text-primary);
+}
+
+.statusTime {
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-em-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ds-allow(color): the Dynamic Island is a camera cutout — true-black
+   hardware in both themes, not a themeable surface */
+.dynamicIsland {
+  position: absolute;
+  left: 50%;
+  top: 12px;
+  transform: translateX(-50%);
+  width: 118px;
+  height: 34px;
+  border-radius: var(--radius-full);
+  background: #000000;
+}
+
+.statusIcons {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-xxs);
+  --icon-size: var(--icon-size-sm);
+}
+
+/* The home-indicator strip (the swipe-up bar). */
+.homeBar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 24px;
+  padding-bottom: var(--padding-xs);
+  flex-shrink: 0;
+}
+
+.homeIndicator {
+  width: 134px;
+  height: 5px;
+  border-radius: var(--radius-full);
+  background: var(--color-text-primary);
+}
+
+/* The devtools-style size label, shown while a grip is being dragged. */
+.sizeReadout {
+  position: absolute;
+  left: 50%;
+  bottom: -36px;
+  transform: translateX(-50%);
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-tertiary);
+  white-space: nowrap;
+  pointer-events: none;
 }
 
 /* ============================================

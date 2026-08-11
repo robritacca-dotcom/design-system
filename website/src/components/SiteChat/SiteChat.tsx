@@ -54,11 +54,24 @@ const claudeGlyph = (
 export function SiteChat({
   fullscreenEnabled = true,
   compact = false,
+  title = "robr0 GPT",
+  placeholder = "Ask anything",
+  showStarters = true,
+  logo = "/rr.svg",
 }: {
   /** Show the expand toggle. The bench's mobile stage is always a takeover, so it hides there. */
   fullscreenEnabled?: boolean;
   /** Narrow insets for phone-width hosts. */
   compact?: boolean;
+  /** The header brand name. The bench overrides it to preview a consumer's own product name. */
+  title?: string;
+  /** The composer's placeholder text. */
+  placeholder?: string;
+  /** Show the conversation starters on the welcome screen. */
+  showStarters?: boolean;
+  /** The header mark's image src; null hides it. The bench feeds it
+      session-only blob URLs for throwaway logo previews. */
+  logo?: string | null;
 }) {
   const {
     turns,
@@ -121,8 +134,18 @@ export function SiteChat({
         <ChatHeader
           title={
             <span className={styles.brand}>
-              <Image src="/rr.svg" alt="" width={20} height={20} />
-              <span className={styles.brandName}>robr0 GPT</span>
+              {logo && (
+                <Image
+                  src={logo}
+                  alt=""
+                  width={20}
+                  height={20}
+                  /* A blob: URL is an in-memory object the optimizer can't
+                     fetch — serve it as-is. */
+                  unoptimized={logo.startsWith("blob:")}
+                />
+              )}
+              <span className={styles.brandName}>{title}</span>
             </span>
           }
           actions={
@@ -198,7 +221,7 @@ export function SiteChat({
         <div className={styles.composerColumn}>
           <Composer
             ref={composerRef}
-            placeholder="Ask anything"
+            placeholder={placeholder}
             sendLabel="Send"
             value={draft}
             onValueChange={setDraft}
@@ -227,7 +250,7 @@ export function SiteChat({
           composer), collapsing on the first utterance — only flex-grow ever
           animates, so the flow-down is seamless. */}
       <div className={`${styles.bottomRegion} ${isEmpty ? styles.bottomRegionWelcome : ""}`}>
-        {isEmpty && (
+        {isEmpty && showStarters && (
           <div className={styles.startersColumn}>
             <PromptSuggestions
               layout="stack"
