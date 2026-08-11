@@ -62,7 +62,11 @@ export default function StageToolbar({
                 __html: JSON.stringify(buildBreadcrumbJsonLd(items)),
               }}
             />
-            <Breadcrumb items={items} />
+            {/* Phones lose the trail (the logo is the way up); the
+                structured data above stays either way. */}
+            <span className={styles.crumb}>
+              <Breadcrumb items={items} />
+            </span>
           </>
         )}
       </div>

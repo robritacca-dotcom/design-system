@@ -38,6 +38,11 @@ export interface PlaygroundControlsProps {
       the rail stays consistent where the views agree and contextual where
       they differ. */
   contextual?: ReactNode;
+  /** How the controls are hosted: the desktop edge panel (default), or
+      bare content for the mobile Drawer, which brings its own shell,
+      scroll, and title. Render one host at a time — two at once would
+      collide on the radio group names. */
+  variant?: "panel" | "drawer";
   onPreset: (value: string) => void;
   /** `darkValue` rides along for the theme-dependent neutral swatches. */
   onBrand: (value: string, darkValue?: string) => void;
@@ -72,6 +77,7 @@ export default function PlaygroundControls({
   isPristine,
   cssSnippet,
   contextual,
+  variant = "panel",
   onPreset,
   onBrand,
   onTintOn,
@@ -125,13 +131,12 @@ export default function PlaygroundControls({
     }
   };
 
-  return (
-    /* No animate-in here: the rail centres itself with a translateY
-       transform, and the entrance animation would fight it. The inner
-       wrapper scrolls; the shell owns the radius and clips (see the CSS). */
-    <aside className={styles.controlRail} aria-label="Theme controls">
-      <div className={styles.railScroll}>
-        <h3 className={styles.railTitle}>Theme controls</h3>
+  const content = (
+    <>
+        {/* In the drawer the Drawer's own title does this job. */}
+        {variant === "panel" && (
+          <h3 className={styles.railTitle}>Theme controls</h3>
+        )}
 
         <div className={styles.controlGroup}>
           <Dropdown
@@ -277,7 +282,19 @@ export default function PlaygroundControls({
             onClick={onReset}
           />
         </div>
-      </div>
+    </>
+  );
+
+  if (variant === "drawer") {
+    return <div className={styles.drawerControls}>{content}</div>;
+  }
+
+  return (
+    /* No animate-in here: the panel is fixed and the entrance animation's
+       transform would fight the layout. The inner wrapper scrolls; the
+       shell owns the clipping (see the CSS). */
+    <aside className={styles.controlRail} aria-label="Theme controls">
+      <div className={styles.railScroll}>{content}</div>
     </aside>
   );
 }

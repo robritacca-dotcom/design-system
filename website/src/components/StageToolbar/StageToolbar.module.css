@@ -41,3 +41,17 @@
   align-items: center;
   flex-shrink: 0;
 }
+
+.crumb {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+/* Phones: the bar keeps logo, switch, and X on one line — the breadcrumb
+   trail gives way (the logo is the way up, and the switch names the page). */
+@media (max-width: 699px) {
+  .crumb {
+    display: none;
+  }
+}

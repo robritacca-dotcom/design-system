@@ -5,8 +5,10 @@ import Link from "next/link";
 import StageToolbar from "@/components/StageToolbar/StageToolbar";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import styles from "./page.module.css";
+import { Button } from "@robr0/design-system/components/Button/Button";
 import { CodeBlock } from "@robr0/design-system/components/CodeBlock/CodeBlock";
 import { Dialog } from "@robr0/design-system/components/Dialog/Dialog";
+import { Drawer } from "@robr0/design-system/components/Drawer/Drawer";
 import {
   DEFAULT_ADVANCED,
   DEFAULT_BRAND,
@@ -63,6 +65,17 @@ function subscribeToTheme(callback: () => void) {
   return () => observer.disconnect();
 }
 
+/* Below the tool's desktop breakpoint there is no room for the edge
+   panel: the controls move into a bottom Drawer summoned by a fixed pill,
+   and the workspace gets the whole screen. Must match the breakpoint in
+   page.module.css. */
+const COMPACT_QUERY = "(max-width: 1099px)";
+const subscribeCompact = (callback: () => void) => {
+  const media = window.matchMedia(COMPACT_QUERY);
+  media.addEventListener("change", callback);
+  return () => media.removeEventListener("change", callback);
+};
+
 export default function PlaygroundPage() {
   /* ---------- the active view ----------
      Local state (the levers must survive a switch), mirrored into ?view=
@@ -105,6 +118,12 @@ export default function PlaygroundPage() {
   const [pill, setPill] = useState(true);
   const [fontLabel, setFontLabel] = useState(FONT_OPTIONS[0].label);
   const [productName, setProductName] = useState("");
+  const compact = useSyncExternalStore(
+    subscribeCompact,
+    () => window.matchMedia(COMPACT_QUERY).matches,
+    () => false
+  );
+  const [controlsOpen, setControlsOpen] = useState(false);
   const [advOpen, setAdvOpen] = useState(false);
   const [cssOpen, setCssOpen] = useState(false);
   const [advColors, setAdvColors] = useState<AdvancedColorState>(DEFAULT_ADVANCED);
@@ -310,6 +329,101 @@ export default function PlaygroundPage() {
     ? "/* Everything is at its shipped default. Move a lever to generate CSS. */"
     : buildCssSnippet(snippetOverrides, font, snippetDarkBlock);
 
+  /* The full lever set, host-agnostic — mounted in the edge panel on
+     desktop or handed to the Drawer on compact screens. */
+  const controls = (
+            <PlaygroundControls
+              variant={compact ? "drawer" : "panel"}
+              preset={preset}
+              brand={effectiveBrand}
+              theme={theme}
+              onTheme={applyTheme}
+              tintOn={tintOn}
+              tintSeed={tintSeed}
+              tintStrength={tintStrength}
+              radiusScale={radiusScale}
+              pill={pill}
+              fontLabel={fontLabel}
+              productName={productName}
+              actionModeNote={
+                actionPlan
+                  ? Object.keys(actionPlan.primitives).length === 0
+                    ? `Pointing the action tokens at the ${actionPlan.ramp} ramp; the primitives stay untouched.`
+                    : `Custom hex: rebasing the ${actionPlan.ramp} ramp around it and pointing the action tokens there. Teal stays teal.`
+                  : null
+              }
+              isPristine={isPristine}
+              cssSnippet={cssSnippet}
+              onPreset={applyPreset}
+              onBrand={pickBrand}
+              onTintOn={asCustom(setTintOn)}
+              onTintSeed={asCustom(setTintSeed)}
+              onTintStrength={asCustom(setTintStrength)}
+              onRadiusScale={asCustom(setRadiusScale)}
+              onPill={asCustom(setPill)}
+              onFontLabel={asCustom(setFontLabel)}
+              onProductName={setProductName}
+              onReset={reset}
+              onOpenAdvanced={() => setAdvOpen(true)}
+              onViewCss={() => setCssOpen(true)}
+              contextual={
+                view === "chat" ? (
+                  <>
+                    {!compact && (
+                    <div className={styles.controlGroup}>
+                      <RadioGroup
+                        label="Stage size"
+                        name="playground-chat-stage"
+                        value={stageSize}
+                        options={Object.entries(STAGE_SIZES).map(([value, s]) => ({
+                          value,
+                          label: s.label,
+                        }))}
+                        onValueChange={(value) => setStageSize(value as StageSize)}
+                      />
+                      <p className={styles.controlNote}>
+                        Mobile renders edge-to-edge in a bezel, the way the site
+                        panel ships on phones.
+                      </p>
+                    </div>
+                    )}
+
+                    <div className={styles.controlGroup}>
+                      <RadioGroup
+                        label="Transport"
+                        name="playground-chat-transport"
+                        value={transportMode}
+                        options={[
+                          { value: "sim", label: "Simulated" },
+                          { value: "live", label: "Live" },
+                        ]}
+                        onValueChange={(value) => setTransportMode(value as TransportMode)}
+                      />
+                      <p className={styles.controlNote}>
+                        Simulated replays a scripted exchange without calling the
+                        model. Live answers through the site&rsquo;s API route.
+                      </p>
+                    </div>
+
+                    <div className={styles.controlGroup}>
+                      <Input
+                        label="Composer placeholder"
+                        placeholder="Ask anything"
+                        value={chatPlaceholder}
+                        onValueChange={setChatPlaceholder}
+                      />
+                      <ToggleSwitch
+                        label="Starter prompts"
+                        checked={showStarters}
+                        onChange={setShowStarters}
+                      />
+                    </div>
+                  </>
+                ) : undefined
+              }
+            />
+  );
+
   return (
     <>
       <BlurBackground />
@@ -326,93 +440,31 @@ export default function PlaygroundPage() {
 
       <div className={styles.dsLayout}>
         {/* The control rail lives where the nav sidebar sits on doc pages */}
-        <PlaygroundControls
-          preset={preset}
-          brand={effectiveBrand}
-          theme={theme}
-          onTheme={applyTheme}
-          tintOn={tintOn}
-          tintSeed={tintSeed}
-          tintStrength={tintStrength}
-          radiusScale={radiusScale}
-          pill={pill}
-          fontLabel={fontLabel}
-          productName={productName}
-          actionModeNote={
-            actionPlan
-              ? Object.keys(actionPlan.primitives).length === 0
-                ? `Pointing the action tokens at the ${actionPlan.ramp} ramp; the primitives stay untouched.`
-                : `Custom hex: rebasing the ${actionPlan.ramp} ramp around it and pointing the action tokens there. Teal stays teal.`
-              : null
-          }
-          isPristine={isPristine}
-          cssSnippet={cssSnippet}
-          onPreset={applyPreset}
-          onBrand={pickBrand}
-          onTintOn={asCustom(setTintOn)}
-          onTintSeed={asCustom(setTintSeed)}
-          onTintStrength={asCustom(setTintStrength)}
-          onRadiusScale={asCustom(setRadiusScale)}
-          onPill={asCustom(setPill)}
-          onFontLabel={asCustom(setFontLabel)}
-          onProductName={setProductName}
-          onReset={reset}
-          onOpenAdvanced={() => setAdvOpen(true)}
-          onViewCss={() => setCssOpen(true)}
-          contextual={
-            view === "chat" ? (
-              <>
-                <div className={styles.controlGroup}>
-                  <RadioGroup
-                    label="Stage size"
-                    name="playground-chat-stage"
-                    value={stageSize}
-                    options={Object.entries(STAGE_SIZES).map(([value, s]) => ({
-                      value,
-                      label: s.label,
-                    }))}
-                    onValueChange={(value) => setStageSize(value as StageSize)}
-                  />
-                  <p className={styles.controlNote}>
-                    Mobile renders edge-to-edge in a bezel, the way the site
-                    panel ships on phones.
-                  </p>
-                </div>
-
-                <div className={styles.controlGroup}>
-                  <RadioGroup
-                    label="Transport"
-                    name="playground-chat-transport"
-                    value={transportMode}
-                    options={[
-                      { value: "sim", label: "Simulated" },
-                      { value: "live", label: "Live" },
-                    ]}
-                    onValueChange={(value) => setTransportMode(value as TransportMode)}
-                  />
-                  <p className={styles.controlNote}>
-                    Simulated replays a scripted exchange without calling the
-                    model. Live answers through the site&rsquo;s API route.
-                  </p>
-                </div>
-
-                <div className={styles.controlGroup}>
-                  <Input
-                    label="Composer placeholder"
-                    placeholder="Ask anything"
-                    value={chatPlaceholder}
-                    onValueChange={setChatPlaceholder}
-                  />
-                  <ToggleSwitch
-                    label="Starter prompts"
-                    checked={showStarters}
-                    onChange={setShowStarters}
-                  />
-                </div>
-              </>
-            ) : undefined
-          }
-        />
+        {compact ? (
+          <>
+            {/* The workspace owns the phone screen; the levers are one tap
+                away. The pill sits where a thumb can reach it. */}
+            <div className={styles.controlsFab}>
+              <Button
+                label="Theme controls"
+                variant="primary"
+                iconLeft="tune"
+                onClick={() => setControlsOpen(true)}
+              />
+            </div>
+            <Drawer
+              open={controlsOpen}
+              onOpenChange={setControlsOpen}
+              title="Theme controls"
+              side="bottom"
+              size="lg"
+            >
+              {controls}
+            </Drawer>
+          </>
+        ) : (
+          controls
+        )}
 
         <AdvancedColorsDialog
           open={advOpen}
@@ -477,7 +529,9 @@ export default function PlaygroundPage() {
             <ChatView
               transportMode={transportMode}
               title={productName.trim() || "Acme Corp"}
-              size={stageSize}
+              /* A phone IS the mobile preset — the stage-size lever hides
+                 on compact screens and the widget goes fluid via CSS. */
+              size={compact ? "desktop" : stageSize}
               placeholder={chatPlaceholder}
               showStarters={showStarters}
             />

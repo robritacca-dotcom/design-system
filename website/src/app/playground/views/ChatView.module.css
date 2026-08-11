@@ -273,3 +273,29 @@
   backdrop-filter: blur(16px);
   box-shadow: var(--shadow-floating);
 }
+
+/* ============================================
+   RESPONSIVE — a phone IS the mobile preset:
+   the widget goes fluid (the preset's inline
+   size stays, these clamps contain it), and
+   the mouse-only review tooling retires.
+   ============================================ */
+@media (max-width: 1099px) {
+  .widgetFrame {
+    width: 100%;
+  }
+
+  /* Always clamped here — the drag-to-outgrow affordance is desktop-only,
+     so the fitted maximums apply whether or not a fit class is present. */
+  .widget {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    max-height: calc(100dvh - var(--chat-clearance));
+  }
+
+  .handle,
+  .sizeReadout {
+    display: none;
+  }
+}

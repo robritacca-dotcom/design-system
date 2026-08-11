@@ -318,29 +318,38 @@
   cursor: not-allowed;
 }
 
+/* The compact controls pill — fixed where a thumb reaches, summoning the
+   Drawer. Rendered only below the breakpoint (the page swaps hosts). */
+.controlsFab {
+  position: fixed;
+  bottom: var(--padding-lg);
+  right: var(--padding-lg);
+  z-index: 25;
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-floating);
+}
+
+/* The same control groups, hosted by the Drawer: a plain column — the
+   Drawer brings the shell, the scroll, and the title. */
+.drawerControls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+}
+
 /* ============================================
    RESPONSIVE — below the tool's breakpoint the
-   panel rejoins the flow above the content
-   rather than floating over it. It must NOT
-   disappear the way the nav Sidebar does.
+   edge panel is not rendered at all: the
+   controls live in the Drawer, and the
+   workspace owns the whole screen.
    ============================================ */
 @media (max-width: 1099px) {
   .dsLayout {
-    flex-direction: column;
-    align-items: stretch;
-    gap: var(--gap-lg);
     padding-left: 0;
-    /* The panel is in the flow here — no centring zone to correct. */
+    /* No panel means no centring zone to correct. */
     width: 100%;
     margin-inline: 0;
-  }
-
-  /* In the flow, the panel becomes a plain glass block above the content —
-     the edge treatment moves to a bottom hairline. */
-  .controlRail {
-    position: static;
-    width: 100%;
-    border-right: none;
-    border-bottom: var(--border-xs) solid var(--color-bg-container-border);
+    /* Room for the fixed controls pill below the content's end. */
+    padding-bottom: calc(var(--padding-lg) * 2 + 40px);
   }
 }
