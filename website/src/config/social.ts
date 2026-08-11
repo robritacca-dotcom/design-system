@@ -1,8 +1,8 @@
 /**
  * Canonical external links: Rob's profiles and the places the design
- * system lives off-site. The footer consumes these; the contact page,
- * PageLinks, and structuredData still carry their own copies and can be
- * pointed here as they get touched.
+ * system lives off-site. The footer and structuredData's sameAs consume
+ * these; the contact page and PageLinks still carry their own copies and
+ * can be pointed here as they get touched.
  */
 
 export interface ExternalLink {

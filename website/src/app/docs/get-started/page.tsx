@@ -189,8 +189,8 @@ export default function GetStartedPage() {
               <section className={`${styles.section} animate-in animate-delay-2`}>
                 <SectionTitle title="Install" />
                 <p className={styles.sectionNote}>
-                  React 19+ is the only required peer dependency (recharts is an
-                  optional second, for charts). Everything else (component CSS, both
+                  React 19+ (react and react-dom) is the only required peer
+                  dependency (recharts is an optional extra, for charts). Everything else (component CSS, both
                   themes, the Material Symbols icon font) is bundled. The package is
                   ESM-only: use a bundler that handles CSS and font imports (Vite,
                   Next.js, webpack), with TypeScript&apos;s{" "}

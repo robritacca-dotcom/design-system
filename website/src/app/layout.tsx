@@ -129,7 +129,7 @@ export default async function RootLayout({
       <head>
         {/* Material Symbols is served from the design system's own bundled
             @font-face (src/fonts/material-symbols.css, imported above) — the
-            .ttf is emitted into the build, so the font was being shipped twice.
+            woff2 is emitted into the build, so the font was being shipped twice.
 
             The Google Fonts <link> that used to sit here is deliberately gone.
             Besides the duplicate request, that stylesheet ships its own

@@ -5,7 +5,7 @@
 [![npm](https://img.shields.io/npm/v/@robr0%2Fdesign-system?logo=npm&color=CB3837)](https://www.npmjs.com/package/@robr0/design-system)
 <!-- npm-badge:end -->
 
-A personal portfolio site, the AI-ready React design system behind it, and the AI layer that lets the site answer questions about itself. Claude Code builds all of it from the written specs in this repo (`CLAUDE.md` for the rules, `design.md` for the design language, `content-design.md` for how every word reads), and generated registries keep this README and the docs site from drifting. The design system is the backbone every portfolio page is built on, so the work is presented consistently and to the same craft standards throughout.
+A personal portfolio site, the AI-ready React design system behind it, and the AI layer that lets the site answer questions about itself. Claude Code builds all of it from the written specs in this repo (`CLAUDE.md` for the rules, `design.md` for the design language, `content-design.md` for how every word reads, and `porting-guide.md` for rebuilding the site chat inside another design system), and generated registries keep this README and the docs site from drifting. The design system is the backbone every portfolio page is built on, so the work is presented consistently and to the same craft standards throughout.
 
 **[→ Live site](https://robertritacca.com/)** · **[→ Storybook](https://design-system-iota-one.vercel.app/?path=/docs/robr0-ds--docs)**
 

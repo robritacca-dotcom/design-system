@@ -68,7 +68,7 @@ const PIPELINE: TimelineCompany[] = [
           "Maintains the layered CSS token architecture (primitives → semantics → components)",
           "Generates React components with TypeScript and token-based CSS from the spec",
           "Builds Storybook documentation automatically for every component",
-          "Maintains the system as well as building it: skills audit token usage, prose, and accessibility on demand, and recurring loops keep the project journal current",
+          "Maintains the system as well as building it: skills audit token usage, prose, and accessibility on demand, and recurring loops run copy experiments and keep the project journal current",
         ],
       },
     ],
@@ -189,7 +189,7 @@ const PIPELINE: TimelineCompany[] = [
         title: "Site-aware chat",
         description: (
           <>
-            The chat behind the floating button on every page. It answers from
+            The chat behind the floating button in the corner of the site. It answers from
             the published site, and from established design knowledge, through
             Claude Sonnet. The same widget runs on{" "}
             <Link href="/robr0-gpt" className={styles.inlineLink}>the chat bench</Link>,
@@ -210,7 +210,7 @@ const PIPELINE: TimelineCompany[] = [
         bullets: [
           "A golden set of questions runs through the real chat route, asserting that every path an answer cites exists and every fact a question needs is present; a coverage validator fails the build the moment the context loses a fact the eval depends on",
           "Layered spend protection: per-visitor rate limits, a daily budget breaker that degrades to a routing answer instead of going dark, and a hard spend cap behind everything",
-          "Conversations are kept for 30 days to improve answers, tied to no name or address, then deleted; the widget discloses this in its footer",
+          "Conversations are kept for 30 days to improve answers, tied to no name or address, then deleted; the widget's footer carries the retention line",
           <>
             The{" "}
             <Link href="/robr0-gpt" className={styles.inlineLink}>bench</Link>{" "}
