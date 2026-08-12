@@ -62,6 +62,11 @@
   line-height: var(--font-mega-1-line-height);
   letter-spacing: var(--font-mega-1-letter-spacing);
   color: var(--color-text-primary);
+  /* The title sits outside .homeHeading, so it centres its own text. The
+     hero's align-items only centres the box, which is shrink-to-fit right up
+     until the name wraps — at which point the box fills the width and
+     left-aligned lines fall off the axis the rest of the hero sits on. */
+  text-align: center;
 }
 
 .homeSubtitle {
