@@ -30,7 +30,7 @@ git rev-parse main
 git fetch --prune
 ```
 
-**Record the `main` SHA before anything moves.** It is the unwind handle for step 6 and belongs in the final report; nothing else can restore a half-landed `main`.
+**Record the `main` SHA before anything moves.** It is the unwind handle for step 8, the diff anchor for step 7, and belongs in the final report; nothing else can restore a half-landed `main`.
 
 Then check divergence with `git rev-list --left-right --count main...origin/main`. If `main` is behind, `git pull --ff-only`. If it has genuinely diverged, stop and report: something pushed elsewhere, and reconciling that is its own decision.
 
@@ -75,7 +75,7 @@ git log --oneline main --not <branch> -- $(git diff --name-only main...<branch>)
 
 Commits here are changes `main` made to the very files the candidate touches. A short list means the work still applies. A long list, or a rewrite of the same component, means the candidate is probably superseded and its conflicts are not worth resolving.
 
-Form an actual view on each candidate, and say it plainly in step 4:
+Form an actual view on each candidate, and say it plainly in step 5:
 
 - **Finished** — coherent, complete, matches current conventions. A landing candidate.
 - **Unfinished** — mid-build, or its own notes record it as still being tuned. Keep, do not land.
@@ -84,7 +84,7 @@ Form an actual view on each candidate, and say it plainly in step 4:
 
 **The dirty-worktree rule.** Uncommitted changes in a worktree are not on its branch, so merging the branch silently drops them and removing the worktree destroys them. Treat any dirty worktree as a session possibly still in flight: name every uncommitted file, and never land or remove it on an assumption. Committing another session's half-finished work is not this skill's call.
 
-Do not run `npm install` in a worktree, and do not lint one with no `node_modules`. A fresh worktree has none, installing root plus the website workspace in each is slow, and step 6's combined `npm run verify` carries the real signal.
+Do not run `npm install` in a worktree, and do not lint one with no `node_modules`. A fresh worktree has none, installing root plus the website workspace in each is slow, and step 8's combined `npm run verify` carries the real signal.
 
 ### 4. Predict the collisions
 
@@ -121,7 +121,7 @@ If predicted conflicts make the order matter, recommend one: fewest conflicts fi
 
 **Mixed candidates.** When a branch is partly worth landing, offer to land a subset by `git cherry-pick <sha>` rather than forcing all-or-nothing, and archive the full branch before deleting the remainder. This is the one place cherry-picking is sanctioned; `ship` bans it because there it means dodging a merge, which is a different act from deliberately selecting commits.
 
-### 6. Land what lands, then verify
+### 6. Land what lands
 
 One branch at a time, each as its own merge:
 
@@ -140,7 +140,26 @@ Uncommitted piles that were approved for landing get committed on `main` in the 
 - **Version bumps** (`PACKAGE_VERSION` in `scripts/package-manifest.mjs`, the root `package.json` version, `package-lock.json`): keep the single higher version, make all three agree, refresh with `npm install --package-lock-only`. `scripts/validate-package-exports.mjs` fails the build when they disagree.
 - **Source, CSS, and prose conflicts**: stop and ask. A semantic conflict between two sessions' intentions is not resolvable from inside a batch cleanup.
 
-Then run the combined check once, on `main`:
+### 7. Check the prose the landed work invalidated
+
+Landed work can make a sentence elsewhere in the repo false, and no validator can see it. This runs before the verify so its fixes are covered by the same green run.
+
+`land` has an exact anchor for the scope, which `ship`'s equivalent check does not — it works from "this session's diff", while here everything landed in this run is one range:
+
+```bash
+git diff --name-only <pre-land-sha>..main
+```
+
+From that diff, take the identifiers it touched — component and prop names, script names, token names, moved or deleted paths, and any rule the work made stricter — and grep the prose surfaces for them: `.claude/skills/`, `README.md`, and every root spec (the doc list in `scripts/validate-doc-refs.mjs` is the authoritative set). Then judge whether any claim just became false.
+
+Two classes matter most, because both actively mislead:
+
+- **An instruction that now contradicts the build.** The worked example: a page moved from a curated subset to full coverage with a validator enforcing it, while `CLAUDE.md` still told the next agent that skipping an entry was fine. Following the doc would have produced a build failure the doc called acceptable. Whenever landed work makes a rule *stricter*, the instructions that describe the old latitude are the first place to look.
+- **A false claim in `README.md`**, which ships inside the npm tarball and so reaches every consumer.
+
+Fix what drifted, in this run, as its own `docs(...)` commit. Any prose the landing itself wrote follows `content-design.md`. `scripts/validate-doc-refs.mjs` catches dead references mechanically, but only a reader catches a sentence that is now wrong.
+
+### 8. Verify the combined result
 
 ```bash
 npm run verify
@@ -150,7 +169,7 @@ Run it plainly and let its exit status be the verdict. **Never pipe it through `
 
 **If verify fails**: nothing is pushed, so nothing is broken in public. Identify the merge or commit that introduced it, report it, and offer to unwind to the SHA from step 1 with `git reset --hard <pre-land-sha>`. That is destructive, so it is offered and confirmed, never automatic. **Dispose of nothing while verify is red** — an unwound merge needs its branch and worktree to still exist.
 
-### 7. Dispose of the junk
+### 9. Dispose of the junk
 
 **Archive before deleting. Always, without being asked.**
 
@@ -176,12 +195,13 @@ git worktree prune
 
 For every candidate marked **Keep**: change nothing. No commits, no deletions, no tidying of stray files. Name each in the report with its branch and worktree path so it stays a resume handle.
 
-### 8. Report
+### 10. Report
 
 - **Landed**: each branch or pile, its merge or commit, and a one-line summary of what it carried
 - **Kept**: each one, why, and its resume handle
 - **Deleted**: each one, its `archive/*` tag, and the recovery line — `git checkout -b <name> archive/<tag>`
 - Conflicts resolved, how, and which were regeneration rather than a judgement call
+- Prose the landed work invalidated, and the fix — or explicitly that nothing drifted
 - The `npm run verify` result and the pre-land SHA as the unwind handle
 - Branches and worktrees removed, local and remote
 - Closing line: `main` carries unpushed commits and nothing deployed. Say `ship` to take it live, or leave it local.
