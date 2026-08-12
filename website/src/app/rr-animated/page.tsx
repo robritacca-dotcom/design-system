@@ -16,6 +16,7 @@ export default function RrAnimatedPreviewPage() {
           justifyContent: "center",
         }}
       >
+        {/* eslint-disable-next-line @next/next/no-img-element -- the source is an animated SVG, and next/image would need images.dangerouslyAllowSVG in next.config.ts to serve it at all. */}
         <img
           src="/logos/rr-animated.svg"
           alt="Animated rr logo"

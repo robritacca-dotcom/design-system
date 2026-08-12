@@ -158,8 +158,6 @@ const logoCategories: LogoCategory[] = [
   },
 ];
 
-const totalLogos = logoCategories.reduce((sum, cat) => sum + cat.logos.length, 0);
-
 /* ============================================
    PAGE
    ============================================ */

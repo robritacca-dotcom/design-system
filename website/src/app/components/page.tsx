@@ -6,7 +6,6 @@ import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import TocCard from "../../components/TocCard/TocCard";
-import { Accordion } from "@robr0/design-system/components/Accordion/Accordion";
 import { AgentStatus } from "@robr0/design-system/components/AgentStatus/AgentStatus";
 import { AiButton } from "@robr0/design-system/components/AiButton/AiButton";
 import { ChatHeader } from "@robr0/design-system/components/ChatHeader/ChatHeader";
@@ -16,7 +15,6 @@ import { ChatThread } from "@robr0/design-system/components/ChatThread/ChatThrea
 import { Alert } from "@robr0/design-system/components/Alert/Alert";
 import { Avatar } from "@robr0/design-system/components/Avatar/Avatar";
 import { Badge } from "@robr0/design-system/components/Badge/Badge";
-import { Breadcrumb } from "@robr0/design-system/components/Breadcrumb/Breadcrumb";
 import { Button } from "@robr0/design-system/components/Button/Button";
 import { Checkbox } from "@robr0/design-system/components/Checkbox/Checkbox";
 import { Chip } from "@robr0/design-system/components/Chip/Chip";
@@ -31,26 +29,21 @@ import { Timeline } from "@robr0/design-system/components/Timeline/Timeline";
 import { ContributionGraph, type ContributionDay } from "@robr0/design-system/components/ContributionGraph/ContributionGraph";
 import { Divider } from "@robr0/design-system/components/Divider/Divider";
 import { DocumentChip } from "@robr0/design-system/components/DocumentChip/DocumentChip";
-import { Dropdown } from "@robr0/design-system/components/Dropdown/Dropdown";
 import { Pagination } from "@robr0/design-system/components/Pagination/Pagination";
-import { Input } from "@robr0/design-system/components/Input/Input";
 import { InterruptCard } from "@robr0/design-system/components/InterruptCard/InterruptCard";
 import { Kbd } from "@robr0/design-system/components/Kbd/Kbd";
 import { ProgressBar } from "@robr0/design-system/components/ProgressBar/ProgressBar";
 import { PromptSuggestions } from "@robr0/design-system/components/PromptSuggestions/PromptSuggestions";
 import { Prose } from "@robr0/design-system/components/Prose/Prose";
 import { RadioButton } from "@robr0/design-system/components/RadioButton/RadioButton";
-import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import { SegmentedControl } from "@robr0/design-system/components/SegmentedControl/SegmentedControl";
 import { Skeleton } from "@robr0/design-system/components/Skeleton/Skeleton";
 import { Slider } from "@robr0/design-system/components/Slider/Slider";
 import { SourceChip } from "@robr0/design-system/components/SourceChip/SourceChip";
 import { Spinner } from "@robr0/design-system/components/Spinner/Spinner";
 import { Tabs } from "@robr0/design-system/components/Tabs/Tabs";
-import { Textarea } from "@robr0/design-system/components/Textarea/Textarea";
 import { ToggleGroup } from "@robr0/design-system/components/ToggleGroup/ToggleGroup";
 import PageLinks from "../../components/PageLinks/PageLinks";
-import { LinkList } from "@robr0/design-system/components/LinkList/LinkList";
 import { MessageActions } from "@robr0/design-system/components/MessageActions/MessageActions";
 import { MessageCard } from "@robr0/design-system/components/MessageCard/MessageCard";
 import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
@@ -642,6 +635,7 @@ export default function ComponentsPage() {
                   { logo: "/logos/Git.svg", label: "GitHub" },
                 ].map((item) => (
                   <div key={item.label} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element -- SVG source: next/image would need images.dangerouslyAllowSVG in next.config.ts to serve it at all. */}
                     <img src={item.logo} alt="" width={20} height={20} style={{ objectFit: "contain", flexShrink: 0 }} />
                     <span style={{ fontSize: "11px", fontWeight: 500, color: "var(--color-text-primary)" }}>{item.label}</span>
                     <span className="material-symbols-rounded" style={{ fontSize: "12px", color: "var(--color-text-tertiary)", marginLeft: "auto" }}>open_in_new</span>
