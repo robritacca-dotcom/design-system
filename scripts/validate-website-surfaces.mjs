@@ -145,6 +145,30 @@ const llmsStale = [
   ),
 ];
 
+// The semantic-colours page states it documents ALL colour tokens, and prints
+// the count from TOKEN_COUNTS. Both halves have to stay true: a token added to
+// the CSS lands in the registry (and so in the printed number) without adding
+// itself to the page's hand-authored swatch arrays, which would silently turn
+// the sentence into a lie. Checked in both directions.
+const colourTokens = JSON.parse(
+  read(join(repoRoot, 'src', 'tokens', 'registry.json'))
+).categories.colour;
+const swatchSource = read(
+  join(appDir, 'foundations', 'colour-mode', 'page.tsx')
+);
+const documentedColours = new Set(
+  [...swatchSource.matchAll(/(?:cssVar|bgVar|borderVar):\s*'(--color-[a-z0-9-]+)'|(?:cssVar|bgVar|borderVar):\s*"(--color-[a-z0-9-]+)"/g)]
+    .map(([, single, double]) => single ?? double)
+);
+const colourSwatchDrift = [
+  ...colourTokens.filter((t) => !documentedColours.has(t)).map(
+    (t) => `${t} is in the token registry but has no swatch on /foundations/colour-mode`
+  ),
+  ...[...documentedColours].filter((t) => !colourTokens.includes(t)).map(
+    (t) => `/foundations/colour-mode shows ${t}, which is not a registered colour token`
+  ),
+];
+
 for (const [what, list] of [
   ['Registry components with no website showcase page', missingPage],
   ['Registry components missing an index-grid TocCard', missingTocCard],
@@ -152,6 +176,7 @@ for (const [what, list] of [
   ['Blueprint specs synced to website/public with no page to read them on', missingBlueprintPage],
   ['llms.txt spec downloads out of sync with sync-blueprints FILES', llmsStale],
   ['SECTION_OG_IMAGE_SEGMENTS out of sync with section opengraph-image files', ogListStale],
+  ['Semantic colours page out of sync with the colour token registry', colourSwatchDrift],
 ]) {
   if (list.length > 0) {
     fail(`${what}:\n` + list.map((l) => `    - ${l}`).join('\n'));
@@ -166,5 +191,6 @@ console.log(
   `✓ Website surfaces in sync — ${registry.components.length} components each have ` +
     `a page, TocCard, and design.md spec, and ${BLUEPRINT_FILES.length} blueprint specs ` +
     `each have a page (the nav entry and its ordering are derived from the registry, ` +
-    `so they cannot drift).`
+    `so they cannot drift), and all ${colourTokens.length} colour tokens have a swatch ` +
+    `on /foundations/colour-mode.`
 );

@@ -64,37 +64,6 @@
 }
 
 /* ============================================
-   EXAMPLE IMAGES
-   ============================================ */
-.exampleRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--primitive-gap-lg);
-}
-
-.exampleItem {
-  flex: 1 1 0;
-  min-width: 280px;
-  display: flex;
-  flex-direction: column;
-  gap: var(--primitive-gap-sm);
-}
-
-.exampleImage {
-  width: 100%;
-  height: auto;
-  border-radius: var(--primitive-radius-md);
-  object-fit: cover;
-}
-
-.exampleCaption {
-  font-size: var(--font-paragraph-size);
-  font-weight: var(--font-paragraph-weight);
-  line-height: var(--font-paragraph-line-height);
-  color: var(--color-text-tertiary);
-}
-
-/* ============================================
    COLOUR GROUP — Section per category
    ============================================ */
 .colourGroup {
@@ -118,9 +87,6 @@
    RESPONSIVE
    ============================================ */
 @media (max-width: 959px) {
-  .exampleItem {
-    min-width: 0;
-  }
   .pageHeader {
     flex-direction: column;
     align-items: flex-start;

@@ -1,7 +1,6 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import Image from "next/image";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
@@ -120,6 +119,21 @@ const containerColours: SwatchData[] = [
     dark: { primitive: "--neutral--01--", hex: "#F1F1F1", rgb: "241 / 241 / 241" },
     light: { primitive: "--neutral--09--", hex: "#0E0E0E", rgb: "14 / 14 / 14" },
   },
+  {
+    label: "Primary Semi", cssVar: "--color-bg-container-primary-semi",
+    dark: { primitive: "--neutral--09-semi-transparent--", hex: "rgba(14,14,14,0.6)", rgb: "14 / 14 / 14" },
+    light: { primitive: "--neutral--01-semi--", hex: "rgba(241,241,241,0.6)", rgb: "241 / 241 / 241" },
+  },
+  {
+    label: "Primary Transparent", cssVar: "--color-bg-container-primary-transparent",
+    dark: { primitive: "--neutral--09-transparent--", hex: "rgba(14,14,14,0.01)", rgb: "Transparent" },
+    light: { primitive: "--neutral--01-transparent--", hex: "rgba(241,241,241,0.01)", rgb: "Transparent" },
+  },
+  {
+    label: "Border", cssVar: "--color-bg-container-border",
+    dark: { primitive: "--neutral--08--", hex: "#232323", rgb: "35 / 35 / 35" },
+    light: { primitive: "--neutral--02--", hex: "#D6D6D6", rgb: "214 / 214 / 214" },
+  },
 ];
 
 /* --- Chat bubbles --- */
@@ -175,6 +189,20 @@ const textColours: SwatchData[] = [
   },
 ];
 
+/* --- Icon --- */
+const iconColours: SwatchData[] = [
+  {
+    label: "Primary", cssVar: "--color-icon-primary",
+    dark: { primitive: "--neutral--02--", hex: "#D6D6D6", rgb: "214 / 214 / 214" },
+    light: { primitive: "--neutral--06--", hex: "#6D6D6D", rgb: "109 / 109 / 109" },
+  },
+  {
+    label: "Secondary", cssVar: "--color-icon-secondary",
+    dark: { primitive: "--neutral--04--", hex: "#A2A2A2", rgb: "162 / 162 / 162" },
+    light: { primitive: "--neutral--04--", hex: "#A2A2A2", rgb: "162 / 162 / 162" },
+  },
+];
+
 /* --- Overlay & Controls --- */
 const overlayControlColours: SwatchData[] = [
   {
@@ -186,6 +214,11 @@ const overlayControlColours: SwatchData[] = [
     label: "Control Thumb", cssVar: "--color-control-thumb",
     dark: { primitive: "--neutral--01--", hex: "#F1F1F1", rgb: "241 / 241 / 241" },
     light: { primitive: "--neutral--00--", hex: "#FFFFFF", rgb: "255 / 255 / 255" },
+  },
+  {
+    label: "Divider", cssVar: "--color-divider",
+    dark: { primitive: "--neutral--08-semi--", hex: "rgba(35,35,35,0.8)", rgb: "35 / 35 / 35" },
+    light: { primitive: "--neutral--02-semi--", hex: "rgba(214,214,214,0.8)", rgb: "214 / 214 / 214" },
   },
 ];
 
@@ -222,9 +255,34 @@ const actionPrimaryColours: SwatchData[] = [
     light: { primitive: "--teal--07--", hex: "#118AB2", rgb: "17 / 138 / 178" },
   },
   {
+    label: "Text Active", cssVar: "--color-action-primary-text-active",
+    dark: { primitive: "--neutral--01--", hex: "#F1F1F1", rgb: "241 / 241 / 241" },
+    light: { primitive: "--neutral--01--", hex: "#F1F1F1", rgb: "241 / 241 / 241" },
+  },
+  {
     label: "Border Primary", cssVar: "--color-action-primary-border",
     dark: { primitive: "--teal--09--", hex: "#0A4E66", rgb: "10 / 78 / 102" },
     light: { primitive: "--teal--09--", hex: "#0A4E66", rgb: "10 / 78 / 102" },
+  },
+  {
+    label: "Border Secondary", cssVar: "--color-action-primary-border-secondary",
+    dark: { primitive: "--teal--06--", hex: "#2C9AB9", rgb: "44 / 154 / 185" },
+    light: { primitive: "--teal--06--", hex: "#2C9AB9", rgb: "44 / 154 / 185" },
+  },
+  {
+    label: "Border Tertiary", cssVar: "--color-action-primary-border-tertiary",
+    dark: { primitive: "--teal--04--", hex: "#6DBCD6", rgb: "109 / 188 / 214" },
+    light: { primitive: "--teal--04--", hex: "#6DBCD6", rgb: "109 / 188 / 214" },
+  },
+  {
+    label: "Icon Default", cssVar: "--color-action-icon-default",
+    dark: { primitive: "--neutral--01--", hex: "#F1F1F1", rgb: "241 / 241 / 241" },
+    light: { primitive: "--neutral--10--", hex: "#050505", rgb: "5 / 5 / 5" },
+  },
+  {
+    label: "Icon Active", cssVar: "--color-action-icon-active",
+    dark: { primitive: "--neutral--01--", hex: "#F1F1F1", rgb: "241 / 241 / 241" },
+    light: { primitive: "--teal--02--", hex: "#CFEAF3", rgb: "207 / 234 / 243" },
   },
 ];
 
@@ -249,6 +307,60 @@ const actionPassiveColours: SwatchData[] = [
     label: "Text Primary", cssVar: "--color-action-passive-text",
     dark: { primitive: "--neutral--01--", hex: "#F1F1F1", rgb: "241 / 241 / 241" },
     light: { primitive: "--neutral--10--", hex: "#050505", rgb: "5 / 5 / 5" },
+  },
+];
+
+/* --- Input --- */
+const inputColours: SwatchData[] = [
+  {
+    label: "Background Default", cssVar: "--color-input-bg-primary",
+    dark: { primitive: "--neutral--10--", hex: "#050505", rgb: "5 / 5 / 5" },
+    light: { primitive: "--neutral--00--", hex: "#FFFFFF", rgb: "255 / 255 / 255" },
+  },
+  {
+    label: "Background Disabled", cssVar: "--color-input-bg-disabled",
+    dark: { primitive: "--neutral--09--", hex: "#0E0E0E", rgb: "14 / 14 / 14" },
+    light: { primitive: "--neutral--02--", hex: "#D6D6D6", rgb: "214 / 214 / 214" },
+  },
+  {
+    label: "Border Default", cssVar: "--color-input-border-primary",
+    dark: { primitive: "--neutral--08--", hex: "#232323", rgb: "35 / 35 / 35" },
+    light: { primitive: "--neutral--02--", hex: "#D6D6D6", rgb: "214 / 214 / 214" },
+  },
+  {
+    label: "Border Hover", cssVar: "--color-input-border-hover",
+    dark: { primitive: "--teal--09--", hex: "#0A4E66", rgb: "10 / 78 / 102" },
+    light: { primitive: "--teal--04--", hex: "#6DBCD6", rgb: "109 / 188 / 214" },
+  },
+  {
+    label: "Border Selected", cssVar: "--color-input-border-selected",
+    dark: { primitive: "--teal--06--", hex: "#2C9AB9", rgb: "44 / 154 / 185" },
+    light: { primitive: "--teal--06--", hex: "#2C9AB9", rgb: "44 / 154 / 185" },
+  },
+  {
+    label: "Border Disabled", cssVar: "--color-input-border-disabled",
+    dark: { primitive: "--neutral--08--", hex: "#232323", rgb: "35 / 35 / 35" },
+    light: { primitive: "--neutral--03--", hex: "#BCBCBC", rgb: "188 / 188 / 188" },
+  },
+  {
+    label: "Text Primary", cssVar: "--color-input-text-primary",
+    dark: { primitive: "--neutral--01--", hex: "#F1F1F1", rgb: "241 / 241 / 241" },
+    light: { primitive: "--neutral--10--", hex: "#050505", rgb: "5 / 5 / 5" },
+  },
+  {
+    label: "Text Placeholder", cssVar: "--color-input-text-placeholder",
+    dark: { primitive: "--neutral--04--", hex: "#A2A2A2", rgb: "162 / 162 / 162" },
+    light: { primitive: "--neutral--06--", hex: "#6D6D6D", rgb: "109 / 109 / 109" },
+  },
+  {
+    label: "Text Disabled", cssVar: "--color-input-text-disabled",
+    dark: { primitive: "--neutral--07--", hex: "#303030", rgb: "48 / 48 / 48" },
+    light: { primitive: "--neutral--04--", hex: "#A2A2A2", rgb: "162 / 162 / 162" },
+  },
+  {
+    label: "Text Inverse", cssVar: "--color-input-text-inverse",
+    dark: { primitive: "--neutral--07--", hex: "#303030", rgb: "48 / 48 / 48" },
+    light: { primitive: "--neutral--04--", hex: "#A2A2A2", rgb: "162 / 162 / 162" },
   },
 ];
 
@@ -278,6 +390,35 @@ const statusColours: StatusSwatchData[] = [
     label: "Neutral", bgVar: "--color-status-neutral-bg", borderVar: "--color-status-neutral-border",
     dark: { primitive: "--neutral--08--", hex: "#232323", rgb: "35 / 35 / 35" },
     light: { primitive: "--neutral--02--", hex: "#D6D6D6", rgb: "214 / 214 / 214" },
+  },
+];
+
+/* --- Status text --- */
+const statusTextColours: SwatchData[] = [
+  {
+    label: "Positive text", cssVar: "--color-status-positive-text",
+    dark: { primitive: "--green--01--", hex: "#ECFCF7", rgb: "236 / 252 / 247" },
+    light: { primitive: "--green--10--", hex: "#024336", rgb: "2 / 67 / 54" },
+  },
+  {
+    label: "Warning text", cssVar: "--color-status-warning-text",
+    dark: { primitive: "--orange--01--", hex: "#FFF3EC", rgb: "255 / 243 / 236" },
+    light: { primitive: "--orange--10--", hex: "#552716", rgb: "85 / 39 / 22" },
+  },
+  {
+    label: "Error text", cssVar: "--color-status-error-text",
+    dark: { primitive: "--red--01--", hex: "#FDEFF3", rgb: "253 / 239 / 243" },
+    light: { primitive: "--red--10--", hex: "#571727", rgb: "87 / 23 / 39" },
+  },
+  {
+    label: "Info text", cssVar: "--color-status-info-text",
+    dark: { primitive: "--blue--01--", hex: "#EEF3FD", rgb: "238 / 243 / 253" },
+    light: { primitive: "--blue--10--", hex: "#081633", rgb: "8 / 22 / 51" },
+  },
+  {
+    label: "Neutral text", cssVar: "--color-status-neutral-text",
+    dark: { primitive: "--neutral--01--", hex: "#F1F1F1", rgb: "241 / 241 / 241" },
+    light: { primitive: "--neutral--08--", hex: "#232323", rgb: "35 / 35 / 35" },
   },
 ];
 
@@ -381,20 +522,8 @@ export default function SemanticColoursPage() {
               Semantic roles that map to primitives per mode
             </p>
             <p className={styles.introBody}>
-              Each colour here has a role, like &quot;page background&quot; or &quot;error border&quot;, and maps to a different primitive value depending on whether the UI is in light or dark mode. Components only reference these roles, so switching themes is just swapping which primitives each role points to. Toggle the mode above to see the values change. This page shows the most-used roles; the full set of {TOKEN_COUNTS.colour} colour tokens lives in the token registry and the Storybook token docs.
+              Each colour here has a role, like &quot;page background&quot; or &quot;error border&quot;, and maps to a different primitive value depending on whether the UI is in light or dark mode. Components only reference these roles, so switching themes is just swapping which primitives each role points to. Toggle the mode above to see the values change. All {TOKEN_COUNTS.colour} colour tokens are below, grouped by the role they play.
             </p>
-          </div>
-
-          {/* Example images */}
-          <div className={`${styles.exampleRow} animate-in animate-delay-2`}>
-            <div className={styles.exampleItem}>
-              <Image src="/images/figma variables.png" alt="Figma mode variables" width={500} height={300} className={styles.exampleImage} />
-              <p className={styles.exampleCaption}>Figma: Colour mode variables collection</p>
-            </div>
-            <div className={styles.exampleItem}>
-              <Image src="/images/coded semantic tokens.png" alt="Coded semantic tokens" width={500} height={300} className={styles.exampleImage} />
-              <p className={styles.exampleCaption}>Code: tokens-light.css / tokens-dark.css</p>
-            </div>
           </div>
 
           {/* Primary UI Colours */}
@@ -457,6 +586,16 @@ export default function SemanticColoursPage() {
             </div>
           </section>
 
+          {/* Icon */}
+          <section className={styles.colourGroup}>
+            <SectionTitle title="Icon" />
+            <div className={styles.colourSwatches}>
+              {iconColours.map((s) => (
+                <ColourSwatch key={s.label} label={s.label} cssVar={s.cssVar} dark={s.dark} light={s.light} theme={theme} />
+              ))}
+            </div>
+          </section>
+
           {/* Action / Primary */}
           <section className={styles.colourGroup}>
             <SectionTitle title="Action / primary" />
@@ -472,6 +611,16 @@ export default function SemanticColoursPage() {
             <SectionTitle title="Action / passive" />
             <div className={styles.colourSwatches}>
               {actionPassiveColours.map((s) => (
+                <ColourSwatch key={s.label} label={s.label} cssVar={s.cssVar} dark={s.dark} light={s.light} theme={theme} />
+              ))}
+            </div>
+          </section>
+
+          {/* Input */}
+          <section className={styles.colourGroup}>
+            <SectionTitle title="Input" />
+            <div className={styles.colourSwatches}>
+              {inputColours.map((s) => (
                 <ColourSwatch key={s.label} label={s.label} cssVar={s.cssVar} dark={s.dark} light={s.light} theme={theme} />
               ))}
             </div>
@@ -493,6 +642,9 @@ export default function SemanticColoursPage() {
             <div className={styles.colourSwatches}>
               {statusColours.map((s) => (
                 <ColourSwatch key={s.label} label={s.label} cssVar={s.bgVar} dark={s.dark} light={s.light} theme={theme} status borderVar={s.borderVar} />
+              ))}
+              {statusTextColours.map((s) => (
+                <ColourSwatch key={s.label} label={s.label} cssVar={s.cssVar} dark={s.dark} light={s.light} theme={theme} />
               ))}
             </div>
           </section>
