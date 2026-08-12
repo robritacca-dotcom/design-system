@@ -94,6 +94,18 @@
   border-radius: var(--radius-md);
 }
 
+/* The narrow column a chat panel gives a message. `overflow-wrap: anywhere`
+   matches what ChatMessage sets on its content, so the demo shows the table
+   holding its width against the same pressure a real message applies. */
+.narrowColumn {
+  max-width: 420px;
+  min-width: 0;
+  padding: var(--padding-md);
+  background-color: var(--color-bg-container-secondary);
+  border-radius: var(--radius-md);
+  overflow-wrap: anywhere;
+}
+
 /* A tighter bubble for the small size demo */
 .bubble {
   max-width: 480px;

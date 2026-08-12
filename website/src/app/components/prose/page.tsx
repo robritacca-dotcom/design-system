@@ -134,6 +134,8 @@ export function Dashboard() {
               Blockquotes take the same quiet left rail as a reasoning trace,
               and tables get collapsed borders with a tinted header row. Both
               come straight out of a markdown renderer with no extra classes.
+              A table sizes to its content rather than stretching to fill the
+              column, which is what lets it scroll when it runs out of room.
             </p>
             <div className={styles.surface}>
               <Prose>
@@ -182,6 +184,55 @@ export function Dashboard() {
                   Everything not listed here is unchanged and imports from the
                   package root as before.
                 </p>
+              </Prose>
+            </div>
+          </section>
+
+          {/* Wide tables in a narrow column */}
+          <section className={styles.section}>
+            <SectionTitle title="Tables in a narrow column" />
+            <p className={styles.demoText}>
+              A markdown table can be wider than the space it lands in. Rather
+              than squeeze the columns until the headings break apart, the
+              table becomes its own scroll container and keeps its natural
+              width. Prose styles markup it does not render, so it cannot add a
+              wrapping element: add <code>{`tabIndex={0}`}</code> to the table when
+              the scroll needs to be reachable by keyboard alone.
+            </p>
+            <div className={styles.narrowColumn}>
+              <Prose size="sm">
+                <p>The roles that moved in the reorg:</p>
+                <table tabIndex={0}>
+                  <thead>
+                    <tr>
+                      <th>Company</th>
+                      <th>Role</th>
+                      <th>Years</th>
+                      <th>Team</th>
+                      <th>Location</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Northwind</td>
+                      <td>Designer</td>
+                      <td>2019</td>
+                      <td>Platform</td>
+                      <td>Vancouver</td>
+                      <td>Archived</td>
+                    </tr>
+                    <tr>
+                      <td>Contoso</td>
+                      <td>Lead</td>
+                      <td>2023</td>
+                      <td>Signals</td>
+                      <td>Remote</td>
+                      <td>Active</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>Everything else keeps the reporting line it had.</p>
               </Prose>
             </div>
           </section>

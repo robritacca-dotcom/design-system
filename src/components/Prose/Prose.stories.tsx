@@ -157,3 +157,59 @@ export const WithTable: Story = {
     </Prose>
   ),
 };
+
+/**
+ * A table too wide for its container, in the narrow column a chat panel gives it.
+ * The wrapper reproduces ChatMessage's content box, `overflow-wrap: anywhere`
+ * included: without Prose holding the cells at `overflow-wrap: normal`, that
+ * inherited rule collapses every column's minimum width to one character and
+ * the headings break mid-word instead of the table scrolling. `tabIndex` is the
+ * consumer's to add — it makes the scroll reachable by keyboard alone, and it is
+ * markup Prose cannot supply for a table it does not render.
+ */
+export const WideTable: Story = {
+  render: (args) => (
+    <div
+      style={{
+        maxWidth: '420px',
+        minWidth: 0,
+        overflowWrap: 'anywhere',
+      }}
+    >
+      <Prose {...args} size="sm">
+        <p>The roles that moved in the reorg:</p>
+        <table tabIndex={0}>
+          <thead>
+            <tr>
+              <th>Company</th>
+              <th>Role</th>
+              <th>Years</th>
+              <th>Team</th>
+              <th>Location</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Northwind</td>
+              <td>Designer</td>
+              <td>2019</td>
+              <td>Platform</td>
+              <td>Vancouver</td>
+              <td>Archived</td>
+            </tr>
+            <tr>
+              <td>Contoso</td>
+              <td>Lead</td>
+              <td>2023</td>
+              <td>Signals</td>
+              <td>Remote</td>
+              <td>Active</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Everything else keeps the reporting line it had.</p>
+      </Prose>
+    </div>
+  ),
+};

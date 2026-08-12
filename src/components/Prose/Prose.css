@@ -192,8 +192,17 @@
    TABLES
    ============================================ */
 
+/* The table is its own scroll container. Prose styles markup it does not
+   render, so it cannot wrap the table in a scrolling div — `display: block`
+   makes the table element itself the scroller. The cost is deliberate: the
+   table sizes to its content instead of filling the container, because the
+   inner anonymous table box a block table generates cannot be stretched.
+   A clipped or shattered table is the worse failure. */
 .ds-prose table {
-  width: 100%;
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  overflow-x: auto;
   border-collapse: collapse;
 }
 
@@ -207,10 +216,18 @@
   text-align: start;
 }
 
+/* Cells never break words, whatever the surrounding context does. An
+   ancestor that sets `overflow-wrap: anywhere` (ChatMessage does, so a long
+   URL cannot widen a bubble) otherwise inherits in and collapses every
+   column's minimum width to one character, which lets auto table layout
+   squeeze a heading into "Co / m / pa / ny" rather than let the table reach
+   its natural width. Holding the floor is what gives the scroll above
+   something to scroll. */
 .ds-prose th,
 .ds-prose td {
   padding: var(--padding-xs) var(--padding-sm-md);
   border-block-end: var(--border-xs) solid var(--color-divider);
+  overflow-wrap: normal;
 }
 
 /* ============================================
