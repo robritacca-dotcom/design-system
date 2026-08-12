@@ -18,6 +18,8 @@ Fourth verb in the shipping vocabulary. `ship` makes one line of work live, `che
 
 Use this skill when pending work has accumulated and needs sorting out — phrases like "land the work", "combine my branches", "clean up the branches", "what's worth shipping". It is the right skill whether the work arrived from parallel sessions, from experiments that were parked and forgotten, or from a working tree that drifted.
 
+**If asked to "merge and push"**: that's the retired ambiguous skill name, and it now maps onto more than one verb. Confirm the intended end state before doing anything: `ship` (merge into `main`, push, deploy), `checkpoint` (push the branch, keep working), or `land` (combine several pieces of pending work into a local `main`, pushing nothing).
+
 **It never pushes and never deploys.** Landing is local, deliberately: a batch of accumulated work reaching robertritacca.com is a decision, not a side effect of tidying up. When `main` is landed and green, `ship` takes it live.
 
 ## Instructions

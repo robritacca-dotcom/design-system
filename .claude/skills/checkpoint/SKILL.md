@@ -14,7 +14,7 @@ Save the session's work-in-progress to a remote branch, then keep working on it.
 
 Use this skill when asked to save unfinished work — phrases like "checkpoint", "save my progress", "back this up", "push to the branch". When the work is finished and should go live, that's `ship`; to save and *stop* working on it, that's `park`.
 
-**If asked to "merge and push"**: that's the retired ambiguous skill name. Confirm whether it means ship (make it live) or checkpoint (save the branch, keep working) before doing anything.
+**If asked to "merge and push"**: that's the retired ambiguous skill name, and it now maps onto more than one verb. Confirm the intended end state before doing anything: `ship` (merge into `main`, push, deploy), `checkpoint` (push the branch, keep working), or `land` (combine several pieces of pending work into a local `main`, pushing nothing).
 
 ## Instructions
 

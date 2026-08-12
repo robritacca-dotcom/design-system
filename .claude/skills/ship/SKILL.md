@@ -1,6 +1,6 @@
 ---
 name: ship
-description: Make finished work live on robertritacca.com. Commit, run the full verify, merge branch work into main when needed, push, and watch CI go green. Use when asked to ship it, make it live, push to main, or deploy this. If asked to "merge and push" (a retired skill name), confirm ship vs checkpoint before acting.
+description: Make finished work live on robertritacca.com. Commit, run the full verify, merge branch work into main when needed, push, and watch CI go green. Use when asked to ship it, make it live, push to main, or deploy this. If asked to "merge and push" (a retired skill name), confirm the intended end state — ship, checkpoint, or land — before acting.
 icon: publish
 displayDescription: "Makes finished work live on robertritacca.com. Surveys the tree so unrelated files never get swept into a commit, runs the full local verify (lint, story tests, and the library, package, Storybook, and website builds, mirroring CI) before anything is committed, merges branch work into main when needed, pushes, confirms the CI run goes green, and reports exactly what deployed."
 invoke: ["ship it","make it live","push to main","deploy this"]
@@ -14,7 +14,7 @@ Make finished work live on robertritacca.com — builds green first, no unrelate
 
 Use this skill when asked to make completed work live — phrases like "ship it", "make it live", "push to main", "deploy this". This skill always ends with a deploy; to save progress without deploying, that's `checkpoint` (or `park` to also return to main).
 
-**If asked to "merge and push"**: that's the retired ambiguous skill name. Confirm whether it means ship (make it live) or checkpoint (save the branch, keep working) before doing anything.
+**If asked to "merge and push"**: that's the retired ambiguous skill name, and it now maps onto more than one verb. Confirm the intended end state before doing anything: `ship` (merge into `main`, push, deploy), `checkpoint` (push the branch, keep working), or `land` (combine several pieces of pending work into a local `main`, pushing nothing).
 
 ## Instructions
 

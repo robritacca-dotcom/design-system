@@ -14,7 +14,7 @@ Save the session's work to a remote branch, then step off it and return to a cle
 
 Use this skill when asked to set the current work aside — phrases like "park this", "shelve this", "set this aside". To save and *keep* working on the branch, that's `checkpoint`; to make the work live, that's `ship`.
 
-**If asked to "merge and push"**: that's the retired ambiguous skill name. Confirm whether it means ship (make it live) or checkpoint (save the branch, keep working) before doing anything.
+**If asked to "merge and push"**: that's the retired ambiguous skill name, and it now maps onto more than one verb. Confirm the intended end state before doing anything: `ship` (merge into `main`, push, deploy), `checkpoint` (push the branch, keep working), or `land` (combine several pieces of pending work into a local `main`, pushing nothing).
 
 ## Instructions
 
