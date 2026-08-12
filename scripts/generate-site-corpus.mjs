@@ -57,12 +57,18 @@ const CHARS_PER_TOKEN = 2.85;
  * Generation fails above this, so the corpus can't quietly grow unbounded.
  *
  * Sized against cost, not aesthetics: the corpus is cached, so a warm message
- * reads it at roughly 2.6 cents and only a cold cache write costs real money
- * (about 33 cents, once per five-minute window). 95K leaves headroom for the
+ * reads it at roughly 2.7 cents and only a cold cache write costs real money
+ * (about 35 cents, once per five-minute window). 100K leaves headroom for the
  * site to grow without a rewrite, while still catching a change that doubles
  * the corpus by accident.
+ *
+ * Raised from 95K on 2026-08-12, when publishing an essay took the corpus 188
+ * tokens over. Raising it is the right move for growth the corpus exists to
+ * carry — a new essay, a new case study. It is the wrong move for a section
+ * that suddenly doubled: trim that instead, and read the `--sizes` report
+ * before deciding which of the two this is.
  */
-const TOKEN_BUDGET = 95_000;
+const TOKEN_BUDGET = 100_000;
 
 /** Normalize CRLF so Windows checkouts generate byte-identical output to CI. */
 const read = (path) => readFileSync(path, 'utf8').replace(/\r\n/g, '\n');
