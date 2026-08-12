@@ -165,7 +165,33 @@ export async function getArticles(): Promise<Article[]> {
     if (key && (keyCount.get(key) ?? 0) > 1) a.coverImage = null;
   }
 
+  // A cover the CSP won't let the browser load is worse than no cover: it
+  // renders as a broken-image box with the alt text showing. Drop those too,
+  // so the placeholder formula takes over instead.
+  for (const a of articles) {
+    if (!isRenderableCover(a.coverImage)) a.coverImage = null;
+  }
+
   return articles.sort((a, b) => b.date.localeCompare(a.date));
+}
+
+/**
+ * Whether a cover URL is one the site's own CSP permits.
+ *
+ * Substack is inconsistent about which host it puts in a post's <enclosure>:
+ * usually the CDN, but sometimes the raw media bucket the CDN proxies. Only
+ * the CDN is in the `img-src` allowlist (website/next.config.ts), so a bucket
+ * URL is a live image the browser refuses to paint. Widening the allowlist is
+ * the other fix available here — the tradeoff is more third-party image hosts
+ * the page may load from, in exchange for the real cover instead of a block.
+ */
+function isRenderableCover(url: string | null): boolean {
+  if (!url) return false;
+  try {
+    return new URL(url).hostname === "substackcdn.com";
+  } catch {
+    return false;
+  }
 }
 
 /** Extracts the underlying Substack image id from a CDN cover URL, if any. */
