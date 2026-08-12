@@ -441,9 +441,9 @@ export default function PlaygroundPage() {
           toolbar: brand mark, breadcrumb trail, the view tabs, and the X
           out. (Footer and the site chat still skip this route.) */}
       <StageToolbar
-        segments={VIEWS}
-        activeSegment={view}
-        onSegmentChange={pickView}
+        tabs={VIEWS}
+        activeTab={view}
+        onTabChange={pickView}
         switchLabel="Switch the playground view"
       />
 

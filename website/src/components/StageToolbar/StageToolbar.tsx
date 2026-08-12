@@ -5,22 +5,19 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { Breadcrumb } from "@robr0/design-system/components/Breadcrumb/Breadcrumb";
 import { CircularButton } from "@robr0/design-system/components/CircularButton/CircularButton";
-import {
-  SegmentedControl,
-  type Segment,
-} from "@robr0/design-system/components/SegmentedControl/SegmentedControl";
+import { Tabs, type Tab } from "@robr0/design-system/components/Tabs/Tabs";
 import { getBreadcrumbs } from "@/config/navigation";
 import { buildBreadcrumbJsonLd } from "@/lib/structuredData";
 import styles from "./StageToolbar.module.css";
 
 export interface StageToolbarProps {
-  /** Centre switch segments — omit to render a toolbar with no switch. */
-  segments?: Segment[];
-  /** The active segment's value. */
-  activeSegment?: string;
-  /** Called with the picked segment's value. */
-  onSegmentChange?: (value: string) => void;
-  /** Accessible label for the centre switch. */
+  /** Centre view tabs — omit to render a toolbar with no switch. */
+  tabs?: Tab[];
+  /** The active tab's value. */
+  activeTab?: string;
+  /** Called with the picked tab's value. */
+  onTabChange?: (value: string) => void;
+  /** Accessible label for the centre tab list. */
   switchLabel?: string;
 }
 
@@ -32,9 +29,9 @@ export interface StageToolbarProps {
  * beneath reserve --layout-toolbar-height (globals.css) of room for it.
  */
 export default function StageToolbar({
-  segments,
-  activeSegment,
-  onSegmentChange,
+  tabs,
+  activeTab,
+  onTabChange,
   switchLabel,
 }: StageToolbarProps) {
   const pathname = usePathname() ?? "/";
@@ -71,11 +68,11 @@ export default function StageToolbar({
         )}
       </div>
 
-      {segments && activeSegment && (
-        <SegmentedControl
-          segments={segments}
-          activeSegment={activeSegment}
-          onSegmentChange={onSegmentChange}
+      {tabs && activeTab && (
+        <Tabs
+          tabs={tabs}
+          activeTab={activeTab}
+          onTabChange={onTabChange}
           size="compact"
           ariaLabel={switchLabel}
         />
