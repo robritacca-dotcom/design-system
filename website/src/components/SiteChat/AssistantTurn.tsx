@@ -43,15 +43,17 @@ function MarkdownLink({ href, children }: React.ComponentPropsWithoutRef<"a">) {
 
 /* A markdown table has a natural minimum width that a docked panel cannot
    meet, and the browser resolves that by breaking headings one letter per
-   line. Scrolling the table sideways inside the message keeps it readable.
-   Prose styles the table itself; this only supplies the scroll container,
-   which Prose cannot add because it styles markup it does not render. */
+   line. Prose makes the table its own scroll container so it stays readable,
+   which leaves one thing only the renderer can supply: a scrollable region
+   has to be reachable without a mouse, and Prose styles markup it does not
+   render, so it cannot put `tabIndex` on the element itself. Never swap this
+   for `role="region"` on the table — that replaces the table semantics. */
 const markdownComponents = {
   a: MarkdownLink,
   table: ({ children, ...props }: React.ComponentPropsWithoutRef<"table">) => (
-    <div className={styles.tableScroll}>
-      <table {...props}>{children}</table>
-    </div>
+    <table tabIndex={0} {...props}>
+      {children}
+    </table>
   ),
 };
 
