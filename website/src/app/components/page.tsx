@@ -32,7 +32,6 @@ import { ContributionGraph, type ContributionDay } from "@robr0/design-system/co
 import { Divider } from "@robr0/design-system/components/Divider/Divider";
 import { DocumentChip } from "@robr0/design-system/components/DocumentChip/DocumentChip";
 import { Dropdown } from "@robr0/design-system/components/Dropdown/Dropdown";
-import { NavList } from "@robr0/design-system/components/NavList/NavList";
 import { Pagination } from "@robr0/design-system/components/Pagination/Pagination";
 import { Input } from "@robr0/design-system/components/Input/Input";
 import { InterruptCard } from "@robr0/design-system/components/InterruptCard/InterruptCard";
@@ -675,16 +674,25 @@ export default function ComponentsPage() {
             </TocCard>
 
             {/* Navigation */}
+            {/* Static mock: NavList rows are real links, which cannot nest inside the card's anchor */}
             <TocCard href="/components/nav-list" title="Nav list">
-              <div style={{ width: "180px" }}>
-                <NavList
-                  items={[
-                    { label: "Overview", href: "#overview" },
-                    { label: "Guides", href: "#guides", items: [{ label: "Theming", href: "#theming" }] },
-                  ]}
-                  currentHref="#overview"
-                  aria-label="Nav list preview"
+              <div aria-hidden="true" style={{ width: "180px", display: "flex", flexDirection: "column", gap: "var(--gap-xxs)" }}>
+                <Button
+                  variant="tertiary"
+                  label="Overview"
+                  state="active"
+                  tabIndex={-1}
+                  style={{ width: "100%", justifyContent: "flex-start" }}
                 />
+                <div style={{ display: "flex", alignItems: "center", gap: "var(--gap-xxs)" }}>
+                  <Button
+                    variant="tertiary"
+                    label="Guides"
+                    tabIndex={-1}
+                    style={{ flex: "1 1 auto", justifyContent: "flex-start" }}
+                  />
+                  <CircularButton icon="expand_more" variant="tertiary" ariaLabel="Expand" tabIndex={-1} />
+                </div>
               </div>
             </TocCard>
 
