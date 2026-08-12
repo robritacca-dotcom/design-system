@@ -97,10 +97,11 @@ Two facts that bite on release day: **a published version can never be reused**,
 
 `npm run verify` is the **single local mirror of CI**: lint, library build, package build, story tests, Storybook build, website lint, website build, in that order. The rule that keeps them in sync: **when CI gains a check (a11y is the worked example), add it to `verify` in the same change** — skills and docs reference `verify`, never individual commands, so nothing else needs updating. **One deliberate exception: Chromatic** (`.github/workflows/chromatic.yml`, visual regression). Every run bills cloud snapshots against a monthly budget, so it is `workflow_dispatch`-only, never part of `verify`, and never a reason to treat a green `verify` as proof the pixels are unchanged.
 
-**Shipping vocabulary** — three skills, named for their end state, because a push to `main` always deploys robertritacca.com:
+**Shipping vocabulary** — skills named for their end state, because a push to `main` always deploys robertritacca.com (`.claude/skills/registry.json` is the authoritative list of what exists):
 - **`ship`** — make it live. Full verify, merge branch work into `main` if needed, push, watch CI. Always ends deployed.
 - **`checkpoint`** — save progress to a remote branch and keep working. Never touches `main`, never deploys; if invoked on `main` it moves the work to a `wip/<topic>` branch first.
 - **`park`** — checkpoint, then return to a clean `main`. The branch name is the resume handle.
+- **`land`** — triage all pending work at once and resolve it. Sweeps worktrees, branches, the working tree and stashes, judges each as **land / keep / delete**, merges the approved into a **local, unpushed** `main`, and verifies the combined result. Anything deleted is archived to an `archive/*` tag first, so discarding unmerged work stays reversible. Deliberately never pushes, so a batch deploy stays an explicit `ship`.
 
 The old `merge-and-push` skill is retired because its name didn't say which of these it meant. If asked to "merge and push", confirm ship vs checkpoint instead of guessing.
 
