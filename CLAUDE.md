@@ -259,7 +259,7 @@ Tokens also have multiple homes — a token that exists only in CSS is incomplet
 1. **Both theme files, always**: define it in `src/tokens/tokens-light.css` **and** `src/tokens/tokens-dark.css` (every semantic token needs a value in each). Add a primitive to `tokens-primitives.css` first if no suitable one exists; semantic colour tokens **must** reference primitives via `var()` (build-enforced by `scripts/validate-token-references.mjs`).
 2. **Document it in `design.md`**: it's the source of truth for the design language — record the token's role and its light/dark values.
 3. **Add it to the foundations doc pages** on the website, in the section matching its type:
-   - Semantic colors → `website/src/app/foundations/colour-mode/page.tsx` (add a swatch data entry with per-theme primitive name/hex/RGB, and a new `SectionTitle` group if it's a new category — the page is a stated curated subset, so a niche internal role may be skipped; the registry and Storybook docs carry the full set)
+   - Semantic colors → `website/src/app/foundations/colour-mode/page.tsx` (add a swatch data entry with per-theme primitive name/hex/RGB, and a new `SectionTitle` group if it's a new category). **Every colour token needs a swatch — this is build-enforced**, in both directions, by `scripts/validate-website-surfaces.mjs`: the page states it shows all of them and prints the count from `TOKEN_COUNTS`, so a token with no swatch would turn that sentence into a lie. Skipping a niche internal role is no longer an option
    - New primitives → `website/src/app/foundations/colour-primitives/page.tsx`
    - Spacing/radius/border → `website/src/app/foundations/spatial/page.tsx`
    - Shadows/depth → `website/src/app/foundations/elevation/page.tsx`
