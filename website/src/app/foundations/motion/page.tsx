@@ -57,6 +57,12 @@ const coreDurations: DurationToken[] = [
 
 const extendedDurations: DurationToken[] = [
   {
+    label: "Instant",
+    token: "--motion-duration-instant",
+    value: "75ms",
+    use: "Below the threshold where a change reads as motion: the Composer growing a line",
+  },
+  {
     label: "Deliberate",
     token: "--motion-duration-deliberate",
     value: "400ms",

@@ -67,6 +67,9 @@ export interface ComposerProps
  * The textarea grows with its content up to `maxRows`, then scrolls
  * internally. Where the browser supports `field-sizing: content` the sizing
  * is fully native; elsewhere a measurement effect keeps the height in step.
+ * Either way the text zone glides between the two heights rather than
+ * snapping — 75ms, short enough to soften the step without reading as an
+ * animation. The action bar's buttons never move relative to the bar.
  *
  * Forwards a ref to the underlying `<textarea>` and spreads unrecognised
  * props onto it; `className` lands on the shell.
@@ -95,6 +98,7 @@ export const Composer = React.forwardRef<HTMLTextAreaElement, ComposerProps>(
   ) => {
     const baseClass = 'ds-composer';
     const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+    const contentRef = useRef<HTMLDivElement | null>(null);
 
     const isControlled = value !== undefined;
     const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue ?? '');
@@ -118,6 +122,21 @@ export const Composer = React.forwardRef<HTMLTextAreaElement, ComposerProps>(
       node.style.height = 'auto';
       node.style.height = `${node.scrollHeight}px`;
     }, [currentValue]);
+
+    /* The text zone animates between heights (see the transition in the CSS),
+       which needs the measured height as a number rather than `auto`. A
+       ResizeObserver publishes it on every cause at once: a wrapped or deleted
+       line, a clear after send, and a rewrap when the shell changes width. */
+    useLayoutEffect(() => {
+      const node = textareaRef.current;
+      const content = contentRef.current;
+      if (!node || !content) return;
+      const observer = new ResizeObserver(() => {
+        content.style.setProperty('--ds-composer-text-height', `${node.offsetHeight}px`);
+      });
+      observer.observe(node);
+      return () => observer.disconnect();
+    }, []);
 
     const submit = () => {
       if (streaming || !canSend) return;
@@ -165,7 +184,7 @@ export const Composer = React.forwardRef<HTMLTextAreaElement, ComposerProps>(
       >
         {attachments && <div className={`${baseClass}__attachments`}>{attachments}</div>}
 
-        <div className={`${baseClass}__content`}>
+        <div className={`${baseClass}__content`} ref={contentRef}>
           <textarea
             {...rest}
             ref={setTextareaRef}

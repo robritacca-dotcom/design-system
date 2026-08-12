@@ -58,8 +58,26 @@
 
 .ds-composer__content {
   display: flex;
+  /* The textarea keeps its own natural height rather than stretching to the
+     zone's — the measurement below reads it, so a stretched textarea would
+     feed its own height back in and the zone could never shrink. */
+  align-items: flex-start;
+  box-sizing: border-box;
   width: 100%;
   padding: var(--padding-md) var(--padding-lg) var(--padding-sm);
+  /* Growing and shrinking is animated, which needs two pixel heights to run
+     between — `auto` has nothing to interpolate. So the zone states its own
+     height: the measured textarea (published as --ds-composer-text-height on
+     every resize) plus the block padding it owns. The fallback is a single
+     row, which is what the shell renders before the first measurement. */
+  height: calc(
+    var(--ds-composer-text-height, var(--font-paragraph-line-height)) + var(--padding-md) +
+      var(--padding-sm)
+  );
+  /* Mid-transition the textarea is already at its new height, so the extra
+     line is clipped on the way in and released on the way out. */
+  overflow: hidden;
+  transition: height var(--motion-duration-instant) var(--motion-ease-emphasized);
 }
 
 .ds-composer__textarea {
