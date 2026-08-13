@@ -318,7 +318,7 @@ Never write a literal *elevation* shadow in component CSS — use one of these t
 
 ## Motion
 
-Motion is quiet and functional — it confirms an interaction, reveals structure, or signals loading, never decorates. The whole vocabulary is defined in `tokens-motion.css` (theme-agnostic, single `:root` like typography): nine `--motion-duration-*` tokens and five `--motion-ease-*` curves. Compose a duration with an easing instead of writing literal values — never hardcode `0.2s ease` in component CSS.
+Motion is quiet and functional — it confirms an interaction, reveals structure, or signals loading. Interface motion never decorates. The one sanctioned exception is the **ambient background**, which is scenery rather than interface: it belongs to no control, communicates no state, and sits behind everything at `z-index: -1` (see the Ambient background section below). The whole vocabulary is defined in `tokens-motion.css` (theme-agnostic, single `:root` like typography): nine `--motion-duration-*` tokens and five `--motion-ease-*` curves. Compose a duration with an easing instead of writing literal values — never hardcode `0.2s ease` in component CSS.
 
 **Durations — core scale** (day-to-day UI):
 
@@ -344,6 +344,18 @@ Motion is quiet and functional — it confirms an interaction, reveals structure
 **Reduced motion contract:** `tokens-motion.css` collapses every duration token to 0.01ms under `prefers-reduced-motion: reduce`, and a universal guard flattens remaining hardcoded transitions/animations. Components that consume the tokens respect the preference automatically — never write component-level `prefers-reduced-motion` queries.
 
 **Migration status:** all component and website CSS composes the tokens — no literal durations or easings remain (the two sanctioned exceptions: Skeleton's shimmer keeps a literal `ease-in-out`, which has no token curve, and the website's decorative 14–22s background floats stay bespoke). JS-driven timings (Tooltip show/hide delays, Toast auto-dismiss, Carousel autoplay) are still hardcoded constants — see Known Gaps.
+
+### Ambient background
+
+The website's background is a WebGL2 field of eight soft Gaussian blobs, each sampling a semantic colour token at runtime so the whole thing re-themes with `data-theme` and with any custom-property override (the playground's colour levers reach it for free). Each blob carries a 14–22s drift period inherited from the CSS blobs it replaced, scaled by the config's `speed` parameter — so the cycles you actually see are those periods divided by `speed`, not the raw numbers. `--color-action-primary-bg` is never among the tokens it samples: the action teal stays reserved for CTAs and focus rings, and a full-viewport decorative field is exactly the kind of use that would dilute it.
+
+Three properties make this an exception that does not erode the rule:
+
+- **It is scenery, not interface.** Nothing about it is a signal, so its motion cannot be mistaken for feedback.
+- **It degrades to the CSS blobs.** They render underneath on every page, so no WebGL2, a lost GPU context, a renderer that stalls before its first frame, or the config's kill switch all land on the same quiet fallback. The blobs are hidden while the renderer is still resolving, rather than painted and then swapped — a visible handoff read as two backgrounds loading in sequence. The deliberate cost is that a machine which cannot run the shader shows bare page floor for that first moment before the blobs fade in; a watchdog bounds the wait so the unresolved state can never be terminal.
+- **It honours reduced motion in JavaScript.** This is the part worth knowing: the guard in `tokens-motion.css` is CSS-only and cannot see a `requestAnimationFrame` loop. A GPU-driven surface has to check `prefers-reduced-motion` itself, and this one renders a single static frame and never starts its loop. The rule against component-level `prefers-reduced-motion` queries still holds for everything that consumes the duration tokens; a JS animation loop is outside that contract by construction.
+
+Every tuneable value — the seven field parameters and the eight blob definitions — lives in `website/src/data/shader-background.json`, validated against the token registry so the field can never sample a token that does not exist.
 
 ---
 
