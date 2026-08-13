@@ -126,11 +126,15 @@ a {
   z-index: -1;
 }
 
-.blur-container-full {
+/* Full-bleed variant. The background is mounted once in the root layout and
+   never re-renders per route, so the variant cannot be a prop any more — the
+   page declares it by rendering FullBleedBackground, and these rules pick the
+   marker up from anywhere in the document. No route list to drift. */
+body:has([data-bg-full-bleed]) .blur-container {
   height: 100vh;
 }
 
-.blur-container-full::after {
+body:has([data-bg-full-bleed]) .blur-container::after {
   display: none;
 }
 
@@ -167,6 +171,25 @@ a {
      eye, deliberately off the --motion-* interaction scale. */
   animation: floatCloud 16s ease-in-out infinite;
   will-change: transform;
+  transition: opacity var(--motion-duration-slower) var(--motion-ease-standard);
+}
+
+/* "pending": the renderer is still resolving, so paint nothing rather than
+   showing blobs that are about to be replaced — that handoff read as two
+   backgrounds loading in sequence. "on": the field has it. Either way the
+   blobs stay in the DOM, so losing the GL context or flipping "mode" to
+   "css" in shader-background.json brings them straight back with nothing to
+   restore. Everything below (the desktop gradient approximation included) is
+   the fallback path, reached by data-shader="off". */
+.blur-container[data-shader="pending"] .blur-ellipse,
+.blur-container[data-shader="on"] .blur-ellipse {
+  opacity: 0;
+}
+
+/* Only stop the drift once the field has actually taken over; a pending
+   container may still fall back, and should not resume from a frozen pose. */
+.blur-container[data-shader="on"] .blur-ellipse {
+  animation-play-state: paused;
 }
 
 /* On desktop-sized viewports, swap filter: blur(80px) for a radial gradient

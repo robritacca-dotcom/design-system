@@ -16,6 +16,7 @@ import { SiteChatMount } from "@/components/SiteChat/SiteChatMount";
 import SiteFooter from "@/components/SiteFooter/SiteFooter";
 import { SiteFooterMount } from "@/components/SiteFooter/SiteFooterMount";
 import { ClientNav } from "@/components/ClientNav/ClientNav";
+import BlurBackground from "@/components/BlurBackground/BlurBackground";
 
 const GA_ID = "G-RCSFYMD51K";
 
@@ -174,6 +175,16 @@ export default async function RootLayout({
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
+        {/* Site chrome, mounted once for the same reason the chat provider is:
+            the root layout never remounts on client-side navigation. That is
+            load-bearing here rather than tidy. Rendered per page, every route
+            change destroyed the canvas and with it the GL context, forcing a
+            fresh context, shader compile, link and reveal fade on every
+            navigation — a context cannot outlive the canvas it was created
+            from. Mounted here it is built once per session and navigation
+            costs nothing. Pages that want the full-viewport variant say so
+            with FullBleedBackground; see globals.css. */}
+        <BlurBackground />
         {/* The chat provider lives here because the root layout never
             remounts on client-side navigation: the transcript, a stream in
             flight, and the draft all survive route changes. The panel mounts
