@@ -4,7 +4,6 @@ import Image from "next/image";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
-import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import SampleCaseStudyCard from "../../../components/SampleCaseStudyCard/SampleCaseStudyCard";
 import { getSidebarLinks, workSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
@@ -42,8 +41,6 @@ const peerFeedback = [
 export default function MetaOffersCaseStudy() {
   return (
     <>
-      <BlurBackground />
-
       <MegaNav />
 
       <div className={styles.dsLayout}>

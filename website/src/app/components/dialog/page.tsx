@@ -4,7 +4,6 @@ import React from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
-import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import { Dialog } from "@robr0/design-system/components/Dialog/Dialog";
 import { Button } from "@robr0/design-system/components/Button/Button";
 import { Input } from "@robr0/design-system/components/Input/Input";
@@ -25,7 +24,6 @@ export default function DialogPage() {
 
   return (
     <>
-      <BlurBackground />
       <MegaNav />
 
       <div className={styles.dsLayout}>

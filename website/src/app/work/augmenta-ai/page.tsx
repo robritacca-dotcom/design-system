@@ -5,7 +5,6 @@ import Image from "next/image";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
-import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import SampleCaseStudyCard from "../../../components/SampleCaseStudyCard/SampleCaseStudyCard";
 import { Figure } from "@robr0/design-system/components/Figure/Figure";
 import { Stat } from "@robr0/design-system/components/Stat/Stat";
@@ -35,8 +34,6 @@ export default function AugmentaCaseStudy() {
 
   return (
     <>
-      <BlurBackground />
-
       <MegaNav />
 
       <div className={styles.dsLayout}>

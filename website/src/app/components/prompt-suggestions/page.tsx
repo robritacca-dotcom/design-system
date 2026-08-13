@@ -4,7 +4,6 @@ import React from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
-import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import { PromptSuggestions } from "@robr0/design-system/components/PromptSuggestions/PromptSuggestions";
 import { ChatMessage } from "@robr0/design-system/components/ChatMessage/ChatMessage";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
@@ -20,7 +19,6 @@ const { sidebarLinks } = getSidebarLinks(
 export default function PromptSuggestionsPage() {
   return (
     <>
-      <BlurBackground />
       <MegaNav />
 
       <div className={styles.dsLayout}>

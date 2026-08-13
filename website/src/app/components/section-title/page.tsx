@@ -4,7 +4,6 @@ import React from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
-import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
 import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
@@ -14,7 +13,6 @@ const { sidebarLinks } = getSidebarLinks(componentsSidebarLinks, "/components/se
 export default function SectionTitlePage() {
   return (
     <>
-      <BlurBackground />
       <MegaNav />
 
       <div className={styles.dsLayout}>

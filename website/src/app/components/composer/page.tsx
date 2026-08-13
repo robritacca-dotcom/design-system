@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
-import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import { Composer } from "@robr0/design-system/components/Composer/Composer";
 import { CircularButton } from "@robr0/design-system/components/CircularButton/CircularButton";
 import { DocumentChip } from "@robr0/design-system/components/DocumentChip/DocumentChip";
@@ -149,7 +148,6 @@ function FullFooterDemo() {
 export default function ComposerPage() {
   return (
     <>
-      <BlurBackground />
       <MegaNav />
 
       <div className={styles.dsLayout}>

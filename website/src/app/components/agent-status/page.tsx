@@ -4,7 +4,6 @@ import React from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
-import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import { AgentStatus } from "@robr0/design-system/components/AgentStatus/AgentStatus";
 import { agentStatusPatterns } from "@robr0/design-system/components/AgentStatus/AgentStatusPatterns";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
@@ -34,7 +33,6 @@ const accentRamps = [
 export default function AgentStatusPage() {
   return (
     <>
-      <BlurBackground />
       <MegaNav />
 
       <div className={styles.dsLayout}>

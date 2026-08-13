@@ -6,7 +6,6 @@ import { Timeline, type TimelineCompany } from "@robr0/design-system/components/
 import MegaNav from "../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import { getSidebarLinks, docsSidebarLinks } from "@/config/navigation";
 import { COMPONENT_COUNT } from "@robr0/design-system/components/registry";
 import { TOKEN_COUNT, TOKEN_COUNTS } from "@robr0/design-system/tokens/registry";
@@ -139,7 +138,7 @@ const PIPELINE: TimelineCompany[] = [
           "Lints the codebase and builds the library, Storybook, and the website on every change",
           "Renders every Storybook story in headless Chrome and runs an axe accessibility audit on each: a render error or a WCAG AA violation fails the build (the contrast criteria are deliberately deferred while the action colour is redesigned)",
           "Chromatic visual regression, run on demand: every story snapshotted in light and dark against an accepted baseline, so a token change that shifts pixels anywhere in the system is caught before it ships",
-          "Drift guard fails the build if any registry-backed content (counts, skills, blueprints, case studies, journal entries) goes stale; the numbers in the rail beside this pipeline come straight from those registries, never typed by hand",
+          "Drift guard fails the build if any registry-backed content (counts, skills, blueprints, case studies, journal entries, the background config) goes stale; the numbers in the rail beside this pipeline come straight from those registries, never typed by hand",
           "The same checklist runs locally as a single command, so local and CI can never disagree",
         ],
       },
@@ -229,8 +228,6 @@ const PIPELINE: TimelineCompany[] = [
 export default function AboutDsPage() {
   return (
     <>
-
-      <BlurBackground />
 
       <MegaNav />
 

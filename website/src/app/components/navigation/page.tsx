@@ -5,7 +5,6 @@ import Image from "next/image";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
-import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import { Nav } from "@robr0/design-system/components/Nav/Nav";
 import { ToggleSwitch } from "@robr0/design-system/components/ToggleSwitch/ToggleSwitch";
 import { ButtonGroup } from "@robr0/design-system/components/ButtonGroup/ButtonGroup";
@@ -52,8 +51,6 @@ const { sidebarLinks } = getSidebarLinks(componentsSidebarLinks, "/components/na
 export default function NavigationPage() {
   return (
     <>
-
-      <BlurBackground />
 
       <MegaNav />
 

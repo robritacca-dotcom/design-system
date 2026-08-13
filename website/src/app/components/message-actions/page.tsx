@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
-import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import { MessageActions } from "@robr0/design-system/components/MessageActions/MessageActions";
 import { ChatMessage } from "@robr0/design-system/components/ChatMessage/ChatMessage";
 import { Avatar } from "@robr0/design-system/components/Avatar/Avatar";
@@ -50,7 +49,6 @@ function CopyFeedbackDemo() {
 export default function MessageActionsPage() {
   return (
     <>
-      <BlurBackground />
       <MegaNav />
 
       <div className={styles.dsLayout}>

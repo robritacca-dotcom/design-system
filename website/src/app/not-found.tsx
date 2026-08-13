@@ -1,16 +1,14 @@
 "use client";
 
 import MegaNav from "../components/MegaNav/MegaNav";
-import BlurBackground from "../components/BlurBackground/BlurBackground";
+import { FullBleedBackground } from "../components/BlurBackground/BlurBackground";
 import { Button } from "@robr0/design-system/components/Button/Button";
 import styles from "./not-found.module.css";
-
 
 export default function NotFound() {
   return (
     <>
-
-      <BlurBackground fullHeight />
+      <FullBleedBackground />
 
       <MegaNav />
 

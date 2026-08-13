@@ -4,7 +4,6 @@ import React from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
-import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import { MessageCard } from "@robr0/design-system/components/MessageCard/MessageCard";
 import { ChatMessage } from "@robr0/design-system/components/ChatMessage/ChatMessage";
 import { Avatar } from "@robr0/design-system/components/Avatar/Avatar";
@@ -36,7 +35,6 @@ function MediaPlaceholder() {
 export default function MessageCardPage() {
   return (
     <>
-      <BlurBackground />
       <MegaNav />
 
       <div className={styles.dsLayout}>

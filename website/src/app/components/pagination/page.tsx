@@ -4,7 +4,6 @@ import React from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
-import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import { Pagination } from "@robr0/design-system/components/Pagination/Pagination";
 import { Table } from "@robr0/design-system/components/Table/Table";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
@@ -88,7 +87,6 @@ function InteractivePagination(props: {
 export default function PaginationPage() {
   return (
     <>
-      <BlurBackground />
       <MegaNav />
 
       <div className={styles.dsLayout}>

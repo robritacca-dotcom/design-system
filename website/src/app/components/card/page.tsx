@@ -4,7 +4,6 @@ import React from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
-import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import { Card } from "@robr0/design-system/components/Card/Card";
 import { EntityCard } from "@robr0/design-system/components/EntityCard/EntityCard";
 import { ColourSwatch } from "@robr0/design-system/components/ColourSwatch/ColourSwatch";
@@ -25,8 +24,6 @@ const { sidebarLinks } = getSidebarLinks(componentsSidebarLinks, "/components/ca
 export default function CardPage() {
   return (
     <>
-
-      <BlurBackground />
 
       <MegaNav />
 

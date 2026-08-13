@@ -4,7 +4,6 @@ import React from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
-import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import { Stat } from "@robr0/design-system/components/Stat/Stat";
 import { COMPONENT_COUNT } from "@robr0/design-system/components/registry";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
@@ -16,7 +15,6 @@ const { sidebarLinks } = getSidebarLinks(componentsSidebarLinks, "/components/st
 export default function StatPage() {
   return (
     <>
-      <BlurBackground />
       <MegaNav />
 
       <div className={styles.dsLayout}>

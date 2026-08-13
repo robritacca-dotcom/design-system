@@ -4,7 +4,6 @@ import Image from "next/image";
 import MegaNav from "../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import TocCard from "../../components/TocCard/TocCard";
 import PageLinks from "../../components/PageLinks/PageLinks";
 import { getSidebarLinks, foundationsSidebarLinks } from "@/config/navigation";
@@ -15,8 +14,6 @@ const { sidebarLinks } = getSidebarLinks(foundationsSidebarLinks, "/foundations"
 export default function FoundationsPage() {
   return (
     <>
-
-      <BlurBackground />
 
       <MegaNav />
 

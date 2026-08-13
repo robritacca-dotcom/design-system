@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
-import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import { Reasoning } from "@robr0/design-system/components/Reasoning/Reasoning";
 import { AgentStatus } from "@robr0/design-system/components/AgentStatus/AgentStatus";
 import { Button } from "@robr0/design-system/components/Button/Button";
@@ -61,7 +60,6 @@ function StreamDemo() {
 export default function ReasoningPage() {
   return (
     <>
-      <BlurBackground />
       <MegaNav />
 
       <div className={styles.dsLayout}>

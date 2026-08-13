@@ -4,7 +4,6 @@ import React from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
-import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import { Tooltip } from "@robr0/design-system/components/Tooltip/Tooltip";
 import { Button } from "@robr0/design-system/components/Button/Button";
 import { CircularButton } from "@robr0/design-system/components/CircularButton/CircularButton";
@@ -17,7 +16,6 @@ const { sidebarLinks } = getSidebarLinks(componentsSidebarLinks, "/components/to
 export default function TooltipPage() {
   return (
     <>
-      <BlurBackground />
       <MegaNav />
 
       <div className={styles.dsLayout}>

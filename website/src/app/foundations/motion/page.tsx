@@ -3,7 +3,6 @@
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
-import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import PageLinks from "../../../components/PageLinks/PageLinks";
 import { getSidebarLinks, foundationsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
@@ -137,8 +136,6 @@ const easings: EasingToken[] = [
 export default function MotionPage() {
   return (
     <>
-      <BlurBackground />
-
       <MegaNav />
 
       <div className={styles.dsLayout}>
@@ -158,8 +155,10 @@ export default function MotionPage() {
               Motion is quiet: a small scale, used sparingly
             </p>
             <p className={styles.introBody}>
-              Animation in this system is functional, not decorative: it confirms an
-              interaction, reveals structure, or signals loading. The whole vocabulary is
+              Animation in the interface is functional, not decorative: it confirms an
+              interaction, reveals structure, or signals loading. The one thing that moves
+              for its own sake is the background, which is scenery rather than interface
+              and keeps its own timings. The whole interface vocabulary is
               {" "}{coreDurations.length + extendedDurations.length} durations and{" "}
               {easings.length} easing curves, defined once as{" "}
               <code>--motion-*</code> tokens and shared by the component library and this
@@ -268,6 +267,12 @@ export default function MotionPage() {
               universal guard flattens any remaining hardcoded transitions and animations.
               Components that use the tokens get accessibility for free: there is nothing
               to opt into, and no component-level media queries to write.
+            </p>
+            <p className={styles.sectionNote}>
+              That guard is CSS, so it cannot reach animation driven from JavaScript. The
+              background field runs on the GPU through a frame loop, which means it has to
+              check the preference itself. It does: with reduced motion set, it draws a
+              single still frame and never starts animating.
             </p>
           </section>
         </main>

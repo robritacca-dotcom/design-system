@@ -3,7 +3,6 @@
 import MegaNav from "../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import { Card } from "@robr0/design-system/components/Card/Card";
 import { getSidebarLinks, workSidebarLinks } from "@/config/navigation";
 import { caseStudies } from "@/data/case-studies";
@@ -14,8 +13,6 @@ const { sidebarLinks } = getSidebarLinks(workSidebarLinks, "/work");
 export default function WorkPage() {
   return (
     <>
-      <BlurBackground />
-
       <MegaNav />
 
       <div className={styles.dsLayout}>

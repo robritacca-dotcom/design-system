@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
-import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import { InterruptCard } from "@robr0/design-system/components/InterruptCard/InterruptCard";
 import { ToolCall } from "@robr0/design-system/components/ToolCall/ToolCall";
 import { Button } from "@robr0/design-system/components/Button/Button";
@@ -58,7 +57,6 @@ function DecisionDemo() {
 export default function InterruptCardPage() {
   return (
     <>
-      <BlurBackground />
       <MegaNav />
 
       <div className={styles.dsLayout}>

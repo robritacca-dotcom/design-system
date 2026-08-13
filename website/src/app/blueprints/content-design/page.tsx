@@ -5,7 +5,6 @@ import remarkGfm from "remark-gfm";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
-import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import DownloadButton from "./DownloadButton";
 import { getSidebarLinks, docsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
@@ -20,8 +19,6 @@ export default function ContentDesignBlueprintPage() {
 
   return (
     <>
-      <BlurBackground />
-
       <MegaNav />
 
       <div className={styles.dsLayout}>

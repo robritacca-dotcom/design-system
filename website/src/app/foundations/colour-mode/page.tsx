@@ -4,7 +4,6 @@ import { useSyncExternalStore } from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
-import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import { ColourSwatch } from "@robr0/design-system/components/ColourSwatch/ColourSwatch";
 import PageLinks from "../../../components/PageLinks/PageLinks";
 import { getSidebarLinks, foundationsSidebarLinks } from "@/config/navigation";
@@ -497,8 +496,6 @@ export default function SemanticColoursPage() {
 
   return (
     <>
-
-      <BlurBackground />
 
       <MegaNav />
 

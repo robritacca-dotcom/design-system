@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
-import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import { getSidebarLinks, buildWritingSidebarLinks } from "@/config/navigation";
 import { getArticles, getArticle, formatArticleDate } from "@/lib/substack";
 import { buildArticleJsonLd } from "@/lib/structuredData";
@@ -78,8 +77,6 @@ export default async function ArticlePage({ params }: PageProps) {
           ),
         }}
       />
-
-      <BlurBackground />
 
       <MegaNav />
 

@@ -4,7 +4,6 @@ import Link from "next/link";
 import MegaNav from "../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import { Badge } from "@robr0/design-system/components/Badge/Badge";
 import { Chip } from "@robr0/design-system/components/Chip/Chip";
 import { getSidebarLinks, docsSidebarLinks } from "@/config/navigation";
@@ -97,8 +96,6 @@ const loops: LoopInfo[] = [
 export default function LoopsPage() {
   return (
     <>
-      <BlurBackground />
-
       <MegaNav />
 
       <div className={styles.dsLayout}>

@@ -4,7 +4,6 @@ import Image from "next/image";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
-import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import SampleCaseStudyCard from "../../../components/SampleCaseStudyCard/SampleCaseStudyCard";
 import { Quote } from "@robr0/design-system/components/Quote/Quote";
 import { getSidebarLinks, workSidebarLinks } from "@/config/navigation";
@@ -18,8 +17,6 @@ const { sidebarLinks } = getSidebarLinks(
 export default function MetaCareerProfileCaseStudy() {
   return (
     <>
-      <BlurBackground />
-
       <MegaNav />
 
       <div className={styles.dsLayout}>

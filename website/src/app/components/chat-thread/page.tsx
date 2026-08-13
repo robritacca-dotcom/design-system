@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
-import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import { ChatThread } from "@robr0/design-system/components/ChatThread/ChatThread";
 import { ChatMessage } from "@robr0/design-system/components/ChatMessage/ChatMessage";
 import { Button } from "@robr0/design-system/components/Button/Button";
@@ -80,7 +79,6 @@ function AnchoringDemo() {
 export default function ChatThreadPage() {
   return (
     <>
-      <BlurBackground />
       <MegaNav />
 
       <div className={styles.dsLayout}>

@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import MegaNav from "../components/MegaNav/MegaNav";
+import { FullBleedBackground } from "../components/BlurBackground/BlurBackground";
 import ScrollCue from "../components/ScrollCue/ScrollCue";
-import BlurBackground from "../components/BlurBackground/BlurBackground";
 import FadeDivider from "../components/FadeDivider/FadeDivider";
 import { dsMegaItems } from "@/config/navigation";
 import { getArticles, coverPlaceholder } from "@/lib/substack";
@@ -36,7 +36,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <BlurBackground fullHeight />
+      <FullBleedBackground />
 
       <MegaNav />
 

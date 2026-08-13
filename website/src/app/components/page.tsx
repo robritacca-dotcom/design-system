@@ -4,7 +4,6 @@ import Image from "next/image";
 import MegaNav from "../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import TocCard from "../../components/TocCard/TocCard";
 import { AgentStatus } from "@robr0/design-system/components/AgentStatus/AgentStatus";
 import { AiButton } from "@robr0/design-system/components/AiButton/AiButton";
@@ -64,8 +63,6 @@ const contributionPreviewDays: ContributionDay[] = Array.from({ length: 8 * 7 },
 export default function ComponentsPage() {
   return (
     <>
-
-      <BlurBackground />
 
       <MegaNav />
 

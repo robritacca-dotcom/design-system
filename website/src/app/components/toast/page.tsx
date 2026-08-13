@@ -4,7 +4,6 @@ import React from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
-import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import { Toast, ToastProvider, useToast } from "@robr0/design-system/components/Toast/Toast";
 import { Button } from "@robr0/design-system/components/Button/Button";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
@@ -80,7 +79,6 @@ function ToastTriggers() {
 export default function ToastPage() {
   return (
     <ToastProvider position="bottom-right">
-      <BlurBackground />
       <MegaNav />
 
       <div className={styles.dsLayout}>

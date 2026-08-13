@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import StageToolbar from "@/components/StageToolbar/StageToolbar";
-import BlurBackground from "../../components/BlurBackground/BlurBackground";
+import { FullBleedBackground } from "@/components/BlurBackground/BlurBackground";
 import styles from "./page.module.css";
 import { Button } from "@robr0/design-system/components/Button/Button";
 import { CodeBlock } from "@robr0/design-system/components/CodeBlock/CodeBlock";
@@ -435,7 +435,9 @@ export default function PlaygroundPage() {
 
   return (
     <>
-      <BlurBackground />
+      {/* An immersive stage runs the background edge to edge, with no
+          fade-to-floor mask — unlike the doc pages' 450px band. */}
+      <FullBleedBackground />
 
       {/* Not the site's full navigation — a full-screen view's slim
           toolbar: brand mark, breadcrumb trail, the view tabs, and the X

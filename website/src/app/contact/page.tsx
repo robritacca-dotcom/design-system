@@ -1,7 +1,6 @@
 "use client";
 
 import MegaNav from "../../components/MegaNav/MegaNav";
-import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import { ToastProvider, useToast } from "@robr0/design-system/components/Toast/Toast";
 import { ContactCard } from "@robr0/design-system/components/ContactCard/ContactCard";
 import styles from "./page.module.css";
@@ -92,8 +91,6 @@ function ContactContent() {
 
   return (
     <>
-      <BlurBackground />
-
       <MegaNav />
 
       <main className={styles.contactContainer} id="main-content">

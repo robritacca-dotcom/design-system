@@ -4,7 +4,6 @@ import React from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
-import BlurBackground from "../../../components/BlurBackground/BlurBackground";
 import { Avatar } from "@robr0/design-system/components/Avatar/Avatar";
 import { demoAvatar1, demoAvatar2 } from "@robr0/design-system/components/Avatar/demoAvatars";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
@@ -16,7 +15,6 @@ const { sidebarLinks } = getSidebarLinks(componentsSidebarLinks, "/components/av
 export default function AvatarPage() {
   return (
     <>
-      <BlurBackground />
       <MegaNav />
 
       <div className={styles.dsLayout}>

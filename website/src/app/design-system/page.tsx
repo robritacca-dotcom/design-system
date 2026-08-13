@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import MegaNav from "../../components/MegaNav/MegaNav";
-import BlurBackground from "../../components/BlurBackground/BlurBackground";
 import FadeDivider from "../../components/FadeDivider/FadeDivider";
 import styles from "./page.module.css";
 import { dsMegaItems } from "@/config/navigation";
@@ -225,8 +224,6 @@ export default function DesignSystemPage() {
 
   return (
     <>
-      <BlurBackground />
-
       <MegaNav />
 
       <main className={styles.page} id="main-content">

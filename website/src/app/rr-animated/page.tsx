@@ -1,11 +1,11 @@
 "use client";
 
-import BlurBackground from "../../components/BlurBackground/BlurBackground";
+import { FullBleedBackground } from "../../components/BlurBackground/BlurBackground";
 
 export default function RrAnimatedPreviewPage() {
   return (
     <>
-      <BlurBackground fullHeight />
+      <FullBleedBackground />
 
       <main
         style={{
