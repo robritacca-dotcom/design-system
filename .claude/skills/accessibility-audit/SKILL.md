@@ -62,6 +62,11 @@ Report a finding as **already-enforced** if `npm run test` would have caught it;
    - Every interactive element has a `:focus-visible` rule in its CSS
    - Focus ring uses the teal action token (`--color-action-primary-bg`) — per design.md, teal is reserved for primary CTAs and focus rings. Flag any `outline: none` without a visible replacement
 
+   **Motion** (axe evaluates none of this):
+   - **[manual]** Anything that animates for more than five seconds, or loops indefinitely, can be paused, stopped, or hidden (WCAG 2.2.2). CSS-token motion satisfies this through the `prefers-reduced-motion` guard in `tokens-motion.css`, which collapses every duration
+   - **[manual]** Animation driven from JavaScript is **outside that guard** — a `requestAnimationFrame` loop cannot be seen by CSS, so each one has to check `prefers-reduced-motion` itself. The site's ambient background is the standing example; confirm it still renders a single static frame under the preference rather than assuming the token layer covers it
+   - **[manual]** Motion triggered by interaction (parallax, cursor-reactive effects) is disabled under reduced motion, or is not essential (WCAG 2.3.3)
+
 4. **Visual audit (from screenshots).** Start the preview server and screenshot the target in both light and dark mode (follow the `visual-review` skill pattern). Check:
    - **Colour contrast (the priority — nothing automated covers this):** compute the ratio for every foreground/background pair actually rendered, not just body text. Flag anything below 4.5:1 for normal text or 3:1 for large text and UI components (WCAG 1.4.3 / 1.4.11). Note which token is used. The action-colour pairs recorded in `.storybook/preview.ts`'s contrast deferral (primary CTA label, teal-as-text on white, tertiary-on-tertiary) are known — report those as *known deferred*, not as new findings.
    - **Text sizing:** No text visually below ~12px (WCAG 1.4.4)

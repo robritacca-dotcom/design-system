@@ -46,3 +46,8 @@ Use the browser/preview tools available in the current environment for every ste
 - The sitemap footer (`SiteFooter`) and the chat button/panel are site chrome mounted once from the root layout, not per page — expect both in every screenshot's lower region, and check the footer's column collapse (5 → 3 → 2) on the mobile pass
 - The routes in `CHROMELESS_ROUTES` (`website/src/config/chromeless.ts`) deliberately render neither the footer nor the chat — their absence there is not a finding
 - The `animate-in` class on page elements triggers CSS entry animations — these are normal on first load
+- The ambient background (`BlurBackground`) is layout-mounted chrome too, and it is the largest thing in every screenshot. Three of its behaviours produce **false findings** if you do not expect them:
+  - **It has two renderers.** A WebGL2 field normally, the CSS blobs underneath as the fallback. Which one you capture depends on the machine's GPU, so the same page can legitimately screenshot two different ways on two runs. A background that differs between runs is not a finding; a *broken-looking* one is.
+  - **There is a moment with no background at all.** While the renderer resolves, the blobs are hidden and the canvas has not faded in. A screenshot caught in those first frames shows bare page floor. Let the page settle before capturing.
+  - **Most pages get a 450px band, not a full screen.** Only pages rendering `FullBleedBackground` fill the viewport; grep `data-bg-full-bleed` for the current set rather than trusting a list here. Judge each page against its own variant.
+- To rule the background in or out of a finding, `?tune=1` on any page in dev opens its control panel, which reports the live renderer and lets you A/B the shader against the CSS blobs

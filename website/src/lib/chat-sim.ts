@@ -59,9 +59,10 @@ const SCENARIOS: SimScenario[] = [
       "- Chat bubbles draw from their own four tokens, so a theme can retune " +
       "them without touching a component.\n\n" +
       "### Motion is a system\n\n" +
-      "Durations and easings are tokens too, with a reduced motion guard that " +
-      "zeroes them globally. If an animation cannot say what it is for, it " +
-      "does not ship.",
+      "Durations and easings are tokens too, and a reduced motion guard " +
+      "collapses every one of them. Animation driven from JavaScript sits " +
+      "outside that guard and checks the preference itself. If an animation " +
+      "cannot say what it is for, it does not ship.",
   },
   {
     steps: [

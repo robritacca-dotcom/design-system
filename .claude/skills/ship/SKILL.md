@@ -54,6 +54,8 @@ Use this skill when asked to make completed work live — phrases like "ship it"
 
    If the pushed work changed component CSS, anything under `src/tokens/`, or `.storybook/`, offer to dispatch Chromatic (`gh workflow run chromatic.yml`) — `verify` proves nothing about pixels, and this is the decision point pre-deploy's Chromatic rule exists for. It bills cloud snapshots, so it's an offer, not an automatic step.
 
+   Chromatic only snapshots Storybook, so it says nothing about the website. If the pushed work touched `website/src/data/shader-background.json` or `website/src/components/BlurBackground/`, offer a `visual-review` pass instead: those files set the background on all of the site's pages at once, and no automated gate covers them — `verify` proves the config validated, not that the result looks right.
+
    Same pattern for the chat: if the pushed work changed what the site chat answers from or how it answers — the corpus sources (page prose feeds `site-corpus.generated.ts` by construction), the persona or guardrails in `website/src/app/api/chat/`, or the route itself — offer to run the answer-quality eval (`npm run eval:chat`, ritual in `evals/chat/README.md`). `verify` proves the corpus regenerated, not that the answers stayed good, and the eval costs real API spend — an offer, not an automatic step.
 
 7. **Confirm CI went green**: after the push, watch the GitHub Actions run to completion:

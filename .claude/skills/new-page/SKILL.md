@@ -38,6 +38,7 @@ For a **component documentation page**, use the `component-doc-page` skill inste
   - All copy on the page (tagline, intro, body, metadata description) follows `content-design.md` — voice, register, and the words-to-avoid tables
   - Sidebar links come from `getSidebarLinks(<section>SidebarLinks, "<your path>")`
   - Include `PageLinks` only if Figma/Storybook URLs exist
+  - **Do not render a background.** `BlurBackground` is mounted once in the root layout and covers every route; adding it per page would build a second canvas and a second GL context on top of the first. `scripts/validate-single-background-mount.mjs` fails the build if you do
 
 ### File 2: `page.module.css`
 - Copy the exemplar's layout classes; add page-specific classes as needed
@@ -48,7 +49,7 @@ For a **component documentation page**, use the `component-doc-page` skill inste
 ### File 3: `layout.tsx`
 - Sidebar-registered pages export `metadata` via the shared helper: `export const metadata = pageMetadata("<your path>", "<one-line description>")` (import from `@/config/navigation`)
 - Standalone pages (`/playground`, `/contact` — pages in no sidebar array) export a literal `Metadata` object instead, with an explicit `alternates.canonical` — see `website/src/app/playground/layout.tsx`
-- **Deliberately hidden pages are the exception to both rules**: a test bench or scratch page that must stay dark sets `robots: { index: false, follow: false }`, skips the canonical *and* the sitemap entirely, and records why in a comment in its `layout.tsx`. A full-viewport or immersive page that should also render none of the shared chrome (the layout-mounted footer and chat panel) additionally adds its route to `CHROMELESS_ROUTES` in `website/src/config/chromeless.ts` — `/playground` and `/rr-animated` are the registered precedents
+- **Deliberately hidden pages are the exception to both rules**: a test bench or scratch page that must stay dark sets `robots: { index: false, follow: false }`, skips the canonical *and* the sitemap entirely, and records why in a comment in its `layout.tsx`. A full-viewport or immersive page that should also render none of the shared chrome (the layout-mounted footer and chat panel) additionally adds its route to `CHROMELESS_ROUTES` in `website/src/config/chromeless.ts` — `/playground` and `/rr-animated` are the registered precedents. Suppressing chrome does **not** make the background full-bleed: by default every page gets the 450px band that fades into the page floor. An immersive page must also render `<FullBleedBackground />` (exported from `website/src/components/BlurBackground/BlurBackground.tsx`), a hidden marker that CSS in `globals.css` reads to drop the fade and fill the viewport. Skip it and the page is chrome-free but band-limited, which looks wrong with nothing to explain why
 - Only **component** pages are build-enforced (`scripts/validate-page-titles.mjs` requires `componentPageMetadata("<slug>")` there); for everything else the helper is convention, not a gate — follow it anyway
 - Default export wraps `{children}` in a fragment
 
