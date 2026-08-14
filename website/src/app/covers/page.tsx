@@ -1,5 +1,9 @@
 import ThemeToggle from "../../components/ThemeToggle/ThemeToggle";
 import {
+  TurboTaxChatGptCover,
+  TurboTaxChatGptCoverMobile,
+} from "../../components/covers/TurboTaxChatGptCover";
+import {
   TurboTaxClaudeCover,
   TurboTaxClaudeCoverMobile,
 } from "../../components/covers/TurboTaxClaudeCover";
@@ -36,6 +40,22 @@ export default function CoverMocksPage() {
         <p className={styles.label}>TurboTax in Claude — mobile, 440 × 972</p>
         <div style={{ width: 440 }}>
           <TurboTaxClaudeCoverMobile />
+        </div>
+      </section>
+
+      <section className={styles.mock}>
+        <p className={styles.label}>
+          TurboTax in ChatGPT — desktop, 1440 × 1024
+        </p>
+        <div style={{ width: 1440 }}>
+          <TurboTaxChatGptCover />
+        </div>
+      </section>
+
+      <section className={styles.mock}>
+        <p className={styles.label}>TurboTax in ChatGPT — mobile, 440 × 972</p>
+        <div style={{ width: 440 }}>
+          <TurboTaxChatGptCoverMobile />
         </div>
       </section>
     </main>

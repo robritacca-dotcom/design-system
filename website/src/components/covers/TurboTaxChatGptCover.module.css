@@ -1,0 +1,886 @@
+/*
+ * A 1:1 redraw of the Figma source frames "ChatGPT ChecklIst Desktop"
+ * (node 3030:12155, 1440 x 1024) and "ChatGPT ChecklIst Mobile"
+ * (node 3030:14557, 440 x 972).
+ *
+ * Every value here is hard-coded from the Figma file on purpose — these mocks
+ * deliberately use no design-system tokens and no design-system components, so
+ * they can never drift when the system's own theme changes.
+ *
+ * The only indirection is the local palette below, which exists so the whole
+ * drawing can cross-fade between light and dark. Note that the checklist card
+ * carries a few Anthropic-side values (#141413, #73726c, the progress
+ * gradient) in the source file itself — those are copied as they are, not
+ * corrected.
+ */
+
+.cover {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.stage,
+.stageMobile {
+  --font-sans: "SF Pro Text", "SF Pro", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Helvetica, Arial, sans-serif;
+
+  --gpt-surface: #ffffff;
+  --gpt-elevated: #ffffff;
+  --gpt-rail: #ffffff;
+  --gpt-bubble: #f3f3f3;
+  --gpt-border-light: rgba(13, 13, 13, 0.05);
+  --gpt-border-default: rgba(13, 13, 13, 0.1);
+  --gpt-border-heavy: rgba(13, 13, 13, 0.15);
+  --gpt-text: #0d0d0d;
+  --gpt-text-secondary: #5d5d5d;
+  --gpt-text-tertiary: #8f8f8f;
+  --gpt-icon: #0d0d0d;
+  --gpt-icon-secondary: #5d5d5d;
+  --gpt-icon-tertiary: #8f8f8f;
+  --gpt-check: #008635;
+  --gpt-accent: #0285ff;
+  --gpt-inverse-bg: #0d0d0d;
+  --gpt-inverse-label: #ffffff;
+  --gpt-avatar: #7d9c6a;
+  --gpt-shadow: rgba(0, 0, 0, 0.05);
+
+  /* Values the source card inherits from the Anthropic side of the file. */
+  --card-text: #141413;
+  --card-text-muted: #73726c;
+  --card-rule: rgba(31, 30, 29, 0.15);
+  --track-bg: #c3ced5;
+  --track-from: #00eec5;
+  --track-to: #00856d;
+
+  /* Isometric upload illustration */
+  --il-ink: #21262a;
+  --il-light: #f4f4ef;
+  --il-mid: #e3ddcd;
+  --il-shade: #cdc6af;
+  --il-olive: #8f8569;
+  --il-blue: #5dabff;
+
+  display: flex;
+  align-items: stretch;
+  box-sizing: border-box;
+  overflow: hidden;
+  border-radius: 12px;
+  background-color: var(--gpt-surface);
+  font-family: var(--font-sans);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+.stage {
+  width: 1440px;
+  height: 1024px;
+}
+
+.stageMobile {
+  width: 440px;
+  height: 972px;
+  flex-direction: column;
+}
+
+:global([data-theme="dark"]) .stage,
+:global([data-theme="dark"]) .stageMobile {
+  --gpt-surface: #212121;
+  --gpt-elevated: #303030;
+  --gpt-rail: #181818;
+  --gpt-bubble: #303030;
+  --gpt-border-light: rgba(255, 255, 255, 0.08);
+  --gpt-border-default: rgba(255, 255, 255, 0.12);
+  --gpt-border-heavy: rgba(255, 255, 255, 0.18);
+  --gpt-text: #ececec;
+  --gpt-text-secondary: #b4b4b4;
+  --gpt-text-tertiary: #8f8f8f;
+  --gpt-icon: #ececec;
+  --gpt-icon-secondary: #b4b4b4;
+  --gpt-icon-tertiary: #8f8f8f;
+  --gpt-check: #3ba55d;
+  --gpt-accent: #4c9eff;
+  --gpt-inverse-bg: #ffffff;
+  --gpt-inverse-label: #0d0d0d;
+  --gpt-shadow: rgba(0, 0, 0, 0.4);
+
+  --card-text: #ececec;
+  --card-text-muted: #9b9b9b;
+  --card-rule: rgba(255, 255, 255, 0.14);
+  --track-bg: #3f4b52;
+
+  --il-ink: #d9d5c8;
+  --il-light: #3a3a37;
+  --il-mid: #2c2c2a;
+  --il-shade: #4a4945;
+}
+
+.stage,
+.stage *,
+.stageMobile,
+.stageMobile * {
+  transition:
+    background-color 320ms ease,
+    background-image 320ms ease,
+    color 320ms ease,
+    border-color 320ms ease,
+    box-shadow 320ms ease,
+    fill 320ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage,
+  .stage *,
+  .stageMobile,
+  .stageMobile * {
+    transition-duration: 1ms;
+  }
+}
+
+.stage p,
+.stageMobile p {
+  margin: 0;
+}
+
+/* ------------------------------------------------------------ desktop rail */
+
+.rail {
+  width: 52px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  padding-bottom: 18px;
+  background-color: var(--gpt-rail);
+  border-right: 1px solid var(--gpt-border-light);
+}
+
+.railBrand {
+  width: 100%;
+  height: 52px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 0;
+}
+
+.railBody {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.railSections {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+}
+
+.railItems {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.railItem {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 10px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+/*
+ * The source frame fills this with a photographic avatar. A raster would
+ * defeat the point of a vector cover, so it is drawn as a flat disc.
+ */
+.railAvatar {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  border-radius: 45px;
+  background-color: var(--gpt-avatar);
+}
+
+/* ------------------------------------------------------------------- main */
+
+.main {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  background-color: var(--gpt-surface);
+}
+
+.header {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px 8px 4px;
+}
+
+.modelSelect {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 8px;
+}
+
+.modelName {
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: -0.4px;
+  color: var(--gpt-text);
+  white-space: nowrap;
+}
+
+.modelVersion {
+  color: var(--gpt-text-tertiary);
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  padding-right: 8px;
+}
+
+.shareButton {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 510;
+  line-height: 20px;
+  letter-spacing: -0.18px;
+  color: var(--gpt-text);
+  white-space: nowrap;
+}
+
+.headerIconButton {
+  width: 32px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+/* -------------------------------------------------------------- chat body */
+
+.chatBody {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 24px;
+  /* The conversation is taller than the frame; the frame cuts it here. */
+  overflow: hidden;
+}
+
+.conversation {
+  width: 100%;
+  max-width: 768px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: flex-start;
+  padding-top: 24px;
+}
+
+.messageTo {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-end;
+}
+
+.bubble {
+  width: 408px;
+  max-width: 456px;
+  box-sizing: border-box;
+  padding: 10px 20px;
+  border-radius: 24px;
+  background-color: var(--gpt-bubble);
+}
+
+.bubbleText {
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.32px;
+  color: var(--gpt-text);
+}
+
+.response {
+  width: 100%;
+  max-width: 768px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.appRow {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.appName {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: -0.18px;
+  color: var(--gpt-text-secondary);
+  white-space: nowrap;
+}
+
+/* -------------------------------------------------------- checklist card */
+
+.card {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 8px;
+  overflow: hidden;
+  /* Outline, not border: Figma draws this stroke inside the frame without
+     taking layout space, so a border would shrink the content box. */
+  outline: 0.5px solid var(--gpt-border-heavy);
+  outline-offset: -0.5px;
+  border-radius: 24px;
+  background-color: var(--gpt-surface);
+}
+
+.cardInner {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 8px;
+}
+
+.heading {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.checklistTitle {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 25px;
+  color: var(--card-text);
+  white-space: nowrap;
+}
+
+.checklistSub {
+  width: 100%;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: -0.3px;
+  color: var(--gpt-text-secondary);
+}
+
+.dropzone {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 0;
+  overflow: hidden;
+  /* Same inside-stroke reason as the card. */
+  outline: 1px dashed var(--gpt-border-heavy);
+  outline-offset: -1px;
+  border-radius: 16px;
+  background-color: var(--gpt-surface);
+}
+
+.spot {
+  position: relative;
+  width: 125px;
+  height: 73.529px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.spotArt {
+  position: absolute;
+  left: 36.875px;
+  top: 3.713px;
+}
+
+.dropText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.dropTitle {
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: -0.3px;
+  color: var(--gpt-text);
+}
+
+.dropHint {
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: -0.1px;
+  color: var(--gpt-text-tertiary);
+}
+
+.pillButton {
+  height: 44px;
+  box-sizing: border-box;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 24px;
+  border: 1px solid var(--gpt-border-default);
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 19.6px;
+  color: var(--gpt-text);
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------- progress */
+
+.progress {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.progressLabel {
+  width: 100%;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--card-text-muted);
+}
+
+.progressCount {
+  font-weight: 600;
+  color: var(--card-text);
+}
+
+.track {
+  width: 100%;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 8px;
+  background-color: var(--track-bg);
+}
+
+.trackFill {
+  width: 100%;
+  height: 4px;
+  border-radius: 100px;
+  background-image: linear-gradient(
+    to right,
+    var(--track-from) 0%,
+    var(--track-to) 104.31%
+  );
+}
+
+/* -------------------------------------------------------------- documents */
+
+.category {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.categoryTitle {
+  width: 100%;
+  font-size: 16px;
+  line-height: 26px;
+  letter-spacing: -0.4px;
+  color: var(--card-text);
+}
+
+.document {
+  width: 100%;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+}
+
+.documentBody {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.documentDescription {
+  width: 248px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: flex-start;
+}
+
+/* The second document lets its description fill the row instead. */
+.documentDescriptionFlex {
+  flex: 1;
+  min-width: 0;
+  width: auto;
+}
+
+.documentTitle {
+  width: 100%;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--card-text);
+}
+
+.documentFile {
+  width: 100%;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--card-text-muted);
+}
+
+.trailingSlot {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  opacity: 0;
+}
+
+/* A zero-height rule, matching the Figma line that sits above its own box. */
+.rule {
+  position: relative;
+  width: 100%;
+  height: 0;
+}
+
+.rule::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -1px;
+  height: 1px;
+  background-color: var(--card-rule);
+}
+
+/* ------------------------------------------------------------------- cta */
+
+.entityFooter {
+  width: 100%;
+  min-width: 100px;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.ctaButton {
+  flex: 1;
+  min-width: 0;
+  height: 44px;
+  box-sizing: border-box;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 24px;
+  border-radius: 999px;
+  background-color: var(--gpt-inverse-bg);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  letter-spacing: -0.3px;
+  color: var(--gpt-inverse-label);
+  white-space: nowrap;
+}
+
+.ctaMark {
+  width: 24px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* -------------------------------------------------- message below the card */
+
+.messageContent {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+  padding-top: 4px;
+}
+
+.messageText {
+  width: 100%;
+  font-size: 16px;
+  line-height: 25px;
+  letter-spacing: -0.4px;
+  color: var(--gpt-text);
+}
+
+/* -------------------------------------------------------------- composer */
+
+.composeFooter {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 768px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  padding-bottom: 8px;
+  border-top-left-radius: 28px;
+  border-top-right-radius: 28px;
+  background-color: var(--gpt-surface);
+}
+
+.composer {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow: hidden;
+  /* Inside stroke again: a border would add 2px to the composer's height and
+     push the whole frame's cut line up by the same amount. */
+  outline: 1px solid var(--gpt-border-default);
+  outline-offset: -1px;
+  border-radius: 28px;
+  background-color: var(--gpt-elevated);
+  box-shadow: 0 4px 16px 0 var(--gpt-shadow);
+}
+
+.composerContent {
+  width: 100%;
+  min-height: 48px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  padding: 16px 28px 8px 20px;
+}
+
+.placeholder {
+  flex: 1;
+  min-width: 0;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.32px;
+  color: var(--gpt-text-tertiary);
+}
+
+.actionBar {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.actionBarSide {
+  display: flex;
+  align-items: center;
+}
+
+.actionBarRight {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.roundAction {
+  width: 34px;
+  height: 34px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  border-radius: 26px;
+}
+
+.appChipRow {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding-left: 12px;
+}
+
+.appChip {
+  height: 34px;
+  box-sizing: border-box;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  padding: 0 12px 0 9px;
+  border-radius: 24px;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: -0.18px;
+  color: var(--gpt-accent);
+  white-space: nowrap;
+}
+
+.appChipIcon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.voiceAction {
+  width: 36px;
+  height: 36px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 999px;
+  background-color: var(--gpt-bubble);
+}
+
+.disclaimer {
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--gpt-text-secondary);
+}
+
+/* ------------------------------------------- mobile navigation bar (44px) */
+
+.navBar {
+  position: relative;
+  width: 100%;
+  height: 44px;
+  flex-shrink: 0;
+  /*
+   * The source layer is 90% white over a 10px backdrop blur. Nothing scrolls
+   * beneath it in this frame, so the blend is flattened to the solid colour it
+   * resolves to — backdrop-filter is unreliable inside foreignObject.
+   */
+  background-color: var(--gpt-surface);
+}
+
+.navBarLeading {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 80px;
+  height: 44px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  padding: 11px 0 11px 16px;
+}
+
+.navBarTitle {
+  position: absolute;
+  left: calc(50% - 21.5px);
+  top: calc(50% - 0.5px);
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+}
+
+.navBarTrailing {
+  position: absolute;
+  right: 0;
+  top: calc(50% + 0.5px);
+  transform: translateY(-50%);
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 12px;
+}
+
+/* ------------------------------------------------- mobile-frame overrides */
+/* Kept last so they win over the desktop values they replace. */
+
+.chatBodyMobile {
+  padding: 0 16px;
+}
+
+.cardMobile {
+  width: 408px;
+}
+
+.composeFooterMobile {
+  box-sizing: border-box;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+/* The mobile model name greys the version with the label colour, not the
+   lighter tertiary the desktop header uses. */
+.modelVersionMobile {
+  color: var(--gpt-text-secondary);
+}
