@@ -87,6 +87,31 @@ export const CaseStudyWithCover: Story = {
   },
 };
 
+/**
+ * A drawn cover: `cover` takes any node and fills the same fixed-ratio slot the
+ * image would, so a grid keeps one cover shape whichever kind each card was
+ * given. The website uses it for vector redraws of the screens behind each
+ * study; an SVG stands in here.
+ */
+export const CaseStudyDrawnCover: Story = {
+  args: {
+    variant: 'case-study',
+    title: 'Building robr0 DS: the rules that hold',
+    dek: 'Six months building a design system where breaking a rule fails the build',
+    companyName: 'Personal',
+    companyLogo: '/logos/rr.svg',
+    href: '/work/robr0-ds',
+    cover: (
+      <svg viewBox="0 0 940 480" role="img" aria-label="Drawn cover placeholder">
+        <rect width="940" height="480" fill="var(--color-bg-container-secondary)" />
+        <rect x="80" y="120" width="360" height="24" rx="12" fill="var(--color-action-primary-bg)" />
+        <rect x="80" y="176" width="600" height="16" rx="8" fill="var(--color-bg-container-border)" />
+        <rect x="80" y="216" width="480" height="16" rx="8" fill="var(--color-bg-container-border)" />
+      </svg>
+    ),
+  },
+};
+
 export const CaseStudyNoCover: Story = {
   args: {
     variant: 'case-study',
