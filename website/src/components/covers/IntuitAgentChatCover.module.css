@@ -1,0 +1,621 @@
+/*
+ * A 1:1 redraw of the Figma source frames "Intuit Agent Chat" — the immersive
+ * desktop panel (node 124823:12866, 1440 x 964) and the SM/MD panel
+ * (node 124823:12867, 428 x 964).
+ *
+ * Every value here is hard-coded from the Figma file on purpose — these mocks
+ * deliberately use no design-system tokens and no design-system components, so
+ * they can never drift when the system's own theme changes. Names below echo
+ * the IDS token they came from (container-background-primary, text-secondary,
+ * action-passive…) purely so the mapping back to the file stays readable.
+ *
+ * The only indirection is the local palette, which exists so the whole drawing
+ * can cross-fade between light and dark.
+ */
+
+.cover {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.stage,
+.stageMobile {
+  /*
+   * Avenir Next forINTUIT is not licensed here. Avenir Next ships with macOS,
+   * so the stack lands on the right face there and degrades to the platform UI
+   * face elsewhere.
+   */
+  --font: "Avenir Next forINTUIT", "Avenir Next", "Avenir", -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+
+  --iac-surface: #ffffff;
+  --iac-input-surface: #ffffff;
+  --iac-border: #d4d7dc;
+  --iac-text: #393a3d;
+  --iac-text-secondary: #6b6c72;
+  --iac-icon: #393a3d;
+  --iac-icon-muted: #6b6c72;
+  --iac-action-passive: #e3e5e8;
+  --iac-link: #0365ac;
+  --iac-brand: #236cff;
+  --iac-sent-bg: #0077c5;
+  --iac-sent-text: #ffffff;
+  /* The 5% wash behind the composer's icon controls. */
+  --iac-wash: rgba(57, 58, 61, 0.05);
+  --iac-input-shadow: rgba(0, 0, 0, 0.03);
+
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: hidden;
+  border-radius: 12px;
+  background-color: var(--iac-surface);
+  font-family: var(--font);
+  font-weight: 400;
+  color: var(--iac-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+.stage {
+  width: 1440px;
+  height: 964px;
+}
+
+.stageMobile {
+  width: 428px;
+  height: 964px;
+}
+
+:global([data-theme="dark"]) .stage,
+:global([data-theme="dark"]) .stageMobile {
+  --iac-surface: #1f2124;
+  --iac-input-surface: #26282c;
+  --iac-border: #3c3f44;
+  --iac-text: #eceef1;
+  --iac-text-secondary: #a9adb4;
+  --iac-icon: #eceef1;
+  --iac-icon-muted: #a9adb4;
+  --iac-action-passive: #33363b;
+  --iac-link: #6ab7f5;
+  --iac-brand: #5b91ff;
+  --iac-sent-bg: #0077c5;
+  --iac-wash: rgba(255, 255, 255, 0.07);
+  --iac-input-shadow: rgba(0, 0, 0, 0.4);
+}
+
+.stage,
+.stage *,
+.stageMobile,
+.stageMobile * {
+  transition:
+    background-color 320ms ease,
+    background-image 320ms ease,
+    color 320ms ease,
+    border-color 320ms ease,
+    box-shadow 320ms ease,
+    fill 320ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage,
+  .stage *,
+  .stageMobile,
+  .stageMobile * {
+    transition-duration: 1ms;
+  }
+}
+
+.stage p,
+.stageMobile p,
+.stage ul,
+.stageMobile ul {
+  margin: 0;
+}
+
+/* ----------------------------------------------------------------- header */
+
+.header {
+  width: 100%;
+  height: 60px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background-color: var(--iac-surface);
+  border-bottom: 1px solid var(--iac-border);
+}
+
+.headerTitle {
+  height: 20px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+.headerRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.headerRightRow {
+  width: 80px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* The shared "Icon + Label" control: 24px glyph in a 6px surround. */
+.iconControl {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  padding: 6px;
+}
+
+/* ------------------------------------------------------------ desktop rail */
+
+.body {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+}
+
+.rail {
+  width: 72px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px 16px;
+  overflow: hidden;
+  background-color: var(--iac-surface);
+  border-right: 1px solid var(--iac-border);
+}
+
+.railNav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.railPrimary {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.railButton {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  padding: 6px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.railButtonWide {
+  padding: 8px;
+}
+
+/* ------------------------------------------------------------------- pane */
+
+/*
+ * Sized by flex in both frames: it is the growing column beside the desktop
+ * rail, and the growing row under the mobile header. A height of 100% would be
+ * the full stage in the mobile case and overflow the header.
+ */
+.paneColumn {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: var(--iac-surface);
+}
+
+.pane {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 24px;
+  overflow: hidden;
+}
+
+.chat {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---------------------------------------------------------------- welcome */
+
+.welcome {
+  width: 100%;
+  max-width: 768px;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.lockup {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+}
+
+.assistMark {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 64px;
+}
+
+.welcomeHeader {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.welcomeHeading {
+  width: 100%;
+  text-align: center;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--iac-text);
+}
+
+.welcomeSubheading {
+  width: 100%;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--iac-text-secondary);
+}
+
+.starters {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: flex-start;
+  align-content: flex-start;
+  justify-content: center;
+}
+
+.starter {
+  box-sizing: border-box;
+  min-height: 44px;
+  max-width: 308px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 12px 16px;
+  border-radius: 24px;
+  background-color: var(--iac-action-passive);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--iac-text);
+}
+
+/* --------------------------------------------------------------- composer */
+
+.inputField {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  padding: 0 24px 8px;
+  background-color: var(--iac-surface);
+}
+
+.semanticInput {
+  width: 100%;
+  max-width: 768px;
+  min-width: 280px;
+  max-height: 68px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 16px;
+  border: 1px solid var(--iac-border);
+  border-radius: 9999px;
+  background-color: var(--iac-input-surface);
+  filter: drop-shadow(0 2px 4px var(--iac-input-shadow));
+}
+
+.inputRow {
+  width: 100%;
+  min-height: 21px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  overflow: hidden;
+}
+
+.attach {
+  position: relative;
+  height: 36px;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  padding: 0 6px;
+}
+
+.attachWash {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background-color: var(--iac-wash);
+}
+
+.attachIcon {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.inputText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: flex-start;
+  padding-left: 4px;
+}
+
+.placeholder {
+  font-size: 16px;
+  line-height: 1.3;
+  color: var(--iac-text-secondary);
+}
+
+.sendControl {
+  position: relative;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  padding: 6px;
+  opacity: 0.4;
+}
+
+.disclaimer {
+  width: 100%;
+  height: 16px;
+  flex-shrink: 0;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--iac-link);
+}
+
+/* ------------------------------------------------------------ mobile pane */
+
+.headerSide {
+  width: 84px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.headerSideRight {
+  width: auto;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.chatPane {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  /*
+   * The source layer is justify-end with overflow-auto. The frame renders the
+   * thread from its start and clips the overflow at the bottom, so the mock
+   * pins to the top and clips to match what the frame shows.
+   */
+  justify-content: flex-start;
+  overflow: hidden;
+}
+
+.thread {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.userMessage {
+  width: 100%;
+  max-width: 768px;
+  min-width: 270px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-end;
+}
+
+.userBubble {
+  width: 255px;
+  max-width: 312px;
+  box-sizing: border-box;
+  padding: 8px 16px;
+  border-radius: 24px;
+  background-color: var(--iac-sent-bg);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--iac-sent-text);
+}
+
+.agentMessage {
+  width: 100%;
+  max-width: 768px;
+  min-width: 270px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.thinkingRow {
+  width: 100%;
+  min-height: 32px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.thinkingLabel {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--iac-text-secondary);
+  white-space: nowrap;
+}
+
+.thinkingChevron {
+  display: flex;
+  align-items: center;
+  padding: 2px;
+}
+
+/* -------------------------------------------------------- agent markdown */
+
+.markdown {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+  overflow: hidden;
+}
+
+.mdHeading {
+  width: 100%;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--iac-text);
+}
+
+.mdSubhead {
+  width: 100%;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--iac-text);
+}
+
+.mdBody {
+  width: 100%;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--iac-text);
+}
+
+.mdLink {
+  color: var(--iac-link);
+}
+
+.mdDivider {
+  width: 100%;
+  height: 16px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.mdDividerLine {
+  width: 100%;
+  height: 1px;
+  background-color: var(--iac-border);
+}
+
+.mdGroup {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.mdList {
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: 21px;
+  list-style: disc;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--iac-text);
+}
+
+.mdList li {
+  margin-bottom: 4px;
+}
+
+.mdList ul {
+  padding-left: 21px;
+  list-style: disc;
+  margin-bottom: 4px;
+}
+
+.mdListLead {
+  font-weight: 500;
+}
+
+/* ------------------------------------------------- mobile-frame overrides */
+/* Kept last so they win over the desktop values they replace. */
+
+.inputFieldMobile {
+  padding-left: 16px;
+  padding-right: 16px;
+}

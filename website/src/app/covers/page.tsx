@@ -1,5 +1,9 @@
 import ThemeToggle from "../../components/ThemeToggle/ThemeToggle";
 import {
+  IntuitAgentChatCover,
+  IntuitAgentChatCoverMobile,
+} from "../../components/covers/IntuitAgentChatCover";
+import {
   TurboTaxChatGptCover,
   TurboTaxChatGptCoverMobile,
 } from "../../components/covers/TurboTaxChatGptCover";
@@ -56,6 +60,22 @@ export default function CoverMocksPage() {
         <p className={styles.label}>TurboTax in ChatGPT — mobile, 440 × 972</p>
         <div style={{ width: 440 }}>
           <TurboTaxChatGptCoverMobile />
+        </div>
+      </section>
+
+      <section className={styles.mock}>
+        <p className={styles.label}>
+          Intuit Agent Chat — immersive, 1440 × 964
+        </p>
+        <div style={{ width: 1440 }}>
+          <IntuitAgentChatCover />
+        </div>
+      </section>
+
+      <section className={styles.mock}>
+        <p className={styles.label}>Intuit Agent Chat — panel, 428 × 964</p>
+        <div style={{ width: 428 }}>
+          <IntuitAgentChatCoverMobile />
         </div>
       </section>
     </main>
