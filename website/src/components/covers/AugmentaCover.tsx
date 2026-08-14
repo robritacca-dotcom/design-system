@@ -40,6 +40,7 @@ import {
   UpChevronIcon,
   UserIcon,
 } from "./augmenta-cover-art";
+import { CoverFrame } from "./CoverFrame";
 import styles from "./AugmentaCover.module.css";
 
 /*
@@ -292,142 +293,135 @@ export function AugmentaDesignRulesCover({
   className?: string;
 }) {
   return (
-    <svg
-      className={[styles.cover, className].filter(Boolean).join(" ")}
-      viewBox="0 0 1440 900"
-      preserveAspectRatio="xMidYMid meet"
-      xmlns="http://www.w3.org/2000/svg"
-      role="img"
-      aria-label="The Augmenta study screen: a design-rule tree beside a table of sixteen generated rules."
+    <CoverFrame
+      width={1440}
+      height={900}
+      className={className}
+      label="The Augmenta study screen: a design-rule tree beside a table of sixteen generated rules."
     >
-      <foreignObject x="0" y="0" width="1440" height="900">
-        <div className={styles.stage}>
-          <Rail />
+      <div className={styles.stage}>
+        <Rail />
 
-          <div className={styles.viewer}>
-            <TopBar />
+        <div className={styles.viewer}>
+          <TopBar />
 
-            <div className={styles.main}>
-              <div className={styles.content}>
-                <div className={styles.studyRow}>
-                  <span className={styles.iconButton32}>
-                    <ArrowLeftIcon />
+          <div className={styles.main}>
+            <div className={styles.content}>
+              <div className={styles.studyRow}>
+                <span className={styles.iconButton32}>
+                  <ArrowLeftIcon />
+                </span>
+                <span className={styles.studyDot} />
+                <span className={styles.studyName}>Study Name</span>
+                <span className={styles.iconButton32} style={{ marginLeft: 8 }}>
+                  <EditIcon />
+                </span>
+
+                <div className={styles.statusGroup}>
+                  <span className={`${styles.tag} ${styles.tagInfo}`}>
+                    <SyncIcon12 />
+                    Generating
                   </span>
-                  <span className={styles.studyDot} />
-                  <span className={styles.studyName}>Study Name</span>
-                  <span
-                    className={styles.iconButton32}
-                    style={{ marginLeft: 8 }}
-                  >
-                    <EditIcon />
+                  <span className={`${styles.tag} ${styles.tagDefault}`}>
+                    <ClockIcon />
+                    00:01:30
                   </span>
+                </div>
 
-                  <div className={styles.statusGroup}>
-                    <span className={`${styles.tag} ${styles.tagInfo}`}>
-                      <SyncIcon12 />
-                      Generating
+                <div className={styles.splitButton}>
+                  <span className={styles.splitLabel}>View Model</span>
+                  <span className={styles.splitIcon}>
+                    <EllipsisIcon />
+                  </span>
+                </div>
+              </div>
+
+              <div className={styles.lower}>
+                <div className={styles.sideMenu}>
+                  <div className={styles.studyStep}>
+                    <span className={styles.studyStepIcon}>
+                      <CheckCircleFill />
                     </span>
-                    <span className={`${styles.tag} ${styles.tagDefault}`}>
-                      <ClockIcon />
-                      00:01:30
+                    <span>
+                      <p className={styles.studyStepLabel}>Design inputs</p>
+                      <p className={styles.studyStepSub}>Validated</p>
+                    </span>
+                  </div>
+                  <div className={styles.studyStep} style={{ marginTop: 8 }}>
+                    <span className={styles.studyStepIcon}>
+                      <CheckCircleFill />
+                    </span>
+                    <span>
+                      <p className={styles.studyStepLabel}>Site Geometry</p>
+                      <p className={styles.studyStepSub}>Validated</p>
+                    </span>
+                  </div>
+                  <div
+                    className={`${styles.studyStep} ${styles.studyStepActive}`}
+                    style={{ marginTop: 8 }}
+                  >
+                    <span className={styles.studyStepIcon}>
+                      <CheckCircleFill />
+                    </span>
+                    <span>
+                      <p className={styles.studyStepLabel}>Design Rules</p>
+                      <p className={styles.studyStepSub}>Validated</p>
                     </span>
                   </div>
 
-                  <div className={styles.splitButton}>
-                    <span className={styles.splitLabel}>View Model</span>
-                    <span className={styles.splitIcon}>
-                      <EllipsisIcon />
-                    </span>
+                  <div className={styles.submenu}>
+                    <div className={styles.submenuTitle}>
+                      <span className={styles.submenuTitleLabel}>
+                        Optional settings
+                      </span>
+                      <UpChevronIcon />
+                    </div>
+                    <div className={styles.submenuList}>
+                      <div className={styles.submenuItem}>Generation</div>
+                    </div>
                   </div>
                 </div>
 
-                <div className={styles.lower}>
-                  <div className={styles.sideMenu}>
-                    <div className={styles.studyStep}>
-                      <span className={styles.studyStepIcon}>
-                        <CheckCircleFill />
-                      </span>
-                      <span>
-                        <p className={styles.studyStepLabel}>Design inputs</p>
-                        <p className={styles.studyStepSub}>Validated</p>
-                      </span>
-                    </div>
-                    <div className={styles.studyStep} style={{ marginTop: 8 }}>
-                      <span className={styles.studyStepIcon}>
-                        <CheckCircleFill />
-                      </span>
-                      <span>
-                        <p className={styles.studyStepLabel}>Site Geometry</p>
-                        <p className={styles.studyStepSub}>Validated</p>
-                      </span>
-                    </div>
-                    <div
-                      className={`${styles.studyStep} ${styles.studyStepActive}`}
-                      style={{ marginTop: 8 }}
-                    >
-                      <span className={styles.studyStepIcon}>
-                        <CheckCircleFill />
-                      </span>
-                      <span>
-                        <p className={styles.studyStepLabel}>Design Rules</p>
-                        <p className={styles.studyStepSub}>Validated</p>
-                      </span>
-                    </div>
-
-                    <div className={styles.submenu}>
-                      <div className={styles.submenuTitle}>
-                        <span className={styles.submenuTitleLabel}>
-                          Optional settings
-                        </span>
-                        <UpChevronIcon />
-                      </div>
-                      <div className={styles.submenuList}>
-                        <div className={styles.submenuItem}>Generation</div>
-                      </div>
-                    </div>
+                <div className={styles.form}>
+                  <div className={styles.rules}>
+                    <span className={styles.rulesPill}>
+                      <HomeIcon />
+                      Design Rules
+                    </span>
+                    <Tree rows={PARTS_TREE} />
+                    <Tree rows={ROUTING_TREE} />
                   </div>
 
-                  <div className={styles.form}>
-                    <div className={styles.rules}>
-                      <span className={styles.rulesPill}>
-                        <HomeIcon />
-                        Design Rules
-                      </span>
-                      <Tree rows={PARTS_TREE} />
-                      <Tree rows={ROUTING_TREE} />
+                  <div className={styles.table}>
+                    <div className={styles.tableGrid}>
+                      {COLUMNS.map((column) => (
+                        <div key={column} className={styles.headerCell}>
+                          <span className={styles.headerLabel}>{column}</span>
+                          {column !== "Actions" && <SortIcon />}
+                        </div>
+                      ))}
+                      {RULE_ROWS.map(([name, ruleClass, type], index) => (
+                        <Row
+                          key={`${name}-${index}`}
+                          name={name}
+                          ruleClass={ruleClass}
+                          type={type}
+                        />
+                      ))}
                     </div>
 
-                    <div className={styles.table}>
-                      <div className={styles.tableGrid}>
-                        {COLUMNS.map((column) => (
-                          <div key={column} className={styles.headerCell}>
-                            <span className={styles.headerLabel}>{column}</span>
-                            {column !== "Actions" && <SortIcon />}
-                          </div>
-                        ))}
-                        {RULE_ROWS.map(([name, ruleClass, type], index) => (
-                          <Row
-                            key={`${name}-${index}`}
-                            name={name}
-                            ruleClass={ruleClass}
-                            type={type}
-                          />
-                        ))}
-                      </div>
-
-                      <div className={styles.pagination}>
-                        <span className={styles.paginationCount}>
-                          Displaying 16 of 16 Total Rules
+                    <div className={styles.pagination}>
+                      <span className={styles.paginationCount}>
+                        Displaying 16 of 16 Total Rules
+                      </span>
+                      <div className={styles.paginationControls}>
+                        <span className={styles.pageArrow}>
+                          <LeftChevron />
                         </span>
-                        <div className={styles.paginationControls}>
-                          <span className={styles.pageArrow}>
-                            <LeftChevron />
-                          </span>
-                          <span className={styles.pageNumber}>1</span>
-                          <span className={styles.pageArrow}>
-                            <RightChevron />
-                          </span>
-                        </div>
+                        <span className={styles.pageNumber}>1</span>
+                        <span className={styles.pageArrow}>
+                          <RightChevron />
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -436,8 +430,8 @@ export function AugmentaDesignRulesCover({
             </div>
           </div>
         </div>
-      </foreignObject>
-    </svg>
+      </div>
+    </CoverFrame>
   );
 }
 
@@ -482,7 +476,20 @@ type SolutionRow = {
   values: string[];
 };
 
-const DASHES = ["-", "-", "-", "-", "-", "-", "-", "-", "- (–%)", "- (–%)", "-", "-"];
+const DASHES = [
+  "-",
+  "-",
+  "-",
+  "-",
+  "-",
+  "-",
+  "-",
+  "-",
+  "- (–%)",
+  "- (–%)",
+  "-",
+  "-",
+];
 
 const STANDARD = (qty: string, routed: string) => [
   "08/01/2023 at 11:00AM",
@@ -501,17 +508,72 @@ const STANDARD = (qty: string, routed: string) => [
 
 const SOLUTION_ROWS: SolutionRow[] = [
   { index: 1, dot: "green", status: "generating", values: DASHES },
-  { index: 2, dot: "green", status: "success", values: STANDARD("200", "94 (94%)") },
-  { index: 3, dot: "green", status: "success", values: STANDARD("1,050", "90 (90%)") },
-  { index: 4, dot: "green", status: "success", values: STANDARD("200", "90 (90%)") },
-  { index: 5, dot: "green", status: "success", values: STANDARD("200", "90 (90%)") },
-  { index: 6, dot: "green", status: "success", values: STANDARD("200", "90 (90%)") },
-  { index: 1, dot: "blue", status: "success", values: STANDARD("200", "90 (90%)") },
-  { index: 2, dot: "blue", status: "success", values: STANDARD("200", "90 (90%)") },
-  { index: 3, dot: "blue", status: "failed", values: STANDARD("200", "90 (90%)") },
-  { index: 4, dot: "blue", status: "failed", values: STANDARD("200", "90 (90%)") },
-  { index: 1, dot: "purple", status: "failed", values: STANDARD("200", "90 (90%)") },
-  { index: 2, dot: "purple", status: "failed", values: STANDARD("200", "90 (90%)") },
+  {
+    index: 2,
+    dot: "green",
+    status: "success",
+    values: STANDARD("200", "94 (94%)"),
+  },
+  {
+    index: 3,
+    dot: "green",
+    status: "success",
+    values: STANDARD("1,050", "90 (90%)"),
+  },
+  {
+    index: 4,
+    dot: "green",
+    status: "success",
+    values: STANDARD("200", "90 (90%)"),
+  },
+  {
+    index: 5,
+    dot: "green",
+    status: "success",
+    values: STANDARD("200", "90 (90%)"),
+  },
+  {
+    index: 6,
+    dot: "green",
+    status: "success",
+    values: STANDARD("200", "90 (90%)"),
+  },
+  {
+    index: 1,
+    dot: "blue",
+    status: "success",
+    values: STANDARD("200", "90 (90%)"),
+  },
+  {
+    index: 2,
+    dot: "blue",
+    status: "success",
+    values: STANDARD("200", "90 (90%)"),
+  },
+  {
+    index: 3,
+    dot: "blue",
+    status: "failed",
+    values: STANDARD("200", "90 (90%)"),
+  },
+  {
+    index: 4,
+    dot: "blue",
+    status: "failed",
+    values: STANDARD("200", "90 (90%)"),
+  },
+  {
+    index: 1,
+    dot: "purple",
+    status: "failed",
+    values: STANDARD("200", "90 (90%)"),
+  },
+  {
+    index: 2,
+    dot: "purple",
+    status: "failed",
+    values: STANDARD("200", "90 (90%)"),
+  },
 ];
 
 /** Group header spans, in column order. */
@@ -556,109 +618,105 @@ export function AugmentaSolutionListCover({
   className?: string;
 }) {
   return (
-    <svg
-      className={[styles.cover, className].filter(Boolean).join(" ")}
-      viewBox="0 0 1440 820"
-      preserveAspectRatio="xMidYMid meet"
-      xmlns="http://www.w3.org/2000/svg"
-      role="img"
-      aria-label="The Augmenta solutions table: twelve generated solutions with their conduit, bend, junction and cost estimates."
+    <CoverFrame
+      width={1440}
+      height={820}
+      className={className}
+      label="The Augmenta solutions table: twelve generated solutions with their conduit, bend, junction and cost estimates."
     >
-      <foreignObject x="0" y="0" width="1440" height="820">
-        <div className={`${styles.stage} ${styles.stageList}`}>
-          <Rail />
+      <div className={`${styles.stage} ${styles.stageList}`}>
+        <Rail />
 
-          <div className={styles.viewer}>
-            <TopBar activeTab="solutions" />
+        <div className={styles.viewer}>
+          <TopBar activeTab="solutions" />
 
-            <div className={styles.main}>
-              <div className={styles.frame17}>
-                <div className={styles.toolbar}>
-                  <div className={styles.search}>
-                    <span className={styles.searchLabel}>Search</span>
-                    <SearchIcon />
-                  </div>
-                  <div className={styles.toolbarRight}>
-                    <span className={styles.squareButton}>
-                      <ListDensityIcon />
-                    </span>
-                    <span className={styles.segmentGroup}>
-                      <span
-                        className={`${styles.segment} ${styles.segmentActive}`}
-                      >
-                        Table
-                      </span>
-                      <span className={styles.segment}>Chart</span>
-                    </span>
+          <div className={styles.main}>
+            <div className={styles.frame17}>
+              <div className={styles.toolbar}>
+                <div className={styles.search}>
+                  <span className={styles.searchLabel}>Search</span>
+                  <SearchIcon />
+                </div>
+                <div className={styles.toolbarRight}>
+                  <span className={styles.squareButton}>
+                    <ListDensityIcon />
+                  </span>
+                  <span className={styles.segmentGroup}>
                     <span
-                      className={`${styles.pillButton} ${styles.filterButton}`}
+                      className={`${styles.segment} ${styles.segmentActive}`}
                     >
-                      Filter Studies
-                      <DownChevron />
+                      Table
                     </span>
-                    <span
-                      className={`${styles.pillButton} ${styles.viewModelButton}`}
+                    <span className={styles.segment}>Chart</span>
+                  </span>
+                  <span
+                    className={`${styles.pillButton} ${styles.filterButton}`}
+                  >
+                    Filter Studies
+                    <DownChevron />
+                  </span>
+                  <span
+                    className={`${styles.pillButton} ${styles.viewModelButton}`}
+                  >
+                    <SandboxIcon />
+                    View Model
+                  </span>
+                </div>
+              </div>
+
+              <div className={styles.listTable}>
+                <div className={styles.listGrid}>
+                  {GROUPS.map(([label, span]) => (
+                    <div
+                      key={label}
+                      className={styles.groupHeader}
+                      style={{ gridColumn: `span ${span}` }}
                     >
-                      <SandboxIcon />
-                      View Model
-                    </span>
-                  </div>
+                      {label}
+                    </div>
+                  ))}
+
+                  {SUB_HEADERS.map((label) => (
+                    <div key={label} className={styles.headerCell}>
+                      <span className={styles.headerLabel}>{label}</span>
+                      <SortIcon />
+                    </div>
+                  ))}
+                  <div className={styles.headerCell} />
+
+                  {SOLUTION_ROWS.map((row, rowIndex) => {
+                    const tag = STATUS_TAG[row.status];
+                    return (
+                      <SolutionRowCells
+                        key={rowIndex}
+                        row={row}
+                        tagLabel={tag.label}
+                        tagClass={styles[tag.className]}
+                      />
+                    );
+                  })}
                 </div>
 
-                <div className={styles.listTable}>
-                  <div className={styles.listGrid}>
-                    {GROUPS.map(([label, span]) => (
-                      <div
-                        key={label}
-                        className={styles.groupHeader}
-                        style={{ gridColumn: `span ${span}` }}
-                      >
-                        {label}
-                      </div>
-                    ))}
-
-                    {SUB_HEADERS.map((label) => (
-                      <div key={label} className={styles.headerCell}>
-                        <span className={styles.headerLabel}>{label}</span>
-                        <SortIcon />
-                      </div>
-                    ))}
-                    <div className={styles.headerCell} />
-
-                    {SOLUTION_ROWS.map((row, rowIndex) => {
-                      const tag = STATUS_TAG[row.status];
-                      return (
-                        <SolutionRowCells
-                          key={rowIndex}
-                          row={row}
-                          tagLabel={tag.label}
-                          tagClass={styles[tag.className]}
-                        />
-                      );
-                    })}
-                  </div>
-
-                  <div className={styles.listPagination}>
-                    <span className={styles.listPaginationCount}>
-                      Displaying 12 of 12 Total Solutions
+                <div className={styles.listPagination}>
+                  <span className={styles.listPaginationCount}>
+                    Displaying 12 of 12 Total Solutions
+                  </span>
+                  <div className={styles.listPaginationControls}>
+                    <span className={styles.pageArrow}>
+                      <LeftChevron />
                     </span>
-                    <div className={styles.listPaginationControls}>
-                      <span className={styles.pageArrow}>
-                        <LeftChevron />
-                      </span>
-                      <span className={styles.pageNumber}>1</span>
-                      <span className={styles.pageArrow}>
-                        <RightChevron />
-                      </span>
-                    </div>
+                    <span className={styles.pageNumber}>1</span>
+                    <span className={styles.pageArrow}>
+                      <RightChevron />
+                    </span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </foreignObject>
-    </svg>
+      </div>
+    </CoverFrame>
   );
 }
 
@@ -800,98 +858,92 @@ function OrientationCube() {
 /** The Solution viewer frame: 1440 x 900, node 4026:61305. */
 export function AugmentaSolutionCover({ className }: { className?: string }) {
   return (
-    <svg
-      className={[styles.cover, className].filter(Boolean).join(" ")}
-      viewBox="0 0 1440 900"
-      preserveAspectRatio="xMidYMid meet"
-      xmlns="http://www.w3.org/2000/svg"
-      role="img"
-      aria-label="The Augmenta 3D viewer: a wireframe building model with a generated conduit route running through it."
+    <CoverFrame
+      width={1440}
+      height={900}
+      className={className}
+      label="The Augmenta 3D viewer: a wireframe building model with a generated conduit route running through it."
     >
-      <foreignObject x="0" y="0" width="1440" height="900">
-        <div className={styles.stage}>
-          <Rail />
+      <div className={styles.stage}>
+        <Rail />
 
-          <div className={styles.viewer}>
-            <TopBar activeTab="solutions" showGenerating={false} />
+        <div className={styles.viewer}>
+          <TopBar activeTab="solutions" showGenerating={false} />
 
-            <div className={styles.viewerMain}>
-              <div className={styles.contextBar}>
-                <div className={styles.contextLeft}>
-                  <span className={styles.iconButton32}>
-                    <ArrowLeftIcon />
-                  </span>
-                  <span className={styles.solutionDot} />
-                  <span className={styles.solutionName}>
-                    Coordination model v1
-                  </span>
-                  <span className={`${styles.tag} ${styles.tagDefault}`}>
-                    Solution #1
-                  </span>
-                </div>
-                <div className={styles.contextRight}>
-                  <span className={styles.squareButton24}>
-                    <InfoCircleIcon />
-                  </span>
-                  <span className={styles.squareButton24}>
-                    <PullRequestIcon />
-                  </span>
-                  <span className={styles.squareButton24}>
-                    <EyeIcon />
-                  </span>
-                  <span className={styles.squareButton24}>
-                    <WarningIcon />
-                  </span>
-                  <span
-                    className={`${styles.pillButton} ${styles.exportButton}`}
-                  >
-                    Export
-                    <DownChevron />
-                  </span>
-                </div>
+          <div className={styles.viewerMain}>
+            <div className={styles.contextBar}>
+              <div className={styles.contextLeft}>
+                <span className={styles.iconButton32}>
+                  <ArrowLeftIcon />
+                </span>
+                <span className={styles.solutionDot} />
+                <span className={styles.solutionName}>
+                  Coordination model v1
+                </span>
+                <span className={`${styles.tag} ${styles.tagDefault}`}>
+                  Solution #1
+                </span>
               </div>
+              <div className={styles.contextRight}>
+                <span className={styles.squareButton24}>
+                  <InfoCircleIcon />
+                </span>
+                <span className={styles.squareButton24}>
+                  <PullRequestIcon />
+                </span>
+                <span className={styles.squareButton24}>
+                  <EyeIcon />
+                </span>
+                <span className={styles.squareButton24}>
+                  <WarningIcon />
+                </span>
+                <span className={`${styles.pillButton} ${styles.exportButton}`}>
+                  Export
+                  <DownChevron />
+                </span>
+              </div>
+            </div>
 
-              <div className={styles.viewport}>
-                {/* eslint-disable-next-line @next/next/no-img-element -- next/image cannot render inside an SVG foreignObject, and both renders are fixed-size static assets. */}
-                <img
-                  className={`${styles.render} ${styles.renderLight}`}
-                  src="/covers/augmenta-solution-light.webp"
-                  alt=""
-                />
-                {/* eslint-disable-next-line @next/next/no-img-element -- as above; this is the dark render that cross-fades in. */}
-                <img
-                  className={`${styles.render} ${styles.renderDark}`}
-                  src="/covers/augmenta-solution-dark.webp"
-                  alt=""
-                />
+            <div className={styles.viewport}>
+              {/* eslint-disable-next-line @next/next/no-img-element -- next/image cannot render inside an SVG foreignObject, and both renders are fixed-size static assets. */}
+              <img
+                className={`${styles.render} ${styles.renderLight}`}
+                src="/covers/augmenta-solution-light.webp"
+                alt=""
+              />
+              {/* eslint-disable-next-line @next/next/no-img-element -- as above; this is the dark render that cross-fades in. */}
+              <img
+                className={`${styles.render} ${styles.renderDark}`}
+                src="/covers/augmenta-solution-dark.webp"
+                alt=""
+              />
 
-                <div className={styles.viewportControls}>
-                  <div className={styles.viewportLeft}>
-                    <span className={styles.ghostButton24}>
-                      <HomeIcon14 />
-                    </span>
-                    <OrientationCube />
-                  </div>
-                  <div className={styles.viewportMid}>
-                    <div className={styles.zoomWrap}>
-                      <span className={styles.zoom}>
-                        <span className={styles.ghostButton24}>
-                          <MinusIcon />
-                        </span>
-                        100%
-                        <span className={styles.ghostButton24}>
-                          <PlusIcon14 />
-                        </span>
-                      </span>
-                    </div>
-                  </div>
-                  <div className={styles.viewportRight} />
+              <div className={styles.viewportControls}>
+                <div className={styles.viewportLeft}>
+                  <span className={styles.ghostButton24}>
+                    <HomeIcon14 />
+                  </span>
+                  <OrientationCube />
                 </div>
+                <div className={styles.viewportMid}>
+                  <div className={styles.zoomWrap}>
+                    <span className={styles.zoom}>
+                      <span className={styles.ghostButton24}>
+                        <MinusIcon />
+                      </span>
+                      100%
+                      <span className={styles.ghostButton24}>
+                        <PlusIcon14 />
+                      </span>
+                    </span>
+                  </div>
+                </div>
+                <div className={styles.viewportRight} />
               </div>
             </div>
           </div>
         </div>
-      </foreignObject>
-    </svg>
+      </div>
+    </CoverFrame>
   );
 }

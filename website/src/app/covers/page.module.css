@@ -2,11 +2,12 @@
   position: relative;
   z-index: 1;
   min-height: 100vh;
+  max-width: 1400px;
+  margin: 0 auto;
   padding: 64px 40px 120px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 64px;
+  gap: 32px;
   /* Opaque, so the site's ambient background doesn't tint the frames. */
   background-color: var(--color-bg-container-primary);
 }
@@ -18,13 +19,49 @@
   z-index: 10;
 }
 
+.note {
+  font-size: var(--font-size-body-sm);
+  color: var(--color-text-secondary);
+}
+
+/* Two per row at desktop: enough to compare a pair side by side and see that
+   they share a shape. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+}
+
 .mock {
   display: flex;
   flex-direction: column;
   gap: var(--gap-sm);
 }
 
+.frame {
+  width: 100%;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  /* The cover's own ground is the site surface, which matches this page —
+     the border is here so the frame's edges are legible while reviewing. */
+  border: 1px solid var(--color-border-secondary);
+  box-shadow: var(--shadow-md);
+}
+
 .label {
   font-size: var(--font-size-body-sm);
   color: var(--color-text-secondary);
+}
+
+.full {
+  width: 100%;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }

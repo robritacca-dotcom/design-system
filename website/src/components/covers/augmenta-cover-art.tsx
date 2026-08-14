@@ -771,9 +771,30 @@ export function ListDensityIcon() {
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
     >
-      <rect x="1.667" y="2" width="12.666" height="2.667" rx="0.5" fill="currentColor" />
-      <rect x="1.667" y="6.667" width="12.666" height="2.667" rx="0.5" fill="currentColor" />
-      <rect x="1.667" y="11.333" width="12.666" height="2.667" rx="0.5" fill="currentColor" />
+      <rect
+        x="1.667"
+        y="2"
+        width="12.666"
+        height="2.667"
+        rx="0.5"
+        fill="currentColor"
+      />
+      <rect
+        x="1.667"
+        y="6.667"
+        width="12.666"
+        height="2.667"
+        rx="0.5"
+        fill="currentColor"
+      />
+      <rect
+        x="1.667"
+        y="11.333"
+        width="12.666"
+        height="2.667"
+        rx="0.5"
+        fill="currentColor"
+      />
     </svg>
   );
 }

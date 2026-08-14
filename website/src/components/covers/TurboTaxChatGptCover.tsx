@@ -16,6 +16,7 @@ import {
   VoiceIcon,
 } from "./chatgpt-cover-art";
 import { SpotUpload } from "./turbotax-cover-art";
+import { CoverFrame } from "./CoverFrame";
 import styles from "./TurboTaxChatGptCover.module.css";
 
 /*
@@ -206,76 +207,72 @@ function ComposeFooter({ mobile = false }: { mobile?: boolean }) {
 /** The desktop frame: 1440 x 1024, node 3030:12155. */
 export function TurboTaxChatGptCover({ className }: { className?: string }) {
   return (
-    <svg
-      className={[styles.cover, className].filter(Boolean).join(" ")}
-      viewBox="0 0 1440 1024"
-      preserveAspectRatio="xMidYMid meet"
-      xmlns="http://www.w3.org/2000/svg"
-      role="img"
-      aria-label="The TurboTax tax-document checklist running as an app inside the ChatGPT desktop interface."
+    <CoverFrame
+      width={1440}
+      height={1024}
+      className={className}
+      label="The TurboTax tax-document checklist running as an app inside the ChatGPT desktop interface."
     >
-      <foreignObject x="0" y="0" width="1440" height="1024">
-        <div className={styles.stage}>
-          <div className={styles.rail}>
-            <div className={styles.railBrand}>
-              <OpenAiLogo />
-            </div>
-            <div className={styles.railBody}>
-              <div className={styles.railSections}>
-                <div className={styles.railItems}>
-                  <div className={styles.railItem}>
-                    <SidebarNewChat />
-                  </div>
-                  <div className={styles.railItem}>
-                    <SidebarSearch />
-                  </div>
-                  <div className={styles.railItem}>
-                    <SidebarLibrary />
-                  </div>
-                </div>
-              </div>
-              <div className={styles.railAvatar} />
-            </div>
+      <div className={styles.stage}>
+        <div className={styles.rail}>
+          <div className={styles.railBrand}>
+            <OpenAiLogo />
           </div>
-
-          <div className={styles.main}>
-            <div className={styles.header}>
-              <div className={styles.modelSelect}>
-                <p className={styles.modelName}>
-                  ChatGPT <span className={styles.modelVersion}>5</span>
-                </p>
-                <ChevronDown />
-              </div>
-              <div className={styles.headerRight}>
-                <div className={styles.shareButton}>
-                  <ShareIcon />
-                  Share
+          <div className={styles.railBody}>
+            <div className={styles.railSections}>
+              <div className={styles.railItems}>
+                <div className={styles.railItem}>
+                  <SidebarNewChat />
                 </div>
-                <div className={styles.headerIconButton}>
-                  <EllipsisIcon />
+                <div className={styles.railItem}>
+                  <SidebarSearch />
+                </div>
+                <div className={styles.railItem}>
+                  <SidebarLibrary />
                 </div>
               </div>
             </div>
-
-            <div className={styles.chatBody}>
-              <div className={styles.conversation}>
-                <UserBubble />
-                <div className={styles.response}>
-                  <div className={styles.appRow}>
-                    <TurboTaxMark />
-                    <p className={styles.appName}>Intuit TurboTax</p>
-                  </div>
-                  <ChecklistCard />
-                  <ReplyText />
-                </div>
-              </div>
-            </div>
-
-            <ComposeFooter />
+            <div className={styles.railAvatar} />
           </div>
         </div>
-      </foreignObject>
-    </svg>
+
+        <div className={styles.main}>
+          <div className={styles.header}>
+            <div className={styles.modelSelect}>
+              <p className={styles.modelName}>
+                ChatGPT <span className={styles.modelVersion}>5</span>
+              </p>
+              <ChevronDown />
+            </div>
+            <div className={styles.headerRight}>
+              <div className={styles.shareButton}>
+                <ShareIcon />
+                Share
+              </div>
+              <div className={styles.headerIconButton}>
+                <EllipsisIcon />
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.chatBody}>
+            <div className={styles.conversation}>
+              <UserBubble />
+              <div className={styles.response}>
+                <div className={styles.appRow}>
+                  <TurboTaxMark />
+                  <p className={styles.appName}>Intuit TurboTax</p>
+                </div>
+                <ChecklistCard />
+                <ReplyText />
+              </div>
+            </div>
+          </div>
+
+          <ComposeFooter />
+        </div>
+      </div>
+    </CoverFrame>
   );
 }
 
@@ -286,55 +283,51 @@ export function TurboTaxChatGptCoverMobile({
   className?: string;
 }) {
   return (
-    <svg
-      className={[styles.cover, className].filter(Boolean).join(" ")}
-      viewBox="0 0 440 972"
-      preserveAspectRatio="xMidYMid meet"
-      xmlns="http://www.w3.org/2000/svg"
-      role="img"
-      aria-label="The TurboTax tax-document checklist running as an app inside the ChatGPT mobile interface."
+    <CoverFrame
+      width={440}
+      height={972}
+      className={className}
+      label="The TurboTax tax-document checklist running as an app inside the ChatGPT mobile interface."
     >
-      <foreignObject x="0" y="0" width="440" height="972">
-        <div className={styles.stageMobile}>
-          <div className={styles.navBar}>
-            <div className={styles.navBarLeading}>
-              <MenuIcon />
-            </div>
-            <div className={styles.navBarTitle}>
-              <div className={styles.modelSelect}>
-                <p className={styles.modelName}>
-                  ChatGPT{" "}
-                  <span
-                    className={`${styles.modelVersion} ${styles.modelVersionMobile}`}
-                  >
-                    5
-                  </span>
-                </p>
-                <ChevronDown />
-              </div>
-            </div>
-            <div className={styles.navBarTrailing}>
-              <ChatTempIcon />
+      <div className={styles.stageMobile}>
+        <div className={styles.navBar}>
+          <div className={styles.navBarLeading}>
+            <MenuIcon />
+          </div>
+          <div className={styles.navBarTitle}>
+            <div className={styles.modelSelect}>
+              <p className={styles.modelName}>
+                ChatGPT{" "}
+                <span
+                  className={`${styles.modelVersion} ${styles.modelVersionMobile}`}
+                >
+                  5
+                </span>
+              </p>
+              <ChevronDown />
             </div>
           </div>
-
-          <div className={`${styles.chatBody} ${styles.chatBodyMobile}`}>
-            <div className={styles.conversation}>
-              <UserBubble />
-              <div className={styles.response}>
-                <div className={styles.appRow}>
-                  <TurboTaxMark />
-                  <p className={styles.appName}>Intuit TurboTax</p>
-                </div>
-                <ChecklistCard mobile />
-                <ReplyText />
-              </div>
-            </div>
+          <div className={styles.navBarTrailing}>
+            <ChatTempIcon />
           </div>
-
-          <ComposeFooter mobile />
         </div>
-      </foreignObject>
-    </svg>
+
+        <div className={`${styles.chatBody} ${styles.chatBodyMobile}`}>
+          <div className={styles.conversation}>
+            <UserBubble />
+            <div className={styles.response}>
+              <div className={styles.appRow}>
+                <TurboTaxMark />
+                <p className={styles.appName}>Intuit TurboTax</p>
+              </div>
+              <ChecklistCard mobile />
+              <ReplyText />
+            </div>
+          </div>
+        </div>
+
+        <ComposeFooter mobile />
+      </div>
+    </CoverFrame>
   );
 }

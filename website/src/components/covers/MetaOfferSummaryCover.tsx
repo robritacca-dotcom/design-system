@@ -7,6 +7,7 @@ import {
   BrandSwooshes,
   InstagramMark,
 } from "./meta-cover-art";
+import { CoverFrame } from "./CoverFrame";
 import styles from "./MetaOfferSummaryCover.module.css";
 
 /*
@@ -96,238 +97,235 @@ function CompensationCell({
 /** The Offer Summary frame: 1638.238 x 1063.988, node 931:1839. */
 export function MetaOfferSummaryCover({ className }: { className?: string }) {
   return (
-    <svg
-      className={[styles.cover, className].filter(Boolean).join(" ")}
-      viewBox="0 0 1638.238 1063.988"
-      preserveAspectRatio="xMidYMid meet"
-      xmlns="http://www.w3.org/2000/svg"
-      role="img"
-      aria-label="Meta's candidate-facing offer summary: role details, a compensation breakdown chart and explainer documents."
+    <CoverFrame
+      width={1638.238}
+      height={1063.988}
+      className={className}
+      label="Meta's candidate-facing offer summary: role details, a compensation breakdown chart and explainer documents."
     >
-      <foreignObject x="0" y="0" width="1638.238" height="1063.988">
-        <div className={styles.stage}>
-          <div className={styles.washes} />
-          <div className={styles.swooshes}>
-            <BrandSwooshes />
+      <div className={styles.stage}>
+        <div className={styles.washes} />
+        <div className={styles.swooshes}>
+          <BrandSwooshes />
+        </div>
+
+        {/* ------------------------------------------------- sidebar */}
+        <div className={styles.sidebar}>
+          <div className={styles.homeButton}>
+            <span className={styles.maskIcon} />
+            Career Profile Home
           </div>
 
-          {/* ------------------------------------------------- sidebar */}
-          <div className={styles.sidebar}>
-            <div className={styles.homeButton}>
-              <span className={styles.maskIcon} />
-              Career Profile Home
+          <p className={styles.whatsNext}>What&rsquo;s next?</p>
+
+          <div className={styles.navSection}>
+            <p className={styles.navSectionTitle}>Understand your offer</p>
+            <div className={styles.navList}>
+              {NAV_ITEMS.map((item, index) => (
+                <div
+                  key={item.title}
+                  className={[
+                    styles.navItem,
+                    index === 0 ? styles.navItemSelected : "",
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element -- next/image cannot render inside an SVG foreignObject; these are fixed-size static assets. */}
+                  <img
+                    className={styles.navThumb}
+                    src={`/covers/${item.thumb}.webp`}
+                    alt=""
+                  />
+                  <span className={styles.navLabel}>
+                    <p className={styles.navTitle}>{item.title}</p>
+                    <p className={styles.navSub}>{item.sub}</p>
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <p className={styles.contactTitle}>
+            Contact your Recruiter when you&rsquo;re ready to discuss your offer
+          </p>
+
+          <div className={styles.peopleCard}>
+            <div className={styles.peopleRow}>
+              <span className={styles.peopleText}>
+                <p className={styles.peopleEyebrow}>Your Recruiter</p>
+                <p className={styles.peopleName}>Ashley Wells</p>
+                <p className={styles.peopleEmail}>ashley.wells@meta.com</p>
+              </span>
+              {/* eslint-disable-next-line @next/next/no-img-element -- as above. */}
+              <img
+                className={styles.peopleAvatar}
+                src="/covers/meta-recruiter.webp"
+                alt=""
+              />
+            </div>
+            <p className={styles.peopleNote}>
+              Hi Gabby! Please review the details of your offer summary. Shoot
+              me an email or call me at 222.222.2222 when you&rsquo;re ready to
+              discuss. Thanks!
+            </p>
+          </div>
+        </div>
+
+        {/* ---------------------------------------------------- card */}
+        <div className={styles.card}>
+          <div className={styles.cardInner}>
+            <div className={styles.cardHead}>
+              <p className={styles.cardDate}>Fri, Oct 21, 2022</p>
+              <p className={styles.cardTitle}>Offer Summary</p>
+              <p className={styles.cardNote}>
+                Please note: The summary is non-binding and is subject to change
+                unless a final definitive written agreement is reviewed,
+                approved, executed and delivered.
+              </p>
+              {/* eslint-disable-next-line @next/next/no-img-element -- as above. */}
+              <img
+                className={styles.metaSymbol}
+                src="/covers/meta-symbol.webp"
+                alt=""
+              />
             </div>
 
-            <p className={styles.whatsNext}>What&rsquo;s next?</p>
-
-            <div className={styles.navSection}>
-              <p className={styles.navSectionTitle}>Understand your offer</p>
-              <div className={styles.navList}>
-                {NAV_ITEMS.map((item, index) => (
-                  <div
-                    key={item.title}
-                    className={[
-                      styles.navItem,
-                      index === 0 ? styles.navItemSelected : "",
-                    ]
-                      .filter(Boolean)
-                      .join(" ")}
-                  >
-                    {/* eslint-disable-next-line @next/next/no-img-element -- next/image cannot render inside an SVG foreignObject; these are fixed-size static assets. */}
-                    <img
-                      className={styles.navThumb}
-                      src={`/covers/${item.thumb}.webp`}
-                      alt=""
-                    />
-                    <span className={styles.navLabel}>
-                      <p className={styles.navTitle}>{item.title}</p>
-                      <p className={styles.navSub}>{item.sub}</p>
+            <div className={styles.section}>
+              <p className={styles.sectionTitle}>Role details</p>
+              <div className={styles.detailGrid}>
+                <div className={styles.detailRow}>
+                  <div className={styles.detailCell}>
+                    <p className={styles.detailValue}>Product Designer</p>
+                    <p className={styles.detailLabel}>Title</p>
+                  </div>
+                  <div className={styles.detailCell}>
+                    <p className={styles.detailValue}>IC4</p>
+                    <p className={styles.detailLabel}>Level</p>
+                  </div>
+                  <div className={styles.detailCell}>
+                    <p className={styles.detailValue}>Mon, Jan 1, 2023</p>
+                    <p className={styles.detailLabel}>Start date</p>
+                  </div>
+                </div>
+                <div className={styles.detailRow}>
+                  <div className={styles.detailCell}>
+                    <p className={styles.detailValue}>US, CA, Remote</p>
+                    <p className={styles.detailLabel}>Location</p>
+                  </div>
+                  <div className={styles.detailCell}>
+                    <span className={styles.orgRow}>
+                      <InstagramMark />
+                      <p className={styles.orgName}>Instagram</p>
                     </span>
+                    <p className={styles.detailLabel}>Organization</p>
+                  </div>
+                  <div className={styles.detailCell}>
+                    <p
+                      className={`${styles.detailValue} ${styles.detailValueLink}`}
+                    >
+                      Ads Monetization
+                    </p>
+                    <p className={styles.detailLabel}>Team</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.section}>
+              <p className={styles.sectionTitle}>Financial compensation</p>
+
+              <div className={styles.compGrid}>
+                <div className={styles.compHero}>
+                  <div className={styles.compTotalBlock}>
+                    <p className={styles.compTotal}>$190,000 USD</p>
+                    <span>
+                      <span className={styles.compTotalLabelRow}>
+                        <p className={styles.compTotalLabel}>
+                          Total compensation
+                        </p>
+                        <span className={styles.infoIcon} />
+                      </span>
+                      <p className={styles.compTotalSub}>Year-one estimate</p>
+                    </span>
+                  </div>
+
+                  <div className={styles.chart}>
+                    <div className={styles.barStack}>
+                      <span className={styles.barBase}>
+                        <BarBase />
+                      </span>
+                      <span className={styles.barSegment}>
+                        <BarBonus />
+                      </span>
+                      <span className={styles.barSegment}>
+                        <BarEquity />
+                      </span>
+                      <span className={styles.barSegment}>
+                        <BarSignOn />
+                      </span>
+                      <span className={styles.barSegment}>
+                        <BarTax />
+                      </span>
+                    </div>
+                    <div className={styles.legend}>
+                      {LEGEND.map((item) => (
+                        <span key={item.label} className={styles.legendItem}>
+                          <span
+                            className={styles.legendSwatch}
+                            style={{ background: item.colour }}
+                          />
+                          <span
+                            className={[
+                              styles.legendLabel,
+                              item.wrap ? styles.legendLabelWrap : "",
+                            ]
+                              .filter(Boolean)
+                              .join(" ")}
+                          >
+                            {item.label}
+                          </span>
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className={styles.compRow}>
+                  {COMPENSATION.slice(0, 3).map((cell) => (
+                    <CompensationCell key={cell.label} {...cell} />
+                  ))}
+                </div>
+                <div className={styles.compRow}>
+                  {COMPENSATION.slice(3).map((cell) => (
+                    <CompensationCell key={cell.label} {...cell} />
+                  ))}
+                </div>
+              </div>
+
+              <p className={styles.docsTitle}>
+                Understanding your compensation
+              </p>
+              <div className={styles.docsRow}>
+                {DOCUMENTS.map((doc) => (
+                  <div key={doc.title} className={styles.docCell}>
+                    <div className={styles.docThumb}>
+                      {/* eslint-disable-next-line @next/next/no-img-element -- as above. */}
+                      <img
+                        className={styles.docImage}
+                        src={`/covers/${doc.image}.webp`}
+                        alt=""
+                      />
+                    </div>
+                    <p className={styles.docTitle}>{doc.title}</p>
+                    <p className={styles.docLink}>Read PDF</p>
                   </div>
                 ))}
               </div>
             </div>
-
-            <p className={styles.contactTitle}>
-              Contact your Recruiter when you&rsquo;re ready to discuss your
-              offer
-            </p>
-
-            <div className={styles.peopleCard}>
-              <div className={styles.peopleRow}>
-                <span className={styles.peopleText}>
-                  <p className={styles.peopleEyebrow}>Your Recruiter</p>
-                  <p className={styles.peopleName}>Ashley Wells</p>
-                  <p className={styles.peopleEmail}>ashley.wells@meta.com</p>
-                </span>
-                {/* eslint-disable-next-line @next/next/no-img-element -- as above. */}
-                <img
-                  className={styles.peopleAvatar}
-                  src="/covers/meta-recruiter.webp"
-                  alt=""
-                />
-              </div>
-              <p className={styles.peopleNote}>
-                Hi Gabby! Please review the details of your offer summary. Shoot
-                me an email or call me at 222.222.2222 when you&rsquo;re ready
-                to discuss. Thanks!
-              </p>
-            </div>
-          </div>
-
-          {/* ---------------------------------------------------- card */}
-          <div className={styles.card}>
-            <div className={styles.cardInner}>
-              <div className={styles.cardHead}>
-                <p className={styles.cardDate}>Fri, Oct 21, 2022</p>
-                <p className={styles.cardTitle}>Offer Summary</p>
-                <p className={styles.cardNote}>
-                  Please note: The summary is non-binding and is subject to
-                  change unless a final definitive written agreement is
-                  reviewed, approved, executed and delivered.
-                </p>
-                {/* eslint-disable-next-line @next/next/no-img-element -- as above. */}
-                <img
-                  className={styles.metaSymbol}
-                  src="/covers/meta-symbol.webp"
-                  alt=""
-                />
-              </div>
-
-              <div className={styles.section}>
-                <p className={styles.sectionTitle}>Role details</p>
-                <div className={styles.detailGrid}>
-                  <div className={styles.detailRow}>
-                    <div className={styles.detailCell}>
-                      <p className={styles.detailValue}>Product Designer</p>
-                      <p className={styles.detailLabel}>Title</p>
-                    </div>
-                    <div className={styles.detailCell}>
-                      <p className={styles.detailValue}>IC4</p>
-                      <p className={styles.detailLabel}>Level</p>
-                    </div>
-                    <div className={styles.detailCell}>
-                      <p className={styles.detailValue}>Mon, Jan 1, 2023</p>
-                      <p className={styles.detailLabel}>Start date</p>
-                    </div>
-                  </div>
-                  <div className={styles.detailRow}>
-                    <div className={styles.detailCell}>
-                      <p className={styles.detailValue}>US, CA, Remote</p>
-                      <p className={styles.detailLabel}>Location</p>
-                    </div>
-                    <div className={styles.detailCell}>
-                      <span className={styles.orgRow}>
-                        <InstagramMark />
-                        <p className={styles.orgName}>Instagram</p>
-                      </span>
-                      <p className={styles.detailLabel}>Organization</p>
-                    </div>
-                    <div className={styles.detailCell}>
-                      <p
-                        className={`${styles.detailValue} ${styles.detailValueLink}`}
-                      >
-                        Ads Monetization
-                      </p>
-                      <p className={styles.detailLabel}>Team</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className={styles.section}>
-                <p className={styles.sectionTitle}>Financial compensation</p>
-
-                <div className={styles.compGrid}>
-                  <div className={styles.compHero}>
-                    <div className={styles.compTotalBlock}>
-                      <p className={styles.compTotal}>$190,000 USD</p>
-                      <span>
-                        <span className={styles.compTotalLabelRow}>
-                          <p className={styles.compTotalLabel}>
-                            Total compensation
-                          </p>
-                          <span className={styles.infoIcon} />
-                        </span>
-                        <p className={styles.compTotalSub}>Year-one estimate</p>
-                      </span>
-                    </div>
-
-                    <div className={styles.chart}>
-                      <div className={styles.barStack}>
-                        <span className={styles.barBase}>
-                          <BarBase />
-                        </span>
-                        <span className={styles.barSegment}>
-                          <BarBonus />
-                        </span>
-                        <span className={styles.barSegment}>
-                          <BarEquity />
-                        </span>
-                        <span className={styles.barSegment}>
-                          <BarSignOn />
-                        </span>
-                        <span className={styles.barSegment}>
-                          <BarTax />
-                        </span>
-                      </div>
-                      <div className={styles.legend}>
-                        {LEGEND.map((item) => (
-                          <span key={item.label} className={styles.legendItem}>
-                            <span
-                              className={styles.legendSwatch}
-                              style={{ background: item.colour }}
-                            />
-                            <span
-                              className={[
-                                styles.legendLabel,
-                                item.wrap ? styles.legendLabelWrap : "",
-                              ]
-                                .filter(Boolean)
-                                .join(" ")}
-                            >
-                              {item.label}
-                            </span>
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className={styles.compRow}>
-                    {COMPENSATION.slice(0, 3).map((cell) => (
-                      <CompensationCell key={cell.label} {...cell} />
-                    ))}
-                  </div>
-                  <div className={styles.compRow}>
-                    {COMPENSATION.slice(3).map((cell) => (
-                      <CompensationCell key={cell.label} {...cell} />
-                    ))}
-                  </div>
-                </div>
-
-                <p className={styles.docsTitle}>Understanding your compensation</p>
-                <div className={styles.docsRow}>
-                  {DOCUMENTS.map((doc) => (
-                    <div key={doc.title} className={styles.docCell}>
-                      <div className={styles.docThumb}>
-                        {/* eslint-disable-next-line @next/next/no-img-element -- as above. */}
-                        <img
-                          className={styles.docImage}
-                          src={`/covers/${doc.image}.webp`}
-                          alt=""
-                        />
-                      </div>
-                      <p className={styles.docTitle}>{doc.title}</p>
-                      <p className={styles.docLink}>Read PDF</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
           </div>
         </div>
-      </foreignObject>
-    </svg>
+      </div>
+    </CoverFrame>
   );
 }

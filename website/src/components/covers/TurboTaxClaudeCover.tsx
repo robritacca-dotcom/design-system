@@ -1,4 +1,5 @@
 import { AvatarGlyph, SpotUpload } from "./turbotax-cover-art";
+import { CoverFrame } from "./CoverFrame";
 import styles from "./TurboTaxClaudeCover.module.css";
 
 /*
@@ -423,39 +424,35 @@ function CollapsedSidebar() {
 /** The desktop frame: 1440 x 972, node 3026:3298. */
 export function TurboTaxClaudeCover({ className }: { className?: string }) {
   return (
-    <svg
-      className={[styles.cover, className].filter(Boolean).join(" ")}
-      viewBox="0 0 1440 972"
-      preserveAspectRatio="xMidYMid meet"
-      xmlns="http://www.w3.org/2000/svg"
-      role="img"
-      aria-label="The TurboTax tax-document checklist running as an app inside the Claude desktop chat interface."
+    <CoverFrame
+      width={1440}
+      height={972}
+      className={className}
+      label="The TurboTax tax-document checklist running as an app inside the Claude desktop chat interface."
     >
-      <foreignObject x="0" y="0" width="1440" height="972">
-        <div className={styles.stage}>
-          <CollapsedSidebar />
+      <div className={styles.stage}>
+        <CollapsedSidebar />
 
-          <div className={styles.main}>
-            <div className={styles.titlebar}>
-              <div className={styles.titleRow}>
-                <p className={styles.titleText}>Help me with my taxes</p>
-                <Icon x={5} y={7} d={CARET_DOWN_D} fill="var(--icon)" />
-              </div>
-              <div className={styles.shareButton}>Share</div>
+        <div className={styles.main}>
+          <div className={styles.titlebar}>
+            <div className={styles.titleRow}>
+              <p className={styles.titleText}>Help me with my taxes</p>
+              <Icon x={5} y={7} d={CARET_DOWN_D} fill="var(--icon)" />
             </div>
-
-            <div className={styles.chatBody}>
-              <div className={styles.conversation}>
-                <UserBubble />
-                <ChecklistCard />
-              </div>
-            </div>
-
-            <ChatInput />
+            <div className={styles.shareButton}>Share</div>
           </div>
+
+          <div className={styles.chatBody}>
+            <div className={styles.conversation}>
+              <UserBubble />
+              <ChecklistCard />
+            </div>
+          </div>
+
+          <ChatInput />
         </div>
-      </foreignObject>
-    </svg>
+      </div>
+    </CoverFrame>
   );
 }
 
@@ -466,37 +463,33 @@ export function TurboTaxClaudeCoverMobile({
   className?: string;
 }) {
   return (
-    <svg
-      className={[styles.cover, className].filter(Boolean).join(" ")}
-      viewBox="0 0 440 972"
-      preserveAspectRatio="xMidYMid meet"
-      xmlns="http://www.w3.org/2000/svg"
-      role="img"
-      aria-label="The TurboTax tax-document checklist running as an app inside the Claude mobile chat interface."
+    <CoverFrame
+      width={440}
+      height={972}
+      className={className}
+      label="The TurboTax tax-document checklist running as an app inside the Claude mobile chat interface."
     >
-      <foreignObject x="0" y="0" width="440" height="972">
-        <div className={styles.stageMobile}>
-          <div className={styles.navBar}>
-            <div className={styles.navBarLeading}>
-              <Icon x={2} y={4} d={SIDEBAR_D} fill="var(--icon-muted)" />
-            </div>
-            <div className={styles.navBarTrailing}>
-              <Icon x={3} y={3} d={ADD_D} fill="var(--icon)" />
-            </div>
+      <div className={styles.stageMobile}>
+        <div className={styles.navBar}>
+          <div className={styles.navBarLeading}>
+            <Icon x={2} y={4} d={SIDEBAR_D} fill="var(--icon-muted)" />
           </div>
-
-          <div className={`${styles.chatBody} ${styles.chatBodyMobile}`}>
-            <div
-              className={`${styles.conversation} ${styles.conversationMobile}`}
-            >
-              <UserBubble />
-              <ChecklistCard />
-            </div>
+          <div className={styles.navBarTrailing}>
+            <Icon x={3} y={3} d={ADD_D} fill="var(--icon)" />
           </div>
-
-          <ChatInput mobile />
         </div>
-      </foreignObject>
-    </svg>
+
+        <div className={`${styles.chatBody} ${styles.chatBodyMobile}`}>
+          <div
+            className={`${styles.conversation} ${styles.conversationMobile}`}
+          >
+            <UserBubble />
+            <ChecklistCard />
+          </div>
+        </div>
+
+        <ChatInput mobile />
+      </div>
+    </CoverFrame>
   );
 }

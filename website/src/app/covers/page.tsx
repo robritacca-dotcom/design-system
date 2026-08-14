@@ -31,12 +31,34 @@ export const metadata = {
   robots: { index: false, follow: false },
 };
 
+/** Every cover, in the order the case studies run. */
+const COVERS: { label: string; cover: React.ReactNode }[] = [
+  { label: "TurboTax in Claude — desktop", cover: <TurboTaxClaudeCover /> },
+  { label: "TurboTax in Claude — mobile", cover: <TurboTaxClaudeCoverMobile /> },
+  { label: "TurboTax in ChatGPT — desktop", cover: <TurboTaxChatGptCover /> },
+  {
+    label: "TurboTax in ChatGPT — mobile",
+    cover: <TurboTaxChatGptCoverMobile />,
+  },
+  { label: "Intuit Agent Chat — immersive", cover: <IntuitAgentChatCover /> },
+  { label: "Intuit Agent Chat — panel", cover: <IntuitAgentChatCoverMobile /> },
+  { label: "Augmenta — design rules", cover: <AugmentaDesignRulesCover /> },
+  { label: "Augmenta — solution list", cover: <AugmentaSolutionListCover /> },
+  { label: "Augmenta — solution viewer", cover: <AugmentaSolutionCover /> },
+  { label: "Meta — offer summary", cover: <MetaOfferSummaryCover /> },
+  { label: "Meta — offer draft", cover: <MetaOfferDraftCover /> },
+  { label: "robertritacca.com — home", cover: <SiteHomeCover /> },
+  {
+    label: "robertritacca.com — playground chat",
+    cover: <SitePlaygroundCover />,
+  },
+];
+
 /**
  * A blank staging page for the vector cover mocks. No site chrome, no layout
- * opinions — each mock renders at its native frame size so it can be checked
- * against its Figma source, with the theme toggle floating over the top so
- * the light/dark cross-fade is one click away. More mocks land here as they
- * are drawn; where they end up is a later decision.
+ * opinions — every cover renders into the same 16:10 frame, so the grid shows
+ * them at the size and shape they would take in a card. The theme toggle
+ * floats over the top so the light/dark cross-fade is one click away.
  */
 export default function CoverMocksPage() {
   return (
@@ -45,104 +67,24 @@ export default function CoverMocksPage() {
         <ThemeToggle />
       </div>
 
-      <section className={styles.mock}>
-        <p className={styles.label}>TurboTax in Claude — desktop, 1440 × 972</p>
-        <div style={{ width: 1440 }}>
-          <TurboTaxClaudeCover />
-        </div>
-      </section>
+      <p className={styles.note}>
+        Every cover shares one 16:10 frame, so they read as a set at any size.
+        Toggle the theme to see them cross-fade.
+      </p>
 
-      <section className={styles.mock}>
-        <p className={styles.label}>TurboTax in Claude — mobile, 440 × 972</p>
-        <div style={{ width: 440 }}>
-          <TurboTaxClaudeCoverMobile />
-        </div>
-      </section>
+      <div className={styles.grid}>
+        {COVERS.map(({ label, cover }) => (
+          <section key={label} className={styles.mock}>
+            <div className={styles.frame}>{cover}</div>
+            <p className={styles.label}>{label}</p>
+          </section>
+        ))}
+      </div>
 
-      <section className={styles.mock}>
-        <p className={styles.label}>
-          TurboTax in ChatGPT — desktop, 1440 × 1024
-        </p>
-        <div style={{ width: 1440 }}>
-          <TurboTaxChatGptCover />
-        </div>
-      </section>
-
-      <section className={styles.mock}>
-        <p className={styles.label}>TurboTax in ChatGPT — mobile, 440 × 972</p>
-        <div style={{ width: 440 }}>
-          <TurboTaxChatGptCoverMobile />
-        </div>
-      </section>
-
-      <section className={styles.mock}>
-        <p className={styles.label}>
-          Intuit Agent Chat — immersive, 1440 × 964
-        </p>
-        <div style={{ width: 1440 }}>
-          <IntuitAgentChatCover />
-        </div>
-      </section>
-
-      <section className={styles.mock}>
-        <p className={styles.label}>Intuit Agent Chat — panel, 428 × 964</p>
-        <div style={{ width: 428 }}>
-          <IntuitAgentChatCoverMobile />
-        </div>
-      </section>
-
-      <section className={styles.mock}>
-        <p className={styles.label}>Augmenta — design rules, 1440 × 900</p>
-        <div style={{ width: 1440 }}>
-          <AugmentaDesignRulesCover />
-        </div>
-      </section>
-
-      <section className={styles.mock}>
-        <p className={styles.label}>Augmenta — solution list, 1440 × 820</p>
-        <div style={{ width: 1440 }}>
-          <AugmentaSolutionListCover />
-        </div>
-      </section>
-
-      <section className={styles.mock}>
-        <p className={styles.label}>Augmenta — solution viewer, 1440 × 900</p>
-        <div style={{ width: 1440 }}>
-          <AugmentaSolutionCover />
-        </div>
-      </section>
-
-      <section className={styles.mock}>
-        <p className={styles.label}>
-          Meta — offer summary, 1638 × 1064
-        </p>
-        <div style={{ width: 1638 }}>
-          <MetaOfferSummaryCover />
-        </div>
-      </section>
-
-      <section className={styles.mock}>
-        <p className={styles.label}>Meta — offer draft, 1513 × 1076</p>
-        <div style={{ width: 1513 }}>
-          <MetaOfferDraftCover />
-        </div>
-      </section>
-
-      <section className={styles.mock}>
-        <p className={styles.label}>robertritacca.com — home, 1440 × 900</p>
-        <div style={{ width: 1440 }}>
-          <SiteHomeCover />
-        </div>
-      </section>
-
-      <section className={styles.mock}>
-        <p className={styles.label}>
-          robertritacca.com — playground chat, 1440 × 900
-        </p>
-        <div style={{ width: 1440 }}>
-          <SitePlaygroundCover />
-        </div>
-      </section>
+      <p className={styles.note}>At full width:</p>
+      <div className={styles.full}>
+        <SiteHomeCover />
+      </div>
     </main>
   );
 }

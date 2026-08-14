@@ -1,0 +1,26 @@
+/*
+ * The shared cover frame. Only two things live here: the box itself, and the
+ * ground the mock sits on when it does not fill the frame — which is every
+ * phone screen, and the wide screens along one axis.
+ */
+
+.cover {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ground {
+  fill: #f1f1f1;
+  transition: fill 320ms ease;
+}
+
+:global([data-theme="dark"]) .ground {
+  fill: #141414;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ground {
+    transition-duration: 1ms;
+  }
+}
