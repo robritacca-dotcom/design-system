@@ -20,9 +20,14 @@ export const revalidate = 3600;
 const [featuredWork, ...moreWork] = caseStudies;
 const workItems = moreWork.slice(0, 4);
 
-/* The featured study's redrawn cover, when it has one — .cardCover is 16:10,
-   which is the covers' own ratio, so the frame needs no aspect here. */
-const featuredCover = caseStudyCover(featuredWork.href);
+/* The featured study's redrawn cover, when it has one. .cardCover is 16:10,
+   which is the "feature" render's ratio. Every study carries that render, not
+   just today's featured one, so reordering case-studies.json cannot leave this
+   slot pointing at an image that was never shot. It is above the fold, so it
+   loads eagerly. */
+const featuredCover = caseStudyCover(featuredWork.href, "feature", {
+  priority: true,
+});
 
 /* The employer strip is hand-curated, current role first, same as the
    timeline on /about that owns the full history — keep the two in step

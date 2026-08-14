@@ -616,6 +616,8 @@ const EXCLUDED_ROUTES = new Map([
     'the landing collage — its prose is demo filler for the live components, not information; the sections it links to are all covered'],
   ['/covers',
     'a noindex staging page for the vector cover mocks — its only prose is a size caption under each frame'],
+  ['/covers/render',
+    'a noindex surface that renders one cover mock alone at an exact size, so the cover images can be shot from it — it carries no prose at all'],
 ]);
 
 /** Component showcase pages: excluded as a class, with one shared reason. */

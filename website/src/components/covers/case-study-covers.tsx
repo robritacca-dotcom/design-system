@@ -1,4 +1,6 @@
 import type { CoverProps } from "./CoverFrame";
+import { CoverImage } from "./CoverImage";
+import type { CoverAspect } from "@/data/cover-renders";
 import { TurboTaxClaudeCover } from "./TurboTaxClaudeCover";
 import { IntuitAgentChatCover } from "./IntuitAgentChatCover";
 import { AugmentaSolutionCover } from "./AugmentaCover";
@@ -17,6 +19,11 @@ import { SitePlaygroundCover } from "./SiteCovers";
  *
  * A study with no entry keeps its photographic cover — CIBC's is a photo of a
  * phone, which has no screen to redraw.
+ *
+ * This map is the *drawing*, and it is rendered in exactly two places: the
+ * `/covers` staging grid, and the `/covers/render` surface the images are shot
+ * from. Everywhere a cover is displayed to a visitor reads one of those images
+ * instead — see `caseStudyCover` below.
  */
 export const CASE_STUDY_COVERS: Record<
   string,
@@ -31,13 +38,20 @@ export const CASE_STUDY_COVERS: Record<
 };
 
 /**
- * The cover for a case study href, already rendered — or null when that study
- * has none, so a caller can fall back to its image in one line.
+ * The cover for a case study href, ready to display — or null when that study
+ * has none, so a caller can fall back to its photograph in one line.
+ *
+ * This hands back the shot, not the drawing. The vector renders correctly in a
+ * desktop browser and wrongly on a phone: mobile WebKit lays the mock out at
+ * its native width inside the `foreignObject` and sizes the text from that,
+ * putting giant type across an otherwise intact screen. The image has no such
+ * failure mode, and it is what every visitor sees.
  */
 export function caseStudyCover(
   href: string,
-  props: CoverProps = {},
+  aspect: CoverAspect,
+  options: { priority?: boolean; className?: string } = {},
 ): React.JSX.Element | null {
-  const Cover = CASE_STUDY_COVERS[href];
-  return Cover ? <Cover {...props} /> : null;
+  if (!CASE_STUDY_COVERS[href]) return null;
+  return <CoverImage href={href} aspect={aspect} {...options} />;
 }

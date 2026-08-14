@@ -1,0 +1,33 @@
+/*
+ * The shot surface. No padding, no centring, no page background showing at
+ * the edges — the element being photographed starts at the origin and is
+ * exactly the size the registry says, so a screenshot of it needs no cropping.
+ */
+
+.page {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.shot {
+  position: relative;
+  overflow: hidden;
+}
+
+/* The cover fills the shot box exactly; the frame is already drawn to the
+   ratio it was handed, so this only removes the inline-element gap. */
+.shot > * {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.error {
+  margin: 0;
+  padding: 24px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--color-text-primary);
+}
