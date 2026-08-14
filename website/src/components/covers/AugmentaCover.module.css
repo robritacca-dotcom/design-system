@@ -851,7 +851,18 @@
 /* =================================================== Solution List screen */
 /* Shares the palette above; only the frame size and the table differ. */
 
+/*
+ * The Solution List's Figma artboard is 1440x900 with the design occupying the
+ * top 820 — the same box its two sibling screens use. Taking the artboard
+ * rather than the design keeps all three Augmenta covers on one aspect; the
+ * children stay pinned at 820 so nothing inside stretches to fill the rest.
+ */
 .stageList {
+  height: 900px;
+  align-items: flex-start;
+}
+
+.stageList > * {
   height: 820px;
 }
 

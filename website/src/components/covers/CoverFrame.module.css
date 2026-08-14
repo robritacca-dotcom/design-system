@@ -19,6 +19,62 @@
   fill: #141414;
 }
 
+/*
+ * Not every source screen is 16:10, so most covers letterbox along one axis.
+ * The band reads as a border when it is a neutral and as more of the page when
+ * it matches the mock's own edge colour — so each cover names its ground here
+ * rather than taking the default.
+ */
+
+.groundWarm {
+  fill: #faf9f5;
+}
+:global([data-theme="dark"]) .groundWarm {
+  fill: #262624;
+}
+
+.groundWhite {
+  fill: #ffffff;
+}
+:global([data-theme="dark"]) .groundWhite {
+  fill: #212121;
+}
+
+.groundPlain {
+  fill: #ffffff;
+}
+:global([data-theme="dark"]) .groundPlain {
+  fill: #1f2124;
+}
+
+.groundPaper {
+  fill: #ffffff;
+}
+:global([data-theme="dark"]) .groundPaper {
+  fill: #141414;
+}
+
+.groundMist {
+  fill: #f1f4f7;
+}
+:global([data-theme="dark"]) .groundMist {
+  fill: #18191a;
+}
+
+.groundHaze {
+  fill: #ebedf0;
+}
+:global([data-theme="dark"]) .groundHaze {
+  fill: #18191a;
+}
+
+.groundSite {
+  fill: #ffffff;
+}
+:global([data-theme="dark"]) .groundSite {
+  fill: #0a0a0a;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .ground {
     transition-duration: 1ms;

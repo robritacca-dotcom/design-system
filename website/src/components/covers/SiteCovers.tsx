@@ -84,6 +84,7 @@ export function SiteHomeCover({ className }: { className?: string }) {
     <CoverFrame
       width={1440}
       height={900}
+      ground="site"
       className={className}
       label="The home page of robertritacca.com: the name set large over the ambient background, with the tagline and client marks beneath."
     >
@@ -231,6 +232,7 @@ export function SitePlaygroundCover({ className }: { className?: string }) {
     <CoverFrame
       width={1440}
       height={900}
+      ground="site"
       className={className}
       label="The playground's Chat view: theme controls down the left, the chat widget on a stage that re-themes with them."
     >

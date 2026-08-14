@@ -210,6 +210,7 @@ export function TurboTaxChatGptCover({ className }: { className?: string }) {
     <CoverFrame
       width={1440}
       height={1024}
+      ground="white"
       className={className}
       label="The TurboTax tax-document checklist running as an app inside the ChatGPT desktop interface."
     >
@@ -286,6 +287,7 @@ export function TurboTaxChatGptCoverMobile({
     <CoverFrame
       width={440}
       height={972}
+      ground="white"
       className={className}
       label="The TurboTax tax-document checklist running as an app inside the ChatGPT mobile interface."
     >

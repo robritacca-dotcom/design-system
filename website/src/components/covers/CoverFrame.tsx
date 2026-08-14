@@ -22,10 +22,25 @@ export const FRAME = { w: 1600, h: 1000 } as const;
 /** How much of the frame the mock may occupy before it starts to crowd. */
 const INSET = 0.94;
 
+/** The page colour each cover letterboxes against. */
+export type Ground =
+  "warm" | "white" | "plain" | "paper" | "mist" | "haze" | "site";
+
+const GROUND_CLASS: Record<Ground, string> = {
+  warm: styles.groundWarm,
+  white: styles.groundWhite,
+  plain: styles.groundPlain,
+  paper: styles.groundPaper,
+  mist: styles.groundMist,
+  haze: styles.groundHaze,
+  site: styles.groundSite,
+};
+
 export function CoverFrame({
   width,
   height,
   label,
+  ground,
   className,
   children,
 }: {
@@ -34,6 +49,8 @@ export function CoverFrame({
   /** The mock's native height, in its own pixels. */
   height: number;
   label: string;
+  /** The mock's own edge colour, so the letterbox reads as more page. */
+  ground?: Ground;
   className?: string;
   children: React.ReactNode;
 }) {
@@ -53,7 +70,9 @@ export function CoverFrame({
       aria-label={label}
     >
       <rect
-        className={styles.ground}
+        className={[styles.ground, ground ? GROUND_CLASS[ground] : ""]
+          .filter(Boolean)
+          .join(" ")}
         x="0"
         y="0"
         width={FRAME.w}

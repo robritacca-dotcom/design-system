@@ -174,6 +174,7 @@ export function MetaOfferDraftCover({ className }: { className?: string }) {
     <CoverFrame
       width={1513.125}
       height={1076}
+      ground="haze"
       className={className}
       label="Meta's recruiter tool: a candidate profile beside an offer draft panel with a compensation calculator."
     >

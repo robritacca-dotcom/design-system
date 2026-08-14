@@ -296,6 +296,7 @@ export function AugmentaDesignRulesCover({
     <CoverFrame
       width={1440}
       height={900}
+      ground="paper"
       className={className}
       label="The Augmenta study screen: a design-rule tree beside a table of sixteen generated rules."
     >
@@ -611,7 +612,7 @@ const STATUS_TAG = {
   failed: { label: "Failed", className: "tagError" },
 } as const;
 
-/** The Solution List frame: 1440 x 820, node 4026:61958. */
+/** The Solution List frame: the 1440 x 900 artboard, node 4026:61958. */
 export function AugmentaSolutionListCover({
   className,
 }: {
@@ -620,7 +621,8 @@ export function AugmentaSolutionListCover({
   return (
     <CoverFrame
       width={1440}
-      height={820}
+      height={900}
+      ground="paper"
       className={className}
       label="The Augmenta solutions table: twelve generated solutions with their conduit, bend, junction and cost estimates."
     >
@@ -861,6 +863,7 @@ export function AugmentaSolutionCover({ className }: { className?: string }) {
     <CoverFrame
       width={1440}
       height={900}
+      ground="paper"
       className={className}
       label="The Augmenta 3D viewer: a wireframe building model with a generated conduit route running through it."
     >
