@@ -1,0 +1,28 @@
+{
+  "$comment": "Which raster renders exist for each case-study cover. Hand-edited: add an aspect here, run `npm run covers:render`, commit the images. scripts/validate-cover-rasters.mjs holds this file, the case-study cover map, and the files on disk to each other.",
+  "aspects": {
+    "card": {
+      "ratio": [940, 480],
+      "width": 1600,
+      "use": "The card cover slot — the /work grid and the Card showcase. Cards sit in a multi-column grid, so 1600px is roughly 3x a typical card and 2x the widest one."
+    },
+    "feature": {
+      "ratio": [16, 10],
+      "width": 2560,
+      "use": "The home page's featured card and the robr0-ds hero. Every study is listed here, not just today's featured one, because the home page features caseStudies[0] — reordering the registry must not leave a study without its render."
+    },
+    "wide": {
+      "ratio": [16, 9],
+      "width": 2560,
+      "use": "The two Meta case-study heroes, which call for 16:9 rather than the 16:10 the others use."
+    }
+  },
+  "studies": {
+    "/work/augmenta-ai": ["card", "feature"],
+    "/work/embedded-ai-turbotax": ["card", "feature"],
+    "/work/intuit-agent-chat": ["card", "feature"],
+    "/work/meta-career-profile": ["card", "feature", "wide"],
+    "/work/meta-offers": ["card", "feature", "wide"],
+    "/work/robr0-ds": ["card", "feature"]
+  }
+}
