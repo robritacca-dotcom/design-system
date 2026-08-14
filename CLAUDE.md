@@ -80,6 +80,7 @@ npm run build-storybook # export static Storybook
 npm run test            # run every Storybook story as a render test (headless Chromium)
 npm run verify          # full local quality gate: lint + tests + the library, package, Storybook and website builds (mirrors CI)
 npm run eval:chat       # site-chat answer-quality eval against a running dev server (see evals/chat/README.md — costs real API calls, never in CI)
+npm run covers:render   # re-shoot the case-study covers into webp, against a running dev server (deliberate, never in the build — see the cover-renders registry)
 ```
 
 ---
@@ -156,9 +157,9 @@ The old `merge-and-push` skill is retired because its name didn't say which of t
     │   ├── llms.txt/          # Serves the public llms.txt agent index (a prose surface — see content-design.md's register table)
     │   └── api/               # Route handlers (github-contributions; chat, the widget's LLM backend)
     ├── src/config/            # navigation.ts (nav/sidebar/breadcrumb source of truth), chromeless.ts (routes with no shared chrome), social.ts (canonical profile + project links)
-    ├── src/data/              # Data registries: case-studies.json, site-updates.json, shader-background.json, skills accessors
+    ├── src/data/              # Data registries and their accessors — the Registries table above is the authoritative list
     ├── src/hooks/             # Client hooks (useChat — the chat widget's transport-agnostic state machine)
-    ├── src/lib/               # Non-UI modules (chat-sim + chat-transport, chat-model, scroll lock, Substack feed, OG image, structured data)
+    ├── src/lib/               # Non-UI modules (the chat's transports, model ids, follow-ups and suggestion budget; scroll lock, Substack feed, OG image, structured data)
     ├── src/components/covers/ # Vector redraws of the screens each case study is known by, drawn in CSS/SVG rather than captured: one 16:10 CoverFrame per cover, mapped to studies by case-study-covers.tsx, staged on /covers. The drawing renders in two places only — the /covers grid and the /covers/render shot surface; everywhere a cover is *displayed* reads a flat image via CoverImage, because mobile WebKit does not render an HTML mock inside a scaled SVG foreignObject reliably
     └── src/components/        # Shared Next.js UI (MegaNav header, Sidebar, SiteFooter + SiteChat — both mounted once from the root layout, skipping the chromeless routes in src/config/chromeless.ts; BlurBackground owns the ambient background and is mounted once from the layout too — the WebGL2 field, with the CSS blobs kept underneath as its fallback)
 ```

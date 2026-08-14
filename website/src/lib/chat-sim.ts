@@ -20,7 +20,9 @@ interface SimScenario {
   response: string;
   /** The follow-up chips offered under the finished answer. Scripted here
       because the sim has no backend to write them: on the site they come
-      from a model reading the answer (see lib/chat-followups). */
+      from a model reading the answer (see lib/chat-followups). Written copy,
+      so the chip budget is held by scripts/validate-chat-starters.mjs — the
+      route's runtime filter never sees these. */
   followups: string[];
 }
 
@@ -133,7 +135,7 @@ const SCENARIOS: SimScenario[] = [
       "build says no.",
     followups: [
       "What does a registry actually check?",
-      "How does the docs site consume the package?",
+      "How does the site use the package?",
       "What runs on every change?",
     ],
   },

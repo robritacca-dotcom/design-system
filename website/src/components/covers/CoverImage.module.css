@@ -1,8 +1,12 @@
 /*
- * The raster cover: both themes stacked, cross-faded by the theme attribute.
- * Same treatment the mocks give their own light/dark screenshots — see
- * AugmentaCover's .renderLight/.renderDark — so the covers change theme in
+ * The raster cover: both themes stacked, swapped by the theme attribute — the
+ * same pair-and-swap the mocks use for their own light/dark screenshots (see
+ * AugmentaCover's .renderLight/.renderDark), so the covers change theme in
  * step with everything drawn around them.
+ *
+ * Unlike those, this one fades rather than cuts: a mock's screenshot is a
+ * small inset that changes with the surface around it, where a cover is the
+ * whole image and a hard cut reads as a flicker.
  */
 
 .cover {
@@ -18,7 +22,10 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: opacity 320ms ease;
+  /* The theme swap is structural, so it runs on the structural duration.
+     Reduced motion is handled by the token layer, which zeroes every
+     duration and every transition globally — nothing to repeat here. */
+  transition: opacity var(--motion-duration-slow) var(--motion-ease-standard);
 }
 
 .light {
@@ -35,10 +42,4 @@
 
 :global([data-theme="dark"]) .dark {
   opacity: 1;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .shot {
-    transition-duration: 1ms;
-  }
 }

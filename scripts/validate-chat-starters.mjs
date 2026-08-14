@@ -25,17 +25,33 @@ import { fileURLToPath } from 'node:url';
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
 const budgetPath = join(repoRoot, 'website', 'src', 'lib', 'chat-suggestions.ts');
 
+/** `label: "…"` in any quote style — a suggestion written as an object. */
+const LABELLED = /label:\s*(?:"([^"]*)"|'([^']*)'|`([^`]*)`)/g;
+
+/** A bare string, for suggestions written as a plain array of them. */
+const BARE = /(?:"([^"]*)"|'([^']*)'|`([^`]*)`)/g;
+
 /**
  * Where written suggestions live. `scope` narrows a file to the region that
- * holds them, for files whose other `label:` fields are not chips — the
- * playground writes a fictional product's starters inline, beside stage
- * sizes and rail controls that are labelled too.
+ * holds them, for files whose other strings are not chips — the playground
+ * writes a fictional product's starters inline, beside stage sizes and rail
+ * controls that are labelled too, and the sim transport's follow-ups sit in
+ * scenarios full of prose.
  */
 const SOURCES = [
   { path: join('website', 'src', 'components', 'SiteChat', 'starters.ts') },
   {
     path: join('website', 'src', 'app', 'playground', 'views', 'ChatView.tsx'),
     scope: /starters=\{\[([\s\S]*?)\]\}/g,
+  },
+  {
+    /* The sim transport's scripted follow-ups. These reach the playground's
+       Chat view through the same chip row as everything else, and no runtime
+       filter stands between them and it: the route's own check only guards
+       suggestions a model wrote. Written copy, so this is where they are held. */
+    path: join('website', 'src', 'lib', 'chat-sim.ts'),
+    scope: /followups:\s*\[([\s\S]*?)\]/g,
+    pattern: BARE,
   },
 ];
 
@@ -55,7 +71,7 @@ try {
 
 let checked = 0;
 
-for (const { path: relative, scope } of SOURCES) {
+for (const { path: relative, scope, pattern = LABELLED } of SOURCES) {
   let source;
   try {
     source = readFileSync(join(repoRoot, relative), 'utf8');
@@ -73,8 +89,7 @@ for (const { path: relative, scope } of SOURCES) {
     source = regions.join('\n');
   }
 
-  // `label: "…"` and `label: \`…\`, in either quote style.
-  const labels = source.matchAll(/label:\s*(?:"([^"]*)"|'([^']*)'|`([^`]*)`)/g);
+  const labels = source.matchAll(pattern);
   for (const match of labels) {
     const label = match[1] ?? match[2] ?? match[3];
     // A `${…}` stands for runtime data of unknown length; measure what is
