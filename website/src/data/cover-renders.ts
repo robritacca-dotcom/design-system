@@ -23,8 +23,22 @@ export const COVER_ASPECTS = data.aspects as Record<
   { ratio: [number, number]; width: number; use: string }
 >;
 
-/** Which aspects each study's cover is rendered at. */
-export const COVER_STUDIES = data.studies as Record<string, CoverAspect[]>;
+/** What each study's cover is rendered at, and what it shows. */
+export const COVER_STUDIES = data.studies as Record<
+  string,
+  { alt: string; aspects: CoverAspect[] }
+>;
+
+/**
+ * What the cover shows, for the image's alt text.
+ *
+ * These describe the *screen* rather than restating the study title sitting
+ * next to it — a cover is a picture of the work, not decoration, so it earns a
+ * description rather than an empty alt.
+ */
+export function coverAlt(href: string): string {
+  return COVER_STUDIES[href]?.alt ?? "";
+}
 
 /** `/work/augmenta-ai` → `augmenta-ai`, the stem every file name is built on. */
 export function coverSlug(href: string): string {
@@ -63,7 +77,7 @@ export type CoverRenderTarget = {
 /** Every (study, aspect, theme) render the site expects to exist. */
 export const COVER_RENDER_TARGETS: CoverRenderTarget[] = Object.entries(
   COVER_STUDIES,
-).flatMap(([href, aspects]) =>
+).flatMap(([href, { aspects }]) =>
   aspects.flatMap((aspect) =>
     (["light", "dark"] as CoverTheme[]).map((theme) => ({
       href,

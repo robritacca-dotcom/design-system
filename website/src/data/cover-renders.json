@@ -1,5 +1,5 @@
 {
-  "$comment": "Which raster renders exist for each case-study cover. Hand-edited: add an aspect here, run `npm run covers:render`, commit the images. scripts/validate-cover-rasters.mjs holds this file, the case-study cover map, and the files on disk to each other.",
+  "$comment": "Which raster renders exist for each case-study cover, and what each cover shows. Hand-edited: add an aspect here, run `npm run covers:render`, commit the images. scripts/validate-cover-rasters.mjs holds this file, the case-study cover map, and the files on disk to each other.",
   "aspects": {
     "card": {
       "ratio": [940, 480],
@@ -18,11 +18,29 @@
     }
   },
   "studies": {
-    "/work/augmenta-ai": ["card", "feature"],
-    "/work/embedded-ai-turbotax": ["card", "feature"],
-    "/work/intuit-agent-chat": ["card", "feature"],
-    "/work/meta-career-profile": ["card", "feature", "wide"],
-    "/work/meta-offers": ["card", "feature", "wide"],
-    "/work/robr0-ds": ["card", "feature"]
+    "/work/augmenta-ai": {
+      "alt": "Augmenta's coordination model viewer, with a routed pipework solution traced in green through a wireframe building model.",
+      "aspects": ["card", "feature"]
+    },
+    "/work/embedded-ai-turbotax": {
+      "alt": "A Claude conversation where TurboTax returns a 2025 tax year checklist, with a drop zone for documents and the wage and investment forms already gathered.",
+      "aspects": ["card", "feature"]
+    },
+    "/work/intuit-agent-chat": {
+      "alt": "Intuit's assistant open full screen, offering starter prompts about cash flow, bottlenecks and growth above an ask-anything composer.",
+      "aspects": ["card", "feature"]
+    },
+    "/work/meta-career-profile": {
+      "alt": "Meta's candidate offer summary, listing role details beside a total compensation figure broken into salary, bonus, equity and sign-on.",
+      "aspects": ["card", "feature", "wide"]
+    },
+    "/work/meta-offers": {
+      "alt": "Meta's recruiter offer draft, with a candidate's profile and engagement history beside a calculator comparing standard, maximum and proposed compensation.",
+      "aspects": ["card", "feature", "wide"]
+    },
+    "/work/robr0-ds": {
+      "alt": "This site's playground, with theme controls for action colour, corner radius and typeface down the left of a live chat preview.",
+      "aspects": ["card", "feature"]
+    }
   }
 }

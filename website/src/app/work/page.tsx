@@ -39,7 +39,7 @@ export default function WorkPage() {
           </div>
 
           <div className={`${styles.caseStudyGrid} animate-in animate-delay-2`}>
-            {caseStudies.map((cs) => (
+            {caseStudies.map((cs, i) => (
               <Card
                 key={cs.href}
                 variant="case-study"
@@ -47,7 +47,10 @@ export default function WorkPage() {
                 dek={cs.dek}
                 companyName={cs.companyName}
                 companyLogo={cs.companyLogo}
-                cover={caseStudyCover(cs.href, "card")}
+                /* The first card is the page's likely LCP element, so its
+                   cover loads eagerly — a lazy image there is the documented
+                   way to lose the metric. The rest stay lazy. */
+                cover={caseStudyCover(cs.href, "card", { priority: i === 0 })}
                 coverSrc={cs.coverSrc}
                 href={cs.href}
               />

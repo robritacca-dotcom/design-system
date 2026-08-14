@@ -42,9 +42,9 @@ const registry = JSON.parse(readFileSync(registryPath, 'utf8'));
 /** Every (study, aspect, theme) the registry asks for. Mirrors cover-renders.ts. */
 function targets() {
   const out = [];
-  for (const [href, aspects] of Object.entries(registry.studies)) {
+  for (const [href, entry] of Object.entries(registry.studies)) {
     const slug = href.replace(/^\/work\//, '');
-    for (const aspect of aspects) {
+    for (const aspect of entry.aspects) {
       const spec = registry.aspects[aspect];
       if (!spec) throw new Error(`${href} asks for unknown aspect "${aspect}"`);
       const [rw, rh] = spec.ratio;

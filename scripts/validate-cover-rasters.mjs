@@ -14,6 +14,9 @@
  *  - every aspect a study asks for is defined, with a sane ratio and width
  *  - every study with a cover in case-study-covers.tsx is registered here, and
  *    every registered study has a cover — the two lists cannot drift
+ *  - every study has alt text describing what its cover shows — an empty alt
+ *    would drop the site's most distinctive images out of image search and
+ *    tell a screen-reader user nothing
  *  - every (study, aspect, theme) render exists under public/covers/rendered
  *  - every file in that folder is one the registry asked for, so a renamed
  *    aspect cannot leave an orphan shipping in the repo forever
@@ -114,11 +117,26 @@ for (const href of Object.keys(studies)) {
 
 // ── every registered render exists, and nothing else does ───────────────────
 const expected = new Set();
-for (const [href, list] of Object.entries(studies)) {
+for (const [href, entry] of Object.entries(studies)) {
+  const list = entry?.aspects;
   if (!Array.isArray(list) || list.length === 0) {
     errors.push(`${href} must list at least one aspect.`);
     continue;
   }
+
+  const alt = entry.alt;
+  if (typeof alt !== 'string' || alt.trim().length === 0) {
+    errors.push(
+      `${href} needs "alt" describing what its cover shows — these are the ` +
+        'site\'s most distinctive images, and an empty alt hides them from ' +
+        'image search and from screen readers alike.'
+    );
+  } else if (!alt.endsWith('.')) {
+    errors.push(`${href} alt text should end in a full stop.`);
+  } else if (alt.length > 220) {
+    errors.push(`${href} alt text is ${alt.length} chars — keep it under 220.`);
+  }
+
   const slug = href.replace(/^\/work\//, '');
   for (const aspect of list) {
     if (!aspects[aspect]) {

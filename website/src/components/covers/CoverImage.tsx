@@ -1,5 +1,6 @@
 import {
   COVER_ASPECTS,
+  coverAlt,
   coverRenderSize,
   coverRenderSrc,
   type CoverAspect,
@@ -14,13 +15,16 @@ import styles from "./CoverImage.module.css";
  * cross-fade the mocks use for their own light/dark screenshots, so switching
  * theme never flashes a missing image or waits on a fetch.
  *
- * `alt` defaults to empty because in every place a cover appears the study's
- * title sits directly beside it; a description here would be read twice.
+ * `alt` defaults to the registry's description of the screen. A cover is a
+ * picture of the work rather than decoration, and it describes what the screen
+ * shows rather than restating the title beside it, so it adds information
+ * instead of repeating it. Pass `alt=""` to opt out where a cover really is
+ * decorative.
  */
 export function CoverImage({
   href,
   aspect,
-  alt = "",
+  alt,
   className,
   priority = false,
 }: {
@@ -28,13 +32,14 @@ export function CoverImage({
   href: string;
   /** Which shot to use. The ratio and pixel size come from the registry. */
   aspect: CoverAspect;
-  /** Left empty for a cover sitting beside its own title. */
+  /** Defaults to the registry's description; pass "" for a decorative cover. */
   alt?: string;
   className?: string;
   /** Set on an above-the-fold cover to opt out of lazy loading. */
   priority?: boolean;
 }) {
   const { width, height } = coverRenderSize(aspect);
+  const description = alt ?? coverAlt(href);
   const [w, h] = COVER_ASPECTS[aspect].ratio;
   const loading = priority ? undefined : "lazy";
 
@@ -50,7 +55,7 @@ export function CoverImage({
       <img
         className={`${styles.shot} ${styles.light}`}
         src={coverRenderSrc(href, aspect, "light")}
-        alt={alt}
+        alt={description}
         width={width}
         height={height}
         loading={loading}
