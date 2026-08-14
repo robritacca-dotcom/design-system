@@ -48,6 +48,14 @@
   --acp-fill-disabled: rgba(0, 0, 0, 0.04);
   --acp-menu-fill-alter: rgba(0, 0, 0, 0.02);
   --acp-purple: #d3adf7;
+  --acp-error: #ff4d4f;
+  --acp-tag-success-bg: #f6ffed;
+  --acp-tag-success-border: #b7eb8f;
+  --acp-tag-error-bg: #fff1f0;
+  --acp-tag-error-border: #ffa39e;
+  --acp-dot-green: #95de64;
+  --acp-dot-blue: #69c0ff;
+  --acp-dot-purple: #b37feb;
 
   /* The rail keeps its own colours in both themes. */
   --acp-rail-bg: #03162b;
@@ -88,6 +96,11 @@
   --acp-fill-disabled: rgba(255, 255, 255, 0.08);
   --acp-menu-fill-alter: rgba(255, 255, 255, 0.04);
   --acp-purple: #301c4d;
+  --acp-error: #dc4446;
+  --acp-tag-success-bg: #162312;
+  --acp-tag-success-border: #274916;
+  --acp-tag-error-bg: #2c1618;
+  --acp-tag-error-border: #58181c;
 }
 
 .stage,
@@ -726,6 +739,7 @@
 .headerLabel {
   flex: 1;
   min-width: 0;
+  white-space: nowrap;
 }
 
 .cell {
@@ -828,4 +842,272 @@
   font-weight: 600;
   line-height: 22px;
   color: var(--acp-primary);
+}
+
+/* =================================================== Solution List screen */
+/* Shares the palette above; only the frame size and the table differ. */
+
+.stageList {
+  height: 820px;
+}
+
+.frame17 {
+  flex: 1;
+  min-height: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+}
+
+.toolbar {
+  position: relative;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.search {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 200px;
+  height: 32px;
+  box-sizing: border-box;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  padding: 0 12px;
+  border: 1px solid var(--acp-border);
+  border-radius: 6px;
+  background-color: var(--acp-surface);
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--acp-text-disabled);
+}
+
+.searchLabel {
+  flex: 1;
+  min-width: 0;
+}
+
+.toolbarRight {
+  position: absolute;
+  left: 865px;
+  top: 0;
+  width: 465px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+}
+
+.squareButton {
+  width: 32px;
+  height: 32px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--acp-border);
+  border-radius: 6px;
+  background-color: var(--acp-surface);
+  color: var(--acp-text);
+}
+
+.segmentGroup {
+  margin-left: 8px;
+  display: flex;
+  align-items: stretch;
+}
+
+.segment {
+  width: 68px;
+  height: 32px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--acp-border);
+  background-color: var(--acp-surface);
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--acp-text);
+}
+
+.segment:first-child {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+.segment:last-child {
+  border-left: none;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.segmentActive {
+  border-color: var(--acp-primary);
+  background-color: var(--acp-primary);
+  color: #ffffff;
+}
+
+.pillButton {
+  height: 32px;
+  box-sizing: border-box;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  border: 1px solid var(--acp-border);
+  border-radius: 6px;
+  background-color: var(--acp-surface);
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--acp-text);
+  white-space: nowrap;
+}
+
+.filterButton {
+  margin-left: 8px;
+  width: 141px;
+}
+
+.viewModelButton {
+  margin-left: 8px;
+  width: 132px;
+}
+
+.listTable {
+  flex: 1;
+  min-height: 0;
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.listGrid {
+  display: grid;
+  grid-template-columns:
+    38px 119px 111px 140px 74px 72px 63px 86px 71px 70px 63px 87px 76px 102px
+    78px 80px;
+}
+
+.groupHeader {
+  height: 36px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border: 0.5px solid var(--acp-split);
+  background-color: var(--acp-border-secondary);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 20px;
+  color: var(--acp-text);
+}
+
+.listCell {
+  height: 36px;
+  box-sizing: border-box;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 8px;
+  border: 0.5px solid var(--acp-split);
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--acp-text);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.listCellRight {
+  justify-content: flex-end;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: 50%;
+}
+
+.tagSuccess {
+  border: 1px solid var(--acp-tag-success-border);
+  background-color: var(--acp-tag-success-bg);
+  color: var(--acp-success);
+}
+
+.tagError {
+  border: 1px solid var(--acp-tag-error-border);
+  background-color: var(--acp-tag-error-bg);
+  color: var(--acp-error);
+}
+
+.openButton {
+  height: 24px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  border: 1px solid var(--acp-border);
+  border-radius: 6px;
+  background-color: var(--acp-fill-disabled);
+}
+
+.openLabel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--acp-text);
+}
+
+.openLabelDisabled {
+  color: var(--acp-text-disabled);
+}
+
+.openIcon {
+  width: 24px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-left: 1px solid var(--acp-border);
+  color: var(--acp-text);
+}
+
+.listPagination {
+  position: relative;
+  height: 40px;
+  flex-shrink: 0;
+  margin-top: 138px;
+}
+
+.listPaginationCount {
+  position: absolute;
+  right: 372px;
+  top: 9px;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--acp-text);
+  white-space: nowrap;
+}
+
+.listPaginationControls {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 112px;
+  height: 40px;
+  box-sizing: border-box;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 0;
+  color: var(--acp-text-disabled);
 }

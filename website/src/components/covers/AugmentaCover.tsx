@@ -22,6 +22,12 @@ import {
   RailChevron,
   RightChevron,
   SisternodeIcon,
+  SandboxIcon,
+  SearchIcon,
+  CheckTagIcon,
+  CloseTagIcon,
+  DownChevron,
+  ListDensityIcon,
   SortIcon,
   SyncIcon12,
   SyncIcon16,
@@ -184,7 +190,11 @@ function Rail() {
 }
 
 /** Breadcrumb, tabs, generation status and the feedback button. */
-function TopBar() {
+function TopBar({
+  activeTab = "studies",
+}: {
+  activeTab?: "studies" | "solutions";
+}) {
   return (
     <div className={styles.topBar}>
       <div className={styles.topLeft}>
@@ -212,13 +222,34 @@ function TopBar() {
 
       <div className={styles.topMid}>
         <div
-          className={`${styles.tab} ${styles.tabActive}`}
-          style={{ left: 80.667, width: 78 }}
+          className={[
+            styles.tab,
+            activeTab === "studies" ? styles.tabActive : "",
+          ]
+            .filter(Boolean)
+            .join(" ")}
+          style={
+            activeTab === "studies"
+              ? { left: 80.667, width: 78 }
+              : { left: 80.667, width: 76 }
+          }
         >
           <BookIcon />
           Studies
         </div>
-        <div className={styles.tab} style={{ left: 190.667, width: 89 }}>
+        <div
+          className={[
+            styles.tab,
+            activeTab === "solutions" ? styles.tabActive : "",
+          ]
+            .filter(Boolean)
+            .join(" ")}
+          style={
+            activeTab === "solutions"
+              ? { left: 188.667, width: 91 }
+              : { left: 190.667, width: 89 }
+          }
+        >
           <NodeExpandIcon />
           Solutions
         </div>
@@ -426,6 +457,258 @@ function Row({
       </div>
       <div className={styles.cell}>
         <span className={styles.viewButton}>View</span>
+      </div>
+    </>
+  );
+}
+
+/* ==================================================== Solution List screen */
+
+/** One solution row. The first is still generating, so every value is a dash. */
+type SolutionRow = {
+  index: number;
+  dot: "green" | "blue" | "purple";
+  status: "generating" | "success" | "failed";
+  values: string[];
+};
+
+const DASHES = ["-", "-", "-", "-", "-", "-", "-", "-", "- (–%)", "- (–%)", "-", "-"];
+
+const STANDARD = (qty: string, routed: string) => [
+  "08/01/2023 at 11:00AM",
+  "500'",
+  "50° / 100'",
+  qty,
+  "1,800°",
+  "250",
+  "125",
+  "100",
+  "95 (95%)",
+  routed,
+  "500 hrs",
+  "$500,000",
+];
+
+const SOLUTION_ROWS: SolutionRow[] = [
+  { index: 1, dot: "green", status: "generating", values: DASHES },
+  { index: 2, dot: "green", status: "success", values: STANDARD("200", "94 (94%)") },
+  { index: 3, dot: "green", status: "success", values: STANDARD("1,050", "90 (90%)") },
+  { index: 4, dot: "green", status: "success", values: STANDARD("200", "90 (90%)") },
+  { index: 5, dot: "green", status: "success", values: STANDARD("200", "90 (90%)") },
+  { index: 6, dot: "green", status: "success", values: STANDARD("200", "90 (90%)") },
+  { index: 1, dot: "blue", status: "success", values: STANDARD("200", "90 (90%)") },
+  { index: 2, dot: "blue", status: "success", values: STANDARD("200", "90 (90%)") },
+  { index: 3, dot: "blue", status: "failed", values: STANDARD("200", "90 (90%)") },
+  { index: 4, dot: "blue", status: "failed", values: STANDARD("200", "90 (90%)") },
+  { index: 1, dot: "purple", status: "failed", values: STANDARD("200", "90 (90%)") },
+  { index: 2, dot: "purple", status: "failed", values: STANDARD("200", "90 (90%)") },
+];
+
+/** Group header spans, in column order. */
+const GROUPS: [string, number][] = [
+  ["Solution", 4],
+  ["Conduit", 1],
+  ["Bends", 3],
+  ["Junctions", 2],
+  ["Run ID", 3],
+  ["Estimates", 2],
+  ["Actions", 1],
+];
+
+const SUB_HEADERS = [
+  "#",
+  "Study",
+  "Status",
+  "Generated",
+  "Length",
+  "° / foot",
+  "QTY",
+  "Ttl. Angle",
+  "Bodies",
+  "Boxes",
+  "Lin…",
+  "Validated",
+  "Routed",
+  "Const. time",
+  "Cost",
+];
+
+const STATUS_TAG = {
+  generating: { label: "Generating", className: "tagInfo" },
+  success: { label: "Success", className: "tagSuccess" },
+  failed: { label: "Failed", className: "tagError" },
+} as const;
+
+/** The Solution List frame: 1440 x 820, node 4026:61958. */
+export function AugmentaSolutionListCover({
+  className,
+}: {
+  className?: string;
+}) {
+  return (
+    <svg
+      className={[styles.cover, className].filter(Boolean).join(" ")}
+      viewBox="0 0 1440 820"
+      preserveAspectRatio="xMidYMid meet"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="The Augmenta solutions table: twelve generated solutions with their conduit, bend, junction and cost estimates."
+    >
+      <foreignObject x="0" y="0" width="1440" height="820">
+        <div className={`${styles.stage} ${styles.stageList}`}>
+          <Rail />
+
+          <div className={styles.viewer}>
+            <TopBar activeTab="solutions" />
+
+            <div className={styles.main}>
+              <div className={styles.frame17}>
+                <div className={styles.toolbar}>
+                  <div className={styles.search}>
+                    <span className={styles.searchLabel}>Search</span>
+                    <SearchIcon />
+                  </div>
+                  <div className={styles.toolbarRight}>
+                    <span className={styles.squareButton}>
+                      <ListDensityIcon />
+                    </span>
+                    <span className={styles.segmentGroup}>
+                      <span
+                        className={`${styles.segment} ${styles.segmentActive}`}
+                      >
+                        Table
+                      </span>
+                      <span className={styles.segment}>Chart</span>
+                    </span>
+                    <span
+                      className={`${styles.pillButton} ${styles.filterButton}`}
+                    >
+                      Filter Studies
+                      <DownChevron />
+                    </span>
+                    <span
+                      className={`${styles.pillButton} ${styles.viewModelButton}`}
+                    >
+                      <SandboxIcon />
+                      View Model
+                    </span>
+                  </div>
+                </div>
+
+                <div className={styles.listTable}>
+                  <div className={styles.listGrid}>
+                    {GROUPS.map(([label, span]) => (
+                      <div
+                        key={label}
+                        className={styles.groupHeader}
+                        style={{ gridColumn: `span ${span}` }}
+                      >
+                        {label}
+                      </div>
+                    ))}
+
+                    {SUB_HEADERS.map((label) => (
+                      <div key={label} className={styles.headerCell}>
+                        <span className={styles.headerLabel}>{label}</span>
+                        <SortIcon />
+                      </div>
+                    ))}
+                    <div className={styles.headerCell} />
+
+                    {SOLUTION_ROWS.map((row, rowIndex) => {
+                      const tag = STATUS_TAG[row.status];
+                      return (
+                        <SolutionRowCells
+                          key={rowIndex}
+                          row={row}
+                          tagLabel={tag.label}
+                          tagClass={styles[tag.className]}
+                        />
+                      );
+                    })}
+                  </div>
+
+                  <div className={styles.listPagination}>
+                    <span className={styles.listPaginationCount}>
+                      Displaying 12 of 12 Total Solutions
+                    </span>
+                    <div className={styles.listPaginationControls}>
+                      <span className={styles.pageArrow}>
+                        <LeftChevron />
+                      </span>
+                      <span className={styles.pageNumber}>1</span>
+                      <span className={styles.pageArrow}>
+                        <RightChevron />
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </foreignObject>
+    </svg>
+  );
+}
+
+/** The sixteen cells of one solution row. */
+function SolutionRowCells({
+  row,
+  tagLabel,
+  tagClass,
+}: {
+  row: SolutionRow;
+  tagLabel: string;
+  tagClass: string;
+}) {
+  const dotColour = {
+    green: "var(--acp-dot-green)",
+    blue: "var(--acp-dot-blue)",
+    purple: "var(--acp-dot-purple)",
+  }[row.dot];
+
+  return (
+    <>
+      <div className={styles.listCell}>{row.index}</div>
+      <div className={styles.listCell}>
+        <span className={styles.dot} style={{ background: dotColour }} />
+        Study name
+      </div>
+      <div className={styles.listCell}>
+        <span className={`${styles.tag} ${tagClass}`}>
+          {row.status === "generating" && <SyncIcon12 />}
+          {row.status === "success" && <CheckTagIcon />}
+          {row.status === "failed" && <CloseTagIcon />}
+          {tagLabel}
+        </span>
+      </div>
+      {row.values.map((value, index) => (
+        <div
+          key={index}
+          className={[styles.listCell, index > 0 ? styles.listCellRight : ""]
+            .filter(Boolean)
+            .join(" ")}
+        >
+          {value}
+        </div>
+      ))}
+      <div className={styles.listCell}>
+        <span className={styles.openButton}>
+          <span
+            className={[
+              styles.openLabel,
+              row.status === "generating" ? styles.openLabelDisabled : "",
+            ]
+              .filter(Boolean)
+              .join(" ")}
+          >
+            Open
+          </span>
+          <span className={styles.openIcon}>
+            <EllipsisIcon />
+          </span>
+        </span>
       </div>
     </>
   );

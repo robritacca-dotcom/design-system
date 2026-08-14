@@ -1,5 +1,8 @@
 import ThemeToggle from "../../components/ThemeToggle/ThemeToggle";
-import { AugmentaDesignRulesCover } from "../../components/covers/AugmentaCover";
+import {
+  AugmentaDesignRulesCover,
+  AugmentaSolutionListCover,
+} from "../../components/covers/AugmentaCover";
 import {
   IntuitAgentChatCover,
   IntuitAgentChatCoverMobile,
@@ -85,6 +88,13 @@ export default function CoverMocksPage() {
         <p className={styles.label}>Augmenta — design rules, 1440 × 900</p>
         <div style={{ width: 1440 }}>
           <AugmentaDesignRulesCover />
+        </div>
+      </section>
+
+      <section className={styles.mock}>
+        <p className={styles.label}>Augmenta — solution list, 1440 × 820</p>
+        <div style={{ width: 1440 }}>
+          <AugmentaSolutionListCover />
         </div>
       </section>
     </main>
