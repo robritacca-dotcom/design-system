@@ -1,6 +1,7 @@
 import ThemeToggle from "../../components/ThemeToggle/ThemeToggle";
 import {
   AugmentaDesignRulesCover,
+  AugmentaSolutionCover,
   AugmentaSolutionListCover,
 } from "../../components/covers/AugmentaCover";
 import {
@@ -95,6 +96,13 @@ export default function CoverMocksPage() {
         <p className={styles.label}>Augmenta — solution list, 1440 × 820</p>
         <div style={{ width: 1440 }}>
           <AugmentaSolutionListCover />
+        </div>
+      </section>
+
+      <section className={styles.mock}>
+        <p className={styles.label}>Augmenta — solution viewer, 1440 × 900</p>
+        <div style={{ width: 1440 }}>
+          <AugmentaSolutionCover />
         </div>
       </section>
     </main>

@@ -27,7 +27,13 @@ import {
   CheckTagIcon,
   CloseTagIcon,
   DownChevron,
+  EyeIcon,
+  HomeIcon14,
   ListDensityIcon,
+  MinusIcon,
+  PlusIcon14,
+  PullRequestIcon,
+  WarningIcon,
   SortIcon,
   SyncIcon12,
   SyncIcon16,
@@ -192,8 +198,10 @@ function Rail() {
 /** Breadcrumb, tabs, generation status and the feedback button. */
 function TopBar({
   activeTab = "studies",
+  showGenerating = true,
 }: {
   activeTab?: "studies" | "solutions";
+  showGenerating?: boolean;
 }) {
   return (
     <div className={styles.topBar}>
@@ -260,12 +268,14 @@ function TopBar({
       </div>
 
       <div className={styles.topRight}>
-        <div className={styles.generating}>
-          <span className={styles.generatingIcon}>
-            <SyncIcon16 />
-          </span>
-          Generating
-        </div>
+        {showGenerating && (
+          <div className={styles.generating}>
+            <span className={styles.generatingIcon}>
+              <SyncIcon16 />
+            </span>
+            Generating
+          </div>
+        )}
         <div className={styles.feedbackButton}>
           <BugIcon />
           Give Feedback
@@ -711,5 +721,177 @@ function SolutionRowCells({
         </span>
       </div>
     </>
+  );
+}
+
+/* ======================================================== Solution viewer */
+
+/** The isometric orientation gizmo. Three skewed faces, a highlighted corner. */
+function OrientationCube() {
+  return (
+    <div className={styles.cube}>
+      <div className={`${styles.cubeFace} ${styles.cubeTop}`}>
+        <span className={styles.cubeTopInner}>
+          <span className={styles.cubePlate} />
+        </span>
+      </div>
+      <div className={`${styles.cubeFace} ${styles.cubeLeft}`}>
+        <span className={styles.cubeLeftInner}>
+          <span className={styles.cubePlate} />
+        </span>
+      </div>
+      <div className={`${styles.cubeFace} ${styles.cubeRight}`}>
+        <span className={styles.cubeRightInner}>
+          <span className={styles.cubePlate} />
+        </span>
+      </div>
+
+      <div className={`${styles.cubeFace} ${styles.cubeCornerTop}`}>
+        <span className={styles.cubeTopInner}>
+          <span className={styles.cubeCorner} />
+        </span>
+      </div>
+      <div className={`${styles.cubeFace} ${styles.cubeCornerLeft}`}>
+        <span className={styles.cubeLeftInner}>
+          <span className={styles.cubeCorner} />
+        </span>
+      </div>
+      <div className={`${styles.cubeFace} ${styles.cubeCornerRight}`}>
+        <span className={styles.cubeRightInner}>
+          <span className={styles.cubeCorner} />
+        </span>
+      </div>
+
+      <div className={`${styles.cubeFace} ${styles.cubeTop}`}>
+        <span className={styles.cubeTopInner}>
+          <span className={styles.cubeOutline} />
+        </span>
+      </div>
+      <div className={`${styles.cubeFace} ${styles.cubeLeft}`}>
+        <span className={styles.cubeLeftInner}>
+          <span className={styles.cubeOutline} />
+        </span>
+      </div>
+      <div className={`${styles.cubeFace} ${styles.cubeRight}`}>
+        <span className={styles.cubeRightInner}>
+          <span className={styles.cubeOutline} />
+        </span>
+      </div>
+
+      <div className={`${styles.cubeFace} ${styles.cubeLabelTop}`}>
+        <span className={styles.cubeTopInner}>
+          <span className={styles.cubeLabel}>TOP</span>
+        </span>
+      </div>
+      <div className={`${styles.cubeFace} ${styles.cubeLabelFront}`}>
+        <span className={styles.cubeLeftInner}>
+          <span className={styles.cubeLabel}>FRONT</span>
+        </span>
+      </div>
+      <div className={`${styles.cubeFace} ${styles.cubeLabelRight}`}>
+        <span className={styles.cubeRightInner}>
+          <span className={styles.cubeLabel}>RIGHT</span>
+        </span>
+      </div>
+    </div>
+  );
+}
+
+/** The Solution viewer frame: 1440 x 900, node 4026:61305. */
+export function AugmentaSolutionCover({ className }: { className?: string }) {
+  return (
+    <svg
+      className={[styles.cover, className].filter(Boolean).join(" ")}
+      viewBox="0 0 1440 900"
+      preserveAspectRatio="xMidYMid meet"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="The Augmenta 3D viewer: a wireframe building model with a generated conduit route running through it."
+    >
+      <foreignObject x="0" y="0" width="1440" height="900">
+        <div className={styles.stage}>
+          <Rail />
+
+          <div className={styles.viewer}>
+            <TopBar activeTab="solutions" showGenerating={false} />
+
+            <div className={styles.viewerMain}>
+              <div className={styles.contextBar}>
+                <div className={styles.contextLeft}>
+                  <span className={styles.iconButton32}>
+                    <ArrowLeftIcon />
+                  </span>
+                  <span className={styles.solutionDot} />
+                  <span className={styles.solutionName}>
+                    Coordination model v1
+                  </span>
+                  <span className={`${styles.tag} ${styles.tagDefault}`}>
+                    Solution #1
+                  </span>
+                </div>
+                <div className={styles.contextRight}>
+                  <span className={styles.squareButton24}>
+                    <InfoCircleIcon />
+                  </span>
+                  <span className={styles.squareButton24}>
+                    <PullRequestIcon />
+                  </span>
+                  <span className={styles.squareButton24}>
+                    <EyeIcon />
+                  </span>
+                  <span className={styles.squareButton24}>
+                    <WarningIcon />
+                  </span>
+                  <span
+                    className={`${styles.pillButton} ${styles.exportButton}`}
+                  >
+                    Export
+                    <DownChevron />
+                  </span>
+                </div>
+              </div>
+
+              <div className={styles.viewport}>
+                {/* eslint-disable-next-line @next/next/no-img-element -- next/image cannot render inside an SVG foreignObject, and both renders are fixed-size static assets. */}
+                <img
+                  className={`${styles.render} ${styles.renderLight}`}
+                  src="/covers/augmenta-solution-light.webp"
+                  alt=""
+                />
+                {/* eslint-disable-next-line @next/next/no-img-element -- as above; this is the dark render that cross-fades in. */}
+                <img
+                  className={`${styles.render} ${styles.renderDark}`}
+                  src="/covers/augmenta-solution-dark.webp"
+                  alt=""
+                />
+
+                <div className={styles.viewportControls}>
+                  <div className={styles.viewportLeft}>
+                    <span className={styles.ghostButton24}>
+                      <HomeIcon14 />
+                    </span>
+                    <OrientationCube />
+                  </div>
+                  <div className={styles.viewportMid}>
+                    <div className={styles.zoomWrap}>
+                      <span className={styles.zoom}>
+                        <span className={styles.ghostButton24}>
+                          <MinusIcon />
+                        </span>
+                        100%
+                        <span className={styles.ghostButton24}>
+                          <PlusIcon14 />
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                  <div className={styles.viewportRight} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </foreignObject>
+    </svg>
   );
 }

@@ -56,6 +56,8 @@
   --acp-dot-green: #95de64;
   --acp-dot-blue: #69c0ff;
   --acp-dot-purple: #b37feb;
+  --acp-solution-dot: #b7eb8f;
+  --acp-cube-corner: #bae0ff;
 
   /* The rail keeps its own colours in both themes. */
   --acp-rail-bg: #03162b;
@@ -101,6 +103,8 @@
   --acp-tag-success-border: #274916;
   --acp-tag-error-bg: #2c1618;
   --acp-tag-error-border: #58181c;
+  --acp-solution-dot: #49aa19;
+  --acp-cube-corner: #15325b;
 }
 
 .stage,
@@ -1110,4 +1114,320 @@
   justify-content: center;
   padding: 4px 0;
   color: var(--acp-text-disabled);
+}
+
+/* ======================================================== Solution viewer */
+
+.viewerMain {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 12px;
+  background-color: var(--acp-layout);
+}
+
+.contextBar {
+  width: 100%;
+  height: 48px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  overflow: hidden;
+  border-bottom: 1px solid var(--acp-border-secondary);
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  background-color: var(--acp-surface);
+}
+
+.contextLeft {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.solutionDot {
+  width: 13.333px;
+  height: 13.333px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background-color: var(--acp-solution-dot);
+}
+
+.solutionName {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 22px;
+  color: var(--acp-text);
+  white-space: nowrap;
+}
+
+.contextRight {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.squareButton24 {
+  width: 32px;
+  height: 32px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--acp-border);
+  border-radius: 6px;
+  background-color: var(--acp-surface);
+  color: var(--acp-text);
+}
+
+.exportButton {
+  width: 99px;
+}
+
+/* The 3D viewport. The render itself is the one raster in these mocks — the
+   source frame is a flat image, so there is nothing to trace. Figma ships a
+   light and a dark render, and the two cross-fade with the theme. */
+.viewport {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  background-color: var(--acp-surface);
+}
+
+.render {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 320ms ease;
+}
+
+.renderLight {
+  opacity: 1;
+}
+
+.renderDark {
+  opacity: 0;
+}
+
+:global([data-theme="dark"]) .renderLight {
+  opacity: 0;
+}
+
+:global([data-theme="dark"]) .renderDark {
+  opacity: 1;
+}
+
+.viewportControls {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: stretch;
+}
+
+.viewportLeft {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 12px;
+}
+
+.viewportMid {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  overflow: hidden;
+}
+
+.viewportRight {
+  width: 56px;
+  flex-shrink: 0;
+}
+
+.ghostButton24 {
+  width: 24px;
+  height: 24px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  border-radius: 4px;
+  color: var(--acp-text);
+}
+
+.zoomWrap {
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 12px;
+}
+
+.zoom {
+  box-sizing: border-box;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  border: 1px solid var(--acp-border);
+  border-radius: 4px;
+  background-color: var(--acp-surface);
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--acp-text);
+}
+
+/* ------------------------------------------------- the orientation gizmo */
+
+.cube {
+  position: relative;
+  width: 68px;
+  height: 78.52px;
+  flex-shrink: 0;
+}
+
+.cubeFace {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cubeTop {
+  left: 0;
+  top: 0;
+  width: 68px;
+  height: 39.26px;
+}
+
+.cubeLeft {
+  left: 0;
+  top: 19.63px;
+  width: 34px;
+  height: 58.89px;
+}
+
+.cubeRight {
+  left: 34px;
+  top: 19.63px;
+  width: 34px;
+  height: 58.89px;
+}
+
+.cubeTopInner,
+.cubeLeftInner,
+.cubeRightInner {
+  display: block;
+  flex: none;
+}
+
+.cubeTopInner {
+  transform: rotate(30deg) skewX(-30deg) scaleY(0.87);
+}
+
+.cubeLeftInner {
+  transform: rotate(30deg) skewX(30deg) scaleY(0.87);
+}
+
+.cubeRightInner {
+  transform: rotate(-30deg) skewX(-30deg) scaleY(0.87);
+}
+
+.cubePlate {
+  display: block;
+  width: 39.26px;
+  height: 39.26px;
+  background-color: var(--acp-surface);
+}
+
+.cubeOutline {
+  display: block;
+  box-sizing: border-box;
+  width: 39.26px;
+  height: 39.26px;
+  border: 1px solid var(--acp-text);
+}
+
+.cubeCorner {
+  display: block;
+  width: 7.125px;
+  height: 7.125px;
+  background-color: var(--acp-cube-corner);
+}
+
+.cubeCornerTop {
+  left: 27.5px;
+  top: 32px;
+  width: 12.341px;
+  height: 7.125px;
+}
+
+.cubeCornerLeft {
+  left: 27.5px;
+  top: 35.56px;
+  width: 6.17px;
+  height: 10.688px;
+}
+
+.cubeCornerRight {
+  left: 33.67px;
+  top: 35.56px;
+  width: 6.17px;
+  height: 10.688px;
+}
+
+.cubeLabel {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  line-height: 20px;
+  color: var(--acp-text);
+  white-space: nowrap;
+}
+
+.cubeLabelTop {
+  left: 13px;
+  top: 8px;
+  width: 41.569px;
+  height: 24px;
+}
+
+.cubeLabelFront {
+  left: 7px;
+  top: 32px;
+  width: 20.785px;
+  height: 36px;
+}
+
+.cubeLabelRight {
+  left: 41px;
+  top: 32px;
+  width: 20.785px;
+  height: 36px;
 }
