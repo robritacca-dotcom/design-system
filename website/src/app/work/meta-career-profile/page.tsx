@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { MetaOfferSummaryCover } from "@/components/covers/MetaOfferSummaryCover";
+import { CoverImage } from "@/components/covers/CoverImage";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
@@ -38,7 +38,12 @@ export default function MetaCareerProfileCaseStudy() {
 
           {/* Hero image */}
           <figure className={`${styles.cover} animate-in animate-delay-2`}>
-            <MetaOfferSummaryCover aspect={16 / 9} className={styles.coverImage} />
+            <CoverImage
+              href="/work/meta-career-profile"
+              aspect="wide"
+              className={styles.coverImage}
+              priority
+            />
           </figure>
 
           {/* Two-column body */}

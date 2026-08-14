@@ -12,7 +12,7 @@ import { SpacingSwatch } from "@robr0/design-system/components/SpacingSwatch/Spa
 import { Button } from "@robr0/design-system/components/Button/Button";
 import { ToggleSwitch } from "@robr0/design-system/components/ToggleSwitch/ToggleSwitch";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
-import { SitePlaygroundCover } from "@/components/covers/SiteCovers";
+import { CoverImage } from "@/components/covers/CoverImage";
 import PageLinks from "../../../components/PageLinks/PageLinks";
 import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
@@ -115,10 +115,10 @@ export default function CardPage() {
               <Card
                 variant="case-study"
                 title="Building robr0 DS: the rules that hold"
-                dek="A drawn cover: the cover prop takes any node and fills the same slot the image would"
+                dek="A cover node: the cover prop takes any element and fills the same slot coverSrc would"
                 companyName="Personal"
                 companyLogo="/logos/rr.svg"
-                cover={<SitePlaygroundCover aspect={940 / 480} />}
+                cover={<CoverImage href="/work/robr0-ds" aspect="card" />}
                 href="/work/robr0-ds"
               />
             </div>

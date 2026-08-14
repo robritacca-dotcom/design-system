@@ -11,10 +11,9 @@ import styles from "./page.module.css";
 
 const { sidebarLinks } = getSidebarLinks(workSidebarLinks, "/work");
 
-/* The Card's cover slot, from ds-card--case-study__cover-wrap. The covers are
-   drawn to fill whatever ratio they are given, so the frame is told the slot's
-   ratio rather than the slot being sized to the frame. */
-const CARD_COVER_ASPECT = 940 / 480;
+/* The Card's cover slot, from ds-card--case-study__cover-wrap. The "card"
+   render is shot to that ratio — see the aspect registry in
+   website/src/data/cover-renders.json, which owns the ratio and pixel size. */
 
 export default function WorkPage() {
   return (
@@ -48,7 +47,7 @@ export default function WorkPage() {
                 dek={cs.dek}
                 companyName={cs.companyName}
                 companyLogo={cs.companyLogo}
-                cover={caseStudyCover(cs.href, { aspect: CARD_COVER_ASPECT })}
+                cover={caseStudyCover(cs.href, "card")}
                 coverSrc={cs.coverSrc}
                 href={cs.href}
               />

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { SitePlaygroundCover } from "@/components/covers/SiteCovers";
+import { CoverImage } from "@/components/covers/CoverImage";
 import { COMPONENT_COUNT } from "@robr0/design-system/components/registry";
 import Link from "next/link";
 import MegaNav from "../../../components/MegaNav/MegaNav";
@@ -201,7 +201,12 @@ export default function Robr0DsCaseStudy() {
 
           {/* Hero image */}
           <figure className={`${styles.cover} animate-in animate-delay-2`}>
-            <SitePlaygroundCover aspect={16 / 10} className={styles.coverImage} />
+            <CoverImage
+              href="/work/robr0-ds"
+              aspect="feature"
+              className={styles.coverImage}
+              priority
+            />
           </figure>
 
           {/* Two-column body — mirrors the embedded-ai-turbotax case study */}
