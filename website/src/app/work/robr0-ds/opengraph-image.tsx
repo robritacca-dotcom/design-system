@@ -2,8 +2,8 @@ import { buildCaseStudyOgImage, ogImageSize, ogImageContentType } from "@/lib/og
 
 export const size = ogImageSize;
 export const contentType = ogImageContentType;
-export const alt = "Building robr0 DS: a one-person design system, end to end";
+export const alt = "Building robr0 DS: the rules that hold";
 
 export default function Image() {
-  return buildCaseStudyOgImage("Building robr0 DS: a one-person design system, end to end");
+  return buildCaseStudyOgImage("Building robr0 DS: the rules that hold");
 }

@@ -4,7 +4,6 @@ import { useState } from "react";
 import Image from "next/image";
 import { SitePlaygroundCover } from "@/components/covers/SiteCovers";
 import { COMPONENT_COUNT } from "@robr0/design-system/components/registry";
-import { TOKEN_COUNT, TOKEN_COUNTS, type TokenCategory } from "@robr0/design-system/tokens/registry";
 import Link from "next/link";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
@@ -13,56 +12,93 @@ import { Button } from "@robr0/design-system/components/Button/Button";
 import { Badge } from "@robr0/design-system/components/Badge/Badge";
 import { Alert } from "@robr0/design-system/components/Alert/Alert";
 import { SegmentedControl } from "@robr0/design-system/components/SegmentedControl/SegmentedControl";
-import { ProgressBar } from "@robr0/design-system/components/ProgressBar/ProgressBar";
 import { LineChart } from "@robr0/design-system/components/Chart/LineChart";
 import { BarChart } from "@robr0/design-system/components/Chart/BarChart";
 import { getSidebarLinks, workSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
 /* ============================================
-   Real history — registered components and semantic
-   tokens measured from git at each month-end
-   (snapshot taken July 2026); the current month
-   comes live from the registries
+   Real history — registered components counted
+   from git at each month-end (folders under
+   src/components minus the doc-only helpers
+   present at that commit); today comes live
+   from the registry.
    ============================================ */
-const systemGrowth = [
-  { month: "Feb", components: 39, tokens: 156 },
-  { month: "Mar", components: 39, tokens: 156 },
-  { month: "Apr", components: 39, tokens: 156 },
-  { month: "May", components: 39, tokens: 156 },
-  { month: "Jun", components: 41, tokens: 156 },
-  { month: "Jul", components: COMPONENT_COUNT, tokens: TOKEN_COUNT },
+const componentGrowth = [
+  { month: "Feb", components: 39 },
+  { month: "Mar", components: 39 },
+  { month: "Apr", components: 39 },
+  { month: "May", components: 39 },
+  { month: "Jun", components: 41 },
+  { month: "Jul", components: 61 },
+  { month: "Aug", components: COMPONENT_COUNT },
 ];
 
-const tokenCategoryLabels: Record<TokenCategory, string> = {
-  colour: "Colour",
-  typography: "Typography",
-  spacing: "Spacing",
-  radius: "Radius",
-  border: "Border",
-  shadow: "Shadow",
-  icons: "Icon sizes",
-  motion: "Motion",
-};
-
-const tokensByCategory = (
-  Object.entries(TOKEN_COUNTS) as [TokenCategory, number][]
-).map(([category, value]) => ({ label: tokenCategoryLabels[category], value }));
+/* ============================================
+   Real traffic — monthly page views for
+   robertritacca.com, pulled from GA4 on
+   2026-08-14. Complete months only.
+   ============================================ */
+const monthlyViews = [
+  { label: "Feb", value: 849 },
+  { label: "Mar", value: 205 },
+  { label: "Apr", value: 153 },
+  { label: "May", value: 1202 },
+  { label: "Jun", value: 1018 },
+  { label: "Jul", value: 2350 },
+];
 
 const { sidebarLinks } = getSidebarLinks(workSidebarLinks, "/work/robr0-ds");
 
-/** The pipeline diagram — six labeled boxes connected by chevrons. */
-function PipelineDiagram() {
-  const steps = [
-    { label: "Figma", note: "Foundation + exploration" },
-    { label: "design.md", note: "The written spec" },
-    { label: "Claude Code", note: "Generates React + CSS" },
-    { label: "Storybook", note: "Auto-built docs" },
-    { label: "GitHub", note: "Version control + CI" },
-    { label: "Vercel", note: "~60s to live" },
+/** The three-tier token stack, with a real value at each level. */
+function TokenTiers() {
+  const tiers = [
+    {
+      name: "Primitives",
+      rule: "Raw values. Never referenced by a component.",
+      code: "--primitive-teal-07: #118AB2",
+    },
+    {
+      name: "Semantic tokens",
+      rule: "Intent, not appearance. Light and dark value on every one.",
+      code: "--color-action-primary-bg: var(--primitive-teal-07)",
+    },
+    {
+      name: "Components",
+      rule: "Only ever read the middle layer.",
+      code: "background: var(--color-action-primary-bg)",
+    },
   ];
   return (
-    <div className={styles.pipeline} role="figure" aria-label="Design-to-deployment pipeline">
+    <div className={styles.tiers} role="figure" aria-label="The three-tier token stack">
+      {tiers.map((t, i) => (
+        <div key={t.name} className={styles.tierRow}>
+          <div className={styles.tier}>
+            <span className={styles.tierName}>{t.name}</span>
+            <span className={styles.tierRule}>{t.rule}</span>
+            <code className={styles.tierCode}>{t.code}</code>
+          </div>
+          {i < tiers.length - 1 && (
+            <span className={`material-symbols-rounded ${styles.tierArrow}`} aria-hidden="true">
+              arrow_downward
+            </span>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** What happens when a rule gets broken. */
+function EnforcementChain() {
+  const steps = [
+    { label: "A raw value lands", note: "A hex or a pixel in component CSS" },
+    { label: "Validators run", note: "Before anything builds" },
+    { label: "The build fails", note: "Named file, named line" },
+    { label: "Two ways out", note: "Use the token, or sign the exception" },
+  ];
+  return (
+    <div className={`${styles.pipeline} ${styles.chain}`} role="figure" aria-label="What happens when a rule is broken">
       {steps.map((s, i) => (
         <div key={s.label} className={styles.pipelineRow}>
           <div className={styles.pipelineStep}>
@@ -91,7 +127,7 @@ const foundationTiles = [
   { href: "/foundations/typography", icon: "text_fields", label: "Typography", sub: "One Nunito Sans scale, weight as hierarchy" },
   { href: "/foundations/spatial", icon: "straighten", label: "Spacing & radius", sub: "The spatial tokens every component shares" },
   { href: "/foundations/icons", icon: "interests", label: "Icons", sub: "Material Symbols Rounded, sized to the system" },
-  { href: "/foundations/logos", icon: "verified", label: "Logos", sub: "Brand marks used across the site" },
+  { href: "/foundations/motion", icon: "animation", label: "Motion", sub: "Duration and easing, with a reduced-motion guard" },
 ];
 
 function CatalogTile({ href, icon, label, sub, wide }: { href: string; icon: string; label: string; sub: string; wide?: boolean }) {
@@ -154,13 +190,13 @@ export default function Robr0DsCaseStudy() {
           {/* Page header */}
           <div className={`${styles.pageHeader} animate-in`}>
             <h1 className={styles.pageTitle}>
-              Building robr0 DS: a one-person design system, end to end
+              Building robr0 DS: the rules that hold
             </h1>
           </div>
 
           {/* Subtitle / dek */}
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Why I built a personal design system from scratch, and how six months of working with AI agents turned it from a weekend of components into a system that partly maintains itself.
+            Six months, {COMPONENT_COUNT} components and a published package, spent finding out what makes a design system rule actually stick. The answer was not better documentation.
           </p>
 
           {/* Hero image */}
@@ -179,168 +215,164 @@ export default function Robr0DsCaseStudy() {
 
                 <article className={styles.body}>
                   <p className={styles.lede}>
-                    The site you&apos;re on runs on a design system I built end to end. Tokens, components, theming, docs, the pipeline that ships it: all mine. It started as two days of rules in February 2026. Six months later, it runs parts of its own maintenance. This is the story of the problem I set out to test, the path the system took, and where it stands today.
-                  </p>
-
-                  <h2 id="the-problem">The problem</h2>
-
-                  <p>
-                    Plenty of great design systems exist: shadcn, Mantine, Material, Radix. Any of them would&apos;ve got me a portfolio site in a weekend. But that would have answered the wrong question. The question I actually wanted to test was this: <strong>can one designer, working with AI agents, carry a design system through its entire lifecycle?</strong> Not only drawing the components, but the parts that normally take a team. Documenting them. Testing them. Hardening them for a public repo. Keeping the docs honest as the system grows.
+                    Most of my career has been design systems inside large companies. Intuit, Meta, CIBC. They ended the same way every time. I would set the rules, document them properly, hand them across the boundary to engineering, and then watch them soften. A hardcoded hex here, a one-off radius there. Nobody was a villain about it. The rules simply had nothing holding them in place, and I usually found out months later with no idea why.
                   </p>
 
                   <p>
-                    There were personal reasons too:
+                    robr0 DS started in February 2026 as a way to fix that from the inside, on a project where the boundary did not exist. It is now{" "}
+                    <Link href="/components" className={styles.inlineLink}>{COMPONENT_COUNT} React components</Link>, a package on npm, and the site you are reading. The components turned out to be the easy part.
                   </p>
 
-                  <ul>
-                    <li>I wanted a system that matched <em>my</em> visual voice, not a popular one.</li>
-                    <li>I wanted a forcing function to build a real design-to-code pipeline, not just consume one.</li>
-                    <li>As a portfolio piece, the system itself is the proof: it demonstrates how I think better than any case study about how I think could.</li>
-                  </ul>
+                  <h2 id="the-foundation">The one part I would not delegate</h2>
 
                   <p>
-                    The bet was a pipeline. Design decisions live in a written spec, and from there they flow to production through a chain that runs without a handoff meeting:
+                    Day one was not a button. It was a palette. I hand-picked every colour, built the ramps, wrote the semantic names, and mapped all of it myself in Figma variables. Then three tiers, and nothing skips a tier.
                   </p>
 
-                  <PipelineDiagram />
+                  <TokenTiers />
 
                   <p>
-                    The foundation started in Figma (every token as a variable, every early component as a set of variants), and in those first weeks Claude Code read the file directly through MCP. As the system matured, the source of truth moved into the repo itself: design.md carries the design language now, and Claude Code generates token CSS, React components with the right TypeScript shape, and Storybook stories straight from the written spec. Figma is still where I explore bigger visual changes, but the spec is what ships. I push to GitHub. Vercel deploys both this site and the Storybook in under a minute.
+                    Because every colour token carries a light and a dark value, dark mode is one attribute flipping rather than a second set of components. And colour is only one category: the same treatment runs through type, spacing, radius, elevation, motion and icons. A component in this system does not invent anything. It assembles.
+                  </p>
+
+                  <p>
+                    That foundation took weeks and it was supposed to. What I had underestimated is how much more it matters once an agent is doing the typing. Sloppy tokens do not just slow down a human developer any more. They slow the model down too, and it will cheerfully invent a value to fill the gap. Design debt became AI debt.
+                  </p>
+
+                  <p>
+                    Then the payoff arrived faster than I expected. Once the token layer held, I stopped drawing components in Figma and started describing them in words, and five components became thirty-nine in about two weeks. I gave up strict Figma-to-code parity in the same stretch, which felt like heresy at the time and turned out to be scaffolding: useful while the structure was going up, a bottleneck once it was proven.
+                  </p>
+
+                  <h2 id="the-plateau">Then nothing happened for three months</h2>
+
+                  <LineChart
+                    data={componentGrowth}
+                    xKey="month"
+                    series={[{ dataKey: "components", label: "Components", color: "#118AB2" }]}
+                    title="Components in the library"
+                    subtitle="Counted from git at each month-end, February to August 2026. The flat stretch is the interesting part"
+                    summaryItems={[{ label: "Today", value: COMPONENT_COUNT }]}
+                    height={220}
+                  />
+
+                  <p>
+                    {componentGrowth[0].components} in February. The same number in March, April and May. From outside, that flat line looks like a project stalling. It is the stretch that made everything after it possible.
+                  </p>
+
+                  <p>
+                    What I was building was the layer that tells an agent how to use the foundation.{" "}
+                    <Link href="/blueprints/design" className={styles.inlineLink}>design.md</Link>{" "}
+                    owns how things look. content-design.md owns how sentences read, including the AI writing habits I kept catching in my own shipped copy.{" "}
+                    <Link href="/blueprints/claude" className={styles.inlineLink}>CLAUDE.md</Link>{" "}
+                    sits above both as the operating manual: where facts live, what to generate, what never to do. Alongside them came the first{" "}
+                    <Link href="/skills" className={styles.inlineLink}>skills</Link>, written procedures for recurring work like scaffolding a component or auditing a page.
+                  </p>
+
+                  <p>
+                    What makes those documents different from every design doc I had written before is the audience. Most design documentation is written to be agreed with. These get read and executed before a line of CSS exists, so vagueness that would sail through a review meeting produces garbage immediately. Writing for a machine turned out to be the hardest editing pass my own thinking has ever had.
+                  </p>
+
+                  <p>
+                    In May the site changed shape too. It stopped being a component library with an about page and became my portfolio, with the system as the main exhibit. Six case studies went up in one push. Building pages was no longer the bottleneck. Having something to say was.
+                  </p>
+
+                  <h2 id="enforcement">A document nothing enforces is a preference</h2>
+
+                  <p>
+                    By June I could see the hole in my own plan. I had written the rules down beautifully, and there was still nothing stopping me, or an agent working from my instructions, from quietly ignoring them. Drift is not a discipline problem. It is the default whenever the same fact lives in more than one place.
+                  </p>
+
+                  <p>
+                    So every fact in the repo got exactly one home, and the home has a name: a registry. A small structured file holding the authoritative list for one collection. Components, tokens, skills, case studies. Nothing else in the project states those facts on its own authority, and every other surface is either generated from the registry or checked against it when the build runs.
+                  </p>
+
+                  <p>
+                    The component registry is the clearest case. One file lists every component with its name, category and description. The navigation, the sidebar, the sitemap, the page titles, the card grid and the README count are all built from it. Register a new component and every surface updates itself. Forget to register one and the build fails and names the folder. There is nowhere in this project I can type a component count by hand, including on this page.
+                  </p>
+
+                  <p>
+                    The same idea, pointed at CSS, is what finally made the rules bite:
+                  </p>
+
+                  <EnforcementChain />
+
+                  <p>
+                    A chain of validators runs before anything builds. One of them reads every line of component CSS looking for raw values: a hex code, a pixel number, anything that should have come from a token. There are exactly two ways past it. Replace the value with the right token, or write a comment directly above the line declaring the category and the reason for the exception. No override flag. No just this once.
                   </p>
 
                   <blockquote>
-                    The handoff that usually sits between design and engineering is just gone. The spec is the work.
+                    I cannot cut a corner without leaving a signed note at the scene. Neither can anything I delegate to.
                   </blockquote>
 
-                  <h2 id="the-journey">Six months, month by month</h2>
+                  <p>
+                    CI closed the loop in July. Every Storybook story now runs as a render test in headless Chromium, 620 of them at the time of writing, with accessibility checks that fail the build on a violation. This is the thing I never had in any system I shipped before. It is not mandated in a deck. It is mandated in the machinery.
+                  </p>
 
-                  <h3 id="february-constraints-before-components">February: constraints before components</h3>
+                  <h2 id="publishing">Publishing it broke my assumptions</h2>
 
                   <p>
-                    Day one wasn&apos;t a button. It was rules. The first commits established the architecture the whole system still rests on:{" "}
-                    <Link href="/foundations/colour-primitives" className={styles.inlineLink}>primitives</Link>{" "}
-                    at the bottom,{" "}
-                    <Link href="/foundations/colour-mode" className={styles.inlineLink}>semantic tokens</Link>{" "}
-                    in the middle,{" "}
-                    <Link href="/components" className={styles.inlineLink}>components</Link>{" "}
-                    on top, with light and dark values from the very first day, and one hard rule: <strong>no component CSS ever references a primitive directly.</strong> Everything since has been built inside those lines.
+                    Late July I published the library to npm as{" "}
+                    <a href="https://www.npmjs.com/package/@robr0/design-system" target="_blank" rel="noopener noreferrer" className={styles.inlineLink}>@robr0/design-system</a>, and it immediately exposed something being my own consumer had hidden. The whole thing was built for this site.
                   </p>
 
                   <p>
-                    Primitives are the raw values: every{" "}
-                    <Link href="/foundations/colour-primitives" className={styles.inlineLink}>shade of teal</Link>{" "}
-                    I might ever use, every{" "}
-                    <Link href="/foundations/spatial" className={styles.inlineLink}>spacing step, every radius</Link>. They were designed as variables in Figma, then coded as CSS custom properties, the layer everything else is built on:
-                  </p>
-
-                  <figure className={styles.imagePair}>
-                    <div className={styles.imagePairItem}>
-                      <Image
-                        src="/images/figma primitive variables.png"
-                        alt="Primitive variables defined in Figma"
-                        width={1200}
-                        height={800}
-                        className={styles.pairImage}
-                      />
-                      <figcaption className={styles.pairCaption}>Primitives in Figma: every raw value the system can use.</figcaption>
-                    </div>
-                    <div className={styles.imagePairItem}>
-                      <Image
-                        src="/images/primitive tokens code.png"
-                        alt="Primitive tokens exported as CSS variables"
-                        width={1200}
-                        height={800}
-                        className={styles.pairImage}
-                      />
-                      <figcaption className={styles.pairCaption}>The same primitives in CSS: the layer the code actually reads.</figcaption>
-                    </div>
-                  </figure>
-
-                  <p>
-                    Semantic tokens give those primitives meaning. <code>--primitive-teal-07</code> becomes <code>--color-action-primary-bg</code>. The semantic layer is also where{" "}
-                    <Link href="/foundations/colour-mode" className={styles.inlineLink}>light and dark mode</Link>{" "}
-                    diverge (same component CSS, different mapping underneath):
-                  </p>
-
-                  <figure className={styles.imagePair}>
-                    <div className={styles.imagePairItem}>
-                      <Image
-                        src="/images/figma variables.png"
-                        alt="Semantic tokens defined in Figma"
-                        width={1200}
-                        height={800}
-                        className={styles.pairImage}
-                      />
-                      <figcaption className={styles.pairCaption}>Semantic tokens in Figma: primitives wrapped in intent.</figcaption>
-                    </div>
-                    <div className={styles.imagePairItem}>
-                      <Image
-                        src="/images/coded semantic tokens.png"
-                        alt="Semantic tokens exported as CSS variables"
-                        width={1200}
-                        height={800}
-                        className={styles.pairImage}
-                      />
-                      <figcaption className={styles.pairCaption}>The same semantic layer in code, theme-aware.</figcaption>
-                    </div>
-                  </figure>
-
-                  <p>
-                    Those constraints paid for themselves almost immediately. Within 48 hours a separate documentation site was live (the one you&apos;re reading), importing the actual library components through a path alias, so every example on it is the real thing. Then came the sprint: on February 16th, one extraordinary day took the library from a handful of components to dozens (inputs, checkboxes, tabs, tables, badges, accordions, dropdowns), each with Storybook stories and a showcase page. What kept that day from producing a pile of parts instead of a system was the consistency passes threaded between the components: one icon scale, one spacing scale named to match Figma exactly, focus states everywhere. A week later the library took on data visualisation: eight chart components, application shells, and two dashboard demos proving it could compose real product surfaces, not just isolated widgets.
+                    Of the 68 components at the time, four forwarded a ref and none extended their native element’s props. Nobody could attach a ref, pass a data attribute, or register a field with a form library. Perfectly good components that were unusable inside anyone else’s application. Eighteen were rebuilt. An accessibility pass in the same stretch fixed 49 violations, nine of which were real component bugs rather than markup slips: DatePicker claimed a grid role it had never implemented, and icon-only buttons had no accessible name at all.
                   </p>
 
                   <p>
-                    By the end of February the library stood at 39 components. And then, for three months, that number barely moved. The plateau turned out to be the most interesting part of the story.
+                    That is the lesson I would hand to anyone building a system for a single product. Using your own system catches taste problems. It does not catch contract problems. Only a second consumer finds those, and publishing is the cheapest way to invent one.
                   </p>
 
-                  <h3 id="spring-the-system-writes-itself-down">Spring: the system writes itself down</h3>
+                  <h2 id="the-chat">Teaching the site to answer for itself</h2>
 
                   <p>
-                    What happened during the plateau wasn&apos;t rest: the project&apos;s centre of gravity shifted from building components to building <em>the system around the system</em>. In April, the first Claude skills appeared: repeatable QA work (heuristic analysis, accessibility audits, API consistency reviews) packaged as instructions an AI agent can run on demand. Shortly after, the documents that govern the build became first-class content:{" "}
-                    <Link href="/blueprints/design" className={styles.inlineLink}>design.md</Link>, the full design spec, and{" "}
-                    <Link href="/blueprints/claude" className={styles.inlineLink}>CLAUDE.md</Link>, the instructions that steer the agents, were both published on the site as Blueprints. The idea underneath: everything an AI needs to build this system well is a document, and documents can be shipped, shared, and reused.
+                    August’s project was a chat that answers questions about my work and this system, on the page it is describing. I was lead design architect on{" "}
+                    <Link href="/work/intuit-agent-chat" className={styles.inlineLink}>Intuit’s agent chat platform</Link>, so I had a build order I trusted: build the parts first, compose them on a scripted fake transport that emits the same events a real model will, and only then wire up a backend.
                   </p>
 
-                  <h3 id="may-from-component-site-to-portfolio">May: from component site to portfolio</h3>
-
                   <p>
-                    Then the biggest identity shift in the project&apos;s history. The site stopped being &ldquo;robr0 DS with an about page&rdquo; and became my portfolio, with the design system as its flagship exhibit. A mega navigation, breadcrumbs, a contact page, and six case studies in one sustained push, including the one you&apos;re reading now. The system had become good enough at building pages that the bottleneck was no longer building. It was having something to say.
+                    Designing against a fake model is the move I would repeat on any project. It let me judge streaming pace and scroll behaviour as pure design work, with no API cost and no latency variance muddying the read. Most of two days went into scrolling alone. My first attempt pushed the conversation up from the bottom as each turn landed, and it read as jumpy the moment a real answer streamed in at an uneven pace. What worked was inverting it: let a new turn float to the top of the viewport with a spacer sized to the exact shortfall, handed back as the answer fills it in. Nothing jumps, because the scroll range never moves.
                   </p>
 
-                  <h3 id="june-reaching-outward">June: reaching outward</h3>
-
                   <p>
-                    Early summer was about the world outside the repo: a technical SEO pass, structured data, the move to a proper domain. The analytics setup was repaired and gained a pull script for on-demand reporting, a small utility that would quietly become the foundation of something bigger a few weeks later. A Writing section began auto-syncing my articles from Substack, and a run of polish closed long-standing irritations, including a theme-toggle flicker bug that had survived two previous fixes.
+                    The hard part turned out to be the corpus. I found that out by asking my own chat for my email address, and being told the site does not publish one while the address sat in plain text on the contact page. Page prose now flows into the corpus straight off the filesystem, so a new page reaches the chat on its next build with nothing to remember. Structured facts opt in explicitly. Nothing reaches the model that a page did not deliberately publish, and the build fails on anything that tries another way in.
                   </p>
 
-                  <h3 id="july-the-system-starts-to-maintain-itself">July: the system starts to maintain itself</h3>
-
                   <p>
-                    This is where the original bet paid off. In the span of three weeks:
+                    Then I tested it like a product rather than a feature. A golden set of questions written from the seats of the people who actually visit, a recruiter, a designer, a developer, plus a few hostile ones, run end to end through the real route. The first pass scored 71 of 78. After the fixes, 77. The one still failing was its own best find: the corpus had been teaching the model about a page that no longer existed.
                   </p>
 
-                  <ul>
-                    <li><strong>The first loop went live.</strong> A skill that runs every week on a schedule: it reads the site&apos;s analytics, forms one falsifiable hypothesis about the words on a page, implements the change on a branch, and writes me a report for approval. That analytics pull script from June was exactly the foundation it needed.</li>
-                    <li><strong>Numbers stopped being able to lie.</strong> Every count and curated list displayed on this site (components, skills, case studies, journal entries) now derives from a registry file checked by a build-time validator. The component count on this page comes from one; it can never silently go stale.</li>
-                    <li><strong>A security scrub</strong> audited the public repo the way an outside attacker would read it, and the hardening it produced now travels with every deploy.</li>
-                    <li><strong>A gap analysis against mature design systems</strong> ranked what the library was still missing, and the highest-impact components shipped. Together with a batch of content components, that took the library from 41 to 51 in a single month.</li>
-                    <li><strong>A real quality gate arrived.</strong> CI now runs lint, three builds, and every Storybook story as a render test in headless Chromium (434 stories at the time it shipped), plus a drift guard that fails the build if generated docs fall out of sync with the code.</li>
-                  </ul>
+                  <h2 id="impact">What it added up to</h2>
+
+                  <BarChart
+                    data={monthlyViews}
+                    title="Page views by month"
+                    subtitle="robertritacca.com, February to July 2026, from Google Analytics"
+                    dataLabel="Page views"
+                    summaryItems={[
+                      { label: "April floor", value: 153 },
+                      { label: "July", value: 2350 },
+                    ]}
+                    height={220}
+                  />
 
                   <p>
-                    The through-line: in February, AI helped me build the system. By July, the system was running parts of its own maintenance and reporting back to me.
+                    Monthly page views went from a floor of 153 in April to 2,350 in July. The first thirteen days of August alone served 1,489. LinkedIn is the largest referrer at 297 sessions, ahead of Google organic at 189 and my own Substack at 84. The two flat months in that chart are the same two flat months in the component chart above, which is not a coincidence: I was writing documents nobody could see yet.
                   </p>
 
-                  <h2 id="where-it-is-now">Where it is now</h2>
+                  <p>
+                    The package has shipped six versions since 26 July, 0.1.0 through 0.6.0, each published with provenance. This site installs it by name like any other consumer, so a packaging mistake breaks my own build before it reaches anyone else’s.
+                  </p>
 
                   <p>
-                    <Link href="/components" className={styles.inlineLink}>{COMPONENT_COUNT} React components</Link>, full Storybook docs,{" "}
-                    <Link href="/foundations/typography" className={styles.inlineLink}>a single type scale</Link>,{" "}
-                    <Link href="/foundations/colour-mode" className={styles.inlineLink}>light and dark themes</Link>, a CI quality gate, a weekly growth loop, and the entire site you&apos;re reading right now. Here&apos;s a live slice: every element below is a real component from the system, and the charts show the system&apos;s real history, measured from git:
+                    And the outcome I actually care about. In June I signed an offer as Principal Product Designer on CoreX AI at Gusto, defining how AI works, behaves and earns trust across their payroll, benefits and HR platform. I started in August. This site was the portfolio I submitted, and the system came up directly in the conversations. It is not a number I can put in a chart, but it is the one that mattered.
+                  </p>
+
+                  <p>
+                    Everything below is a real component from the library, rendered from the same token layer as the rest of this page:
                   </p>
 
                   <div className={styles.liveDemo} aria-label="Live components from robr0 DS">
-                    {/* Controls */}
                     <div className={styles.demoRow}>
                       <Button label="Primary" variant="primary" size="compact" />
                       <Button label="Secondary" variant="secondary" size="compact" />
@@ -352,8 +384,6 @@ export default function Robr0DsCaseStudy() {
                       <Badge variant="warning" label="Warning" />
                       <Badge variant="error" label="Error" />
                       <Badge variant="neutral" label="Neutral" />
-                    </div>
-                    <div className={styles.demoRow}>
                       <SegmentedControl
                         segments={[
                           { label: "Day", value: "day" },
@@ -363,107 +393,39 @@ export default function Robr0DsCaseStudy() {
                         activeSegment={viewSegment}
                         onSegmentChange={setViewSegment}
                       />
-                      <div style={{ flex: 1, minWidth: 200 }}>
-                        <ProgressBar value={75} showLabel />
-                      </div>
                     </div>
-
-                    {/* Charts */}
-                    <LineChart
-                      data={systemGrowth}
-                      xKey="month"
-                      series={[
-                        { dataKey: "components", label: "Components", color: "#118AB2" },
-                        { dataKey: "tokens", label: "Tokens", color: "#06D6A0" },
-                      ]}
-                      title="System growth"
-                      subtitle="Registered components and semantic tokens at each month-end, Feb – Jul 2026. The spring plateau is when the system around the system was built"
-                      summaryItems={[
-                        { label: "Components", value: COMPONENT_COUNT },
-                        { label: "Semantic tokens", value: TOKEN_COUNT },
-                      ]}
-                      height={240}
-                    />
-
-                    <BarChart
-                      data={tokensByCategory}
-                      title="Tokens by category"
-                      subtitle={`What ${TOKEN_COUNT} semantic tokens cover`}
-                      dataLabel="Tokens"
-                      summaryItems={[{ label: "Total", value: TOKEN_COUNT }]}
-                      height={220}
-                    />
-
                     <Alert
                       variant="positive"
-                      title="It&rsquo;s the same system the rest of this page uses."
-                      description="Every component above (buttons, badges, segmented control, progress bar, charts) is a real React component from robr0 DS, rendered from the same token layer."
+                      title="Both charts above are components too."
+                      description="Same library, same tokens, installed from npm exactly the way a stranger would install it."
                     />
                   </div>
 
-                  <h2 id="browse-the-system">Browse the system</h2>
+                  <h2 id="what-changed">What changed in how I work</h2>
 
                   <p>
-                    Every layer described above has its own documented page. This is the map. Each tile is the real reference I work from, the same one any visitor can read:
+                    The outcome that surprised me was where my judgment moved. The hours that used to go into pushing pixels now go into writing specifications precise enough for an agent to execute. The thinking is the deliverable. I can try three directions in an afternoon and keep one. The handoff between design and engineering is not shortened, it is gone: the design language lives in one written spec, in version control, next to the code it governs.
+                  </p>
+
+                  <p>
+                    None of that replaces design judgment. It moves where judgment gets applied, earlier, at the spec, before any code or visuals exist. And the rules hold now, which was the whole test. One rule nobody can break is worth more than fifty everybody agrees with.
+                  </p>
+
+                  <h2 id="browse">Browse the system</h2>
+
+                  <p>
+                    Every layer described above has its own documented page. Each tile is the real reference I work from:
                   </p>
 
                   <MiniCatalog />
 
                   <p>
-                    And the story keeps writing itself, literally. The{" "}
+                    The{" "}
                     <Link href="/project-journal" className={styles.inlineLink}>project journal</Link>{" "}
-                    is a build-progression timeline of everything described above, kept current by one of the system&apos;s own scheduled loops: every two weeks it reads the git history since its last visit and consolidates it into stories.
-                  </p>
-
-                  <h2 id="what-changed-in-my-practice">What changed in my practice</h2>
-
-                  <p>
-                    The most interesting outcome wasn&apos;t the system itself. It was how building this way rewired how I work:
-                  </p>
-
-                  <ul>
-                    <li><strong>The spec is the work.</strong> The time that used to go into pushing pixels now goes into writing clear specs that an AI agent can execute. The thinking is the deliverable.</li>
-                    <li><strong>Speed compresses iteration.</strong> I can try three layout directions in an afternoon and keep the best one. Earlier in my career that was a week.</li>
-                    <li><strong>Designer-to-dev handoff is gone.</strong> The design language lives in one written spec, in version control, next to the code it governs. When the design changes, the spec changes, and the code follows in the same gesture.</li>
-                    <li><strong>The system reports to me now.</strong> Loops run the routine maintenance (analytics reviews, journal updates) and hand me a branch and a report. My judgment moved from doing the work to approving it.</li>
-                  </ul>
-
-                  <p>
-                    None of this replaces design judgment. It moves where judgment is applied: earlier, at the spec level, before code or visuals exist.
-                  </p>
-
-                  <h2 id="the-artifacts-im-leaving-open">The artefacts I&apos;m leaving open</h2>
-
-                  <p>
-                    The whole system is on GitHub. Five artefacts make the approach reusable on any project you start tomorrow:
-                  </p>
-
-                  <ul>
-                    <li>
-                      <a href="https://www.npmjs.com/package/@robr0/design-system" target="_blank" rel="noopener noreferrer" className={styles.inlineLink}>The npm package</a>: <code>@robr0/design-system</code>, published with provenance; this site installs it like any other consumer. <Link href="/docs/get-started" className={styles.inlineLink}>Get started</Link> covers install and theming.
-                    </li>
-                    <li>
-                      <Link href="/playground" className={styles.inlineLink}>The playground</Link>: re-theme the whole system live and copy the CSS it generates straight into your own project.
-                    </li>
-                    <li>
-                      <Link href="/blueprints/claude" className={styles.inlineLink}>Claude MD</Link>: the codebase context any AI agent can read to understand the project.
-                    </li>
-                    <li>
-                      <Link href="/blueprints/design" className={styles.inlineLink}>Design MD</Link>: the design language compressed into a single markdown reference.
-                    </li>
-                    <li>
-                      <Link href="/skills" className={styles.inlineLink}>Skills</Link>: small Claude Code skill files for the repetitive work (scaffolding components, auditing tokens, running pre-deploy checks, accessibility reviews).
-                    </li>
-                  </ul>
-
-                  <p>
-                    The last three are plain markdown files. Download one, drop it into your project, point Claude at it. The pipeline isn&apos;t magic: it&apos;s a stack of small written agreements an AI can act on.
-                  </p>
-
-                  <h2 id="whats-next">What&apos;s next</h2>
-
-                  <p>
-                    The hardening July started has landed: the accessibility checks are now build-blocking (an axe violation fails CI, with the colour-contrast criteria deliberately deferred while the action colour is redesigned), and Chromatic visual regression snapshots every story in both themes against an accepted baseline, run on demand (a budget choice rather than an unfinished state). What&apos;s left is autonomy: more <Link href="/loops" className={styles.inlineLink}>loops</Link> that don&apos;t wait to be asked. The weekly copy experiments and the biweekly journal are the first two, not the last. The experiment continues, and so far the answer to the original question is yes: one designer really can run the whole lifecycle, as long as the system helps.
+                    keeps its own timeline current: a scheduled loop reads the git history every two weeks and consolidates it into entries. I have written up the parts that generalise beyond my repo in three pieces:{" "}
+                    <Link href="/writing/design-still-derisks-dev" className={styles.inlineLink}>Design still derisks dev</Link>,{" "}
+                    <Link href="/writing/youre-not-building-what-you-think" className={styles.inlineLink}>You’re not building what you think you’re building</Link>, and{" "}
+                    <Link href="/writing/how-to-add-a-chat-to-your-own-site" className={styles.inlineLink}>How to add a chat to your own site</Link>.
                   </p>
                 </article>
               </section>
@@ -559,6 +521,17 @@ export default function Robr0DsCaseStudy() {
                     </div>
                   </a>
 
+                  <Link href="/playground" className={styles.linkItem}>
+                    <Image src="/logos/rr.svg" alt="" width={28} height={28} className={styles.linkLogo} />
+                    <div className={styles.linkContent}>
+                      <div className={styles.linkTitle}>
+                        <span>Playground</span>
+                        <span className="material-symbols-rounded" aria-hidden="true">arrow_forward</span>
+                      </div>
+                      <span className={styles.linkSub}>Re-theme the system live</span>
+                    </div>
+                  </Link>
+
                   <a
                     href="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26?node-id=113-7533"
                     target="_blank"
@@ -575,30 +548,16 @@ export default function Robr0DsCaseStudy() {
                     </div>
                   </a>
 
-                  <Link href="/docs" className={styles.linkItem}>
+                  <Link href="/docs/get-started" className={styles.linkItem}>
                     <Image src="/logos/rr.svg" alt="" width={28} height={28} className={styles.linkLogo} />
                     <div className={styles.linkContent}>
                       <div className={styles.linkTitle}>
-                        <span>robr0 DS docs</span>
+                        <span>Get started</span>
                         <span className="material-symbols-rounded" aria-hidden="true">arrow_forward</span>
                       </div>
-                      <span className={styles.linkSub}>System overview + artifacts</span>
+                      <span className={styles.linkSub}>Install it and theme it yourself</span>
                     </div>
                   </Link>
-                  <a
-                    href="https://robertritacca1.substack.com/p/design-still-derisks-dev"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.linkItem}
-                  >
-                    <Image src="/logos/substack.svg" alt="" width={28} height={28} className={styles.linkLogo} />
-                    <div className={styles.linkContent}>
-                      <div className={styles.linkTitle}>
-                        Design still derisks dev
-                      </div>
-                      <span className={styles.linkSub}>Article on Substack</span>
-                    </div>
-                  </a>
                 </div>
               </section>
             </aside>

@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { pageOpenGraph } from "@/config/navigation";
 import { buildCaseStudyJsonLd } from "@/lib/structuredData";
 
-const title = "Building robr0 DS: a one-person design system, end to end";
+const title = "Building robr0 DS: the rules that hold";
 const description =
-  "Why I built a personal design system from scratch, and how an AI-augmented spec-to-code pipeline let me ship a polished site alone.";
+  "Six months building a design system where breaking a rule fails the build: tokens by hand, documents an agent executes, and validators that make the rules stick.";
 
 export const metadata: Metadata = {
   title,

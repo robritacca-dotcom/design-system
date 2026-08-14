@@ -42,8 +42,8 @@
     },
     {
       "href": "/work/robr0-ds",
-      "title": "Building robr0 DS: a one-person design system, end to end",
-      "dek": "Why I built a personal design system and the AI-augmented pipeline behind this site",
+      "title": "Building robr0 DS: the rules that hold",
+      "dek": "Six months building a design system where breaking a rule fails the build",
       "companyName": "Personal",
       "companyLogo": "/logos/rr.svg",
       "coverSrc": "/images/heroes/robr0-ds.png"
