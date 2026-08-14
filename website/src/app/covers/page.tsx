@@ -10,6 +10,10 @@ import {
 } from "../../components/covers/IntuitAgentChatCover";
 import { MetaOfferDraftCover } from "../../components/covers/MetaOfferDraftCover";
 import { MetaOfferSummaryCover } from "../../components/covers/MetaOfferSummaryCover";
+import {
+  SiteHomeCover,
+  SitePlaygroundCover,
+} from "../../components/covers/SiteCovers";
 import { openSans } from "./fonts";
 import {
   TurboTaxChatGptCover,
@@ -121,6 +125,22 @@ export default function CoverMocksPage() {
         <p className={styles.label}>Meta — offer draft, 1513 × 1076</p>
         <div style={{ width: 1513 }}>
           <MetaOfferDraftCover />
+        </div>
+      </section>
+
+      <section className={styles.mock}>
+        <p className={styles.label}>robertritacca.com — home, 1440 × 900</p>
+        <div style={{ width: 1440 }}>
+          <SiteHomeCover />
+        </div>
+      </section>
+
+      <section className={styles.mock}>
+        <p className={styles.label}>
+          robertritacca.com — playground chat, 1440 × 900
+        </p>
+        <div style={{ width: 1440 }}>
+          <SitePlaygroundCover />
         </div>
       </section>
     </main>
