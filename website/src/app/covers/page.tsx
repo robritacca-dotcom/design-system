@@ -8,6 +8,7 @@ import {
   IntuitAgentChatCover,
   IntuitAgentChatCoverMobile,
 } from "../../components/covers/IntuitAgentChatCover";
+import { MetaOfferDraftCover } from "../../components/covers/MetaOfferDraftCover";
 import { MetaOfferSummaryCover } from "../../components/covers/MetaOfferSummaryCover";
 import { openSans } from "./fonts";
 import {
@@ -113,6 +114,13 @@ export default function CoverMocksPage() {
         </p>
         <div style={{ width: 1638 }}>
           <MetaOfferSummaryCover />
+        </div>
+      </section>
+
+      <section className={styles.mock}>
+        <p className={styles.label}>Meta — offer draft, 1513 × 1076</p>
+        <div style={{ width: 1513 }}>
+          <MetaOfferDraftCover />
         </div>
       </section>
     </main>
