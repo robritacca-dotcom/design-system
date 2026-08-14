@@ -40,7 +40,7 @@ import {
   UpChevronIcon,
   UserIcon,
 } from "./augmenta-cover-art";
-import { CoverFrame } from "./CoverFrame";
+import { CoverFrame, type CoverProps } from "./CoverFrame";
 import styles from "./AugmentaCover.module.css";
 
 /*
@@ -287,18 +287,14 @@ function TopBar({
 }
 
 /** The Design Rules frame: 1440 x 900, node 4026:58513. */
-export function AugmentaDesignRulesCover({
-  className,
-}: {
-  className?: string;
-}) {
+export function AugmentaDesignRulesCover(props: CoverProps) {
   return (
     <CoverFrame
       width={1440}
       height={900}
       ground="paper"
       tone="augmenta"
-      className={className}
+      {...props}
       label="The Augmenta study screen: a design-rule tree beside a table of sixteen generated rules."
     >
       <div className={styles.stage}>
@@ -614,18 +610,14 @@ const STATUS_TAG = {
 } as const;
 
 /** The Solution List frame: the 1440 x 900 artboard, node 4026:61958. */
-export function AugmentaSolutionListCover({
-  className,
-}: {
-  className?: string;
-}) {
+export function AugmentaSolutionListCover(props: CoverProps) {
   return (
     <CoverFrame
       width={1440}
       height={900}
       ground="paper"
       tone="augmenta"
-      className={className}
+      {...props}
       label="The Augmenta solutions table: twelve generated solutions with their conduit, bend, junction and cost estimates."
     >
       <div className={`${styles.stage} ${styles.stageList}`}>
@@ -860,14 +852,14 @@ function OrientationCube() {
 }
 
 /** The Solution viewer frame: 1440 x 900, node 4026:61305. */
-export function AugmentaSolutionCover({ className }: { className?: string }) {
+export function AugmentaSolutionCover(props: CoverProps) {
   return (
     <CoverFrame
       width={1440}
       height={900}
       ground="paper"
       tone="augmenta"
-      className={className}
+      {...props}
       label="The Augmenta 3D viewer: a wireframe building model with a generated conduit route running through it."
     >
       <div className={styles.stage}>

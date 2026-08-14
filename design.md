@@ -501,7 +501,7 @@ Default icons (Material Symbols Rounded): `info`, `check_circle`, `warning`, `er
 
 ### Card
 
-**`ds-card`** — Table-of-contents navigation tile. Two parts: `.ds-card__preview` (content/component preview area) + `.ds-card__title` (h3 label below). Used in component/foundations index grids. When `interactive`, gains `role="button"` and keyboard support. Background: `--color-bg-container-primary-semi`; radius: `--radius-xl` (24px). Interactive and case-study variants lift on hover with `0 8px 24px rgba(0,0,0,0.3)` — the system's one sanctioned container shadow (see Do's and Don'ts).
+**`ds-card`** — Table-of-contents navigation tile. Two parts: `.ds-card__preview` (content/component preview area) + `.ds-card__title` (h3 label below). Used in component/foundations index grids. When `interactive`, gains `role="button"` and keyboard support. Background: `--color-bg-container-primary-semi`; radius: `--radius-xl` (24px). Interactive and case-study variants lift on hover with `0 8px 24px rgba(0,0,0,0.3)` — the system's one sanctioned container shadow (see Do's and Don'ts). The case-study variant's cover slot takes either an image (`coverSrc`) or drawn content (`cover` — an SVG, a chart, a live preview); both fill the same fixed-ratio box, so a grid keeps one cover shape whichever kind each card was given.
 
 ### EntityCard
 

@@ -10,7 +10,7 @@ import {
   PlusIcon,
   SendIcon,
 } from "./intuit-cover-art";
-import { CoverFrame } from "./CoverFrame";
+import { CoverFrame, type CoverProps } from "./CoverFrame";
 import styles from "./IntuitAgentChatCover.module.css";
 
 /*
@@ -74,14 +74,14 @@ function Composer({ mobile = false }: { mobile?: boolean }) {
 }
 
 /** The desktop frame: 1440 x 964, node 124823:12866. */
-export function IntuitAgentChatCover({ className }: { className?: string }) {
+export function IntuitAgentChatCover(props: CoverProps) {
   return (
     <CoverFrame
       width={1440}
       height={964}
       ground="plain"
       tone="intuit"
-      className={className}
+      {...props}
       label="The Intuit Agent Chat welcome screen, with a greeting, five conversation starters and the composer."
     >
       <div className={styles.stage}>
@@ -156,18 +156,14 @@ export function IntuitAgentChatCover({ className }: { className?: string }) {
 }
 
 /** The mobile frame: 428 x 964, node 124823:12867. */
-export function IntuitAgentChatCoverMobile({
-  className,
-}: {
-  className?: string;
-}) {
+export function IntuitAgentChatCoverMobile(props: CoverProps) {
   return (
     <CoverFrame
       width={428}
       height={964}
       ground="plain"
       tone="intuit"
-      className={className}
+      {...props}
       label="The Intuit Agent Chat panel answering a question about cash flow with a long formatted article."
     >
       <div className={styles.stageMobile}>

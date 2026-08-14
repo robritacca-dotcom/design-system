@@ -1,5 +1,5 @@
 import { AvatarGlyph, SpotUpload } from "./turbotax-cover-art";
-import { CoverFrame } from "./CoverFrame";
+import { CoverFrame, type CoverProps } from "./CoverFrame";
 import styles from "./TurboTaxClaudeCover.module.css";
 
 /*
@@ -422,14 +422,14 @@ function CollapsedSidebar() {
 }
 
 /** The desktop frame: 1440 x 972, node 3026:3298. */
-export function TurboTaxClaudeCover({ className }: { className?: string }) {
+export function TurboTaxClaudeCover(props: CoverProps) {
   return (
     <CoverFrame
       width={1440}
       height={972}
       ground="warm"
       tone="claude"
-      className={className}
+      {...props}
       label="The TurboTax tax-document checklist running as an app inside the Claude desktop chat interface."
     >
       <div className={styles.stage}>
@@ -459,18 +459,14 @@ export function TurboTaxClaudeCover({ className }: { className?: string }) {
 }
 
 /** The mobile frame: 440 x 972, node 3026:3234. */
-export function TurboTaxClaudeCoverMobile({
-  className,
-}: {
-  className?: string;
-}) {
+export function TurboTaxClaudeCoverMobile(props: CoverProps) {
   return (
     <CoverFrame
       width={440}
       height={972}
       ground="warm"
       tone="claude"
-      className={className}
+      {...props}
       label="The TurboTax tax-document checklist running as an app inside the Claude mobile chat interface."
     >
       <div className={styles.stageMobile}>

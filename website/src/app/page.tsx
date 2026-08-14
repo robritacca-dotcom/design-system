@@ -4,6 +4,7 @@ import MegaNav from "../components/MegaNav/MegaNav";
 import { FullBleedBackground } from "../components/BlurBackground/BlurBackground";
 import ScrollCue from "../components/ScrollCue/ScrollCue";
 import FadeDivider from "../components/FadeDivider/FadeDivider";
+import { caseStudyCover } from "@/components/covers/case-study-covers";
 import { dsMegaItems } from "@/config/navigation";
 import { getArticles, coverPlaceholder } from "@/lib/substack";
 import { caseStudies } from "@/data/case-studies";
@@ -18,6 +19,10 @@ export const revalidate = 3600;
    Adding a case study or publishing a post reflows this page by itself. */
 const [featuredWork, ...moreWork] = caseStudies;
 const workItems = moreWork.slice(0, 4);
+
+/* The featured study's redrawn cover, when it has one — .cardCover is 16:10,
+   which is the covers' own ratio, so the frame needs no aspect here. */
+const featuredCover = caseStudyCover(featuredWork.href);
 
 /* The employer strip is hand-curated, current role first, same as the
    timeline on /about that owns the full history — keep the two in step
@@ -105,13 +110,15 @@ export default async function HomePage() {
 
             <Link href={featuredWork.href} className={styles.featured}>
               <span className={styles.cardCover}>
-                <Image
-                  src={featuredWork.coverSrc}
-                  alt=""
-                  fill
-                  sizes="(max-width: 959px) 100vw, 370px"
-                  className={styles.cardCoverImg}
-                />
+                {featuredCover ?? (
+                  <Image
+                    src={featuredWork.coverSrc}
+                    alt=""
+                    fill
+                    sizes="(max-width: 959px) 100vw, 370px"
+                    className={styles.cardCoverImg}
+                  />
+                )}
                 <span className={styles.coverBadge}>
                   <Image
                     src={featuredWork.companyLogo}

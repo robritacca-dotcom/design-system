@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { SitePlaygroundCover } from "@/components/covers/SiteCovers";
 import { COMPONENT_COUNT } from "@robr0/design-system/components/registry";
 import { TOKEN_COUNT, TOKEN_COUNTS, type TokenCategory } from "@robr0/design-system/tokens/registry";
 import Link from "next/link";
@@ -164,14 +165,7 @@ export default function Robr0DsCaseStudy() {
 
           {/* Hero image */}
           <figure className={`${styles.cover} animate-in animate-delay-2`}>
-            <Image
-              src="/images/heroes/robr0-ds.png"
-              alt="robr0 DS design system overview"
-              width={1440}
-              height={900}
-              priority
-              className={styles.coverImage}
-            />
+            <SitePlaygroundCover aspect={16 / 10} className={styles.coverImage} />
           </figure>
 
           {/* Two-column body — mirrors the embedded-ai-turbotax case study */}

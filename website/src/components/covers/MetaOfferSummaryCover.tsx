@@ -7,7 +7,7 @@ import {
   BrandSwooshes,
   InstagramMark,
 } from "./meta-cover-art";
-import { CoverFrame } from "./CoverFrame";
+import { CoverFrame, type CoverProps } from "./CoverFrame";
 import styles from "./MetaOfferSummaryCover.module.css";
 
 /*
@@ -95,14 +95,14 @@ function CompensationCell({
 }
 
 /** The Offer Summary frame: 1638.238 x 1063.988, node 931:1839. */
-export function MetaOfferSummaryCover({ className }: { className?: string }) {
+export function MetaOfferSummaryCover(props: CoverProps) {
   return (
     <CoverFrame
       width={1638.238}
       height={1063.988}
       ground="mist"
       tone="meta"
-      className={className}
+      {...props}
       label="Meta's candidate-facing offer summary: role details, a compensation breakdown chart and explainer documents."
     >
       <div className={styles.stage}>

@@ -21,7 +21,12 @@ import styles from "./CoverFrame.module.css";
  * where the screen should read as the subject rather than as an object.
  */
 
-/** The shared cover box: 16:10, the ratio most of the source screens sit near. */
+/**
+ * The shared cover box: 16:10, the ratio most of the source screens sit near.
+ * A container with a different ratio passes `aspect` and gets a frame that
+ * fills it; the height stays 1000 either way, so the card radius and shadow
+ * below keep meaning the same thing at every ratio.
+ */
 export const FRAME = { w: 1600, h: 1000 } as const;
 
 /** How much of the frame the mock may occupy, per treatment. */
@@ -57,6 +62,22 @@ const TONE_CLASS: Record<Tone, string> = {
   site: styles.toneSite,
 };
 
+/**
+ * What every cover accepts and hands straight to its frame. A cover's own
+ * signature is this and nothing else — the drawing is fixed, only the box
+ * around it moves.
+ */
+export type CoverProps = {
+  className?: string;
+  /**
+   * The frame's ratio, width over height. Left out, a cover is 16:10; set it
+   * to the ratio of the slot the cover is going into, so the gradient fills
+   * the container instead of letterboxing inside it.
+   */
+  aspect?: number;
+  variant?: "thumb" | "bleed";
+};
+
 export function CoverFrame({
   width,
   height,
@@ -64,9 +85,10 @@ export function CoverFrame({
   ground,
   tone,
   variant = "thumb",
+  aspect = FRAME.w / FRAME.h,
   className,
   children,
-}: {
+}: CoverProps & {
   /** The mock's native width, in its own pixels. */
   width: number;
   /** The mock's native height, in its own pixels. */
@@ -76,20 +98,21 @@ export function CoverFrame({
   ground?: Ground;
   /** The product whose colours the thumbnail gradient is drawn from. */
   tone?: Tone;
-  variant?: "thumb" | "bleed";
-  className?: string;
   children: React.ReactNode;
 }) {
   const thumb = variant === "thumb";
   const inset = thumb ? INSET.thumb : INSET.bleed;
 
+  const frameH = FRAME.h;
+  const frameW = frameH * aspect;
+
   /* Contain, not cover: a cover crop would cut title bars off the wide
      screens and gut the narrow ones. */
-  const scale = Math.min((FRAME.w * inset) / width, (FRAME.h * inset) / height);
+  const scale = Math.min((frameW * inset) / width, (frameH * inset) / height);
   const w = width * scale;
   const h = height * scale;
-  const x = (FRAME.w - w) / 2;
-  const y = (FRAME.h - h) / 2;
+  const x = (frameW - w) / 2;
+  const y = (frameH - h) / 2;
 
   /* The card's radius is specified in frame units, so it has to be divided
      back out for the mock, which lives in its own scaled coordinates. */
@@ -98,14 +121,14 @@ export function CoverFrame({
   return (
     <svg
       className={[styles.cover, className].filter(Boolean).join(" ")}
-      viewBox={`0 0 ${FRAME.w} ${FRAME.h}`}
+      viewBox={`0 0 ${frameW} ${frameH}`}
       preserveAspectRatio="xMidYMid meet"
       xmlns="http://www.w3.org/2000/svg"
       role="img"
       aria-label={label}
     >
       {thumb ? (
-        <foreignObject x="0" y="0" width={FRAME.w} height={FRAME.h}>
+        <foreignObject x="0" y="0" width={frameW} height={frameH}>
           <div
             className={[styles.gradient, tone ? TONE_CLASS[tone] : ""]
               .filter(Boolean)
@@ -119,8 +142,8 @@ export function CoverFrame({
             .join(" ")}
           x="0"
           y="0"
-          width={FRAME.w}
-          height={FRAME.h}
+          width={frameW}
+          height={frameH}
         />
       )}
 

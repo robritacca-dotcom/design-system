@@ -106,6 +106,15 @@
   background: var(--color-bg-container-secondary);
 }
 
+/* A drawn cover (the `cover` prop) fills the same slot the image would, so a
+   grid of cards keeps one cover shape whichever kind it was given. */
+.ds-card--case-study__cover-slot,
+.ds-card--case-study__cover-slot > * {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .ds-card--case-study__cover-image {
   width: 100%;
   height: 100%;

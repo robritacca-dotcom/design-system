@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { MetaOfferSummaryCover } from "@/components/covers/MetaOfferSummaryCover";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
@@ -37,14 +38,7 @@ export default function MetaCareerProfileCaseStudy() {
 
           {/* Hero image */}
           <figure className={`${styles.cover} animate-in animate-delay-2`}>
-            <Image
-              src="/images/heroes/meta-vision.png"
-              alt="Career Profile vision: the Meta candidate experience platform"
-              width={2560}
-              height={1440}
-              priority
-              className={styles.coverImage}
-            />
+            <MetaOfferSummaryCover aspect={16 / 9} className={styles.coverImage} />
           </figure>
 
           {/* Two-column body */}

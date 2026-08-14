@@ -1,4 +1,4 @@
-import { CoverFrame } from "./CoverFrame";
+import { CoverFrame, type CoverProps } from "./CoverFrame";
 import styles from "./SiteCovers.module.css";
 
 /*
@@ -79,14 +79,14 @@ function ThemeToggle() {
 }
 
 /** The home hero: 1440 x 900. */
-export function SiteHomeCover({ className }: { className?: string }) {
+export function SiteHomeCover(props: CoverProps) {
   return (
     <CoverFrame
       width={1440}
       height={900}
       ground="site"
       tone="site"
-      className={className}
+      {...props}
       label="The home page of robertritacca.com: the name set large over the ambient background, with the tagline and client marks beneath."
     >
       <div className={styles.stage}>
@@ -228,14 +228,14 @@ const SWATCHES = [
 ];
 
 /** The playground's Chat view: 1440 x 900. */
-export function SitePlaygroundCover({ className }: { className?: string }) {
+export function SitePlaygroundCover(props: CoverProps) {
   return (
     <CoverFrame
       width={1440}
       height={900}
       ground="site"
       tone="site"
-      className={className}
+      {...props}
       label="The playground's Chat view: theme controls down the left, the chat widget on a stage that re-themes with them."
     >
       <div className={styles.stage}>

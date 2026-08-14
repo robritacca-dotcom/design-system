@@ -4,11 +4,17 @@ import MegaNav from "../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import { Card } from "@robr0/design-system/components/Card/Card";
+import { caseStudyCover } from "@/components/covers/case-study-covers";
 import { getSidebarLinks, workSidebarLinks } from "@/config/navigation";
 import { caseStudies } from "@/data/case-studies";
 import styles from "./page.module.css";
 
 const { sidebarLinks } = getSidebarLinks(workSidebarLinks, "/work");
+
+/* The Card's cover slot, from ds-card--case-study__cover-wrap. The covers are
+   drawn to fill whatever ratio they are given, so the frame is told the slot's
+   rather than the other way round. */
+const CARD_COVER_ASPECT = 940 / 480;
 
 export default function WorkPage() {
   return (
@@ -42,6 +48,7 @@ export default function WorkPage() {
                 dek={cs.dek}
                 companyName={cs.companyName}
                 companyLogo={cs.companyLogo}
+                cover={caseStudyCover(cs.href, { aspect: CARD_COVER_ASPECT })}
                 coverSrc={cs.coverSrc}
                 href={cs.href}
               />

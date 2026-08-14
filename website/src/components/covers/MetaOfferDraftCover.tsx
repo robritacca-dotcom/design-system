@@ -22,7 +22,7 @@ import {
   RadioDot,
   TriangleDown,
 } from "./meta-recruiter-cover-art";
-import { CoverFrame } from "./CoverFrame";
+import { CoverFrame, type CoverProps } from "./CoverFrame";
 import styles from "./MetaOfferDraftCover.module.css";
 
 /*
@@ -169,14 +169,14 @@ function CalcColumn({
 }
 
 /** The Offer Draft frame: 1513.125 x 1076, node 931:2105. */
-export function MetaOfferDraftCover({ className }: { className?: string }) {
+export function MetaOfferDraftCover(props: CoverProps) {
   return (
     <CoverFrame
       width={1513.125}
       height={1076}
       ground="haze"
       tone="meta"
-      className={className}
+      {...props}
       label="Meta's recruiter tool: a candidate profile beside an offer draft panel with a compensation calculator."
     >
       <div className={styles.stage}>

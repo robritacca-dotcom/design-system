@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { MetaOfferDraftCover } from "@/components/covers/MetaOfferDraftCover";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
@@ -61,14 +62,7 @@ export default function MetaOffersCaseStudy() {
 
           {/* Hero image */}
           <figure className={`${styles.cover} animate-in animate-delay-2`}>
-            <Image
-              src="/images/heroes/meta-offers.png"
-              alt="Offer Creation Flow hero"
-              width={1920}
-              height={1080}
-              priority
-              className={styles.coverImage}
-            />
+            <MetaOfferDraftCover aspect={16 / 9} className={styles.coverImage} />
           </figure>
 
           {/* Two-column body */}

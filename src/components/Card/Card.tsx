@@ -25,6 +25,12 @@ type CardOwnProps = {
   href?: string;
   /** Cover image src */
   coverSrc?: string;
+  /**
+   * Cover content rendered in place of the image — for a cover that is drawn
+   * rather than photographed (an SVG, a chart, a live preview). Takes
+   * precedence over `coverSrc`, and fills the same fixed-ratio slot.
+   */
+  cover?: React.ReactNode;
   /** Cover image alt text */
   coverAlt?: string;
   /** Path to the company logo shown in the eyebrow */
@@ -60,6 +66,7 @@ export const Card = React.forwardRef<HTMLDivElement | HTMLAnchorElement, CardPro
       className = '',
       href,
       coverSrc,
+      cover,
       coverAlt,
       companyLogo,
       companyName,
@@ -74,7 +81,9 @@ export const Card = React.forwardRef<HTMLDivElement | HTMLAnchorElement, CardPro
       const inner = (
         <>
           <div className="ds-card--case-study__cover-wrap">
-            {coverSrc ? (
+            {cover ? (
+              <div className="ds-card--case-study__cover-slot">{cover}</div>
+            ) : coverSrc ? (
               <img
                 src={coverSrc}
                 alt={coverAlt ?? `${title} cover`}

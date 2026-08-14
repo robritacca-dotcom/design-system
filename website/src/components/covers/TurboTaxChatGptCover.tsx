@@ -16,7 +16,7 @@ import {
   VoiceIcon,
 } from "./chatgpt-cover-art";
 import { SpotUpload } from "./turbotax-cover-art";
-import { CoverFrame } from "./CoverFrame";
+import { CoverFrame, type CoverProps } from "./CoverFrame";
 import styles from "./TurboTaxChatGptCover.module.css";
 
 /*
@@ -205,14 +205,14 @@ function ComposeFooter({ mobile = false }: { mobile?: boolean }) {
 }
 
 /** The desktop frame: 1440 x 1024, node 3030:12155. */
-export function TurboTaxChatGptCover({ className }: { className?: string }) {
+export function TurboTaxChatGptCover(props: CoverProps) {
   return (
     <CoverFrame
       width={1440}
       height={1024}
       ground="white"
       tone="openai"
-      className={className}
+      {...props}
       label="The TurboTax tax-document checklist running as an app inside the ChatGPT desktop interface."
     >
       <div className={styles.stage}>
@@ -279,18 +279,14 @@ export function TurboTaxChatGptCover({ className }: { className?: string }) {
 }
 
 /** The mobile frame: 440 x 972, node 3030:14557. */
-export function TurboTaxChatGptCoverMobile({
-  className,
-}: {
-  className?: string;
-}) {
+export function TurboTaxChatGptCoverMobile(props: CoverProps) {
   return (
     <CoverFrame
       width={440}
       height={972}
       ground="white"
       tone="openai"
-      className={className}
+      {...props}
       label="The TurboTax tax-document checklist running as an app inside the ChatGPT mobile interface."
     >
       <div className={styles.stageMobile}>
