@@ -1,0 +1,863 @@
+/*
+ * A 1:1 redraw of the Figma source frame "Interface" (TurboTax in AI Apps,
+ * node 3026:3298), built to replace the raster cover on the TurboTax case
+ * study. Every value here is hard-coded from the Figma file on purpose — this
+ * mock deliberately uses no design-system tokens and no design-system
+ * components, so it can never drift when the system's own theme changes.
+ *
+ * The only indirection is the local palette below, which exists so the whole
+ * drawing can cross-fade between light and dark.
+ */
+
+.cover {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.stage,
+.stageMobile {
+  --font-sans: "Anthropic Sans Text", -apple-system, BlinkMacSystemFont,
+    "SF Pro Text", "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-serif: "Anthropic Serif Text", ui-serif, Georgia, "Times New Roman",
+    serif;
+
+  --app-bg: #faf9f5;
+  --surface: #ffffff;
+  --border-strong: rgba(31, 30, 29, 0.4);
+  --border-soft: rgba(31, 30, 29, 0.3);
+  --divider: rgba(31, 30, 29, 0.15);
+  --text-primary: #141413;
+  --text-black: #000000;
+  --text-near-black: #0d0d0d;
+  --text-secondary: #3d3d3a;
+  --text-tertiary: #73726c;
+  --text-quiet: #8f8f8f;
+  --bubble-bg: #f0eee6;
+  --check-bg: #265b19;
+  --check-ring: #e9f1dc;
+  --check-mark: #ffffff;
+  --track-bg: #c3ced5;
+  --track-from: #00eec5;
+  --track-to: #00856d;
+  --inverse-bg: #141413;
+  --inverse-text: #ffffff;
+  --accent: #c6613f;
+  --send-mark: #ffffff;
+  --icon: #141413;
+  --icon-muted: #3d3d3a;
+  --caret-muted: #73726c;
+  --cursor: #242424;
+  --avatar-bg: #c46686;
+  --shadow-composer: rgba(0, 0, 0, 0.08);
+
+  /* Isometric upload illustration */
+  --il-ink: #21262a;
+  --il-light: #f4f4ef;
+  --il-mid: #e3ddcd;
+  --il-shade: #cdc6af;
+  --il-olive: #8f8569;
+  --il-blue: #5dabff;
+
+  height: 972px;
+  display: flex;
+  align-items: stretch;
+  box-sizing: border-box;
+  background-color: var(--surface);
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-feature-settings: "salt" 1;
+  -webkit-font-smoothing: antialiased;
+}
+
+.stage {
+  width: 1440px;
+}
+
+.stageMobile {
+  width: 440px;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  background-color: var(--app-bg);
+}
+
+:global([data-theme="dark"]) .stage,
+:global([data-theme="dark"]) .stageMobile {
+  --app-bg: #262624;
+  --surface: #30302e;
+  --border-strong: rgba(245, 244, 239, 0.22);
+  --border-soft: rgba(245, 244, 239, 0.14);
+  --divider: rgba(245, 244, 239, 0.14);
+  --text-primary: #f5f4ef;
+  --text-black: #ffffff;
+  --text-near-black: #f5f4ef;
+  --text-secondary: #c2c0b6;
+  --text-tertiary: #91908a;
+  --text-quiet: #91908a;
+  --bubble-bg: #3a3a37;
+  --check-bg: #3f7f26;
+  --check-ring: #2b3b21;
+  --track-bg: #3f4b52;
+  --inverse-bg: #f5f4ef;
+  --inverse-text: #1f1e1d;
+  --accent: #d97757;
+  --icon: #f5f4ef;
+  --icon-muted: #c2c0b6;
+  --caret-muted: #91908a;
+  --cursor: #f5f4ef;
+  --shadow-composer: rgba(0, 0, 0, 0.4);
+
+  --il-ink: #d9d5c8;
+  --il-light: #3a3a37;
+  --il-mid: #2c2c2a;
+  --il-shade: #4a4945;
+}
+
+.stage,
+.stage *,
+.stageMobile,
+.stageMobile * {
+  transition:
+    background-color 320ms ease,
+    background-image 320ms ease,
+    color 320ms ease,
+    border-color 320ms ease,
+    box-shadow 320ms ease,
+    fill 320ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage,
+  .stage *,
+  .stageMobile,
+  .stageMobile * {
+    transition-duration: 1ms;
+  }
+}
+
+.stage p,
+.stageMobile p {
+  margin: 0;
+}
+
+/* ------------------------------------------- mobile navigation bar (44px) */
+
+.navBar {
+  position: relative;
+  width: 100%;
+  height: 44px;
+  flex-shrink: 0;
+  background-color: var(--app-bg);
+}
+
+.navBarLeading {
+  position: absolute;
+  left: 16px;
+  top: 12px;
+}
+
+.navBarTrailing {
+  position: absolute;
+  left: 408px;
+  top: 12.5px;
+}
+
+/* ---------------------------------------------------------------- sidebar */
+
+.sidebar {
+  width: 52px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  padding: 0 8px 12px;
+  overflow: hidden;
+  background-color: var(--app-bg);
+  border-right: 0.5px solid var(--border-soft);
+}
+
+.sidebarItems {
+  flex: 1;
+  min-height: 0;
+  width: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.sidebarToggle {
+  width: 36px;
+  height: 68px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.sidebarButtons {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.navIcon {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.accountSwitcher {
+  width: 100%;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 4px;
+  border-radius: 8px;
+}
+
+.avatar {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1000px;
+  background-color: var(--avatar-bg);
+}
+
+/* ------------------------------------------------------------------- main */
+
+.main {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  background-color: var(--app-bg);
+}
+
+.titlebar {
+  width: 100%;
+  height: 68px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background-color: var(--app-bg);
+}
+
+.titleRow {
+  height: 36px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 4px 4px 8px;
+  border-radius: 6px;
+}
+
+.titleText {
+  font-size: 16px;
+  line-height: 22.4px;
+  letter-spacing: -0.16px;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.shareButton {
+  height: 36px;
+  min-width: 75px;
+  box-sizing: border-box;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 8px;
+  overflow: hidden;
+  border: 0.5px solid var(--border-soft);
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 19.6px;
+  letter-spacing: -0.14px;
+  color: var(--text-primary);
+}
+
+/* -------------------------------------------------------------- chat body */
+
+.chatBody {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 24px;
+  /* The conversation is taller than the frame; the frame cuts it here, which
+     is why the dark CTA button only shows as a sliver above the composer. */
+  overflow: hidden;
+}
+
+.conversation {
+  width: 720px;
+  max-width: 768px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: flex-start;
+  padding-top: 24px;
+}
+
+.messageTo {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-end;
+}
+
+.bubble {
+  width: 408px;
+  max-width: 456px;
+  box-sizing: border-box;
+  padding: 10px 20px;
+  border-radius: 12px;
+  background-color: var(--bubble-bg);
+}
+
+.bubbleText {
+  font-size: 16px;
+  line-height: 23px;
+  color: var(--text-near-black);
+}
+
+/*
+ * Line heights on the checklist text are the whole-pixel box heights Figma
+ * reports for these layers (23 / 20 / 17), not the 22.4 / 19.6 / 16.8 the
+ * type ramp computes. Figma rounds each line box up, and the difference
+ * compounds to 3.6px down the card — enough to move the cut line and expose
+ * the top of the CTA's icon. Rounding here keeps the frame's total geometry
+ * exact.
+ */
+
+/* -------------------------------------------------------------- app card */
+
+.card {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow: hidden;
+  /* Outline, not border: Figma draws this stroke inside the frame without
+     taking layout space, so a border would shrink the 720px content box. */
+  outline: 1px solid var(--border-strong);
+  outline-offset: -1px;
+  border-radius: 10px;
+  background-color: var(--surface);
+}
+
+.appHeader {
+  width: 100%;
+  height: 52px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  border-bottom: 0.5px solid var(--border-strong);
+}
+
+.appName {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.appIcon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.appNameText {
+  font-size: 14px;
+  line-height: 19.6px;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  opacity: 0;
+}
+
+/* -------------------------------------------------------------- checklist */
+
+.checklist {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 24px;
+  background-color: var(--surface);
+}
+
+.heading {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.checklistTitle {
+  width: 100%;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 25px;
+  color: var(--text-black);
+}
+
+.checklistSub {
+  width: 100%;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-secondary);
+}
+
+.dropzone {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 0;
+  overflow: hidden;
+  /* Same reason as the card: an inside stroke that costs no layout height. */
+  outline: 1px dashed var(--border-strong);
+  outline-offset: -1px;
+  border-radius: 16px;
+  background-color: var(--surface);
+}
+
+.spot {
+  position: relative;
+  width: 125px;
+  height: 73.529px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.spotArt {
+  position: absolute;
+  left: 36.875px;
+  top: 3.713px;
+}
+
+.dropText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.dropTitle {
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: -0.3px;
+  color: var(--text-near-black);
+}
+
+.dropHint {
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: -0.1px;
+  color: var(--text-quiet);
+}
+
+.ghostButton {
+  height: 36px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  overflow: hidden;
+  border: 0.5px solid var(--border-strong);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 19.6px;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------- progress */
+
+.progress {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.progressLabel {
+  width: 100%;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-tertiary);
+}
+
+.progressCount {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.track {
+  width: 100%;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 8px;
+  background-color: var(--track-bg);
+}
+
+.trackFill {
+  width: 100%;
+  height: 4px;
+  border-radius: 100px;
+  background-image: linear-gradient(
+    to right,
+    var(--track-from) 0%,
+    var(--track-to) 104.31%
+  );
+}
+
+/* -------------------------------------------------------------- documents */
+
+.category {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.categoryTitle {
+  width: 100%;
+  font-size: 16px;
+  line-height: 23px;
+  color: var(--text-primary);
+}
+
+.document {
+  width: 100%;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.check {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  overflow: hidden;
+  border: 0.5px solid var(--check-ring);
+  border-radius: 100px;
+  background-color: var(--check-bg);
+}
+
+.documentBody {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.documentDescription {
+  width: 248px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: flex-start;
+}
+
+.documentTitle {
+  width: 100%;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-primary);
+}
+
+.documentFileLarge {
+  width: 100%;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-tertiary);
+}
+
+.documentFileSmall {
+  width: 100%;
+  font-size: 12px;
+  line-height: 17px;
+  color: var(--text-tertiary);
+}
+
+.iconButton28 {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+/* A zero-height rule, matching the Figma line that sits above its own box. */
+.rule {
+  position: relative;
+  width: 100%;
+  height: 0;
+}
+
+.rule::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -1px;
+  height: 1px;
+  background-color: var(--divider);
+}
+
+/* ------------------------------------------------------------------- cta */
+
+.entityFooter {
+  width: 100%;
+  min-width: 100px;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.ctaButton {
+  flex: 1;
+  min-width: 0;
+  height: 36px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  overflow: hidden;
+  border-radius: 8px;
+  background-color: var(--inverse-bg);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 19.6px;
+  color: var(--inverse-text);
+  white-space: nowrap;
+}
+
+.ctaLeftIcon,
+.ctaRightIcon {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.ctaLeftIcon > * {
+  position: absolute;
+  left: -4px;
+  top: 0;
+}
+
+.ctaRightIcon > * {
+  position: absolute;
+  left: 4px;
+  top: 0;
+}
+
+/* -------------------------------------------------------------- composer */
+
+.composer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 12px;
+  background-color: var(--app-bg);
+}
+
+.chatInput {
+  width: 768px;
+  max-width: 768px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  border: 0.5px solid var(--border-soft);
+  border-radius: 16px;
+  background-color: var(--surface);
+  box-shadow: 0 2px 8px 0 var(--shadow-composer);
+}
+
+.composerRow {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  padding: 12px 16px;
+}
+
+.composerField {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 4px;
+}
+
+.placeholder {
+  font-size: 16px;
+  line-height: 22.4px;
+  letter-spacing: -0.16px;
+  color: var(--text-tertiary);
+  opacity: 0.75;
+  white-space: nowrap;
+}
+
+.caret {
+  position: absolute;
+  left: 4px;
+  top: calc(50% + 0.5px);
+  transform: translateY(-50%);
+  width: 1px;
+  height: 20px;
+  border-radius: 1px;
+  background-color: var(--cursor);
+}
+
+.composerToolbar {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+}
+
+.composerToolbarLeft {
+  width: 340px;
+  display: flex;
+  align-items: center;
+}
+
+.composerToolbarRight {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.modelRow {
+  height: 32px;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  padding: 0 4px 0 8px;
+}
+
+.modelName {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  line-height: 1.6;
+  letter-spacing: -0.14px;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.iconButton32 {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.sendButton {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0.5px solid var(--border-soft);
+  border-radius: 8px;
+  background-color: var(--accent);
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.05));
+}
+
+/* ------------------------------------------------- mobile-frame overrides */
+/* Kept last so they win over the desktop widths they replace. */
+
+.chatBodyMobile {
+  padding: 0 16px;
+}
+
+.conversationMobile {
+  width: 408px;
+}
+
+.chatInputMobile {
+  width: 408px;
+}

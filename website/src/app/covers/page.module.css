@@ -1,0 +1,30 @@
+.page {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  padding: 64px 40px 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 64px;
+  /* Opaque, so the site's ambient background doesn't tint the frames. */
+  background-color: var(--color-bg-container-primary);
+}
+
+.toggle {
+  position: fixed;
+  right: 24px;
+  top: 24px;
+  z-index: 10;
+}
+
+.mock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+}
+
+.label {
+  font-size: var(--font-size-body-sm);
+  color: var(--color-text-secondary);
+}

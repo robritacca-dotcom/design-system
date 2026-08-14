@@ -614,6 +614,8 @@ const EXCLUDED_ROUTES = new Map([
     'a standalone animated-logo page with no informational prose'],
   ['/design-system',
     'the landing collage — its prose is demo filler for the live components, not information; the sections it links to are all covered'],
+  ['/covers',
+    'a noindex staging page for the vector cover mocks — its only prose is a size caption under each frame'],
 ]);
 
 /** Component showcase pages: excluded as a class, with one shared reason. */
