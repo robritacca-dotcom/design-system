@@ -428,6 +428,7 @@ export function TurboTaxClaudeCover({ className }: { className?: string }) {
       width={1440}
       height={972}
       ground="warm"
+      tone="claude"
       className={className}
       label="The TurboTax tax-document checklist running as an app inside the Claude desktop chat interface."
     >
@@ -468,6 +469,7 @@ export function TurboTaxClaudeCoverMobile({
       width={440}
       height={972}
       ground="warm"
+      tone="claude"
       className={className}
       label="The TurboTax tax-document checklist running as an app inside the Claude mobile chat interface."
     >

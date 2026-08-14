@@ -80,6 +80,7 @@ export function IntuitAgentChatCover({ className }: { className?: string }) {
       width={1440}
       height={964}
       ground="plain"
+      tone="intuit"
       className={className}
       label="The Intuit Agent Chat welcome screen, with a greeting, five conversation starters and the composer."
     >
@@ -165,6 +166,7 @@ export function IntuitAgentChatCoverMobile({
       width={428}
       height={964}
       ground="plain"
+      tone="intuit"
       className={className}
       label="The Intuit Agent Chat panel answering a question about cash flow with a long formatted article."
     >

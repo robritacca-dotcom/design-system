@@ -80,3 +80,124 @@
     transition-duration: 1ms;
   }
 }
+
+/* ============================================== the thumbnail treatment */
+
+/*
+ * Each gradient is mixed from the product's own colours rather than a house
+ * palette — Anthropic's clay, OpenAI's gunmetal, Intuit's indigo, Augmenta's
+ * navy, Meta's cyan-blue, and this site's teal — so a row of thumbnails reads
+ * as six products rather than one set of stock cards. They are deliberately
+ * off the design system's tokens: these are pictures of other people's
+ * products, and borrowing this system's palette for them would be a lie.
+ */
+
+.gradient {
+  width: 100%;
+  height: 100%;
+  transition: background 320ms ease;
+}
+
+/* A soft highlight in the upper left over the base ramp, so the card has
+   something to sit against rather than a flat wash. */
+.gradient::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    ellipse 70% 60% at 22% 8%,
+    rgba(255, 255, 255, 0.34),
+    rgba(255, 255, 255, 0) 62%
+  );
+}
+
+:global([data-theme="dark"]) .gradient::before {
+  background: radial-gradient(
+    ellipse 70% 60% at 22% 8%,
+    rgba(255, 255, 255, 0.09),
+    rgba(255, 255, 255, 0) 60%
+  );
+}
+
+.cardShadow {
+  fill: rgba(15, 23, 42, 0.28);
+  filter: blur(28px);
+}
+
+:global([data-theme="dark"]) .cardShadow {
+  fill: rgba(0, 0, 0, 0.55);
+}
+
+.card {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* A hairline on top of the mock, so a white screen still has an edge against
+   a pale gradient. Drawn in the SVG so its width stays 1px in frame units
+   rather than scaling with the mock. */
+.cardEdge {
+  fill: none;
+  stroke: rgba(15, 23, 42, 0.16);
+  stroke-width: 1;
+}
+
+:global([data-theme="dark"]) .cardEdge {
+  stroke: rgba(255, 255, 255, 0.14);
+}
+
+/* Anthropic's clay and cream. */
+.toneClaude {
+  background: linear-gradient(135deg, #fff4ea 0%, #f3c9a8 46%, #cf7845 100%);
+}
+:global([data-theme="dark"]) .toneClaude {
+  background: linear-gradient(135deg, #201712 0%, #46291a 46%, #96502c 100%);
+}
+
+/* OpenAI: gunmetal, the one product here with no brand hue to borrow. */
+.toneOpenai {
+  background: linear-gradient(135deg, #f7f9fb 0%, #ccd3dc 46%, #7f8b9a 100%);
+}
+:global([data-theme="dark"]) .toneOpenai {
+  background: linear-gradient(135deg, #15181b 0%, #282d34 46%, #4d5661 100%);
+}
+
+/* Intuit's indigo, from the wordmark blue. */
+.toneIntuit {
+  background: linear-gradient(135deg, #eef1ff 0%, #b9c8ff 46%, #4a63e0 100%);
+}
+:global([data-theme="dark"]) .toneIntuit {
+  background: linear-gradient(135deg, #0d1022 0%, #1a2757 46%, #3450c4 100%);
+}
+
+/* Augmenta's navy rail, warmed by the khaki its active state uses. */
+.toneAugmenta {
+  background: linear-gradient(135deg, #eef3f8 0%, #a8bed4 44%, #2f5d85 100%);
+}
+:global([data-theme="dark"]) .toneAugmenta {
+  background: linear-gradient(135deg, #050c15 0%, #0d2540 44%, #175a8c 100%);
+}
+
+/* Meta's blue, pushed cyan so it does not read as Intuit's. */
+.toneMeta {
+  background: linear-gradient(135deg, #e9f4ff 0%, #a5d3ff 46%, #1f8fe0 100%);
+}
+:global([data-theme="dark"]) .toneMeta {
+  background: linear-gradient(135deg, #08141f 0%, #0e3253 46%, #1a6cae 100%);
+}
+
+/* This site's own teal action colour. */
+.toneSite {
+  background: linear-gradient(135deg, #edf8fb 0%, #aadbeb 46%, #1e91b4 100%);
+}
+:global([data-theme="dark"]) .toneSite {
+  background: linear-gradient(135deg, #07141c 0%, #0d3442 46%, #16708c 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gradient {
+    transition-duration: 1ms;
+  }
+}

@@ -211,6 +211,7 @@ export function TurboTaxChatGptCover({ className }: { className?: string }) {
       width={1440}
       height={1024}
       ground="white"
+      tone="openai"
       className={className}
       label="The TurboTax tax-document checklist running as an app inside the ChatGPT desktop interface."
     >
@@ -288,6 +289,7 @@ export function TurboTaxChatGptCoverMobile({
       width={440}
       height={972}
       ground="white"
+      tone="openai"
       className={className}
       label="The TurboTax tax-document checklist running as an app inside the ChatGPT mobile interface."
     >

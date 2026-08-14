@@ -101,6 +101,7 @@ export function MetaOfferSummaryCover({ className }: { className?: string }) {
       width={1638.238}
       height={1063.988}
       ground="mist"
+      tone="meta"
       className={className}
       label="Meta's candidate-facing offer summary: role details, a compensation breakdown chart and explainer documents."
     >

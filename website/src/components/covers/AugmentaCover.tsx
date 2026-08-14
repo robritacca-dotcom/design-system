@@ -297,6 +297,7 @@ export function AugmentaDesignRulesCover({
       width={1440}
       height={900}
       ground="paper"
+      tone="augmenta"
       className={className}
       label="The Augmenta study screen: a design-rule tree beside a table of sixteen generated rules."
     >
@@ -623,6 +624,7 @@ export function AugmentaSolutionListCover({
       width={1440}
       height={900}
       ground="paper"
+      tone="augmenta"
       className={className}
       label="The Augmenta solutions table: twelve generated solutions with their conduit, bend, junction and cost estimates."
     >
@@ -864,6 +866,7 @@ export function AugmentaSolutionCover({ className }: { className?: string }) {
       width={1440}
       height={900}
       ground="paper"
+      tone="augmenta"
       className={className}
       label="The Augmenta 3D viewer: a wireframe building model with a generated conduit route running through it."
     >
