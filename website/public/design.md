@@ -96,11 +96,11 @@ ChatMessage consumes only these four — never the container tokens directly. Te
 - Violet: `--color-core-accent-violet` #9E47EF
 
 ### AI Gradient (reserved for AI entry points and surfaces)
-The purple → blue → teal gradient is the system's "a model answers here" signal, the AI counterpart to the action teal: ordinary actions keep the flat `--color-action-primary-bg`, AI affordances carry the gradient, and neither is ever used for the other's job — or decoratively. Always used as gradient stops (AiButton's ring and glow are the reference), never as flat fills for ordinary chrome.
+The red → blue → teal gradient is the system's "a model answers here" signal, the AI counterpart to the action teal: ordinary actions keep the flat `--color-action-primary-bg`, AI affordances carry the gradient, and neither is ever used for the other's job — or decoratively. Always used as gradient stops (AiButton's ring and glow are the reference), never as flat fills for ordinary chrome.
 
 | Stop | Light | Dark |
 |---|---|---|
-| `--color-ai-gradient-start` | `purple-06` #9754DC | `purple-05` #A86AE8 |
+| `--color-ai-gradient-start` | `red-06` #F16385 | `red-05` #F37F9B |
 | `--color-ai-gradient-mid` | `blue-06` #345AC4 | `blue-05` #5475D4 |
 | `--color-ai-gradient-end` | `teal-06` #2C9AB9 | `teal-05` #3CA5C6 |
 

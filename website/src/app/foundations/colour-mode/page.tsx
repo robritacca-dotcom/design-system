@@ -425,8 +425,8 @@ const statusTextColours: SwatchData[] = [
 const aiGradientColours: SwatchData[] = [
   {
     label: "Start", cssVar: "--color-ai-gradient-start",
-    dark: { primitive: "--purple--05--", hex: "#A86AE8", rgb: "168 / 106 / 232" },
-    light: { primitive: "--purple--06--", hex: "#9754DC", rgb: "151 / 84 / 220" },
+    dark: { primitive: "--red--05--", hex: "#F37F9B", rgb: "243 / 127 / 155" },
+    light: { primitive: "--red--06--", hex: "#F16385", rgb: "241 / 99 / 133" },
   },
   {
     label: "Mid", cssVar: "--color-ai-gradient-mid",

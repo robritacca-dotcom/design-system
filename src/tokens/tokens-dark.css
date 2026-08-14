@@ -97,7 +97,7 @@
 
   /* AI - The gradient accent, one step brighter than light mode so the ring
      stays luminous on dark surfaces. */
-  --color-ai-gradient-start: var(--primitive-purple-05);
+  --color-ai-gradient-start: var(--primitive-red-05);
   --color-ai-gradient-mid: var(--primitive-blue-05);
   --color-ai-gradient-end: var(--primitive-teal-05);
 
