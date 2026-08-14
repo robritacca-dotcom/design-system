@@ -8,6 +8,7 @@ import {
   IntuitAgentChatCover,
   IntuitAgentChatCoverMobile,
 } from "../../components/covers/IntuitAgentChatCover";
+import { MetaOfferSummaryCover } from "../../components/covers/MetaOfferSummaryCover";
 import { openSans } from "./fonts";
 import {
   TurboTaxChatGptCover,
@@ -103,6 +104,15 @@ export default function CoverMocksPage() {
         <p className={styles.label}>Augmenta — solution viewer, 1440 × 900</p>
         <div style={{ width: 1440 }}>
           <AugmentaSolutionCover />
+        </div>
+      </section>
+
+      <section className={styles.mock}>
+        <p className={styles.label}>
+          Meta — offer summary, 1638 × 1064
+        </p>
+        <div style={{ width: 1638 }}>
+          <MetaOfferSummaryCover />
         </div>
       </section>
     </main>

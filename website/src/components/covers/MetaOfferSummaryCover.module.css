@@ -1,0 +1,727 @@
+/*
+ * A 1:1 redraw of the Figma source frame "Offer summary" (robr0-ds26,
+ * node 931:1839) — the candidate-facing half of the Meta work.
+ *
+ * Every value here is hard-coded from the Figma file on purpose — this mock
+ * deliberately uses no design-system tokens and no design-system components,
+ * so it can never drift when the system's own theme changes. Names keep the
+ * product's own token names (Text/Primary, Background/Wash, XDS DataViz…) so
+ * the mapping back to the file stays readable.
+ *
+ * The odd fractional sizes are the file's: the artboard was drawn at 1512 and
+ * pasted at 1638.238, a factor of 1.0835, so every value carries it. They are
+ * copied rather than rounded.
+ *
+ * The frame ships light only, so the dark palette below is a derivation —
+ * Meta's own dark surfaces (#18191a page, #242526 card, #e4e6eb text).
+ */
+
+.cover {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.stage {
+  --font-display: "Optimistic Display", "SF Pro Display", -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-text: "SF Pro Text", "SF Pro", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Helvetica, Arial, sans-serif;
+
+  --meta-page: #f1f4f7;
+  --meta-card: rgba(255, 255, 255, 0.84);
+  --meta-card-solid: #ffffff;
+  --meta-wash: #f0f2f5;
+  --meta-text: #050505;
+  --meta-text-secondary: #65676b;
+  --meta-heading: #242526;
+  --meta-link: #1763cf;
+  --meta-selected: rgba(27, 116, 228, 0.15);
+  --meta-card-shadow: rgba(0, 0, 0, 0.1);
+  --meta-swoosh-opacity: 1;
+
+  width: 1638.238px;
+  height: 1063.988px;
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  border-radius: 24px;
+  background-color: var(--meta-page);
+  font-family: var(--font-text);
+  color: var(--meta-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+:global([data-theme="dark"]) .stage {
+  --meta-page: #18191a;
+  --meta-card: rgba(36, 37, 38, 0.88);
+  --meta-card-solid: #242526;
+  --meta-wash: #3a3b3c;
+  --meta-text: #e4e6eb;
+  --meta-text-secondary: #b0b3b8;
+  --meta-heading: #e4e6eb;
+  --meta-link: #2d88ff;
+  --meta-selected: rgba(45, 136, 255, 0.18);
+  --meta-card-shadow: rgba(0, 0, 0, 0.5);
+  --meta-swoosh-opacity: 0.55;
+}
+
+.stage,
+.stage * {
+  transition:
+    background-color 320ms ease,
+    color 320ms ease,
+    border-color 320ms ease,
+    opacity 320ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage,
+  .stage * {
+    transition-duration: 1ms;
+  }
+}
+
+.stage p {
+  margin: 0;
+}
+
+/* The three radial washes the file paints over the flat page colour. */
+.washes {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(
+      ellipse 1200px 700px at 107% -13%,
+      rgba(37, 211, 102, 0.06),
+      rgba(37, 211, 102, 0) 70%
+    ),
+    radial-gradient(
+      ellipse 1100px 700px at 0% 0%,
+      rgba(180, 111, 205, 0.08),
+      rgba(180, 111, 205, 0) 70%
+    ),
+    radial-gradient(
+      ellipse 900px 600px at 50% 117%,
+      rgba(255, 108, 92, 0.08),
+      rgba(255, 108, 92, 0) 70%
+    );
+}
+
+.swooshes {
+  position: absolute;
+  inset: 0;
+  opacity: var(--meta-swoosh-opacity);
+}
+
+/* --------------------------------------------------------------- sidebar */
+
+.sidebar {
+  position: absolute;
+  left: 135.44px;
+  top: 34.67px;
+  width: 303.377px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 21.67px;
+  padding-right: 34.672px;
+}
+
+.homeButton {
+  box-sizing: border-box;
+  display: flex;
+  gap: 8.668px;
+  align-items: center;
+  padding: 8.668px 13.002px;
+  border-radius: 200px;
+  font-size: 15.17px;
+  line-height: 21.67px;
+  color: var(--meta-text);
+  white-space: nowrap;
+}
+
+.maskIcon {
+  width: 17.336px;
+  height: 17.336px;
+  flex-shrink: 0;
+  background-color: var(--meta-text);
+  -webkit-mask-size: 16px 16px;
+  mask-size: 16px 16px;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAYAAAAe2bNZAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAOdEVYdFNvZnR3YXJlAEZpZ21hnrGWYwAAAiBJREFUeAHtlzlIXFEUhv+YmGUyMTtJDIkWCYQUSQhpUqW3ThtSpQqEVLZWttpbW1lY2WkjYqWiCCoqWrjirqi4L//POY+nIqPjvLmv8YcPZoHhm3PPvfc84Drn5yaSzW3yjnwhW2QDKSVLfpFW0k3qXC54MuQ3aSebZJu0kDsInAcu0gtbmkN//Q/Jt0HOZBFXJBIZJdXkLQLmHvmJeGkikdrQIhkXGUZckT6kUBE1ZRUZIAfODPmfhshXMk72YBWRSA15hUApQVwRiRy5yDSsIsFEgNMVOXJUmT/kGQJGzVp1RmTXRTIImGj7drmAliaVimQRb99IZBopVET5QZpPiKySvyhiRUpyfPeYPCel/l6n7AhZRJGS6yJToz4ln8hd/+whGSOzCCyjwWiFPCEVpIy8ccFBsgZbviAyOua1JEuwPpGIxoWPLjHpsokJXTRvRPdOP3kEGym1ZN9gU9x4kkKXGX4kpJ2k5q1wdCJ/hi3VHFmHnT9Fl4mEtFxDLlEO22XfXWKCLCPhHrookn+BeKCK7qgG2K4rRQopd6G9E0L15ANSynkVaoTd7ldKIdP7Dukh78lLWFNXwmYb9dY88kwhMmpWNXUn7NqQlC5XjZ6vcYWTutDnGgnppJ6CnUOVsINRr3Wzt8F2YhCZSGgBtrXvu1CZv2/KR+YWkonGjA7YaaynSfWQHl328/gN3ECy0Z/TRarbXSfzGq6TQI4BN+CN+trefTAAAAAASUVORK5CYII=");
+  mask-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAYAAAAe2bNZAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAOdEVYdFNvZnR3YXJlAEZpZ21hnrGWYwAAAiBJREFUeAHtlzlIXFEUhv+YmGUyMTtJDIkWCYQUSQhpUqW3ThtSpQqEVLZWttpbW1lY2WkjYqWiCCoqWrjirqi4L//POY+nIqPjvLmv8YcPZoHhm3PPvfc84Drn5yaSzW3yjnwhW2QDKSVLfpFW0k3qXC54MuQ3aSebZJu0kDsInAcu0gtbmkN//Q/Jt0HOZBFXJBIZJdXkLQLmHvmJeGkikdrQIhkXGUZckT6kUBE1ZRUZIAfODPmfhshXMk72YBWRSA15hUApQVwRiRy5yDSsIsFEgNMVOXJUmT/kGQJGzVp1RmTXRTIImGj7drmAliaVimQRb99IZBopVET5QZpPiKySvyhiRUpyfPeYPCel/l6n7AhZRJGS6yJToz4ln8hd/+whGSOzCCyjwWiFPCEVpIy8ccFBsgZbviAyOua1JEuwPpGIxoWPLjHpsokJXTRvRPdOP3kEGym1ZN9gU9x4kkKXGX4kpJ2k5q1wdCJ/hi3VHFmHnT9Fl4mEtFxDLlEO22XfXWKCLCPhHrookn+BeKCK7qgG2K4rRQopd6G9E0L15ANSynkVaoTd7ldKIdP7Dukh78lLWFNXwmYb9dY88kwhMmpWNXUn7NqQlC5XjZ6vcYWTutDnGgnppJ6CnUOVsINRr3Wzt8F2YhCZSGgBtrXvu1CZv2/KR+YWkonGjA7YaaynSfWQHl328/gN3ECy0Z/TRarbXSfzGq6TQI4BN+CN+trefTAAAAAASUVORK5CYII=");
+}
+
+/* The 12dp info-circle the file uses as an alpha mask beside every figure. */
+.infoIcon {
+  width: 13.002px;
+  height: 13.002px;
+  flex-shrink: 0;
+  background-color: var(--meta-text-secondary);
+  -webkit-mask-size: 12px 12px;
+  mask-size: 12px 12px;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAOdEVYdFNvZnR3YXJlAEZpZ21hnrGWYwAAAi1JREFUeAG1lssuc1EUx1d9V5XvQ0QQEYmBiQExMiASYSRhJiYknsALeAETj0DUAI+AuA+NmEhEQuIWVMStOFX8/z2rcnqc7rMr9U9+bbq791prr31ZOyJmRUEz6AHtoAFU6X/n4ABsgiWwAx4kT5WCfjALTkEcJIADUoqjbTfgRPtyzH9bJ01gWgc/gTdLnnTMtNowqgNMaZSpPJxkSGkGZtTWh374ZjIKekE5iPiCSIItMAEWxE1vNSjy9OGYf6AWlIB9cOk1wrzGwJkh2rgGEVV6tS1X/xu1mbVmXMQTMafrCNR4xtRomymNx2o7PW1GNwgqJDsNfhWDVs+MWrUtl2irUm1Hf+KjBXSCP2IWUzAGGvX3gLjrZNJvtd1MR93iLlyYfoE2JR9xAj101KFGTOIZeQS34uafu4szLJdwFauP9BZMivl87IJhT0D8HgLXEn62HPUhdxJ+ODfkc3rp7MDCEW3fmXaZVzyAI5Kd4qTYiw6tUkeYpjWfAZsZpVNXpJ1toisD9ZK/XuiDjlhPEvJ94iQ26YhFy5HvE4vhEh1tg3XwLIWXo7a36YhpmwNX4FUKJ9q6VNuJzPZeBcvgPmQw+2eu/RIxX8IXYEVtfxQ+pm1P3J1VJ+7tHKQ3jZJXUBfoA38D+rFOLYJxcUvFJ/FOYhlmOQ66LbiDWLfmwWFAH/5mwZsUXykPEkt6TL7+OImJxeMkI66D97nFKHM9t+Ji8dyKhDgs2APyHex0/TgvPWqSAAAAAElFTkSuQmCC");
+  mask-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAOdEVYdFNvZnR3YXJlAEZpZ21hnrGWYwAAAi1JREFUeAG1lssuc1EUx1d9V5XvQ0QQEYmBiQExMiASYSRhJiYknsALeAETj0DUAI+AuA+NmEhEQuIWVMStOFX8/z2rcnqc7rMr9U9+bbq791prr31ZOyJmRUEz6AHtoAFU6X/n4ABsgiWwAx4kT5WCfjALTkEcJIADUoqjbTfgRPtyzH9bJ01gWgc/gTdLnnTMtNowqgNMaZSpPJxkSGkGZtTWh374ZjIKekE5iPiCSIItMAEWxE1vNSjy9OGYf6AWlIB9cOk1wrzGwJkh2rgGEVV6tS1X/xu1mbVmXMQTMafrCNR4xtRomymNx2o7PW1GNwgqJDsNfhWDVs+MWrUtl2irUm1Hf+KjBXSCP2IWUzAGGvX3gLjrZNJvtd1MR93iLlyYfoE2JR9xAj101KFGTOIZeQS34uafu4szLJdwFauP9BZMivl87IJhT0D8HgLXEn62HPUhdxJ+ODfkc3rp7MDCEW3fmXaZVzyAI5Kd4qTYiw6tUkeYpjWfAZsZpVNXpJ1toisD9ZK/XuiDjlhPEvJ94iQ26YhFy5HvE4vhEh1tg3XwLIWXo7a36YhpmwNX4FUKJ9q6VNuJzPZeBcvgPmQw+2eu/RIxX8IXYEVtfxQ+pm1P3J1VJ+7tHKQ3jZJXUBfoA38D+rFOLYJxcUvFJ/FOYhlmOQ66LbiDWLfmwWFAH/5mwZsUXykPEkt6TL7+OImJxeMkI66D97nFKHM9t+Ji8dyKhDgs2APyHex0/TgvPWqSAAAAAElFTkSuQmCC");
+}
+
+.whatsNext {
+  width: 100%;
+  padding-left: 13.002px;
+  padding-top: 34.672px;
+  font-family: var(--font-display);
+  font-size: 34.672px;
+  font-weight: 700;
+  color: var(--meta-heading);
+}
+
+.navSection {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 8.668px;
+  align-items: flex-start;
+  padding-left: 4.334px;
+  padding-top: 34.672px;
+}
+
+.navSectionTitle {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 8.668px;
+  font-family: var(--font-display);
+  font-size: 19.503px;
+  font-weight: 700;
+  line-height: 26.004px;
+  color: var(--meta-heading);
+}
+
+.navList {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.navItem {
+  width: 242.702px;
+  height: 69.343px;
+  box-sizing: border-box;
+  display: flex;
+  gap: 8.668px;
+  align-items: center;
+  padding: 8.668px;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.navItemSelected {
+  background-color: var(--meta-selected);
+}
+
+.navThumb {
+  width: 52.008px;
+  height: 52.008px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.navLabel {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.navTitle {
+  width: 100%;
+  font-size: 15.17px;
+  line-height: 21.67px;
+  color: var(--meta-text);
+}
+
+.navSub {
+  width: 100%;
+  font-size: 13px;
+  line-height: 17.336px;
+  color: var(--meta-text-secondary);
+}
+
+.contactTitle {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 26.004px;
+  padding: 0 8.668px;
+  font-family: var(--font-display);
+  font-size: 19.503px;
+  font-weight: 700;
+  line-height: 26.004px;
+  color: var(--meta-heading);
+}
+
+.peopleCard {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 19.503px;
+  display: flex;
+  flex-direction: column;
+  gap: 17.336px;
+  align-items: flex-start;
+  padding: 17.336px;
+  overflow: hidden;
+  border-radius: 17.336px;
+  background-color: var(--meta-card-solid);
+}
+
+.peopleRow {
+  width: 100%;
+  display: flex;
+  gap: 17.336px;
+  align-items: center;
+}
+
+.peopleText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4.334px;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.peopleEyebrow {
+  font-size: 13.002px;
+  line-height: 17.336px;
+  color: var(--meta-text);
+  white-space: nowrap;
+}
+
+.peopleName {
+  font-family: var(--font-display);
+  font-size: 21.67px;
+  font-weight: 700;
+  line-height: 26.004px;
+  color: var(--meta-text);
+  white-space: nowrap;
+}
+
+.peopleEmail {
+  font-size: 13.002px;
+  line-height: 17.336px;
+  color: var(--meta-text);
+  white-space: nowrap;
+}
+
+.peopleAvatar {
+  width: 43.34px;
+  height: 43.34px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: 500px;
+}
+
+.peopleNote {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 17.336px;
+  border-radius: 17.336px;
+  background-color: var(--meta-wash);
+  font-size: 13.002px;
+  line-height: 17.336px;
+  color: var(--meta-text);
+}
+
+/* ------------------------------------------------------------------ card */
+
+.card {
+  position: absolute;
+  left: 470.235px;
+  top: 43.34px;
+  width: 975.142px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.cardInner {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 69.343px;
+  align-items: flex-start;
+  padding: 65.009px 112.683px;
+  overflow: hidden;
+  border-radius: 17.336px;
+  background-color: var(--meta-card);
+  backdrop-filter: blur(16.252px);
+  box-shadow:
+    0 0 5.417px 0 var(--meta-card-shadow),
+    0 0 1.083px 0 var(--meta-card-shadow);
+}
+
+.cardHead {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.cardDate {
+  font-weight: 700;
+  font-size: 13.002px;
+  line-height: 17.336px;
+  color: var(--meta-text-secondary);
+  white-space: nowrap;
+}
+
+.cardTitle {
+  width: 100%;
+  font-family: var(--font-display);
+  font-size: 43.34px;
+  font-weight: 700;
+  line-height: 52.008px;
+  color: var(--meta-text);
+}
+
+.cardNote {
+  width: 100%;
+  padding-top: 4.334px;
+  font-size: 17.336px;
+  line-height: 21.67px;
+  color: var(--meta-text-secondary);
+}
+
+.metaSymbol {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 63.5px;
+  height: 41.4px;
+  object-fit: contain;
+}
+
+.section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8.668px;
+  align-items: flex-start;
+}
+
+.sectionTitle {
+  width: 100%;
+  /* Figma reports 24 for this single line, not the 26.004 the ramp states. */
+  height: 24px;
+  font-family: var(--font-display);
+  font-size: 21.67px;
+  font-weight: 700;
+  line-height: 24px;
+  color: var(--meta-text);
+}
+
+.detailGrid {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 17.336px;
+  align-items: flex-start;
+  padding: 17.336px 0;
+}
+
+.detailRow {
+  width: 100%;
+  display: flex;
+  gap: 8.668px;
+  align-items: flex-start;
+}
+
+.detailCell {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.detailValue {
+  width: 100%;
+  font-weight: 700;
+  font-size: 15.169px;
+  line-height: 21.67px;
+  color: var(--meta-text);
+}
+
+.detailValueLink {
+  color: var(--meta-link);
+}
+
+.detailLabel {
+  font-size: 13.002px;
+  line-height: 17.336px;
+  color: var(--meta-text-secondary);
+  white-space: nowrap;
+}
+
+.orgRow {
+  display: flex;
+  gap: 4.334px;
+  align-items: center;
+}
+
+.orgName {
+  font-weight: 700;
+  font-size: 15.169px;
+  line-height: 21.67px;
+  color: var(--meta-link);
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------- compensation summary */
+
+.compGrid {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 17.336px;
+  align-items: flex-start;
+  padding-top: 17.336px;
+  padding-bottom: 65.009px;
+}
+
+.compHero {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  gap: 17.336px;
+  align-items: flex-start;
+  padding: 17.336px;
+  border-radius: 13.002px;
+  background-color: var(--meta-wash);
+}
+
+.compTotalBlock {
+  width: 212.364px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4.334px;
+  align-items: flex-start;
+}
+
+.compTotal {
+  width: 227.533px;
+  font-weight: 590;
+  font-size: 26.004px;
+  line-height: 39.006px;
+  color: var(--meta-text);
+}
+
+.compTotalLabelRow {
+  display: flex;
+  gap: 4.334px;
+  align-items: center;
+}
+
+.compTotalLabel {
+  font-size: 15.169px;
+  line-height: 21.67px;
+  color: var(--meta-text);
+  white-space: nowrap;
+}
+
+.compTotalSub {
+  font-size: 13.002px;
+  line-height: 17.336px;
+  color: var(--meta-text-secondary);
+  white-space: nowrap;
+}
+
+.chart {
+  position: relative;
+  width: 512.491px;
+  height: 86.679px;
+  flex-shrink: 0;
+}
+
+.barStack {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 476.736px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.barBase {
+  width: 266.539px;
+  flex-shrink: 0;
+  height: 39.006px;
+}
+
+.barSegment {
+  flex: 1;
+  min-width: 0;
+  height: 39.006px;
+}
+
+.legend {
+  position: absolute;
+  left: 0;
+  top: 52px;
+  display: flex;
+  gap: 17.336px;
+  align-items: flex-start;
+  overflow: hidden;
+}
+
+.legendItem {
+  display: flex;
+  gap: 8.668px;
+  align-items: flex-start;
+  height: 34.672px;
+}
+
+.legendSwatch {
+  width: 17.336px;
+  height: 17.336px;
+  flex-shrink: 0;
+  border-radius: 4.334px;
+}
+
+.legendLabel {
+  font-size: 13.002px;
+  line-height: 17.336px;
+  color: var(--meta-text);
+}
+
+.legendLabelWrap {
+  width: 73.677px;
+}
+
+.compRow {
+  width: 100%;
+  display: flex;
+  gap: 8.668px;
+  align-items: flex-start;
+}
+
+.compCell {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.compValue {
+  width: 100%;
+  font-weight: 700;
+  font-size: 15.169px;
+  line-height: 21.67px;
+  color: var(--meta-text);
+}
+
+.compLabelRow {
+  display: flex;
+  gap: 4.334px;
+  align-items: center;
+}
+
+.compLabel {
+  font-size: 15.169px;
+  line-height: 21.67px;
+  color: var(--meta-text);
+  white-space: nowrap;
+}
+
+.compSub {
+  font-size: 13.002px;
+  line-height: 17.336px;
+  color: var(--meta-text-secondary);
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------- document row */
+
+.docsTitle {
+  width: 100%;
+  height: 24px;
+  font-family: var(--font-display);
+  font-size: 15.169px;
+  font-weight: 700;
+  line-height: 24px;
+  color: var(--meta-text);
+}
+
+.docsRow {
+  width: 100%;
+  display: flex;
+  gap: 8.668px;
+  align-items: flex-start;
+}
+
+.docCell {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8.668px;
+  align-items: flex-start;
+}
+
+.docThumb {
+  position: relative;
+  width: 100%;
+  height: 145.188px;
+  overflow: hidden;
+  border-radius: 13.002px;
+  box-shadow: 0 8.668px 17.336px 0 var(--meta-card-shadow);
+}
+
+.docImage {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 204%;
+  object-fit: cover;
+  object-position: top;
+}
+
+.docTitle {
+  width: 100%;
+  font-weight: 700;
+  font-size: 15.169px;
+  line-height: 21.67px;
+  color: var(--meta-text);
+}
+
+.docLink {
+  width: 100%;
+  font-weight: 510;
+  font-size: 13.002px;
+  line-height: 21.67px;
+  color: var(--meta-link);
+}
