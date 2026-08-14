@@ -8,6 +8,24 @@
   display: block;
   width: 100%;
   height: auto;
+
+  /*
+   * Each mock is a block 1440–1638px wide, shrunk to fit by the scale
+   * transform on the <g> below. iOS Safari's text autosizer boosts font sizes
+   * from a block's layout width and is blind to that transform, so on a phone
+   * it read the mock at its native width and inflated every string several
+   * times over while the geometry around it scaled correctly — giant headings
+   * across an otherwise intact screen.
+   *
+   * text-size-adjust is inherited and crosses the foreignObject boundary, so
+   * one declaration here reaches every mock's subtree. 100% rather than none:
+   * none has interfered with pinch-zoom on some WebKit versions.
+   *
+   * Nothing guards this. Font boosting is iOS-only, so Chromium — the story
+   * tests, Chromatic, and any Playwright run — renders these covers correctly
+   * with or without this line. Cover changes need a look on a real phone.
+   */
+  -webkit-text-size-adjust: 100%;
 }
 
 .ground {
