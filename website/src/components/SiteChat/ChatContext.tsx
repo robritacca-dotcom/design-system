@@ -4,12 +4,14 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useRef,
   useState,
   type ReactNode,
 } from "react";
 import { useChat, type ChatTransport } from "@/hooks/useChat";
+import { fetchFollowups, followupTarget } from "@/lib/chat-followups";
 import { createFetchTransport } from "@/lib/chat-transport";
 
 /** Panel is the docked rail; full is the viewport takeover. */
@@ -36,6 +38,7 @@ interface SiteChatContextValue {
   stop: () => void;
   reset: () => void;
   setTurnFeedback: ReturnType<typeof useChat>["setTurnFeedback"];
+  setTurnFollowups: ReturnType<typeof useChat>["setTurnFollowups"];
   open: boolean;
   setOpen: (open: boolean) => void;
   toggleOpen: () => void;
@@ -68,6 +71,28 @@ export function SiteChatProvider({
 }) {
   const fallbackTransport = useMemo(() => createFetchTransport(), []);
   const chat = useChat(transport ?? fallbackTransport);
+
+  /* Follow-up chips for the answer that just landed. Fired here rather than
+     from the turn's own component so it happens once per answer, whether or
+     not anything is rendering it — the panel can be closed, or the turn
+     scrolled far above the fold, and the chips are still there when the
+     visitor arrives. Turn ids are minted in sequence and never reused, so
+     the set of ids already asked about is all the bookkeeping this needs: it
+     survives the state changes that a request-in-flight would otherwise be
+     re-fired by (a thumbs verdict, the next question being asked). */
+  const { setTurnFollowups } = chat;
+  const target = useMemo(() => followupTarget(chat.turns), [chat.turns]);
+  const askedRef = useRef<Set<string>>(new Set());
+
+  useEffect(() => {
+    if (!target || askedRef.current.has(target.id)) return;
+    askedRef.current.add(target.id);
+    // Never rejects, and a write to a turn that has since been cleared by a
+    // new chat is a no-op — so there is nothing here to abort or guard.
+    void fetchFollowups(target.question, target.answer).then((suggestions) =>
+      setTurnFollowups(target.id, suggestions)
+    );
+  }, [target, setTurnFollowups]);
 
   const [open, setOpen] = useState(false);
   const [view, setView] = useState<ChatView>("panel");

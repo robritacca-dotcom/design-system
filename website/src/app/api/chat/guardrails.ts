@@ -218,6 +218,41 @@ export async function recordSpend(usage: TokenUsage): Promise<void> {
 }
 
 /* ============================================
+   Follow-up suggestions
+
+   One call per answer, so the per-IP limits on /api/chat already bound the
+   honest path. This limiter exists for the dishonest one: the route is a
+   model call anyone can POST to directly. Set a little above the chat's own
+   burst limit, so a fast conversation never trips it.
+
+   There is no daily-breaker check here on purpose. A suggestion call only
+   follows an answer that already passed the breaker, its spend lands in the
+   same day counter, and the failure mode is chips that quietly stop
+   appearing — the answer itself is what the budget protects.
+   ============================================ */
+
+const followupLimiter = (redis: Redis) =>
+  new Ratelimit({
+    redis,
+    limiter: Ratelimit.slidingWindow(15, "60 s"),
+    prefix: "chat:rl:followups",
+    analytics: false,
+  });
+
+/** Per-IP limit for the follow-ups route. Fail-open, like every guardrail. */
+export async function checkFollowupLimit(request: Request): Promise<boolean> {
+  const redis = getRedis();
+  if (!redis) return true;
+  try {
+    const { success } = await followupLimiter(redis).limit(visitorKey(request));
+    return success;
+  } catch (error) {
+    console.error("[chat] follow-up limit check failed, allowing:", error);
+    return true;
+  }
+}
+
+/* ============================================
    Exchange log
 
    One line per exchange: what was asked, what came back, and the numbers

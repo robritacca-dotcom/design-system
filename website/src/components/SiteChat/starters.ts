@@ -7,11 +7,23 @@
  * The route also travels to the model as page context (see the sanitised
  * `path` in /api/chat), which is what lets a starter say "this page" or
  * "this case study" and resolve.
+ *
+ * Every label here has to fit on one chip: the budget is SUGGESTION_MAX_CHARS
+ * and `scripts/validate-chat-starters.mjs` holds the written ones to it. The
+ * item starters below name the thing the visitor is looking at, so their
+ * length depends on runtime data — those fall back to the unnamed wording
+ * rather than overflowing.
  */
+import { fitsChip } from "@/lib/chat-suggestions";
+
 export interface Starter {
   id: string;
   label: string;
 }
+
+/** The named wording when it fits the chip, the unnamed one when it does not. */
+const named = (withName: string, without: string): string =>
+  fitsChip(withName) ? withName : without;
 
 const DEFAULT_STARTERS: Starter[] = [
   { id: "philosophy", label: "Describe Rob's design philosophy" },
@@ -22,7 +34,7 @@ const DEFAULT_STARTERS: Starter[] = [
 /** Longest-prefix wins, so /work/meta-offers beats /work. */
 const STARTERS_BY_PREFIX: Array<[string, Starter[]]> = [
   ["/about", [
-    { id: "career", label: "Give me a two-minute summary of Rob's career" },
+    { id: "career", label: "Summarise Rob's career" },
     { id: "intuit", label: "What did Rob build at Intuit?" },
     { id: "reach", label: "How do I get in touch with Rob?" },
   ]],
@@ -87,7 +99,7 @@ const STARTERS_BY_PREFIX: Array<[string, Starter[]]> = [
     { id: "install", label: "How do I install the design system?" },
   ]],
   ["/design-system", [
-    { id: "nutshell", label: "What is this design system, in a nutshell?" },
+    { id: "nutshell", label: "What is this system, in a nutshell?" },
     { id: "install", label: "How do I install it?" },
     { id: "different", label: "What makes it different?" },
   ]],
@@ -103,7 +115,7 @@ function itemStarters(pathname: string, itemLabel?: string | null): Starter[] | 
   if (/^\/writing\/[^/]+$/.test(pathname)) {
     return [
       { id: "argument", label: "What's the core argument of this essay?" },
-      { id: "summary", label: "Summarise this essay in three points" },
+      { id: "summary", label: "Summarise this essay" },
       { id: "connect", label: "How does this connect to Rob's work?" },
     ];
   }
@@ -111,7 +123,9 @@ function itemStarters(pathname: string, itemLabel?: string | null): Starter[] | 
     return [
       {
         id: "walkthrough",
-        label: itemLabel ? `Walk me through ${itemLabel}` : "Walk me through this case study",
+        label: itemLabel
+          ? named(`Walk me through ${itemLabel}`, "Walk me through this case study")
+          : "Walk me through this case study",
       },
       { id: "role", label: "What was Rob's role in this project?" },
       { id: "results", label: "What results did it ship?" },
@@ -122,7 +136,7 @@ function itemStarters(pathname: string, itemLabel?: string | null): Starter[] | 
       {
         id: "use",
         label: itemLabel
-          ? `How do I use the ${itemLabel} component?`
+          ? named(`How do I use the ${itemLabel} component?`, "How do I use this component?")
           : "How do I use this component?",
       },
       { id: "tokens", label: "Which tokens does it use?" },
@@ -133,7 +147,12 @@ function itemStarters(pathname: string, itemLabel?: string | null): Starter[] | 
     return [
       {
         id: "this-foundation",
-        label: itemLabel ? `Explain how ${itemLabel.toLowerCase()} works here` : "Explain this part of the system",
+        label: itemLabel
+          ? named(
+              `Explain how ${itemLabel.toLowerCase()} works here`,
+              "Explain this part of the system"
+            )
+          : "Explain this part of the system",
       },
       { id: "tokens", label: "Explain the token architecture" },
       { id: "teal", label: "Why is teal reserved for actions?" },

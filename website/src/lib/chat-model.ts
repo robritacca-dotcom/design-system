@@ -9,6 +9,16 @@
 export const CHAT_MODEL = "claude-sonnet-5";
 
 /**
+ * The model that writes the follow-up suggestions under a finished answer.
+ * A deliberately smaller one: the job is three short questions from a
+ * question-and-answer pair it is handed, with no corpus to read and nothing
+ * to reason about, and it runs once per exchange on top of the answer itself.
+ * It is never shown in the composer's label — the label names the model that
+ * answered.
+ */
+export const FOLLOWUP_MODEL = "claude-haiku-4-5-20251001";
+
+/**
  * "claude-sonnet-5" → "Sonnet 5", "claude-haiku-4-5" → "Haiku 4.5".
  * Word segments are capitalised; trailing numeric segments join with dots.
  */

@@ -12,6 +12,7 @@ import { PromptSuggestions } from "@robr0/design-system/components/PromptSuggest
 import { usePathname } from "next/navigation";
 import { getNavLabel } from "@/config/navigation";
 import { CHAT_MODEL_LABEL } from "@/lib/chat-model";
+import { fitsChip } from "@/lib/chat-suggestions";
 import { AssistantTurn } from "./AssistantTurn";
 import { useSiteChat } from "./ChatContext";
 import { readGreeting, serverGreeting, subscribeClock } from "./greeting";
@@ -105,8 +106,13 @@ export function SiteChat({
      reactive, so navigating with the welcome screen showing swaps the
      suggestions to match where the visitor now stands. */
   const pathname = usePathname();
-  const starters =
-    startersOverride ?? startersForPath(pathname, pathname ? getNavLabel(pathname) : null);
+  /* Filtered, not truncated: a chip is a question the visitor is about to
+     ask, and half a question is not one. The route's own starters are held
+     to the budget by scripts/validate-chat-starters.mjs, so this only ever
+     fires on a caller's overrides. */
+  const starters = (
+    startersOverride ?? startersForPath(pathname, pathname ? getNavLabel(pathname) : null)
+  ).filter((starter) => fitsChip(starter.label));
 
   /* The text field is ready to type into whenever a conversation can start:
      on open, on new chat, and again after every send. The host restores

@@ -9,6 +9,7 @@ import { Prose } from "@robr0/design-system/components/Prose/Prose";
 import { Reasoning } from "@robr0/design-system/components/Reasoning/Reasoning";
 import type { ChatTurn, LiveResponse } from "@/hooks/useChat";
 import { DOCK_QUERY, useSiteChat } from "./ChatContext";
+import { FollowupSuggestions } from "./FollowupSuggestions";
 import { ResponseActions } from "./ResponseActions";
 import styles from "./SiteChat.module.css";
 
@@ -76,6 +77,13 @@ export function AssistantTurn({ turn, live }: { turn?: ChatTurn; live?: LiveResp
          response, not a hover affordance to discover. */
       showActions
       actions={turn && turn.text !== "" ? <ResponseActions turn={turn} /> : undefined}
+      /* Where the conversation could go next, under the actions row. They
+         arrive a beat after the answer commits — see lib/chat-followups. */
+      footer={
+        turn?.followups?.length ? (
+          <FollowupSuggestions turnId={turn.id} suggestions={turn.followups} />
+        ) : undefined
+      }
     >
       <div className={styles.responseStack}>
         {/* While thinking the disclosure carries the live status; once

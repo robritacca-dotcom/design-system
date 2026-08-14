@@ -287,6 +287,30 @@
   color: var(--color-icon-primary);
 }
 
+/* ============================================
+   FOLLOW-UP SUGGESTIONS — the chips a committed
+   assistant turn passes into ChatMessage's footer
+   slot. The same PromptSuggestions row the welcome
+   screen uses, so these only place it: full width
+   of the footer, set off from the actions above.
+   ============================================ */
+
+.followups {
+  width: 100%;
+  margin-top: var(--gap-sm);
+  /* They land a beat after the answer commits, so they arrive rather than
+     appear. Reduced motion zeroes the duration through the token, which
+     leaves the chips in their final state on the first frame. */
+  animation: followupsIn var(--motion-duration-slow) var(--motion-ease-entrance) both;
+}
+
+@keyframes followupsIn {
+  from {
+    opacity: 0;
+    transform: translateY(var(--gap-xs));
+  }
+}
+
 /* Sidebar.module.css's srOnly, repeated here because CSS modules scope
    class names per file. Visually hidden, still announced. */
 .srOnly {

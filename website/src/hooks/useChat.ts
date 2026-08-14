@@ -25,6 +25,12 @@ export type ChatEvent =
       The sim transport never sends one, which is what hides the thumbs in
       the playground's Chat view. */
   | { type: "exchange"; id: string }
+  /** Follow-up questions to offer under the finished answer. A transport that
+      can produce them yields this before `done`; the site's real transport
+      cannot (they are written from the completed answer, so waiting for them
+      would hold the turn open) and fetches them after the turn commits
+      instead — see lib/chat-followups. */
+  | { type: "followups"; items: string[] }
   /** Terminal: the response is complete. */
   | { type: "done" }
   /** A guardrail response (rate limit, circuit breaker): rendered as a normal assistant message. */
@@ -71,6 +77,12 @@ export interface ChatTurn {
   exchangeId?: string;
   /** The visitor's thumbs verdict on this turn, kept for the session only. */
   feedback?: "up" | "down";
+  /**
+   * Follow-up questions offered under this answer. Undefined means none have
+   * been asked for yet; an empty array means they were and none came back,
+   * which is what stops a failed attempt being retried on every render.
+   */
+  followups?: string[];
 }
 
 export type LivePhase = "thinking" | "streaming";
@@ -91,6 +103,8 @@ export interface LiveResponse {
   durationSeconds?: number;
   /** Carried from the transport's `exchange` event into the committed turn. */
   exchangeId?: string;
+  /** Carried from the transport's `followups` event into the committed turn. */
+  followups?: string[];
 }
 
 let nextId = 0;
@@ -171,6 +185,7 @@ export function useChat(transport: ChatTransport) {
           text: finished.text,
           tracePoints: finished.tracePoints,
           exchangeId: finished.exchangeId,
+          followups: finished.followups,
           durationSeconds:
             finished.durationSeconds ??
             Math.max(1, Math.round((Date.now() - startedAt) / 1000)),
@@ -289,6 +304,10 @@ export function useChat(transport: ChatTransport) {
                 /* A fact about the turn, not about what is on screen — no
                    render needed; commit carries it into the turn. */
                 current = { ...current, exchangeId: event.id };
+                break;
+              case "followups":
+                // Same: nothing renders until the turn commits with them.
+                current = { ...current, followups: event.items };
                 break;
               case "status":
                 update({
@@ -412,6 +431,18 @@ export function useChat(transport: ChatTransport) {
     );
   }, []);
 
+  /**
+   * Attach follow-up questions to a committed turn. State only — the caller
+   * owns producing them, because only it knows where they come from. Writing
+   * an empty array records that the attempt was made and came back with
+   * nothing, so it is never repeated for that turn.
+   */
+  const setTurnFollowups = useCallback((turnId: string, followups: string[]) => {
+    setTurns((prev) =>
+      prev.map((turn) => (turn.id === turnId ? { ...turn, followups } : turn))
+    );
+  }, []);
+
   /** Stop the in-flight response, keeping the text that already arrived. */
   const stop = useCallback(() => {
     abortRef.current?.abort();
@@ -429,5 +460,15 @@ export function useChat(transport: ChatTransport) {
     setLive(null);
   }, []);
 
-  return { turns, live, streaming, modelLabel, send, stop, reset, setTurnFeedback };
+  return {
+    turns,
+    live,
+    streaming,
+    modelLabel,
+    send,
+    stop,
+    reset,
+    setTurnFeedback,
+    setTurnFollowups,
+  };
 }

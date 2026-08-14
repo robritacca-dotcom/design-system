@@ -18,6 +18,10 @@ const STREAM_MS = 30;
 interface SimScenario {
   steps: { status: string; point: string }[];
   response: string;
+  /** The follow-up chips offered under the finished answer. Scripted here
+      because the sim has no backend to write them: on the site they come
+      from a model reading the answer (see lib/chat-followups). */
+  followups: string[];
 }
 
 /* Scenarios rotate per exchange so a test conversation stays varied:
@@ -35,6 +39,11 @@ const SCENARIOS: SimScenario[] = [
       "The launch is on track overall. Three of the four readiness tracks are " +
       "green, and the one item I would watch is the **legal review**, since it " +
       "gates the pricing rollout.",
+    followups: [
+      "Which track is behind?",
+      "Who owns the legal review?",
+      "What happens if pricing slips?",
+    ],
   },
   {
     steps: [
@@ -63,6 +72,11 @@ const SCENARIOS: SimScenario[] = [
       "collapses every one of them. Animation driven from JavaScript sits " +
       "outside that guard and checks the preference itself. If an animation " +
       "cannot say what it is for, it does not ship.",
+    followups: [
+      "How does a theme swap work?",
+      "Why is teal reserved for actions?",
+      "What are the five status roles?",
+    ],
   },
   {
     steps: [
@@ -80,6 +94,11 @@ const SCENARIOS: SimScenario[] = [
       "entirely from those primitives.\n\n" +
       "The project journal on the site tells the longer story, one theme at " +
       "a time.",
+    followups: [
+      "What is in the ai category?",
+      "How do I install the package?",
+      "What is this widget built from?",
+    ],
   },
   {
     steps: [
@@ -112,6 +131,11 @@ const SCENARIOS: SimScenario[] = [
       "change.\n\n" +
       "The practical result is that a change either fits the system or the " +
       "build says no.",
+    followups: [
+      "What does a registry actually check?",
+      "How does the docs site consume the package?",
+      "What runs on every change?",
+    ],
   },
 ];
 
@@ -167,6 +191,12 @@ export function createSimTransport(): ChatTransport {
       await delay(STREAM_MS, signal);
     }
 
+    /* Before `done`, like the event contract asks: the hook carries them
+       into the turn when it commits, so the chips are there with the copy
+       and thumbs row rather than a beat behind it. The site's own transport
+       cannot do this — its suggestions are written from the finished answer,
+       so they are fetched after the commit instead. */
+    yield { type: "followups", items: scenario.followups };
     yield { type: "done" };
   };
 }
