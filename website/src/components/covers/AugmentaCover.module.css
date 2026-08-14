@@ -1,0 +1,831 @@
+/*
+ * 1:1 redraws of the Augmenta ACP frames (Figma "ACP 2024", node 4026:67215).
+ *
+ * Every value here is hard-coded from the Figma file on purpose — these mocks
+ * deliberately use no design-system tokens and no design-system components, so
+ * they can never drift when the system's own theme changes.
+ *
+ * The product is built on Ant Design, and the file ships a light frame and a
+ * dark frame of every screen. Both palettes below are read straight out of
+ * Figma's variable definitions rather than derived, so dark mode here is as
+ * literal as light mode. Names keep Ant's own token names so the mapping back
+ * to the file stays readable.
+ */
+
+.cover {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.stage {
+  --font: var(
+    --font-open-sans,
+    "Open Sans",
+    "Segoe UI",
+    -apple-system,
+    BlinkMacSystemFont,
+    Helvetica,
+    Arial,
+    sans-serif
+  );
+
+  --acp-layout: #f5f5f5;
+  --acp-surface: #ffffff;
+  --acp-text: rgba(0, 0, 0, 0.88);
+  --acp-text-secondary: rgba(0, 0, 0, 0.65);
+  --acp-text-description: rgba(0, 0, 0, 0.45);
+  --acp-text-disabled: rgba(0, 0, 0, 0.25);
+  --acp-border: rgba(0, 0, 0, 0.15);
+  --acp-border-secondary: rgba(0, 0, 0, 0.06);
+  --acp-split: rgba(0, 0, 0, 0.06);
+  --acp-primary: #1677ff;
+  --acp-primary-active: #0958d9;
+  --acp-success: #52c41a;
+  --acp-tag-info-bg: #e6f4ff;
+  --acp-tag-info-border: #91caff;
+  --acp-fill-quaternary: rgba(0, 0, 0, 0.02);
+  --acp-fill-disabled: rgba(0, 0, 0, 0.04);
+  --acp-menu-fill-alter: rgba(0, 0, 0, 0.02);
+  --acp-purple: #d3adf7;
+
+  /* The rail keeps its own colours in both themes. */
+  --acp-rail-bg: #03162b;
+  --acp-rail-sub-bg: #000c17;
+  --acp-rail-ink: rgba(255, 255, 255, 0.65);
+  --acp-rail-active-bg: #beb89b;
+  --acp-rail-active-ink: #1c1b17;
+
+  width: 1440px;
+  height: 900px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  background-color: var(--acp-surface);
+  font-family: var(--font);
+  font-weight: 400;
+  color: var(--acp-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+:global([data-theme="dark"]) .stage {
+  --acp-layout: #000000;
+  --acp-surface: #141414;
+  --acp-text: rgba(255, 255, 255, 0.85);
+  --acp-text-secondary: rgba(255, 255, 255, 0.65);
+  --acp-text-description: rgba(255, 255, 255, 0.45);
+  --acp-text-disabled: rgba(255, 255, 255, 0.25);
+  --acp-border: #424242;
+  --acp-border-secondary: #303030;
+  --acp-split: rgba(255, 255, 255, 0.06);
+  --acp-primary: #1668dc;
+  --acp-primary-active: #1554ad;
+  --acp-success: #49aa19;
+  --acp-tag-info-bg: #111a2c;
+  --acp-tag-info-border: #15325b;
+  --acp-fill-quaternary: rgba(255, 255, 255, 0.04);
+  --acp-fill-disabled: rgba(255, 255, 255, 0.08);
+  --acp-menu-fill-alter: rgba(255, 255, 255, 0.04);
+  --acp-purple: #301c4d;
+}
+
+.stage,
+.stage * {
+  transition:
+    background-color 320ms ease,
+    color 320ms ease,
+    border-color 320ms ease,
+    fill 320ms ease,
+    stroke 320ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage,
+  .stage * {
+    transition-duration: 1ms;
+  }
+}
+
+.stage p,
+.stage span {
+  margin: 0;
+}
+
+/* ------------------------------------------------------------------- rail */
+
+.rail {
+  width: 62px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: var(--acp-rail-bg);
+  color: var(--acp-rail-ink);
+}
+
+.railTop {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.railLogo {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  color: #ffffff;
+}
+
+.railGroup {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+}
+
+.railItem {
+  width: 100%;
+  height: 40px;
+  box-sizing: border-box;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+  border-radius: 8px;
+}
+
+.railItemActive {
+  background-color: var(--acp-rail-active-bg);
+  color: var(--acp-rail-active-ink);
+}
+
+.railFoot {
+  width: 100%;
+  height: 40px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: var(--acp-rail-sub-bg);
+}
+
+.railFootButton {
+  width: 32px;
+  height: 32px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+  border-radius: 6px;
+}
+
+/* ----------------------------------------------------------------- viewer */
+
+.viewer {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--acp-surface);
+}
+
+.topBar {
+  position: relative;
+  width: 100%;
+  height: 46px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: stretch;
+}
+
+.topLeft,
+.topMid,
+.topRight {
+  position: relative;
+  width: 451.333px;
+  flex-shrink: 0;
+}
+
+.topLeft {
+  margin-left: 12px;
+}
+
+/* ------------------------------------------------------------- breadcrumb */
+
+.breadcrumb {
+  position: absolute;
+  left: 0;
+  top: 12px;
+  display: flex;
+  align-items: center;
+  height: 22px;
+}
+
+.crumb {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  padding: 0 4px;
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--acp-text-description);
+  white-space: nowrap;
+}
+
+.crumbCurrent {
+  color: var(--acp-text);
+}
+
+.crumbBadge {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 2px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 22px;
+  color: #ffffff;
+}
+
+.crumbBadgeX {
+  background-color: var(--acp-primary);
+}
+
+.crumbBadgeA {
+  border-radius: 1px;
+  background-color: var(--acp-success);
+}
+
+.crumbSeparator {
+  display: flex;
+  align-items: center;
+  padding: 0 4px;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--acp-text-description);
+}
+
+/* ------------------------------------------------------------------- tabs */
+
+.tab {
+  position: absolute;
+  top: 0;
+  height: 46px;
+  box-sizing: border-box;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 0;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--acp-text);
+  white-space: nowrap;
+}
+
+.tabActive {
+  border-bottom: 2px solid var(--acp-primary);
+  font-weight: 600;
+  color: var(--acp-primary);
+}
+
+/* --------------------------------------------------------- header, right */
+
+.generating {
+  position: absolute;
+  left: 223.333px;
+  top: 12px;
+  width: 97px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--acp-text);
+  white-space: nowrap;
+}
+
+.generatingIcon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.feedbackButton {
+  position: absolute;
+  left: 330.333px;
+  top: 11px;
+  width: 121px;
+  height: 24px;
+  box-sizing: border-box;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--acp-border);
+  border-radius: 4px;
+  background-color: var(--acp-surface);
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--acp-text);
+  white-space: nowrap;
+}
+
+/* ------------------------------------------------------------------- main */
+
+.main {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  overflow: hidden;
+}
+
+.content {
+  flex: 1;
+  min-height: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+}
+
+/* The study title row, its status tags and the split button. */
+.studyRow {
+  position: relative;
+  height: 32px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.iconButton32 {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  color: var(--acp-text);
+}
+
+.studyDot {
+  width: 13.333px;
+  height: 13.333px;
+  flex-shrink: 0;
+  margin-left: 8px;
+  border-radius: 50%;
+  background-color: var(--acp-purple);
+}
+
+.studyName {
+  margin-left: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 22px;
+  color: var(--acp-text);
+  white-space: nowrap;
+}
+
+.statusGroup {
+  position: absolute;
+  left: 573.5px;
+  top: 5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tag {
+  height: 22px;
+  box-sizing: border-box;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  padding: 0 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  line-height: 20px;
+  white-space: nowrap;
+}
+
+.tagInfo {
+  border: 1px solid var(--acp-tag-info-border);
+  background-color: var(--acp-tag-info-bg);
+  color: var(--acp-primary);
+}
+
+.tagDefault {
+  border: 1px solid var(--acp-border);
+  background-color: var(--acp-fill-quaternary);
+  color: var(--acp-text);
+}
+
+.splitButton {
+  position: absolute;
+  left: 1190px;
+  top: 0;
+  width: 140px;
+  height: 32px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  border: 1px solid var(--acp-border);
+  border-radius: 6px;
+  background-color: var(--acp-surface);
+}
+
+.splitLabel {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid var(--acp-fill-disabled);
+  background-color: var(--acp-fill-disabled);
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--acp-text-disabled);
+  white-space: nowrap;
+}
+
+.splitIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  color: var(--acp-text);
+}
+
+/* -------------------------------------------------------------- side menu */
+
+.lower {
+  flex: 1;
+  min-height: 0;
+  margin-top: 12px;
+  display: flex;
+  align-items: stretch;
+}
+
+.sideMenu {
+  width: 180px;
+  flex-shrink: 0;
+  padding-top: 28px;
+  display: flex;
+  flex-direction: column;
+}
+
+.studyStep {
+  height: 58px;
+  box-sizing: border-box;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 24px;
+  border-radius: 8px;
+}
+
+.studyStepActive {
+  background-color: var(--acp-fill-disabled);
+}
+
+.studyStepIcon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.studyStepLabel {
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--acp-text);
+  white-space: nowrap;
+}
+
+.studyStepSub {
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--acp-text-secondary);
+  white-space: nowrap;
+}
+
+.submenu {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px 0;
+}
+
+.submenuTitle {
+  height: 40px;
+  box-sizing: border-box;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 0 4px;
+  padding: 0 16px 0 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--acp-text);
+}
+
+.submenuTitleLabel {
+  flex: 1;
+  min-width: 0;
+}
+
+.submenuList {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px;
+  background-color: var(--acp-menu-fill-alter);
+}
+
+.submenuItem {
+  height: 40px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  padding: 0 24px 0 48px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--acp-text);
+}
+
+/* ------------------------------------------------------------- rule tree */
+
+.form {
+  flex: 1;
+  min-width: 0;
+  margin-left: 16px;
+  display: flex;
+  align-items: stretch;
+}
+
+.rules {
+  width: 280px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  padding: 12px;
+}
+
+.rulesPill {
+  height: 24px;
+  box-sizing: border-box;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  border: 1px solid var(--acp-primary-active);
+  border-radius: 4px;
+  background-color: var(--acp-surface);
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--acp-primary-active);
+  white-space: nowrap;
+}
+
+.treeGroup {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.treeRow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: var(--acp-text);
+}
+
+.treeRowBranch {
+  height: 24px;
+}
+
+.treeRowLeaf {
+  height: 22px;
+}
+
+/* The Ant tree connectors: one 24px column per level, hairline down the
+   middle of each, plus a stub into the leaf. */
+.treeIndent {
+  position: relative;
+  align-self: stretch;
+  flex-shrink: 0;
+}
+
+.treeIndent::before,
+.treeIndent::after {
+  content: "";
+  position: absolute;
+  background-color: var(--acp-border);
+}
+
+.treeIndent::before {
+  top: 0;
+  bottom: 0;
+  width: 1px;
+}
+
+.treeIndent::after {
+  top: 50%;
+  height: 1px;
+  width: 11.5px;
+  right: 0;
+}
+
+.treeExpander {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+}
+
+.treeCheckbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 8px;
+}
+
+.treeLabel {
+  padding: 0 4px;
+  border-radius: 6px;
+  font-size: 12px;
+  line-height: 20px;
+  white-space: nowrap;
+}
+
+.treeLabelBranch {
+  font-weight: 600;
+}
+
+/* ------------------------------------------------------------------ table */
+
+.table {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.tableGrid {
+  display: grid;
+  grid-template-columns: 159px 212px 212px 212px 59px;
+}
+
+.headerCell {
+  height: 36px;
+  box-sizing: border-box;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 8px;
+  border: 0.5px solid var(--acp-split);
+  background-color: var(--acp-border-secondary);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 20px;
+  color: var(--acp-text);
+}
+
+.headerLabel {
+  flex: 1;
+  min-width: 0;
+}
+
+.cell {
+  height: 36px;
+  box-sizing: border-box;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 4px;
+  border: 0.5px solid var(--acp-split);
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--acp-text);
+}
+
+.cellText {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cellLink {
+  color: var(--acp-primary);
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+}
+
+.viewButton {
+  height: 24px;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  border: 1px solid var(--acp-border);
+  border-radius: 4px;
+  background-color: var(--acp-surface);
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--acp-text);
+}
+
+/* ------------------------------------------------------------- pagination */
+
+.pagination {
+  position: relative;
+  height: 40px;
+  flex-shrink: 0;
+  margin-top: 182px;
+}
+
+.paginationCount {
+  position: absolute;
+  left: 533px;
+  top: 9px;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--acp-text);
+  white-space: nowrap;
+}
+
+.paginationControls {
+  position: absolute;
+  left: 742px;
+  top: 0;
+  width: 112px;
+  height: 40px;
+  box-sizing: border-box;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 0;
+  color: var(--acp-text-disabled);
+}
+
+.pageArrow {
+  width: 32px;
+  height: 32px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+  border-radius: 6px;
+}
+
+.pageNumber {
+  width: 32px;
+  height: 32px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--acp-primary);
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 22px;
+  color: var(--acp-primary);
+}

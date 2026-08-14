@@ -1,8 +1,10 @@
 import ThemeToggle from "../../components/ThemeToggle/ThemeToggle";
+import { AugmentaDesignRulesCover } from "../../components/covers/AugmentaCover";
 import {
   IntuitAgentChatCover,
   IntuitAgentChatCoverMobile,
 } from "../../components/covers/IntuitAgentChatCover";
+import { openSans } from "./fonts";
 import {
   TurboTaxChatGptCover,
   TurboTaxChatGptCoverMobile,
@@ -28,7 +30,7 @@ export const metadata = {
  */
 export default function CoverMocksPage() {
   return (
-    <main className={styles.page}>
+    <main className={`${styles.page} ${openSans.variable}`}>
       <div className={styles.toggle}>
         <ThemeToggle />
       </div>
@@ -76,6 +78,13 @@ export default function CoverMocksPage() {
         <p className={styles.label}>Intuit Agent Chat — panel, 428 × 964</p>
         <div style={{ width: 428 }}>
           <IntuitAgentChatCoverMobile />
+        </div>
+      </section>
+
+      <section className={styles.mock}>
+        <p className={styles.label}>Augmenta — design rules, 1440 × 900</p>
+        <div style={{ width: 1440 }}>
+          <AugmentaDesignRulesCover />
         </div>
       </section>
     </main>
