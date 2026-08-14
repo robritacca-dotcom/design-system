@@ -13,7 +13,7 @@ const { sidebarLinks } = getSidebarLinks(workSidebarLinks, "/work");
 
 /* The Card's cover slot, from ds-card--case-study__cover-wrap. The covers are
    drawn to fill whatever ratio they are given, so the frame is told the slot's
-   rather than the other way round. */
+   ratio rather than the slot being sized to the frame. */
 const CARD_COVER_ASPECT = 940 / 480;
 
 export default function WorkPage() {

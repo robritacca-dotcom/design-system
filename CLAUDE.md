@@ -94,7 +94,7 @@ Two facts that bite on release day: **a published version can never be reused**,
 **Infrastructure** (the facts the /overview pipeline describes — keep them in sync):
 - **Domain**: `robertritacca.com` is registered at GoDaddy; GoDaddy DNS points at the Vercel deployment (`www` CNAMEs to Vercel's DNS). Storybook deploys as a second Vercel project.
 - **Analytics**: Google Analytics 4 via the gtag snippet in `website/src/app/layout.tsx` (`GA_ID` is the public G-… measurement ID — safe to commit; it is visible in every page's source by design). GA *credentials* (service-account key, property ID) live only in local `ga-analysis/` files that its own `.gitignore` excludes from the repo (the directory's tooling — `pull_ga.py`, `README.md` — is tracked and secret-free); they never reach the repo or the site.
-- **Fonts**: Nunito Sans is **not** bundled anywhere — the website self-hosts it via `next/font/google` (fetched from Google Fonts at build time), Storybook loads it via a Google Fonts `<link>`, and package consumers bring their own (override `--font-family-primary`). Material Symbols Rounded ships as a self-hosted woff2 **inside the npm package** (`src/fonts/`). The playground (`/playground`) is the one surface that loads fonts from Google at runtime.
+- **Fonts**: Nunito Sans is **not** bundled anywhere — the website self-hosts it via `next/font/google` (fetched from Google Fonts at build time), Storybook loads it via a Google Fonts `<link>`, and package consumers bring their own (override `--font-family-primary`). Material Symbols Rounded ships as a self-hosted woff2 **inside the npm package** (`src/fonts/`). One second Google face, Open Sans, is loaded the same build-time way but scoped to `/covers` alone (the Augmenta covers redraw a product that sets it), so it never reaches another page. The playground (`/playground`) is the one surface that loads fonts from Google at runtime.
 
 `npm run verify` is the **single local mirror of CI**: lint, library build, package build, story tests, Storybook build, website lint, website build, in that order. The rule that keeps them in sync: **when CI gains a check (a11y is the worked example), add it to `verify` in the same change** — skills and docs reference `verify`, never individual commands, so nothing else needs updating. **One deliberate exception: Chromatic** (`.github/workflows/chromatic.yml`, visual regression). Every run bills cloud snapshots against a monthly budget, so it is `workflow_dispatch`-only, never part of `verify`, and never a reason to treat a green `verify` as proof the pixels are unchanged.
 
@@ -149,12 +149,14 @@ The old `merge-and-push` skill is retired because its name didn't say which of t
     │   ├── writing/           # Essay pages, mirrored from the Substack feed
     │   ├── about/             # About page
     │   ├── rr-animated/       # Standalone animated-logo page
+    │   ├── covers/            # Hidden staging grid for the vector cover mocks (noindex, chromeless, in no nav/sitemap/corpus)
     │   ├── llms.txt/          # Serves the public llms.txt agent index (a prose surface — see content-design.md's register table)
     │   └── api/               # Route handlers (github-contributions; chat, the widget's LLM backend)
     ├── src/config/            # navigation.ts (nav/sidebar/breadcrumb source of truth), chromeless.ts (routes with no shared chrome), social.ts (canonical profile + project links)
     ├── src/data/              # Data registries: case-studies.json, site-updates.json, shader-background.json, skills accessors
     ├── src/hooks/             # Client hooks (useChat — the chat widget's transport-agnostic state machine)
     ├── src/lib/               # Non-UI modules (chat-sim + chat-transport, chat-model, scroll lock, Substack feed, OG image, structured data)
+    ├── src/components/covers/ # Vector redraws of the screens each case study is known by, drawn in CSS/SVG rather than captured: one 16:10 CoverFrame per cover, mapped to studies by case-study-covers.tsx, staged on /covers
     └── src/components/        # Shared Next.js UI (MegaNav header, Sidebar, SiteFooter + SiteChat — both mounted once from the root layout, skipping the chromeless routes in src/config/chromeless.ts; BlurBackground owns the ambient background and is mounted once from the layout too — the WebGL2 field, with the CSS blobs kept underneath as its fallback)
 ```
 
