@@ -517,6 +517,14 @@
       "client": true
     },
     {
+      "name": "ShaderField",
+      "label": "Shader field",
+      "slug": "shader-field",
+      "description": "An ambient WebGL2 field of soft light sources that sample colour tokens, with a reported fallback status.",
+      "category": "layout",
+      "client": true
+    },
+    {
       "name": "Skeleton",
       "label": "Skeleton",
       "slug": "skeleton",

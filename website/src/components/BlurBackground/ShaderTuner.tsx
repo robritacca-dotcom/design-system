@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
+import type { ShaderFieldStatus } from "@robr0/design-system/components/ShaderField/ShaderField";
 import {
   shaderBackground,
   type BackgroundMode,
@@ -109,10 +110,8 @@ export interface ShaderTunerProps {
   onParamsChange: (next: ShaderParams) => void;
   mode: BackgroundMode;
   onModeChange: (next: BackgroundMode) => void;
-  /** False once getContext('webgl2') has returned null. */
-  supported: boolean;
-  /** True once the first frame has been drawn. */
-  active: boolean;
+  /** How ShaderField has resolved: still coming up, drawing, or fallen back. */
+  status: ShaderFieldStatus;
 }
 
 /**
@@ -131,8 +130,7 @@ export default function ShaderTuner({
   onParamsChange,
   mode,
   onModeChange,
-  supported,
-  active,
+  status,
 }: ShaderTunerProps) {
   const [open, setOpen] = useState(true);
   const stats = useFrameStats();
@@ -194,7 +192,7 @@ export default function ShaderTuner({
             </button>
           </div>
 
-          {mode === "shader" && !supported && (
+          {mode === "shader" && status === "unavailable" && (
             <p className={styles.fallbackNote}>
               WebGL2 unavailable — the CSS blobs are carrying the background.
               This is the fallback path working as intended.
@@ -235,9 +233,11 @@ export default function ShaderTuner({
               mode:{" "}
               {mode === "css"
                 ? "css blobs"
-                : active
+                : status === "active"
                   ? "shader (webgl2)"
-                  : "shader (starting)"}
+                  : status === "unavailable"
+                    ? "shader (fell back)"
+                    : "shader (starting)"}
             </span>
           </div>
 

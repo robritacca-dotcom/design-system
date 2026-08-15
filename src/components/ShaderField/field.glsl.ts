@@ -1,23 +1,22 @@
 /**
- * GLSL sources for the site's ambient background field.
+ * GLSL sources for ShaderField, the system's ambient background field.
  *
  * This file owns the shader and BLOB_COUNT only. The blob table and every
- * tuneable parameter live in website/src/data/shader-background.json, so a
- * look can be retuned without touching GLSL.
+ * tuneable parameter are data, passed in by the caller, so a look can be
+ * retuned without touching GLSL.
  *
- * The fragment shader draws the same eight blobs BlurBackground draws — the
- * blob table below is ported 1:1 from the CSS in globals.css:212-273 — but
- * computes the true Gaussian falloff the CSS approximates (the ≥1280px path
- * samples the Gaussian CDF at σ=80px with twelve color-mix stops), blends in
- * linear space so midpoints keep their saturation, warps the field with fbm
- * noise so it flows instead of translating rigidly, and dithers away the
- * 8-bit banding these wide, soft ramps otherwise produce.
+ * The field is a sum of soft Gaussian sources. It computes the true Gaussian
+ * falloff a stack of blurred CSS discs only approximates, blends in linear
+ * space so midpoints keep their saturation, warps the field with fbm noise so
+ * it flows instead of translating rigidly, and dithers away the 8-bit banding
+ * these wide, soft ramps otherwise produce.
  *
- * Coordinate space matches the CSS exactly: origin at the container centre
- * (the ellipses sit at left/top: 50%), one unit = container width (the blobs
- * are vw-sized, and CSS percentage margins — top included — resolve against
- * the containing block's width). Centres are therefore constants that never
- * need re-uploading on resize.
+ * Coordinate space is chosen to match a CSS blob layer exactly, so a fallback
+ * built from absolutely-positioned discs lines up with it: origin at the
+ * container centre (`left`/`top: 50%`), one unit = container width (discs are
+ * vw-sized, and CSS percentage margins — top included — resolve against the
+ * containing block's width). Centres are therefore constants that never need
+ * re-uploading on resize.
  *
  * Colours arrive already converted to linear RGB (the hook does the sRGB
  * decode once per theme change); the shader only encodes back at the end.
@@ -25,9 +24,10 @@
 
 /**
  * Sizes the shader's uniform arrays, so it is a compile-time constant here
- * rather than a length read from data. scripts/validate-shader-background.mjs
- * reads this number out of this file and fails the build if the config's blob
- * count disagrees — the config never silently over- or under-fills the arrays.
+ * rather than a length read from data. A caller may pass fewer blobs — unused
+ * slots are parked off-field — but never more; ShaderField's own default table
+ * fills it exactly, and scripts/validate-shader-background.mjs reads this
+ * number out of this file to hold the website's config to it.
  */
 export const BLOB_COUNT = 8;
 

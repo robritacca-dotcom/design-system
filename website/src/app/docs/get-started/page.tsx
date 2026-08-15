@@ -36,6 +36,16 @@ import { BarChart, LineChart } from '@robr0/design-system/charts';`;
 const DARK_MODE_SNIPPET = `<!-- Light is the default; flip the whole system with one attribute -->
 <html data-theme="dark">`;
 
+const SHADER_SNIPPET = `import { ShaderField, type ShaderFieldStatus } from '@robr0/design-system';
+
+const [status, setStatus] = useState<ShaderFieldStatus>('pending');
+
+// Note: the fallback paints on 'unavailable', not on 'not active'.
+<div style={{ position: 'fixed', inset: 0, zIndex: -1 }}>
+  {status === 'unavailable' && <YourCssFallback />}
+  <ShaderField params={{ streak: 0.4 }} onStatusChange={setStatus} />
+</div>`;
+
 const FONT_SNIPPET = `/* The whole type scale chains to one token.
    Load any font (Google Fonts, next/font, self-hosted), then: */
 :root {
@@ -263,6 +273,31 @@ export default function GetStartedPage() {
                     open robr0 GPT
                   </OpenChatLink>{" "}
                   and you are looking at those components at work.
+                </p>
+              </section>
+
+              {/* Ambient background */}
+              <section className={`${styles.section} animate-in animate-delay-6`}>
+                <SectionTitle title="Ambient background" />
+                <p className={styles.sectionNote}>
+                  <Link href="/components/shader-field" className={styles.inlineLink}>
+                    Shader field
+                  </Link>{" "}
+                  is the one component that asks more of you than an import. It
+                  renders a WebGL2 field of soft light sources that read your
+                  colour tokens at runtime, so it re-themes with everything
+                  else. But it fills a positioned ancestor you provide, and it
+                  can fail on hardware you do not control. So it never decides what
+                  to paint instead of itself: it reports <code>pending</code>,{" "}
+                  <code>active</code> or <code>unavailable</code>, and one
+                  fallback covers every failure. It also checks{" "}
+                  <code>prefers-reduced-motion</code> itself, since the CSS
+                  motion tokens cannot see an animation loop.
+                </p>
+                <CodeBlock code={SHADER_SNIPPET} language="tsx" showCopy />
+                <p className={styles.sectionNote}>
+                  The background behind this page is that component, with eight
+                  blurred CSS discs kept painted underneath as its fallback.
                 </p>
               </section>
 

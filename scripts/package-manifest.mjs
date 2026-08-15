@@ -35,6 +35,10 @@ const SUBPATHS = [
   // Demo data for the Avatar docs (a .ts module, so the *.tsx wildcard
   // below can't serve it — it needs its own subpath).
   { key: './components/Avatar/demoAvatars', srcJs: './src/components/Avatar/demoAvatars.ts', dist: './components/Avatar/demoAvatars' },
+  // ShaderField's headless renderer, for a consumer who wants the WebGL
+  // lifetime without the component's canvas. A .ts module, so the *.tsx
+  // wildcard below can't serve it either.
+  { key: './components/ShaderField/useShaderField', srcJs: './src/components/ShaderField/useShaderField.ts', dist: './components/ShaderField/useShaderField' },
   { key: './tokens/registry', srcJs: './src/tokens/registry.ts', dist: './tokens/registry' },
   { key: './components/*', srcJs: './src/components/*.tsx', dist: './components/*' },
   { key: './tokens/*.css', asset: './src/tokens/*.css', dist: './tokens/*.css' },

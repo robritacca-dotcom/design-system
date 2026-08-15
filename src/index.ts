@@ -67,6 +67,7 @@ export * from './components/Reasoning/Reasoning';
 export * from './components/SectionTitle/SectionTitle';
 export * from './components/SegmentedControl/SegmentedControl';
 export * from './components/SelectionCard/SelectionCard';
+export * from './components/ShaderField/ShaderField';
 export * from './components/Skeleton/Skeleton';
 export * from './components/Slider/Slider';
 export * from './components/SourceChip/SourceChip';

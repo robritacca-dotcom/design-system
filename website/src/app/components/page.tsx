@@ -36,6 +36,7 @@ import { PromptSuggestions } from "@robr0/design-system/components/PromptSuggest
 import { Prose } from "@robr0/design-system/components/Prose/Prose";
 import { RadioButton } from "@robr0/design-system/components/RadioButton/RadioButton";
 import { SegmentedControl } from "@robr0/design-system/components/SegmentedControl/SegmentedControl";
+import { ShaderField } from "@robr0/design-system/components/ShaderField/ShaderField";
 import { Skeleton } from "@robr0/design-system/components/Skeleton/Skeleton";
 import { Slider } from "@robr0/design-system/components/Slider/Slider";
 import { SourceChip } from "@robr0/design-system/components/SourceChip/SourceChip";
@@ -806,6 +807,13 @@ export default function ComponentsPage() {
                   <span style={{ fontSize: "12px", color: "var(--color-text-primary)" }}>B</span>
                   <div style={{ width: "14px", height: "14px", borderRadius: "50%", border: "2px solid var(--color-bg-container-border)" }} />
                 </div>
+              </div>
+            </TocCard>
+
+            {/* Shader field */}
+            <TocCard href="/components/shader-field" title="Shader field">
+              <div style={{ position: "relative", width: "180px", height: "84px", overflow: "hidden", borderRadius: "8px", border: "1px solid var(--color-bg-container-border)", background: "var(--color-bg-page-primary)" }}>
+                <ShaderField params={{ intensity: 0.85, scale: 1.6, streak: 0.3 }} />
               </div>
             </TocCard>
 

@@ -1,14 +1,16 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import {
+  ShaderField,
+  type ShaderFieldStatus,
+} from "@robr0/design-system/components/ShaderField/ShaderField";
 import {
   shaderBackground,
   type BackgroundMode,
   type ShaderParams,
 } from "@/data/shader-background";
-import { useShaderField } from "./useShaderField";
-import styles from "./ShaderCanvas.module.css";
 
 /* Dev-only tuning panel, and the ternary is load-bearing: the bundler
    statically replaces process.env.NODE_ENV, so in a production build this
@@ -53,22 +55,28 @@ export function HiddenBackground() {
  *
  * Two layers, and the order matters. The eight CSS blobs render first and
  * always — server-side, on every page, exactly as they have since before the
- * shader existed. The WebGL2 field then fades in *over* them once a context is
- * live, and the blobs fade out beneath it.
+ * shader existed. The design system's ShaderField then fades in *over* them
+ * once a context is live, and the blobs fade out beneath it.
  *
  * That arrangement is the failsafe. No WebGL2, a blocked GPU, a lost context,
  * or `"mode": "css"` in the config, and the blobs simply stay painted: nothing
  * flashes, nothing is missing, and the server-rendered markup is identical
  * either way, so there is no hydration mismatch.
  *
+ * This component owns only the site's half of that arrangement — the fixed
+ * layer, the fallback blobs, the config and the dev tuner. The renderer, its
+ * reduced-motion handling, context-loss recovery and the watchdog that bounds
+ * "pending" all live in ShaderField, which reports which of the three states
+ * it has reached.
+ *
  * Every tuneable value comes from website/src/data/shader-background.json.
  * Append `?tune=1` to any page in `npm run dev` to adjust them live.
  */
 export default function BlurBackground() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const [params, setParams] = useState<ShaderParams>(shaderBackground.params);
   const [mode, setMode] = useState<BackgroundMode>(shaderBackground.mode);
   const [tuning, setTuning] = useState(false);
+  const [status, setStatus] = useState<ShaderFieldStatus>("pending");
 
   /* Read once on mount from the URL, which the server prerender cannot see —
      same approach as the playground's ?view= handling, and deliberately not
@@ -80,30 +88,10 @@ export default function BlurBackground() {
     setTuning(true);
   }, []);
 
-  const { supported, active } = useShaderField(
-    canvasRef,
-    { ...params, blobs: shaderBackground.blobs },
-    mode === "shader"
+  const onStatusChange = useCallback(
+    (next: ShaderFieldStatus) => setStatus(next),
+    [],
   );
-
-  /**
-   * Watchdog on the pending state, and it is load-bearing.
-   *
-   * Hiding the blobs while the renderer resolves means "pending" paints
-   * nothing — so if resolution never arrives, the page has no background at
-   * all. A context that is lost before the first frame and never restored
-   * does exactly that (StrictMode's double-mount is the common way in). This
-   * bounds the wait: resolve or the blobs come back.
-   *
-   * The window is generous next to a normal start, which lands within a frame
-   * of mount, so a healthy field never trips it.
-   */
-  const [gaveUp, setGaveUp] = useState(false);
-  useEffect(() => {
-    if (mode !== "shader" || active || !supported) return;
-    const timer = window.setTimeout(() => setGaveUp(true), 1500);
-    return () => window.clearTimeout(timer);
-  }, [mode, active, supported]);
 
   /**
    * Tri-state, and "pending" is the one that matters.
@@ -118,24 +106,18 @@ export default function BlurBackground() {
    * "css" resolves server-side, so that path never pends and the blobs are
    * painted in the very first frame with no gap at all.
    */
-  /* active is tested before gaveUp, so a restore that lands after the
-     watchdog fired still wins — the field fades in over the blobs. */
   const state =
-    mode === "css" || !supported
+    mode === "css"
       ? "off"
-      : active
+      : status === "active"
         ? "on"
-        : gaveUp
+        : status === "unavailable"
           ? "off"
           : "pending";
 
   return (
     <>
-      <div
-        className="blur-container"
-        data-shader={state}
-        aria-hidden="true"
-      >
+      <div className="blur-container" data-shader={state} aria-hidden="true">
         <div className="blur-ellipse blur-yellow" />
         <div className="blur-ellipse blur-green" />
         <div className="blur-ellipse blur-purple" />
@@ -145,14 +127,12 @@ export default function BlurBackground() {
         <div className="blur-ellipse blur-orange" />
         <div className="blur-ellipse blur-teal" />
 
-        {mode === "shader" && (
-          <canvas
-            ref={canvasRef}
-            className={
-              active ? `${styles.canvas} ${styles.canvasActive}` : styles.canvas
-            }
-          />
-        )}
+        <ShaderField
+          params={params}
+          blobs={shaderBackground.blobs}
+          enabled={mode === "shader"}
+          onStatusChange={onStatusChange}
+        />
       </div>
 
       {ShaderTuner && tuning && (
@@ -161,8 +141,7 @@ export default function BlurBackground() {
           onParamsChange={setParams}
           mode={mode}
           onModeChange={setMode}
-          supported={supported}
-          active={active}
+          status={status}
         />
       )}
     </>

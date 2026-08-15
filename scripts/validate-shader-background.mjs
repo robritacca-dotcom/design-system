@@ -28,7 +28,7 @@ const dataPath = join(
 );
 const tokenRegistryPath = join(repoRoot, 'src', 'tokens', 'registry.json');
 const shaderPath = join(
-  repoRoot, 'website', 'src', 'components', 'BlurBackground', 'field.glsl.ts'
+  repoRoot, 'src', 'components', 'ShaderField', 'field.glsl.ts'
 );
 
 const errors = [];
@@ -62,8 +62,8 @@ try {
 }
 if (blobCount === null) {
   errors.push(
-    'could not read BLOB_COUNT from website/src/components/BlurBackground/' +
-      'field.glsl.ts — the shader owns that number and this validator reads it'
+    'could not read BLOB_COUNT from src/components/ShaderField/field.glsl.ts' +
+      ' — the shader owns that number and this validator reads it'
   );
 }
 
@@ -109,7 +109,7 @@ for (const name of Object.keys(params)) {
     errors.push(
       `params.${name} is not a shader parameter — remove it, or add it to ` +
         'PARAM_RANGES in scripts/validate-shader-background.mjs and to ' +
-        'ShaderParams in website/src/data/shader-background.ts'
+        'ShaderParams in src/components/ShaderField/useShaderField.ts'
     );
   }
 }

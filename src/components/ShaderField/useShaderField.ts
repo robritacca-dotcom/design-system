@@ -2,14 +2,98 @@
 
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { BLOB_COUNT, fragmentSource, vertexSource } from "./field.glsl";
-import type { ShaderBlob, ShaderParams } from "@/data/shader-background";
+
+/** The seven tuneable properties of the field. */
+export interface ShaderParams {
+  /** Overall opacity of the field, 0.1–1. */
+  intensity: number;
+  /** Domain-warp strength: how much fbm noise bends the field, 0–0.5. */
+  warp: number;
+  /** Noise frequency. Higher values give finer, busier structure, 0.5–6. */
+  scale: number;
+  /** Drift-rate multiplier on every blob's period, 0–4. */
+  speed: number;
+  /** Dither/film-grain amplitude, 0–0.4. Also what kills 8-bit banding. */
+  grain: number;
+  /** Anisotropic stretch: 0 renders discs, 1 renders diagonal streams, 0–1. */
+  streak: number;
+  /**
+   * Cursor-wake strength, 0–1. Defaults to 0 — the interaction is built and
+   * dormant, not absent. Raising it turns on the swirl and glow trail, and
+   * with them the loop's step up from 30fps to 60fps while a wake is alive.
+   */
+  react: number;
+}
+
+/**
+ * One light source in the field.
+ *
+ * The coordinate space is the shader's (see field.glsl): origin at the
+ * container centre, one unit = container width, y running downward. Centres
+ * are constants — nothing here is recomputed on resize.
+ */
+export interface ShaderBlob {
+  /**
+   * Semantic colour token, read from the canvas's computed style at runtime,
+   * so the field re-themes with `data-theme` and with any scoped custom-
+   * property override. A token nothing defines resolves to no colour — an
+   * invisible source, never an error.
+   */
+  token: string;
+  /** Disc diameter in container-width units. */
+  size: number;
+  /** Centre offset from the container centre, width units. */
+  cx: number;
+  /** Centre offset from the container centre, width units. */
+  cy: number;
+  /** Drift cycle in seconds, before `speed` is applied. */
+  period: number;
+  /** Phase offset, so sources never move in lockstep. */
+  phase: number;
+  /**
+   * Emission weight. Positive emits light; negative absorbs it, giving a
+   * shadow that occludes whatever shines behind it.
+   */
+  weight: number;
+}
+
+/**
+ * The shipped look: seven parameters tuned by eye, cursor wake off. Spread it
+ * and override the one or two you want rather than restating the set.
+ */
+export const DEFAULT_SHADER_PARAMS: ShaderParams = {
+  intensity: 0.5,
+  warp: 0.14,
+  scale: 2.7,
+  speed: 2,
+  grain: 0.1,
+  streak: 0.4,
+  react: 0,
+};
+
+/**
+ * The default composition: eight sources on core accent tokens, filling
+ * BLOB_COUNT exactly.
+ *
+ * `--color-action-primary-bg` is deliberately absent. The action colour is
+ * reserved for CTAs and focus rings, and a full-viewport decorative field is
+ * precisely the use that would stop it meaning "click here" — so the last
+ * source takes `--color-core-ui-secondary` instead.
+ */
+export const DEFAULT_SHADER_BLOBS: readonly ShaderBlob[] = [
+  { token: "--color-core-accent-gold", size: 0.45, cx: 0.175, cy: 0.125, period: 18, phase: 0, weight: 1 },
+  { token: "--color-core-accent-mint", size: 0.55, cx: 0.125, cy: 0.125, period: 16, phase: 1, weight: 1 },
+  { token: "--color-core-accent-violet", size: 0.9, cx: 0.35, cy: 0.25, period: 22, phase: 0.5, weight: 1 },
+  { token: "--color-bg-container-secondary", size: 0.55, cx: 0.025, cy: 0.075, period: 14, phase: 1.5, weight: 1 },
+  { token: "--color-core-accent-cobalt", size: 0.55, cx: -0.125, cy: 0.475, period: 17, phase: 0.8, weight: 1 },
+  { token: "--color-core-accent-coral", size: 0.48, cx: 0.39, cy: -0.26, period: 19, phase: 0.3, weight: 1 },
+  { token: "--color-core-accent-amber", size: 0.3, cx: 0.35, cy: 0.3, period: 15, phase: 1.2, weight: 1 },
+  { token: "--color-core-ui-secondary", size: 0.75, cx: -0.125, cy: -0.025, period: 20, phase: 0.7, weight: 1 },
+];
 
 /**
  * Live tunables. Changing them never rebuilds the GL state — the render loop
  * reads them through a ref, and a paused field redraws one frame.
- *
- * The parameters are exactly the config's, so their documentation lives once,
- * on ShaderParams in website/src/data/shader-background.ts.
  */
 export interface ShaderFieldParams extends ShaderParams {
   /** The colour-source table; swap it to change composition live. */
@@ -96,7 +180,7 @@ export function useShaderField(
   canvasRef: RefObject<HTMLCanvasElement | null>,
   params: ShaderFieldParams,
   /* False keeps GL entirely unmounted — the caller's CSS blobs are the whole
-     background. This is the "mode": "css" path, and the dev tuner's A/B. */
+     background — the kill switch, and the A/B against the fallback. */
   enabled = true
 ): ShaderFieldState {
   const [supported, setSupported] = useState(true);
@@ -228,7 +312,7 @@ export function useShaderField(
 
     function readColors(into: Float32Array) {
       // Read from the canvas, not documentElement, so scoped overrides
-      // (the playground writes custom properties onto ancestors) apply.
+      // (custom properties written onto an ancestor) apply.
       const style = getComputedStyle(canvas as HTMLCanvasElement);
       into.fill(0);
       paramsRef.current.blobs.slice(0, BLOB_COUNT).forEach((b, i) => {
@@ -411,8 +495,8 @@ export function useShaderField(
     };
     document.addEventListener("visibilitychange", onVisibility);
 
-    // data-theme drives the palette; the style filter catches the playground
-    // writing custom-property overrides. Coalesced to a flag: one slider drag
+    // data-theme drives the palette; the style filter catches a consumer
+    // writing custom-property overrides live. Coalesced to a flag: one drag
     // emits dozens of records, and colours are re-read at most once per frame.
     const themeObserver = new MutationObserver(() => {
       colorsDirty = true;
@@ -514,7 +598,8 @@ export function useShaderField(
       if (program) gl.deleteProgram(program);
       if (vao) gl.deleteVertexArray(vao);
       // Chrome caps live WebGL contexts (~16) and silently kills the oldest;
-      // App Router remounts this on navigation, so release explicitly. The
+      // a router that remounts this on navigation would leak one context per
+      // visit, so release explicitly rather than waiting to be evicted. The
       // stashed extension lets the next mount on this canvas restore it.
       try {
         if (!gl.isContextLost()) loseExt()?.loseContext();
