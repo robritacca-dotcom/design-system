@@ -13,10 +13,16 @@
  *
  * Coordinate space is chosen to match a CSS blob layer exactly, so a fallback
  * built from absolutely-positioned discs lines up with it: origin at the
- * container centre (`left`/`top: 50%`), one unit = container width (discs are
- * vw-sized, and CSS percentage margins — top included — resolve against the
- * containing block's width). Centres are therefore constants that never need
- * re-uploading on resize.
+ * container centre (`left`/`top: 50%`), one unit = the field's reference
+ * width (discs are vw-sized, and CSS percentage margins — top included —
+ * resolve against the containing block's width). Centres are therefore
+ * constants that never need re-uploading on resize.
+ *
+ * That reference width is the container's own width until `crop` holds it
+ * back on a narrow viewport, where the field keeps more of the scale it was
+ * composed at and the viewport crops into it instead. The hook resolves it to
+ * `u_unit`, in drawing-buffer pixels, so the shader itself never has to know
+ * which of the two it is looking at.
  *
  * Colours arrive already converted to linear RGB (the hook does the sRGB
  * decode once per theme change); the shader only encodes back at the end.
@@ -43,6 +49,7 @@ export const fragmentSource = /* glsl */ `#version 300 es
 precision highp float;
 
 uniform vec2  u_resolution;  // drawing-buffer size in pixels
+uniform float u_unit;        // pixels per field unit (see coordinate space)
 uniform float u_time;        // field time, seconds (speed applied JS-side)
 uniform vec3  u_color[${BLOB_COUNT}];  // linear RGB per blob
 uniform vec4  u_blob[${BLOB_COUNT}];   // xy = centre, z = sigma, w = emission weight
@@ -98,9 +105,9 @@ float fbm(vec2 p) {
 }
 
 void main() {
-  // CSS coordinate space: origin at container centre, one unit = width,
-  // y running downward.
-  vec2 p = (gl_FragCoord.xy - 0.5 * u_resolution) / u_resolution.x;
+  // CSS coordinate space: origin at container centre, one unit = the
+  // reference width the hook resolved, y running downward.
+  vec2 p = (gl_FragCoord.xy - 0.5 * u_resolution) / u_unit;
   p.y = -p.y;
 
   // Light-stream axis: a fixed diagonal. Distances across the axis are

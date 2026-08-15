@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Validates website/src/data/shader-background.json — the single source of
- * truth for the site background: which renderer paints it, the seven shader
+ * truth for the site background: which renderer paints it, the eight shader
  * parameters, and the eight blob definitions. BlurBackground reads this file
  * on every page, so a bad value here is a site-wide visual failure.
  *
@@ -90,6 +90,7 @@ const PARAM_RANGES = {
   grain: [0, 0.4],
   streak: [0, 1],
   react: [0, 1],
+  crop: [0, 1],
 };
 
 const params = config.params ?? {};

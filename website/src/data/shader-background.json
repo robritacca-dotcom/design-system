@@ -7,7 +7,8 @@
     "speed": 2,
     "grain": 0.1,
     "streak": 0.4,
-    "react": 0
+    "react": 0,
+    "crop": 0.5
   },
   "blobs": [
     {

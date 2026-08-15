@@ -29,6 +29,7 @@ const SLIDERS: {
   { key: "grain", label: "Grain", min: 0, max: 0.4, step: 0.01 },
   { key: "scale", label: "Scale", min: 0.5, max: 6, step: 0.1 },
   { key: "speed", label: "Speed", min: 0, max: 4, step: 0.1 },
+  { key: "crop", label: "Crop", min: 0, max: 1, step: 0.05 },
 ];
 
 interface FrameStats {

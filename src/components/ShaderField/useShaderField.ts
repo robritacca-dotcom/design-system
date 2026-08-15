@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { BLOB_COUNT, fragmentSource, vertexSource } from "./field.glsl";
 
-/** The seven tuneable properties of the field. */
+/** The eight tuneable properties of the field. */
 export interface ShaderParams {
   /** Overall opacity of the field, 0.1–1. */
   intensity: number;
@@ -23,6 +23,23 @@ export interface ShaderParams {
    * with them the loop's step up from 30fps to 60fps while a wake is alive.
    */
   react: number;
+  /**
+   * How much the composition resists shrinking with the container, 0–1.
+   *
+   * At 0 — the default, and the behaviour a CSS blob layer has — the whole
+   * field is fitted to whatever width it is given, so a phone shows the
+   * entire composition at phone scale: every source small, and more of them
+   * crowded into view than the look was built for. At 1 the field holds the
+   * scale it was composed at (`REFERENCE_WIDTH`) and a narrower container
+   * crops into it instead. Values between blend the two geometrically,
+   * keeping some of the shrink so colours still bleed together on a small
+   * screen. Above the reference width it does nothing.
+   *
+   * Raise it for a full-viewport background, which is read on a phone as a
+   * scene rather than a diagram; leave it at 0 wherever the point is to see
+   * the whole composition, such as a small demo tile.
+   */
+  crop: number;
 }
 
 /**
@@ -58,7 +75,7 @@ export interface ShaderBlob {
 }
 
 /**
- * The shipped look: seven parameters tuned by eye, cursor wake off. Spread it
+ * The shipped look: eight parameters tuned by eye, cursor wake off. Spread it
  * and override the one or two you want rather than restating the set.
  */
 export const DEFAULT_SHADER_PARAMS: ShaderParams = {
@@ -69,6 +86,7 @@ export const DEFAULT_SHADER_PARAMS: ShaderParams = {
   grain: 0.1,
   streak: 0.4,
   react: 0,
+  crop: 0.5,
 };
 
 /**
@@ -111,6 +129,27 @@ export interface ShaderFieldState {
 /* Half device resolution: the field is entirely low-frequency, so the CSS
    upscale is indistinguishable and fill cost roughly quarters. */
 const RENDER_SCALE = 0.5;
+/* The width the compositions here are framed for, in CSS pixels — a desktop
+   page. `crop` measures the field against this instead of the container when
+   the container is narrower, so a phone crops into the composition rather
+   than shrinking all of it into 375px. Wider containers are never scaled up:
+   the field is built to fill, and a 4K monitor should show more of it, not a
+   magnified version of the same frame. */
+const REFERENCE_WIDTH = 1440;
+
+/**
+ * Pixels per field unit for a container of this CSS width — the divisor the
+ * shader's coordinate space is built on, and the same one the pointer has to
+ * be mapped through or the wake would land somewhere else on the field.
+ *
+ * Geometric blend, so `crop` reads as a proportion of the way from "fit the
+ * whole composition" to "hold its scale and crop": at 375px wide, crop 0.5
+ * measures the field against 735px rather than 375px or 1440px.
+ */
+function fieldUnit(cssWidth: number, crop: number): number {
+  if (cssWidth <= 0) return 1;
+  return cssWidth * Math.pow(Math.max(REFERENCE_WIDTH / cssWidth, 1), crop);
+}
 /* 30fps at rest: the slowest blob cycle is 22s — nothing in the ambient
    drift moves fast enough for 60fps to be visible on a field with no hard
    edges. The cursor wake is the exception: it tracks the hand, and 30fps
@@ -254,6 +293,7 @@ export function useShaderField(
       loc = {};
       for (const name of [
         "u_resolution",
+        "u_unit",
         "u_time",
         "u_color[0]",
         "u_blob[0]",
@@ -332,11 +372,16 @@ export function useShaderField(
 
     let bufWidth = 0;
     let bufHeight = 0;
+    /* CSS width behind the current buffer. `crop` is a live param, so the
+       unit it resolves to is uploaded per frame rather than here — this is
+       what that computation measures against. */
+    let cssWidth = 0;
 
     function resize() {
       if (!gl) return;
       const c = canvas as HTMLCanvasElement;
       const dpr = window.devicePixelRatio || 1;
+      cssWidth = c.clientWidth;
       const w = Math.max(1, Math.round(c.clientWidth * dpr * RENDER_SCALE));
       const h = Math.max(1, Math.round(c.clientHeight * dpr * RENDER_SCALE));
       // Compare before reallocating: mobile URL-bar collapse fires resize
@@ -374,8 +419,9 @@ export function useShaderField(
       const c = canvas as HTMLCanvasElement;
       const rect = c.getBoundingClientRect();
       if (rect.width === 0) return;
-      const x = (e.clientX - rect.left - rect.width / 2) / rect.width;
-      const y = (e.clientY - rect.top - rect.height / 2) / rect.width;
+      const unit = fieldUnit(rect.width, paramsRef.current.crop);
+      const x = (e.clientX - rect.left - rect.width / 2) / unit;
+      const y = (e.clientY - rect.top - rect.height / 2) / unit;
       if (mouseTarget.x < 5) {
         moveAccum += Math.hypot(x - mouseTarget.x, y - mouseTarget.y);
       }
@@ -410,6 +456,12 @@ export function useShaderField(
       }
       const p = paramsRef.current;
       gl.uniform3fv(loc["u_color[0]"], colorCurrent);
+      /* Buffer pixels per field unit: the CSS ratio, applied to the buffer,
+         so render scale and DPR stay out of the coordinate space. */
+      gl.uniform1f(
+        loc["u_unit"],
+        bufWidth * (fieldUnit(cssWidth, p.crop) / Math.max(cssWidth, 1)),
+      );
       gl.uniform1f(loc["u_time"], fieldTime);
       gl.uniform1f(loc["u_intensity"], p.intensity);
       gl.uniform1f(loc["u_warp"], p.warp);
