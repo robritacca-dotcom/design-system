@@ -128,12 +128,16 @@
   align-items: center;
 }
 
+/* The band travels dim → bright → dim, and stays narrow, matching
+   AgentStatus's sweep stop for stop: the two sit in the same conversation,
+   so a shimmer that read differently here would look like a second effect
+   rather than the same one. */
 .ds-reasoning--streaming .ds-reasoning__summary:not(.ds-reasoning__summary--node) {
   background-image: linear-gradient(
     100deg,
-    var(--color-text-primary) 35%,
-    var(--color-text-tertiary) 50%,
-    var(--color-text-primary) 65%
+    var(--color-text-tertiary) 44%,
+    var(--color-text-primary) 50%,
+    var(--color-text-tertiary) 56%
   );
   background-size: 250% 100%;
   background-clip: text;

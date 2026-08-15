@@ -22,8 +22,8 @@
 .ds-agent-status {
   --ds-agent-color: var(--color-text-secondary);
   --ds-agent-label-color: var(--color-text-secondary);
-  --ds-agent-shimmer-base: var(--color-text-primary);
-  --ds-agent-shimmer-sweep: var(--color-text-tertiary);
+  --ds-agent-shimmer-base: var(--color-text-tertiary);
+  --ds-agent-shimmer-sweep: var(--color-text-primary);
   --ds-agent-dot-dim: 0.2;
   --ds-agent-dot-rest: 0.82;
   --ds-agent-cycle: var(--motion-duration-loop-matrix);
@@ -33,11 +33,16 @@
   display: inline-flex;
   align-items: center;
   gap: var(--gap-sm-md);
-  font-family: var(--font-paragraph-family);
-  font-size: var(--font-paragraph-size);
-  font-weight: var(--font-paragraph-weight);
-  line-height: var(--font-paragraph-line-height);
-  letter-spacing: var(--font-paragraph-letter-spacing);
+
+  /* The label is set in the title-body face, not the paragraph one: a status
+     is a heading for the work underneath it, not prose. The two sets share
+     16px/24px metrics, so the row's geometry is identical either way — only
+     the weight and tracking change. */
+  font-family: var(--font-title-body-family);
+  font-size: var(--font-title-body-size);
+  font-weight: var(--font-title-body-weight);
+  line-height: var(--font-title-body-line-height);
+  letter-spacing: var(--font-title-body-letter-spacing);
 }
 
 /* ============================================
@@ -112,13 +117,19 @@
 /* A gradient between the shimmer base and sweep colours, moving left to
    right: with an oversized background image, background-position 100% shows
    its right edge, 0% its left, so counting down walks the sweep band across
-   the text. */
+   the text.
+
+   The base is the dimmer colour and the sweep the brighter one, so what
+   travels is a highlight rather than a shadow — the same "the sweep only
+   brightens it" reading `waiting` has always had. The band is narrow
+   (12% of a 250% image, so under a third of the text at a time): spread
+   wide it washes the whole label at once and stops reading as movement. */
 .ds-agent-status__label--shimmer {
   background-image: linear-gradient(
     100deg,
-    var(--ds-agent-shimmer-base) 35%,
+    var(--ds-agent-shimmer-base) 44%,
     var(--ds-agent-shimmer-sweep) 50%,
-    var(--ds-agent-shimmer-base) 65%
+    var(--ds-agent-shimmer-base) 56%
   );
   background-size: 250% 100%;
   background-clip: text;
@@ -189,9 +200,13 @@
   --ds-agent-matrix-size: var(--icon-size-sm);
 
   gap: var(--gap-sm);
+
+  /* The small metrics, carrying the same title weight down a size: the scale
+     has no 14px title face, and dropping to the paragraph weight here would
+     make one size of the component read as a heading and the other as prose. */
   font-family: var(--font-paragraph-sm-family);
   font-size: var(--font-paragraph-sm-size);
-  font-weight: var(--font-paragraph-sm-weight);
+  font-weight: var(--font-title-body-weight);
   line-height: var(--font-paragraph-sm-line-height);
   letter-spacing: var(--font-paragraph-sm-letter-spacing);
 }
