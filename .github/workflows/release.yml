@@ -29,6 +29,8 @@ name: Release
 # 0.5.0 shipped 2026-08-09 — the chat component set behind the site chat.
 # 0.6.0 shipped 2026-08-11 — the composer radius token, ChatMessage's
 #   showActions, and the README's chat-boundary correction.
+# 0.7.0 shipped 2026-08-15 — ShaderField, the WebGL2 ambient background, plus
+#   Card's cover slot and the --motion-duration-instant token.
 
 on:
   workflow_dispatch:
