@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { AiButton } from "@robr0/design-system/components/AiButton/AiButton";
 import { lockBodyScroll, unlockBodyScroll } from "@/lib/scroll-lock";
 import { CHROMELESS_ROUTES } from "@/config/chromeless";
-import { DOCK_QUERY, useSiteChat } from "./ChatContext";
+import { DOCK_QUERY, TAKEOVER_QUERY, useSiteChat } from "./ChatContext";
 import { SiteChat } from "./SiteChat";
 import styles from "./SiteChat.module.css";
 
@@ -17,12 +17,15 @@ import styles from "./SiteChat.module.css";
 const PANEL_MIN_WIDTH = 420;
 const PANEL_MAX_WIDTH = 546;
 
-const subscribeDock = (onChange: () => void) => {
-  const media = window.matchMedia(DOCK_QUERY);
+const subscribeQuery = (query: string) => (onChange: () => void) => {
+  const media = window.matchMedia(query);
   media.addEventListener("change", onChange);
   return () => media.removeEventListener("change", onChange);
 };
+const subscribeDock = subscribeQuery(DOCK_QUERY);
 const readDocked = () => window.matchMedia(DOCK_QUERY).matches;
+const subscribeTakeover = subscribeQuery(TAKEOVER_QUERY);
+const readTakeover = () => window.matchMedia(TAKEOVER_QUERY).matches;
 
 /**
  * The site-wide panel. Mounted once from the root layout, after {children},
@@ -39,9 +42,13 @@ export function SiteChatMount() {
   const { open, setOpen, view, returnFocusRef } = useSiteChat();
   const pathname = usePathname();
   const docked = useSyncExternalStore(subscribeDock, readDocked, () => false);
+  /* Phone widths: the panel fills the viewport, so it is a takeover whatever
+     the view says — the expand toggle is hidden there rather than offering a
+     switch from full screen to full screen. */
+  const takeover = useSyncExternalStore(subscribeTakeover, readTakeover, () => false);
 
   const denied = CHROMELESS_ROUTES.has(pathname);
-  const isFull = view === "full";
+  const isFull = view === "full" || takeover;
   const modal = open && !denied && (isFull || !docked);
   const showPanel = open && !denied;
 
@@ -179,7 +186,9 @@ export function SiteChatMount() {
         aria-label="Site chat"
         onKeyDown={handleKeyDown}
       >
-        <SiteChat fullscreenEnabled compact={!isFull} />
+        {/* compact tracks the host's width, not the view: a takeover on a
+            phone still wants phone insets, where one on a desktop does not. */}
+        <SiteChat fullscreenEnabled={!takeover} compact={takeover || !isFull} />
       </div>
       {/* The widen grip — the bench's left handle, docked form only. It
           rides the panel's left edge as a fixed sibling (the panel clips its

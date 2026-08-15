@@ -459,6 +459,10 @@
   }
 }
 
+/* Phone widths: the panel is a takeover and has no card form to return to.
+   SiteChatMount reads the same threshold as TAKEOVER_QUERY and opens the
+   chat in full view there — this rule is what covers the first render,
+   before a media query has been read, so the two must stay in step. */
 @media (max-width: 719px) {
   .panel {
     top: 0;
@@ -488,4 +492,11 @@
   background: var(--color-bg-container-primary);
   backdrop-filter: blur(16px);
   box-shadow: var(--shadow-floating);
+}
+
+/* MegaNav's mobile drawer is open (it sets the attribute on <html>). The FAB
+   sits above the drawer's scrim, where it reads as a stray button laid over
+   the menu, so it stands down until the menu closes. */
+:global(html[data-nav-drawer="open"]) .fab {
+  display: none;
 }

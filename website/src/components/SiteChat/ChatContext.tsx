@@ -28,6 +28,13 @@ export type ChatView = "panel" | "full";
    when the panel docks beside the page rather than covering it. */
 export const DOCK_QUERY = "(min-width: 1440px)";
 
+/* Below this the panel has no card form to return to: it fills the viewport
+   whatever the view says, so the site opens it as a takeover and hides the
+   expand toggle rather than offering a switch between a state and itself.
+   The width is mirrored by the .panel rule in SiteChat.module.css — the CSS
+   is what covers the first render, before this query has been read. */
+export const TAKEOVER_QUERY = "(max-width: 719px)";
+
 interface SiteChatContextValue {
   turns: ReturnType<typeof useChat>["turns"];
   live: ReturnType<typeof useChat>["live"];
