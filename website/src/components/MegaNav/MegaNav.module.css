@@ -216,7 +216,15 @@
   margin-top: 8px;
   z-index: 9;
 
-  background: var(--color-bg-page-primary);
+  /* The chat panel's glass, the same recipe the mobile drawer takes
+     (SiteChat's .panel owns the original): translucent in both themes —
+     light's container token is opaque — so the page's colours and the
+     ambient field reach through. Denser and blurred harder than those two,
+     because this panel is a shallow strip that lands on whatever the page
+     opens with — display type, most of it — and at the panel's 82%/24px a
+     heading that size still reads straight through the tile labels. */
+  background: color-mix(in srgb, var(--color-bg-container-primary) 88%, transparent);
+  backdrop-filter: blur(32px);
   border: 1px solid var(--color-bg-container-border);
   border-radius: var(--radius-lg);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
