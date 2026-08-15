@@ -129,7 +129,8 @@ const missingBlueprintPage = BLUEPRINT_FILES.filter(
 // The llms.txt route hand-lists a raw-markdown download per published spec.
 // Both directions: every synced spec must be advertised, and every
 // advertised root .md must be synced — an unsynced advert is a public link
-// to a 404 (the drift class the porting-guide unpublish nearly created).
+// to a 404, the drift class that unpublishing a spec nearly created once and
+// the reason this runs in both directions rather than one.
 const llmsSource = read(
   join(repoRoot, 'website', 'src', 'app', 'llms.txt', 'route.ts')
 );

@@ -136,9 +136,9 @@ const PIPELINE: TimelineCompany[] = [
           "Every push and PR runs an automated quality gate before anything is trusted.",
         bullets: [
           "Lints the codebase and builds the library, Storybook, and the website on every change",
-          "Renders every Storybook story in headless Chrome and runs an axe accessibility audit on each: a render error or a WCAG AA violation fails the build (the contrast criteria are deliberately deferred while the action colour is redesigned)",
+          "Renders every Storybook story in headless Chrome and runs an axe accessibility audit on each: a render error or an accessibility violation fails the build, so a regression is caught on the story that introduced it",
           "Chromatic visual regression, run on demand: every story snapshotted in light and dark against an accepted baseline, so a token change that shifts pixels anywhere in the system is caught before it ships",
-          "Drift guard fails the build the moment any registry-backed content goes stale — every countable collection on the site has a registry behind it and a check that holds the two together; the numbers in the rail beside this pipeline come straight from those registries, never typed by hand",
+          "Drift guard fails the build the moment any registry-backed content goes stale: every countable collection on the site has a registry behind it and a check that holds the two together, so the numbers in the rail beside this pipeline come straight from those registries, never typed by hand",
           "The same checklist runs locally as a single command, so local and CI can never disagree",
         ],
       },

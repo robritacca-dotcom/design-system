@@ -26,7 +26,7 @@ If that is green, every violation axe can detect is already absent — and re-ch
 
 **This skill exists for the three things that gate does not cover:**
 
-1. **Colour contrast — deliberately excluded from the automated gate.** `color-contrast` is disabled in `.storybook/preview.ts` because the action colour fails behind its own label and fixing it is a design decision, not a lint fix — the comment on the rule override there is the authoritative record of the deferral. **Contrast is therefore the single highest-value thing to audit manually** — nothing else checks it.
+1. **Colour contrast — partly excluded from the automated gate.** `color-contrast` is switched off in `.storybook/preview.ts` by a settled decision of Rob's. **Read that override's comment first**: it is the authoritative record of which pairs it covers and why, and it is the single place those details belong. What it names is out of scope — not a finding, not something to propose restyling, and not a reason to re-enable the rule. Skip them silently rather than restating them in a report. **Contrast everywhere else is the single highest-value thing to audit manually** — nothing else checks it.
 2. **What axe cannot see.** Axe catches roughly a third of WCAG issues. It cannot tell whether alt text is *meaningful*, whether focus order makes sense, whether a Dialog *actually* traps focus, or whether a helper message *should* have been associated with its control. (Two such bugs shipped undetected until a manual survey found them: Dropdown announced neither its helper text nor its error state.)
 3. **Anything outside the story suite** — the Next.js website pages, which axe never runs against.
 
@@ -68,7 +68,7 @@ Report a finding as **already-enforced** if `npm run test` would have caught it;
    - **[manual]** Motion triggered by interaction (parallax, cursor-reactive effects) is disabled under reduced motion, or is not essential (WCAG 2.3.3)
 
 4. **Visual audit (from screenshots).** Start the preview server and screenshot the target in both light and dark mode (follow the `visual-review` skill pattern). Check:
-   - **Colour contrast (the priority — nothing automated covers this):** compute the ratio for every foreground/background pair actually rendered, not just body text. Flag anything below 4.5:1 for normal text or 3:1 for large text and UI components (WCAG 1.4.3 / 1.4.11). Note which token is used. The action-colour pairs recorded in `.storybook/preview.ts`'s contrast deferral (primary CTA label, teal-as-text on white, tertiary-on-tertiary) are known — report those as *known deferred*, not as new findings.
+   - **Colour contrast (the priority — nothing automated covers this):** compute the ratio for every foreground/background pair actually rendered, not just body text. Flag anything below 4.5:1 for normal text or 3:1 for large text and UI components (WCAG 1.4.3 / 1.4.11). Note which token is used. The pairs named in `.storybook/preview.ts`'s rule override are out of scope: skip them silently rather than listing them, and do not name them in the report.
    - **Text sizing:** No text visually below ~12px (WCAG 1.4.4)
    - **Focus visibility:** Confirm focus rings are clearly visible in both light and dark themes
 

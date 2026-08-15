@@ -58,17 +58,24 @@ const CHARS_PER_TOKEN = 2.85;
  *
  * Sized against cost, not aesthetics: the corpus is cached, so a warm message
  * reads it at roughly 2.7 cents and only a cold cache write costs real money
- * (about 35 cents, once per five-minute window). 100K leaves headroom for the
- * site to grow without a rewrite, while still catching a change that doubles
- * the corpus by accident.
+ * (about 35 cents, once per five-minute window). The ceiling leaves headroom
+ * for the site to grow without a rewrite, while still catching a change that
+ * doubles the corpus by accident.
  *
  * Raised from 95K on 2026-08-12, when publishing an essay took the corpus 188
- * tokens over. Raising it is the right move for growth the corpus exists to
- * carry — a new essay, a new case study. It is the wrong move for a section
- * that suddenly doubled: trim that instead, and read the `--sizes` report
- * before deciding which of the two this is.
+ * tokens over. Raised again to 105K on 2026-08-14, when shipping ShaderField
+ * took it 265 over — a new component, its page and its spec are exactly the
+ * growth this corpus exists to carry. That raise was sized deliberately larger
+ * than the overage: 100K had drifted to under 550 tokens of headroom, so every
+ * clearance had become one paragraph, and a guard that fails on ordinary
+ * writing gets read as noise rather than as a signal.
+ *
+ * Raising it is the right move for growth the corpus exists to carry — a new
+ * essay, a case study, a component. It is the wrong move for a section that
+ * suddenly doubled: trim that instead, and read the `--sizes` report before
+ * deciding which of the two this is.
  */
-const TOKEN_BUDGET = 100_000;
+const TOKEN_BUDGET = 105_000;
 
 /** Normalize CRLF so Windows checkouts generate byte-identical output to CI. */
 const read = (path) => readFileSync(path, 'utf8').replace(/\r\n/g, '\n');
@@ -159,7 +166,10 @@ function isStructuralString(node) {
   return false;
 }
 
-function extractProse(source, fileName) {
+/* Exported so validate-shipped-prose.mjs checks exactly the text this
+   extracts. Two readers of "what counts as page prose" would drift; one
+   cannot. */
+export function extractProse(source, fileName) {
   const sourceFile = ts.createSourceFile(
     fileName, source, ts.ScriptTarget.Latest, /* setParentNodes */ true, ts.ScriptKind.TSX
   );

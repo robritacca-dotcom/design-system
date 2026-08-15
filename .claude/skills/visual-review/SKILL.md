@@ -43,7 +43,7 @@ Use the browser/preview tools available in the current environment for every ste
 
 - Theme state lives on `document.documentElement` as `data-theme="light"` or `data-theme="dark"`; it persists via the localStorage key `theme` and is applied before first paint by an inline script in the root layout
 - The theme toggle is rendered by `MegaNav` (top-right of every page)
-- The sitemap footer (`SiteFooter`) and the chat button/panel are site chrome mounted once from the root layout, not per page — expect both in every screenshot's lower region, and check the footer's column collapse (5 → 3 → 2) on the mobile pass
+- The sitemap footer (`SiteFooter`) and the chat button/panel are site chrome mounted once from the root layout, not per page — expect both in every screenshot's lower region. On the mobile pass, check the footer's collapse: a brand block beside four link columns at desktop, then 3 columns and 2 as the width drops, with the brand block leaving the row and sitting above the links at the same 960px breakpoint the page's nav rail disappears at. The footer is identical on every page, so a difference between two pages is a finding; the brand block's width matching the rail is deliberate, not a coincidence to report
 - The routes in `CHROMELESS_ROUTES` (`website/src/config/chromeless.ts`) deliberately render neither the footer nor the chat — their absence there is not a finding
 - The `animate-in` class on page elements triggers CSS entry animations — these are normal on first load
 - The ambient background (`BlurBackground`) is layout-mounted chrome too, and it is the largest thing in every screenshot. Three of its behaviours produce **false findings** if you do not expect them:

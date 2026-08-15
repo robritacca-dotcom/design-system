@@ -87,8 +87,8 @@ export default function ToolCallPage() {
             <p className={styles.subDisplay}>What ran, how it went, what it returned</p>
             <p className={styles.introBody}>
               A run is mostly a list of these. So the collapsed header carries
-              everything needed to skim it — the tool, the target, the outcome,
-              the time — and the body carries everything needed to audit it.
+              everything needed to skim it (the tool, the target, the outcome,
+              the time), and the body carries everything needed to audit it.
             </p>
           </div>
 
@@ -98,8 +98,8 @@ export default function ToolCallPage() {
             <p className={styles.demoText}>
               The container stays neutral, so a long run reads as a list rather
               than a wall of tinted cards. Only the two states someone has to
-              act on — awaiting approval, and failed — take a coloured border
-              as well.
+              act on, awaiting approval and failed, take a coloured border as
+              well.
             </p>
             <div className={styles.stack}>
               <ToolCall name="read_file" summary="package.json" duration="0.1s" />
@@ -126,7 +126,7 @@ export default function ToolCallPage() {
             <p className={styles.demoText}>
               Pass the call&apos;s detail as children and the header becomes a
               disclosure. With nothing to disclose it renders as a plain row
-              instead — a row that cannot open should not look pressable.
+              instead: a row that cannot open should not look pressable.
             </p>
             <div className={styles.stack}>
               <ToolCall
@@ -146,7 +146,7 @@ export default function ToolCallPage() {
             <p className={styles.demoText}>
               Approval controls render outside the collapsible panel. Someone
               deciding whether to allow a write should not have to expand the
-              call to find the button — and someone who wants to check the
+              call to find the button, and someone who wants to check the
               arguments first can still open it.
             </p>
             <ApprovalDemo />

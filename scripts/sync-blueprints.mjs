@@ -26,10 +26,13 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
  * it on, so a spec cannot be synced as a raw download and then be
  * unreachable from the site.
  *
- * porting-guide.md is deliberately absent: unpublished from the site in
- * August 2026 (the old route redirects to /docs), it stays a repo-only
- * agent doc, still scanned by scripts/validate-doc-refs.mjs. Do not
- * re-add it here without a decision to republish.
+ * There was a fourth spec, porting-guide.md — a guide to rebuilding the site
+ * chat inside another design system. It was unpublished from the site in
+ * August 2026 and deleted from the repo in the drift audit that followed,
+ * having gone stale against a chat that kept moving under it. The redirect
+ * from its old route survives it in website/next.config.ts, because the URL
+ * was public and may still be linked; recover the text from git history if it
+ * is ever wanted back.
  */
 export const FILES = ['CLAUDE.md', 'design.md', 'content-design.md'];
 

@@ -19,7 +19,7 @@ const { sidebarLinks } = getSidebarLinks(
 
 const TRACE = `The request asks for the total across both regions, but the two
 tables report in different currencies. I need to convert before summing, and
-the rate should be the one on the invoice date rather than today's — otherwise
+the rate should be the one on the invoice date rather than today's. Otherwise
 the November figures move every time the report is re-run.`;
 
 /** Runs a stream and settles into a duration, so the transition is visible on the page. */
@@ -115,7 +115,7 @@ export default function ReasoningPage() {
             <SectionTitle title="Expanded" />
             <p className={styles.demoText}>
               The trace sits on a rail in secondary text. It is deliberately
-              plainer than the response it belongs to — the reader came for the
+              plainer than the response it belongs to: the reader came for the
               answer, and opened this only to check the working.
             </p>
             <Reasoning duration={4} defaultOpen>
@@ -169,7 +169,7 @@ export default function ReasoningPage() {
             <p className={styles.demoText}>
               <strong>The auto-collapse yields to the reader.</strong> Opening
               on stream and closing on completion is right until someone opens
-              the panel themselves — after that, the stream ending no longer
+              the panel themselves. After that, the stream ending no longer
               moves it. A panel that shuts while you are reading it is worse
               than one that stays open.
             </p>

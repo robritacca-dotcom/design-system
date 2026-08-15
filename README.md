@@ -5,7 +5,7 @@
 [![npm](https://img.shields.io/npm/v/@robr0%2Fdesign-system?logo=npm&color=CB3837)](https://www.npmjs.com/package/@robr0/design-system)
 <!-- npm-badge:end -->
 
-A personal portfolio site, the AI-ready React design system behind it, and the AI layer that lets the site answer questions about itself. Claude Code builds all of it from the written specs in this repo (`CLAUDE.md` for the rules, `design.md` for the design language, `content-design.md` for how every word reads, and `porting-guide.md` for rebuilding the site chat inside another design system), and generated registries keep this README and the docs site from drifting. The design system is the backbone every portfolio page is built on, so the work is presented consistently and to the same craft standards throughout.
+A personal portfolio site, the AI-ready React design system behind it, and the AI layer that lets the site answer questions about itself. Claude Code builds all of it from the written specs in this repo (`CLAUDE.md` for the rules, `design.md` for the design language, `content-design.md` for how every word reads), and generated registries keep this README and the docs site from drifting. The design system is the backbone every portfolio page is built on, so the work is presented consistently and to the same craft standards throughout.
 
 **[→ Live site](https://robertritacca.com/)** · **[→ Storybook](https://design-system-iota-one.vercel.app/?path=/docs/robr0-ds--docs)**
 
@@ -18,7 +18,7 @@ The **live site** is the portfolio built on the design system. **Storybook** is 
 | Part | Description |
 |---|---|
 | **Portfolio website** (`/website`) | Next.js app with case studies, work history, writing, and about pages, all built exclusively with the design system components below. **[Live site →](https://robertritacca.com/)** |
-| **Design system** (`/src`) | <!-- component-count -->78<!-- /component-count --> React components, a three-tier token architecture, dark mode, and a full documentation site. Built to production standards. **[Storybook →](https://design-system-iota-one.vercel.app/?path=/docs/robr0-ds--docs)** |
+| **Design system** (`/src`) | <!-- component-count -->79<!-- /component-count --> React components, a three-tier token architecture, dark mode, a WebGL2 ambient background that themes itself from your tokens, and a full documentation site. Built to production standards. **[Storybook →](https://design-system-iota-one.vercel.app/?path=/docs/robr0-ds--docs)** |
 | **AI layer** (`ai` components in `/src`, chat in `/website`, `/evals`) | A site-wide chat that answers questions about the work: built from the library's own `ai` components, grounded in a corpus generated from the site's published content, and scored by a golden-set eval. |
 
 ---
@@ -28,8 +28,31 @@ The **live site** is the portfolio built on the design system. **Storybook** is 
 ### Components
 
 <!-- component-list:start -->
-Accordion · Agent status · AI button · Alert · Alert dialog · App layout · App sidebar · Avatar · Badge · Breadcrumb · Button · Button group · Card · Carousel · Chart · Chat header · Chat marker · Chat message · Chat thread · Checkbox · Chip · Circular button · Code block · Colour picker · Combobox · Command palette · Composer · Contact card · Context menu · Contribution graph · Date input · Date picker · Dialog · Divider · Document chip · Drawer · Dropdown · Dropdown menu · Empty state · Entity card · Field · Figure · File input · Input · Instructions · Interrupt card · Kbd · Link list · Message actions · Message card · Navigation · Nav list · Pagination · Popover · Progress bar · Prompt suggestions · Prose · Quote · Radio button · Reasoning · Section title · Segmented control · Selection card · Skeleton · Slider · Source chip · Spinner · Stat · Swatch · Table · Tabs · Textarea · Timeline · Toast · Toggle group · Toggle switch · Tool call · Tooltip
+Accordion · Agent status · AI button · Alert · Alert dialog · App layout · App sidebar · Avatar · Badge · Breadcrumb · Button · Button group · Card · Carousel · Chart · Chat header · Chat marker · Chat message · Chat thread · Checkbox · Chip · Circular button · Code block · Colour picker · Combobox · Command palette · Composer · Contact card · Context menu · Contribution graph · Date input · Date picker · Dialog · Divider · Document chip · Drawer · Dropdown · Dropdown menu · Empty state · Entity card · Field · Figure · File input · Input · Instructions · Interrupt card · Kbd · Link list · Message actions · Message card · Navigation · Nav list · Pagination · Popover · Progress bar · Prompt suggestions · Prose · Quote · Radio button · Reasoning · Section title · Segmented control · Selection card · Shader field · Skeleton · Slider · Source chip · Spinner · Stat · Swatch · Table · Tabs · Textarea · Timeline · Toast · Toggle group · Toggle switch · Tool call · Tooltip
 <!-- component-list:end -->
+
+### Ambient background
+
+The package ships more than components. **Shader field** is a WebGL2 canvas that sums soft Gaussian light sources into an ambient field of colour, and every source reads a semantic colour token at runtime. Override a primitive and the background re-themes with the rest of the system, in both themes, with nothing wired up:
+
+```tsx
+import { ShaderField, type ShaderFieldStatus } from '@robr0/design-system';
+
+const [status, setStatus] = useState<ShaderFieldStatus>('pending');
+
+<div style={{ position: 'fixed', inset: 0, zIndex: -1 }}>
+  {status === 'unavailable' && <YourCssFallback />}
+  <ShaderField params={{ streak: 0.4 }} onStatusChange={setStatus} />
+</div>
+```
+
+Seven parameters describe the look, and a composition is a table of token names with positions and drift periods, so a negative weight cuts a shadow through the field instead of adding light to it.
+
+It asks two things of you, both deliberate. It fills a positioned ancestor you provide, because where a background sits is a layout decision rather than a rendering one. And it never decides what to paint instead of itself: it reports `pending`, `active` or `unavailable`, and one fallback covers every way it can fail (no WebGL2, a blocked or lost GPU context, a renderer that stalls before its first frame, or `enabled={false}` as a kill switch). `pending` is the state worth handling. Paint neither layer while the context comes up, or the swap a frame later reads as two backgrounds loading in sequence.
+
+It is also the one place a `prefers-reduced-motion` check lives in JavaScript rather than in the motion tokens, because the CSS guard cannot see a `requestAnimationFrame` loop. Set the preference and it draws a single static frame.
+
+The background behind this site is that component, with eight blurred CSS discs kept painted underneath as its fallback. The **[component page](https://robertritacca.com/components/shader-field)** is a live demo, and the **[setup guide](https://robertritacca.com/docs/get-started)** has the wiring.
 
 ### Using the package
 
@@ -116,14 +139,14 @@ Answers are measured, not assumed. `evals/chat` holds a golden set that runs thr
 - **Vite 7**: dev server and library build
 - **Next.js 16**: portfolio site and design system documentation
 - **Storybook 10**: component explorer
-- **Vitest + Playwright**: every Storybook story runs as a render test in headless Chromium
+- **Vitest + Playwright + axe**: every Storybook story runs as a render test in headless Chromium, with an accessibility audit on each
 - **CSS custom properties**: all theming via semantic tokens, no CSS-in-JS
 
 ---
 
 ## Quality & CI
 
-Every push and pull request runs a GitHub Actions pipeline ([`ci.yml`](.github/workflows/ci.yml)) with four jobs: lint + library build, story tests (every Storybook story rendered in headless Chromium via Vitest), Storybook build, and website lint + build. The same checklist runs locally with one command:
+Every push and pull request runs a GitHub Actions pipeline ([`ci.yml`](.github/workflows/ci.yml)) with four jobs: lint + library build, story tests, Storybook build, and website lint + build. The story tests render every Storybook story in headless Chromium via Vitest and run an axe accessibility audit on each, so a violation fails the build exactly like a render error. The same checklist runs locally with one command:
 
 ```bash
 npm run verify   # lint + library type-check + package build + story tests + Storybook build + website lint + build
@@ -148,6 +171,6 @@ npm run dev --workspace website   # http://localhost:3000
 
 ## License
 
-Two licenses, one repository. The **software** — components, tokens, scripts, and the website's application code — is MIT, so use it in anything. The **content** — page prose, case studies, essays, images, and the name and likeness of Rob Ritacca — is all rights reserved and not licensed for reuse. See [`LICENSE`](LICENSE) for the full terms.
+Two licenses, one repository. The **software** (components, tokens, scripts, and the website's application code) is MIT, so use it in anything. The **content** (page prose, case studies, essays, images, and the name and likeness of Rob Ritacca) is all rights reserved and not licensed for reuse. See [`LICENSE`](LICENSE) for the full terms.
 
 The npm package contains the software only.

@@ -44,9 +44,10 @@ const nextConfig: NextConfig = {
       { source: "/about/me", destination: "/about", permanent: true },
       { source: "/design-md", destination: "/blueprints/design", permanent: true },
       { source: "/blueprints", destination: "/docs", permanent: true },
-      // The porting guide was unpublished from /blueprints in August 2026;
-      // the source file stays in the repo. Straight to /docs, matching the
-      // bare /blueprints redirect above, so no chain.
+      // The porting guide was unpublished from /blueprints in August 2026 and
+      // its source deleted from the repo soon after. The URL was public, so
+      // the redirect outlives the page: straight to /docs, matching the bare
+      // /blueprints redirect above, so no chain.
       { source: "/blueprints/porting-guide", destination: "/docs", permanent: true },
       // The Customization section became the top-level /playground, and its
       // install guide moved into the Docs cluster.

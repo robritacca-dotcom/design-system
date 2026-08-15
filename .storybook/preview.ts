@@ -34,12 +34,20 @@ const preview: Preview = {
       // regression now fails CI rather than being reported and ignored.
       test: 'error',
       config: {
-        // Target is WCAG 2.1 AA minus the contrast criteria. Contrast is
-        // deliberately deferred: the action colour fails behind its own label
-        // (primary CTA label, teal-as-text on white, tertiary-on-tertiary),
-        // and fixing it is a design decision, not a lint fix. This comment is
-        // the authoritative record of that deferral — delete the rule override
-        // when the action-colour decision lands.
+        // The gate is WCAG 2.1 AA minus the contrast criteria, and this
+        // comment is the authoritative record of why.
+        //
+        // The action colour does not clear the ratio behind its own label
+        // (primary CTA label, teal-as-text on white, tertiary-on-tertiary).
+        // That is a settled style decision by the owner, not a bug waiting on
+        // a fix: the colour is a token, so anyone building on this system
+        // resolves it from their own palette and gets their own answer. Do not
+        // re-enable this rule, redesign the action colour, or raise the pairs
+        // above as findings without asking Rob first. It is his call and he
+        // may well keep it as it is.
+        //
+        // Everything else in AA is enforced, and a contrast failure appearing
+        // in CI means someone turned this back on.
         rules: [{ id: 'color-contrast', enabled: false }]
       }
     }

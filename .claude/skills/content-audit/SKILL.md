@@ -33,7 +33,7 @@ Use this skill when asked to audit copy, check prose quality, find AI-writing te
 
    **Banned** (the guide allows no use in shipped copy):
    - Hard-ban words and phrases from the Words to Avoid table
-   - Em dashes anywhere in shipped copy
+   - Em dashes anywhere in shipped copy. `scripts/validate-shipped-prose.mjs` already fails the build on these, so a clean tree means the surfaces it reads are clear and you are checking the ones it cannot judge: the chat's persona and greeting strings, and any prose outside its scope (its doc block is authoritative). Report a hit there as Banned exactly as before
    - Title Case in shipped headings, buttons, or labels
    - First person in surfaces whose register says "None" (check the Register by Surface table for the scoped surface)
    - Emoji, exclamation marks in UI copy, unsourced statistics

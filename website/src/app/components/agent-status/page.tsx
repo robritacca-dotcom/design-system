@@ -81,7 +81,7 @@ export default function AgentStatusPage() {
             <p className={styles.demoText}>
               Fifteen named choreographies over one 4×3 grid. Each dot is told
               which of the cycle&apos;s twelve slots it lights in, and the dots a
-              pattern never lights opt out entirely — so a pattern is a
+              pattern never lights opt out entirely, so a pattern is a
               sequence of numbers rather than its own animation. One grid and
               one cycle length means switching pattern never changes the
               indicator&apos;s footprint or its rhythm.
@@ -165,7 +165,7 @@ export default function AgentStatusPage() {
               assistive technology, so a state change is announced once as text
               rather than as twelve dots. Under reduced-motion preferences the
               matrix parks at a static, legible opacity and the sweep resolves
-              to flat text — the meaning has to survive the animation being
+              to flat text. The meaning has to survive the animation being
               switched off, because for some readers it always is.
             </p>
           </section>

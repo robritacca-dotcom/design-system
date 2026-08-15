@@ -11,12 +11,14 @@
  *      `npm install` dirtying the tree — which breaks the worktree
  *      recipes in the site-updates and growth-loop skills. Fix with
  *      `npm install --package-lock-only` and commit the lockfile.
+ *   4. Every `.ts` module under src/components is reachable by a
+ *      consumer. See REACHABILITY below.
  *
  * Part of the validate-registry chain, so the public import surface the
  * website dogfoods can never drift from what the package declares.
  */
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
-import { dirname, join } from 'node:path';
+import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { PACKAGE_NAME, PACKAGE_VERSION, sourceExports } from './package-manifest.mjs';
 
@@ -77,6 +79,82 @@ for (const [key, target] of Object.entries(expected)) {
   }
 }
 
+/* ---------------------------------------------------------------------------
+ * REACHABILITY — every `.ts` module under src/components can be imported.
+ *
+ * The `./components/*` wildcard maps `.tsx` only, so a sibling `.ts` module
+ * (a hook, a data table, a shader source) gets no deep-import path for free.
+ * It reaches consumers one of two ways: an explicit entry in the manifest's
+ * SUBPATHS, or a re-export from a `.tsx` in the same folder that the barrel
+ * already exports. A module with neither still ships inside the tarball and
+ * cannot be imported at all — dead weight, and an API that documentation can
+ * describe but nobody can use.
+ *
+ * This is not hypothetical. `Avatar/demoAvatars.ts` is re-exported by nothing
+ * and reachable *only* through its hand-written subpath; `ShaderField`'s two
+ * modules were the second time the same gap had to be closed by hand. Both
+ * were caught by a reader. This check is what makes the third one impossible.
+ *
+ * A genuinely internal module — imported by its component, exporting nothing
+ * a consumer needs — belongs here with a reason rather than a subpath.
+ */
+const INTERNAL_MODULES = new Map([
+  // (none today — add as `['src/components/X/y.ts', 'why it is internal']`)
+]);
+
+const componentsDir = join(repoRoot, 'src', 'components');
+const tsModules = [];
+{
+  const stack = [componentsDir];
+  while (stack.length > 0) {
+    const dir = stack.pop();
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) stack.push(full);
+      else if (
+        entry.name.endsWith('.ts') &&
+        !entry.name.endsWith('.d.ts') &&
+        !entry.name.endsWith('.stories.ts')
+      ) {
+        tsModules.push(full);
+      }
+    }
+  }
+}
+
+/** Non-wildcard export targets, normalized to repo-relative paths. */
+const explicitTargets = new Set(
+  Object.values(expected)
+    .filter((t) => !t.includes('*'))
+    .map((t) => t.replace(/^\.\//, ''))
+);
+
+for (const modulePath of tsModules) {
+  const rel = relative(repoRoot, modulePath).split('\\').join('/');
+  if (explicitTargets.has(rel) || INTERNAL_MODULES.has(rel)) continue;
+
+  // Re-exported by a sibling .tsx? Textual, because that is what the bundler
+  // resolves: `export … from './field.glsl'` for `field.glsl.ts`.
+  const dir = dirname(modulePath);
+  const base = rel.split('/').pop().replace(/\.ts$/, '');
+  const reExported = readdirSync(dir)
+    .filter((f) => f.endsWith('.tsx') && !f.endsWith('.stories.tsx'))
+    .some((f) =>
+      new RegExp(`export\\s[^;]*?\\sfrom\\s+['"]\\./${base.replace(/\./g, '\\.')}['"]`, 's')
+        .test(readFileSync(join(dir, f), 'utf8'))
+    );
+
+  if (!reExported) {
+    errors.push(
+      `${rel} ships in the package but no consumer can import it — the ` +
+        `"./components/*" wildcard maps .tsx only. Either add a subpath to ` +
+        `SUBPATHS in scripts/package-manifest.mjs, re-export it from the ` +
+        `.tsx beside it, or record it in INTERNAL_MODULES in this script ` +
+        `with the reason it is internal`
+    );
+  }
+}
+
 if (errors.length > 0) {
   console.error(
     `✗ Package exports invalid:\n` + errors.map((e) => `    - ${e}`).join('\n')
@@ -85,5 +163,6 @@ if (errors.length > 0) {
 }
 
 console.log(
-  `✓ Package exports valid — ${Object.keys(expected).length} subpaths, all targets present.`
+  `✓ Package exports valid — ${Object.keys(expected).length} subpaths, all targets present; ` +
+    `${tsModules.length} component .ts module(s) reachable.`
 );
