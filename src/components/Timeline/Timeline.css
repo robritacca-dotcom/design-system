@@ -286,6 +286,23 @@
   color: var(--color-status-positive-text);
 }
 
+.ds-timeline__role-subtitle {
+  margin: 0;
+  font-family: var(--font-paragraph-family);
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  letter-spacing: var(--font-paragraph-letter-spacing);
+  color: var(--color-text-secondary);
+}
+
+/* The title and its subtitle read as one header block, so whatever follows
+   needs a wider break than the role's own 8px rhythm to separate from it. */
+.ds-timeline__role-subtitle + .ds-timeline__role-description,
+.ds-timeline__role-subtitle + .ds-timeline__role-bullets {
+  margin-top: var(--gap-sm);
+}
+
 .ds-timeline__role-description {
   margin: 0;
   font-family: var(--font-paragraph-family);

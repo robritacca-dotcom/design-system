@@ -50,7 +50,8 @@ const EXPERIENCE = [
     logo: companyLogo("/logos/Intuit.svg", "Intuit"),
     roles: [
       {
-        title: "Principal Product Designer, Consumer AI",
+        title: "Principal Product Designer",
+        subtitle: "Consumer AI",
         start: "Jan 2026",
         present: true,
         bullets: [
@@ -62,7 +63,8 @@ const EXPERIENCE = [
         ],
       },
       {
-        title: "Principal Product Designer, Agent Platform",
+        title: "Principal Product Designer",
+        subtitle: "Agent Platform",
         start: "May 2024",
         end: "Jan 2026",
         bullets: [

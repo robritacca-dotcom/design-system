@@ -25,7 +25,8 @@ const COMPANY_ITEMS: TimelineCompany[] = [
     logo: logo('I', '#236CFF'),
     roles: [
       {
-        title: 'Principal Product Designer, Consumer AI',
+        title: 'Principal Product Designer',
+        subtitle: 'Consumer AI',
         start: 'Jan 2026',
         present: true,
         bullets: [
@@ -34,7 +35,8 @@ const COMPANY_ITEMS: TimelineCompany[] = [
         ],
       },
       {
-        title: 'Principal Product Designer, Agent Platform',
+        title: 'Principal Product Designer',
+        subtitle: 'Agent Platform',
         start: 'May 2024',
         end: 'Jan 2026',
         bullets: [

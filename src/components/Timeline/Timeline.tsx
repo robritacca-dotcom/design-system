@@ -17,6 +17,8 @@ export interface TimelineItem {
 export interface TimelineRole {
   /** Role or position title */
   title: string;
+  /** Secondary line under the title, e.g. the team, org, or product the role sat in */
+  subtitle?: React.ReactNode;
   /** Start of the date range, e.g. "May 2024" (omit for entries with no dates) */
   start?: string;
   /** End of the date range, e.g. "Jan 2026" (ignored when `present` is set) */
@@ -102,6 +104,9 @@ const CompanyTimeline = ({ items, className = '' }: TimelineCompanyProps) => {
                     <h3 className={`${BASE_CLASS}__role-title`}>{role.title}</h3>
                     {renderRoleDates(role)}
                   </div>
+                  {role.subtitle && (
+                    <p className={`${BASE_CLASS}__role-subtitle`}>{role.subtitle}</p>
+                  )}
                   {role.description && (
                     <p className={`${BASE_CLASS}__role-description`}>{role.description}</p>
                   )}
