@@ -1,11 +1,8 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import { LinkList } from "@robr0/design-system/components/LinkList/LinkList";
 import { Timeline, type TimelineCompany } from "@robr0/design-system/components/Timeline/Timeline";
 import MegaNav from "../../components/MegaNav/MegaNav";
-import PageLinks from "../../components/PageLinks/PageLinks";
 import styles from "./page.module.css";
 
 const companyLogo = (src: string, alt: string) => (
@@ -19,7 +16,8 @@ const EXPERIENCE: TimelineCompany[] = [
     logo: companyLogo("/logos/gusto.svg", "Gusto"),
     roles: [
       {
-        title: "Principal Product Designer | CoreX AI",
+        title: "Principal Product Designer",
+        subtitle: "CoreX AI",
         start: "Aug 2026",
         present: true,
         description:
@@ -37,7 +35,8 @@ const EXPERIENCE: TimelineCompany[] = [
     logo: companyLogo("/logos/Intuit.svg", "Intuit"),
     roles: [
       {
-        title: "Principal Product Designer, Consumer AI",
+        title: "Principal Product Designer",
+        subtitle: "Consumer AI",
         start: "Jan 2026",
         end: "Jul 2026",
         bullets: [
@@ -51,7 +50,8 @@ const EXPERIENCE: TimelineCompany[] = [
         ],
       },
       {
-        title: "Principal Product Designer | Agent Platform",
+        title: "Principal Product Designer",
+        subtitle: "Agent Platform",
         start: "May 2024",
         end: "Jan 2026",
         bullets: [
@@ -166,7 +166,6 @@ const EXPERIENCE: TimelineCompany[] = [
 export default function AboutMePage() {
   return (
     <>
-
       <MegaNav />
 
       <div className={styles.dsLayout}>
@@ -182,19 +181,7 @@ export default function AboutMePage() {
         </div>
 
         <main className={styles.dsContent} id="main-content">
-          {/* Location byline sits in the breadcrumb slot, title below it at the shared offset */}
-          <div className={`${styles.locationRow} animate-in`}>
-            <Image src="/logos/Canada.svg" alt="" width={20} height={20} />
-            <span>Based in Toronto, Canada</span>
-          </div>
-          <div className={`${styles.pageHeader} animate-in`}>
-            <h1 className={styles.pageTitle}>Robert Ritacca</h1>
-            <PageLinks
-              linkedinUrl="https://www.linkedin.com/in/robertritacca/"
-              xUrl="https://x.com/robr0"
-              instagramUrl="https://www.instagram.com/robr0designs/"
-            />
-          </div>
+          <h1 className={`${styles.pageTitle} animate-in`}>Robert Ritacca</h1>
 
           {/* Page Description */}
           <div className={styles.introSection}>
@@ -223,24 +210,6 @@ export default function AboutMePage() {
 
             {/* Right Rail */}
             <aside className={styles.resumeSidebar}>
-              {/* Consulting Section */}
-              <div className={`${styles.resumeSection} animate-in animate-delay-2`}>
-                <div className={styles.resumeSectionHeader}>
-                  <h2 className={styles.resumeSectionTitle}>Work with me</h2>
-                </div>
-                <LinkList
-                  items={[
-                    {
-                      label: "Book a consultation",
-                      href: "https://buy.stripe.com/28o7vb5NBaSJ3NC5kn",
-                      logo: "/logos/stripe-new.png",
-                      logoAlt: "Stripe",
-                      sub: "Secure checkout via Stripe",
-                    },
-                  ]}
-                />
-              </div>
-
               {/* Skills Section */}
               <div className={`${styles.resumeSection} animate-in animate-delay-2`}>
                 <div className={styles.resumeSectionHeader}>
@@ -248,42 +217,44 @@ export default function AboutMePage() {
                 </div>
 
                 <div className={styles.skillsGroup}>
-                  <h4 className={styles.skillsCategory}>AI and agentic design</h4>
+                  <h4 className={styles.skillsCategory}>AI products</h4>
                   <ul className={styles.skillsList}>
-                    <li>Agentic and conversational UX</li>
-                    <li>Multi turn interaction design</li>
-                    <li>Human in the loop workflows</li>
-                    <li>Dynamic UI from model output</li>
+                    <li>Designing inside ChatGPT and Claude</li>
+                    <li>Conversational and agentic products</li>
+                    <li>Generative UI, assembled at runtime</li>
+                    <li>Knowing when to keep a human in the loop</li>
+                    <li>Showing what a model does not know</li>
                   </ul>
                 </div>
 
                 <div className={styles.skillsGroup}>
-                  <h4 className={styles.skillsCategory}>Product and delivery</h4>
+                  <h4 className={styles.skillsCategory}>Product direction</h4>
                   <ul className={styles.skillsList}>
-                    <li>0 to 1 product development</li>
-                    <li>Shipping and iteration ownership</li>
-                    <li>Product domain definition</li>
-                    <li>Cross functional execution</li>
+                    <li>0&rarr;1 product design</li>
+                    <li>Learning how people actually work</li>
+                    <li>Deciding what not to build</li>
+                    <li>Getting leadership behind a direction</li>
+                    <li>Leading cross functional teams</li>
                   </ul>
                 </div>
 
                 <div className={styles.skillsGroup}>
                   <h4 className={styles.skillsCategory}>Systems and platforms</h4>
                   <ul className={styles.skillsList}>
-                    <li>Design system architecture</li>
-                    <li>Token based theming</li>
-                    <li>Reusable primitives and patterns</li>
-                    <li>Platform scale design</li>
+                    <li>Design systems other teams build on</li>
+                    <li>One token set, many brands</li>
+                    <li>Getting a shared platform adopted</li>
+                    <li>Deciding what belongs in a platform</li>
                   </ul>
                 </div>
 
                 <div className={styles.skillsGroup}>
-                  <h4 className={styles.skillsCategory}>Tooling and execution</h4>
+                  <h4 className={styles.skillsCategory}>Building</h4>
                   <ul className={styles.skillsList}>
-                    <li>Advanced Figma systems</li>
-                    <li>MCP and Cursor workflows</li>
-                    <li>Design to engineering handoff</li>
-                    <li>System level prototyping</li>
+                    <li>Designing by building, not handing off</li>
+                    <li>Design rules the build enforces</li>
+                    <li>Prototyping against a fake backend</li>
+                    <li>Writing as part of the design work</li>
                   </ul>
                 </div>
               </div>
@@ -341,7 +312,6 @@ export default function AboutMePage() {
           </div>
         </main>
       </div>
-
     </>
   );
 }

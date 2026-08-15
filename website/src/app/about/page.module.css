@@ -18,37 +18,6 @@
 }
 
 /* ============================================
-   LOCATION ROW + PAGE HEADER
-   The location byline occupies the breadcrumb slot, so it copies the
-   breadcrumb's typography and spacing, and the h1 lands at the same
-   offset as the doc pages' titles.
-   ============================================ */
-.locationRow {
-  display: flex;
-  align-items: center;
-  gap: var(--primitive-gap-xs);
-  padding-bottom: var(--primitive-gap-md);
-  font-family: var(--font-paragraph-sm-family);
-  font-size: var(--font-paragraph-sm-size);
-  font-weight: var(--font-paragraph-sm-weight);
-  line-height: var(--font-paragraph-sm-line-height);
-  letter-spacing: var(--font-paragraph-sm-letter-spacing);
-  color: var(--color-text-secondary);
-}
-
-/* ============================================
-   PAGE HEADER
-   ============================================ */
-.pageHeader {
-  margin-top: calc(var(--primitive-gap-xl) - var(--gap-xxxl));
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--primitive-gap-lg);
-  width: 100%;
-}
-
-/* ============================================
    PAGE TITLE - Display 2
    ============================================ */
 .pageTitle {
@@ -57,7 +26,6 @@
   line-height: var(--font-display-2-line-height);
   letter-spacing: var(--font-display-2-letter-spacing);
   color: var(--color-text-primary);
-  width: 100%;
 }
 
 /* Sub Display */
@@ -85,53 +53,6 @@
   font-weight: var(--font-paragraph-weight);
   line-height: var(--font-paragraph-line-height);
   color: var(--color-text-primary);
-}
-
-/* ============================================
-   TOOLS LIST (right rail)
-   ============================================ */
-.toolItem {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--primitive-gap-md);
-  text-decoration: none;
-  color: inherit;
-  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
-}
-
-a.toolItem:hover {
-  opacity: 0.8;
-}
-
-.toolLinkIcon {
-  /* Off-scale below the 20px opsz floor on purpose: a quiet trailing
-     affordance sized to read as metadata, not an action. */
-  --icon-size: 16px;
-  color: var(--color-text-tertiary);
-  margin-left: auto;
-  flex-shrink: 0;
-  padding-top: 4px;
-}
-
-.toolDetails {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.toolName {
-  font-size: var(--font-title-body-size);
-  font-weight: var(--font-title-body-weight);
-  line-height: var(--font-title-body-line-height);
-  letter-spacing: -0.16px;
-  color: var(--color-text-primary);
-}
-
-.toolDesc {
-  font-size: var(--font-paragraph-size);
-  font-weight: var(--font-paragraph-weight);
-  line-height: var(--font-paragraph-line-height);
-  color: var(--color-text-tertiary);
 }
 
 /* ============================================
@@ -203,7 +124,9 @@ a.toolItem:hover {
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  /* Wide enough that an entry wrapping to a second line still reads as
+     one entry rather than two. */
+  gap: var(--gap-sm);
 }
 
 .skillsList li {
@@ -253,11 +176,6 @@ a.toolItem:hover {
 }
 
 @media (max-width: 959px) {
-  .pageHeader {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
   .dsLayout {
     padding-left: 0;
     min-width: 0;
