@@ -13,6 +13,12 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
+  /* The header bar's height and the logo mark's size. Everything that has
+     to line up with either reads these: the sticky overlay, the drawer's
+     close button, and the drawer's logo row and list indent. Inherited, so
+     descendants see them too. */
+  --mn-bar-height: 78px;
+  --mn-logo-mark: 24px;
 }
 
 .headerInner {
@@ -21,7 +27,7 @@
   justify-content: space-between;
   width: 100%;
   max-width: 1440px;
-  height: 78px;
+  height: var(--mn-bar-height);
   /* No horizontal padding: the in-flow header sits inside the body, whose
      side gutters already align it with the page content. The sticky
      overlay is viewport-fixed, so it re-adds matching gutters below. */
@@ -73,8 +79,8 @@
 }
 
 .logoMark {
-  width: 24px;
-  height: 24px;
+  width: var(--mn-logo-mark);
+  height: var(--mn-logo-mark);
   flex-shrink: 0;
 }
 
@@ -351,8 +357,11 @@
     var(--color-bg-page-primary) 50%,
     rgba(0, 0, 0, 0) 100%
   );
+  /* No hand-written -webkit- twin here or on the drawer: the build's CSS
+     pipeline adds the prefix from browserslist, and a manual one next to it
+     made it drop the property entirely — the bar rendered with no blur at
+     all until this was removed. */
   backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
 }
 
 /* Dark-mode variant uses near-black instead of pure white */
@@ -394,7 +403,7 @@
    drawer was opened from the sticky header (78px bar, matching gutters). */
 .mobileMenuClose {
   position: absolute;
-  top: calc(var(--primitive-padding-lg) + (78px - 40px) / 2);
+  top: calc(var(--primitive-padding-lg) + (var(--mn-bar-height) - 40px) / 2);
   right: var(--primitive-padding-lg);
   display: flex;
   align-items: center;
@@ -413,26 +422,33 @@
 }
 
 .mobileMenuCloseStuck {
-  top: calc((78px - 40px) / 2);
+  top: calc((var(--mn-bar-height) - 40px) / 2);
 }
 
 .mobileMenu {
   position: absolute;
   top: 0;
   left: 0;
-  width: 341px;
-  max-width: 85vw;
+  width: 320px;
+  max-width: 80vw;
   height: 100%;
-  background: var(--color-bg-page-primary);
+  /* The chat panel's glass, and deliberately the same recipe (SiteChat's
+     .panel owns the original): translucent in both themes — light's
+     container token is opaque — so the page's colours and the ambient field
+     reach through, with the blur keeping the rows legible over them. */
+  background: color-mix(in srgb, var(--color-bg-container-primary) 82%, transparent);
+  backdrop-filter: blur(24px);
   box-shadow: 5px 0px 30px 0px rgba(0, 0, 0, 0.15);
-  padding: var(--primitive-padding-xl);
-  /* The section accordions (Components alone is ~60 links) can exceed the
-     viewport, so the drawer scrolls its own content. */
-  overflow-y: auto;
+  /* Top and side padding mirror the body gutters (globals.css) so the
+     drawer's logo row lands on the page's own logo; the bottom keeps the
+     wider inset for the theme toggle. */
+  padding: var(--primitive-padding-lg) var(--primitive-padding-lg) var(--primitive-padding-xl);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--primitive-gap-md);
+  gap: var(--primitive-gap-lg);
+  /* The section accordions (Components alone is ~60 links) can exceed the
+     viewport, so the drawer scrolls its own content. */
   overflow-y: auto;
   transform: translateX(-100%);
   transition: transform var(--motion-duration-slow) var(--motion-ease-standard);
@@ -442,8 +458,44 @@
   transform: translateX(0);
 }
 
+/* The drawer opens on the logo it replaced: same gutter, same header band,
+   so it doesn't move as the panel slides over the page. */
+.mobileMenuLogo {
+  height: var(--mn-bar-height);
+  flex-shrink: 0;
+}
+
+/* Opened from the sticky header, the bar it replaced is at the viewport top
+   rather than below the body's inset — so the drawer drops its top padding
+   and the logo tracks it, exactly as the close button does. */
+.mobileMenuStuck {
+  padding-top: 0;
+}
+
+/* Rows already carry the Button's own text inset, so the list steps right
+   by whatever is left of the logo's lead-in — the mark plus its gap — and
+   every label starts on the wordmark's first letter. The same step on the
+   right keeps the rows centred in the panel rather than pushed against its
+   far edge. */
+.mobileMenuNav {
+  width: 100%;
+  padding-inline: calc(var(--mn-logo-mark) + var(--primitive-gap-sm) - var(--padding-lg));
+}
+
 /* The drawer's rows are a NavList (@robr0/design-system) — no row styling
-   lives here anymore. */
+   lives here, only a roomier rhythm than the library default: on a phone
+   the list is the whole screen, so the rows get space the sidebar's
+   denser default doesn't need. Both places NavList separates siblings —
+   the list itself and any open sub-list — take the same step. */
+.mobileMenu :global(.ds-nav-list),
+.mobileMenu :global(.ds-nav-list__sublist) {
+  gap: var(--primitive-gap-md);
+}
+
+.mobileMenu :global(.ds-nav-list__panel--open),
+.mobileMenu :global(.ds-nav-list__item) > :global(.ds-nav-list__sublist) {
+  margin-top: var(--primitive-gap-md);
+}
 
 .mobileThemeToggle {
   margin-top: auto;
@@ -490,6 +542,12 @@
 
   .mobileMenuClose {
     right: var(--primitive-padding-md);
+  }
+
+  /* Phone gutters, so the drawer's logo keeps sitting on the page's. */
+  .mobileMenu {
+    padding-left: var(--primitive-padding-md);
+    padding-right: var(--primitive-padding-md);
   }
 }
 

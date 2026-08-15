@@ -87,7 +87,8 @@ export default function MegaNav() {
   // desktop sidebar shows, which is otherwise hidden below 960px. Work and
   // Writing stay current on their child routes via the prefix matchers.
   const drawerItems: NavListItem[] = [
-    { label: "Home", href: "/" },
+    // No Home row: the logo above the list is the link home, as it is in the
+    // header the drawer covers.
     { label: "About", href: "/about" },
     {
       label: "Work",
@@ -211,14 +212,24 @@ export default function MegaNav() {
   // Lock body scroll while mobile menu is open. The counted lock is shared
   // with the chat panel: whichever overlay closes first must not unlock the
   // page while the other still covers it.
+  //
+  // The same effect flags the open drawer on <html>, which is how the chat's
+  // FAB knows to get out of the way — it floats above the scrim, and a launch
+  // button for a panel you cannot see is just clutter over the menu. An
+  // attribute rather than shared state: the two mount from the root layout
+  // and never meet, and the site already drives the header's docked inset
+  // this way.
   useEffect(() => {
     if (mobileOpen) {
       lockBodyScroll("mega-nav");
+      document.documentElement.setAttribute("data-nav-drawer", "open");
     } else {
       unlockBodyScroll("mega-nav");
+      document.documentElement.removeAttribute("data-nav-drawer");
     }
     return () => {
       unlockBodyScroll("mega-nav");
+      document.documentElement.removeAttribute("data-nav-drawer");
     };
   }, [mobileOpen]);
 
@@ -499,18 +510,28 @@ export default function MegaNav() {
             close
           </span>
         </button>
-        <nav className={styles.mobileMenu} aria-label="Mobile navigation">
-          <NavList
-            items={drawerItems}
-            currentHref={pathname}
-            expandedIds={expandedSection ? [expandedSection] : []}
-            onExpandedChange={(ids) => setExpandedSection(ids[0] ?? null)}
-            onNavigate={() => setMobileOpen(false)}
-          />
+        <div className={`${styles.mobileMenu} ${isStuck ? styles.mobileMenuStuck : ""}`}>
+          <Link
+            href="/"
+            className={`${styles.logo} ${styles.mobileMenuLogo}`}
+            onClick={() => setMobileOpen(false)}
+          >
+            <LogoIcon className={styles.logoMark} />
+            <span className={styles.logoText}>Robert Ritacca</span>
+          </Link>
+          <nav className={styles.mobileMenuNav} aria-label="Mobile navigation">
+            <NavList
+              items={drawerItems}
+              currentHref={pathname}
+              expandedIds={expandedSection ? [expandedSection] : []}
+              onExpandedChange={(ids) => setExpandedSection(ids[0] ?? null)}
+              onNavigate={() => setMobileOpen(false)}
+            />
+          </nav>
           <div className={styles.mobileThemeToggle}>
             <ThemeToggle />
           </div>
-        </nav>
+        </div>
       </div>
     </header>
   );
