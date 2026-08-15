@@ -7,12 +7,13 @@ API, because the thing under test is the system, not the model.
 ## How to run it
 
 ```bash
-# 1. Start the dev server with the guardrails open (75 calls would trip the
+# 1. Start the dev server with the guardrails open (81 calls would trip the
 #    per-IP rate limiter otherwise; blanking the KV vars makes them fail open).
 npm run dev:eval -w website
 
 # 2. Run the eval from the repo root. --no-cache is deliberate: variance is
 #    part of what this measures, and cached responses would fake stability.
+#    Set CHAT_EVAL_URL when step 1 landed on a port other than 3000.
 npm run eval:chat
 
 # 3. Compare runs in the local UI.
@@ -21,6 +22,26 @@ npx -y promptfoo@0.122.0 view
 
 Results land in `runs/` (gitignored — transcripts are evidence, not source).
 Copy `runs/latest.json` to a named file when a run is a baseline worth keeping.
+
+## Running it against the wrong server
+
+Step 1 is not advice, and neither is the port. The eval posts to whatever is
+listening, so an ordinary `npm run dev` — or another session's server already
+holding 3000 — becomes the thing under test with its guardrails live. After
+the first ten requests the rate limiter answers every one of them, and the
+notice is short, cites `/contact`, contains no em dash and returns fast, so
+the remaining assertions are all satisfied by it.
+
+That is not hypothetical. The run of 2026-08-12 scored 24 rows that never
+reached the model, including all 12 of the conduct seat — the prompt-injection
+case reported green three times without an answer behind it.
+
+Two things now prevent it. `assert-answered.mjs` runs first on every test and
+fails any row whose output carries the `[notice]` or `[error]` prefix that
+`transform-response.js` attaches, so a throttled run fails loudly instead of
+grading the guardrail copy. And `CHAT_EVAL_URL` makes the target explicit
+rather than assumed. A run where every row fails that assertion is not a
+regression in the chat — it means the server was wrong.
 
 ## How to read it
 

@@ -8,6 +8,8 @@ A React component library + design system + documentation website. It has three 
 2. **Documentation Website** (`/website`) — A separate Next.js app that showcases every component with live, interactive examples. Each component has its own page under `website/src/app/components/[component-name]/`.
 3. **AI Layer** (spans both) — the site answering questions about itself: the library's `ai` component category, the site-wide chat (the `SiteChat` panel, mounted from the root layout via `SiteChatMount`, the `useChat` hook, the Claude-backed `/api/chat` route, and `/api/chat/followups`, which writes the suggestion chips under a finished answer with a smaller model), the build-generated site corpus it reads (see the corpus rows and security boundary in **Registries** below), and the answer-quality eval in `evals/chat`.
 
+Every exchange is logged to Redis for 30 days, and each line records **which bucket the asker fell in** — `dev` (localhost, or any non-production build), `self` (production, carrying the marker cookie `/api/chat/self` sets from `CHAT_SELF_TOKEN`), or `visitor`. `exchangeSource` in `website/src/app/api/chat/guardrails.ts` owns the rule. This is not analytics garnish: the dev server forwards `::1`, which hashes to an ordinary-looking visitor key, so without the bucket a week of local testing reads as the site's most engaged user and drags the averages with it. Read the log with `npm run chat:log`, which shows visitor lines by default.
+
 **Every chat suggestion is one chip, and a chip never wraps.** Conversation starters and follow-up questions share the same row component, so they share one length budget: `SUGGESTION_MAX_CHARS` in `website/src/lib/chat-suggestions.ts`, set to what fits the message column on a small phone, where the panel fills the viewport. It is enforced at every point a suggestion enters the UI — the generator is told the number, the route drops a long one rather than clipping it, and `scripts/validate-chat-starters.mjs` fails the build on written copy that exceeds it. A suggestion that will not fit is dropped, never truncated: half a question is not a question.
 
 The design spec lives in [`design.md`](design.md) — read it before touching tokens, colors, or typography. The content style guide lives in [`content-design.md`](content-design.md) — read it before writing or editing any shipped prose (page copy, journal entries, descriptions, README, release notes, microcopy).
@@ -80,6 +82,7 @@ npm run build-storybook # export static Storybook
 npm run test            # run every Storybook story as a render test (headless Chromium)
 npm run verify          # full local quality gate: lint + tests + the library, package, Storybook and website builds (mirrors CI)
 npm run eval:chat       # site-chat answer-quality eval against a running dev server (see evals/chat/README.md — costs real API calls, never in CI)
+npm run chat:log        # read the 30-day site-chat exchange log out of Redis (read-only ops tool, never in the build; --all, --full, --json)
 npm run covers:render   # re-shoot the case-study covers into webp, against a running dev server (deliberate, never in the build — see the cover-renders registry)
 ```
 

@@ -27,7 +27,13 @@ import type { ChatEvent, ChatTransportMessage } from "@/hooks/useChat";
 import { CHAT_MODEL, modelLabel } from "@/lib/chat-model";
 
 import { EASTER_EGGS } from "./easter-eggs";
-import { checkGuardrails, recordExchange, recordSpend, visitorKey } from "./guardrails";
+import {
+  checkGuardrails,
+  exchangeSource,
+  recordExchange,
+  recordSpend,
+  visitorKey,
+} from "./guardrails";
 import { PERSONA } from "./persona";
 
 export const runtime = "nodejs";
@@ -241,6 +247,7 @@ export async function POST(request: Request): Promise<Response> {
 
   const startedAt = Date.now();
   const visitor = visitorKey(request);
+  const source = exchangeSource(request);
   const question = latest.content;
   /* The exchange's log id. Minted before the guardrails so every logged
      line carries one, streamed to the client (model path only) so the
@@ -260,6 +267,7 @@ export async function POST(request: Request): Promise<Response> {
       firstTextMs: null,
       notice: true,
       visitor,
+      source,
     });
     return ndjson({ type: "notice", text: verdict.notice }, { type: "done" });
   }
@@ -383,6 +391,7 @@ export async function POST(request: Request): Promise<Response> {
           firstTextMs,
           notice: noticeText !== null,
           visitor,
+          source,
         });
         // After the log line exists, so a verdict can never dangle. Not sent
         // on the guardrail path: thumbs on a rate-limit notice rate the

@@ -10,7 +10,12 @@ providers:
   - id: https
     label: chat-route
     config:
-      url: http://localhost:3000/api/chat
+      # Set by the npm script, which defaults it to port 3000. An override
+      # matters because the port is not guaranteed: a dev server already
+      # holding 3000 silently becomes the thing under test, guardrails and
+      # all. That is how the 2026-08-12 run got scored against rate-limit
+      # notices.
+      url: '{{env.CHAT_EVAL_URL}}'
       method: POST
       headers:
         content-type: application/json
@@ -29,6 +34,11 @@ evaluateOptions:
 
 defaultTest:
   assert:
+    # First, because every assertion below it is a shape check a guardrail
+    # notice happens to satisfy. Without this one a throttled run scores
+    # itself green — see the comment in assert-answered.mjs.
+    - type: javascript
+      value: file://assert-answered.mjs
     # House style is written down in content-design.md; these two are its
     # cheapest tripwires. Violations are informative, not noise.
     - type: not-contains

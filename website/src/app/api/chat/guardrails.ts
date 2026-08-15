@@ -25,10 +25,10 @@ import { createHash } from "node:crypto";
    Caps. Env overrides let production be tuned without a deploy.
    ============================================ */
 
-const PER_IP_PER_MINUTE = 10;
-const PER_IP_PER_DAY = 60;
+const PER_IP_PER_MINUTE = 15;
+const PER_IP_PER_DAY = 100;
 
-const DAILY_MESSAGE_CAP = Number(process.env.CHAT_DAILY_MESSAGE_CAP ?? 300);
+const DAILY_MESSAGE_CAP = Number(process.env.CHAT_DAILY_MESSAGE_CAP ?? 500);
 const DAILY_SPEND_CAP_TENTHS = Number(process.env.CHAT_DAILY_SPEND_CAP_CENTS ?? 500) * 10;
 
 /**
@@ -98,15 +98,62 @@ const dailyLimiter = (redis: Redis) =>
    Keys
    ============================================ */
 
+/* ============================================
+   Who is asking
+
+   Not identity — three buckets, so the log can be read as "what visitors
+   actually ask" without Rob's own testing in the average. Worth having
+   because it was not obvious in hindsight: the dev server forwards `::1`,
+   which hashes to a perfectly ordinary-looking visitor key, so a week of
+   local testing read as the site's busiest user.
+   ============================================ */
+
+export type ExchangeSource =
+  /** Localhost, or any non-production build. */
+  | "dev"
+  /** Production, carrying the marker cookie — Rob testing the live site. */
+  | "self"
+  /** Everyone else. */
+  | "visitor";
+
+const LOOPBACK = new Set(["::1", "127.0.0.1", "::ffff:127.0.0.1", "local"]);
+
+/** The cookie `/api/chat/self` sets, matched against `CHAT_SELF_TOKEN`. */
+const SELF_COOKIE = "chat-self";
+
+function cookie(request: Request, name: string): string | null {
+  const header = request.headers.get("cookie");
+  if (!header) return null;
+  for (const part of header.split(";")) {
+    const [key, ...value] = part.trim().split("=");
+    if (key === name) return decodeURIComponent(value.join("="));
+  }
+  return null;
+}
+
+/** The raw client address, before hashing. Local use only — never stored. */
+function clientIp(request: Request): string {
+  const forwarded = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+  return forwarded || request.headers.get("x-real-ip")?.trim() || "local";
+}
+
+/** Classifies the request. Cheap, synchronous, and never throws. */
+export function exchangeSource(request: Request): ExchangeSource {
+  if (process.env.NODE_ENV !== "production" || LOOPBACK.has(clientIp(request))) {
+    return "dev";
+  }
+  const token = process.env.CHAT_SELF_TOKEN;
+  if (token && cookie(request, SELF_COOKIE) === token) return "self";
+  return "visitor";
+}
+
 /**
  * A stable per-visitor key. The IP is hashed before it becomes a Redis key so
  * no raw address is stored, which keeps a rate-limit store from quietly
  * becoming a log of who visited.
  */
 export function visitorKey(request: Request): string {
-  const forwarded = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
-  const ip = forwarded || request.headers.get("x-real-ip")?.trim() || "local";
-  return createHash("sha256").update(ip).digest("hex").slice(0, 32);
+  return createHash("sha256").update(clientIp(request)).digest("hex").slice(0, 32);
 }
 
 /** UTC date, so the daily counters reset at midnight UTC without a scheduler. */
@@ -277,6 +324,10 @@ export interface ExchangeLog {
   /** True when the answer is a guardrail notice, not a model response. */
   notice: boolean;
   visitor: string;
+  /** Which bucket the asker falls in — see `exchangeSource`. Lines written
+      before this field existed have none, which reads as unknown, not as
+      `visitor`: the early log is a mix and cannot be sorted after the fact. */
+  source: ExchangeSource;
 }
 
 const LOG_TTL_SECONDS = 60 * 60 * 24 * 30;
