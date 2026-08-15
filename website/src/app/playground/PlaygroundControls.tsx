@@ -22,6 +22,9 @@ export interface PlaygroundControlsProps {
   /** Sets the site theme — the rail owns the toggle now that the immersive
       format drops the header that used to carry it. */
   onTheme: (value: string) => void;
+  /** Whether the ambient gradient sits behind the stage. */
+  backgroundOn: boolean;
+  onBackgroundOn: (value: boolean) => void;
   tintOn: boolean;
   tintSeed: string;
   tintStrength: number;
@@ -66,6 +69,8 @@ export default function PlaygroundControls({
   brand,
   theme,
   onTheme,
+  backgroundOn,
+  onBackgroundOn,
   tintOn,
   tintSeed,
   tintStrength,
@@ -159,6 +164,14 @@ export default function PlaygroundControls({
               { value: "dark", label: "Dark" },
             ]}
             onValueChange={onTheme}
+          />
+          {/* Also a stage setting rather than a theme lever — it changes what
+              the preview sits on, never a token, so it stays out of the
+              generated CSS and never flips the preset to Custom. */}
+          <ToggleSwitch
+            label="Background gradient"
+            checked={backgroundOn}
+            onChange={onBackgroundOn}
           />
         </div>
 

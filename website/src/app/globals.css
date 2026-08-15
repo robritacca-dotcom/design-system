@@ -138,6 +138,13 @@ body:has([data-bg-full-bleed]) .blur-container::after {
   display: none;
 }
 
+/* Background off — the playground's stage toggle, read the same marker way.
+   Hiding the layer rather than unmounting it keeps the WebGL context alive,
+   so switching back on is instant instead of a fresh compile and fade. */
+body:has([data-bg-hidden]) .blur-container {
+  display: none;
+}
+
 .blur-container::after {
   content: '';
   position: absolute;

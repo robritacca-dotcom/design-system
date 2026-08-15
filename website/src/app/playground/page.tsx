@@ -3,7 +3,10 @@
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import StageToolbar from "@/components/StageToolbar/StageToolbar";
-import { FullBleedBackground } from "@/components/BlurBackground/BlurBackground";
+import {
+  FullBleedBackground,
+  HiddenBackground,
+} from "@/components/BlurBackground/BlurBackground";
 import styles from "./page.module.css";
 import { Button } from "@robr0/design-system/components/Button/Button";
 import { CodeBlock } from "@robr0/design-system/components/CodeBlock/CodeBlock";
@@ -110,6 +113,11 @@ export default function PlaygroundPage() {
   const [chatManual, setChatManual] = useState<{ w?: number; h?: number }>({});
   const [chatPlaceholder, setChatPlaceholder] = useState("");
   const [showStarters, setShowStarters] = useState(true);
+  /* A stage setting, not a theme lever: it changes what the preview sits on,
+     never a token. So it sits beside the theme radios, stays out of the
+     generated CSS and out of isPristine, and — like theme and product name —
+     Reset leaves it alone. */
+  const [backgroundOn, setBackgroundOn] = useState(true);
 
   /* ---------- levers ---------- */
   const [preset, setPreset] = useState("default");
@@ -341,6 +349,8 @@ export default function PlaygroundPage() {
               brand={effectiveBrand}
               theme={theme}
               onTheme={applyTheme}
+              backgroundOn={backgroundOn}
+              onBackgroundOn={setBackgroundOn}
               tintOn={tintOn}
               tintSeed={tintSeed}
               tintStrength={tintStrength}
@@ -436,8 +446,9 @@ export default function PlaygroundPage() {
   return (
     <>
       {/* An immersive stage runs the background edge to edge, with no
-          fade-to-floor mask — unlike the doc pages' 450px band. */}
-      <FullBleedBackground />
+          fade-to-floor mask — unlike the doc pages' 450px band. Switched off,
+          the theme is judged against the flat page colour instead. */}
+      {backgroundOn ? <FullBleedBackground /> : <HiddenBackground />}
 
       {/* Not the site's full navigation — a full-screen view's slim
           toolbar: brand mark, breadcrumb trail, the view tabs, and the X
