@@ -144,7 +144,7 @@ export default function PlaygroundPage() {
       inherits it — touching one lever must only change that lever, never
       snap the rest of the look back to the shipped defaults. */
   const [presetExtras, setPresetExtras] = useState<
-    Pick<ThemePreset, "brandDark" | "extraOverrides">
+    Pick<ThemePreset, "brandDark" | "extraOverrides" | "extraOverridesDark">
   >({});
 
   /** Touching any individual lever means the state is no longer the preset. */
@@ -182,7 +182,11 @@ export default function PlaygroundPage() {
     const p = THEME_PRESETS[value];
     if (!p) return; // "custom" — keep the current levers
     setAdvColors(p.advanced ?? DEFAULT_ADVANCED); // harmonized ramp keys
-    setPresetExtras({ brandDark: p.brandDark, extraOverrides: p.extraOverrides });
+    setPresetExtras({
+      brandDark: p.brandDark,
+      extraOverrides: p.extraOverrides,
+      extraOverridesDark: p.extraOverridesDark,
+    });
     setBrand(p.brand);
     setTintOn(p.tintOn);
     setTintSeed(p.tintSeed);
@@ -238,11 +242,14 @@ export default function PlaygroundPage() {
     if (presetExtras.extraOverrides) {
       Object.assign(merged, presetExtras.extraOverrides);
     }
+    if (theme === "dark" && presetExtras.extraOverridesDark) {
+      Object.assign(merged, presetExtras.extraOverridesDark);
+    }
     if (!isAdvancedPristine(advColors)) {
       Object.assign(merged, advancedColorOverrides(advColors, merged));
     }
     return merged;
-  }, [actionPlan, tintOn, tintSeed, tintStrength, radiusScale, pill, presetExtras, advColors]);
+  }, [actionPlan, theme, tintOn, tintSeed, tintStrength, radiusScale, pill, presetExtras, advColors]);
 
   /* ---------- apply to the whole page ----------
      Custom properties substitute var() where they are declared, and the
@@ -317,8 +324,15 @@ export default function PlaygroundPage() {
   const lightPlan = actionColorPlan(brand, "light");
   const darkPlan = actionColorPlan(darkHex, "dark");
 
+  /* Dark-only extras belong in the dark block whether or not the action
+     colour itself differs, or the copied CSS would not reproduce what is
+     on screen. They layer last, over the derived dark pointers. */
+  const darkExtras = presetExtras.extraOverridesDark;
+
   let snippetOverrides = overrides;
-  let snippetDarkBlock: Overrides | undefined;
+  let snippetDarkBlock: Overrides | undefined = darkExtras
+    ? { ...darkExtras }
+    : undefined;
   if (lightPlan || darkPlan) {
     /* Primitives first, then the applied overrides: a rebased ramp may
        have been further transformed by the all-ramps levers, and those
@@ -333,8 +347,9 @@ export default function PlaygroundPage() {
       ? {
           ...(darkHex !== brand ? darkPlan.primitives : {}),
           ...darkPlan.semantics,
+          ...darkExtras,
         }
-      : undefined;
+      : snippetDarkBlock;
   }
   const cssSnippet = isPristine
     ? "/* Everything is at its shipped default. Move a lever to generate CSS. */"
