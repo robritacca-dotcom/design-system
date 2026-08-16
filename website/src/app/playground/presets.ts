@@ -24,6 +24,14 @@ export interface ThemePreset {
   advanced?: AdvancedColorState;
   /** Preset-specific extras beyond the levers (e.g. greyscale accents). */
   extraOverrides?: Overrides;
+  /**
+   * Extras that only apply in dark mode, layered over `extraOverrides`.
+   * Same reason `brandDark` exists: a few action roles cannot hold one
+   * value across both themes, and the derived ramp assumes the light-mode
+   * shape (fills that deepen under a light label). A preset that inverts
+   * that shape corrects the affected roles here.
+   */
+  extraOverridesDark?: Overrides;
 }
 
 /** Shorthand: an AdvancedColorState that only sets ramp keys. */
@@ -34,6 +42,66 @@ const bases = (b: Record<string, string>): AdvancedColorState => ({
 });
 
 export const THEME_PRESETS: Record<string, ThemePreset> = {
+  tealAccessible: {
+    label: "Accessible teal",
+    // The shipped hue, moved to the steps that clear WCAG AA in each theme.
+    // A single value cannot: the band that reads against both a white page
+    // and a near black one is too narrow to also carry a label, so light
+    // takes a deep fill with a light label and dark inverts it. Both are
+    // real teal primitives (08 and 05), so this repoints the action roles
+    // rather than rewriting the ramp.
+    brand: "#0E6E8F",
+    brandDark: "#3CA5C6",
+    tintOn: true,
+    tintSeed: "#0E6E8F",
+    tintStrength: 4,
+    radiusScale: 100,
+    pill: true,
+    fontLabel: "Nunito Sans (default)",
+    // No re-keyed neighbours: this preset changes one decision, so the rest
+    // of the palette stays where the shipped theme has it.
+    //
+    // The derived ramp lands three roles short of AA, and all three are the
+    // same story: the derivation is built for a dark fill under a light
+    // label, and light mode is the only theme still shaped that way here.
+    extraOverrides: {
+      // As a link on the lightest container the derived teal-08 reads 3.96.
+      // Teal-09 clears every light surface.
+      "--color-action-primary-text-tertiary": "var(--primitive-teal-09)",
+      // RadioButton's focus ring. Teal-04 is 2.02 against the page, which
+      // the shipped theme gets wrong too; this is the one gap here that is
+      // a fix rather than a regression being undone.
+      "--color-action-primary-border-tertiary": "var(--primitive-teal-08)",
+      // The input hover border, 2.02 as teal-04. Teal-06 clears 3:1 and
+      // still reads lighter than the selected border, so the resting,
+      // hover and selected states stay in order.
+      "--color-input-border-hover": "var(--primitive-teal-06)",
+    },
+    extraOverridesDark: {
+      // The dark fill is light, so its label has to be dark on every step.
+      // Left light, the hover fill reads 2.75 behind its own text.
+      "--color-action-primary-text-active": "var(--primitive-teal-10)",
+      // Hover and active deepen by default, which walks the fill out of
+      // contrast with the page. Hold them on the light half of the ramp.
+      "--color-action-primary-bg-hover": "var(--primitive-teal-04)",
+      "--color-action-primary-bg-active": "var(--primitive-teal-03)",
+      // Teal-09 as the outlined button's edge is 1.44 against a dark
+      // surface, which is no edge at all.
+      "--color-action-primary-border": "var(--primitive-teal-05)",
+      "--color-action-primary-text-tertiary": "var(--primitive-teal-04)",
+      // The secondary button and CircularButton put this icon on the hover
+      // and active fills, which are now the light half of the ramp. Left at
+      // near-white it reads 1.80 on its own background: the same inversion
+      // the label needed, one token over.
+      "--color-action-icon-active": "var(--primitive-teal-10)",
+      // RadioButton's focus ring sits on the page at a 2px offset, so the
+      // derived teal-09 is 2.18 against it.
+      "--color-action-primary-border-tertiary": "var(--primitive-teal-04)",
+      // The input hover border, same problem as its light counterpart but
+      // from the other end: teal-09 is 2.18 on a dark page.
+      "--color-input-border-hover": "var(--primitive-teal-07)",
+    },
+  },
   warm: {
     label: "Warm serif",
     brand: "#D97757",
