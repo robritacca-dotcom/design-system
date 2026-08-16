@@ -230,4 +230,4 @@ The on-demand audit for all of this is the `content-audit` skill (`.claude/skill
 - **Alt text and accessibility copy**: image alt text, `aria-label` wording, and screen-reader-only text have no rules here yet. The a11y test suite enforces presence, not quality.
 - **The word lists are seeded, not exhaustive**: they cover the tells observed in AI prose as of mid-2026. Model habits shift; the Iteration Guide covers additions.
 - **No localisation stance**: the project ships in English only; nothing here addresses translation.
-- **Enforcement is by audit, not build**: the `content-audit` skill is on-demand. No validator fails the build on a banned word, deliberately: most style calls need a reader, and a regex that mangles good writing to appease itself would be worse than drift.
+- **Enforcement is mostly by audit, not build**: the em dash is the one rule a script can settle, and `scripts/validate-shipped-prose.mjs` settles it. Every other rule here belongs to the on-demand `content-audit` skill, deliberately: most style calls need a reader, and a regex that mangles good writing to appease itself would be worse than drift.

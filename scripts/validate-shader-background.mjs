@@ -17,6 +17,13 @@
  *    what makes the background a real consumer of the token registry: a
  *    renamed or deleted token can never leave it sampling a custom property
  *    that nothing defines (which resolves to empty, i.e. an invisible blob).
+ *  - PARAM_RANGES below matches DEFAULT_SHADER_PARAMS in the library, in both
+ *    directions, so a new parameter cannot ship without a sanity range
+ *  - the "<N> parameters" claims in README.md, design.md and CLAUDE.md match
+ *    that count. A parameter count is a countable fact, so it gets the same
+ *    treatment as every other one in this repo: build-enforced rather than
+ *    remembered. The 2026-08 drift audit is why — `crop` landed, the specs
+ *    were updated, and the README kept telling npm consumers there were seven.
  */
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -112,6 +119,87 @@ for (const name of Object.keys(params)) {
         'PARAM_RANGES in scripts/validate-shader-background.mjs and to ' +
         'ShaderParams in src/components/ShaderField/useShaderField.ts'
     );
+  }
+}
+
+// -- the parameter set, and the prose that counts it --------------------
+
+/* PARAM_RANGES is this file's own list, so it can drift from the component's.
+   DEFAULT_SHADER_PARAMS is the authority: read the keys from it rather than
+   trusting the two lists to stay in step by hand. */
+const hookPath = join(
+  repoRoot, 'src', 'components', 'ShaderField', 'useShaderField.ts'
+);
+let shipped = null;
+try {
+  const source = readFileSync(hookPath, 'utf8').replace(/\r\n/g, '\n');
+  const block = source.match(
+    /export const DEFAULT_SHADER_PARAMS: ShaderParams = \{([\s\S]*?)\n\};/
+  );
+  if (block) {
+    shipped = [...block[1].matchAll(/^\s*([a-zA-Z]\w*):/gm)].map((m) => m[1]);
+  }
+} catch {
+  /* reported below */
+}
+
+if (!shipped || shipped.length === 0) {
+  errors.push(
+    'could not read DEFAULT_SHADER_PARAMS from ' +
+      'src/components/ShaderField/useShaderField.ts — that object is the ' +
+      'authoritative parameter set and this validator reads it'
+  );
+} else {
+  for (const name of shipped) {
+    if (!(name in PARAM_RANGES)) {
+      errors.push(
+        `DEFAULT_SHADER_PARAMS declares "${name}" but PARAM_RANGES in ` +
+          'scripts/validate-shader-background.mjs has no range for it — every ' +
+          'parameter needs one, or an out-of-range value reaches a deploy'
+      );
+    }
+  }
+  for (const name of Object.keys(PARAM_RANGES)) {
+    if (!shipped.includes(name)) {
+      errors.push(
+        `PARAM_RANGES has a range for "${name}" but DEFAULT_SHADER_PARAMS ` +
+          'does not declare it — the parameter was renamed or removed'
+      );
+    }
+  }
+}
+
+/* The count is a countable fact, so no doc may restate it from memory. */
+const NUMBER_WORDS = [
+  'zero', 'one', 'two', 'three', 'four', 'five', 'six',
+  'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve',
+];
+const claimPattern = new RegExp(
+  `\\b(${NUMBER_WORDS.join('|')}|\\d+) (?:field |shader )?parameters\\b`, 'gi'
+);
+if (shipped && shipped.length > 0) {
+  const expected = shipped.length;
+  for (const doc of ['README.md', 'design.md', 'CLAUDE.md']) {
+    let text;
+    try {
+      text = readFileSync(join(repoRoot, doc), 'utf8').replace(/\r\n/g, '\n');
+    } catch {
+      errors.push(`could not read ${doc} to check its parameter-count claims`);
+      continue;
+    }
+    for (const match of text.matchAll(claimPattern)) {
+      const word = match[1].toLowerCase();
+      const claimed = NUMBER_WORDS.indexOf(word) >= 0
+        ? NUMBER_WORDS.indexOf(word)
+        : Number(word);
+      if (claimed !== expected) {
+        const line = text.slice(0, match.index).split('\n').length;
+        errors.push(
+          `${doc}:${line} claims "${match[0]}" but ShaderField ships ` +
+            `${expected} (${shipped.join(', ')})`
+        );
+      }
+    }
   }
 }
 
