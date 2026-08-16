@@ -36,7 +36,7 @@ const EXPERIENCE: TimelineCompany[] = [
     roles: [
       {
         title: "Principal Product Designer",
-        subtitle: "Consumer AI",
+        subtitle: "TurboTax, Consumer AI",
         start: "Jan 2026",
         end: "Jul 2026",
         bullets: [
@@ -51,7 +51,7 @@ const EXPERIENCE: TimelineCompany[] = [
       },
       {
         title: "Principal Product Designer",
-        subtitle: "Agent Platform",
+        subtitle: "GenUX - AI / Agent platform",
         start: "May 2024",
         end: "Jan 2026",
         bullets: [
@@ -94,6 +94,7 @@ const EXPERIENCE: TimelineCompany[] = [
     roles: [
       {
         title: "Staff Product Designer",
+        subtitle: "Enterprise Products",
         start: "Sep 2021",
         end: "Jul 2023",
         description:
