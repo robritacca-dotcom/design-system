@@ -112,6 +112,24 @@ export default function ComponentsPage() {
               </div>
             </TocCard>
 
+            {/* Agent plan */}
+            <TocCard href="/components/agent-plan" title="Agent plan">
+              <div aria-hidden="true" style={{ display: "flex", flexDirection: "column", gap: "6px", width: "150px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                  <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-status-positive-text)" }}>check_circle</span>
+                  <span style={{ fontSize: "11px", color: "var(--color-text-tertiary)" }}>Read project files</span>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                  <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-status-info-text)" }}>progress_activity</span>
+                  <span style={{ fontSize: "11px", fontWeight: 600, color: "var(--color-text-primary)" }}>Update dark tokens</span>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                  <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-icon-secondary)" }}>circle</span>
+                  <span style={{ fontSize: "11px", color: "var(--color-text-primary)" }}>Run the build</span>
+                </div>
+              </div>
+            </TocCard>
+
             {/* Agent status */}
             <TocCard href="/components/agent-status" title="Agent status">
               <AgentStatus state="working" label="Working" pattern="orbit" size="compact" />
@@ -440,6 +458,25 @@ export default function ComponentsPage() {
               </div>
             </TocCard>
 
+            {/* Data table */}
+            <TocCard href="/components/data-table" title="Data table">
+              <div aria-hidden="true" style={{ display: "flex", flexDirection: "column", gap: "4px", width: "160px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px", paddingBottom: "4px", borderBottom: "1px solid var(--color-divider)" }}>
+                  <span style={{ fontSize: "10px", fontWeight: 600, color: "var(--color-text-primary)", flex: 1 }}>Customer</span>
+                  <span style={{ fontSize: "10px", fontWeight: 600, color: "var(--color-text-primary)" }}>Status</span>
+                  <span className="material-symbols-rounded" style={{ fontSize: "12px", color: "var(--color-icon-secondary)" }}>arrow_upward</span>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                  <span style={{ fontSize: "10px", color: "var(--color-text-secondary)", flex: 1 }}>Aspen Lubin</span>
+                  <span style={{ fontSize: "9px", padding: "1px 6px", borderRadius: "4px", background: "var(--color-status-positive-bg)", color: "var(--color-status-positive-text)" }}>Shipped</span>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                  <span style={{ fontSize: "10px", color: "var(--color-text-secondary)", flex: 1 }}>Omar Vetrovs</span>
+                  <span style={{ fontSize: "9px", padding: "1px 6px", borderRadius: "4px", background: "var(--color-status-warning-bg)", color: "var(--color-status-warning-text)" }}>Waiting</span>
+                </div>
+              </div>
+            </TocCard>
+
             {/* Date input */}
             <TocCard href="/components/date-input" title="Date input">
               <div className={styles.inputPreview}>
@@ -543,6 +580,22 @@ export default function ComponentsPage() {
                   <div key={name} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", padding: "10px 14px", borderRadius: "10px", border: "1px solid var(--color-bg-container-border)", background: "var(--color-bg-container-primary)" }}>
                     <span className="material-symbols-rounded" style={{ fontSize: "20px", color: "var(--color-text-primary)" }}>{name}</span>
                     <span style={{ fontSize: "10px", color: "var(--color-text-tertiary)" }}>{name}</span>
+                  </div>
+                ))}
+              </div>
+            </TocCard>
+
+            {/* Event calendar */}
+            <TocCard href="/components/event-calendar" title="Event calendar">
+              <div aria-hidden="true" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "3px", width: "140px" }}>
+                {Array.from({ length: 8 }, (_, i) => (
+                  <div key={i} style={{ display: "flex", flexDirection: "column", gap: "2px", padding: "3px", borderRadius: "4px", background: "var(--color-bg-container-secondary)", minHeight: "22px" }}>
+                    <span style={{ fontSize: "8px", color: "var(--color-text-tertiary)" }}>{i + 9}</span>
+                    {(i === 1 || i === 6) && (
+                      <span style={{ display: "flex", alignItems: "center", gap: "2px", padding: "1px 3px", borderRadius: "3px", background: "var(--color-bg-container-primary)" }}>
+                        <span style={{ width: "4px", height: "4px", borderRadius: "50%", background: i === 1 ? "var(--color-core-accent-cobalt)" : "var(--color-core-accent-coral)" }} />
+                      </span>
+                    )}
                   </div>
                 ))}
               </div>
@@ -665,6 +718,14 @@ export default function ComponentsPage() {
               </div>
             </TocCard>
 
+            {/* Model picker */}
+            <TocCard href="/components/model-picker" title="Model picker">
+              <div aria-hidden="true" style={{ display: "inline-flex", alignItems: "center", gap: "4px", padding: "4px 12px", borderRadius: "999px", background: "var(--color-action-passive-bg-hover)" }}>
+                <span style={{ fontSize: "12px", fontWeight: 500, color: "var(--color-text-secondary)" }}>Sonnet 5</span>
+                <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-icon-secondary)" }}>expand_more</span>
+              </div>
+            </TocCard>
+
             {/* Navigation */}
             {/* Static mock: NavList rows are real links, which cannot nest inside the card's anchor */}
             <TocCard href="/components/nav-list" title="Nav list">
@@ -695,6 +756,21 @@ export default function ComponentsPage() {
                 <span style={{ fontSize: "16px", fontWeight: 600, color: "var(--color-text-primary)", letterSpacing: "-0.16px" }}>
                   robr0
                 </span>
+              </div>
+            </TocCard>
+
+            {/* Notification centre */}
+            <TocCard href="/components/notification-center" title="Notification centre">
+              <div aria-hidden="true" style={{ display: "flex", flexDirection: "column", gap: "6px", width: "160px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                  <span style={{ fontSize: "11px", fontWeight: 600, color: "var(--color-text-primary)", flex: 1 }}>Backup ready</span>
+                  <span style={{ fontSize: "10px", color: "var(--color-text-tertiary)" }}>2m</span>
+                  <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--color-status-info-border)" }} />
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px", opacity: 0.7 }}>
+                  <span style={{ fontSize: "11px", color: "var(--color-text-primary)", flex: 1 }}>Review requested</span>
+                  <span style={{ fontSize: "10px", color: "var(--color-text-tertiary)" }}>1h</span>
+                </div>
               </div>
             </TocCard>
 

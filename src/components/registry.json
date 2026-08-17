@@ -21,6 +21,14 @@
       "client": true
     },
     {
+      "name": "AgentPlan",
+      "label": "Agent plan",
+      "slug": "agent-plan",
+      "description": "A collapsible checklist of an agent's task, with live step states and a progress readout.",
+      "category": "ai",
+      "client": true
+    },
+    {
       "name": "AgentStatus",
       "label": "Agent status",
       "slug": "agent-status",
@@ -253,6 +261,14 @@
       "client": false
     },
     {
+      "name": "DataTable",
+      "label": "Data table",
+      "slug": "data-table",
+      "description": "The wired table: sorting, search, row selection, and pagination assembled around Table.",
+      "category": "data-display",
+      "client": true
+    },
+    {
       "name": "DateInput",
       "label": "Date input",
       "slug": "date-input",
@@ -331,6 +347,14 @@
       "description": "Compact display-only card with a centred icon or image and a label, used in the Icons and Logos galleries.",
       "category": "data-display",
       "client": false
+    },
+    {
+      "name": "EventCalendar",
+      "label": "Event calendar",
+      "slug": "event-calendar",
+      "description": "A month grid with event pills, overflow counts, and month navigation.",
+      "category": "data-display",
+      "client": true
     },
     {
       "name": "Field",
@@ -413,6 +437,14 @@
       "client": false
     },
     {
+      "name": "ModelPicker",
+      "label": "Model picker",
+      "slug": "model-picker",
+      "description": "A model selector for chat surfaces, with per-model descriptions and an optional effort row.",
+      "category": "ai",
+      "client": true
+    },
+    {
       "name": "Nav",
       "label": "Navigation",
       "slug": "navigation",
@@ -426,6 +458,14 @@
       "slug": "nav-list",
       "description": "Vertical list of navigation links for drawers and menus, with three indent levels and per-row expand toggles.",
       "category": "navigation",
+      "client": true
+    },
+    {
+      "name": "NotificationCenter",
+      "label": "Notification centre",
+      "slug": "notification-center",
+      "description": "A persistent notification inbox with unread count, filter tabs, and per-item actions.",
+      "category": "feedback",
       "client": true
     },
     {

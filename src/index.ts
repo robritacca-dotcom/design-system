@@ -4,6 +4,7 @@
  * (validate-registry chain). recharts-backed modules live in charts.ts, not here — recharts is an optional peer.
  */
 export * from './components/Accordion/Accordion';
+export * from './components/AgentPlan/AgentPlan';
 export * from './components/AgentStatus/AgentStatus';
 export * from './components/AgentStatus/AgentStatusPatterns';
 export * from './components/AiButton/AiButton';
@@ -33,6 +34,7 @@ export * from './components/Composer/Composer';
 export * from './components/ContactCard/ContactCard';
 export * from './components/ContextMenu/ContextMenu';
 export * from './components/ContributionGraph/ContributionGraph';
+export * from './components/DataTable/DataTable';
 export * from './components/DateInput/DateInput';
 export * from './components/DatePicker/DatePicker';
 export * from './components/Dialog/Dialog';
@@ -43,6 +45,7 @@ export * from './components/Dropdown/Dropdown';
 export * from './components/DropdownMenu/DropdownMenu';
 export * from './components/EmptyState/EmptyState';
 export * from './components/EntityCard/EntityCard';
+export * from './components/EventCalendar/EventCalendar';
 export * from './components/Field/Field';
 export * from './components/Field/FieldContext';
 export * from './components/Figure/Figure';
@@ -54,8 +57,10 @@ export * from './components/Kbd/Kbd';
 export * from './components/LinkList/LinkList';
 export * from './components/MessageActions/MessageActions';
 export * from './components/MessageCard/MessageCard';
+export * from './components/ModelPicker/ModelPicker';
 export * from './components/Nav/Nav';
 export * from './components/NavList/NavList';
+export * from './components/NotificationCenter/NotificationCenter';
 export * from './components/Pagination/Pagination';
 export * from './components/Popover/Popover';
 export * from './components/ProgressBar/ProgressBar';
