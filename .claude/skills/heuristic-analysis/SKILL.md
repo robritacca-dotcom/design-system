@@ -60,4 +60,4 @@ Use this skill when asked to run a UX or usability review — phrases like "heur
    X critical · Y moderate · Z minor · W passing
    ```
 
-6. **Be specific.** Reference the exact element, prop, or file where possible. A finding like "the Dismiss button in AlertDialog has no visible focus ring (AlertDialog.css:47)" is more useful than "focus styles are missing".
+6. **Be specific.** Reference the exact element, prop, or file where possible. A finding like "the Dismiss button in Gadget has no visible focus ring (Gadget.css:47)" is more useful than "focus styles are missing". (The component in that example is fictional by design — a factual claim about a real component inside an example rots silently.)

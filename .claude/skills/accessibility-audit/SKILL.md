@@ -54,9 +54,9 @@ Report a finding as **already-enforced** if `npm run test` would have caught it;
 
    **Keyboard Navigation:**
    - **[manual]** All interactive elements are reachable by Tab, in an order that makes sense — axe cannot judge order
-   - Custom interactive components handle `onKeyDown` for Enter/Space (buttons), arrow keys (RadioButton, SegmentedControl, ToggleGroup)
+   - Custom interactive components handle `onKeyDown` for Enter/Space (buttons) and arrow keys (any component with roving or list focus — radio groups, segmented controls, listboxes, tablists)
    - **[manual]** Modal/dialog *actually* traps focus while open and restores it to the trigger on close — axe sees the attributes, not the behaviour
-   - Escape key closes dismissible overlays (Tooltip, Popover, DropdownMenu, AlertDialog)
+   - Escape key closes dismissible overlays (any floating panel — tooltips, popovers, menus, dialogs, pickers)
 
    **Focus Styles:**
    - Every interactive element has a `:focus-visible` rule in its CSS

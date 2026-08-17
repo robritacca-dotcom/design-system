@@ -21,7 +21,7 @@ Use this skill when asked to audit copy, check prose quality, find AI-writing te
    - `site-updates` → `website/src/data/site-updates.json` (titles + story bodies)
    - `registry` → the `description` fields in `src/components/registry.json`
    - `case-studies` → the `title` and `dek` fields in `website/src/data/case-studies.json` (shipped copy on /work and the home page)
-   - `readme` → `README.md` prose plus `src/stories/Configure.mdx`
+   - `readme` → `README.md` prose plus `src/stories/Configure.mdx`. README's marked regions (`component-count`, `component-list`, `npm-badge`) are **generated** from `src/components/registry.json` — a rewrite inside them silently reverts on the next build, so fix that copy through the `registry` scope instead
    - `skills` → the `displayDescription` frontmatter strings across `.claude/skills/` (they render on /skills, so they are published copy; skill instruction *bodies* are out of scope)
    - `website` → user-visible strings in `website/src/app/**` page files; a page slug (e.g. `about`) scopes to that page folder
    - `chat` → the site chat's shipped prose: the greeting and starter-suggestion copy in `website/src/components/SiteChat/`, and the persona and easter-egg strings in `website/src/app/api/chat/` (visitor-visible through the chat panel, but not "page files", so the `website` scope misses them; the answers' register row lives in the guide's Register by Surface table)

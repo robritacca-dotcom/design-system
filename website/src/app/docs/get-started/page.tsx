@@ -257,8 +257,9 @@ export default function GetStartedPage() {
                 <p className={styles.sectionNote}>
                   The <code>ai</code> category installs with the rest of the package:
                   chat surface primitives (Chat thread, Chat message, Composer, Chat
-                  header), agent-state components (Agent status, Reasoning, Tool
-                  call), and supporting pieces such as Prose and the citation chips.
+                  header, Model picker), agent-state components (Agent status, Agent
+                  plan, Reasoning, Tool call), and supporting pieces such as Prose
+                  and the citation chips.
                   They are components like any other here, themed by the same tokens,
                   and they render whatever conversation you hand them.
                 </p>
