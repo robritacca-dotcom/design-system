@@ -64,25 +64,6 @@
 }
 
 /* ============================================
-   ON-THIS-PAGE RAIL (desktop only)
-   ============================================ */
-.tocRail {
-  width: 176px;
-  flex-shrink: 0;
-  position: sticky;
-  /* Clears the sticky MegaNav bar (--mn-bar-height, 78px) plus breathing room */
-  top: 110px;
-  align-self: flex-start;
-  padding-top: var(--primitive-gap-xl);
-}
-
-@media (max-width: 1279px) {
-  .tocRail {
-    display: none;
-  }
-}
-
-/* ============================================
    CATEGORY SECTIONS
    ============================================ */
 .categorySections {

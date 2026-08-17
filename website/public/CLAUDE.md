@@ -139,7 +139,7 @@ The old `merge-and-push` skill is retired because its name didn't say which of t
 └── website/                   # Next.js docs site (npm workspace; consumes @robr0/design-system by name)
     ├── public/                # Includes GENERATED copies of the root markdown specs (see /blueprints)
     ├── src/app/
-    │   ├── components/        # One folder per component (page.tsx + page.module.css); the index renders registry-derived category sections over the shared ComponentPreviews map, with an AnchorNav rail tracking them
+    │   ├── components/        # One folder per component (page.tsx + page.module.css); the index renders registry-derived category sections over the shared ComponentPreviews map
     │   ├── foundations/       # Design tokens & layout doc pages
     │   ├── design-system/     # DS landing page (hero with section-link buttons + live component collage)
     │   ├── docs/              # Docs hub: links out to overview/skills/journal; owns get-started (install + theming)

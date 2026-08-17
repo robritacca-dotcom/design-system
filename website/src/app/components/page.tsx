@@ -3,18 +3,12 @@ import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import ComponentsSidebar from "../../components/Sidebar/ComponentsSidebar";
 import PageLinks from "../../components/PageLinks/PageLinks";
 import ComponentCardGrid from "../../components/ComponentCardGrid/ComponentCardGrid";
-import { AnchorNav } from "@robr0/design-system/components/AnchorNav/AnchorNav";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import {
   componentMetadata,
   componentCategoryMetadata,
 } from "@robr0/design-system/components/registry";
 import styles from "./page.module.css";
-
-const categoryAnchors = componentCategoryMetadata.map((cat) => ({
-  id: cat.id,
-  label: cat.label,
-}));
 
 export default function ComponentsPage() {
   return (
@@ -60,11 +54,6 @@ export default function ComponentsPage() {
             ))}
           </div>
         </main>
-
-        {/* Desktop-only category outline; the drawer covers narrow screens */}
-        <aside className={`${styles.tocRail} animate-in animate-delay-2`}>
-          <AnchorNav items={categoryAnchors} offset={110} />
-        </aside>
       </div>
     </>
   );
