@@ -1,15 +1,51 @@
 {
   "$comment": "SINGLE SOURCE OF TRUTH for the public component count. Every folder in src/components must appear in exactly one of these lists; scripts/validate-component-registry.mjs enforces this at build time. Import COMPONENT_COUNT from src/components/registry.ts wherever a count is displayed - never hardcode the number.",
   "categories": [
-    "actions",
-    "ai",
-    "charts",
-    "data-display",
-    "feedback",
-    "forms",
-    "layout",
-    "navigation",
-    "overlays"
+    {
+      "id": "actions",
+      "label": "Actions",
+      "description": "Buttons, button groups, and toggles for triggering actions and switching modes."
+    },
+    {
+      "id": "ai",
+      "label": "AI",
+      "description": "Chat, agent, and model surfaces for building AI products, from the composer to the reasoning trace."
+    },
+    {
+      "id": "charts",
+      "label": "Charts",
+      "description": "Data visualisation components for plotting series and activity over time."
+    },
+    {
+      "id": "data-display",
+      "label": "Data display",
+      "description": "Cards, tables, lists, and badges for presenting structured content."
+    },
+    {
+      "id": "feedback",
+      "label": "Feedback",
+      "description": "Alerts, toasts, progress, and empty states that tell people what is happening."
+    },
+    {
+      "id": "forms",
+      "label": "Forms",
+      "description": "Inputs, pickers, and selection controls for collecting and editing values."
+    },
+    {
+      "id": "layout",
+      "label": "Layout",
+      "description": "Page scaffolding, from app shells and sidebars to the ambient shader background."
+    },
+    {
+      "id": "navigation",
+      "label": "Navigation",
+      "description": "Top bars, breadcrumbs, tabs, and pagination for moving around a product."
+    },
+    {
+      "id": "overlays",
+      "label": "Overlays",
+      "description": "Dialogs, drawers, menus, and tooltips that float above the page."
+    }
   ],
   "components": [
     {

@@ -74,6 +74,48 @@ const metaErrors = [];
 const seenSlugs = new Map();
 const seenLabels = new Map();
 
+/*
+ * Category checks. Categories are objects because their label and description
+ * are displayed — the /components index sections, the category landing pages,
+ * and the chat corpus all read them. Ids share the /components/* URL namespace
+ * with component slugs, so the two sets must stay disjoint or a category
+ * landing page and a component page would claim the same route.
+ */
+const categoryIds = registry.categories.map((cat) => cat.id);
+
+for (const cat of registry.categories) {
+  const where = `categories["${cat.id ?? '?'}"]`;
+  for (const field of ['id', 'label', 'description']) {
+    if (typeof cat[field] !== 'string' || cat[field].trim() === '') {
+      metaErrors.push(`${where}.${field} is missing or empty`);
+    }
+  }
+  if (cat.id && !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(cat.id)) {
+    metaErrors.push(`${where}.id "${cat.id}" is not kebab-case`);
+  }
+  if (cat.description && !cat.description.trim().endsWith('.')) {
+    metaErrors.push(`${where}.description should end in a full stop`);
+  }
+  if (cat.description && cat.description.length > 160) {
+    metaErrors.push(`${where}.description is ${cat.description.length} chars — keep it under 160`);
+  }
+}
+
+const dupCategoryIds = categoryIds.filter((id, i) => categoryIds.indexOf(id) !== i);
+if (dupCategoryIds.length > 0) {
+  metaErrors.push(`duplicate category ids: ${[...new Set(dupCategoryIds)].join(', ')}`);
+}
+if (JSON.stringify(categoryIds) !== JSON.stringify([...categoryIds].sort())) {
+  metaErrors.push('categories must be sorted alphabetically by id');
+}
+for (const cat of registry.categories) {
+  if (cat.id && !registry.components.some((c) => c.category === cat.id)) {
+    metaErrors.push(
+      `categories["${cat.id}"] has no components — an empty category is drift, remove it or assign it a component`
+    );
+  }
+}
+
 for (const c of registry.components) {
   const where = `components["${c.name}"]`;
   for (const field of ['name', 'label', 'slug', 'description', 'category']) {
@@ -93,7 +135,7 @@ for (const c of registry.components) {
   if (c.description && c.description.length > 160) {
     metaErrors.push(`${where}.description is ${c.description.length} chars — keep it under 160`);
   }
-  if (c.category && !registry.categories.includes(c.category)) {
+  if (c.category && !categoryIds.includes(c.category)) {
     metaErrors.push(
       `${where}.category "${c.category}" is not in the registry's categories list — ` +
         `add it deliberately rather than inventing a category per component`
@@ -102,6 +144,12 @@ for (const c of registry.components) {
   if (c.slug) {
     if (seenSlugs.has(c.slug)) metaErrors.push(`slug "${c.slug}" is used by both ${seenSlugs.get(c.slug)} and ${c.name}`);
     else seenSlugs.set(c.slug, c.name);
+    if (categoryIds.includes(c.slug)) {
+      metaErrors.push(
+        `slug "${c.slug}" collides with a category id — component pages and category ` +
+          `landing pages share the /components/* namespace, so slugs and ids must stay disjoint`
+      );
+    }
   }
   if (c.label) {
     if (seenLabels.has(c.label)) metaErrors.push(`label "${c.label}" is used by both ${seenLabels.get(c.label)} and ${c.name}`);

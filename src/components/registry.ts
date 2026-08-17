@@ -45,11 +45,23 @@ export interface ComponentMeta {
   client: boolean;
 }
 
+export interface ComponentCategoryMeta {
+  /** Category id — the value each component's `category` field carries, and the website route segment under /components */
+  id: string;
+  /** Display name for the category, used for section headings and landing pages */
+  label: string;
+  /** One-line summary of what the category holds */
+  description: string;
+}
+
 /** Full metadata for every public component, alphabetical by name. */
 export const componentMetadata: readonly ComponentMeta[] = registry.components;
 
-/** The categories a component may belong to. */
-export const componentCategories: readonly string[] = registry.categories;
+/** Full metadata for every component category, alphabetical by id. */
+export const componentCategoryMetadata: readonly ComponentCategoryMeta[] = registry.categories;
+
+/** The category ids a component may belong to. */
+export const componentCategories: readonly string[] = registry.categories.map((c) => c.id);
 
 /**
  * The official public component list, names only.

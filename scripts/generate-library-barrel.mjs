@@ -61,9 +61,10 @@ export {
   componentRegistry,
   componentMetadata,
   componentCategories,
+  componentCategoryMetadata,
   COMPONENT_COUNT,
 } from './components/registry';
-export type { ComponentMeta } from './components/registry';
+export type { ComponentMeta, ComponentCategoryMeta } from './components/registry';
 export { tokenRegistry, TOKEN_COUNT, TOKEN_COUNTS } from './tokens/registry';
 `;
 

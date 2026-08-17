@@ -767,12 +767,13 @@ function sectionComponents() {
     byCategory.get(c.category).push(c);
   }
 
-  const groups = [...byCategory.entries()]
-    .map(([category, items]) => {
+  const groups = registry.categories
+    .map((cat) => {
+      const items = byCategory.get(cat.id) ?? [];
       const lines = items
         .map((c) => `- ${c.label} (/components/${c.slug}): ${c.description}`)
         .join('\n');
-      return `### ${category}\n\n${lines}`;
+      return `### ${cat.label}\n\n${cat.description}\n\n${lines}`;
     })
     .join('\n\n');
 
