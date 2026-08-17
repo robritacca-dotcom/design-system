@@ -4,7 +4,11 @@
  * is fully represented on the website and in design.md:
  *
  *   1. website/src/app/components/<slug>/page.tsx exists (showcase page)
- *   2. The components index grid has a matching <TocCard href=...>
+ *   2. ComponentPreviews.tsx has a preview entry for the slug (both
+ *      directions — every key in the map must be a registered slug too).
+ *      The index grid and category pages map over the registry, so card
+ *      presence there is structurally guaranteed; the preview map is the
+ *      one hand-maintained surface left.
  *   3. design.md has a `### Heading` spec section for the component
  *
  * The sidebar nav entry and its alphabetical order used to be checked here.
@@ -31,11 +35,24 @@ const registry = JSON.parse(
   read(join(repoRoot, 'src', 'components', 'registry.json'))
 );
 
-/** "AlertDialog" -> "alert-dialog"; folder-name exceptions listed inline. */
-const indexSource = read(
-  join(repoRoot, 'website', 'src', 'app', 'components', 'page.tsx')
+const previewsSource = read(
+  join(
+    repoRoot,
+    'website',
+    'src',
+    'components',
+    'ComponentPreviews',
+    'ComponentPreviews.tsx'
+  )
 );
 const designMd = read(join(repoRoot, 'design.md'));
+
+// Keys of the previews map — the `"<slug>": () => (` entries.
+const previewKeys = new Set(
+  [...previewsSource.matchAll(/^  "([a-z0-9-]+)": \(\) => \(/gm)].map(
+    ([, slug]) => slug
+  )
+);
 
 /**
  * design.md spec headings, normalized. Shared headings split on "/" so
@@ -50,7 +67,7 @@ const specHeadings = new Set(
 );
 
 const missingPage = [];
-const missingTocCard = [];
+const missingPreview = [];
 const missingSpec = [];
 
 // slug and label are stored in the registry, so a name-to-slug exception is
@@ -64,8 +81,10 @@ for (const { name, slug } of registry.components) {
   ) {
     missingPage.push(`${name} → website/src/app/components/${slug}/page.tsx`);
   }
-  if (!indexSource.includes(`href="/components/${slug}"`)) {
-    missingTocCard.push(`${name} → <TocCard href="/components/${slug}"> on the index grid`);
+  if (!previewKeys.has(slug)) {
+    missingPreview.push(
+      `${name} → "${slug}" entry in website/src/components/ComponentPreviews/ComponentPreviews.tsx`
+    );
   }
   if (!specHeadings.has(normalize(name))) {
     missingSpec.push(`${name} → "### ${name}" section in design.md`);
@@ -170,9 +189,17 @@ const colourSwatchDrift = [
   ),
 ];
 
+// Reverse direction: a preview entry for a slug the registry doesn't know is
+// dead artwork — usually a rename that missed the map.
+const registeredSlugs = new Set(registry.components.map((c) => c.slug));
+const orphanPreviews = [...previewKeys]
+  .filter((k) => !registeredSlugs.has(k))
+  .map((k) => `"${k}" in ComponentPreviews.tsx is not a registered component slug`);
+
 for (const [what, list] of [
   ['Registry components with no website showcase page', missingPage],
-  ['Registry components missing an index-grid TocCard', missingTocCard],
+  ['Registry components missing a ComponentPreviews entry', missingPreview],
+  ['Preview entries with no registry component', orphanPreviews],
   ['Registry components with no design.md spec section', missingSpec],
   ['Blueprint specs synced to website/public with no page to read them on', missingBlueprintPage],
   ['llms.txt spec downloads out of sync with sync-blueprints FILES', llmsStale],
@@ -190,7 +217,7 @@ if (failed) {
 
 console.log(
   `✓ Website surfaces in sync — ${registry.components.length} components each have ` +
-    `a page, TocCard, and design.md spec, and ${BLUEPRINT_FILES.length} blueprint specs ` +
+    `a page, preview entry, and design.md spec, and ${BLUEPRINT_FILES.length} blueprint specs ` +
     `each have a page (the nav entry and its ordering are derived from the registry, ` +
     `so they cannot drift), and all ${colourTokens.length} colour tokens have a swatch ` +
     `on /foundations/colour-mode.`
