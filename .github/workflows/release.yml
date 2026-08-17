@@ -31,6 +31,8 @@ name: Release
 #   showActions, and the README's chat-boundary correction.
 # 0.7.0 shipped 2026-08-15 — ShaderField, the WebGL2 ambient background, plus
 #   Card's cover slot and the --motion-duration-instant token.
+# 0.8.0 shipped 2026-08-16 — AgentPlan, ModelPicker, NotificationCenter,
+#   DataTable and EventCalendar, the five from the dashboard gap analysis.
 
 on:
   workflow_dispatch:
