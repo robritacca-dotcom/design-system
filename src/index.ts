@@ -10,6 +10,7 @@ export * from './components/AgentStatus/AgentStatusPatterns';
 export * from './components/AiButton/AiButton';
 export * from './components/Alert/Alert';
 export * from './components/AlertDialog/AlertDialog';
+export * from './components/AnchorNav/AnchorNav';
 export * from './components/AppLayout/AppLayout';
 export * from './components/AppSidebar/AppSidebar';
 export * from './components/Avatar/Avatar';

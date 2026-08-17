@@ -116,37 +116,23 @@ export const componentsSidebarLinks: NavLink[] = [
     })),
 ];
 
-/**
- * One link per component category — the /components/<id> landing pages.
- * Derived from the registry like the component links above; the validator
- * keeps category ids disjoint from component slugs, so these hrefs can
- * never collide with a component page.
- */
-export const componentCategoryLinks: NavLink[] = componentCategoryMetadata.map(
-  (cat) => ({
-    href: `/components/${cat.id}`,
-    label: cat.label,
-    description: cat.description,
-  })
-);
-
-/** A titled group of sidebar links; the header links to the category landing page. */
+/** A titled group of sidebar links; the header toggles the group's accordion. */
 export interface SidebarGroup {
   id: string;
   label: string;
-  href: string;
   links: NavLink[];
 }
 
 /**
- * The components sidebar, grouped by category — one group per registry
- * category, components alphabetical by label within each.
+ * The components sidebar, grouped by category — one accordion per registry
+ * category, components alphabetical by label within each. Categories have no
+ * page of their own; they are sections of the /components index (`#<id>`
+ * anchors) and these sidebar groups.
  */
 export const componentsSidebarGroups: SidebarGroup[] = componentCategoryMetadata.map(
   (cat) => ({
     id: cat.id,
     label: cat.label,
-    href: `/components/${cat.id}`,
     links: [...componentMetadata]
       .filter((c) => c.category === cat.id)
       .sort((a, b) => a.label.localeCompare(b.label))
@@ -234,7 +220,6 @@ export function getSidebarLinks(links: NavLink[], activeHref: string) {
  */
 const allSidebarLinks: NavLink[] = [
   ...componentsSidebarLinks,
-  ...componentCategoryLinks,
   ...foundationsSidebarLinks,
   ...docsSidebarLinks,
   ...workSidebarLinks,
@@ -361,22 +346,6 @@ export function componentPageMetadata(slug: string): Metadata {
   return pageMetadata(`/components/${slug}`, meta.description);
 }
 
-/**
- * Metadata for a category landing page, resolved entirely from the registry —
- * the category's label and description live in registry.json alone, exactly
- * like componentPageMetadata above.
- */
-export function categoryPageMetadata(id: string): Metadata {
-  const meta = componentCategoryMetadata.find((cat) => cat.id === id);
-  if (!meta) {
-    throw new Error(
-      `categoryPageMetadata: no category registered with id "${id}". ` +
-        `Add it to src/components/registry.json.`
-    );
-  }
-  return pageMetadata(`/components/${id}`, meta.description);
-}
-
 /* ============================================
    BREADCRUMBS
    Builds a trail based on pathname, walking the
@@ -405,9 +374,7 @@ const breadcrumbSections: SectionConfig[] = [
   // docsSidebarLinks) since their URLs don't share a /docs prefix.
   // Other DS sections
   { base: "/foundations", label: "Foundations", parent: "Design system", sidebar: foundationsSidebarLinks },
-  // Category landing links join the lookup so /components/forms resolves its
-  // crumb label from the registry instead of the slugToTitle fallback.
-  { base: "/components", label: "Components", parent: "Design system", sidebar: [...componentsSidebarLinks, ...componentCategoryLinks] },
+  { base: "/components", label: "Components", parent: "Design system", sidebar: componentsSidebarLinks },
   { base: "/work", label: "Work", parent: null, sidebar: workSidebarLinks },
   // Writing — article sub-labels resolve from the slug (feed is dynamic)
   { base: "/writing", label: "Writing", parent: null, sidebar: null },

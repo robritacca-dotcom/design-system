@@ -91,25 +91,10 @@ for (const { name, slug } of registry.components) {
   }
 }
 
-// Category landing pages: every registry category needs its /components/<id>
-// page, and every folder under website/src/app/components must be either a
-// registered slug or a category id — an orphan folder is usually a rename
-// that missed the registry, and it would ship as an unlisted page.
-const missingCategoryPage = [];
-for (const { id } of registry.categories) {
-  if (
-    !existsSync(
-      join(repoRoot, 'website', 'src', 'app', 'components', id, 'page.tsx')
-    )
-  ) {
-    missingCategoryPage.push(`${id} → website/src/app/components/${id}/page.tsx`);
-  }
-}
-
-const knownSegments = new Set([
-  ...registry.components.map((c) => c.slug),
-  ...registry.categories.map((cat) => cat.id),
-]);
+// Every folder under website/src/app/components must be a registered slug —
+// an orphan folder is usually a rename that missed the registry, and it
+// would ship as an unlisted page.
+const knownSegments = new Set(registry.components.map((c) => c.slug));
 const orphanFolders = readdirSync(
   join(repoRoot, 'website', 'src', 'app', 'components'),
   { withFileTypes: true }
@@ -230,7 +215,6 @@ for (const [what, list] of [
   ['Registry components missing a ComponentPreviews entry', missingPreview],
   ['Preview entries with no registry component', orphanPreviews],
   ['Registry components with no design.md spec section', missingSpec],
-  ['Registry categories with no landing page', missingCategoryPage],
   ['Folders under website/src/app/components with no registry entry', orphanFolders],
   ['Blueprint specs synced to website/public with no page to read them on', missingBlueprintPage],
   ['llms.txt spec downloads out of sync with sync-blueprints FILES', llmsStale],

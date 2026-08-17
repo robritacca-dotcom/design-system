@@ -6,8 +6,8 @@ import { usePathname } from "next/navigation";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
 import { lockBodyScroll, unlockBodyScroll } from "@/lib/scroll-lock";
 import { NavList, type NavListItem } from "@robr0/design-system/components/NavList/NavList";
+import { componentCategoryMetadata } from "@robr0/design-system/components/registry";
 import {
-  componentCategoryLinks,
   docsSidebarLinks,
   dsMegaItems,
   foundationsSidebarLinks,
@@ -123,10 +123,13 @@ export default function MegaNav() {
           label: "Components",
           href: "/components",
           id: "components",
-          // Category landing links, not all the components — NavList caps at
-          // three levels, so per-component rows would be pruned here anyway,
-          // and nine categories scan better in a drawer than the full list.
-          items: toNavItems(componentCategoryLinks),
+          // Category anchors on the index, not all the components — NavList
+          // caps at three levels, so per-component rows would be pruned here
+          // anyway, and ten categories scan better in a drawer than the list.
+          items: componentCategoryMetadata.map((cat) => ({
+            label: cat.label,
+            href: `/components#${cat.id}`,
+          })),
         },
         { label: "Playground", href: "/playground" },
       ],

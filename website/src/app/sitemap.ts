@@ -3,7 +3,6 @@ import { execFileSync } from "node:child_process";
 import path from "node:path";
 import { getArticles } from "@/lib/substack";
 import {
-  componentCategoryLinks,
   componentsSidebarLinks,
   docsSidebarLinks,
   foundationsSidebarLinks,
@@ -84,7 +83,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...docsSidebarLinks.map((l) => l.href),
     ...foundationsSidebarLinks.map((l) => l.href),
     ...componentsSidebarLinks.map((l) => l.href),
-    ...componentCategoryLinks.map((l) => l.href),
   ];
 
   const staticEntries: MetadataRoute.Sitemap = staticRoutes.map((route) => ({

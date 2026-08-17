@@ -14,11 +14,8 @@ export interface SidebarLink {
 
 export interface SidebarLinkGroup {
   id: string;
-  /** Group header text; the header links to `href` */
+  /** Group header text; the header toggles the group open and closed */
   label: string;
-  href: string;
-  /** Highlight the header — its landing page is the current page */
-  active?: boolean;
   links: SidebarLink[];
 }
 

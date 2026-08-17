@@ -1,6 +1,5 @@
 /* ============================================
-   CATEGORY LANDING PAGE LAYOUT
-   Mirrors the /components index shell.
+   PAGE LAYOUT
    ============================================ */
 .dsLayout {
   display: flex;
@@ -15,6 +14,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--gap-xxxl);
+  min-width: 0;
 }
 
 .pageHeader {
@@ -34,6 +34,19 @@
   color: var(--color-text-primary);
 }
 
+.subDisplay {
+  font-family: var(--font-sub-display-family);
+  font-size: var(--font-sub-display-size);
+  font-weight: var(--font-sub-display-weight);
+  line-height: var(--font-sub-display-line-height);
+  letter-spacing: var(--font-sub-display-letter-spacing);
+  color: var(--color-text-primary);
+  margin-bottom: 0;
+}
+
+/* ============================================
+   INTRO SECTION
+   ============================================ */
 .introSection {
   display: flex;
   flex-direction: column;
@@ -47,23 +60,41 @@
   color: var(--color-text-primary);
 }
 
-.backRow {
+.section {
   display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-xl);
+  width: 100%;
+}
+
+.variantRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--primitive-gap-xl);
+  align-items: flex-start;
+}
+
+.variantItem {
+  width: 280px;
+  flex-shrink: 0;
+}
+
+.variantStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-xl);
+  align-items: flex-start;
 }
 
 @media (max-width: 959px) {
+  .variantItem {
+    width: 100%;
+  }
   .pageHeader {
     flex-direction: column;
     align-items: flex-start;
   }
 
-  .dsLayout {
-    padding-left: 0;
-    min-width: 0;
-  }
-
-  .dsContent {
-    max-width: 100%;
-    min-width: 0;
-  }
+  .dsLayout { padding-left: 0; min-width: 0; }
+  .dsContent { max-width: 100%; min-width: 0; }
 }

@@ -3,13 +3,18 @@ import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import ComponentsSidebar from "../../components/Sidebar/ComponentsSidebar";
 import PageLinks from "../../components/PageLinks/PageLinks";
 import ComponentCardGrid from "../../components/ComponentCardGrid/ComponentCardGrid";
-import { Button } from "@robr0/design-system/components/Button/Button";
+import { AnchorNav } from "@robr0/design-system/components/AnchorNav/AnchorNav";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import {
   componentMetadata,
   componentCategoryMetadata,
 } from "@robr0/design-system/components/registry";
 import styles from "./page.module.css";
+
+const categoryAnchors = componentCategoryMetadata.map((cat) => ({
+  id: cat.id,
+  label: cat.label,
+}));
 
 export default function ComponentsPage() {
   return (
@@ -33,22 +38,9 @@ export default function ComponentsPage() {
               Every building block in one place
             </p>
             <p className={styles.introBody}>
-              Each component is built on the colour, spacing, and typography tokens from the foundations pages. They all share the same padding rules, focus styles, and sizing conventions so they feel consistent when combined. Jump to a category below, or click into any component to see its variants, states, and sizing options.
+              Each component is built on the colour, spacing, and typography tokens from the foundations pages. They all share the same padding rules, focus styles, and sizing conventions so they feel consistent when combined. Click into any component to see its variants, states, and sizing options.
             </p>
           </div>
-
-          {/* Category jump links */}
-          <nav aria-label="Component categories" className={`${styles.jumpRow} animate-in animate-delay-2`}>
-            {componentCategoryMetadata.map((cat) => (
-              <Button
-                key={cat.id}
-                href={`#${cat.id}`}
-                label={cat.label}
-                variant="tertiary"
-                size="compact"
-              />
-            ))}
-          </nav>
 
           {/* One section per category, cards alphabetical within */}
           <div className={`${styles.categorySections} animate-in animate-delay-2`}>
@@ -68,6 +60,11 @@ export default function ComponentsPage() {
             ))}
           </div>
         </main>
+
+        {/* Desktop-only category outline; the drawer covers narrow screens */}
+        <aside className={`${styles.tocRail} animate-in animate-delay-2`}>
+          <AnchorNav items={categoryAnchors} offset={110} />
+        </aside>
       </div>
     </>
   );

@@ -227,6 +227,15 @@ const previews: Record<string, () => ReactNode> = {
       </div>
     </>
   ),
+  "anchor-nav": () => (
+    <>
+      <div aria-hidden="true" style={{ display: "flex", flexDirection: "column", width: "150px", borderLeft: "1px solid var(--color-divider)" }}>
+        <span style={{ fontSize: "12px", fontWeight: 600, color: "var(--color-text-primary)", padding: "3px 0 3px 12px", borderLeft: "2px solid var(--color-text-primary)", marginLeft: "-1px" }}>Preview</span>
+        <span style={{ fontSize: "12px", color: "var(--color-text-tertiary)", padding: "3px 0 3px 12px" }}>Installation</span>
+        <span style={{ fontSize: "12px", color: "var(--color-text-tertiary)", padding: "3px 0 3px 12px" }}>Filtering</span>
+      </div>
+    </>
+  ),
   "area-chart": () => (
     <>
       <svg width="120" height="64" viewBox="0 0 120 64" fill="none" xmlns="http://www.w3.org/2000/svg">

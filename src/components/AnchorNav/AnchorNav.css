@@ -1,0 +1,63 @@
+/* ============================================
+   ANCHOR NAV
+   "On this page" list of anchor links with a
+   position indicator riding the left rail.
+   ============================================ */
+.ds-anchor-nav {
+  font-family: var(--font-family-primary);
+}
+
+.ds-anchor-nav__header {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-xs);
+  margin: 0 0 var(--gap-sm);
+  font-size: var(--font-paragraph-em-size);
+  font-weight: var(--font-paragraph-em-weight);
+  line-height: var(--font-paragraph-em-line-height);
+  color: var(--color-text-primary);
+}
+
+.ds-anchor-nav__icon {
+  --icon-size: var(--icon-size-sm);
+  color: var(--color-icon-primary);
+}
+
+.ds-anchor-nav__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-left: var(--border-xs) solid var(--color-divider);
+}
+
+.ds-anchor-nav__link {
+  display: block;
+  padding: var(--padding-xs) 0 var(--padding-xs) var(--padding-md);
+  /* Sits over the list rail; turns into the indicator when active */
+  margin-left: calc(var(--border-xs) * -1);
+  border-left: var(--border-md) solid transparent;
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  color: var(--color-text-tertiary);
+  text-decoration: none;
+  transition:
+    color var(--motion-duration-fast) var(--motion-ease-standard),
+    border-color var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.ds-anchor-nav__link:hover {
+  color: var(--color-text-primary);
+}
+
+.ds-anchor-nav__link:focus-visible {
+  outline: 2px solid var(--color-action-primary-bg);
+  outline-offset: -2px;
+  border-radius: var(--radius-xxs);
+}
+
+.ds-anchor-nav__link--active {
+  color: var(--color-text-primary);
+  font-weight: var(--font-paragraph-em-weight);
+  border-left-color: var(--color-text-primary);
+}

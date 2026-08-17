@@ -89,7 +89,7 @@ export default function SidebarSearch({ links, groups, listLabel = "Components" 
       </p>
 
       {groups ? (
-        <SidebarGroups groups={groupMatches ?? []} />
+        <SidebarGroups groups={groupMatches ?? []} forceOpen={q.length > 0} />
       ) : (
         <SidebarLinks links={flatMatches} />
       )}

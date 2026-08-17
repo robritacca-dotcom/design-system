@@ -84,10 +84,10 @@ const seenLabels = new Map();
 
 /*
  * Category checks. Categories are objects because their label and description
- * are displayed — the /components index sections, the category landing pages,
- * and the chat corpus all read them. Ids share the /components/* URL namespace
- * with component slugs, so the two sets must stay disjoint or a category
- * landing page and a component page would claim the same route.
+ * are displayed — the /components index sections, the sidebar accordions, and
+ * the chat corpus all read them. Ids are the index's `#<id>` anchor namespace
+ * and have historically been routes, so they stay disjoint from component
+ * slugs rather than ever ambiguously naming both a section and a component.
  */
 const categoryIds = registry.categories.map((cat) => cat.id);
 
@@ -154,8 +154,8 @@ for (const c of registry.components) {
     else seenSlugs.set(c.slug, c.name);
     if (categoryIds.includes(c.slug)) {
       metaErrors.push(
-        `slug "${c.slug}" collides with a category id — component pages and category ` +
-          `landing pages share the /components/* namespace, so slugs and ids must stay disjoint`
+        `slug "${c.slug}" collides with a category id — slugs route /components/* pages and ` +
+          `ids anchor the index sections, so the two sets must stay disjoint`
       );
     }
   }

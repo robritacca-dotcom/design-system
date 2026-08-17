@@ -69,11 +69,11 @@
   color: var(--color-text-tertiary);
 }
 
-/* Grouped mode — one titled block per category */
+/* Grouped mode — one accordion per category */
 .groups {
   display: flex;
   flex-direction: column;
-  gap: var(--primitive-gap-lg);
+  gap: var(--primitive-gap-sm);
 }
 
 .group {
@@ -81,11 +81,21 @@
   flex-direction: column;
 }
 
-/* A listHeader that navigates: same face, plus link affordances */
+/* A listHeader that toggles: same face, full-width row with a chevron */
 .groupHeader {
   composes: listHeader;
-  display: block;
-  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0;
+  padding-top: var(--primitive-padding-xs);
+  padding-bottom: var(--primitive-padding-xs);
+  padding-right: var(--primitive-padding-sm);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
   transition: color var(--motion-duration-fast) var(--motion-ease-standard);
 }
 
@@ -93,8 +103,26 @@
   color: var(--color-text-primary);
 }
 
-.groupHeaderActive {
-  color: var(--color-text-primary);
+.groupHeader:focus-visible {
+  outline: 2px solid var(--color-action-primary-bg);
+  outline-offset: -2px;
+  border-radius: var(--radius-xxs);
+}
+
+.groupChevron {
+  --icon-size: var(--icon-size-sm);
+  color: var(--color-icon-secondary);
+  transition: transform var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.groupChevronOpen {
+  transform: rotate(180deg);
+}
+
+/* Indent the group's links so the hierarchy reads at a glance */
+.groupList {
+  padding-left: var(--primitive-gap-sm);
+  padding-bottom: var(--primitive-gap-xs);
 }
 
 /* No-results state */

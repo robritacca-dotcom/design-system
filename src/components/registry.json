@@ -102,6 +102,14 @@
       "client": true
     },
     {
+      "name": "AnchorNav",
+      "label": "Anchor nav",
+      "slug": "anchor-nav",
+      "description": "An on-page list of anchor links that tracks the reader's position and jumps between sections.",
+      "category": "navigation",
+      "client": true
+    },
+    {
       "name": "AppLayout",
       "label": "App layout",
       "slug": "app-layout",
