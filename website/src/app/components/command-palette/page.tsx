@@ -3,16 +3,14 @@
 import React, { useState } from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
-import Sidebar from "../../../components/Sidebar/Sidebar";
+import ComponentsSidebar from "../../../components/Sidebar/ComponentsSidebar";
 import { CommandPalette } from "@robr0/design-system/components/CommandPalette/CommandPalette";
 import type { CommandPaletteGroup } from "@robr0/design-system/components/CommandPalette/CommandPalette";
 import { Button } from "@robr0/design-system/components/Button/Button";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
-import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
-const { sidebarLinks } = getSidebarLinks(componentsSidebarLinks, "/components/command-palette");
 
 const groups: CommandPaletteGroup[] = [
   {
@@ -70,7 +68,7 @@ export default function CommandPalettePage() {
       <MegaNav />
 
       <div className={styles.dsLayout}>
-        <Sidebar links={sidebarLinks} searchable />
+        <ComponentsSidebar />
 
         <main className={styles.dsContent} id="main-content">
           <PageBreadcrumb />

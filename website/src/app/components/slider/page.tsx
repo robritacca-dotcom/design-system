@@ -3,13 +3,11 @@
 import React, { useState } from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
-import Sidebar from "../../../components/Sidebar/Sidebar";
+import ComponentsSidebar from "../../../components/Sidebar/ComponentsSidebar";
 import { Slider } from "@robr0/design-system/components/Slider/Slider";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
-import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
-const { sidebarLinks } = getSidebarLinks(componentsSidebarLinks, "/components/slider");
 
 export default function SliderPage() {
   const [value1, setValue1] = useState(60);
@@ -20,7 +18,7 @@ export default function SliderPage() {
       <MegaNav />
 
       <div className={styles.dsLayout}>
-        <Sidebar links={sidebarLinks} searchable />
+        <ComponentsSidebar />
 
         <main className={styles.dsContent} id="main-content">
           <PageBreadcrumb />

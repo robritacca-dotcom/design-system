@@ -69,6 +69,34 @@
   color: var(--color-text-tertiary);
 }
 
+/* Grouped mode — one titled block per category */
+.groups {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-lg);
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+}
+
+/* A listHeader that navigates: same face, plus link affordances */
+.groupHeader {
+  composes: listHeader;
+  display: block;
+  text-decoration: none;
+  transition: color var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.groupHeader:hover {
+  color: var(--color-text-primary);
+}
+
+.groupHeaderActive {
+  color: var(--color-text-primary);
+}
+
 /* No-results state */
 .noResults {
   display: flex;

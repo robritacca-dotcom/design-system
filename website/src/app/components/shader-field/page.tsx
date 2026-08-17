@@ -3,7 +3,7 @@
 import React from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
-import Sidebar from "../../../components/Sidebar/Sidebar";
+import ComponentsSidebar from "../../../components/Sidebar/ComponentsSidebar";
 import PageLinks from "../../../components/PageLinks/PageLinks";
 import { Badge } from "@robr0/design-system/components/Badge/Badge";
 import { Button } from "@robr0/design-system/components/Button/Button";
@@ -13,13 +13,8 @@ import {
   type ShaderBlob,
   type ShaderFieldStatus,
 } from "@robr0/design-system/components/ShaderField/ShaderField";
-import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
-const { sidebarLinks } = getSidebarLinks(
-  componentsSidebarLinks,
-  "/components/shader-field",
-);
 
 function Stage({
   caption,
@@ -62,7 +57,7 @@ export default function ShaderFieldPage() {
       <MegaNav />
 
       <div className={styles.dsLayout}>
-        <Sidebar links={sidebarLinks} searchable />
+        <ComponentsSidebar />
 
         <main className={styles.dsContent} id="main-content">
           <PageBreadcrumb />

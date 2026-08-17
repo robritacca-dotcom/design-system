@@ -2,14 +2,12 @@
 
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
-import Sidebar from "../../../components/Sidebar/Sidebar";
+import ComponentsSidebar from "../../../components/Sidebar/ComponentsSidebar";
 import { EntityCard } from "@robr0/design-system/components/EntityCard/EntityCard";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
-import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
-const { sidebarLinks } = getSidebarLinks(componentsSidebarLinks, "/components/entity-card");
 
 const demoIcons = ["home", "search", "settings", "person", "favorite", "star"];
 
@@ -26,7 +24,7 @@ export default function EntityCardPage() {
       <MegaNav />
 
       <div className={styles.dsLayout}>
-        <Sidebar links={sidebarLinks} searchable />
+        <ComponentsSidebar />
 
         <main className={styles.dsContent} id="main-content">
           <PageBreadcrumb />

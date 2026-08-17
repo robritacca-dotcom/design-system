@@ -7,7 +7,7 @@ import ThemeToggle from "../ThemeToggle/ThemeToggle";
 import { lockBodyScroll, unlockBodyScroll } from "@/lib/scroll-lock";
 import { NavList, type NavListItem } from "@robr0/design-system/components/NavList/NavList";
 import {
-  componentsSidebarLinks,
+  componentCategoryLinks,
   docsSidebarLinks,
   dsMegaItems,
   foundationsSidebarLinks,
@@ -123,7 +123,10 @@ export default function MegaNav() {
           label: "Components",
           href: "/components",
           id: "components",
-          items: toNavItems(componentsSidebarLinks.slice(1)),
+          // Category landing links, not all the components — NavList caps at
+          // three levels, so per-component rows would be pruned here anyway,
+          // and nine categories scan better in a drawer than the full list.
+          items: toNavItems(componentCategoryLinks),
         },
         { label: "Playground", href: "/playground" },
       ],

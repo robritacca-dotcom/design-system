@@ -3,14 +3,12 @@
 import React from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
-import Sidebar from "../../../components/Sidebar/Sidebar";
+import ComponentsSidebar from "../../../components/Sidebar/ComponentsSidebar";
 import { LinkList } from "@robr0/design-system/components/LinkList/LinkList";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
-import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
-const { sidebarLinks } = getSidebarLinks(componentsSidebarLinks, "/components/link-list");
 
 export default function LinkListPage() {
   return (
@@ -18,7 +16,7 @@ export default function LinkListPage() {
       <MegaNav />
 
       <div className={styles.dsLayout}>
-        <Sidebar links={sidebarLinks} searchable />
+        <ComponentsSidebar />
 
         <main className={styles.dsContent} id="main-content">
           <PageBreadcrumb />

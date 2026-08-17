@@ -3,20 +3,15 @@
 import React, { useState } from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
-import Sidebar from "../../../components/Sidebar/Sidebar";
+import ComponentsSidebar from "../../../components/Sidebar/ComponentsSidebar";
 import { Composer } from "@robr0/design-system/components/Composer/Composer";
 import { CircularButton } from "@robr0/design-system/components/CircularButton/CircularButton";
 import { DocumentChip } from "@robr0/design-system/components/DocumentChip/DocumentChip";
 import { PromptSuggestions } from "@robr0/design-system/components/PromptSuggestions/PromptSuggestions";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
-import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
-const { sidebarLinks } = getSidebarLinks(
-  componentsSidebarLinks,
-  "/components/composer",
-);
 
 /** Send flips into a short fake stream, with stop cutting it off early. */
 function StreamingDemo() {
@@ -151,7 +146,7 @@ export default function ComposerPage() {
       <MegaNav />
 
       <div className={styles.dsLayout}>
-        <Sidebar links={sidebarLinks} searchable />
+        <ComponentsSidebar />
 
         <main className={styles.dsContent} id="main-content">
           <PageBreadcrumb />

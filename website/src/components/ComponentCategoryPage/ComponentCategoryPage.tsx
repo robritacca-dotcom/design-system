@@ -1,13 +1,12 @@
 import MegaNav from "../MegaNav/MegaNav";
 import PageBreadcrumb from "../PageBreadcrumb/PageBreadcrumb";
-import Sidebar from "../Sidebar/Sidebar";
+import ComponentsSidebar from "../Sidebar/ComponentsSidebar";
 import ComponentCardGrid from "../ComponentCardGrid/ComponentCardGrid";
 import { Button } from "@robr0/design-system/components/Button/Button";
 import {
   componentMetadata,
   componentCategoryMetadata,
 } from "@robr0/design-system/components/registry";
-import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./ComponentCategoryPage.module.css";
 
 interface ComponentCategoryPageProps {
@@ -26,14 +25,13 @@ export default function ComponentCategoryPage({ id }: ComponentCategoryPageProps
     throw new Error(`ComponentCategoryPage: no category registered with id "${id}".`);
   }
   const members = componentMetadata.filter((c) => c.category === id);
-  const { sidebarLinks } = getSidebarLinks(componentsSidebarLinks, `/components/${id}`);
 
   return (
     <>
       <MegaNav />
 
       <div className={styles.dsLayout}>
-        <Sidebar links={sidebarLinks} searchable />
+        <ComponentsSidebar />
 
         <main className={styles.dsContent} id="main-content">
           <PageBreadcrumb />

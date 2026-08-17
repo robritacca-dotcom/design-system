@@ -3,7 +3,7 @@
 import React from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
-import Sidebar from "../../../components/Sidebar/Sidebar";
+import ComponentsSidebar from "../../../components/Sidebar/ComponentsSidebar";
 import { Card } from "@robr0/design-system/components/Card/Card";
 import { EntityCard } from "@robr0/design-system/components/EntityCard/EntityCard";
 import { ColourSwatch } from "@robr0/design-system/components/ColourSwatch/ColourSwatch";
@@ -14,13 +14,11 @@ import { ToggleSwitch } from "@robr0/design-system/components/ToggleSwitch/Toggl
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import { CoverImage } from "@/components/covers/CoverImage";
 import PageLinks from "../../../components/PageLinks/PageLinks";
-import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 /* ============================================
    PAGE
    ============================================ */
 
-const { sidebarLinks } = getSidebarLinks(componentsSidebarLinks, "/components/card");
 
 export default function CardPage() {
   return (
@@ -29,7 +27,7 @@ export default function CardPage() {
       <MegaNav />
 
       <div className={styles.dsLayout}>
-        <Sidebar links={sidebarLinks} searchable />
+        <ComponentsSidebar />
 
         <main className={styles.dsContent} id="main-content">
           <PageBreadcrumb />

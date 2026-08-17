@@ -3,18 +3,13 @@
 import React, { useState } from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
-import Sidebar from "../../../components/Sidebar/Sidebar";
+import ComponentsSidebar from "../../../components/Sidebar/ComponentsSidebar";
 import { ChatHeader } from "@robr0/design-system/components/ChatHeader/ChatHeader";
 import { CircularButton } from "@robr0/design-system/components/CircularButton/CircularButton";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
-import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
-const { sidebarLinks } = getSidebarLinks(
-  componentsSidebarLinks,
-  "/components/chat-header"
-);
 
 function ViewSwitchDemo() {
   const [fullscreen, setFullscreen] = useState(false);
@@ -54,7 +49,7 @@ export default function ChatHeaderPage() {
       <MegaNav />
 
       <div className={styles.dsLayout}>
-        <Sidebar links={sidebarLinks} searchable />
+        <ComponentsSidebar />
 
         <main className={styles.dsContent} id="main-content">
           <PageBreadcrumb />

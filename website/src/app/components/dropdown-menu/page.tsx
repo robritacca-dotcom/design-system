@@ -3,15 +3,13 @@
 import React from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
-import Sidebar from "../../../components/Sidebar/Sidebar";
+import ComponentsSidebar from "../../../components/Sidebar/ComponentsSidebar";
 import { DropdownMenu, DropdownMenuEntry } from "@robr0/design-system/components/DropdownMenu/DropdownMenu";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import { Button } from "@robr0/design-system/components/Button/Button";
 import PageLinks from "../../../components/PageLinks/PageLinks";
-import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
-const { sidebarLinks } = getSidebarLinks(componentsSidebarLinks, "/components/dropdown-menu");
 
 /* ============================================
    DEMO DATA
@@ -95,7 +93,7 @@ export default function DropdownMenuPage() {
       <MegaNav />
 
       <div className={styles.dsLayout}>
-        <Sidebar links={sidebarLinks} searchable />
+        <ComponentsSidebar />
 
         <main className={styles.dsContent} id="main-content">
           <PageBreadcrumb />

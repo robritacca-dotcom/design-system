@@ -3,7 +3,7 @@
 import React from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
-import Sidebar from "../../../components/Sidebar/Sidebar";
+import ComponentsSidebar from "../../../components/Sidebar/ComponentsSidebar";
 import { ChatMessage } from "@robr0/design-system/components/ChatMessage/ChatMessage";
 import { ChatMarker } from "@robr0/design-system/components/ChatMarker/ChatMarker";
 import { MessageActions } from "@robr0/design-system/components/MessageActions/MessageActions";
@@ -11,13 +11,8 @@ import { SourceChip } from "@robr0/design-system/components/SourceChip/SourceChi
 import { Avatar } from "@robr0/design-system/components/Avatar/Avatar";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
-import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
-const { sidebarLinks } = getSidebarLinks(
-  componentsSidebarLinks,
-  "/components/chat-message"
-);
 
 export default function ChatMessagePage() {
   return (
@@ -25,7 +20,7 @@ export default function ChatMessagePage() {
       <MegaNav />
 
       <div className={styles.dsLayout}>
-        <Sidebar links={sidebarLinks} searchable />
+        <ComponentsSidebar />
 
         <main className={styles.dsContent} id="main-content">
           <PageBreadcrumb />

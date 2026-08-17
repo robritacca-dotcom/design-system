@@ -1,6 +1,6 @@
 import MegaNav from "../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
-import Sidebar from "../../components/Sidebar/Sidebar";
+import ComponentsSidebar from "../../components/Sidebar/ComponentsSidebar";
 import PageLinks from "../../components/PageLinks/PageLinks";
 import ComponentCardGrid from "../../components/ComponentCardGrid/ComponentCardGrid";
 import { Button } from "@robr0/design-system/components/Button/Button";
@@ -9,10 +9,7 @@ import {
   componentMetadata,
   componentCategoryMetadata,
 } from "@robr0/design-system/components/registry";
-import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
-
-const { sidebarLinks } = getSidebarLinks(componentsSidebarLinks, "/components");
 
 export default function ComponentsPage() {
   return (
@@ -20,7 +17,7 @@ export default function ComponentsPage() {
       <MegaNav />
 
       <div className={styles.dsLayout}>
-        <Sidebar links={sidebarLinks} searchable />
+        <ComponentsSidebar />
 
         <main className={styles.dsContent} id="main-content">
           <PageBreadcrumb />

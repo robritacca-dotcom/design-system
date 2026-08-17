@@ -3,7 +3,7 @@
 import React from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
-import Sidebar from "../../../components/Sidebar/Sidebar";
+import ComponentsSidebar from "../../../components/Sidebar/ComponentsSidebar";
 import { BarChart } from "@robr0/design-system/components/Chart/BarChart";
 import { LineChart } from "@robr0/design-system/components/Chart/LineChart";
 import { PieChart } from "@robr0/design-system/components/Chart/PieChart";
@@ -14,10 +14,8 @@ import { ScatterChart } from "@robr0/design-system/components/Chart/ScatterChart
 import { Treemap } from "@robr0/design-system/components/Chart/Treemap";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
-import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
-const { sidebarLinks } = getSidebarLinks(componentsSidebarLinks, "/components/chart");
 
 /* ============================================
    Sample data
@@ -113,7 +111,7 @@ export default function ChartPage() {
       <MegaNav />
 
       <div className={styles.dsLayout}>
-        <Sidebar links={sidebarLinks} searchable />
+        <ComponentsSidebar />
 
         <main className={styles.dsContent} id="main-content">
           <PageBreadcrumb />

@@ -3,20 +3,15 @@
 import React from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
-import Sidebar from "../../../components/Sidebar/Sidebar";
+import ComponentsSidebar from "../../../components/Sidebar/ComponentsSidebar";
 import { MessageCard } from "@robr0/design-system/components/MessageCard/MessageCard";
 import { ChatMessage } from "@robr0/design-system/components/ChatMessage/ChatMessage";
 import { Avatar } from "@robr0/design-system/components/Avatar/Avatar";
 import { Button } from "@robr0/design-system/components/Button/Button";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
-import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
-const { sidebarLinks } = getSidebarLinks(
-  componentsSidebarLinks,
-  "/components/message-card"
-);
 
 function MediaPlaceholder() {
   return (
@@ -38,7 +33,7 @@ export default function MessageCardPage() {
       <MegaNav />
 
       <div className={styles.dsLayout}>
-        <Sidebar links={sidebarLinks} searchable />
+        <ComponentsSidebar />
 
         <main className={styles.dsContent} id="main-content">
           <PageBreadcrumb />

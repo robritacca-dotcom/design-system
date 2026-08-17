@@ -3,12 +3,11 @@
 import React from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
-import Sidebar from "../../../components/Sidebar/Sidebar";
+import ComponentsSidebar from "../../../components/Sidebar/ComponentsSidebar";
 import { ButtonGroup } from "@robr0/design-system/components/ButtonGroup/ButtonGroup";
 import type { ButtonProps } from "@robr0/design-system/components/Button/Button";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
-import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 /* ============================================
    DEMO DATA
@@ -52,7 +51,6 @@ const primaryGroup: ButtonProps[] = [
    PAGE
    ============================================ */
 
-const { sidebarLinks } = getSidebarLinks(componentsSidebarLinks, "/components/button-group");
 
 export default function ButtonGroupPage() {
   return (
@@ -61,7 +59,7 @@ export default function ButtonGroupPage() {
       <MegaNav />
 
       <div className={styles.dsLayout}>
-        <Sidebar links={sidebarLinks} searchable />
+        <ComponentsSidebar />
 
         <main className={styles.dsContent} id="main-content">
           <PageBreadcrumb />

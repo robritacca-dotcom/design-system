@@ -3,16 +3,14 @@
 import React from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
-import Sidebar from "../../../components/Sidebar/Sidebar";
+import ComponentsSidebar from "../../../components/Sidebar/ComponentsSidebar";
 import { Field } from "@robr0/design-system/components/Field/Field";
 import { Input } from "@robr0/design-system/components/Input/Input";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import { CodeBlock } from "@robr0/design-system/components/CodeBlock/CodeBlock";
 import PageLinks from "../../../components/PageLinks/PageLinks";
-import { getSidebarLinks, componentsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
-const { sidebarLinks } = getSidebarLinks(componentsSidebarLinks, "/components/field");
 
 export default function FieldPage() {
   return (
@@ -20,7 +18,7 @@ export default function FieldPage() {
       <MegaNav />
 
       <div className={styles.dsLayout}>
-        <Sidebar links={sidebarLinks} searchable />
+        <ComponentsSidebar />
 
         <main className={styles.dsContent} id="main-content">
           <PageBreadcrumb />
