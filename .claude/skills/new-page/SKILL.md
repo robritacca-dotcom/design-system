@@ -20,7 +20,7 @@ For a **component documentation page**, use the `component-doc-page` skill inste
 
 1. **Gather requirements** if not already provided:
    - Page URL path (e.g. `/foundations/motion`)
-   - Which section it belongs to — the sidebar arrays in `website/src/config/navigation.ts` are the authoritative list of sections (foundations, the docs cluster, work; writing is fed dynamically from Substack; standalone pages like `/playground` and `/contact` live in no sidebar array and declare their metadata as a literal). **Components are the exception**: `componentsSidebarLinks` is derived from `src/components/registry.json`, so a component page is registered by adding a registry entry, not by editing the array — use the `component-doc-page` skill for those.
+   - Which section it belongs to — the sidebar arrays in `website/src/config/navigation.ts` are the authoritative list of sections (foundations, the docs cluster, work; writing is fed dynamically from Substack; standalone pages like `/playground` and `/contact` live in no sidebar array and declare their metadata as a literal). **Components are the exception**: `componentsSidebarLinks` is derived from `src/components/registry.json`, so a component page is registered by adding a registry entry, not by editing the array — use the `component-doc-page` skill for those. The `/components/<category>` landing pages are registry-driven the same way (one per category entry, each a three-line shell over `ComponentCategoryPage`), so a new category means a registry entry plus its shell folder, never a nav edit.
    - Page title, a short `subDisplay` tagline, and a 1–2 sentence description (for metadata and the intro block)
    - Figma URL and Storybook path (optional) — for `PageLinks`
 
