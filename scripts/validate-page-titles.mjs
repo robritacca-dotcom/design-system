@@ -40,8 +40,8 @@ const componentsDir = join(repoRoot, 'website', 'src', 'app', 'components');
 const missingLayout = [];
 const notCentralized = [];
 
-// slug and label are stored in the registry — the Nav → navigation exception
-// is data, not a special case each validator has to remember.
+// slug and label are stored in the registry, so a name-to-slug exception is
+// data, not a special case each validator has to remember.
 for (const { name, slug } of registry.components) {
   const layoutPath = join(componentsDir, slug, 'layout.tsx');
   if (!existsSync(layoutPath)) {

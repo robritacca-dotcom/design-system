@@ -46,7 +46,7 @@ const demoMobileSubnavLinks: ButtonProps[] = [
    PAGE
    ============================================ */
 
-const { sidebarLinks } = getSidebarLinks(componentsSidebarLinks, "/components/navigation");
+const { sidebarLinks } = getSidebarLinks(componentsSidebarLinks, "/components/nav");
 
 export default function NavigationPage() {
   return (
@@ -61,7 +61,7 @@ export default function NavigationPage() {
           <PageBreadcrumb />
           {/* Page Title */}
           <div className={`${styles.pageHeader} animate-in`}>
-            <h1 className={styles.pageTitle}>Navigation</h1>
+            <h1 className={styles.pageTitle}>Nav</h1>
             <PageLinks
               figmaUrl="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26?node-id=155-7279"
               storybookPath="/?path=/docs/components-nav--docs"

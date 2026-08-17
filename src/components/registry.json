@@ -446,8 +446,8 @@
     },
     {
       "name": "Nav",
-      "label": "Navigation",
-      "slug": "navigation",
+      "label": "Nav",
+      "slug": "nav",
       "description": "Desktop top navigation bar with a brand slot, horizontal button group, and optional trailing content.",
       "category": "navigation",
       "client": false

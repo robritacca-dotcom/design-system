@@ -726,7 +726,17 @@ export default function ComponentsPage() {
               </div>
             </TocCard>
 
-            {/* Navigation */}
+            {/* Nav */}
+            <TocCard href="/components/nav" title="Nav">
+              <div className={styles.previewRow} style={{ gap: "20px" }}>
+                <Image src="/rr.svg" alt="robr0" width={24} height={24} />
+                <span style={{ fontSize: "16px", fontWeight: 600, color: "var(--color-text-primary)", letterSpacing: "-0.16px" }}>
+                  robr0
+                </span>
+              </div>
+            </TocCard>
+
+            {/* Nav list */}
             {/* Static mock: NavList rows are real links, which cannot nest inside the card's anchor */}
             <TocCard href="/components/nav-list" title="Nav list">
               <div aria-hidden="true" style={{ width: "180px", display: "flex", flexDirection: "column", gap: "var(--gap-xxs)" }}>
@@ -746,16 +756,6 @@ export default function ComponentsPage() {
                   />
                   <CircularButton icon="expand_more" variant="tertiary" ariaLabel="Expand" tabIndex={-1} />
                 </div>
-              </div>
-            </TocCard>
-
-            {/* Navigation */}
-            <TocCard href="/components/navigation" title="Navigation">
-              <div className={styles.previewRow} style={{ gap: "20px" }}>
-                <Image src="/rr.svg" alt="robr0" width={24} height={24} />
-                <span style={{ fontSize: "16px", fontWeight: 600, color: "var(--color-text-primary)", letterSpacing: "-0.16px" }}>
-                  robr0
-                </span>
               </div>
             </TocCard>
 

@@ -53,8 +53,8 @@ const missingPage = [];
 const missingTocCard = [];
 const missingSpec = [];
 
-// slug and label are stored in the registry — the Nav → navigation exception
-// is data, not a special case each validator has to remember.
+// slug and label are stored in the registry, so a name-to-slug exception is
+// data, not a special case each validator has to remember.
 for (const { name, slug } of registry.components) {
 
   if (

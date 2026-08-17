@@ -7,9 +7,9 @@ import registry from './registry.json';
  * The data lives in registry.json. Each entry in `components` carries:
  *
  *   name        the folder under src/components (also the exported name)
- *   label       the display name — "Navigation" for the Nav folder
- *   slug        the website route segment — stored, not derived, so the
- *               Nav → navigation exception is plain data rather than a
+ *   label       the display name — "Nav list" for the NavList folder
+ *   slug        the website route segment — stored, not derived, so a
+ *               name-to-slug exception stays plain data rather than a
  *               special case duplicated across validators
  *   description one line, used for the page title, the sidebar search index,
  *               and anywhere the component is summarised
@@ -33,7 +33,7 @@ import registry from './registry.json';
 export interface ComponentMeta {
   /** Folder under src/components, and the exported component name */
   name: string;
-  /** Display name — may differ from `name` (Nav → "Navigation") */
+  /** Display name — may differ from `name` (NavList → "Nav list") */
   label: string;
   /** Website route segment under /components */
   slug: string;
