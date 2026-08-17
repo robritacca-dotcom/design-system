@@ -60,6 +60,23 @@ for (const { name, slug } of registry.components) {
   }
 }
 
+// Category landing pages resolve their metadata the same way — label and
+// description come from the registry via categoryPageMetadata(id).
+for (const { id } of registry.categories) {
+  const layoutPath = join(componentsDir, id, 'layout.tsx');
+  if (!existsSync(layoutPath)) {
+    missingLayout.push(
+      `category ${id} → website/src/app/components/${id}/layout.tsx (page falls back to the default title)`
+    );
+    continue;
+  }
+  if (!read(layoutPath).includes(`categoryPageMetadata("${id}")`)) {
+    notCentralized.push(
+      `category ${id} → components/${id}/layout.tsx should resolve its metadata via categoryPageMetadata("${id}")`
+    );
+  }
+}
+
 // Guard against hardcoded, spelled-out component counts anywhere in the site.
 // Tens-based number words next to "component(s)" are always count claims — this
 // deliberately ignores "one"/"a" so ordinary prose ("in one component") is fine.

@@ -635,6 +635,18 @@ const COMPONENT_PAGE_EXCLUSION =
   'component showcase pages are demo shells; each component’s facts are carried by the ' +
   'Component library section (registry description + path) and the design.md spec paragraph';
 
+/** Category landing pages: excluded as a class, with their own reason. */
+const CATEGORY_PAGE_EXCLUSION =
+  'category landing pages carry an intro line over registry-derived cards; each category’s ' +
+  'label, description and member list are carried by the Component library section';
+
+/** The registry category ids — /components/<id> routes are landings, not showcases. */
+const componentCategoryIds = new Set(
+  JSON.parse(read(join(repoRoot, 'src', 'components', 'registry.json'))).categories.map(
+    (cat) => cat.id
+  )
+);
+
 /** The routes whose prose the Site pages section includes, in sorted order. */
 function sitePageRoutes() {
   const covered = coveredElsewhere();
@@ -656,7 +668,12 @@ export function routeCoverage() {
   for (const route of sitePageRoutes()) covered.set(route, 'Site pages');
   const excluded = new Map(EXCLUDED_ROUTES);
   for (const route of siteRoutes()) {
-    if (/^\/components\//.test(route)) excluded.set(route, COMPONENT_PAGE_EXCLUSION);
+    const category = route.match(/^\/components\/([a-z0-9-]+)$/);
+    if (category && componentCategoryIds.has(category[1])) {
+      excluded.set(route, CATEGORY_PAGE_EXCLUSION);
+    } else if (/^\/components\//.test(route)) {
+      excluded.set(route, COMPONENT_PAGE_EXCLUSION);
+    }
   }
   return { covered, excluded };
 }
