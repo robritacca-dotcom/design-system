@@ -55,7 +55,15 @@ const folders = readdirSync(componentsDir, { withFileTypes: true })
   .sort();
 
 const componentNames = registry.components.map((c) => c.name);
-const registered = [...componentNames, ...registry.docOnlyHelpers].sort();
+// A component's implementation folder is its name unless `folder` points at a
+// shared one (the nine chart components live in Chart/).
+const componentFolder = (c) => c.folder ?? c.name;
+const registered = [
+  ...new Set([
+    ...registry.components.map(componentFolder),
+    ...registry.docOnlyHelpers,
+  ]),
+].sort();
 
 const missingFromRegistry = folders.filter((f) => !registered.includes(f));
 const missingFromDisk = registered.filter((r) => !folders.includes(r));
@@ -159,7 +167,7 @@ for (const c of registry.components) {
 
 // `client` must match reality, or the registry is documenting a bug.
 for (const c of registry.components) {
-  const file = join(componentsDir, c.name, `${c.name}.tsx`);
+  const file = join(componentsDir, componentFolder(c), `${c.name}.tsx`);
   if (!existsSync(file)) continue;
   const declares = /^'use client'/m.test(readFileSync(file, 'utf8'));
   if (declares !== c.client) {
@@ -180,8 +188,8 @@ for (const c of registry.components) {
 const missingStories = registry.components
   .filter(
     (c) =>
-      !readdirSync(join(componentsDir, c.name)).some((f) =>
-        f.includes('.stories.')
+      !readdirSync(join(componentsDir, componentFolder(c))).some((f) =>
+        f.startsWith(`${c.name}.stories.`)
       )
   )
   .map((c) => c.name);

@@ -43,15 +43,20 @@ const registry = JSON.parse(
 export function sourceFilesFor(name, dir = join(componentsDir, name)) {
   const canonical = join(dir, `${name}.tsx`);
   if (existsSync(canonical)) return [canonical];
-  // Folder-of-components entry (Chart): every non-story component file.
+  // Folder-of-components entry: every non-story component file.
   return readdirSync(dir)
     .filter((file) => file.endsWith('.tsx') && !file.includes('.stories.'))
     .sort()
     .map((file) => join(dir, file));
 }
 
+// Entries with a `folder` field share an implementation folder (the nine
+// charts in Chart/); each contributes its own <Name>.tsx from it.
 const sourceFiles = registry.components.flatMap((component) =>
-  sourceFilesFor(component.name)
+  sourceFilesFor(
+    component.name,
+    join(componentsDir, component.folder ?? component.name)
+  )
 );
 
 // These settings mirror .storybook/main.ts exactly, so this validator sees

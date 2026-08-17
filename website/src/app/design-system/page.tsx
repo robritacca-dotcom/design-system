@@ -288,7 +288,7 @@ export default function DesignSystemPage() {
             <DemoCard
               heading="Spending by category"
               sub="Where this month's money went."
-              links={[{ label: "Chart", href: "/components/chart" }]}
+              links={[{ label: "Pie chart", href: "/components/pie-chart" }]}
             >
               <div className={styles.chartFlush}>
                 <PieChart
@@ -467,7 +467,7 @@ export default function DesignSystemPage() {
               heading="Revenue"
               sub="Monthly, in thousands."
               links={[
-                { label: "Chart", href: "/components/chart" },
+                { label: "Bar chart", href: "/components/bar-chart" },
                 { label: "Segmented control", href: "/components/segmented-control" },
               ]}
             >
@@ -586,7 +586,7 @@ export default function DesignSystemPage() {
             <DemoCard
               heading="Portfolio value"
               sub="Against the index, in thousands."
-              links={[{ label: "Chart", href: "/components/chart" }]}
+              links={[{ label: "Line chart", href: "/components/line-chart" }]}
             >
               <div className={styles.chartFlush}>
                 <LineChart

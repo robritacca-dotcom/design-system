@@ -35,7 +35,12 @@ const importsRecharts = (path) =>
 
 const mainLines = [];
 const chartLines = [];
-for (const { name } of [...registry.components].sort((a, b) => a.name.localeCompare(b.name))) {
+// Components sharing an implementation folder (`folder` field — the nine
+// charts in Chart/) contribute that folder's modules exactly once.
+const componentFolders = [
+  ...new Set(registry.components.map((c) => c.folder ?? c.name)),
+].sort((a, b) => a.localeCompare(b));
+for (const name of componentFolders) {
   const modules = readdirSync(join(componentsDir, name))
     .filter((f) => f.endsWith('.tsx') && !f.endsWith('.stories.tsx'))
     .sort();

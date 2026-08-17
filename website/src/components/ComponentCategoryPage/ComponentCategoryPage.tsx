@@ -41,7 +41,7 @@ export default function ComponentCategoryPage({ id }: ComponentCategoryPageProps
 
           <div className={`${styles.introSection} animate-in animate-delay-1`}>
             <p className={styles.introBody}>
-              {`${category.description} ${members.length} of the library's components live here.`}
+              {`${category.description} ${members.length} of the library's components ${members.length === 1 ? "lives" : "live"} here.`}
             </p>
           </div>
 

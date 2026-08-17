@@ -22,6 +22,11 @@
       "description": "Cards, tables, lists, and badges for presenting structured content."
     },
     {
+      "id": "effects",
+      "label": "Effects",
+      "description": "Ambient and decorative surfaces that sit behind or around the interface."
+    },
+    {
       "id": "feedback",
       "label": "Feedback",
       "description": "Alerts, toasts, progress, and empty states that tell people what is happening."
@@ -34,7 +39,7 @@
     {
       "id": "layout",
       "label": "Layout",
-      "description": "Page scaffolding, from app shells and sidebars to the ambient shader background."
+      "description": "Page scaffolding: app shells, sidebars, dividers, and section headings."
     },
     {
       "id": "navigation",
@@ -113,6 +118,15 @@
       "client": true
     },
     {
+      "name": "AreaChart",
+      "label": "Area chart",
+      "slug": "area-chart",
+      "description": "Filled area chart for showing volume over time, with stacked and single-series variants.",
+      "category": "charts",
+      "client": false,
+      "folder": "Chart"
+    },
+    {
       "name": "Avatar",
       "label": "Avatar",
       "slug": "avatar",
@@ -127,6 +141,15 @@
       "description": "Small inline status labels with info, positive, warning, error, and neutral variants.",
       "category": "data-display",
       "client": false
+    },
+    {
+      "name": "BarChart",
+      "label": "Bar chart",
+      "slug": "bar-chart",
+      "description": "Vertical bars for comparing values across categories or time, with summary stats and tooltips.",
+      "category": "charts",
+      "client": false,
+      "folder": "Chart"
     },
     {
       "name": "Breadcrumb",
@@ -167,14 +190,6 @@
       "description": "Sliding content viewer with navigation arrows, dot indicators, auto-play, and keyboard support.",
       "category": "data-display",
       "client": true
-    },
-    {
-      "name": "Chart",
-      "label": "Chart",
-      "slug": "chart",
-      "description": "Data visualisation components built on Recharts. Includes bar, line, pie, and radial chart types with design-system token integration.",
-      "category": "charts",
-      "client": false
     },
     {
       "name": "ChatHeader",
@@ -449,6 +464,15 @@
       "client": false
     },
     {
+      "name": "LineChart",
+      "label": "Line chart",
+      "slug": "line-chart",
+      "description": "Multi-series line chart for trends over time, with per-series colours and a summary row.",
+      "category": "charts",
+      "client": false,
+      "folder": "Chart"
+    },
+    {
       "name": "LinkList",
       "label": "Link list",
       "slug": "link-list",
@@ -513,6 +537,15 @@
       "client": true
     },
     {
+      "name": "PieChart",
+      "label": "Pie chart",
+      "slug": "pie-chart",
+      "description": "Proportional share of a whole as a pie or donut, with per-slice colours.",
+      "category": "charts",
+      "client": false,
+      "folder": "Chart"
+    },
+    {
       "name": "Popover",
       "label": "Popover",
       "slug": "popover",
@@ -553,6 +586,24 @@
       "client": false
     },
     {
+      "name": "RadarChart",
+      "label": "Radar chart",
+      "slug": "radar-chart",
+      "description": "Multi-axis comparison of series across categories on a radial grid.",
+      "category": "charts",
+      "client": false,
+      "folder": "Chart"
+    },
+    {
+      "name": "RadialChart",
+      "label": "Radial chart",
+      "slug": "radial-chart",
+      "description": "Concentric progress rings for completion and KPI readouts.",
+      "category": "charts",
+      "client": false,
+      "folder": "Chart"
+    },
+    {
       "name": "RadioButton",
       "label": "Radio button",
       "slug": "radio-button",
@@ -567,6 +618,15 @@
       "description": "A model's thinking, disclosed behind a one-line summary and collapsed once it finishes.",
       "category": "ai",
       "client": true
+    },
+    {
+      "name": "ScatterChart",
+      "label": "Scatter chart",
+      "slug": "scatter-chart",
+      "description": "Plots point clusters across two axes to show correlation and distribution.",
+      "category": "charts",
+      "client": false,
+      "folder": "Chart"
     },
     {
       "name": "SectionTitle",
@@ -597,7 +657,7 @@
       "label": "Shader field",
       "slug": "shader-field",
       "description": "An ambient WebGL2 field of soft light sources that sample colour tokens, with a reported fallback status.",
-      "category": "layout",
+      "category": "effects",
       "client": true
     },
     {
@@ -631,6 +691,15 @@
       "description": "Animated circular loading indicator in three sizes and primary, neutral, or inherit variants.",
       "category": "feedback",
       "client": false
+    },
+    {
+      "name": "StackedBarChart",
+      "label": "Stacked bar chart",
+      "slug": "stacked-bar-chart",
+      "description": "Bars split into stacked segments to compare totals and their composition.",
+      "category": "charts",
+      "client": false,
+      "folder": "Chart"
     },
     {
       "name": "Stat",
@@ -719,6 +788,15 @@
       "description": "Contextual text label that appears on hover or focus with position and delay options.",
       "category": "overlays",
       "client": true
+    },
+    {
+      "name": "Treemap",
+      "label": "Treemap",
+      "slug": "treemap",
+      "description": "Nested rectangles sized by value for part-to-whole breakdowns.",
+      "category": "charts",
+      "client": false,
+      "folder": "Chart"
     }
   ],
   "docOnlyHelpers": [

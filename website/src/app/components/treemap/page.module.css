@@ -1,5 +1,5 @@
 /* ============================================
-   COMPONENTS PAGE LAYOUT
+   CHART PAGE LAYOUT
    ============================================ */
 .dsLayout {
   display: flex;
@@ -14,6 +14,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--gap-xxxl);
+  min-width: 0;
 }
 
 /* ============================================
@@ -64,43 +65,27 @@
 }
 
 /* ============================================
-   CATEGORY JUMP LINKS
+   SECTION
    ============================================ */
-.jumpRow {
+.section {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--gap-xxs);
+  flex-direction: column;
+  gap: var(--primitive-gap-xl);
+  width: 100%;
 }
 
 /* ============================================
-   CATEGORY SECTIONS
+   CHART ROW — side-by-side charts
    ============================================ */
-.categorySections {
+.chartRow {
   display: flex;
-  flex-direction: column;
-  gap: var(--gap-xxxl);
+  gap: var(--primitive-gap-xl);
+  width: 100%;
 }
 
-.categorySection {
-  display: flex;
-  flex-direction: column;
-  gap: var(--primitive-gap-lg);
-  /* Anchor targets clear the sticky MegaNav bar (--mn-bar-height, 78px)
-     plus a breathing gap */
-  scroll-margin-top: 94px;
-}
-
-.categoryHeader {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-lg);
-}
-
-.categoryDescription {
-  font-size: var(--font-paragraph-size);
-  font-weight: var(--font-paragraph-weight);
-  line-height: var(--font-paragraph-line-height);
-  color: var(--color-text-secondary);
+.chartRow > * {
+  flex: 1;
+  min-width: 0;
 }
 
 /* ============================================
@@ -112,14 +97,7 @@
     align-items: flex-start;
   }
 
-  .dsLayout {
-    padding-left: 0;
-    min-width: 0;
-  }
-
-  .dsContent {
-    max-width: 100%;
-    min-width: 0;
-  }
-
+  .dsLayout { padding-left: 0; min-width: 0; }
+  .dsContent { max-width: 100%; min-width: 0; }
+  .chartRow { flex-direction: column; }
 }

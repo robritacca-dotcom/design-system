@@ -6,7 +6,8 @@ import registry from './registry.json';
  *
  * The data lives in registry.json. Each entry in `components` carries:
  *
- *   name        the folder under src/components (also the exported name)
+ *   name        the exported component name; also the folder under
+ *               src/components unless `folder` says otherwise
  *   label       the display name — "Nav list" for the NavList folder
  *   slug        the website route segment — stored, not derived, so a
  *               name-to-slug exception stays plain data rather than a
@@ -18,6 +19,9 @@ import registry from './registry.json';
  *               uses hooks or defines handlers. Presentational components are
  *               deliberately false so consumers can render them from a React
  *               Server Component.
+ *   folder      set only when the implementation lives in a shared folder
+ *               rather than one named after the component — the nine chart
+ *               components all live in Chart/. Omitted everywhere else.
  *
  * `docOnlyHelpers` names the internal documentation helpers that are
  * deliberately excluded from the public count.
@@ -43,6 +47,8 @@ export interface ComponentMeta {
   category: string;
   /** Whether the component declares 'use client' */
   client: boolean;
+  /** Folder under src/components when it differs from `name` (shared folders like Chart) */
+  folder?: string;
 }
 
 export interface ComponentCategoryMeta {

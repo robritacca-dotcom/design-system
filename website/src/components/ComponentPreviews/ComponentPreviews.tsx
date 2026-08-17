@@ -227,7 +227,16 @@ const previews: Record<string, () => ReactNode> = {
       </div>
     </>
   ),
-  "chart": () => (
+  "area-chart": () => (
+    <>
+      <svg width="120" height="64" viewBox="0 0 120 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 48 L20 34 L40 40 L60 22 L80 28 L100 12 L120 18 L120 64 L0 64 Z" fill="var(--color-action-primary-bg)" opacity={0.3} />
+        <path d="M0 48 L20 34 L40 40 L60 22 L80 28 L100 12 L120 18" stroke="var(--color-action-primary-bg)" strokeWidth="2" fill="none" />
+        <line x1="0" y1="63.5" x2="120" y2="63.5" stroke="var(--color-bg-container-border)" strokeWidth="1" />
+      </svg>
+    </>
+  ),
+  "bar-chart": () => (
     <>
       <svg width="120" height="64" viewBox="0 0 120 64" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ overflow: "visible" }}>
         {[
@@ -252,6 +261,90 @@ const previews: Record<string, () => ReactNode> = {
           />
         ))}
         <line x1="0" y1="63.5" x2="120" y2="63.5" stroke="var(--color-bg-container-border)" strokeWidth="1" />
+      </svg>
+    </>
+  ),
+  "line-chart": () => (
+    <>
+      <svg width="120" height="64" viewBox="0 0 120 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="0,44 24,28 48,36 72,16 96,24 120,8" stroke="var(--color-action-primary-bg)" strokeWidth="2" fill="none" />
+        <polyline points="0,54 24,48 48,52 72,38 96,44 120,30" stroke="var(--color-action-primary-bg)" strokeWidth="2" opacity={0.4} fill="none" />
+        <line x1="0" y1="63.5" x2="120" y2="63.5" stroke="var(--color-bg-container-border)" strokeWidth="1" />
+      </svg>
+    </>
+  ),
+  "pie-chart": () => (
+    <>
+      <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="32" r="24" stroke="var(--color-action-primary-bg)" strokeWidth="14" opacity={0.3} fill="none" />
+        {/* 60% slice: dash length over a c=150.8 circumference, rotated to start at 12 o'clock */}
+        <circle cx="32" cy="32" r="24" stroke="var(--color-action-primary-bg)" strokeWidth="14" fill="none" strokeDasharray="90.5 150.8" transform="rotate(-90 32 32)" />
+      </svg>
+    </>
+  ),
+  "radar-chart": () => (
+    <>
+      <svg width="72" height="64" viewBox="0 0 72 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="36,4 66,26 55,60 17,60 6,26" stroke="var(--color-bg-container-border)" strokeWidth="1" fill="none" />
+        <polygon points="36,18 51,29 46,46 26,46 21,29" stroke="var(--color-bg-container-border)" strokeWidth="1" fill="none" />
+        <polygon points="36,10 58,28 48,54 22,50 14,24" stroke="var(--color-action-primary-bg)" strokeWidth="2" fill="var(--color-action-primary-bg)" fillOpacity={0.25} />
+      </svg>
+    </>
+  ),
+  "radial-chart": () => (
+    <>
+      <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        {/* Outer ring at 75%, inner ring at 45%, both from 12 o'clock */}
+        <circle cx="32" cy="32" r="26" stroke="var(--color-bg-container-border)" strokeWidth="6" fill="none" />
+        <circle cx="32" cy="32" r="26" stroke="var(--color-action-primary-bg)" strokeWidth="6" fill="none" strokeLinecap="round" strokeDasharray="122.5 163.4" transform="rotate(-90 32 32)" />
+        <circle cx="32" cy="32" r="16" stroke="var(--color-bg-container-border)" strokeWidth="6" fill="none" />
+        <circle cx="32" cy="32" r="16" stroke="var(--color-action-primary-bg)" strokeWidth="6" opacity={0.5} fill="none" strokeLinecap="round" strokeDasharray="45.2 100.5" transform="rotate(-90 32 32)" />
+      </svg>
+    </>
+  ),
+  "scatter-chart": () => (
+    <>
+      <svg width="120" height="64" viewBox="0 0 120 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        {[
+          { cx: 14, cy: 44 }, { cx: 24, cy: 36 }, { cx: 30, cy: 48 }, { cx: 38, cy: 40 }, { cx: 22, cy: 52 },
+        ].map((p, i) => (
+          <circle key={`a${i}`} cx={p.cx} cy={p.cy} r={4} fill="var(--color-action-primary-bg)" opacity={0.85} />
+        ))}
+        {[
+          { cx: 78, cy: 20 }, { cx: 90, cy: 14 }, { cx: 96, cy: 26 }, { cx: 104, cy: 18 }, { cx: 86, cy: 30 },
+        ].map((p, i) => (
+          <circle key={`b${i}`} cx={p.cx} cy={p.cy} r={4} fill="var(--color-action-primary-bg)" opacity={0.4} />
+        ))}
+        <line x1="0" y1="63.5" x2="120" y2="63.5" stroke="var(--color-bg-container-border)" strokeWidth="1" />
+      </svg>
+    </>
+  ),
+  "stacked-bar-chart": () => (
+    <>
+      <svg width="120" height="64" viewBox="0 0 120 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        {[
+          { x: 8, a: 22, b: 14 },
+          { x: 32, a: 30, b: 20 },
+          { x: 56, a: 18, b: 12 },
+          { x: 80, a: 26, b: 18 },
+          { x: 104, a: 22, b: 10 },
+        ].map((bar, i) => (
+          <g key={i}>
+            <rect x={bar.x} y={64 - bar.a} width={10} height={bar.a} fill="var(--color-action-primary-bg)" opacity={0.85} />
+            <rect x={bar.x} y={64 - bar.a - bar.b} width={10} height={bar.b} rx={2} fill="var(--color-action-primary-bg)" opacity={0.35} />
+          </g>
+        ))}
+        <line x1="0" y1="63.5" x2="120" y2="63.5" stroke="var(--color-bg-container-border)" strokeWidth="1" />
+      </svg>
+    </>
+  ),
+  "treemap": () => (
+    <>
+      <svg width="120" height="64" viewBox="0 0 120 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="56" height="64" rx="3" fill="var(--color-action-primary-bg)" opacity={0.85} />
+        <rect x="60" y="0" width="60" height="30" rx="3" fill="var(--color-action-primary-bg)" opacity={0.5} />
+        <rect x="60" y="34" width="34" height="30" rx="3" fill="var(--color-action-primary-bg)" opacity={0.3} />
+        <rect x="98" y="34" width="22" height="30" rx="3" fill="var(--color-action-primary-bg)" opacity={0.15} />
       </svg>
     </>
   ),
