@@ -54,6 +54,34 @@ for (const asset of assets) {
 }
 console.log(`▸ Copied ${assets.length} runtime assets (css, fonts, registries).`);
 
+// Vite's react plugin drops "use client" directives during the lib
+// build, so restore them in dist from what the source declares — a
+// Next.js App Router consumer needs the directive on every interactive
+// module, or importing one from a Server Component throws. The registry
+// cross-check keeps this step honest: a `client: true` component whose
+// built module ends up unmarked fails the build.
+const sourceModules = collect(srcDir, (name) => /\.(ts|tsx)$/.test(name) && !name.includes('.stories.'));
+const clientDistFiles = [];
+for (const sourceFile of sourceModules) {
+  const firstLine = readFileSync(sourceFile, 'utf8').split('\n', 1)[0].trim();
+  if (!/^(['"])use client\1;?$/.test(firstLine)) continue;
+  const distFile = join(distDir, relative(srcDir, sourceFile)).replace(/\.tsx?$/, '.js');
+  const built = readFileSync(distFile, 'utf8');
+  if (!built.startsWith('"use client"')) writeFileSync(distFile, `"use client";\n${built}`);
+  clientDistFiles.push(relative(distDir, distFile));
+}
+const registry = JSON.parse(readFileSync(join(srcDir, 'components', 'registry.json'), 'utf8'));
+const unmarked = registry.components.filter((c) => {
+  if (!c.client) return false;
+  const folder = c.folder ?? c.name;
+  return !clientDistFiles.includes(join('components', folder, `${c.name}.js`));
+});
+if (unmarked.length > 0) {
+  console.error(`✗ client components missing "use client" in dist: ${unmarked.map((c) => c.name).join(', ')}`);
+  process.exit(1);
+}
+console.log(`▸ Restored "use client" on ${clientDistFiles.length} dist modules.`);
+
 const rootPkg = JSON.parse(readFileSync(join(repoRoot, 'package.json'), 'utf8'));
 writeFileSync(join(distDir, 'package.json'), JSON.stringify(distManifest(rootPkg), null, 2) + '\n');
 copyFileSync(join(repoRoot, 'LICENSE'), join(distDir, 'LICENSE'));
