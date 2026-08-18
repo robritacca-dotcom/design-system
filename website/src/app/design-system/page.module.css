@@ -58,26 +58,97 @@
 /* ---------- collage ---------- */
 
 /* Three curated stacks rather than auto-flow columns, so specific cards can
-   hold specific positions (spending donut top-left, install top-middle). */
+   hold specific positions (spending donut top-left, install top-middle).
+
+   The collage is a fixed-height window onto three escalator columns: each
+   column's cards render twice into a track that translates continuously by
+   one copy's height, so the loop never shows a seam. The outer columns run
+   down, the middle runs up, all slower than a reading pace — ambient motion,
+   not a carousel. The mask fades the cards out at the window's edges. */
 .collage {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--gap-md);
   align-items: stretch;
+  height: clamp(640px, 130vh, 1400px);
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 9%, black 91%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, black 9%, black 91%, transparent);
 }
 
 .col {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.escalatorTrack {
+  display: flex;
+  flex-direction: column;
+  /* Durations are minutes long by design — the day-to-day motion scale tops
+     out at page reveals, so these stay per-column values, set inline */
+  animation: escalate var(--escalator-duration, 240s) var(--motion-ease-linear) infinite;
+  will-change: transform;
+}
+
+.colDown .escalatorTrack {
+  animation-direction: reverse;
+}
+
+/* A moving target is unusable: freeze the column while the pointer is over
+   it, and for keyboard users whenever focus is inside it */
+.col:hover .escalatorTrack,
+.col:focus-within .escalatorTrack {
+  animation-play-state: paused;
+}
+
+.escalatorStack {
   display: flex;
   flex-direction: column;
   gap: var(--gap-md);
-  min-width: 0;
+  padding-bottom: var(--gap-md); /* the seam between the two copies = the card gap */
 }
 
-/* The columns are balanced to within a few pixels by their content; the
-   last card in each stretches to absorb the remainder so all three end
-   on the same line. Its footer pins to the card's bottom edge. */
-.col > article:last-child {
-  flex-grow: 1;
+/* The chat demo thread needs a bounded height to be a scroll container at
+   all; without one it grows to its content and the thread's own edge fades
+   and jump control never engage */
+.chatDemoThread {
+  height: 320px;
+}
+
+/* Translating by half the track's own height is exactly one copy (cards +
+   seam padding), which is what makes the loop seamless at any content size */
+@keyframes escalate {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+/* Reduced motion: back to the plain static collage — full height, no mask,
+   one copy per column. The global animation guard would stop the track
+   anyway; this also removes the window so nothing is clipped. */
+@media (prefers-reduced-motion: reduce) {
+  .collage {
+    height: auto;
+    overflow: visible;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .escalatorTrack {
+    animation: none;
+  }
+
+  .escalatorStack {
+    padding-bottom: 0;
+  }
+
+  .escalatorDupe {
+    display: none;
+  }
 }
 
 .card > footer {
@@ -497,10 +568,29 @@
 /* ---------- responsive ---------- */
 
 /* Content-driven threshold: the three-column collage needs ~1024px to
-   breathe, so it collapses here rather than at a canonical layout tier. */
+   breathe, so it collapses here rather than at a canonical layout tier.
+   One stacked column also ends the escalator — three looping columns on
+   top of each other would be a wall of motion, so the collage reverts to
+   the plain static layout. */
 @media (max-width: 1023px) {
   .collage {
     grid-template-columns: minmax(0, 1fr);
+    height: auto;
+    overflow: visible;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .escalatorTrack {
+    animation: none;
+  }
+
+  .escalatorStack {
+    padding-bottom: 0;
+  }
+
+  .escalatorDupe {
+    display: none;
   }
 }
 

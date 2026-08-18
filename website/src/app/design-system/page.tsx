@@ -6,7 +6,25 @@ import MegaNav from "../../components/MegaNav/MegaNav";
 import FadeDivider from "../../components/FadeDivider/FadeDivider";
 import styles from "./page.module.css";
 import { dsMegaItems } from "@/config/navigation";
+import { AgentPlan } from "@robr0/design-system/components/AgentPlan/AgentPlan";
+import { AgentStatus } from "@robr0/design-system/components/AgentStatus/AgentStatus";
+import { AiButton } from "@robr0/design-system/components/AiButton/AiButton";
 import { Avatar } from "@robr0/design-system/components/Avatar/Avatar";
+import { ChatHeader } from "@robr0/design-system/components/ChatHeader/ChatHeader";
+import { ChatMarker } from "@robr0/design-system/components/ChatMarker/ChatMarker";
+import { ChatMessage } from "@robr0/design-system/components/ChatMessage/ChatMessage";
+import { ChatThread } from "@robr0/design-system/components/ChatThread/ChatThread";
+import { Composer } from "@robr0/design-system/components/Composer/Composer";
+import { DocumentChip } from "@robr0/design-system/components/DocumentChip/DocumentChip";
+import { InterruptCard } from "@robr0/design-system/components/InterruptCard/InterruptCard";
+import { MessageActions } from "@robr0/design-system/components/MessageActions/MessageActions";
+import { MessageCard } from "@robr0/design-system/components/MessageCard/MessageCard";
+import { ModelPicker } from "@robr0/design-system/components/ModelPicker/ModelPicker";
+import { PromptSuggestions } from "@robr0/design-system/components/PromptSuggestions/PromptSuggestions";
+import { Prose } from "@robr0/design-system/components/Prose/Prose";
+import { Reasoning } from "@robr0/design-system/components/Reasoning/Reasoning";
+import { SourceChip } from "@robr0/design-system/components/SourceChip/SourceChip";
+import { ToolCall } from "@robr0/design-system/components/ToolCall/ToolCall";
 import { Badge } from "@robr0/design-system/components/Badge/Badge";
 import { Button } from "@robr0/design-system/components/Button/Button";
 import { ButtonGroup } from "@robr0/design-system/components/ButtonGroup/ButtonGroup";
@@ -128,6 +146,29 @@ const SPENDING_DATA = [
   { name: "Subscriptions", value: 120 },
 ];
 
+const AGENT_MODELS = [
+  { label: "Fable 5", value: "fable-5", description: "Deepest reasoning for planning questions" },
+  { label: "Sonnet 5", value: "sonnet-5", description: "Fast answers for everyday lookups" },
+];
+
+const PROMPT_IDEAS = [
+  { id: "dining", label: "Dining spend this month", icon: "restaurant" },
+  { id: "runway", label: "How long will my runway last?", icon: "timeline" },
+  { id: "duplicates", label: "Find duplicate subscriptions", icon: "content_copy" },
+];
+
+const RECONCILE_STEPS = [
+  { label: "Pull the July statements", status: "completed" as const },
+  { label: "Match invoices to deposits", status: "active" as const, detail: "31 of 34 matched" },
+  { label: "Flag the rest for review", status: "pending" as const },
+];
+
+const ANSWER_ACTIONS = [
+  { id: "copy", icon: "content_copy", label: "Copy" },
+  { id: "retry", icon: "refresh", label: "Retry" },
+  { id: "thumb-up", icon: "thumb_up", label: "Good answer" },
+];
+
 const SCHEDULE_OPTIONS = [
   { value: "weekly", label: "Weekly", description: "Every Friday, balances over $10" },
   { value: "monthly", label: "Monthly", description: "On the 15th of each month" },
@@ -205,6 +246,39 @@ function NavCard({
   );
 }
 
+/** One escalator column: the cards render twice into a track that translates
+    by exactly one copy's height, so the loop is seamless. The second copy is
+    presentation only — aria-hidden and inert keep it out of the accessibility
+    tree and the tab order. `render` is a function (not children) so a copy can
+    vary anything that must be document-unique, like a radio group name. */
+function EscalatorColumn({
+  direction,
+  duration,
+  render,
+}: {
+  direction: "up" | "down";
+  duration: string;
+  render: (copy: "a" | "b") => React.ReactNode;
+}) {
+  return (
+    <div
+      className={`${styles.col} ${direction === "up" ? styles.colUp : styles.colDown}`}
+      style={{ "--escalator-duration": duration } as React.CSSProperties}
+    >
+      <div className={styles.escalatorTrack}>
+        <div className={styles.escalatorStack}>{render("a")}</div>
+        <div
+          className={`${styles.escalatorStack} ${styles.escalatorDupe}`}
+          aria-hidden="true"
+          inert
+        >
+          {render("b")}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ---------- page ---------- */
 
 export default function DesignSystemPage() {
@@ -219,6 +293,9 @@ export default function DesignSystemPage() {
   const [receipt, setReceipt] = useState(true);
   const [schedule, setSchedule] = useState("monthly");
   const [holdingsFilter, setHoldingsFilter] = useState("all");
+  const [draft, setDraft] = useState("");
+  const [model, setModel] = useState("fable-5");
+  const [transferChoice, setTransferChoice] = useState<string | undefined>(undefined);
 
   const chartData = range === "6m" ? REVENUE_DATA.slice(1) : REVENUE_DATA;
 
@@ -284,7 +361,7 @@ export default function DesignSystemPage() {
           aria-label="Live component examples"
         >
           {/* -------- left column -------- */}
-          <div className={styles.col}>
+          <EscalatorColumn direction="down" duration="320s" render={() => (<>
             <DemoCard
               heading="Spending by category"
               sub="Where this month's money went."
@@ -353,6 +430,53 @@ export default function DesignSystemPage() {
                   </li>
                 ))}
               </ul>
+            </DemoCard>
+
+            <DemoCard
+              heading="Ask about your money"
+              sub="Answers grounded in your own transactions."
+              links={[
+                { label: "Chat thread", href: "/components/chat-thread" },
+                { label: "Chat message", href: "/components/chat-message" },
+                { label: "Reasoning", href: "/components/reasoning" },
+                { label: "Tool call", href: "/components/tool-call" },
+                { label: "Source chip", href: "/components/source-chip" },
+              ]}
+            >
+              <ChatHeader
+                title="Money copilot"
+                actions={
+                  <CircularButton icon="edit_square" variant="tertiary" ariaLabel="New chat" />
+                }
+              />
+              <ChatThread ariaLabel="Example conversation" className={styles.chatDemoThread}>
+                <ChatMarker>Today</ChatMarker>
+                <ChatMessage role="user">
+                  How much did I spend on dining in July?
+                </ChatMessage>
+                <Reasoning size="compact" duration={2}>
+                  July has five weekends, so compare against a weekly average
+                  rather than the June total.
+                </Reasoning>
+                <ToolCall
+                  name="query_transactions"
+                  status="success"
+                  summary="86 transactions scanned"
+                />
+                <ChatMessage
+                  role="assistant"
+                  actions={<MessageActions items={ANSWER_ACTIONS} showTooltips={false} />}
+                  showActions
+                >
+                  <Prose size="sm">
+                    <p>
+                      <strong>$280</strong> across nine visits, 12% less than
+                      June. Your cheapest week was the one you meal-prepped.
+                    </p>
+                  </Prose>
+                  <SourceChip index={1} title="July statement" />
+                </ChatMessage>
+              </ChatThread>
             </DemoCard>
 
             <DemoCard
@@ -430,10 +554,10 @@ export default function DesignSystemPage() {
                 <Chip label="#3461" />
               </div>
             </DemoCard>
-          </div>
+          </>)} />
 
           {/* -------- middle column -------- */}
-          <div className={styles.col}>
+          <EscalatorColumn direction="up" duration="360s" render={(copy) => (<>
             <NavCard
               heading="Install"
               sub={`${COMPONENT_COUNT} components on ${TOKEN_COUNT} semantic tokens, one package.`}
@@ -461,6 +585,18 @@ export default function DesignSystemPage() {
               <div className={styles.scrollX}>
                 <ContributionGraph days={tradingDays} showLegend />
               </div>
+            </DemoCard>
+
+            <DemoCard
+              heading="Reconciling accounts"
+              sub="A background agent matching invoices to deposits."
+              links={[
+                { label: "Agent status", href: "/components/agent-status" },
+                { label: "Agent plan", href: "/components/agent-plan" },
+              ]}
+            >
+              <AgentStatus state="working" label="Matching deposits" pattern="orbit" shimmer />
+              <AgentPlan title="Reconciliation plan" steps={RECONCILE_STEPS} defaultOpen />
             </DemoCard>
 
             <DemoCard
@@ -504,6 +640,44 @@ export default function DesignSystemPage() {
                   <CircularButton icon="more_horiz" variant="tertiary" ariaLabel="More actions" />
                   <span className={styles.quickActionLabel}>More</span>
                 </div>
+              </div>
+            </DemoCard>
+
+            <DemoCard
+              heading="Start a conversation"
+              sub="Ask in plain language; pick the model behind it."
+              links={[
+                { label: "Composer", href: "/components/composer" },
+                { label: "Prompt suggestions", href: "/components/prompt-suggestions" },
+                { label: "Model picker", href: "/components/model-picker" },
+                { label: "AI button", href: "/components/ai-button" },
+              ]}
+            >
+              <PromptSuggestions
+                suggestions={PROMPT_IDEAS}
+                layout="wrap"
+                size="compact"
+                ariaLabel="Suggested questions"
+                onValueChange={(id) =>
+                  setDraft(PROMPT_IDEAS.find((p) => p.id === id)?.label ?? "")
+                }
+              />
+              <Composer
+                value={draft}
+                onValueChange={setDraft}
+                onSubmit={() => setDraft("")}
+                placeholder="Message the agent"
+                actions={
+                  <ModelPicker
+                    models={AGENT_MODELS}
+                    value={model}
+                    onValueChange={setModel}
+                    placement="top"
+                  />
+                }
+              />
+              <div className={styles.buttonRow}>
+                <AiButton label="Summarise July" size="compact" />
               </div>
             </DemoCard>
 
@@ -554,7 +728,7 @@ export default function DesignSystemPage() {
             >
               <SelectionCard
                 mode="radio"
-                name="ds-landing-schedule"
+                name={`ds-landing-schedule-${copy}`}
                 options={SCHEDULE_OPTIONS}
                 value={schedule}
                 onChange={(v) => setSchedule(v as string)}
@@ -579,10 +753,10 @@ export default function DesignSystemPage() {
               </div>
               <Skeleton variant="text" lines={6} />
             </DemoCard>
-          </div>
+          </>)} />
 
           {/* -------- right column -------- */}
-          <div className={styles.col}>
+          <EscalatorColumn direction="down" duration="340s" render={() => (<>
             <DemoCard
               heading="Portfolio value"
               sub="Against the index, in thousands."
@@ -689,6 +863,34 @@ export default function DesignSystemPage() {
             </DemoCard>
 
             <DemoCard
+              heading="Agent hand-offs"
+              sub="The agent pauses before anything irreversible."
+              links={[
+                { label: "Interrupt card", href: "/components/interrupt-card" },
+                { label: "Message card", href: "/components/message-card" },
+                { label: "Document chip", href: "/components/document-chip" },
+              ]}
+            >
+              <InterruptCard
+                title="Send $2,500 to savings?"
+                description="This transfer is larger than your usual amount."
+                options={[
+                  { value: "allow", label: "Allow", variant: "primary" },
+                  { value: "deny", label: "Not now" },
+                ]}
+                value={transferChoice}
+                onValueChange={setTransferChoice}
+              />
+              <MessageCard
+                icon="receipt_long"
+                title="July statement is ready"
+                description="Nine categories over 86 transactions."
+                meta="Generated 1 Aug"
+              />
+              <DocumentChip name="statement-july.pdf" fileType="pdf" meta="84 KB" size="compact" />
+            </DemoCard>
+
+            <DemoCard
               heading="Invoices"
               sub="This month, most recent first."
               links={[{ label: "Badge", href: "/components/badge" }]}
@@ -741,7 +943,7 @@ export default function DesignSystemPage() {
                 ]}
               />
             </DemoCard>
-          </div>
+          </>)} />
         </section>
       </main>
 
