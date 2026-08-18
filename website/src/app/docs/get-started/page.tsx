@@ -74,7 +74,7 @@ const SEMANTIC_SNIPPET = `/* Prefer surgical changes? Override a semantic token 
   --color-status-info-border: #7F99E3;
 }`;
 
-/** The package's own stack — what a consumer is actually installing. */
+/** The package's own stack — what it is built and shipped with. */
 const STACK_TOOLS: {
   name: string;
   desc: string;

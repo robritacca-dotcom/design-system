@@ -112,8 +112,8 @@ export default function ElevationPage() {
               Standard containers never carry a shadow. Depth comes from stepping through the
               container colour ramp, which keeps surfaces flat, crisp, and legible against the
               page floor. Only surfaces that genuinely float above the page (anchored overlays
-              and modals) earn a shadow, and there are exactly two tokens for that. Never write a
-              literal <code>box-shadow</code> value in component CSS.
+              and modals) earn a shadow, and the elevation tokens below are the only ones that
+              exist for it. Never write a literal <code>box-shadow</code> value in component CSS.
             </p>
           </div>
 

@@ -69,6 +69,8 @@ Each surface has its own shape. The full standard for a surface lives in one pla
 | Hand-written corpus prose (the connective paragraphs in `scripts/generate-site-corpus.mjs`) | None | Short orienting paragraphs between derived blocks | The chat model can repeat any of it verbatim to a visitor: production copy, same bar as page prose | This file + `CLAUDE.md` (corpus boundary rules) |
 | `/llms.txt` section intros (`website/src/app/llms.txt/route.ts`) | None | One line per section | Served publicly to crawlers and agents; describe, never promote | This file |
 
+Deliberately out of scope: the essays on `/writing` are authored on Substack and synced in verbatim (`scripts/sync-essays.mjs`) — their register is the essay's own, and no rule in this file applies to or edits them.
+
 ---
 
 ## Writing Principles

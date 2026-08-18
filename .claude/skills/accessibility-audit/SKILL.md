@@ -77,8 +77,8 @@ Report a finding as **already-enforced** if `npm run test` would have caught it;
 5. **For each issue, report:**
 
    ```
-   src/components/Dropdown/Dropdown.tsx:84 — WCAG 4.1.2 Name, Role, Value [Critical]
-   Trigger button has no accessible name. Icon-only button needs aria-label="Open dropdown".
+   src/components/FilterMenu/FilterMenu.tsx:84 — WCAG 4.1.2 Name, Role, Value [Critical]
+   Trigger button has no accessible name. Icon-only button needs aria-label="Open filters".
    ```
 
    Severity:
