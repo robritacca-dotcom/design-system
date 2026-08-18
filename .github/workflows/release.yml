@@ -33,6 +33,9 @@ name: Release
 #   Card's cover slot and the --motion-duration-instant token.
 # 0.8.0 shipped 2026-08-16 — AgentPlan, ModelPicker, NotificationCenter,
 #   DataTable and EventCalendar, the five from the dashboard gap analysis.
+# 0.9.0 shipped 2026-08-17 — past 100 components: AnchorNav, Stepper, TagInput,
+#   NumberInput, TreeView, PinInput, CodeDiff, Sparkline and TimePicker, plus
+#   restored "use client" directives in the published dist.
 
 on:
   workflow_dispatch:
