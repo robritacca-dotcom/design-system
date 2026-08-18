@@ -9,7 +9,7 @@
     {
       "id": "ai",
       "label": "AI",
-      "description": "Chat, agent, and model surfaces for building AI products, from the composer to the reasoning trace."
+      "description": "Chat, agent, and model surfaces for building AI products, from the composer to the reasoning trace and the diff an agent proposes."
     },
     {
       "id": "charts",
@@ -44,7 +44,7 @@
     {
       "id": "navigation",
       "label": "Navigation",
-      "description": "Top bars, breadcrumbs, tabs, and pagination for moving around a product."
+      "description": "Top bars, breadcrumbs, tabs, steppers, and pagination for moving through a product."
     },
     {
       "id": "overlays",
@@ -262,6 +262,14 @@
       "description": "Monospace code with a header and one-click copy.",
       "category": "data-display",
       "client": true
+    },
+    {
+      "name": "CodeDiff",
+      "label": "Code diff",
+      "slug": "code-diff",
+      "description": "Unified diff view for code changes, with added, removed, and context lines.",
+      "category": "ai",
+      "client": false
     },
     {
       "name": "ColorPicker",
@@ -537,6 +545,14 @@
       "client": true
     },
     {
+      "name": "NumberInput",
+      "label": "Number input",
+      "slug": "number-input",
+      "description": "Numeric field with increment and decrement steppers and min/max clamping.",
+      "category": "forms",
+      "client": true
+    },
+    {
       "name": "Pagination",
       "label": "Pagination",
       "slug": "pagination",
@@ -552,6 +568,14 @@
       "category": "charts",
       "client": false,
       "folder": "Chart"
+    },
+    {
+      "name": "PinInput",
+      "label": "Pin input",
+      "slug": "pin-input",
+      "description": "Segmented one-time-code input with auto-advance, paste support, and completion callback.",
+      "category": "forms",
+      "client": true
     },
     {
       "name": "Popover",
@@ -693,6 +717,14 @@
       "client": false
     },
     {
+      "name": "Sparkline",
+      "label": "Sparkline",
+      "slug": "sparkline",
+      "description": "Inline trend line for stats and table cells, drawn without axes or chrome.",
+      "category": "charts",
+      "client": false
+    },
+    {
       "name": "Spinner",
       "label": "Spinner",
       "slug": "spinner",
@@ -716,6 +748,14 @@
       "description": "Headline metrics with labels and trend deltas.",
       "category": "data-display",
       "client": false
+    },
+    {
+      "name": "Stepper",
+      "label": "Stepper",
+      "slug": "stepper",
+      "description": "Step-by-step progress indicator for wizards and multi-stage flows.",
+      "category": "navigation",
+      "client": true
     },
     {
       "name": "Swatch",
@@ -742,10 +782,26 @@
       "client": true
     },
     {
+      "name": "TagInput",
+      "label": "Tag input",
+      "slug": "tag-input",
+      "description": "Multi-value text input with entries held as removable tags.",
+      "category": "forms",
+      "client": true
+    },
+    {
       "name": "Textarea",
       "label": "Textarea",
       "slug": "textarea",
       "description": "Multi-line text input with character counter, resize control, helper text, and error states.",
+      "category": "forms",
+      "client": true
+    },
+    {
+      "name": "TimePicker",
+      "label": "Time picker",
+      "slug": "time-picker",
+      "description": "Time-of-day field with a dropdown list of selectable times.",
       "category": "forms",
       "client": true
     },
@@ -795,6 +851,14 @@
       "slug": "tooltip",
       "description": "Contextual text label that appears on hover or focus with position and delay options.",
       "category": "overlays",
+      "client": true
+    },
+    {
+      "name": "TreeView",
+      "label": "Tree view",
+      "slug": "tree-view",
+      "description": "Collapsible hierarchy for files, folders, and nested structures.",
+      "category": "data-display",
       "client": true
     },
     {

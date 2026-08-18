@@ -18,7 +18,7 @@ The **live site** is the portfolio built on the design system. **Storybook** is 
 | Part | Description |
 |---|---|
 | **Portfolio website** (`/website`) | Next.js app with case studies, work history, writing, and about pages, all built exclusively with the design system components below. **[Live site →](https://robertritacca.com/)** |
-| **Design system** (`/src`) | <!-- component-count -->93<!-- /component-count --> React components, a three-tier token architecture, dark mode, a WebGL2 ambient background that themes itself from your tokens, and a full documentation site. Built to production standards. **[Storybook →](https://design-system-iota-one.vercel.app/?path=/docs/robr0-ds--docs)** |
+| **Design system** (`/src`) | <!-- component-count -->101<!-- /component-count --> React components, a three-tier token architecture, dark mode, a WebGL2 ambient background that themes itself from your tokens, and a full documentation site. Built to production standards. **[Storybook →](https://design-system-iota-one.vercel.app/?path=/docs/robr0-ds--docs)** |
 | **AI layer** (`ai` components in `/src`, chat in `/website`, `/evals`) | A site-wide chat that answers questions about the work: built from the library's own `ai` components, grounded in a corpus generated from the site's published content, and scored by a golden-set eval. |
 
 ---
@@ -28,7 +28,7 @@ The **live site** is the portfolio built on the design system. **Storybook** is 
 ### Components
 
 <!-- component-list:start -->
-Accordion · Agent plan · Agent status · AI button · Alert · Alert dialog · Anchor nav · App layout · App sidebar · Area chart · Avatar · Badge · Bar chart · Breadcrumb · Button · Button group · Card · Carousel · Chat header · Chat marker · Chat message · Chat thread · Checkbox · Chip · Circular button · Code block · Colour picker · Combobox · Command palette · Composer · Contact card · Context menu · Contribution graph · Data table · Date input · Date picker · Dialog · Divider · Document chip · Drawer · Dropdown · Dropdown menu · Empty state · Entity card · Event calendar · Field · Figure · File input · Input · Instructions · Interrupt card · Kbd · Line chart · Link list · Message actions · Message card · Model picker · Nav · Nav list · Notification centre · Pagination · Pie chart · Popover · Progress bar · Prompt suggestions · Prose · Quote · Radar chart · Radial chart · Radio button · Reasoning · Scatter chart · Section title · Segmented control · Selection card · Shader field · Skeleton · Slider · Source chip · Spinner · Stacked bar chart · Stat · Swatch · Table · Tabs · Textarea · Timeline · Toast · Toggle group · Toggle switch · Tool call · Tooltip · Treemap
+Accordion · Agent plan · Agent status · AI button · Alert · Alert dialog · Anchor nav · App layout · App sidebar · Area chart · Avatar · Badge · Bar chart · Breadcrumb · Button · Button group · Card · Carousel · Chat header · Chat marker · Chat message · Chat thread · Checkbox · Chip · Circular button · Code block · Code diff · Colour picker · Combobox · Command palette · Composer · Contact card · Context menu · Contribution graph · Data table · Date input · Date picker · Dialog · Divider · Document chip · Drawer · Dropdown · Dropdown menu · Empty state · Entity card · Event calendar · Field · Figure · File input · Input · Instructions · Interrupt card · Kbd · Line chart · Link list · Message actions · Message card · Model picker · Nav · Nav list · Notification centre · Number input · Pagination · Pie chart · Pin input · Popover · Progress bar · Prompt suggestions · Prose · Quote · Radar chart · Radial chart · Radio button · Reasoning · Scatter chart · Section title · Segmented control · Selection card · Shader field · Skeleton · Slider · Source chip · Sparkline · Spinner · Stacked bar chart · Stat · Stepper · Swatch · Table · Tabs · Tag input · Textarea · Time picker · Timeline · Toast · Toggle group · Toggle switch · Tool call · Tooltip · Tree view · Treemap
 <!-- component-list:end -->
 
 ### Ambient background
@@ -71,7 +71,7 @@ import '@robr0/design-system/tokens/tokens.css';
 import { Button, Card, Badge } from '@robr0/design-system';
 ```
 
-Deep imports work too (`@robr0/design-system/components/Button/Button`). Chart components live behind a separate entry so the optional `recharts` peer dependency is only needed if you use them:
+Deep imports work too (`@robr0/design-system/components/Button/Button`). The Recharts-backed charts live behind a separate entry so the optional `recharts` peer dependency is only needed if you use them; Sparkline and ContributionGraph are dependency-free and export from the main barrel:
 
 ```tsx
 import { BarChart, LineChart } from '@robr0/design-system/charts';

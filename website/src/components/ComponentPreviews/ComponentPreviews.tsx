@@ -32,6 +32,7 @@ import { Timeline } from "@robr0/design-system/components/Timeline/Timeline";
 import { ContributionGraph, type ContributionDay } from "@robr0/design-system/components/ContributionGraph/ContributionGraph";
 import { Divider } from "@robr0/design-system/components/Divider/Divider";
 import { DocumentChip } from "@robr0/design-system/components/DocumentChip/DocumentChip";
+import { NumberInput } from "@robr0/design-system/components/NumberInput/NumberInput";
 import { Pagination } from "@robr0/design-system/components/Pagination/Pagination";
 import { InterruptCard } from "@robr0/design-system/components/InterruptCard/InterruptCard";
 import { Kbd } from "@robr0/design-system/components/Kbd/Kbd";
@@ -44,6 +45,7 @@ import { ShaderField } from "@robr0/design-system/components/ShaderField/ShaderF
 import { Skeleton } from "@robr0/design-system/components/Skeleton/Skeleton";
 import { Slider } from "@robr0/design-system/components/Slider/Slider";
 import { SourceChip } from "@robr0/design-system/components/SourceChip/SourceChip";
+import { Sparkline } from "@robr0/design-system/components/Sparkline/Sparkline";
 import { Spinner } from "@robr0/design-system/components/Spinner/Spinner";
 import { Tabs } from "@robr0/design-system/components/Tabs/Tabs";
 import { ToggleGroup } from "@robr0/design-system/components/ToggleGroup/ToggleGroup";
@@ -351,6 +353,30 @@ const previews: Record<string, () => ReactNode> = {
       </svg>
     </>
   ),
+  "tree-view": () => (
+    <>
+      <div aria-hidden="true" style={{ display: "flex", flexDirection: "column", gap: "2px", width: "150px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "4px", padding: "2px 4px" }}>
+          <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-icon-primary)", transform: "rotate(90deg)" }}>chevron_right</span>
+          <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-icon-primary)" }}>folder</span>
+          <span style={{ fontSize: "11px", fontWeight: 500, color: "var(--color-text-primary)" }}>src</span>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: "4px", padding: "2px 4px 2px 18px" }}>
+          <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-icon-primary)", transform: "rotate(90deg)" }}>chevron_right</span>
+          <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-icon-primary)" }}>folder</span>
+          <span style={{ fontSize: "11px", fontWeight: 500, color: "var(--color-text-primary)" }}>components</span>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: "4px", padding: "2px 4px 2px 36px", background: "var(--color-action-passive-bg-active)", borderRadius: "4px" }}>
+          <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-icon-primary)" }}>draft</span>
+          <span style={{ fontSize: "11px", fontWeight: 500, color: "var(--color-text-primary)" }}>Button.tsx</span>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: "4px", padding: "2px 4px 2px 36px" }}>
+          <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-icon-primary)" }}>draft</span>
+          <span style={{ fontSize: "11px", color: "var(--color-text-secondary)" }}>Badge.tsx</span>
+        </div>
+      </div>
+    </>
+  ),
   "treemap": () => (
     <>
       <svg width="120" height="64" viewBox="0 0 120 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -439,6 +465,15 @@ const previews: Record<string, () => ReactNode> = {
     <>
       <div className={styles.scaledComponentPreview} style={{ width: "224px" }}>
         <CodeBlock code={`--radius-full: 999px;`} filename="tokens.css" showCopy={false} />
+      </div>
+    </>
+  ),
+  "code-diff": () => (
+    <>
+      <div aria-hidden="true" style={{ width: "170px", borderRadius: "8px", border: "1px solid var(--color-bg-container-border)", background: "var(--color-bg-container-primary)", overflow: "hidden", fontFamily: "var(--font-family-code)", fontSize: "11px", lineHeight: "20px", color: "var(--color-text-primary)", whiteSpace: "pre", padding: "6px 0" }}>
+        <div style={{ padding: "0 10px" }}>{"  const t = s.trim();"}</div>
+        <div style={{ padding: "0 10px", background: "var(--color-status-error-bg)" }}>{"- return t.toUpper();"}</div>
+        <div style={{ padding: "0 10px", background: "var(--color-status-positive-bg)" }}>{"+ return upper(t);"}</div>
       </div>
     </>
   ),
@@ -854,9 +889,36 @@ const previews: Record<string, () => ReactNode> = {
       </div>
     </>
   ),
+  "number-input": () => (
+    <>
+      <div style={{ width: "150px" }}>
+        <NumberInput defaultValue={2} min={0} max={10} aria-label="Quantity" />
+      </div>
+    </>
+  ),
   "pagination": () => (
     <>
       <Pagination page={2} pageCount={3} onPageChange={() => {}} size="compact" />
+    </>
+  ),
+  "pin-input": () => (
+    <>
+      <div aria-hidden="true" style={{ display: "flex", gap: "6px" }}>
+        {["4", "2", "", ""].map((ch, i) => (
+          <span
+            key={i}
+            style={{
+              display: "flex", alignItems: "center", justifyContent: "center",
+              width: "28px", height: "34px", borderRadius: "8px",
+              border: `1px solid ${i === 2 ? "var(--color-input-border-selected)" : "var(--color-input-border-primary)"}`,
+              background: "var(--color-input-bg-primary)",
+              fontSize: "14px", fontWeight: 600, color: "var(--color-text-primary)",
+            }}
+          >
+            {ch}
+          </span>
+        ))}
+      </div>
     </>
   ),
   "popover": () => (
@@ -999,6 +1061,14 @@ const previews: Record<string, () => ReactNode> = {
       </div>
     </>
   ),
+  "sparkline": () => (
+    <>
+      <div style={{ display: "flex", flexDirection: "column", gap: "12px", alignItems: "flex-start" }}>
+        <Sparkline data={[4, 6, 5, 8, 7, 10, 9, 12, 14, 13, 16]} tone="positive" variant="area" />
+        <Sparkline data={[16, 14, 15, 12, 13, 10, 11, 8, 7, 8, 5]} tone="negative" />
+      </div>
+    </>
+  ),
   "spinner": () => (
     <>
       <Spinner size="lg" />
@@ -1007,6 +1077,19 @@ const previews: Record<string, () => ReactNode> = {
   "stat": () => (
     <>
       <Stat value="~900%" label="Successful generations" trend="up" delta="+clash view" />
+    </>
+  ),
+  "stepper": () => (
+    <>
+      <div aria-hidden="true" className={styles.previewRow} style={{ gap: "0", alignItems: "center" }}>
+        <div style={{ width: "20px", height: "20px", borderRadius: "50%", border: "1.5px solid var(--color-action-primary-border-secondary)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+          <span className="material-symbols-rounded" style={{ fontSize: "12px", width: "12px", height: "12px", color: "var(--color-action-primary-text-tertiary)" }}>check</span>
+        </div>
+        <div style={{ width: "26px", height: "2px", background: "var(--color-action-primary-border-secondary)" }} />
+        <div style={{ width: "20px", height: "20px", borderRadius: "50%", background: "var(--color-action-primary-bg)", color: "var(--color-action-primary-text)", fontSize: "11px", fontWeight: 600, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>2</div>
+        <div style={{ width: "26px", height: "2px", background: "var(--color-divider)" }} />
+        <div style={{ width: "20px", height: "20px", borderRadius: "50%", border: "1.5px solid var(--color-bg-container-border)", color: "var(--color-text-tertiary)", fontSize: "11px", fontWeight: 500, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>3</div>
+      </div>
     </>
   ),
   "swatch": () => (
@@ -1042,12 +1125,34 @@ const previews: Record<string, () => ReactNode> = {
       />
     </>
   ),
+  "tag-input": () => (
+    <>
+      <div aria-hidden="true" style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: "4px", width: "150px", padding: "6px 10px", borderRadius: "8px", border: "1px solid var(--color-input-border-primary)", background: "var(--color-input-bg-primary)" }}>
+        {["design", "tokens"].map((tag) => (
+          <span key={tag} style={{ display: "inline-flex", alignItems: "center", gap: "2px", padding: "1px 6px", borderRadius: "999px", background: "var(--color-bg-container-secondary)", fontSize: "10px", color: "var(--color-text-primary)" }}>
+            {tag}
+            <span className="material-symbols-rounded" style={{ fontSize: "10px", width: "10px", height: "10px", color: "var(--color-icon-primary)" }}>close</span>
+          </span>
+        ))}
+        <span style={{ fontSize: "10px", color: "var(--color-input-text-placeholder)" }}>Add...</span>
+      </div>
+    </>
+  ),
   "textarea": () => (
     <>
       <div className={styles.textareaPreview}>
         <span style={{ color: "var(--color-text-tertiary)", fontSize: "14px" }}>
           Enter text...
         </span>
+      </div>
+    </>
+  ),
+  "time-picker": () => (
+    <>
+      <div aria-hidden="true" style={{ display: "flex", alignItems: "center", gap: "8px", padding: "8px 14px", borderRadius: "12px", border: "1px solid var(--color-input-border-primary)", background: "var(--color-input-bg-primary)", width: "150px" }}>
+        <span className="material-symbols-rounded" style={{ fontSize: "18px", color: "var(--color-icon-primary)" }}>schedule</span>
+        <span style={{ flex: 1, fontSize: "14px", color: "var(--color-input-text-primary)", fontVariantNumeric: "tabular-nums" }}>2:30 PM</span>
+        <span className="material-symbols-rounded" style={{ fontSize: "20px", color: "var(--color-icon-primary)" }}>expand_more</span>
       </div>
     </>
   ),

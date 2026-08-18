@@ -1,0 +1,52 @@
+/* ============================================
+   SPARKLINE COMPONENT
+   Inline trend line for stats and table cells.
+   Colour flows through `color` — the line, fill
+   and dot all draw with currentColor, so a tone
+   is one custom property swap.
+   ============================================ */
+
+/* Base */
+
+.ds-sparkline {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+  color: var(--color-action-primary-bg);
+}
+
+/* Parts */
+
+.ds-sparkline__line {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ds-sparkline__fill {
+  fill: currentColor;
+  opacity: 0.15;
+}
+
+.ds-sparkline__dot {
+  fill: currentColor;
+}
+
+/* Tones */
+
+.ds-sparkline--accent {
+  color: var(--color-action-primary-bg);
+}
+
+.ds-sparkline--positive {
+  color: var(--color-status-positive-text);
+}
+
+.ds-sparkline--negative {
+  color: var(--color-status-error-text);
+}
+
+.ds-sparkline--neutral {
+  color: var(--color-text-secondary);
+}
