@@ -1,8 +1,8 @@
 "use client";
 
 /**
- * The miniature live previews shown on the /components index sections and the
- * category landing pages, one per public component, keyed by registry slug.
+ * The miniature live previews shown on the /components index sections,
+ * one per public component, keyed by registry slug.
  *
  * scripts/validate-website-surfaces.mjs holds this map to the registry in both
  * directions: every registered slug needs a preview entry here, and every key
@@ -53,9 +53,13 @@ import type { ReactNode } from "react";
 import styles from "./ComponentPreviews.module.css";
 
 // Small fixed dataset for the contribution graph preview card
-const contributionPreviewDays: ContributionDay[] = Array.from({ length: 8 * 7 }, (_, i) => {
+// 10 weeks: the grid columns are minmax(12px, 1fr), so ten of them plus
+// gaps fill the 150px preview width exactly — no overflow scrollbar
+const contributionPreviewDays: ContributionDay[] = Array.from({ length: 10 * 7 }, (_, i) => {
   const d = new Date(2026, 0, 4 + i);
-  const level = ([0, 1, 3, 0, 2, 4, 1, 0, 2, 3, 1, 4, 0, 2][i % 14]) as ContributionDay["level"];
+  // 13-value cycle: coprime with the 7-day week, so levels vary
+  // across rows instead of banding (14 % 7 = 0 striped every row)
+  const level = ([0, 1, 3, 0, 2, 4, 1, 0, 2, 3, 1, 4, 2][i % 13]) as ContributionDay["level"];
   return {
     date: `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`,
     count: level * 3,
@@ -433,7 +437,7 @@ const previews: Record<string, () => ReactNode> = {
   ),
   "code-block": () => (
     <>
-      <div style={{ width: "180px" }}>
+      <div className={styles.scaledComponentPreview} style={{ width: "224px" }}>
         <CodeBlock code={`--radius-full: 999px;`} filename="tokens.css" showCopy={false} />
       </div>
     </>
@@ -449,11 +453,11 @@ const previews: Record<string, () => ReactNode> = {
   "combobox": () => (
     <>
       <div className={styles.previewColumn} style={{ gap: "4px", width: "150px" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "6px", padding: "6px 10px", borderRadius: "8px", border: "1px solid var(--color-input-border-selected)", background: "var(--color-input-bg-primary)" }}>
-          <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-icon-primary)" }}>search</span>
+        <div style={{ display: "flex", alignItems: "center", gap: "6px", width: "100%", padding: "6px 10px", borderRadius: "8px", border: "1px solid var(--color-input-border-selected)", background: "var(--color-input-bg-primary)" }}>
+          <span className="material-symbols-rounded" style={{ fontSize: "12px", width: "12px", height: "12px", color: "var(--color-icon-primary)" }}>search</span>
           <span style={{ fontSize: "10px", color: "var(--color-text-primary)" }}>Can</span>
         </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: "2px", padding: "4px", borderRadius: "8px", border: "1px solid var(--color-bg-container-border)", background: "var(--color-bg-page-primary)" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "2px", width: "100%", padding: "4px", borderRadius: "8px", border: "1px solid var(--color-bg-container-border)", background: "var(--color-bg-page-primary)" }}>
           <span style={{ fontSize: "10px", padding: "3px 6px", borderRadius: "4px", background: "var(--color-action-passive-bg-hover)", color: "var(--color-text-primary)" }}>Canada</span>
           <span style={{ fontSize: "10px", padding: "3px 6px", color: "var(--color-text-tertiary)" }}>Cancún</span>
         </div>
@@ -735,7 +739,7 @@ const previews: Record<string, () => ReactNode> = {
   ),
   "interrupt-card": () => (
     <>
-      <div style={{ width: "100%", maxWidth: "220px" }}>
+      <div className={styles.scaledComponentPreview} style={{ width: "220px" }}>
         <InterruptCard
           title="Allow file edit?"
           options={[
@@ -786,11 +790,11 @@ const previews: Record<string, () => ReactNode> = {
   ),
   "message-card": () => (
     <>
-      <div style={{ width: "100%", maxWidth: "220px" }}>
+      <div className={styles.scaledComponentPreview} style={{ width: "220px" }}>
         <MessageCard
           icon="language"
-          title="Harbour Line timetable"
-          meta="transit.harbourline.example"
+          title="Harbour timetable"
+          meta="harbourline.example"
         />
       </div>
     </>
@@ -948,16 +952,16 @@ const previews: Record<string, () => ReactNode> = {
   ),
   "selection-card": () => (
     <>
-      <div className={styles.previewColumn} style={{ gap: "6px", width: "180px" }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 14px", borderRadius: "8px", border: "1px solid var(--color-action-primary-border)" }}>
-          <span style={{ fontSize: "12px", fontWeight: 500, color: "var(--color-text-primary)" }}>A</span>
-          <div style={{ width: "14px", height: "14px", borderRadius: "50%", border: "2px solid var(--color-action-primary-bg)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <div className={styles.previewColumn} style={{ gap: "6px", width: "150px" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", padding: "8px 12px", borderRadius: "8px", border: "1px solid var(--color-action-primary-border)" }}>
+          <span style={{ fontSize: "11px", fontWeight: 500, color: "var(--color-text-primary)" }}>Option A</span>
+          <div style={{ width: "14px", height: "14px", borderRadius: "50%", border: "2px solid var(--color-action-primary-bg)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
             <div style={{ width: "7px", height: "7px", borderRadius: "50%", background: "var(--color-action-primary-bg)" }} />
           </div>
         </div>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 14px", borderRadius: "8px", border: "1px solid var(--color-bg-container-border)" }}>
-          <span style={{ fontSize: "12px", color: "var(--color-text-primary)" }}>B</span>
-          <div style={{ width: "14px", height: "14px", borderRadius: "50%", border: "2px solid var(--color-bg-container-border)" }} />
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", padding: "8px 12px", borderRadius: "8px", border: "1px solid var(--color-bg-container-border)" }}>
+          <span style={{ fontSize: "11px", color: "var(--color-text-primary)" }}>Option B</span>
+          <div style={{ width: "14px", height: "14px", borderRadius: "50%", border: "2px solid var(--color-bg-container-border)", flexShrink: 0 }} />
         </div>
       </div>
     </>

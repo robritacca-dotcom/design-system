@@ -21,6 +21,14 @@
   justify-content: center;
 }
 
+/* Real components rendered at true size read huge beside the
+   miniature mocks — scale them down to the same visual register.
+   The wrapper keeps its layout width; only the paint shrinks. */
+.scaledComponentPreview {
+  flex-shrink: 0;
+  transform: scale(0.72);
+}
+
 /* ============================================
    CARD PREVIEW (mini card inside circle)
    ============================================ */
