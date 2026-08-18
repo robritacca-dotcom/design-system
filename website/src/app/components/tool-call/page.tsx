@@ -92,9 +92,8 @@ export default function ToolCallPage() {
             <SectionTitle title="Statuses" />
             <p className={styles.demoText}>
               The container stays neutral, so a long run reads as a list rather
-              than a wall of tinted cards. Only the two states someone has to
-              act on, awaiting approval and failed, take a coloured border as
-              well.
+              than a wall of tinted cards. The status word and its icon carry
+              the state; the border never changes.
             </p>
             <div className={styles.stack}>
               <ToolCall name="read_file" summary="package.json" duration="0.1s" />

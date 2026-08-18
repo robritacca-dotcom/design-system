@@ -7,20 +7,19 @@
    The container stays neutral — colour lives in
    the indicator and the status word, so a long
    run of calls reads as a list rather than a
-   wall of tinted cards. The two states a person
-   has to act on, pending and error, also take a
-   coloured border.
+   wall of tinted cards. The border is the
+   standard container hairline in every status;
+   the status word and icon carry the state.
    ============================================ */
 
 .ds-tool-call {
   --ds-tool-call-color: var(--color-text-secondary);
-  --ds-tool-call-border: var(--color-bg-container-border);
 
   display: flex;
   flex-direction: column;
   width: 100%;
   background-color: var(--color-bg-container-primary);
-  border: var(--border-xs) solid var(--ds-tool-call-border);
+  border: var(--border-xs) solid var(--color-bg-container-border);
   border-radius: var(--radius-md);
   overflow: hidden;
 }
@@ -34,7 +33,7 @@
   align-items: center;
   gap: var(--gap-sm);
   width: 100%;
-  padding: var(--padding-xs) var(--padding-sm-md);
+  padding: var(--padding-sm) var(--padding-md);
   background: none;
   border: none;
   text-align: left;
@@ -144,7 +143,6 @@
 
 .ds-tool-call--pending {
   --ds-tool-call-color: var(--color-status-warning-text);
-  --ds-tool-call-border: var(--color-status-warning-border);
 }
 
 .ds-tool-call--running {
@@ -157,7 +155,6 @@
 
 .ds-tool-call--error {
   --ds-tool-call-color: var(--color-status-error-text);
-  --ds-tool-call-border: var(--color-status-error-border);
 }
 
 /* ============================================
@@ -184,7 +181,7 @@
 }
 
 .ds-tool-call--open .ds-tool-call__content {
-  padding: var(--padding-sm-md);
+  padding: var(--padding-md);
   border-top: var(--border-xs) solid var(--color-divider);
 }
 
@@ -207,7 +204,6 @@
   align-items: center;
   justify-content: flex-end;
   gap: var(--gap-sm);
-  padding: var(--padding-sm) var(--padding-sm-md);
+  padding: var(--padding-sm-md) var(--padding-md);
   border-top: var(--border-xs) solid var(--color-divider);
-  background-color: var(--color-bg-container-secondary);
 }

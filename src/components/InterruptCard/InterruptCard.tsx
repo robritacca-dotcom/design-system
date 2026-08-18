@@ -37,8 +37,7 @@ type InterruptCardOwnProps = {
   onValueChange?: (value: string) => void;
   /**
    * The already-chosen value. When set, the card renders its answered state:
-   * the warning signal drops to monochrome and the options are replaced by an
-   * echo of the chosen label.
+   * the options are replaced by a quiet echo of the chosen label.
    */
   value?: string;
   /** Override the echoed text in the answered state (default: the chosen option's label). */
@@ -61,10 +60,10 @@ export interface InterruptCardProps
  * with option buttons for the person to decide. "Allow this file edit?" —
  * allow once, always allow, deny.
  *
- * Unanswered it wears ToolCall's pending language promoted to a card: the
- * warning pair on icon and border, options in a footer outside the content.
- * Once `value` is set the decision is made, so the signal drops to monochrome
- * and the footer echoes the chosen label.
+ * The card stays quiet in both states: one tone, the standard container
+ * border, options in a footer outside the content. Once `value` is set the
+ * decision is made and the footer echoes the chosen label; a visually hidden
+ * status announcement carries the waiting state for screen readers.
  *
  * Fully controlled: the card never stores the answer itself — `onValueChange`
  * reports the choice and `value` renders it.

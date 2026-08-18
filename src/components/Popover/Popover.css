@@ -28,7 +28,9 @@
   padding: var(--padding-md); /* 16px */
   border: var(--border-xs) solid var(--color-bg-container-border);
   border-radius: var(--radius-sm); /* 8px */
-  background-color: var(--color-bg-container-primary);
+  /* Page background, not container: the container fill is semi-transparent
+     in dark mode, and a floating panel must not show text through itself */
+  background-color: var(--color-bg-page-primary);
   box-shadow: var(--shadow-floating);
 
   /* Hidden by default */
@@ -88,12 +90,9 @@
    SIZE — COMPACT
    ============================================ */
 
+/* The size class rides on the panel element itself, so this is a plain
+   compound selector — a descendant form would never match */
 .ds-popover--compact {
   padding: var(--padding-sm); /* 8px */
-  min-width: 160px;
-}
-
-.ds-popover--compact .ds-popover__panel {
-  padding: var(--padding-sm);
   min-width: 160px;
 }

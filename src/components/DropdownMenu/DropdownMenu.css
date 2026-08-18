@@ -37,7 +37,7 @@
   left: 0;
   z-index: 50;
   min-width: 200px;
-  margin-top: var(--gap-xxs); /* 4px offset from trigger */
+  margin-top: var(--gap-xxs); /* 2px offset from trigger */
 
   /* Appearance — Figma: page/primary bg, input/border/primary, radius/md */
   background: var(--color-bg-page-primary);

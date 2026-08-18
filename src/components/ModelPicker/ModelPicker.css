@@ -76,7 +76,9 @@
   min-width: 260px;
   display: flex;
   flex-direction: column;
-  background-color: var(--color-bg-container-primary);
+  /* Page background, not container: the container fill is semi-transparent
+     in dark mode, and a floating panel must not show text through itself */
+  background-color: var(--color-bg-page-primary);
   border: var(--border-xs) solid var(--color-bg-container-border);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-floating);

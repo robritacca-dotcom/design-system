@@ -70,10 +70,10 @@ export default function InterruptCardPage() {
             </p>
             <p className={styles.introBody}>
               A human-in-the-loop checkpoint: a question, some context, and
-              option buttons to decide. While it waits it wears the warning
-              pair that tool calls use for pending, because the two mean the
-              same thing. Once answered, the signal drops to monochrome and
-              the footer echoes the choice.
+              option buttons to decide. The card stays deliberately quiet
+              while it waits, one tone behind a regular border, because the
+              question itself is the signal. Once answered, the footer echoes
+              the choice.
             </p>
           </div>
 
@@ -125,8 +125,8 @@ export default function InterruptCardPage() {
             <p className={styles.demoText}>
               The card is fully controlled: it reports the choice and the
               consumer renders it back. Pick an option to see the answered
-              state, where the warning drops away and the chosen label is
-              echoed in the footer.
+              state, where the buttons give way to the chosen label echoed
+              in the footer.
             </p>
             <DecisionDemo />
           </section>
@@ -136,9 +136,8 @@ export default function InterruptCardPage() {
             <SectionTitle title="Danger options" />
             <p className={styles.demoText}>
               A destructive approval takes the danger weight, which renders
-              the destructive button. The card itself keeps the warning pair
-              either way, because the state is still the same: waiting on a
-              person.
+              the destructive button. The card itself stays quiet either way,
+              because the state is still the same: waiting on a person.
             </p>
             <div className={styles.stack}>
               <InterruptCard

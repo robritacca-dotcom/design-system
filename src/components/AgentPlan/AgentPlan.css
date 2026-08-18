@@ -29,7 +29,7 @@
   align-items: center;
   gap: var(--gap-sm);
   width: 100%;
-  padding: var(--padding-xs) var(--padding-sm-md);
+  padding: var(--padding-sm) var(--padding-md);
   background: none;
   border: none;
   text-align: left;
@@ -121,7 +121,7 @@
   display: flex;
   flex-direction: column;
   margin: 0;
-  padding: var(--padding-sm) var(--padding-sm-md);
+  padding: var(--padding-sm-md) var(--padding-md);
   list-style: none;
 }
 

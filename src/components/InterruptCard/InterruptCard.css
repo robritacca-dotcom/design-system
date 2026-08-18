@@ -4,31 +4,23 @@
    from the agent, a detail slot, and option
    buttons in a footer.
 
-   ToolCall's pending language promoted to a
-   card — the warning pair on icon and border
-   while a decision is owed, routed through a
-   local custom-property pair so the answered
-   state repoints two variables and the whole
-   card drops to monochrome.
+   The card is deliberately quiet — one tone,
+   the standard container border, no status
+   colour. The question and its buttons are
+   the signal; the visually hidden status
+   announcement carries the waiting state.
    ============================================ */
 
 .ds-interrupt-card {
-  --ds-interrupt-card-color: var(--color-status-warning-text);
-  --ds-interrupt-card-border: var(--color-status-warning-border);
+  --ds-interrupt-card-color: var(--color-icon-secondary);
 
   display: flex;
   flex-direction: column;
   width: 100%;
   background-color: var(--color-bg-container-primary);
-  border: var(--border-xs) solid var(--ds-interrupt-card-border);
+  border: var(--border-xs) solid var(--color-bg-container-border);
   border-radius: var(--radius-md);
   overflow: hidden;
-}
-
-/* Decision made — no signal needed */
-.ds-interrupt-card--answered {
-  --ds-interrupt-card-color: var(--color-text-secondary);
-  --ds-interrupt-card-border: var(--color-bg-container-border);
 }
 
 /* ============================================
@@ -39,7 +31,7 @@
   display: flex;
   align-items: flex-start;
   gap: var(--gap-sm);
-  padding: var(--padding-sm) var(--padding-sm-md);
+  padding: var(--padding-sm-md) var(--padding-md);
 }
 
 .ds-interrupt-card__icon {
@@ -88,7 +80,7 @@
    ============================================ */
 
 .ds-interrupt-card__detail {
-  padding: 0 var(--padding-sm-md) var(--padding-sm);
+  padding: 0 var(--padding-md) var(--padding-sm-md);
 }
 
 .ds-interrupt-card__detail > :first-child {
@@ -111,9 +103,8 @@
   align-items: center;
   justify-content: flex-end;
   gap: var(--gap-sm);
-  padding: var(--padding-sm) var(--padding-sm-md);
+  padding: var(--padding-sm-md) var(--padding-md);
   border-top: var(--border-xs) solid var(--color-divider);
-  background-color: var(--color-bg-container-secondary);
 }
 
 /* ============================================
@@ -127,9 +118,8 @@
   align-items: center;
   justify-content: flex-end;
   gap: var(--gap-xs);
-  padding: var(--padding-sm) var(--padding-sm-md);
+  padding: var(--padding-sm-md) var(--padding-md);
   border-top: var(--border-xs) solid var(--color-divider);
-  background-color: var(--color-bg-container-secondary);
   font-family: var(--font-paragraph-sm-family);
   font-size: var(--font-paragraph-sm-size);
   font-weight: var(--font-paragraph-sm-weight);

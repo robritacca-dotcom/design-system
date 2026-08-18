@@ -106,7 +106,6 @@
   align-items: center;
   justify-content: flex-end;
   gap: var(--gap-sm);
-  padding: var(--padding-sm) var(--padding-sm-md);
+  padding: var(--padding-sm-md) var(--padding-md);
   border-top: var(--border-xs) solid var(--color-divider);
-  background-color: var(--color-bg-container-secondary);
 }
