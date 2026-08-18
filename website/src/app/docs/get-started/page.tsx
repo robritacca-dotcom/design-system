@@ -29,8 +29,9 @@ import { Button } from '@robr0/design-system/components/Button/Button';
 // any component import already loads the icon font for you.
 import '@robr0/design-system/fonts/material-symbols.css';`;
 
-const CHARTS_SNIPPET = `// Charts live behind their own entry so the recharts peer
-// dependency stays optional — install recharts only if you use them.
+const CHARTS_SNIPPET = `// The recharts-backed charts live behind their own entry so that peer
+// dependency stays optional — Sparkline and ContributionGraph are
+// dependency-free and come from the main barrel.
 import { BarChart, LineChart } from '@robr0/design-system/charts';`;
 
 const DARK_MODE_SNIPPET = `<!-- Light is the default; flip the whole system with one attribute -->
@@ -198,7 +199,7 @@ export default function GetStartedPage() {
                 <SectionTitle title="Install" />
                 <p className={styles.sectionNote}>
                   React 19+ (react and react-dom) is the only required peer
-                  dependency (recharts is an optional extra, for charts). Everything else (component CSS, both
+                  dependency (recharts is an optional extra, for the recharts-backed charts). Everything else (component CSS, both
                   themes, the Material Symbols icon font) is bundled. The package is
                   ESM-only: use a bundler that handles CSS and font imports (Vite,
                   Next.js, webpack), with TypeScript&apos;s{" "}
