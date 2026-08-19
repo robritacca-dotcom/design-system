@@ -119,3 +119,37 @@ export const WithActiveAccordion: Story = {
     activeSubKey: 'buttons',
   },
 };
+
+/** Items with an `href` render as real links (with `aria-current` on the
+    active one), so middle-click and copy-link work; accordion rows stay
+    buttons, and their sub-items can be links too. */
+export const WithLinks: Story = {
+  args: {
+    defaultExpanded: true,
+    activeKey: 'dashboard',
+    sections: [
+      {
+        category: 'Main',
+        items: [
+          { key: 'dashboard', icon: 'dashboard', label: 'Dashboard', href: '#dashboard' },
+          { key: 'analytics', icon: 'analytics', label: 'Analytics', href: '#analytics' },
+          { key: 'projects', icon: 'folder', label: 'Projects', href: '#projects' },
+        ],
+      },
+      {
+        category: 'Design',
+        items: [
+          {
+            key: 'components',
+            icon: 'widgets',
+            label: 'Components',
+            children: [
+              { key: 'buttons', label: 'Buttons', href: '#buttons' },
+              { key: 'inputs', label: 'Inputs', href: '#inputs' },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+};

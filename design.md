@@ -547,7 +547,7 @@ Default icons (Material Symbols Rounded): `info`, `check_circle`, `warning`, `er
 
 ### AppLayout / AppSidebar
 
-**`ds-app-layout`** — Full-page shell: header + collapsible sidebar + main content area. **`ds-app-sidebar`** — The side navigation component. Used as the outer wrapper for every documentation page on the website. Sidebar background: `--color-bg-container-primary`.
+**`ds-app-layout`** — Full-page shell: header + collapsible sidebar + main content area. **`ds-app-sidebar`** — The side navigation component. Used as the outer wrapper for every documentation page on the website. Sidebar background: `--color-bg-container-primary`. Expanded nav pills float off the rail edges (12px margin + 8px padding, so icon and label hold the same 20px inset as the category labels). An item or sub-item with an `href` renders as a real `<a>` (its `onClick` still fires, for client-side routing); accordion rows stay buttons. The active row carries `aria-current="page"`.
 
 ### ShaderField
 

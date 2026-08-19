@@ -13,8 +13,10 @@ export interface AppSidebarSubItem {
   key: string;
   /** Display label */
   label: string;
-  /** Click handler */
+  /** Click handler — also fires on a link sub-item, so a consumer can route client-side */
   onClick?: () => void;
+  /** Renders the sub-item as a real link to this URL instead of a button */
+  href?: string;
 }
 
 export interface AppSidebarItem {
@@ -24,8 +26,10 @@ export interface AppSidebarItem {
   icon: string;
   /** Display label (shown when expanded) */
   label: string;
-  /** Click handler */
+  /** Click handler — also fires on a link item, so a consumer can route client-side */
   onClick?: () => void;
+  /** Renders the item as a real link to this URL instead of a button. Ignored when the item has children, whose row is the accordion toggle */
+  href?: string;
   /** Sub-items — turns this into an accordion */
   children?: AppSidebarSubItem[];
 }
@@ -263,43 +267,70 @@ export const AppSidebar = ({
               const isOpen = openKeys.has(item.key);
               const isActive = activeKey === item.key;
 
+              /* A leaf item with an href is a real link; an accordion row
+                 stays a button whatever it declares, because its job is to
+                 toggle, not navigate. */
+              const isLink = Boolean(item.href) && !hasChildren;
+
+              const itemClasses = [
+                `${baseClass}__btn`,
+                isActive ? `${baseClass}__btn--active` : '',
+              ]
+                .filter(Boolean)
+                .join(' ');
+
+              const itemContent = (
+                <>
+                  <span className={`${baseClass}__btn-left`}>
+                    <span className={`${baseClass}__btn-icon material-symbols-rounded`}>
+                      {item.icon}
+                    </span>
+                    <span className={`${baseClass}__btn-label`}>{item.label}</span>
+                  </span>
+                  {hasChildren && (
+                    <span
+                      className={[
+                        `${baseClass}__btn-chevron material-symbols-rounded`,
+                        isOpen ? `${baseClass}__btn-chevron--open` : '',
+                      ]
+                        .filter(Boolean)
+                        .join(' ')}
+                    >
+                      chevron_right
+                    </span>
+                  )}
+                </>
+              );
+
               return (
                 <React.Fragment key={item.key}>
-                  <button
-                    className={[
-                      `${baseClass}__btn`,
-                      isActive ? `${baseClass}__btn--active` : '',
-                    ]
-                      .filter(Boolean)
-                      .join(' ')}
-                    onClick={() => {
-                      if (hasChildren && isExpanded) {
-                        toggleAccordion(item.key);
-                      }
-                      item.onClick?.();
-                    }}
-                    aria-expanded={hasChildren ? isOpen : undefined}
-                    title={!isExpanded ? item.label : undefined}
-                  >
-                    <span className={`${baseClass}__btn-left`}>
-                      <span className={`${baseClass}__btn-icon material-symbols-rounded`}>
-                        {item.icon}
-                      </span>
-                      <span className={`${baseClass}__btn-label`}>{item.label}</span>
-                    </span>
-                    {hasChildren && (
-                      <span
-                        className={[
-                          `${baseClass}__btn-chevron material-symbols-rounded`,
-                          isOpen ? `${baseClass}__btn-chevron--open` : '',
-                        ]
-                          .filter(Boolean)
-                          .join(' ')}
-                      >
-                        chevron_right
-                      </span>
-                    )}
-                  </button>
+                  {isLink ? (
+                    <a
+                      className={itemClasses}
+                      href={item.href}
+                      onClick={() => item.onClick?.()}
+                      aria-current={isActive ? 'page' : undefined}
+                      title={!isExpanded ? item.label : undefined}
+                    >
+                      {itemContent}
+                    </a>
+                  ) : (
+                    <button
+                      type="button"
+                      className={itemClasses}
+                      onClick={() => {
+                        if (hasChildren && isExpanded) {
+                          toggleAccordion(item.key);
+                        }
+                        item.onClick?.();
+                      }}
+                      aria-expanded={hasChildren ? isOpen : undefined}
+                      aria-current={isActive ? 'page' : undefined}
+                      title={!isExpanded ? item.label : undefined}
+                    >
+                      {itemContent}
+                    </button>
+                  )}
 
                   {/* Sub-items */}
                   {hasChildren && (
@@ -311,22 +342,42 @@ export const AppSidebar = ({
                         .filter(Boolean)
                         .join(' ')}
                     >
-                      {item.children!.map((sub) => (
-                        <div key={sub.key} className={`${baseClass}__sub-item`}>
-                          <div className={`${baseClass}__sub-line`} />
-                          <button
-                            className={[
-                              `${baseClass}__sub-btn`,
-                              activeSubKey === sub.key ? `${baseClass}__sub-btn--active` : '',
-                            ]
-                              .filter(Boolean)
-                              .join(' ')}
-                            onClick={sub.onClick}
-                          >
-                            <span className={`${baseClass}__sub-label`}>{sub.label}</span>
-                          </button>
-                        </div>
-                      ))}
+                      {item.children!.map((sub) => {
+                        const subActive = activeSubKey === sub.key;
+                        const subClasses = [
+                          `${baseClass}__sub-btn`,
+                          subActive ? `${baseClass}__sub-btn--active` : '',
+                        ]
+                          .filter(Boolean)
+                          .join(' ');
+                        const subLabel = (
+                          <span className={`${baseClass}__sub-label`}>{sub.label}</span>
+                        );
+                        return (
+                          <div key={sub.key} className={`${baseClass}__sub-item`}>
+                            <div className={`${baseClass}__sub-line`} />
+                            {sub.href ? (
+                              <a
+                                className={subClasses}
+                                href={sub.href}
+                                onClick={sub.onClick}
+                                aria-current={subActive ? 'page' : undefined}
+                              >
+                                {subLabel}
+                              </a>
+                            ) : (
+                              <button
+                                type="button"
+                                className={subClasses}
+                                onClick={sub.onClick}
+                                aria-current={subActive ? 'page' : undefined}
+                              >
+                                {subLabel}
+                              </button>
+                            )}
+                          </div>
+                        );
+                      })}
                     </div>
                   )}
                 </React.Fragment>

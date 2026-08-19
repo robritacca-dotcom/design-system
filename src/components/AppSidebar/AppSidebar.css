@@ -166,12 +166,17 @@
   cursor: pointer;
   overflow: hidden;
   text-align: left;
-  transition: background-color var(--motion-duration-fast) var(--motion-ease-standard), padding var(--motion-duration-slow) var(--motion-ease-emphasized);
+  /* The row renders as an <a> when the item carries an href. */
+  text-decoration: none;
+  transition: background-color var(--motion-duration-fast) var(--motion-ease-standard), padding var(--motion-duration-slow) var(--motion-ease-emphasized), margin var(--motion-duration-slow) var(--motion-ease-emphasized);
 }
 
+/* Inset via margin + reduced padding (12 + 8 = the 20px the label sat at
+   before), so the pill floats off the rail edges while the icon and label
+   keep their exact x-positions against the category labels above. */
 .ds-app-sidebar--expanded .ds-app-sidebar__btn {
-  width: 100%;
-  padding: var(--padding-sm) var(--padding-lg);
+  margin: 0 var(--padding-sm-md);
+  padding: var(--padding-sm);
   justify-content: space-between;
 }
 
@@ -282,6 +287,9 @@
   align-items: center;
   gap: 8px;
   height: 40px;
+  /* The same edge inset the parent pills get; sub-items only render while
+     the rail is expanded, so this needs no state selector. */
+  margin-right: var(--padding-sm-md);
   padding: var(--padding-sm);
   border-radius: var(--radius-full);
   background: transparent;
@@ -292,6 +300,8 @@
   text-align: left;
   overflow: hidden;
   white-space: nowrap;
+  /* The row renders as an <a> when the sub-item carries an href. */
+  text-decoration: none;
   transition: background-color var(--motion-duration-fast) var(--motion-ease-standard);
 }
 
