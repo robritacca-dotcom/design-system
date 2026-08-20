@@ -68,7 +68,10 @@ const BRAND_RAMP_WEIGHTS: ReadonlyArray<[step: string, weight: number]> = [
   ["10", -0.66],
 ];
 
-export const DEFAULT_BRAND = "#118AB2";
+/** The shipped light-theme action fill (teal-08). The dark theme inverts
+    to teal-05, but the lever is keyed by the light hex: the shipped hex in
+    either theme short-circuits to the token files (null plan). */
+export const DEFAULT_BRAND = "#0E6E8F";
 
 /**
  * Preset action colours: steps 07 and 08 of every chromatic primitive ramp
@@ -394,7 +397,7 @@ const NEUTRALS: NeutralDef[] = [
   { step: "11", hex: "#000000" },
 ];
 
-export const DEFAULT_NEUTRAL_SEED = "#118AB2";
+export const DEFAULT_NEUTRAL_SEED = "#0E6E8F";
 
 /**
  * Tints every neutral primitive toward a seed colour. `strength` is
@@ -419,38 +422,41 @@ export function neutralOverrides(seedHex: string, strength: number): Overrides {
 
 /**
  * Every semantic token the shipped themes point at the teal (action) ramp,
- * with the step each theme uses. Mirrors tokens-light/dark.css by hand —
- * if those files repoint a role, update this map. `dark: null` means the
- * dark theme doesn't reference teal for that role; `darkRestore` is the
- * shipped dark value, re-asserted so a consumer's :root override can't
- * leak into their dark theme by load order.
+ * as role intents in key-relative weight steps ("07" is the key itself,
+ * lower tints, higher shades). Mirrors the SHAPE of tokens-light/dark.css
+ * by hand — if those files repoint a role, update this map. The shipped
+ * themes split per theme (light: deep fill under a light label; dark
+ * inverts to a light fill under a dark label), so the two columns differ.
+ * Nearest-step matching cannot always land the exact shipped step from an
+ * arbitrary key — for the shipped keys the token files are authoritative
+ * (the default hex never derives; it short-circuits to a null plan).
+ * `null` means that theme keeps its shipped value for the role.
  */
 const ACTION_SEMANTIC_REFS: ReadonlyArray<{
   cssVar: string;
-  light: string;
+  light: string | null;
   dark: string | null;
-  darkRestore?: string;
 }> = [
   { cssVar: "--color-action-primary-bg", light: "07", dark: "07" },
-  { cssVar: "--color-action-primary-bg-hover", light: "08", dark: "08" },
-  { cssVar: "--color-action-primary-bg-active", light: "09", dark: "09" },
+  { cssVar: "--color-action-primary-bg-hover", light: "08", dark: "06" },
+  { cssVar: "--color-action-primary-bg-active", light: "09", dark: "05" },
+  /* Label steps are "02" in both themes on purpose: brandRampValues
+     inverts the tint pole for a light key, so "02" always means "oppose
+     the fill" — near-white on a dark fill, near-black on a light one. For
+     the shipped dark key (teal-05) it lands on teal-10, the shipped label. */
   { cssVar: "--color-action-primary-text", light: "02", dark: "02" },
+  { cssVar: "--color-action-primary-text-active", light: null, dark: "02" },
   { cssVar: "--color-action-primary-text-secondary", light: "10", dark: "10" },
-  { cssVar: "--color-action-primary-text-tertiary", light: "07", dark: "07" },
-  { cssVar: "--color-action-primary-border", light: "09", dark: "09" },
-  { cssVar: "--color-action-primary-border-secondary", light: "06", dark: "06" },
-  { cssVar: "--color-action-primary-border-tertiary", light: "04", dark: "04" },
-  {
-    cssVar: "--color-action-icon-active",
-    light: "02",
-    dark: null,
-    darkRestore: "var(--primitive-neutral-01)",
-  },
+  { cssVar: "--color-action-primary-text-tertiary", light: "08", dark: "07" },
+  { cssVar: "--color-action-primary-border", light: "10", dark: "07" },
+  { cssVar: "--color-action-primary-border-secondary", light: "07", dark: "08" },
+  { cssVar: "--color-action-primary-border-tertiary", light: "07", dark: "07" },
+  { cssVar: "--color-action-icon-active", light: "02", dark: "02" },
   { cssVar: "--color-core-ui-primary", light: "07", dark: "07" },
   { cssVar: "--color-core-ui-secondary", light: "10", dark: "09" },
-  { cssVar: "--color-input-border-hover", light: "04", dark: "09" },
-  { cssVar: "--color-input-border-selected", light: "06", dark: "06" },
-  { cssVar: "--color-ai-gradient-end", light: "06", dark: "05" },
+  { cssVar: "--color-input-border-hover", light: "05", dark: "08" },
+  { cssVar: "--color-input-border-selected", light: "07", dark: "08" },
+  { cssVar: "--color-ai-gradient-end", light: "07", dark: "08" },
 ];
 
 /** Steps of any primitive ramp, the neutral scale included. */
@@ -531,24 +537,28 @@ export function actionPointerOverrides(
   const overrides: Overrides = {};
   for (const ref of ACTION_SEMANTIC_REFS) {
     const tealStep = theme === "light" ? ref.light : ref.dark;
-    if (!tealStep) {
-      if (theme === "dark" && ref.darkRestore) overrides[ref.cssVar] = ref.darkRestore;
-      continue;
-    }
+    if (!tealStep) continue; // that theme keeps its shipped value
     picked[ref.cssVar] = nearest(ideal[tealStep], tealStep);
   }
 
   /* Nearest-match can collapse bg/hover/active onto one step, which would
-     erase the interaction states — force them onto distinct, deepening
-     steps (both ramp directions run light to dark, and hover/active always
-     deepen, whichever way the key leans). */
+     erase the interaction states — force them onto distinct steps. The
+     direction is the theme's: light hover/active deepen away from the white
+     page, dark ones brighten away from the near-black one — unless the key
+     is already near-white (the black & white preset's dark button), where
+     there is no brightening headroom and a slight deepen reads correctly. */
   const idx = (s: string) => order.indexOf(s);
-  const deeper = (s: string) => order[Math.min(order.length - 1, idx(s) + 1)];
+  const brighten = theme === "dark" && luminance(hexToRgb(keyHex)) < 0.8;
+  const dir = brighten ? -1 : 1;
+  const walk = (s: string) =>
+    order[Math.min(order.length - 1, Math.max(0, idx(s) + dir))];
+  const collapsed = (outer: string, inner: string) =>
+    brighten ? idx(outer) >= idx(inner) : idx(outer) <= idx(inner);
   const bg = "--color-action-primary-bg";
   const hover = "--color-action-primary-bg-hover";
   const active = "--color-action-primary-bg-active";
-  if (idx(picked[hover]) <= idx(picked[bg])) picked[hover] = deeper(picked[bg]);
-  if (idx(picked[active]) <= idx(picked[hover])) picked[active] = deeper(picked[hover]);
+  if (collapsed(picked[hover], picked[bg])) picked[hover] = walk(picked[bg]);
+  if (collapsed(picked[active], picked[hover])) picked[active] = walk(picked[hover]);
 
   for (const [cssVar, step] of Object.entries(picked)) {
     overrides[cssVar] = `var(--primitive-${ramp}-${step})`;
@@ -580,7 +590,7 @@ export function actionColorPlan(
   if (upper === DEFAULT_BRAND) return null;
   const prim = findPrimitive(upper);
   if (prim) {
-    if (prim.ramp === "teal" && prim.step === "07") return null;
+    if (prim.ramp === "teal" && prim.step === "08") return null;
     return {
       ramp: prim.ramp,
       isPrimitive: true,

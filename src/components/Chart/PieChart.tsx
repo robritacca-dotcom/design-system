@@ -60,7 +60,7 @@ function getDefaultColors(): string[] {
   const get = (v: string, fb: string) =>
     getComputedStyle(document.documentElement).getPropertyValue(v).trim() || fb;
   return [
-    get('--color-action-primary-bg', '#118AB2'),
+    get('--color-action-primary-bg', '#0E6E8F'),
     get('--color-core-accent-mint', '#06D6A0'),
     get('--color-core-accent-gold', '#FFD166'),
     get('--color-core-accent-coral', '#EF476F'),

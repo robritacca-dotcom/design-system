@@ -98,7 +98,7 @@ export const LineChart = ({
 
   const textSecondary = getCSSVar('--color-text-secondary', '#A2A2A2');
   const gridColor = getCSSVar('--color-divider', '#232323');
-  const defaultColor = getCSSVar('--color-action-primary-bg', '#118AB2');
+  const defaultColor = getCSSVar('--color-action-primary-bg', '#0E6E8F');
 
   const renderTooltip = useCallback(
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */

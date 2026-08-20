@@ -50,7 +50,7 @@ Use this skill when asked to check for hardcoded values, audit token usage, find
    - The offending value
    - Recommended token replacement (if a clear match exists in the token files)
 
-   Format: `path/to/file.css:42 — #118AB2 → var(--color-action-primary-bg)`
+   Format: `path/to/file.css:42 — #0E6E8F → var(--color-action-primary-bg)`
 
 5. **Summarise** at the end:
    - `X violation(s) found`

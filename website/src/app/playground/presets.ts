@@ -42,64 +42,44 @@ const bases = (b: Record<string, string>): AdvancedColorState => ({
 });
 
 export const THEME_PRESETS: Record<string, ThemePreset> = {
-  tealAccessible: {
-    label: "Accessible teal",
-    // The shipped hue, moved to the steps that clear WCAG AA in each theme.
-    // A single value cannot: the band that reads against both a white page
-    // and a near black one is too narrow to also carry a label, so light
-    // takes a deep fill with a light label and dark inverts it. Both are
-    // real teal primitives (08 and 05), so this repoints the action roles
-    // rather than rewriting the ramp.
-    brand: "#0E6E8F",
-    brandDark: "#3CA5C6",
-    tintOn: true,
-    tintSeed: "#0E6E8F",
-    tintStrength: 4,
+  classic: {
+    label: "robr0 DS Classic",
+    // The pre-promotion shipped theme, kept as a revert handle: teal-07 as
+    // one action colour across both themes, before "Accessible teal" (the
+    // per-theme split now shipped in the token files) became the default.
+    // The lever derives an inverted dark plan from teal-07, so every role
+    // is pinned to the exact steps the old tokens-light/dark.css used.
+    brand: "#118AB2",
+    tintOn: false,
+    tintSeed: DEFAULT_NEUTRAL_SEED,
+    tintStrength: 6,
     radiusScale: 100,
     pill: true,
     fontLabel: "Nunito Sans (default)",
-    // No re-keyed neighbours: this preset changes one decision, so the rest
-    // of the palette stays where the shipped theme has it.
-    //
-    // The derived ramp lands three roles short of AA, and all three are the
-    // same story: the derivation is built for a dark fill under a light
-    // label, and light mode is the only theme still shaped that way here.
     extraOverrides: {
-      // As a link on the lightest container the derived teal-08 reads 3.96.
-      // Teal-09 clears every light surface.
-      "--color-action-primary-text-tertiary": "var(--primitive-teal-09)",
-      // RadioButton's focus ring. Teal-04 is 2.02 against the page, which
-      // the shipped theme gets wrong too; this is the one gap here that is
-      // a fix rather than a regression being undone.
-      "--color-action-primary-border-tertiary": "var(--primitive-teal-08)",
-      // The input hover border, 2.02 as teal-04. Teal-06 clears 3:1 and
-      // still reads lighter than the selected border, so the resting,
-      // hover and selected states stay in order.
-      "--color-input-border-hover": "var(--primitive-teal-06)",
-    },
-    extraOverridesDark: {
-      // The dark fill is light, so its label has to be dark on every step.
-      // Left light, the hover fill reads 2.75 behind its own text.
-      "--color-action-primary-text-active": "var(--primitive-teal-10)",
-      // Hover and active deepen by default, which walks the fill out of
-      // contrast with the page. Hold them on the light half of the ramp.
-      "--color-action-primary-bg-hover": "var(--primitive-teal-04)",
-      "--color-action-primary-bg-active": "var(--primitive-teal-03)",
-      // Teal-09 as the outlined button's edge is 1.44 against a dark
-      // surface, which is no edge at all.
-      "--color-action-primary-border": "var(--primitive-teal-05)",
-      "--color-action-primary-text-tertiary": "var(--primitive-teal-04)",
-      // The secondary button and CircularButton put this icon on the hover
-      // and active fills, which are now the light half of the ramp. Left at
-      // near-white it reads 1.80 on its own background: the same inversion
-      // the label needed, one token over.
-      "--color-action-icon-active": "var(--primitive-teal-10)",
-      // RadioButton's focus ring sits on the page at a 2px offset, so the
-      // derived teal-09 is 2.18 against it.
+      "--color-action-primary-bg": "var(--primitive-teal-07)",
+      "--color-action-primary-bg-hover": "var(--primitive-teal-08)",
+      "--color-action-primary-bg-active": "var(--primitive-teal-09)",
+      "--color-action-primary-text": "var(--primitive-teal-02)",
+      "--color-action-primary-text-tertiary": "var(--primitive-teal-07)",
+      "--color-action-primary-border": "var(--primitive-teal-09)",
+      "--color-action-primary-border-secondary": "var(--primitive-teal-06)",
       "--color-action-primary-border-tertiary": "var(--primitive-teal-04)",
-      // The input hover border, same problem as its light counterpart but
-      // from the other end: teal-09 is 2.18 on a dark page.
-      "--color-input-border-hover": "var(--primitive-teal-07)",
+      "--color-action-icon-active": "var(--primitive-teal-02)",
+      "--color-core-ui-primary": "var(--primitive-teal-07)",
+      "--color-core-ui-secondary": "var(--primitive-teal-10)",
+      "--color-input-border-hover": "var(--primitive-teal-04)",
+      "--color-input-border-selected": "var(--primitive-teal-06)",
+      "--color-ai-gradient-end": "var(--primitive-teal-06)",
+    },
+    // The classic theme pointed both themes at the same fills; only these
+    // five roles differed in its dark file.
+    extraOverridesDark: {
+      "--color-action-primary-text-active": "var(--primitive-neutral-01)",
+      "--color-action-icon-active": "var(--primitive-neutral-01)",
+      "--color-core-ui-secondary": "var(--primitive-teal-09)",
+      "--color-input-border-hover": "var(--primitive-teal-09)",
+      "--color-ai-gradient-end": "var(--primitive-teal-05)",
     },
   },
   warm: {

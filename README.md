@@ -99,9 +99,9 @@ Icons use a bundled Material Symbols Rounded variable font (woff2), with no extr
 Tokens flow in one direction, and primitives are never referenced directly in components:
 
 ```
-tokens-primitives.css      --primitive-teal-07: #118AB2
+tokens-primitives.css      --primitive-teal-08: #0E6E8F
         ↓
-tokens-light/dark.css      --color-action-primary-bg: var(--primitive-teal-07)
+tokens-light/dark.css      --color-action-primary-bg: var(--primitive-teal-08)
         ↓
 Component CSS              background-color: var(--color-action-primary-bg)
 ```

@@ -111,7 +111,7 @@ export const BarChart = ({
   const classes = [baseClass, className].filter(Boolean).join(' ');
 
   /* Resolve theme-aware colours once per render */
-  const resolvedBarColor = barColor || getCSSVar('--color-action-primary-bg', '#118AB2');
+  const resolvedBarColor = barColor || getCSSVar('--color-action-primary-bg', '#0E6E8F');
   const textSecondary = getCSSVar('--color-text-secondary', '#A2A2A2');
   const gridColor = getCSSVar('--color-divider', '#232323');
   const cursorColor = getCSSVar('--color-bg-container-secondary', '#303030');

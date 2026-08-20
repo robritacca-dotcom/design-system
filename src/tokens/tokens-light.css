@@ -51,17 +51,20 @@
   --shadow-floating: 0 4px 16px rgba(0, 0, 0, 0.12);
   --shadow-modal: 0 8px 32px rgba(0, 0, 0, 0.2);
 
-  /* Action - Primary */
-  --color-action-primary-bg: var(--primitive-teal-07);
-  --color-action-primary-bg-hover: var(--primitive-teal-08);
-  --color-action-primary-bg-active: var(--primitive-teal-09);
+  /* Action - Primary. The action colour is theme-dependent: one teal step
+     cannot clear 3:1 against both a white page and a near-black one while
+     also carrying a 4.5:1 label, so light takes a deep fill under a light
+     label and the dark theme inverts it (see tokens-dark.css). */
+  --color-action-primary-bg: var(--primitive-teal-08);
+  --color-action-primary-bg-hover: var(--primitive-teal-09);
+  --color-action-primary-bg-active: var(--primitive-teal-10);
   --color-action-primary-text: var(--primitive-teal-02);
   --color-action-primary-text-active: var(--primitive-neutral-01);
   --color-action-primary-text-secondary: var(--primitive-teal-10);
-  --color-action-primary-text-tertiary: var(--primitive-teal-07);
-  --color-action-primary-border: var(--primitive-teal-09);
-  --color-action-primary-border-secondary: var(--primitive-teal-06);
-  --color-action-primary-border-tertiary: var(--primitive-teal-04);
+  --color-action-primary-text-tertiary: var(--primitive-teal-09);
+  --color-action-primary-border: var(--primitive-teal-10);
+  --color-action-primary-border-secondary: var(--primitive-teal-08);
+  --color-action-primary-border-tertiary: var(--primitive-teal-08);
 
   /* Action - Icon */
   --color-action-icon-default: var(--primitive-neutral-10);
@@ -74,7 +77,7 @@
   --color-action-passive-bg-active: var(--primitive-neutral-03-semi);
 
   /* Core colours */
-  --color-core-ui-primary: var(--primitive-teal-07);
+  --color-core-ui-primary: var(--primitive-teal-08);
   --color-core-ui-secondary: var(--primitive-teal-10);
   --color-core-accent-coral: var(--primitive-red-07);
   --color-core-accent-violet: var(--primitive-purple-07);
@@ -114,7 +117,7 @@
      (AiButton's ring and glow), never as fills for ordinary chrome. */
   --color-ai-gradient-start: var(--primitive-red-06);
   --color-ai-gradient-mid: var(--primitive-blue-06);
-  --color-ai-gradient-end: var(--primitive-teal-06);
+  --color-ai-gradient-end: var(--primitive-teal-08);
 
   /* Chart - Contribution heatmap ramp (level 0 = none → level 4 = most) */
   --color-chart-contribution-0: var(--color-bg-container-primary);
@@ -129,8 +132,8 @@
   --color-input-text-disabled: var(--primitive-neutral-04);
   --color-input-text-inverse: var(--primitive-neutral-04);
   --color-input-border-primary: var(--primitive-neutral-02);
-  --color-input-border-hover: var(--primitive-teal-04);
-  --color-input-border-selected: var(--primitive-teal-06);
+  --color-input-border-hover: var(--primitive-teal-06);
+  --color-input-border-selected: var(--primitive-teal-08);
   --color-input-border-disabled: var(--primitive-neutral-03);
   --color-input-bg-primary: var(--primitive-neutral-00);
   --color-input-bg-disabled: var(--primitive-neutral-02);

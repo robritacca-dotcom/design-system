@@ -113,7 +113,7 @@ export const CollapsedByDefault: Story = {
 
 export const LongLines: Story = {
   args: {
-    code: `--color-action-primary-bg: var(--primitive-teal-07); /* #118AB2 — primary CTA fill, focus rings, active input borders. Never decorative. */`,
+    code: `--color-action-primary-bg: var(--primitive-teal-08); /* #0E6E8F — primary CTA fill, focus rings, active input borders. Never decorative. */`,
     filename: 'tokens-light.css',
     language: 'css',
   },

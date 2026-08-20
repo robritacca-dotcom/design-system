@@ -38,14 +38,14 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/** Primary UI colour — same values in both themes */
+/** Primary UI colour — the action teal, theme-split by design */
 export const PrimaryUI: Story = {
   args: {
     label: 'Primary',
     cssVar: '--color-core-ui-primary',
     theme: 'dark',
-    dark: { primitive: '--teal--07--', hex: '#118AB2', rgb: '17 / 138 / 178' },
-    light: { primitive: '--teal--07--', hex: '#118AB2', rgb: '17 / 138 / 178' },
+    dark: { primitive: '--teal--05--', hex: '#3CA5C6', rgb: '60 / 165 / 198' },
+    light: { primitive: '--teal--08--', hex: '#0E6E8F', rgb: '14 / 110 / 143' },
   },
 };
 
@@ -113,8 +113,8 @@ export const SwatchGrid: Story = {
     label: 'Primary',
     cssVar: '--color-core-ui-primary',
     theme: 'dark',
-    dark: { primitive: '--teal--07--', hex: '#118AB2', rgb: '17 / 138 / 178' },
-    light: { primitive: '--teal--07--', hex: '#118AB2', rgb: '17 / 138 / 178' },
+    dark: { primitive: '--teal--05--', hex: '#3CA5C6', rgb: '60 / 165 / 198' },
+    light: { primitive: '--teal--08--', hex: '#0E6E8F', rgb: '14 / 110 / 143' },
   },
   decorators: [
     () => (
@@ -122,7 +122,7 @@ export const SwatchGrid: Story = {
         <ColourSwatch
           label="Primary"
           cssVar="--color-core-ui-primary"
-          dark={{ primitive: '--teal--07--', hex: '#118AB2', rgb: '17 / 138 / 178' }}
+          dark={{ primitive: '--teal--05--', hex: '#3CA5C6', rgb: '60 / 165 / 198' }}
         />
         <ColourSwatch
           label="Secondary"

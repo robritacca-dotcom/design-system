@@ -172,9 +172,9 @@ The old `merge-and-push` skill is retired because its name didn't say which of t
 Three tiers — **never skip a tier**:
 
 ```
-tokens-primitives.css       --primitive-teal-07: #118AB2
+tokens-primitives.css       --primitive-teal-08: #0E6E8F
         ↓
-tokens-light/dark.css       --color-action-primary-bg: var(--primitive-teal-07)
+tokens-light/dark.css       --color-action-primary-bg: var(--primitive-teal-08)
         ↓
 Component CSS               background-color: var(--color-action-primary-bg)
 ```
@@ -184,7 +184,7 @@ Component CSS               background-color: var(--color-action-primary-bg)
 - **Dark mode** is driven by `data-theme="dark"` on the root element. Every semantic token has a light and dark value — no `prefers-color-scheme` queries in components.
 
 Key invariants:
-- Teal `--color-action-primary-bg` (#118AB2) is **only** for primary CTA buttons and focus rings. Never decorative.
+- Teal `--color-action-primary-bg` (#0E6E8F light / #3CA5C6 dark — the action family is theme-split by design, see design.md) is **only** for primary CTA buttons and focus rings. Never decorative.
 - Never hardcode hex values in component CSS — always a semantic token. (Deliberate off-token values are sanctioned *in place* with a `/* ds-allow(<category>): <reason> */` directive — `ds-allow-file(...)` for file-wide cases like ColorPicker's `hsl()` colour physics. Grep `ds-allow` to enumerate them; `scripts/validate-css-directives.mjs` owns the category set and build-enforces the grammar.)
 - Never hardcode hex values in semantic colour tokens either: every `--color-*` value in `tokens-light/dark.css` must be a `var(--primitive-*)` (or `var(--color-*)`) reference — build-enforced by `scripts/validate-token-references.mjs`. This is what lets a consumer override a primitive and have it cascade through the whole system.
 - Every `var(--…)` a component references must actually resolve: `scripts/validate-token-usage.mjs` fails the build on a reference to a custom property nothing defines (a fallback value marks a deliberate consumer-override hook and is exempt). This is the guard that would have caught Dialog styling its title with a token family that never existed.

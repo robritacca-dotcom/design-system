@@ -2,7 +2,7 @@
 
 ## Overview
 
-This design system is a **cool-professional, teal-anchored** component library and documentation website. The base atmosphere is a **pure white page floor** (`--color-bg-page-primary` — #FFFFFF) lifted by a **neutral container hierarchy** (light gray #F1F1F1 → mid gray #D6D6D6 → deep gray #BCBCBC) — clinical, precise, never warm. The brand voltage comes from **signature teal** (`--color-action-primary-bg` — #118AB2), a mid-depth cyan-blue that reads trustworthy and technical without corporate-blue flatness.
+This design system is a **cool-professional, teal-anchored** component library and documentation website. The base atmosphere is a **pure white page floor** (`--color-bg-page-primary` — #FFFFFF) lifted by a **neutral container hierarchy** (light gray #F1F1F1 → mid gray #D6D6D6 → deep gray #BCBCBC) — clinical, precise, never warm. The brand voltage comes from **signature teal** (`--color-action-primary-bg` — #0E6E8F light / #3CA5C6 dark), a cyan-blue that reads trustworthy and technical without corporate-blue flatness. The action colour is deliberately theme-dependent: no single teal step can clear 3:1 against both a white page and a near-black one while also carrying a 4.5:1 label, so light mode takes a deep fill under a light label and dark mode inverts to a light fill under a dark label.
 
 The system runs a **single typeface throughout**: **Nunito Sans** at weight 300 (display/hero) → 600 (headings) → 500/400 (body/UI). There is no serif face, and monospace appears only in sanctioned code contexts through `--font-family-code` — the typographic personality is clean, rounded, and approachable rather than editorial.
 
@@ -15,7 +15,7 @@ The system is **light/dark-first**: every semantic color token has a light-theme
 
 **Key Characteristics:**
 - White page floor (`--color-bg-page-primary` — #FFFFFF) with near-black primary text (`--color-text-primary` — #050505 light / #F1F1F1 dark).
-- Teal primary action (`--color-action-primary-bg` — #118AB2). Used exclusively on primary CTA buttons and focus rings, with one sanctioned data-viz exception: teal leads the default chart series palette. Never decorative elsewhere.
+- Teal primary action (`--color-action-primary-bg` — #0E6E8F light / #3CA5C6 dark). Used exclusively on primary CTA buttons and focus rings, with one sanctioned data-viz exception: teal leads the default chart series palette. Never decorative elsewhere.
 - Nunito Sans single-family system. Weight 300 for Mega/Display (marketing), 600 for headings, 500/400 for body and UI labels.
 - Container hierarchy as depth signal — standard containers carry no drop shadows. Depth is conveyed by stepping through `--color-bg-container-primary` → `secondary` → `tertiary`; the only shadows are the `--shadow-floating`/`--shadow-modal` tokens on floating surfaces and the interactive-card hover lift.
 - Five semantic status variants running through every feedback component: `info` (blue), `positive` (green), `warning` (orange), `error` (red), `neutral` (gray).
@@ -33,15 +33,18 @@ The system is **light/dark-first**: every semantic color token has a light-theme
 Never reference `--primitive-*` tokens inside components. Always use the semantic layer (`--color-*`). The chain is enforced in the other direction too: every semantic colour token's value must be a `var(--primitive-*)` reference — never a raw hex/rgba literal — so that overriding a primitive re-themes everything built on it (`scripts/validate-token-references.mjs` fails the build otherwise). The hex values noted throughout this section are the resolved values of those primitives.
 
 ### Action / Brand
-- **Primary bg** (`--color-action-primary-bg` — #118AB2): Teal. Every primary CTA button fill, focus rings, active input borders. The most-recognized brand color.
-- **Primary bg hover** (`--color-action-primary-bg-hover` — #0E6E8F): Pressed/hover darken on primary buttons.
-- **Primary bg active** (`--color-action-primary-bg-active` — #0A4E66): Press/active darken on primary buttons.
-- **Primary text** (`--color-action-primary-text` — #CFEAF3): Text/icon color on primary teal fill (light teal for contrast).
-- **Primary text active** (`--color-action-primary-text-active` — #F1F1F1): Text on hovered/active primary button.
-- **Primary border** (`--color-action-primary-border` — #0A4E66): Outline on secondary (outlined) Buttons and CircularButtons.
-- **Secondary border** (`--color-action-primary-border-secondary` — #2C9AB9): Reserved brighter border step — defined in both themes but not yet consumed by any component.
-- **Tertiary border** (`--color-action-primary-border-tertiary` — #6DBCD6): Hover ring on RadioButton.
-- **Tertiary text** (`--color-action-primary-text-tertiary` — #118AB2): Teal-coloured text for tertiary/ghost button labels.
+
+The action roles are the one token family that splits per theme by design (see Overview): light mode runs a deep fill under a light label, dark mode a light fill under a dark label, and hover/active walk away from the page — deepening in light, brightening in dark.
+
+- **Primary bg** (`--color-action-primary-bg` — #0E6E8F light / #3CA5C6 dark): Teal. Every primary CTA button fill, focus rings, active input borders. The most-recognized brand color.
+- **Primary bg hover** (`--color-action-primary-bg-hover` — #0A4E66 light / #6DBCD6 dark): Hover shift on primary buttons.
+- **Primary bg active** (`--color-action-primary-bg-active` — #052F3E light / #9ED4E5 dark): Press/active shift on primary buttons.
+- **Primary text** (`--color-action-primary-text` — #CFEAF3 light / #052F3E dark): Text/icon color on the primary fill — light teal on the deep light-mode fill, deep teal on the light dark-mode fill.
+- **Primary text active** (`--color-action-primary-text-active` — #F1F1F1 light / #052F3E dark): Text on hovered/active primary button.
+- **Primary border** (`--color-action-primary-border` — #052F3E light / #3CA5C6 dark): Outline on secondary (outlined) Buttons and CircularButtons.
+- **Secondary border** (`--color-action-primary-border-secondary` — #0E6E8F light / #2C9AB9 dark): Brighter border step — the completed-step border and connector in Stepper.
+- **Tertiary border** (`--color-action-primary-border-tertiary` — #0E6E8F light / #6DBCD6 dark): Hover ring on RadioButton.
+- **Tertiary text** (`--color-action-primary-text-tertiary` — #0A4E66 light / #6DBCD6 dark): Teal-coloured text for tertiary/ghost button labels.
 - **Passive bg** (`--color-action-passive-bg` — rgba(241,241,241,0.01)): Near-transparent ghost button fill.
 - **Passive bg hover** (`--color-action-passive-bg-hover` — rgba(214,214,214,0.8)): Gray hover on ghost/tertiary buttons.
 - **Passive text** (`--color-action-passive-text` — #050505 light / #F1F1F1 dark): Ghost button label color.
@@ -103,9 +106,9 @@ The red → blue → teal gradient is the system's "a model answers here" signal
 |---|---|---|
 | `--color-ai-gradient-start` | `red-06` #F16385 | `red-05` #F37F9B |
 | `--color-ai-gradient-mid` | `blue-06` #345AC4 | `blue-05` #5475D4 |
-| `--color-ai-gradient-end` | `teal-06` #2C9AB9 | `teal-05` #3CA5C6 |
+| `--color-ai-gradient-end` | `teal-08` #0E6E8F | `teal-07` #118AB2 |
 
-Dark mode runs one primitive step brighter so the gradient stays luminous on dark surfaces.
+Dark mode runs one primitive step brighter so the gradient stays luminous on dark surfaces. The teal stop sits deeper than the red and blue ones so the gradient ends on the same weight the action colour carries.
 
 ---
 
@@ -398,12 +401,12 @@ Each blob carries a 14–22s drift period inherited from the CSS blobs it replac
 
 | Variant | Fill | Border | Text |
 |---|---|---|---|
-| `primary` | `--color-action-primary-bg` (#118AB2) | none | `--color-action-primary-text` (#CFEAF3) |
-| `secondary` | transparent | `--color-action-primary-border` (#0A4E66) 1px | `--color-text-primary` |
+| `primary` | `--color-action-primary-bg` (#0E6E8F light / #3CA5C6 dark) | none | `--color-action-primary-text` (#CFEAF3 light / #052F3E dark) |
+| `secondary` | transparent | `--color-action-primary-border` (#052F3E light / #3CA5C6 dark) 1px | `--color-text-primary` |
 | `tertiary` | `--color-action-passive-bg` (near-transparent) | none | `--color-action-passive-text` |
 | `destructive` | transparent | `--color-core-accent-coral` (#EF476F) 1px | `--color-core-accent-coral` |
 
-Hover: primary and secondary → `--color-action-primary-bg-hover`; destructive → fills with its coral border colour. Active: primary and secondary → `--color-action-primary-bg-active` (which is secondary's border colour, so secondary's press reads as filling with its own border).
+Hover: primary and secondary → `--color-action-primary-bg-hover`; destructive → fills with its coral border colour. Active: primary and secondary → `--color-action-primary-bg-active`. Hover and active walk away from the page — deepening in light mode, brightening in dark — so the pressed fill never sinks toward the floor behind it.
 
 Sizes: `default` (padding 8px × 20px), `compact` (padding 6px × 12px).
 
@@ -457,8 +460,8 @@ Sizes: `default` (padding 6px × 12px — 32px tall), `compact` (padding 2px × 
 
 States:
 - **Default**: `--color-input-border-primary`
-- **Hover**: `--color-input-border-hover` (#6DBCD6 — teal tint)
-- **Focus**: `--color-input-border-selected` (#2C9AB9 — brighter teal)
+- **Hover**: `--color-input-border-hover` (#2C9AB9 light / #118AB2 dark — mid teal, clearing 3:1 against each page)
+- **Focus**: `--color-input-border-selected` (#0E6E8F light / #2C9AB9 dark — the active border, on the action colour's weight)
 - **Error**: `--color-status-error-border` (#EF476F) on border and helper text
 - **Disabled**: `--color-input-bg-disabled` fill, `--color-input-border-disabled`, `--color-input-text-disabled` on label/text
 
@@ -914,10 +917,9 @@ The theme is activated by `data-theme="dark"` on the HTML root element. The `tok
 - `--color-scrim` (0.5 → 0.7 black), `--color-control-thumb` (#FFFFFF → #F1F1F1)
 - `--shadow-floating`, `--shadow-modal` (shadow opacity increases in dark mode)
 
+- `--color-action-primary-*` — the action family inverts by design: the light theme's deep fill (#0E6E8F) under a light label becomes a light fill (#3CA5C6) under a deep label, because one teal step cannot clear contrast against both page floors (see Action / Brand)
+
 **Tokens that stay stable:**
-- `--color-action-primary-bg` #118AB2 — teal does not change in dark mode
-- `--color-action-primary-bg-hover`, `--color-action-primary-bg-active` — same
-- `--color-action-primary-text`, `--color-action-primary-text-active` — same
 - Status border colors (`--color-status-*-border`) — same in both themes
 - Status background/text invert to their dark counterparts for contrast
 

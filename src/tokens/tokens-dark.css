@@ -48,21 +48,25 @@
   --shadow-floating: 0 4px 16px rgba(0, 0, 0, 0.55);
   --shadow-modal: 0 8px 32px rgba(0, 0, 0, 0.6);
 
-  /* Action - Primary */
-  --color-action-primary-bg: var(--primitive-teal-07);
-  --color-action-primary-bg-hover: var(--primitive-teal-08);
-  --color-action-primary-bg-active: var(--primitive-teal-09);
-  --color-action-primary-text: var(--primitive-teal-02);
-  --color-action-primary-text-active: var(--primitive-neutral-01);
+  /* Action - Primary. Inverted from light: the fill is the light half of
+     the teal ramp under a dark label, because a dark fill cannot clear 3:1
+     against the near-black page. Hover and active brighten rather than
+     deepen, so the fill walks toward the page's opposite, not into it. */
+  --color-action-primary-bg: var(--primitive-teal-05);
+  --color-action-primary-bg-hover: var(--primitive-teal-04);
+  --color-action-primary-bg-active: var(--primitive-teal-03);
+  --color-action-primary-text: var(--primitive-teal-10);
+  --color-action-primary-text-active: var(--primitive-teal-10);
   --color-action-primary-text-secondary: var(--primitive-teal-10);
-  --color-action-primary-text-tertiary: var(--primitive-teal-07);
-  --color-action-primary-border: var(--primitive-teal-09);
+  --color-action-primary-text-tertiary: var(--primitive-teal-04);
+  --color-action-primary-border: var(--primitive-teal-05);
   --color-action-primary-border-secondary: var(--primitive-teal-06);
   --color-action-primary-border-tertiary: var(--primitive-teal-04);
 
-  /* Action - Icon */
+  /* Action - Icon. The active icon sits on the hover/active fills, which
+     are the light half of the ramp here — so it inverts with the label. */
   --color-action-icon-default: var(--primitive-neutral-01);
-  --color-action-icon-active: var(--primitive-neutral-01);
+  --color-action-icon-active: var(--primitive-teal-10);
 
   /* Action - Passive (Secondary button) */
   --color-action-passive-text: var(--primitive-neutral-01);
@@ -99,7 +103,7 @@
      stays luminous on dark surfaces. */
   --color-ai-gradient-start: var(--primitive-red-05);
   --color-ai-gradient-mid: var(--primitive-blue-05);
-  --color-ai-gradient-end: var(--primitive-teal-05);
+  --color-ai-gradient-end: var(--primitive-teal-07);
 
   /* Chart - Contribution heatmap ramp (level 0 = none → level 4 = most) */
   --color-chart-contribution-0: var(--primitive-neutral-08);
@@ -114,14 +118,14 @@
   --color-input-text-disabled: var(--primitive-neutral-07);
   --color-input-text-inverse: var(--primitive-neutral-07);
   --color-input-border-primary: var(--primitive-neutral-08);
-  --color-input-border-hover: var(--primitive-teal-09);
+  --color-input-border-hover: var(--primitive-teal-07);
   --color-input-border-selected: var(--primitive-teal-06);
   --color-input-border-disabled: var(--primitive-neutral-08);
   --color-input-bg-primary: var(--primitive-neutral-10);
   --color-input-bg-disabled: var(--primitive-neutral-09);
 
   /* Core colours */
-  --color-core-ui-primary: var(--primitive-teal-07);
+  --color-core-ui-primary: var(--primitive-teal-05);
   --color-core-ui-secondary: var(--primitive-teal-09);
   --color-core-accent-coral: var(--primitive-red-07);
   --color-core-accent-violet: var(--primitive-purple-07);

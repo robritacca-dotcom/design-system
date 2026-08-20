@@ -38,8 +38,8 @@ interface StatusSwatchData {
 const primaryUiColours: SwatchData[] = [
   {
     label: "Primary", cssVar: "--color-core-ui-primary",
-    dark: { primitive: "--teal--07--", hex: "#118AB2", rgb: "17 / 138 / 178" },
-    light: { primitive: "--teal--07--", hex: "#118AB2", rgb: "17 / 138 / 178" },
+    dark: { primitive: "--teal--05--", hex: "#3CA5C6", rgb: "60 / 165 / 198" },
+    light: { primitive: "--teal--08--", hex: "#0E6E8F", rgb: "14 / 110 / 143" },
   },
   {
     label: "Secondary", cssVar: "--color-core-ui-secondary",
@@ -225,22 +225,22 @@ const overlayControlColours: SwatchData[] = [
 const actionPrimaryColours: SwatchData[] = [
   {
     label: "Background Default", cssVar: "--color-action-primary-bg",
-    dark: { primitive: "--teal--07--", hex: "#118AB2", rgb: "17 / 138 / 178" },
-    light: { primitive: "--teal--07--", hex: "#118AB2", rgb: "17 / 138 / 178" },
-  },
-  {
-    label: "Background Hover", cssVar: "--color-action-primary-bg-hover",
-    dark: { primitive: "--teal--08--", hex: "#0E6E8F", rgb: "14 / 110 / 143" },
+    dark: { primitive: "--teal--05--", hex: "#3CA5C6", rgb: "60 / 165 / 198" },
     light: { primitive: "--teal--08--", hex: "#0E6E8F", rgb: "14 / 110 / 143" },
   },
   {
-    label: "Background Active", cssVar: "--color-action-primary-bg-active",
-    dark: { primitive: "--teal--09--", hex: "#0A4E66", rgb: "10 / 78 / 102" },
+    label: "Background Hover", cssVar: "--color-action-primary-bg-hover",
+    dark: { primitive: "--teal--04--", hex: "#6DBCD6", rgb: "109 / 188 / 214" },
     light: { primitive: "--teal--09--", hex: "#0A4E66", rgb: "10 / 78 / 102" },
   },
   {
+    label: "Background Active", cssVar: "--color-action-primary-bg-active",
+    dark: { primitive: "--teal--03--", hex: "#9ED4E5", rgb: "158 / 212 / 229" },
+    light: { primitive: "--teal--10--", hex: "#052F3E", rgb: "5 / 47 / 62" },
+  },
+  {
     label: "Text Primary", cssVar: "--color-action-primary-text",
-    dark: { primitive: "--teal--02--", hex: "#CFEAF3", rgb: "207 / 234 / 243" },
+    dark: { primitive: "--teal--10--", hex: "#052F3E", rgb: "5 / 47 / 62" },
     light: { primitive: "--teal--02--", hex: "#CFEAF3", rgb: "207 / 234 / 243" },
   },
   {
@@ -250,28 +250,28 @@ const actionPrimaryColours: SwatchData[] = [
   },
   {
     label: "Text Tertiary", cssVar: "--color-action-primary-text-tertiary",
-    dark: { primitive: "--teal--07--", hex: "#118AB2", rgb: "17 / 138 / 178" },
-    light: { primitive: "--teal--07--", hex: "#118AB2", rgb: "17 / 138 / 178" },
+    dark: { primitive: "--teal--04--", hex: "#6DBCD6", rgb: "109 / 188 / 214" },
+    light: { primitive: "--teal--09--", hex: "#0A4E66", rgb: "10 / 78 / 102" },
   },
   {
     label: "Text Active", cssVar: "--color-action-primary-text-active",
-    dark: { primitive: "--neutral--01--", hex: "#F1F1F1", rgb: "241 / 241 / 241" },
+    dark: { primitive: "--teal--10--", hex: "#052F3E", rgb: "5 / 47 / 62" },
     light: { primitive: "--neutral--01--", hex: "#F1F1F1", rgb: "241 / 241 / 241" },
   },
   {
     label: "Border Primary", cssVar: "--color-action-primary-border",
-    dark: { primitive: "--teal--09--", hex: "#0A4E66", rgb: "10 / 78 / 102" },
-    light: { primitive: "--teal--09--", hex: "#0A4E66", rgb: "10 / 78 / 102" },
+    dark: { primitive: "--teal--05--", hex: "#3CA5C6", rgb: "60 / 165 / 198" },
+    light: { primitive: "--teal--10--", hex: "#052F3E", rgb: "5 / 47 / 62" },
   },
   {
     label: "Border Secondary", cssVar: "--color-action-primary-border-secondary",
     dark: { primitive: "--teal--06--", hex: "#2C9AB9", rgb: "44 / 154 / 185" },
-    light: { primitive: "--teal--06--", hex: "#2C9AB9", rgb: "44 / 154 / 185" },
+    light: { primitive: "--teal--08--", hex: "#0E6E8F", rgb: "14 / 110 / 143" },
   },
   {
     label: "Border Tertiary", cssVar: "--color-action-primary-border-tertiary",
     dark: { primitive: "--teal--04--", hex: "#6DBCD6", rgb: "109 / 188 / 214" },
-    light: { primitive: "--teal--04--", hex: "#6DBCD6", rgb: "109 / 188 / 214" },
+    light: { primitive: "--teal--08--", hex: "#0E6E8F", rgb: "14 / 110 / 143" },
   },
   {
     label: "Icon Default", cssVar: "--color-action-icon-default",
@@ -280,7 +280,7 @@ const actionPrimaryColours: SwatchData[] = [
   },
   {
     label: "Icon Active", cssVar: "--color-action-icon-active",
-    dark: { primitive: "--neutral--01--", hex: "#F1F1F1", rgb: "241 / 241 / 241" },
+    dark: { primitive: "--teal--10--", hex: "#052F3E", rgb: "5 / 47 / 62" },
     light: { primitive: "--teal--02--", hex: "#CFEAF3", rgb: "207 / 234 / 243" },
   },
 ];
@@ -328,13 +328,13 @@ const inputColours: SwatchData[] = [
   },
   {
     label: "Border Hover", cssVar: "--color-input-border-hover",
-    dark: { primitive: "--teal--09--", hex: "#0A4E66", rgb: "10 / 78 / 102" },
-    light: { primitive: "--teal--04--", hex: "#6DBCD6", rgb: "109 / 188 / 214" },
+    dark: { primitive: "--teal--07--", hex: "#118AB2", rgb: "17 / 138 / 178" },
+    light: { primitive: "--teal--06--", hex: "#2C9AB9", rgb: "44 / 154 / 185" },
   },
   {
     label: "Border Selected", cssVar: "--color-input-border-selected",
     dark: { primitive: "--teal--06--", hex: "#2C9AB9", rgb: "44 / 154 / 185" },
-    light: { primitive: "--teal--06--", hex: "#2C9AB9", rgb: "44 / 154 / 185" },
+    light: { primitive: "--teal--08--", hex: "#0E6E8F", rgb: "14 / 110 / 143" },
   },
   {
     label: "Border Disabled", cssVar: "--color-input-border-disabled",
@@ -435,8 +435,8 @@ const aiGradientColours: SwatchData[] = [
   },
   {
     label: "End", cssVar: "--color-ai-gradient-end",
-    dark: { primitive: "--teal--05--", hex: "#3CA5C6", rgb: "60 / 165 / 198" },
-    light: { primitive: "--teal--06--", hex: "#2C9AB9", rgb: "44 / 154 / 185" },
+    dark: { primitive: "--teal--07--", hex: "#118AB2", rgb: "17 / 138 / 178" },
+    light: { primitive: "--teal--08--", hex: "#0E6E8F", rgb: "14 / 110 / 143" },
   },
 ];
 
