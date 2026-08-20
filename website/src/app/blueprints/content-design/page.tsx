@@ -2,10 +2,12 @@ import fs from "fs";
 import path from "path";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { AnchorNav } from "@robr0/design-system/components/AnchorNav/AnchorNav";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import DownloadButton from "./DownloadButton";
+import { createAnchoredH2, extractSections } from "../markdown-sections";
 import { getSidebarLinks, docsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
@@ -16,6 +18,7 @@ export default function ContentDesignBlueprintPage() {
   const raw = fs.readFileSync(filePath, "utf-8");
 
   const content = raw.replace(/^#\s+.+\r?\n/, "");
+  const sections = extractSections(content);
 
   return (
     <>
@@ -40,10 +43,12 @@ export default function ContentDesignBlueprintPage() {
             </p>
           </div>
 
-          <div className={`${styles.markdownBody} animate-in animate-delay-2`}>
-            <ReactMarkdown
+          <div className={`${styles.docLayout} animate-in animate-delay-2`}>
+            <div className={styles.markdownBody}>
+              <ReactMarkdown
               remarkPlugins={[remarkGfm]}
               components={{
+                h2: createAnchoredH2(),
                 table: ({ ...props }) => (
                   <div className={styles.tableWrapper}>
                     <table {...props} />
@@ -52,7 +57,12 @@ export default function ContentDesignBlueprintPage() {
               }}
             >
               {content}
-            </ReactMarkdown>
+              </ReactMarkdown>
+            </div>
+
+            <aside className={styles.anchorRail}>
+              <AnchorNav items={sections} />
+            </aside>
           </div>
         </main>
       </div>
