@@ -53,6 +53,18 @@ export default function SectionTitlePage() {
               <SectionTitle title="Primary, compact" trailing="New" />
             </div>
           </section>
+
+          {/* Without divider */}
+          <section className={styles.section}>
+            <SectionTitle title="Without divider" />
+            <p className={styles.sectionBody}>
+              Set divider to false above content that draws its own lines, such as bordered tables or calendars, so the heading separates by whitespace alone instead of doubling up the rules.
+            </p>
+            <div className={styles.variantStack}>
+              <SectionTitle title="Upcoming events" divider={false} />
+              <SectionTitle title="Team members" trailing="12" divider={false} />
+            </div>
+          </section>
         </main>
       </div>
 

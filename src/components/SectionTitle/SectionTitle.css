@@ -11,6 +11,14 @@
   padding-bottom: var(--padding-xl);
 }
 
+/* Divider-less variant: for headings above content that draws its own
+   lines, where a second rule would double up. The generous clearance
+   the divider needed drops to a small breathing gap. */
+.ds-section-title--no-divider {
+  border-bottom: none;
+  padding-bottom: var(--padding-md);
+}
+
 /* ============================================
    HEADING
    ============================================ */
