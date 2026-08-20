@@ -84,10 +84,15 @@ import { BarChart, LineChart } from '@robr0/design-system/charts';
   ```css
   :root { --font-family-primary: 'Inter', sans-serif; }
   ```
-- **Colours, radius, spacing**: every semantic token chains to a primitive, so overriding a primitive re-themes everything built on it:
+- **Colours, radius, spacing**: every semantic token chains to a primitive, so overriding a primitive re-themes everything built on it. The action colour is theme-split by design (light fills run teal-08/09/10, dark inverts to teal-05/04/03), so rebranding it means re-keying those steps:
   ```css
   :root {
-    --primitive-teal-07: #7C3AED;  /* your brand color becomes the action color */
+    --primitive-teal-08: #6D31D3;  /* light fill */
+    --primitive-teal-09: #4C2293;  /* light hover */
+    --primitive-teal-10: #2E1560;  /* light active, dark label */
+    --primitive-teal-05: #A78BFA;  /* dark fill */
+    --primitive-teal-04: #C4B5FD;  /* dark hover */
+    --primitive-teal-03: #DDD6FE;  /* dark active */
     --primitive-radius-full: 12px; /* pill buttons become rounded rectangles */
   }
   ```

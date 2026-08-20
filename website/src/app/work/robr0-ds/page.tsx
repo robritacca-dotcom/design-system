@@ -56,12 +56,12 @@ function TokenTiers() {
     {
       name: "Primitives",
       rule: "Raw values. Never referenced by a component.",
-      code: "--primitive-teal-07: #118AB2",
+      code: "--primitive-teal-08: #0E6E8F",
     },
     {
       name: "Semantic tokens",
       rule: "Intent, not appearance. Light and dark value on every one.",
-      code: "--color-action-primary-bg: var(--primitive-teal-07)",
+      code: "--color-action-primary-bg: var(--primitive-teal-08)",
     },
     {
       name: "Components",

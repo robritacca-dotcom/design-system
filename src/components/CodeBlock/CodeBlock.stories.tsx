@@ -64,8 +64,8 @@ export const NoHeader: Story = {
 };
 
 const SAMPLE_LONG_CSS = `:root {
-  --color-action-primary-bg: var(--primitive-teal-07);
-  --color-action-primary-bg-hover: var(--primitive-teal-08);
+  --color-action-primary-bg: var(--primitive-teal-08);
+  --color-action-primary-bg-hover: var(--primitive-teal-09);
   --color-action-passive-bg: var(--primitive-neutral-02);
   --color-action-passive-bg-hover: var(--primitive-neutral-03);
   --color-bg-page: var(--primitive-white);

@@ -469,7 +469,7 @@ Icon slots (Material Symbols Rounded): left icon at 16px from edge, right icon a
 
 ### Checkbox
 
-**`ds-checkbox`** — Custom checkbox with an inline SVG check (and minus for `indeterminate`) instead of font glyphs, for pixel-perfect centring. The box is `--radius-sm` with a `--border-md` border; checked state fills `--color-action-primary-bg` with `--color-action-primary-text-active` stroke, hover darkens to `--color-action-primary-bg-hover`. Sizes: `default`, `compact`. Disabled: `opacity: 0.4`, `cursor: not-allowed`. A `CheckboxGroup` wrapper renders a labelled list of checkboxes bound to a value array.
+**`ds-checkbox`** — Custom checkbox with an inline SVG check (and minus for `indeterminate`) instead of font glyphs, for pixel-perfect centring. The box is `--radius-sm` with a `--border-md` border; checked state fills `--color-action-primary-bg` with `--color-action-primary-text-active` stroke, hover shifts to `--color-action-primary-bg-hover`. Sizes: `default`, `compact`. Disabled: `opacity: 0.4`, `cursor: not-allowed`. A `CheckboxGroup` wrapper renders a labelled list of checkboxes bound to a value array.
 
 ### RadioButton
 

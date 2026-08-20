@@ -324,7 +324,7 @@ export function SitePlaygroundCover(props: CoverProps) {
             </span>
             <span className={styles.hexChip}>
               <span className={styles.hexSwatch} />
-              #118AB2
+              #0E6E8F
             </span>
             <span className={styles.hexChip}>All colour ramps</span>
           </span>

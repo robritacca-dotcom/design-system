@@ -34,7 +34,7 @@ This is a more thorough, component-specific version of `new-page`. The Button pa
    - `website/src/app/components/button/page.module.css` — CSS module structure
 
 4. **Create `website/src/app/components/<component-slug>/page.tsx`:**
-   - Mirror the Button page's layout shell exactly — same components, same nesting, same class names, with your slug in the `getSidebarLinks` call. Don't improvise structure. Mirror the *structure*, not deprecated APIs: if an existing page still uses a prop marked `@deprecated` in the component source (the `priority` → `variant` rename is the precedent), write the current prop name.
+   - Mirror the Button page's layout shell exactly — same components, same nesting, same class names — and render `<ComponentsSidebar />` with no props: it resolves the active entry from the pathname and its groups from the registry. Don't improvise structure. Mirror the *structure*, not deprecated APIs: if an existing page still uses a prop marked `@deprecated` in the component source (the `priority` → `variant` rename is the precedent), write the current prop name.
    - Invariants the exemplar can't teach:
      - `subDisplay` is a *tagline* for the component (e.g. Button's "The main action element") — not the word "Components"; the breadcrumb already shows the section
      - `introBody` is a clear 1–2 sentence description of the component's purpose, inferred from its props and JSDoc if available

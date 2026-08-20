@@ -54,13 +54,17 @@ const FONT_SNIPPET = `/* The whole type scale chains to one token.
 }`;
 
 const PRIMITIVE_SNIPPET = `/* Every semantic token references a primitive, so overriding a
-   primitive re-themes everything built on it — in both themes. */
+   primitive re-themes everything built on it — in both themes.
+   The action colour is theme-split: light fills run teal-08/09/10,
+   dark inverts to teal-05/04/03. Re-key those steps to rebrand —
+   or copy a complete override from the playground. */
 :root {
-  /* Your brand colour becomes the action colour (buttons, focus rings) */
-  --primitive-teal-07: #7C3AED;
-  /* Its pressed/hover ramp neighbours */
-  --primitive-teal-08: #6D31D3;
-  --primitive-teal-09: #4C2293;
+  --primitive-teal-08: #6D31D3;  /* light fill */
+  --primitive-teal-09: #4C2293;  /* light hover */
+  --primitive-teal-10: #2E1560;  /* light active, dark label */
+  --primitive-teal-05: #A78BFA;  /* dark fill */
+  --primitive-teal-04: #C4B5FD;  /* dark hover */
+  --primitive-teal-03: #DDD6FE;  /* dark active */
 
   /* Pill buttons become rounded rectangles */
   --primitive-radius-full: 12px;

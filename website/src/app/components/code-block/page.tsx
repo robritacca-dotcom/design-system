@@ -14,13 +14,13 @@ const USAGE_SNIPPET = `import { Chip } from '@robr0/design-system/components/Chi
 <Chip label="Filter" icon="check" selected onClick={toggle} />`;
 
 const TOKEN_SNIPPET = `/* Semantic tokens reference primitives — never skip a tier */
---color-action-primary-bg: var(--primitive-teal-07);   /* #118AB2 */
+--color-action-primary-bg: var(--primitive-teal-08);   /* #0E6E8F */
 --color-text-primary: var(--primitive-neutral-09);     /* #050505 */
 --radius-full: var(--primitive-radius-full);           /* 999px */`;
 
 const SCROLL_SNIPPET = `:root {
-  --color-action-primary-bg: var(--primitive-teal-07);
-  --color-action-primary-bg-hover: var(--primitive-teal-08);
+  --color-action-primary-bg: var(--primitive-teal-08);
+  --color-action-primary-bg-hover: var(--primitive-teal-09);
   --color-action-passive-bg: var(--primitive-neutral-02);
   --color-action-passive-bg-hover: var(--primitive-neutral-03);
   --color-bg-page: var(--primitive-white);

@@ -55,7 +55,7 @@ export interface PieChartProps {
 /** Default colour palette using DS accent tokens (resolved at render) */
 function getDefaultColors(): string[] {
   if (typeof window === 'undefined') {
-    return ['#118AB2', '#06D6A0', '#FFD166', '#EF476F', '#9E47EF', '#EF8247'];
+    return ['#0E6E8F', '#06D6A0', '#FFD166', '#EF476F', '#9E47EF', '#EF8247'];
   }
   const get = (v: string, fb: string) =>
     getComputedStyle(document.documentElement).getPropertyValue(v).trim() || fb;
