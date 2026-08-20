@@ -253,6 +253,36 @@ Whitespace communicates hierarchy. Dense elements use micro-gaps (2–8px); comf
 
 ---
 
+## Composition
+
+Tokens constrain values; this section constrains choices. Element-level rules (colors, radii, type) make components consistent — these rules make **pages** consistent. Every rule here is stated so that a page assembled from the components lands right on the first pass, without per-page taste decisions.
+
+### The rhythm ladder
+
+Page-level vertical space is a statement of relatedness: the gap between two things says how related they are. The ladder is exhaustive — these five roles are the *only* page-level gaps. A spacing value that is not on the ladder is component-internal spacing, and belongs to a component.
+
+| Role | Token | Value | Meaning |
+|---|---|---|---|
+| Section break | `--gap-xxxl` | 80px (60px ≤768px) | Separates page regions. The only gap between sections. |
+| Heading bind | `--gap-xl` | 40px, flat | Ties a heading to the content it introduces. |
+| Intro bind | `--gap-lg` | 20px | Ties a tagline or lede to its body copy. |
+| Group bind | `--gap-sm` | 8px | Ties a label to the items it names. |
+| Column gutters | `--layout-*` | presets | Gutters and rail widths are facts of the layout, set once at the shell — never per-page choices. |
+
+Because the ladder's meanings differ by a full visual step (80 / 40 / 20 / 8), a reader can recover the page structure from spacing alone. Never use an off-ladder gap to "fine-tune" a page-level relationship: if 40px feels wrong between a heading and its content, the content is wrong, not the gap.
+
+### Composition rules
+
+1. **Parent owns spacing.** Siblings are spaced by their container's `gap`, never by margins on the children. A child that carries its own outer margin breaks in every context except the one it was tuned for.
+2. **One level of chrome.** Components that carry their own container (charts, tables, calendars) sit bare under a heading — never wrapped in a card. A card wrapper is only for content with no chrome of its own. Two levels of container on one element is always a bug.
+3. **Dividers are the last resort.** Separation comes from whitespace (the ladder) and containers first; a divider is only for where spacing contrast cannot do the job — long uniform lists, table rows. A divider under a heading that whitespace already separates is decoration, and decoration is not a divider's job. Next to content that draws its own lines (bordered tables, calendars), a section heading always separates by whitespace alone — on a line-heavy page, every added line is noise.
+4. **Constrain the column, not the content.** A page has one content max-width; anything wider than its column (tables, diagrams, code) scrolls inside its own container. Never cap the width of a paragraph — cap the column it sits in.
+5. **A header is one region.** A page title and its tagline bind at the heading tier (40px), never separated by a section break. The first section break on a page sits *below* the complete header group.
+6. **Page rhythm stops at a component's edge.** The ladder governs the space *between* components and headings; a component's internal spacing is its own spec's business. Composing a page never involves reaching into a component to adjust its insides.
+7. **Sections stack.** A page is one column of full-width sections; side-by-side placement is for the items *inside* a band (a metrics row of Stats), not for sections themselves. Tiling sections into a grid is a template's decision to make, never a page-by-page one — tested both ways on a dense dashboard, the stack reads calmer and the grid reads cramped.
+
+---
+
 ## Shapes
 
 ### Border Radius Scale
