@@ -11,6 +11,7 @@ const meta = {
   argTypes: {
     title: { control: 'text' },
     trailing: { control: 'text' },
+    divider: { control: 'boolean' },
   },
   args: {
     title: 'Section heading',
@@ -51,5 +52,13 @@ export const WithBadge: Story = {
   args: {
     title: 'Primary, compact',
     trailing: 'New',
+  },
+};
+
+/** Divider-less variant, for headings above content that draws its own lines */
+export const WithoutDivider: Story = {
+  args: {
+    title: 'Upcoming events',
+    divider: false,
   },
 };

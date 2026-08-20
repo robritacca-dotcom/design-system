@@ -689,7 +689,7 @@ Field deliberately owns **no layout** — the flex column and gap stay on the co
 
 ### SectionTitle
 
-**`ds-section-title`** — The standard section heading used across the docs site: an `<h2>` in `--font-heading-2-*` `--color-text-secondary` with an optional `trailing` slot (count, badge, metadata) in `--font-paragraph-*` `--color-text-tertiary`, closed by a `--color-divider` bottom border with `--padding-xl` breathing room. This is the h2-carries-the-divider rule from the typography spec, packaged as a component.
+**`ds-section-title`** — The standard section heading used across the docs site: an `<h2>` in `--font-heading-2-*` `--color-text-secondary` with an optional `trailing` slot (count, badge, metadata) in `--font-paragraph-*` `--color-text-tertiary`, closed by a `--color-divider` bottom border with `--padding-xl` breathing room. This is the h2-carries-the-divider rule from the typography spec, packaged as a component. `divider={false}` (`ds-section-title--no-divider`) drops the border and reduces the clearance to `--padding-md`, for headings above content that draws its own lines (bordered tables, calendars) — where a second rule would double up, the section separates by whitespace alone.
 
 ### Instructions
 
