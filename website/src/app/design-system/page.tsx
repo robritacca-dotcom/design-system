@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import MegaNav from "../../components/MegaNav/MegaNav";
 import FadeDivider from "../../components/FadeDivider/FadeDivider";
@@ -247,10 +247,17 @@ function NavCard({
 }
 
 /** One escalator column: the cards render twice into a track that translates
-    by exactly one copy's height, so the loop is seamless. The second copy is
-    presentation only — aria-hidden and inert keep it out of the accessibility
-    tree and the tab order. `render` is a function (not children) so a copy can
-    vary anything that must be document-unique, like a radio group name. */
+    by exactly one copy's height, so the loop is seamless. Exactly one copy is
+    live at a time — the other is aria-hidden and inert, keeping the pair out
+    of the accessibility tree and tab order as a single column. Which copy is
+    live follows the loop: inert also removes a subtree from pointer
+    hit-testing, so a statically inert duplicate turns into visible-but-dead
+    UI (arrow cursor, no hover, no pause) for the stretch of the cycle where
+    it fills the window. A slow poll keeps the copy occupying the window the
+    interactive one, and never swaps under a pointer or focus, since flipping
+    inert mid-hover would drop the hover and un-pause the track. `render` is
+    a function (not children) so a copy can vary anything that must be
+    document-unique, like a radio group name. */
 function EscalatorColumn({
   direction,
   duration,
@@ -260,17 +267,52 @@ function EscalatorColumn({
   duration: string;
   render: (copy: "a" | "b") => React.ReactNode;
 }) {
+  const colRef = useRef<HTMLDivElement>(null);
+  const stackARef = useRef<HTMLDivElement>(null);
+  const stackBRef = useRef<HTMLDivElement>(null);
+  const [liveCopy, setLiveCopy] = useState<"a" | "b">("a");
+
+  useEffect(() => {
+    const col = colRef.current;
+    const a = stackARef.current;
+    const b = stackBRef.current;
+    if (!col || !a || !b) return;
+    const visibleHeight = (el: HTMLElement, win: DOMRect) => {
+      const r = el.getBoundingClientRect();
+      return Math.max(0, Math.min(r.bottom, win.bottom) - Math.max(r.top, win.top));
+    };
+    const tick = () => {
+      if (col.matches(":hover") || col.matches(":focus-within")) return;
+      const win = col.getBoundingClientRect();
+      setLiveCopy(visibleHeight(a, win) >= visibleHeight(b, win) ? "a" : "b");
+    };
+    tick();
+    /* The track drifts ~10px/s and the handover zone spans hundreds of px,
+       so a 1s poll can't miss it; rAF would be waste. */
+    const id = window.setInterval(tick, 1000);
+    return () => window.clearInterval(id);
+  }, []);
+
   return (
     <div
+      ref={colRef}
       className={`${styles.col} ${direction === "up" ? styles.colUp : styles.colDown}`}
       style={{ "--escalator-duration": duration } as React.CSSProperties}
     >
       <div className={styles.escalatorTrack}>
-        <div className={styles.escalatorStack}>{render("a")}</div>
         <div
+          ref={stackARef}
+          className={styles.escalatorStack}
+          aria-hidden={liveCopy !== "a" || undefined}
+          inert={liveCopy !== "a"}
+        >
+          {render("a")}
+        </div>
+        <div
+          ref={stackBRef}
           className={`${styles.escalatorStack} ${styles.escalatorDupe}`}
-          aria-hidden="true"
-          inert
+          aria-hidden={liveCopy !== "b" || undefined}
+          inert={liveCopy !== "b"}
         >
           {render("b")}
         </div>
