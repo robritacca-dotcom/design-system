@@ -60,7 +60,7 @@
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  padding: var(--border-xs);
+  padding: var(--border-md);
   background: conic-gradient(
     from var(--ds-ai-button-angle),
     var(--color-ai-gradient-start),
