@@ -74,3 +74,12 @@
   opacity: 0.4;
   cursor: not-allowed;
 }
+
+/* Icons take the colour of the text around them. Explicit, not just
+   inherited by default: a consumer stylesheet that sets a colour on
+   .material-symbols-rounded itself (a common global default) would
+   otherwise override inheritance and detach the icon from the state
+   colours this component sets on its parents. */
+.ds-message-actions .material-symbols-rounded {
+  color: inherit;
+}

@@ -152,3 +152,12 @@
 .ds-numberinput--compact .ds-numberinput__stepper {
   padding: 0 var(--padding-sm); /* 8px */
 }
+
+/* Icons take the colour of the text around them. Explicit, not just
+   inherited by default: a consumer stylesheet that sets a colour on
+   .material-symbols-rounded itself (a common global default) would
+   otherwise override inheritance and detach the icon from the state
+   colours this component sets on its parents. */
+.ds-numberinput .material-symbols-rounded {
+  color: inherit;
+}

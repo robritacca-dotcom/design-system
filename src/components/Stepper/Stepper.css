@@ -205,3 +205,12 @@ button.ds-stepper__content:hover .ds-stepper__label {
   height: auto;
   transform: translateX(-50%);
 }
+
+/* Icons take the colour of the text around them. Explicit, not just
+   inherited by default: a consumer stylesheet that sets a colour on
+   .material-symbols-rounded itself (a common global default) would
+   otherwise override inheritance and detach the icon from the state
+   colours this component sets on its parents. */
+.ds-stepper .material-symbols-rounded {
+  color: inherit;
+}
