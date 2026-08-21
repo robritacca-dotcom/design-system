@@ -22,6 +22,12 @@
 }
 
 .headerInner {
+  /* The containing block for the mega panel, in both headers. The panel must
+     centre on the content box, not the header: the sticky bar is full
+     viewport width and carries its gutters — and the docked chat's inset —
+     as padding, which absolute positioning ignores (offsets resolve against
+     the padding box). Anchoring to the inner box inherits all of it. */
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;

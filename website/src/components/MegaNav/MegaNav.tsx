@@ -326,41 +326,42 @@ export default function MegaNav() {
             </span>
           </button>
         </div>
-      </div>
 
-      {/* MEGA MENU — Design system dropdown */}
-      <div
-        ref={menuRef}
-        id="ds-mega"
-        className={`${styles.mega} ${open ? styles.megaOpen : ""}`}
-        onMouseEnter={openMenu}
-        onMouseLeave={scheduleClose}
-        aria-hidden={!open}
-      >
-        <div className={styles.megaInner}>
-          <div className={styles.megaGrid}>
-            {dsMegaItems.map((item) => {
-              const itemActive = pathname === item.href || pathname.startsWith(item.href + "/");
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`${styles.megaItem} ${itemActive ? styles.megaItemActive : ""}`}
-                  tabIndex={open ? 0 : -1}
-                  aria-current={itemActive ? "page" : undefined}
-                >
-                  <div className={styles.megaIcon}>
-                    <span className="material-symbols-rounded" aria-hidden="true">
-                      {item.icon}
-                    </span>
-                  </div>
-                  <div className={styles.megaItemText}>
-                    <div className={styles.megaLabel}>{item.label}</div>
-                    <div className={styles.megaDescription}>{item.description}</div>
-                  </div>
-                </Link>
-              );
-            })}
+        {/* MEGA MENU — Design system dropdown. Inside headerInner so the
+            panel anchors to the content box (see .headerInner in the CSS). */}
+        <div
+          ref={menuRef}
+          id="ds-mega"
+          className={`${styles.mega} ${open ? styles.megaOpen : ""}`}
+          onMouseEnter={openMenu}
+          onMouseLeave={scheduleClose}
+          aria-hidden={!open}
+        >
+          <div className={styles.megaInner}>
+            <div className={styles.megaGrid}>
+              {dsMegaItems.map((item) => {
+                const itemActive = pathname === item.href || pathname.startsWith(item.href + "/");
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`${styles.megaItem} ${itemActive ? styles.megaItemActive : ""}`}
+                    tabIndex={open ? 0 : -1}
+                    aria-current={itemActive ? "page" : undefined}
+                  >
+                    <div className={styles.megaIcon}>
+                      <span className="material-symbols-rounded" aria-hidden="true">
+                        {item.icon}
+                      </span>
+                    </div>
+                    <div className={styles.megaItemText}>
+                      <div className={styles.megaLabel}>{item.label}</div>
+                      <div className={styles.megaDescription}>{item.description}</div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
@@ -457,42 +458,44 @@ export default function MegaNav() {
               </span>
             </button>
           </div>
-        </div>
 
-        {/* Sticky mega menu — same content, positioned relative to sticky header */}
-        <div
-          ref={stickyMenuRef}
-          id="ds-mega-sticky"
-          className={`${styles.mega} ${open ? styles.megaOpen : ""}`}
-          style={!isStuck ? { pointerEvents: "none" } : undefined}
-          onMouseEnter={openMenu}
-          onMouseLeave={scheduleClose}
-          aria-hidden={!open}
-        >
-          <div className={styles.megaInner}>
-            <div className={styles.megaGrid}>
-              {dsMegaItems.map((item) => {
-                const itemActive = pathname === item.href || pathname.startsWith(item.href + "/");
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`${styles.megaItem} ${itemActive ? styles.megaItemActive : ""}`}
-                    tabIndex={open && isStuck ? 0 : -1}
-                    aria-current={itemActive ? "page" : undefined}
-                  >
-                    <div className={styles.megaIcon}>
-                      <span className="material-symbols-rounded" aria-hidden="true">
-                        {item.icon}
-                      </span>
-                    </div>
-                    <div className={styles.megaItemText}>
-                      <div className={styles.megaLabel}>{item.label}</div>
-                      <div className={styles.megaDescription}>{item.description}</div>
-                    </div>
-                  </Link>
-                );
-              })}
+          {/* Sticky mega menu — same content, anchored to the sticky bar's
+              headerInner so it centres on the content box rather than the
+              full-viewport-width fixed bar (see .headerInner in the CSS). */}
+          <div
+            ref={stickyMenuRef}
+            id="ds-mega-sticky"
+            className={`${styles.mega} ${open ? styles.megaOpen : ""}`}
+            style={!isStuck ? { pointerEvents: "none" } : undefined}
+            onMouseEnter={openMenu}
+            onMouseLeave={scheduleClose}
+            aria-hidden={!open}
+          >
+            <div className={styles.megaInner}>
+              <div className={styles.megaGrid}>
+                {dsMegaItems.map((item) => {
+                  const itemActive = pathname === item.href || pathname.startsWith(item.href + "/");
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={`${styles.megaItem} ${itemActive ? styles.megaItemActive : ""}`}
+                      tabIndex={open && isStuck ? 0 : -1}
+                      aria-current={itemActive ? "page" : undefined}
+                    >
+                      <div className={styles.megaIcon}>
+                        <span className="material-symbols-rounded" aria-hidden="true">
+                          {item.icon}
+                        </span>
+                      </div>
+                      <div className={styles.megaItemText}>
+                        <div className={styles.megaLabel}>{item.label}</div>
+                        <div className={styles.megaDescription}>{item.description}</div>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
