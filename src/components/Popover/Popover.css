@@ -35,13 +35,15 @@
 
   /* Hidden by default */
   opacity: 0;
+  visibility: hidden; /* keeps panel content out of the tab order when closed */
   pointer-events: none;
   transform: scale(0.96);
-  transition: opacity var(--motion-duration-base) var(--motion-ease-standard), transform var(--motion-duration-base) var(--motion-ease-standard);
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard), transform var(--motion-duration-base) var(--motion-ease-standard), visibility var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 .ds-popover__panel--open {
   opacity: 1;
+  visibility: visible;
   pointer-events: auto;
   transform: scale(1);
 }

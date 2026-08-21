@@ -193,6 +193,21 @@ export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
             });
           }
           break;
+        case 'Home':
+          if (isOpen) {
+            e.preventDefault();
+            const first = flatOptions.findIndex((opt) => !opt.disabled);
+            if (first >= 0) setFocusedIndex(first);
+          }
+          break;
+        case 'End':
+          if (isOpen) {
+            e.preventDefault();
+            let last = flatOptions.length - 1;
+            while (last >= 0 && flatOptions[last].disabled) last--;
+            if (last >= 0) setFocusedIndex(last);
+          }
+          break;
         case 'Escape':
           setIsOpen(false);
           break;
@@ -203,11 +218,18 @@ export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
     };
 
     useEffect(() => {
+      // Look the option up by id — in the grouped variant the list's direct
+      // children are group lis, so children[focusedIndex] is the wrong element.
       if (isOpen && focusedIndex >= 0 && listRef.current) {
-        const focusedEl = listRef.current.children[focusedIndex] as HTMLElement;
+        const focusedEl = document.getElementById(`${inputId}-option-${focusedIndex}`);
         focusedEl?.scrollIntoView({ block: 'nearest' });
       }
-    }, [focusedIndex, isOpen]);
+    }, [focusedIndex, isOpen, inputId]);
+
+    const activeOptionId =
+      isOpen && focusedIndex >= 0 && flatOptions[focusedIndex]
+        ? `${inputId}-option-${focusedIndex}`
+        : undefined;
 
     return (
       <Field
@@ -231,7 +253,8 @@ export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
           // it — point at the label's id instead (Field renders `${id}-label`).
           aria-labelledby={label ? `${inputId}-label` : undefined}
           aria-label={ariaLabel || rest['aria-label'] || (!label ? placeholder : undefined)}
-          aria-controls={`${inputId}-listbox`}
+          aria-controls={isOpen ? `${inputId}-listbox` : undefined}
+          aria-activedescendant={activeOptionId}
           // Previously missing entirely: the helper/error message was rendered
           // but never announced, and the error state was visual-only.
           aria-describedby={helperText ? `${inputId}-helper` : rest['aria-describedby']}
@@ -277,6 +300,7 @@ export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
                           return (
                             <li
                               key={option.value}
+                              id={`${inputId}-option-${myIndex}`}
                               className={[
                                 `${baseClass}__option`,
                                 option.value === value ? `${baseClass}__option--selected` : '',
@@ -312,6 +336,7 @@ export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
               : options.map((option, index) => (
                   <li
                     key={option.value}
+                    id={`${inputId}-option-${index}`}
                     className={[
                       `${baseClass}__option`,
                       option.value === value ? `${baseClass}__option--selected` : '',

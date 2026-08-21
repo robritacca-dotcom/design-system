@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useId, useState } from 'react';
 import { EmptyState } from '../EmptyState/EmptyState';
 import './NotificationCenter.css';
 import '../../fonts/material-symbols.css';
@@ -143,6 +143,14 @@ export const NotificationCenter = React.forwardRef<HTMLElement, NotificationCent
     const [uncontrolledTab, setUncontrolledTab] = useState(defaultTab ?? tabs?.[0]?.value);
     const currentTab = isTabControlled ? activeTab : uncontrolledTab;
 
+    // Ids tying each tab to the list as its tabpanel. Index-based, because
+    // tab values are consumer strings and not guaranteed id-safe.
+    const idBase = useId();
+    const panelId = `${idBase}-panel`;
+    const tabIdFor = (index: number) => `${idBase}-tab-${index}`;
+    const activeTabIndex = tabs?.findIndex((tab) => tab.value === currentTab) ?? -1;
+    const hasTabs = !!tabs && tabs.length > 0;
+
     const selectTab = (value: string) => {
       if (!isTabControlled) setUncontrolledTab(value);
       onTabChange?.(value);
@@ -187,7 +195,9 @@ export const NotificationCenter = React.forwardRef<HTMLElement, NotificationCent
           <div className={`${baseClass}__heading`}>
             <span className={`${baseClass}__title`}>{title}</span>
             {unreadCount !== undefined && unreadCount > 0 && (
-              <span className={`${baseClass}__unread`}>{unreadCount} unread</span>
+              <span className={`${baseClass}__unread`} aria-live="polite">
+                {unreadCount} unread
+              </span>
             )}
           </div>
           {onMarkAllRead && (
@@ -197,7 +207,7 @@ export const NotificationCenter = React.forwardRef<HTMLElement, NotificationCent
           )}
         </header>
 
-        {tabs && tabs.length > 0 && (
+        {hasTabs && (
           <div className={`${baseClass}__tabs`} role="tablist" aria-label={`${title} filters`}>
             {tabs.map((tab, index) => {
               const isActive = tab.value === currentTab;
@@ -205,8 +215,10 @@ export const NotificationCenter = React.forwardRef<HTMLElement, NotificationCent
                 <button
                   key={tab.value}
                   type="button"
+                  id={tabIdFor(index)}
                   role="tab"
                   aria-selected={isActive}
+                  aria-controls={panelId}
                   tabIndex={isActive ? 0 : -1}
                   className={[
                     `${baseClass}__tab`,
@@ -227,7 +239,13 @@ export const NotificationCenter = React.forwardRef<HTMLElement, NotificationCent
           </div>
         )}
 
-        <div className={`${baseClass}__list`}>
+        {/* The list is the panel the tabs control — tabpanel only when tabs exist. */}
+        <div
+          className={`${baseClass}__list`}
+          role={hasTabs ? 'tabpanel' : undefined}
+          id={hasTabs ? panelId : undefined}
+          aria-labelledby={hasTabs && activeTabIndex >= 0 ? tabIdFor(activeTabIndex) : undefined}
+        >
           {hasItems
             ? children
             : emptyState ?? (

@@ -11,12 +11,14 @@
   align-items: center;
   justify-content: center;
   opacity: 0;
+  visibility: hidden; /* keeps panel controls out of the tab order when closed */
   pointer-events: none;
-  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard), visibility var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 .ds-alert-dialog--open {
   opacity: 1;
+  visibility: visible;
   pointer-events: auto;
 }
 

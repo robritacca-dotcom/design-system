@@ -270,6 +270,16 @@ export const ColorPicker = React.forwardRef<HTMLButtonElement, ColorPickerProps>
           e.preventDefault();
           commit({ h, s, v: clamp(v - step, 0, 100), a });
           break;
+        // The slider pattern requires Home/End; they act on the horizontal
+        // (saturation) axis, matching the arrow keys above.
+        case 'Home':
+          e.preventDefault();
+          commit({ h, s: 0, v, a });
+          break;
+        case 'End':
+          e.preventDefault();
+          commit({ h, s: 100, v, a });
+          break;
       }
     };
 

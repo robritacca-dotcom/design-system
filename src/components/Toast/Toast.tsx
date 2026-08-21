@@ -145,8 +145,11 @@ const ToastItem = ({
   return (
     <div
       className={classes}
-      role="status"
-      aria-live={variant === 'error' || variant === 'warning' ? 'assertive' : 'polite'}
+      // The container is the polite live region, so a non-critical toast
+      // carries no live semantics of its own — a second region here would
+      // double-announce. Error and warning toasts take role="alert", whose
+      // implicit assertive announcement is the one interruption we want.
+      role={variant === 'error' || variant === 'warning' ? 'alert' : undefined}
       onMouseEnter={() => setPauseTimer(true)}
       onMouseLeave={() => setPauseTimer(false)}
       onFocus={() => setPauseTimer(true)}
@@ -260,6 +263,10 @@ export const ToastProvider = ({
             className={containerClasses}
             role="region"
             aria-label="Notifications"
+            // The live region lives on this always-mounted container, not on
+            // the toasts themselves: a region that enters the DOM together
+            // with its text is not reliably announced.
+            aria-live="polite"
           >
             {toasts.map((t) => (
               <ToastItem

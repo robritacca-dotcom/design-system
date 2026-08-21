@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback, useId } from 'react';
 import { MOTION_HOVER_HIDE_DELAY_MS } from '../../tokens/motion';
 import './DropdownMenu.css';
 import '../../fonts/material-symbols.css';
@@ -82,12 +82,13 @@ function collectItems(entries: DropdownMenuEntry[]): DropdownMenuItem[] {
 interface SubMenuItemProps {
   item: DropdownMenuItem;
   baseClass: string;
+  itemId: string;
   focused: boolean;
   size: 'default' | 'compact';
   onActivate: () => void;
 }
 
-const SubMenuItem = ({ item, baseClass, focused, size, onActivate }: SubMenuItemProps) => {
+const SubMenuItem = ({ item, baseClass, itemId, focused, size, onActivate }: SubMenuItemProps) => {
   const [subOpen, setSubOpen] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -126,6 +127,7 @@ const SubMenuItem = ({ item, baseClass, focused, size, onActivate }: SubMenuItem
 
   return (
     <li
+      id={itemId}
       className={classes}
       role="menuitem"
       aria-haspopup="menu"
@@ -153,6 +155,7 @@ const SubMenuItem = ({ item, baseClass, focused, size, onActivate }: SubMenuItem
         <MenuPanel
           entries={item.children}
           baseClass={baseClass}
+          itemIdBase={`${itemId}-sub`}
           size={size}
           isSubmenu
           onItemActivate={onActivate}
@@ -169,6 +172,7 @@ const SubMenuItem = ({ item, baseClass, focused, size, onActivate }: SubMenuItem
 interface MenuPanelProps {
   entries: DropdownMenuEntry[];
   baseClass: string;
+  itemIdBase: string;
   size: 'default' | 'compact';
   isSubmenu?: boolean;
   onItemActivate: () => void;
@@ -177,6 +181,7 @@ interface MenuPanelProps {
 const MenuPanel = ({
   entries,
   baseClass,
+  itemIdBase,
   size,
   isSubmenu = false,
   onItemActivate,
@@ -189,7 +194,9 @@ const MenuPanel = ({
     .filter(Boolean)
     .join(' ');
 
-  const renderEntry = (entry: DropdownMenuEntry, index: number) => {
+  const renderEntry = (entry: DropdownMenuEntry, index: number, idBase: string) => {
+    const entryId = `${idBase}-${index}`;
+
     if (entry.type === 'separator') {
       return <li key={`sep-${index}`} className={`${baseClass}__separator`} role="separator" />;
     }
@@ -199,7 +206,7 @@ const MenuPanel = ({
         <li key={`group-${index}`} className={`${baseClass}__group`} role="group" aria-label={entry.label}>
           <span className={`${baseClass}__group-label`}>{entry.label}</span>
           <ul className={`${baseClass}__group-list`} role="group">
-            {entry.items.map((subEntry, subIndex) => renderEntry(subEntry, subIndex))}
+            {entry.items.map((subEntry, subIndex) => renderEntry(subEntry, subIndex, entryId))}
           </ul>
         </li>
       );
@@ -212,6 +219,7 @@ const MenuPanel = ({
           key={`submenu-${index}`}
           item={entry}
           baseClass={baseClass}
+          itemId={entryId}
           focused={false}
           size={size}
           onActivate={onItemActivate}
@@ -231,6 +239,7 @@ const MenuPanel = ({
     return (
       <li
         key={`item-${index}`}
+        id={entryId}
         className={itemClasses}
         role="menuitem"
         aria-disabled={entry.disabled || undefined}
@@ -259,7 +268,7 @@ const MenuPanel = ({
 
   return (
     <ul className={panelClasses} role="menu">
-      {entries.map((entry, index) => renderEntry(entry, index))}
+      {entries.map((entry, index) => renderEntry(entry, index, itemIdBase))}
     </ul>
   );
 };
@@ -279,11 +288,16 @@ export const DropdownMenu = ({
   const [focusedIndex, setFocusedIndex] = useState(-1);
   const rootRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLUListElement | null>(null);
+  const generatedId = useId();
 
   const baseClass = 'ds-dropdown-menu';
   const classes = [baseClass, className].filter(Boolean).join(' ');
 
   const flatItems = collectItems(items);
+
+  const menuId = `${generatedId}-menu`;
+  const activeDescendantId =
+    isOpen && focusedIndex >= 0 ? `${generatedId}-item-${focusedIndex}` : undefined;
 
   const handleToggle = () => {
     setIsOpen((prev) => {
@@ -348,6 +362,26 @@ export const DropdownMenu = ({
           });
         }
         break;
+      case 'Home':
+        if (isOpen) {
+          e.preventDefault();
+          setFocusedIndex((prev) => {
+            let next = 0;
+            while (next < flatItems.length && flatItems[next].disabled) next++;
+            return next < flatItems.length ? next : prev;
+          });
+        }
+        break;
+      case 'End':
+        if (isOpen) {
+          e.preventDefault();
+          setFocusedIndex((prev) => {
+            let next = flatItems.length - 1;
+            while (next >= 0 && flatItems[next].disabled) next--;
+            return next >= 0 ? next : prev;
+          });
+        }
+        break;
       case 'Escape':
       case 'Tab':
         handleClose();
@@ -394,6 +428,7 @@ export const DropdownMenu = ({
           key={`submenu-${index}`}
           item={entry}
           baseClass={baseClass}
+          itemId={`${generatedId}-item-${myIndex}`}
           focused={isFocused}
           size={size}
           onActivate={handleClose}
@@ -414,6 +449,7 @@ export const DropdownMenu = ({
     return (
       <li
         key={`item-${index}`}
+        id={`${generatedId}-item-${myIndex}`}
         className={itemClasses}
         role="menuitem"
         aria-disabled={entry.disabled || undefined}
@@ -464,6 +500,8 @@ export const DropdownMenu = ({
           React.cloneElement(trigger as React.ReactElement<Record<string, unknown>>, {
             'aria-haspopup': 'menu',
             'aria-expanded': isOpen,
+            'aria-controls': isOpen ? menuId : undefined,
+            'aria-activedescendant': activeDescendantId,
             onClick: handleToggle,
             onKeyDown: handleKeyDown,
           })
@@ -472,6 +510,8 @@ export const DropdownMenu = ({
             type="button"
             aria-haspopup="menu"
             aria-expanded={isOpen}
+            aria-controls={isOpen ? menuId : undefined}
+            aria-activedescendant={activeDescendantId}
             onClick={handleToggle}
             onKeyDown={handleKeyDown}
           >
@@ -481,6 +521,7 @@ export const DropdownMenu = ({
       </div>
       {isOpen && (
         <ul
+          id={menuId}
           className={panelClasses}
           role="menu"
           ref={(el) => {

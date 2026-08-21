@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect, useCallback, useLayoutEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback, useLayoutEffect, useId } from 'react';
 import { MOTION_HOVER_HIDE_DELAY_MS } from '../../tokens/motion';
 import type {
   DropdownMenuEntry,
@@ -56,12 +56,13 @@ function collectItems(entries: DropdownMenuEntry[]): DropdownMenuItem[] {
 interface SubMenuItemProps {
   item: DropdownMenuItem;
   baseClass: string;
+  itemId: string;
   focused: boolean;
   size: 'default' | 'compact';
   onActivate: () => void;
 }
 
-const SubMenuItem = ({ item, baseClass, focused, size, onActivate }: SubMenuItemProps) => {
+const SubMenuItem = ({ item, baseClass, itemId, focused, size, onActivate }: SubMenuItemProps) => {
   const [subOpen, setSubOpen] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -100,6 +101,7 @@ const SubMenuItem = ({ item, baseClass, focused, size, onActivate }: SubMenuItem
 
   return (
     <li
+      id={itemId}
       className={classes}
       role="menuitem"
       aria-haspopup="menu"
@@ -130,6 +132,7 @@ const SubMenuItem = ({ item, baseClass, focused, size, onActivate }: SubMenuItem
               key={index}
               entry={entry}
               baseClass={baseClass}
+              itemId={`${itemId}-sub-${index}`}
               size={size}
               onActivate={onActivate}
             />
@@ -144,11 +147,13 @@ const SubMenuItem = ({ item, baseClass, focused, size, onActivate }: SubMenuItem
 const SubEntry = ({
   entry,
   baseClass,
+  itemId,
   size,
   onActivate,
 }: {
   entry: DropdownMenuEntry;
   baseClass: string;
+  itemId: string;
   size: 'default' | 'compact';
   onActivate: () => void;
 }) => {
@@ -167,6 +172,7 @@ const SubEntry = ({
               key={subIndex}
               entry={subEntry}
               baseClass={baseClass}
+              itemId={`${itemId}-sub-${subIndex}`}
               size={size}
               onActivate={onActivate}
             />
@@ -180,6 +186,7 @@ const SubEntry = ({
       <SubMenuItem
         item={entry}
         baseClass={baseClass}
+        itemId={itemId}
         focused={false}
         size={size}
         onActivate={onActivate}
@@ -195,6 +202,7 @@ const SubEntry = ({
     .join(' ');
   return (
     <li
+      id={itemId}
       className={itemClasses}
       role="menuitem"
       aria-disabled={entry.disabled || undefined}
@@ -247,6 +255,8 @@ export const ContextMenu = React.forwardRef<HTMLDivElement, ContextMenuProps>(
     const [focusedIndex, setFocusedIndex] = useState(-1);
     const rootRef = useRef<HTMLDivElement | null>(null);
     const panelRef = useRef<HTMLUListElement | null>(null);
+    const previousFocusRef = useRef<HTMLElement | null>(null);
+    const generatedId = useId();
 
     const baseClass = 'ds-context-menu';
     const classes = [baseClass, className].filter(Boolean).join(' ');
@@ -263,6 +273,11 @@ export const ContextMenu = React.forwardRef<HTMLDivElement, ContextMenuProps>(
     const handleClose = useCallback(() => {
       setPosition(null);
       setFocusedIndex(-1);
+      const previous = previousFocusRef.current;
+      previousFocusRef.current = null;
+      if (previous && document.contains(previous)) {
+        previous.focus();
+      }
     }, []);
 
     const handleContextMenu = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -276,6 +291,9 @@ export const ContextMenu = React.forwardRef<HTMLDivElement, ContextMenuProps>(
         const rect = rootRef.current.getBoundingClientRect();
         x = rect.left + rect.width / 2;
         y = rect.top + rect.height / 2;
+      }
+      if (!isOpen) {
+        previousFocusRef.current = document.activeElement as HTMLElement;
       }
       setPosition({ x, y });
       setFocusedIndex(-1);
@@ -356,6 +374,22 @@ export const ContextMenu = React.forwardRef<HTMLDivElement, ContextMenuProps>(
             return next >= 0 ? next : prev;
           });
           break;
+        case 'Home':
+          e.preventDefault();
+          setFocusedIndex((prev) => {
+            let next = 0;
+            while (next < flatItems.length && flatItems[next].disabled) next++;
+            return next < flatItems.length ? next : prev;
+          });
+          break;
+        case 'End':
+          e.preventDefault();
+          setFocusedIndex((prev) => {
+            let next = flatItems.length - 1;
+            while (next >= 0 && flatItems[next].disabled) next--;
+            return next >= 0 ? next : prev;
+          });
+          break;
         case 'Escape':
         case 'Tab':
           e.preventDefault();
@@ -399,6 +433,7 @@ export const ContextMenu = React.forwardRef<HTMLDivElement, ContextMenuProps>(
             key={`submenu-${index}`}
             item={entry}
             baseClass={baseClass}
+            itemId={`${generatedId}-item-${myIndex}`}
             focused={isFocused}
             size={size}
             onActivate={handleClose}
@@ -418,6 +453,7 @@ export const ContextMenu = React.forwardRef<HTMLDivElement, ContextMenuProps>(
       return (
         <li
           key={`item-${index}`}
+          id={`${generatedId}-item-${myIndex}`}
           className={itemClasses}
           role="menuitem"
           aria-disabled={entry.disabled || undefined}
@@ -462,6 +498,9 @@ export const ContextMenu = React.forwardRef<HTMLDivElement, ContextMenuProps>(
             className={panelClasses}
             role="menu"
             aria-label={ariaLabel}
+            aria-activedescendant={
+              focusedIndex >= 0 ? `${generatedId}-item-${focusedIndex}` : undefined
+            }
             tabIndex={-1}
             ref={(el) => {
               panelRef.current = el;

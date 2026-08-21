@@ -55,6 +55,23 @@ function formatDate(date: Date): string {
   return `${y}-${m}-${d}`;
 }
 
+/**
+ * Standard sr-only clip pattern, inline so no stylesheet change is needed.
+ * position: absolute takes the element out of flow, so it cannot affect
+ * layout; the 1px box + clip keep it invisible but still announced.
+ */
+const visuallyHidden: React.CSSProperties = {
+  position: 'absolute',
+  width: 1,
+  height: 1,
+  padding: 0,
+  margin: -1,
+  overflow: 'hidden',
+  clip: 'rect(0 0 0 0)',
+  whiteSpace: 'nowrap',
+  border: 0,
+};
+
 function isSameDay(a: Date, b: Date): boolean {
   return (
     a.getFullYear() === b.getFullYear() &&
@@ -177,6 +194,17 @@ export const DatePicker = React.forwardRef<HTMLDivElement, DatePickerProps>(
             chevron_right
           </button>
         </div>
+
+        {/*
+          Announces month navigation: the region is mounted from the first
+          render, so when prev/next replaces its text the change is spoken.
+          The visible month-year span cannot do this job — it re-renders as
+          part of the same header, and live regions that appear with their
+          text are unreliable.
+        */}
+        <span aria-live="polite" style={visuallyHidden}>
+          {MONTHS[viewMonth]} {viewYear}
+        </span>
 
         {/*
           Deliberately NOT role="grid". A grid promises 2D arrow-key navigation

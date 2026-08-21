@@ -2,6 +2,7 @@
 
 import {
   useState,
+  useEffect,
   useRef,
   useId,
   cloneElement,
@@ -57,6 +58,22 @@ export const Tooltip = ({
     hideTimeoutRef.current = setTimeout(() => setVisible(false), hideDelay);
   };
 
+  // Escape dismisses the tooltip while it is visible (WCAG 1.4.13). A
+  // document listener rather than a wrapper handler, so it also works when
+  // the tooltip was triggered by hover and focus is elsewhere.
+  useEffect(() => {
+    if (!visible) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        clearTimeout(showTimeoutRef.current);
+        clearTimeout(hideTimeoutRef.current);
+        setVisible(false);
+      }
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [visible]);
+
   // Associate the trigger with the tooltip for screen readers. When the
   // child is a single element, put aria-describedby directly on it.
   const trigger = isValidElement(children)
@@ -84,12 +101,12 @@ export const Tooltip = ({
     >
       {trigger}
 
-      <span
-        className={panelClasses}
-        role="tooltip"
-        id={tooltipId}
-        aria-hidden={!visible}
-      >
+      {/*
+        No aria-hidden toggle: the trigger's aria-describedby points here, and
+        show is delayed, so the description must be computable the moment
+        focus lands. The panel is hidden visually by CSS until visible.
+      */}
+      <span className={panelClasses} role="tooltip" id={tooltipId}>
         {content}
         <span className={`${baseClass}__arrow`} />
       </span>

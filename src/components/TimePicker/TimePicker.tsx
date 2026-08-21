@@ -244,6 +244,11 @@ export const TimePicker = React.forwardRef<HTMLButtonElement, TimePickerProps>(
       }
     }, [focusedIndex, isOpen]);
 
+    const activeOptionId =
+      isOpen && focusedIndex >= 0 && timeOptions[focusedIndex]
+        ? `${inputId}-option-${focusedIndex}`
+        : undefined;
+
     return (
       <Field
         ref={rootRef}
@@ -264,7 +269,8 @@ export const TimePicker = React.forwardRef<HTMLButtonElement, TimePickerProps>(
           className={`${baseClass}__trigger`}
           aria-expanded={isOpen}
           aria-haspopup="listbox"
-          aria-controls={`${inputId}-listbox`}
+          aria-controls={isOpen ? `${inputId}-listbox` : undefined}
+          aria-activedescendant={activeOptionId}
           aria-describedby={helperText ? `${inputId}-helper` : rest['aria-describedby']}
           aria-invalid={error || undefined}
           disabled={disabled}
@@ -294,6 +300,7 @@ export const TimePicker = React.forwardRef<HTMLButtonElement, TimePickerProps>(
             {timeOptions.map((option, index) => (
               <li
                 key={option.value}
+                id={`${inputId}-option-${index}`}
                 className={[
                   `${baseClass}__option`,
                   option.value === selectedValue ? `${baseClass}__option--selected` : '',

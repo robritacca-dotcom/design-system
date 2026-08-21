@@ -8,6 +8,9 @@ import '../../fonts/material-symbols.css';
 
 const emptySubscribe = () => () => {};
 
+const FOCUSABLE =
+  'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
 export interface AlertDialogProps {
   /** Whether the dialog is open */
   open: boolean;
@@ -96,9 +99,7 @@ export const AlertDialog = ({
       }
 
       if (e.key === 'Tab' && panel) {
-        const focusable = panel.querySelectorAll<HTMLElement>(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-        );
+        const focusable = panel.querySelectorAll<HTMLElement>(FOCUSABLE);
         if (focusable.length === 0) return;
 
         const first = focusable[0];

@@ -1,9 +1,21 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback, type ReactNode } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useSyncExternalStore, type ReactNode } from 'react';
 import { MOTION_AUTOPLAY_INTERVAL_MS } from '../../tokens/motion';
 import './Carousel.css';
 import '../../fonts/material-symbols.css';
+
+const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
+
+// matchMedia as an external store: auto-play reacts live when the OS
+// reduced-motion setting flips, and the server snapshot keeps SSR safe.
+const subscribeReducedMotion = (callback: () => void) => {
+  const query = window.matchMedia(REDUCED_MOTION_QUERY);
+  query.addEventListener('change', callback);
+  return () => query.removeEventListener('change', callback);
+};
+const getReducedMotion = () => window.matchMedia(REDUCED_MOTION_QUERY).matches;
+const getServerReducedMotion = () => false;
 
 export interface CarouselProps {
   /** Carousel slides */
@@ -44,6 +56,11 @@ export const Carousel = ({
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
+  const reducedMotion = useSyncExternalStore(
+    subscribeReducedMotion,
+    getReducedMotion,
+    getServerReducedMotion,
+  );
   const containerRef = useRef<HTMLDivElement>(null);
 
   const baseClass = 'ds-carousel';
@@ -65,13 +82,13 @@ export const Carousel = ({
   const goNext = useCallback(() => goTo(activeIndex + 1), [activeIndex, goTo]);
   const goPrev = useCallback(() => goTo(activeIndex - 1), [activeIndex, goTo]);
 
-  // Auto-play
+  // Auto-play — never starts under the OS reduced-motion setting
   useEffect(() => {
-    if (!autoPlay || paused || slideCount <= 1) return;
+    if (!autoPlay || paused || reducedMotion || slideCount <= 1) return;
 
     const interval = setInterval(goNext, autoPlayInterval);
     return () => clearInterval(interval);
-  }, [autoPlay, paused, autoPlayInterval, goNext, slideCount]);
+  }, [autoPlay, paused, reducedMotion, autoPlayInterval, goNext, slideCount]);
 
   // Keyboard navigation
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -82,6 +99,26 @@ export const Carousel = ({
       e.preventDefault();
       goNext();
     }
+  };
+
+  // Roving tabindex on the dots: arrows move focus and select, so the
+  // tablist is a single tab stop. stopPropagation keeps the region-level
+  // arrow handler from moving the slide a second time.
+  const handleDotKeyDown = (e: React.KeyboardEvent, index: number) => {
+    let target: number | undefined;
+    if (e.key === 'ArrowRight') {
+      target = loop ? (index + 1) % slideCount : Math.min(index + 1, slideCount - 1);
+    } else if (e.key === 'ArrowLeft') {
+      target = loop ? (index - 1 + slideCount) % slideCount : Math.max(index - 1, 0);
+    }
+    if (target === undefined) return;
+    e.preventDefault();
+    e.stopPropagation();
+    goTo(target);
+    // Focus the new dot button
+    const dotList = (e.target as HTMLElement).parentElement;
+    const dots = dotList?.querySelectorAll<HTMLButtonElement>(`.${baseClass}__dot`);
+    dots?.[target]?.focus();
   };
 
   const canGoPrev = loop || activeIndex > 0;
@@ -97,6 +134,8 @@ export const Carousel = ({
       ref={containerRef}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
       onKeyDown={handleKeyDown}
       role="region"
       aria-roledescription="carousel"
@@ -158,8 +197,10 @@ export const Carousel = ({
                 index === activeIndex ? ` ${baseClass}__dot--active` : ''
               }`}
               onClick={() => goTo(index)}
+              onKeyDown={(e) => handleDotKeyDown(e, index)}
               role="tab"
               aria-selected={index === activeIndex}
+              tabIndex={index === activeIndex ? 0 : -1}
               aria-label={`Go to slide ${index + 1}`}
               type="button"
             />

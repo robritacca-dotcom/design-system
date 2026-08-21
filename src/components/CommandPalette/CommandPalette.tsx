@@ -16,6 +16,9 @@ import '../../fonts/material-symbols.css';
 
 const emptySubscribe = () => () => {};
 
+const FOCUSABLE =
+  'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
 export interface CommandPaletteCommand {
   /** Stable identifier */
   id: string;
@@ -95,6 +98,7 @@ export const CommandPalette = ({
   const [rawActiveIndex, setActiveIndex] = useState(0);
   const [prevOpen, setPrevOpen] = useState(open);
   const inputRef = useRef<HTMLInputElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
   const generatedId = useId();
@@ -185,6 +189,41 @@ export const CommandPalette = ({
     };
   }, [open]);
 
+  // Focus trap + ESC — document-level, so both work from anywhere in the dialog
+  useEffect(() => {
+    if (!open) return;
+
+    const handleTrapKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        onOpenChange(false);
+        return;
+      }
+
+      if (e.key === 'Tab') {
+        const panel = panelRef.current;
+        if (!panel) return;
+
+        const focusable = panel.querySelectorAll<HTMLElement>(FOCUSABLE);
+        if (focusable.length === 0) return;
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleTrapKeyDown);
+    return () => document.removeEventListener('keydown', handleTrapKeyDown);
+  }, [open, onOpenChange]);
+
   const runCommand = (command: CommandPaletteCommand) => {
     if (command.disabled) return;
     command.onSelect?.();
@@ -217,10 +256,6 @@ export const CommandPalette = ({
       case 'Enter':
         e.preventDefault();
         if (flatCommands[activeIndex]) runCommand(flatCommands[activeIndex]);
-        break;
-      case 'Escape':
-        e.preventDefault();
-        onOpenChange(false);
         break;
     }
   };
@@ -260,6 +295,7 @@ export const CommandPalette = ({
 
       <div
         className={`${baseClass}__panel`}
+        ref={panelRef}
         role="dialog"
         aria-modal="true"
         aria-label="Command palette"
@@ -300,7 +336,9 @@ export const CommandPalette = ({
           {loading && <p className={`${baseClass}__status`}>Loading…</p>}
 
           {!loading && filteredGroups.length === 0 && (
-            <p className={`${baseClass}__status`}>{emptyMessage}</p>
+            <p className={`${baseClass}__status`} aria-live="polite">
+              {emptyMessage}
+            </p>
           )}
 
           {!loading &&

@@ -177,6 +177,21 @@ export const ModelPicker = React.forwardRef<HTMLDivElement, ModelPickerProps>(
             });
           }
           break;
+        case 'Home':
+          if (isOpen) {
+            e.preventDefault();
+            const first = models.findIndex((m) => !m.disabled);
+            if (first >= 0) setFocusedIndex(first);
+          }
+          break;
+        case 'End':
+          if (isOpen) {
+            e.preventDefault();
+            let last = models.length - 1;
+            while (last >= 0 && models[last].disabled) last--;
+            if (last >= 0) setFocusedIndex(last);
+          }
+          break;
         case 'Escape':
           setIsOpen(false);
           break;
@@ -187,12 +202,40 @@ export const ModelPicker = React.forwardRef<HTMLDivElement, ModelPickerProps>(
       }
     };
 
+    const handleEffortKeyDown = (e: React.KeyboardEvent, index: number) => {
+      let targetIndex = -1;
+      switch (e.key) {
+        case 'ArrowRight':
+        case 'ArrowDown':
+          e.preventDefault();
+          targetIndex = (index + 1) % effortOptions.length;
+          break;
+        case 'ArrowLeft':
+        case 'ArrowUp':
+          e.preventDefault();
+          targetIndex = (index - 1 + effortOptions.length) % effortOptions.length;
+          break;
+      }
+      if (targetIndex >= 0) {
+        selectEffort(effortOptions[targetIndex].value);
+        document.getElementById(`${id}-effort-option-${targetIndex}`)?.focus();
+      }
+    };
+
     useEffect(() => {
       if (isOpen && focusedIndex >= 0 && listRef.current) {
         const focusedEl = listRef.current.children[focusedIndex] as HTMLElement;
         focusedEl?.scrollIntoView({ block: 'nearest' });
       }
     }, [focusedIndex, isOpen]);
+
+    const activeOptionId =
+      isOpen && focusedIndex >= 0 && models[focusedIndex]
+        ? `${id}-option-${focusedIndex}`
+        : undefined;
+
+    const checkedEffortIndex = effortOptions.findIndex((o) => o.value === currentEffort);
+    const effortTabStop = checkedEffortIndex >= 0 ? checkedEffortIndex : 0;
 
     const classes = [
       baseClass,
@@ -213,6 +256,7 @@ export const ModelPicker = React.forwardRef<HTMLDivElement, ModelPickerProps>(
           aria-expanded={isOpen}
           aria-haspopup="listbox"
           aria-controls={isOpen ? listboxId : undefined}
+          aria-activedescendant={activeOptionId}
           aria-label={rest['aria-label'] ?? 'Choose a model'}
           onClick={() => {
             setIsOpen((prev) => !prev);
@@ -240,6 +284,7 @@ export const ModelPicker = React.forwardRef<HTMLDivElement, ModelPickerProps>(
               {models.map((model, index) => (
                 <li
                   key={model.value}
+                  id={`${id}-option-${index}`}
                   className={[
                     `${baseClass}__option`,
                     model.value === currentValue ? `${baseClass}__option--selected` : '',
@@ -288,10 +333,11 @@ export const ModelPicker = React.forwardRef<HTMLDivElement, ModelPickerProps>(
                   role="radiogroup"
                   aria-labelledby={`${id}-effort-label`}
                 >
-                  {effortOptions.map((option) => (
+                  {effortOptions.map((option, index) => (
                     <button
                       key={option.value}
                       type="button"
+                      id={`${id}-effort-option-${index}`}
                       className={[
                         `${baseClass}__effort-option`,
                         option.value === currentEffort
@@ -302,7 +348,9 @@ export const ModelPicker = React.forwardRef<HTMLDivElement, ModelPickerProps>(
                         .join(' ')}
                       role="radio"
                       aria-checked={option.value === currentEffort}
+                      tabIndex={index === effortTabStop ? 0 : -1}
                       onClick={() => selectEffort(option.value)}
+                      onKeyDown={(e) => handleEffortKeyDown(e, index)}
                     >
                       {option.label}
                     </button>
