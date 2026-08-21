@@ -22,6 +22,7 @@
  * cannot tell whether an image is *stale*, so regenerating after a cover
  * change is on the person changing it.
  */
+/* global document -- the page.evaluate() callbacks below execute in the browser */
 import { chromium } from 'playwright';
 import sharp from 'sharp';
 import { mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';

@@ -43,3 +43,6 @@ ga-analysis/loop-reports/
 
 # Chat eval transcripts — evidence, not source
 evals/chat/runs/
+
+# Local working notes — not for the public repo
+notes/

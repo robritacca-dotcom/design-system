@@ -29,4 +29,17 @@ export default defineConfig([globalIgnores(['dist', 'storybook-static', 'website
       { varsIgnorePattern: '^_', argsIgnorePattern: '^_', ignoreRestSiblings: true },
     ],
   },
+}, {
+  files: ['**/*.mjs', 'eslint.config.js'],
+  extends: [js.configs.recommended],
+  languageOptions: {
+    globals: globals.node,
+  },
+  rules: {
+    // generate-site-corpus.mjs documents the corpus-facts() directive inside
+    // a block comment, using a zero-width space so the example's `*/` cannot
+    // close the enclosing comment. That character is deliberate, so the
+    // irregular-whitespace check skips comments; code stays covered.
+    'no-irregular-whitespace': ['error', { skipComments: true }],
+  },
 }, ...storybook.configs["flat/recommended"]])

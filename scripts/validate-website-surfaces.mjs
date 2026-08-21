@@ -49,7 +49,7 @@ const designMd = read(join(repoRoot, 'design.md'));
 
 // Keys of the previews map — the `"<slug>": () => (` entries.
 const previewKeys = new Set(
-  [...previewsSource.matchAll(/^  "([a-z0-9-]+)": \(\) => \(/gm)].map(
+  [...previewsSource.matchAll(/^ {2}"([a-z0-9-]+)": \(\) => \(/gm)].map(
     ([, slug]) => slug
   )
 );
