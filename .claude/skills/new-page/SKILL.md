@@ -43,6 +43,7 @@ For a **component documentation page**, use the `component-doc-page` skill inste
 ### File 2: `page.module.css`
 - Copy the exemplar's layout classes; add page-specific classes as needed
 - Semantic design tokens only — no hardcoded colours or magic values
+- Page assembly is a spec, not taste: design.md's **Composition** section owns the rhythm ladder and the assembly rules (parent owns spacing, one level of chrome, dividers last, prose never width-capped) — read it before laying out sections; the exemplar shows the pattern, the spec owns the rules
 - No `ch`-based `max-width` on prose — doc paragraphs run the full content column; the layout column is the only width constraint (build-enforced by `scripts/validate-page-titles.mjs`)
 - Mobile type and section rhythm collapse at the **token layer** (display sizes and section-gap tokens step down at 768px system-wide) — do not add per-page `@media` overrides for tokenized values; when a page genuinely needs a breakpoint, use the canonical set in `design.md`'s responsive spec
 

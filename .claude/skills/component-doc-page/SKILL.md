@@ -46,6 +46,7 @@ This is a more thorough, component-specific version of `new-page`. The Button pa
 5. **Create `website/src/app/components/<component-slug>/page.module.css`:**
    - Standard layout classes: `dsLayout`, `dsContent`, `pageHeader`, `pageTitle`, `subDisplay`, `introSection`, `introBody`
    - Any additional classes needed for the variant showcase grid
+   - Page assembly follows design.md's **Composition** section (rhythm ladder, spacing ownership, one level of chrome, dividers last) — the exemplar shows the pattern, the spec owns the rules
    - **Prose is never width-capped.** No `max-width` on `introBody`, section body text, or any paragraph class — page text fills the content column, exactly as the Button page does. A `max-width` is only legitimate on a *demo container* (a box that holds a rendered component, e.g. a drawer or form-control mount) where the component itself needs a bounded stage. If you find yourself capping a paragraph "for readability", don't — the column width is the layout's decision, not the page's.
    - CSS custom properties only
    - Mobile type and section rhythm collapse at the **token layer** (768px, system-wide) — do not add per-page `@media` overrides for tokenized values; when the showcase grid genuinely needs a breakpoint, use the canonical set in `design.md`'s responsive spec

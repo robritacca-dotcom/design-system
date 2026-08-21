@@ -133,6 +133,7 @@ The old `merge-and-push` skill is retired because its name didn't say which of t
 │   │   ├── tokens-dark.css          # Semantic tokens, dark theme
 │   │   ├── tokens-typography.css    # Font size/weight/line-height scale
 │   │   ├── tokens-motion.css        # Duration/easing scale + reduced-motion guard
+│   │   ├── motion.ts                # JS-timing constants (hover delays, auto-dismiss, autoplay…) — published as ./tokens/motion
 │   │   └── registry.json            # GENERATED token registry — never hand-edit
 │   └── fonts/                 # Material Symbols icon font (self-hosted); Nunito Sans is loaded via Google Fonts
 ├── .storybook/                # Storybook config (Storybook is the library's dev sandbox)
@@ -186,9 +187,10 @@ Component CSS               background-color: var(--color-action-primary-bg)
 Key invariants:
 - Teal `--color-action-primary-bg` (#0E6E8F light / #3CA5C6 dark — the action family is theme-split by design, see design.md) is **only** for primary CTA buttons and focus rings. Never decorative.
 - Never hardcode hex values in component CSS — always a semantic token. (Deliberate off-token values are sanctioned *in place* with a `/* ds-allow(<category>): <reason> */` directive — `ds-allow-file(...)` for file-wide cases like ColorPicker's `hsl()` colour physics. Grep `ds-allow` to enumerate them; `scripts/validate-css-directives.mjs` owns the category set and build-enforces the grammar.)
-- Never hardcode hex values in semantic colour tokens either: every `--color-*` value in `tokens-light/dark.css` must be a `var(--primitive-*)` (or `var(--color-*)`) reference — build-enforced by `scripts/validate-token-references.mjs`. This is what lets a consumer override a primitive and have it cascade through the whole system.
+- Never hardcode hex values in semantic colour tokens either: every `--color-*` value in `tokens-light/dark.css` must be a `var(--primitive-*)` (or `var(--color-*)`) reference — build-enforced by `scripts/validate-token-references.mjs`. This is what lets a consumer override a primitive and have it cascade through the whole system. (The same script holds the chart palette's SSR fallbacks in `src/components/Chart/palette.ts` to the `--color-chart-series-*` tokens, so the one place a chart colour lives outside CSS cannot drift from them.)
 - Every `var(--…)` a component references must actually resolve: `scripts/validate-token-usage.mjs` fails the build on a reference to a custom property nothing defines (a fallback value marks a deliberate consumer-override hook and is exempt). This is the guard that would have caught Dialog styling its title with a token family that never existed.
 - Buttons are always `--radius-full` (pill). Inputs are always `--radius-md` (12px). Two sanctioned departures: Card/EntityCard navigation tiles use `--radius-xl` (24px), and the chat Composer's input shell uses `--radius-composer` (29px, concentric with its pill send button — the geometry is specified in design.md's Composer section).
+- Timings that live in JavaScript timers (hover show/hide delays, toast auto-dismiss, carousel autoplay, feedback resets, scroll settle) have one home too: the shared constants in `src/tokens/motion.ts`, published as `@robr0/design-system/tokens/motion`. Never write a literal ms value into a component timer — import the constant, or add one there deliberately. These are schedule timings, not animations, so the reduced-motion guard deliberately does not apply (see design.md's Motion section).
 
 ---
 
@@ -313,7 +315,5 @@ These are stated at the level of **token roles**, deliberately: which colour, ra
 
 ## Known Gaps
 
-- CSS motion is fully tokenized (`--motion-*`), but JS-driven timings (Tooltip delays, Toast auto-dismiss, Carousel autoplay, ChatThread's scrollbar settle delay — a non-exhaustive list) remain hardcoded TS constants — tokenizing them is a pending follow-up
-- No `--chart-series-{n}` formal token set for ordered chart series colors
-- Figma source file documented: [robr0-ds26](https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26) — foundation/component pages deep-link to specific frames via `figmaUrl`
+- Figma parity: the system originates in [robr0-ds26](https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26), and foundation/component pages deep-link to specific frames via `figmaUrl` — but keeping the Figma file and the coded tokens in sync is a manual process; there is no automated export pipeline
 - Visual regression runs via Chromatic (`.github/workflows/chromatic.yml`, dispatch-only — see **CI & Local Verify** for why it is not part of `verify`); baseline accepted 2026-07-27 across both themes. A11y is enforced with one axe rule deliberately switched off (see `.storybook/preview.ts`, which is authoritative and is not a gap to close), and axe only catches roughly a third of WCAG issues, so keyboard order and meaningful alt text still need human review

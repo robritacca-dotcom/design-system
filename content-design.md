@@ -79,7 +79,7 @@ Five principles. Strong copy visibly demonstrates at least three of them; no cop
 
 1. **Specific beats general.** The test for every paragraph: could this have been written by someone who knows nothing about this project? If yes, it says nothing. The fix is always the same: add something only this project knows. A token name, a real count from a registry, the actual failure a validator prevents, the date something shipped.
 
-2. **Commit.** Say the thing. No both-sidesing, no hedging a claim until nothing is asserted. "The build fails when the registry drifts" is a sentence; "the build should generally fail in most cases where the registry may have drifted" is fog. If a claim is genuinely uncertain, state the uncertainty as a fact ("JS-driven timings are not yet tokenized") rather than diluting the verb.
+2. **Commit.** Say the thing. No both-sidesing, no hedging a claim until nothing is asserted. "The build fails when the registry drifts" is a sentence; "the build should generally fail in most cases where the registry may have drifted" is fog. If a claim is genuinely uncertain, state the uncertainty as a fact ("Figma-to-code sync is still a manual process") rather than diluting the verb.
 
 3. **Stay neutral.** Never promotional. No hype adjectives, no superlative without a number behind it, no exclamation marks doing an adjective's job. This project describes itself the way a good spec describes a component: what it is, what it does, what breaks if you misuse it. Readers trust the register precisely because it is not asking for trust.
 

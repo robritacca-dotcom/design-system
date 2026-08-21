@@ -377,7 +377,7 @@ Motion is quiet and functional — it confirms an interaction, reveals structure
 
 **Reduced motion contract:** `tokens-motion.css` collapses every duration token to 0.01ms under `prefers-reduced-motion: reduce`, and a universal guard flattens remaining hardcoded transitions/animations. Components that consume the tokens respect the preference automatically — never write component-level `prefers-reduced-motion` queries.
 
-**Migration status:** all component and website CSS composes the tokens — no literal durations or easings remain (the two sanctioned exceptions: Skeleton's shimmer keeps a literal `ease-in-out`, which has no token curve, and the website's decorative 14–22s background floats stay bespoke). JS-driven timings (Tooltip show/hide delays, Toast auto-dismiss, Carousel autoplay) are still hardcoded constants — see Known Gaps.
+**Migration status:** all component and website CSS composes the tokens — no literal durations or easings remain (the two sanctioned exceptions: Skeleton's shimmer keeps a literal `ease-in-out`, which has no token curve, and the website's decorative 14–22s background floats stay bespoke). JS-driven timings (hover show/hide delays, toast auto-dismiss, carousel autoplay, transient feedback resets, scroll settle) have their own single home: the shared constants in `src/tokens/motion.ts`, published as `@robr0/design-system/tokens/motion`. They are schedule timings rather than animation durations, so the reduced-motion guard deliberately does not touch them; components use them as defaults, overridable per instance through props.
 
 ### Ambient background
 
@@ -466,6 +466,8 @@ States:
 - **Disabled**: `--color-input-bg-disabled` fill, `--color-input-border-disabled`, `--color-input-text-disabled` on label/text
 
 Icon slots (Material Symbols Rounded): left icon at 16px from edge, right icon at 16px from edge. Compact size: padding 6px × 12px, icon 20px.
+
+Field-level error state is where the system's responsibility ends, by design: form-level validation — inline error summaries, field grouping, when to validate — is orchestration, and it belongs to the consumer's form layer, not to a component library. Every form control carries the same error anatomy (status border + helper text), which is exactly the surface a form library needs to drive.
 
 ### Checkbox
 
@@ -736,7 +738,7 @@ Field deliberately owns **no layout** — the flex column and gap stay on the co
 
 ### AreaChart / BarChart / LineChart / PieChart / RadarChart / RadialChart / ScatterChart / StackedBarChart / Treemap
 
-The Recharts wrapper set — nine components sharing one implementation folder (`Chart/`), one CSS file, and one visual language. Series colours: teal (`--color-action-primary-bg`) leads the default palette — the sanctioned data-viz exception to the action-only rule — with `--color-core-accent-*` tokens filling the remaining slots. Tooltips and legends use system typography tokens. Axes text in `--color-text-tertiary`.
+The Recharts wrapper set, sharing one implementation folder (`Chart/`), one CSS file, and one visual language. Series colours come from the ordered `--color-chart-series-1` → `-7` ramp, read at render by the shared palette helper (`Chart/palette.ts`) so every multi-series chart assigns the same colour to the same slot. Series 1 aliases the action teal (`--color-action-primary-bg`) — the sanctioned data-viz exception to the action-only rule, theme-split with it — and series 2–7 alias the core accents (mint, gold, coral, violet, amber, cobalt), so re-theming an accent re-themes every chart using its slot. Tooltips and legends use system typography tokens. Axes text in `--color-text-tertiary`.
 
 ### Contribution graph
 
@@ -745,7 +747,7 @@ The Recharts wrapper set — nine components sharing one implementation folder (
 - `--color-chart-contribution-0` — no activity (`--color-bg-container-primary` light / #232323 dark)
 - `--color-chart-contribution-1` → `-4` — increasing activity, green primitives (light: green-02 → 04 → 07 → 09; dark: green-10 → 09 → 08 → 07, so the brightest cell is mint #06D6A0)
 
-Month labels, caption, and Less→More legend use `--font-paragraph-sm-*` in `--color-text-tertiary`/`--color-text-secondary`. The grid scrolls horizontally inside its own container on narrow screens. This ramp is for activity intensity only — ordered multi-series chart colors remain an open gap (see below).
+Month labels, caption, and Less→More legend use `--font-paragraph-sm-*` in `--color-text-tertiary`/`--color-text-secondary`. The grid scrolls horizontally inside its own container on narrow screens. This ramp is for activity intensity only — ordered multi-series colours come from the `--color-chart-series` ramp (see the chart set spec above).
 
 ### Sparkline
 
@@ -966,6 +968,8 @@ The canonical set is **1279 / 1151 / 959 / 768 / 600**, all `max-width`. The rai
 
 A section-specific threshold outside this set is allowed only when it is content-driven (a bespoke grid that breaks at its own natural width) and commented in place; everything else uses the canonical five.
 
+The thresholds themselves stay raw numbers in the media queries, and that is settled rather than pending: CSS custom properties cannot drive `@media` conditions, and a preprocessor dependency is not worth it for five documented literals. This section is their single authoritative home — the rail widths and gutters they switch are tokenized (`--layout-*`), the numbers that trigger the switch are not.
+
 ### Typography Collapse
 - Handled by the token layer at ≤768px — Display 2 64px → 40px, Sub Display 30px → 24px, Mega/Display 1 proportional. No per-page overrides.
 - In-app headings (H1–H3, 30–22px) hold at every viewport; never reduce H3 below 20px.
@@ -996,8 +1000,6 @@ A section-specific threshold outside this set is allowed only when it is content
 
 ## Known Gaps
 
-- **Motion (JS timings)** — CSS motion is fully tokenized, but JS-driven timings (Tooltip's 300/150ms show/hide delays, Toast's 5000ms auto-dismiss, Carousel's autoplay interval) remain hardcoded constants in component TypeScript — tokenizing them needs shared TS constants, a separate follow-up.
 - **Figma parity** — The system originates in Figma ([robr0-ds26](https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26)), and foundation/component pages deep-link to specific frames via `figmaUrl`. Keeping the Figma file and the coded tokens in sync is still a manual process — there is no automated export pipeline.
-- **Breakpoint tokens** — The docs-shell column widths are tokenized (`--layout-*` in the website's `globals.css`), but the media-query thresholds themselves (the canonical 1279 / 1151 / 959 / 768 / 600px set) remain raw values repeated across CSS files by design — CSS custom properties cannot drive `@media` conditions, and a preprocessor dependency isn't worth it for five documented literals.
-- **Form validation patterns** — Error state on Input is documented, but multi-field form-level validation patterns (inline error summaries, field grouping) are not in scope here.
-- **Chart theming** — chart series colours are hardcoded per component (teal first, then `--color-core-accent-*` values); a formal `--chart-series-{n}` token set for ordered series colors has not been codified.
+
+Three former entries left this list as decisions rather than work: JS-driven timings now share one home (`src/tokens/motion.ts` — see Motion → Migration status), the raw breakpoint literals are settled as raw (see Responsive Behavior → Breakpoints), and form-level validation is permanently the consumer's form layer, not the system's (see the Input spec).

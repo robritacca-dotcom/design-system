@@ -38,7 +38,18 @@ const sources = [
   ...readdirSync(externalDir)
     .filter((f) => f.endsWith('.md'))
     .map((f) => [`website/src/data/external-skills/${f}`, join(externalDir, f)]),
-  ...['CLAUDE.md', 'README.md', 'design.md', 'content-design.md', 'SECURITY.md'].map((f) => [f, join(repoRoot, f)]),
+  ...[
+    'CLAUDE.md',
+    'README.md',
+    'design.md',
+    'content-design.md',
+    'SECURITY.md',
+    // Non-root instruction docs: CLAUDE.md sends readers to the evals README
+    // by name, and all three prescribe commands — so they rot the same way.
+    'evals/chat/README.md',
+    'website/README.md',
+    'ga-analysis/README.md',
+  ].map((f) => [f, join(repoRoot, f)]),
 ].map(([label, path]) => [label, read(path)]);
 
 // ---------------------------------------------------------------------------
@@ -49,7 +60,7 @@ const sources = [
 // here is fixed by extending the placeholder pattern, not by deleting the
 // reference.
 const pathPrefix =
-  /^(src|website|scripts|\.claude|\.storybook|\.github|design\.md|content-design\.md|CLAUDE\.md|README\.md|SECURITY\.md)(\/|$)/;
+  /^(src|website|scripts|evals|ga-analysis|\.claude|\.storybook|\.github|design\.md|content-design\.md|CLAUDE\.md|README\.md|SECURITY\.md)(\/|$)/;
 const placeholder = /[<>*{}[\] $~]|ComponentName|MyComponent|my-component|component-slug|YYYY/;
 const deadPaths = [];
 let pathCount = 0;

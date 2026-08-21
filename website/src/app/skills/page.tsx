@@ -46,7 +46,7 @@ export default function SkillsPage() {
               component patterns, token rules, navigation wiring, and more. Invoke any
               skill by name in Claude Code and it follows the exact steps without
               re-explanation each session. Expand any skill to read the full file, and
-              copy it to adapt it for your own project. Two of them run on their own schedule: see{" "}
+              copy it to adapt it for your own project. The recurring ones run on their own schedule: see{" "}
               <Link href="/loops" className={styles.introLink}>Loops</Link>.
             </p>
           </div>
