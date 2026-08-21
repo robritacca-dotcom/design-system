@@ -71,7 +71,10 @@
   position: absolute;
   inset: calc(-1 * var(--border-xs));
   border-radius: inherit;
-  padding: var(--border-xs);
+  /* One step up from the shell's --border-xs border: the outer edge stays on
+     the border box and the extra pixel grows inward, so the thicker band
+     reads clearly on low-density screens without changing the geometry. */
+  padding: var(--border-md);
   background: conic-gradient(
     from var(--ds-composer-glow-angle),
     var(--color-ai-gradient-start),
