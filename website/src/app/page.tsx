@@ -1,12 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
+import { Button } from "@robr0/design-system/components/Button/Button";
 import MegaNav from "../components/MegaNav/MegaNav";
 import { FullBleedBackground } from "../components/BlurBackground/BlurBackground";
 import ScrollCue from "../components/ScrollCue/ScrollCue";
 import FadeDivider from "../components/FadeDivider/FadeDivider";
 import { caseStudyCover } from "@/components/covers/case-study-covers";
 import { dsMegaItems } from "@/config/navigation";
-import { getArticles, coverPlaceholder } from "@/lib/substack";
+import { getArticles, coverPlaceholder, articleExcerpt } from "@/lib/substack";
 import { caseStudies } from "@/data/case-studies";
 import styles from "./page.module.css";
 
@@ -28,6 +29,12 @@ const workItems = moreWork.slice(0, 4);
 const featuredCover = caseStudyCover(featuredWork.href, "feature", {
   priority: true,
 });
+
+/* The writing card borrows the robr0-ds case study's rendered cover. A
+   deliberate break from "covers belong to studies": Substack's feed covers
+   are a headshot or nothing, and the site's own playground shot is a better
+   thumbnail than the generated placeholder. */
+const writingCover = caseStudyCover("/work/robr0-ds", "feature");
 
 /* The employer strip is hand-curated, current role first, same as the
    timeline on /about that owns the full history — keep the two in step
@@ -96,22 +103,12 @@ export default async function HomePage() {
         <section
           className={styles.sections}
           id="home-sections"
-          aria-labelledby="home-sections-title"
+          aria-label="Work, writing, and the design system"
         >
-          <h2 className={styles.sectionsTitle} id="home-sections-title">
-            Explore
-          </h2>
-
           <div className={styles.cardGrid}>
           {/* ── Work ── */}
           <section className={styles.card} aria-labelledby="home-work">
-            <header className={styles.cardHeader}>
-              <h2 className={styles.cardTitle} id="home-work">Work</h2>
-              <Link href="/work" className={styles.cardAll}>
-                All work
-                <span className="material-symbols-rounded" aria-hidden="true">arrow_forward</span>
-              </Link>
-            </header>
+            <h2 className={styles.cardTitle} id="home-work">Work</h2>
 
             <Link href={featuredWork.href} className={styles.featured}>
               <span className={styles.cardCover}>
@@ -135,6 +132,7 @@ export default async function HomePage() {
                 </span>
               </span>
               <span className={styles.featuredTitle}>{featuredWork.title}</span>
+              <span className={styles.featuredDek}>{featuredWork.dek}</span>
             </Link>
 
             <ul className={styles.rowList}>
@@ -156,32 +154,38 @@ export default async function HomePage() {
                 </li>
               ))}
             </ul>
+
+            <div className={styles.cardFooter}>
+              <Button href="/work" label="All work" variant="secondary" size="compact" iconRight="arrow_forward" />
+            </div>
           </section>
 
           {/* ── Writing ── */}
           <section className={styles.card} aria-labelledby="home-writing">
-            <header className={styles.cardHeader}>
-              <h2 className={styles.cardTitle} id="home-writing">Writing</h2>
-              <Link href="/writing" className={styles.cardAll}>
-                All writing
-                <span className="material-symbols-rounded" aria-hidden="true">arrow_forward</span>
-              </Link>
-            </header>
+            <h2 className={styles.cardTitle} id="home-writing">Writing</h2>
 
             {latest ? (
               <>
                 <Link href={`/writing/${latest.slug}`} className={styles.featured}>
                   <span className={styles.cardCover}>
-                    {/* Substack CDN covers aren't in next/image's allowlist; the
-                        plain img matches how /writing renders them. */}
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={latest.coverImage ?? coverPlaceholder(latest.slug)}
-                      alt=""
-                      className={styles.cardCoverImg}
-                    />
+                    {writingCover ?? (
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img
+                        src={latest.coverImage ?? coverPlaceholder(latest.slug)}
+                        alt=""
+                        className={styles.cardCoverImg}
+                      />
+                    )}
                   </span>
-                  <span className={styles.featuredTitle}>{latest.title}</span>
+                  {/* The subtitle rides in the title (Substack deks read as
+                      title continuations); the dek slot gets the essay's
+                      opening lines instead, so all three cards carry real
+                      paragraph text under their covers. */}
+                  <span className={styles.featuredTitle}>
+                    {latest.title}
+                    {latest.subtitle ? ` ${latest.subtitle}` : ""}
+                  </span>
+                  <span className={styles.featuredDek}>{articleExcerpt(latest)}</span>
                 </Link>
 
                 <ul className={styles.rowList}>
@@ -203,17 +207,15 @@ export default async function HomePage() {
                 <a href="https://robertritacca1.substack.com">Substack</a>.
               </p>
             )}
+
+            <div className={styles.cardFooter}>
+              <Button href="/writing" label="All writing" variant="secondary" size="compact" iconRight="arrow_forward" />
+            </div>
           </section>
 
           {/* ── Design system ── */}
           <section className={styles.card} aria-labelledby="home-ds">
-            <header className={styles.cardHeader}>
-              <h2 className={styles.cardTitle} id="home-ds">Design system</h2>
-              <Link href="/design-system" className={styles.cardAll}>
-                Overview
-                <span className="material-symbols-rounded" aria-hidden="true">arrow_forward</span>
-              </Link>
-            </header>
+            <h2 className={styles.cardTitle} id="home-ds">Design system</h2>
 
             <Link href="/design-system" className={styles.featured}>
               <span className={styles.cardCover}>
@@ -259,6 +261,11 @@ export default async function HomePage() {
               <span className={styles.featuredTitle}>
                 robr0 DS, the AI-ready design system this website is built on
               </span>
+              <span className={styles.featuredDek}>
+                Every colour, radius, and motion value here resolves from one
+                token layer, and the build fails when a rule breaks. The
+                playground re-themes it all live, then hands over the CSS.
+              </span>
             </Link>
 
             <ul className={styles.rowList}>
@@ -276,6 +283,10 @@ export default async function HomePage() {
                 </li>
               ))}
             </ul>
+
+            <div className={styles.cardFooter}>
+              <Button href="/design-system" label="Overview" variant="secondary" size="compact" iconRight="arrow_forward" />
+            </div>
           </section>
           </div>
         </section>

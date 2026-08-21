@@ -260,6 +260,24 @@ export function coverPlaceholder(seed: string, index = 0): string {
   return `data:image/svg+xml,${encodeURIComponent(svg)}`;
 }
 
+/**
+ * The plain-text opening of a post body, for dek/excerpt slots: tags
+ * stripped, entities decoded, whitespace collapsed, cut at a word boundary.
+ * The caller's line clamp handles the ellipsis.
+ */
+export function articleExcerpt(article: Article, maxChars = 300): string {
+  const text = decodeEntities(article.contentHtml.replace(/<[^>]+>/g, " "))
+    .replace(/\s+/g, " ")
+    // Tag-stripping leaves a space where inline markup ended, which shows up
+    // as a gap before punctuation ("robr0 GPT , that…"). Close it.
+    .replace(/ ([,.;:!?)])/g, "$1")
+    .trim();
+  if (text.length <= maxChars) return text;
+  const cut = text.slice(0, maxChars);
+  const lastSpace = cut.lastIndexOf(" ");
+  return lastSpace > 0 ? cut.slice(0, lastSpace) : cut;
+}
+
 /** Formats an ISO date as e.g. "May 23, 2026". */
 export function formatArticleDate(iso: string): string {
   return new Date(iso).toLocaleDateString("en-US", {

@@ -10,7 +10,10 @@
   flex: 1;
   position: relative;
   gap: var(--gap-xxl);
-  padding: 0 var(--padding-xl) var(--padding-xl);
+  /* No horizontal padding: the body's gutter is the alignment line the
+     header sits on, so content here lines up with the logo and the theme
+     toggle instead of indenting past them. */
+  padding: 0 0 var(--padding-xl);
 }
 
 /* ============================================
@@ -103,83 +106,50 @@
   gap: var(--primitive-gap-xxl);
   width: 100%;
   /* Same vertical balance as the hero: the section is its own full
-     viewport and centres the title + cards in it, so the smooth-scroll
-     from the cue lands on a balanced screen (no scroll-margin — the
+     viewport and centres the cards in it, so the smooth-scroll from
+     the cue lands on a balanced screen (no scroll-margin — the
      section top aligns with the viewport top). */
   min-height: 100vh;
   min-height: 100svh;
 }
 
-/* Site-standard index-page title treatment (display-2, light). */
-.sectionsTitle {
-  font-size: var(--font-display-2-size);
-  font-weight: var(--font-display-2-weight);
-  line-height: var(--font-display-2-line-height);
-  letter-spacing: var(--font-display-2-letter-spacing);
-  color: var(--color-text-primary);
-  text-align: center;
-  margin: 0;
-}
-
+/* Full width of the home container, so the grid's edges sit on the same
+   lines as the header's logo and theme toggle. */
 .cardGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--gap-lg);
   width: 100%;
-  max-width: 1200px;
 }
 
 .card {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--gap-md);
+  /* A step up from the old md gap: the cards carry deks and buttons now,
+     so the blocks need more vertical air between them. */
+  gap: var(--gap-lg);
   padding: var(--padding-lg);
   border-radius: var(--radius-xl);
   border: 1px solid var(--color-bg-container-border);
   background: var(--color-bg-container-primary-semi);
 }
 
-.cardHeader {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--gap-sm);
-}
-
 .cardTitle {
-  font-size: var(--font-title-body-size);
-  font-weight: var(--font-title-body-weight);
-  line-height: var(--font-title-body-line-height);
-  letter-spacing: var(--font-title-body-letter-spacing);
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  letter-spacing: var(--font-heading-3-letter-spacing);
   color: var(--color-text-primary);
   margin: 0;
 }
 
-/* The "All work / Overview" link: a quiet pill, no underline. Negative
-   margins keep its text aligned with the card edge at rest. */
-.cardAll {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--gap-xxs);
-  font-size: var(--font-paragraph-sm-size);
-  line-height: var(--font-paragraph-sm-line-height);
-  color: var(--color-text-tertiary);
-  text-decoration: none;
-  padding: var(--padding-xxs) var(--padding-xs);
-  margin: calc(-1 * var(--padding-xxs)) calc(-1 * var(--padding-xs));
-  border-radius: var(--radius-full);
-  transition: background-color var(--motion-duration-fast) var(--motion-ease-standard),
-    color var(--motion-duration-fast) var(--motion-ease-standard);
-}
-
-.cardAll :global(.material-symbols-rounded) {
-  --icon-size: var(--icon-size-sm);
-}
-
-.cardAll:hover {
-  color: var(--color-text-primary);
-  background: var(--color-bg-container-secondary);
+/* The section's button, pinned to the bottom of the card so all three
+   land on the same line however tall the content above runs. */
+.cardFooter {
+  margin-top: auto;
+  padding-top: var(--padding-xs);
+  display: flex;
 }
 
 .cardHint {
@@ -233,7 +203,23 @@
   letter-spacing: var(--font-heading-3-letter-spacing);
   color: var(--color-text-primary);
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  /* Three lines: the writing card's title carries the essay subtitle too,
+     which a two-line clamp would cut on narrower desktop widths. */
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Editorial dek under the featured title: the study's or essay's one-line
+   summary, clamped so uneven deks can't stagger the three cards. */
+.featuredDek {
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  color: var(--color-text-secondary);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -457,9 +443,12 @@
 .rowList {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: var(--padding-xs) 0 0;
   display: flex;
   flex-direction: column;
+  /* Divider between the featured story above and the link rows, matching
+     the hairlines between the rows themselves. */
+  border-top: 1px solid var(--color-bg-container-border);
 }
 
 .rowList > li + li {
@@ -581,7 +570,7 @@
 @media (max-width: 600px) {
   .homeContainer {
     gap: var(--gap-xxl);
-    padding: 0 var(--padding-md) var(--padding-xl);
+    padding: 0 0 var(--padding-xl);
   }
 
   .homeTitle {
