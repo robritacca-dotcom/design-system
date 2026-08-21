@@ -14,6 +14,10 @@ Scan CSS files for hardcoded values that should use design tokens, and report vi
 
 Use this skill when asked to check for hardcoded values, audit token usage, find raw colours or pixel values, or check design system compliance — phrases like "check for hardcoded values", "token audit", "are there any raw colours", "audit [component] CSS".
 
+## What is already automated
+
+`scripts/validate-token-usage.mjs` already fails the build on any `var(--…)` reference to a custom property nothing defines, so unresolvable-token references need no hand-check; this skill hunts for raw values that never reference a token at all.
+
 ## Instructions
 
 1. **Determine scope.** Accept one of:

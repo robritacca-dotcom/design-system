@@ -30,7 +30,9 @@ Entries are **thematic stories, not commit digests**:
 
 ### 1. Gate — is there enough to say?
 
-Read `asOf` from `website/src/data/site-updates.json`, then:
+First, run `node scripts/sync-essays.mjs` to pull any newly published essay into `website/src/data/essays.json`, so the regenerated chat corpus can discuss it (the script's own doc block owns the details). If it changes the file, re-run the sync inside step 3's worktree and include the change in the same commit as the rest of the loop's changes.
+
+Then read `asOf` from `website/src/data/site-updates.json`, and:
 
 ```bash
 git log --format='%ad %s' --date=short <asOf.commit>..HEAD
