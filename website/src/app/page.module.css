@@ -5,12 +5,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  /* The grid runs to the container's own boundary: the 1440px cap stays,
+     but there is no inner padding shrinking content inside it — the body's
+     gutter is the only inset below 1440. */
   width: 100%;
   max-width: 1440px;
   flex: 1;
   position: relative;
   gap: var(--gap-xxl);
-  padding: 0 var(--padding-xl) var(--padding-xl);
+  padding: 0 0 var(--padding-xl);
 }
 
 /* ============================================
@@ -90,10 +93,7 @@
 }
 
 /* ============================================
-   CARD GRID — three across
-   ============================================ */
-/* ============================================
-   SECTIONS — title + card grid below the fold
+   SECTIONS — title + bento grid below the fold
    ============================================ */
 .sections {
   display: flex;
@@ -110,23 +110,52 @@
   min-height: 100svh;
 }
 
-/* Site-standard index-page title treatment (display-2, light). */
-.sectionsTitle {
-  font-size: var(--font-display-2-size);
-  font-weight: var(--font-display-2-weight);
-  line-height: var(--font-display-2-line-height);
-  letter-spacing: var(--font-display-2-letter-spacing);
-  color: var(--color-text-primary);
-  text-align: center;
-  margin: 0;
-}
+/* No section title — the tiles' own headings carry the wayfinding. */
 
-.cardGrid {
+/* ============================================
+   BENTO GRID — one 12-column field, full width.
+   The featured study drives the two top rows;
+   the right column stacks the writing and DS
+   features; the bottom row holds the lighter
+   link tiles. Tile spans are the hierarchy.
+   ============================================ */
+.bento {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  /* The two hero-flanked rows split the hero's height evenly, so the
+     writing and DS tiles come out the same size. */
+  grid-template-rows: repeat(2, minmax(0, 1fr));
   gap: var(--gap-lg);
   width: 100%;
-  max-width: 1200px;
+}
+
+.tileWorkFeat {
+  grid-column: 1 / 8;
+  grid-row: 1 / 3;
+}
+
+.tileWriteFeat {
+  grid-column: 8 / 13;
+  grid-row: 1;
+}
+
+.tileDsFeat {
+  grid-column: 8 / 13;
+  grid-row: 2;
+}
+
+.tileWorkList {
+  grid-column: 1 / 6;
+}
+
+.tileWriteList {
+  grid-column: 6 / 13;
+}
+
+/* The four DS sections auto-place into a strip of quarter tiles under
+   the lists. */
+.dsLinkCard {
+  grid-column: span 3;
 }
 
 .card {
@@ -134,7 +163,9 @@
   display: flex;
   flex-direction: column;
   gap: var(--gap-md);
-  padding: var(--padding-lg);
+  /* Roomier than the old three-across cards: at bento scale the tiles are
+     large enough to carry the wide inset. */
+  padding: var(--padding-xl);
   border-radius: var(--radius-xl);
   border: 1px solid var(--color-bg-container-border);
   background: var(--color-bg-container-primary-semi);
@@ -147,11 +178,13 @@
   gap: var(--gap-sm);
 }
 
+/* With no section-level title above the grid, each tile's heading is the
+   wayfinding — heading-2 gives it that weight. */
 .cardTitle {
-  font-size: var(--font-title-body-size);
-  font-weight: var(--font-title-body-weight);
-  line-height: var(--font-title-body-line-height);
-  letter-spacing: var(--font-title-body-letter-spacing);
+  font-size: var(--font-heading-2-size);
+  font-weight: var(--font-heading-2-weight);
+  line-height: var(--font-heading-2-line-height);
+  letter-spacing: var(--font-heading-2-letter-spacing);
   color: var(--color-text-primary);
   margin: 0;
 }
@@ -238,6 +271,19 @@
   overflow: hidden;
 }
 
+/* Editorial dek under a featured title, on the featured link itself. */
+.featuredDesc {
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  letter-spacing: var(--font-paragraph-letter-spacing);
+  color: var(--color-text-secondary);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .cardCoverImg {
   position: absolute;
   inset: 0;
@@ -252,6 +298,106 @@
 }
 
 /* ============================================
+   FEATURED ROW — the horizontal variant used by
+   the right-column tiles: thumbnail beside the
+   title, centred in whatever height the hero
+   tile gives the row.
+   ============================================ */
+.featuredRow {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: stretch;
+  gap: var(--gap-lg);
+  text-decoration: none;
+}
+
+.thumb {
+  position: relative;
+  flex: 0 0 44%;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--color-bg-container-border);
+  min-height: 0;
+}
+
+/* On the desktop grid the hero tile sets the row heights, so the thumbnail
+   drops its fixed ratio and fills the tile instead of floating in it. */
+@media (min-width: 1151px) {
+  .thumb {
+    aspect-ratio: auto;
+  }
+}
+
+/* Title + dek beside the thumbnail, centred as one block. */
+.featuredRowText {
+  align-self: center;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+}
+
+.featuredRow > .featuredRowTitle {
+  align-self: center;
+}
+
+.featuredRowTitle {
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  letter-spacing: var(--font-heading-3-letter-spacing);
+  color: var(--color-text-primary);
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Same hover lift as the vertical covers */
+.featuredRow:hover .cardCoverImg,
+.featuredRow:hover .dsBoard {
+  transform: scale(1.02);
+}
+
+/* ============================================
+   MINI TILES — the DS sections as a small bento
+   of their own inside the bottom-right tile
+   ============================================ */
+/* Each DS section is a whole tile that is itself the link: icon, name,
+   and a line, with the tile surface as the hover target. */
+.dsLinkCard {
+  gap: var(--gap-xs);
+  text-decoration: none;
+  transition: background-color var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.dsLinkCard:hover {
+  background: var(--color-bg-container-secondary);
+}
+
+.dsLinkIcon {
+  --icon-size: var(--icon-size-md);
+  color: var(--color-icon-primary);
+  margin-bottom: var(--gap-xs);
+}
+
+.dsLinkLabel {
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  letter-spacing: var(--font-heading-3-letter-spacing);
+  color: var(--color-text-primary);
+}
+
+.dsLinkDesc {
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+}
+
+/* ============================================
    DS BOARD — a live mini-bento rendered from
    the tokens, standing in for a screenshot.
    ds-allow(mockup): the fixed px dimensions in
@@ -262,7 +408,7 @@
   position: absolute;
   inset: 0;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   grid-template-rows: repeat(2, minmax(0, 1fr));
   gap: var(--gap-xs);
   padding: var(--padding-sm);
@@ -280,7 +426,9 @@
   align-items: center;
   justify-content: center;
   gap: var(--gap-xs);
+  min-width: 0;
   min-height: 0;
+  overflow: hidden;
   background: var(--color-bg-container-primary);
   border: 1px solid var(--color-bg-container-border);
   border-radius: var(--radius-md);
@@ -382,22 +530,6 @@
   background: var(--color-chart-contribution-4);
 }
 
-/* ds-allow(mockup): miniature button pills */
-.dsButton {
-  width: 40px;
-  height: 14px;
-  border-radius: var(--radius-full);
-  background: var(--color-action-primary-bg);
-}
-
-.dsButtonSecondary {
-  width: 24px;
-  height: 14px;
-  border-radius: var(--radius-full);
-  border: 1px solid var(--color-divider);
-  background: var(--color-bg-container-primary);
-}
-
 /* ds-allow(mockup): miniature switch track and thumb */
 .dsToggle {
   width: 32px;
@@ -436,11 +568,6 @@
   }
 }
 
-.dsGlyph {
-  --icon-size: var(--icon-size-md);
-  color: var(--color-icon-primary);
-}
-
 @media (prefers-reduced-motion: reduce) {
   .dsBar1,
   .dsBar2,
@@ -460,6 +587,16 @@
   padding: 0;
   display: flex;
   flex-direction: column;
+  /* Fill the tile: in the bento's bottom row the tallest tile sets the
+     height, and the rows spread to meet it instead of pooling slack. */
+  flex: 1;
+}
+
+.rowList > li {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .rowList > li + li {
@@ -504,9 +641,10 @@
 .rowTitle {
   flex: 1;
   min-width: 0;
-  font-size: var(--font-paragraph-sm-em-size);
-  font-weight: var(--font-paragraph-sm-em-weight);
-  line-height: var(--font-paragraph-sm-em-line-height);
+  font-size: var(--font-paragraph-em-size);
+  font-weight: var(--font-paragraph-em-weight);
+  line-height: var(--font-paragraph-em-line-height);
+  letter-spacing: var(--font-paragraph-em-letter-spacing);
   color: var(--color-text-primary);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -561,6 +699,36 @@
    two-stage ramp (132 → 64 @959 → 40 @600) that the single 768px token
    step can't provide at this size.
    ============================================ */
+/* Between desktop and the single-column stack: the hero goes full width,
+   the two features share a row, the lists share the next, and the DS minis
+   spread into a four-across footer strip. */
+@media (max-width: 1150px) {
+  .bento {
+    grid-template-rows: none;
+  }
+
+  .tileWorkFeat {
+    grid-column: 1 / 13;
+    grid-row: auto;
+  }
+
+  .tileWriteFeat,
+  .tileWorkList {
+    grid-column: 1 / 7;
+    grid-row: auto;
+  }
+
+  .tileDsFeat,
+  .tileWriteList {
+    grid-column: 7 / 13;
+    grid-row: auto;
+  }
+
+  .dsLinkCard {
+    grid-column: span 6;
+  }
+}
+
 @media (max-width: 959px) {
   .homeTitle {
     font-size: 64px;
@@ -572,16 +740,38 @@
     line-height: 36px;
   }
 
-  .cardGrid {
-    grid-template-columns: minmax(0, 1fr);
+  /* Stacked: each section's featured tile leads and its links follow, in
+     reading order rather than grid order. The DS tiles pair up two
+     across. */
+  .bento {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     max-width: 560px;
   }
+
+  .tileWorkFeat,
+  .tileWriteFeat,
+  .tileDsFeat,
+  .tileWorkList,
+  .tileWriteList {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  .dsLinkCard {
+    grid-column: span 1;
+  }
+
+  .tileWorkFeat { order: 1; }
+  .tileWorkList { order: 2; }
+  .tileWriteFeat { order: 3; }
+  .tileWriteList { order: 4; }
+  .tileDsFeat { order: 5; }
+  .dsLinkCard { order: 6; }
 }
 
 @media (max-width: 600px) {
   .homeContainer {
     gap: var(--gap-xxl);
-    padding: 0 var(--padding-md) var(--padding-xl);
   }
 
   .homeTitle {
@@ -601,5 +791,23 @@
 
   .homeCompanies {
     gap: var(--gap-sm) var(--gap-xl);
+  }
+
+  /* The wide bento inset would eat a phone's column — step back down. */
+  .card {
+    padding: var(--padding-lg);
+  }
+
+  /* The horizontal features go vertical on small phones: full-width
+     thumbnail over the title, same shape as the hero tile. */
+  .featuredRow {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--gap-sm);
+  }
+
+  .thumb {
+    flex: none;
+    width: 100%;
   }
 }

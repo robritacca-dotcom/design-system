@@ -96,15 +96,16 @@ export default async function HomePage() {
         <section
           className={styles.sections}
           id="home-sections"
-          aria-labelledby="home-sections-title"
+          aria-label="Explore"
         >
-          <h2 className={styles.sectionsTitle} id="home-sections-title">
-            Explore
-          </h2>
-
-          <div className={styles.cardGrid}>
-          {/* ── Work ── */}
-          <section className={styles.card} aria-labelledby="home-work">
+          {/* One bento field: the featured case study gets the hero tile,
+              the writing and DS features sit beside it as horizontal tiles,
+              and the remaining links share a lighter bottom row. Every link
+              from the old three-card layout is still here — the grid only
+              redistributes the space. */}
+          <div className={styles.bento}>
+          {/* ── Work, featured (hero tile) ── */}
+          <section className={`${styles.card} ${styles.tileWorkFeat}`} aria-labelledby="home-work">
             <header className={styles.cardHeader}>
               <h2 className={styles.cardTitle} id="home-work">Work</h2>
               <Link href="/work" className={styles.cardAll}>
@@ -120,7 +121,7 @@ export default async function HomePage() {
                     src={featuredWork.coverSrc}
                     alt=""
                     fill
-                    sizes="(max-width: 959px) 100vw, 370px"
+                    sizes="(max-width: 959px) 100vw, 760px"
                     className={styles.cardCoverImg}
                   />
                 )}
@@ -135,31 +136,12 @@ export default async function HomePage() {
                 </span>
               </span>
               <span className={styles.featuredTitle}>{featuredWork.title}</span>
+              <span className={styles.featuredDesc}>{featuredWork.dek}</span>
             </Link>
-
-            <ul className={styles.rowList}>
-              {workItems.map((work) => (
-                <li key={work.href}>
-                  <Link href={work.href} className={styles.row}>
-                    <Image
-                      src={work.companyLogo}
-                      alt={work.companyName}
-                      width={20}
-                      height={20}
-                      className={styles.rowLogo}
-                    />
-                    <span className={styles.rowTitle}>{work.title}</span>
-                    <span className={`material-symbols-rounded ${styles.rowArrow}`} aria-hidden="true">
-                      arrow_forward
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
           </section>
 
-          {/* ── Writing ── */}
-          <section className={styles.card} aria-labelledby="home-writing">
+          {/* ── Writing, featured ── */}
+          <section className={`${styles.card} ${styles.tileWriteFeat}`} aria-labelledby="home-writing">
             <header className={styles.cardHeader}>
               <h2 className={styles.cardTitle} id="home-writing">Writing</h2>
               <Link href="/writing" className={styles.cardAll}>
@@ -169,34 +151,24 @@ export default async function HomePage() {
             </header>
 
             {latest ? (
-              <>
-                <Link href={`/writing/${latest.slug}`} className={styles.featured}>
-                  <span className={styles.cardCover}>
-                    {/* Substack CDN covers aren't in next/image's allowlist; the
-                        plain img matches how /writing renders them. */}
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={latest.coverImage ?? coverPlaceholder(latest.slug)}
-                      alt=""
-                      className={styles.cardCoverImg}
-                    />
-                  </span>
-                  <span className={styles.featuredTitle}>{latest.title}</span>
-                </Link>
-
-                <ul className={styles.rowList}>
-                  {moreWriting.map((article) => (
-                    <li key={article.slug}>
-                      <Link href={`/writing/${article.slug}`} className={styles.row}>
-                        <span className={styles.rowTitle}>{article.title}</span>
-                        <span className={`material-symbols-rounded ${styles.rowArrow}`} aria-hidden="true">
-                          arrow_forward
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </>
+              <Link href={`/writing/${latest.slug}`} className={styles.featuredRow}>
+                <span className={styles.thumb}>
+                  {/* Substack CDN covers aren't in next/image's allowlist; the
+                      plain img matches how /writing renders them. */}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={latest.coverImage ?? coverPlaceholder(latest.slug)}
+                    alt=""
+                    className={styles.cardCoverImg}
+                  />
+                </span>
+                <span className={styles.featuredRowText}>
+                  <span className={styles.featuredRowTitle}>{latest.title}</span>
+                  {latest.subtitle && (
+                    <span className={styles.featuredDesc}>{latest.subtitle}</span>
+                  )}
+                </span>
+              </Link>
             ) : (
               <p className={styles.cardHint}>
                 Essays are taking a moment to load. Read them on{" "}
@@ -205,8 +177,8 @@ export default async function HomePage() {
             )}
           </section>
 
-          {/* ── Design system ── */}
-          <section className={styles.card} aria-labelledby="home-ds">
+          {/* ── Design system, featured ── */}
+          <section className={`${styles.card} ${styles.tileDsFeat}`} aria-labelledby="home-ds">
             <header className={styles.cardHeader}>
               <h2 className={styles.cardTitle} id="home-ds">Design system</h2>
               <Link href="/design-system" className={styles.cardAll}>
@@ -215,11 +187,14 @@ export default async function HomePage() {
               </Link>
             </header>
 
-            <Link href="/design-system" className={styles.featured}>
-              <span className={styles.cardCover}>
+            <Link href="/design-system" className={styles.featuredRow}>
+              <span className={styles.thumb}>
                 {/* A live mini-bento rendered from the tokens themselves, so
                     the cover re-themes with the toggle instead of being a
                     static screenshot. Purely decorative. */}
+                {/* Four tiles, two by two: wide enough at every size this
+                    thumbnail reaches that no miniature can overflow its
+                    tile. */}
                 <span className={styles.dsBoard} aria-hidden="true">
                 <span className={styles.dsTile}>
                   <span className={styles.dsType}>Aa</span>
@@ -241,34 +216,33 @@ export default async function HomePage() {
                   </span>
                 </span>
                 <span className={styles.dsTile}>
-                  <span className={styles.dsButton} />
-                  <span className={styles.dsButtonSecondary} />
-                </span>
-                <span className={styles.dsTile}>
                   <span className={styles.dsToggle}>
                     <span className={styles.dsToggleThumb} />
                   </span>
                 </span>
-                <span className={styles.dsTile}>
-                  <span className={`material-symbols-rounded ${styles.dsGlyph}`}>
-                    widgets
-                  </span>
-                </span>
                 </span>
               </span>
-              <span className={styles.featuredTitle}>
+              <span className={styles.featuredRowTitle}>
                 robr0 DS, the AI-ready design system this website is built on
               </span>
             </Link>
+          </section>
 
+          {/* ── More work ── */}
+          <section className={`${styles.card} ${styles.tileWorkList}`} aria-labelledby="home-work-more">
+            <h2 className={styles.cardTitle} id="home-work-more">More work</h2>
             <ul className={styles.rowList}>
-              {dsMegaItems.map((item) => (
-                <li key={item.href}>
-                  <Link href={item.href} className={styles.row}>
-                    <span className={`material-symbols-rounded ${styles.rowIcon}`} aria-hidden="true">
-                      {item.icon}
-                    </span>
-                    <span className={styles.rowTitle}>{item.label}</span>
+              {workItems.map((work) => (
+                <li key={work.href}>
+                  <Link href={work.href} className={styles.row}>
+                    <Image
+                      src={work.companyLogo}
+                      alt={work.companyName}
+                      width={20}
+                      height={20}
+                      className={styles.rowLogo}
+                    />
+                    <span className={styles.rowTitle}>{work.title}</span>
                     <span className={`material-symbols-rounded ${styles.rowArrow}`} aria-hidden="true">
                       arrow_forward
                     </span>
@@ -277,6 +251,40 @@ export default async function HomePage() {
               ))}
             </ul>
           </section>
+
+          {/* ── More writing ── */}
+          {moreWriting.length > 0 && (
+            <section className={`${styles.card} ${styles.tileWriteList}`} aria-labelledby="home-writing-more">
+              <h2 className={styles.cardTitle} id="home-writing-more">More writing</h2>
+              <ul className={styles.rowList}>
+                {moreWriting.map((article) => (
+                  <li key={article.slug}>
+                    <Link href={`/writing/${article.slug}`} className={styles.row}>
+                      <span className={styles.rowTitle}>{article.title}</span>
+                      <span className={`material-symbols-rounded ${styles.rowArrow}`} aria-hidden="true">
+                        arrow_forward
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          {/* ── Design system sections, each a tile of its own ── */}
+          {dsMegaItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`${styles.card} ${styles.dsLinkCard}`}
+            >
+              <span className={`material-symbols-rounded ${styles.dsLinkIcon}`} aria-hidden="true">
+                {item.icon}
+              </span>
+              <span className={styles.dsLinkLabel}>{item.label}</span>
+              <span className={styles.dsLinkDesc}>{item.description}</span>
+            </Link>
+          ))}
           </div>
         </section>
       </main>
