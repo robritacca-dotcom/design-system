@@ -1,12 +1,9 @@
 'use client';
 
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { MOTION_SCROLL_SETTLE_MS } from '../../tokens/motion';
 import './ChatThread.css';
 import '../../fonts/material-symbols.css';
-
-/* JS timing, not CSS: how long after the last scroll event the scrollbar
-   fades back out. Tokenizing JS timings is a known pending follow-up. */
-const SCROLLBAR_SETTLE_MS = 600;
 
 /* Content within this many pixels of the fold counts as "nothing left to
    scroll to" — the scroll-to-bottom control hides inside it. */
@@ -274,7 +271,7 @@ export const ChatThread = React.forwardRef<HTMLDivElement, ChatThreadProps>(
       window.clearTimeout(settleTimer.current);
       settleTimer.current = window.setTimeout(
         () => setScrolling(false),
-        SCROLLBAR_SETTLE_MS,
+        MOTION_SCROLL_SETTLE_MS,
       );
     };
 

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useContext, useCallback, useSyncExternalStore, createContext, type ReactNode } from 'react';
+import { MOTION_AUTO_DISMISS_MS } from '../../tokens/motion';
 
 const emptySubscribe = () => () => {};
 import ReactDOM from 'react-dom';
@@ -221,7 +222,7 @@ export const ToastProvider = ({
         ...data,
         id,
         variant: data.variant || 'info',
-        duration: data.duration ?? 5000,
+        duration: data.duration ?? MOTION_AUTO_DISMISS_MS,
         dismissible: data.dismissible ?? true,
       };
 
@@ -269,7 +270,7 @@ export const ToastProvider = ({
                 variant={t.variant || 'info'}
                 dismissible={t.dismissible ?? true}
                 icon={t.icon}
-                duration={t.duration ?? 5000}
+                duration={t.duration ?? MOTION_AUTO_DISMISS_MS}
                 onDismiss={dismiss}
               />
             ))}

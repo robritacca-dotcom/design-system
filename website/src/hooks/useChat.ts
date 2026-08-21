@@ -121,9 +121,10 @@ const makeId = () => `turn-${++nextId}`;
 
    The rate scales with the backlog rather than being fixed, so the reveal
    never falls behind a fast response: whatever is waiting drains within
-   REVEAL_DRAIN_MS, and a thin trickle still moves at the floor rate. Both are
-   JS timings, which the motion tokens do not yet cover — the same pending
-   follow-up as Tooltip's delays and Toast's dismiss.
+   REVEAL_DRAIN_MS, and a thin trickle still moves at the floor rate. Both
+   are JS timings, but deliberately local rather than constants from
+   @robr0/design-system/tokens/motion: they are this reveal's rendering-rate
+   policy, not a schedule timing any other surface shares.
    ============================================ */
 
 /** Slowest the reveal ever runs, in characters per second. */

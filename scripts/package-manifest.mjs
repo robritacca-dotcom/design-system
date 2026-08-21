@@ -40,6 +40,9 @@ const SUBPATHS = [
   // wildcard below can't serve it either.
   { key: './components/ShaderField/useShaderField', srcJs: './src/components/ShaderField/useShaderField.ts', dist: './components/ShaderField/useShaderField' },
   { key: './tokens/registry', srcJs: './src/tokens/registry.ts', dist: './tokens/registry' },
+  // The JS-timing constants — the TypeScript side of the motion tokens,
+  // for timers a CSS variable cannot reach.
+  { key: './tokens/motion', srcJs: './src/tokens/motion.ts', dist: './tokens/motion' },
   { key: './components/*', srcJs: './src/components/*.tsx', dist: './components/*' },
   { key: './tokens/*.css', asset: './src/tokens/*.css', dist: './tokens/*.css' },
   { key: './fonts/*', asset: './src/fonts/*', dist: './fonts/*' },

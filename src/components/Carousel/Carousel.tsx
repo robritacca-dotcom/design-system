@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useCallback, type ReactNode } from 'react';
+import { MOTION_AUTOPLAY_INTERVAL_MS } from '../../tokens/motion';
 import './Carousel.css';
 import '../../fonts/material-symbols.css';
 
@@ -33,7 +34,7 @@ export const Carousel = ({
   showDots = true,
   showArrows = true,
   autoPlay = false,
-  autoPlayInterval = 5000,
+  autoPlayInterval = MOTION_AUTOPLAY_INTERVAL_MS,
   loop = false,
   onSlideChange,
   className = '',

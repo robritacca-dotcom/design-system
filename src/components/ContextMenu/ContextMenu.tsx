@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect, useCallback, useLayoutEffect } from 'react';
+import { MOTION_HOVER_HIDE_DELAY_MS } from '../../tokens/motion';
 import type {
   DropdownMenuEntry,
   DropdownMenuItem,
@@ -70,7 +71,7 @@ const SubMenuItem = ({ item, baseClass, focused, size, onActivate }: SubMenuItem
   };
 
   const handleMouseLeave = () => {
-    timeoutRef.current = setTimeout(() => setSubOpen(false), 150);
+    timeoutRef.current = setTimeout(() => setSubOpen(false), MOTION_HOVER_HIDE_DELAY_MS);
   };
 
   useEffect(() => {

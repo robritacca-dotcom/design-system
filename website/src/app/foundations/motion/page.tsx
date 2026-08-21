@@ -158,7 +158,7 @@ export default function MotionPage() {
               Animation in the interface is functional, not decorative: it confirms an
               interaction, reveals structure, or signals loading. The one thing that moves
               for its own sake is the background, which is scenery rather than interface
-              and keeps its own timings. The whole interface vocabulary is
+              and keeps its own timings. The whole CSS vocabulary is
               {" "}{coreDurations.length + extendedDurations.length} durations and{" "}
               {easings.length} easing curves, defined once as{" "}
               <code>--motion-*</code> tokens and shared by the component library and this
@@ -273,6 +273,21 @@ export default function MotionPage() {
               background field runs on the GPU through a frame loop, which means it has to
               check the preference itself. It does: with reduced motion set, it draws a
               single still frame and never starts animating.
+            </p>
+          </section>
+
+          {/* JS timings */}
+          <section className={styles.section}>
+            <SectionTitle title="Timings in JavaScript" />
+            <p className={styles.sectionNote}>
+              Some timings live in JavaScript timers rather than CSS: hover show and hide
+              delays, toast auto-dismiss, carousel autoplay, the copied-state reset. Those
+              share one home too, the constants published as{" "}
+              <code>@robr0/design-system/tokens/motion</code>. Components read them as
+              defaults and still expose each one through props. They are schedule timings
+              that decide when something appears or is taken away, not animations, so the
+              reduced-motion collapse deliberately leaves them alone: a toast that
+              dismisses itself faster would help nobody.
             </p>
           </section>
         </main>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useId, useState, type CSSProperties } from 'react';
+import { MOTION_FEEDBACK_RESET_MS } from '../../tokens/motion';
 import './CodeBlock.css';
 import '../../fonts/material-symbols.css';
 
@@ -80,7 +81,7 @@ export const CodeBlock = ({
     }
 
     setCopied(true);
-    window.setTimeout(() => setCopied(false), 2000);
+    window.setTimeout(() => setCopied(false), MOTION_FEEDBACK_RESET_MS);
   };
 
   return (

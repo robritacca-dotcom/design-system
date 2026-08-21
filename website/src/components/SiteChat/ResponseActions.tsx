@@ -1,14 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { MOTION_FEEDBACK_RESET_MS } from "@robr0/design-system/tokens/motion";
 import type { ChatTurn } from "@/hooks/useChat";
 import { useSiteChat } from "./ChatContext";
 import styles from "./SiteChat.module.css";
-
-/** How long the copy button wears its tick before reverting. A JS timing the
-    motion tokens do not yet cover — the same pending follow-up as Toast's
-    auto-dismiss. */
-const COPIED_REVERT_MS = 2000;
 
 /**
  * The row under a committed assistant turn: copy, and, when the server
@@ -45,7 +41,7 @@ export function ResponseActions({ turn }: { turn: ChatTurn }) {
     }
     setCopied(true);
     if (revertTimer.current !== null) window.clearTimeout(revertTimer.current);
-    revertTimer.current = window.setTimeout(() => setCopied(false), COPIED_REVERT_MS);
+    revertTimer.current = window.setTimeout(() => setCopied(false), MOTION_FEEDBACK_RESET_MS);
   };
 
   const vote = (verdict: "up" | "down") => {

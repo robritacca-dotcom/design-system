@@ -10,6 +10,7 @@ import {
   type ReactElement,
 } from 'react';
 import './Tooltip.css';
+import { MOTION_HOVER_SHOW_DELAY_MS, MOTION_HOVER_HIDE_DELAY_MS } from '../../tokens/motion';
 
 export interface TooltipProps {
   /** Trigger element */
@@ -35,8 +36,8 @@ export const Tooltip = ({
   children,
   content,
   position = 'top',
-  showDelay = 300,
-  hideDelay = 150,
+  showDelay = MOTION_HOVER_SHOW_DELAY_MS,
+  hideDelay = MOTION_HOVER_HIDE_DELAY_MS,
   className = '',
 }: TooltipProps) => {
   const [visible, setVisible] = useState(false);

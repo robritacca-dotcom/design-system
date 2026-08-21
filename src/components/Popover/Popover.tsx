@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { MOTION_HOVER_HIDE_DELAY_MS } from '../../tokens/motion';
 import './Popover.css';
 
 export interface PopoverProps {
@@ -108,7 +109,7 @@ export const Popover = ({
 
   const handleMouseLeave = () => {
     if (trigger === 'hover') {
-      hoverTimeoutRef.current = setTimeout(() => setOpen(false), 150);
+      hoverTimeoutRef.current = setTimeout(() => setOpen(false), MOTION_HOVER_HIDE_DELAY_MS);
     }
   };
 
