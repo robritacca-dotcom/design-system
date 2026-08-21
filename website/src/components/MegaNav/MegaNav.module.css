@@ -359,6 +359,21 @@
   visibility: visible;
   pointer-events: auto;
   transform: translateY(0);
+}
+
+/* The bar's gradient and blur live on a pseudo-layer, not the bar itself: a
+   backdrop-filter on the bar would make it a backdrop root, and the mega
+   panel inside it (its own backdrop-filter glass) would then sample only the
+   bar's subtree instead of the page — the panel's blur silently dies. The
+   pseudo covers exactly the box the background used to paint (inset: 0 spans
+   the padding box too), and z-index: -1 tucks it behind the nav items inside
+   the bar's own stacking context (fixed + z-index), still above the page. */
+.stickyHeaderVisible::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
   background: linear-gradient(
     to bottom,
     var(--color-bg-page-primary) 0%,
@@ -373,7 +388,7 @@
 }
 
 /* Dark-mode variant uses near-black instead of pure white */
-:global([data-theme="dark"]) .stickyHeaderVisible {
+:global([data-theme="dark"]) .stickyHeaderVisible::before {
   background: linear-gradient(
     to bottom,
     rgba(5, 5, 5, 1) 0%,
