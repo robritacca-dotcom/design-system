@@ -20,6 +20,7 @@
  *
  * Runs in the validate-registry chain before every build.
  */
+import { spawnSync } from 'node:child_process';
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -65,6 +66,13 @@ const placeholder = /[<>*{}[\] $~]|ComponentName|MyComponent|my-component|compon
 const deadPaths = [];
 let pathCount = 0;
 
+// A missing path that the repo's own .gitignore covers is a claim about a
+// runtime artifact (GA credentials, generated output) — those legitimately
+// exist on one machine and not in a fresh checkout or CI, so existence is
+// the wrong test for them. Everything else must exist.
+const isGitignored = (span) =>
+  spawnSync('git', ['check-ignore', '-q', span], { cwd: repoRoot }).status === 0;
+
 // Check B — every `npm run X` mention resolves to a real script in the root
 // or website workspace package.json. The union is deliberately context-free:
 // workspace-scoped forms (`cd website && npm run dev`, `--workspace`) stay
@@ -93,7 +101,7 @@ for (const [label, src] of sources) {
   for (const [, span] of src.matchAll(/`([^`\n]+)`/g)) {
     if (pathPrefix.test(span) && !placeholder.test(span)) {
       pathCount += 1;
-      if (!existsSync(join(repoRoot, span))) {
+      if (!existsSync(join(repoRoot, span)) && !isGitignored(span)) {
         deadPaths.push(`${label}: \`${span}\` does not exist — rename or restore it`);
       }
     }
