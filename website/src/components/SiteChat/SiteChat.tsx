@@ -144,6 +144,16 @@ export function SiteChat({
           setView("panel");
         }
       }}
+      /* On the welcome screen the whole panel is an invitation to type, so a
+         click on its dead space lands focus in the composer — unless it hit a
+         real control, or the visitor was selecting the greeting text. */
+      onClick={(e) => {
+        if (!isEmpty) return;
+        const target = e.target as HTMLElement;
+        if (target.closest("button, a, input, textarea, [role='button']")) return;
+        if (window.getSelection()?.toString()) return;
+        focusComposer();
+      }}
     >
       <div className={styles.topRegion}>
         <ChatHeader
