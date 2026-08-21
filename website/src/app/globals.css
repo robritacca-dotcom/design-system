@@ -138,6 +138,23 @@ body:has([data-bg-full-bleed]) .blur-container::after {
   display: none;
 }
 
+/* Tall variant — one viewport of ambient colour with the fade in its lower
+   half, so at rest it dissolves into the page colour around the same line a
+   hero image's own bottom fade does. Absolute, not fixed, deliberately: the
+   band is anchored to the top of the document, so scrolling moves past it
+   into plain page colour instead of carrying it along and never letting the
+   fade actually go by. Declared with the same marker mechanism as full
+   bleed. */
+body:has([data-bg-tall]) .blur-container {
+  position: absolute;
+  height: 100vh;
+  height: 100svh;
+}
+
+body:has([data-bg-tall]) .blur-container::after {
+  height: 45vh;
+}
+
 /* Background off — the playground's stage toggle, read the same marker way.
    Hiding the layer rather than unmounting it keeps the WebGL context alive,
    so switching back on is instant instead of a fresh compile and fade. */

@@ -36,6 +36,21 @@ export function FullBleedBackground() {
 }
 
 /**
+ * Marker a page renders to stretch the background band to one viewport while
+ * keeping the fade into the page colour — the middle ground between the
+ * 450px header band and the full bleed. Unlike the other variants this band
+ * is anchored to the top of the document rather than the viewport, so
+ * scrolling passes through the fade into plain page colour. The home
+ * experiment uses it so the ambient colour runs down behind its hero image,
+ * fades out around the same line the image's own bottom fade does, and stays
+ * behind as the page scrolls. Same marker mechanism as FullBleedBackground,
+ * for the same reason.
+ */
+export function TallBackground() {
+  return <div data-bg-tall hidden />;
+}
+
+/**
  * Marker a page renders to hide the background entirely, leaving the flat page
  * colour — the playground's stage toggle, so a theme can be judged without the
  * ambient field colouring it.

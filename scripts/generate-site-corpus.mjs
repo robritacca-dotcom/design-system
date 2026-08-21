@@ -628,6 +628,10 @@ const EXCLUDED_ROUTES = new Map([
     'a noindex staging page for the vector cover mocks — its only prose is a size caption under each frame'],
   ['/covers/render',
     'a noindex surface that renders one cover mock alone at an exact size, so the cover images can be shot from it — it carries no prose at all'],
+  ['/home-v2',
+    'a noindex home page experiment — the cycling hero; its facts (titles, deks, covers) all come from the case-study registries the corpus already carries'],
+  ['/home-v3',
+    'a noindex home page experiment — the live hero over a cycling work section; its facts all come from the case-study registries the corpus already carries'],
 ]);
 
 /** Component showcase pages: excluded as a class, with one shared reason. */

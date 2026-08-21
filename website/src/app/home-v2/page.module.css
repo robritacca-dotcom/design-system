@@ -1,0 +1,335 @@
+/* ============================================
+   HOME V2 — the cycling-hero experiment.
+   Same container discipline as the home page;
+   the hero is left-aligned and the cover render
+   fills the container width.
+   ============================================ */
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1440px;
+  flex: 1;
+  position: relative;
+  gap: var(--gap-xxl);
+  /* No horizontal padding: the body's gutter is the only inset, the same
+     arrangement as the nav's headerInner — so the headline, the picker and
+     the stage all sit flush with the nav's logo and its far edge. */
+  padding: 0 0 var(--padding-xl);
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* Even rhythm through the text cluster (headline, summary, picker row).
+     No top padding: the space above the headline is exactly the body's
+     nav-to-main gap, and the stage's margin below brings the picker-to-image
+     space to the same total — the two big breaks match. */
+  gap: var(--gap-xl);
+  width: 100%;
+}
+
+/* ============================================
+   HEADLINE — a small sub-display kicker in
+   secondary over the product name at display
+   size in primary, so the product carries the
+   weight. One typeface; size and colour make
+   the hierarchy.
+   ============================================ */
+.heroTitle {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm-md);
+}
+
+.titleKicker {
+  font-family: var(--font-sub-display-family);
+  font-size: var(--font-sub-display-size);
+  font-weight: var(--font-sub-display-weight);
+  line-height: var(--font-sub-display-line-height);
+  letter-spacing: var(--font-sub-display-letter-spacing);
+  color: var(--color-text-secondary);
+}
+
+/* Every phrase stacks in one grid cell, so the slot is always as tall and
+   wide as the largest phrase and the line below never shifts. */
+.titleSlot {
+  display: grid;
+  font-family: var(--font-display-2-family);
+  font-size: var(--font-display-2-size);
+  font-weight: var(--font-display-2-weight);
+  line-height: var(--font-display-2-line-height);
+  letter-spacing: var(--font-display-2-letter-spacing);
+  color: var(--color-text-primary);
+}
+
+.phrase {
+  grid-area: 1 / 1;
+  opacity: 0;
+  transform: translateY(0.3em);
+  visibility: hidden;
+  /* Visibility flips only after the fade-out completes, so inactive phrases
+     drop out of hit-testing and find-in-page without cutting the crossfade. */
+  transition:
+    opacity var(--motion-duration-slower) var(--motion-ease-standard),
+    transform var(--motion-duration-slower) var(--motion-ease-standard),
+    visibility 0s linear var(--motion-duration-slower);
+}
+
+.phraseActive {
+  opacity: 1;
+  transform: none;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+/* ============================================
+   DEK — the active study's registry summary,
+   crossfading in step with the headline.
+   ============================================ */
+.dekSlot {
+  display: grid;
+  max-width: 640px;
+}
+
+.dek {
+  grid-area: 1 / 1;
+  font-family: var(--font-title-body-family);
+  font-size: var(--font-title-body-size);
+  font-weight: var(--font-title-body-weight);
+  line-height: var(--font-title-body-line-height);
+  letter-spacing: var(--font-title-body-letter-spacing);
+  color: var(--color-text-secondary);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--motion-duration-slower) var(--motion-ease-standard),
+    visibility 0s linear var(--motion-duration-slower);
+}
+
+.dekActive {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+/* ============================================
+   PICKER ROW — product pills on the left, the
+   case-study CTA on the right, one row like
+   the reference's logos-and-actions band.
+   ============================================ */
+.pickerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--gap-md);
+  width: 100%;
+}
+
+/* One pill per product; the active one is outlined in the text colour,
+   keeping the action teal for the real CTA beside them. */
+.picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-sm);
+}
+
+/* The chips borrow the library Button's tertiary (passive) treatment and its
+   default-size metrics — same padding, radius and type as the case-study CTA
+   beside them — so the row reads as one set of buttons at one size. */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--padding-sm) var(--padding-lg);
+  border-radius: var(--radius-full);
+  border: none;
+  background: var(--color-action-passive-bg);
+  font-family: var(--font-paragraph-em-family);
+  font-size: var(--font-paragraph-em-size);
+  font-weight: var(--font-paragraph-em-weight);
+  line-height: var(--font-paragraph-em-line-height);
+  letter-spacing: var(--font-paragraph-em-letter-spacing);
+  color: var(--color-action-passive-text);
+  cursor: pointer;
+  transition: background-color var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.chip:hover {
+  background: var(--color-action-passive-bg-hover);
+}
+
+.chip:active {
+  background: var(--color-action-passive-bg-active);
+}
+
+/* The selected chip rests on the passive hover tint, so the light pill marks
+   it even before the name finishes sliding out. */
+.chipActive,
+.chipActive:hover {
+  background: var(--color-action-passive-bg-hover);
+}
+
+.chipLogo {
+  display: block;
+}
+
+/* The company name rides a 0fr grid track: selecting a chip grows the track
+   to 1fr and the name slides out beside the logo, deselecting collapses it
+   back to logo-only — and the whole row shuffles along with the width
+   change, on the same eased duration. */
+.chipLabel {
+  display: grid;
+  grid-template-columns: 0fr;
+  transition: grid-template-columns var(--motion-duration-base) var(--motion-ease-standard);
+}
+
+.chipLabelText {
+  overflow: hidden;
+  white-space: nowrap;
+  min-width: 0;
+  padding-left: 0;
+  opacity: 0;
+  transition:
+    opacity var(--motion-duration-base) var(--motion-ease-standard),
+    padding-left var(--motion-duration-base) var(--motion-ease-standard);
+}
+
+.chipActive .chipLabel {
+  grid-template-columns: 1fr;
+}
+
+.chipActive .chipLabelText {
+  padding-left: var(--gap-sm);
+  opacity: 1;
+}
+
+/* ============================================
+   STAGE — the full-width cover render. Both
+   themes of every slide stay mounted; the
+   active slide fades in over the rest.
+
+   The bottom fades to nothing instead of
+   ending in an edge: every screen is a
+   different height, so a hard crop lands
+   mid-composer on one and mid-card on the
+   next, where the fade reads as deliberate on
+   all of them.
+
+   The mask sits on the inner clip and the
+   shadow on the link as a drop-shadow filter,
+   in that order deliberately: drop-shadow
+   follows its child's rendered alpha, so the
+   shadow dissolves exactly where the image
+   does instead of drawing an edge under the
+   fade. Doubling the elevation token deepens
+   and widens it without leaving the token.
+   ============================================ */
+.stage {
+  display: block;
+  position: relative;
+  width: 100%;
+  /* With the hero's own gap this totals the body's nav-to-main gap, so the
+     break above the image equals the break above the headline. */
+  margin-top: var(--gap-xl);
+  filter: drop-shadow(var(--shadow-modal)) drop-shadow(var(--shadow-modal));
+}
+
+/* The click surface, present only while the active slide has a study. */
+.stageLink {
+  position: absolute;
+  inset: 0;
+}
+
+.stageClip {
+  display: grid;
+  width: 100%;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: var(--border-xs) solid var(--color-bg-container-border);
+  -webkit-mask-image: linear-gradient(to bottom, black 58%, transparent 97%);
+  mask-image: linear-gradient(to bottom, black 58%, transparent 97%);
+}
+
+.slide {
+  grid-area: 1 / 1;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--motion-duration-slower) var(--motion-ease-standard),
+    visibility 0s linear var(--motion-duration-slower);
+}
+
+.slideActive {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+/* ============================================
+   COMING SOON — the closing slide's stand-in
+   for a cover render: the container surface at
+   the renders' 16:10 ratio, a few soft accent
+   blobs echoing the site's ambient field, and
+   the one line of text.
+   ============================================ */
+.comingSoon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  /* The hero renders' ratio, so the stage holds its height on this slide. */
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--color-bg-container-secondary);
+}
+
+.comingSoonBlob {
+  position: absolute;
+  width: 45%;
+  aspect-ratio: 1;
+  border-radius: var(--radius-full);
+  filter: blur(80px);
+  opacity: 0.35;
+}
+
+.comingSoonBlobA {
+  top: -15%;
+  left: 8%;
+  background: var(--color-core-accent-mint);
+}
+
+.comingSoonBlobB {
+  top: 20%;
+  right: -10%;
+  background: var(--color-core-accent-violet);
+}
+
+.comingSoonBlobC {
+  bottom: -20%;
+  left: 30%;
+  background: var(--color-core-accent-gold);
+}
+
+.comingSoonText {
+  position: relative;
+  font-family: var(--font-sub-display-family);
+  font-size: var(--font-sub-display-size);
+  font-weight: var(--font-sub-display-weight);
+  line-height: var(--font-sub-display-line-height);
+  letter-spacing: var(--font-sub-display-letter-spacing);
+  color: var(--color-text-secondary);
+}
+
+/* ============================================
+   RESPONSIVE — the type rides the token
+   collapse (display-2 steps down by itself at
+   768px); only the frame spacing changes here.
+   ============================================ */
+@media (max-width: 600px) {
+  .picker {
+    gap: var(--gap-xs);
+  }
+}
