@@ -34,6 +34,13 @@ type ComposerOwnProps = {
   /** Growth cap in text rows before the textarea scrolls internally. */
   maxRows?: number;
   /**
+   * While focused, the shell wears AiButton's slowly rotating gradient ring
+   * and glow in place of the plain selected border — the system's "a model
+   * answers here" signal, for composers whose messages are answered by one.
+   * Off by default.
+   */
+  aiGlow?: boolean;
+  /**
    * Attachment row rendered above the textarea (DocumentChips). Fully
    * controlled by the caller — Composer never owns the list.
    */
@@ -84,6 +91,7 @@ export const Composer = React.forwardRef<HTMLTextAreaElement, ComposerProps>(
       streaming = false,
       onStop,
       maxRows = 8,
+      aiGlow = false,
       attachments,
       actions,
       trailingActions,
@@ -167,7 +175,12 @@ export const Composer = React.forwardRef<HTMLTextAreaElement, ComposerProps>(
       textareaRef.current?.focus();
     };
 
-    const classes = [baseClass, disabled ? `${baseClass}--disabled` : '', className]
+    const classes = [
+      baseClass,
+      aiGlow ? `${baseClass}--ai-glow` : '',
+      disabled ? `${baseClass}--disabled` : '',
+      className,
+    ]
       .filter(Boolean)
       .join(' ');
 

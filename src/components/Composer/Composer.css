@@ -3,7 +3,20 @@
    The chat input shell: attachments, auto-growing textarea, send/stop
    ============================================ */
 
+/* The focus treatment animates a registered custom property, exactly as
+   AiButton does: a conic gradient's angle cannot tween otherwise. Browsers
+   without @property render the ring at its initial angle, static — a
+   correct, quieter fallback. Registered under its own name so Composer
+   never depends on AiButton's stylesheet being loaded. */
+@property --ds-composer-glow-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
 .ds-composer {
+  /* Anchors the focus ring and glow pseudo-elements */
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -34,6 +47,102 @@
 
 .ds-composer:focus-within {
   border-color: var(--color-input-border-selected);
+}
+
+/* ============================================
+   AI GLOW — opt-in via the `aiGlow` prop
+   While focused, the plain selected border stands down and the AI gradient
+   ring takes its place — the same "a model answers here" signal AiButton
+   carries, for composers whose messages are answered by a model.
+   ============================================ */
+
+.ds-composer--ai-glow:focus-within {
+  border-color: transparent;
+}
+
+/* The gradient ring: AiButton's treatment on the composer shell — a conic
+   gradient painted across the whole box, masked to the border band (two
+   fills, exclude-composited, inset by the border width). The gradient
+   repeats back to its start colour so the seam at 360° is invisible while
+   it turns. Negative inset lays the pseudo over the shell's own border
+   box, so the ring replaces the border exactly. */
+.ds-composer--ai-glow::before {
+  content: '';
+  position: absolute;
+  inset: calc(-1 * var(--border-xs));
+  border-radius: inherit;
+  padding: var(--border-xs);
+  background: conic-gradient(
+    from var(--ds-composer-glow-angle),
+    var(--color-ai-gradient-start),
+    var(--color-ai-gradient-mid),
+    var(--color-ai-gradient-end),
+    var(--color-ai-gradient-mid),
+    var(--color-ai-gradient-start)
+  );
+  /* Standard properties only — the build pipeline prefixes per its browser
+     targets, and hand-written -webkit- duplicates confuse its merging. */
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
+  /* ds-allow(motion): ambient signature rotation, matched to AiButton's —
+     deliberately far slower than the interaction-scale motion tokens */
+  animation: ds-composer-glow-turn 7s linear infinite paused;
+}
+
+/* The glow: the same gradient, blurred behind the opaque shell at low
+   opacity, so it reads as a halo around the border. A colour effect, not
+   an elevation shadow — depth stays token-owned. */
+.ds-composer--ai-glow::after {
+  content: '';
+  position: absolute;
+  inset: calc(-1 * var(--border-xs));
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--ds-composer-glow-angle),
+    var(--color-ai-gradient-start),
+    var(--color-ai-gradient-mid),
+    var(--color-ai-gradient-end),
+    var(--color-ai-gradient-mid),
+    var(--color-ai-gradient-start)
+  );
+  /* The glow's spread; a length with no token family, matched to AiButton. */
+  --ds-composer-glow: 14px;
+  filter: blur(var(--ds-composer-glow));
+  opacity: 0;
+  z-index: -1;
+  pointer-events: none;
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
+  /* ds-allow(motion): same ambient rotation as the ring, kept in phase */
+  animation: ds-composer-glow-turn 7s linear infinite paused;
+}
+
+.ds-composer--ai-glow:focus-within::before {
+  opacity: 1;
+  animation-play-state: running;
+}
+
+.ds-composer--ai-glow:focus-within::after {
+  opacity: 0.3;
+  animation-play-state: running;
+}
+
+@keyframes ds-composer-glow-turn {
+  to {
+    --ds-composer-glow-angle: 360deg;
+  }
+}
+
+/* Reduced motion: the ring and glow stay, the turning stops. */
+@media (prefers-reduced-motion: reduce) {
+  .ds-composer--ai-glow::before,
+  .ds-composer--ai-glow::after {
+    animation: none;
+  }
 }
 
 /* ============================================
@@ -173,6 +282,12 @@
 .ds-composer--disabled:hover:not(:focus-within),
 .ds-composer--disabled:focus-within {
   border-color: var(--color-input-border-disabled);
+}
+
+.ds-composer--disabled:focus-within::before,
+.ds-composer--disabled:focus-within::after {
+  opacity: 0;
+  animation-play-state: paused;
 }
 
 .ds-composer--disabled .ds-composer__textarea {

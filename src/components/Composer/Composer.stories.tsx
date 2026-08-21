@@ -14,6 +14,7 @@ const meta = {
     value: { control: 'text' },
     defaultValue: { control: 'text' },
     streaming: { control: 'boolean' },
+    aiGlow: { control: 'boolean' },
     maxRows: { control: 'number' },
     sendLabel: { control: 'text' },
     stopLabel: { control: 'text' },
@@ -34,6 +35,16 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+
+/**
+ * With `aiGlow`, focusing the composer swaps the plain selected border for
+ * AiButton's rotating gradient ring and glow. Click into the field to see it.
+ */
+export const AiGlow: Story = {
+  args: {
+    aiGlow: true,
+  },
+};
 
 /** While a response streams, send becomes stop and Enter is inert. */
 export const Streaming: Story = {
