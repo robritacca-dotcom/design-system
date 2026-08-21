@@ -50,7 +50,7 @@ Eight parameters describe the look, and a composition is a table of token names 
 
 It asks two things of you, both deliberate. It fills a positioned ancestor you provide, because where a background sits is a layout decision rather than a rendering one. And it never decides what to paint instead of itself: it reports `pending`, `active` or `unavailable`, and one fallback covers every way it can fail (no WebGL2, a blocked or lost GPU context, a renderer that stalls before its first frame, or `enabled={false}` as a kill switch). `pending` is the state worth handling. Paint neither layer while the context comes up, or the swap a frame later reads as two backgrounds loading in sequence.
 
-It is also the one place a `prefers-reduced-motion` check lives in JavaScript rather than in the motion tokens, because the CSS guard cannot see a `requestAnimationFrame` loop. Set the preference and it draws a single static frame.
+It checks `prefers-reduced-motion` in JavaScript rather than through the motion tokens, because the CSS guard cannot see a JS-driven loop. Set the preference and it draws a single static frame.
 
 The background behind this site is that component, with eight blurred CSS discs kept painted underneath as its fallback. The **[component page](https://robertritacca.com/components/shader-field)** is a live demo, and the **[setup guide](https://robertritacca.com/docs/get-started)** has the wiring.
 

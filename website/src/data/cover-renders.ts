@@ -3,7 +3,7 @@ import data from "./cover-renders.json";
 /**
  * The raster renders of the vector covers.
  *
- * The covers are drawn in CSS/SVG and live in `src/components/covers/` — that
+ * The covers are drawn in CSS/SVG and live in `website/src/components/covers/` — that
  * is still where a cover is authored and changed. But an HTML mock inside an
  * SVG `foreignObject`, shrunk by a scale transform, is not something mobile
  * WebKit renders reliably, so the places a cover is *displayed* read a flat

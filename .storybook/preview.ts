@@ -37,14 +37,15 @@ const preview: Preview = {
         // The gate is WCAG 2.1 AA minus the contrast criteria, and this
         // comment is the authoritative record of why.
         //
-        // The action colour does not clear the ratio behind its own label
-        // (primary CTA label, teal-as-text on white, tertiary-on-tertiary).
-        // That is a settled style decision by the owner, not a bug waiting on
-        // a fix: the colour is a token, so anyone building on this system
-        // resolves it from their own palette and gets their own answer. Do not
-        // re-enable this rule, redesign the action colour, or raise the pairs
-        // above as findings without asking Rob first. It is his call and he
-        // may well keep it as it is.
+        // The rule stays off because the action colour is a token: anyone
+        // building on this system resolves it from their own palette and gets
+        // their own answer, so a ratio computed against the shipped teal
+        // proves nothing about a consumer's build. (As of the 2026-08-20
+        // accessible teal split, the shipped pairs the rule used to fail —
+        // primary CTA label, teal-as-text on white, tertiary-on-tertiary —
+        // all clear AA; the audit trail lives in that change.) Keeping it off
+        // is still a settled decision of Rob's: do not re-enable this rule or
+        // redesign the action colour without asking him first.
         //
         // Everything else in AA is enforced, and a contrast failure appearing
         // in CI means someone turned this back on.

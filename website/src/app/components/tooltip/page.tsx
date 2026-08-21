@@ -33,7 +33,7 @@ export default function TooltipPage() {
               Contextual labels on hover and focus
             </p>
             <p className={styles.introBody}>
-              Tooltips provide brief, informative text when users hover over or focus on an element. They use inverted colours for contrast and support four placement positions with a directional arrow.
+              Tooltips provide brief, informative text when users hover over or focus on an element. They use inverted colours for contrast and support four placement positions with a directional arrow. Pressing Escape dismisses a visible tooltip from anywhere on the page.
             </p>
           </div>
 

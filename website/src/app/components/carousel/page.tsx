@@ -38,7 +38,7 @@ export default function CarouselPage() {
               Browse content one slide at a time
             </p>
             <p className={styles.introBody}>
-              A sliding content viewer with arrow navigation, dot indicators, optional auto-play, and keyboard support. Pauses auto-play on hover for accessibility.
+              A sliding content viewer with arrow navigation, dot indicators, optional auto-play, and keyboard support. Auto-play pauses on hover or keyboard focus, and never starts at all when the reader prefers reduced motion.
             </p>
           </div>
 

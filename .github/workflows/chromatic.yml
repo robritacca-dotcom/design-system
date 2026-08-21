@@ -7,9 +7,9 @@ name: Chromatic
 # DELIBERATELY workflow_dispatch-ONLY. The project, CHROMATIC_PROJECT_TOKEN
 # secret, and accepted baseline all exist (first baseline 2026-07-27:
 # 502 stories x 2 themes). The reason is snapshot budget: a full run is
-# roughly 1,000 snapshots against the free tier's 5,000/month, so runs are
-# deliberate, not per-push. Revisit the trigger (and TurboSnap) once the
-# real monthly spend is known.
+# roughly twice the story count in snapshots (about 1,330 today) against
+# the free tier's 5,000/month, so runs are deliberate, not per-push.
+# Revisit the trigger (and TurboSnap) once the real monthly spend is known.
 #
 # NOT part of `npm run verify` — the one deliberate exception to the "CI
 # check ⇒ verify" rule, because every run bills cloud snapshots. See the

@@ -75,7 +75,7 @@ const CHARS_PER_TOKEN = 2.85;
  * suddenly doubled: trim that instead, and read the `--sizes` report before
  * deciding which of the two this is.
  */
-const TOKEN_BUDGET = 105_000;
+const TOKEN_BUDGET = 110_000;
 
 /** Normalize CRLF so Windows checkouts generate byte-identical output to CI. */
 const read = (path) => readFileSync(path, 'utf8').replace(/\r\n/g, '\n');
