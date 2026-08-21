@@ -238,6 +238,7 @@ export function SiteChat({
             ref={composerRef}
             placeholder={placeholder}
             sendLabel="Send"
+            aiGlow
             value={draft}
             onValueChange={setDraft}
             onSubmit={handleSubmit}
