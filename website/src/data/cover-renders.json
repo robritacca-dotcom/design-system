@@ -15,32 +15,38 @@
       "ratio": [16, 9],
       "width": 2560,
       "use": "The two Meta case-study heroes, which call for 16:9 rather than the 16:10 the others use."
+    },
+    "hero": {
+      "ratio": [16, 10],
+      "width": 2560,
+      "variant": "full",
+      "use": "The home experiment's full-width stage (/home-v2): the full treatment, the screen alone filling the frame edge to edge, cropped at the bottom where a screen is taller than 16:10."
     }
   },
   "studies": {
     "/work/augmenta-ai": {
       "alt": "Augmenta's coordination model viewer, with a routed pipework solution traced in green through a wireframe building model.",
-      "aspects": ["card", "feature"]
+      "aspects": ["card", "feature", "hero"]
     },
     "/work/embedded-ai-turbotax": {
       "alt": "A Claude conversation where TurboTax returns a 2025 tax year checklist, with a drop zone for documents and the wage and investment forms already gathered.",
-      "aspects": ["card", "feature"]
+      "aspects": ["card", "feature", "hero"]
     },
     "/work/intuit-agent-chat": {
       "alt": "Intuit's assistant open full screen, offering starter prompts about cash flow, bottlenecks and growth above an ask-anything composer.",
-      "aspects": ["card", "feature"]
+      "aspects": ["card", "feature", "hero"]
     },
     "/work/meta-career-profile": {
       "alt": "Meta's candidate offer summary, listing role details beside a total compensation figure broken into salary, bonus, equity and sign-on.",
-      "aspects": ["card", "feature", "wide"]
+      "aspects": ["card", "feature", "wide", "hero"]
     },
     "/work/meta-offers": {
       "alt": "Meta's recruiter offer draft, with a candidate's profile and engagement history beside a calculator comparing standard, maximum and proposed compensation.",
-      "aspects": ["card", "feature", "wide"]
+      "aspects": ["card", "feature", "wide", "hero"]
     },
     "/work/robr0-ds": {
       "alt": "This site's playground, with theme controls for action colour, corner radius and typeface down the left of a live chat preview.",
-      "aspects": ["card", "feature"]
+      "aspects": ["card", "feature", "hero"]
     }
   }
 }

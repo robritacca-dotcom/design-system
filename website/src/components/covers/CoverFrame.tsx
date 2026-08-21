@@ -15,10 +15,14 @@ import styles from "./CoverFrame.module.css";
  * own native pixel geometry inside — nothing is re-laid-out to fit, which is
  * what keeps the redraws 1:1 with their sources.
  *
- * Two treatments. "thumb" floats the mock on a gradient drawn from the
+ * Three treatments. "thumb" floats the mock on a gradient drawn from the
  * product's own colours, for a card or a listing. "bleed" fills the frame and
  * letterboxes against the mock's own page colour, for use inside a case study
  * where the screen should read as the subject rather than as an object.
+ * "full" is the extraction: the screen alone, filling the frame edge to edge
+ * with no gradient, ground or card chrome — scaled to cover, anchored to the
+ * top, so what a narrower frame crops is the bottom of the screen, never its
+ * title bar.
  */
 
 /**
@@ -75,7 +79,7 @@ export type CoverProps = {
    * the container instead of letterboxing inside it.
    */
   aspect?: number;
-  variant?: "thumb" | "bleed";
+  variant?: "thumb" | "bleed" | "full";
 };
 
 export function CoverFrame({
@@ -101,18 +105,24 @@ export function CoverFrame({
   children: React.ReactNode;
 }) {
   const thumb = variant === "thumb";
+  const full = variant === "full";
   const inset = thumb ? INSET.thumb : INSET.bleed;
 
   const frameH = FRAME.h;
   const frameW = frameH * aspect;
 
-  /* Contain, not cover: a cover crop would cut title bars off the wide
-     screens and gut the narrow ones. */
-  const scale = Math.min((frameW * inset) / width, (frameH * inset) / height);
+  /* Thumb and bleed contain, not cover: a cover crop would cut title bars
+     off the wide screens and gut the narrow ones. Full is the exception —
+     it exists to fill the frame with the screen, so it covers, centred
+     horizontally but pinned to the top: the overflow a narrower frame crops
+     away is the bottom of the screen, never its title bar. */
+  const scale = full
+    ? Math.max(frameW / width, frameH / height)
+    : Math.min((frameW * inset) / width, (frameH * inset) / height);
   const w = width * scale;
   const h = height * scale;
   const x = (frameW - w) / 2;
-  const y = (frameH - h) / 2;
+  const y = full ? 0 : (frameH - h) / 2;
 
   /* The card's radius is specified in frame units, so it has to be divided
      back out for the mock, which lives in its own scaled coordinates. */
@@ -127,7 +137,7 @@ export function CoverFrame({
       role="img"
       aria-label={label}
     >
-      {thumb ? (
+      {thumb && (
         <foreignObject x="0" y="0" width={frameW} height={frameH}>
           <div
             className={[styles.gradient, tone ? TONE_CLASS[tone] : ""]
@@ -135,7 +145,8 @@ export function CoverFrame({
               .join(" ")}
           />
         </foreignObject>
-      ) : (
+      )}
+      {variant === "bleed" && (
         <rect
           className={[styles.ground, ground ? GROUND_CLASS[ground] : ""]
             .filter(Boolean)

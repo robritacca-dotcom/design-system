@@ -20,7 +20,15 @@ export type CoverTheme = "light" | "dark";
 
 export const COVER_ASPECTS = data.aspects as Record<
   CoverAspect,
-  { ratio: [number, number]; width: number; use: string }
+  {
+    ratio: [number, number];
+    width: number;
+    use: string;
+    /** The CoverFrame treatment to shoot: "bleed" letterboxes the screen
+        against its own page colour, "full" fills the frame with the screen
+        alone; left out, the gradient "thumb" treatment is used. */
+    variant?: "thumb" | "bleed" | "full";
+  }
 >;
 
 /** What each study's cover is rendered at, and what it shows. */

@@ -67,7 +67,7 @@ export default async function CoverRenderPage({
         className={styles.shot}
         style={{ width: `${width}px`, height: `${height}px` }}
       >
-        <Cover aspect={w / h} />
+        <Cover aspect={w / h} variant={COVER_ASPECTS[key].variant ?? "thumb"} />
       </div>
     </main>
   );
