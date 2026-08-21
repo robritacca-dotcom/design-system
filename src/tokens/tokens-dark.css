@@ -112,6 +112,17 @@
   --color-chart-contribution-3: var(--primitive-green-08);
   --color-chart-contribution-4: var(--primitive-green-07);
 
+  /* Chart - Ordered series ramp for multi-series charts. Series 1 follows
+     the action teal (theme-split with it); 2-7 alias the core accents, so
+     re-theming an accent re-themes every chart that uses its slot. */
+  --color-chart-series-1: var(--color-action-primary-bg);
+  --color-chart-series-2: var(--color-core-accent-mint);
+  --color-chart-series-3: var(--color-core-accent-gold);
+  --color-chart-series-4: var(--color-core-accent-coral);
+  --color-chart-series-5: var(--color-core-accent-violet);
+  --color-chart-series-6: var(--color-core-accent-amber);
+  --color-chart-series-7: var(--color-core-accent-cobalt);
+
   /* Input */
   --color-input-text-primary: var(--primitive-neutral-01);
   --color-input-text-placeholder: var(--primitive-neutral-04);

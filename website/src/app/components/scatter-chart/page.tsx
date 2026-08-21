@@ -17,8 +17,8 @@ function generateScatterCluster(cx: number, cy: number, count: number, spread: n
 }
 
 const scatterDatasets = [
-  { name: "Group A", data: generateScatterCluster(60, 200, 20, 80), color: "#118AB2" },
-  { name: "Group B", data: generateScatterCluster(180, 120, 20, 80), color: "#06D6A0" },
+  { name: "Group A", data: generateScatterCluster(60, 200, 20, 80) },
+  { name: "Group B", data: generateScatterCluster(180, 120, 20, 80) },
 ];
 
 export default function ScatterChartPage() {

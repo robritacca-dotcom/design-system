@@ -10,6 +10,7 @@ import {
   Legend,
 } from 'recharts';
 import type { ChartSummaryItem } from './BarChart';
+import { getChartSeriesColors } from './palette';
 import './Chart.css';
 
 interface AreaTooltipPayloadEntry {
@@ -102,7 +103,7 @@ export const AreaChart = ({
 
   const textSecondary = getCSSVar('--color-text-secondary', '#A2A2A2');
   const gridColor = getCSSVar('--color-divider', '#232323');
-  const defaultColor = getCSSVar('--color-action-primary-bg', '#0E6E8F');
+  const seriesColors = getChartSeriesColors();
 
   const renderTooltip = useCallback(
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
@@ -137,8 +138,8 @@ export const AreaChart = ({
         <ResponsiveContainer width="100%" height={height}>
           <RechartsAreaChart data={data} margin={{ top: 8, right: 4, bottom: 0, left: -12 }}>
             <defs>
-              {series.map((s) => {
-                const color = s.color || defaultColor;
+              {series.map((s, i) => {
+                const color = s.color || seriesColors[i % seriesColors.length];
                 return (
                   <linearGradient key={`grad-${s.dataKey}`} id={`area-gradient-${s.dataKey}`} x1="0" y1="0" x2="0" y2="1">
                     <stop offset="0%" stopColor={color} stopOpacity={0.4} />
@@ -160,13 +161,13 @@ export const AreaChart = ({
               axisLine={false}
             />
             <Tooltip content={renderTooltip} />
-            {series.map((s) => (
+            {series.map((s, i) => (
               <Area
                 key={s.dataKey}
                 type="monotone"
                 dataKey={s.dataKey}
                 name={s.label}
-                stroke={s.color || defaultColor}
+                stroke={s.color || seriesColors[i % seriesColors.length]}
                 strokeWidth={2}
                 fill={`url(#area-gradient-${s.dataKey})`}
                 fillOpacity={s.fillOpacity ?? 1}

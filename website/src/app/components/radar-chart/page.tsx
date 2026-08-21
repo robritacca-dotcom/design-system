@@ -49,8 +49,8 @@ export default function RadarChartPage() {
                 data={radarData}
                 categoryKey="subject"
                 series={[
-                  { dataKey: "teamA", label: "Team Alpha", color: "#118AB2" },
-                  { dataKey: "teamB", label: "Team Beta", color: "#06D6A0" },
+                  { dataKey: "teamA", label: "Team Alpha" },
+                  { dataKey: "teamB", label: "Team Beta" },
                 ]}
                 title="Team skills"
                 subtitle="Competency comparison across domains"
@@ -60,7 +60,7 @@ export default function RadarChartPage() {
                 data={radarData}
                 categoryKey="subject"
                 series={[
-                  { dataKey: "teamA", label: "Team Alpha", color: "#EF476F", fillOpacity: 0.4 },
+                  { dataKey: "teamA", label: "Team Alpha", fillOpacity: 0.4 },
                 ]}
                 title="Team Alpha focus"
                 subtitle="Single-series radar"

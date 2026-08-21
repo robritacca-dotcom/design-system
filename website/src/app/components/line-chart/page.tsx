@@ -38,7 +38,7 @@ export default function LineChartPage() {
               Trends over time, one line per series
             </p>
             <p className={styles.introBody}>
-              Each series gets its own colour and legend entry, and the summary row totals the story. Built on Recharts with system tokens for axes, gridlines, and typography.
+              Each series gets its own colour and legend entry, and the summary row totals the story. Built on Recharts with system tokens for the series palette, axes, gridlines, and typography.
             </p>
           </div>
 
@@ -48,8 +48,8 @@ export default function LineChartPage() {
               data={lineData}
               xKey="month"
               series={[
-                { dataKey: "desktop", label: "Desktop", color: "#118AB2" },
-                { dataKey: "mobile", label: "Mobile", color: "#06D6A0" },
+                { dataKey: "desktop", label: "Desktop" },
+                { dataKey: "mobile", label: "Mobile" },
               ]}
               title="Visitors by device"
               subtitle="January to June 2024"

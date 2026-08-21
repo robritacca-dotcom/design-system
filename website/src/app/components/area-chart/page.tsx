@@ -48,8 +48,8 @@ export default function AreaChartPage() {
               data={areaData}
               xKey="month"
               series={[
-                { dataKey: "organic", label: "Organic", color: "#118AB2" },
-                { dataKey: "paid", label: "Paid", color: "#9E47EF" },
+                { dataKey: "organic", label: "Organic" },
+                { dataKey: "paid", label: "Paid" },
               ]}
               title="Traffic sources"
               subtitle="Organic vs paid visits, January to June 2024"
@@ -65,7 +65,7 @@ export default function AreaChartPage() {
             <AreaChart
               data={areaData}
               xKey="month"
-              series={[{ dataKey: "organic", label: "Organic", color: "#118AB2" }]}
+              series={[{ dataKey: "organic", label: "Organic" }]}
               title="Organic traffic"
               subtitle="January to June 2024"
             />

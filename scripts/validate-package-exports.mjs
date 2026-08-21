@@ -99,7 +99,8 @@ for (const [key, target] of Object.entries(expected)) {
  * a consumer needs — belongs here with a reason rather than a subpath.
  */
 const INTERNAL_MODULES = new Map([
-  // (none today — add as `['src/components/X/y.ts', 'why it is internal']`)
+  ['src/components/Chart/palette.ts',
+    'series-colour reader shared by the chart set; the --color-chart-series tokens it reads are the public surface'],
 ]);
 
 const componentsDir = join(repoRoot, 'src', 'components');

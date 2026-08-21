@@ -9,6 +9,7 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import type { ChartSummaryItem } from './BarChart';
+import { getChartSeriesColors } from './palette';
 import './Chart.css';
 
 interface LineChartTooltipPayloadEntry {
@@ -98,7 +99,7 @@ export const LineChart = ({
 
   const textSecondary = getCSSVar('--color-text-secondary', '#A2A2A2');
   const gridColor = getCSSVar('--color-divider', '#232323');
-  const defaultColor = getCSSVar('--color-action-primary-bg', '#0E6E8F');
+  const seriesColors = getChartSeriesColors();
 
   const renderTooltip = useCallback(
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
@@ -145,13 +146,13 @@ export const LineChart = ({
               axisLine={false}
             />
             <Tooltip content={renderTooltip} />
-            {series.map((s) => (
+            {series.map((s, i) => (
               <Line
                 key={s.dataKey}
                 type="monotone"
                 dataKey={s.dataKey}
                 name={s.label}
-                stroke={s.color || defaultColor}
+                stroke={s.color || seriesColors[i % seriesColors.length]}
                 strokeWidth={2}
                 strokeDasharray={s.strokeDasharray}
                 dot={false}

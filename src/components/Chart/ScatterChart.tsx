@@ -11,6 +11,7 @@ import {
   ZAxis,
 } from 'recharts';
 import type { ChartSummaryItem } from './BarChart';
+import { getChartSeriesColors } from './palette';
 import './Chart.css';
 
 interface ScatterTooltipPayloadEntry {
@@ -59,14 +60,6 @@ export interface ScatterChartProps {
   /** Additional CSS classes on the wrapper */
   className?: string;
 }
-
-const PALETTE = [
-  '#118AB2', // teal-07
-  '#06D6A0', // green-07
-  '#EF476F', // red-07
-  '#FFD166', // yellow-07
-  '#9E47EF', // purple-07
-];
 
 function getCSSVar(name: string, fallback: string): string {
   if (typeof window === 'undefined') return fallback;
@@ -118,6 +111,7 @@ export const ScatterChart = ({
   const baseClass = 'ds-chart';
   const classes = [baseClass, className].filter(Boolean).join(' ');
 
+  const seriesColors = getChartSeriesColors();
   const textSecondary = getCSSVar('--color-text-secondary', '#A2A2A2');
   const gridColor = getCSSVar('--color-divider', '#232323');
 
@@ -177,7 +171,7 @@ export const ScatterChart = ({
                 key={ds.name}
                 name={ds.name}
                 data={ds.data}
-                fill={ds.color || PALETTE[i % PALETTE.length]}
+                fill={ds.color || seriesColors[i % seriesColors.length]}
               />
             ))}
             {datasets.length > 1 && (

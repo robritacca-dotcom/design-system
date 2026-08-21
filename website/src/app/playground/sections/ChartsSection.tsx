@@ -73,9 +73,9 @@ export default function ChartsSection({ brand }: { brand: string }) {
     <section className={styles.demoSection} aria-label="Charts">
       <SectionTitle title="Charts" />
       <p className={styles.sectionNote}>
-        Every chart colours its series from the action colour, with the
-        lighter companions mixed from the same pick, so data visualisation
-        stays on brand as you re-theme.
+        Series one follows the action colour, and the companions here are
+        mixed from the same pick, so this demo stays on brand as you
+        re-theme.
       </p>
 
       <BarChart

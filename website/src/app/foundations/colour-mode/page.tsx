@@ -469,6 +469,45 @@ const chartContributionColours: SwatchData[] = [
   },
 ];
 
+/* --- Chart / Series --- */
+const chartSeriesColours: SwatchData[] = [
+  {
+    label: "Series 1", cssVar: "--color-chart-series-1",
+    dark: { primitive: "--teal--05--", hex: "#3CA5C6", rgb: "60 / 165 / 198" },
+    light: { primitive: "--teal--08--", hex: "#0E6E8F", rgb: "14 / 110 / 143" },
+  },
+  {
+    label: "Series 2", cssVar: "--color-chart-series-2",
+    dark: { primitive: "--green--07--", hex: "#06D6A0", rgb: "6 / 214 / 160" },
+    light: { primitive: "--green--07--", hex: "#06D6A0", rgb: "6 / 214 / 160" },
+  },
+  {
+    label: "Series 3", cssVar: "--color-chart-series-3",
+    dark: { primitive: "--yellow--07--", hex: "#FFD166", rgb: "255 / 209 / 102" },
+    light: { primitive: "--yellow--07--", hex: "#FFD166", rgb: "255 / 209 / 102" },
+  },
+  {
+    label: "Series 4", cssVar: "--color-chart-series-4",
+    dark: { primitive: "--red--07--", hex: "#EF476F", rgb: "239 / 71 / 111" },
+    light: { primitive: "--red--07--", hex: "#EF476F", rgb: "239 / 71 / 111" },
+  },
+  {
+    label: "Series 5", cssVar: "--color-chart-series-5",
+    dark: { primitive: "--purple--07--", hex: "#9E47EF", rgb: "158 / 71 / 239" },
+    light: { primitive: "--purple--07--", hex: "#9E47EF", rgb: "158 / 71 / 239" },
+  },
+  {
+    label: "Series 6", cssVar: "--color-chart-series-6",
+    dark: { primitive: "--orange--07--", hex: "#EF8247", rgb: "239 / 130 / 71" },
+    light: { primitive: "--orange--07--", hex: "#EF8247", rgb: "239 / 130 / 71" },
+  },
+  {
+    label: "Series 7", cssVar: "--color-chart-series-7",
+    dark: { primitive: "--blue--07--", hex: "#1E47B0", rgb: "30 / 71 / 176" },
+    light: { primitive: "--blue--07--", hex: "#1E47B0", rgb: "30 / 71 / 176" },
+  },
+];
+
 /* ============================================
    THEME HOOK
    ============================================ */
@@ -661,6 +700,16 @@ export default function SemanticColoursPage() {
             <SectionTitle title="Chart / contribution" />
             <div className={styles.colourSwatches}>
               {chartContributionColours.map((s) => (
+                <ColourSwatch key={s.label} label={s.label} cssVar={s.cssVar} dark={s.dark} light={s.light} theme={theme} />
+              ))}
+            </div>
+          </section>
+
+          {/* Chart / Series */}
+          <section className={styles.colourGroup}>
+            <SectionTitle title="Chart / series" />
+            <div className={styles.colourSwatches}>
+              {chartSeriesColours.map((s) => (
                 <ColourSwatch key={s.label} label={s.label} cssVar={s.cssVar} dark={s.dark} light={s.light} theme={theme} />
               ))}
             </div>

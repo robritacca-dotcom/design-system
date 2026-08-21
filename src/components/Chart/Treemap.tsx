@@ -5,6 +5,7 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import type { ChartSummaryItem } from './BarChart';
+import { getChartSeriesColors } from './palette';
 import './Chart.css';
 
 interface TreemapTooltipPayloadEntry {
@@ -48,16 +49,6 @@ export interface TreemapProps {
   className?: string;
 }
 
-const PALETTE = [
-  '#118AB2', // teal-07
-  '#06D6A0', // green-07
-  '#EF476F', // red-07
-  '#FFD166', // yellow-07
-  '#9E47EF', // purple-07
-  '#1E47B0', // blue-07
-  '#EF8247', // orange
-];
-
 function getCSSVar(name: string, fallback: string): string {
   if (typeof window === 'undefined') return fallback;
   return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback;
@@ -68,7 +59,8 @@ function TreemapContent(props: any) {
   const { x, y, width, height, name, index, color } = props;
   if (width < 4 || height < 4) return null;
 
-  const fill = color || PALETTE[index % PALETTE.length];
+  const seriesColors = getChartSeriesColors();
+  const fill = color || seriesColors[index % seriesColors.length];
   const textColor = getCSSVar('--color-text-primary', '#050505');
   const showLabel = width > 50 && height > 28;
 

@@ -20,8 +20,8 @@ const meta = {
   },
   args: {
     datasets: [
-      { name: 'Group A', data: generateCluster(60, 200, 20, 80), color: '#118AB2' },
-      { name: 'Group B', data: generateCluster(180, 120, 20, 80), color: '#06D6A0' },
+      { name: 'Group A', data: generateCluster(60, 200, 20, 80) },
+      { name: 'Group B', data: generateCluster(180, 120, 20, 80) },
     ],
     xKey: 'x',
     yKey: 'y',

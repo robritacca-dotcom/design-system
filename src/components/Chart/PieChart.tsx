@@ -8,6 +8,7 @@ import {
   Legend,
 } from 'recharts';
 import type { ChartSummaryItem } from './BarChart';
+import { getChartSeriesColors } from './palette';
 import './Chart.css';
 
 interface PieChartTooltipPayloadEntry {
@@ -52,23 +53,6 @@ export interface PieChartProps {
   className?: string;
 }
 
-/** Default colour palette using DS accent tokens (resolved at render) */
-function getDefaultColors(): string[] {
-  if (typeof window === 'undefined') {
-    return ['#0E6E8F', '#06D6A0', '#FFD166', '#EF476F', '#9E47EF', '#EF8247'];
-  }
-  const get = (v: string, fb: string) =>
-    getComputedStyle(document.documentElement).getPropertyValue(v).trim() || fb;
-  return [
-    get('--color-action-primary-bg', '#0E6E8F'),
-    get('--color-core-accent-mint', '#06D6A0'),
-    get('--color-core-accent-gold', '#FFD166'),
-    get('--color-core-accent-coral', '#EF476F'),
-    get('--color-core-accent-violet', '#9E47EF'),
-    get('--color-core-accent-amber', '#EF8247'),
-  ];
-}
-
 function getCSSVar(name: string, fallback: string): string {
   if (typeof window === 'undefined') return fallback;
   return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback;
@@ -111,7 +95,7 @@ export const PieChart = ({
 }: PieChartProps) => {
   const baseClass = 'ds-chart';
   const classes = [baseClass, className].filter(Boolean).join(' ');
-  const defaultColors = getDefaultColors();
+  const defaultColors = getChartSeriesColors();
   const textSecondary = getCSSVar('--color-text-secondary', '#A2A2A2');
 
   const renderTooltip = useCallback(

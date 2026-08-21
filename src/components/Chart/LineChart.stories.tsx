@@ -24,8 +24,8 @@ const meta = {
     data: monthlyData,
     xKey: 'month',
     series: [
-      { dataKey: 'desktop', label: 'Desktop', color: '#118AB2' },
-      { dataKey: 'mobile', label: 'Mobile', color: '#06D6A0' },
+      { dataKey: 'desktop', label: 'Desktop' },
+      { dataKey: 'mobile', label: 'Mobile' },
     ],
     title: 'Visitors by Device',
     subtitle: 'January - June 2024',

@@ -621,6 +621,29 @@ export const ChartColors: Story = {
         <ColorToken name="Level 3" value="--color-chart-contribution-3" />
         <ColorToken name="Level 4" value="--color-chart-contribution-4" />
       </TokenSection>
+
+      <p
+        style={{
+          fontSize: '14px',
+          color: 'var(--color-text-secondary)',
+          marginBottom: '32px',
+          lineHeight: '1.5',
+        }}
+      >
+        The ordered series ramp multi-series charts assign by slot. Series 1
+        follows the action teal, so it is theme-split with it; series 2–6
+        alias the core accents.
+      </p>
+
+      <TokenSection title="Series Ramp">
+        <ColorToken name="Series 1" value="--color-chart-series-1" />
+        <ColorToken name="Series 2" value="--color-chart-series-2" />
+        <ColorToken name="Series 3" value="--color-chart-series-3" />
+        <ColorToken name="Series 4" value="--color-chart-series-4" />
+        <ColorToken name="Series 5" value="--color-chart-series-5" />
+        <ColorToken name="Series 6" value="--color-chart-series-6" />
+        <ColorToken name="Series 7" value="--color-chart-series-7" />
+      </TokenSection>
     </div>
   ),
 };

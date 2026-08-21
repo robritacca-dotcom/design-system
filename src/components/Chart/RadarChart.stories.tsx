@@ -24,8 +24,8 @@ const meta = {
     data: skillData,
     categoryKey: 'subject',
     series: [
-      { dataKey: 'A', label: 'Team Alpha', color: '#118AB2' },
-      { dataKey: 'B', label: 'Team Beta', color: '#06D6A0' },
+      { dataKey: 'A', label: 'Team Alpha' },
+      { dataKey: 'B', label: 'Team Beta' },
     ],
     title: 'Team Skills',
     subtitle: 'Competency comparison across domains',
