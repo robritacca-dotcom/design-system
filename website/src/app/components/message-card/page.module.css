@@ -92,18 +92,13 @@
   margin: 0;
 }
 
-/* Self-contained media stand-in: token background, fixed aspect ratio */
-.mediaPlaceholder {
-  aspect-ratio: 2 / 1;
-  background-color: var(--color-bg-container-secondary);
-  display: flex;
-  align-items: flex-end;
-  color: var(--color-icon-secondary);
-}
-
-.mediaPlaceholder svg {
-  width: 100%;
-  display: block;
+/* A chart injected as card media: the chart's own panel chrome comes off,
+   because the message card is already the panel. */
+.chartMedia :global(.ds-chart) {
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  padding: var(--padding-sm) var(--padding-sm) 0 0;
 }
 
 /* A conversation mock around the composed example */

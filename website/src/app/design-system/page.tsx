@@ -924,7 +924,6 @@ export default function DesignSystemPage() {
                 onValueChange={setTransferChoice}
               />
               <MessageCard
-                icon="receipt_long"
                 title="July statement is ready"
                 description="Nine categories over 86 transactions."
                 meta="Generated 1 Aug"

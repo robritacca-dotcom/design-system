@@ -827,7 +827,6 @@ const previews: Record<string, () => ReactNode> = {
     <>
       <div className={styles.scaledComponentPreview} style={{ width: "220px" }}>
         <MessageCard
-          icon="language"
           title="Harbour timetable"
           meta="harbourline.example"
         />
@@ -836,7 +835,7 @@ const previews: Record<string, () => ReactNode> = {
   ),
   "model-picker": () => (
     <>
-      <div aria-hidden="true" style={{ display: "inline-flex", alignItems: "center", gap: "4px", padding: "4px 12px", borderRadius: "999px", background: "var(--color-action-passive-bg-hover)" }}>
+      <div aria-hidden="true" style={{ display: "inline-flex", alignItems: "center", gap: "4px", height: "40px", padding: "0 12px", borderRadius: "999px", background: "var(--color-action-passive-bg-hover)" }}>
         <span style={{ fontSize: "12px", fontWeight: 500, color: "var(--color-text-secondary)" }}>Sonnet 5</span>
         <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-icon-secondary)" }}>expand_more</span>
       </div>

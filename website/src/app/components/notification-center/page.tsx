@@ -178,7 +178,7 @@ export default function NotificationCenterPage() {
                   unread
                   media="rocket_launch"
                   actions={
-                    <Button variant="tertiary" size="compact" label="View site" />
+                    <Button variant="secondary" size="compact" label="View site" />
                   }
                 >
                   The site is live on production.

@@ -5,6 +5,7 @@ import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import ComponentsSidebar from "../../../components/Sidebar/ComponentsSidebar";
 import { MessageCard } from "@robr0/design-system/components/MessageCard/MessageCard";
+import { AreaChart } from "@robr0/design-system/components/Chart/AreaChart";
 import { ChatMessage } from "@robr0/design-system/components/ChatMessage/ChatMessage";
 import { Avatar } from "@robr0/design-system/components/Avatar/Avatar";
 import { Button } from "@robr0/design-system/components/Button/Button";
@@ -13,19 +14,15 @@ import PageLinks from "../../../components/PageLinks/PageLinks";
 import styles from "./page.module.css";
 
 
-function MediaPlaceholder() {
-  return (
-    <div className={styles.mediaPlaceholder} aria-hidden="true">
-      <svg viewBox="0 0 200 60">
-        <rect x="16" y="34" width="24" height="26" fill="currentColor" opacity="0.35" />
-        <rect x="52" y="22" width="24" height="38" fill="currentColor" opacity="0.5" />
-        <rect x="88" y="40" width="24" height="20" fill="currentColor" opacity="0.35" />
-        <rect x="124" y="12" width="24" height="48" fill="currentColor" opacity="0.65" />
-        <rect x="160" y="27" width="24" height="33" fill="currentColor" opacity="0.5" />
-      </svg>
-    </div>
-  );
-}
+const signupData = [
+  { day: "Mon", signups: 210 },
+  { day: "Tue", signups: 260 },
+  { day: "Wed", signups: 240 },
+  { day: "Thu", signups: 380 },
+  { day: "Fri", signups: 300 },
+  { day: "Sat", signups: 150 },
+  { day: "Sun", signups: 120 },
+];
 
 export default function MessageCardPage() {
   return (
@@ -61,13 +58,11 @@ export default function MessageCardPage() {
           <section className={styles.section}>
             <SectionTitle title="Anatomy" />
             <p className={styles.demoText}>
-              An optional icon leads the title, a free-text meta line carries
-              a domain or date in your own formatting, and the description
-              stays to a line or two.
+              A free-text meta line carries a domain or date in your own
+              formatting, and the description stays to a line or two.
             </p>
             <div className={styles.stack}>
               <MessageCard
-                icon="article"
                 title="Design tokens, explained"
                 meta="fieldnotes.example · 4 min read"
                 description="How a three-tier token architecture keeps a component library on one palette."
@@ -85,21 +80,19 @@ export default function MessageCardPage() {
             </p>
             <div className={styles.stack}>
               <MessageCard
-                icon="language"
                 title="Harbour Line timetable"
                 meta="transit.harbourline.example"
                 description="Departures every twelve minutes from Pier 4 until midnight."
                 actions={<Button variant="secondary" size="compact" label="Open" />}
               />
               <MessageCard
-                icon="language"
                 title="Alpine pass conditions"
                 meta="roads.grimsel.example"
                 description="Open to traffic. Chains recommended above 1,800 metres after dark."
                 actions={
                   <>
-                    <Button variant="tertiary" size="compact" label="Share" />
                     <Button variant="secondary" size="compact" label="Open" />
+                    <Button variant="tertiary" size="compact" label="Share" />
                   </>
                 }
               />
@@ -110,12 +103,23 @@ export default function MessageCardPage() {
           <section className={styles.section}>
             <SectionTitle title="With media" />
             <p className={styles.demoText}>
-              The media slot renders flush to the card edges with no padding
-              of its own; the card clips it, so the corners round themselves.
+              The media slot sits inset from the card edges with its own
+              rounded corners, concentric with the card&apos;s shell. It takes
+              drawn content as readily as an image; here it holds a live
+              area chart.
             </p>
             <div className={styles.stack}>
               <MessageCard
-                media={<MediaPlaceholder />}
+                media={
+                  <div className={styles.chartMedia}>
+                    <AreaChart
+                      data={signupData}
+                      xKey="day"
+                      series={[{ dataKey: "signups", label: "Signups" }]}
+                      height={150}
+                    />
+                  </div>
+                }
                 title="Weekly signups"
                 meta="Updated this morning"
                 description="Thursday is still the strongest day, holding the pattern from last month."
@@ -150,7 +154,6 @@ export default function MessageCardPage() {
                   below.
                 </p>
                 <MessageCard
-                  icon="language"
                   title="Harbour Line timetable"
                   meta="transit.harbourline.example"
                   description="Departures every twelve minutes from Pier 4 until midnight."

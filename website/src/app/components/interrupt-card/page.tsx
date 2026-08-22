@@ -39,7 +39,7 @@ function DecisionDemo() {
       />
       {value !== undefined && (
         <Button
-          variant="tertiary"
+          variant="secondary"
           size="compact"
           label="Reset"
           onClick={() => setValue(undefined)}
@@ -143,7 +143,6 @@ export default function InterruptCardPage() {
               <InterruptCard
                 title="Delete 3 files?"
                 description="This removes the generated fixtures and cannot be undone."
-                icon="warning"
                 options={[
                   { value: "delete", label: "Delete", variant: "danger" },
                   { value: "cancel", label: "Cancel" },

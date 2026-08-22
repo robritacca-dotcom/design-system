@@ -37,7 +37,7 @@ function RemovableDemo() {
   if (files.length === 0) {
     return (
       <Button
-        variant="tertiary"
+        variant="secondary"
         size="compact"
         label="Restore files"
         onClick={() => setFiles([...ATTACHMENTS])}

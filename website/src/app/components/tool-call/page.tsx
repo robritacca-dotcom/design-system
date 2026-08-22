@@ -50,7 +50,7 @@ function ApprovalDemo() {
           </>
         ) : (
           <Button
-            variant="tertiary"
+            variant="secondary"
             size="compact"
             label="Reset"
             onClick={() => setStatus("pending")}
