@@ -69,10 +69,10 @@ export default function NavigationPage() {
           {/* Intro */}
           <div className={`${styles.introSection} animate-in animate-delay-1`}>
             <p className={styles.subDisplay}>
-              The top-level nav bar used across the site
+              A compositional top bar: brand, page links, and a trailing slot
             </p>
             <p className={styles.introBody}>
-              On desktop it shows the brand, page links, and trailing content like a theme toggle. On mobile it collapses to a hamburger that opens a slide-out drawer with nested subnav links.
+              Nav lays out a brand, a ButtonGroup of page links, and trailing content such as a theme toggle. It has no mobile behaviour of its own. The collapsed bar and drawer below are this site&apos;s phone pattern, mocked up from ButtonGroup and ToggleSwitch, to show how the pieces compose at a narrow width.
             </p>
           </div>
 
@@ -107,7 +107,7 @@ export default function NavigationPage() {
             <SectionTitle title="Mobile bar" />
             <div className={styles.showcase}>
               <span className={styles.showcaseLabel}>
-                Collapsed navigation bar with brand and hamburger trigger
+                Site pattern, not a Nav prop: the collapsed bar with brand and menu trigger
               </span>
               <div className={styles.mobileNavPreview}>
                 <div className={styles.mobileNavInner}>
@@ -130,7 +130,7 @@ export default function NavigationPage() {
             <SectionTitle title="Hamburger menu" />
             <div className={styles.showcase}>
               <span className={styles.showcaseLabel}>
-                Slide-out drawer with top-level links, nested subnav, and theme toggle
+                Site pattern, not a Nav prop: the drawer with top-level links, nested subnav, and theme toggle
               </span>
               <div className={styles.hamburgerPreview}>
                 <div className={styles.hamburgerOverlay}>
