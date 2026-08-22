@@ -96,6 +96,25 @@ html[data-chat="docked"] body {
   );
 }
 
+/* The phone takeover: SiteChatMount sets data-chat="takeover" on <html>
+   while the chat is open at phone width. The chat is the document there —
+   the panel sits in normal flow at 100dvh (SiteChat.module.css) and the
+   page around it is hidden, not covered, so Safari handles the soft
+   keyboard as it does for any page with a field at the bottom, by scrolling
+   the document. The ambient background stays: it is what the panel's glass
+   shows. The body drops its page-container layout so the panel is the whole
+   document, and its padding glide, so the hand-off is a cut. */
+html[data-chat="takeover"] body {
+  display: block;
+  min-height: 0;
+  padding: 0;
+  transition: none;
+}
+
+html[data-chat="takeover"] body > :not(#site-chat-panel):not(.blur-container) {
+  display: none;
+}
+
 /* While the panel's widen grip is being dragged (SiteChatMount sets the
    attribute): the pointer drives --layout-chat-width frame by frame, so the
    body inset must follow instantly rather than glide after it, and the drag

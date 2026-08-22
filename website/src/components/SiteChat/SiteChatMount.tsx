@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
 import { usePathname } from "next/navigation";
 import { AiButton } from "@robr0/design-system/components/AiButton/AiButton";
-import { MOTION_SCROLL_SETTLE_MS } from "@robr0/design-system/tokens/motion";
 import { lockBodyScroll, unlockBodyScroll } from "@/lib/scroll-lock";
 import { CHROMELESS_ROUTES } from "@/config/chromeless";
 import { DOCK_QUERY, TAKEOVER_QUERY, useSiteChat } from "./ChatContext";
@@ -53,97 +52,52 @@ export function SiteChatMount() {
   const modal = open && !denied && (isFull || !docked);
   const showPanel = open && !denied;
 
-  /* The page-slide inset: html[data-chat="docked"] pads the body and offsets
-     the fixed sticky header (globals.css + MegaNav.module.css). Attribute,
-     not context, so the styling needs no subscription anywhere else. */
-  useEffect(() => {
-    if (showPanel && docked && !isFull) {
-      document.documentElement.setAttribute("data-chat", "docked");
-    } else {
-      document.documentElement.removeAttribute("data-chat");
-    }
-    return () => document.documentElement.removeAttribute("data-chat");
-  }, [showPanel, docked, isFull]);
+  /* The page's relationship to the panel, as an attribute on <html> so the
+     styling needs no subscription anywhere else (globals.css owns both
+     rules, MegaNav.module.css reads the first):
 
-  /* Modal mode owns the page behind it. */
+     - docked: html[data-chat="docked"] pads the body and offsets the fixed
+       sticky header, so the page slides over beside the panel.
+     - takeover (phone widths): html[data-chat="takeover"] hides the page
+       around the panel, which leaves the fixed layer for normal flow at
+       100dvh (SiteChat.module.css) — the chat *is* the document. That is
+       what lets the soft keyboard be Safari's problem rather than the
+       panel's: it scrolls the document to show the focused composer, as it
+       does for any page with a field at the bottom, with no viewport
+       arithmetic on our side. A viewport-sized position: fixed panel is
+       exactly what iOS 26.0 Safari renders short under the keyboard, and
+       every number it reports about that state is suspect, so no fixed
+       geometry is trusted there. Hiding the page collapses the document,
+       so the scroll offset is read before the attribute lands and restored,
+       instantly, when the page comes back. A layout effect, so the in-flow
+       panel never paints once below the footer before the page hides. */
+  useLayoutEffect(() => {
+    const root = document.documentElement;
+    if (showPanel && takeover) {
+      const scrollY = window.scrollY;
+      root.setAttribute("data-chat", "takeover");
+      window.scrollTo({ top: 0, behavior: "instant" });
+      return () => {
+        root.removeAttribute("data-chat");
+        window.scrollTo({ top: scrollY, behavior: "instant" });
+      };
+    }
+    if (showPanel && docked && !isFull) {
+      root.setAttribute("data-chat", "docked");
+      return () => root.removeAttribute("data-chat");
+    }
+    root.removeAttribute("data-chat");
+  }, [showPanel, docked, isFull, takeover]);
+
+  /* Modal mode owns the page behind it. Not on phones: there the page is
+     hidden rather than covered, so there is nothing behind to hold still. */
   useEffect(() => {
-    if (!modal) return;
+    if (!modal || takeover) return;
     lockBodyScroll("site-chat");
     return () => unlockBodyScroll("site-chat");
-  }, [modal]);
+  }, [modal, takeover]);
 
   const panelRef = useRef<HTMLDivElement | null>(null);
-
-  /* Phone takeover: the panel always spans the whole layout viewport, and
-     the soft keyboard is handled as a bottom inset that lifts the composer
-     above the keys. iOS leaves 100dvh alone when the keyboard opens and pans
-     the page to reveal the focused field instead, which slid a viewport-tall
-     panel up and uncovered the page beneath it; sizing the panel to the
-     visual viewport instead left a hole below it, because iOS 26.0 Safari
-     reports the visual viewport short by the collapsed toolbar and leaves
-     offsetTop stuck after the keyboard dismisses (WebKit #297779). Keeping
-     the panel full-height and insetting means a wrong number lands the
-     composer a little high over the panel's own surface, never over a gap.
-     Three guards against the stale values: the inset applies only while a
-     field inside the panel is focused (no focus, no keyboard); every
-     viewport or focus event re-syncs each frame until the viewport has been
-     quiet for the scroll-settle period, so the final keyboard and toolbar
-     geometry is read even when Safari fires no event for it; and the
-     variables live on <html> so the CSS phone rule reads them, with 100dvh
-     and a zero inset as its fallback before the first sync. */
-  useEffect(() => {
-    if (!showPanel || !takeover) return;
-    const viewport = window.visualViewport;
-    if (!viewport) return;
-    const root = document.documentElement;
-    const written = { top: "", height: "", inset: "" };
-    const sync = () => {
-      const focused = document.activeElement;
-      const typing =
-        (focused instanceof HTMLTextAreaElement || focused instanceof HTMLInputElement) &&
-        panelRef.current?.contains(focused) === true;
-      const top = typing ? Math.round(viewport.offsetTop) : 0;
-      const inset = typing
-        ? Math.max(0, Math.round(window.innerHeight - viewport.height - viewport.offsetTop))
-        : 0;
-      const next = { top: `${top}px`, height: `${window.innerHeight}px`, inset: `${inset}px` };
-      if (next.top !== written.top) root.style.setProperty("--sitechat-viewport-top", next.top);
-      if (next.height !== written.height) root.style.setProperty("--sitechat-layout-height", next.height);
-      if (next.inset !== written.inset) root.style.setProperty("--sitechat-keyboard-inset", next.inset);
-      Object.assign(written, next);
-    };
-    let quietAt = 0;
-    let frame = 0;
-    const tick = () => {
-      sync();
-      frame = performance.now() < quietAt ? requestAnimationFrame(tick) : 0;
-    };
-    /* Synchronous first, so the response to an event is immediate and does
-       not wait on a frame (a hidden tab never gets one); the frame loop then
-       keeps reading until the viewport has been quiet for the settle period. */
-    const settle = () => {
-      sync();
-      quietAt = performance.now() + MOTION_SCROLL_SETTLE_MS;
-      if (!frame) frame = requestAnimationFrame(tick);
-    };
-    settle();
-    viewport.addEventListener("resize", settle);
-    viewport.addEventListener("scroll", settle);
-    window.addEventListener("resize", settle);
-    document.addEventListener("focusin", settle);
-    document.addEventListener("focusout", settle);
-    return () => {
-      viewport.removeEventListener("resize", settle);
-      viewport.removeEventListener("scroll", settle);
-      window.removeEventListener("resize", settle);
-      document.removeEventListener("focusin", settle);
-      document.removeEventListener("focusout", settle);
-      if (frame) cancelAnimationFrame(frame);
-      root.style.removeProperty("--sitechat-viewport-top");
-      root.style.removeProperty("--sitechat-layout-height");
-      root.style.removeProperty("--sitechat-keyboard-inset");
-    };
-  }, [showPanel, takeover]);
 
   /* Closing restores focus to whichever launcher opened the panel, when it
      is still on the page (the header remounts per route). */
