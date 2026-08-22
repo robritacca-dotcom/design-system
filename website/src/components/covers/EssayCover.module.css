@@ -1,0 +1,9 @@
+/*
+ * EssayCover fills the slot it is given rather than sizing itself: the Card
+ * cover slot and the home page's cover frame each own their aspect ratio, and
+ * the illustration crops to it. (CoverImage, which shares the swap styles,
+ * sets its own ratio instead because its renders are shot per aspect.)
+ */
+.fill {
+  height: 100%;
+}
