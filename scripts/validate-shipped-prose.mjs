@@ -202,6 +202,12 @@ for (const [slug, entry] of Object.entries(covers.studies ?? covers)) {
   scan(`website/src/data/cover-renders.json (${slug})`, entry?.alt);
 }
 
+const essayCovers = json('website/src/data/essay-covers.json');
+surfacesChecked += 1;
+for (const [slug, entry] of Object.entries(essayCovers.covers ?? essayCovers)) {
+  scan(`website/src/data/essay-covers.json (${slug})`, entry?.alt);
+}
+
 // --- Skill display descriptions (they render on /skills) --------------------
 
 const skillsDir = join(repoRoot, '.claude', 'skills');
