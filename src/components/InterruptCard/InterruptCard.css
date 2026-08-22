@@ -31,7 +31,7 @@
   display: flex;
   align-items: flex-start;
   gap: var(--gap-sm);
-  padding: var(--padding-sm-md) var(--padding-md);
+  padding: var(--padding-md) var(--padding-lg);
 }
 
 .ds-interrupt-card__icon {
@@ -48,7 +48,7 @@
 .ds-interrupt-card__heading {
   display: flex;
   flex-direction: column;
-  gap: var(--gap-xxs);
+  gap: var(--gap-xs);
   min-width: 0;
 }
 
@@ -80,7 +80,7 @@
    ============================================ */
 
 .ds-interrupt-card__detail {
-  padding: 0 var(--padding-md) var(--padding-sm-md);
+  padding: 0 var(--padding-lg) var(--padding-md);
 }
 
 .ds-interrupt-card__detail > :first-child {
@@ -101,10 +101,9 @@
 .ds-interrupt-card__options {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
   gap: var(--gap-sm);
-  padding: var(--padding-sm-md) var(--padding-md);
-  border-top: var(--border-xs) solid var(--color-divider);
+  padding: var(--padding-sm) var(--padding-lg) var(--padding-md);
 }
 
 /* ============================================
@@ -116,10 +115,9 @@
 .ds-interrupt-card__answer {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
   gap: var(--gap-xs);
-  padding: var(--padding-sm-md) var(--padding-md);
-  border-top: var(--border-xs) solid var(--color-divider);
+  padding: var(--padding-sm) var(--padding-lg) var(--padding-md);
   font-family: var(--font-paragraph-sm-family);
   font-size: var(--font-paragraph-sm-size);
   font-weight: var(--font-paragraph-sm-weight);

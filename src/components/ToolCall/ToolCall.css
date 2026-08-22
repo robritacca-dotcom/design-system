@@ -202,10 +202,9 @@
 .ds-tool-call__actions {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
   gap: var(--gap-sm);
-  padding: var(--padding-sm-md) var(--padding-md);
-  border-top: var(--border-xs) solid var(--color-divider);
+  padding: var(--padding-sm) var(--padding-lg) var(--padding-md);
 }
 
 /* Icons take the colour of the text around them. Explicit, not just

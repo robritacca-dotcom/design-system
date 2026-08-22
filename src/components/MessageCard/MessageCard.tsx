@@ -8,7 +8,7 @@ type MessageCardOwnProps = {
   title?: string;
   /** One or two lines under the title. */
   description?: string;
-  /** Top media slot — an image or chart, rendered flush to the card edges (the card clips it). */
+  /** Top media slot — an image or chart, inset from the card edges with its own rounded corners. */
   media?: React.ReactNode;
   /** Small leading icon beside the title — a Material Symbol name, or any custom element. */
   icon?: string | React.ReactNode;

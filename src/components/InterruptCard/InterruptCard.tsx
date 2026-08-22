@@ -29,7 +29,7 @@ type InterruptCardOwnProps = {
   title: string;
   /** One line of context under the title. */
   description?: string;
-  /** Leading Material Symbol name, or any custom element. */
+  /** Leading Material Symbol name, or any custom element. No icon by default. */
   icon?: string | React.ReactNode;
   /** The choices, rendered as buttons left to right. */
   options?: InterruptCardOption[];
@@ -73,7 +73,7 @@ export const InterruptCard = React.forwardRef<HTMLDivElement, InterruptCardProps
     {
       title,
       description,
-      icon = 'pause_circle',
+      icon,
       options,
       onValueChange,
       value,

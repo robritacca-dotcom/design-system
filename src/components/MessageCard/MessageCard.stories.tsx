@@ -74,7 +74,7 @@ export const LinkPreview: Story = {
   },
 };
 
-/** The media slot runs flush to the card edges; the card's clip rounds its corners. */
+/** The media slot sits inset with its own rounded corners, on a page-tone panel concentric with the card's shell. */
 export const WithMedia: Story = {
   args: {
     media: <MediaPlaceholder />,
@@ -99,8 +99,8 @@ export const WithBody: Story = {
     ),
     actions: (
       <>
-        <Button variant="tertiary" size="compact" label="Edit" />
         <Button variant="secondary" size="compact" label="Save" />
+        <Button variant="tertiary" size="compact" label="Edit" />
       </>
     ),
   },
@@ -120,7 +120,6 @@ export const InAMessage: Story = {
           Found the timetable you asked about. The last ferry back leaves at 11:48 PM.
         </p>
         <MessageCard
-          icon="language"
           title="Harbour Line timetable"
           meta="transit.harbourline.example"
           description="Departures every twelve minutes from Pier 4 until midnight."
