@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { usePathname } from "next/navigation";
 import { AiButton } from "@robr0/design-system/components/AiButton/AiButton";
+import { MOTION_SCROLL_SETTLE_MS } from "@robr0/design-system/tokens/motion";
 import { lockBodyScroll, unlockBodyScroll } from "@/lib/scroll-lock";
 import { CHROMELESS_ROUTES } from "@/config/chromeless";
 import { DOCK_QUERY, TAKEOVER_QUERY, useSiteChat } from "./ChatContext";
@@ -71,31 +72,76 @@ export function SiteChatMount() {
     return () => unlockBodyScroll("site-chat");
   }, [modal]);
 
-  /* Phone takeover: the panel is sized to the visual viewport, not the
-     layout one. When the keyboard opens, iOS leaves 100dvh alone and pans
-     the page to bring the focused composer into view instead, which slid
-     the panel up and uncovered the page beneath it. Tracking
-     window.visualViewport pins the panel to exactly the visible region,
-     keyboard up or down: the composer sits above the keys and nothing shows
-     around the edges. The variables live on <html> so the CSS phone rule
-     can read them, with 100dvh as its fallback before the first sync. */
+  const panelRef = useRef<HTMLDivElement | null>(null);
+
+  /* Phone takeover: the panel always spans the whole layout viewport, and
+     the soft keyboard is handled as a bottom inset that lifts the composer
+     above the keys. iOS leaves 100dvh alone when the keyboard opens and pans
+     the page to reveal the focused field instead, which slid a viewport-tall
+     panel up and uncovered the page beneath it; sizing the panel to the
+     visual viewport instead left a hole below it, because iOS 26.0 Safari
+     reports the visual viewport short by the collapsed toolbar and leaves
+     offsetTop stuck after the keyboard dismisses (WebKit #297779). Keeping
+     the panel full-height and insetting means a wrong number lands the
+     composer a little high over the panel's own surface, never over a gap.
+     Three guards against the stale values: the inset applies only while a
+     field inside the panel is focused (no focus, no keyboard); every
+     viewport or focus event re-syncs each frame until the viewport has been
+     quiet for the scroll-settle period, so the final keyboard and toolbar
+     geometry is read even when Safari fires no event for it; and the
+     variables live on <html> so the CSS phone rule reads them, with 100dvh
+     and a zero inset as its fallback before the first sync. */
   useEffect(() => {
     if (!showPanel || !takeover) return;
     const viewport = window.visualViewport;
     if (!viewport) return;
     const root = document.documentElement;
+    const written = { top: "", height: "", inset: "" };
     const sync = () => {
-      root.style.setProperty("--sitechat-viewport-top", `${viewport.offsetTop}px`);
-      root.style.setProperty("--sitechat-viewport-height", `${viewport.height}px`);
+      const focused = document.activeElement;
+      const typing =
+        (focused instanceof HTMLTextAreaElement || focused instanceof HTMLInputElement) &&
+        panelRef.current?.contains(focused) === true;
+      const top = typing ? Math.round(viewport.offsetTop) : 0;
+      const inset = typing
+        ? Math.max(0, Math.round(window.innerHeight - viewport.height - viewport.offsetTop))
+        : 0;
+      const next = { top: `${top}px`, height: `${window.innerHeight}px`, inset: `${inset}px` };
+      if (next.top !== written.top) root.style.setProperty("--sitechat-viewport-top", next.top);
+      if (next.height !== written.height) root.style.setProperty("--sitechat-layout-height", next.height);
+      if (next.inset !== written.inset) root.style.setProperty("--sitechat-keyboard-inset", next.inset);
+      Object.assign(written, next);
     };
-    sync();
-    viewport.addEventListener("resize", sync);
-    viewport.addEventListener("scroll", sync);
+    let quietAt = 0;
+    let frame = 0;
+    const tick = () => {
+      sync();
+      frame = performance.now() < quietAt ? requestAnimationFrame(tick) : 0;
+    };
+    /* Synchronous first, so the response to an event is immediate and does
+       not wait on a frame (a hidden tab never gets one); the frame loop then
+       keeps reading until the viewport has been quiet for the settle period. */
+    const settle = () => {
+      sync();
+      quietAt = performance.now() + MOTION_SCROLL_SETTLE_MS;
+      if (!frame) frame = requestAnimationFrame(tick);
+    };
+    settle();
+    viewport.addEventListener("resize", settle);
+    viewport.addEventListener("scroll", settle);
+    window.addEventListener("resize", settle);
+    document.addEventListener("focusin", settle);
+    document.addEventListener("focusout", settle);
     return () => {
-      viewport.removeEventListener("resize", sync);
-      viewport.removeEventListener("scroll", sync);
+      viewport.removeEventListener("resize", settle);
+      viewport.removeEventListener("scroll", settle);
+      window.removeEventListener("resize", settle);
+      document.removeEventListener("focusin", settle);
+      document.removeEventListener("focusout", settle);
+      if (frame) cancelAnimationFrame(frame);
       root.style.removeProperty("--sitechat-viewport-top");
-      root.style.removeProperty("--sitechat-viewport-height");
+      root.style.removeProperty("--sitechat-layout-height");
+      root.style.removeProperty("--sitechat-keyboard-inset");
     };
   }, [showPanel, takeover]);
 
@@ -109,8 +155,6 @@ export function SiteChatMount() {
     }
     wasOpen.current = open;
   }, [open, returnFocusRef]);
-
-  const panelRef = useRef<HTMLDivElement | null>(null);
 
   /* Drag-to-widen, docked view only. Same pointer choreography as the
      bench's grips (pointer capture, primary button, cancel-safe); the panel's
