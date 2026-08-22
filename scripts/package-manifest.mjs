@@ -3,17 +3,20 @@
  * PACKAGE MANIFEST — the single source of truth for the published
  * package's identity and public import surface.
  *
- * The exports map exists in two forms generated from SUBPATHS below:
- *   - source form: targets under ./src, written into the root
+ * The exports map exists in two forms derived from SUBPATHS below:
+ *   - source form: targets under ./src, mirrored by hand into the root
  *     package.json so the website workspace (and Storybook) consume the
  *     exact specifiers a consumer would, resolved against live source.
  *   - dist form: targets under the built output, written into
  *     dist/package.json by build-package.mjs — that manifest is what
  *     actually ships to npm.
  *
- * scripts/validate-package-exports.mjs (validate-registry chain) fails
- * the build if the root package.json drifts from the source form or if
- * any source target does not exist. Never hand-edit the exports field.
+ * A subpath has three homes: SUBPATHS here, the root package.json
+ * exports (copy sourceExports() in after editing SUBPATHS), and the lib
+ * entry list in vite.lib.config.ts, which decides what the dist build
+ * emits. scripts/validate-package-exports.mjs (validate-registry chain)
+ * fails the build if any of the three disagree or a target is missing,
+ * so SUBPATHS is the one to edit and the other two are checked copies.
  */
 
 export const PACKAGE_NAME = '@robr0/design-system';

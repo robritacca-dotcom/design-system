@@ -38,6 +38,7 @@ export default defineConfig({
         charts: 'src/charts.ts',
         'components/registry': 'src/components/registry.ts',
         'components/Avatar/demoAvatars': 'src/components/Avatar/demoAvatars.ts',
+        'components/ShaderField/useShaderField': 'src/components/ShaderField/useShaderField.ts',
         'tokens/registry': 'src/tokens/registry.ts',
         'tokens/motion': 'src/tokens/motion.ts',
         // Doc-only helpers: not in the barrel, but reachable via the

@@ -13,6 +13,8 @@
  *      `npm install --package-lock-only` and commit the lockfile.
  *   4. Every `.ts` module under src/components is reachable by a
  *      consumer. See REACHABILITY below.
+ *   5. Every explicit (non-wildcard) JS subpath is a lib entry in
+ *      vite.lib.config.ts. See DIST ENTRIES below.
  *
  * Part of the validate-registry chain, so the public import surface the
  * website dogfoods can never drift from what the package declares.
@@ -156,6 +158,45 @@ for (const modulePath of tsModules) {
   }
 }
 
+/* ---------------------------------------------------------------------------
+ * DIST ENTRIES — every explicit JS subpath is built.
+ *
+ * A subpath has three homes: SUBPATHS in the manifest, the root package.json
+ * exports it is mirrored into (held together above), and the lib entry list
+ * in vite.lib.config.ts. The build emits one module per source file
+ * (preserveModules), but only for files some entry reaches — so a subpath
+ * whose module nothing else imports (demoAvatars, the swatch helpers) ships
+ * only if it is an entry of its own, and a module that is reached today
+ * only because its component imports it stops being built the day that
+ * import goes. Declaring every explicit subpath as an entry makes the dist
+ * output a function of the manifest rather than of the import graph.
+ *
+ * The entry list is read textually, which is what keeps this check free of
+ * a Vite import at validate time; an entry written in a shape the regex
+ * does not recognise fails loudly here rather than passing by accident.
+ */
+const viteConfigPath = join(repoRoot, 'vite.lib.config.ts');
+const viteConfig = readFileSync(viteConfigPath, 'utf8');
+const entryBlock = viteConfig.match(/\bentry:\s*\{([\s\S]*?)\n\s*\},/);
+if (!entryBlock) {
+  errors.push(`could not find the lib \`entry: { … }\` block in vite.lib.config.ts`);
+} else {
+  const viteEntries = new Set(
+    [...entryBlock[1].matchAll(/:\s*'([^']+)'/g)].map((m) => m[1])
+  );
+  for (const [key, target] of Object.entries(expected)) {
+    if (target.includes('*') || !/\.tsx?$/.test(target)) continue;
+    const src = target.replace(/^\.\//, '');
+    if (!viteEntries.has(src)) {
+      errors.push(
+        `export "${key}" → "${target}" has no lib entry in vite.lib.config.ts — ` +
+          `add it to \`build.lib.entry\` so the dist build emits it whether or ` +
+          `not anything else imports it`
+      );
+    }
+  }
+}
+
 if (errors.length > 0) {
   console.error(
     `✗ Package exports invalid:\n` + errors.map((e) => `    - ${e}`).join('\n')
@@ -165,5 +206,5 @@ if (errors.length > 0) {
 
 console.log(
   `✓ Package exports valid — ${Object.keys(expected).length} subpaths, all targets present; ` +
-    `${tsModules.length} component .ts module(s) reachable.`
+    `${tsModules.length} component .ts module(s) reachable; every explicit subpath is a lib entry.`
 );
