@@ -86,6 +86,11 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  // The software keyboard shrinks the layout viewport rather than covering
+  // it, so 100dvh surfaces (the phone chat takeover) end above the keys.
+  // Android Chrome honours this; iOS ignores it, and SiteChatMount tracks
+  // the visual viewport there instead.
+  interactiveWidget: "resizes-content",
   // Matches the white-floor UI: pure white in light, near-black in dark.
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#FFFFFF" },

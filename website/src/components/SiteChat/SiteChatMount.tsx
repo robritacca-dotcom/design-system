@@ -71,6 +71,34 @@ export function SiteChatMount() {
     return () => unlockBodyScroll("site-chat");
   }, [modal]);
 
+  /* Phone takeover: the panel is sized to the visual viewport, not the
+     layout one. When the keyboard opens, iOS leaves 100dvh alone and pans
+     the page to bring the focused composer into view instead, which slid
+     the panel up and uncovered the page beneath it. Tracking
+     window.visualViewport pins the panel to exactly the visible region,
+     keyboard up or down: the composer sits above the keys and nothing shows
+     around the edges. The variables live on <html> so the CSS phone rule
+     can read them, with 100dvh as its fallback before the first sync. */
+  useEffect(() => {
+    if (!showPanel || !takeover) return;
+    const viewport = window.visualViewport;
+    if (!viewport) return;
+    const root = document.documentElement;
+    const sync = () => {
+      root.style.setProperty("--sitechat-viewport-top", `${viewport.offsetTop}px`);
+      root.style.setProperty("--sitechat-viewport-height", `${viewport.height}px`);
+    };
+    sync();
+    viewport.addEventListener("resize", sync);
+    viewport.addEventListener("scroll", sync);
+    return () => {
+      viewport.removeEventListener("resize", sync);
+      viewport.removeEventListener("scroll", sync);
+      root.style.removeProperty("--sitechat-viewport-top");
+      root.style.removeProperty("--sitechat-viewport-height");
+    };
+  }, [showPanel, takeover]);
+
   /* Closing restores focus to whichever launcher opened the panel, when it
      is still on the page (the header remounts per route). */
   const wasOpen = useRef(false);

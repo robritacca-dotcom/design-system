@@ -535,16 +535,24 @@
 /* Phone widths: the panel is a takeover and has no card form to return to.
    SiteChatMount reads the same threshold as TAKEOVER_QUERY and opens the
    chat in full view there — this rule is what covers the first render,
-   before a media query has been read, so the two must stay in step. */
+   before a media query has been read, so the two must stay in step.
+
+   The panel fills the visual viewport, which SiteChatMount writes onto
+   <html> frame by frame: on iOS the keyboard shrinks the visible region
+   without shrinking 100dvh, and a panel still sized to the layout viewport
+   gets panned up, uncovering the page beneath it. No transition here: there
+   is no card form to glide from, and an eased height would lag the keyboard
+   and open the same gap for the length of the ease. */
 @media (max-width: 719px) {
   .panel {
-    top: 0;
+    top: var(--sitechat-viewport-top, 0px);
     right: 0;
-    height: 100dvh;
+    height: var(--sitechat-viewport-height, 100dvh);
     width: 100vw;
     max-width: 100vw;
     border: none;
     border-radius: 0;
+    transition: none;
   }
 }
 
