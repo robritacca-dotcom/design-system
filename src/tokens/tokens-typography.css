@@ -118,6 +118,15 @@
   --font-paragraph-sm-em-weight: 500;
   --font-paragraph-sm-em-line-height: 20px;
   --font-paragraph-sm-em-letter-spacing: 0;
+
+  /* Caption — the floor of the scale. Footnotes and disclaimers: a line the
+     reader should be able to find but never has to read to use the screen.
+     Never on a control, never for running text. */
+  --font-caption-family: var(--font-family-primary);
+  --font-caption-size: 12px;
+  --font-caption-weight: 400;
+  --font-caption-line-height: 16px;
+  --font-caption-letter-spacing: 0;
 }
 
 /* ============================================

@@ -253,6 +253,20 @@ const bodyStyles: TypeStyleData[] = [
       letterSpacing: "var(--font-paragraph-sm-letter-spacing)",
     },
   },
+  {
+    name: "Caption",
+    weight: "Regular",
+    size: "12px",
+    lineHeight: "16px",
+    letterSpacing: "0",
+    previewStyle: {
+      fontFamily: "var(--font-caption-family)",
+      fontSize: "var(--font-caption-size)",
+      fontWeight: "var(--font-caption-weight)" as unknown as number,
+      lineHeight: "var(--font-caption-line-height)",
+      letterSpacing: "var(--font-caption-letter-spacing)",
+    },
+  },
 ];
 
 /* Code — the one sanctioned monospace context (--font-family-code).
@@ -328,7 +342,7 @@ export default function TypographyPage() {
               </a>
             </p>
             <p className={styles.introBody}>
-              Mega and Display styles are for hero moments and landing pages. Headings structure sections. Title is for bold labels. Paragraph Em is the default for buttons and interactive controls. Paragraph is body copy. The SM variants scale each of those down for compact components and secondary text.
+              Mega and Display styles are for hero moments and landing pages. Headings structure sections. Title is for bold labels. Paragraph Em is the default for buttons and interactive controls. Paragraph is body copy. The SM variants scale each of those down for compact components and secondary text. Caption is the floor, for footnotes and disclaimers only.
             </p>
           </div>
 

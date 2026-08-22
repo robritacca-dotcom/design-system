@@ -335,6 +335,11 @@ export const BodyTextStyles: Story = {
         varPrefix="paragraph"
         example="This is paragraph text for body content. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris."
       />
+      <TypographyStyle
+        title="Caption"
+        varPrefix="caption"
+        example="This is caption text, the floor of the scale, for footnotes and disclaimers only"
+      />
     </div>
   ),
 };
@@ -502,6 +507,11 @@ export const AllStyles: Story = {
           title="Paragraph"
           varPrefix="paragraph"
           example="Paragraph text for body content. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        />
+        <TypographyStyle
+          title="Caption"
+          varPrefix="caption"
+          example="Caption"
         />
       </div>
     </div>

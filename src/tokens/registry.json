@@ -91,6 +91,11 @@
       "--color-text-tertiary"
     ],
     "typography": [
+      "--font-caption-family",
+      "--font-caption-letter-spacing",
+      "--font-caption-line-height",
+      "--font-caption-size",
+      "--font-caption-weight",
       "--font-display-1-family",
       "--font-display-1-letter-spacing",
       "--font-display-1-line-height",
