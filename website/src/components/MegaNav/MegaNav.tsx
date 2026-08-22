@@ -371,6 +371,13 @@ export default function MegaNav() {
         className={`${styles.stickyHeader} ${isStuck ? styles.stickyHeaderVisible : ""}`}
         aria-hidden={!isStuck}
       >
+        {/* Tint + progressive blur behind the bar — see .stickyBackdrop */}
+        <div className={styles.stickyBackdrop} aria-hidden="true">
+          <span />
+          <span />
+          <span />
+          <span />
+        </div>
         <div className={styles.headerInner}>
           <div className={styles.logoSlot}>
             <Link href="/" className={styles.logo} tabIndex={isStuck ? 0 : -1}>

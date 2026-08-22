@@ -367,40 +367,71 @@
   transform: translateY(0);
 }
 
-/* The bar's gradient and blur live on a pseudo-layer, not the bar itself: a
-   backdrop-filter on the bar would make it a backdrop root, and the mega
-   panel inside it (its own backdrop-filter glass) would then sample only the
-   bar's subtree instead of the page — the panel's blur silently dies. The
-   pseudo covers exactly the box the background used to paint (inset: 0 spans
-   the padding box too), and z-index: -1 tucks it behind the nav items inside
-   the bar's own stacking context (fixed + z-index), still above the page. */
-.stickyHeaderVisible::before {
-  content: "";
+/* The bar's tint and blur live on a stack of layers behind the nav, not on
+   the bar itself: a backdrop-filter on the bar would make it a backdrop
+   root, and the mega panel inside it (its own backdrop-filter glass) would
+   then sample only the bar's subtree instead of the page — the panel's blur
+   silently dies. The stack sits inside the bar's own stacking context
+   (fixed + z-index) at z-index: -1, behind the nav items but above the page.
+
+   Why a stack, and why masks: a single backdrop-filter is uniform across its
+   whole box, so a tint that fades to transparent still ends in a hard line
+   where the blur stops. A mask-image multiplies both the tint *and* the
+   filtered backdrop by its alpha, so the blur itself dissolves. Four layers
+   with rising blur radius and a shrinking mask band give a progressive
+   blur: sharp and clear well below the bar, frosted at the top. The stack
+   reaches --sticky-backdrop-reach below the bar so the dissolve has room.
+   The tint is the page surface in both themes (dark's resolves to the
+   near-black floor), so the bar reads as one with the viewport edge. */
+.stickyBackdrop {
+  --sticky-backdrop-tint: var(--color-bg-page-primary);
+  --sticky-backdrop-reach: 64px;
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: calc(100% + var(--sticky-backdrop-reach));
   z-index: -1;
   pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    var(--color-bg-page-primary) 0%,
-    var(--color-bg-page-primary) 50%,
-    rgba(0, 0, 0, 0) 100%
-  );
-  /* No hand-written -webkit- twin here or on the drawer: the build's CSS
-     pipeline adds the prefix from browserslist, and a manual one next to it
-     made it drop the property entirely — the bar rendered with no blur at
-     all until this was removed. */
-  backdrop-filter: blur(20px);
 }
 
-/* Dark-mode variant uses near-black instead of pure white */
-:global([data-theme="dark"]) .stickyHeaderVisible::before {
+/* No hand-written -webkit- twins for backdrop-filter here or on the drawer:
+   the build's CSS pipeline adds the prefix from browserslist, and a manual
+   one next to it made it drop the property entirely — the bar rendered
+   with no blur at all until this was removed. */
+.stickyBackdrop > span {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+/* ds-allow(color): mask alpha keywords (black/transparent), not palette colours */
+
+.stickyBackdrop > span:nth-child(1) {
   background: linear-gradient(
     to bottom,
-    rgba(5, 5, 5, 1) 0%,
-    rgba(5, 5, 5, 0.95) 50%,
-    rgba(5, 5, 5, 0) 100%
+    var(--sticky-backdrop-tint) 0%,
+    color-mix(in srgb, var(--sticky-backdrop-tint) 90%, transparent) 30%,
+    color-mix(in srgb, var(--sticky-backdrop-tint) 40%, transparent) 65%,
+    transparent 100%
   );
+  backdrop-filter: blur(2px);
+  mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 100%);
+}
+
+.stickyBackdrop > span:nth-child(2) {
+  backdrop-filter: blur(6px);
+  mask-image: linear-gradient(to bottom, black 0%, black 40%, transparent 80%);
+}
+
+.stickyBackdrop > span:nth-child(3) {
+  backdrop-filter: blur(12px);
+  mask-image: linear-gradient(to bottom, black 0%, black 25%, transparent 60%);
+}
+
+.stickyBackdrop > span:nth-child(4) {
+  backdrop-filter: blur(24px);
+  mask-image: linear-gradient(to bottom, black 0%, black 10%, transparent 40%);
 }
 
 /* ============================================
