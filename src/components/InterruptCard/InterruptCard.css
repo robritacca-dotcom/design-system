@@ -19,7 +19,8 @@
   width: 100%;
   background-color: var(--color-bg-container-primary);
   border: var(--border-xs) solid var(--color-bg-container-border);
-  border-radius: var(--radius-md);
+  /* The chat furniture's shared 24px shell — see ToolCall. */
+  border-radius: var(--radius-xl);
   overflow: hidden;
 }
 
@@ -38,6 +39,8 @@
   display: inline-flex;
   align-items: center;
   flex: none;
+  /* Centre the icon on the title's first line. */
+  margin-top: calc((var(--font-heading-3-line-height) - var(--icon-size-sm)) / 2);
   color: var(--ds-interrupt-card-color);
 }
 
@@ -52,14 +55,14 @@
   min-width: 0;
 }
 
-/* The question is the card's one heading, so it takes the title tier
-   rather than an emphasised paragraph */
+/* The question is the card's one heading, so it takes the same heading
+   tier as MessageCard's title — the chat cards share one title scale. */
 .ds-interrupt-card__title {
-  font-family: var(--font-title-body-family);
-  font-size: var(--font-title-body-size);
-  font-weight: var(--font-title-body-weight);
-  line-height: var(--font-title-body-line-height);
-  letter-spacing: var(--font-title-body-letter-spacing);
+  font-family: var(--font-heading-3-family);
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  letter-spacing: var(--font-heading-3-letter-spacing);
   color: var(--color-text-primary);
 }
 

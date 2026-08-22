@@ -110,6 +110,22 @@
   color: var(--color-text-primary);
 }
 
+/* Card furniture inside a turn steps clear of the content around it — at
+   the body's default rhythm an adjacent text line sits close enough to read
+   as a caption rather than a neighbouring block. Margins, not gap, so a
+   card standing alone adds nothing. */
+.ds-chat-message__content > .ds-message-card:not(:first-child),
+.ds-chat-message__content > .ds-interrupt-card:not(:first-child),
+.ds-chat-message__content > .ds-tool-call:not(:first-child) {
+  margin-top: var(--gap-sm-md);
+}
+
+.ds-chat-message__content > .ds-message-card:not(:last-child),
+.ds-chat-message__content > .ds-interrupt-card:not(:last-child),
+.ds-chat-message__content > .ds-tool-call:not(:last-child) {
+  margin-bottom: var(--gap-sm-md);
+}
+
 /* Bubble — capped width so a short line never drags a surface across the
    whole row; the fallback is the sanctioned consumer-override hook */
 .ds-chat-message--bubble .ds-chat-message__content {

@@ -20,7 +20,10 @@
   width: 100%;
   background-color: var(--color-bg-container-primary);
   border: var(--border-xs) solid var(--color-bg-container-border);
-  border-radius: var(--radius-md);
+  /* The chat furniture shares one 24px shell with MessageCard and the
+     bubbles; a closed row rounds to a capsule the way a one-line bubble
+     does, echoing the system's pill buttons. */
+  border-radius: var(--radius-xl);
   overflow: hidden;
 }
 
@@ -33,7 +36,8 @@
   align-items: center;
   gap: var(--gap-sm);
   width: 100%;
-  padding: var(--padding-sm) var(--padding-md);
+  /* 20px sides — the card family's shared content inset. */
+  padding: var(--padding-sm) var(--padding-lg);
   background: none;
   border: none;
   text-align: left;
@@ -181,7 +185,7 @@
 }
 
 .ds-tool-call--open .ds-tool-call__content {
-  padding: var(--padding-md);
+  padding: var(--padding-md) var(--padding-lg);
   border-top: var(--border-xs) solid var(--color-divider);
 }
 

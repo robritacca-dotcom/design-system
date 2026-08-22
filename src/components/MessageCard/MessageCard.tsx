@@ -50,21 +50,25 @@ export const MessageCard = React.forwardRef<HTMLDivElement, MessageCardProps>(
 
         {hasBody && (
           <div className={`${baseClass}__body`}>
-            {(title || icon) && (
-              <div className={`${baseClass}__title-row`}>
-                {icon && (
-                  <span className={`${baseClass}__icon`} aria-hidden="true">
-                    {typeof icon === 'string' ? (
-                      <span className="material-symbols-rounded">{icon}</span>
-                    ) : (
-                      icon
+            {(title || icon || meta) && (
+              <div className={`${baseClass}__header`}>
+                {(title || icon) && (
+                  <div className={`${baseClass}__title-row`}>
+                    {icon && (
+                      <span className={`${baseClass}__icon`} aria-hidden="true">
+                        {typeof icon === 'string' ? (
+                          <span className="material-symbols-rounded">{icon}</span>
+                        ) : (
+                          icon
+                        )}
+                      </span>
                     )}
-                  </span>
+                    {title && <span className={`${baseClass}__title`}>{title}</span>}
+                  </div>
                 )}
-                {title && <span className={`${baseClass}__title`}>{title}</span>}
+                {meta && <span className={`${baseClass}__meta`}>{meta}</span>}
               </div>
             )}
-            {meta && <span className={`${baseClass}__meta`}>{meta}</span>}
             {description && <p className={`${baseClass}__description`}>{description}</p>}
             {children}
           </div>

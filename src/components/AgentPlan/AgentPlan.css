@@ -16,7 +16,8 @@
   width: 100%;
   background-color: var(--color-bg-container-primary);
   border: var(--border-xs) solid var(--color-bg-container-border);
-  border-radius: var(--radius-md);
+  /* The chat furniture's shared 24px shell — see ToolCall. */
+  border-radius: var(--radius-xl);
   overflow: hidden;
 }
 
@@ -29,7 +30,8 @@
   align-items: center;
   gap: var(--gap-sm);
   width: 100%;
-  padding: var(--padding-sm) var(--padding-md);
+  /* 20px sides — the card family's shared content inset. */
+  padding: var(--padding-sm) var(--padding-lg);
   background: none;
   border: none;
   text-align: left;
@@ -121,7 +123,7 @@
   display: flex;
   flex-direction: column;
   margin: 0;
-  padding: var(--padding-sm-md) var(--padding-md);
+  padding: var(--padding-sm-md) var(--padding-lg);
   list-style: none;
 }
 
