@@ -189,6 +189,19 @@
   gap: var(--gap-lg);
 }
 
+/* A visitor turn with an injected attachment: the file tile stacks above
+   the bubble, sharing its right edge. The stack is one thread child, so
+   the thread's own turn spacing treats the pair as a single turn. */
+.userTurnStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+}
+
+.userTurnAttachment {
+  align-self: flex-end;
+}
+
 /* No divider — the composer floats free of the transcript, like the
    reference. The thread's bottom padding provides the separation above;
    the disclaimer row provides it below. */

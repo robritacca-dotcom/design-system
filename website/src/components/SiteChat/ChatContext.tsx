@@ -41,9 +41,11 @@ interface SiteChatContextValue {
   streaming: boolean;
   /** Display label of the model last reported by the server, null before the first exchange. */
   modelLabel: string | null;
-  send: (text: string) => boolean;
+  send: ReturnType<typeof useChat>["send"];
   stop: () => void;
   reset: () => void;
+  /** Appends a committed turn without a transport round trip — the playground's event director. */
+  injectTurn: ReturnType<typeof useChat>["injectTurn"];
   setTurnFeedback: ReturnType<typeof useChat>["setTurnFeedback"];
   setTurnFollowups: ReturnType<typeof useChat>["setTurnFollowups"];
   open: boolean;

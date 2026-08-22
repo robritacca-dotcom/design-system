@@ -111,6 +111,10 @@ export function AssistantTurn({ turn, live }: { turn?: ChatTurn; live?: LiveResp
             )}
           </Reasoning>
         )}
+        {/* Injected rich content (a tool call, a card) sits where an agent's
+            structured output belongs: after the reasoning, before the prose
+            that reads off what it shows. */}
+        {turn?.content}
         {text !== "" && (
           <Prose>
             {/* gfm: a real model emits tables and strikethrough, which plain

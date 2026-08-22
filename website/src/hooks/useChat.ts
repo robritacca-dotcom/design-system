@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 
 /* ============================================
    The chat event contract.
@@ -31,6 +31,11 @@ export type ChatEvent =
       would hold the turn open) and fetches them after the turn commits
       instead — see lib/chat-followups. */
   | { type: "followups"; items: string[] }
+  /** Rich content to render with the committed turn — a card, a chart, a
+      tool call. Only a scripted transport can yield one (the playground's
+      sim story does); the live transports produce text alone, so the site
+      widget never sees this event. */
+  | { type: "content"; node: ReactNode }
   /** Terminal: the response is complete. */
   | { type: "done" }
   /** A guardrail response (rate limit, circuit breaker): rendered as a normal assistant message. */
@@ -83,6 +88,20 @@ export interface ChatTurn {
    * which is what stops a failed attempt being retried on every render.
    */
   followups?: string[];
+  /**
+   * Injected rich content rendered with the turn: a tool call, a card, an
+   * attachment chip. Set by `injectTurn` (the playground's event director)
+   * or carried from a scripted transport's `content` event (the sim story);
+   * the live transports produce text alone, so the site widget never
+   * carries one. Assistant turns render it between the reasoning and the
+   * prose; user turns stack it above the bubble, like an attachment.
+   */
+  content?: ReactNode;
+  /**
+   * Render `content` on its own in the thread, outside any message chrome —
+   * for conversation furniture like a day marker.
+   */
+  bare?: boolean;
 }
 
 export type LivePhase = "thinking" | "streaming";
@@ -105,6 +124,8 @@ export interface LiveResponse {
   exchangeId?: string;
   /** Carried from the transport's `followups` event into the committed turn. */
   followups?: string[];
+  /** Carried from the transport's `content` event into the committed turn. */
+  content?: ReactNode;
 }
 
 let nextId = 0;
@@ -187,6 +208,7 @@ export function useChat(transport: ChatTransport) {
           tracePoints: finished.tracePoints,
           exchangeId: finished.exchangeId,
           followups: finished.followups,
+          content: finished.content,
           durationSeconds:
             finished.durationSeconds ??
             Math.max(1, Math.round((Date.now() - startedAt) / 1000)),
@@ -200,9 +222,13 @@ export function useChat(transport: ChatTransport) {
    * Send a message. Returns whether the send was accepted — false while a
    * response is in flight or for an empty draft, so the caller knows not to
    * clear its input.
+   *
+   * `options.content` attaches rich content to the user turn — an attachment
+   * chip above the bubble, the way a dropped file lands. Playground staging
+   * only: the transport still receives the text alone.
    */
   const send = useCallback(
-    (text: string): boolean => {
+    (text: string, options?: { content?: ReactNode }): boolean => {
       const trimmed = text.trim();
       if (trimmed === "" || busyRef.current) return false;
       busyRef.current = true;
@@ -221,7 +247,10 @@ export function useChat(transport: ChatTransport) {
       // The user turn and the live assistant turn appear in the same update,
       // so ChatThread anchors the user turn to the top of the viewport.
       const userTurnId = makeId();
-      setTurns((prev) => [...prev, { id: userTurnId, role: "user", text: trimmed }]);
+      setTurns((prev) => [
+        ...prev,
+        { id: userTurnId, role: "user", text: trimmed, content: options?.content },
+      ]);
 
       let current: LiveResponse = {
         id: makeId(),
@@ -309,6 +338,10 @@ export function useChat(transport: ChatTransport) {
               case "followups":
                 // Same: nothing renders until the turn commits with them.
                 current = { ...current, followups: event.items };
+                break;
+              case "content":
+                // Same: the rich element appears when the turn commits.
+                current = { ...current, content: event.node };
                 break;
               case "status":
                 update({
@@ -444,6 +477,16 @@ export function useChat(transport: ChatTransport) {
     );
   }, []);
 
+  /**
+   * Append a committed turn directly, bypassing the transport — the
+   * playground's event director stages cards, tool calls, and markers with
+   * this. Injected turns are stage dressing: they never enter the transport
+   * history, so a live model is never fed words it did not say.
+   */
+  const injectTurn = useCallback((turn: Omit<ChatTurn, "id">) => {
+    setTurns((prev) => [...prev, { ...turn, id: makeId() }]);
+  }, []);
+
   /** Stop the in-flight response, keeping the text that already arrived. */
   const stop = useCallback(() => {
     abortRef.current?.abort();
@@ -469,6 +512,7 @@ export function useChat(transport: ChatTransport) {
     send,
     stop,
     reset,
+    injectTurn,
     setTurnFeedback,
     setTurnFollowups,
   };

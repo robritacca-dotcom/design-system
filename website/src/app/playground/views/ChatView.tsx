@@ -1,12 +1,38 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { AiButton } from "@robr0/design-system/components/AiButton/AiButton";
-import { createSimTransport } from "@/lib/chat-sim";
-import { createFetchTransport } from "@/lib/chat-transport";
-import { SiteChatProvider, useSiteChat } from "@/components/SiteChat/ChatContext";
+import { CircularButton } from "@robr0/design-system/components/CircularButton/CircularButton";
+import { DocumentChip } from "@robr0/design-system/components/DocumentChip/DocumentChip";
+import {
+  ModelPicker,
+  type ModelPickerModel,
+} from "@robr0/design-system/components/ModelPicker/ModelPicker";
+import { useSiteChat } from "@/components/SiteChat/ChatContext";
 import { SiteChat } from "@/components/SiteChat/SiteChat";
 import styles from "./ChatView.module.css";
+
+/* The simulated composer's model list — set dressing for a generic product,
+   so choosing one changes nothing but the pill. The default matches the
+   label the live composer shows, so switching transports doesn't jump. */
+const MOCK_MODELS: ModelPickerModel[] = [
+  {
+    label: "Sonnet 5",
+    value: "sonnet-5",
+    description: "Fast and capable, the everyday pick.",
+    badge: "New",
+  },
+  {
+    label: "Fable 5",
+    value: "fable-5",
+    description: "The deepest reasoning for hard questions.",
+  },
+  {
+    label: "Haiku 4.5",
+    value: "haiku-4-5",
+    description: "Instant answers for quick lookups.",
+  },
+];
 
 export type TransportMode = "live" | "sim";
 type ResizeAxis = "x" | "y" | "both";
@@ -22,7 +48,6 @@ export const STAGE_SIZES = {
 export type StageSize = keyof typeof STAGE_SIZES;
 
 export interface ChatViewProps {
-  transportMode: TransportMode;
   /** The widget's header brand — follows the Product name lever. */
   title: string;
   /** The review footprint: desktop as a resizable card, mobile in a bezel. */
@@ -40,18 +65,21 @@ export interface ChatViewProps {
   /** The takeover is a desktop affordance — compact screens are already
       edge-to-edge, so the page withholds it there. */
   allowFullscreen: boolean;
+  /** The Simulated transport is active: the composer swaps its disabled
+      model label for the working mock picker and the attach button. */
+  simControls: boolean;
 }
 
 /**
  * The Chat view: the site's chat widget on a stage, re-themed by the same
- * levers as everything else. Runs its own provider so the transport picked
- * in the rail (simulated by default — reviewing choreography should cost
- * nothing) can be injected. The widget's title follows the Product name
- * lever and its copy is deliberately generic — the stage shows a
- * consumer's product, not the site's own assistant.
+ * levers as everything else. The provider lives up in the page now, wrapped
+ * around the whole layout, so the event rail and the compact Drawer can
+ * direct the same conversation the stage renders — and the transcript
+ * survives a switch to the Components view and back. The widget's title
+ * follows the Product name lever and its copy is deliberately generic —
+ * the stage shows a consumer's product, not the site's own assistant.
  */
 export default function ChatView({
-  transportMode,
   title,
   size,
   placeholder,
@@ -59,39 +87,9 @@ export default function ChatView({
   manual,
   onManual,
   allowFullscreen,
+  simControls,
 }: ChatViewProps) {
-  const transport = useMemo(
-    () => (transportMode === "live" ? createFetchTransport() : createSimTransport()),
-    [transportMode]
-  );
-
-  return (
-    /* Keyed by transport: swapping remounts the provider, so a stream from
-       the old transport can never keep writing into the new transcript. */
-    <SiteChatProvider key={transportMode} transport={transport}>
-      <ChatStage
-        title={title}
-        size={size}
-        placeholder={placeholder}
-        showStarters={showStarters}
-        manual={manual}
-        onManual={onManual}
-        allowFullscreen={allowFullscreen}
-      />
-    </SiteChatProvider>
-  );
-}
-
-function ChatStage({
-  title,
-  size,
-  placeholder,
-  showStarters,
-  manual,
-  onManual,
-  allowFullscreen,
-}: Omit<ChatViewProps, "transportMode">) {
-  const { open, setOpen, view, returnFocusRef } = useSiteChat();
+  const { open, setOpen, view, returnFocusRef, send, streaming } = useSiteChat();
 
   /* The provider defaults to closed (the site's resting state); the view
      exists to look at the widget, so it opens on arrival. */
@@ -291,6 +289,39 @@ function ChatStage({
           { id: "pricing", label: "What do the plans include?" },
           { id: "invite", label: "Invite my team to a workspace" },
         ]}
+        composerActions={
+          simControls ? (
+            <>
+              {/* The attach button stages a file exactly the way the
+                  director's doc-drop event does — everything on this stage
+                  is simulated, so the click skips the picker and sends the
+                  attachment through the sim story: the chip rides the
+                  visitor's bubble, and the agent answers by reading the
+                  doc and charting its budget. */}
+              <CircularButton
+                icon="add"
+                variant="tertiary"
+                ariaLabel="Attach a file"
+                disabled={streaming}
+                onClick={() =>
+                  send("Here is the launch plan we are working from.", {
+                    content: (
+                      <DocumentChip
+                        name="Q3 launch plan.pdf"
+                        fileType="pdf"
+                        meta="1.2 MB"
+                      />
+                    ),
+                  })
+                }
+              />
+              {/* Working mock: the panel opens and the pill follows the
+                  choice, but nothing routes anywhere — the sim script is
+                  the sim script whatever the pill says. */}
+              <ModelPicker models={MOCK_MODELS} placement="top" />
+            </>
+          ) : undefined
+        }
       />
     </div>
   );

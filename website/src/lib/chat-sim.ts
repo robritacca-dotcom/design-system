@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import type { ChatEvent, ChatTransport, ChatTransportMessage } from "@/hooks/useChat";
 
 /* ============================================
@@ -7,6 +8,14 @@ import type { ChatEvent, ChatTransport, ChatTransportMessage } from "@/hooks/use
    steady beat, a handoff pause, then word-cadence deltas — the same event
    stream the real /api/chat transport will produce in Build 2, so the
    widget cannot tell the difference.
+
+   On top of the rotation, a branching story: every chip the stage offers —
+   the three starters and each answer's follow-ups — routes to a scripted
+   node, and each path shows off different rich elements (cards, charts,
+   tool calls, an approval). The nodes hold text only; the rich elements
+   come in through the `content` map the playground passes at creation,
+   keyed by `contentKey`, because JSX cannot live in this .ts module.
+   Typed free text falls back to the scenario rotation below.
 
    Beats carried over from the original scratch-page sim.
    ============================================ */
@@ -141,6 +150,229 @@ const SCENARIOS: SimScenario[] = [
   },
 ];
 
+/* ============================================
+   The story graph.
+
+   Keyed by the chip text itself: a starter or follow-up chip sends its
+   label as the message, so the label is the routing key. Every follow-up
+   below names another node's prompt (or a starter), so no path dead-ends —
+   each answer offers three roads, and the roads cross. The chip budget is
+   held by scripts/validate-chat-starters.mjs, which reads the followups
+   arrays in this file.
+   ============================================ */
+
+interface StoryNode {
+  /** The chip text that routes here. */
+  prompt: string;
+  steps: { status: string; point: string }[];
+  response: string;
+  /** Names a rich element in the playground's content map. */
+  contentKey?: string;
+  followups: string[];
+}
+
+const STORY: StoryNode[] = [
+  {
+    prompt: "How do I get started?",
+    steps: [
+      { status: "Reading the first-run flow", point: "The question maps to the first-run flow." },
+      { status: "Drafting the answer", point: "Lead with the workspace, then the invite step." },
+    ],
+    response:
+      "Create a workspace from the dashboard, then invite your team from " +
+      "Settings. Everyone you add sees the shared projects the moment they " +
+      "join. If you would rather not click through it, I can set the whole " +
+      "thing up for you.",
+    followups: [
+      "Set it all up for me",
+      "What do the plans include?",
+      "How is the trial going?",
+    ],
+  },
+  {
+    prompt: "Set it all up for me",
+    steps: [
+      { status: "Planning the setup", point: "Four steps, from quota check to welcome note." },
+      { status: "Creating the workspace", point: "The shared project comes first." },
+    ],
+    response: "On it. Two steps are done already, and the invites are going out now.",
+    contentKey: "setup-plan",
+    followups: [
+      "Find a time we can all meet",
+      "Take us up to twelve seats",
+      "How is the trial going?",
+    ],
+  },
+  {
+    prompt: "What do the plans include?",
+    steps: [
+      { status: "Comparing the plans", point: "Three plans differ on collaboration, not on limits." },
+      { status: "Drafting the answer", point: "Name what the Team plan adds over the base." },
+    ],
+    response:
+      "Every plan includes unlimited projects. The Team plan adds shared " +
+      "workspaces, guest seats, and a 90 day version history.",
+    followups: [
+      "Which plan fits a team of five?",
+      "Where is that written down?",
+      "How is the trial going?",
+    ],
+  },
+  {
+    prompt: "Which plan fits a team of five?",
+    steps: [
+      { status: "Matching plans to the team", point: "The visitor needs shared workspaces and guest seats." },
+      { status: "Drafting the answer", point: "The Team plan covers both; lead with the card." },
+    ],
+    response:
+      "The Team plan fits what you described: shared workspaces for the " +
+      "whole team, and guest seats stay free.",
+    contentKey: "team-plan-card",
+    followups: [
+      "Where is that written down?",
+      "Invite my team to a workspace",
+      "How is the trial going?",
+    ],
+  },
+  {
+    prompt: "Where is that written down?",
+    steps: [
+      { status: "Collecting the sources", point: "Three product pages back the answer." },
+      { status: "Drafting the answer", point: "Cite them so the visitor can check." },
+    ],
+    response:
+      "Each chip opens the page the answer came from, so nothing here needs " +
+      "taking on trust.",
+    contentKey: "sources",
+    followups: [
+      "Which plan fits a team of five?",
+      "How do I get started?",
+      "How is the trial going?",
+    ],
+  },
+  {
+    prompt: "How is the trial going?",
+    steps: [
+      { status: "Pulling the signup numbers", point: "Six weeks of signup data since the trial opened." },
+      { status: "Charting the trend", point: "One series tells it; chart it in the card." },
+    ],
+    response:
+      "Signups have climbed for five of the six weeks since the trial " +
+      "opened, and last week was the strongest yet.",
+    contentKey: "trial-chart",
+    followups: [
+      "Which plan fits a team of five?",
+      "Invite my team to a workspace",
+      "Where is that written down?",
+    ],
+  },
+  {
+    prompt: "Invite my team to a workspace",
+    steps: [
+      { status: "Checking the account", point: "Three teammates sit on the account, none invited yet." },
+      { status: "Drafting the answer", point: "Confirm before sending anything." },
+    ],
+    response:
+      "Happy to. Give me the word and I will send invites to the three " +
+      "teammates on your account, all as editors.",
+    followups: [
+      "Go ahead and invite the other three",
+      "Take us up to twelve seats",
+      "Find a time we can all meet",
+    ],
+  },
+  {
+    prompt: "Go ahead and invite the other three",
+    steps: [
+      { status: "Sending the invites", point: "Three teammates to invite, all editors." },
+      { status: "Confirming delivery", point: "One call covers the batch." },
+    ],
+    response:
+      "All three invites are out. Everyone lands in the workspace with " +
+      "editor access.",
+    contentKey: "invite-tool",
+    followups: [
+      "Find a time we can all meet",
+      "Take us up to twelve seats",
+      "How is the trial going?",
+    ],
+  },
+  {
+    prompt: "Take us up to twelve seats",
+    steps: [
+      { status: "Locating the seat limit", point: "The seat limit lives in workspace.config.ts." },
+      { status: "Preparing the change", point: "One line changes; show the diff." },
+    ],
+    response:
+      "Only the seat count moves, from five to twelve. Everything else in " +
+      "the config stays as it was.",
+    contentKey: "seat-diff",
+    followups: [
+      "Go ahead and invite the other three",
+      "What do the plans include?",
+      "Find a time we can all meet",
+    ],
+  },
+  /* Two nodes the director's rail reaches by sending their prompt — the
+     doc drop and the failing sync. Unreferenced by any chip is fine: the
+     graph routes whatever text arrives. */
+  {
+    prompt: "Here is the launch plan we are working from.",
+    steps: [
+      { status: "Reading the document", point: "Fourteen pages; read it before answering." },
+      { status: "Charting the budget", point: "Budget is the decision in the doc; chart it." },
+    ],
+    response:
+      "Three phases, and most of the budget sits behind launch week itself. " +
+      "The dates line up with the workspace you already set up, so nothing " +
+      "needs to move.",
+    contentKey: "launch-analysis",
+    followups: [
+      "Set it all up for me",
+      "Take us up to twelve seats",
+      "Find a time we can all meet",
+    ],
+  },
+  {
+    prompt: "Sync the shared calendar",
+    steps: [
+      { status: "Starting the calendar sync", point: "The calendar sync runs after the invites." },
+    ],
+    response:
+      "The sync timed out on the provider's side. Retry below and it should land.",
+    contentKey: "flaky-tool",
+    followups: [
+      "Find a time we can all meet",
+      "Go ahead and invite the other three",
+      "How is the trial going?",
+    ],
+  },
+  {
+    prompt: "Find a time we can all meet",
+    steps: [
+      { status: "Checking what this needs", point: "Suggesting times needs calendar access." },
+      { status: "Preparing the request", point: "Ask before connecting anything." },
+    ],
+    response: "I can check everyone's calendar for a slot, once you allow it below.",
+    contentKey: "calendar-approval",
+    followups: [
+      "Go ahead and invite the other three",
+      "How is the trial going?",
+      "How do I get started?",
+    ],
+  },
+];
+
+/** Chip labels route by text, so matching forgives case and punctuation. */
+const normalize = (text: string) =>
+  text
+    .toLowerCase()
+    .replace(/[^a-z0-9 ]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+const STORY_BY_PROMPT = new Map(STORY.map((node) => [normalize(node.prompt), node]));
+
 class SimAbortError extends Error {
   constructor() {
     super("Simulated response aborted");
@@ -169,16 +401,28 @@ const delay = (ms: number, signal: AbortSignal) =>
  * A transport that scripts the full live-response choreography: one status
  * step (with its reasoning trace point) per beat, the handoff pause, then
  * the response revealed word by word.
+ *
+ * `content` is the playground's map of rich elements for the story nodes —
+ * a node whose `contentKey` resolves in it commits its answer with that
+ * element attached, which is how a chip path ends on a card, a chart, or
+ * an approval. Without the map (or for a key it lacks) the node still
+ * answers in text, so the transport never depends on the caller.
  */
-export function createSimTransport(): ChatTransport {
+export function createSimTransport(content?: Record<string, ReactNode>): ChatTransport {
   let exchangeCount = 0;
 
   return async function* simTransport(
-    _messages: ChatTransportMessage[],
+    messages: ChatTransportMessage[],
     signal: AbortSignal
   ): AsyncGenerator<ChatEvent> {
-    const scenario = SCENARIOS[exchangeCount % SCENARIOS.length];
-    exchangeCount += 1;
+    /* Route by the visitor's message: a chip sends its label, so an exact
+       (normalized) match lands on its story node. Typed free text falls
+       back to the scenario rotation. */
+    const lastUser = [...messages].reverse().find((m) => m.role === "user");
+    const node = lastUser ? STORY_BY_PROMPT.get(normalize(lastUser.content)) : undefined;
+
+    const scenario = node ?? SCENARIOS[exchangeCount % SCENARIOS.length];
+    if (!node) exchangeCount += 1;
 
     for (const step of scenario.steps) {
       yield { type: "status", label: step.status, point: step.point };
@@ -191,6 +435,11 @@ export function createSimTransport(): ChatTransport {
     for (let i = 0; i < words.length; i += 1) {
       yield { type: "delta", text: i === 0 ? words[i] : ` ${words[i]}` };
       await delay(STREAM_MS, signal);
+    }
+
+    const nodeContent = node?.contentKey ? content?.[node.contentKey] : undefined;
+    if (nodeContent) {
+      yield { type: "content", node: nodeContent };
     }
 
     /* Before `done`, like the event contract asks: the hook carries them

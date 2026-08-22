@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useSyncExternalStore } from "react";
+import { useEffect, useRef, useSyncExternalStore, type ReactNode } from "react";
 import Image from "next/image";
 import { Button } from "@robr0/design-system/components/Button/Button";
 import { ChatHeader } from "@robr0/design-system/components/ChatHeader/ChatHeader";
@@ -61,6 +61,7 @@ export function SiteChat({
   logo = "/rr.svg",
   tagline,
   starters: startersOverride,
+  composerActions,
 }: {
   /** Show the expand toggle. The bench's mobile stage is always a takeover, so it hides there. */
   fullscreenEnabled?: boolean;
@@ -81,6 +82,9 @@ export function SiteChat({
   /** Replaces the route-aware conversation starters wholesale — again the
       playground's lever, so its preview isn't robr0-specific. */
   starters?: Starter[];
+  /** Replaces the composer's leading actions (the disabled model label) —
+      the playground slots a working mock picker and attach button here. */
+  composerActions?: ReactNode;
 }) {
   const {
     turns,
@@ -210,10 +214,26 @@ export function SiteChat({
                 and React would remount across them. */}
             {[
               ...turns.map((turn) =>
-                turn.role === "user" ? (
-                  <ChatMessage key={turn.id} role="user">
-                    {turn.text}
-                  </ChatMessage>
+                turn.bare ? (
+                  /* Conversation furniture (a day marker): the injected
+                     content stands alone in the thread, no message chrome. */
+                  <div key={turn.id}>{turn.content}</div>
+                ) : turn.role === "user" ? (
+                  turn.content ? (
+                    /* An injected attachment rides above the bubble, right-
+                       aligned with it — a file lands beside the message,
+                       never inside the sentence. */
+                    <div key={turn.id} className={styles.userTurnStack}>
+                      <div className={styles.userTurnAttachment}>{turn.content}</div>
+                      {turn.text !== "" && (
+                        <ChatMessage role="user">{turn.text}</ChatMessage>
+                      )}
+                    </div>
+                  ) : (
+                    <ChatMessage key={turn.id} role="user">
+                      {turn.text}
+                    </ChatMessage>
+                  )
                 ) : (
                   <AssistantTurn key={turn.id} turn={turn} />
                 )
@@ -255,17 +275,21 @@ export function SiteChat({
             streaming={streaming}
             onStop={stop}
             actions={
-              /* The model picker is out of scope — the label is shown,
-                 disabled, so the bar's final shape reads now. The name is
-                 dynamic: the configured model until the server first
-                 reports, then whatever the server says actually served. */
-              <Button
-                variant="tertiary"
-                size="compact"
-                iconLeft={claudeGlyph}
-                label={modelLabel ?? CHAT_MODEL_LABEL}
-                disabled
-              />
+              /* A host can slot its own leading actions (the playground's
+                 mock picker). The site's default: the model picker is out of
+                 scope — the label is shown, disabled, so the bar's final
+                 shape reads now. The name is dynamic: the configured model
+                 until the server first reports, then whatever the server
+                 says actually served. */
+              composerActions ?? (
+                <Button
+                  variant="tertiary"
+                  size="compact"
+                  iconLeft={claudeGlyph}
+                  label={modelLabel ?? CHAT_MODEL_LABEL}
+                  disabled
+                />
+              )
             }
           />
         </div>

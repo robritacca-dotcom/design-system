@@ -33,7 +33,7 @@
   flex-direction: column;
   min-width: 320px;
   min-height: 480px;
-  max-width: calc(100vw - var(--rail-width, 300px) - var(--gap-xl) * 2);
+  max-width: calc(100vw - var(--stage-walls, 300px) - var(--gap-xl) * 2);
   /* The tall wall: a drag may push past the viewport fit (the page
      scrolls), but never past this — a review target just over the
      resting 956px footprint. */

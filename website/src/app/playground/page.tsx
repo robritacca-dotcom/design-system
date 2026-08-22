@@ -30,12 +30,16 @@ import {
 import { THEME_PRESETS, type ThemePreset } from "./presets";
 import PlaygroundControls from "./PlaygroundControls";
 import AdvancedColorsDialog from "./AdvancedColorsDialog";
+import ChatDirector, { STORY_CONTENT } from "./ChatDirector";
 import ChatView, {
   STAGE_SIZES,
   type StageSize,
   type TransportMode,
 } from "./views/ChatView";
 import MockNav from "./views/MockNav";
+import { createSimTransport } from "@/lib/chat-sim";
+import { createFetchTransport } from "@/lib/chat-transport";
+import { SiteChatProvider, useSiteChat } from "@/components/SiteChat/ChatContext";
 import { Input } from "@robr0/design-system/components/Input/Input";
 import { RadioGroup } from "@robr0/design-system/components/RadioButton/RadioButton";
 import { ToggleSwitch } from "@robr0/design-system/components/ToggleSwitch/ToggleSwitch";
@@ -79,6 +83,25 @@ const subscribeCompact = (callback: () => void) => {
   return () => media.removeEventListener("change", callback);
 };
 
+/**
+ * Swapping transports used to remount the provider so a stream from the old
+ * transport could not keep writing into the new transcript. The provider now
+ * wraps the whole layout (the chat director and the compact Drawer read the
+ * same conversation the stage renders), so the same guarantee comes from
+ * reset(): it aborts the in-flight stream and bumps the generation counter
+ * that makes any late event from it inert.
+ */
+function ResetOnTransportChange({ mode }: { mode: TransportMode }) {
+  const { reset } = useSiteChat();
+  const previous = useRef(mode);
+  useEffect(() => {
+    if (previous.current === mode) return;
+    previous.current = mode;
+    reset();
+  }, [mode, reset]);
+  return null;
+}
+
 export default function PlaygroundPage() {
   /* ---------- the active view ----------
      Local state (the levers must survive a switch), mirrored into ?view=
@@ -107,6 +130,15 @@ export default function PlaygroundPage() {
      should cost nothing — Live is the deliberate opt-in (the chat cost
      policy on record). */
   const [transportMode, setTransportMode] = useState<TransportMode>("sim");
+  const transport = useMemo(
+    () =>
+      transportMode === "live"
+        ? createFetchTransport()
+        : /* The sim gets the story's rich elements — the map is what lets a
+             chip path end on a card, a chart, or an approval. */
+          createSimTransport(STORY_CONTENT),
+    [transportMode]
+  );
   const [stageSize, setStageSize] = useState<StageSize>("desktop");
   /* The dragged widget size lives here so it survives a switch to the
      Components view and back; like every lever, it dies with the page. */
@@ -355,6 +387,68 @@ export default function PlaygroundPage() {
     ? "/* Everything is at its shipped default. Move a lever to generate CSS. */"
     : buildCssSnippet(snippetOverrides, font, snippetDarkBlock);
 
+  /* The Chat view's levers — hosted by the chat director's rail on desktop,
+     or slotted into the Drawer above the event list on compact screens, so
+     the whole chat toolkit lives on one side of the stage. */
+  const chatLevers = view === "chat" && (
+    <>
+      {!compact && (
+        <div className={styles.controlGroup}>
+          <RadioGroup
+            label="Stage size"
+            name="playground-chat-stage"
+            value={stageSize}
+            options={Object.entries(STAGE_SIZES).map(([value, s]) => ({
+              value,
+              label: s.label,
+            }))}
+            onValueChange={(value) => {
+              /* A manual drag is a size of its own — switching the stage
+                 size discards it rather than resizing around it. */
+              setStageSize(value as StageSize);
+              setChatManual({});
+            }}
+          />
+          <p className={styles.controlNote}>
+            Mobile renders edge-to-edge in a bezel, the way the site panel
+            ships on phones.
+          </p>
+        </div>
+      )}
+
+      <div className={styles.controlGroup}>
+        <RadioGroup
+          label="Transport"
+          name="playground-chat-transport"
+          value={transportMode}
+          options={[
+            { value: "sim", label: "Simulated" },
+            { value: "live", label: "Live" },
+          ]}
+          onValueChange={(value) => setTransportMode(value as TransportMode)}
+        />
+        <p className={styles.controlNote}>
+          Simulated replays a scripted exchange without calling the model.
+          Live answers through the site&rsquo;s API route.
+        </p>
+      </div>
+
+      <div className={styles.controlGroup}>
+        <Input
+          label="Composer placeholder"
+          placeholder="Ask anything"
+          value={chatPlaceholder}
+          onValueChange={setChatPlaceholder}
+        />
+        <ToggleSwitch
+          label="Starter prompts"
+          checked={showStarters}
+          onChange={setShowStarters}
+        />
+      </div>
+    </>
+  );
+
   /* The full lever set, host-agnostic — mounted in the edge panel on
      desktop or handed to the Drawer on compact screens. */
   const controls = (
@@ -395,63 +489,13 @@ export default function PlaygroundPage() {
               onOpenAdvanced={() => setAdvOpen(true)}
               onViewCss={() => setCssOpen(true)}
               contextual={
-                view === "chat" ? (
+                /* On compact screens the chat director has no rail of its
+                   own — its levers and events ride in the Drawer with the
+                   theme controls. On desktop the right rail owns them. */
+                view === "chat" && compact ? (
                   <>
-                    {!compact && (
-                    <div className={styles.controlGroup}>
-                      <RadioGroup
-                        label="Stage size"
-                        name="playground-chat-stage"
-                        value={stageSize}
-                        options={Object.entries(STAGE_SIZES).map(([value, s]) => ({
-                          value,
-                          label: s.label,
-                        }))}
-                        onValueChange={(value) => {
-                      /* A manual drag is a size of its own — switching the
-                         stage size discards it rather than resizing around
-                         it. */
-                      setStageSize(value as StageSize);
-                      setChatManual({});
-                    }}
-                      />
-                      <p className={styles.controlNote}>
-                        Mobile renders edge-to-edge in a bezel, the way the site
-                        panel ships on phones.
-                      </p>
-                    </div>
-                    )}
-
-                    <div className={styles.controlGroup}>
-                      <RadioGroup
-                        label="Transport"
-                        name="playground-chat-transport"
-                        value={transportMode}
-                        options={[
-                          { value: "sim", label: "Simulated" },
-                          { value: "live", label: "Live" },
-                        ]}
-                        onValueChange={(value) => setTransportMode(value as TransportMode)}
-                      />
-                      <p className={styles.controlNote}>
-                        Simulated replays a scripted exchange without calling the
-                        model. Live answers through the site&rsquo;s API route.
-                      </p>
-                    </div>
-
-                    <div className={styles.controlGroup}>
-                      <Input
-                        label="Composer placeholder"
-                        placeholder="Ask anything"
-                        value={chatPlaceholder}
-                        onValueChange={setChatPlaceholder}
-                      />
-                      <ToggleSwitch
-                        label="Starter prompts"
-                        checked={showStarters}
-                        onChange={setShowStarters}
-                      />
-                    </div>
+                    {chatLevers}
+                    <ChatDirector variant="drawer" live={transportMode === "live"} />
                   </>
                 ) : undefined
               }
@@ -475,7 +519,19 @@ export default function PlaygroundPage() {
         switchLabel="Switch the playground view"
       />
 
-      <div className={styles.dsLayout}>
+      {/* One provider around the whole layout: the theme drawer, the chat
+          director's rail, and the stage all direct the same conversation,
+          and the transcript survives a switch between views. */}
+      <SiteChatProvider transport={transport}>
+      <ResetOnTransportChange mode={transportMode} />
+      <div
+        className={[
+          styles.dsLayout,
+          view === "chat" && !compact ? styles.dsLayoutChat : "",
+        ]
+          .filter(Boolean)
+          .join(" ")}
+      >
         {/* The control rail lives where the nav sidebar sits on doc pages */}
         {compact ? (
           <>
@@ -561,10 +617,9 @@ export default function PlaygroundPage() {
           )}
 
           {/* The Chat view: the widget on its stage, same levers, plus the
-              contextual transport control in the rail. */}
+              chat director's rail on the right. */}
           {view === "chat" && (
             <ChatView
-              transportMode={transportMode}
               title={productName.trim() || "Acme Corp"}
               /* A phone IS the mobile preset — the stage-size lever hides
                  on compact screens and the widget goes fluid via CSS. */
@@ -574,10 +629,23 @@ export default function PlaygroundPage() {
               manual={chatManual}
               onManual={(next) => setChatManual((m) => ({ ...m, ...next }))}
               allowFullscreen={!compact}
+              simControls={transportMode === "sim"}
             />
           )}
         </main>
+
+        {/* The chat director: the Chat view's own edge panel, mirroring the
+            theme rail on the right — chat levers above, the event list below.
+            Compact screens get the same content through the Drawer instead. */}
+        {view === "chat" && !compact && (
+          <ChatDirector
+            variant="panel"
+            levers={chatLevers}
+            live={transportMode === "live"}
+          />
+        )}
       </div>
+      </SiteChatProvider>
 
     </>
   );

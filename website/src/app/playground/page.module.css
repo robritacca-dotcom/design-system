@@ -8,6 +8,9 @@
 .dsLayout {
   /* The edge panel's width — the workspace centres in what remains. */
   --rail-width: 300px;
+  /* What the stage widget's hard width wall must stay clear of — the Chat
+     view's second rail widens it below. Read by ChatView.module.css. */
+  --stage-walls: var(--rail-width);
   display: flex;
   justify-content: center;
   /* Stretch across the body's own side padding so the centring zone is
@@ -19,6 +22,14 @@
   /* Clear the fixed toolbar, then the immersive page still starts lower
      than a doc page would — the title gets air, not a viewport edge. */
   padding-top: calc(var(--layout-toolbar-height) + var(--primitive-gap-xl));
+}
+
+/* The Chat view runs a second edge panel on the right (the chat director),
+   so the workspace centres between the two rails. Applied by the page only
+   when that rail is actually rendered. */
+.dsLayoutChat {
+  padding-right: var(--rail-width);
+  --stage-walls: calc(var(--rail-width) * 2);
 }
 
 .dsContent {
@@ -58,6 +69,23 @@
   overflow: hidden;
   background: color-mix(in srgb, var(--color-bg-container-primary) 82%, transparent);
   border-right: var(--border-xs) solid var(--color-bg-container-border);
+  backdrop-filter: blur(24px);
+}
+
+/* The chat director's rail: the control rail mirrored to the right edge.
+   Same shell, same scroll treatment — only the flush edge and the divider
+   side change. */
+.eventRail {
+  position: fixed;
+  top: var(--layout-toolbar-height);
+  bottom: 0;
+  right: 0;
+  width: var(--rail-width);
+  z-index: 15;
+  display: flex;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--color-bg-container-primary) 82%, transparent);
+  border-left: var(--border-xs) solid var(--color-bg-container-border);
   backdrop-filter: blur(24px);
 }
 
