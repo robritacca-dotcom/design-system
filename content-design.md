@@ -69,6 +69,10 @@ Each surface has its own shape. The full standard for a surface lives in one pla
 | Cover alt text (`website/src/data/cover-renders.json`) | None | One sentence describing the screen, ends in a full stop | Describe what the cover shows, never restate the title beside it — it is read by screen readers and image search, and repeating the title tells both nothing | This file + cover-rasters validator |
 | Hand-written corpus prose (the connective paragraphs in `scripts/generate-site-corpus.mjs`) | None | Short orienting paragraphs between derived blocks | The chat model can repeat any of it verbatim to a visitor: production copy, same bar as page prose | This file + `CLAUDE.md` (corpus boundary rules) |
 | `/llms.txt` section intros (`website/src/app/llms.txt/route.ts`) | None | One line per section | Served publicly to crawlers and agents; describe, never promote | This file |
+| Site-chat widget copy (the welcome tagline and disclaimer line in `website/src/components/SiteChat/SiteChat.tsx`) | Imperative | One line each | The tagline names subjects, not the author; the disclaimer keeps the 30-day logging disclosure and fits one line at the caption size | This file + the `content-audit` skill's `chat` scope |
+| Chat easter-egg answers (`website/src/app/api/chat/easter-eggs.ts`) | Third person about Rob | Hand-written answers the model repeats verbatim on an exact trigger | The one sanctioned departure from Stay neutral: an egg may be enthusiastic, because Rob wrote it and approved the facts. The em-dash ban still holds | `easter-eggs.ts` (its preamble states the carve-out) |
+| Chat guardrail notices (`website/src/app/api/chat/guardrails.ts`) | The assistant | One or two plain sentences | They render as ordinary assistant messages, so they say what happened and what to do next, never blame the visitor | This file (Microcopy: errors) |
+| Footer copy (column titles in `website/src/components/SiteFooter/SiteFooter.tsx`, link labels in `website/src/config/social.ts`) | None | Sentence-case fragments | Identical on every page, so a change is a site-wide change; labels name destinations, never actions | This file + the `content-audit` skill's `footer` scope |
 
 Deliberately out of scope: the essays on `/writing` are authored on Substack and synced in verbatim (`scripts/sync-essays.mjs`) — their register is the essay's own, and no rule in this file applies to or edits them.
 
@@ -82,7 +86,7 @@ Five principles. Strong copy visibly demonstrates at least three of them; no cop
 
 2. **Commit.** Say the thing. No both-sidesing, no hedging a claim until nothing is asserted. "The build fails when the registry drifts" is a sentence; "the build should generally fail in most cases where the registry may have drifted" is fog. If a claim is genuinely uncertain, state the uncertainty as a fact ("Figma-to-code sync is still a manual process") rather than diluting the verb.
 
-3. **Stay neutral.** Never promotional. No hype adjectives, no superlative without a number behind it, no exclamation marks doing an adjective's job. This project describes itself the way a good spec describes a component: what it is, what it does, what breaks if you misuse it. Readers trust the register precisely because it is not asking for trust.
+3. **Stay neutral.** Never promotional. No hype adjectives, no superlative without a number behind it, no exclamation marks doing an adjective's job. This project describes itself the way a good spec describes a component: what it is, what it does, what breaks if you misuse it. Readers trust the register precisely because it is not asking for trust. One sanctioned exception: the chat's easter-egg answers (`website/src/app/api/chat/easter-eggs.ts`) may be enthusiastic, because Rob wrote them; the carve-out is stated in that file and in the Register table, and it reaches nothing else.
 
 4. **Plain words, one idea per sentence.** Used, not utilized. Has, not boasts. Is, not serves as. Every sentence advances exactly one idea; every paragraph does one job. If a sentence needs two commas and a semicolon to hold together, it is two sentences.
 
@@ -159,7 +163,7 @@ Sentence- and structure-level tells. Each entry pairs the pattern with its repai
 
 **Macro-openers.** "In today's component-driven development landscape..." could open any article ever written. Start with this project.
 
-**Fake specificity.** Numbers with no source are worse than no numbers. Every count on the site derives from a registry; every statistic in a case study is real. A number that cannot be traced is deleted, not rounded.
+**Fake specificity.** Numbers with no source are worse than no numbers. A number that cannot be traced is deleted, not rounded; a count comes from its registry (`CLAUDE.md`'s Registries section owns that rule) and a case-study statistic comes from the work itself.
 
 **Listicle filler.** A bullet that restates its heading in new words is padding. Every bullet must add a fact absent from the heading.
 

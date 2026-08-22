@@ -16,7 +16,7 @@ The design spec lives in [`design.md`](design.md) — read it before touching to
 
 ## Registries — counts are never hardcoded
 
-**General rule:** any count of items displayed anywhere (components, skills, tokens, loops — anything countable) must derive from a registry that is the single source of truth for that collection, kept in sync with reality by a build-time validator. Never write a literal number (or a hand-maintained list that implies one) into page copy, stats, or docs.
+**General rule:** any count of items displayed anywhere (components, skills, tokens, case studies — anything countable) must derive from a registry that is the single source of truth for that collection, kept in sync with reality by a build-time validator. Never write a literal number (or a hand-maintained list that implies one) into page copy, stats, or docs.
 
 Existing registries:
 
@@ -43,7 +43,7 @@ The `/project-journal` page renders this data as the build-progression timeline;
 
 The same script fails the build if its Tech section names a different major version of React, Next.js, Storybook, or Vite than package.json, and if **either** install surface stops mentioning the package name — `README.md` or `src/stories/Configure.mdx` (the Storybook landing page). Both tell a stranger how to install the package, and they deploy separately, so a scope rename that reaches one but not the other leaves a live install snippet pointing at a package that does not exist. **The README also ships inside the npm tarball**, so anything inaccurate there reaches every consumer — treat both files' install/usage prose as production copy.
 
-When a new countable collection appears on the site (tokens, loops, case studies…): create a registry file next to the collection, export the count from a small accessor module, add a validator script chained into `validate-registry`, and pull every displayed number from the export. When adding a skill: write `.claude/skills/<name>/SKILL.md` and register the name in `.claude/skills/registry.json` (`displayed` if it appears on `/skills`, `unlisted` if internal) — that's all. The `/skills` page is fully data-driven: it maps over `website/src/data/skills-content.generated.ts`, which `scripts/generate-skills-content.mjs` builds from the SKILL.md files in registry order, so **never hand-add a card to `website/src/app/skills/page.tsx`**. `scripts/validate-skills-registry.mjs` fails the build if a skill file and the registry drift.
+When a new countable collection appears on the site (a loop list, a glossary, a changelog…): create a registry file next to the collection, export the count from a small accessor module, add a validator script chained into `validate-registry`, and pull every displayed number from the export. When adding a skill: write `.claude/skills/<name>/SKILL.md` and register the name in `.claude/skills/registry.json` (`displayed` if it appears on `/skills`, `unlisted` if internal) — that's all. The `/skills` page is fully data-driven: it maps over `website/src/data/skills-content.generated.ts`, which `scripts/generate-skills-content.mjs` builds from the SKILL.md files in registry order, so **never hand-add a card to `website/src/app/skills/page.tsx`**. `scripts/validate-skills-registry.mjs` fails the build if a skill file and the registry drift.
 
 **The website's /blueprints pages are a generated surface too.** `scripts/sync-blueprints.mjs` (in the `validate-registry` chain) copies the root markdown specs into `website/public/` on every build — never hand-edit those copies; edit the root files. Its `FILES` array is the authoritative list, and `scripts/validate-website-surfaces.mjs` imports it to check every synced file has a `/blueprints/<name>` page, so a spec cannot be published as a raw download with no page to read it on; the same validator holds the llms.txt route's spec-download list to `FILES` in both directions, so an unpublished spec cannot stay advertised as a link that 404s.
 
@@ -65,11 +65,13 @@ When a new countable collection appears on the site (tokens, loops, case studies
 ## Quick Start
 
 ```bash
+npm install                    # once, at the root — the website is an npm workspace, so this installs both
+
 # Storybook (interactive component showcase — the library's dev sandbox)
 npm run storybook              # http://localhost:6006
 
 # Documentation website (separate project)
-npm install && cd website && npm run dev   # http://localhost:3000 (workspace install runs at the root)
+cd website && npm run dev      # http://localhost:3000
 ```
 
 Other useful commands:
@@ -266,7 +268,7 @@ Checklist before shipping a component:
 
 Tokens also have multiple homes — a token that exists only in CSS is incomplete. When adding or changing a token:
 
-1. **Both theme files, always**: define it in `src/tokens/tokens-light.css` **and** `src/tokens/tokens-dark.css` (every semantic token needs a value in each). Add a primitive to `tokens-primitives.css` first if no suitable one exists; semantic colour tokens **must** reference primitives via `var()` (build-enforced by `scripts/validate-token-references.mjs`).
+1. **The file follows the category** (`SEMANTIC_FILES` in `scripts/generate-token-registry.mjs` is the authoritative list of what the registry reads): colour tokens go in `src/tokens/tokens-light.css` **and** `src/tokens/tokens-dark.css` (light/dark parity is build-enforced by `scripts/validate-token-registry.mjs`); spacing, radius, border, shadow and icon-size tokens in `tokens-light.css` alone; typography in `tokens-typography.css`; motion in `tokens-motion.css`. Only colour and shadow are theme-split — `tokens-dark.css` carries nothing else, and a duplicate there is dead weight the build never notices. Add a primitive to `tokens-primitives.css` first if no suitable one exists; semantic colour tokens **must** reference primitives via `var()` (build-enforced by `scripts/validate-token-references.mjs`).
 2. **Document it in `design.md`**: it's the source of truth for the design language — record the token's role and its light/dark values.
 3. **Add it to the foundations doc pages** on the website, in the section matching its type:
    - Semantic colors → `website/src/app/foundations/colour-mode/page.tsx` (add a swatch data entry with per-theme primitive name/hex/RGB, and a new `SectionTitle` group if it's a new category). **Every colour token needs a swatch — this is build-enforced**, in both directions, by `scripts/validate-website-surfaces.mjs`: the page states it shows all of them and prints the count from `TOKEN_COUNTS`, so a token with no swatch would turn that sentence into a lie. Skipping a niche internal role is no longer an option

@@ -2,7 +2,7 @@
 name: new-token
 description: Add a new design token (or token family) to the system, with every home it needs to reach. Use when asked to add a token, a new colour or motion token, or a token category.
 icon: palette
-displayDescription: "Walks a new design token through every surface it must reach: both theme files, the generated registry, the foundations swatch pages, the Storybook token docs, and design.md. Covers the extra packaging steps a TypeScript-side token needs, and the validators that hold each home in sync."
+displayDescription: "Walks a new design token through every surface it must reach: the token file its category lives in (both theme files for colour), the generated registry, the foundations pages, the Storybook token docs, and design.md. Covers the extra packaging steps a TypeScript-side token needs, and the validators that hold each home in sync."
 invoke: ["add a token","add a [name] token","new token family","add a colour token"]
 ---
 
@@ -20,13 +20,13 @@ CLAUDE.md's **How to Add a New Token** section is the authoritative checklist �
 
 1. **Decide the tier.** A primitive (`--primitive-*` in `tokens-primitives.css`) is a raw value; a semantic token is a role. New roles reference existing primitives via `var()` — add a primitive first only when no suitable one exists. Semantic colour tokens must chain to a primitive or another `--color-*` token; `scripts/validate-token-references.mjs` fails the build on a literal.
 
-2. **Define it in both theme files, always** — `src/tokens/tokens-light.css` and `src/tokens/tokens-dark.css`. The registry validator enforces light/dark parity for colour tokens. Identical values in both themes is fine; a missing side is not.
+2. **Put it in the file its category lives in** — `SEMANTIC_FILES` in `scripts/generate-token-registry.mjs` is the authoritative list of what the registry reads. Colour: both `src/tokens/tokens-light.css` and `src/tokens/tokens-dark.css`, always; the registry validator enforces light/dark parity for colour, so identical values in both is fine and a missing side is not. Spacing, radius, border, shadow, icon size: `tokens-light.css` alone. Typography: `tokens-typography.css`. Motion: `tokens-motion.css`. Nothing but colour and shadow is theme-split; a typography or spacing token copied into `tokens-dark.css` registers from the light file anyway and leaves a dead duplicate no validator reports.
 
 3. **Check the prefix.** If the token starts a *new* prefix, generation fails until the prefix is added to `CATEGORY_PREFIXES` in `scripts/generate-token-registry.mjs` — deliberately, so a new category gets a display home at the same time. An existing prefix (`--color-`, `--motion-`, `--radius-`, …) needs nothing here; the registry regenerates on every build.
 
 4. **Give it its documentation homes** (the build enforces the first, a drift audit catches the rest):
    - Colour tokens need a swatch on `/foundations/colour-mode` — build-enforced in both directions by `scripts/validate-website-surfaces.mjs`. Other categories go on their matching foundations page (CLAUDE.md's checklist maps category → page).
-   - The matching story in `src/stories/Tokens.stories.tsx`.
+   - The matching Storybook doc: `src/stories/Tokens.stories.tsx` for colour, status, chart, elevation, spacing and motion; `src/stories/Typography.stories.tsx` for a type style (its Body and All Styles stories list every tier).
    - A sentence in `design.md` recording the role and per-theme values, in the section that owns the token's subject.
 
 5. **A TypeScript-side token** (a shared constant, like the JS timing constants in `src/tokens/motion.ts`) has packaging steps CSS tokens do not:

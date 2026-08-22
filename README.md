@@ -97,7 +97,7 @@ import { BarChart, LineChart } from '@robr0/design-system/charts';
   }
   ```
 
-Icons use a bundled Material Symbols Rounded variable font (woff2), with no extra setup. Nunito Sans, the system's default typeface, is intentionally *not* bundled: load it yourself (e.g. Google Fonts or `next/font`) or override `--font-family-primary`.
+Icons use a bundled Material Symbols Rounded variable font (woff2): components import it themselves, so they need no extra setup. If you render raw `.material-symbols-rounded` spans of your own, import `@robr0/design-system/fonts/material-symbols.css` once. Nunito Sans, the system's default typeface, is intentionally *not* bundled: load it yourself (e.g. Google Fonts or `next/font`) or override `--font-family-primary`.
 
 ### Token architecture
 
@@ -164,11 +164,12 @@ CI also guards against documentation drift: generated surfaces (this README's co
 ## Running locally
 
 ```bash
+npm install              # once, at the root: the website is an npm workspace, so this installs both
+
 # Storybook (the library's dev sandbox)
 npm run storybook        # http://localhost:6006
 
-# Portfolio + documentation website (npm workspace: install once at the root)
-npm install
+# Portfolio + documentation website
 npm run dev --workspace website   # http://localhost:3000
 ```
 
