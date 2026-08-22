@@ -55,6 +55,7 @@ const claudeGlyph = (
 export function SiteChat({
   fullscreenEnabled = true,
   compact = false,
+  phone = false,
   title = "robr0 GPT",
   placeholder = "Ask anything",
   showStarters = true,
@@ -67,6 +68,13 @@ export function SiteChat({
   fullscreenEnabled?: boolean;
   /** Narrow insets for phone-width hosts. */
   compact?: boolean;
+  /** The host is a phone viewport, where the soft keyboard will claim the
+      lower half of the screen the moment the composer is focused. The
+      welcome screen stacks instead of centring the composer: greeting in
+      the middle of the empty thread, starters directly above the composer,
+      composer pinned to the bottom
+      from the first paint — no centred state, and no glide out of one. */
+  phone?: boolean;
   /** The header brand name. The bench overrides it to preview a consumer's own product name. */
   title?: string;
   /** The composer's placeholder text. */
@@ -136,10 +144,29 @@ export function SiteChat({
   const isFull = view === "full";
   const isEmpty = turns.length === 0 && !live;
 
+  /* The starters sit in one of two places: under the centred composer on
+     the desktop welcome, directly above the bottom-pinned one on a phone.
+     Rendered where they show, not reordered with CSS, so the tab order
+     follows the visual order in both layouts. */
+  const startersNode = isEmpty && showStarters && (
+    <div className={styles.startersColumn}>
+      <PromptSuggestions
+        layout="stack"
+        ariaLabel="Conversation starters"
+        suggestions={starters}
+        onValueChange={(id) => {
+          const starter = starters.find((s) => s.id === id);
+          if (starter && send(starter.label)) focusComposer();
+        }}
+      />
+    </div>
+  );
+
   return (
     <div
       className={styles.chat}
       data-compact={compact || undefined}
+      data-phone={phone || undefined}
       /* Escape steps out of the takeover first; the host's own Escape
          handling (closing the panel) takes over once back in panel view. */
       onKeyDown={(e) => {
@@ -243,15 +270,21 @@ export function SiteChat({
           </ChatThread>
 
           {/* Welcome greeting — an overlay on the empty thread, sitting
-              just above the centred composer. */}
+              just above the centred composer; centred in the empty thread
+              on a phone, where the composer is pinned to the bottom. */}
           {isEmpty && (
             <div className={styles.welcomeTop}>
               <div className={styles.welcomeGreeting}>
                 {/* Nameless by design: visitors are anonymous, so the
                     widget cannot know who it is greeting — only when. */}
                 <p className={styles.welcomeHello}>{greeting}</p>
+                {/* The subjects, not the author: the chat is about the work
+                    and the thinking behind it, and the header already says
+                    whose it is. */}
                 <p className={styles.welcomeAsk}>
-                  {tagline ?? "Ask about Rob’s work, or anything design"}
+                  {/* The last pair is tied: "AI" alone on a line is a widow
+                      at the docked panel's width. */}
+                  {tagline ?? "Ask about the case studies, the system, design, or\u00a0AI"}
                 </p>
                 {/* The placeholder below stays a plain action ("Ask anything")
                     so this line and the composer don't say the same sentence
@@ -261,6 +294,11 @@ export function SiteChat({
           )}
         </div>
       </div>
+
+      {/* Phone welcome: the starters lead the composer, so the chips sit
+          between the greeting and the input rather than between the input
+          and the keyboard. */}
+      {phone && startersNode}
 
       <footer className={styles.footer}>
         <div className={styles.composerColumn}>
@@ -298,26 +336,16 @@ export function SiteChat({
       {/* The bottom region: starters at its top, disclaimer pinned to its
           bottom in every state. Grown while the chat is empty (centring the
           composer), collapsing on the first utterance — only flex-grow ever
-          animates, so the flow-down is seamless. */}
+          animates, so the flow-down is seamless. On a phone it never grows:
+          the composer is already at the bottom, and the starters are above
+          it. */}
       <div className={`${styles.bottomRegion} ${isEmpty ? styles.bottomRegionWelcome : ""}`}>
-        {isEmpty && showStarters && (
-          <div className={styles.startersColumn}>
-            <PromptSuggestions
-              layout="stack"
-              ariaLabel="Conversation starters"
-              suggestions={starters}
-              onValueChange={(id) => {
-                const starter = starters.find((s) => s.id === id);
-                if (starter && send(starter.label)) focusComposer();
-              }}
-            />
-          </div>
-        )}
+        {!phone && startersNode}
         <div className={styles.disclaimerRow}>
           {/* The second sentence is the logging disclosure — required by the
               privacy decision on record, so keep it when editing. */}
           <p className={styles.disclaimer}>
-            The agent can make mistakes. Chats are kept for 30 days to improve answers.
+            Answers can be wrong. Chats are kept for 30 days.
           </p>
         </div>
       </div>

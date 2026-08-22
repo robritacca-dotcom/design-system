@@ -11,10 +11,24 @@
   width: 100%;
   height: 100%;
   min-height: 0;
+  /* The one side inset every row shares — header controls, greeting,
+     thread bubbles, composer edge, starter pills, disclaimer — so they sit
+     on a single rail. A step tighter on compact hosts. */
+  --sitechat-inset: var(--padding-lg);
   /* A size container, so the welcome dressing below can step aside when the
      host — docked panel, takeover, or bench stage — is too short for it. */
   container-type: size;
   container-name: sitechat;
+}
+
+.chat[data-compact] {
+  --sitechat-inset: var(--padding-md);
+}
+
+/* The header rides the same rail as everything under it; the component's
+   own default is a step tighter than the widget wants. */
+.chat :global(.ds-chat-header) {
+  padding-inline: var(--sitechat-inset);
 }
 
 /* The header brand: the RR mark beside the chat name. A node title renders
@@ -68,11 +82,7 @@
   --ds-chat-thread-content-max-width: 768px;
   /* Match the composer and header inset, so bubbles, composer edge, and
      the header controls all share one right rail. */
-  --ds-chat-thread-padding-inline: var(--padding-md);
-}
-
-.chat[data-compact] .thread {
-  --ds-chat-thread-padding-inline: var(--padding-sm-md);
+  --ds-chat-thread-padding-inline: var(--sitechat-inset);
 }
 
 /* ============================================
@@ -90,12 +100,8 @@
   margin-inline: auto;
   /* The block-end padding is the gap between the greeting and the composer;
      block-start is inert, since the overlay bottom-aligns its content. */
-  padding: var(--padding-lg) var(--padding-md) var(--gap-xl);
+  padding: var(--padding-lg) var(--sitechat-inset) var(--gap-xl);
   pointer-events: none;
-}
-
-.chat[data-compact] .welcomeTop {
-  padding-inline: var(--padding-sm-md);
 }
 
 .welcomeGreeting {
@@ -152,11 +158,7 @@
   width: 100%;
   max-width: 768px;
   margin-inline: auto;
-  padding: var(--gap-xl) var(--padding-md) 0;
-}
-
-.chat[data-compact] .startersColumn {
-  padding-inline: var(--padding-sm-md);
+  padding: var(--gap-xl) var(--sitechat-inset) 0;
 }
 
 /* The welcome dressing needs roughly 580px of widget for the greeting and
@@ -177,10 +179,71 @@
   }
 }
 
+/* ============================================
+   WELCOME ON A PHONE — data-phone
+   The soft keyboard claims the lower half of a phone screen the moment the
+   composer is focused, and on the centred layout that leaves the starters
+   squeezed between the input and the keys. So a phone never centres: the
+   top region takes all the slack, which pins the composer to the bottom
+   from the first paint, the greeting floats in the middle of the empty
+   thread, and the starters render directly above the composer (SiteChat.tsx places
+   them before it in the DOM there). Nothing glides on the first utterance
+   because nothing moves — the composer is already where it ends up.
+   ============================================ */
+
+.chat[data-phone] .welcomeTop {
+  /* Restated, not inherited: the desktop height guard above hides the
+     overlay under 580px, which is most phones once the keyboard is up.
+     This outranks it on specificity, and the phone guard below takes over
+     at the same specificity, later in source. */
+  display: flex;
+  /* Centred in whatever the empty thread has left, so the greeting reads
+     as the screen's focal point rather than a header subtitle; with the
+     keyboard up it drifts toward the chips, which is where the eye goes. */
+  justify-content: center;
+  /* Symmetric, since neither edge is the live one now. */
+  padding-block: var(--padding-md);
+}
+
+.chat[data-phone] .bottomRegionWelcome {
+  flex-grow: 0;
+}
+
+.chat[data-phone] .bottomRegion {
+  transition: none;
+}
+
+/* Above the composer: its gap is the block-end padding now, and the start
+   side is open to the thread. */
+.chat[data-phone] .startersColumn {
+  display: block;
+  padding-block: 0 var(--gap-md);
+}
+
+/* The phone stack needs less height than the centred layout — roughly
+   500px with the greeting, 380px without (header, three starters, composer
+   and disclaimer, measured at the site's type scale) — and it is the
+   keyboard, not a short window, that usually takes it away. The greeting
+   steps aside first (it is the one part the visitor has already read), the
+   starters only when even they would crowd the composer. Same pattern as
+   the desktop guards above, one specificity step up so the phone
+   thresholds replace the desktop ones rather than stacking on them. */
+@container sitechat (max-height: 499px) {
+  .chat[data-phone] .welcomeTop {
+    display: none;
+  }
+}
+
+@container sitechat (max-height: 379px) {
+  .chat[data-phone] .startersColumn {
+    display: none;
+  }
+}
+
 /* Locked to the bottom of the widget, in every state. */
 .disclaimerRow {
   margin-top: auto;
-  padding: var(--gap-xs) var(--padding-md) var(--padding-sm);
+  padding: var(--gap-xs) var(--sitechat-inset) var(--padding-sm);
 }
 
 .responseStack {
@@ -211,11 +274,7 @@
   /* The composer never gives up height in a squeeze — the regions around
      it absorb the shortfall instead. */
   flex-shrink: 0;
-  padding: 0 var(--padding-md);
-}
-
-.chat[data-compact] .footer {
-  padding-inline: var(--padding-sm-md);
+  padding: 0 var(--sitechat-inset);
 }
 
 /* The composer shares the conversation column's cap and centre. */
@@ -225,15 +284,16 @@
   margin-inline: auto;
 }
 
-/* One quiet line, centred with the composer column. */
+/* One quiet line, centred with the composer column, at the floor of the
+   type scale: a visitor can find it, and never has to read it to chat. */
 .disclaimer {
   margin: 0;
   text-align: center;
-  font-family: var(--font-paragraph-sm-family);
-  font-size: var(--font-paragraph-sm-size);
-  font-weight: var(--font-paragraph-sm-weight);
-  line-height: var(--font-paragraph-sm-line-height);
-  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  font-family: var(--font-caption-family);
+  font-size: var(--font-caption-size);
+  font-weight: var(--font-caption-weight);
+  line-height: var(--font-caption-line-height);
+  letter-spacing: var(--font-caption-letter-spacing);
   color: var(--color-text-tertiary);
 }
 

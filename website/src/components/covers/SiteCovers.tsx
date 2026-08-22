@@ -468,8 +468,7 @@ export function SitePlaygroundCover(props: CoverProps) {
           </div>
 
           <p className={styles.chatNote}>
-            The agent can make mistakes. Chats are kept for 30 days to improve
-            answers.
+            Answers can be wrong. Chats are kept for 30 days.
           </p>
         </div>
       </div>

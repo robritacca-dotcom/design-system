@@ -8,6 +8,7 @@ import {
   useMemo,
   useRef,
   useState,
+  useSyncExternalStore,
   type ReactNode,
 } from "react";
 import { useChat, type ChatTransport } from "@/hooks/useChat";
@@ -34,6 +35,20 @@ export const DOCK_QUERY = "(min-width: 1440px)";
    The width is mirrored by the .panel rule in SiteChat.module.css — the CSS
    is what covers the first render, before this query has been read. */
 export const TAKEOVER_QUERY = "(max-width: 719px)";
+
+const subscribeTakeover = (onChange: () => void) => {
+  const media = window.matchMedia(TAKEOVER_QUERY);
+  media.addEventListener("change", onChange);
+  return () => media.removeEventListener("change", onChange);
+};
+const readTakeover = () => window.matchMedia(TAKEOVER_QUERY).matches;
+
+/** Whether the viewport is a phone width (TAKEOVER_QUERY), false on the
+    server and for the first client render. Shared by the site mount and
+    the playground's stage, which both hand the widget its phone layout. */
+export function useTakeoverViewport(): boolean {
+  return useSyncExternalStore(subscribeTakeover, readTakeover, () => false);
+}
 
 interface SiteChatContextValue {
   turns: ReturnType<typeof useChat>["turns"];

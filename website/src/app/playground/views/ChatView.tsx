@@ -8,7 +8,7 @@ import {
   ModelPicker,
   type ModelPickerModel,
 } from "@robr0/design-system/components/ModelPicker/ModelPicker";
-import { useSiteChat } from "@/components/SiteChat/ChatContext";
+import { useSiteChat, useTakeoverViewport } from "@/components/SiteChat/ChatContext";
 import { SiteChat } from "@/components/SiteChat/SiteChat";
 import styles from "./ChatView.module.css";
 
@@ -90,6 +90,9 @@ export default function ChatView({
   simControls,
 }: ChatViewProps) {
   const { open, setOpen, view, returnFocusRef, send, streaming } = useSiteChat();
+  /* A real phone viewport: the stage-size lever is hidden there and the
+     widget goes fluid, so the preset alone cannot say it is a phone. */
+  const phoneViewport = useTakeoverViewport();
 
   /* The provider defaults to closed (the site's resting state); the view
      exists to look at the widget, so it opens on arrival. */
@@ -278,6 +281,9 @@ export default function ChatView({
       <SiteChat
         fullscreenEnabled={allowFullscreen && !isDevice}
         compact={isCompact}
+        /* The bezel previews a phone, and a phone is one: both get the
+           stacked welcome the site's takeover shows. */
+        phone={isDevice || phoneViewport}
         title={title}
         placeholder={placeholder.trim() === "" ? "Ask anything" : placeholder}
         showStarters={showStarters}

@@ -188,7 +188,14 @@ export function SiteChatMount() {
       >
         {/* compact tracks the host's width, not the view: a takeover on a
             phone still wants phone insets, where one on a desktop does not. */}
-        <SiteChat fullscreenEnabled={!takeover} compact={takeover || !isFull} />
+        <SiteChat
+          fullscreenEnabled={!takeover}
+          compact={takeover || !isFull}
+          /* A phone viewport stacks the welcome screen (greeting centred in
+             the thread, starters over a bottom-pinned composer), because the keyboard
+             is about to take the lower half of it. */
+          phone={takeover}
+        />
       </div>
       {/* The widen grip — the bench's left handle, docked form only. It
           rides the panel's left edge as a fixed sibling (the panel clips its
