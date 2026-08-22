@@ -21,6 +21,14 @@
  * shipped copy: the README (it ships inside the npm tarball), the Storybook
  * landing page, and the data registries whose fields render on the site.
  *
+ * Two non-page modules are in scope by name: the playground's scripted chat
+ * story ships visitor-visible prose from `website/src/lib/chat-sim.ts` (the
+ * story and scenario responses and their chips) and
+ * `website/src/app/playground/ChatDirector.tsx` (the event-rail copy).
+ * Their string literals and JSX text are scanned through the AST, so
+ * comments — where an em dash is a structural separator, not voice — are
+ * never seen. `STORY_MODULES` below is the list.
+ *
  * WHAT IS DELIBERATELY OUT, AND WHY
  *
  *   - Agent-facing markdown — CLAUDE.md, design.md, content-design.md,
@@ -35,10 +43,11 @@
  *     internal surfaces a visitor never reaches. Derived from the page's own
  *     `robots: { index: false }`, so a page joining or leaving the set moves
  *     itself in and out of scope with no list to maintain here.
- *   - Non-page `.ts` modules — their string literals are server logs and
- *     internal messages, not copy. The chat's persona and greeting strings are
- *     genuinely shipped prose but live among those; they stay the
- *     `content-audit` skill's `chat` scope, which reads them with judgement.
+ *   - Non-page `.ts` modules other than `STORY_MODULES` — their string
+ *     literals are server logs and internal messages, not copy. The chat's
+ *     persona and greeting strings are genuinely shipped prose but live among
+ *     those; the em-dash check aside, everything needing judgement (register,
+ *     voice, banned words) stays the `content-audit` skill's `chat` scope.
  *
  * Part of the validate-registry chain.
  */
@@ -213,6 +222,46 @@ surfacesChecked += 1;
 const manifest = read(join(repoRoot, 'scripts', 'package-manifest.mjs'));
 const desc = manifest.match(/PACKAGE_DESCRIPTION\s*=\s*(['"`])([\s\S]*?)\1/);
 if (desc) scan('scripts/package-manifest.mjs (PACKAGE_DESCRIPTION)', desc[2]);
+
+// --- The playground's scripted chat story ------------------------------------
+
+/**
+ * Non-page modules whose string literals are visitor-visible prose: the sim's
+ * scripted story and scenario copy, and the director's event rail. Scanned
+ * through the AST so comments never register — only what a visitor can read.
+ */
+const STORY_MODULES = [
+  'website/src/lib/chat-sim.ts',
+  'website/src/app/playground/ChatDirector.tsx',
+];
+
+function scanStringLiterals(relPath) {
+  const sourceFile = ts.createSourceFile(
+    relPath,
+    read(join(repoRoot, relPath)),
+    ts.ScriptTarget.Latest,
+    /* setParentNodes */ true,
+    relPath.endsWith('.tsx') ? ts.ScriptKind.TSX : ts.ScriptKind.TS
+  );
+  const visit = (node) => {
+    if (
+      ts.isStringLiteral(node) ||
+      ts.isNoSubstitutionTemplateLiteral(node) ||
+      ts.isTemplateHead(node) ||
+      ts.isTemplateMiddleOrTemplateTail(node) ||
+      ts.isJsxText(node)
+    ) {
+      scan(relPath, node.text, 'string literal');
+    }
+    ts.forEachChild(node, visit);
+  };
+  ts.forEachChild(sourceFile, visit);
+}
+
+for (const mod of STORY_MODULES) {
+  surfacesChecked += 1;
+  scanStringLiterals(mod);
+}
 
 // --- Report -----------------------------------------------------------------
 
