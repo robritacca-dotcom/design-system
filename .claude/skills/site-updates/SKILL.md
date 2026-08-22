@@ -32,6 +32,8 @@ Entries are **thematic stories, not commit digests**:
 
 First, run `node scripts/sync-essays.mjs` to pull any newly published essay into `website/src/data/essays.json`, so the regenerated chat corpus can discuss it (the script's own doc block owns the details). If it changes the file, re-run the sync inside step 3's worktree and include the change in the same commit as the rest of the loop's changes.
 
+**A newly synced essay does not build on its own.** Every essay needs its illustrated cover pair (an entry in `website/src/data/essay-covers.json` plus the light and dark files under `website/public/covers/writing/`), and `scripts/validate-essay-covers.mjs` fails the website build until both exist; the sync script's doc block says the same. This loop cannot draw a cover, so when the sync brings in an essay with no pair: leave the synced `essays.json` change out of the loop's commit (`git checkout` it back in the worktree), finish the rest of the loop, and say in the report that a new essay is waiting on its cover before it can be synced. Never try to satisfy the validator with a placeholder pair.
+
 Then read `asOf` from `website/src/data/site-updates.json`, and:
 
 ```bash

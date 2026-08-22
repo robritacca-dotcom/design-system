@@ -13,7 +13,7 @@ Pulls GA4 data for **www.robertritacca.com** (property `••••••••
 
 ## Where things live
 
-- Script + venv: `~/Documents/Projects/design-system/ga-analysis/`
+- Script + venv: `ga-analysis/` at the repo root (`git rev-parse --show-toplevel`)
 - Runner: `./.venv/bin/python pull_ga.py`
 - Output: `ga-analysis/output/all.json` (+ one CSV per report). Git-ignored.
 - Credentials: `ga-analysis/service-account.json` (git-ignored; already set up).
@@ -26,7 +26,7 @@ Pulls GA4 data for **www.robertritacca.com** (property `••••••••
 
 2. **Run the pull** from the ga-analysis folder:
    ```bash
-   cd ~/Documents/Projects/design-system/ga-analysis && ./.venv/bin/python pull_ga.py --days 30
+   cd "$(git rev-parse --show-toplevel)/ga-analysis" && ./.venv/bin/python pull_ga.py --days 30
    ```
    If the venv is missing, create it first:
    ```bash
