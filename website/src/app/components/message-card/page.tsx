@@ -48,9 +48,9 @@ export default function MessageCardPage() {
               message card gives rich content a quiet frame inside an
               assistant turn or bubble: media on top, a title and description
               in the body, actions in a footer. It is not the navigation
-              Card. That one is a large-radius tile you click to go
-              somewhere; this one is content furniture the conversation
-              scrolls past.
+              Card. That one is a tile you click to go somewhere; this one
+              is content furniture the conversation scrolls past, wearing
+              the same card geometry.
             </p>
           </div>
 
@@ -111,14 +111,12 @@ export default function MessageCardPage() {
             <div className={styles.stack}>
               <MessageCard
                 media={
-                  <div className={styles.chartMedia}>
-                    <AreaChart
-                      data={signupData}
-                      xKey="day"
-                      series={[{ dataKey: "signups", label: "Signups" }]}
-                      height={150}
-                    />
-                  </div>
+                  <AreaChart
+                    data={signupData}
+                    xKey="day"
+                    series={[{ dataKey: "signups", label: "Signups" }]}
+                    height={150}
+                  />
                 }
                 title="Weekly signups"
                 meta="Updated this morning"

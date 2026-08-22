@@ -204,14 +204,12 @@ const TEAM_PLAN_CARD = (
 const TRIAL_CHART_CARD = (
   <MessageCard
     media={
-      <div className={styles.chartMedia}>
-        <AreaChart
-          data={TRIAL_SIGNUPS}
-          xKey="week"
-          series={[{ dataKey: "signups", label: "Signups" }]}
-          height={150}
-        />
-      </div>
+      <AreaChart
+        data={TRIAL_SIGNUPS}
+        xKey="week"
+        series={[{ dataKey: "signups", label: "Signups" }]}
+        height={150}
+      />
     }
     title="Trial signups"
     meta="Last six weeks"
@@ -249,15 +247,13 @@ const LAUNCH_ANALYSIS = (
     />
     <MessageCard
       media={
-        <div className={styles.chartMedia}>
-          <BarChart
-            data={LAUNCH_BUDGET}
-            xKey="phase"
-            yKey="spend"
-            dataLabel="Spend ($k)"
-            height={150}
-          />
-        </div>
+        <BarChart
+          data={LAUNCH_BUDGET}
+          xKey="phase"
+          yKey="spend"
+          dataLabel="Spend ($k)"
+          height={150}
+        />
       }
       title="Budget by phase"
       meta="From Q3 launch plan.pdf"

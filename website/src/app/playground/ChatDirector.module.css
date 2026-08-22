@@ -45,11 +45,3 @@
   gap: var(--gap-sm-md);
 }
 
-/* A chart injected as card media: the chart's own panel chrome comes off,
-   because the message card is already the panel. */
-.chartMedia :global(.ds-chart) {
-  border: none;
-  border-radius: 0;
-  background: transparent;
-  padding: var(--padding-sm) var(--padding-sm) 0 0;
-}
