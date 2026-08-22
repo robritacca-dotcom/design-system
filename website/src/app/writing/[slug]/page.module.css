@@ -68,6 +68,15 @@
   border: 1px solid var(--color-bg-container-border);
 }
 
+/* The illustrated cover sizes itself to the slot it is given, so the hero
+   gives it the illustration's own 3:2 and nothing is cropped; the frame
+   matches the feed-cover hero above. */
+.heroIllustration {
+  aspect-ratio: 3 / 2;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-bg-container-border);
+}
+
 /* ============================================
    RESUME LAYOUT — main + 320px aside
    ============================================ */

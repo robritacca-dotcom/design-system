@@ -6,6 +6,8 @@ import Sidebar from "../../../components/Sidebar/Sidebar";
 import { getSidebarLinks, buildWritingSidebarLinks } from "@/config/navigation";
 import { getArticles, getArticle, formatArticleDate } from "@/lib/substack";
 import { buildArticleJsonLd } from "@/lib/structuredData";
+import { EssayCover } from "@/components/covers/EssayCover";
+import { hasEssayCover } from "@/data/essay-covers";
 import styles from "./page.module.css";
 
 // Re-fetch the feed at most hourly (see the list page). Updates to a
@@ -96,12 +98,23 @@ export default async function ArticlePage({ params }: PageProps) {
             </p>
           )}
 
-          {article.coverImage && (
+          {/* The feed's own cover when the post has one; otherwise the
+              essay's illustrated pair (see the essay-covers registry), which
+              is also what its card shows on /writing and the home page. */}
+          {article.coverImage ? (
             <figure className={`${styles.hero} animate-in animate-delay-2`}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={article.coverImage} alt="" className={styles.heroImg} />
             </figure>
-          )}
+          ) : hasEssayCover(slug) ? (
+            <figure className={`${styles.hero} animate-in animate-delay-2`}>
+              <EssayCover
+                slug={slug}
+                className={styles.heroIllustration}
+                priority
+              />
+            </figure>
+          ) : null}
 
           {/* Two-column body — article on the left, details rail on the right */}
           <div className={`${styles.resumeLayout} animate-in animate-delay-3`}>
