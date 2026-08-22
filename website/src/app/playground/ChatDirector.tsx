@@ -213,7 +213,6 @@ const TRIAL_CHART_CARD = (
     }
     title="Trial signups"
     meta="Last six weeks"
-    actions={<Button label="Open the full report" variant="secondary" size="compact" />}
   />
 );
 
