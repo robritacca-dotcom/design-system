@@ -237,6 +237,16 @@
   transform: scale(1.02);
 }
 
+/* The essay illustration gets the same hover lift; it sizes itself to the
+   frame, so only the motion is set here. */
+.cardCoverEssay {
+  transition: transform var(--motion-duration-slow) var(--motion-ease-standard);
+}
+
+.cardCover:hover .cardCoverEssay {
+  transform: scale(1.02);
+}
+
 /* ============================================
    DS BOARD — a live mini-bento rendered from
    the tokens, standing in for a screenshot.

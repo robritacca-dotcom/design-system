@@ -9,6 +9,8 @@ import { caseStudyCover } from "@/components/covers/case-study-covers";
 import { dsMegaItems } from "@/config/navigation";
 import { getArticles, coverPlaceholder, articleExcerpt } from "@/lib/substack";
 import { caseStudies } from "@/data/case-studies";
+import { EssayCover } from "@/components/covers/EssayCover";
+import { hasEssayCover } from "@/data/essay-covers";
 import styles from "./page.module.css";
 
 // Re-fetch the Substack feed at most once an hour, same as /writing.
@@ -30,11 +32,6 @@ const featuredCover = caseStudyCover(featuredWork.href, "feature", {
   priority: true,
 });
 
-/* The writing card borrows the robr0-ds case study's rendered cover. A
-   deliberate break from "covers belong to studies": Substack's feed covers
-   are a headshot or nothing, and the site's own playground shot is a better
-   thumbnail than the generated placeholder. */
-const writingCover = caseStudyCover("/work/robr0-ds", "feature");
 
 /* The employer strip is hand-curated, current role first, same as the
    timeline on /about that owns the full history — keep the two in step
@@ -168,7 +165,16 @@ export default async function HomePage() {
               <>
                 <Link href={`/writing/${latest.slug}`} className={styles.featured}>
                   <span className={styles.cardCover}>
-                    {writingCover ?? (
+                    {/* The essay's illustrated pair (see the essay-covers
+                        registry); the feed cover or the generated placeholder
+                        only for a post published since the last pair was
+                        added. */}
+                    {hasEssayCover(latest.slug) ? (
+                      <EssayCover
+                        slug={latest.slug}
+                        className={styles.cardCoverEssay}
+                      />
+                    ) : (
                       /* eslint-disable-next-line @next/next/no-img-element */
                       <img
                         src={latest.coverImage ?? coverPlaceholder(latest.slug)}

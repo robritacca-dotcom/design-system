@@ -5,6 +5,8 @@ import { Card } from "@robr0/design-system/components/Card/Card";
 import PageLinks from "../../components/PageLinks/PageLinks";
 import { getSidebarLinks, buildWritingSidebarLinks } from "@/config/navigation";
 import { getArticles, formatArticleDate, coverPlaceholder } from "@/lib/substack";
+import { EssayCover } from "@/components/covers/EssayCover";
+import { hasEssayCover } from "@/data/essay-covers";
 import styles from "./page.module.css";
 
 // Re-fetch the Substack feed at most once an hour. New posts appear
@@ -59,6 +61,15 @@ export default async function WritingPage() {
                   title={article.title}
                   dek={article.subtitle}
                   companyName={formatArticleDate(article.date)}
+                  /* The illustrated pair (light and dark, swapped with the
+                     theme) when the essay has one; the feed cover or the
+                     generated placeholder only for a post published since
+                     the last pair was added. */
+                  cover={
+                    hasEssayCover(article.slug) ? (
+                      <EssayCover slug={article.slug} />
+                    ) : undefined
+                  }
                   coverSrc={article.coverImage ?? coverPlaceholder(article.slug, i)}
                   href={`/writing/${article.slug}`}
                 />
