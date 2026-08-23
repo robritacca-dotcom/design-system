@@ -342,11 +342,13 @@ export function SiteChat({
       <div className={`${styles.bottomRegion} ${isEmpty ? styles.bottomRegionWelcome : ""}`}>
         {!phone && startersNode}
         <div className={styles.disclaimerRow}>
-          {/* The second sentence is the logging disclosure — required by the
-              privacy decision on record, so keep it when editing. */}
+          {/* The link points at /privacy, which carries the AI-use and 30-day
+              logging disclosure required by the privacy decision on record. */}
           <p className={styles.disclaimer}>
-            Answers can be wrong. Chats are kept for 30 days. See the{" "}
-            <a href="/privacy">privacy page</a>.
+            Answers may be wrong.{" "}
+            <a className={styles.disclaimerLink} href="/privacy">
+              How we use AI and your data
+            </a>
           </p>
         </div>
       </div>

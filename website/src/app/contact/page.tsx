@@ -155,8 +155,8 @@ function ContactContent() {
           </div>
         </div>
 
-        {/* The site chat's logging disclosure — the widget's disclaimer says
-            the same thing in one line. Both change together. */}
+        {/* The site chat's logging disclosure. The widget's disclaimer links
+            to /privacy for the same facts; this page and /privacy state them. */}
         <p className={`${styles.chatNote} animate-in animate-delay-3`}>
           The site chat can answer most questions about my work directly. Its
           conversations are kept for 30 days to improve the answers, tied to no
