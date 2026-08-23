@@ -46,6 +46,25 @@ html.theme-ready {
      wider — keep its PANEL_MIN/MAX constants in step with this value. */
   --layout-chat-width: 420px;
   --layout-chat-inset: 20px;
+
+  /* The site's fixed layers, lowest to highest: sticky header (10), the
+     ambient tuner (20), the library's floating surfaces (tooltip 50,
+     Dialog/Drawer 100, CommandPalette 110), the mega-nav drawer (1000), the
+     chat FAB (1080), scrim (1090), panel (1100) and its grip (1101). Toasts
+     go last: they are transient feedback and must be seen, so they outrank
+     the chat chrome the same way they outrank a dialog in the library. */
+  --ds-toast-z: 1200;
+
+  /* The chat FAB holds the bottom-right corner on every page, which is
+     also the toast queue's default corner. Bottom-placed toasts start
+     above it: the FAB's inset plus its height (AiButton's padding and line
+     height, restated here because CSS cannot read a sibling's box) plus
+     one gap. The playground has no FAB but keeps the offset: a toast 60px
+     higher is not a bug, a toast under a button is. */
+  --ds-toast-inset-bottom: calc(
+    var(--layout-chat-inset) + var(--padding-sm) * 2 + var(--font-paragraph-em-line-height) +
+      var(--gap-sm)
+  );
 }
 
 /* Mid breakpoint (960–1279px): narrow both rails and tighten the column
@@ -94,6 +113,16 @@ html[data-chat="docked"] body {
   padding-right: calc(
     var(--primitive-padding-xl) + var(--layout-chat-width) + var(--layout-chat-inset)
   );
+}
+
+/* Docked, the panel owns the right column and the FAB is gone. A fixed
+   toast ignores the body padding, so right-placed toasts move left of the
+   panel (they glide with the widen grip, since this reads the same width)
+   and bottom-placed ones drop to the panel's own inset, aligned with its
+   bottom edge. */
+html[data-chat="docked"] {
+  --ds-toast-inset-right: calc(var(--layout-chat-width) + var(--layout-chat-inset));
+  --ds-toast-inset-bottom: var(--layout-chat-inset);
 }
 
 /* The phone takeover: SiteChatMount sets data-chat="takeover" on <html>
