@@ -260,8 +260,8 @@ export async function checkFollowupLimit(request: Request): Promise<boolean> {
    One line per exchange: what was asked, what came back, and the numbers
    (tokens, cache, latency). This is the ground truth the eval's golden set
    grows from — questions not logged in week one are gone — and the site
-   discloses it: 30-day retention, stated in the widget's disclaimer and on
-   /contact. The visitor field is the hashed key above (salted when
+   discloses it: 30-day retention, stated on /privacy, which the widget's
+   disclaimer links to. The visitor field is the hashed key above (salted when
    CHAT_VISITOR_SALT is set), never an address.
    ============================================ */
 
