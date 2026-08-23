@@ -42,6 +42,14 @@
   flex-shrink: 0;
 }
 
+.title {
+  font-family: var(--font-title-body-family);
+  font-size: var(--font-title-body-size);
+  font-weight: var(--font-title-body-weight);
+  color: var(--color-text-primary);
+  white-space: nowrap;
+}
+
 .crumb {
   display: flex;
   align-items: center;

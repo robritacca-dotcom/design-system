@@ -7,7 +7,9 @@
  * the covers page is a blank staging surface for vector mocks, where any
  * shared chrome would sit on top of the frames being reviewed — as is
  * /covers/render, the surface the cover images are shot from, where a footer
- * or chat panel would land inside the screenshot.
+ * or chat panel would land inside the screenshot; and the canvas is the
+ * site laid out on one endless board, which fills the viewport under its
+ * own stage toolbar.
  *
  * Matching is exact, so a nested route needs its own entry.
  */
@@ -16,4 +18,5 @@ export const CHROMELESS_ROUTES = new Set([
   "/rr-animated",
   "/covers",
   "/covers/render",
+  "/canvas",
 ]);

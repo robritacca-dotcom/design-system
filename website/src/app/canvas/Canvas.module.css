@@ -1,0 +1,232 @@
+/* Registered so it can transition: a stepped zoom animates the world's
+   transform, and the labels and outlines that divide by --zoom have to
+   travel with it, not snap to the destination size and wait. */
+@property --zoom {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+
+/* ============================================
+   CANVAS
+   An endless board under the stage toolbar. The world layer carries one
+   transform (pan + zoom) and a --zoom variable; every on-board stroke and
+   label divides by it, so outlines stay hairline and names stay readable
+   at any zoom, the way a design tool's do.
+   ============================================ */
+.viewport {
+  position: fixed;
+  top: var(--layout-toolbar-height);
+  right: 0;
+  bottom: 0;
+  left: 0;
+  /* clip, not hidden: a hidden box still scrolls when something inside it
+     takes focus (a page in a frame being clicked into), and that scroll
+     would silently offset the whole board from where its transform says
+     it is. A clipped box cannot scroll at all. */
+  overflow: clip;
+  background: var(--color-bg-container-secondary);
+  cursor: grab;
+  touch-action: none;
+  overscroll-behavior: none;
+}
+
+.viewport[data-dragging] {
+  cursor: grabbing;
+  user-select: none;
+}
+
+/* A drag must not be swallowed by the page under the pointer. */
+.viewport[data-dragging] .page {
+  pointer-events: none;
+}
+
+.world {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+
+.world[data-smooth] {
+  transition:
+    transform var(--motion-duration-slow) var(--motion-ease-emphasized),
+    --zoom var(--motion-duration-slow) var(--motion-ease-emphasized);
+}
+
+/* ---------- IA branch labels ---------- */
+.section {
+  position: absolute;
+  container-type: inline-size;
+}
+
+/* Constant on screen like a frame name, until the branch is a single
+   narrow column at a far-out zoom: then it shrinks to the column rather
+   than truncate or run into its neighbour. */
+.sectionLabel {
+  position: absolute;
+  left: 0;
+  bottom: calc(var(--gap-xl) / var(--zoom));
+  font-family: var(--font-title-body-family);
+  font-size: min(calc(var(--font-title-body-size) / var(--zoom)), 22cqw);
+  font-weight: var(--font-title-body-weight);
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--color-text-secondary);
+  pointer-events: none;
+}
+
+/* ---------- page frames ---------- */
+.frame {
+  position: absolute;
+  background: var(--color-bg-page-primary);
+  cursor: default;
+  /* Hairline on the board; the outline is a shadow so it never takes
+     layout room and scales with --zoom rather than the frame. */
+  box-shadow: 0 0 0 calc(var(--border-xs) / var(--zoom)) var(--color-divider);
+  transition: box-shadow var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.frame:hover {
+  box-shadow: 0 0 0 calc(var(--border-xs) / var(--zoom)) var(--color-action-primary-bg);
+}
+
+.frame[data-selected],
+.frame[data-selected]:hover {
+  box-shadow: 0 0 0 calc(var(--border-md) / var(--zoom)) var(--color-action-primary-bg);
+}
+
+.frameLabel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  display: flex;
+  overflow: hidden;
+  gap: calc(var(--gap-sm) / var(--zoom));
+  padding-bottom: calc(var(--gap-xs) / var(--zoom));
+  font-family: var(--font-caption-family);
+  font-size: calc(var(--font-caption-size) / var(--zoom));
+  font-weight: var(--font-caption-weight);
+  line-height: 1.3;
+  white-space: nowrap;
+  color: var(--color-text-secondary);
+  /* A hit target for the whole frame, like a design tool's frame name. */
+  cursor: default;
+  transition: color var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+/* Frames too small to carry a name: the name goes, the hit strip stays. */
+.world[data-unlabelled] .frameLabel {
+  color: transparent;
+}
+
+.frame:hover .frameLabel,
+.frame[data-selected] .frameLabel {
+  color: var(--color-action-primary-bg);
+}
+
+/* Both parts clip to the frame: at a small zoom the label is wide relative
+   to its frame, and a name that ran on would read as its neighbour's. The
+   path gives way first. */
+.frameLabel > span {
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.frameLocation {
+  flex-shrink: 2;
+  color: var(--color-text-tertiary);
+}
+
+.page {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: var(--color-bg-page-primary);
+}
+
+/* The hit layer takes the pointer so the board can select and drag; an
+   entered frame drops it and the page beneath becomes usable. */
+.hit {
+  position: absolute;
+  inset: 0;
+}
+
+.frame[data-entered] .hit {
+  pointer-events: none;
+}
+
+/* ---------- floating controls ---------- */
+.controls {
+  position: fixed;
+  bottom: var(--padding-lg);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: var(--gap-xs);
+  padding: var(--padding-xxs) var(--padding-xs);
+  border-radius: var(--radius-full);
+  background: color-mix(in srgb, var(--color-bg-container-primary) 85%, transparent);
+  backdrop-filter: blur(16px);
+  border: var(--border-xs) solid var(--color-divider);
+  box-shadow: var(--shadow-floating);
+  z-index: 30;
+}
+
+.separator {
+  width: var(--border-xs);
+  height: var(--gap-lg);
+  margin: 0 var(--gap-xs);
+  background: var(--color-divider);
+}
+
+.zoomLevel {
+  min-width: 4.5em;
+  height: var(--gap-xl);
+  padding: 0 var(--padding-xs);
+  border: 0;
+  border-radius: var(--radius-full);
+  background: none;
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  color: var(--color-text-primary);
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: background var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.zoomLevel:hover {
+  background: var(--color-bg-container-secondary);
+}
+
+.zoomLevel:focus-visible {
+  outline: var(--border-md) solid var(--color-action-primary-bg);
+  outline-offset: var(--gap-xxs);
+}
+
+.hint {
+  position: fixed;
+  left: var(--padding-lg);
+  bottom: var(--padding-lg);
+  margin: 0;
+  font-family: var(--font-caption-family);
+  font-size: var(--font-caption-size);
+  line-height: var(--font-caption-line-height);
+  color: var(--color-text-tertiary);
+  pointer-events: none;
+  z-index: 30;
+}
+
+/* Phones: the hint would collide with the controls. */
+@media (max-width: 699px) {
+  .hint {
+    display: none;
+  }
+}

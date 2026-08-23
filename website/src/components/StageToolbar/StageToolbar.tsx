@@ -4,13 +4,26 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { Breadcrumb } from "@robr0/design-system/components/Breadcrumb/Breadcrumb";
+import { Button } from "@robr0/design-system/components/Button/Button";
 import { CircularButton } from "@robr0/design-system/components/CircularButton/CircularButton";
 import { Tabs, type Tab } from "@robr0/design-system/components/Tabs/Tabs";
+import { Badge } from "@robr0/design-system/components/Badge/Badge";
 import { getBreadcrumbs } from "@/config/navigation";
 import { buildBreadcrumbJsonLd } from "@/lib/structuredData";
 import styles from "./StageToolbar.module.css";
 
 export interface StageToolbarProps {
+  /** A name beside the brand mark, for a surface that sits in no section
+      and so has no breadcrumb trail to name it. */
+  title?: string;
+  /** A short status word next to the title ("Alpha"), for a surface
+      that is live but not finished. */
+  badge?: string;
+  /** How the surface is left. "close" is the X, which goes back to
+      wherever the visitor came from (or home, opened cold); "home" is a
+      labelled way home for a surface reached by its address alone, where
+      "back" would usually mean nowhere. */
+  exit?: "close" | "home";
   /** Centre view tabs — omit to render a toolbar with no switch. */
   tabs?: Tab[];
   /** The active tab's value. */
@@ -29,6 +42,9 @@ export interface StageToolbarProps {
  * beneath reserve --layout-toolbar-height (globals.css) of room for it.
  */
 export default function StageToolbar({
+  title,
+  badge,
+  exit = "close",
   tabs,
   activeTab,
   onTabChange,
@@ -51,6 +67,8 @@ export default function StageToolbar({
         <Link href="/" className={styles.logo} aria-label="Home">
           <Image src="/rr.svg" alt="" width={24} height={24} />
         </Link>
+        {title && <span className={styles.title}>{title}</span>}
+        {badge && <Badge label={badge} variant="info" />}
         {items.length > 0 && (
           <>
             <script
@@ -79,12 +97,22 @@ export default function StageToolbar({
       )}
 
       <div className={styles.actions}>
-        <CircularButton
-          icon="close"
-          variant="tertiary"
-          ariaLabel="Close this view"
-          onClick={leave}
-        />
+        {exit === "home" ? (
+          <Button
+            href="/"
+            variant="tertiary"
+            size="compact"
+            iconLeft="arrow_back"
+            label="Back to home"
+          />
+        ) : (
+          <CircularButton
+            icon="close"
+            variant="tertiary"
+            ariaLabel="Close this view"
+            onClick={leave}
+          />
+        )}
       </div>
     </header>
   );
