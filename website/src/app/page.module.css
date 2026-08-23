@@ -36,10 +36,10 @@
      (MegaNav.module.css), and the body's nav→main gap. svh keeps the
      scroll cue above mobile browser bars; vh is the fallback. */
   min-height: calc(100vh - 78px - var(--primitive-padding-lg) - var(--primitive-gap-xxxl));
-  min-height: calc(100svh - 78px - var(--primitive-padding-lg) - var(--primitive-gap-xxxl));
+  min-height: calc(var(--layout-viewport-height) - 78px - var(--primitive-padding-lg) - var(--primitive-gap-xxxl));
   /* Optical centring: pad the bottom so the block sits a touch above true
      centre and the first screen reads centre-weighted, not bottom-heavy. */
-  padding-bottom: 10vh;
+  padding-bottom: calc(var(--layout-viewport-height) * 0.1);
 }
 
 /* The scroll cue itself lives in components/ScrollCue — it positions
@@ -110,7 +110,7 @@
      the cue lands on a balanced screen (no scroll-margin — the
      section top aligns with the viewport top). */
   min-height: 100vh;
-  min-height: 100svh;
+  min-height: var(--layout-viewport-height);
 }
 
 /* Full width of the home container, so the grid's edges sit on the same

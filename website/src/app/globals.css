@@ -38,6 +38,13 @@ html.theme-ready {
      beneath it, so the two can never drift apart. */
   --layout-toolbar-height: 56px;
 
+  /* What "one viewport tall" means to a page. Sections that fill the first
+     screen size themselves from this rather than from svh directly, so a
+     surface that shows a page at a height of its own choosing (the /canvas
+     board, which pins it to a desktop viewport on the frame's <html>) gets
+     a page with a natural height instead of one that grows with its frame. */
+  --layout-viewport-height: 100svh;
+
   /* The docked site-chat panel: its width, and the gap it floats off the
      viewport edges (top, right, bottom — and the FAB's corner offset).
      Only applied above 1440px, where a fourth column fits beside
@@ -241,9 +248,28 @@ body:has([data-bg-hidden]) .blur-container {
   opacity: 0;
 }
 
+/* A framed page. The /canvas board marks the <html> of every page it shows
+   (data-embedded) and rasterizes the page under a scale transform, where
+   each repaint re-rasterizes 1440px-wide tiles. So a framed page stops
+   doing the two things that repaint continuously: motion, cut the same way
+   the library's reduced-motion guard cuts it (tokens-motion.css is the
+   model — every transition and animation collapses to its end state), and
+   the glass behind the header and the chat, which re-composites on every
+   paint beneath it. Nothing here changes a page outside a frame. */
+html[data-embedded] *,
+html[data-embedded] *::before,
+html[data-embedded] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  backdrop-filter: none !important;
+}
+
 /* Only stop the drift once the field has actually taken over; a pending
-   container may still fall back, and should not resume from a frozen pose. */
-.blur-container[data-shader="on"] .blur-ellipse {
+   container may still fall back, and should not resume from a frozen pose.
+   An embedded page (a /canvas frame) freezes it too: a still of the band. */
+.blur-container[data-shader="on"] .blur-ellipse,
+.blur-container[data-embedded] .blur-ellipse {
   animation-play-state: paused;
 }
 

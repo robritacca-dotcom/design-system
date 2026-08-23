@@ -77,10 +77,23 @@ export default function BlurBackground() {
   const [mode, setMode] = useState<BackgroundMode>(shaderBackground.mode);
   const [tuning, setTuning] = useState(false);
   const [status, setStatus] = useState<ShaderFieldStatus>("pending");
+  /* Embedded in a frame (the /canvas board shows every page live inside an
+     iframe), the page holds no GL context — a board of N pages would
+     otherwise open N contexts, and browsers start evicting them well before
+     that — and shows the CSS band instead, frozen: a still of the ambient
+     background, so a framed page looks like itself. Detected after mount so
+     the server markup stays identical; the hook loses the context it briefly
+     opened when `enabled` flips. */
+  const [embedded, setEmbedded] = useState(false);
 
   /* Read once on mount from the URL, which the server prerender cannot see —
      same approach as the playground's ?view= handling, and deliberately not
      useSearchParams, which would force a Suspense boundary on every page. */
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (window.self !== window.top) setEmbedded(true);
+  }, []);
+
   useEffect(() => {
     if (process.env.NODE_ENV !== "development") return;
     if (!new URLSearchParams(window.location.search).has("tune")) return;
@@ -107,7 +120,7 @@ export default function BlurBackground() {
    * painted in the very first frame with no gap at all.
    */
   const state =
-    mode === "css"
+    mode === "css" || embedded
       ? "off"
       : status === "active"
         ? "on"
@@ -117,7 +130,12 @@ export default function BlurBackground() {
 
   return (
     <>
-      <div className="blur-container" data-shader={state} aria-hidden="true">
+      <div
+        className="blur-container"
+        data-shader={state}
+        data-embedded={embedded || undefined}
+        aria-hidden="true"
+      >
         <div className="blur-ellipse blur-yellow" />
         <div className="blur-ellipse blur-green" />
         <div className="blur-ellipse blur-purple" />
@@ -130,7 +148,7 @@ export default function BlurBackground() {
         <ShaderField
           params={params}
           blobs={shaderBackground.blobs}
-          enabled={mode === "shader"}
+          enabled={mode === "shader" && !embedded}
           onStatusChange={onStatusChange}
         />
       </div>
