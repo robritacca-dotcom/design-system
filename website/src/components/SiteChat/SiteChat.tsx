@@ -345,7 +345,8 @@ export function SiteChat({
           {/* The second sentence is the logging disclosure — required by the
               privacy decision on record, so keep it when editing. */}
           <p className={styles.disclaimer}>
-            Answers can be wrong. Chats are kept for 30 days.
+            Answers can be wrong. Chats are kept for 30 days. See the{" "}
+            <a href="/privacy">privacy page</a>.
           </p>
         </div>
       </div>

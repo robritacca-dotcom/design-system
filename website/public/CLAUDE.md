@@ -152,6 +152,7 @@ The old `merge-and-push` skill is retired because its name didn't say which of t
     │   ├── project-journal/   # Build-progression timeline (site-updates registry)
     │   ├── loops/             # The recurring agent loops page
     │   ├── contact/           # Contact page
+    │   ├── privacy/           # Privacy policy page (standalone; analytics + chat-log disclosure)
     │   ├── playground/        # The immersive re-theming tool: Components + Chat views over one set of levers (chromeless; absorbed the old /robr0-gpt chat bench, which now redirects here)
     │   ├── blueprints/        # Renders the public root-spec copies (CLAUDE.md, design.md, content-design.md)
     │   ├── work/              # Case-study pages, one folder per study (see the case-study registry)

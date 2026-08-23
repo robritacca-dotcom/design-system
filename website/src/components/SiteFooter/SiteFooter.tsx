@@ -21,6 +21,7 @@ const siteLinks = [
   { href: "/work", label: "Work" },
   { href: "/writing", label: "Writing" },
   { href: "/contact", label: "Contact" },
+  { href: "/privacy", label: "Privacy" },
 ];
 
 // The /design-system landing stays out: its own column would just repeat
