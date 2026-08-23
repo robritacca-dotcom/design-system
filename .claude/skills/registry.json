@@ -25,5 +25,7 @@
   "external": [
     "ga-report"
   ],
-  "unlisted": []
+  "unlisted": [
+    "security-audit"
+  ]
 }
