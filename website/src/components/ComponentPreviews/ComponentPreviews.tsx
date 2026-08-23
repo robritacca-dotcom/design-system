@@ -36,6 +36,9 @@ import { NumberInput } from "@robr0/design-system/components/NumberInput/NumberI
 import { Pagination } from "@robr0/design-system/components/Pagination/Pagination";
 import { InterruptCard } from "@robr0/design-system/components/InterruptCard/InterruptCard";
 import { Kbd } from "@robr0/design-system/components/Kbd/Kbd";
+import { Globe } from "@robr0/design-system/components/Globe/Globe";
+import { MapCallout } from "@robr0/design-system/components/MapCallout/MapCallout";
+import { MapLegend } from "@robr0/design-system/components/MapLegend/MapLegend";
 import { ProgressBar } from "@robr0/design-system/components/ProgressBar/ProgressBar";
 import { PromptSuggestions } from "@robr0/design-system/components/PromptSuggestions/PromptSuggestions";
 import { Prose } from "@robr0/design-system/components/Prose/Prose";
@@ -218,6 +221,18 @@ const previews: Record<string, () => ReactNode> = {
   "card": () => (
     <>
       <div className={styles.cardPreview} />
+    </>
+  ),
+  "card-stack": () => (
+    <>
+      <div aria-hidden="true" style={{ position: "relative", width: "110px", height: "84px" }}>
+        <div style={{ position: "absolute", inset: "0 8px", top: "16px", height: "72px", borderRadius: "12px", border: "1px solid var(--color-bg-container-border)", background: "var(--color-bg-container-tertiary)" }} />
+        <div style={{ position: "absolute", inset: "0 4px", top: "8px", height: "72px", borderRadius: "12px", border: "1px solid var(--color-bg-container-border)", background: "var(--color-bg-container-secondary)" }} />
+        <div style={{ position: "absolute", inset: 0, height: "72px", borderRadius: "12px", border: "1px solid var(--color-bg-container-border)", background: "var(--color-bg-container-primary)", display: "flex", flexDirection: "column", justifyContent: "center", gap: "6px", padding: "0 12px" }}>
+          <span style={{ width: "60%", height: "8px", borderRadius: "4px", background: "var(--color-text-tertiary)", opacity: 0.5 }} />
+          <span style={{ width: "40%", height: "6px", borderRadius: "3px", background: "var(--color-bg-container-tertiary)" }} />
+        </div>
+      </div>
     </>
   ),
   "carousel": () => (
@@ -792,6 +807,44 @@ const previews: Record<string, () => ReactNode> = {
         <Kbd>⇧</Kbd>
         <Kbd>K</Kbd>
       </div>
+    </>
+  ),
+  "globe": () => (
+    <>
+      <div style={{ width: "130px" }}>
+        <Globe
+          points={[
+            { id: "a", lat: -33.45, lng: -70.66, kind: "point" },
+            { id: "b", lat: 43.65, lng: -79.38, kind: "anchor" },
+            { id: "c", lat: 51.5, lng: -0.12, kind: "point" },
+            { id: "d", lat: 1.35, lng: 103.82, kind: "point" },
+          ]}
+          arcs={[
+            { from: "a", to: "b" },
+            { from: "b", to: "c" },
+            { from: "c", to: "d", altitude: 0.35 },
+          ]}
+          interactive={false}
+          showLabels={false}
+          label="Miniature globe"
+        />
+      </div>
+    </>
+  ),
+  "map-callout": () => (
+    <>
+      <MapCallout title="Santiago, CL" lines={["Cobalt", "17.73 / 64 arcs"]} />
+    </>
+  ),
+  "map-legend": () => (
+    <>
+      <MapLegend
+        items={[
+          { glyph: "point", label: "Listening point" },
+          { glyph: "anchor", label: "Fixed witness" },
+          { glyph: "arc", label: "Signal route" },
+        ]}
+      />
     </>
   ),
   "link-list": () => (

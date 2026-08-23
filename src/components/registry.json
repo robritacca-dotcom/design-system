@@ -42,6 +42,11 @@
       "description": "Page scaffolding: app shells, sidebars, dividers, and section headings."
     },
     {
+      "id": "maps",
+      "label": "Maps",
+      "description": "Geographic surfaces for showing where things are and what connects them, from the globe to its legend."
+    },
+    {
       "id": "navigation",
       "label": "Navigation",
       "description": "Top bars, breadcrumbs, tabs, steppers, and pagination for moving through a product."
@@ -188,6 +193,14 @@
       "label": "Card",
       "slug": "card",
       "description": "Card components for previews, navigation, and token documentation, from content cards to colour swatches and typography specimens.",
+      "category": "data-display",
+      "client": true
+    },
+    {
+      "name": "CardStack",
+      "label": "Card stack",
+      "slug": "card-stack",
+      "description": "A deck of cards showing one at a time, flipped through with a lift-and-settle animation.",
       "category": "data-display",
       "client": true
     },
@@ -448,6 +461,14 @@
       "client": true
     },
     {
+      "name": "Globe",
+      "label": "Globe",
+      "slug": "globe",
+      "description": "An orthographic globe with markers and great-circle arcs, rotated by drag, keys, or a slow spin.",
+      "category": "maps",
+      "client": true
+    },
+    {
       "name": "Input",
       "label": "Input",
       "slug": "input",
@@ -494,6 +515,22 @@
       "slug": "link-list",
       "description": "Linked items with logo, label, and subtitle.",
       "category": "data-display",
+      "client": false
+    },
+    {
+      "name": "MapCallout",
+      "label": "Map callout",
+      "slug": "map-callout",
+      "description": "The annotation beside a map point: a name in capitals over monospace readout lines.",
+      "category": "maps",
+      "client": false
+    },
+    {
+      "name": "MapLegend",
+      "label": "Map legend",
+      "slug": "map-legend",
+      "description": "The corner block of a map: its name, what it shows, and the key to its markers.",
+      "category": "maps",
       "client": false
     },
     {
