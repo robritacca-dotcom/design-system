@@ -40,11 +40,12 @@ const deviceSegments = (Object.keys(DEVICES) as DeviceId[]).map((id) => ({
    the desktop board's proportions.
    ============================================ */
 /** A frame shows at most this much of its page; the rest scrolls inside it.
-    A case study runs to ~12,000px and fits; the rendered design spec runs
-    past 70,000 and would otherwise make everything else on the board a speck. */
+    A page a visitor navigates a frame to can be far longer than a landing
+    page (the rendered design spec runs past 70,000px) and would otherwise
+    make everything else on the board a speck. */
 const MAX_FRAME_HEIGHT = 24000;
 
-/** Low enough that a board of forty full pages still fits the view. */
+/** Low enough that a board of full-height pages still fits the view. */
 const MIN_ZOOM = 0.004;
 const MAX_ZOOM = 4;
 const ZOOM_STEP = 1.25;
@@ -64,7 +65,7 @@ const FIT_PADDING = 96;
 const DRAG_THRESHOLD = 4;
 /** The second height pass, for images and fonts that land after load. */
 const RESETTLE_DELAY_MS = 1500;
-/** Pages load this many at a time, in IA order: forty at once would contend
+/** Pages load this many at a time, in IA order, so they do not all contend
     for the same connection and the same main thread. */
 const LOAD_CONCURRENCY = 4;
 
@@ -618,7 +619,7 @@ export default function Canvas() {
 
   /* Switching device re-measures every page at its new width: after the
      frames have re-rendered at it, and a few pages at a time, so no reading
-     lands mid-way through forty pages re-laying-out at once. */
+     lands mid-way through every page re-laying-out at once. */
   useEffect(() => {
     let cancelled = false;
     const run = async () => {
