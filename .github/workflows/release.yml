@@ -65,7 +65,7 @@ jobs:
       # Without it npm finds no credentials and falls through to Trusted
       # Publishing. npm defaults to registry.npmjs.org anyway, and the package
       # sets no publishConfig, so nothing is lost. (Cost us run 30284784878.)
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: npm
