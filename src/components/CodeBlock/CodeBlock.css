@@ -95,7 +95,7 @@
   font-weight: var(--font-paragraph-sm-em-weight);
   line-height: var(--font-paragraph-sm-line-height);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--font-overline-letter-spacing);
   color: var(--color-text-tertiary);
   flex-shrink: 0;
 }

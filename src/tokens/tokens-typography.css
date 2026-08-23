@@ -119,6 +119,17 @@
   --font-paragraph-sm-em-line-height: 20px;
   --font-paragraph-sm-em-letter-spacing: 0;
 
+  /* Overline — the uppercase label face: an eyebrow over a title, a map
+     callout's place name, a code block's language chip. Small and bold with
+     open tracking, because capitals at this size need air to stay legible.
+     Pair with text-transform: uppercase at the use site — the tokens set the
+     metrics, never the casing. */
+  --font-overline-family: var(--font-family-primary);
+  --font-overline-size: 14px;
+  --font-overline-weight: 600;
+  --font-overline-line-height: 20px;
+  --font-overline-letter-spacing: 0.08em; /* +8% */
+
   /* Caption — the floor of the scale. Footnotes and disclaimers: a line the
      reader should be able to find but never has to read to use the screen.
      Never on a control, never for running text. */

@@ -254,6 +254,21 @@ const bodyStyles: TypeStyleData[] = [
     },
   },
   {
+    name: "Overline",
+    weight: "SemiBold",
+    size: "14px",
+    lineHeight: "20px",
+    letterSpacing: "+8%",
+    previewStyle: {
+      fontFamily: "var(--font-overline-family)",
+      fontSize: "var(--font-overline-size)",
+      fontWeight: "var(--font-overline-weight)" as unknown as number,
+      lineHeight: "var(--font-overline-line-height)",
+      letterSpacing: "var(--font-overline-letter-spacing)",
+      textTransform: "uppercase" as const,
+    },
+  },
+  {
     name: "Caption",
     weight: "Regular",
     size: "12px",
@@ -342,7 +357,7 @@ export default function TypographyPage() {
               </a>
             </p>
             <p className={styles.introBody}>
-              Mega and Display styles are for hero moments and landing pages. Headings structure sections. Title is for bold labels. Paragraph Em is the default for buttons and interactive controls. Paragraph is body copy. The SM variants scale each of those down for compact components and secondary text. Caption is the floor, for footnotes and disclaimers only.
+              Mega and Display styles are for hero moments and landing pages. Headings structure sections. Title is for bold labels. Paragraph Em is the default for buttons and interactive controls. Paragraph is body copy. The SM variants scale each of those down for compact components and secondary text. Overline is the uppercase label face, always paired with an uppercase transform at the use site. Caption is the floor, for footnotes and disclaimers only.
             </p>
           </div>
 
