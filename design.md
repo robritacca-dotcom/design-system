@@ -541,7 +541,7 @@ Event pills are `--color-bg-container-primary` chips at `--radius-xs`: an accent
 
 ### Toast
 
-**`ds-toast`** — Ephemeral notification via `ToastProvider` + `useToast()` hook. Rendered via React portal into `document.body`. Default duration: 5000ms. Pauses on hover/focus. Progress bar animates across bottom. Position: configurable (`top-right`, `bottom-right`, etc.), defaults to `bottom-right`. Max stack: 5 toasts. Five variants share the same `--color-status-*` token mapping as Badge/Alert.
+**`ds-toast`** — Ephemeral notification via `ToastProvider` + `useToast()` hook. Rendered via React portal into `document.body`. Default duration: 5000ms. Pauses on hover/focus. Progress bar animates across bottom. Position: configurable (`top-right`, `bottom-right`, etc.), defaults to `bottom-right`. Max stack: 5 toasts. Five variants share the same `--color-status-*` token mapping as Badge/Alert. The container sits at `z-index: 200`, the library's top layer, flush to its corner; both are consumer hooks. A host that keeps its own fixed chrome in that corner sets `--ds-toast-inset-top/bottom/left/right` so the queue stacks clear of it, and raises `--ds-toast-z` above its own overlays: toasts are transient feedback and must be seen, so they outrank persistent chrome. The website does exactly this for its chat launcher (`globals.css`), and moves the queue left of the panel while it is docked.
 
 Default icons (Material Symbols Rounded): `info`, `check_circle`, `warning`, `error`, `info` for each variant. Override via `icon` prop.
 

@@ -1,11 +1,23 @@
 /* ============================================
    TOAST CONTAINER
    Fixed position stack for notifications
+
+   Consumer hooks (custom properties with fallbacks, so the defaults hold
+   until a consumer sets them): a page that keeps its own fixed chrome in a
+   corner (a chat launcher, a cookie bar, a docked panel) sets the matching
+   inset so toasts stack clear of it rather than on top of it, and raises
+   --ds-toast-z above its own overlay layers. Toasts are transient feedback
+   and must be seen; a launcher can be covered for five seconds.
+     --ds-toast-z             stacking order (default 200, the library's top)
+     --ds-toast-inset-top     gap from the top edge for top-* placements
+     --ds-toast-inset-bottom  gap from the bottom edge for bottom-* placements
+     --ds-toast-inset-left    gap from the left edge for *-left placements
+     --ds-toast-inset-right   gap from the right edge for *-right placements
    ============================================ */
 
 .ds-toast-container {
   position: fixed;
-  z-index: 200;
+  z-index: var(--ds-toast-z, 200);
   display: flex;
   flex-direction: column;
   gap: var(--gap-sm); /* 8px */
@@ -14,38 +26,38 @@
 }
 
 .ds-toast-container--top-right {
-  top: 0;
-  right: 0;
+  top: var(--ds-toast-inset-top, 0);
+  right: var(--ds-toast-inset-right, 0);
   align-items: flex-end;
 }
 
 .ds-toast-container--top-left {
-  top: 0;
-  left: 0;
+  top: var(--ds-toast-inset-top, 0);
+  left: var(--ds-toast-inset-left, 0);
   align-items: flex-start;
 }
 
 .ds-toast-container--bottom-right {
-  bottom: 0;
-  right: 0;
+  bottom: var(--ds-toast-inset-bottom, 0);
+  right: var(--ds-toast-inset-right, 0);
   align-items: flex-end;
 }
 
 .ds-toast-container--bottom-left {
-  bottom: 0;
-  left: 0;
+  bottom: var(--ds-toast-inset-bottom, 0);
+  left: var(--ds-toast-inset-left, 0);
   align-items: flex-start;
 }
 
 .ds-toast-container--top-center {
-  top: 0;
+  top: var(--ds-toast-inset-top, 0);
   left: 50%;
   transform: translateX(-50%);
   align-items: center;
 }
 
 .ds-toast-container--bottom-center {
-  bottom: 0;
+  bottom: var(--ds-toast-inset-bottom, 0);
   left: 50%;
   transform: translateX(-50%);
   align-items: center;
