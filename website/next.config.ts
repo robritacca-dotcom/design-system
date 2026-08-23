@@ -20,14 +20,19 @@ const contentSecurityPolicy = [
   // surfaced on /writing from the Substack RSS feed.
   "img-src 'self' data: https://substackcdn.com https://www.googletagmanager.com https://*.google-analytics.com",
   "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com",
-  // The /work case-study pages embed YouTube videos in iframes.
-  "frame-src https://www.youtube.com https://www.youtube-nocookie.com",
-  "frame-ancestors 'none'",
+  // The /work case-study pages embed YouTube videos in iframes, and /canvas
+  // frames the site's own pages.
+  "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com",
+  // Same-origin only: /canvas shows every page live inside a frame, so the
+  // site must be allowed to frame itself. No other origin may, which is all
+  // the clickjacking protection was ever for.
+  "frame-ancestors 'self'",
 ].join("; ");
 
 const securityHeaders = [
   { key: "Content-Security-Policy", value: contentSecurityPolicy },
-  { key: "X-Frame-Options", value: "DENY" },
+  // The legacy form of frame-ancestors 'self' above, for the same reason.
+  { key: "X-Frame-Options", value: "SAMEORIGIN" },
   { key: "X-Content-Type-Options", value: "nosniff" },
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
   // No page uses the camera, microphone, or geolocation; deny them outright.
