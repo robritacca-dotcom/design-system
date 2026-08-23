@@ -11,6 +11,8 @@ const scriptEval =
 
 const contentSecurityPolicy = [
   "default-src 'self'",
+  "base-uri 'self'",
+  "form-action 'self'",
   `script-src 'self' 'unsafe-inline'${scriptEval} https://www.googletagmanager.com`,
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com",
@@ -28,9 +30,13 @@ const securityHeaders = [
   { key: "X-Frame-Options", value: "DENY" },
   { key: "X-Content-Type-Options", value: "nosniff" },
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  // No page uses the camera, microphone, or geolocation; deny them outright.
+  { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
 ];
 
 const nextConfig: NextConfig = {
+  // Don't advertise the framework in an X-Powered-By response header.
+  poweredByHeader: false,
   async headers() {
     return [{ source: "/(.*)", headers: securityHeaders }];
   },

@@ -35,6 +35,9 @@ ga-analysis/loop-reports/
 
 # Claude's internal session notes — local-only, not for the public repo
 .claude/memory/
+# Local Claude settings — machine-specific, never committed
+.claude/settings.local.json
+.claude/*.local.json
 
 # macOS Finder/iCloud duplicate copies ("name 2.ext") — the registry
 # validator also fails the build on these so they get deleted, not shipped

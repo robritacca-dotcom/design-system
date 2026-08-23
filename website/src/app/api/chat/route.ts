@@ -62,6 +62,14 @@ const MAX_TURNS = 10;
 /** Longest single message accepted, in characters. */
 const MAX_MESSAGE_CHARS = 4000;
 
+/** Longest whole conversation accepted, summed across every kept turn. The
+    per-message cap bounds the latest turn; this bounds the history behind it. */
+const MAX_TOTAL_CHARS = 40000;
+
+/** Hard byte ceiling on the raw request body, rejected before it is parsed.
+    Far above a real 10-turn conversation, far below Vercel's platform limit. */
+const MAX_BODY_BYTES = 64 * 1024;
+
 /** Trace points shown under the status label before the rest is dropped. */
 const MAX_TRACE_POINTS = 8;
 
@@ -145,6 +153,11 @@ function parseBody(payload: unknown): ParsedBody {
     return { ok: false, status: 400, reason: "no user message in the recent turns" };
   }
 
+  const totalChars = trimmed.reduce((sum, message) => sum + message.content.length, 0);
+  if (totalChars > MAX_TOTAL_CHARS) {
+    return { ok: false, status: 413, reason: "conversation is too large" };
+  }
+
   return { ok: true, messages: trimmed, path: sanitisePath(path) };
 }
 
@@ -218,7 +231,11 @@ export async function POST(request: Request): Promise<Response> {
 
   let payload: unknown;
   try {
-    payload = await request.json();
+    const raw = await request.text();
+    if (raw.length > MAX_BODY_BYTES) {
+      return Response.json({ error: "request body too large" }, { status: 413 });
+    }
+    payload = JSON.parse(raw);
   } catch {
     return Response.json({ error: "invalid JSON" }, { status: 400 });
   }

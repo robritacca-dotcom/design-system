@@ -99,14 +99,16 @@ const dailyLimiter = (redis: Redis) =>
    ============================================ */
 
 /**
- * A stable per-visitor key. The IP is hashed before it becomes a Redis key so
- * no raw address is stored, which keeps a rate-limit store from quietly
- * becoming a log of who visited.
+ * A stable per-visitor key. The IP is hashed (salted when CHAT_VISITOR_SALT is
+ * set) before it becomes a Redis key, so no raw address is stored. Without a
+ * salt, a hash over the 32-bit IPv4 space is reversible, so set
+ * CHAT_VISITOR_SALT in the deploy environment to make the key genuinely opaque.
  */
 export function visitorKey(request: Request): string {
   const forwarded = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
   const ip = forwarded || request.headers.get("x-real-ip")?.trim() || "local";
-  return createHash("sha256").update(ip).digest("hex").slice(0, 32);
+  const salt = process.env.CHAT_VISITOR_SALT ?? "";
+  return createHash("sha256").update(salt + ip).digest("hex").slice(0, 32);
 }
 
 /** UTC date, so the daily counters reset at midnight UTC without a scheduler. */
@@ -259,7 +261,8 @@ export async function checkFollowupLimit(request: Request): Promise<boolean> {
    (tokens, cache, latency). This is the ground truth the eval's golden set
    grows from — questions not logged in week one are gone — and the site
    discloses it: 30-day retention, stated in the widget's disclaimer and on
-   /contact. The visitor field is the salted hash above, never an address.
+   /contact. The visitor field is the hashed key above (salted when
+   CHAT_VISITOR_SALT is set), never an address.
    ============================================ */
 
 export interface ExchangeLog {

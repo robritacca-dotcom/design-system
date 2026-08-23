@@ -87,6 +87,33 @@ try {
   // Generation already failed above; no need to report it twice.
 }
 
+// 2b. The other system blocks. persona.ts and easter-eggs.ts are sent to the
+// model alongside the corpus, so the same secret-leak rules apply to them. The
+// email screen is corpus-only (it depends on corpus-facts() sanctioning); these
+// files carry no such mechanism, so they are held to the non-sanctionable
+// patterns — a local path, GA id, or API key must never appear in a prompt file.
+const promptFiles = [
+  'website/src/app/api/chat/persona.ts',
+  'website/src/app/api/chat/easter-eggs.ts',
+];
+for (const rel of promptFiles) {
+  const abs = join(repoRoot, rel);
+  if (!existsSync(abs)) {
+    fail(`${rel} is missing — the prompt-file leak scan expects it.`);
+    continue;
+  }
+  const text = readFileSync(abs, 'utf8');
+  for (const [pattern, what, sanctionable] of leakPatterns) {
+    if (sanctionable) continue; // the email screen is corpus-only
+    for (const match of text.matchAll(pattern)) {
+      fail(
+        `${rel} contains a ${what} (${JSON.stringify(match[0].slice(0, 40))}) — ` +
+          `it is sent to the model as a system block; remove it at the source.`
+      );
+    }
+  }
+}
+
 if (errors.length > 0) {
   console.error('\n✗ Site corpus validation failed:\n');
   for (const error of errors) console.error(`  - ${error}\n`);
