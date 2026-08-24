@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { CoverImage } from "@/components/covers/CoverImage";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
@@ -122,7 +123,15 @@ export default function MetaOffersExpandedCaseStudy() {
                   </p>
 
                   <p>
-                    That delay is the most expensive kind of slow. By the offer stage the company has already paid for the entire funnel: sourcing, screens, full loops, debriefs. Slow extensions correlate with lower acceptance rates, worse candidate sentiment, and recruiters missing their own performance metrics. All of it was about to be amplified by the scale of Meta&apos;s hiring ambitions: thousands of recruiters, millions of candidates, tens of thousands of offers, and a hiring target in the tens of thousands for 2022 alone.
+                    That delay is the most expensive kind of slow. By the offer stage the company has already paid for the entire funnel: sourcing, screens, full loops, debriefs. And the offer is the point where all of that can still be lost. Roughly one in five Meta offers ended in a decline, which at this volume is thousands of candidates a year walking away at the very end of a process the company had already paid for in full.
+                  </p>
+
+                  <p>
+                    That is why the offer got so much investment. Every decline is a funnel rerun, so the work of finding the right offer for a candidate, and getting it in front of them while they are still deciding, pays for itself many times over. Slow extensions correlate with lower acceptance rates, worse candidate sentiment, and recruiters missing their own performance metrics. Meta bet on both ends of that problem in the same period: this project attacked how fast a well-supported offer could be built and approved, while <Link href="/work/meta-immersive-offers" className={styles.inlineLink}>Immersive Offers</Link> attacked how the offer itself was delivered to the candidate.
+                  </p>
+
+                  <p>
+                    All of it was about to be amplified by the scale of Meta&apos;s hiring ambitions: thousands of recruiters, millions of candidates, tens of thousands of offers, and a hiring target in the tens of thousands for 2022 alone.
                   </p>
 
                   <p>
