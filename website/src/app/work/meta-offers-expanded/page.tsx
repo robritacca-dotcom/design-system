@@ -185,15 +185,27 @@ export default function MetaOffersExpandedCaseStudy() {
                     caption="The core dynamic: every additional comp proposal round pushes offer extension velocity down, and acceptance rates fall with it."
                   />
 
-                  <p>Three user types collide at this moment, each optimising for something different.</p>
+                  <h2 id="tension">The tension at the centre</h2>
+
+                  <p>
+                    Three user types collide at this moment, and they all want the same thing. The candidate wants the job. The recruiter wants the accept. The comp analyst wants an offer that is defensible and lands. A signed offer is the one outcome all three are measured on.
+                  </p>
+
+                  <p>
+                    They pull in opposite directions to get there. Candidates disclose as little as they can and optimise for maximum earnings, because what they withhold is leverage. Recruiters optimise for processing speed and accepts, so they take what the conversation gives them and move. Comp analysts work formulaically from data, and cannot approve what they cannot verify. Each of those behaviours is rational on its own. Put them in one flow and they produce a queue nobody intends.
+                  </p>
 
                   <Fig
                     src="diagram-three-user-types.png"
                     alt="Venn diagram of candidate, recruiter, and compensation analyst needs"
                     width={1500}
                     height={844}
-                    caption="Candidates provide less information and optimise for maximum earnings. Recruiters optimise processing for offer accepts. Comp analysts determine compensation through a data-based, formulaic approach. A signed offer lives at the intersection."
+                    caption="The same goal, three different routes to it. Candidates provide less information and optimise for maximum earnings. Recruiters optimise processing for offer accepts. Comp analysts determine compensation through a data-based, formulaic approach. A signed offer lives at the intersection, and only at the intersection."
                   />
+
+                  <p>
+                    That is what made this a design problem rather than a form problem. A form serves one user. This flow had to make a candidate comfortable disclosing, make a recruiter faster for doing it properly rather than slower, and let an analyst trust the result without a follow-up. Optimise for any one of the three and it fails the other two. Ask the candidate for everything and the recruiter loses the room. Ask for nothing and the analyst sends it back. Every later decision, what to require, what to validate, what to define in place, and what to ask only when relevant, was a judgement about where in that triangle to spend the effort.
+                  </p>
 
                   <Fig
                     src="diagram-offer-scenarios.png"
