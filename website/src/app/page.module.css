@@ -465,6 +465,14 @@
   border-top: 1px solid var(--color-bg-container-border);
 }
 
+/* Rows whose page needs a desktop (the canvas board) leave the mobile IA.
+   Breakpoint matches the nav's drawer switch in MegaNav.module.css. */
+@media (max-width: 959px) {
+  .rowList > li.desktopOnly {
+    display: none;
+  }
+}
+
 /* The hover pill bleeds past the text column (negative inline margin) so
    labels stay aligned with the card's other content. */
 .row {

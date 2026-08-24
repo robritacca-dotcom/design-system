@@ -131,6 +131,9 @@ export default function MegaNav() {
             href: `/components#${cat.id}`,
           })),
         },
+        // Canvas is deliberately absent: the drawer is the mobile IA, and
+        // the board is desktopOnly in navigation.ts (needs a pointer and a
+        // wide viewport).
         { label: "Playground", href: "/playground" },
       ],
     },

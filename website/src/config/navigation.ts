@@ -29,6 +29,14 @@ export interface MegaItem {
   description: string;
   icon?: string; // Material Symbols name
   logo?: string; // Path to logo SVG/image — rendered in the icon slot when set
+  /**
+   * The page needs a pointer and a wide viewport, so it stays out of the
+   * mobile IA: the drawer never lists it, and the surfaces that render on
+   * every viewport (footer, DS landing hero, home DS card) hide its link
+   * below the nav's 959px breakpoint. The mega panels need no guard — they
+   * only exist above it.
+   */
+  desktopOnly?: boolean;
 }
 
 /** One step in a breadcrumb trail; omit href for the current page (last item) */
@@ -72,6 +80,13 @@ export const dsMegaItems: MegaItem[] = [
     description: "Re-theme the whole system live: components, chat and all",
     icon: "tune",
   },
+  {
+    href: "/canvas",
+    label: "Canvas",
+    description: "Every section's landing page live on one endless board",
+    icon: "space_dashboard",
+    desktopOnly: true,
+  },
 ];
 
 /** URL prefixes that should mark the "Design system" mega trigger as active */
@@ -86,6 +101,7 @@ export const dsActiveMatchers = [
   (path: string) => path.startsWith("/foundations"),
   (path: string) => path.startsWith("/components"),
   (path: string) => path === "/playground",
+  (path: string) => path === "/canvas",
 ];
 
 export function isDesignSystemPath(pathname: string): boolean {
@@ -402,6 +418,12 @@ export function getBreadcrumbs(pathname: string): BreadcrumbItem[] {
   // can't resolve it).
   if (path === "/playground") {
     return [DS_CRUMB, { label: "Playground" }];
+  }
+
+  // The canvas is the same kind of immersive surface, with the same slim
+  // toolbar rendering the trail.
+  if (path === "/canvas") {
+    return [DS_CRUMB, { label: "Canvas" }];
   }
 
   // Docs cluster — the landing lives at /docs but sub-pages keep their

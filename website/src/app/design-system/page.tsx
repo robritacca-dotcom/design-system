@@ -398,6 +398,8 @@ export default function DesignSystemPage() {
               variant: "tertiary" as const,
               iconLeft: item.icon,
               href: item.href,
+              // Desktop-only pages (the canvas board) leave the mobile IA.
+              className: item.desktopOnly ? styles.desktopOnly : undefined,
             }))}
           />
           <FadeDivider />

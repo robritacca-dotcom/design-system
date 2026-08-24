@@ -21,7 +21,9 @@ export const revalidate = 3600;
    writing from the Substack feed, DS sections from the shared nav config.
    Adding a case study or publishing a post reflows this page by itself. */
 const [featuredWork, ...moreWork] = caseStudies;
-const workItems = moreWork.slice(0, 4);
+/* Five rows since the DS card grew its fifth (Canvas) — the three columns
+   read as equals when their row counts match. */
+const workItems = moreWork.slice(0, 5);
 
 /* The featured study's redrawn cover, when it has one. .cardCover is 16:10,
    which is the "feature" render's ratio. Every study carries that render, not
@@ -46,7 +48,7 @@ const companies = [
 export default async function HomePage() {
   const articles = await getArticles();
   const latest = articles[0];
-  const moreWriting = articles.slice(1, 5);
+  const moreWriting = articles.slice(1, 6);
 
   return (
     <>
@@ -276,7 +278,10 @@ export default async function HomePage() {
 
             <ul className={styles.rowList}>
               {dsMegaItems.map((item) => (
-                <li key={item.href}>
+                <li
+                  key={item.href}
+                  className={item.desktopOnly ? styles.desktopOnly : undefined}
+                >
                   <Link href={item.href} className={styles.row}>
                     <span className={`material-symbols-rounded ${styles.rowIcon}`} aria-hidden="true">
                       {item.icon}

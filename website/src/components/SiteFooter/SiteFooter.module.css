@@ -238,3 +238,11 @@
     padding-bottom: var(--gap-xxxl);
   }
 }
+
+/* Links to desktop-only pages (the canvas board) leave the mobile IA.
+   Breakpoint matches the nav's drawer switch in MegaNav.module.css. */
+@media (max-width: 959px) {
+  .columnList > li.desktopOnly {
+    display: none;
+  }
+}

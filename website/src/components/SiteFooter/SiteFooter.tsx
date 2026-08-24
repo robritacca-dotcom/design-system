@@ -26,9 +26,10 @@ const siteLinks = [
 
 // The /design-system landing stays out: its own column would just repeat
 // the title, and the mega nav trigger already links it.
-const designSystemLinks = dsMegaItems.map(({ href, label }) => ({
+const designSystemLinks = dsMegaItems.map(({ href, label, desktopOnly }) => ({
   href,
   label,
+  desktopOnly,
 }));
 
 const docsLinks = docsSidebarLinks
@@ -57,14 +58,17 @@ function LinkColumn({
   links,
 }: {
   title: string;
-  links: { href: string; label: string }[];
+  links: { href: string; label: string; desktopOnly?: boolean }[];
 }) {
   return (
     <div className={styles.column}>
       <h2 className={styles.columnTitle}>{title}</h2>
       <ul className={styles.columnList}>
         {links.map((link) => (
-          <li key={link.href}>
+          <li
+            key={link.href}
+            className={link.desktopOnly ? styles.desktopOnly : undefined}
+          >
             <Link href={link.href} className={styles.link}>
               {link.label}
             </Link>
