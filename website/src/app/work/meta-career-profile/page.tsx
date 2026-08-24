@@ -185,7 +185,11 @@ export default function MetaCareerProfileCaseStudy() {
                   <h2 id="what-we-inherited">What we inherited</h2>
 
                   <p>
-                    Navigation did not scale, because level-one items were pages rather than categories. Every candidate saw the same content regardless of who they were. Geodesic, the internal system underneath, had no mobile web support and little brand expression.
+                    Career Profile is not a side surface. It carries the whole funnel: millions of visitors a year, and the hundreds of thousands of candidates it takes to make Meta’s tens of thousands of annual hires, across every role, level and region. Anything the platform does badly, it does at that volume.
+                  </p>
+
+                  <p>
+                    And it was doing several things badly. Navigation did not scale, because level-one items were pages rather than categories. Every candidate saw the same content regardless of who they were. Geodesic, the internal system underneath, had no mobile web support and little brand expression.
                   </p>
 
                   <Fig
