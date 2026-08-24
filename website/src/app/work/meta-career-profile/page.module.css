@@ -1,7 +1,5 @@
 /* ============================================
-   CASE STUDY — Meta · Career Profile Vision
-   No cover image / video; long-form text-first
-   layout with a Details rail on the right.
+   CASE STUDY: Meta, Career Profile vision
    ============================================ */
 
 .dsLayout {
@@ -141,16 +139,6 @@
   margin: var(--primitive-gap-xl) 0 0;
 }
 
-.body h3 {
-  font-family: var(--font-heading-3-family);
-  font-size: var(--font-heading-3-size);
-  font-weight: var(--font-heading-3-weight);
-  line-height: var(--font-heading-3-line-height);
-  letter-spacing: var(--font-heading-3-letter-spacing);
-  color: var(--color-text-primary);
-  margin: var(--primitive-gap-md) 0 0;
-}
-
 .body ul {
   list-style: disc;
   padding-left: 24px;
@@ -172,22 +160,160 @@
   color: var(--color-text-tertiary);
 }
 
-/* Design-system Quote inside the article body keeps the prose rhythm */
-.body :global(.ds-quote) {
-  margin: var(--primitive-gap-xl) 0;
-}
-
 .body strong {
   font-weight: var(--font-paragraph-em-weight);
   color: var(--color-text-primary);
 }
 
+.body h3 {
+  font-family: var(--font-heading-3-family);
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  letter-spacing: var(--font-heading-3-letter-spacing);
+  color: var(--color-text-primary);
+  margin: var(--primitive-gap-xl) 0 0;
+}
+
+/* Design-system Quote inside the article body keeps the prose rhythm */
+.body :global(.ds-quote) {
+  margin: var(--primitive-gap-xl) 0;
+}
+
+.body em {
+  font-style: italic;
+}
+
+/* ============================================
+   LEDE + STAT BANDS
+   The outcome is the reason to read this one, so the
+   headline numbers open the article and close it.
+   ============================================ */
 .lede {
   font-family: var(--font-paragraph-em-family);
   font-size: 18px !important;
   font-weight: var(--font-paragraph-em-weight) !important;
   line-height: 28px !important;
   color: var(--color-text-primary) !important;
+}
+
+.statBand {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--primitive-gap-xl) var(--primitive-gap-lg);
+  margin-top: var(--primitive-gap-lg);
+}
+
+/* The teaser band runs three across whatever the column width, so the
+   numbers read as one row rather than a ragged block. */
+.statBandTop {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: var(--primitive-padding-lg);
+  border: 1px solid var(--color-bg-container-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-container-primary-semi);
+}
+
+@media (max-width: 600px) {
+  .statBandTop {
+    grid-template-columns: 1fr;
+  }
+}
+
+.calloutAlert {
+  margin-top: var(--primitive-gap-md);
+}
+
+/* ============================================
+   INLINE FIGURE
+   The library Figure: caption inside the frame,
+   click to open the shot in the lightbox.
+   ============================================ */
+.zoomFigure {
+  margin-top: var(--primitive-gap-md);
+  border: 1px solid var(--color-bg-container-border);
+}
+
+/* Tall stills (the discovery doc, the portrait mocks) would otherwise run for
+   most of a screen on their own, so height is capped and the ratio kept. */
+.zoomFigure :global(.ds-figure__media) {
+  display: flex;
+  justify-content: center;
+}
+
+.zoomFigure :global(.ds-figure__media img) {
+  width: auto;
+  max-width: 100%;
+  max-height: 640px;
+}
+
+/* ============================================
+   LIGHTBOX
+   ============================================ */
+.lightboxOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(5, 5, 5, 0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--primitive-gap-xl);
+  cursor: zoom-out;
+  animation: lightboxFadeIn var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+@keyframes lightboxFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.lightboxImg {
+  max-width: 90vw;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  border-radius: var(--radius-md);
+  display: block;
+  cursor: default;
+  box-shadow: 0 24px 64px rgba(5, 5, 5, 0.5);
+}
+
+.lightboxClose {
+  position: fixed;
+  top: var(--primitive-gap-lg);
+  right: var(--primitive-gap-lg);
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  border: none;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background var(--motion-duration-fast) var(--motion-ease-standard);
+  z-index: 10000;
+}
+
+.lightboxClose:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.lightboxClose :global(.material-symbols-rounded) {
+  --icon-size: var(--icon-size-sm);
+  line-height: 1;
+}
+
+.inlineLink {
+  color: var(--color-action-primary-bg);
+  text-decoration: none;
+  font-weight: var(--font-paragraph-em-weight);
+}
+
+.inlineLink:hover {
+  text-decoration: underline;
 }
 
 /* ============================================
@@ -220,6 +346,20 @@
   font-weight: var(--font-title-body-weight);
   line-height: var(--font-title-body-line-height);
   color: var(--color-text-primary);
+}
+
+.statusLive {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--primitive-gap-xs);
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-status-positive-text, #10b981);
+  flex-shrink: 0;
 }
 
 /* ============================================
