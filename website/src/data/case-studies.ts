@@ -3,9 +3,9 @@
    Single source of truth for the case-study
    list: /work maps over all of it, the home
    page features [0] and lists the next few.
-   Ordered by curation (newest / most important
-   first) — add new studies at the top and every
-   surface reorders itself.
+   Ordered by curation (most important first,
+   roughly newest first) — reorder here and every
+   surface follows.
    Validated by scripts/validate-case-studies.mjs.
    ============================================ */
 
