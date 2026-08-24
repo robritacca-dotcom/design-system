@@ -20,6 +20,8 @@ const { sidebarLinks } = getSidebarLinks(foundationsSidebarLinks, "/foundations/
    Display-tier styles carry a `mobile` variant — the values the tokens
    resolve to below 768px. Mobile previews use literal px (a CSS var would
    resolve against the visitor's actual viewport, not the toggle).
+   Mega and Display state their leading as the unitless ratio the token
+   holds; the heading and body tiers state theirs in px, as those tokens do.
    ============================================ */
 
 interface TypeStyleData {
@@ -41,7 +43,7 @@ const megaStyles: TypeStyleData[] = [
     name: "Mega 1",
     weight: "Light",
     size: "132px",
-    lineHeight: "112px",
+    lineHeight: "0.92",
     letterSpacing: "2%",
     previewStyle: {
       fontFamily: "var(--font-mega-1-family)",
@@ -52,15 +54,15 @@ const megaStyles: TypeStyleData[] = [
     },
     mobile: {
       size: "64px",
-      lineHeight: "54px",
-      previewStyle: { fontSize: "64px", lineHeight: 0.85 },
+      lineHeight: "0.92",
+      previewStyle: { fontSize: "64px", lineHeight: 0.92 },
     },
   },
   {
     name: "Mega 2",
     weight: "Light",
     size: "116px",
-    lineHeight: "99px",
+    lineHeight: "0.92",
     letterSpacing: "2%",
     previewStyle: {
       fontFamily: "var(--font-mega-2-family)",
@@ -71,8 +73,8 @@ const megaStyles: TypeStyleData[] = [
     },
     mobile: {
       size: "56px",
-      lineHeight: "48px",
-      previewStyle: { fontSize: "56px", lineHeight: 0.85 },
+      lineHeight: "0.92",
+      previewStyle: { fontSize: "56px", lineHeight: 0.92 },
     },
   },
 ];
@@ -82,7 +84,7 @@ const displayStyles: TypeStyleData[] = [
     name: "Display 1",
     weight: "Light",
     size: "96px",
-    lineHeight: "96px",
+    lineHeight: "1.05",
     letterSpacing: "2%",
     previewStyle: {
       fontFamily: "var(--font-display-1-family)",
@@ -93,15 +95,15 @@ const displayStyles: TypeStyleData[] = [
     },
     mobile: {
       size: "48px",
-      lineHeight: "48px",
-      previewStyle: { fontSize: "48px", lineHeight: 1 },
+      lineHeight: "1.05",
+      previewStyle: { fontSize: "48px", lineHeight: 1.05 },
     },
   },
   {
     name: "Display 2",
     weight: "Light",
     size: "64px",
-    lineHeight: "64px",
+    lineHeight: "1.1",
     letterSpacing: "1.5%",
     previewStyle: {
       fontFamily: "var(--font-display-2-family)",
@@ -112,8 +114,8 @@ const displayStyles: TypeStyleData[] = [
     },
     mobile: {
       size: "40px",
-      lineHeight: "42px",
-      previewStyle: { fontSize: "40px", lineHeight: 1.05 },
+      lineHeight: "1.15",
+      previewStyle: { fontSize: "40px", lineHeight: 1.15 },
     },
   },
   {

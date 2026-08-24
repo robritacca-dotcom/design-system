@@ -125,10 +125,10 @@ Nunito Sans is a rounded humanist sans-serif. The rounded terminals give UI elem
 
 | Token prefix | Size | ≤768px | Weight | Line Height | Letter Spacing | Use |
 |---|---|---|---|---|---|---|
-| `--font-mega-1-*` | 132px | 64px | 300 | 0.85 | +2% | Marketing hero — never in app UI |
-| `--font-mega-2-*` | 116px | 56px | 300 | 0.85 | +2% | Marketing hero — never in app UI |
-| `--font-display-1-*` | 96px | 48px | 300 | 1.0 | +2% | Large marketing section heads |
-| `--font-display-2-*` | 64px | 40px | 300 | 1.0 (1.05 ≤768px) | +1.5% | Marketing section heads |
+| `--font-mega-1-*` | 132px | 64px | 300 | 0.92 | +2% | Marketing hero — never in app UI |
+| `--font-mega-2-*` | 116px | 56px | 300 | 0.92 | +2% | Marketing hero — never in app UI |
+| `--font-display-1-*` | 96px | 48px | 300 | 1.05 | +2% | Large marketing section heads |
+| `--font-display-2-*` | 64px | 40px | 300 | 1.1 (1.15 ≤768px) | +1.5% | Marketing section heads |
 | `--font-sub-display-*` | 30px | 24px | 300 | 44px (36px ≤768px) | +1.5% | Sub-section heads on marketing pages |
 | `--font-heading-1-*` | 30px | — | 600 | 44px | +1.5% | Page-level h1 in app/docs |
 | `--font-heading-2-*` | 26px | — | 600 | 32px | +1.5% | Section headings in app/docs |
@@ -146,6 +146,7 @@ The ≤768px column is not a separate token set: the same `--font-*-size` tokens
 ### Principles
 - Mega and Display sizes (Mega 1/2, Display 1/2, Sub Display) are **marketing-only** — they belong on the documentation homepage and landing pages, never inside application UI or component pages.
 - Headings 1–3 use weight 600. Display styles use weight 300. **Never bold a display size** — the lightness is intentional and gives the system its modern, airy character.
+- **Display leading is unitless, and loosens as the size drops**: 0.92 on Mega, 1.05 on Display 1, 1.1 on Display 2 (1.15 on mobile, where the same headline wraps to more lines). Set solid, a display line reads as a poster on one line and closes up on two — and these headlines wrap, because a page title is a sentence. The heading and body tiers state leading in px instead, because at those sizes the line box is a rhythm the whole page snaps to.
 - Positive letter-spacing (+1.5–2%) applies to all display and heading sizes. Negative letter-spacing (−1%) applies to title-body and paragraph-em — this tightening is what makes UI labels feel crisp.
 - Buttons use `--font-paragraph-em-*` (default) and `--font-paragraph-sm-em-*` (compact). Always weight 500 on interactive controls.
 - Overline is the uppercase label face, and always pairs with `text-transform: uppercase` at the use site — the tokens set the metrics, never the casing. Its +8% tracking is the one positive letter-spacing outside the display and heading tiers, because capitals at label size need air to stay legible. A component may keep the metrics and swap the family (MapCallout sets its title in the code face).
