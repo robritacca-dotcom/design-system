@@ -25,12 +25,12 @@
       "coverSrc": "/images/heroes/augmenta.png"
     },
     {
-      "href": "/work/meta-career-profile",
-      "title": "Career Profile vision",
-      "dek": "Turning the maze of tools Meta candidates face into one guided, personal path through interviews, offers, and onboarding",
+      "href": "/work/meta-offers",
+      "title": "Structured compensation capture",
+      "dek": "Replacing free-text compensation notes with structured, validated capture, and cutting average approval time by 23.7%",
       "companyName": "Meta",
       "companyLogo": "/logos/meta.svg",
-      "coverSrc": "/images/heroes/meta-vision.png"
+      "coverSrc": "/images/heroes/meta-offers.png"
     },
     {
       "href": "/work/meta-immersive-offers",
@@ -41,12 +41,12 @@
       "coverSrc": "/images/heroes/meta-immersive.jpg"
     },
     {
-      "href": "/work/meta-offers",
-      "title": "Structured compensation capture",
-      "dek": "Replacing free-text compensation notes with structured, validated capture, and cutting average approval time by 23.7%",
+      "href": "/work/meta-career-profile",
+      "title": "Career Profile vision",
+      "dek": "Turning the maze of tools Meta candidates face into one guided, personal path through interviews, offers, and onboarding",
       "companyName": "Meta",
       "companyLogo": "/logos/meta.svg",
-      "coverSrc": "/images/heroes/meta-offers.png"
+      "coverSrc": "/images/heroes/meta-vision.png"
     },
     {
       "href": "/work/robr0-ds",

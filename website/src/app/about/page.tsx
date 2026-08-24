@@ -102,8 +102,8 @@ const EXPERIENCE: TimelineCompany[] = [
           "Led evidence-driven design across a horizontal portfolio of Recruiting Products, supporting how Meta discovers, develops, and hires talent.",
         bullets: [
           <>
-            Redesigned the Job Offer tool within Meta&apos;s Applicant Tracking System, improving offer extension velocity by over 10%, compensation approval velocity by 25%, and volume of data points by 50%. Full story in the{" "}
-            <Link href="/work/meta-offers">case study</Link>
+            Replaced the free-text compensation notes in Meta&apos;s Applicant Tracking System with structured, validated capture: 23.7% faster compensation approvals, 51% more validated data captured, and 9% faster offer extension overall. Full story in the{" "}
+            <Link href="/work/meta-offers">Structured compensation capture case study</Link>
           </>,
           "Redesigned the Internal Mobility transfer and eligibility tool, resulting in a 58% increase in data accuracy and a 33% reduction in processing time to earn an estimated savings of 2000 hours/year of productivity",
           <>

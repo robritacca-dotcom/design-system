@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
@@ -145,6 +146,10 @@ export default function MetaImmersiveOffersCaseStudy() {
 
                   <p>
                     Candidates with a verbal offer would be invited in, on a loaned Meta Quest 2 if needed, to learn about their offer in a way no other company could match. All without touching the standard offer process in any way.
+                  </p>
+
+                  <p>
+                    That last part matters. The standard flow was being rebuilt at the same time, by the same team: <Link href="/work/meta-offers" className={styles.inlineLink}>structured compensation capture</Link> went after the speed of getting a supported offer approved and out. This was the parallel bet on the other half of the problem, what the candidate experiences once it reaches them.
                   </p>
 
                   <p>The dimensions of the problem:</p>
