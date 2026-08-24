@@ -106,7 +106,14 @@ const EXPERIENCE: TimelineCompany[] = [
             <Link href="/work/meta-offers">case study</Link>
           </>,
           "Redesigned the Internal Mobility transfer and eligibility tool, resulting in a 58% increase in data accuracy and a 33% reduction in processing time to earn an estimated savings of 2000 hours/year of productivity",
-          "Led design direction for a mixed-reality initiative of 40+ people across 6 organizations, including Recruiting Products and an external XR development shop. Wrote the design brief, worked through hardware logistics and digital onboarding, and ran a pilot that put target users through an immersive VR experience.",
+          <>
+            Owned the long-term design vision for Career Profile, the candidate-facing platform, turning a patchwork of disconnected tools into one guided path personal to each candidate. Full story in the{" "}
+            <Link href="/work/meta-career-profile">case study</Link>
+          </>,
+          <>
+            Led design direction for a mixed-reality initiative of 40+ people across 6 organizations, including Recruiting Products and an external XR development shop. Wrote the design brief, worked through hardware logistics and digital onboarding, and ran a pilot that put target users through an immersive VR experience. Full story in the{" "}
+            <Link href="/work/meta-immersive-offers">case study</Link>
+          </>,
         ],
       },
     ],

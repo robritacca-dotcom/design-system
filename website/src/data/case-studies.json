@@ -33,6 +33,14 @@
       "coverSrc": "/images/heroes/meta-vision.png"
     },
     {
+      "href": "/work/meta-immersive-offers",
+      "title": "Immersive Offers in Horizon Worlds",
+      "dek": "Turning the offer call into a place: a private VR world where candidates hear, explore, and celebrate their offer with their recruiter",
+      "companyName": "Meta",
+      "companyLogo": "/logos/meta.svg",
+      "coverSrc": "/images/heroes/meta-immersive.jpg"
+    },
+    {
       "href": "/work/meta-offers",
       "title": "Offer Creation Flow",
       "dek": "Improving the velocity between hire decision and offer extension at recruiting scale",
