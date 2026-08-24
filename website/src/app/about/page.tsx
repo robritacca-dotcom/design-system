@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Globe } from "@robr0/design-system/components/Globe/Globe";
 import { LinkList } from "@robr0/design-system/components/LinkList/LinkList";
 import { Timeline, type TimelineCompany } from "@robr0/design-system/components/Timeline/Timeline";
 import MegaNav from "../../components/MegaNav/MegaNav";
@@ -171,18 +172,26 @@ export default function AboutMePage() {
 
       <div className={styles.dsLayout}>
         <div className={styles.profileCol}>
-          <Image
-            src="/images/robr02.jpg"
-            alt="Robert Ritacca"
-            width={291}
-            height={291}
-            className={styles.profileImage}
-            priority
-          />
+          <div className={styles.profileGlobe}>
+            <Globe
+              label="Home in Toronto, with arcs to Gusto HQ in Denver and Napoli, Italy"
+              defaultRotation={[-92, 42]}
+              points={[
+                { id: "toronto", lat: 43.65, lng: -79.38, label: "Toronto", kind: "anchor" },
+                { id: "gusto-hq", lat: 39.74, lng: -104.99, label: "Gusto HQ" },
+                { id: "napoli", lat: 40.85, lng: 14.27, label: "Napoli" },
+              ]}
+              arcs={[
+                { from: "toronto", to: "gusto-hq" },
+                { from: "toronto", to: "napoli" },
+              ]}
+              activePointId="toronto"
+            />
+          </div>
         </div>
 
         <main className={styles.dsContent} id="main-content">
-          <h1 className={`${styles.pageTitle} animate-in`}>Robert Ritacca</h1>
+          <h1 className={`${styles.pageTitle} animate-in`}>About me</h1>
 
           {/* Page Description */}
           <div className={styles.introSection}>

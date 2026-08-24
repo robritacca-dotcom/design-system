@@ -145,12 +145,21 @@
   flex-shrink: 0;
 }
 
-.profileImage {
+/* The globe's sphere spans 75% of its drawing (radius 180 in a 480 viewBox,
+   leaving room for arcs to lift off the surface), so at column width the disc
+   reads smaller than the profile photo did. Oversize the globe by the inverse
+   (480/360) and centre it, so the disc itself matches the photo circle. */
+.profileGlobe {
+  position: relative;
   width: 100%;
   aspect-ratio: 1 / 1;
-  display: block;
-  border-radius: 50%;
-  object-fit: cover;
+}
+
+.profileGlobe > :global(.ds-globe) {
+  position: absolute;
+  top: -16.667%;
+  left: -16.667%;
+  width: 133.334%;
 }
 
 /* ============================================
