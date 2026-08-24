@@ -172,23 +172,23 @@ export default function MetaCareerProfileCaseStudy() {
 
                 <article className={styles.body}>
                   <p className={styles.lede}>
-                    Career Profile is the logged-in platform every Meta candidate passes through: tracking where you are in the process, preparing for your loops, handling paperwork, reviewing your offer. Created in 2018, it had grown into a patchwork of features built by different teams on an internal design system that was never meant to face candidates.
+                    Career Profile is the logged-in platform every Meta candidate passes through: tracking your process, preparing for loops, handling paperwork, reviewing your offer. Created in 2018, it had grown into a patchwork built by different teams on an internal design system never meant to face candidates.
                   </p>
 
                   <p>
-                    A design team had already run phase one: the audit, the principles, and three exploratory concepts, presented to Recruiting Products leadership in August 2022. That work is theirs, and this case study inherits it rather than repeating it.
+                    A design team had already run phase one: the audit, the principles, and three exploratory concepts, presented to Recruiting Products leadership in August 2022. That work is theirs, and this inherits it rather than repeats it.
                   </p>
 
                   <p>
-                    I joined in Q4 2022 for phase two, coming across from the Offers team. The mandate had changed. Phase one had opened the space; phase two had to close it, with enough conviction and enough fidelity that leadership could actually decide something. We worked as three individual contributors and a design manager, in equal collaboration. I wasn’t the lead on this, and the good decisions in it came out of the group rather than out of me.
+                    I joined in Q4 2022 for phase two, coming from the Offers team. Phase one had opened the space; phase two had to close it, with enough conviction and fidelity for leadership to decide. We worked as three individual contributors and a design manager, in equal collaboration. I was not the lead, and the good decisions came out of the group.
                   </p>
 
-                  <p><strong>What I owned inside that:</strong> the typology framework, the concept convergence and its evaluation, the timeline and content-card system, and the offer experience I brought over from Offers.</p>
+                  <p><strong>What I owned:</strong> the typology framework, the concept convergence, the timeline and card system, and the offer experience I brought from Offers.</p>
 
                   <h2 id="what-we-inherited">What we inherited</h2>
 
                   <p>
-                    The problems phase one had documented were structural, not cosmetic. Navigation didn’t scale, because level-one items were pages rather than categories. The homepage was administrative and under-dense. Every candidate saw the same generic content regardless of who they were or where they stood. And Geodesic, the internal system underneath it, had no mobile web support and little brand expression.
+                    The problems were structural, not cosmetic. Navigation did not scale, because level-one items were pages rather than categories. Every candidate saw the same generic content regardless of who they were. And Geodesic, the internal system underneath, had no mobile web support and little brand expression.
                   </p>
 
                   <Fig
@@ -210,7 +210,7 @@ export default function MetaCareerProfileCaseStudy() {
                   <h2 id="converging">Converging on a direction</h2>
 
                   <p>
-                    Phase one had produced three concepts. The temptation was to pick a favourite. Instead we scored each on what it was actually good at, and reached an uncomfortable conclusion: none of them was the answer.
+                    Phase one had produced three concepts. Instead of picking a favourite we scored each on what it was actually good at, and reached an uncomfortable conclusion: none of them was the answer.
                   </p>
 
                   <Fig
@@ -232,11 +232,11 @@ export default function MetaCareerProfileCaseStudy() {
                   />
 
                   <p>
-                    A third concept, Career Workplace, borrowed Workplace’s structure and social graph. It matched a mental model candidates already had, but the structure limited functionality and social networking was never validated as a candidate need.
+                    A third, Career Workplace, borrowed Workplace’s structure and social graph. Familiar, but the structure limited functionality and social networking was never validated as a candidate need.
                   </p>
 
                   <p>
-                    Each of the three was a good <em>feature idea</em> wearing the costume of a <em>framework</em>. What was missing was the framework itself. That reframing is what phase two was for.
+                    Each was a good <em>feature idea</em> wearing the costume of a <em>framework</em>. The framework itself was missing. That reframing is what phase two was for.
                   </p>
 
                   <Alert
@@ -249,7 +249,7 @@ export default function MetaCareerProfileCaseStudy() {
                   <h2 id="typologies">Typologies: a shared vocabulary for pages</h2>
 
                   <p>
-                    Before designing screens we needed a way to classify them. A typology sorts content by the mental model a user brings to it, and clear typologies meant a set of templates that could scale Career Profile consistently instead of accumulating one-off pages. We landed on three.
+                    A typology sorts content by the mental model a user brings to it. Clear typologies meant templates that could scale Career Profile consistently instead of accumulating one-off pages. We landed on three.
                   </p>
 
                   <Fig
@@ -277,13 +277,13 @@ export default function MetaCareerProfileCaseStudy() {
                   />
 
                   <p>
-                    Three typologies meant three page templates, and three templates meant a partner team building a new feature into Career Profile finally had somewhere to put it that wouldn’t degrade the experience for everyone else.
+                    Three typologies meant three templates, and a partner team building a new feature finally had somewhere to put it that would not degrade the experience for everyone else.
                   </p>
 
                   <h2 id="five-degrees">Five degrees of change</h2>
 
                   <p>
-                    In a set of worksessions in Burlingame we laid the direction out as five options on a deliberate spectrum, from no change to overhaul, so leadership could see the trade space instead of a single recommendation. Structure first, before any visual design.
+                    In worksessions in Burlingame we laid the direction out as five options from no change to overhaul, so leadership could see the trade space instead of a single recommendation. Structure first, before any visual design.
                   </p>
 
                   <Fig
@@ -313,17 +313,17 @@ export default function MetaCareerProfileCaseStudy() {
                   />
 
                   <p>
-                    Scored against build-for-all, clarity, scale, efficiency and innovation, Timeline as Anchor came out ahead. It was the only option that solved the framework problem rather than the surface problem. The timeline is the one thing every candidate has in common, it is the thing they came to the page to check, and making it the organising principle meant content could be surfaced contextually instead of dumped on a homepage.
+                    Scored against build-for-all, clarity, scale, efficiency and innovation, Timeline as Anchor won. It was the only option solving the framework problem rather than the surface problem: the timeline is the one thing every candidate has and came to check, so organising around it let content surface contextually instead of being dumped on a homepage.
                   </p>
 
                   <h2 id="the-system">The system we built</h2>
 
                   <p>
-                    Most of the work went here, into the ingredients rather than the pages. Every part had to declare the same four things before it earned a place: its priority, the mental model it serves, where it lives, and which states it has. Specify the parts that way and the pages assemble themselves.
+                    Most of the work went here, into the ingredients rather than the pages. Every part had to declare four things before it earned a place: its priority, the mental model it serves, where it lives, and its states. Specify the parts that way and the pages assemble themselves.
                   </p>
 
                   <SpecRow
-                    caption="Primary navigation. High priority, always in view, answering “help me understand where I am.” A static rail carries Home, Jobs, Meta Connections, Preparation Hub, Coding Puzzles, Demystifying the Interview Experience, VR Hub and Knowledge Library, with settings, search, messages, help and profile below the fold of the rail."
+                    caption="Primary navigation. High priority, always in view, answering “help me understand where I am.” Settings, search, messages, help and profile sit below the fold of the rail."
                     items={[
                       { src: "nav-primary-collapsed-crop.png", label: "Collapsed", alt: "Primary navigation rail collapsed to icons", width: 104, height: 943 },
                       { src: "nav-primary-expanded-crop.png", label: "Expanded", alt: "Primary navigation rail expanded with labels", width: 496, height: 943 },
@@ -331,7 +331,7 @@ export default function MetaCareerProfileCaseStudy() {
                   />
 
                   <SpecRow
-                    caption="Sub navigation, which appears only when a section needs one and collapses on the same rules as the primary rail. Two rails with one behaviour rather than two navigation systems: that is the difference between a platform other teams can extend and a surface that accretes menus."
+                    caption="Sub navigation appears only when a section needs one, and collapses on the same rules as the primary rail. Two rails with one behaviour, which is the difference between a platform teams can extend and a surface that accretes menus."
                     items={[
                       { src: "nav-sub-expanded-crop.png", label: "Expanded", alt: "Sub navigation panel expanded, showing a page title and sub pages", width: 496, height: 945 },
                       { src: "nav-sub-collapsed-crop.png", label: "Collapsed", alt: "Sub navigation collapsed to icons", width: 106, height: 945 },
@@ -339,7 +339,7 @@ export default function MetaCareerProfileCaseStudy() {
                   />
 
                   <SpecRow
-                    caption="The dynamic timeline and its status vocabulary. Completed stages carry status and dates, the active stage adds duration and activity badges, future stages show what is coming. One shared set of statuses covers every state a process can be in, so the same component tells a candidate they are up next, awaiting a decision, or holding an offer."
+                    caption="Completed stages carry status and dates, the active stage adds duration and activity badges, future stages show what is coming. One set of statuses covers every state a process can be in, so the same component says up next, decision pending, or offer extended."
                     items={[
                       { src: "component-dynamic-timeline.webp", label: "Stage states", alt: "The dynamic timeline showing completed, active and future stages", width: 395, height: 976, animated: true },
                       { src: "timeline-status-chips.png", label: "Status vocabulary", alt: "The set of timeline status chips", width: 322, height: 520 },
@@ -357,7 +357,7 @@ export default function MetaCareerProfileCaseStudy() {
 
                   <SpecRow
                     wide
-                    caption="Primary content cards. High priority, always above the fold, centre column. The card is one container with a swappable payload, which is why a job-recommendation list and an interview agenda can occupy the same slot at different points in the journey without a new template."
+                    caption="Primary content cards: high priority, always above the fold, centre column. One container with a swappable payload, which is why a job list and an interview agenda occupy the same slot at different points in the journey without a new template."
                     items={[
                       { src: "card-job-recommendations.png", label: "Prospective: job recommendations", alt: "A primary content card listing job recommendations", width: 1232, height: 1044 },
                       { src: "card-whats-next.png", label: "Active: what’s next", alt: "A primary content card showing the upcoming interview agenda", width: 1232, height: 992 },
@@ -365,21 +365,21 @@ export default function MetaCareerProfileCaseStudy() {
                   />
 
                   <p>
-                    Secondary cards take the right rail, tertiary and low-priority cards sit below the fold, and flex cards resize to fit whatever the candidate’s type, seniority and stage call for. One page template serves a prospective candidate and a signed hire, and a partner team gets a defensible place to build without renegotiating the layout.
+                    Secondary cards take the right rail, lower-priority cards sit below the fold, and flex cards resize to whatever the candidate’s type, seniority and stage call for. One template serves a prospect and a signed hire.
                   </p>
 
                   <h2 id="design-system">What to build it in</h2>
 
                   <p>
-                    Components need a system to be built from, so choosing one was part of the implementation plan and part of the vision itself. We had real options and none of them was obviously right.
+                    Components need a system to be built from, so choosing one was part of the implementation plan and part of the vision.
                   </p>
 
                   <p>
-                    XMDS was the forward-facing choice, used by marketing and approved for external work, but it was optimised for light editorial content and our surface is dense, stateful and transactional. XDS was the internal system, running in nearly every enterprise app at Meta, and its systems team sat adjacent to us in Enterprise Engineering. Capable, close at hand, and built for employees rather than candidates.
+                    XMDS was the forward-facing choice, approved for external work but optimised for light editorial content, and our surface is dense and transactional. XDS was the internal system, running nearly every enterprise app at Meta, with its systems team adjacent to us in Enterprise Engineering.
                   </p>
 
                   <p>
-                    We proposed using XDS externally, which nobody had done before. So we went to the XDS team and worked it through with them rather than around them, and together we explored a People Theme: an extension that kept the system&rsquo;s structural rigour and added what a candidate-facing product needs, including rounded corners and pops of colour.
+                    Taking XDS external had no precedent. We worked it through with that team rather than around them, and together explored a People Theme: the system’s structural rigour, plus the rounded corners and pops of colour a candidate-facing product needs.
                   </p>
 
                   <Fig
@@ -391,7 +391,7 @@ export default function MetaCareerProfileCaseStudy() {
                   />
 
                   <p>
-                    That theme became Astryx, the AI-ready design system Meta has since launched publicly. Proposing a system extension is usually the least glamorous part of a vision. It turned out to be the part with the longest life.
+                    That theme became Astryx, the AI-ready design system Meta has since launched publicly. Proposing a system extension is the least glamorous part of a vision. It turned out to have the longest life.
                   </p>
 
                   <h2 id="key-screens">Key screens</h2>
@@ -423,7 +423,7 @@ export default function MetaCareerProfileCaseStudy() {
                   <h2 id="the-offer">The offer experience</h2>
 
                   <p>
-                    This is the part I brought with me. On the Offers team I had written a vision brief arguing the case for a genuinely full-featured offer experience, and it fed straight into this one. The evidence was hard to argue with.
+                    This is the part I brought with me: a vision brief from the Offers team arguing for a genuinely full-featured offer experience, which fed straight into this one.
                   </p>
 
                   <div className={styles.statBand}>
@@ -448,7 +448,7 @@ export default function MetaCareerProfileCaseStudy() {
                   </div>
 
                   <p>
-                    Using the Offer Summary effectively forced recruiters to share approved compensation values with the candidate, and the recruiters who worked that way saw higher acceptance, candidates accepting about half a day sooner, and offers extending nearly two days faster. If transparency moved those numbers at 72% usage, a complete, honest, self-serve offer experience at full usage was worth designing for. There was a compliance argument underneath it too: the whole system depended on an individual recruiter to orchestrate, and nothing guaranteed a candidate received what they needed to decide.
+                    Using it forced recruiters to share approved compensation values with the candidate. If transparency moved those numbers at 72% usage, a complete self-serve experience at full usage was worth designing for. The compliance argument ran the same way: nothing guaranteed a candidate got what they needed to decide.
                   </p>
 
                   <Fig
@@ -456,20 +456,26 @@ export default function MetaCareerProfileCaseStudy() {
                     alt="The job offer summary, showing a full compensation breakdown"
                     width={2048}
                     height={1330}
-                    caption="The argument, living inside the framework: role, compensation, life at Meta, team, career, and a VR offer explorer. The compensation breakdown is complete and self-serve (base, bonus, equity, sign-on, benefits, with definitions attached), so the candidate isn't dependent on a recruiter to know what they've been offered. All figures illustrative."
-                  />
-
-                  <Fig
-                    src="screen-prehire-sign-offer.png"
-                    alt="The pre-hire checklist for reviewing and signing an offer"
-                    width={2048}
-                    height={1330}
-                    caption="Pre-hire checklist. Typology: Work. “Help me get across the finish line”: sign, update information, background check, select equipment. The journey doesn't end at signature."
+                    caption="Role, compensation, life at Meta, team, career, and a VR offer explorer. The breakdown is complete and self-serve, with definitions attached, so the candidate isn't dependent on a recruiter to know what they've been offered. Figures illustrative."
                   />
 
                   <p>
                     Meta was betting on both ends of the offer moment in the same period. This was the self-serve half; <Link href="/work/meta-immersive-offers" className={styles.inlineLink}>Immersive Offers</Link> was the human half.
                   </p>
+
+                  <h2 id="through-to-joining">Through to joining</h2>
+
+                  <p>
+                    Accepting an offer is not the end of the candidate’s journey, so it is not the end of the product. Career Profile carries someone from signature to first day.
+                  </p>
+
+                  <Fig
+                    src="screen-prehire-sign-offer.png"
+                    alt="The pre-hire checklist, shown after the offer has been accepted"
+                    width={2048}
+                    height={1330}
+                    caption="After acceptance: sign the documents, clear the background check, choose equipment, create the employee record. The timeline has moved past Job Offer to Pre-hire checklist, Tech Setup and Onboarding, and the same framework carries all of it."
+                  />
 
                   <h2 id="personalisation">Personalisation without a second product</h2>
 
@@ -505,7 +511,7 @@ export default function MetaCareerProfileCaseStudy() {
                   <h2 id="what-we-delivered">What we delivered</h2>
 
                   <p>
-                    We took the full vision to high fidelity: a converged direction with the reasoning behind it, the typology framework, a design-system recommendation, the component system, key screens across the whole lifecycle from prospect to first day, and an interactive prototype running the journey end to end in three candidate states.
+                    We took the full vision to high fidelity: the converged direction and its reasoning, the typology framework, the design-system recommendation, the component system, key screens from prospect to first day, and an interactive prototype running the journey in three candidate states.
                   </p>
 
                   <h2 id="what-i-took-from-it">What I took from it</h2>
