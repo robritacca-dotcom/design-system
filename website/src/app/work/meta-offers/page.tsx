@@ -351,7 +351,7 @@ export default function MetaOffersCaseStudy() {
                   <p>Every change had a rationale the whole team could point to.</p>
 
                   <Fig
-                    src="flow-one-click-extension.gif"
+                    src="flow-one-click-extension.webp"
                     alt="One-click extension of a standard offer draft"
                     width={1799}
                     height={1279}
@@ -360,7 +360,7 @@ export default function MetaOffersCaseStudy() {
                   />
 
                   <Fig
-                    src="flow-intentional-custom-offer.gif"
+                    src="flow-intentional-custom-offer.webp"
                     alt="Selecting the custom offer path deliberately"
                     width={1799}
                     height={1280}
@@ -369,7 +369,7 @@ export default function MetaOffersCaseStudy() {
                   />
 
                   <Fig
-                    src="flow-competing-data-required.gif"
+                    src="flow-competing-data-required.webp"
                     alt="Competing compensation data enforced before an above-band proposal proceeds"
                     width={1799}
                     height={1280}
@@ -378,7 +378,7 @@ export default function MetaOffersCaseStudy() {
                   />
 
                   <Fig
-                    src="flow-structured-comp-capture.gif"
+                    src="flow-structured-comp-capture.webp"
                     alt="The structured, dynamic compensation capture flow"
                     width={1799}
                     height={1280}
@@ -419,7 +419,7 @@ export default function MetaOffersCaseStudy() {
                   />
 
                   <Fig
-                    src="flow-proposal-validated.gif"
+                    src="flow-proposal-validated.webp"
                     alt="Competing data validated against the compensation proposal"
                     width={1799}
                     height={1280}
@@ -448,7 +448,7 @@ export default function MetaOffersCaseStudy() {
                   </p>
 
                   <Fig
-                    src="vision-candidate-profile.gif"
+                    src="vision-candidate-profile.webp"
                     alt="Vision concept: the offer surfaced in Candidate Profile"
                     width={1889}
                     height={1227}
