@@ -41,6 +41,14 @@
       "coverSrc": "/images/heroes/meta-immersive.jpg"
     },
     {
+      "href": "/work/meta-offers-expanded",
+      "title": "Structured compensation capture",
+      "dek": "Replacing free-text compensation notes with structured, validated capture, and cutting average approval time by 23.7%",
+      "companyName": "Meta",
+      "companyLogo": "/logos/meta.svg",
+      "coverSrc": "/images/heroes/meta-offers.png"
+    },
+    {
       "href": "/work/meta-offers",
       "title": "Offer Creation Flow",
       "dek": "Improving the velocity between hire decision and offer extension at recruiting scale",
