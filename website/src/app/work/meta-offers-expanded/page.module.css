@@ -170,6 +170,42 @@
 }
 
 /* ============================================
+   LEDE + STAT BANDS
+   The outcome is the reason to read this one, so the
+   headline numbers open the article and close it.
+   ============================================ */
+.lede {
+  font-family: var(--font-paragraph-em-family);
+  font-size: 18px !important;
+  font-weight: var(--font-paragraph-em-weight) !important;
+  line-height: 28px !important;
+  color: var(--color-text-primary) !important;
+}
+
+.statBand {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--primitive-gap-xl) var(--primitive-gap-lg);
+  margin-top: var(--primitive-gap-lg);
+}
+
+/* The teaser band runs three across whatever the column width, so the
+   numbers read as one row rather than a ragged block. */
+.statBandTop {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: var(--primitive-padding-lg);
+  border: 1px solid var(--color-bg-container-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-container-primary-semi);
+}
+
+@media (max-width: 600px) {
+  .statBandTop {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================
    INLINE FIGURE — image + caption
    ============================================ */
 .figure {

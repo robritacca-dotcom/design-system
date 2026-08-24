@@ -7,6 +7,7 @@ import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import SampleCaseStudyCard from "../../../components/SampleCaseStudyCard/SampleCaseStudyCard";
+import { Stat } from "@robr0/design-system/components/Stat/Stat";
 import { getSidebarLinks, workSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
@@ -88,6 +89,31 @@ export default function MetaOffersExpandedCaseStudy() {
                 </div>
 
                 <article className={styles.body}>
+                  <p className={styles.lede}>
+                    This is the most impactful thing I shipped at Meta. Every offer that goes above the standard compensation range needs approval, and the approval ran on a free-text notes box: recruiters typed what they knew, analysts parsed it by hand, and offers bounced between them for days while the candidate waited. I replaced that box with a structured, validated, dynamic capture flow. It launched in July 2022 to the entire recruiting org and is still running.
+                  </p>
+
+                  <div className={`${styles.statBand} ${styles.statBandTop}`}>
+                    <Stat
+                      value="23.7%"
+                      label="Faster comp approvals"
+                      trend="up"
+                      delta="average approval time"
+                    />
+                    <Stat
+                      value="51%"
+                      label="More validated comp data"
+                      trend="up"
+                      delta="volume captured"
+                    />
+                    <Stat
+                      value="12.2%"
+                      label="Fewer approval requests"
+                      trend="up"
+                      delta="across the org"
+                    />
+                  </div>
+
                   <h2 id="context">Context</h2>
 
                   <p>
@@ -425,16 +451,50 @@ export default function MetaOffersExpandedCaseStudy() {
                   <h2 id="impact">Impact</h2>
 
                   <p>
-                    Launched in July 2022 to the entire recruiting org: thousands of recruiters, plus the comp analyst team.
+                    Launched in July 2022 to the entire recruiting org: thousands of recruiters, plus the comp analyst team. Every number below is measured against the same flow it replaced.
                   </p>
 
-                  <ul>
-                    <li><strong>23.7% faster</strong> average compensation approval time overall</li>
-                    <li><strong>First approvals went from days to same-day</strong>, a several-hundred-percent improvement in first-approval velocity</li>
-                    <li><strong>51% increase</strong> in the volume of validated comp data captured</li>
-                    <li><strong>12.2% reduction</strong> in the overall number of compensation approval requests</li>
-                    <li><strong>9% improvement</strong> to overall hire-decision to offer-extension velocity</li>
-                  </ul>
+                  <div className={styles.statBand}>
+                    <Stat
+                      size="large"
+                      value="23.7%"
+                      label="Faster comp approvals"
+                      trend="up"
+                      delta="average approval time, overall"
+                    />
+                    <Stat
+                      size="large"
+                      value="51%"
+                      label="More validated comp data"
+                      trend="up"
+                      delta="volume captured per offer"
+                    />
+                    <Stat
+                      size="large"
+                      value="12.2%"
+                      label="Fewer approval requests"
+                      trend="up"
+                      delta="total requests submitted"
+                    />
+                    <Stat
+                      size="large"
+                      value="9%"
+                      label="Faster offer extension"
+                      trend="up"
+                      delta="hire decision to offer out"
+                    />
+                    <Stat
+                      size="large"
+                      value="Same-day"
+                      label="First approvals"
+                      trend="up"
+                      delta="previously days"
+                    />
+                  </div>
+
+                  <p>
+                    The first-approval number is the one that changed the day-to-day. A recruiter who submitted a supported proposal got an answer inside the same day rather than at the end of the week, which is the difference between a candidate deciding with an offer in hand and a candidate deciding without one.
+                  </p>
 
                   <p>
                     One metric did not move. Offers requiring two or more approvals stayed slow, slightly slower by a single-digit percentage. Those are the genuinely hard negotiations, and they became the target of the next phase of work.
