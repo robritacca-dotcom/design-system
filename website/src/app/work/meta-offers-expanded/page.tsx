@@ -125,14 +125,6 @@ export default function MetaOffersExpandedCaseStudy() {
                     That delay is the most expensive kind of slow. By the offer stage the company has already paid for the entire funnel: sourcing, screens, full loops, debriefs. Slow extensions correlate with lower acceptance rates, worse candidate sentiment, and recruiters missing their own performance metrics. All of it was about to be amplified by the scale of Meta&apos;s hiring ambitions: thousands of recruiters, millions of candidates, tens of thousands of offers, and a hiring target in the tens of thousands for 2022 alone.
                   </p>
 
-                  <Fig
-                    src="context-meta-campus.jpg"
-                    alt="Meta campus"
-                    width={1536}
-                    height={2048}
-                    caption="The scale of the problem: thousands of recruiters serving millions of candidates, extending tens of thousands of offers a year."
-                  />
-
                   <p>
                     I was the product designer for the Recruiting Products Offers team, the team that owns everything between hire decision and a signed offer letter. Structured compensation capture was our P0 for H1 2022.
                   </p>
