@@ -25,7 +25,8 @@
      would silently offset the whole board from where its transform says
      it is. A clipped box cannot scroll at all. */
   overflow: clip;
-  background: var(--color-bg-container-secondary);
+  /* No fill of its own: the page runs the ambient field full-bleed (the
+     playground's stage treatment) and the frames float over it. */
   cursor: grab;
   touch-action: none;
   overscroll-behavior: none;

@@ -11,7 +11,12 @@ import {
 } from "react";
 import { CircularButton } from "@robr0/design-system/components/CircularButton/CircularButton";
 import { SegmentedControl } from "@robr0/design-system/components/SegmentedControl/SegmentedControl";
+import StageToolbar from "@/components/StageToolbar/StageToolbar";
 import ThemeToggle from "@/components/ThemeToggle/ThemeToggle";
+import {
+  FullBleedBackground,
+  HiddenBackground,
+} from "@/components/BlurBackground/BlurBackground";
 import { siteSections, type CanvasSection } from "./ia";
 import styles from "./Canvas.module.css";
 
@@ -289,6 +294,9 @@ export default function Canvas() {
 
   const viewportRef = useRef<HTMLDivElement>(null);
   const [device, setDevice] = useState<DeviceId>("desktop");
+  /* Stage setting, same as the playground's: whether the board sits on the
+     ambient field or the flat page colour. */
+  const [backgroundOn, setBackgroundOn] = useState(true);
   const [view, setViewState] = useState<View>({ x: 0, y: 0, k: 0.2 });
   const [smooth, setSmooth] = useState(false);
   const [heights, setHeights] = useState<Record<string, number>>({});
@@ -706,6 +714,15 @@ export default function Canvas() {
 
   return (
     <>
+      {/* The playground's stage treatment: the ambient field edge to edge,
+          or the flat page colour when the toggle in the controls is off. */}
+      {backgroundOn ? <FullBleedBackground /> : <HiddenBackground />}
+
+      {/* The playground's toolbar: brand mark and breadcrumb trail on the
+          left (navigation.ts names this route), the X out on the right.
+          The board's own controls stay in the bottom pill, beside the
+          zoom they belong with. */}
+      <StageToolbar />
       <div
         ref={viewportRef}
         className={styles.viewport}
@@ -806,6 +823,14 @@ export default function Canvas() {
           ariaLabel="Device"
         />
         <span className={styles.separator} aria-hidden="true" />
+        <CircularButton
+          icon={backgroundOn ? "blur_on" : "blur_off"}
+          variant={backgroundOn ? "secondary" : "tertiary"}
+          size="compact"
+          ariaLabel="Background gradient"
+          aria-pressed={backgroundOn}
+          onClick={() => setBackgroundOn((on) => !on)}
+        />
         <ThemeToggle />
       </div>
 
