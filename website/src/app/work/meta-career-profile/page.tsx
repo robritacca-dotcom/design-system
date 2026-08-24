@@ -98,7 +98,7 @@ export default function MetaCareerProfileCaseStudy() {
 
           {/* Subtitle / dek */}
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            A design team had spent a phase exploring what Meta&rsquo;s candidate platform could become. I joined for phase two, where the job was no longer to explore. It was to converge.
+            A design team had spent a phase exploring what Meta’s candidate platform could become. I joined for phase two, where the job was no longer to explore. It was to converge.
           </p>
 
           {/* Hero image */}
@@ -129,7 +129,7 @@ export default function MetaCareerProfileCaseStudy() {
                   </p>
 
                   <p>
-                    I joined in Q4 2022 for phase two, coming across from the Offers team. The mandate had changed. Phase one had opened the space; phase two had to close it, with enough conviction and enough fidelity that leadership could actually decide something. We worked as three individual contributors and a design manager, in equal collaboration. I wasn&rsquo;t the lead on this, and the good decisions in it came out of the group rather than out of me.
+                    I joined in Q4 2022 for phase two, coming across from the Offers team. The mandate had changed. Phase one had opened the space; phase two had to close it, with enough conviction and enough fidelity that leadership could actually decide something. We worked as three individual contributors and a design manager, in equal collaboration. I wasn’t the lead on this, and the good decisions in it came out of the group rather than out of me.
                   </p>
 
                   <p><strong>What I owned inside that:</strong> the typology framework, the concept convergence and its evaluation, the timeline and content-card system, and the offer experience I brought over from Offers.</p>
@@ -137,7 +137,7 @@ export default function MetaCareerProfileCaseStudy() {
                   <h2 id="what-we-inherited">What we inherited</h2>
 
                   <p>
-                    The problems phase one had documented were structural, not cosmetic. Navigation didn&rsquo;t scale, because level-one items were pages rather than categories. The homepage was administrative and under-dense. Every candidate saw the same generic content regardless of who they were or where they stood. And Geodesic, the internal system underneath it, had no mobile web support and little brand expression.
+                    The problems phase one had documented were structural, not cosmetic. Navigation didn’t scale, because level-one items were pages rather than categories. The homepage was administrative and under-dense. Every candidate saw the same generic content regardless of who they were or where they stood. And Geodesic, the internal system underneath it, had no mobile web support and little brand expression.
                   </p>
 
                   <Fig
@@ -181,7 +181,7 @@ export default function MetaCareerProfileCaseStudy() {
                   />
 
                   <p>
-                    A third concept, Career Workplace, borrowed Workplace&rsquo;s structure and social graph. It matched a mental model candidates already had, but the structure limited functionality and social networking was never validated as a candidate need.
+                    A third concept, Career Workplace, borrowed Workplace’s structure and social graph. It matched a mental model candidates already had, but the structure limited functionality and social networking was never validated as a candidate need.
                   </p>
 
                   <p>
@@ -226,7 +226,7 @@ export default function MetaCareerProfileCaseStudy() {
                   />
 
                   <p>
-                    Three typologies meant three page templates, and three templates meant a partner team building a new feature into Career Profile finally had somewhere to put it that wouldn&rsquo;t degrade the experience for everyone else.
+                    Three typologies meant three page templates, and three templates meant a partner team building a new feature into Career Profile finally had somewhere to put it that wouldn’t degrade the experience for everyone else.
                   </p>
 
                   <h2 id="design-system">The system underneath</h2>
@@ -300,7 +300,7 @@ export default function MetaCareerProfileCaseStudy() {
                   />
 
                   <p>
-                    With the timeline as the anchor, the rest of the page became a priority-ranked, flexible card system: primary cards above the fold in the centre column, secondary cards in the right rail, and flex cards that resize to fit whatever the candidate&rsquo;s type, seniority and stage call for. That is what let one page template serve a prospective candidate and a signed hire, and what gave partner teams a place to build without renegotiating the layout each time.
+                    With the timeline as the anchor, the rest of the page became a priority-ranked, flexible card system: primary cards above the fold in the centre column, secondary cards in the right rail, and flex cards that resize to fit whatever the candidate’s type, seniority and stage call for. That is what let one page template serve a prospective candidate and a signed hire, and what gave partner teams a place to build without renegotiating the layout each time.
                   </p>
 
                   <h2 id="key-screens">Key screens</h2>
@@ -411,33 +411,29 @@ export default function MetaCareerProfileCaseStudy() {
                     caption="The interactive prototype: the active candidate journey, with the timeline driving the content area."
                   />
 
-                  <h2 id="what-happened">What happened</h2>
+                  <h2 id="what-we-delivered">What we delivered</h2>
 
                   <p>
-                    We delivered the phase two milestone deck in December 2022: the convergence, the typologies, the design-system recommendation, the evaluated concepts, the component system, the key screens, and an interactive prototype across the full journey. The plan for H1 2023 was to build the templates, finish the system diligence, formalise the Career Site relationship, and publish a partner manual for teams building into Career Profile.
+                    We took the full vision to high fidelity: a converged direction with the reasoning behind it, the typology framework, a design-system recommendation, the component system, key screens across the whole lifecycle from prospect to first day, and an interactive prototype running the journey end to end in three candidate states.
+                  </p>
+
+                  <h2 id="what-i-took-from-it">What I took from it</h2>
+
+                  <p>
+                    <strong>Convergence is a different craft from exploration.</strong> Widening rewards generosity. Narrowing rewards evidence, and scoring five options on one spectrum is what turned a matter of taste into a decision leadership could actually make.
                   </p>
 
                   <p>
-                    That didn&rsquo;t happen. In the middle of the engagement Meta announced 11,000 layoffs, and the business context changed underneath the project. The team couldn&rsquo;t align on a design solution before the holidays, and the work was paused alongside significant organisational change.
+                    <strong>A framework is not a bigger feature.</strong> All three inherited concepts were good and all three sat at the wrong altitude. Anchoring to the timeline worked because it organised the product around the candidate’s state rather than around Meta’s org chart.
                   </p>
 
                   <p>
-                    I include it anyway, because the thinking is the part worth being judged on, and because the way it ended taught me more than a launch would have.
-                  </p>
-
-                  <h2 id="what-id-do-differently">What I&rsquo;d do differently</h2>
-
-                  <p>
-                    I responded to a hard deadline by working harder. Long hours, high energy, pushing to get high-fidelity prototypes and supporting evidence in front of the team. When the ground shifted under us I kept powering ahead, hoping to regain momentum. The team, me included, didn&rsquo;t react quickly enough to the new reality.
+                    <strong>Fidelity is an argument, not a finish.</strong> The debate about personalisation went in circles while it stayed abstract and ended the moment two candidate types were on screen, rendered by one system.
                   </p>
 
                   <Quote variant="pull">
-                    Effort does not equal impact, and brute force is rarely the tool the problem calls for.
+                    The deliverable was never the screens. It was a vocabulary other teams could build in without asking permission.
                   </Quote>
-
-                  <p>
-                    When significant change happens outside your control, the move is to slow down, reflect and realign before making major design recommendations. The related Offer Summary pause taught the same lesson from another angle: we knew early that the project would be hard to measure, didn&rsquo;t aggressively fix that, and the eventual decision to pause rested on data we already knew was unreliable. Capture the metrics that let work move forward, and force the difficult conversation before the decision rather than after it.
-                  </p>
                 </article>
               </section>
             </div>
@@ -474,7 +470,7 @@ export default function MetaCareerProfileCaseStudy() {
                   </div>
                   <div className={styles.detailItem}>
                     <span className={styles.detailLabel}>Status</span>
-                    <span className={styles.detailValue}>Vision work · milestone delivered December 2022 · paused</span>
+                    <span className={styles.detailValue}>Vision work · full vision delivered in high fidelity, December 2022</span>
                   </div>
                   <div className={styles.detailItem}>
                     <span className={styles.detailLabel}>Platform</span>
