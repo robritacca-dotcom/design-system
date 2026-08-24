@@ -2,8 +2,8 @@ import { buildCaseStudyOgImage, ogImageSize, ogImageContentType } from "@/lib/og
 
 export const size = ogImageSize;
 export const contentType = ogImageContentType;
-export const alt = "Designing a job offer you can step inside";
+export const alt = "Designing a job offer candidates can step inside";
 
 export default function Image() {
-  return buildCaseStudyOgImage("Designing a job offer you can step inside");
+  return buildCaseStudyOgImage("Designing a job offer candidates can step inside");
 }

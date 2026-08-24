@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { pageOpenGraph } from "@/config/navigation";
 import { buildCaseStudyJsonLd } from "@/lib/structuredData";
 
-const title = "Designing a job offer you can step inside";
+const title = "Designing a job offer candidates can step inside";
 const description =
   "Case study: leading design on Meta's Immersive Offers, a Horizon Worlds experience that reimagined the job offer stage in VR, from creative brief to internal pilot.";
 

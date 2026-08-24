@@ -79,7 +79,7 @@ export default function MetaImmersiveOffersCaseStudy() {
           {/* Page header */}
           <div className={`${styles.pageHeader} animate-in`}>
             <h1 className={styles.pageTitle}>
-              Designing a job offer you can step inside
+              Designing a job offer candidates can step inside
             </h1>
           </div>
 
