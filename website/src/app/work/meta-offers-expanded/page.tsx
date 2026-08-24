@@ -48,34 +48,6 @@ function Fig({
   );
 }
 
-const peerFeedback = [
-  {
-    quote:
-      "Rob is an extremely collaborative and thoughtful coworker. As part of the project, Rob wrangled and incorporated feedback from a large and disparate group of cross-functional partners, filtering the signal through the noise to incorporate the feedback that really mattered into the designs.",
-    role: "Product Manager, Recruiting Products",
-  },
-  {
-    quote:
-      "Rob is an XFN partner that has had impact not just in his own work but by multiplying the amount of impact that I was able to have. He collected requirements, something I would have normally had to do, without being asked, so it sped up the time for delivering.",
-    role: "Software Engineer, Offers team",
-  },
-  {
-    quote:
-      "Rob provides design mocks paying attention to the smallest details and turnaround is usually very fast, which enables the team to move fast. Proactively surveying recruiters in his own research sessions helped shape the project from the beginning.",
-    role: "Software Engineer, Offers team",
-  },
-  {
-    quote:
-      "For the new streamlined compensation capture flow, Robert did an amazing job leading the design validation sessions with recruiters and the compensation team, presenting the new flow, gathering feedback, and quickly working on iterating the designs.",
-    role: "Product Marketing Manager",
-  },
-  {
-    quote:
-      "During one of the meetings the engineers proposed to leave some of the design changes for a version 2 of the launch. Leaving those for version 2 would result in a poor user experience. Robert immediately brought up that risk and was able to influence the engineers to work on the changes for version 1.",
-    role: "Product Manager",
-  },
-];
-
 export default function MetaOffersExpandedCaseStudy() {
   return (
     <>
@@ -466,21 +438,6 @@ export default function MetaOffersExpandedCaseStudy() {
 
                   <p>
                     One metric did not move. Offers requiring two or more approvals stayed slow, slightly slower by a single-digit percentage. Those are the genuinely hard negotiations, and they became the target of the next phase of work.
-                  </p>
-
-                  <h2 id="peer-feedback">Selected peer feedback (anonymised)</h2>
-
-                  <div className={styles.peerQuotes}>
-                    {peerFeedback.map((q, i) => (
-                      <blockquote key={i} className={styles.peerQuote}>
-                        <p className={styles.peerQuoteText}>&ldquo;{q.quote}&rdquo;</p>
-                        <footer className={styles.peerQuoteFooter}>{q.role}</footer>
-                      </blockquote>
-                    ))}
-                  </div>
-
-                  <p className={styles.footnote}>
-                    Figures come from internal project reviews and my performance review. Absolute volumes and cycle times are generalised and sensitive details redacted; percentage improvements are reported as measured. All candidate data shown in mocks is fictional, and internal screenshots use test data.
                   </p>
 
                 </article>
