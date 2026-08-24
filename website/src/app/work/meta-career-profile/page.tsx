@@ -64,6 +64,57 @@ function Fig({
   );
 }
 
+type SpecItem = {
+  src: string;
+  label: string;
+  alt: string;
+  width: number;
+  height: number;
+  animated?: boolean;
+};
+
+/** A row of component variants shown side by side under one caption, each
+ *  labelled. The system was specified as parts that compose, so the parts are
+ *  shown composing rather than stacked one full-width figure at a time.
+ *  `wide` switches from a bottom-aligned rail row to a grid, for cards. */
+function SpecRow({
+  items,
+  caption,
+  wide = false,
+}: {
+  items: SpecItem[];
+  caption: React.ReactNode;
+  wide?: boolean;
+}) {
+  const zoom = useContext(ZoomContext);
+
+  return (
+    <figure className={styles.specRow}>
+      <div className={`${styles.specStage} ${wide ? styles.specStageWide : ""}`}>
+        {items.map((item) => (
+          <button
+            key={item.src}
+            type="button"
+            className={styles.specItem}
+            onClick={() => zoom(`${IMG}/${item.src}`, item.alt)}
+            aria-label={`Open ${item.label} at full size`}
+          >
+            <Image
+              src={`${IMG}/${item.src}`}
+              alt={item.alt}
+              width={item.width}
+              height={item.height}
+              unoptimized={item.animated}
+            />
+            <span className={styles.specLabel}>{item.label}</span>
+          </button>
+        ))}
+      </div>
+      <figcaption className={styles.specCaption}>{caption}</figcaption>
+    </figure>
+  );
+}
+
 export default function MetaCareerProfileCaseStudy() {
   const [lightbox, setLightbox] = useState<Lightbox>(null);
 
@@ -229,20 +280,6 @@ export default function MetaCareerProfileCaseStudy() {
                     Three typologies meant three page templates, and three templates meant a partner team building a new feature into Career Profile finally had somewhere to put it that wouldn’t degrade the experience for everyone else.
                   </p>
 
-                  <h2 id="design-system">The system underneath</h2>
-
-                  <p>
-                    We evaluated three design systems against engineering effort and fit. Geodesic, the incumbent, had powerful data-visualisation components and supported complex workflows, but was never built for consumer-facing products. XMDS was recommended by Meta Brand and approved for external use, but was still in development and required the XMDS team to approve every design.
-                  </p>
-
-                  <Fig
-                    src="ds-xds-people-theme.png"
-                    alt="XDS People Theme, the design system direction we leaned toward"
-                    width={1115}
-                    height={727}
-                    caption="XDS People Theme: used by the People Products partner team, mobile support, and a dedicated team open to collaboration. Still in development and light on data-visualisation components. Medium-to-high effort, and the direction we leaned toward, with the honest recommendation to finish the diligence in H1 2023 rather than force a call we couldn't defend."
-                  />
-
                   <h2 id="five-degrees">Five degrees of change</h2>
 
                   <p>
@@ -281,13 +318,32 @@ export default function MetaCareerProfileCaseStudy() {
 
                   <h2 id="the-system">The system we built</h2>
 
-                  <Fig
-                    src="component-dynamic-timeline.webp"
-                    alt="The dynamic timeline component, showing completed, active and future stages"
-                    width={395}
-                    height={976}
-                    animated
-                    caption="The dynamic timeline: completed stages show status and dates, the active stage adds duration and activity badges, future stages show what's coming. An active-role selector sits above it, because candidates can be in more than one process at once."
+                  <p>
+                    Most of the work went here, into the ingredients rather than the pages. Every part had to declare the same four things before it earned a place: its priority, the mental model it serves, where it lives, and which states it has. Specify the parts that way and the pages assemble themselves.
+                  </p>
+
+                  <SpecRow
+                    caption="Primary navigation. High priority, always in view, answering “help me understand where I am.” A static rail carries Home, Jobs, Meta Connections, Preparation Hub, Coding Puzzles, Demystifying the Interview Experience, VR Hub and Knowledge Library, with settings, search, messages, help and profile below the fold of the rail."
+                    items={[
+                      { src: "nav-primary-collapsed-crop.png", label: "Collapsed", alt: "Primary navigation rail collapsed to icons", width: 104, height: 943 },
+                      { src: "nav-primary-expanded-crop.png", label: "Expanded", alt: "Primary navigation rail expanded with labels", width: 496, height: 943 },
+                    ]}
+                  />
+
+                  <SpecRow
+                    caption="Sub navigation, which appears only when a section needs one and collapses on the same rules as the primary rail. Two rails with one behaviour rather than two navigation systems: that is the difference between a platform other teams can extend and a surface that accretes menus."
+                    items={[
+                      { src: "nav-sub-expanded-crop.png", label: "Expanded", alt: "Sub navigation panel expanded, showing a page title and sub pages", width: 496, height: 945 },
+                      { src: "nav-sub-collapsed-crop.png", label: "Collapsed", alt: "Sub navigation collapsed to icons", width: 106, height: 945 },
+                    ]}
+                  />
+
+                  <SpecRow
+                    caption="The dynamic timeline and its status vocabulary. Completed stages carry status and dates, the active stage adds duration and activity badges, future stages show what is coming. One shared set of statuses covers every state a process can be in, so the same component tells a candidate they are up next, awaiting a decision, or holding an offer."
+                    items={[
+                      { src: "component-dynamic-timeline.webp", label: "Stage states", alt: "The dynamic timeline showing completed, active and future stages", width: 395, height: 976, animated: true },
+                      { src: "timeline-status-chips.png", label: "Status vocabulary", alt: "The set of timeline status chips", width: 322, height: 520 },
+                    ]}
                   />
 
                   <Fig
@@ -296,11 +352,46 @@ export default function MetaCareerProfileCaseStudy() {
                     width={1400}
                     height={909}
                     animated
-                    caption="The key mechanic: the active timeline state determines what appears in the content area. Select a future stage and the page tells you how to prepare for it; select the active one and it tells you what to do right now."
+                    caption="The mechanic the whole system hangs on: the active timeline state determines what appears in the content area. Select a future stage and the page tells you how to prepare for it, select the active one and it tells you what to do right now."
+                  />
+
+                  <SpecRow
+                    wide
+                    caption="Primary content cards. High priority, always above the fold, centre column. The card is one container with a swappable payload, which is why a job-recommendation list and an interview agenda can occupy the same slot at different points in the journey without a new template."
+                    items={[
+                      { src: "card-job-recommendations.png", label: "Prospective: job recommendations", alt: "A primary content card listing job recommendations", width: 1232, height: 1044 },
+                      { src: "card-whats-next.png", label: "Active: what’s next", alt: "A primary content card showing the upcoming interview agenda", width: 1232, height: 992 },
+                    ]}
                   />
 
                   <p>
-                    With the timeline as the anchor, the rest of the page became a priority-ranked, flexible card system: primary cards above the fold in the centre column, secondary cards in the right rail, and flex cards that resize to fit whatever the candidate’s type, seniority and stage call for. That is what let one page template serve a prospective candidate and a signed hire, and what gave partner teams a place to build without renegotiating the layout each time.
+                    Secondary cards take the right rail, tertiary and low-priority cards sit below the fold, and flex cards resize to fit whatever the candidate’s type, seniority and stage call for. One page template serves a prospective candidate and a signed hire, and a partner team gets a defensible place to build without renegotiating the layout.
+                  </p>
+
+                  <h2 id="design-system">What to build it in</h2>
+
+                  <p>
+                    Components need a system to be built from, so choosing one was part of the implementation plan and part of the vision itself. We had real options and none of them was obviously right.
+                  </p>
+
+                  <p>
+                    XMDS was the forward-facing choice, used by marketing and approved for external work, but it was optimised for light editorial content and our surface is dense, stateful and transactional. XDS was the internal system, running in nearly every enterprise app at Meta, and its systems team sat adjacent to us in Enterprise Engineering. Capable, close at hand, and built for employees rather than candidates.
+                  </p>
+
+                  <p>
+                    We proposed using XDS externally, which nobody had done before. So we went to the XDS team and worked it through with them rather than around them, and together we explored a People Theme: an extension that kept the system&rsquo;s structural rigour and added what a candidate-facing product needs, including rounded corners and pops of colour.
+                  </p>
+
+                  <Fig
+                    src="ds-xds-people-theme.png"
+                    alt="The XDS People Theme, a candidate-facing extension of Meta's internal design system"
+                    width={1115}
+                    height={727}
+                    caption="The People Theme: XDS underneath, with the warmth and softness an external audience expects on top."
+                  />
+
+                  <p>
+                    That theme became Astryx, the AI-ready design system Meta has since launched publicly. Proposing a system extension is usually the least glamorous part of a vision. It turned out to be the part with the longest life.
                   </p>
 
                   <h2 id="key-screens">Key screens</h2>
@@ -332,7 +423,7 @@ export default function MetaCareerProfileCaseStudy() {
                   <h2 id="the-offer">The offer experience</h2>
 
                   <p>
-                    This is the part I brought with me. On the Offers team our planned Offer Summary 2.0 revamp had been paused for engineering capacity, and rather than shelve the thinking I wrote a vision brief arguing the case for a genuinely full-featured offer experience. The evidence was hard to argue with.
+                    This is the part I brought with me. On the Offers team I had written a vision brief arguing the case for a genuinely full-featured offer experience, and it fed straight into this one. The evidence was hard to argue with.
                   </p>
 
                   <div className={styles.statBand}>
