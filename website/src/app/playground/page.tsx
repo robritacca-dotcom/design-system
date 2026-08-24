@@ -44,6 +44,7 @@ import { Input } from "@robr0/design-system/components/Input/Input";
 import { RadioGroup } from "@robr0/design-system/components/RadioButton/RadioButton";
 import { ToggleSwitch } from "@robr0/design-system/components/ToggleSwitch/ToggleSwitch";
 import ActionsSection from "./sections/ActionsSection";
+import MapsSection from "./sections/MapsSection";
 import AiSection from "./sections/AiSection";
 import FormsSection from "./sections/FormsSection";
 import NavigationSection from "./sections/NavigationSection";
@@ -606,6 +607,7 @@ export default function PlaygroundPage() {
                   earlier one. */}
               <MockNav brandName={productName.trim() || "Acme Corp"} />
               <ActionsSection />
+              <MapsSection />
               <AiSection />
               <FormsSection />
               <NavigationSection />

@@ -244,6 +244,22 @@
   }
 }
 
+/* The globe takes the wider column; the legend rides beside it, centred
+   on the sphere. Collapses with the rest of the two-up grids. */
+.mapsColumns {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: var(--primitive-gap-lg);
+  align-items: center;
+}
+
+@media (max-width: 1151px) {
+  .mapsColumns {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+}
+
 /* ============================================
    ADVANCED COLOURS DIALOG — mini primitive ramps
    ============================================ */
