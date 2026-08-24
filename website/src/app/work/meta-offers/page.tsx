@@ -148,7 +148,7 @@ export default function MetaOffersCaseStudy() {
                   </p>
 
                   <p>
-                    That delay is the most expensive kind of slow. By the offer stage Meta has already paid for the entire funnel: sourcing, screens, full loops, debriefs. And roughly one in five offers still ended in a decline. At this volume that is thousands of candidates a year walking away at the very end.
+                    That delay is the most expensive kind of slow. By the offer stage Meta has already paid for the entire funnel: sourcing, screens, full loops, debriefs. And roughly a quarter of offers still ended in a decline. At this volume that is thousands of candidates a year walking away at the very end.
                   </p>
 
                   <p>
