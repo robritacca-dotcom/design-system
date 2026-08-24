@@ -263,6 +263,9 @@
   overflow: hidden;
 }
 
+/* Scrolls within itself rather than widening the page: four rails at a legible
+   height are wider than the article column on a narrow screen, and a row that
+   overflows the body sends the whole page sideways. */
 .specStage {
   display: flex;
   align-items: flex-end;
@@ -270,10 +273,11 @@
   gap: var(--primitive-gap-lg);
   padding: var(--primitive-gap-lg);
   background: var(--color-bg-container-secondary);
+  overflow-x: auto;
 }
 
-/* Rails are tall and narrow, cards wide and short. Letting each item size on
-   its own ratio keeps a 104px rail beside a 496px one without crushing either. */
+/* Rails size on their own ratio, so a 104px rail sits beside a 496px one
+   without either being crushed. */
 /* A button, so it needs its chrome stripped: the default background and border
    otherwise paint a grey pill behind every label. */
 .specItem {
@@ -281,7 +285,7 @@
   flex-direction: column;
   align-items: center;
   gap: var(--primitive-gap-xs);
-  min-width: 0;
+  flex: 0 0 auto;
   margin: 0;
   padding: 0;
   border: 0;
@@ -322,7 +326,6 @@
     gap: var(--primitive-gap-md);
     padding: var(--primitive-gap-md);
     justify-content: flex-start;
-    overflow-x: auto;
   }
 }
 

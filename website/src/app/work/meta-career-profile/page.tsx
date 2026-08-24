@@ -340,18 +340,12 @@ export default function MetaCareerProfileCaseStudy() {
                   </p>
 
                   <SpecRow
-                    caption="Primary navigation. High priority, always in view, answering “help me understand where I am.” Settings, search, messages, help and profile sit below the fold of the rail."
+                    caption="Navigation. High priority, always in view, answering “help me understand where I am.” The primary rail is static; sub navigation appears only when a section needs one. Two rails, one collapse behaviour."
                     items={[
-                      { src: "nav-primary-collapsed-crop.png", label: "Collapsed", alt: "Primary navigation rail collapsed to icons", width: 104, height: 943 },
-                      { src: "nav-primary-expanded-crop.png", label: "Expanded", alt: "Primary navigation rail expanded with labels", width: 496, height: 943 },
-                    ]}
-                  />
-
-                  <SpecRow
-                    caption="Sub navigation appears only when a section needs one, and collapses on the same rules as the primary rail. Two rails, one behaviour."
-                    items={[
-                      { src: "nav-sub-expanded-crop.png", label: "Expanded", alt: "Sub navigation panel expanded, showing a page title and sub pages", width: 496, height: 945 },
-                      { src: "nav-sub-collapsed-crop.png", label: "Collapsed", alt: "Sub navigation collapsed to icons", width: 106, height: 945 },
+                      { src: "nav-primary-collapsed-crop.png", label: "Primary, collapsed", alt: "Primary navigation rail collapsed to icons", width: 104, height: 943 },
+                      { src: "nav-primary-expanded-crop.png", label: "Primary, expanded", alt: "Primary navigation rail expanded with labels", width: 496, height: 943 },
+                      { src: "nav-sub-expanded-crop.png", label: "Sub, expanded", alt: "Sub navigation panel expanded, showing a page title and sub pages", width: 496, height: 945 },
+                      { src: "nav-sub-collapsed-crop.png", label: "Sub, collapsed", alt: "Sub navigation collapsed to icons", width: 106, height: 945 },
                     ]}
                   />
 
