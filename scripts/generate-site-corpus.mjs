@@ -540,6 +540,7 @@ Every page on robertritacca.com. Link to these paths when pointing someone at mo
 - Contact (/contact): ways to get in touch
 - Design system (/design-system): the whole system on one page with live demos
 - Playground (/playground): re-theme the design system live and copy the CSS
+- Canvas (/canvas): every section's landing page live on one endless board (alpha, desktop only)
 
 ### Case studies
 
@@ -629,7 +630,7 @@ const EXCLUDED_ROUTES = new Map([
   ['/covers/render',
     'a noindex surface that renders one cover mock alone at an exact size, so the cover images can be shot from it — it carries no prose at all'],
   ['/canvas',
-    'a noindex proof of concept that lays the site out on one board, every page live in a frame — its only prose is the board\'s controls; every page it shows is covered by its own route'],
+    'a noindex alpha (nav-linked, desktop-only) that lays each section\'s landing page out on one board, live in a frame — its only prose is the board\'s controls and its toolbar trail; every page it shows is covered by its own route, and the site map above gives the chat the one line it needs'],
 ]);
 
 /** Component showcase pages: excluded as a class, with one shared reason. */

@@ -39,10 +39,14 @@
  *   - Essays (`website/src/data/essays.json`) — Rob's Substack pieces, synced
  *     rather than authored here. Restyling already-published writing is not
  *     this rule's job.
- *   - noindex staging pages (`/covers`, `/covers/render`, `/rr-animated`) —
- *     internal surfaces a visitor never reaches. Derived from the page's own
- *     `robots: { index: false }`, so a page joining or leaving the set moves
- *     itself in and out of scope with no list to maintain here.
+ *   - noindex pages — derived from the page's own `robots: { index: false }`,
+ *     so a page joining or leaving the set moves itself in and out of scope
+ *     with no list to maintain here. Today that is `/covers`, `/covers/render`
+ *     and `/rr-animated` (internal surfaces a visitor never reaches) plus
+ *     `/canvas`, which IS nav-linked but stays noindex while it is alpha —
+ *     its board hint and control labels ride outside this gate until the
+ *     page graduates to indexed, at which point the derivation pulls it in
+ *     by itself.
  *   - Non-page `.ts` modules other than `STORY_MODULES` — their string
  *     literals are server logs and internal messages, not copy. The chat's
  *     persona and greeting strings are genuinely shipped prose but live among

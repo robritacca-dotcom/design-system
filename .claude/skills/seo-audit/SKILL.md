@@ -40,7 +40,7 @@ Build the site (`npm run build` in `website/`), then serve it via the `website-p
 
 ### 3. Cross-check the crawl graph
 
-- Every public route appears in the sitemap, and every sitemap URL returns 200 from the running server. Registry-driven collections (components, case studies, writing) must be complete in it — if one is missing, the fix belongs in how `sitemap.ts` derives the list, not in a hand-added entry.
+- Every public route appears in the sitemap, and every sitemap URL returns 200 from the running server. Registry-driven collections (components, case studies, writing) must be complete in it — if one is missing, the fix belongs in how `sitemap.ts` derives the list, not in a hand-added entry. Nav-linked does not imply sitemap-listed: a deliberately noindex page may sit in the nav (its own metadata comment is the record of that decision), and it stays out of the sitemap by design.
 - Robots rules and the sitemap agree (nothing disallowed that the sitemap advertises).
 - Internal links resolve: no anchors pointing at routes that 404.
 - The 404 page itself returns HTTP 404, not 200.
