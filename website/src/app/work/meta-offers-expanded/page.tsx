@@ -120,7 +120,7 @@ export default function MetaOffersExpandedCaseStudy() {
 
                 <article className={styles.body}>
                   <p className={styles.lede}>
-                    This is the most impactful thing I shipped at Meta. Every offer that goes above the standard compensation range needs approval, and the approval ran on a free-text notes box: recruiters typed what they knew, analysts parsed it by hand, and offers bounced between them for days while the candidate waited. I replaced that box with a structured, validated, dynamic capture flow. It launched in July 2022 to the entire recruiting org and is still running.
+                    Any offer above the standard compensation range needs approval, and that approval ran on a free-text notes box: recruiters typed what they knew, analysts parsed it by hand, and offers bounced between them for days. I replaced the box with a structured, validated, dynamic capture flow, live to the entire recruiting org since July 2022.
                   </p>
 
                   <div className={`${styles.statBand} ${styles.statBandTop}`}>
@@ -147,32 +147,31 @@ export default function MetaOffersExpandedCaseStudy() {
                   <h2 id="context">Context</h2>
 
                   <p>
-                    Every job offer at Meta falls into one of two buckets. If the proposal sits inside the standard compensation range, it can be extended almost immediately, often within a single business day. If it goes above the range, it needs compensation approval, with justification. In a typical year thousands of offers needed at least one approval, and a meaningful share needed two or more, stretching what should have been days into more than a week.
+                    Every job offer at Meta falls into one of two buckets. Inside the standard compensation range, it can go out in a single business day. Above the range, it needs compensation approval with justification. Thousands of offers a year needed at least one approval, and a meaningful share needed two or more, stretching days into more than a week.
                   </p>
 
                   <p>
-                    That delay is the most expensive kind of slow. By the offer stage the company has already paid for the entire funnel: sourcing, screens, full loops, debriefs. And the offer is the point where all of that can still be lost. Roughly one in five Meta offers ended in a decline, which at this volume is thousands of candidates a year walking away at the very end of a process the company had already paid for in full.
+                    That delay is the most expensive kind of slow. By the offer stage Meta has already paid for the entire funnel: sourcing, screens, full loops, debriefs. And roughly one in five offers still ended in a decline. At this volume that is thousands of candidates a year walking away at the very end.
                   </p>
 
                   <p>
-                    That is why the offer got so much investment. Every decline is a funnel rerun, so the work of finding the right offer for a candidate, and getting it in front of them while they are still deciding, pays for itself many times over. Slow extensions correlate with lower acceptance rates, worse candidate sentiment, and recruiters missing their own performance metrics. Meta bet on both ends of that problem in the same period: this project attacked how fast a well-supported offer could be built and approved, while <Link href="/work/meta-immersive-offers" className={styles.inlineLink}>Immersive Offers</Link> attacked how the offer itself was delivered to the candidate.
+                    Every decline means running the funnel again, which is why the offer got heavy investment. Slow extensions track with lower acceptance rates and worse candidate sentiment. Meta bet on both ends of that in the same period: this project on how fast a well-supported offer could be built and approved, <Link href="/work/meta-immersive-offers" className={styles.inlineLink}>Immersive Offers</Link> on how the offer reached the candidate.
                   </p>
 
                   <p>
-                    All of it was about to be amplified by the scale of Meta&apos;s hiring ambitions: thousands of recruiters, millions of candidates, tens of thousands of offers, and a hiring target in the tens of thousands for 2022 alone.
+                    And it was about to scale: thousands of recruiters, millions of candidates, tens of thousands of offers, and a hiring target in the tens of thousands for 2022 alone.
                   </p>
 
                   <p>
-                    I was the product designer for the Recruiting Products Offers team, the team that owns everything between hire decision and a signed offer letter. Structured compensation capture was our P0 for H1 2022.
+                    I was the product designer on the Recruiting Products Offers team, which owns everything between hire decision and signed offer letter. This was our P0 for H1 2022.
                   </p>
 
-                  <p><strong>The dimensions of the problem:</strong></p>
+                  <p><strong>The shape of it:</strong></p>
 
                   <ul>
-                    <li>A P0 for H1 2022, spanning multiple orgs</li>
                     <li>Core team: 1 product designer (me), 1 PM, 1 PMM, 1 researcher, 1 data scientist, 1 content designer, 6 engineers</li>
-                    <li>Partner teams: the Compensation Analysis team (PM, designer, engineer and comp analyst SMEs) and the recruiting business (a leadership stakeholder and 30+ recruiter SMEs)</li>
-                    <li>Three very different user types with competing needs, meeting inside one flow</li>
+                    <li>Partners: the Compensation Analysis team, plus 30+ recruiter SMEs and the comp analyst SMEs</li>
+                    <li>Three user types with competing needs, meeting inside one flow</li>
                   </ul>
 
                   <Fig
@@ -188,13 +187,13 @@ export default function MetaOffersExpandedCaseStudy() {
                     alt="The recruiter-facing ATS, showing an offer draft"
                     width={2048}
                     height={1456}
-                    caption="The recruiter-facing surface: the internal ATS where offers are drafted, approved, and extended. All candidate data shown across these mocks is fictional."
+                    caption="The recruiter-facing surface: the ATS where offers are drafted, approved, and extended. All candidate data shown is fictional."
                   />
 
                   <h2 id="research">The research</h2>
 
                   <p>
-                    I started by mapping the offer stage end to end. The velocity data told a stark story. A standard offer could be extended in about a business day, an offer requiring comp approval took days, and one requiring multiple approvals took over a week. Working with our data scientist, I blueprinted the path from hire decision to signed offer letter across candidate, touchpoint, front stage, tooling, pains, and opportunities.
+                    With our data scientist I mapped the offer stage end to end: hire decision to signed letter, across candidate, touchpoint, front stage, tooling, pains, and opportunities. The velocity data was stark. A standard offer went out in about a business day, one needing comp approval took days, and one needing multiple approvals took over a week.
                   </p>
 
                   <Fig
@@ -202,7 +201,7 @@ export default function MetaOffersExpandedCaseStudy() {
                     alt="Journey map of the offer stage, from hire decision to signed letter"
                     width={2048}
                     height={1151}
-                    caption="The offer-stage map: hire decision, team matching, offer extend, acceptance, signed letter, with pains and opportunities at every phase. Cycle-time figures redacted."
+                    caption="The offer-stage map, with pains and opportunities at every phase. Cycle-time figures redacted."
                   />
 
                   <Fig
@@ -210,17 +209,17 @@ export default function MetaOffersExpandedCaseStudy() {
                     alt="Concept chart: offer velocity against acceptance rate"
                     width={1500}
                     height={844}
-                    caption="The core dynamic: every additional comp proposal round pushes offer extension velocity down, and acceptance rates fall with it."
+                    caption="Every extra comp proposal round pushes extension velocity down, and acceptance rates fall with it."
                   />
 
                   <h2 id="tension">The tension at the centre</h2>
 
                   <p>
-                    Three user types collide at this moment, and they all want the same thing. The candidate wants the job. The recruiter wants the accept. The comp analyst wants an offer that is defensible and lands. A signed offer is the one outcome all three are measured on.
+                    Three user types collide here, and all three want the same thing. The candidate wants the job, the recruiter wants the accept, the analyst wants an offer that is defensible and lands.
                   </p>
 
                   <p>
-                    They pull in opposite directions to get there. Candidates disclose as little as they can and optimise for maximum earnings, because what they withhold is leverage. Recruiters optimise for processing speed and accepts, so they take what the conversation gives them and move. Comp analysts work formulaically from data, and cannot approve what they cannot verify. Each of those behaviours is rational on its own. Put them in one flow and they produce a queue nobody intends.
+                    They pull in opposite directions to get there. Candidates disclose as little as they can, because what they withhold is leverage. Recruiters are measured on speed, so they take what the conversation gives them and move. Analysts work from data, and cannot approve what they cannot verify. Each behaviour is rational alone. Together they produce a queue nobody intends.
                   </p>
 
                   <Fig
@@ -228,11 +227,11 @@ export default function MetaOffersExpandedCaseStudy() {
                     alt="Venn diagram of candidate, recruiter, and compensation analyst needs"
                     width={1500}
                     height={844}
-                    caption="The same goal, three different routes to it. Candidates provide less information and optimise for maximum earnings. Recruiters optimise processing for offer accepts. Comp analysts determine compensation through a data-based, formulaic approach. A signed offer lives at the intersection, and only at the intersection."
+                    caption="The same goal, three routes to it. A signed offer lives at the intersection, and only at the intersection."
                   />
 
                   <p>
-                    That is what made this a design problem rather than a form problem. A form serves one user. This flow had to make a candidate comfortable disclosing, make a recruiter faster for doing it properly rather than slower, and let an analyst trust the result without a follow-up. Optimise for any one of the three and it fails the other two. Ask the candidate for everything and the recruiter loses the room. Ask for nothing and the analyst sends it back. Every later decision, what to require, what to validate, what to define in place, and what to ask only when relevant, was a judgement about where in that triangle to spend the effort.
+                    That is what made this a design problem rather than a form problem. A form serves one user. This one had to make a candidate comfortable disclosing, make a recruiter faster for doing it properly, and let an analyst trust the result without a follow-up. Ask the candidate for everything and the recruiter loses the room. Ask for nothing and the analyst sends it back. Every later decision was a judgement about where in that triangle to spend the effort.
                   </p>
 
                   <Fig
@@ -240,11 +239,11 @@ export default function MetaOffersExpandedCaseStudy() {
                     alt="Scenario A, a standard offer, next to scenario B, an above-band offer"
                     width={1500}
                     height={844}
-                    caption="Scenario A, the standard offer, is about 40% of accepted offers: no approval, out in as fast as one business day. Scenario B, above band, is about 60%: evidence required, approval required, extended on average 5 to 13 times slower."
+                    caption="Standard offers, about 40% of accepted offers: no approval, out in a business day. Above band, about 60%: evidence and approval required, 5 to 13 times slower."
                   />
 
                   <p>
-                    <strong>Why was it so slow?</strong> Compensation is genuinely complex. Recruiters were not comp experts, candidates withheld important information, and compliance guidelines were unclear. The tooling made it worse: missing fields, no validation, and at the heart of it a single free-form notes box where recruiters typed everything they knew about a candidate&apos;s current and competing compensation.
+                    <strong>Why so slow?</strong> Compensation is complex, recruiters were not comp experts, candidates withheld information, and compliance guidance was unclear. The tooling made it worse: missing fields, no validation, and at the heart of it one free-form notes box for everything a recruiter knew about a candidate&apos;s current and competing compensation.
                   </p>
 
                   <Fig
@@ -252,7 +251,7 @@ export default function MetaOffersExpandedCaseStudy() {
                     alt="The old approval request form: a free-text notes box"
                     width={674}
                     height={472}
-                    caption="The before: a free-text notes box with a checklist of questions recruiters were meant to answer from memory. Approver names redacted."
+                    caption="The before: a free-text notes box and a checklist recruiters answered from memory. Approver names redacted."
                   />
 
                   <Fig
@@ -260,11 +259,11 @@ export default function MetaOffersExpandedCaseStudy() {
                     alt="The old compensation capture form, with unvalidated fields"
                     width={840}
                     height={812}
-                    caption="Fields existed, but nothing was validated. An empty input could mean 0%, did not disclose, or none given by company. Each ambiguity triggered a request for more information."
+                    caption="Fields existed, nothing was validated. An empty input could mean 0%, did not disclose, or none given by company. Every ambiguity triggered a follow-up."
                   />
 
                   <p>
-                    Consider what a comp analyst had to work with. Two recruiters describing the <em>same</em> candidate would write two completely different paragraphs, with different facts, different omissions, and different formats, which an analyst then had to parse by hand into the fields they actually needed.
+                    Two recruiters describing the <em>same</em> candidate would write two completely different paragraphs, which an analyst then had to parse by hand into the fields they needed.
                   </p>
 
                   <Fig
@@ -272,11 +271,11 @@ export default function MetaOffersExpandedCaseStudy() {
                     alt="Two free-text candidate descriptions beside the structured fields extracted from them"
                     width={1500}
                     height={844}
-                    caption="Two free-text descriptions of the same illustrative candidate, and the structured fields the analyst has to extract from them. Every gap becomes a follow-up question."
+                    caption="Two free-text descriptions of the same candidate, and the fields an analyst has to extract. Every gap becomes a follow-up."
                   />
 
                   <p>
-                    When the data did not hold up, the proposal bounced. The analyst requested more information, the recruiter went back to the candidate, the candidate responded, and the proposal re-entered the queue. A repeating rejection loop, with the candidate waiting at the end of it.
+                    When the data did not hold up, the proposal bounced. The analyst asked for more, the recruiter went back to the candidate, and the proposal rejoined the queue. A repeating rejection loop, with the candidate waiting at the end of it.
                   </p>
 
                   <Fig
@@ -284,13 +283,13 @@ export default function MetaOffersExpandedCaseStudy() {
                     alt="Diagram of the repeating rejection loop between candidate, recruiter, and comp partner"
                     width={2048}
                     height={696}
-                    caption="The repeating rejection loop between candidate, recruiter, and comp partner. Every cycle adds days to the offer."
+                    caption="The repeating loop between candidate, recruiter, and comp partner. Every cycle adds days."
                   />
 
                   <h2 id="approach">Solving the problem</h2>
 
                   <p>
-                    I led rounds of requirement gathering between the engineers, recruiters, and comp analysts, and aligned the group on four goals: increase offer extension velocity, reduce requests for additional information, increase request consistency, and improve request analytics through structured data. We carried a bonus objective too, raising the design quality of the surface by implementing our internal design system.
+                    I ran requirement gathering between the engineers, recruiters, and comp analysts, and aligned everyone on four goals: faster offer extension, fewer requests for more information, more consistent requests, and the approval analytics structured data would finally make possible. We took on a fifth: rebuild the surface on our internal design system.
                   </p>
 
                   <Fig
@@ -298,7 +297,7 @@ export default function MetaOffersExpandedCaseStudy() {
                     alt="FigJam board from requirement gathering, with story-mapped themes and epics"
                     width={2048}
                     height={1100}
-                    caption="The project board from requirement gathering: story-mapped themes, epics, and capture dimensions (company, role, salary, sign-on, equity) built with recruiters and comp analysts."
+                    caption="The requirement-gathering board: themes, epics, and capture dimensions, built with recruiters and comp analysts."
                   />
 
                   <Fig
@@ -306,11 +305,11 @@ export default function MetaOffersExpandedCaseStudy() {
                     alt="Pages from the discovery document"
                     width={2048}
                     height={1826}
-                    caption="The discovery doc I partnered on: problem statement, baseline statistics, pain points, and solution options, each scored by risk and expected impact."
+                    caption="The discovery doc: problem statement, pain points, and solution options scored by risk and impact."
                   />
 
                   <p>
-                    Recruiters are not comp experts, and candidates use different words for the same thing. So we wrote a shared vocabulary, with precise definitions for every capture field, from equity types to forfeited-cash categories, that would later be embedded directly into the UI.
+                    Recruiters are not comp experts, and candidates use different words for the same thing. So we wrote a shared vocabulary: a precise definition for every capture field, from equity types to forfeited cash, later embedded in the UI itself.
                   </p>
 
                   <Fig
@@ -318,17 +317,17 @@ export default function MetaOffersExpandedCaseStudy() {
                     alt="Table of structured compensation definitions"
                     width={536}
                     height={641}
-                    caption="Structured compensation definitions: every field, its input type, and its plain-language definition. One consistent language for recruiters, candidates, and analysts."
+                    caption="Every field, its input type, and its plain-language definition. One language for recruiters, candidates, and analysts."
                   />
 
-                  <p>From there I produced a series of prototypes that evolved through user feedback.</p>
+                  <p>Prototypes followed, and evolved through user feedback.</p>
 
                   <Fig
                     src="process-design-iterations.png"
                     alt="Composite of design iterations, from a dense capture table to a guided flow"
                     width={1500}
                     height={844}
-                    caption="Iterations along the way: from a dense spreadsheet-style capture table to a guided, dynamic flow."
+                    caption="From a dense spreadsheet-style capture table to a guided, dynamic flow."
                   />
 
                   <Fig
@@ -336,16 +335,16 @@ export default function MetaOffersExpandedCaseStudy() {
                     alt="Chart of validation survey results from recruiters"
                     width={949}
                     height={559}
-                    caption="Validation: I ran design validation sessions and a survey with recruiters. The large majority rated the new flow fast, clear, and easy to use, and the detractor themes, information overload and nuance capture, drove the next iteration."
+                    caption="Validation sessions and a survey with recruiters. Most rated the new flow fast, clear, and easy to use. The detractor themes drove the next iteration."
                   />
 
                   <p>
-                    The testing surfaced a real tension. Recruiters liked the high level of capture detail, but flagged information overload and worried that a rigid form could not capture the nuance of every candidate scenario. The answer was a <em>dynamic</em> flow: ask only what is relevant, educate as you go, and validate everything.
+                    Testing surfaced a real tension. Recruiters liked the level of detail, but flagged information overload and doubted a rigid form could hold the nuance of every candidate. The answer was a <em>dynamic</em> flow: ask only what is relevant, educate as you go, validate everything.
                   </p>
 
                   <h2 id="solution">The solution</h2>
 
-                  <p>Each change was grounded in a rationale the whole team could point to.</p>
+                  <p>Every change had a rationale the whole team could point to.</p>
 
                   <Fig
                     src="flow-one-click-extension.gif"
@@ -353,7 +352,7 @@ export default function MetaOffersExpandedCaseStudy() {
                     width={1799}
                     height={1279}
                     animated
-                    caption="Enabled 1-click offer extension with a default standard offer draft. Less friction means faster extensions and improved acceptance rates."
+                    caption="1-click extension from a default standard offer draft. Less friction, faster extensions."
                   />
 
                   <Fig
@@ -362,7 +361,7 @@ export default function MetaOffersExpandedCaseStudy() {
                     width={1799}
                     height={1280}
                     animated
-                    caption="Required intentional selection to start the custom offer flow. Standard and custom paths are cleanly separated, which improved process clarity."
+                    caption="Starting a custom offer takes an intentional selection, which separates the fast path from the slow one."
                   />
 
                   <Fig
@@ -371,7 +370,7 @@ export default function MetaOffersExpandedCaseStudy() {
                     width={1799}
                     height={1280}
                     animated
-                    caption="Enforced submission of competing data before an above-band proposal can proceed, which reduces unsupported submissions."
+                    caption="Competing data must be submitted before an above-band proposal can proceed."
                   />
 
                   <Fig
@@ -380,7 +379,7 @@ export default function MetaOffersExpandedCaseStudy() {
                     width={1799}
                     height={1280}
                     animated
-                    caption="The centrepiece: a structured, dynamic comp capture flow. Better data quality and consistency, and a 51% increase in validated comp data."
+                    caption="The centrepiece: a structured, dynamic capture flow. 51% more validated comp data."
                   />
 
                   <Fig
@@ -388,7 +387,7 @@ export default function MetaOffersExpandedCaseStudy() {
                     alt="Salary and bonus capture step, with validated inputs"
                     width={1296}
                     height={1352}
-                    caption="Every input validated: bonus captured as a target percent or a fixed value, with explicit not offered, did not disclose, and undisclosed states, so an empty field can never be ambiguous again."
+                    caption="Bonus captured as a target percent or a fixed value, with explicit not offered, did not disclose, and undisclosed states. An empty field can never be ambiguous again."
                   />
 
                   <Fig
@@ -396,7 +395,7 @@ export default function MetaOffersExpandedCaseStudy() {
                     alt="Equity capture step, broken into guided sub-steps"
                     width={1300}
                     height={1470}
-                    caption="Equity, the hardest data to capture and the biggest source of analyst follow-ups, broken into guided steps: RSUs against options, vesting in the next 12 months, forfeited value."
+                    caption="Equity, the biggest source of analyst follow-ups, in guided steps: RSUs against options, vesting in the next 12 months, forfeited value."
                   />
 
                   <Fig
@@ -404,7 +403,7 @@ export default function MetaOffersExpandedCaseStudy() {
                     alt="Grid of tailored capture paths by compensation data type"
                     width={1456}
                     height={1287}
-                    caption="Tailored capture by data type: current compensation, counter offers, candidate expectations, and competing initial and counter offers each get their own path. Recruiters only see what applies."
+                    caption="Tailored capture by data type, so a recruiter only sees the path that applies."
                   />
 
                   <Fig
@@ -412,7 +411,7 @@ export default function MetaOffersExpandedCaseStudy() {
                     alt="Compensation definitions and sub-labels embedded in the capture UI"
                     width={1800}
                     height={1280}
-                    caption="Definitions and sub-labels embedded directly in the UI. Educating recruiters at the source reinforced consistent language with candidates."
+                    caption="Definitions and sub-labels in the UI itself, teaching recruiters at the source."
                   />
 
                   <Fig
@@ -421,7 +420,7 @@ export default function MetaOffersExpandedCaseStudy() {
                     width={1799}
                     height={1280}
                     animated
-                    caption="Competing data validated against the proposal itself, so proposals align with the evidence submitted. This contributed to a double-digit percentage reduction in comp submissions."
+                    caption="Competing data validated against the proposal, so proposals align with the evidence submitted."
                   />
 
                   <Fig
@@ -429,7 +428,7 @@ export default function MetaOffersExpandedCaseStudy() {
                     alt="Structured compensation data displayed in the ATS offer draft"
                     width={1798}
                     height={1277}
-                    caption="The after: high-quality, structured data flowing into the offer draft."
+                    caption="The after: structured data flowing into the offer draft."
                   />
 
                   <Fig
@@ -437,11 +436,11 @@ export default function MetaOffersExpandedCaseStudy() {
                     alt="Wireframe of the compensation analyst dashboard"
                     width={1500}
                     height={844}
-                    caption="Downstream, comp analysts consume clean, consistent, structured requests: informed decisions with efficiency, and data that can finally power approval analytics."
+                    caption="Downstream, analysts consume clean, consistent requests, and data that can power approval analytics."
                   />
 
                   <p>
-                    I also contributed a longer-term vision for how structured comp data could surface in the candidate-facing experience.
+                    I also pitched a longer-term vision: structured comp data surfacing in the candidate experience.
                   </p>
 
                   <Fig
@@ -450,16 +449,16 @@ export default function MetaOffersExpandedCaseStudy() {
                     width={1889}
                     height={1227}
                     animated
-                    caption="Vision work: the offer surfaced in Candidate Profile, from you have a job offer through review and acceptance."
+                    caption="Vision work: the offer surfaced in Candidate Profile, from notification through acceptance."
                   />
 
                   <h2 id="pre-launch">Pre-launch</h2>
 
                   <ul>
-                    <li>Ran dogfooding (beta testing) with 30+ recruiters using <strong>real offers</strong></li>
-                    <li>Led design QA, documenting and flagging critical UX and UI issues</li>
-                    <li>Collaborated with our content designer to complete the content design artefacts</li>
-                    <li>Saw through the compliance reviews and approval processes</li>
+                    <li>Dogfooded with 30+ recruiters on <strong>real offers</strong></li>
+                    <li>Led design QA, flagging critical UX and UI issues</li>
+                    <li>Completed the content design artefacts with our content designer</li>
+                    <li>Saw through compliance review and approval</li>
                   </ul>
 
                   <Fig
@@ -467,7 +466,7 @@ export default function MetaOffersExpandedCaseStudy() {
                     alt="The internal dogfooding and feedback group"
                     width={2048}
                     height={1423}
-                    caption="The dogfooding and feedback group: recruiters opted in as gatekeepers, used the new flow with live candidates, and reported issues in one place. Names redacted."
+                    caption="The dogfooding group: recruiters used the new flow with live candidates and reported issues in one place. Names redacted."
                   />
 
                   <Fig
@@ -475,13 +474,13 @@ export default function MetaOffersExpandedCaseStudy() {
                     alt="The capture flow running on a laptop during testing"
                     width={2048}
                     height={1536}
-                    caption="The flow in situ during testing. Test data only, browser chrome blurred."
+                    caption="The flow in situ during testing."
                   />
 
                   <h2 id="impact">Impact</h2>
 
                   <p>
-                    Launched in July 2022 to the entire recruiting org: thousands of recruiters, plus the comp analyst team. Every number below is measured against the same flow it replaced.
+                    Launched in July 2022 to the entire recruiting org: thousands of recruiters, plus the comp analyst team. Every number is measured against the flow it replaced.
                   </p>
 
                   <div className={styles.statBand}>
@@ -518,12 +517,12 @@ export default function MetaOffersExpandedCaseStudy() {
                   <Alert
                     variant="positive"
                     title="First approvals went from days to same day."
-                    description="This is the one that changed the day-to-day. A recruiter who submitted a supported proposal got an answer inside the same day rather than at the end of the week, which is the difference between a candidate deciding with an offer in hand and a candidate deciding without one."
+                    description="A recruiter who submitted a supported proposal got an answer the same day rather than at the end of the week. That is the difference between a candidate deciding with an offer in hand and deciding without one."
                     className={styles.calloutAlert}
                   />
 
                   <p>
-                    One metric did not move. Offers requiring two or more approvals stayed slow, slightly slower by a single-digit percentage. Those are the genuinely hard negotiations, and they became the target of the next phase of work.
+                    One metric did not move. Offers needing two or more approvals stayed slow, slightly slower by a single-digit percentage. Those are the genuinely hard negotiations, and they became the next phase of work.
                   </p>
 
                 </article>
