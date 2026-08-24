@@ -75,22 +75,19 @@ type SpecItem = {
 
 /** A row of component variants shown side by side under one caption, each
  *  labelled. The system was specified as parts that compose, so the parts are
- *  shown composing rather than stacked one full-width figure at a time.
- *  `wide` switches from a bottom-aligned rail row to a grid, for cards. */
+ *  shown composing rather than stacked one full-width figure at a time. */
 function SpecRow({
   items,
   caption,
-  wide = false,
 }: {
   items: SpecItem[];
   caption: React.ReactNode;
-  wide?: boolean;
 }) {
   const zoom = useContext(ZoomContext);
 
   return (
     <figure className={styles.specRow}>
-      <div className={`${styles.specStage} ${wide ? styles.specStageWide : ""}`}>
+      <div className={styles.specStage}>
         {items.map((item) => (
           <button
             key={item.src}
@@ -355,17 +352,8 @@ export default function MetaCareerProfileCaseStudy() {
                     caption="The mechanic the whole system hangs on: the active timeline state determines what appears in the content area. Select a future stage and the page tells you how to prepare for it, select the active one and it tells you what to do right now."
                   />
 
-                  <SpecRow
-                    wide
-                    caption="Primary content cards: high priority, always above the fold, centre column. One container with a swappable payload, which is why a job list and an interview agenda occupy the same slot at different points in the journey without a new template."
-                    items={[
-                      { src: "card-job-recommendations.png", label: "Prospective: job recommendations", alt: "A primary content card listing job recommendations", width: 1232, height: 1044 },
-                      { src: "card-whats-next.png", label: "Active: what’s next", alt: "A primary content card showing the upcoming interview agenda", width: 1232, height: 992 },
-                    ]}
-                  />
-
                   <p>
-                    Secondary cards take the right rail, lower-priority cards sit below the fold, and flex cards resize to whatever the candidate’s type, seniority and stage call for. One template serves a prospect and a signed hire.
+                    The cards work the same way. Primary cards sit above the fold in the centre column, secondary cards take the right rail, lower-priority cards fall below, and flex cards resize to whatever the candidate’s type, seniority and stage call for. Each is one container with a swappable payload, which is why a job list and an interview agenda can occupy the same slot at different points in the journey, and why one template serves a prospect and a signed hire.
                   </p>
 
                   <h2 id="design-system">What to build it in</h2>
