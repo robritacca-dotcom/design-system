@@ -274,6 +274,13 @@ export default function MetaOffersExpandedCaseStudy() {
                     caption="Two free-text descriptions of the same candidate, and the fields an analyst has to extract. Every gap becomes a follow-up."
                   />
 
+                  <Alert
+                    variant="info"
+                    title="This was 2021, before LLMs were a practical option."
+                    description="Today the first instinct would be to point a model at the free text and have it extract the fields. That was not on the table, so the structure had to come from the capture itself. It is also the better ordering: a model infers what a recruiter meant, a validated field records it."
+                    className={styles.calloutAlert}
+                  />
+
                   <p>
                     When the data did not hold up, the proposal bounced. The analyst asked for more, the recruiter went back to the candidate, and the proposal rejoined the queue. A repeating rejection loop, with the candidate waiting at the end of it.
                   </p>
