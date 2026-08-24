@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { pageOpenGraph } from "@/config/navigation";
 import { buildCaseStudyJsonLd } from "@/lib/structuredData";
 
-const title = "Meta: Offer Creation Flow";
+const title = "Meta: Structured compensation capture";
 const description =
-  "Case study: improving the velocity between hire decision and offer extension at Meta. 9% faster overall offer velocity, 23.7% reduction in comp approval time, live since July 2022 to 8,000+ recruiters.";
+  "Case study: replacing Meta's free-text compensation notes with structured, validated capture. 23.7% faster comp approvals, 51% more validated data captured, live since July 2022 to the whole recruiting org.";
 
 export const metadata: Metadata = {
   title,
