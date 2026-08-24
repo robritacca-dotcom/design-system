@@ -205,38 +205,90 @@
   }
 }
 
-/* ============================================
-   INLINE FIGURE — image + caption
-   ============================================ */
-.figure {
-  margin: var(--primitive-gap-md) 0 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--primitive-gap-sm);
+.calloutAlert {
+  margin-top: var(--primitive-gap-md);
 }
 
-/* Tall stills (the campus photo, the discovery doc) would otherwise run for
+/* ============================================
+   INLINE FIGURE
+   The library Figure: caption inside the frame,
+   click to open the shot in the lightbox.
+   ============================================ */
+.zoomFigure {
+  margin-top: var(--primitive-gap-md);
+  border: 1px solid var(--color-bg-container-border);
+}
+
+/* Tall stills (the discovery doc, the portrait mocks) would otherwise run for
    most of a screen on their own, so height is capped and the ratio kept. */
-.figureImage {
+.zoomFigure :global(.ds-figure__media) {
+  display: flex;
+  justify-content: center;
+}
+
+.zoomFigure :global(.ds-figure__media img) {
   width: auto;
   max-width: 100%;
-  height: auto;
   max-height: 640px;
-  display: block;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--color-bg-container-border);
-  background: var(--color-bg-container-secondary);
 }
 
-.figureCaption {
-  align-self: stretch;
-  font-family: var(--font-paragraph-sm-family);
-  font-size: var(--font-paragraph-sm-size);
-  font-weight: var(--font-paragraph-sm-weight);
-  line-height: var(--font-paragraph-sm-line-height);
-  color: var(--color-text-tertiary);
-  margin: 0;
+/* ============================================
+   LIGHTBOX
+   ============================================ */
+.lightboxOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(5, 5, 5, 0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--primitive-gap-xl);
+  cursor: zoom-out;
+  animation: lightboxFadeIn var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+@keyframes lightboxFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.lightboxImg {
+  max-width: 90vw;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  border-radius: var(--radius-md);
+  display: block;
+  cursor: default;
+  box-shadow: 0 24px 64px rgba(5, 5, 5, 0.5);
+}
+
+.lightboxClose {
+  position: fixed;
+  top: var(--primitive-gap-lg);
+  right: var(--primitive-gap-lg);
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  border: none;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background var(--motion-duration-fast) var(--motion-ease-standard);
+  z-index: 10000;
+}
+
+.lightboxClose:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.lightboxClose :global(.material-symbols-rounded) {
+  --icon-size: var(--icon-size-sm);
+  line-height: 1;
 }
 
 .inlineLink {

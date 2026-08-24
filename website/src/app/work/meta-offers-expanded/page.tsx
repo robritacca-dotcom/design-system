@@ -1,5 +1,6 @@
 "use client";
 
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { CoverImage } from "@/components/covers/CoverImage";
@@ -8,6 +9,8 @@ import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import SampleCaseStudyCard from "../../../components/SampleCaseStudyCard/SampleCaseStudyCard";
 import { Stat } from "@robr0/design-system/components/Stat/Stat";
+import { Alert } from "@robr0/design-system/components/Alert/Alert";
+import { Figure } from "@robr0/design-system/components/Figure/Figure";
 import { getSidebarLinks, workSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
@@ -18,7 +21,13 @@ const { sidebarLinks } = getSidebarLinks(
 
 const IMG = "/images/meta-offers-expanded";
 
-/** One inline figure: image or animated gif, plus its caption. */
+type Lightbox = { src: string; alt: string } | null;
+
+/** Every figure on the page opens the same lightbox, so the handler rides
+ *  a context rather than a prop threaded through thirty call sites. */
+const ZoomContext = createContext<(src: string, alt: string) => void>(() => {});
+
+/** One inline figure: image or animated gif, its caption, and click to zoom. */
 function Fig({
   src,
   alt,
@@ -34,24 +43,45 @@ function Fig({
   caption: React.ReactNode;
   animated?: boolean;
 }) {
+  const zoom = useContext(ZoomContext);
+  const fullSrc = `${IMG}/${src}`;
+
   return (
-    <figure className={styles.figure}>
+    <Figure
+      caption={caption}
+      onClick={() => zoom(fullSrc, alt)}
+      className={styles.zoomFigure}
+    >
       <Image
-        src={`${IMG}/${src}`}
+        src={fullSrc}
         alt={alt}
         width={width}
         height={height}
         unoptimized={animated}
-        className={styles.figureImage}
       />
-      <figcaption className={styles.figureCaption}>{caption}</figcaption>
-    </figure>
+    </Figure>
   );
 }
 
 export default function MetaOffersExpandedCaseStudy() {
+  const [lightbox, setLightbox] = useState<Lightbox>(null);
+
+  const closeLightbox = useCallback(() => setLightbox(null), []);
+  const zoom = useCallback((src: string, alt: string) => setLightbox({ src, alt }), []);
+
+  useEffect(() => {
+    if (!lightbox) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") closeLightbox(); };
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [lightbox, closeLightbox]);
+
   return (
-    <>
+    <ZoomContext.Provider value={zoom}>
       <MegaNav />
 
       <div className={styles.dsLayout}>
@@ -483,18 +513,14 @@ export default function MetaOffersExpandedCaseStudy() {
                       trend="up"
                       delta="hire decision to offer out"
                     />
-                    <Stat
-                      size="large"
-                      value="Same-day"
-                      label="First approvals"
-                      trend="up"
-                      delta="previously days"
-                    />
                   </div>
 
-                  <p>
-                    The first-approval number is the one that changed the day-to-day. A recruiter who submitted a supported proposal got an answer inside the same day rather than at the end of the week, which is the difference between a candidate deciding with an offer in hand and a candidate deciding without one.
-                  </p>
+                  <Alert
+                    variant="positive"
+                    title="First approvals went from days to same day."
+                    description="This is the one that changed the day-to-day. A recruiter who submitted a supported proposal got an answer inside the same day rather than at the end of the week, which is the difference between a candidate deciding with an offer in hand and a candidate deciding without one."
+                    className={styles.calloutAlert}
+                  />
 
                   <p>
                     One metric did not move. Offers requiring two or more approvals stayed slow, slightly slower by a single-digit percentage. Those are the genuinely hard negotiations, and they became the target of the next phase of work.
@@ -566,6 +592,27 @@ export default function MetaOffersExpandedCaseStudy() {
         </main>
       </div>
 
-    </>
+      {lightbox && (
+        <div
+          className={styles.lightboxOverlay}
+          onClick={closeLightbox}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Image preview"
+        >
+          <button className={styles.lightboxClose} onClick={closeLightbox} aria-label="Close preview">
+            <span className="material-symbols-rounded">close</span>
+          </button>
+          {/* eslint-disable-next-line @next/next/no-img-element -- the lightbox
+              shows the original asset at full size, including animated gifs. */}
+          <img
+            src={lightbox.src}
+            alt={lightbox.alt}
+            className={styles.lightboxImg}
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
+    </ZoomContext.Provider>
   );
 }
