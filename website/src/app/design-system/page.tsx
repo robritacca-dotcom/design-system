@@ -33,6 +33,8 @@ import {
   GitHubIcon,
   StorybookIcon,
 } from "../../components/BrandIcons/BrandIcons";
+import { Card } from "@robr0/design-system/components/Card/Card";
+import { CardStack } from "@robr0/design-system/components/CardStack/CardStack";
 import { Checkbox } from "@robr0/design-system/components/Checkbox/Checkbox";
 import { Chip } from "@robr0/design-system/components/Chip/Chip";
 import { CircularButton } from "@robr0/design-system/components/CircularButton/CircularButton";
@@ -45,8 +47,15 @@ import { DateInput } from "@robr0/design-system/components/DateInput/DateInput";
 import { DatePicker } from "@robr0/design-system/components/DatePicker/DatePicker";
 import { Dropdown } from "@robr0/design-system/components/Dropdown/Dropdown";
 import { EmptyState } from "@robr0/design-system/components/EmptyState/EmptyState";
+import {
+  Globe,
+  type GlobeArc,
+  type GlobePoint,
+} from "@robr0/design-system/components/Globe/Globe";
 import { Input } from "@robr0/design-system/components/Input/Input";
 import { Kbd } from "@robr0/design-system/components/Kbd/Kbd";
+import { MapCallout } from "@robr0/design-system/components/MapCallout/MapCallout";
+import { MapLegend } from "@robr0/design-system/components/MapLegend/MapLegend";
 import { Pagination } from "@robr0/design-system/components/Pagination/Pagination";
 import { ProgressBar } from "@robr0/design-system/components/ProgressBar/ProgressBar";
 import { SegmentedControl } from "@robr0/design-system/components/SegmentedControl/SegmentedControl";
@@ -172,6 +181,35 @@ const ANSWER_ACTIONS = [
 const SCHEDULE_OPTIONS = [
   { value: "weekly", label: "Weekly", description: "Every Friday, balances over $10" },
   { value: "monthly", label: "Monthly", description: "On the 15th of each month" },
+];
+
+/* Client cities for the globe card — one arc per invoice, traced home to
+   the head office. Amounts match the invoice list card. */
+const PAYMENT_ROUTES = [
+  { id: "london", lat: 51.5, lng: -0.12, label: "LDN", client: "Acme Ltd", amount: "$12,400.00" },
+  { id: "singapore", lat: 1.35, lng: 103.82, label: "SIN", client: "Northwind", amount: "$8,150.00" },
+  { id: "sao-paulo", lat: -23.55, lng: -46.63, label: "GRU", client: "Globex", amount: "$21,090.00" },
+  { id: "sydney", lat: -33.86, lng: 151.2, label: "SYD", client: "Initech", amount: "$3,600.00" },
+];
+
+const GLOBE_POINTS: GlobePoint[] = [
+  { id: "toronto", lat: 43.65, lng: -79.38, label: "YYZ", kind: "anchor" },
+  ...PAYMENT_ROUTES.map(
+    (r): GlobePoint => ({ id: r.id, lat: r.lat, lng: r.lng, label: r.label, kind: "point" })
+  ),
+];
+
+const GLOBE_ARCS: GlobeArc[] = PAYMENT_ROUTES.map((r, i) => ({
+  from: r.id,
+  to: "toronto",
+  altitude: i % 2 ? 0.3 : undefined,
+}));
+
+/* Virtual cards for the deck — same team as the activity card. */
+const TEAM_CARDS = [
+  { name: "Danilo Sousa", number: "•••• 4021", limit: "$2,000 monthly limit" },
+  { name: "Zahra Ambessa", number: "•••• 8874", limit: "$1,200 monthly limit" },
+  { name: "Jasper Eriksson", number: "•••• 1149", limit: "$500 monthly limit" },
 ];
 
 // A fixed five months of activity for the contribution graph card — enough
@@ -800,6 +838,43 @@ export default function DesignSystemPage() {
           {/* -------- right column -------- */}
           <EscalatorColumn direction="down" duration="340s" render={() => (<>
             <DemoCard
+              heading="Where payments come from"
+              sub="Hover a city for the client and the invoice it settled."
+              links={[
+                { label: "Globe", href: "/components/globe" },
+                { label: "Map callout", href: "/components/map-callout" },
+                { label: "Map legend", href: "/components/map-legend" },
+              ]}
+            >
+              <Globe
+                points={GLOBE_POINTS}
+                arcs={GLOBE_ARCS}
+                defaultRotation={[-45, -25]}
+                label="Client cities and the payment routes home"
+                renderCallout={(point) => {
+                  const route = PAYMENT_ROUTES.find((r) => r.id === point.id);
+                  return (
+                    <MapCallout
+                      title={point.label ?? point.id}
+                      lines={
+                        route
+                          ? [route.client, route.amount]
+                          : ["Head office", `${PAYMENT_ROUTES.length} clients`]
+                      }
+                    />
+                  );
+                }}
+              />
+              <MapLegend
+                items={[
+                  { glyph: "anchor", label: "Head office" },
+                  { glyph: "point", label: "Client" },
+                  { glyph: "arc", label: "Payment route" },
+                ]}
+              />
+            </DemoCard>
+
+            <DemoCard
               heading="Portfolio value"
               sub="Against the index, in thousands."
               links={[{ label: "Line chart", href: "/components/line-chart" }]}
@@ -849,6 +924,26 @@ export default function DesignSystemPage() {
                 caption="Top holdings by market value"
                 captionHidden
               />
+            </DemoCard>
+
+            <DemoCard
+              heading="Team cards"
+              sub="Click the deck to flip through the virtual cards you've issued."
+              links={[
+                { label: "Card stack", href: "/components/card-stack" },
+                { label: "Card", href: "/components/card" },
+              ]}
+            >
+              <CardStack label="Virtual team cards">
+                {TEAM_CARDS.map((c) => (
+                  <Card key={c.name} title={c.name}>
+                    <div className={styles.teamCardBody}>
+                      <span className={styles.teamCardNumber}>{c.number}</span>
+                      <Badge variant="neutral" label={c.limit} />
+                    </div>
+                  </Card>
+                ))}
+              </CardStack>
             </DemoCard>
 
             <DemoCard
