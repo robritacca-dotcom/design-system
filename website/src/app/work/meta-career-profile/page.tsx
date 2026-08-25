@@ -145,7 +145,7 @@ export default function MetaCareerProfileCaseStudy() {
 
           {/* Subtitle / dek */}
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            A design team had spent a phase exploring what Meta’s candidate platform could become. I joined for phase two, where the job was no longer to explore. It was to converge.
+            A vision for Meta’s candidate platform: three page typologies, a timeline that composes the page around wherever a candidate is, and an offer they can read without a recruiter in the room. Built by three designers and a design manager.
           </p>
 
           {/* Hero image */}
@@ -172,14 +172,14 @@ export default function MetaCareerProfileCaseStudy() {
                   </p>
 
                   <p>
-                    A design team had already run phase one: the audit, the principles, and three exploratory concepts, presented to Recruiting Products leadership in August 2022. That work is theirs.
+                    The exploration behind it belongs to the design team who ran it: an audit, a set of principles, and three concepts, presented to Recruiting Products leadership in August 2022.
                   </p>
 
                   <p>
-                    I joined in Q4 2022 for phase two, coming from the Offers team. Phase one had opened the space; phase two had to close it, with enough conviction and fidelity for leadership to decide. We worked as three individual contributors and a design manager, in equal collaboration. I was not the lead.
+                    By Q4 2022 the job was no longer to explore. It was to converge, with enough conviction and fidelity for leadership to decide. Three product designers and a design manager worked it together, in equal collaboration.
                   </p>
 
-                  <p><strong>What I owned:</strong> the typology framework, the concept convergence, the timeline and card system, and the offer experience I brought from Offers.</p>
+                  <p><strong>My part of it:</strong> the typology framework, the concept convergence, the timeline and card system, and the offer experience.</p>
 
                   <h2 id="what-we-inherited">What we inherited</h2>
 
@@ -210,12 +210,12 @@ export default function MetaCareerProfileCaseStudy() {
                   <h2 id="converging">Converging on a direction</h2>
 
                   <p>
-                    Phase one had produced three concepts. Instead of picking a favourite we scored each on what it was good at, and concluded that none of them was the answer.
+                    The exploration had produced three concepts. Instead of picking a favourite we scored each on what it was good at, and concluded that none of them was the answer.
                   </p>
 
                   <Fig
                     src="concept-1-career-coach.webp"
-                    alt="Phase one concept: Career Coach, a guided one-task-at-a-time experience"
+                    alt="Exploratory concept: Career Coach, a guided one-task-at-a-time experience"
                     width={1400}
                     height={929}
                     animated
@@ -224,7 +224,7 @@ export default function MetaCareerProfileCaseStudy() {
 
                   <Fig
                     src="concept-3-career-dashboard.webp"
-                    alt="Phase one concept: Career Dashboard, with configurable modules"
+                    alt="Exploratory concept: Career Dashboard, with configurable modules"
                     width={1400}
                     height={829}
                     animated
@@ -402,7 +402,7 @@ export default function MetaCareerProfileCaseStudy() {
                   <h2 id="the-offer">The offer experience</h2>
 
                   <p>
-                    This is the part I brought with me: a vision brief from the Offers team arguing for a full-featured offer experience, which fed into this one.
+                    This part carried over from work with the Offers team: a vision brief arguing for a full-featured offer experience, which fed into this one.
                   </p>
 
                   <div className={styles.statBand}>
@@ -530,11 +530,11 @@ export default function MetaCareerProfileCaseStudy() {
                   </div>
                   <div className={styles.detailItem}>
                     <span className={styles.detailLabel}>Role</span>
-                    <span className={styles.detailValue}>Product Designer · one of three ICs, phase two</span>
+                    <span className={styles.detailValue}>Product Designer · one of three product designers</span>
                   </div>
                   <div className={styles.detailItem}>
                     <span className={styles.detailLabel}>Team</span>
-                    <span className={styles.detailValue}>3 product designers and a design manager, in equal collaboration · UXR · engineering · partner teams</span>
+                    <span className={styles.detailValue}>3 product designers and a design manager · UXR · engineering · partner teams</span>
                   </div>
                   <div className={styles.detailItem}>
                     <span className={styles.detailLabel}>Scope</span>
