@@ -145,7 +145,7 @@ export default function MetaCareerProfileCaseStudy() {
 
           {/* Subtitle / dek */}
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            A design team had spent a phase exploring what Meta’s candidate platform could become. I joined for phase two, where the job was no longer to explore. It was to converge.
+            Reimagining the platform every Meta candidate passes through, so the page assembles itself around where they are in the process.
           </p>
 
           {/* Hero image */}
