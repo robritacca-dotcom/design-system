@@ -71,3 +71,6 @@ jobs:
         working-directory: website
       - run: npm run build
         working-directory: website
+      # Reads the prerendered HTML, so it has to follow the build rather than
+      # ride the prebuild validator chain.
+      - run: node scripts/validate-rendered-spacing.mjs
