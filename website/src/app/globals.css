@@ -49,8 +49,8 @@ html.theme-ready {
      viewport edges (top, right, bottom — and the FAB's corner offset).
      Only applied above 1440px, where a fourth column fits beside
      sidebar + content + rail. The width is the resting minimum: the panel's
-     widen grip (SiteChatMount) rewrites it inline on <html>, capped 30%
-     wider — keep its PANEL_MIN/MAX constants in step with this value. */
+     widen grip (SiteChatMount) rewrites it inline on <html>, capped at
+     655px — keep its PANEL_MIN/MAX constants in step with this value. */
   --layout-chat-width: 420px;
   --layout-chat-inset: 20px;
 

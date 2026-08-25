@@ -11,11 +11,11 @@ import styles from "./SiteChat.module.css";
 
 /* The docked panel's drag-to-widen range. The minimum mirrors the
    --layout-chat-width default in globals.css (the resting width); the
-   maximum is 30% wider. The drag writes the variable back onto <html>, so
-   the body inset and the MegaNav content inset — both derived from the same
-   variable — slide with the panel edge for free. */
+   maximum is a little over half again as wide. The drag writes the variable
+   back onto <html>, so the body inset and the MegaNav content inset — both
+   derived from the same variable — slide with the panel edge for free. */
 const PANEL_MIN_WIDTH = 420;
-const PANEL_MAX_WIDTH = 546;
+const PANEL_MAX_WIDTH = 655;
 
 const subscribeQuery = (query: string) => (onChange: () => void) => {
   const media = window.matchMedia(query);
