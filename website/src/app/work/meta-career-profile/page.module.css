@@ -175,11 +175,6 @@
   margin: var(--primitive-gap-xl) 0 0;
 }
 
-/* Design-system Quote inside the article body keeps the prose rhythm */
-.body :global(.ds-quote) {
-  margin: var(--primitive-gap-xl) 0;
-}
-
 .body em {
   font-style: italic;
 }

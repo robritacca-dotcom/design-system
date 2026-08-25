@@ -11,7 +11,6 @@ import SampleCaseStudyCard from "../../../components/SampleCaseStudyCard/SampleC
 import { Stat } from "@robr0/design-system/components/Stat/Stat";
 import { Alert } from "@robr0/design-system/components/Alert/Alert";
 import { Figure } from "@robr0/design-system/components/Figure/Figure";
-import { Quote } from "@robr0/design-system/components/Quote/Quote";
 import { getSidebarLinks, workSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
@@ -507,10 +506,6 @@ export default function MetaCareerProfileCaseStudy() {
                   <p>
                     <strong>Fidelity is an argument, not a finish.</strong> The debate about personalisation went in circles while it stayed abstract and ended the moment two candidate types were on screen, rendered by one system.
                   </p>
-
-                  <Quote variant="pull">
-                    The deliverable was never the screens. It was a vocabulary other teams could build in without asking permission.
-                  </Quote>
                 </article>
               </section>
             </div>
