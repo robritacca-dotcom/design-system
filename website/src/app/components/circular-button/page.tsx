@@ -112,7 +112,7 @@ export default function CircularButtonPage() {
             <SectionTitle title="Loading" />
             <p className={styles.introBody}>
               Set <code>loading</code> while an async action runs. The spinner
-              replaces the icon in the variant&apos;s own colour and interaction
+              replaces the icon in the variant’s own colour and interaction
               is blocked, without the dimmed disabled look.
             </p>
             <div className={styles.variantRow}>

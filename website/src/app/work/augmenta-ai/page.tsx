@@ -223,7 +223,7 @@ export default function AugmentaCaseStudy() {
                   </Figure>
 
                   <p>
-                    <strong>Framing mattered too.</strong> We replaced engineering-speak with intent-aligned language: &ldquo;Placement considerations&rdquo; instead of &ldquo;Unhandled error&rdquo;. Daunting, catastrophic-sounding failures became calm, actionable guidance.
+                    <strong>Framing mattered too.</strong> We replaced engineering-speak with intent-aligned language: “Placement considerations” instead of “Unhandled error”. Daunting, catastrophic-sounding failures became calm, actionable guidance.
                   </p>
 
                   <h3 id="faster-value-through-better-inputs-and-signal">3. Faster value through better inputs and signal</h3>
@@ -231,7 +231,7 @@ export default function AugmentaCaseStudy() {
                   <p>Two changes attacked time-to-value head-on.</p>
 
                   <p>
-                    <strong>Better inputs.</strong> Unlike a chat assistant, these prompts are 100% mathematical. The first generation was rarely useful because the input wasn&apos;t granular enough, so we reorganised the prompt structure and roughly doubled the number of fields for fine-grained control. That alone doubled the usability of the very first generation, right out of the gate.
+                    <strong>Better inputs.</strong> Unlike a chat assistant, these prompts are 100% mathematical. The first generation was rarely useful because the input wasn’t granular enough, so we reorganised the prompt structure and roughly doubled the number of fields for fine-grained control. That alone doubled the usability of the very first generation, right out of the gate.
                   </p>
 
                   <p>

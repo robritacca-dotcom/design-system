@@ -240,7 +240,7 @@ export default function MetaOffersCaseStudy() {
                   />
 
                   <p>
-                    <strong>Why so slow?</strong> Compensation is complex, recruiters were not comp experts, candidates withheld information, and compliance guidance was unclear. The tooling made it worse: missing fields, no validation, and at the heart of it one free-form notes box for everything a recruiter knew about a candidate&apos;s current and competing compensation.
+                    <strong>Why so slow?</strong> Compensation is complex, recruiters were not comp experts, candidates withheld information, and compliance guidance was unclear. The tooling made it worse: missing fields, no validation, and at the heart of it one free-form notes box for everything a recruiter knew about a candidate’s current and competing compensation.
                   </p>
 
                   <Fig

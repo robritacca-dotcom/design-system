@@ -155,7 +155,7 @@ export default function IntuitAgentChatCaseStudy() {
                   </p>
 
                   <p>
-                    <strong>Confirm before acting.</strong> Once agents could take real actions instead of just answering, we needed a moment where the user could see exactly what was about to happen and approve it. Structured confirmation cards became the pattern for anything an agent proposed to do on the user&apos;s behalf. They turn &ldquo;the agent did something&rdquo; into &ldquo;I told it to.&rdquo;
+                    <strong>Confirm before acting.</strong> Once agents could take real actions instead of just answering, we needed a moment where the user could see exactly what was about to happen and approve it. Structured confirmation cards became the pattern for anything an agent proposed to do on the user’s behalf. They turn “the agent did something” into “I told it to.”
                   </p>
 
                   <p>
