@@ -12,6 +12,7 @@
  *   - .claude/skills/<name>/SKILL.md          (repo skills)
  *   - website/src/data/external-skills/*.md   (published external copies)
  *   - CLAUDE.md, README.md, design.md, content-design.md, SECURITY.md
+ *   - evals/chat/README.md, website/README.md, ga-analysis/README.md
  *
  * Deliberately excluded:
  *   - website/src/data/skills-content.generated.ts and the website/public

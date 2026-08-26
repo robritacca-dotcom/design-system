@@ -174,29 +174,37 @@ const NUMBER_WORDS = [
   'zero', 'one', 'two', 'three', 'four', 'five', 'six',
   'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve',
 ];
-const claimPattern = new RegExp(
-  `\\b(${NUMBER_WORDS.join('|')}|\\d+) (?:field |shader )?parameters\\b`, 'gi'
-);
-if (shipped && shipped.length > 0) {
-  const expected = shipped.length;
-  for (const doc of ['README.md', 'design.md', 'CLAUDE.md']) {
-    let text;
-    try {
-      text = readFileSync(join(repoRoot, doc), 'utf8').replace(/\r\n/g, '\n');
-    } catch {
-      errors.push(`could not read ${doc} to check its parameter-count claims`);
-      continue;
-    }
+const claimNumber = (word) =>
+  NUMBER_WORDS.indexOf(word.toLowerCase()) >= 0
+    ? NUMBER_WORDS.indexOf(word.toLowerCase())
+    : Number(word);
+/* Two countable facts, two phrasings the docs use for each. The blob claims
+   check against BLOB_COUNT (the CSS fallback renders one disc per blob, so
+   "blurred CSS discs" is the same count). */
+const CLAIM_CHECKS = [
+  { pattern: `(?:field |shader )?parameters`, expected: () => shipped?.length, name: 'ShaderField parameters' },
+  { pattern: `(?:blob definitions|blurred CSS discs|CSS blobs)`, expected: () => blobCount, name: 'BLOB_COUNT' },
+];
+for (const doc of ['README.md', 'design.md', 'CLAUDE.md']) {
+  let text;
+  try {
+    text = readFileSync(join(repoRoot, doc), 'utf8').replace(/\r\n/g, '\n');
+  } catch {
+    errors.push(`could not read ${doc} to check its count claims`);
+    continue;
+  }
+  for (const { pattern, expected, name } of CLAIM_CHECKS) {
+    const target = expected();
+    if (target === null || target === undefined) continue;
+    const claimPattern = new RegExp(
+      `\\b(${NUMBER_WORDS.join('|')}|\\d+) ${pattern}\\b`, 'gi'
+    );
     for (const match of text.matchAll(claimPattern)) {
-      const word = match[1].toLowerCase();
-      const claimed = NUMBER_WORDS.indexOf(word) >= 0
-        ? NUMBER_WORDS.indexOf(word)
-        : Number(word);
-      if (claimed !== expected) {
+      const claimed = claimNumber(match[1]);
+      if (claimed !== target) {
         const line = text.slice(0, match.index).split('\n').length;
         errors.push(
-          `${doc}:${line} claims "${match[0]}" but ShaderField ships ` +
-            `${expected} (${shipped.join(', ')})`
+          `${doc}:${line} claims "${match[0]}" but ${name} is ${target}`
         );
       }
     }

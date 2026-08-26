@@ -30,6 +30,9 @@ Before judging any prose, build an accurate picture of what is true *right now*:
 
 ```bash
 npm run validate-registry          # what the automated chain enforces, and what it prints
+# The chain is not the whole automated layer: the `verify` entry in the root
+# package.json ends with the validators that need built HTML and so run after
+# the website build (in `verify` and CI), outside this chain.
 node -e "console.log(Object.keys(require('./package.json').scripts).join('\n'))"
 node -e "console.log(JSON.stringify(require('./package.json').exports, null, 2))"
 git log --oneline -20

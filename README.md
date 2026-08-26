@@ -151,10 +151,10 @@ Answers are measured, not assumed. `evals/chat` holds a golden set that runs thr
 
 ## Quality & CI
 
-Every push and pull request runs a GitHub Actions pipeline ([`ci.yml`](.github/workflows/ci.yml)) with four jobs: lint + library build, story tests, Storybook build, and website lint + build. The story tests render every Storybook story in headless Chromium via Vitest and run an axe accessibility audit on each, so a violation fails the build exactly like a render error. The same checklist runs locally with one command:
+Every push and pull request runs a GitHub Actions pipeline ([`ci.yml`](.github/workflows/ci.yml)) with four jobs: lint + library build, story tests, Storybook build, and website lint + build followed by the two built-HTML checks (rendered spacing, chat-corpus coverage). The story tests render every Storybook story in headless Chromium via Vitest and run an axe accessibility audit on each, so a violation fails the build exactly like a render error. The same checklist runs locally with one command:
 
 ```bash
-npm run verify   # lint + library type-check + package build + story tests + Storybook build + website lint + build
+npm run verify   # lint + library type-check + package build + story tests + Storybook build + website lint + build + built-HTML checks
 ```
 
 CI also guards against documentation drift: generated surfaces (this README's component count and list, the website's skills pages, the published blueprint copies of the root markdown specs) are rebuilt from their source registries on every build, and CI fails if the committed copies are stale. The numbers on the site are never hand-written.

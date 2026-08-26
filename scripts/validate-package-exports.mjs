@@ -2,7 +2,8 @@
 /**
  * Validates the root package.json against scripts/package-manifest.mjs:
  *   1. name/version/exports match the manifest's source form exactly
- *      (the exports field is generated — never hand-edit it).
+ *      (SUBPATHS in the manifest is the single source — a subpath change
+ *      is made there and mirrored into package.json, never on one side alone).
  *   2. Every non-wildcard export target exists on disk; wildcard
  *      targets' base directories exist and contain at least one match.
  *   3. package-lock.json's root version matches too. npm records the

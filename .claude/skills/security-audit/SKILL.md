@@ -30,7 +30,7 @@ Work the surfaces below. The list says where to look, not what is there — read
 - `npm audit --json` at the repo root (the single lockfile covers the `website` workspace too; run it in `website/` as well to be sure). Capture vuln counts and whether fixes exist.
 - Secret scan of the working tree — `secretlint` with the recommended preset (write its config to a scratch dir, not the repo), or an equivalent scanner if one is installed.
 - Secret sweep of the **full git history** (`git log -p --all`) for key patterns (`sk-ant-`, `ghp_`, `github_pat_`, `AIza…`, PEM headers, AWS keys) — the repo is public, so history matters as much as the tree. Confirm no `.env` file was ever committed (`git log --all --diff-filter=A --name-only`).
-- On this Windows machine the scanner binaries (gitleaks, trufflehog, osv-scanner, semgrep, trivy) are generally **not installed** and Docker is absent — lean on `npm audit`, `npx secretlint`, and `git` history greps, which need no install. Offer to download a standalone scanner only with permission (see the memory on Windows checkout quirks).
+- Probe for the scanner binaries (gitleaks, trufflehog, osv-scanner, semgrep, trivy) and Docker before planning the sweep rather than assuming either way — on the Windows checkout they are generally absent (see the memory on Windows checkout quirks). Where they are missing, lean on `npm audit`, `npx secretlint`, and `git` history greps, which need no install, and offer to download a standalone scanner only with permission.
 
 ### 2. API routes & the AI chat (OWASP LLM Top 10)
 

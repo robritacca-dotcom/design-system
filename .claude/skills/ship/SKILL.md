@@ -2,7 +2,7 @@
 name: ship
 description: Make finished work live on robertritacca.com. Commit, run the full verify, merge branch work into main when needed, push, and watch CI go green. Use when asked to ship it, make it live, push to main, or deploy this. If asked to "merge and push" (a retired skill name), confirm the intended end state — ship, checkpoint, or land — before acting.
 icon: publish
-displayDescription: "Makes finished work live on robertritacca.com. Surveys the tree so unrelated files never get swept into a commit, runs the full local verify (lint, story tests, and the library, package, Storybook, and website builds, mirroring CI) before anything is committed, merges branch work into main when needed, pushes, confirms the CI run goes green, and reports exactly what deployed."
+displayDescription: "Makes finished work live on robertritacca.com. Surveys the tree so unrelated files never get swept into a commit, runs the full local verify (the single script mirroring CI) before anything is committed, merges branch work into main when needed, pushes, confirms the CI run goes green, and reports exactly what deployed."
 invoke: ["ship it","make it live","push to main","deploy this"]
 ---
 
@@ -30,7 +30,7 @@ Use this skill when asked to make completed work live — phrases like "ship it"
 
 2. **Run the full verify before committing**:
    ```bash
-   npm run verify   # lint + library type-check + package build + story tests + Storybook build + website lint + build
+   npm run verify   # the single local mirror of CI — the script entry in the root package.json is the step list
    ```
    This one script is the single source of truth for local checks and mirrors the CI jobs in `.github/workflows/ci.yml` — if CI gains a check (tests, a11y), it gets added to `verify`, never listed here separately. The registry validators run automatically via the builds' `prebuild` hooks.
 
