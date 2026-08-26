@@ -7,8 +7,9 @@ API, because the thing under test is the system, not the model.
 ## How to run it
 
 ```bash
-# 1. Start the dev server with the guardrails open (75 calls would trip the
-#    per-IP rate limiter otherwise; blanking the KV vars makes them fail open).
+# 1. Start the dev server with the guardrails open (a full run is the golden
+#    set times three repeats, more than enough to trip the per-IP rate
+#    limiter; blanking the KV vars makes them fail open).
 npm run dev:eval -w website
 
 # 2. Run the eval from the repo root. --no-cache is deliberate: variance is
@@ -24,9 +25,9 @@ Copy `runs/latest.json` to a named file when a run is a baseline worth keeping.
 
 ## How to read it
 
-**The transcripts are the grader.** With ~25 questions, a small change in the
-aggregate score is noise by construction; one flipped answer moves it 4
-points. Read the answers seat by seat — `metadata.seat` is `recruiter`,
+**The transcripts are the grader.** With a golden set this small, a change in
+the aggregate score is noise by construction; one flipped answer moves it a
+few points. Read the answers seat by seat — `metadata.seat` is `recruiter`,
 `designer`, `developer`, or `conduct` — and judge whether that visitor got
 something they could act on, not just whether nothing was wrong. The
 assertions are a regression tripwire (did the email vanish, did it invent a
@@ -43,8 +44,8 @@ borderline, which is worth reading, not averaging away.
   corpus, and every page route is either covered or deliberately excluded. A
   question the corpus cannot answer is a corpus bug, and it fails the build.
 - **Layer 1 — this config.** Deterministic assertions through the real route.
-- **Layer 2 — LLM judge. Not built.** Gated on real logged failures to grade;
-  see the build plan. Do not add `llm-rubric` assertions before then.
+- **Layer 2 — LLM judge. Not built.** Gated on real logged failures to grade.
+  Do not add `llm-rubric` assertions before then.
 - **Layer 3 — you, reading.** The conduct questions especially.
 
 ## Known limits, so nobody rediscovers them
