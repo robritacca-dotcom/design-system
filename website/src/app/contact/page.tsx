@@ -126,7 +126,7 @@ function ContactContent() {
         <div className={`${styles.section} animate-in animate-delay-2`}>
           <h2 className={styles.sectionTitle}>Book a consultation</h2>
           <ContactCard
-            label="Pay via Stripe"
+            label="Stripe"
             value="Book a design consultation, secure checkout via Stripe"
             href="https://buy.stripe.com/28o7vb5NBaSJ3NC5kn"
             logo="/logos/stripe-new.png"
@@ -155,14 +155,6 @@ function ContactContent() {
           </div>
         </div>
 
-        {/* The site chat's logging disclosure. The widget's disclaimer links
-            to /privacy for the same facts; this page and /privacy state them. */}
-        <p className={`${styles.chatNote} animate-in animate-delay-3`}>
-          The site chat can answer most questions about my work directly. Its
-          conversations are kept for 30 days to improve the answers, tied to a
-          scrambled visitor key rather than a name, then deleted; the privacy
-          page states exactly what is kept.
-        </p>
       </main>
 
     </>
