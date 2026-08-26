@@ -15,6 +15,7 @@
  */
 export const CHROMELESS_ROUTES = new Set([
   "/playground",
+  "/playground/gusto",
   "/rr-animated",
   "/covers",
   "/covers/render",

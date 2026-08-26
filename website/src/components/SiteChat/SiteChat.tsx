@@ -63,6 +63,7 @@ export function SiteChat({
   tagline,
   starters: startersOverride,
   composerActions,
+  statusAdornment,
 }: {
   /** Show the expand toggle. The bench's mobile stage is always a takeover, so it hides there. */
   fullscreenEnabled?: boolean;
@@ -93,6 +94,9 @@ export function SiteChat({
   /** Replaces the composer's leading actions (the disabled model label) —
       the playground slots a working mock picker and attach button here. */
   composerActions?: ReactNode;
+  /** Rendered beside the live agent status while a response streams — the
+      playground's branding-test spinner. The site passes nothing. */
+  statusAdornment?: ReactNode;
 }) {
   const {
     turns,
@@ -265,7 +269,15 @@ export function SiteChat({
                   <AssistantTurn key={turn.id} turn={turn} />
                 )
               ),
-              ...(live ? [<AssistantTurn key={live.id} live={live} />] : []),
+              ...(live
+                ? [
+                    <AssistantTurn
+                      key={live.id}
+                      live={live}
+                      statusAdornment={statusAdornment}
+                    />,
+                  ]
+                : []),
             ]}
           </ChatThread>
 

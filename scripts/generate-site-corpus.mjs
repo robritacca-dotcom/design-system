@@ -627,6 +627,8 @@ const EXCLUDED_ROUTES = new Map([
     'the landing collage — its prose is demo filler for the live components, not information; the sections it links to are all covered'],
   ['/covers',
     'a noindex staging page for the vector cover mocks — its only prose is a size caption under each frame'],
+  ['/playground/gusto',
+    'a noindex demo stage for the playground\'s Gusto branding test — the themed chat widget alone on a bare stage, carrying no prose beyond a stage-size switcher; the widget and its simulated script belong to /playground, which is covered'],
   ['/covers/render',
     'a noindex surface that renders one cover mock alone at an exact size, so the cover images can be shot from it — it carries no prose at all'],
   ['/canvas',

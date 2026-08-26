@@ -38,9 +38,9 @@ import { useSiteChat } from "@/components/SiteChat/ChatContext";
 /* Each one is a story key in lib/chat-sim.ts, so asking as the visitor
    always enters the branching script rather than the fallback rotation. */
 const VISITOR_QUESTIONS = [
-  "How do I get started?",
+  "How do I run my first payroll?",
   "What do the plans include?",
-  "Invite my team to a workspace",
+  "Add my new hire to payroll",
 ];
 
 /* Each instant reply is a whole agent message: trace points behind the
@@ -49,21 +49,21 @@ const VISITOR_QUESTIONS = [
 const ASSISTANT_REPLIES = [
   {
     text:
-      "Create a workspace from the dashboard, then invite your team from " +
-      "Settings. Everyone you add sees the shared projects the moment they join.",
+      "Enter everyone's hours, review the totals, and submit; taxes are " +
+      "calculated and filed for you on every run.",
     trace: [
-      "The question maps to the first-run flow.",
-      "Lead with the workspace, then the invite step.",
+      "Company and tax details are already verified.",
+      "Lead with the hours, then the review step.",
     ],
     duration: 3,
   },
   {
     text:
-      "Every plan includes unlimited projects. The Team plan adds shared " +
-      "workspaces, guest seats, and a 90 day version history.",
+      "Every plan includes full-service payroll with taxes filed for you. " +
+      "The Plus plan adds benefits administration and onboarding tools.",
     trace: [
-      "Three plans differ on collaboration, not on limits.",
-      "Name what the Team plan adds over the base.",
+      "The plans differ on HR tools, not on payroll.",
+      "Name what the Plus plan adds over the base.",
     ],
     duration: 4,
   },
@@ -78,28 +78,28 @@ const nextQuestion = () => VISITOR_QUESTIONS[questionCursor++ % VISITOR_QUESTION
 const nextReply = () => ASSISTANT_REPLIES[replyCursor++ % ASSISTANT_REPLIES.length];
 
 const TOOL_ARGS = `{
-  "workspace": "acme-design",
-  "role": "editor",
-  "emails": 3
+  "employee": "Riley Chen",
+  "role": "Studio manager",
+  "start_date": "2026-09-01"
 }`;
 
 const CONFIG_DIFF = `@@ -12,7 +12,7 @@
- export const workspace = {
-   name: "acme-design",
--  seats: 5,
-+  seats: 12,
-   region: "eu-west",
+ export const timeOff = {
+   policy: "standard",
+-  defaultDays: 10,
++  defaultDays: 15,
+   carryOver: 5,
  };`;
 
 const PLAN_STEPS: AgentPlanStep[] = [
-  { label: "Check the workspace quota", status: "completed" },
+  { label: "Verify the company tax details", status: "completed" },
   {
-    label: "Create the shared project",
+    label: "Confirm the bank connection",
     status: "completed",
-    detail: "acme-design / launch",
+    detail: "direct deposit",
   },
-  { label: "Invite the three teammates", status: "active" },
-  { label: "Post the welcome note", status: "pending" },
+  { label: "Enter the team's hours", status: "active" },
+  { label: "Submit the payroll run", status: "pending" },
 ];
 
 /* A schedule timing, not an animation: how long the staged retry "runs"
@@ -107,21 +107,21 @@ const PLAN_STEPS: AgentPlanStep[] = [
    this mock's pacing, not a timing any shipped surface shares. */
 const RETRY_RUN_MS = 1400;
 
-/* Chart data for the injected cards — a trial that is going well, and the
-   budget read out of the dropped launch plan. */
-const TRIAL_SIGNUPS = [
-  { week: "W1", signups: 320 },
-  { week: "W2", signups: 410 },
-  { week: "W3", signups: 380 },
-  { week: "W4", signups: 520 },
-  { week: "W5", signups: 610 },
-  { week: "W6", signups: 720 },
+/* Chart data for the injected cards — a team that is growing steadily,
+   and the cost split read out of the dropped payroll register. */
+const HEADCOUNT_TREND = [
+  { month: "Mar", people: 5 },
+  { month: "Apr", people: 6 },
+  { month: "May", people: 6 },
+  { month: "Jun", people: 7 },
+  { month: "Jul", people: 8 },
+  { month: "Aug", people: 9 },
 ];
 
-const LAUNCH_BUDGET = [
-  { phase: "Beta", spend: 12 },
-  { phase: "Launch week", spend: 34 },
-  { phase: "Follow-up", spend: 18 },
+const PAYROLL_BY_DEPT = [
+  { dept: "Operations", spend: 34 },
+  { dept: "Sales", spend: 22 },
+  { dept: "Support", spend: 18 },
 ];
 
 /**
@@ -140,8 +140,8 @@ function FlakyToolCall() {
 
   return (
     <ToolCall
-      name="sync_calendar"
-      summary="team@acme.com"
+      name="file_state_taxes"
+      summary="Quarterly state filing"
       status={status}
       duration={status === "success" ? "1.4s" : status === "error" ? "2.1s" : undefined}
       actions={
@@ -166,8 +166,8 @@ function ApprovalMock() {
   const [value, setValue] = useState<string | undefined>(undefined);
   return (
     <InterruptCard
-      title="Connect the shared calendar?"
-      description="The assistant wants read access to the team calendar to suggest meeting times."
+      title="Connect the team calendar?"
+      description="The assistant wants read access to the calendar to schedule Riley's orientation."
       options={[
         { value: "allow", label: "Allow once", variant: "primary" },
         { value: "always", label: "Always allow", variant: "secondary" },
@@ -189,8 +189,8 @@ function ApprovalMock() {
 const TEAM_PLAN_CARD = (
   <MessageCard
     media={<div className={styles.cardMedia} aria-hidden="true" />}
-    title="Team plan"
-    description="Shared workspaces, guest seats, and version history for the whole team."
+    title="Plus plan"
+    description="Full-service payroll, benefits administration, and hiring tools for growing teams."
     meta="Billed monthly, cancel any time"
     actions={
       <>
@@ -205,57 +205,58 @@ const TRIAL_CHART_CARD = (
   <MessageCard
     media={
       <AreaChart
-        data={TRIAL_SIGNUPS}
-        xKey="week"
-        series={[{ dataKey: "signups", label: "Signups" }]}
+        data={HEADCOUNT_TREND}
+        xKey="month"
+        series={[{ dataKey: "people", label: "Headcount" }]}
         height={150}
       />
     }
-    title="Trial signups"
-    meta="Last six weeks"
+    title="Headcount"
+    meta="Last six months"
   />
 );
 
 const SOURCE_CHIPS = (
   <div className={styles.sourceRow}>
     <SourceChip title="Pricing guide" index={1} />
-    <SourceChip title="Workspace docs" index={2} />
-    <SourceChip title="Fair use policy" icon="menu_book" />
+    <SourceChip title="Payroll docs" index={2} />
+    <SourceChip title="Benefits policy" icon="menu_book" />
   </div>
 );
 
 const INVITE_TOOL_CALL = (
-  <ToolCall name="invite_teammates" summary="3 editors to acme-design" status="success" duration="0.6s">
+  <ToolCall name="add_employee" summary="Riley Chen, starts Sep 1" status="success" duration="0.6s">
     <CodeBlock code={TOOL_ARGS} language="json" />
   </ToolCall>
 );
 
-const SEAT_DIFF = <CodeDiff diff={CONFIG_DIFF} filename="workspace.config.ts" />;
+const SEAT_DIFF = <CodeDiff diff={CONFIG_DIFF} filename="time-off.config.ts" />;
 
 const SETUP_PLAN = <AgentPlan steps={PLAN_STEPS} />;
 
 /* The doc drop's answer: the read shows its work, then the chart reads the
-   budget out of the plan — two elements landing as one turn's stack. */
+   cost split out of the register — two elements landing as one turn's
+   stack. */
 const LAUNCH_ANALYSIS = (
   <div className={styles.contentStack}>
     <ToolCall
       name="read_document"
-      summary="Q3 launch plan.pdf"
+      summary="Q3 payroll register.pdf"
       status="success"
       duration="1.8s"
     />
     <MessageCard
       media={
         <BarChart
-          data={LAUNCH_BUDGET}
-          xKey="phase"
+          data={PAYROLL_BY_DEPT}
+          xKey="dept"
           yKey="spend"
-          dataLabel="Spend ($k)"
+          dataLabel="Payroll ($k)"
           height={150}
         />
       }
-      title="Budget by phase"
-      meta="From Q3 launch plan.pdf"
+      title="Payroll by department"
+      meta="From Q3 payroll register.pdf"
     />
   </div>
 );
@@ -376,10 +377,10 @@ export default function ChatDirector({
         },
         {
           id: "chart",
-          label: "Chart the trial numbers",
+          label: "Chart the headcount",
           icon: "monitoring",
           disabled: streaming,
-          run: () => send("How is the trial going?"),
+          run: () => send("How is headcount trending?"),
         },
         {
           id: "sources",
@@ -390,10 +391,10 @@ export default function ChatDirector({
         },
         {
           id: "diff",
-          label: "Bump the seat count",
+          label: "Raise the default PTO",
           icon: "difference",
           disabled: streaming,
-          run: () => send("Take us up to twelve seats"),
+          run: () => send("Raise default PTO to 15 days"),
         },
         {
           id: "attachment",
@@ -403,11 +404,11 @@ export default function ChatDirector({
           /* The visitor's words ride with the file, the way a real
              attachment lands: the chip above the bubble, text below. The
              text is the story key, so the sim answers with the read and
-             the budget chart. */
+             the department chart. */
           run: () =>
-            send("Here is the launch plan we are working from.", {
+            send("Here is our latest payroll register.", {
               content: (
-                <DocumentChip name="Q3 launch plan.pdf" fileType="pdf" meta="1.2 MB" />
+                <DocumentChip name="Q3 payroll register.pdf" fileType="pdf" meta="1.2 MB" />
               ),
             }),
         },
@@ -421,28 +422,28 @@ export default function ChatDirector({
           label: "Run a tool call",
           icon: "construction",
           disabled: streaming,
-          run: () => send("Go ahead and invite the other three"),
+          run: () => send("Go ahead and onboard Riley"),
         },
         {
           id: "flaky",
           label: "Fail a tool call",
           icon: "error",
           disabled: streaming,
-          run: () => send("Sync the shared calendar"),
+          run: () => send("File the state tax forms"),
         },
         {
           id: "plan",
           label: "Show an agent plan",
           icon: "checklist",
           disabled: streaming,
-          run: () => send("Set it all up for me"),
+          run: () => send("Run it all for me"),
         },
         {
           id: "approval",
           label: "Ask for permission",
           icon: "rule",
           disabled: streaming,
-          run: () => send("Find a time we can all meet"),
+          run: () => send("Find a time for orientation"),
         },
       ],
     },

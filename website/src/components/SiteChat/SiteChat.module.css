@@ -252,6 +252,19 @@
   gap: var(--gap-lg);
 }
 
+/* The live status line when a host slots an adornment (the playground's
+   branding-test spinner). The adornment REPLACES the dot-matrix indicator
+   rather than joining it, so the label keeps exactly one spinner. */
+.statusRow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-sm);
+}
+
+.statusRow :global(.ds-agent-status__matrix) {
+  display: none;
+}
+
 /* A visitor turn with an injected attachment: the file tile stacks above
    the bubble, sharing its right edge. The stack is one thread child, so
    the thread's own turn spacing treats the pair as a single turn. */

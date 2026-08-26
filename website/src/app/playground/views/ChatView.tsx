@@ -10,6 +10,7 @@ import {
 } from "@robr0/design-system/components/ModelPicker/ModelPicker";
 import { useSiteChat, useTakeoverViewport } from "@/components/SiteChat/ChatContext";
 import { SiteChat } from "@/components/SiteChat/SiteChat";
+import { CometTrailSpinner } from "../CometTrailSpinner";
 import styles from "./ChatView.module.css";
 
 /* The simulated composer's model list — set dressing for a generic product,
@@ -90,6 +91,19 @@ export default function ChatView({
   simControls,
 }: ChatViewProps) {
   const { open, setOpen, view, returnFocusRef, send, streaming } = useSiteChat();
+
+  /* Gusto branding test: the welcome greeting's display serif, loaded the
+     same runtime way as the typeface lever (the playground is the one
+     surface sanctioned to fetch fonts from Google at runtime). Removed
+     with the view, like the lever's link. */
+  useEffect(() => {
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href =
+      "https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap";
+    document.head.appendChild(link);
+    return () => link.remove();
+  }, []);
   /* A real phone viewport: the stage-size lever is hidden there and the
      widget goes fluid, so the preset alone cannot say it is a phone. */
   const phoneViewport = useTakeoverViewport();
@@ -255,6 +269,10 @@ export default function ChatView({
       ref={widgetRef}
       className={[
         styles.widget,
+        /* The Gusto branding test: crisp white card, green action colour,
+           coral spinner and wordmark. Delete this class (and the test
+           props on SiteChat below) to end the experiment. */
+        styles.gustoTest,
         isDevice ? styles.widgetDevice : "",
         /* Resting sizes stay fitted to the column and viewport; a manual
            drag drops the matching clamp so the card can grow past both —
@@ -284,16 +302,18 @@ export default function ChatView({
         /* The bezel previews a phone, and a phone is one: both get the
            stacked welcome the site's takeover shows. */
         phone={isDevice || phoneViewport}
-        title={title}
+        /* Gusto branding test: the wordmark plus "Assistant" replace the
+           Product name lever's title while the test runs. */
+        title="Assistant"
         placeholder={placeholder.trim() === "" ? "Ask anything" : placeholder}
         showStarters={showStarters}
-        /* No site mark on a generic product's chat. */
-        logo={null}
+        logo="/playground/gusto-logo.svg"
+        statusAdornment={<CometTrailSpinner />}
         tagline="How can we help you today?"
         starters={[
-          { id: "start", label: "How do I get started?" },
+          { id: "start", label: "How do I run my first payroll?" },
           { id: "pricing", label: "What do the plans include?" },
-          { id: "invite", label: "Invite my team to a workspace" },
+          { id: "hire", label: "Add my new hire to payroll" },
         ]}
         composerActions={
           simControls ? (
@@ -303,17 +323,17 @@ export default function ChatView({
                   is simulated, so the click skips the picker and sends the
                   attachment through the sim story: the chip rides the
                   visitor's bubble, and the agent answers by reading the
-                  doc and charting its budget. */}
+                  register and charting its cost split. */}
               <CircularButton
                 icon="add"
                 variant="tertiary"
                 ariaLabel="Attach a file"
                 disabled={streaming}
                 onClick={() =>
-                  send("Here is the launch plan we are working from.", {
+                  send("Here is our latest payroll register.", {
                     content: (
                       <DocumentChip
-                        name="Q3 launch plan.pdf"
+                        name="Q3 payroll register.pdf"
                         fileType="pdf"
                         meta="1.2 MB"
                       />

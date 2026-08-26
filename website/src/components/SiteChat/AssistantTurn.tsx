@@ -62,7 +62,17 @@ const markdownComponents = {
    its committed form share an id (and so a key), so React reconciles the
    finished response in place — separate components remounted the whole
    subtree at commit, which read as a flicker after the response rendered. */
-export function AssistantTurn({ turn, live }: { turn?: ChatTurn; live?: LiveResponse }) {
+export function AssistantTurn({
+  turn,
+  live,
+  statusAdornment,
+}: {
+  turn?: ChatTurn;
+  live?: LiveResponse;
+  /** Rendered beside the live status while the agent works — the
+      playground's branding-test spinner. Absent on the site itself. */
+  statusAdornment?: React.ReactNode;
+}) {
   const thinking = live?.phase === "thinking";
   const tracePoints = live ? live.tracePoints : (turn?.tracePoints ?? []);
   const durationSeconds = live ? live.durationSeconds : turn?.durationSeconds;
@@ -98,7 +108,14 @@ export function AssistantTurn({ turn, live }: { turn?: ChatTurn; live?: LiveResp
             duration={durationSeconds}
             summary={
               thinking && live ? (
-                <AgentStatus state="working" label={live.statusLabel} />
+                statusAdornment ? (
+                  <span className={styles.statusRow}>
+                    {statusAdornment}
+                    <AgentStatus state="working" label={live.statusLabel} />
+                  </span>
+                ) : (
+                  <AgentStatus state="working" label={live.statusLabel} />
+                )
               ) : undefined
             }
           >

@@ -38,114 +38,96 @@ interface SimScenario {
 /* Scenarios rotate per exchange so a test conversation stays varied:
    short plain answers through long sectioned ones, exercising the Prose
    typography kit (headings, paragraphs, bullets) and below-the-fold
-   scrolling. */
+   scrolling. The stage plays a small-business payroll and HR product, so
+   typed free text lands on a business owner's questions. */
 const SCENARIOS: SimScenario[] = [
   {
     steps: [
-      { status: "Reading the readiness tracks", point: "Pull the four readiness tracks and their owners." },
-      { status: "Reviewing the legal blocker", point: "Pricing copy is still sitting in legal review." },
-      { status: "Drafting the answer", point: "Lead with the overall status, then flag the one real risk." },
+      { status: "Checking this month's payroll", point: "The next run is scheduled and funded." },
+      { status: "Reviewing the filings", point: "Federal and state filings are current." },
+      { status: "Drafting the answer", point: "Lead with the status, then flag the one open item." },
     ],
     response:
-      "The launch is on track overall. Three of the four readiness tracks are " +
-      "green, and the one item I would watch is the **legal review**, since it " +
-      "gates the pricing rollout.",
+      "Payroll is in good shape. Friday's run is funded, direct deposits " +
+      "land Monday, and your filings are current. The one item I would " +
+      "watch is the **contractor invoice** from your designer, since it is " +
+      "still waiting on your approval.",
     followups: [
-      "Which track is behind?",
-      "Who owns the legal review?",
-      "What happens if pricing slips?",
+      "How is headcount trending?",
+      "File the state tax forms",
+      "What do the plans include?",
     ],
   },
   {
     steps: [
-      { status: "Reading the design principles", point: "The principles are stated at the level of token roles." },
-      { status: "Tracing them through the tokens", point: "Each principle maps to a small set of semantic tokens." },
-      { status: "Collecting examples", point: "The action teal and the status set are the clearest cases." },
-      { status: "Structuring the answer", point: "Three sections: tokens, colour, motion." },
+      { status: "Pulling the payroll numbers", point: "Six months of payroll and headcount data." },
+      { status: "Checking the compliance calendar", point: "One filing lands this month." },
+      { status: "Reading the benefits usage", point: "Enrolment is steady; dental is underused." },
+      { status: "Structuring the answer", point: "Three sections: costs, team, compliance." },
     ],
     response:
-      "Rob's philosophy comes down to a few firm rules, applied everywhere.\n\n" +
-      "### Tokens before components\n\n" +
-      "Every visual decision starts as a token. Primitives hold the raw values, " +
-      "semantic tokens give them roles, and components only ever reference the " +
-      "semantic layer. That one rule is what lets the whole system re-theme " +
-      "from a single file.\n\n" +
-      "### Colour carries meaning\n\n" +
-      "Colour is never decoration. A few examples of how strictly that holds:\n\n" +
-      "- The action teal appears only on primary actions and focus rings, so it " +
-      "always means click here.\n" +
-      "- Five status roles cover info, positive, warning, error, and neutral, " +
-      "shared by every status bearing component.\n" +
-      "- Chat bubbles draw from their own four tokens, so a theme can retune " +
-      "them without touching a component.\n\n" +
-      "### Motion is a system\n\n" +
-      "Durations and easings are tokens too, and a reduced motion guard " +
-      "collapses every one of them. Animation driven from JavaScript sits " +
-      "outside that guard and checks the preference itself. If an animation " +
-      "cannot say what it is for, it does not ship.",
+      "Here is the shape of the business right now.\n\n" +
+      "### Payroll costs\n\n" +
+      "Monthly payroll has held steady around your budget for the last " +
+      "quarter. Overtime is the one line that moved, up a little in the " +
+      "busy weeks, and it settled back down last month.\n\n" +
+      "### The team\n\n" +
+      "A few things worth knowing:\n\n" +
+      "- Headcount has grown by two this quarter, both full time.\n" +
+      "- Everyone is enrolled in medical; dental is sitting at half the " +
+      "team.\n" +
+      "- One offer letter is out and waiting on a signature.\n\n" +
+      "### Compliance\n\n" +
+      "Your quarterly state filing is due at the end of the month. " +
+      "Everything it needs is already in the system, so it is a review and " +
+      "a submit rather than a scramble.",
     followups: [
-      "How does a theme swap work?",
-      "Why is teal reserved for actions?",
-      "What are the five status roles?",
+      "How is headcount trending?",
+      "File the state tax forms",
+      "Add my new hire to payroll",
     ],
   },
   {
     steps: [
-      { status: "Scanning the project journal", point: "The journal groups work into thematic stories." },
-      { status: "Picking the highlights", point: "The ai category and the npm release stand out." },
-      { status: "Drafting the answer", point: "Three bullets, then a pointer to the journal." },
+      { status: "Reading the benefits setup", point: "Medical, dental, and retirement are live." },
+      { status: "Drafting the answer", point: "Three bullets, then the next step." },
     ],
     response:
-      "Quite a lot this summer. The highlights:\n\n" +
-      "- **The ai category**: a full set of conversation components, from " +
-      "ChatMessage and Composer through Reasoning and AgentStatus.\n" +
-      "- **npm publishing**: the system ships as a public package with " +
-      "provenance, and the site itself consumes it like any other user.\n" +
-      "- **This widget**: the chat surface you are using right now, composed " +
-      "entirely from those primitives.\n\n" +
-      "The project journal on the site tells the longer story, one theme at " +
-      "a time.",
+      "Your benefits today, at a glance:\n\n" +
+      "- **Medical**: the whole team is enrolled, renewal lands in " +
+      "November.\n" +
+      "- **Dental and vision**: offered, about half the team opted in.\n" +
+      "- **Retirement**: the 401k is live with a three percent match.\n\n" +
+      "Open enrolment is the natural moment to revisit any of these, and I " +
+      "can walk you through the options when it opens.",
     followups: [
-      "What is in the ai category?",
-      "How do I install the package?",
-      "What is this widget built from?",
+      "What do the plans include?",
+      "How is headcount trending?",
+      "Raise default PTO to 15 days",
     ],
   },
   {
     steps: [
-      { status: "Mapping the repo layout", point: "A component library and a docs site share one repo." },
-      { status: "Following the token chain", point: "Primitives feed semantic tokens, which feed components." },
-      { status: "Checking the guardrails", point: "Validators fail the build when surfaces drift." },
-      { status: "Structuring the answer", point: "Anatomy first, then tokens, then the safety net." },
+      { status: "Reviewing the quarter", point: "Two hires, one filing, one policy change." },
+      { status: "Pulling the pay run history", point: "Six runs, all on time." },
+      { status: "Structuring the answer", point: "What happened, then what is coming." },
     ],
     response:
-      "At a high level it is one system with three layers that keep each " +
-      "other honest.\n\n" +
-      "### The anatomy\n\n" +
-      "A React component library and a Next.js documentation site live in one " +
-      "repo. The site consumes the published package the same way any outside " +
-      "user would, so the docs can never quietly drift from what ships.\n\n" +
-      "Each component is self contained: implementation, scoped styles, and " +
-      "its Storybook stories sit together in one folder, and every component " +
-      "has a live showcase page on the site.\n\n" +
-      "### The token chain\n\n" +
-      "Colour, spacing, type, and motion all flow through the same three " +
-      "tiers:\n\n" +
-      "- Primitives hold raw values and are never referenced directly.\n" +
-      "- Semantic tokens give each value a role, in light and dark.\n" +
-      "- Components spend only semantic tokens, so themes swap cleanly.\n\n" +
-      "### The safety net\n\n" +
-      "Registries are the single source of truth for anything countable, and " +
-      "build time validators check them against reality: every component " +
-      "registered, every page present, every token resolving in both themes. " +
-      "A render test and an accessibility pass run on every story, on every " +
-      "change.\n\n" +
-      "The practical result is that a change either fits the system or the " +
-      "build says no.",
+      "A steady quarter. The highlights:\n\n" +
+      "### What happened\n\n" +
+      "- Six payroll runs went out, all on time, all funded from the " +
+      "operating account.\n" +
+      "- Two new hires onboarded with their paperwork done before day " +
+      "one.\n" +
+      "- The quarterly federal filing went in two weeks early.\n\n" +
+      "### What is coming\n\n" +
+      "The state filing is due at the end of the month, and open enrolment " +
+      "for benefits opens the week after. Neither needs anything from you " +
+      "yet; I will ask when they do.",
     followups: [
-      "What does a registry actually check?",
-      "How does the site use the package?",
-      "What runs on every change?",
+      "File the state tax forms",
+      "Add my new hire to payroll",
+      "How is headcount trending?",
     ],
   },
 ];
@@ -173,72 +155,76 @@ interface StoryNode {
 
 const STORY: StoryNode[] = [
   {
-    prompt: "How do I get started?",
+    prompt: "How do I run my first payroll?",
     steps: [
-      { status: "Reading the first-run flow", point: "The question maps to the first-run flow." },
-      { status: "Drafting the answer", point: "Lead with the workspace, then the invite step." },
+      { status: "Reading the account setup", point: "Company and tax details are already verified." },
+      { status: "Drafting the answer", point: "Lead with the hours, then the review step." },
     ],
     response:
-      "Create a workspace from the dashboard, then invite your team from " +
-      "Settings. Everyone you add sees the shared projects the moment they " +
-      "join. If you would rather not click through it, I can set the whole " +
-      "thing up for you.",
+      "You are closer than you think. Enter everyone's hours, review the " +
+      "totals, and submit; taxes are calculated and filed for you. If you " +
+      "would rather not click through it, I can run the whole thing for " +
+      "you.",
     followups: [
-      "Set it all up for me",
+      "Run it all for me",
       "What do the plans include?",
-      "How is the trial going?",
+      "How is headcount trending?",
     ],
   },
   {
-    prompt: "Set it all up for me",
+    prompt: "Run it all for me",
     steps: [
-      { status: "Planning the setup", point: "Four steps, from quota check to welcome note." },
-      { status: "Creating the workspace", point: "The shared project comes first." },
+      { status: "Planning the payroll run", point: "Four steps, from tax details to submission." },
+      { status: "Verifying the account", point: "Company details and bank link check out." },
     ],
-    response: "On it. Two steps are done already, and the invites are going out now.",
+    response:
+      "On it. Your details and bank link are verified already, and the " +
+      "team's hours are next.",
     contentKey: "setup-plan",
     followups: [
-      "Find a time we can all meet",
-      "Take us up to twelve seats",
-      "How is the trial going?",
+      "Find a time for orientation",
+      "Add my new hire to payroll",
+      "How is headcount trending?",
     ],
   },
   {
     prompt: "What do the plans include?",
     steps: [
-      { status: "Comparing the plans", point: "Three plans differ on collaboration, not on limits." },
-      { status: "Drafting the answer", point: "Name what the Team plan adds over the base." },
+      { status: "Comparing the plans", point: "The plans differ on HR tools, not on payroll." },
+      { status: "Drafting the answer", point: "Name what the Plus plan adds over the base." },
     ],
     response:
-      "Every plan includes unlimited projects. The Team plan adds shared " +
-      "workspaces, guest seats, and a 90 day version history.",
+      "Every plan includes full-service payroll with taxes filed for you. " +
+      "The Plus plan adds benefits administration, hiring and onboarding " +
+      "tools, and time-off tracking.",
     followups: [
       "Which plan fits a team of five?",
       "Where is that written down?",
-      "How is the trial going?",
+      "How is headcount trending?",
     ],
   },
   {
     prompt: "Which plan fits a team of five?",
     steps: [
-      { status: "Matching plans to the team", point: "The visitor needs shared workspaces and guest seats." },
-      { status: "Drafting the answer", point: "The Team plan covers both; lead with the card." },
+      { status: "Matching plans to the team", point: "Five people, benefits, and a hire in flight." },
+      { status: "Drafting the answer", point: "The Plus plan covers both; lead with the card." },
     ],
     response:
-      "The Team plan fits what you described: shared workspaces for the " +
-      "whole team, and guest seats stay free.",
+      "The Plus plan fits what you described: payroll for the whole team, " +
+      "benefits administration, and the onboarding tools for your next " +
+      "hire.",
     contentKey: "team-plan-card",
     followups: [
       "Where is that written down?",
-      "Invite my team to a workspace",
-      "How is the trial going?",
+      "Add my new hire to payroll",
+      "How is headcount trending?",
     ],
   },
   {
     prompt: "Where is that written down?",
     steps: [
-      { status: "Collecting the sources", point: "Three product pages back the answer." },
-      { status: "Drafting the answer", point: "Cite them so the visitor can check." },
+      { status: "Collecting the sources", point: "Three help pages back the answer." },
+      { status: "Drafting the answer", point: "Cite them so the owner can check." },
     ],
     response:
       "Each chip opens the page the answer came from, so nothing here needs " +
@@ -246,119 +232,122 @@ const STORY: StoryNode[] = [
     contentKey: "sources",
     followups: [
       "Which plan fits a team of five?",
-      "How do I get started?",
-      "How is the trial going?",
+      "How do I run my first payroll?",
+      "How is headcount trending?",
     ],
   },
   {
-    prompt: "How is the trial going?",
+    prompt: "How is headcount trending?",
     steps: [
-      { status: "Pulling the signup numbers", point: "Six weeks of signup data since the trial opened." },
+      { status: "Pulling the headcount numbers", point: "Six months of team data since January." },
       { status: "Charting the trend", point: "One series tells it; chart it in the card." },
     ],
     response:
-      "Signups have climbed for five of the six weeks since the trial " +
-      "opened, and last week was the strongest yet.",
+      "The team has grown steadily for five of the last six months, and " +
+      "you brought on two people this quarter alone.",
     contentKey: "trial-chart",
     followups: [
       "Which plan fits a team of five?",
-      "Invite my team to a workspace",
+      "Add my new hire to payroll",
       "Where is that written down?",
     ],
   },
   {
-    prompt: "Invite my team to a workspace",
+    prompt: "Add my new hire to payroll",
     steps: [
-      { status: "Checking the account", point: "Three teammates sit on the account, none invited yet." },
-      { status: "Drafting the answer", point: "Confirm before sending anything." },
+      { status: "Checking the offer letter", point: "Riley's signed offer arrived yesterday." },
+      { status: "Drafting the answer", point: "Confirm before onboarding anyone." },
     ],
     response:
-      "Happy to. Give me the word and I will send invites to the three " +
-      "teammates on your account, all as editors.",
+      "Happy to. Riley's signed offer is in, so give me the word and I " +
+      "will start their onboarding: paperwork, direct deposit, and a " +
+      "first-day checklist.",
     followups: [
-      "Go ahead and invite the other three",
-      "Take us up to twelve seats",
-      "Find a time we can all meet",
+      "Go ahead and onboard Riley",
+      "Raise default PTO to 15 days",
+      "Find a time for orientation",
     ],
   },
   {
-    prompt: "Go ahead and invite the other three",
+    prompt: "Go ahead and onboard Riley",
     steps: [
-      { status: "Sending the invites", point: "Three teammates to invite, all editors." },
-      { status: "Confirming delivery", point: "One call covers the batch." },
+      { status: "Starting the onboarding", point: "Riley starts on the first of the month." },
+      { status: "Confirming the paperwork", point: "One call covers the forms and deposit setup." },
     ],
     response:
-      "All three invites are out. Everyone lands in the workspace with " +
-      "editor access.",
+      "Riley is set up. The paperwork is out for signature, direct deposit " +
+      "is connected, and they land on the next payroll run automatically.",
     contentKey: "invite-tool",
     followups: [
-      "Find a time we can all meet",
-      "Take us up to twelve seats",
-      "How is the trial going?",
+      "Find a time for orientation",
+      "Raise default PTO to 15 days",
+      "How is headcount trending?",
     ],
   },
   {
-    prompt: "Take us up to twelve seats",
+    prompt: "Raise default PTO to 15 days",
     steps: [
-      { status: "Locating the seat limit", point: "The seat limit lives in workspace.config.ts." },
+      { status: "Locating the PTO policy", point: "The default lives in the benefits config." },
       { status: "Preparing the change", point: "One line changes; show the diff." },
     ],
     response:
-      "Only the seat count moves, from five to twelve. Everything else in " +
-      "the config stays as it was.",
+      "Only the default moves, from ten days to fifteen. Everyone's " +
+      "existing balances carry over untouched.",
     contentKey: "seat-diff",
     followups: [
-      "Go ahead and invite the other three",
+      "Go ahead and onboard Riley",
       "What do the plans include?",
-      "Find a time we can all meet",
+      "Find a time for orientation",
     ],
   },
   /* Two nodes the director's rail reaches by sending their prompt — the
-     doc drop and the failing sync. Unreferenced by any chip is fine: the
+     doc drop and the failing filing. Unreferenced by any chip is fine: the
      graph routes whatever text arrives. */
   {
-    prompt: "Here is the launch plan we are working from.",
+    prompt: "Here is our latest payroll register.",
     steps: [
-      { status: "Reading the document", point: "Fourteen pages; read it before answering." },
-      { status: "Charting the budget", point: "Budget is the decision in the doc; chart it." },
+      { status: "Reading the register", point: "Twelve pages; read it before answering." },
+      { status: "Charting the costs", point: "Cost by department is the story; chart it." },
     ],
     response:
-      "Three phases, and most of the budget sits behind launch week itself. " +
-      "The dates line up with the workspace you already set up, so nothing " +
-      "needs to move.",
+      "Three departments, and most of the quarter's payroll sits in " +
+      "operations. The totals match what ran through your account, so " +
+      "nothing needs correcting.",
     contentKey: "launch-analysis",
     followups: [
-      "Set it all up for me",
-      "Take us up to twelve seats",
-      "Find a time we can all meet",
+      "Run it all for me",
+      "Raise default PTO to 15 days",
+      "How is headcount trending?",
     ],
   },
   {
-    prompt: "Sync the shared calendar",
+    prompt: "File the state tax forms",
     steps: [
-      { status: "Starting the calendar sync", point: "The calendar sync runs after the invites." },
+      { status: "Starting the state filing", point: "The quarterly filing is ready to submit." },
     ],
     response:
-      "The sync timed out on the provider's side. Retry below and it should land.",
+      "The filing timed out on the state's side. Retry below and it should land.",
     contentKey: "flaky-tool",
     followups: [
-      "Find a time we can all meet",
-      "Go ahead and invite the other three",
-      "How is the trial going?",
+      "Find a time for orientation",
+      "Go ahead and onboard Riley",
+      "How is headcount trending?",
     ],
   },
   {
-    prompt: "Find a time we can all meet",
+    prompt: "Find a time for orientation",
     steps: [
-      { status: "Checking what this needs", point: "Suggesting times needs calendar access." },
+      { status: "Checking what this needs", point: "Scheduling orientation needs calendar access." },
       { status: "Preparing the request", point: "Ask before connecting anything." },
     ],
-    response: "I can check everyone's calendar for a slot, once you allow it below.",
+    response:
+      "I can find a slot that works for you and Riley, once you allow it " +
+      "below.",
     contentKey: "calendar-approval",
     followups: [
-      "Go ahead and invite the other three",
-      "How is the trial going?",
-      "How do I get started?",
+      "Go ahead and onboard Riley",
+      "How is headcount trending?",
+      "How do I run my first payroll?",
     ],
   },
 ];

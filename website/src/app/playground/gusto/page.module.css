@@ -1,0 +1,23 @@
+/* A bare stage: the switcher above a centred widget, painted over the
+   ambient background so the demo sits on a quiet ground.
+   ds-allow(color): the Gusto test's warm off-white, a step off the crisp
+   white card so the card still reads as a surface. */
+/* Fixed rather than flowed, so the ground covers the viewport whatever
+   margins or ambient layers sit behind the route; the stage scrolls
+   inside itself when the desktop widget outgrows a short window. */
+.stage {
+  position: fixed;
+  inset: 0;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gap-lg);
+  padding: var(--padding-lg);
+  background: #faf9f6;
+}
+
+.switcher {
+  display: flex;
+  justify-content: center;
+}
