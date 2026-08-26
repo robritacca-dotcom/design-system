@@ -59,7 +59,7 @@ import { readdirSync, readFileSync } from 'node:fs';
 import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import ts from 'typescript';
-import { extractProse } from './generate-site-corpus.mjs';
+import { extractProse, isProse, PROSE_ATTRIBUTES } from './generate-site-corpus.mjs';
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => readFileSync(p, 'utf8').replace(/\r\n/g, '\n');
@@ -130,18 +130,15 @@ const noIndex = (pagePath) => {
 };
 
 /**
- * Prose that rides in a JSX attribute, which `extractProse` cannot see.
+ * Attribute copy too short for `extractProse` to treat as prose.
  *
- * It skips every attribute deliberately: for the corpus, attributes are
- * className, src and width. But a handful carry copy a visitor reads, and a
- * stage caption is prose by any measure. Rather than diverge from the shared
- * extractor, this names the attributes that hold words and checks those.
+ * The shared extractor now reads the attributes in PROSE_ATTRIBUTES, so most
+ * of this text arrives through `extractProse` above. What it drops is anything
+ * under its sentence threshold — a four-word button label, a stage caption of
+ * three words. Those still ship to a reader, so they are still checked here,
+ * and skipping what the extractor already emitted keeps one em dash from
+ * being reported twice.
  */
-const PROSE_ATTRIBUTES = new Set([
-  'caption', 'label', 'title', 'alt', 'placeholder', 'dek',
-  'helperText', 'description', 'pendingLabel', 'emptyMessage',
-]);
-
 function scanProseAttributes(label, source, fileName) {
   const sourceFile = ts.createSourceFile(
     fileName, source, ts.ScriptTarget.Latest, /* setParentNodes */ true, ts.ScriptKind.TSX
@@ -152,7 +149,8 @@ function scanProseAttributes(label, source, fileName) {
       ts.isIdentifier(node.name) &&
       PROSE_ATTRIBUTES.has(node.name.text) &&
       node.initializer &&
-      ts.isStringLiteral(node.initializer)
+      ts.isStringLiteral(node.initializer) &&
+      !isProse(node.initializer.text.replace(/\s+/g, ' ').trim())
     ) {
       scan(label, node.initializer.text, `${node.name.text} attribute`);
     }

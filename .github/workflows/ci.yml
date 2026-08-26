@@ -74,3 +74,5 @@ jobs:
       # Reads the prerendered HTML, so it has to follow the build rather than
       # ride the prebuild validator chain.
       - run: node scripts/validate-rendered-spacing.mjs
+      # Same reason: compares the corpus against what the pages actually render.
+      - run: node scripts/validate-corpus-coverage.mjs

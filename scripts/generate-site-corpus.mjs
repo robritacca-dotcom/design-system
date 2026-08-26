@@ -28,7 +28,7 @@
  * Flags: --dump prints the corpus to stdout instead of writing it.
  *        --sizes prints a per-section byte/token breakdown.
  */
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import ts from 'typescript';
@@ -74,8 +74,15 @@ const CHARS_PER_TOKEN = 2.85;
  * essay, a case study, a component. It is the wrong move for a section that
  * suddenly doubled: trim that instead, and read the `--sizes` report before
  * deciding which of the two this is.
+ *
+ * Raised to 130K on 2026-08-25, when the walk started reading prose out of the
+ * attributes in PROSE_ATTRIBUTES. That added about 5,500 tokens, effectively
+ * all of it the case studies' figure captions and Alert callouts — words that
+ * were on those pages all along and simply never reached the model. Sized well
+ * past the overage on purpose: the budget had drifted to under 2,800 tokens of
+ * headroom, which is one case study away from failing on ordinary writing.
  */
-const TOKEN_BUDGET = 115_000;
+const TOKEN_BUDGET = 130_000;
 
 /** Normalize CRLF so Windows checkouts generate byte-identical output to CI. */
 const read = (path) => readFileSync(path, 'utf8').replace(/\r\n/g, '\n');
@@ -113,7 +120,7 @@ const decode = (text) =>
   text.replace(/&[a-z]+;/gi, (entity) => ENTITIES[entity] ?? entity);
 
 /** True for fragments that read as sentences rather than code. */
-function isProse(text) {
+export function isProse(text) {
   if (text.length < 25) return false;
   if (text.split(/\s+/).length < 4) return false;
   if (/^[/.#@]/.test(text)) return false;          // paths, selectors, imports
@@ -156,13 +163,47 @@ function hasBlockDescendant(node) {
 const isBlockElement = (node) =>
   isBlockTag(node) || (ts.isJsxFragment(node) && !hasBlockDescendant(node));
 
+/**
+ * JSX attributes that hold copy a visitor reads, rather than markup plumbing.
+ *
+ * Most attributes are className, src and width, so the walk below skips them
+ * wholesale. These are the exceptions: a figure caption, an Alert's title and
+ * body, an image's alt text. On the case-study pages that is not decoration —
+ * the captions carry the argument a diagram is making, and an Alert is how a
+ * page states the context a reader needs (that a 2021 project predates
+ * practical LLMs, say). Left out, the chat answers those questions blind.
+ *
+ * Exported so validate-shipped-prose.mjs holds the same set; two lists of
+ * "which attributes hold words" would drift.
+ */
+export const PROSE_ATTRIBUTES = new Set([
+  'caption', 'label', 'title', 'alt', 'placeholder', 'dek',
+  'helperText', 'description', 'pendingLabel', 'emptyMessage',
+  'sub', 'subtitle', 'delta', 'value', 'body', 'content',
+  'tagline', 'detail', 'meta', 'aria-label',
+]);
+
+/**
+ * Deliberately absent, and worth naming so nobody adds them: `allow` (iframe
+ * permission lists), `sizes` (image hints), `gradientTransform` (SVG matrices).
+ * Each holds a long string that reads as words to a sentence filter and as
+ * noise to a reader. The rule for admitting an attribute here is whether a
+ * visitor sees its text on the page.
+ */
+
 /** True when a string literal is structural rather than prose. */
 function isStructuralString(node) {
   const parent = node.parent;
   if (!parent) return true;
   if (ts.isImportDeclaration(parent) || ts.isExportDeclaration(parent)) return true;
-  if (ts.isJsxAttribute(parent)) return true;       // className, src, width…
-  if (ts.isJsxAttribute(parent?.parent)) return true;
+  const attribute = ts.isJsxAttribute(parent) ? parent
+    : ts.isJsxAttribute(parent?.parent) ? parent.parent
+    : null;
+  if (attribute) {
+    return !(
+      ts.isIdentifier(attribute.name) && PROSE_ATTRIBUTES.has(attribute.name.text)
+    );
+  }
   return false;
 }
 
@@ -220,9 +261,57 @@ export function extractProse(source, fileName) {
   return lines.join('\n');
 }
 
+/**
+ * Next's own file conventions. Their text is metadata, chrome or an error
+ * state, never page prose, so the co-located sweep below skips them.
+ */
+const NEXT_SPECIAL_FILES = new Set([
+  'layout', 'template', 'loading', 'error', 'global-error', 'not-found',
+  'default', 'icon', 'apple-icon', 'opengraph-image', 'twitter-image',
+]);
+
+/**
+ * The .tsx files a route folder owns besides page.tsx, sorted for determinism.
+ *
+ * A page that outgrows one file splits into co-located components — the
+ * playground's section files are the worked example, and a long case study is
+ * the obvious next one. Reading page.tsx alone made that refactor silently
+ * delete the page from the chat's knowledge while every validator stayed
+ * green: the route is still on disk, still "covered", and now says nothing.
+ *
+ * Only folders that are not themselves routes are followed, so one page can
+ * never swallow another's prose, and the root route is skipped outright
+ * because its folder is the whole app directory.
+ */
+function coLocatedFiles(dir, isRoot) {
+  if (isRoot) return [];
+  const files = [];
+  for (const entry of readdirSync(dir, { withFileTypes: true }).sort((a, b) =>
+    a.name < b.name ? -1 : a.name > b.name ? 1 : 0
+  )) {
+    const full = join(dir, entry.name);
+    if (entry.isDirectory()) {
+      // A folder holding a page.tsx is another route; it speaks for itself.
+      if (existsSync(join(full, 'page.tsx'))) continue;
+      files.push(...coLocatedFiles(full, false));
+    } else if (
+      entry.name.endsWith('.tsx') &&
+      entry.name !== 'page.tsx' &&
+      !NEXT_SPECIAL_FILES.has(entry.name.replace(/\.tsx$/, ''))
+    ) {
+      files.push(full);
+    }
+  }
+  return files;
+}
+
 const pageProse = (...segments) => {
-  const path = join(websiteApp, ...segments, 'page.tsx');
-  return extractProse(read(path), path);
+  const dir = join(websiteApp, ...segments);
+  const sources = [join(dir, 'page.tsx'), ...coLocatedFiles(dir, segments.length === 0)];
+  return sources
+    .map((path) => extractProse(read(path), path))
+    .filter(Boolean)
+    .join('\n');
 };
 
 /* ============================================================
@@ -406,15 +495,36 @@ function extractFacts(source, fileName) {
   return blocks;
 }
 
-/** Prose plus rendered fact blocks for one page. */
+/**
+ * Prose from a shared component under website/src/components.
+ *
+ * Named one at a time, never swept: most shared components are chrome (the
+ * nav, the footer, the chat panel) whose text would repeat on every route.
+ * The exceptions are components that state something a reader needs and no
+ * page repeats — the sample-case-study notice being the case in point.
+ */
+function sharedComponentProse(name) {
+  const path = join(repoRoot, 'website', 'src', 'components', name, `${name}.tsx`);
+  return extractProse(read(path), path);
+}
+
+/**
+ * Prose plus rendered fact blocks for one page.
+ *
+ * Prose comes from the whole route folder via `pageProse`; facts stay bound to
+ * page.tsx, which is where a `corpus-facts()` directive is declared and what
+ * `sanctionedFacts` reads to build the leak-screen allowlist. Keeping those
+ * two readers on the same file is what makes the screen fail closed: a
+ * contact-shaped detail published anywhere else has no allowlist entry, so it
+ * fails the build rather than slipping through.
+ */
 function pageContent(...segments) {
   const path = join(websiteApp, ...segments, 'page.tsx');
-  const source = read(path);
-  const facts = extractFacts(source, path);
+  const facts = extractFacts(read(path), path);
   const factsMarkdown = facts
     .map(({ label, lines }) => `#### ${label}\n\n${lines.join('\n')}`)
     .join('\n\n');
-  return { prose: extractProse(source, path), factsMarkdown, facts };
+  return { prose: pageProse(...segments), factsMarkdown, facts };
 }
 
 /**
@@ -698,7 +808,13 @@ function sectionCaseStudies() {
     })
     .join('\n\n');
 
+  // Rendered at the foot of every case study by SampleCaseStudyCard, so it is
+  // stated once here rather than repeated into all eight.
+  const sampleNotice = sharedComponentProse('SampleCaseStudyCard');
+
   return `## Case studies
+
+Every case study below carries this notice: ${sampleNotice.replace(/\n/g, ' ')}
 
 Newest first.
 
@@ -783,6 +899,8 @@ function sectionComponents() {
 
   return `## Component library
 
+${pageProse('components')}
+
 ${registry.components.length} components published as @robr0/design-system, grouped by category. Each has documentation at the path shown.
 
 ${groups}`;
@@ -853,6 +971,8 @@ function sectionWriting() {
   return `## Writing
 
 Rob's essays on design and AI, mirrored from Substack onto /writing. The full text of each is below — quote and discuss them freely, and link the essay's page. Newest first.
+
+${pageProse('writing')}
 
 ${list}
 
