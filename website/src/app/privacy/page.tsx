@@ -27,10 +27,13 @@ export default function PrivacyPage() {
           <h2 className={styles.sectionTitle}>The site chat</h2>
           <p className={styles.body}>
             The chat answers questions about my work and this design system.
-            Messages go to Anthropic, whose model writes the replies. I keep
-            each conversation for 30 days to improve the answers, then delete
-            it. Nothing in it is linked to your name. Do not type anything
-            private into it.
+            Messages go to Anthropic, whose model writes the replies. For each
+            exchange I keep the question, the answer, the page it was asked
+            from, timing and token counts, and a thumbs verdict if you leave
+            one. Each entry carries a scrambled, one-way stand-in for your
+            network address so I can spot abuse; it is not your name, and I
+            cannot turn it back into an address. Everything is deleted after
+            30 days. Do not type anything private into it.
           </p>
         </div>
 

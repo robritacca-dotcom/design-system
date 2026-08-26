@@ -159,8 +159,9 @@ function ContactContent() {
             to /privacy for the same facts; this page and /privacy state them. */}
         <p className={`${styles.chatNote} animate-in animate-delay-3`}>
           The site chat can answer most questions about my work directly. Its
-          conversations are kept for 30 days to improve the answers, tied to no
-          name or address, then deleted.
+          conversations are kept for 30 days to improve the answers, tied to a
+          scrambled visitor key rather than a name, then deleted; the privacy
+          page states exactly what is kept.
         </p>
       </main>
 
