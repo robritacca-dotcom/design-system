@@ -45,13 +45,17 @@ export interface TreemapProps {
   summaryItems?: ChartSummaryItem[];
   /** Chart area height in pixels */
   height?: number;
+  /** Strip the card chrome (border, padding, fill) when the chart sits inside another panel that supplies the surface */
+  bare?: boolean;
   /** Additional CSS classes on the wrapper */
   className?: string;
 }
 
 function getCSSVar(name: string, fallback: string): string {
-  if (typeof window === 'undefined') return fallback;
-  return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback;
+  // A var() reference resolves live in SVG paint, so the chart follows a
+  // theme switch without re-rendering; the fallback covers SSR markup and
+  // token-less consumers.
+  return `var(${name}, ${fallback})`;
 }
 
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
@@ -118,10 +122,13 @@ export const Treemap = ({
   subtitle,
   summaryItems,
   height = 350,
+  bare = false,
   className = '',
 }: TreemapProps) => {
   const baseClass = 'ds-chart';
-  const classes = [baseClass, className].filter(Boolean).join(' ');
+  const classes = [baseClass, bare ? `${baseClass}--bare` : '', className]
+    .filter(Boolean)
+    .join(' ');
 
   const renderTooltip = useCallback(
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */

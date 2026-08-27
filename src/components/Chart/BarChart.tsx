@@ -49,6 +49,8 @@ export interface BarChartProps {
   barColor?: string;
   /** Chart area height in pixels */
   height?: number;
+  /** Strip the card chrome (border, padding, fill) when the chart sits inside another panel that supplies the surface */
+  bare?: boolean;
   /** Additional CSS classes on the wrapper */
   className?: string;
 }
@@ -58,8 +60,10 @@ export interface BarChartProps {
  * Falls back to the provided default if unavailable (e.g. SSR).
  */
 function getCSSVar(name: string, fallback: string): string {
-  if (typeof window === 'undefined') return fallback;
-  return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback;
+  // A var() reference resolves live in SVG paint, so the chart follows a
+  // theme switch without re-rendering; the fallback covers SSR markup and
+  // token-less consumers.
+  return `var(${name}, ${fallback})`;
 }
 
 /**
@@ -105,10 +109,13 @@ export const BarChart = ({
   summaryItems,
   barColor,
   height = 350,
+  bare = false,
   className = '',
 }: BarChartProps) => {
   const baseClass = 'ds-chart';
-  const classes = [baseClass, className].filter(Boolean).join(' ');
+  const classes = [baseClass, bare ? `${baseClass}--bare` : '', className]
+    .filter(Boolean)
+    .join(' ');
 
   /* Resolve theme-aware colours once per render */
   const resolvedBarColor = barColor || getCSSVar('--color-action-primary-bg', '#0E6E8F');

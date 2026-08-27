@@ -96,6 +96,51 @@
 
 .ds-chart__body {
   width: 100%;
+  /* Anchors the radial centre label overlay. */
+  position: relative;
+}
+
+/* ============================================
+   BARE MODE — the chart sits inside another
+   panel that supplies the surface, so its own
+   card chrome would double-frame it
+   ============================================ */
+
+.ds-chart--bare {
+  border: none;
+  padding: 0;
+  background-color: transparent;
+}
+
+/* ============================================
+   RADIAL CENTRE LABEL — the gauge's headline
+   in the donut hole
+   ============================================ */
+
+.ds-chart__radial-center {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: var(--gap-xxs);
+  pointer-events: none;
+}
+
+.ds-chart__radial-center-value {
+  font-family: var(--font-sub-display-family);
+  font-size: var(--font-sub-display-size);
+  font-weight: var(--font-sub-display-weight);
+  line-height: var(--font-sub-display-line-height);
+  letter-spacing: var(--font-sub-display-letter-spacing);
+  color: var(--color-text-primary);
+}
+
+.ds-chart__radial-center-sub {
+  font-family: var(--font-caption-family);
+  font-size: var(--font-caption-size);
+  line-height: var(--font-caption-line-height);
+  color: var(--color-text-secondary);
 }
 
 /* ============================================

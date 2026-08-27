@@ -1,9 +1,10 @@
 /**
  * The ordered series palette shared by every multi-series chart.
- * Reads the `--color-chart-series-{n}` tokens at render, so the palette
- * follows the active theme and any consumer re-theming of the tokens.
- * The fallbacks are the light-theme resolved values, used during SSR and
- * when a token is missing from the cascade.
+ * Each entry is a var() reference to the `--color-chart-series-{n}` token,
+ * which SVG paint resolves live, so the palette follows the active theme
+ * (including a mid-session switch) and any consumer re-theming of the
+ * tokens. The fallbacks are the light-theme resolved values, used when a
+ * token is missing from the cascade.
  */
 const SERIES_FALLBACKS = [
   '#0E6E8F',
@@ -16,10 +17,7 @@ const SERIES_FALLBACKS = [
 ];
 
 export function getChartSeriesColors(): string[] {
-  if (typeof window === 'undefined') return SERIES_FALLBACKS;
-  const style = getComputedStyle(document.documentElement);
   return SERIES_FALLBACKS.map(
-    (fallback, i) =>
-      style.getPropertyValue(`--color-chart-series-${i + 1}`).trim() || fallback,
+    (fallback, i) => `var(--color-chart-series-${i + 1}, ${fallback})`,
   );
 }

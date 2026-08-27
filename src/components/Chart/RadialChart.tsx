@@ -50,13 +50,21 @@ export interface RadialChartProps {
   outerRadius?: number;
   /** Show legend */
   showLegend?: boolean;
+  /** Headline printed in the donut hole, e.g. "46%"; pairs best with showLegend false, since the legend shifts the rings above centre */
+  centerLabel?: string;
+  /** Small caption under the centre headline */
+  centerSublabel?: string;
+  /** Strip the card chrome (border, padding, fill) when the chart sits inside another panel that supplies the surface */
+  bare?: boolean;
   /** Additional CSS classes on the wrapper */
   className?: string;
 }
 
 function getCSSVar(name: string, fallback: string): string {
-  if (typeof window === 'undefined') return fallback;
-  return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback;
+  // A var() reference resolves live in SVG paint, so the chart follows a
+  // theme switch without re-rendering; the fallback covers SSR markup and
+  // token-less consumers.
+  return `var(${name}, ${fallback})`;
 }
 
 function RadialTooltip({ active, payload }: RadialTooltipProps) {
@@ -94,10 +102,15 @@ export const RadialChart = ({
   innerRadius = 40,
   outerRadius = 140,
   showLegend = true,
+  centerLabel,
+  centerSublabel,
+  bare = false,
   className = '',
 }: RadialChartProps) => {
   const baseClass = 'ds-chart';
-  const classes = [baseClass, className].filter(Boolean).join(' ');
+  const classes = [baseClass, bare ? `${baseClass}--bare` : '', className]
+    .filter(Boolean)
+    .join(' ');
   const defaultColors = getChartSeriesColors();
   const textSecondary = getCSSVar('--color-text-secondary', '#A2A2A2');
   const bgColor = getCSSVar('--color-bg-container-primary', '#0E0E0E');
@@ -174,6 +187,14 @@ export const RadialChart = ({
             )}
           </RechartsRadialBarChart>
         </ResponsiveContainer>
+        {centerLabel && (
+          <div className={`${baseClass}__radial-center`}>
+            <span className={`${baseClass}__radial-center-value`}>{centerLabel}</span>
+            {centerSublabel && (
+              <span className={`${baseClass}__radial-center-sub`}>{centerSublabel}</span>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
