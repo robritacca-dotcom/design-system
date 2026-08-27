@@ -4,6 +4,7 @@ import path from "node:path";
 import { getArticles } from "@/lib/substack";
 import {
   componentsSidebarLinks,
+  consultingSidebarLinks,
   docsSidebarLinks,
   foundationsSidebarLinks,
   workSidebarLinks,
@@ -80,6 +81,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/privacy",
     "/playground",
     "/design-system",
+    ...consultingSidebarLinks.map((l) => l.href),
     ...workSidebarLinks.map((l) => l.href),
     ...docsSidebarLinks.map((l) => l.href),
     ...foundationsSidebarLinks.map((l) => l.href),

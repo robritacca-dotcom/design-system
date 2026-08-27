@@ -20,6 +20,7 @@ const siteLinks = [
   { href: "/about", label: "About" },
   { href: "/work", label: "Work" },
   { href: "/writing", label: "Writing" },
+  { href: "/consulting", label: "Consulting" },
   { href: "/contact", label: "Contact" },
   { href: "/privacy", label: "Privacy" },
 ];

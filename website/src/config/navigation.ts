@@ -202,6 +202,17 @@ export function buildWritingSidebarLinks(
   ];
 }
 
+/**
+ * Sidebar for the Consulting cluster — the landing plus one page per
+ * audience. The audience split is the section's whole structure, so the
+ * rail doubles as the audience selector.
+ */
+export const consultingSidebarLinks: NavLink[] = [
+  { href: "/consulting", label: "Contents" },
+  { href: "/consulting/teams", label: "For teams" },
+  { href: "/consulting/designers", label: "For designers" },
+];
+
 export const workSidebarLinks: NavLink[] = [
   { href: "/work", label: "Contents" },
   { href: "/work/embedded-ai-turbotax", label: "TurboTax in ChatGPT & Claude", logo: "/logos/turbotax.svg" },
@@ -239,6 +250,7 @@ const allSidebarLinks: NavLink[] = [
   ...componentsSidebarLinks,
   ...foundationsSidebarLinks,
   ...docsSidebarLinks,
+  ...consultingSidebarLinks,
   ...workSidebarLinks,
 ];
 
@@ -392,6 +404,7 @@ const breadcrumbSections: SectionConfig[] = [
   // Other DS sections
   { base: "/foundations", label: "Foundations", parent: "Design system", sidebar: foundationsSidebarLinks },
   { base: "/components", label: "Components", parent: "Design system", sidebar: componentsSidebarLinks },
+  { base: "/consulting", label: "Consulting", parent: null, sidebar: consultingSidebarLinks },
   { base: "/work", label: "Work", parent: null, sidebar: workSidebarLinks },
   // Writing — article sub-labels resolve from the slug (feed is dynamic)
   { base: "/writing", label: "Writing", parent: null, sidebar: null },

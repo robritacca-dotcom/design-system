@@ -8,6 +8,7 @@ import { lockBodyScroll, unlockBodyScroll } from "@/lib/scroll-lock";
 import { NavList, type NavListItem } from "@robr0/design-system/components/NavList/NavList";
 import { componentCategoryMetadata } from "@robr0/design-system/components/registry";
 import {
+  consultingSidebarLinks,
   docsSidebarLinks,
   dsMegaItems,
   foundationsSidebarLinks,
@@ -29,6 +30,7 @@ const sectionForPath = (path: string): string | null => {
   if (path.startsWith("/docs")) return "docs";
   if (path.startsWith("/foundations")) return "foundations";
   if (path.startsWith("/components")) return "components";
+  if (path.startsWith("/consulting")) return "consulting";
   return null;
 };
 
@@ -81,6 +83,8 @@ export default function MegaNav() {
   const isAboutActive = pathname === "/about";
   const isWorkActive = pathname === "/work" || pathname.startsWith("/work/");
   const isWritingActive = pathname === "/writing" || pathname.startsWith("/writing/");
+  const isConsultingActive =
+    pathname === "/consulting" || pathname.startsWith("/consulting/");
   const isContactActive = pathname === "/contact";
 
   // The drawer's whole tree, fed to NavList — the same per-section links the
@@ -136,6 +140,13 @@ export default function MegaNav() {
         // wide viewport).
         { label: "Playground", href: "/playground" },
       ],
+    },
+    {
+      label: "Consulting",
+      href: "/consulting",
+      id: "consulting",
+      current: isConsultingActive || undefined,
+      items: toNavItems(consultingSidebarLinks.slice(1)),
     },
     { label: "Contact", href: "/contact" },
   ];
@@ -304,6 +315,14 @@ export default function MegaNav() {
                 </span>
               </Link>
             </div>
+
+            <Link
+              href="/consulting"
+              className={`${styles.navLink} ${isConsultingActive ? styles.navLinkActive : ""}`}
+              aria-current={isConsultingActive ? "page" : undefined}
+            >
+              Consulting
+            </Link>
 
             <Link
               href="/contact"
