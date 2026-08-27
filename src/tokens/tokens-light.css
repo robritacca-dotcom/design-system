@@ -19,17 +19,17 @@
   --color-icon-secondary: var(--primitive-neutral-04);
 
   /* Background - Page */
-  --color-bg-page-primary: var(--primitive-neutral-00);
+  --color-bg-page-primary: var(--primitive-neutral-01);
   --color-bg-page-inverse: var(--primitive-neutral-10);
 
   /* Background - Container */
-  --color-bg-container-primary: var(--primitive-neutral-01);
-  --color-bg-container-primary-transparent: var(--primitive-neutral-01-transparent);
-  --color-bg-container-primary-semi: var(--primitive-neutral-01-semi);
+  --color-bg-container-primary: var(--primitive-neutral-00);
+  --color-bg-container-primary-transparent: rgba(255, 255, 255, 0.01);
+  --color-bg-container-primary-semi: rgba(255, 255, 255, 0.6);
   --color-bg-container-secondary: var(--primitive-neutral-02);
   --color-bg-container-tertiary: var(--primitive-neutral-03);
   --color-bg-container-inverse: var(--primitive-neutral-09);
-  --color-bg-container-border: var(--primitive-neutral-02);
+  --color-bg-container-border: transparent;
 
   /* Glass: the translucent floating-surface fill (chat panel, floating
      sidebar). Deliberately translucent in both themes so the page's

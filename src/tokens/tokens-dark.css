@@ -18,17 +18,17 @@
   --color-icon-secondary: var(--primitive-neutral-04);
 
   /* Background - Page */
-  --color-bg-page-primary: var(--primitive-neutral-10);
+  --color-bg-page-primary: var(--primitive-neutral-09-semi);
   --color-bg-page-inverse: var(--primitive-neutral-01);
 
   /* Background - Container */
-  --color-bg-container-primary: var(--primitive-neutral-09-semi);
-  --color-bg-container-primary-transparent: var(--primitive-neutral-09-transparent);
-  --color-bg-container-primary-semi: var(--primitive-neutral-09-semi-transparent);
+  --color-bg-container-primary: var(--primitive-neutral-10);
+  --color-bg-container-primary-transparent: var(--primitive-neutral-10-subtle);
+  --color-bg-container-primary-semi: var(--primitive-neutral-10-semi);
   --color-bg-container-secondary: var(--primitive-neutral-07);
   --color-bg-container-tertiary: var(--primitive-neutral-08);
   --color-bg-container-inverse: var(--primitive-neutral-01);
-  --color-bg-container-border: var(--primitive-neutral-08);
+  --color-bg-container-border: transparent;
   --color-bg-glass: var(--primitive-neutral-09-glass);
 
   /* Divider */

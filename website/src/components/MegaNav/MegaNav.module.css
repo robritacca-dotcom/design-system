@@ -395,6 +395,14 @@
   pointer-events: none;
 }
 
+/* Dark's page token is a translucent wash (the swapped-background look), so
+   tinting with it leaves the bar see-through even at the viewport edge. The
+   opaque floor of that wash is the container surface — tint with it instead
+   so the bar still reads solid where it meets the top. */
+:global(html[data-theme="dark"]) .stickyBackdrop {
+  --sticky-backdrop-tint: var(--color-bg-container-primary);
+}
+
 /* No hand-written -webkit- twins for backdrop-filter here or on the drawer:
    the build's CSS pipeline adds the prefix from browserslist, and a manual
    one next to it made it drop the property entirely — the bar rendered
