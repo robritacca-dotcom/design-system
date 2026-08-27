@@ -81,7 +81,7 @@ export default function AppSidebarPage() {
               Collapsible navigation for app layouts
             </p>
             <p className={styles.introBody}>
-              A two-state sidebar that collapses to a 64px icon rail or expands to 280px with labels, category headings, accordion sub-items with tree-line connectors, and a profile section at the bottom.
+              A two-state sidebar that collapses to a 64px icon rail or expands to 280px with labels, category headings, accordion sub-items with tree-line connectors, and a profile section at the bottom. Items take an optional count badge; topSlot and footerSlot host consumer content that fades out while collapsed; and the floating prop renders the rail as a glass card inset from the viewport edges.
             </p>
           </div>
 

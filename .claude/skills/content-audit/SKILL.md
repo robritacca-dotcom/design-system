@@ -53,6 +53,7 @@ Use this skill when asked to audit copy, check prose quality, find AI-writing te
    - Skill instruction bodies, `design.md`, `CLAUDE.md` — agent-facing references, out of scope by design (see the guide's Overview)
    - Code, identifiers, token names, class names, and anything inside backticks or code fences
    - Text authored by third parties (external-skill copies keep their upstream voice)
+   - The labs rebuilds under `website/src/app/labs/**` — their copy is fictional demo data reproducing a reference product, excluded from the chat corpus for the same reason, so register and voice rules do not apply to it
 
 5. **For each finding**, output:
    - File path (repo-relative) and line number, or the entry label for JSON surfaces

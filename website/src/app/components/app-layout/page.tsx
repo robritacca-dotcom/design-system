@@ -76,8 +76,9 @@ export default function AppLayoutPage() {
             <p className={styles.introBody}>
               A page shell that pairs the App sidebar with a centred content area. The sidebar
               collapses to an icon rail; the main region reflows automatically. The component
-              currently renders its own dark surface regardless of the site theme, so the demos
-              below always appear dark.
+              pins itself to the dark theme by default, which is why the demos below appear
+              dark; pass theme=&quot;inherit&quot; to drop the pin and let the layout follow the
+              surrounding data-theme like any other component.
             </p>
           </div>
 

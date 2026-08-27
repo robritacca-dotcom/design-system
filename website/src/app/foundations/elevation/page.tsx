@@ -32,7 +32,7 @@ const shadowTokens: ShadowToken[] = [
     tileClass: "elevationTileFloating",
     light: "0 4px 16px rgba(0, 0, 0, 0.12)",
     dark: "0 4px 16px rgba(0, 0, 0, 0.55)",
-    usedBy: "Popover, Dropdown and DropdownMenu, Combobox, ContextMenu, ColorPicker, chart tooltips, Toast",
+    usedBy: "Popover, Dropdown and DropdownMenu, Combobox, ContextMenu, ColorPicker, chart tooltips, Toast, chat surfaces, the floating App sidebar",
   },
   {
     label: "Modal",
@@ -111,9 +111,9 @@ export default function ElevationPage() {
             <p className={styles.introBody}>
               Standard containers never carry a shadow. Depth comes from stepping through the
               container colour ramp, which keeps surfaces flat, crisp, and legible against the
-              page floor. Only surfaces that genuinely float above the page (anchored overlays
-              and modals) earn a shadow, and the elevation tokens below are the only ones that
-              exist for it. Never write a literal <code>box-shadow</code> value in component CSS.
+              page floor. Only surfaces that genuinely float above the page (anchored overlays,
+              modals, and the floating App sidebar) earn a shadow, and the elevation tokens
+              below are the only ones that exist for it. Never write a literal <code>box-shadow</code> value in component CSS.
             </p>
           </div>
 

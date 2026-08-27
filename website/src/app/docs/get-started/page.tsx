@@ -30,8 +30,8 @@ import { Button } from '@robr0/design-system/components/Button/Button';
 import '@robr0/design-system/fonts/material-symbols.css';`;
 
 const CHARTS_SNIPPET = `// The recharts-backed charts live behind their own entry so that peer
-// dependency stays optional — Sparkline and ContributionGraph are
-// dependency-free and come from the main barrel.
+// dependency stays optional — the dependency-free chart pieces (Sparkline,
+// ContributionGraph, FunnelChart, LegendTile) come from the main barrel.
 import { BarChart, LineChart } from '@robr0/design-system/charts';`;
 
 const DARK_MODE_SNIPPET = `<!-- Light is the default; flip the whole system with one attribute -->

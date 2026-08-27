@@ -32,7 +32,7 @@ CLAUDE.md's **How to Add a New Token** section is the authoritative checklist �
 5. **A TypeScript-side token** (a shared constant, like the JS timing constants in `src/tokens/motion.ts`) has packaging steps CSS tokens do not:
    - A subpath entry in `SUBPATHS` in `scripts/package-manifest.mjs`, mirrored by hand into the root `package.json` `exports` (`scripts/validate-package-exports.mjs` fails the build if they drift), plus a matching entry in `vite.lib.config.ts`.
    - Or, if it is internal-only, an entry in `INTERNAL_MODULES` in `scripts/validate-package-exports.mjs` with the reason.
-   - If component code mirrors the token's value outside CSS (an SSR fallback, a serialized config), route the mirror through a validator so it cannot drift — the chart palette guard in `scripts/validate-token-references.mjs` is the pattern to copy.
+   - If component code mirrors the token's value outside CSS (a `var()` fallback, a serialized config), route the mirror through a validator so it cannot drift — the chart palette guard in `scripts/validate-token-references.mjs` is the pattern to copy.
 
 6. **Verify**: `npm run validate-registry` must pass end to end (it regenerates `src/tokens/registry.json` and re-checks every home), then `npm run build` for the type-check. Displayed counts update themselves — never hardcode one.
 

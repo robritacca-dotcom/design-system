@@ -56,6 +56,7 @@ The action roles are the one token family that splits per theme by design (see O
 - **Container tertiary** (`--color-bg-container-tertiary` — #BCBCBC light / #232323 dark): Third elevation — pressed states, deepest nesting.
 - **Container border** (`--color-bg-container-border` — #D6D6D6 light / #232323 dark): Hairline borders on containers.
 - **Container inverse** (`--color-bg-container-inverse` — #0E0E0E light / #F1F1F1 dark): High-contrast inverted surface — the tooltip bubble. Always paired with `--color-text-on-inverse`.
+- **Glass** (`--color-bg-glass` — rgba(241,241,241,0.82) light / rgba(14,14,14,0.66) dark): The floating-surface fill — deliberately translucent in both themes so the page's colours reach the surface. Always paired with `backdrop-filter: blur(24px)`, which is what keeps content readable through it; the blur radius is a documented constant, not a token. Used by the site chat panel and AppSidebar's floating variant.
 - **Divider** (`--color-divider` — rgba(214,214,214,0.8) light / rgba(35,35,35,0.8) dark): Horizontal/vertical rule between sections.
 
 ### Chat bubbles
@@ -90,6 +91,12 @@ ChatMessage consumes only these four — never the container tokens directly. Te
 | `error` | #FDEFF3 | `#EF476F` | #571727 | #571727 | #FDEFF3 |
 | `info` | #EEF3FD | `#1E47B0` | #081633 | #081633 | #EEF3FD |
 | `neutral` | #D6D6D6 | `#303030` | #232323 | #232323 | #F1F1F1 |
+
+### Trend (theme-split — the "number went up / went down" role)
+- Up: `--color-trend-up` — #024336 (green-10) light / #06D6A0 (green-07, the mint accent) dark
+- Down: `--color-trend-down` — #571727 (red-10) light / #EF476F (red-07, the coral accent) dark
+
+Stat deltas and any table mover colour through these, never through the accents directly: on light surfaces the vivid accents fall below readable contrast, so the light half uses the deep status inks, while the dark half keeps the accents, which read well on dark fills. The role exists so that "went up" has one colour everywhere it appears.
 
 ### Core Accents (data-viz, decorative — not for semantic status)
 - Coral: `--color-core-accent-coral` #EF476F
@@ -279,6 +286,19 @@ Page-level vertical space is a statement of relatedness: the gap between two thi
 
 Because the ladder's meanings differ by a full visual step (80 / 40 / 20 / 8), a reader can recover the page structure from spacing alone. Never use an off-ladder gap to "fine-tune" a page-level relationship: if 40px feels wrong between a heading and its content, the content is wrong, not the gap.
 
+### The dashboard rung set
+
+Rule 7 below says tiling is a template's decision; a dashboard is that template. When a page is an app shell laying Panels in a grid, the ladder gains one inner rung set, worked out on the labs marketing rebuild and stated here so every dashboard lands on the same density:
+
+| Role | Token | Value | Meaning |
+|---|---|---|---|
+| Card gutter | `--gap-lg` | 20px | Between Panels, in every direction. |
+| Card inset | `--padding-lg` | 20px | A Panel's own padding — the gutter and the inset match, so the grid reads as one fabric. |
+| Region gap | `--gap-md` | 16px | Between a Panel's regions: header to chart, chart to legend row. |
+| Cluster gap | `--gap-sm` / `--gap-sm-md` | 8 / 12px | Within a cluster: icon to text, tiles in a legend row, buttons in a toolbar. |
+
+The recurring mistake this prevents: reaching for the 2px and 4px tokens (`--gap-xxs`, `--gap-xs`) for cluster spacing — both spacing audits on the labs rebuild found the same error, and at cluster scale those values read as touching, not spaced.
+
 ### Composition rules
 
 1. **Parent owns spacing.** Siblings are spaced by their container's `gap`, never by margins on the children. A child that carries its own outer margin breaks in every context except the one it was tuned for.
@@ -301,7 +321,7 @@ Because the ladder's meanings differ by a full visual step (80 / 40 / 20 / 8), a
 | `--radius-sm` | 8px | Small sub-elements, inner nested surfaces |
 | `--radius-md` | 12px | Inputs, cards (standard), modals |
 | `--radius-lg` | 16px | Large feature cards, hero containers |
-| `--radius-xl` | 24px | Card/EntityCard navigation tiles, chat bubbles and chat card furniture (MessageCard, ToolCall, AgentPlan, InterruptCard), oversized hero containers, page-level sections |
+| `--radius-xl` | 24px | Card/EntityCard navigation tiles, Panel, chat bubbles and chat card furniture (MessageCard, ToolCall, AgentPlan, InterruptCard), AppSidebar's floating variant, oversized hero containers, page-level sections |
 | `--radius-xxl` | 48px | Pill containers, oversized decorative elements |
 | `--radius-full` | 999px | All buttons (primary, secondary, tertiary, destructive), toggle thumbs |
 | `--radius-composer` | 29px | The Composer shell only — concentric with the 40px send button it wraps (half the button + the padding-sm ring + the border width), held as a resolved constant so consumer re-theming reaches it |
@@ -316,6 +336,8 @@ Because the ladder's meanings differ by a full visual step (80 / 40 / 20 / 8), a
 | `--icon-size-md` | 24px | Default — the size an icon is unless told otherwise |
 | `--icon-size-lg` | 32px | Feature icons — EntityCard, section headers |
 | `--icon-size-xl` | 48px | Marketing and empty-state illustration icons |
+
+**The icon tile pattern** — an icon on a filled circle, for KPI cards and table cells: a `--radius-full` disc in `--color-bg-container-tertiary` holding a `--icon-size-sm` glyph in `--color-text-primary`, at 40px (stat and KPI headers) or 32px (table cells and list rows). It is a page pattern, not a component: four declarations in module CSS, worked out on the labs marketing rebuild.
 
 Components set **`--icon-size`**, never `font-size`:
 
@@ -437,7 +459,7 @@ Loading state: `loading` puts a `variant="inherit"` Spinner in the left icon slo
 
 ### Badge
 
-**`ds-badge`** — Inline status label. Radius `--radius-xs` (4px) — notably tighter than buttons and inputs. Text: `--font-paragraph-sm-em-*` (14px/500). Padding: 2px vertical × 8px horizontal. Each of the five status variants (`info`, `positive`, `warning`, `error`, `neutral`) maps directly to its `--color-status-*-bg`, `--color-status-*-border`, and `--color-status-*-text` tokens. Renders with `role="status"` for accessibility.
+**`ds-badge`** — Inline status label. Radius `--radius-xs` (4px) — notably tighter than buttons and inputs. Text: `--font-paragraph-sm-em-*` (14px/500). Padding: 2px vertical × 8px horizontal. Each of the five status variants (`info`, `positive`, `warning`, `error`, `neutral`) maps directly to its `--color-status-*-bg` and `--color-status-*-text` tokens. Badges are borderless by decision (2026-08-26): the tinted fill carries the status on its own, and the old per-variant borders sat below 3:1 against their fills — a transparent `--border-xs` border remains for stable geometry. Renders with `role="status"` for accessibility.
 
 ### Chip
 
@@ -520,7 +542,7 @@ Event pills are `--color-bg-container-primary` chips at `--radius-xs`: an accent
 
 ### Dropdown
 
-**`ds-dropdown`** — Select-style form field. Closed state matches Input anatomy (label, `--radius-md`, input border/bg tokens, helper/error text); open state reveals a `--radius-md` listbox on `--color-bg-page-primary` elevated with `--shadow-floating`, max-height 240px with scroll. Options support disabled entries and grouped sections (`groups`) with headings and separators. The selected option is marked with `--color-action-primary-text-tertiary`; hover uses `--color-action-passive-bg-hover`. Listbox keyboard pattern (arrows, Home/End, Escape, Enter) with `aria-expanded`/`aria-activedescendant` wiring. Sizes: `default`, `compact`. For action menus (not form values) use DropdownMenu.
+**`ds-dropdown`** — Select-style form field. Closed state matches Input anatomy (label, `--radius-md`, input border/bg tokens, helper/error text); open state reveals a `--radius-md` listbox on `--color-bg-page-primary` elevated with `--shadow-floating`, max-height 240px with scroll. Options support disabled entries and grouped sections (`groups`) with headings and separators. The selected option is marked with `--color-action-primary-text-tertiary`; hover uses `--color-action-passive-bg-hover`. Listbox keyboard pattern (arrows, Home/End, Escape, Enter) with `aria-expanded`/`aria-activedescendant` wiring. Sizes: `default`, `compact`. Width is deliberately `100%` — a form field fills its field column; when a Dropdown is toolbar furniture instead (a date-range select in a panel header, a table filter), the consumer caps it with a fixed width via `className`, which is the sanctioned sizing hook. For action menus (not form values) use DropdownMenu.
 
 ### Combobox
 
@@ -591,9 +613,13 @@ Default icons (Material Symbols Rounded): `info`, `check_circle`, `warning`, `er
 
 **`ds-card-stack`** — A deck of cards showing one at a time, the rest peeking out beneath it; the stack is the pattern, not the cards — any children work, Card and EntityCard are the intended fillings, and every card in a deck should share one size. Rendering is a CSS grid with every item in the same cell; each item's place in the deck is a single transform driven by two custom properties — `--ds-card-stack-peek` (the per-card offset, default `--gap-md`) times the item's `--ds-card-stack-pos`, with `scale(1 - 0.04 × pos)` from a bottom-centre origin so buried cards narrow while their bottom edges still peek below. The container pads its own bottom by `peek × --ds-card-stack-peek` so the deck occupies its true height. Flipping forward plays a lift-and-settle: the top card animates up and away (`translateY(-18%)`, a 3° tilt, fading — percentages of the card itself, so the choreography scales with whatever the deck holds) over `--motion-duration-deliberate` `--motion-ease-emphasized`, and the index commits on `animationend`, never a timer, so reduced motion (which collapses the duration via the token guard) commits immediately. Flipping back commits first and drops the incoming card in from above on `--motion-ease-entrance`. Position moves between slots transition on the same duration. Flip by clicking the top card (clicks landing on a link or control inside the card keep their meaning — `advanceOnClick` turns the rest off), or with the arrow keys when the stack has focus. `index`/`defaultIndex`/`onIndexChange` follow the controlled/uncontrolled pair convention; `loop` (default on) wraps the deck. The root is a focusable `role="group"` with `aria-roledescription="card stack"`; non-top cards are `inert` and `aria-hidden` so a buried card's controls can never take focus, and a visually hidden `role="status"` announces "Card X of N" as the deck turns.
 
+### Panel
+
+**`ds-panel`** — The plain dashboard surface: `--color-bg-container-primary` fill at `--radius-xl`, `--padding-lg` inside, a `--gap-md` column, no border and no shadow. Card cannot play this role — it requires a title and carries its own navigational look — so Panel is what a dashboard's regions build on, with charts dropped in `bare` and LegendTile rows beneath them. `padding="compact"` steps to `--padding-md`, `"none"` removes it for full-bleed content. Presentational and server-renderable.
+
 ### AppLayout / AppSidebar
 
-**`ds-app-layout`** — Full-page shell: header + collapsible sidebar + main content area. **`ds-app-sidebar`** — The side navigation component. Used as the outer wrapper for every documentation page on the website. Sidebar background: `--color-bg-container-primary`. Expanded nav pills float off the rail edges (12px margin + 8px padding, so icon and label hold the same 20px inset as the category labels). An item or sub-item with an `href` renders as a real `<a>` (its `onClick` still fires, for client-side routing); accordion rows stay buttons. The active row carries `aria-current="page"`.
+**`ds-app-layout`** — Full-page shell: header + collapsible sidebar + main content area. Pins `data-theme="dark"` by default (the historical behaviour); `theme="inherit"` drops the pin so the layout follows the surrounding theme. **`ds-app-sidebar`** — The side navigation component. Sidebar background: `--color-bg-page-primary`. Nav pills hold one inset in both states (12px margin + 8px padding), which makes the collapsed hover pill a circle clear of the 64px rail's edges and keeps every icon stationary through the expand/collapse. The transition choreography is deliberate: inner layout never changes between states — labels keep natural width with `min-width: 0` so they truncate under the sweeping rail, gaps are constant, and only the rail's clipping width, explicit widths (toggle, profile-more), and opacity fades animate; `width: 0 ↔ auto` and gap snaps read as a bounce and are never reintroduced. `floating` renders the rail as a glass card inset from the viewport edges (`--color-bg-glass` + 24px backdrop blur, `--radius-xl`, `--shadow-floating`, inset via `--ds-sidebar-float-inset`, default 20px). Items take an optional `badge` count pill (hidden while collapsed); `topSlot` (under the logo row) and `footerSlot` (above the profile) host consumer content that fades out while collapsed without changing the rail's layout. An item or sub-item with an `href` renders as a real `<a>` (its `onClick` still fires, for client-side routing); accordion rows stay buttons. The active row carries `aria-current="page"`.
 
 ### ShaderField
 
@@ -647,6 +673,8 @@ Two behaviours are the component's rather than the caller's, and both are why it
 
 Sortable headers render the label inside a button with a trailing sort glyph (`swap_vert` idle, `arrow_upward`/`arrow_downward` active, `--icon-size-sm`) that fades in on hover/focus and stays at full opacity while active; clicks cycle ascending → descending → unsorted, and the button's `aria-label` narrates the current state. Sorting compares numbers numerically and text with `localeCompare` (numeric-aware). The toolbar puts a consumer `toolbar` slot (filter Dropdowns) on the left and the built-in search Input (`compact`, `search` icon, capped at 240px) on the right; searching matches every column's raw value and resets to page 1. Selection adds a 40px checkbox column with an indeterminate select-all scoped to the visible page. The footer pairs a `tabular-nums` readout (`--font-paragraph-sm-*` tertiary; result count, or "N selected" once a selection exists, in an `aria-live` region) with compact Pagination. No matches renders the bordered EmptyState. Sort and selection follow the controlled/uncontrolled pair convention (`sort`/`defaultSort`/`onSortChange`, `selectedIds`/`defaultSelectedIds`/`onSelectionChange`) so server-driven tables stay possible.
 
+Row status is shown as a Badge, with editing behind the row's actions — the blessed pattern (2026-08-26). A live select in every row also works and some references use it, but a page of mounted comboboxes is heavy and the table reads calmer with the state as a label; reach for per-row selects only when in-place switching is the row's primary job.
+
 ### Dialog
 
 **`ds-dialog`** — General-purpose modal for arbitrary content; for confirm/cancel prompts use AlertDialog. Panel: `--radius-md`, `--color-bg-page-primary`, hairline `--color-bg-container-border` border, `--shadow-modal`, over a `--color-scrim` backdrop; opens with the standard base-duration scale + fade (`--motion-duration-base` / `--motion-ease-standard`). Header: `--font-heading-3-*` title with optional `--font-paragraph-sm-*` tertiary description and a 32px ghost close button. Body slot scrolls (`overflow-y: auto`) when content exceeds the viewport-capped panel height; optional footer slot right-aligns consumer-provided Buttons. Sizes: `sm` 400px / `md` 560px (default) / `lg` 720px max-width. Behaviour: portal to `<body>`, focus trap with Tab cycling, focus restore on close, body scroll lock, `role="dialog" aria-modal="true"`; `dismissible={false}` disables ESC, backdrop click, and hides the close button.
@@ -693,7 +721,7 @@ Sortable headers render the label inside a button with a trailing sort glyph (`s
 
 ### Stat
 
-**`ds-stat`** — A single headline metric: display-weight numeral over a quiet label, with an optional trend delta. Value uses `--font-sub-display-*` (30px/300) by default, `--font-display-2-*` (64px/300) at `large` — the weight-contrast rule applied to numerals. Label: `--font-paragraph-sm-*` in `--color-text-tertiary`. Delta: `--font-paragraph-sm-em-*` with a 16px Material arrow; colours by trend — `up` → `--color-core-accent-mint`, `down` → `--color-core-accent-coral` (the vivid accents, stable across themes — the muted status text tokens read too subtle at this size), `neutral` → `--color-text-tertiary`. Compose several in a flex row for a case-study metrics band.
+**`ds-stat`** — A single headline metric: display-weight numeral over a quiet label, with an optional trend delta. Value uses `--font-sub-display-*` (30px/300) by default, `--font-display-2-*` (64px/300) at `large` — the weight-contrast rule applied to numerals. Label: `--font-paragraph-sm-*` in `--color-text-tertiary`. Delta: `--font-paragraph-sm-em-*` with a 16px Material arrow; colours by trend through the theme-split trend tokens — `up` → `--color-trend-up`, `down` → `--color-trend-down`, `neutral` → `--color-text-tertiary` (the earlier always-accent colouring was unreadable on light surfaces; see the Trend token section). `deltaPlacement="inline"` (`ds-stat--delta-inline`) moves the delta to the right of the value, bottom-aligned to its baseline via a grid re-template, for dashboard KPI tiles; the default stacks it below the label. Compose several in a flex row for a case-study metrics band.
 
 ### CodeBlock
 
@@ -747,9 +775,9 @@ Field deliberately owns **no layout** — the flex column and gap stay on the co
 
 **`ds-timeline--company`** — a résumé/pipeline variant (`variant="company"`, always vertical). The marker is a 32px logo image (`ds-timeline__marker--logo`, bare transparent box) instead of a dot/icon, and each entry carries a company/tool name (`ds-timeline__company-name`, `--font-title-body-*`, 16px/600) beside it. Under the name sits one or more roles (`ds-timeline__role`): a header row (`ds-timeline__role-header`) with the role title (`--font-heading-3-*`) on the left and a right-aligned, optional date (`ds-timeline__role-dates`, `--font-paragraph-*` tertiary) — a current role sets `present` to render a green "Present" (`ds-timeline__present`, `--color-status-positive-text`) in place of the end date. An optional `subtitle` (`ds-timeline__role-subtitle`, `--font-paragraph-*` secondary) sits on its own line under that row for the team, org, or product the role sat in — keeping the title a job title rather than a title and a team punctuated together. Because the title and subtitle read as one header block, whatever follows a subtitle takes a `--gap-sm` top margin on top of the role's own `--gap-sm` rhythm, so the body separates from the header at twice the internal spacing. Roles may add an optional description (`--font-paragraph-*` secondary) and a disc bullet list (`ds-timeline__role-bullets`, links in `--color-action-primary-bg`). The connector is **segmented per entry** — centred under the 32px logo, starting 8px below it and running down to 8px above the next entry's logo, so every logo sits in an even break rather than having the line pass behind it. The last entry's bar thins to `--border-xs` and fades to `--color-bg-container-primary-transparent` at its end — the site's fading-hairline treatment, marking where the timeline runs out.
 
-### AreaChart / BarChart / LineChart / PieChart / RadarChart / RadialChart / ScatterChart / StackedBarChart / Treemap
+### AreaChart / BarChart / ComboChart / LineChart / PieChart / RadarChart / RadialChart / ScatterChart / StackedBarChart / Treemap
 
-The Recharts wrapper set, sharing one implementation folder (`Chart/`), one CSS file, and one visual language. Series colours come from the ordered `--color-chart-series-1` → `-7` ramp, read at render by the shared palette helper (`Chart/palette.ts`) so every multi-series chart assigns the same colour to the same slot. Series 1 aliases the action teal (`--color-action-primary-bg`) — the sanctioned data-viz exception to the action-only rule, theme-split with it — and series 2–7 alias the core accents (mint, gold, coral, violet, amber, cobalt), so re-theming an accent re-themes every chart using its slot. Tooltips and legends use system typography tokens. Axes text in `--color-text-tertiary`.
+The Recharts wrapper set, sharing one implementation folder (`Chart/`), one CSS file, and one visual language. Series colours come from the ordered `--color-chart-series-1` → `-7` ramp as live `var()` references emitted by the shared palette helper (`Chart/palette.ts`) — SVG paint resolves them at draw time, so charts follow a mid-session theme switch without re-rendering, and every multi-series chart assigns the same colour to the same slot. Series 1 aliases the action teal (`--color-action-primary-bg`) — the sanctioned data-viz exception to the action-only rule, theme-split with it — and series 2–7 alias the core accents (mint, gold, coral, violet, amber, cobalt), so re-theming an accent re-themes every chart using its slot. Tooltips and legends use system typography tokens. Axes text in `--color-text-tertiary`. Every chart takes `bare` (`ds-chart--bare`), which strips the card chrome — border, padding, fill — for when the chart sits inside a Panel or card that supplies the surface (the composition rules' one-level-of-chrome principle as a prop). ComboChart pairs one bar series with one line series, on a shared axis or with `secondaryAxis` putting the line on a right-hand scale for pairs in different units (spend and ROAS). AreaChart's automatic multi-series legend can be dropped with `showLegend={false}` when legend tiles carry the series instead. RadialChart takes `centerLabel` (+ `centerSublabel`), the gauge's headline printed in the donut hole — pair it with `showLegend={false}`, since the legend shifts the rings above centre.
 
 ### Contribution graph
 
@@ -763,6 +791,14 @@ Month labels, caption, and Less→More legend use `--font-paragraph-sm-*` in `--
 ### Sparkline
 
 **`ds-sparkline`** — An inline trend line for stats and table cells, drawn without axes or chrome. Dependency-free SVG computed from props, not a recharts wrapper: no `'use client'`, no hooks, so it renders from a Server Component and works without the optional recharts peer, which is why it keeps its own folder rather than joining `Chart/`. The series normalises into a padded viewBox (default 120x32; `width`/`height` set both the viewBox and the default rendered size, and the SVG scales to its container when sized via CSS). Colour flows through `color`: line, area fill, and end dot all draw with `currentColor`, set per tone. `accent` (default) uses `--color-action-primary-bg` (the chart palette's sanctioned lead colour), `positive` uses `--color-status-positive-text`, `negative` uses `--color-status-error-text`, `neutral` uses `--color-text-secondary`. `variant="area"` (`ds-sparkline--area`) repeats the tone colour under the line at 0.15 opacity. `showDot` (default true) marks the final point with a circle sized off `strokeWidth` (default 2, an SVG geometry attribute rather than a token); internal viewBox padding keeps stroke and dot from clipping at the edges. Degenerate data never produces a NaN path: an all-equal series renders a horizontal midline, a single point renders just the dot, an empty array renders nothing. Decorative by default (`aria-hidden`); passing `label` switches to `role="img"` with `aria-label`.
+
+### FunnelChart
+
+**`ds-funnel-chart`** — Ordered stages as side-by-side vertical bars whose heights step down with each stage's share of the first, each carrying a centred percentage pill. Dependency-free JSX/CSS like Sparkline: no recharts, no `'use client'`, renderable from a Server Component. Stage colours cycle `--color-chart-series-1` → `-7`; bars are `--radius-sm` with per-stage height and colour flowing in as inline custom properties so the stylesheet stays token-only. Shares clamp to a floor (`minStageShare`, default 16%) so steep drop-offs stay readable, while the pill prints the true percentage. The root is `role="img"` with a generated label naming every stage and value. Pair with a LegendTile row for the stage readings.
+
+### LegendTile
+
+**`ds-legend-tile`** — The labelled value tile that sits under a chart and ties a series to its number: an optional 8px series dot (any CSS colour via `swatch`, typically a `--color-chart-series-*` token), the series name in `--font-caption-*` secondary with ellipsis, and the reading in `--font-paragraph-sm-em-*` primary. Fill is `--color-bg-page-primary` at `--radius-md` — one step below a panel's `container-primary`, so the tile reads as an inset rather than a raised card. Presentational and server-renderable; numbers format with `toLocaleString()`.
 
 ### Globe
 

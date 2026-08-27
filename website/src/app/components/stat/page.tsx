@@ -57,6 +57,20 @@ export default function StatPage() {
             </div>
           </section>
 
+          {/* Delta placement */}
+          <section className={styles.section}>
+            <SectionTitle title="Delta placement" />
+            <p className={styles.sectionIntro}>
+              Where the delta sits is a prop. The default stacks it at the bottom, under
+              the label; deltaPlacement=&quot;inline&quot; moves it to the top, riding the
+              value&apos;s baseline, which is the arrangement dashboard KPI tiles want.
+            </p>
+            <div className={styles.variantRow}>
+              <Stat value="$24,380" label="Stacked, the default" trend="up" delta="+8.4%" />
+              <Stat value="$24,380" label="Inline, for KPI tiles" trend="up" delta="+8.4%" deltaPlacement="inline" />
+            </div>
+          </section>
+
           {/* Metrics band */}
           <section className={styles.section}>
             <SectionTitle title="Metrics band" />
