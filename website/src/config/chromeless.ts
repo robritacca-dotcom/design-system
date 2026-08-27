@@ -9,7 +9,9 @@
  * /covers/render, the surface the cover images are shot from, where a footer
  * or chat panel would land inside the screenshot; and the canvas is the
  * site laid out on one endless board, which fills the viewport under its
- * own stage toolbar.
+ * own stage toolbar; and the labs pages are full-viewport rebuilds of
+ * reference products, where the shared chrome would sit inside the app
+ * shell being tested.
  *
  * Matching is exact, so a nested route needs its own entry.
  */
@@ -19,4 +21,5 @@ export const CHROMELESS_ROUTES = new Set([
   "/covers",
   "/covers/render",
   "/canvas",
+  "/labs/marketing",
 ]);
