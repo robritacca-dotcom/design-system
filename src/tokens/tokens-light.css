@@ -31,6 +31,11 @@
   --color-bg-container-inverse: var(--primitive-neutral-09);
   --color-bg-container-border: var(--primitive-neutral-02);
 
+  /* Glass: the translucent floating-surface fill (chat panel, floating
+     sidebar). Deliberately translucent in both themes so the page's
+     colours reach the surface; pair it with backdrop-filter: blur(24px). */
+  --color-bg-glass: var(--primitive-neutral-01-glass);
+
   /* Divider */
   --color-divider: var(--primitive-neutral-02-semi);
 
@@ -85,6 +90,12 @@
   --color-core-accent-amber: var(--primitive-orange-07);
   --color-core-accent-gold: var(--primitive-yellow-07);
   --color-core-accent-mint: var(--primitive-green-07);
+
+  /* Trend: the "number went up / went down" role (Stat deltas, table
+     movers). Theme-split for contrast: deep status inks on light
+     surfaces, the mint/coral accents on dark ones. */
+  --color-trend-up: var(--primitive-green-10);
+  --color-trend-down: var(--primitive-red-10);
 
   /* Status - Positive */
   --color-status-positive-bg: var(--primitive-green-01);

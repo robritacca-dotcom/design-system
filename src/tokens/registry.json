@@ -28,6 +28,7 @@
       "--color-bg-container-primary-transparent",
       "--color-bg-container-secondary",
       "--color-bg-container-tertiary",
+      "--color-bg-glass",
       "--color-bg-page-inverse",
       "--color-bg-page-primary",
       "--color-chart-contribution-0",
@@ -88,7 +89,9 @@
       "--color-text-on-inverse",
       "--color-text-primary",
       "--color-text-secondary",
-      "--color-text-tertiary"
+      "--color-text-tertiary",
+      "--color-trend-down",
+      "--color-trend-up"
     ],
     "typography": [
       "--font-caption-family",

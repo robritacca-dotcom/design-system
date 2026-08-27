@@ -430,6 +430,7 @@ export const SemanticColors: Story = {
         <ColorToken name="Tertiary" value="--color-bg-container-tertiary" />
         <ColorToken name="Inverse" value="--color-bg-container-inverse" />
         <ColorToken name="Border" value="--color-bg-container-border" />
+        <ColorToken name="Glass" value="--color-bg-glass" />
       </TokenSection>
 
       <TokenSection title="Chat Bubbles">
@@ -522,6 +523,11 @@ export const SemanticColors: Story = {
         <ColorToken name="Accent Orange" value="--color-core-accent-amber" />
         <ColorToken name="Accent Yellow" value="--color-core-accent-gold" />
         <ColorToken name="Accent Green" value="--color-core-accent-mint" />
+      </TokenSection>
+
+      <TokenSection title="Trend">
+        <ColorToken name="Up" value="--color-trend-up" />
+        <ColorToken name="Down" value="--color-trend-down" />
       </TokenSection>
     </div>
   ),

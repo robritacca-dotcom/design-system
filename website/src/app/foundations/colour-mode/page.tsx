@@ -133,6 +133,25 @@ const containerColours: SwatchData[] = [
     dark: { primitive: "--neutral--08--", hex: "#232323", rgb: "35 / 35 / 35" },
     light: { primitive: "--neutral--02--", hex: "#D6D6D6", rgb: "214 / 214 / 214" },
   },
+  {
+    label: "Glass", cssVar: "--color-bg-glass",
+    dark: { primitive: "--neutral--09-glass--", hex: "rgba(14,14,14,0.66)", rgb: "14 / 14 / 14" },
+    light: { primitive: "--neutral--01-glass--", hex: "rgba(241,241,241,0.82)", rgb: "241 / 241 / 241" },
+  },
+];
+
+/* --- Trend --- */
+const trendColours: SwatchData[] = [
+  {
+    label: "Up", cssVar: "--color-trend-up",
+    dark: { primitive: "--green--07--", hex: "#06D6A0", rgb: "6 / 214 / 160" },
+    light: { primitive: "--green--10--", hex: "#024336", rgb: "2 / 67 / 54" },
+  },
+  {
+    label: "Down", cssVar: "--color-trend-down",
+    dark: { primitive: "--red--07--", hex: "#EF476F", rgb: "239 / 71 / 111" },
+    light: { primitive: "--red--10--", hex: "#571727", rgb: "87 / 23 / 39" },
+  },
 ];
 
 /* --- Chat bubbles --- */
@@ -680,6 +699,16 @@ export default function SemanticColoursPage() {
                 <ColourSwatch key={s.label} label={s.label} cssVar={s.bgVar} dark={s.dark} light={s.light} theme={theme} status borderVar={s.borderVar} />
               ))}
               {statusTextColours.map((s) => (
+                <ColourSwatch key={s.label} label={s.label} cssVar={s.cssVar} dark={s.dark} light={s.light} theme={theme} />
+              ))}
+            </div>
+          </section>
+
+          {/* Trend */}
+          <section className={styles.colourGroup}>
+            <SectionTitle title="Trend" />
+            <div className={styles.colourSwatches}>
+              {trendColours.map((s) => (
                 <ColourSwatch key={s.label} label={s.label} cssVar={s.cssVar} dark={s.dark} light={s.light} theme={theme} />
               ))}
             </div>
