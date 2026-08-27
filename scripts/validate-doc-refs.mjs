@@ -108,7 +108,10 @@ for (const [label, src] of sources) {
     }
 
     for (const [, name] of span.matchAll(/([A-Za-z_$][\w$]*)\(/g)) {
-      if (!(name in SYMBOL_HOMES)) continue;
+      // Object.hasOwn, not `in`: `in` walks the prototype chain, so a doc
+      // mentioning `toLocaleString()` or `toString()` would resolve to the
+      // Object.prototype method and crash the path join.
+      if (!Object.hasOwn(SYMBOL_HOMES, name)) continue;
       symbolCount += 1;
       const home = SYMBOL_HOMES[name];
       const exported =
