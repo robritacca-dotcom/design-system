@@ -179,6 +179,33 @@ a {
   overflow: hidden;
   pointer-events: none;
   z-index: -1;
+  /* Fade the band out with an alpha mask on the layer itself rather than
+     overlaying the page colour on top: the backdrop below the band is then
+     the body's own background by construction, so the hand-off cannot seam
+     even when the page token is translucent. The stops follow a smoothstep
+     curve so the fade has no visible start or end edge. */
+  -webkit-mask-image: linear-gradient(to bottom,
+    rgb(0 0 0 / 1) 0%,
+    rgb(0 0 0 / 0.957) 12.5%,
+    rgb(0 0 0 / 0.844) 25%,
+    rgb(0 0 0 / 0.684) 37.5%,
+    rgb(0 0 0 / 0.5) 50%,
+    rgb(0 0 0 / 0.316) 62.5%,
+    rgb(0 0 0 / 0.156) 75%,
+    rgb(0 0 0 / 0.043) 87.5%,
+    rgb(0 0 0 / 0) 100%
+  );
+  mask-image: linear-gradient(to bottom,
+    rgb(0 0 0 / 1) 0%,
+    rgb(0 0 0 / 0.957) 12.5%,
+    rgb(0 0 0 / 0.844) 25%,
+    rgb(0 0 0 / 0.684) 37.5%,
+    rgb(0 0 0 / 0.5) 50%,
+    rgb(0 0 0 / 0.316) 62.5%,
+    rgb(0 0 0 / 0.156) 75%,
+    rgb(0 0 0 / 0.043) 87.5%,
+    rgb(0 0 0 / 0) 100%
+  );
 }
 
 /* Full-bleed variant. The background is mounted once in the root layout and
@@ -189,8 +216,9 @@ body:has([data-bg-full-bleed]) .blur-container {
   height: 100vh;
 }
 
-body:has([data-bg-full-bleed]) .blur-container::after {
-  display: none;
+body:has([data-bg-full-bleed]) .blur-container {
+  -webkit-mask-image: none;
+  mask-image: none;
 }
 
 /* Background off — the playground's stage toggle, read the same marker way.
@@ -198,21 +226,6 @@ body:has([data-bg-full-bleed]) .blur-container::after {
    so switching back on is instant instead of a fresh compile and fade. */
 body:has([data-bg-hidden]) .blur-container {
   display: none;
-}
-
-.blur-container::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 450px;
-  background: linear-gradient(to bottom,
-    transparent 0%,
-    var(--color-bg-page-primary) 100%
-  );
-  pointer-events: none;
-  z-index: 1;
 }
 
 .blur-ellipse {

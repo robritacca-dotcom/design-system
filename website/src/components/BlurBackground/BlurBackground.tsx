@@ -24,7 +24,7 @@ const ShaderTuner =
 
 /**
  * Marker a page renders to make the background fill the viewport instead of
- * the 450px header band, suppressing the fade-to-page-colour mask.
+ * the 450px header band, suppressing the fade-out alpha mask.
  *
  * It is a marker rather than a prop because the background is mounted once in
  * the root layout and no longer re-renders per route. CSS reads the marker
