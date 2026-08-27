@@ -10,6 +10,8 @@ export interface StatProps {
   delta?: string;
   /** Direction of the delta — colours it and adds an arrow */
   trend?: 'up' | 'down' | 'neutral';
+  /** Where the delta sits: stacked below the label, or inline to the right of the value, bottom-aligned */
+  deltaPlacement?: 'stacked' | 'inline';
   /** Stat size */
   size?: 'default' | 'large';
   /** Additional CSS classes */
@@ -31,12 +33,18 @@ export const Stat = ({
   label,
   delta,
   trend = 'neutral',
+  deltaPlacement = 'stacked',
   size = 'default',
   className = '',
 }: StatProps) => {
   const baseClass = 'ds-stat';
 
-  const classes = [baseClass, `${baseClass}--${size}`, className]
+  const classes = [
+    baseClass,
+    `${baseClass}--${size}`,
+    deltaPlacement === 'inline' ? `${baseClass}--delta-inline` : '',
+    className,
+  ]
     .filter(Boolean)
     .join(' ');
 

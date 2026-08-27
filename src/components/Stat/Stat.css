@@ -65,16 +65,49 @@
   line-height: 1;
 }
 
+/* The trend tokens are theme-split for contrast: deep status inks on
+   light surfaces, the mint/coral accents on dark ones. */
 .ds-stat__delta--up {
-  color: var(--color-core-accent-mint);
+  color: var(--color-trend-up);
 }
 
 .ds-stat__delta--down {
-  color: var(--color-core-accent-coral);
+  color: var(--color-trend-down);
 }
 
 .ds-stat__delta--neutral {
   color: var(--color-text-tertiary);
+}
+
+/* ============================================
+   INLINE DELTA — delta to the right of the
+   value, bottom-aligned to its baseline
+   ============================================ */
+
+.ds-stat--delta-inline {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    'value delta'
+    'label label';
+  column-gap: var(--gap-sm);
+  row-gap: var(--gap-xxs);
+}
+
+.ds-stat--delta-inline .ds-stat__value {
+  grid-area: value;
+}
+
+.ds-stat--delta-inline .ds-stat__label {
+  grid-area: label;
+}
+
+.ds-stat--delta-inline .ds-stat__delta {
+  grid-area: delta;
+  align-self: end;
+  justify-self: start;
+  /* Optical baseline: compensates the display value's half-leading. */
+  margin-bottom: var(--gap-xs);
 }
 
 /* Icons take the colour of the text around them. Explicit, not just

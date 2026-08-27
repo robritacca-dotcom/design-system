@@ -16,6 +16,10 @@ const meta = {
       control: 'select',
       options: ['up', 'down', 'neutral'],
     },
+    deltaPlacement: {
+      control: 'select',
+      options: ['stacked', 'inline'],
+    },
     size: {
       control: 'select',
       options: ['default', 'large'],
@@ -52,6 +56,16 @@ export const WithTrendDown: Story = {
     label: 'Time to outcome',
     delta: 'faster than baseline',
     trend: 'down',
+  },
+};
+
+export const InlineDelta: Story = {
+  args: {
+    value: '$24,380',
+    label: 'Ad spend',
+    delta: '+8.4%',
+    trend: 'up',
+    deltaPlacement: 'inline',
   },
 };
 
