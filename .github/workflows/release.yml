@@ -41,6 +41,10 @@ name: Release
 #   SectionTitle's optional divider and AppSidebar link rows.
 # 0.11.0 shipped 2026-08-23 — the maps category (Globe, MapCallout, MapLegend),
 #   CardStack, and the overline typography face.
+# 0.12.0 shipped 2026-08-26 — the dashboard set from the labs rebuild: Panel,
+#   LegendTile, FunnelChart, ComboChart; live var() chart colours with bare
+#   mode; Stat's trend tokens and inline delta; borderless badges; the
+#   AppSidebar floating/badges/slots set and its rebuilt transition.
 
 on:
   workflow_dispatch:
