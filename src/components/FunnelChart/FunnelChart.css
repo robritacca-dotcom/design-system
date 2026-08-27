@@ -1,0 +1,41 @@
+/* ============================================
+   FUNNEL CHART COMPONENT
+   Side-by-side vertical bars stepping down with
+   each stage's share of the first. Geometry and
+   colour arrive per stage as inline custom
+   properties (--funnel-stage-size, a clamped
+   percentage number; --funnel-stage-color, a
+   chart-series token), so the rules here stay
+   token-only.
+   ============================================ */
+
+/* Base */
+
+.ds-funnel-chart {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-xxs);
+}
+
+/* Parts */
+
+.ds-funnel-chart__stage {
+  flex: 1;
+  min-width: 0;
+  height: calc(var(--funnel-stage-size) * 1%);
+  border-radius: var(--radius-sm);
+  background-color: var(--funnel-stage-color);
+  display: grid;
+  place-items: center;
+}
+
+.ds-funnel-chart__pct {
+  background-color: var(--color-bg-container-primary);
+  color: var(--color-text-primary);
+  border-radius: var(--radius-full);
+  padding: var(--padding-xxxs) var(--padding-xs);
+  font-family: var(--font-caption-family);
+  font-size: var(--font-caption-size);
+  font-weight: var(--font-paragraph-sm-em-weight);
+  line-height: var(--font-caption-line-height);
+}

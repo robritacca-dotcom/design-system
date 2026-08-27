@@ -5,6 +5,7 @@
  */
 export * from './components/Chart/AreaChart';
 export * from './components/Chart/BarChart';
+export * from './components/Chart/ComboChart';
 export * from './components/Chart/LineChart';
 export * from './components/Chart/PieChart';
 export * from './components/Chart/RadarChart';

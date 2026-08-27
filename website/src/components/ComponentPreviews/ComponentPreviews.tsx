@@ -20,6 +20,8 @@ import { Avatar } from "@robr0/design-system/components/Avatar/Avatar";
 import { Badge } from "@robr0/design-system/components/Badge/Badge";
 import { Button } from "@robr0/design-system/components/Button/Button";
 import { Checkbox } from "@robr0/design-system/components/Checkbox/Checkbox";
+import { LegendTile } from "@robr0/design-system/components/LegendTile/LegendTile";
+import { Panel } from "@robr0/design-system/components/Panel/Panel";
 import { Chip } from "@robr0/design-system/components/Chip/Chip";
 import { CircularButton } from "@robr0/design-system/components/CircularButton/CircularButton";
 import { CodeBlock } from "@robr0/design-system/components/CodeBlock/CodeBlock";
@@ -294,6 +296,14 @@ const previews: Record<string, () => ReactNode> = {
       </svg>
     </>
   ),
+  "legend-tile": () => (
+    <>
+      <div style={{ display: "flex", gap: "8px" }}>
+        <LegendTile label="Organic" value="74,500" swatch="var(--color-chart-series-1)" />
+        <LegendTile label="Paid" value="38,500" swatch="var(--color-chart-series-2)" />
+      </div>
+    </>
+  ),
   "line-chart": () => (
     <>
       <svg width="120" height="64" viewBox="0 0 120 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -498,6 +508,31 @@ const previews: Record<string, () => ReactNode> = {
         <Swatch value="#118AB2" label="Teal 07" shape="square" tabIndex={-1} />
         <span style={{ fontSize: "12px", color: "var(--color-text-primary)", fontVariantNumeric: "tabular-nums" }}>#118AB2</span>
       </div>
+    </>
+  ),
+  "combo-chart": () => (
+    <>
+      <svg width="120" height="64" viewBox="0 0 120 64" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ overflow: "visible" }}>
+        {[
+          { x: 4, h: 24 },
+          { x: 20, h: 32 },
+          { x: 36, h: 28 },
+          { x: 52, h: 40 },
+          { x: 68, h: 36 },
+          { x: 84, h: 48 },
+          { x: 100, h: 56 },
+        ].map(({ x, h }) => (
+          <rect key={x} x={x} y={64 - h} width="10" height={h} rx="2" fill="var(--color-action-primary-bg)" opacity="0.7" />
+        ))}
+        <polyline
+          points="9,40 25,34 41,38 57,26 73,28 89,18 105,10"
+          fill="none"
+          stroke="var(--color-chart-series-2)"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
     </>
   ),
   "combobox": () => (
@@ -809,6 +844,16 @@ const previews: Record<string, () => ReactNode> = {
       </div>
     </>
   ),
+  "funnel-chart": () => (
+    <>
+      <svg width="120" height="64" viewBox="0 0 120 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="26" height="64" rx="4" fill="var(--color-chart-series-1)" />
+        <rect x="31" y="19" width="26" height="26" rx="4" fill="var(--color-chart-series-2)" />
+        <rect x="62" y="26" width="26" height="12" rx="4" fill="var(--color-chart-series-3)" />
+        <rect x="93" y="29" width="26" height="6" rx="3" fill="var(--color-chart-series-4)" />
+      </svg>
+    </>
+  ),
   "globe": () => (
     <>
       <div style={{ width: "130px" }}>
@@ -951,6 +996,16 @@ const previews: Record<string, () => ReactNode> = {
   "pagination": () => (
     <>
       <Pagination page={2} pageCount={3} onPageChange={() => {}} size="compact" />
+    </>
+  ),
+  "panel": () => (
+    <>
+      <Panel padding="compact" style={{ width: "160px" }}>
+        <span style={{ fontWeight: 600 }}>Revenue</span>
+        <span style={{ color: "var(--color-text-secondary)", fontSize: "12px" }}>
+          The plain surface a dashboard builds on.
+        </span>
+      </Panel>
     </>
   ),
   "pin-input": () => (
