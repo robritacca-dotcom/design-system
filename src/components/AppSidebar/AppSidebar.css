@@ -28,6 +28,24 @@
 }
 
 /* ============================================
+   FLOATING VARIANT — the rail as a glass card
+   inset from the viewport edges (the same
+   recipe as the site chat panel)
+   ============================================ */
+.ds-app-sidebar--floating {
+  top: var(--ds-sidebar-float-inset, 20px);
+  left: var(--ds-sidebar-float-inset, 20px);
+  height: calc(100dvh - var(--ds-sidebar-float-inset, 20px) * 2);
+  background-color: var(--color-bg-glass);
+  border: var(--border-xs) solid var(--color-bg-container-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-floating);
+  /* The glass token is deliberately translucent; this blur is what keeps
+     content behind the rail readable through it. */
+  backdrop-filter: blur(24px);
+}
+
+/* ============================================
    TOP SECTION — logo + nav
    ============================================ */
 .ds-app-sidebar__top {
@@ -52,15 +70,17 @@
   flex-shrink: 0;
 }
 
+/* Expand/collapse choreography, here and on every row below: the rail's
+   clipping width and the text's opacity fade carry the whole transition.
+   Inner layout stays constant - text keeps its natural width with
+   min-width: 0 so it truncates under the sweeping rail instead of holding
+   rows at full width (width: 0 to auto cannot interpolate, and a gap that
+   snaps mid-glide reads as a bounce). */
 .ds-app-sidebar__logo-inner {
   display: flex;
   align-items: center;
-  gap: 0;
-  min-width: 0;
-}
-
-.ds-app-sidebar--expanded .ds-app-sidebar__logo-inner {
   gap: var(--gap-lg);
+  min-width: 0;
 }
 
 .ds-app-sidebar__logo-icon {
@@ -77,14 +97,14 @@
   letter-spacing: var(--font-paragraph-em-letter-spacing);
   color: var(--color-text-primary);
   white-space: nowrap;
-  width: 0;
+  min-width: 0;
+  flex-shrink: 1;
   overflow: hidden;
   opacity: 0;
   transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 .ds-app-sidebar--expanded .ds-app-sidebar__logo-text {
-  width: auto;
   opacity: 1;
 }
 
@@ -102,7 +122,8 @@
   padding: 0;
   overflow: hidden;
   opacity: 0;
-  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
+  /* Both widths are explicit (0 and 24px), so the width glides too. */
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard), width var(--motion-duration-slow) var(--motion-ease-emphasized);
 }
 
 .ds-app-sidebar--expanded .ds-app-sidebar__toggle {
@@ -123,10 +144,8 @@
   flex-direction: column;
   gap: var(--gap-xs);
   flex-shrink: 0;
-  align-items: center;
-}
-
-.ds-app-sidebar--expanded .ds-app-sidebar__nav {
+  /* Stretch in both states: rows fill the rail and the collapsed icon is
+     centred by the row's own padding, so alignment never snaps. */
   align-items: stretch;
 }
 
@@ -156,8 +175,14 @@
 .ds-app-sidebar__btn {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   height: 40px;
+  min-width: 0;
+  /* The same inset in both states: in the collapsed 64px rail the 12px
+     margins leave a 40px row, so the hover pill is a perfect circle clear
+     of the rail edges, with the icon centred (12 + 8 + 24 + 8 + 12 = 64);
+     expanded, these are the pill's edge inset. Nothing to transition. */
+  margin: 0 var(--padding-sm-md);
   padding: var(--padding-sm);
   border-radius: var(--radius-full);
   background: transparent;
@@ -174,11 +199,6 @@
 /* Inset via margin + reduced padding (12 + 8 = the 20px the label sat at
    before), so the pill floats off the rail edges while the icon and label
    keep their exact x-positions against the category labels above. */
-.ds-app-sidebar--expanded .ds-app-sidebar__btn {
-  margin: 0 var(--padding-sm-md);
-  padding: var(--padding-sm);
-  justify-content: space-between;
-}
 
 .ds-app-sidebar__btn:hover {
   background-color: var(--color-action-passive-bg-hover);
@@ -191,12 +211,8 @@
 .ds-app-sidebar__btn-left {
   display: flex;
   align-items: center;
-  gap: 0;
+  gap: var(--gap-sm);
   min-width: 0;
-}
-
-.ds-app-sidebar--expanded .ds-app-sidebar__btn-left {
-  gap: 8px;
 }
 
 .ds-app-sidebar__btn-icon {
@@ -213,29 +229,48 @@
   letter-spacing: var(--font-paragraph-em-letter-spacing);
   color: var(--color-text-primary);
   white-space: nowrap;
-  width: 0;
+  min-width: 0;
+  flex-shrink: 1;
   overflow: hidden;
   opacity: 0;
   transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 .ds-app-sidebar--expanded .ds-app-sidebar__btn-label {
-  width: auto;
+  opacity: 1;
+}
+
+.ds-app-sidebar__btn-badge {
+  font-family: var(--font-caption-family);
+  font-size: var(--font-caption-size);
+  font-weight: var(--font-paragraph-sm-em-weight);
+  line-height: var(--font-caption-line-height);
+  color: var(--color-text-secondary);
+  background-color: var(--color-bg-container-tertiary);
+  border-radius: var(--radius-full);
+  padding: var(--padding-xxxs) var(--padding-sm);
+  min-width: 0;
+  flex-shrink: 1;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
+}
+
+.ds-app-sidebar--expanded .ds-app-sidebar__btn-badge {
   opacity: 1;
 }
 
 .ds-app-sidebar__btn-chevron {
   font-size: 24px;
   color: var(--color-icon-secondary);
-  flex-shrink: 0;
-  width: 0;
+  min-width: 0;
+  flex-shrink: 1;
   overflow: hidden;
   transition: transform var(--motion-duration-slow) var(--motion-ease-standard), opacity var(--motion-duration-base) var(--motion-ease-standard);
   opacity: 0;
 }
 
 .ds-app-sidebar--expanded .ds-app-sidebar__btn-chevron {
-  width: auto;
   opacity: 1;
 }
 
@@ -324,30 +359,59 @@
 }
 
 /* ============================================
+   CONSUMER SLOTS + BOTTOM WRAPPER
+   Slots keep their height in both states so the
+   rail's layout never snaps; collapsed they fade
+   out and stop taking clicks.
+   ============================================ */
+.ds-app-sidebar__bottom {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  min-width: 0;
+  flex-shrink: 0;
+}
+
+.ds-app-sidebar__top-slot,
+.ds-app-sidebar__footer-slot {
+  padding: 0 var(--padding-md);
+  min-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
+}
+
+.ds-app-sidebar--expanded .ds-app-sidebar__top-slot,
+.ds-app-sidebar--expanded .ds-app-sidebar__footer-slot {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ============================================
    PROFILE
    ============================================ */
 .ds-app-sidebar__profile {
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 0;
+  justify-content: space-between;
+  min-width: 0;
+  /* Centres the 40px avatar in the collapsed 64px rail; glides to the
+     expanded inset below. */
+  padding: 0 var(--padding-sm-md);
   flex-shrink: 0;
+  transition: padding var(--motion-duration-slow) var(--motion-ease-emphasized);
 }
 
 .ds-app-sidebar--expanded .ds-app-sidebar__profile {
-  justify-content: space-between;
   padding: 0 var(--padding-lg);
 }
 
 .ds-app-sidebar__profile-left {
   display: flex;
   align-items: center;
-  gap: 0;
-  min-width: 0;
-}
-
-.ds-app-sidebar--expanded .ds-app-sidebar__profile-left {
   gap: 10px;
+  min-width: 0;
 }
 
 .ds-app-sidebar__avatar {
@@ -369,14 +433,13 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
-  width: 0;
+  flex-shrink: 1;
   overflow: hidden;
   opacity: 0;
   transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 .ds-app-sidebar--expanded .ds-app-sidebar__profile-info {
-  width: auto;
   opacity: 1;
 }
 
@@ -416,11 +479,12 @@
   width: 0;
   overflow: hidden;
   opacity: 0;
-  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
+  /* Both widths are explicit (0 and 24px), so the width glides too. */
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard), width var(--motion-duration-slow) var(--motion-ease-emphasized);
 }
 
 .ds-app-sidebar--expanded .ds-app-sidebar__profile-more {
-  width: auto;
+  width: 24px;
   opacity: 1;
 }
 

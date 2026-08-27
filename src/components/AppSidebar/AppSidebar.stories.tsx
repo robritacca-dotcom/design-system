@@ -112,6 +112,50 @@ export const Collapsed: Story = {
   },
 };
 
+/** The glass-card treatment: inset from the viewport edges with rounded
+    corners, the translucent glass fill over a backdrop blur, and the
+    floating shadow. */
+export const Floating: Story = {
+  args: {
+    defaultExpanded: true,
+    floating: true,
+  },
+};
+
+/** Count pills on nav rows, hidden while the rail is collapsed. */
+export const WithBadges: Story = {
+  args: {
+    defaultExpanded: true,
+    sections: [
+      {
+        items: [
+          { key: 'home', icon: 'home', label: 'Home', badge: 152 },
+          { key: 'campaigns', icon: 'campaign', label: 'Campaigns' },
+          { key: 'inbox', icon: 'inbox', label: 'Inbox', badge: 91 },
+          { key: 'archive', icon: 'archive', label: 'Archive', badge: '9+' },
+        ],
+      },
+    ],
+  },
+};
+
+/** Consumer slots: a search field under the logo row and custom content
+    above the profile block, both fading out while collapsed. */
+export const WithSlots: Story = {
+  args: {
+    defaultExpanded: true,
+    topSlot: (
+      <input
+        type="search"
+        placeholder="Quick search"
+        aria-label="Quick search"
+        style={{ width: '100%' }}
+      />
+    ),
+    footerSlot: <span>Workspace switcher</span>,
+  },
+};
+
 export const WithActiveAccordion: Story = {
   args: {
     defaultExpanded: true,

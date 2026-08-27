@@ -30,6 +30,8 @@ export interface AppSidebarItem {
   onClick?: () => void;
   /** Renders the item as a real link to this URL instead of a button. Ignored when the item has children, whose row is the accordion toggle */
   href?: string;
+  /** Trailing count pill, e.g. unread items; hidden while the rail is collapsed */
+  badge?: string | number;
   /** Sub-items — turns this into an accordion */
   children?: AppSidebarSubItem[];
 }
@@ -67,6 +69,17 @@ export interface AppSidebarProps {
   onExpandedChange?: (expanded: boolean) => void;
   /** Callback when profile more button clicked */
   onProfileMore?: () => void;
+  /**
+   * Floats the rail off the viewport edges as a glass card: inset with
+   * rounded corners, the translucent glass fill over a backdrop blur, and
+   * the floating shadow. The inset defaults to 20px and is overridable via
+   * the --ds-sidebar-float-inset custom property.
+   */
+  floating?: boolean;
+  /** Rendered under the logo row, above the nav; fades out while collapsed */
+  topSlot?: React.ReactNode;
+  /** Rendered above the profile block; fades out while collapsed */
+  footerSlot?: React.ReactNode;
   /** Additional CSS classes */
   className?: string;
   /** Logo element — defaults to built-in robr0 logo */
@@ -185,6 +198,9 @@ export const AppSidebar = ({
   expanded: controlledExpanded,
   onExpandedChange,
   onProfileMore,
+  floating = false,
+  topSlot,
+  footerSlot,
   className = '',
   logo,
   logoText = 'robr0',
@@ -219,6 +235,7 @@ export const AppSidebar = ({
   const classes = [
     baseClass,
     isExpanded ? `${baseClass}--expanded` : '',
+    floating ? `${baseClass}--floating` : '',
     className,
   ]
     .filter(Boolean)
@@ -255,6 +272,9 @@ export const AppSidebar = ({
           </button>
         </div>
 
+        {/* Consumer slot under the logo row */}
+        {topSlot && <div className={`${baseClass}__top-slot`}>{topSlot}</div>}
+
         {/* Nav sections */}
         {sections.map((section, si) => (
           <div key={si} className={`${baseClass}__nav`}>
@@ -287,6 +307,9 @@ export const AppSidebar = ({
                     </span>
                     <span className={`${baseClass}__btn-label`}>{item.label}</span>
                   </span>
+                  {item.badge !== undefined && (
+                    <span className={`${baseClass}__btn-badge`}>{item.badge}</span>
+                  )}
                   {hasChildren && (
                     <span
                       className={[
@@ -387,8 +410,12 @@ export const AppSidebar = ({
         ))}
       </div>
 
-      {/* ---- BOTTOM — Profile ---- */}
-      {profile && (
+      {/* ---- BOTTOM — consumer slot + profile ---- */}
+      <div className={`${baseClass}__bottom`}>
+        {footerSlot && (
+          <div className={`${baseClass}__footer-slot`}>{footerSlot}</div>
+        )}
+        {profile && (
         <div className={`${baseClass}__profile`}>
           <div className={`${baseClass}__profile-left`}>
             <div className={`${baseClass}__avatar`}>
@@ -409,7 +436,8 @@ export const AppSidebar = ({
             <span className="material-symbols-rounded">more_horiz</span>
           </button>
         </div>
-      )}
+        )}
+      </div>
     </nav>
   );
 };

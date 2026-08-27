@@ -22,6 +22,12 @@ export interface AppLayoutProps {
   logo?: React.ReactNode;
   /** Page content — centred in the main area */
   children: React.ReactNode;
+  /**
+   * Colour scheme: 'dark' pins the layout to the dark theme (the historical
+   * behaviour and the default); 'inherit' drops the pin so the layout
+   * follows the surrounding data-theme like any other component.
+   */
+  theme?: 'dark' | 'inherit';
   /** Additional CSS classes on outer wrapper */
   className?: string;
 }
@@ -39,6 +45,7 @@ export const AppLayout = ({
   logoText,
   logo,
   children,
+  theme = 'dark',
   className = '',
 }: AppLayoutProps) => {
   const baseClass = 'ds-app-layout';
@@ -57,7 +64,7 @@ export const AppLayout = ({
     .join(' ');
 
   return (
-    <div className={classes} data-theme="dark">
+    <div className={classes} data-theme={theme === 'dark' ? 'dark' : undefined}>
       <AppSidebar
         sections={sections}
         profile={profile}
