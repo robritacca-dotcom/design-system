@@ -45,6 +45,9 @@ name: Release
 #   LegendTile, FunnelChart, ComboChart; live var() chart colours with bare
 #   mode; Stat's trend tokens and inline delta; borderless badges; the
 #   AppSidebar floating/badges/slots set and its rebuilt transition.
+# 0.13.0 shipped 2026-08-29 — five composition gap-fillers: Gauge, FilterBar,
+#   SplitPane, StreamingText, AvatarGroup, with the stream reveal's motion
+#   constant and the amended JS motion contract.
 
 on:
   workflow_dispatch:
