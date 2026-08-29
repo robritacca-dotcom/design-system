@@ -11,6 +11,7 @@ import { SectionTitle } from "@robr0/design-system/components/SectionTitle/Secti
 import { CodeBlock } from "@robr0/design-system/components/CodeBlock/CodeBlock";
 import { Button } from "@robr0/design-system/components/Button/Button";
 import { OpenChatLink } from "./OpenChatLink";
+import { componentMetadata } from "@robr0/design-system/components/registry";
 
 const { sidebarLinks } = getSidebarLinks(docsSidebarLinks, "/docs/get-started");
 
@@ -29,9 +30,17 @@ import { Button } from '@robr0/design-system/components/Button/Button';
 // any component import already loads the icon font for you.
 import '@robr0/design-system/fonts/material-symbols.css';`;
 
+/* The dependency-free chart pieces are a registry fact — charts-category
+   components whose implementation lives outside the shared recharts folder —
+   so the snippet derives the list rather than restating it. */
+const BARREL_CHARTS = componentMetadata
+  .filter((c) => c.category === "charts" && c.folder !== "Chart")
+  .map((c) => c.name)
+  .join(", ");
+
 const CHARTS_SNIPPET = `// The recharts-backed charts live behind their own entry so that peer
-// dependency stays optional — the dependency-free chart pieces (Sparkline,
-// ContributionGraph, FunnelChart, LegendTile) come from the main barrel.
+// dependency stays optional — the dependency-free chart pieces
+// (${BARREL_CHARTS}) come from the main barrel.
 import { BarChart, LineChart } from '@robr0/design-system/charts';`;
 
 const DARK_MODE_SNIPPET = `<!-- Light is the default; flip the whole system with one attribute -->
