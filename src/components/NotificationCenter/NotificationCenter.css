@@ -165,11 +165,16 @@
   padding: var(--padding-sm) var(--padding-sm-md);
 }
 
+/* The slot is a fixed column as wide as its largest medium — an sm Avatar
+   (32px, the --icon-size-lg rung) — with smaller media centred in it, so
+   every row's text starts on the same edge whether its medium is an avatar
+   or a bare icon. */
 .ds-notification-item__media {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex: none;
+  width: var(--icon-size-lg);
   color: var(--color-icon-primary);
 }
 
@@ -220,11 +225,14 @@
 }
 
 /* Unread dot — informational, so it takes the info status colour rather
-   than the action teal */
+   than the action teal, at the full-strength border weight for the same
+   reason Meter's fill does: a tint vanishes in a small mark. 8px because
+   a 4px dot is sub-perceptual at reading distance — the dot is the row's
+   one unmistakable unread signal, so it has to register at a glance. */
 .ds-notification-item__dot {
   flex: none;
-  width: var(--gap-xs);
-  height: var(--gap-xs);
+  width: var(--gap-sm);
+  height: var(--gap-sm);
   border-radius: var(--radius-full);
   background-color: var(--color-status-info-border);
 }

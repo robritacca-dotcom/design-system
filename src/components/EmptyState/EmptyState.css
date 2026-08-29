@@ -13,6 +13,11 @@
   gap: var(--gap-md); /* 16px */
   padding: var(--padding-xl); /* 32px */
   width: 100%;
+  /* width: 100% plus own padding — border-box locally (as ContactCard,
+     Checkbox, Composer, SelectionCard and Textarea do), so a consumer
+     without a global reset doesn't get a horizontal scrollbar wherever
+     this is embedded. */
+  box-sizing: border-box;
 }
 
 /* ============================================
