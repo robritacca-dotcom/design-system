@@ -12,6 +12,7 @@ import { Button } from "@robr0/design-system/components/Button/Button";
 import { Badge } from "@robr0/design-system/components/Badge/Badge";
 import { Alert } from "@robr0/design-system/components/Alert/Alert";
 import { SegmentedControl } from "@robr0/design-system/components/SegmentedControl/SegmentedControl";
+import { LinkList } from "@robr0/design-system/components/LinkList/LinkList";
 import { LineChart } from "@robr0/design-system/components/Chart/LineChart";
 import { BarChart } from "@robr0/design-system/components/Chart/BarChart";
 import { getSidebarLinks, workSidebarLinks } from "@/config/navigation";
@@ -35,17 +36,21 @@ const componentGrowth = [
 ];
 
 /* ============================================
-   Real traffic — monthly page views for
-   robertritacca.com, pulled from GA4 on
-   2026-08-14. Complete months only.
+   Real traffic shape — monthly page views for
+   robertritacca.com indexed to the April floor
+   (April = 1), from GA4, pulled 2026-08-14
+   and re-indexed from the absolute counts.
+   Complete months only. Absolute counts stay
+   out of the case study on purpose; the index
+   keeps the shape without publishing them.
    ============================================ */
 const monthlyViews = [
-  { label: "Feb", value: 849 },
-  { label: "Mar", value: 205 },
-  { label: "Apr", value: 153 },
-  { label: "May", value: 1202 },
-  { label: "Jun", value: 1018 },
-  { label: "Jul", value: 2350 },
+  { label: "Feb", value: 5.5 },
+  { label: "Mar", value: 1.3 },
+  { label: "Apr", value: 1 },
+  { label: "May", value: 7.9 },
+  { label: "Jun", value: 6.7 },
+  { label: "Jul", value: 15.4 },
 ];
 
 const { sidebarLinks } = getSidebarLinks(workSidebarLinks, "/work/robr0-ds");
@@ -119,57 +124,39 @@ function EnforcementChain() {
 /* ============================================
    Mini catalog — every documented layer of the
    system, linked inline so the case study shows
-   its own breadth.
+   its own breadth. Rendered with the library's
+   own LinkList, in-site rows via newTab: false.
    ============================================ */
-const foundationTiles = [
-  { href: "/foundations/colour-primitives", icon: "palette", label: "Primitive colours", sub: "Every raw hue: the bottom of the token stack" },
-  { href: "/foundations/colour-mode", icon: "contrast", label: "Semantic colours", sub: "Primitives wrapped in intent, with light + dark" },
-  { href: "/foundations/typography", icon: "text_fields", label: "Typography", sub: "One Nunito Sans scale, weight as hierarchy" },
-  { href: "/foundations/spatial", icon: "straighten", label: "Spacing & radius", sub: "The spatial tokens every component shares" },
-  { href: "/foundations/icons", icon: "interests", label: "Icons", sub: "Material Symbols Rounded, sized to the system" },
-  { href: "/foundations/motion", icon: "animation", label: "Motion", sub: "Duration and easing, with a reduced-motion guard" },
+const foundationLinks = [
+  { href: "/foundations/colour-primitives", icon: "palette", label: "Primitive colours", sub: "Every raw hue: the bottom of the token stack", newTab: false },
+  { href: "/foundations/colour-mode", icon: "contrast", label: "Semantic colours", sub: "Primitives wrapped in intent, with light + dark", newTab: false },
+  { href: "/foundations/typography", icon: "text_fields", label: "Typography", sub: "One Nunito Sans scale, weight as hierarchy", newTab: false },
+  { href: "/foundations/spatial", icon: "straighten", label: "Spacing & radius", sub: "The spatial tokens every component shares", newTab: false },
+  { href: "/foundations/icons", icon: "interests", label: "Icons", sub: "Material Symbols Rounded, sized to the system", newTab: false },
+  { href: "/foundations/motion", icon: "animation", label: "Motion", sub: "Duration and easing, with a reduced-motion guard", newTab: false },
 ];
 
-function CatalogTile({ href, icon, label, sub, wide }: { href: string; icon: string; label: string; sub: string; wide?: boolean }) {
-  return (
-    <Link href={href} className={`${styles.catalogTile} ${wide ? styles.catalogTileWide : ""}`}>
-      <span className={styles.catalogIcon}>
-        <span className="material-symbols-rounded" aria-hidden="true">{icon}</span>
-      </span>
-      <span className={styles.catalogText}>
-        <span className={styles.catalogTitle}>
-          {label}
-          <span className="material-symbols-rounded" aria-hidden="true">arrow_forward</span>
-        </span>
-        <span className={styles.catalogSub}>{sub}</span>
-      </span>
-    </Link>
-  );
-}
-
-/** The mini catalog — foundations grid + the components index. */
+/** The mini catalog — the foundations list + the components index. */
 function MiniCatalog() {
   return (
     <div className={styles.catalog} aria-label="Browse the design system">
       <div className={styles.catalogGroup}>
         <p className={styles.catalogGroupLabel}>Foundations</p>
-        <div className={styles.catalogGrid}>
-          {foundationTiles.map((t) => (
-            <CatalogTile key={t.href} {...t} />
-          ))}
-        </div>
+        <LinkList items={foundationLinks} />
       </div>
       <div className={styles.catalogGroup}>
         <p className={styles.catalogGroupLabel}>Components</p>
-        <div className={styles.catalogGrid}>
-          <CatalogTile
-            href="/components"
-            icon="widgets"
-            label={`${COMPONENT_COUNT} components`}
-            sub="Every component with live examples + Storybook docs"
-            wide
-          />
-        </div>
+        <LinkList
+          items={[
+            {
+              href: "/components",
+              icon: "widgets",
+              label: `${COMPONENT_COUNT} components`,
+              sub: "Every component with live examples + Storybook docs",
+              newTab: false,
+            },
+          ]}
+        />
       </div>
     </div>
   );
@@ -220,7 +207,7 @@ export default function Robr0DsCaseStudy() {
 
                 <article className={styles.body}>
                   <p className={styles.lede}>
-                    Most of my career has been design systems inside large companies. Intuit, Meta, CIBC. They ended the same way every time. I would set the rules, document them properly, hand them across the boundary to engineering, and then watch them soften. A hardcoded hex here, a one-off radius there. Nobody was a villain about it. The rules simply had nothing holding them in place, and I usually found out months later with no idea why.
+                    Most of my career has been design systems inside large companies, and they ended the same way every time. I would set the rules, document them properly, hand them across the boundary to engineering, and then watch them soften. A hardcoded hex here, a one-off radius there. Nobody was a villain about it. The rules simply had nothing holding them in place, and I usually found out months later with no idea why.
                   </p>
 
                   <p>
@@ -310,7 +297,7 @@ export default function Robr0DsCaseStudy() {
                   </blockquote>
 
                   <p>
-                    CI closed the loop in July. Every Storybook story now runs as a render test in headless Chromium, 620 of them at the time of writing, with accessibility checks that fail the build on a violation. This is the thing I never had in any system I shipped before. It is not mandated in a deck. It is mandated in the machinery.
+                    CI closed the loop in July. Every Storybook story now runs as a render test in headless Chromium, with accessibility checks that fail the build on a violation. This is the thing I never had in any system I shipped before. It is not mandated in a deck. It is mandated in the machinery.
                   </p>
 
                   <h2 id="publishing">Publishing it broke my assumptions</h2>
@@ -331,12 +318,16 @@ export default function Robr0DsCaseStudy() {
                   <h2 id="the-chat">Teaching the site to answer for itself</h2>
 
                   <p>
-                    August’s project was a chat that answers questions about my work and this system, on the page it is describing. I was lead design architect on{" "}
-                    <Link href="/work/intuit-agent-chat" className={styles.inlineLink}>Intuit’s agent chat platform</Link>, so I had a build order I trusted: build the parts first, compose them on a scripted fake transport that emits the same events a real model will, and only then wire up a backend.
+                    August’s project was a chat that answers questions about my work and this system, on the page it is describing. I had already led design on{" "}
+                    <Link href="/work/intuit-agent-chat" className={styles.inlineLink}>an agent chat platform at Intuit</Link>, so I had a build order I trusted: build the parts first, compose them on a scripted fake transport that emits the same events a real model will, and only then wire up a backend.
                   </p>
 
                   <p>
                     Designing against a fake model is the move I would repeat on any project. It let me judge streaming pace and scroll behaviour as pure design work, with no API cost and no latency variance muddying the read. Most of two days went into scrolling alone. My first attempt pushed the conversation up from the bottom as each turn landed, and it read as jumpy the moment a real answer streamed in at an uneven pace. What worked was inverting it: let a new turn float to the top of the viewport with a spacer sized to the exact shortfall, handed back as the answer fills it in. Nothing jumps, because the scroll range never moves.
+                  </p>
+
+                  <p>
+                    That reveal work has since flowed back into the package. It shipped in 0.13.0 as Streaming text with a headless hook, so the chat on this page now runs on the same engine a consumer installs, which is the direction things keep moving here: the site invents a part, and the library absorbs it.
                   </p>
 
                   <p>
@@ -347,30 +338,34 @@ export default function Robr0DsCaseStudy() {
                     Then I tested it like a product rather than a feature. A golden set of questions written from the seats of the people who actually visit, a recruiter, a designer, a developer, plus a few hostile ones, run end to end through the real route. The first pass scored 71 of 78. After the fixes, 77. The one still failing was its own best find: the corpus had been teaching the model about a page that no longer existed.
                   </p>
 
+                  <p>
+                    The chat was built for people reading the site. The newest door is for agents: the site now serves a Model Context Protocol endpoint at <code>/api/mcp</code>, and any MCP client that connects can read the component list, every component&rsquo;s exact prop contract, and the token registry. The prop data is generated from the same JSDoc that ships in the package&rsquo;s type declarations, so a coding agent building with the system reads the contract npm ships instead of guessing at props. Same public-only boundary as the corpus, no key, no model behind it.
+                  </p>
+
                   <h2 id="impact">What it added up to</h2>
 
                   <BarChart
                     data={monthlyViews}
-                    title="Page views by month"
-                    subtitle="robertritacca.com, February to July 2026, from Google Analytics"
-                    dataLabel="Page views"
+                    title="Traffic by month"
+                    subtitle="Monthly page views as a multiple of the April floor, February to July 2026, from Google Analytics"
+                    dataLabel="Multiple of April"
                     summaryItems={[
-                      { label: "April floor", value: 153 },
-                      { label: "July", value: 2350 },
+                      { label: "April floor", value: "1×" },
+                      { label: "July", value: "15×" },
                     ]}
                     height={220}
                   />
 
                   <p>
-                    Monthly page views went from a floor of 153 in April to 2,350 in July. The first thirteen days of August alone served 1,489. LinkedIn is the largest referrer at 297 sessions, ahead of Google organic at 189 and my own Substack at 84. The two flat months in that chart are the same two flat months in the component chart above, which is not a coincidence: I was writing documents nobody could see yet.
+                    Traffic bottomed in April and grew about fifteenfold by July. LinkedIn is the largest referrer, ahead of Google search and my own Substack. The two flat months in that chart are the same two flat months in the component chart above, which is not a coincidence: I was writing documents nobody could see yet.
                   </p>
 
                   <p>
-                    The package has shipped six versions since 26 July, 0.1.0 through 0.6.0, each published with provenance. This site installs it by name like any other consumer, so a packaging mistake breaks my own build before it reaches anyone else’s.
+                    The package has shipped thirteen versions since 26 July, 0.1.0 through 0.13.0, each published with provenance. The recent ones carry whole categories at a time: the charts, the maps set with the globe, the dashboard pieces, the streaming reveal the chat runs on. This site installs it by name like any other consumer, so a packaging mistake breaks my own build before it reaches anyone else’s.
                   </p>
 
                   <p>
-                    And the outcome I actually care about. In June I signed an offer as Principal Product Designer on CoreX AI at Gusto, defining how AI works, behaves and earns trust across their payroll, benefits and HR platform. I started in August. This site was the portfolio I submitted, and the system came up directly in the conversations. It is not a number I can put in a chart, but it is the one that mattered.
+                    And the outcome I actually care about. This site is the portfolio I put in front of people, and when it leads to a conversation, the system is what the conversation ends up being about. It has done the job a portfolio exists to do. That is not a number I can put in a chart, but it is the one that mattered.
                   </p>
 
                   <p>

@@ -42,7 +42,9 @@ export default function PrivacyPage() {
           <p className={styles.body}>
             No accounts. No advertising. Nothing is sold or shared for
             marketing. The only data collected is the analytics and chat logs
-            above, and both are used only to run and improve the site.
+            above, and both are used only to run and improve the site. The
+            machine-readable endpoint at /api/mcp stores nothing: it reads
+            published data and answers.
           </p>
         </div>
 

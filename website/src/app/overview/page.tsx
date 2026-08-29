@@ -37,12 +37,12 @@ const PIPELINE: TimelineCompany[] = [
       {
         title: "Design foundation",
         description:
-          "Where the system's foundation was designed: the token architecture, the colour ramps, the component vocabulary. Today it's the sketchpad for visual exploration; the source of truth has moved into the repo.",
+          "Where the foundation was designed: the token architecture, the colour ramps, the component vocabulary. The source of truth has since moved into the repo.",
         bullets: [
-          "Designed the token architecture as variables: the colour ramps + spatial tokens (gap, padding, radius, border)",
-          "Designed the original components with variants and light/dark semantic mappings",
+          "Tokens designed as variables: the colour ramps plus the spatial scale (gap, padding, radius, border)",
           <>
-            Still where bigger visual changes get explored before they land in{" "}
+            Still the sketchpad where bigger visual changes get explored before
+            they land in{" "}
             <Link href="/blueprints/design" className={styles.inlineLink}>the written spec</Link>
           </>,
         ],
@@ -57,17 +57,15 @@ const PIPELINE: TimelineCompany[] = [
         title: "AI component generator",
         description: (
           <>
-            Builds production React from the written specs that live in the repo:{" "}
+            Builds production React from the written specs in the repo:{" "}
             <Link href="/blueprints/design" className={styles.inlineLink}>design.md</Link> for the design language,{" "}
             <Link href="/blueprints/claude" className={styles.inlineLink}>CLAUDE.md</Link> for the rules, and{" "}
             <Link href="/blueprints/content-design" className={styles.inlineLink}>content-design.md</Link> for how every word reads.
           </>
         ),
         bullets: [
-          "Maintains the layered CSS token architecture (primitives → semantics → components)",
-          "Generates React components with TypeScript and token-based CSS from the spec",
-          "Builds Storybook documentation automatically for every component",
-          "Maintains the system as well as building it: skills audit token usage, prose, and accessibility on demand, and recurring loops run copy experiments and keep the project journal current",
+          "Generates the components, the layered token CSS, and the Storybook docs from the spec",
+          "Maintains the system too: skills audit token usage, prose, and accessibility on demand, and recurring loops keep the project journal current",
         ],
       },
     ],
@@ -80,16 +78,13 @@ const PIPELINE: TimelineCompany[] = [
         title: "Live documentation site",
         description: (
           <>
-            Interactive component library at{" "}
-            <a href="https://design-system-iota-one.vercel.app" target="_blank" rel="noopener noreferrer" className={styles.inlineLink}>design-system-iota-one.vercel.app</a>{" "}
-            showing every piece of robr0 DS.
+            Every component, variant, and token, live at{" "}
+            <a href="https://design-system-iota-one.vercel.app" target="_blank" rel="noopener noreferrer" className={styles.inlineLink}>design-system-iota-one.vercel.app</a>.
           </>
         ),
         bullets: [
-          "Component playground with live controls for all props and states",
-          "The props tables are generated from the component source itself: each prop is described once, next to the code, and a build check fails if any description is missing, so the docs cannot drift from what ships",
-          "Token docs (colors, spacing, typography), icon gallery, logo library",
-          "Auto-deploys on every code push",
+          "A playground with live controls for every prop and state",
+          "Props tables generate from the component source itself, and a build check fails on any missing description, so the docs cannot drift from what ships",
         ],
       },
     ],
@@ -99,47 +94,19 @@ const PIPELINE: TimelineCompany[] = [
     logo: pipelineLogo("/logos/Git.svg", "GitHub"),
     roles: [
       {
-        title: "Version control",
-        description:
-          "Public repository storing the entire codebase with full commit history.",
-        bullets: [
-          <>
-            npm-workspace monorepo: the library publishes as{" "}
-            <code>@robr0/design-system</code>, and this site installs that same
-            package, so every page dogfoods the exact import surface a consumer gets
-          </>,
-          "Triggers Vercel deployment on every push to main",
-          <>
-            Portfolio visibility at{" "}
-            <a href="https://github.com/robritacca-dotcom/design-system" target="_blank" rel="noopener noreferrer" className={styles.inlineLink}>github.com/robritacca-dotcom/design-system</a>
-          </>,
-        ],
-      },
-      {
-        title: "Package publishing",
+        title: "Source, releases, and CI",
         description: (
           <>
-            A manual release workflow ships the library to npm as{" "}
-            <code>@robr0/design-system</code>. See{" "}
-            <Link href="/docs/get-started" className={styles.inlineLink}>how to install and customise it</Link>.
+            <a href="https://github.com/robritacca-dotcom/design-system" target="_blank" rel="noopener noreferrer" className={styles.inlineLink}>A public monorepo</a>
+            : the library publishes to npm as <code>@robr0/design-system</code>,
+            and this site installs that same package, so every page dogfoods the
+            exact import surface a consumer gets.
           </>
         ),
         bullets: [
-          "Builds the distributable package: per-module JS + type declarations, token CSS, and the icon font",
-          "Before anything reaches the registry, the tarball is installed into a scratch Vite app and built: a real consumer smoke test",
-          "Publishes through a trust link between GitHub and npm, so there is no stored password or token to leak; every release carries provenance, a verifiable record of which code produced it. Dry-run by default",
-        ],
-      },
-      {
-        title: "Continuous integration",
-        description:
-          "Every push and PR runs an automated quality gate before anything is trusted.",
-        bullets: [
-          "Lints the codebase and builds the library, Storybook, and the website on every change",
-          "Renders every Storybook story in headless Chrome and runs an axe accessibility audit on each: a render error or an accessibility violation fails the build (one contrast rule is deliberately excluded by a settled token decision), so a regression is caught on the story that introduced it",
-          "Chromatic visual regression, run on demand: every story snapshotted in light and dark against an accepted baseline, so a token change that shifts pixels anywhere in the system is caught before it ships",
-          "Drift guard fails the build the moment any registry-backed content goes stale: every countable collection on the site has a registry behind it and a check that holds the two together, so the numbers in the rail beside this pipeline come straight from those registries, never typed by hand",
-          "The same checklist runs locally as a single command; CI adds two checks of its own: a high-severity dependency audit, and a guard that regenerated content was actually committed",
+          "Releases smoke-test the tarball in a scratch Vite app, then publish with provenance through a trust link between GitHub and npm: no stored token to leak",
+          "CI renders every Storybook story in headless Chrome with an axe accessibility audit on each, so a render error or a violation fails the build; one contrast rule is deliberately excluded by a settled token decision",
+          "A drift guard fails the build the moment registry-backed content goes stale: the numbers in the rail beside this pipeline come from those registries, never typed by hand",
         ],
       },
     ],
@@ -149,33 +116,16 @@ const PIPELINE: TimelineCompany[] = [
     logo: vercelLogo,
     roles: [
       {
-        title: "Auto-deployment",
+        title: "Deployment and delivery",
         description:
-          "Watches GitHub and deploys both sites automatically on every push.",
+          "Watches GitHub and deploys the website and Storybook on every push to main, live in under a minute.",
         bullets: [
           <>
-            Builds and deploys Storybook →{" "}
-            <a href="https://design-system-iota-one.vercel.app" target="_blank" rel="noopener noreferrer" className={styles.inlineLink}>design-system-iota-one.vercel.app</a>
+            <code>robertritacca.com</code> is registered at GoDaddy, whose DNS
+            points at the Vercel deployment
           </>,
-          <>
-            Builds and deploys website →{" "}
-            <a href="https://robr0-ds.vercel.app" target="_blank" rel="noopener noreferrer" className={styles.inlineLink}>robr0-ds.vercel.app</a>
-          </>,
-          "Live in under 60 seconds with SSL and global CDN",
-        ],
-      },
-      {
-        title: "Domain & delivery",
-        description:
-          "How the site actually reaches you: the domain, the fonts, the icons, and the measurement.",
-        bullets: [
-          <>
-            <code>robertritacca.com</code> is registered at GoDaddy, whose DNS points
-            at the Vercel deployment
-          </>,
-          "Nunito Sans is self-hosted: next/font fetches it from Google Fonts at build time and serves it from this domain, with no runtime Google request",
-          "Material Symbols icons ship as a self-hosted woff2 inside the npm package itself; on this site, the playground's typeface picker is the one place fonts load from Google at runtime",
-          "Google Analytics (GA4) measures traffic via the standard gtag snippet in the root layout",
+          "Nunito Sans is self-hosted via next/font, and Material Symbols ships inside the npm package; the playground's typeface picker is the one place fonts load from Google at runtime",
+          "Google Analytics (GA4) measures traffic via the gtag snippet in the root layout",
         ],
       },
     ],
@@ -188,37 +138,33 @@ const PIPELINE: TimelineCompany[] = [
         title: "Site-aware chat",
         description: (
           <>
-            The chat behind the floating button in the corner of the site. It
-            answers from the published site through Claude Sonnet; the same
-            widget runs in{" "}
+            The chat behind the floating button, built from the system&rsquo;s
+            own ai components. It answers from the published site through
+            Claude Sonnet; the same widget runs in{" "}
             <Link href="/playground?view=chat" className={styles.inlineLink}>
               the playground&rsquo;s Chat view
             </Link>
-            , where it can be resized and re-themed.
+            .
           </>
         ),
         bullets: [
-          "The model's context is generated at build time from the site itself: page prose, data registries, root specs, and the essays. A new page reaches the chat on the next build",
-          "Only published, self-authored content can enter the context; a validator fails the build on anything else. Facts about Rob come only from the site, while general design knowledge is answered freely and kept visibly separate",
-          "Composed from the system's own ai components and mounted once in the root layout, so an answer keeps streaming between pages",
+          "Its context is generated at build time from the site itself: page prose, data registries, root specs, and the essays. Only published, self-authored content can enter, and a validator fails the build on anything else",
+          "A golden-set eval runs through the real route, and spend is held by per-visitor rate limits and a daily budget breaker",
+          "Conversations are kept for 30 days, tied to no name or address, then deleted",
         ],
       },
       {
-        title: "Guardrails and evals",
-        description:
-          "Answer quality and spend are held by build gates and measurements.",
-        bullets: [
-          "A golden set of questions runs through the real chat route; a coverage validator fails the build the moment the context loses a fact the eval depends on",
-          "Layered spend protection: per-visitor rate limits, a daily budget breaker that degrades instead of going dark, and a hard cap behind everything",
+        title: "MCP endpoint",
+        description: (
           <>
-            Conversations are kept for 30 days, tied to no name or address, then
-            deleted. The{" "}
-            <Link href="/playground?view=chat" className={styles.inlineLink}>
-              playground&rsquo;s Chat view
-            </Link>{" "}
-            doubles as the QA surface, with a simulated transport that exercises
-            the streaming without calling the model
-          </>,
+            The same public data, served to agents: <code>/api/mcp</code> is a
+            Model Context Protocol server, and any MCP client connects with
+            just the URL. No key, no account, no model behind it.
+          </>
+        ),
+        bullets: [
+          "Five tools: the component list, per-component prop APIs, the token registry, install setup, and search over the site's published content",
+          "The prop data is generated from the same JSDoc that ships in the package's type declarations, so a coding agent reads the exact contract npm ships",
         ],
       },
     ],
@@ -248,19 +194,19 @@ export default function AboutDsPage() {
             </p>
             <p className={styles.introBody}>
               robr0 DS is the system I built, by myself, to make every page you see here. The foundation was designed in{" "}
-              <a href="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26?node-id=246-5864" target="_blank" rel="noopener noreferrer" className={styles.inlineLink}>Figma</a>. The system itself lives in{" "}
-              <a href="https://github.com/robritacca-dotcom/design-system" target="_blank" rel="noopener noreferrer" className={styles.inlineLink}>the repo</a>: a{" "}
-              <Link href="/blueprints/design" className={styles.inlineLink}>written spec</Link>, tokens as layered CSS, components in React. Claude Code builds from the spec, so a design change reaches production in under a minute. None of it is theoretical: the buttons, the colours, the type, and the layout are all running on the same system this page describes. It ships as the npm package <code>@robr0/design-system</code>, and this site installs that package like any other consumer would. You can{" "}
+              <a href="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26?node-id=246-5864" target="_blank" rel="noopener noreferrer" className={styles.inlineLink}>Figma</a>; the system itself lives in{" "}
+              <a href="https://github.com/robritacca-dotcom/design-system" target="_blank" rel="noopener noreferrer" className={styles.inlineLink}>the repo</a> as a{" "}
+              <Link href="/blueprints/design" className={styles.inlineLink}>written spec</Link>, layered CSS tokens, and React components, and Claude Code builds from the spec, so a design change reaches production in under a minute. It ships as the npm package <code>@robr0/design-system</code>, and this site installs that package like any other consumer would. You can{" "}
               <Link href="/docs/get-started" className={styles.inlineLink}>install it yourself</Link> and{" "}
               <Link href="/playground" className={styles.inlineLink}>re-theme it live</Link>.
             </p>
             <p className={styles.introBody}>
-              I&apos;m putting all of it on display because I think the system is the work. The pipeline below shows how the pieces fit. The rail beside it lists the key numbers and links. And if you want to lift any of it for your own project, everything is open:{" "}
+              I&apos;m putting all of it on display because I think the system is the work: the pipeline below shows how the pieces fit, and everything is open to lift.{" "}
               <Link href="/blueprints/claude" className={styles.inlineLink}>CLAUDE.md</Link>,{" "}
               <Link href="/blueprints/design" className={styles.inlineLink}>design.md</Link>,{" "}
               <Link href="/blueprints/content-design" className={styles.inlineLink}>content-design.md</Link>, the{" "}
               <Link href="/skills" className={styles.inlineLink}>skills</Link>, and the{" "}
-              <Link href="/loops" className={styles.inlineLink}>loops</Link> are ready to drop into your own codebase or AI tooling.
+              <Link href="/loops" className={styles.inlineLink}>loops</Link> drop into your own codebase or AI tooling. Agents get the same access: the site serves a Model Context Protocol endpoint at <code>/api/mcp</code>, so a coding agent connects with one URL and reads the component list, exact prop contracts, and the token registry while it builds with the package, instead of guessing at props.
             </p>
           </div>
 

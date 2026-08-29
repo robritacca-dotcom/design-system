@@ -388,8 +388,13 @@ export default function DesignSystemPage() {
         <section className={`${styles.hero} animate-in`} aria-label="About the design system">
           <h1 className={styles.pageTitle}>robr0 DS</h1>
           <p className={styles.subDisplay}>
-            An AI-ready design system: Claude Code builds the components from
-            written specs, and every token chains to a primitive you can override.
+            An AI-ready design system
+          </p>
+          <p className={styles.heroBody}>
+            Every token chains to a primitive you can override, so one change
+            re-themes the whole system in both themes. The docs serve machines
+            too: connect a coding agent over MCP and it reads the component
+            list and exact prop contracts while it builds.
           </p>
           <ButtonGroup
             ariaLabel="Design system sections"

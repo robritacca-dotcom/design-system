@@ -22,7 +22,12 @@ import { FilterBar } from "@robr0/design-system/components/FilterBar/FilterBar";
 import { Gauge } from "@robr0/design-system/components/Gauge/Gauge";
 import { StreamingText } from "@robr0/design-system/components/StreamingText/StreamingText";
 import { Badge } from "@robr0/design-system/components/Badge/Badge";
+import { Banner } from "@robr0/design-system/components/Banner/Banner";
 import { Button } from "@robr0/design-system/components/Button/Button";
+import { ImageCompare } from "@robr0/design-system/components/ImageCompare/ImageCompare";
+import { Meter } from "@robr0/design-system/components/Meter/Meter";
+import { Rating } from "@robr0/design-system/components/Rating/Rating";
+import { SplitButton } from "@robr0/design-system/components/SplitButton/SplitButton";
 import { Checkbox } from "@robr0/design-system/components/Checkbox/Checkbox";
 import { LegendTile } from "@robr0/design-system/components/LegendTile/LegendTile";
 import { Panel } from "@robr0/design-system/components/Panel/Panel";
@@ -208,6 +213,13 @@ const previews: Record<string, () => ReactNode> = {
         <Badge variant="info" label="Info" />
         <Badge variant="positive" label="Success" />
         <Badge variant="error" label="Error" />
+      </div>
+    </>
+  ),
+  "banner": () => (
+    <>
+      <div style={{ width: "210px" }}>
+        <Banner variant="info" title="v2 is live.">Read the notes.</Banner>
       </div>
     </>
   ),
@@ -921,6 +933,34 @@ const previews: Record<string, () => ReactNode> = {
       </div>
     </>
   ),
+  "hover-card": () => (
+    <>
+      <div className={styles.previewColumn} style={{ gap: "4px", width: "120px", alignItems: "flex-start" }}>
+        <span style={{ fontSize: "11px", color: "var(--color-action-primary-text-tertiary)", textDecoration: "underline" }}>@janedoe</span>
+        <div style={{ padding: "8px", borderRadius: "8px", border: "1px solid var(--color-bg-container-border)", background: "var(--color-bg-page-primary)", boxShadow: "var(--shadow-floating)", display: "flex", flexDirection: "column", gap: "5px", width: "100%" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+            <div style={{ width: "16px", height: "16px", borderRadius: "50%", background: "var(--color-bg-container-tertiary)" }} />
+            <span style={{ fontSize: "10px", fontWeight: 600, color: "var(--color-text-primary)" }}>Jane Doe</span>
+          </div>
+          <div style={{ width: "85%", height: "5px", borderRadius: "3px", background: "var(--color-bg-container-secondary)" }} />
+          <div style={{ width: "60%", height: "5px", borderRadius: "3px", background: "var(--color-bg-container-secondary)" }} />
+        </div>
+      </div>
+    </>
+  ),
+  "image-compare": () => (
+    <>
+      <div style={{ width: "140px" }}>
+        <ImageCompare
+          beforeSrc={`data:image/svg+xml,${encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500"><rect width="800" height="500" fill="#d8d8d8"/><circle cx="620" cy="120" r="60" fill="#c2c2c2"/><path d="M0 340 Q200 240 400 330 T800 310 V500 H0 Z" fill="#a8a8a8"/></svg>')}`}
+          afterSrc={`data:image/svg+xml,${encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500"><rect width="800" height="500" fill="#8ecae6"/><circle cx="620" cy="120" r="60" fill="#ffb703"/><path d="M0 340 Q200 240 400 330 T800 310 V500 H0 Z" fill="#2a9d8f"/></svg>')}`}
+          beforeAlt="Greyscale landscape"
+          afterAlt="Colour landscape"
+          showLabels={false}
+        />
+      </div>
+    </>
+  ),
   "map-callout": () => (
     <>
       <MapCallout title="Santiago, CL" lines={["Cobalt", "17.73 / 64 arcs"]} />
@@ -973,6 +1013,13 @@ const previews: Record<string, () => ReactNode> = {
           title="Harbour timetable"
           meta="harbourline.example"
         />
+      </div>
+    </>
+  ),
+  "meter": () => (
+    <>
+      <div style={{ width: "130px" }}>
+        <Meter label="Storage" value={64} showValue />
       </div>
     </>
   ),
@@ -1134,6 +1181,11 @@ const previews: Record<string, () => ReactNode> = {
       </div>
     </>
   ),
+  "rating": () => (
+    <>
+      <Rating value={4} readOnly label="Preview rating" />
+    </>
+  ),
   "reasoning": () => (
     <>
       <div style={{ width: "160px" }}>
@@ -1229,6 +1281,15 @@ const previews: Record<string, () => ReactNode> = {
   "stat": () => (
     <>
       <Stat value="~900%" label="Successful generations" trend="up" delta="+clash view" />
+    </>
+  ),
+  "split-button": () => (
+    <>
+      <SplitButton
+        label="Save"
+        size="compact"
+        items={[{ label: "Save as draft" }, { label: "Save as template" }]}
+      />
     </>
   ),
   "split-pane": () => (

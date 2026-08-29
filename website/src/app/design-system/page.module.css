@@ -42,9 +42,18 @@
   line-height: var(--font-sub-display-line-height);
   letter-spacing: var(--font-sub-display-letter-spacing);
   color: var(--color-text-primary);
-  /* Together with the hero gap, the spacing above and below matches the
-     Work page's section gap (--primitive-gap-xxxl) */
-  margin: calc(var(--primitive-gap-xxxl) - var(--gap-md)) 0;
+  /* Together with the hero gap, the spacing above (and below, carried by
+     .heroBody) matches the Work page's section gap (--primitive-gap-xxxl) */
+  margin: calc(var(--primitive-gap-xxxl) - var(--gap-md)) 0 0;
+}
+
+.heroBody {
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  color: var(--color-text-secondary);
+  max-width: 640px;
+  margin: 0 0 calc(var(--primitive-gap-xxxl) - var(--gap-md));
 }
 
 /* Both hero link rows wrap and stay centred on narrow screens */

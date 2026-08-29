@@ -12,6 +12,7 @@ import { CodeBlock } from "@robr0/design-system/components/CodeBlock/CodeBlock";
 import { Button } from "@robr0/design-system/components/Button/Button";
 import { OpenChatLink } from "./OpenChatLink";
 import { componentMetadata } from "@robr0/design-system/components/registry";
+import { SITE_URL } from "@/lib/structuredData";
 
 const { sidebarLinks } = getSidebarLinks(docsSidebarLinks, "/docs/get-started");
 
@@ -55,6 +56,9 @@ const [status, setStatus] = useState<ShaderFieldStatus>('pending');
   {status === 'unavailable' && <YourCssFallback />}
   <ShaderField params={{ streak: 0.4 }} onStatusChange={setStatus} />
 </div>`;
+
+const MCP_SNIPPET = `# Claude Code shown here; any Streamable HTTP MCP client works the same way.
+claude mcp add --transport http robr0-ds ${SITE_URL}/api/mcp`;
 
 const FONT_SNIPPET = `/* The whole type scale chains to one token.
    Load any font (Google Fonts, next/font, self-hosted), then: */
@@ -289,6 +293,23 @@ export default function GetStartedPage() {
                   </OpenChatLink>{" "}
                   and you are looking at those components at work.
                 </p>
+              </section>
+
+              {/* MCP server */}
+              <section className={`${styles.section} animate-in animate-delay-6`}>
+                <SectionTitle title="Docs for your agent" />
+                <p className={styles.sectionNote}>
+                  The documentation also serves machines. The site exposes a
+                  Model Context Protocol endpoint at <code>/api/mcp</code>:
+                  connect any MCP client and your coding agent can query the
+                  component list, the exact prop contract of every component,
+                  the token registry, and the site&apos;s published content
+                  while it builds. The prop data is generated from the same
+                  JSDoc as the package&apos;s type declarations, so it always
+                  matches what npm ships. No key or account is needed;
+                  everything it serves is already public.
+                </p>
+                <CodeBlock code={MCP_SNIPPET} language="bash" showCopy />
               </section>
 
               {/* Ambient background */}
