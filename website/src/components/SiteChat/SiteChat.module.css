@@ -107,12 +107,13 @@
 .welcomeGreeting {
   display: flex;
   flex-direction: column;
-  gap: var(--gap-xxs);
+  gap: var(--gap-sm);
 }
 
-/* One heading level below the ask line, so the pair reads dynamically.
-   The action-text token is a deliberate flourish here: the greeting is the
-   one place the widget spends the primary colour outside a control. */
+/* Small and semibold over the ask line's large light face — the pair
+   separates by weight contrast, per the hierarchy rule. Tertiary text,
+   a step quieter than the ask line, so the time-of-day pleasantry
+   supports the invitation rather than competing with it. */
 .welcomeHello {
   margin: 0;
   /* The greeting is read from the visitor's clock after mount, so this line
@@ -124,16 +125,16 @@
   font-weight: var(--font-heading-3-weight);
   line-height: var(--font-heading-3-line-height);
   letter-spacing: var(--font-heading-3-letter-spacing);
-  color: var(--color-action-primary-text-tertiary);
+  color: var(--color-text-tertiary);
 }
 
 .welcomeAsk {
   margin: 0;
-  font-family: var(--font-heading-2-family);
-  font-size: var(--font-heading-2-size);
-  font-weight: var(--font-heading-2-weight);
-  line-height: var(--font-heading-2-line-height);
-  letter-spacing: var(--font-heading-2-letter-spacing);
+  font-family: var(--font-sub-display-family);
+  font-size: var(--font-sub-display-size);
+  font-weight: var(--font-sub-display-weight);
+  line-height: var(--font-sub-display-line-height);
+  letter-spacing: var(--font-sub-display-letter-spacing);
   color: var(--color-text-secondary);
 }
 
