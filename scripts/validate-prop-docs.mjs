@@ -4,8 +4,9 @@
  *
  * The prop-level JSDoc in src/components is not a comment convention —
  * it is the source the documented surface is generated from: Storybook's
- * autodocs props tables and the .d.ts declarations that ship inside the
- * npm tarball. An undocumented prop is a hole in the published API
+ * autodocs props tables, the .d.ts declarations that ship inside the
+ * npm tarball, and the component-API registry the website's /api/mcp
+ * route serves. An undocumented prop is a hole in the published API
  * reference, so it fails the build.
  *
  * Scope is deliberately the component's *own* props. Every component
@@ -15,72 +16,17 @@
  * spec, not to this project, so props inherited from node_modules are
  * filtered out rather than demanded to carry local documentation.
  *
- * react-docgen-typescript is used rather than react-docgen because it
- * resolves types instead of pattern-matching the AST, which is what
- * makes it cope with the two shapes react-docgen cannot see:
- *   - components that return `createPortal(...)` with no direct JSX
- *     (AlertDialog, CommandPalette) — react-docgen finds no component
- *     definition at all and reports nothing
- *   - files exporting several components (Checkbox + CheckboxGroup)
- * It also handles the one folder-of-components entry, src/components/Chart,
- * which has no Chart.tsx.
+ * The docgen settings live in scripts/component-docgen.mjs, shared with
+ * generate-component-api.mjs and mirroring .storybook/main.ts, so this
+ * validator sees exactly what the rendered props table sees.
  *
  * Runs as part of `npm run validate-registry` (every build, both
  * projects).
  */
-import { existsSync, readdirSync, readFileSync } from 'node:fs';
-import { dirname, join, relative } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { withCustomConfig } from 'react-docgen-typescript';
+import { relative } from 'node:path';
+import { parseLibrary, repoRoot } from './component-docgen.mjs';
 
-const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
-const componentsDir = join(repoRoot, 'src', 'components');
-const registry = JSON.parse(
-  readFileSync(join(componentsDir, 'registry.json'), 'utf8')
-);
-
-/** The component source files backing one registry entry. */
-export function sourceFilesFor(name, dir = join(componentsDir, name)) {
-  const canonical = join(dir, `${name}.tsx`);
-  if (existsSync(canonical)) return [canonical];
-  // Folder-of-components entry: every non-story component file.
-  return readdirSync(dir)
-    .filter((file) => file.endsWith('.tsx') && !file.includes('.stories.'))
-    .sort()
-    .map((file) => join(dir, file));
-}
-
-// Entries with a `folder` field share an implementation folder (the nine
-// charts in Chart/); each contributes its own <Name>.tsx from it.
-const sourceFiles = registry.components.flatMap((component) =>
-  sourceFilesFor(
-    component.name,
-    join(componentsDir, component.folder ?? component.name)
-  )
-);
-
-// These settings mirror .storybook/main.ts exactly, so this validator sees
-// what the rendered props table sees. Two of them are load-bearing:
-//   - tsconfig.app.json, because the root tsconfig.json is solution-style
-//     ("files": [] plus references) and yields a program with no files
-//   - shouldIncludePropTagMap, because it moves an `@deprecated` tag out of
-//     `description` and into `tags`. A prop documented *only* with the tag
-//     therefore has an empty description and renders as a blank cell, which
-//     is exactly the hole this validator exists to catch. Put a sentence
-//     before the tag so both survive.
-const parser = withCustomConfig(join(repoRoot, 'tsconfig.app.json'), {
-  savePropValueAsString: true,
-  shouldExtractLiteralValuesFromEnum: true,
-  shouldRemoveUndefinedFromOptional: true,
-  shouldIncludePropTagMap: true,
-  // Own props only — native pass-through attributes are React's to document.
-  propFilter: (prop) =>
-    !(prop.parent && prop.parent.fileName.includes('node_modules')),
-});
-
-// One parse call builds a single TypeScript program for the whole
-// library; parsing file-by-file rebuilds it each time and is far slower.
-const parsed = parser.parse(sourceFiles);
+const parsed = parseLibrary();
 
 const offenders = [];
 let propCount = 0;

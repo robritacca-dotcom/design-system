@@ -75,6 +75,7 @@ export function GET() {
     "",
     "Raw markdown sources and machine-readable indexes.",
     "",
+    `- [MCP server](${SITE_URL}/api/mcp): a Model Context Protocol endpoint (Streamable HTTP, no auth). Tools cover the component list, per-component prop APIs, the design token registry, install setup, and full-text site search. Point any MCP client at this URL`,
     `- [Storybook](https://design-system-iota-one.vercel.app): the rendered API reference. Every component has a props table with types, defaults, and deprecations`,
     `- [npm package](https://www.npmjs.com/package/@robr0/design-system): \`npm install @robr0/design-system\` ships complete .d.ts type declarations for every component`,
     `- [CLAUDE.md](${SITE_URL}/CLAUDE.md): how this repository is *maintained* (architecture, registries, workflows). Written for contributors to the system itself, not for people using the package: for that, read design.md below and the README`,
