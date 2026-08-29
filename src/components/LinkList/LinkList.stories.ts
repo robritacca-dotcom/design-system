@@ -70,6 +70,27 @@ export const NoSubtitle: Story = {
   },
 };
 
+export const InternalLinks: Story = {
+  args: {
+    items: [
+      {
+        label: 'Foundations',
+        href: '/foundations',
+        icon: 'palette',
+        sub: 'Stays in the current tab, with an arrow_forward indicator',
+        newTab: false,
+      },
+      {
+        label: 'Components',
+        href: '/components',
+        icon: 'widgets',
+        sub: 'Set newTab: false for links inside the same site',
+        newTab: false,
+      },
+    ],
+  },
+};
+
 export const Consulting: Story = {
   args: {
     items: [

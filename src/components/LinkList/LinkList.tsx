@@ -14,10 +14,12 @@ export interface LinkListItem {
   logoAlt?: string;
   /** Material Symbol name used when no logo is provided (e.g. "emoji_events") */
   icon?: string;
+  /** Open in a new tab. Defaults to true; set false for links inside the same site, which swaps the open_in_new indicator for arrow_forward. */
+  newTab?: boolean;
 }
 
 export interface LinkListProps {
-  /** Links to render, in display order — each opens in a new tab */
+  /** Links to render, in display order */
   items: LinkListItem[];
   /** Additional CSS classes */
   className?: string;
@@ -34,12 +36,14 @@ export const LinkList = ({ items, className = '' }: LinkListProps) => {
             : [item.sub]
           : [];
 
+        const newTab = item.newTab ?? true;
+
         return (
           <a
             key={item.href + item.label}
             href={item.href}
-            target="_blank"
-            rel="noopener noreferrer"
+            target={newTab ? '_blank' : undefined}
+            rel={newTab ? 'noopener noreferrer' : undefined}
             className="ds-link-list__item"
           >
             <span className="ds-link-list__icon-wrap" aria-hidden="true">
@@ -62,7 +66,7 @@ export const LinkList = ({ items, className = '' }: LinkListProps) => {
               <div className="ds-link-list__title">
                 <span>{item.label}</span>
                 <span className="material-symbols-rounded ds-link-list__open-icon" aria-hidden="true">
-                  open_in_new
+                  {newTab ? 'open_in_new' : 'arrow_forward'}
                 </span>
               </div>
               {subs.map((s, i) => (
