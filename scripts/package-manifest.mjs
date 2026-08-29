@@ -42,6 +42,10 @@ const SUBPATHS = [
   // lifetime without the component's canvas. A .ts module, so the *.tsx
   // wildcard below can't serve it either.
   { key: './components/ShaderField/useShaderField', srcJs: './src/components/ShaderField/useShaderField.ts', dist: './components/ShaderField/useShaderField' },
+  // StreamingText's headless pacing engine, for a consumer whose streamed
+  // text needs its own renderer (markdown, a highlighter). A .ts module,
+  // so the *.tsx wildcard below can't serve it either.
+  { key: './components/StreamingText/useStreamReveal', srcJs: './src/components/StreamingText/useStreamReveal.ts', dist: './components/StreamingText/useStreamReveal' },
   { key: './tokens/registry', srcJs: './src/tokens/registry.ts', dist: './tokens/registry' },
   // The JS-timing constants — the TypeScript side of the motion tokens,
   // for timers a CSS variable cannot reach.

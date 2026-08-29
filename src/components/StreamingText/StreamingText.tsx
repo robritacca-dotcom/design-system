@@ -1,8 +1,24 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
-import { MOTION_STREAM_CHAR_INTERVAL_MS } from '../../tokens/motion';
+import React, { useEffect, useRef } from 'react';
+import { useStreamReveal } from './useStreamReveal';
 import './StreamingText.css';
+
+export type {
+  StreamReveal,
+  StreamRevealOptions,
+  UseStreamRevealOptions,
+} from './useStreamReveal';
+/* The generated barrel only walks a component folder's .tsx modules, so an
+   engine that only ever lived in a .ts file could never be imported from
+   the package root — and the headless engine is a documented escape hatch,
+   not an implementation detail. Re-exporting it here is what puts it in
+   the barrel. Fast-refresh granularity is the price, and it is not one a
+   published library pays: the .ts module underneath is where the code
+   actually lives. */
+/* eslint-disable react-refresh/only-export-components */
+export { createStreamReveal, useStreamReveal } from './useStreamReveal';
+/* eslint-enable react-refresh/only-export-components */
 
 /** Props owned by StreamingText itself — everything else falls through to the root span. */
 type StreamingTextOwnProps = {
@@ -18,9 +34,21 @@ type StreamingTextOwnProps = {
    */
   streaming?: boolean;
   /**
-   * Milliseconds between reveal steps. The reveal adds more characters per
-   * step the further it falls behind, so a large chunk catches up instead of
-   * typing for seconds.
+   * Slowest the reveal ever runs, in characters per second — the pace a
+   * thin trickle of chunks types at. Defaults to MOTION_STREAM_FLOOR_CPS.
+   */
+  floorCps?: number;
+  /**
+   * However much text is waiting, it is fully on screen within this long,
+   * in milliseconds — the rate rises with the backlog. Defaults to
+   * MOTION_STREAM_DRAIN_MS.
+   */
+  drainMs?: number;
+  /**
+   * The retired interval between reveal steps; when set, its equivalent
+   * rate becomes the reveal's floor.
+   * @deprecated The reveal is frame-driven now — pace it with `floorCps`
+   * and `drainMs` instead.
    */
   charIntervalMs?: number;
   /** Shows the blinking cursor while streaming or revealing. */
@@ -42,18 +70,25 @@ export interface StreamingTextProps
  * StreamingText — the reveal for text that arrives in chunks: an LLM
  * response typing itself out, with a cursor that blinks while more is
  * coming. Feed it the accumulated text on every render and it animates
- * through what was appended, catching up faster the further behind it
- * falls. Under `prefers-reduced-motion` the reveal is skipped and each
- * chunk appears whole. Announcement is the container's job — pair it with
- * an `aria-live` region when the surrounding UI does not already announce
- * the message.
+ * through what was appended from a frame loop that spends real elapsed
+ * time: a thin trickle types at the floor rate, and however much lands at
+ * once is on screen within the drain window. Under
+ * `prefers-reduced-motion` the reveal is skipped and each chunk appears
+ * whole. Announcement is the container's job — pair it with an
+ * `aria-live` region when the surrounding UI does not already announce
+ * the message. When the streamed text needs its own renderer (markdown
+ * through a parser), pace it with `useStreamReveal` or
+ * `createStreamReveal` from this folder instead — the same engine without
+ * the span.
  */
 export const StreamingText = React.forwardRef<HTMLSpanElement, StreamingTextProps>(
   (
     {
       text,
       streaming = false,
-      charIntervalMs = MOTION_STREAM_CHAR_INTERVAL_MS,
+      floorCps,
+      drainMs,
+      charIntervalMs,
       cursor = true,
       onRevealComplete,
       className = '',
@@ -63,46 +98,20 @@ export const StreamingText = React.forwardRef<HTMLSpanElement, StreamingTextProp
   ) => {
     const baseClass = 'ds-streaming-text';
 
-    // Text present on mount shows whole; only appended text animates.
-    const [revealed, setRevealed] = useState(text.length);
-    const previousText = useRef(text);
+    const { visible, caughtUp } = useStreamReveal(text, {
+      // The legacy interval's equivalent rate: one character per step.
+      floorCps: charIntervalMs != null ? 1000 / charIntervalMs : floorCps,
+      drainMs,
+    });
+
     const completed = useRef(false);
 
     useEffect(() => {
-      // A replacement (not an extension) is a new message: reveal from zero.
-      if (!text.startsWith(previousText.current)) {
-        setRevealed(0);
+      if (!caughtUp) {
         completed.current = false;
-      }
-      previousText.current = text;
-    }, [text]);
-
-    const caughtUp = revealed >= text.length;
-
-    useEffect(() => {
-      if (caughtUp) return;
-      completed.current = false;
-
-      // Reduced motion: no typing — each chunk appears whole.
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        setRevealed(text.length);
         return;
       }
-
-      const interval = setInterval(() => {
-        setRevealed((current) => {
-          const pending = text.length - current;
-          if (pending <= 0) return current;
-          // The further behind, the bigger the step — a dumped paragraph
-          // catches up in a beat instead of typing for seconds.
-          return current + Math.max(1, Math.round(pending / 20));
-        });
-      }, charIntervalMs);
-      return () => clearInterval(interval);
-    }, [text, caughtUp, charIntervalMs]);
-
-    useEffect(() => {
-      if (caughtUp && !streaming && text.length > 0 && !completed.current) {
+      if (!streaming && text.length > 0 && !completed.current) {
         completed.current = true;
         onRevealComplete?.();
       }
@@ -114,7 +123,7 @@ export const StreamingText = React.forwardRef<HTMLSpanElement, StreamingTextProp
 
     return (
       <span {...rest} ref={ref} className={classes}>
-        {caughtUp ? text : text.slice(0, revealed)}
+        {visible}
         {showCursor && <span className={`${baseClass}__cursor`} aria-hidden="true" />}
       </span>
     );

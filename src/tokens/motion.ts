@@ -7,9 +7,10 @@
  *
  * Most are schedule timings (when something starts, stops, or is taken
  * away), which the reduced-motion guard in tokens-motion.css deliberately
- * leaves alone. A constant that paces an animation (the streaming-text
- * reveal step) is the exception: its component checks the preference
- * itself in JS, because the CSS guard cannot see a JavaScript timer.
+ * leaves alone. A constant that paces an animation (the streaming reveal's
+ * rate floor and drain window) is the exception: its component checks the
+ * preference itself in JS, because the CSS guard cannot see a JavaScript
+ * timer.
  */
 
 /** Delay before a hover-triggered overlay appears, filtering pass-through hovers. */
@@ -30,5 +31,11 @@ export const MOTION_FEEDBACK_RESET_MS = 2000;
 /** How long after the last scroll event a scroll surface is considered settled. */
 export const MOTION_SCROLL_SETTLE_MS = 600;
 
-/** Interval between character-reveal steps when streaming text types itself out. An animation pace, not a schedule timing — StreamingText skips the reveal under reduced motion. */
+/** Slowest the streaming reveal ever runs, in characters per second — the pace a thin trickle of deltas types at. An animation pace, not a schedule timing: the reveal is skipped under reduced motion. */
+export const MOTION_STREAM_FLOOR_CPS = 70;
+
+/** However much streamed text is waiting, the reveal has it fully on screen within this long — the rate rises with the backlog, so a dumped paragraph catches up in a beat. */
+export const MOTION_STREAM_DRAIN_MS = 250;
+
+/** The retired interval-based reveal step. @deprecated The reveal is frame-driven now — pace it with MOTION_STREAM_FLOOR_CPS and MOTION_STREAM_DRAIN_MS. */
 export const MOTION_STREAM_CHAR_INTERVAL_MS = 15;
