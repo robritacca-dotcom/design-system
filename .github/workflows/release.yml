@@ -48,6 +48,8 @@ name: Release
 # 0.13.0 shipped 2026-08-29 — five composition gap-fillers: Gauge, FilterBar,
 #   SplitPane, StreamingText, AvatarGroup, with the stream reveal's motion
 #   constant and the amended JS motion contract.
+# 0.14.0 shipped 2026-08-29 — six components to 120: Banner, HoverCard,
+#   ImageCompare, Meter, Rating, SplitButton, plus LinkList's newTab opt-out.
 
 on:
   workflow_dispatch:
