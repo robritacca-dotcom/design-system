@@ -36,6 +36,19 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
+export const WithHeader: Story = {
+  args: {
+    title: 'Acquisition funnel',
+    subtitle: 'Visits through to paying customers',
+  },
+};
+
+export const Bare: Story = {
+  args: {
+    bare: true,
+  },
+};
+
 export const ThreeStages: Story = {
   args: {
     data: [

@@ -1,3 +1,4 @@
+import '../Chart/Chart.css';
 import './ContributionGraph.css';
 
 export interface ContributionDay {
@@ -12,6 +13,12 @@ export interface ContributionDay {
 export interface ContributionGraphProps {
   /** One entry per day, ordered oldest to newest */
   days: ContributionDay[];
+  /** Chart title, in the shared chart header. */
+  title?: string;
+  /** Description text below the title. */
+  subtitle?: string;
+  /** Strip the card chrome (border, padding, fill) when the chart sits inside another panel that supplies the surface */
+  bare?: boolean;
   /** Summary line shown under the grid, e.g. "496 contributions in the last year" */
   caption?: string;
   /** Show month labels above the grid */
@@ -92,9 +99,14 @@ const buildMonthLabels = (weeks: (ContributionDay | null)[][]) => {
  * ContributionGraph renders a GitHub-style contribution heatmap:
  * one cell per day, arranged in weekday rows and week columns,
  * coloured by activity level via the --color-chart-contribution-* ramp.
+ * It wears the chart family's card chrome (title, subtitle, padding) and
+ * takes `bare` to drop it inside a panel that supplies the surface.
  */
 export const ContributionGraph = ({
   days,
+  title,
+  subtitle,
+  bare = false,
   caption,
   showMonthLabels = true,
   showLegend = true,
@@ -103,7 +115,15 @@ export const ContributionGraph = ({
   const weeks = buildWeeks(days);
   const monthLabels = buildMonthLabels(weeks);
 
-  const classes = ['ds-contribution-graph', className].filter(Boolean).join(' ');
+  const chartClass = 'ds-chart';
+  const classes = [
+    chartClass,
+    bare && `${chartClass}--bare`,
+    'ds-contribution-graph',
+    className,
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   // Columns stretch to fill the container but never shrink below the base
   // cell size — past that, the scroll wrapper takes over
@@ -111,6 +131,15 @@ export const ContributionGraph = ({
 
   return (
     <div className={classes}>
+      {(title || subtitle) && (
+        <div className={`${chartClass}__header`}>
+          <div className={`${chartClass}__header-text`}>
+            {title && <h3 className={`${chartClass}__title`}>{title}</h3>}
+            {subtitle && <p className={`${chartClass}__subtitle`}>{subtitle}</p>}
+          </div>
+        </div>
+      )}
+      <div className={`${chartClass}__body ds-contribution-graph__content`}>
       <div className="ds-contribution-graph__scroll">
         {showMonthLabels && (
           <div
@@ -168,6 +197,7 @@ export const ContributionGraph = ({
           )}
         </div>
       )}
+      </div>
     </div>
   );
 };

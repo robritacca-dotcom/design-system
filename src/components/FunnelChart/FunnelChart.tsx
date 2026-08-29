@@ -1,4 +1,5 @@
 import React from 'react';
+import '../Chart/Chart.css';
 import './FunnelChart.css';
 
 /** One stage of the funnel, ordered widest first. */
@@ -18,7 +19,13 @@ export interface FunnelStage {
 type FunnelChartOwnProps = {
   /** Ordered stages, first stage widest. Each later stage's height is its share of the first. */
   data: FunnelStage[];
-  /** Chart height in pixels. */
+  /** Chart title, in the shared chart header. */
+  title?: string;
+  /** Description text below the title. */
+  subtitle?: string;
+  /** Strip the card chrome (border, padding, fill) when the chart sits inside another panel that supplies the surface */
+  bare?: boolean;
+  /** Chart area height in pixels. */
   height?: number;
   /**
    * Floor percentage for a stage's height, so steep drop-offs stay readable.
@@ -41,17 +48,36 @@ const SERIES_COUNT = 7;
  * step down with each stage's share of the first, each carrying a centred
  * percentage pill. Pure JSX and CSS computed from props: no recharts, no
  * hooks, no browser APIs, so it deliberately omits 'use client' and renders
- * from a Server Component. Degenerate data stays safe: an empty array
- * renders an empty root, and a zero or negative first value draws every
- * stage at the floor height.
+ * from a Server Component. It wears the chart family's card chrome (title,
+ * subtitle, padding) and takes `bare` to drop it inside a Panel, like every
+ * other chart. Degenerate data stays safe: an empty array renders an empty
+ * stage row, and a zero or negative first value draws every stage at the
+ * floor height.
  */
 export const FunnelChart = React.forwardRef<HTMLDivElement, FunnelChartProps>(
   (
-    { data, height = 190, minStageShare = 16, className = '', style, ...rest },
+    {
+      data,
+      title,
+      subtitle,
+      bare = false,
+      height = 190,
+      minStageShare = 16,
+      className = '',
+      ...rest
+    },
     ref,
   ) => {
     const baseClass = 'ds-funnel-chart';
-    const classes = [baseClass, className].filter(Boolean).join(' ');
+    const chartClass = 'ds-chart';
+    const classes = [
+      chartClass,
+      bare && `${chartClass}--bare`,
+      baseClass,
+      className,
+    ]
+      .filter(Boolean)
+      .join(' ');
 
     const firstValue = data.length > 0 ? data[0].value : 0;
     const clampShare = (share: number) =>
@@ -71,30 +97,38 @@ export const FunnelChart = React.forwardRef<HTMLDivElement, FunnelChartProps>(
         : 'Funnel, no data';
 
     return (
-      <div
-        {...rest}
-        ref={ref}
-        className={classes}
-        style={{ ...style, height }}
-        role="img"
-        aria-label={ariaLabel}
-      >
-        {stages.map((stage, i) => (
-          <div
-            key={`${stage.label}-${i}`}
-            className={`${baseClass}__stage`}
-            style={
-              {
-                '--funnel-stage-size': stage.share,
-                '--funnel-stage-color': stage.color,
-              } as React.CSSProperties
-            }
-          >
-            <span className={`${baseClass}__pct`}>
-              {Math.round(firstValue > 0 ? (stage.value / firstValue) * 100 : 0)}%
-            </span>
+      <div {...rest} ref={ref} className={classes}>
+        {(title || subtitle) && (
+          <div className={`${chartClass}__header`}>
+            <div className={`${chartClass}__header-text`}>
+              {title && <h3 className={`${chartClass}__title`}>{title}</h3>}
+              {subtitle && <p className={`${chartClass}__subtitle`}>{subtitle}</p>}
+            </div>
           </div>
-        ))}
+        )}
+        <div
+          className={`${chartClass}__body ${baseClass}__stages`}
+          style={{ height }}
+          role="img"
+          aria-label={ariaLabel}
+        >
+          {stages.map((stage, i) => (
+            <div
+              key={`${stage.label}-${i}`}
+              className={`${baseClass}__stage`}
+              style={
+                {
+                  '--funnel-stage-size': stage.share,
+                  '--funnel-stage-color': stage.color,
+                } as React.CSSProperties
+              }
+            >
+              <span className={`${baseClass}__pct`}>
+                {Math.round(firstValue > 0 ? (stage.value / firstValue) * 100 : 0)}%
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
     );
   },

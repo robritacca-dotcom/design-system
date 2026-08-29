@@ -9,9 +9,10 @@
    token-only.
    ============================================ */
 
-/* Base */
+/* Base — card chrome, header, and padding come from the shared chart
+   styles (Chart.css); this file owns the stage row alone. */
 
-.ds-funnel-chart {
+.ds-funnel-chart__stages {
   display: flex;
   align-items: center;
   gap: var(--gap-xxs);

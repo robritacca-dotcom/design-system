@@ -57,6 +57,19 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
+export const WithHeader: Story = {
+  args: {
+    title: 'Contribution activity',
+    subtitle: 'One cell per day, coloured by volume',
+  },
+};
+
+export const Bare: Story = {
+  args: {
+    bare: true,
+  },
+};
+
 export const WithoutLegend: Story = {
   args: {
     showLegend: false,

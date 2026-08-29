@@ -46,12 +46,52 @@ export interface SparklineProps
 const round = (n: number) => Math.round(n * 100) / 100;
 
 /**
+ * Monotone-cubic path (Fritsch–Carlson tangents) through the points — the
+ * same curve family as the recharts line charts' `monotone`, so a sparkline
+ * bends the way a LineChart does instead of showing hard segment corners.
+ * Monotonicity means the curve never overshoots a local extreme, so the
+ * drawn trend stays honest to the data.
+ */
+const buildMonotonePath = (pts: { x: number; y: number }[]) => {
+  const n = pts.length;
+  const dx: number[] = [];
+  const slope: number[] = [];
+  for (let i = 0; i < n - 1; i++) {
+    dx[i] = pts[i + 1].x - pts[i].x;
+    slope[i] = (pts[i + 1].y - pts[i].y) / dx[i];
+  }
+  const tangent: number[] = [slope[0]];
+  for (let i = 1; i < n - 1; i++) {
+    if (slope[i - 1] * slope[i] <= 0) {
+      tangent[i] = 0;
+    } else {
+      const w1 = 2 * dx[i] + dx[i - 1];
+      const w2 = dx[i] + 2 * dx[i - 1];
+      tangent[i] = (w1 + w2) / (w1 / slope[i - 1] + w2 / slope[i]);
+    }
+  }
+  tangent[n - 1] = slope[n - 2];
+
+  let d = `M ${round(pts[0].x)} ${round(pts[0].y)}`;
+  for (let i = 0; i < n - 1; i++) {
+    const c1x = pts[i].x + dx[i] / 3;
+    const c1y = pts[i].y + (tangent[i] * dx[i]) / 3;
+    const c2x = pts[i + 1].x - dx[i] / 3;
+    const c2y = pts[i + 1].y - (tangent[i + 1] * dx[i]) / 3;
+    d += ` C ${round(c1x)} ${round(c1y)} ${round(c2x)} ${round(c2y)} ${round(pts[i + 1].x)} ${round(pts[i + 1].y)}`;
+  }
+  return d;
+};
+
+/**
  * Sparkline — an inline trend line for stats and table cells, drawn without
  * axes or chrome. Pure SVG computed from props: no charting library, no hooks,
  * no dependencies, so it renders from a Server Component and costs nothing in
- * a dense table. Degenerate data never breaks the path: an all-equal series
- * renders a horizontal midline, and fewer than two points render just the
- * end dot, or nothing.
+ * a dense table. The line bends through a monotone curve, the same family as
+ * the recharts charts' `monotone`, so it reads as a miniature LineChart
+ * rather than a jagged polyline. Degenerate data never breaks the path: an
+ * all-equal series renders a horizontal midline, and fewer than two points
+ * render just the end dot, or nothing.
  */
 export const Sparkline = React.forwardRef<SVGSVGElement, SparklineProps>(
   (
@@ -106,9 +146,7 @@ export const Sparkline = React.forwardRef<SVGSVGElement, SparklineProps>(
     const lastPoint = points.length > 0 ? points[points.length - 1] : undefined;
     const hasLine = points.length >= 2;
 
-    const linePath = hasLine
-      ? `M ${points.map((p) => `${p.x} ${p.y}`).join(' L ')}`
-      : undefined;
+    const linePath = hasLine ? buildMonotonePath(points) : undefined;
 
     const baseline = round(height - pad);
     const areaPath =

@@ -4,14 +4,20 @@
    day, coloured by the contribution colour ramp
    ============================================ */
 
+/* Card chrome, header, and padding come from the shared chart styles
+   (Chart.css); this file owns the grid, legend, and cell ramp. */
+
 .ds-contribution-graph {
   --ds-contribution-cell: 12px;
   --ds-contribution-gap: 3px;
 
+  min-width: 0;
+}
+
+.ds-contribution-graph__content {
   display: flex;
   flex-direction: column;
   gap: var(--gap-sm);
-  width: 100%;
   min-width: 0;
 }
 

@@ -19,6 +19,13 @@ const meta = {
     value: 64,
     label: 'CPU usage',
   },
+  decorators: [
+    (Story) => (
+      <div style={{ width: '320px' }}>
+        <Story />
+      </div>
+    ),
+  ],
 } satisfies Meta<typeof Gauge>;
 
 export default meta;
@@ -26,10 +33,24 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
-export const WithThresholds: Story = {
+export const WithHeader: Story = {
   args: {
     value: 82,
     label: 'Memory',
+    title: 'Cluster memory',
+    subtitle: 'Rolling five-minute average',
+    thresholds: [
+      { value: 70, tone: 'warning' },
+      { value: 90, tone: 'error' },
+    ],
+  },
+};
+
+export const Bare: Story = {
+  args: {
+    bare: true,
+    value: 78,
+    label: 'CPU',
     thresholds: [
       { value: 70, tone: 'warning' },
       { value: 90, tone: 'error' },
@@ -48,22 +69,13 @@ export const Formatted: Story = {
   },
 };
 
-export const Small: Story = {
-  args: {
-    value: 40,
-    size: 80,
-    strokeWidth: 8,
-    label: undefined,
-    'aria-label': 'Disk usage',
-  },
-};
-
 export const Large: Story = {
   args: {
     value: 91,
     size: 180,
-    strokeWidth: 14,
+    strokeWidth: 16,
     label: 'Capacity',
+    title: 'Storage',
     thresholds: [
       { value: 70, tone: 'warning' },
       { value: 90, tone: 'error' },
@@ -73,6 +85,7 @@ export const Large: Story = {
 
 export const DialOnly: Story = {
   args: {
+    bare: true,
     value: 55,
     showValue: false,
     label: undefined,
@@ -82,12 +95,12 @@ export const DialOnly: Story = {
 
 export const Tones: Story = {
   render: () => (
-    <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-      <Gauge value={64} tone="accent" size={96} label="Accent" />
-      <Gauge value={64} tone="positive" size={96} label="Positive" />
-      <Gauge value={64} tone="warning" size={96} label="Warning" />
-      <Gauge value={64} tone="error" size={96} label="Error" />
-      <Gauge value={64} tone="neutral" size={96} label="Neutral" />
+    <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', width: '640px' }}>
+      <Gauge bare value={64} tone="accent" size={96} label="Accent" />
+      <Gauge bare value={64} tone="positive" size={96} label="Positive" />
+      <Gauge bare value={64} tone="warning" size={96} label="Warning" />
+      <Gauge bare value={64} tone="error" size={96} label="Error" />
+      <Gauge bare value={64} tone="neutral" size={96} label="Neutral" />
     </div>
   ),
 };
