@@ -34,7 +34,7 @@ Work the surfaces below. The list says where to look, not what is there — read
 
 ### 2. API routes & the AI chat (OWASP LLM Top 10)
 
-The routes live under `website/src/app/api/` (the chat and its followups/feedback, and the github-contributions proxy); the guardrails are in `website/src/app/api/chat/guardrails.ts`; the system-prompt boundary is `website/src/app/api/chat/persona.ts` (plus the easter-eggs file beside it). Check:
+The routes live under `website/src/app/api/` — read the directory fresh rather than working from a remembered list, it grows. The guardrails are in `website/src/app/api/chat/guardrails.ts`; the system-prompt boundary is `website/src/app/api/chat/persona.ts` (plus the easter-eggs file beside it). The `/api/mcp` route is a different animal: it calls no model, so the LLM Top 10 does not apply — check instead that every tool still reads only generated, already-published data (the boundary its own doc block asserts), that tool arguments stay bounded, and that the deliberate absence of auth and rate limiting (recorded in that doc block) still holds up against what the tools now cost. Check:
 
 - **Input validation & limits** — body shape, per-message and total body size, turn count. A cap on only the *last* message leaves earlier history unbounded.
 - **Rate limiting & cost control** — the per-IP, daily, and spend guardrails, and crucially their **failure mode** (fail-open vs fail-closed) when the store is unreachable.
@@ -56,7 +56,7 @@ Read the analytics embed in `website/src/app/layout.tsx`. Check whether tracking
 
 ### 6. Existing self-defenses (credit them)
 
-The repo has build-time guards worth verifying and crediting: the corpus leak validator (`scripts/validate-site-corpus.mjs`) and the token/CSS directive validators. Note where a good guard has a coverage gap (e.g. it scans the corpus but not the other files sent to the model as system prompts).
+The repo has build-time guards worth verifying and crediting: the corpus leak validator (`scripts/validate-site-corpus.mjs`), the component-API leak validator (`scripts/validate-component-api.mjs` — it screens the prop JSDoc served by `/api/mcp`, and a hit there is a leak in the published npm tarball too), and the token/CSS directive validators. Note where a good guard has a coverage gap (e.g. it scans the corpus but not the other files sent to the model as system prompts).
 
 ## Verify, then report
 

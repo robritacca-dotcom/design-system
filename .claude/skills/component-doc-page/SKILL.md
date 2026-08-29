@@ -24,7 +24,7 @@ This is a more thorough, component-specific version of `new-page`. The Button pa
    - Storybook path (optional — format: `/?path=/docs/components-<slug>--docs`)
 
 2. **Read the source component** `src/components/ComponentName/ComponentName.tsx`:
-   - Extract all props from the TypeScript interface
+   - Extract all props from the TypeScript interface (the entry in `website/src/data/component-api.generated.ts` has them pre-parsed with types, defaults and descriptions — the source is still worth reading for behaviour)
    - Identify all variant enumerations (e.g. `variant`, `size`, `status` props with union types)
    - Understand the component's states (default, hover, active, disabled, loading, etc.)
    - Note the BEM class names used for each variant/state

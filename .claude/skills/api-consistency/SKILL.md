@@ -21,8 +21,8 @@ Use this skill when asked to review component APIs, check prop naming consistenc
    - `all` → scan all components in `src/components/`
    - A category description (e.g. "all button-like components", "all form inputs") → infer the relevant components
 
-2. **Read every component's TypeScript interface.** For each `.tsx` file in scope, extract:
-   - All prop names, types, and whether they are required or optional
+2. **Read every component's TypeScript interface.** Start from `website/src/data/component-api.generated.ts` for the prop inventory — it holds every own prop with type, default, requiredness and description, parsed exactly as the published `.d.ts` documents them. Then read the `.tsx` files in scope for what the generated file does not capture:
+   - The structural contract (`forwardRef`, `{...rest}` placement, the own-props split, `'use client'`)
    - Default values (from destructuring defaults in the function signature)
 
 3. **First, check conformance to the published contract.** This is the highest-value part of the review and takes precedence over style preferences below. The contract is defined in the `new-component` skill and summarised in CLAUDE.md's **Component Anatomy** — read one of them rather than trusting this list, which exists to tell you *what to look for*, not to restate the rules:
