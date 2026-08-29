@@ -32,6 +32,9 @@ export interface StageToolbarProps {
   onTabChange?: (value: string) => void;
   /** Accessible label for the centre tab list. */
   switchLabel?: string;
+  /** Extra controls for the right side, rendered before the exit —
+      the hosting page's own toolbar furniture (the inspect-mode switch). */
+  actions?: React.ReactNode;
 }
 
 /**
@@ -49,6 +52,7 @@ export default function StageToolbar({
   activeTab,
   onTabChange,
   switchLabel,
+  actions,
 }: StageToolbarProps) {
   const pathname = usePathname() ?? "/";
   const items = getBreadcrumbs(pathname);
@@ -97,6 +101,7 @@ export default function StageToolbar({
       )}
 
       <div className={styles.actions}>
+        {actions}
         {exit === "home" ? (
           <Button
             href="/"

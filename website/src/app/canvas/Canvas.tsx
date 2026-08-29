@@ -12,6 +12,7 @@ import {
 import { CircularButton } from "@robr0/design-system/components/CircularButton/CircularButton";
 import { SegmentedControl } from "@robr0/design-system/components/SegmentedControl/SegmentedControl";
 import StageToolbar from "@/components/StageToolbar/StageToolbar";
+import InspectMode from "@/components/InspectMode/InspectMode";
 import ThemeToggle from "@/components/ThemeToggle/ThemeToggle";
 import {
   FullBleedBackground,
@@ -721,8 +722,11 @@ export default function Canvas() {
       {/* The playground's toolbar: brand mark and breadcrumb trail on the
           left (navigation.ts names this route), the X out on the right.
           The board's own controls stay in the bottom pill, beside the
-          zoom they belong with. */}
-      <StageToolbar />
+          zoom they belong with. The inspect-mode switch rides beside the X;
+          the board has no sections to redline (frames are other pages'
+          documents), so it is the hover inspector for the board's own
+          furniture. */}
+      <StageToolbar actions={<InspectMode desktopOnly />} />
       <div
         ref={viewportRef}
         className={styles.viewport}

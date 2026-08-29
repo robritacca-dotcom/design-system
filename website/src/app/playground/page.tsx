@@ -31,6 +31,7 @@ import { THEME_PRESETS, type ThemePreset } from "./presets";
 import PlaygroundControls from "./PlaygroundControls";
 import AdvancedColorsDialog from "./AdvancedColorsDialog";
 import ChatDirector, { STORY_CONTENT } from "./ChatDirector";
+import InspectMode from "@/components/InspectMode/InspectMode";
 import ChatView, {
   STAGE_SIZES,
   type StageSize,
@@ -518,6 +519,11 @@ export default function PlaygroundPage() {
         activeTab={view}
         onTabChange={pickView}
         switchLabel="Switch the playground view"
+        /* Inspect mode, as a toolbar switch so nothing floats over the
+           stage: hover any staged component to see which tokens its
+           computed styles resolve from — including the levers' live
+           overrides, which the inspector re-reads as they land. */
+        actions={<InspectMode desktopOnly />}
       />
 
       {/* One provider around the whole layout: the theme drawer, the chat
