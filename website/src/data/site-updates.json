@@ -1,9 +1,27 @@
 {
   "asOf": {
-    "commit": "1d70dc93cc07575f5ef25118b2f0849c6d829a0f",
-    "date": "2026-08-14"
+    "commit": "bc6719b0a69b285132213bc64013ea0b790bea03",
+    "date": "2026-08-29"
   },
   "entries": [
+    {
+      "meta": "August 29, 2026",
+      "title": "A front door for other people's agents",
+      "body": [
+        "The site has answered questions about itself since the chat shipped in August. What it could not do was answer another machine. That changed today: robertritacca.com now serves a Model Context Protocol endpoint at /api/mcp, and any MCP client can connect with nothing but the URL. Five tools sit behind it: the component list, the full prop API for any one component, the design token registry, install and theming setup, and full-text search over the same corpus the chat reads. No key, no account, and no model anywhere in the path; every tool is a deterministic read over data the build already generates.",
+        "The interesting part is where the prop API comes from. Every component's props are documented in JSDoc, and that JSDoc was already the single source for Storybook's props tables and the type declarations npm ships. The endpoint reads a build-generated file produced from the same source with the same parser settings, so the three surfaces cannot disagree: an agent asking the endpoint for Button's contract reads exactly what a consumer's editor shows. New validators hold the whole thing honest. One regenerates the file in memory on every build and fails on a byte of drift, screens it for anything leak-shaped, and bans email addresses outright, since prop documentation now travels further than the repo. Another counts the tools the route actually registers and fails the build if any prose surface claims a different number.",
+        "The security boundary is the corpus rule, inherited whole: the endpoint may only read what is already published. The worst case of any request is a stranger reading what was always public. That constraint is what let it ship without auth, without rate limits, and without a persona to defend, and it is written into the route itself as a rule for every tool that comes later. The endpoint is advertised in llms.txt beside the specs and the sitemap, which makes the AI layer three surfaces deep: a chat for people, an index for crawlers, and now a typed contract for the agents actually building with the package."
+      ]
+    },
+    {
+      "meta": "August 15–29, 2026",
+      "title": "Seventy-nine parts become a hundred and twenty",
+      "body": [
+        "The registry started the fortnight at 79 components and ended it at 120, across five releases. Almost none of that growth came from a checklist. It came from building real things with the system and keeping what was missing: a hidden labs page that rebuilds a reference analytics dashboard from the library alone surfaced Panel, the legend tile, and two chart types; the maps set with the globe came from wanting a working world on the about page; a round of composition gap-fillers (a gauge, a filter bar, a split pane, a streaming-text reveal, an avatar group) came from noticing which arrangements the system still could not make. The last six landed this week: Banner, HoverCard, ImageCompare, Meter, Rating and SplitButton.",
+        "Growth that fast is exactly when quality slips, so the checks grew with it. Every one of the six was audited against the published prop contract before it registered, and the audit caught real things: a hover panel that broke paragraphs mid-parse, a prop named against the library's own convention, a split button whose two segments could disagree about their height by a pixel. That last class of defect, invisible at normal size and glaring at any zoom, now has a named owner: a design-qa skill that renders a component in both themes, magnifies every join and corner, and judges the result against its rendered siblings rather than against memory. It is a gate a new component passes before it can register, not a cleanup that happens later.",
+        "Two full drift audits ran in the same window, because forty-one new parts and a new public endpoint make a lot of sentences elsewhere go stale. Every count, spec section, skill instruction and self-description was checked against what the code now does, and the fixes shipped with the work they describe. The journal entry you are reading was written by the same loop."
+      ]
+    },
     {
       "meta": "August 10–14, 2026",
       "title": "Drawn in code, so it can follow the theme",
