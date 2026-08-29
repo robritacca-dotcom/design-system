@@ -17,6 +17,10 @@ import { ChatMessage } from "@robr0/design-system/components/ChatMessage/ChatMes
 import { ChatThread } from "@robr0/design-system/components/ChatThread/ChatThread";
 import { Alert } from "@robr0/design-system/components/Alert/Alert";
 import { Avatar } from "@robr0/design-system/components/Avatar/Avatar";
+import { AvatarGroup } from "@robr0/design-system/components/AvatarGroup/AvatarGroup";
+import { FilterBar } from "@robr0/design-system/components/FilterBar/FilterBar";
+import { Gauge } from "@robr0/design-system/components/Gauge/Gauge";
+import { StreamingText } from "@robr0/design-system/components/StreamingText/StreamingText";
 import { Badge } from "@robr0/design-system/components/Badge/Badge";
 import { Button } from "@robr0/design-system/components/Button/Button";
 import { Checkbox } from "@robr0/design-system/components/Checkbox/Checkbox";
@@ -185,6 +189,17 @@ const previews: Record<string, () => ReactNode> = {
         <Avatar size="md" name="Alex Smith" />
         <Avatar size="sm" />
       </div>
+    </>
+  ),
+  "avatar-group": () => (
+    <>
+      <AvatarGroup size="sm" max={3} aria-label="Project members">
+        <Avatar name="Jane Doe" />
+        <Avatar name="Alex Smith" />
+        <Avatar name="Sam Reyes" />
+        <Avatar name="Kim Park" />
+        <Avatar name="Lee Chen" />
+      </AvatarGroup>
     </>
   ),
   "badge": () => (
@@ -844,6 +859,20 @@ const previews: Record<string, () => ReactNode> = {
       </div>
     </>
   ),
+  "filter-bar": () => (
+    <>
+      <div style={{ pointerEvents: "none" }} aria-hidden="true">
+        <FilterBar
+          size="compact"
+          filters={[
+            { id: "status", label: "Status", options: [{ value: "open", label: "Open" }] },
+            { id: "owner", label: "Owner", options: [{ value: "jane", label: "Jane" }] },
+          ]}
+          defaultValues={{ status: ["open"] }}
+        />
+      </div>
+    </>
+  ),
   "funnel-chart": () => (
     <>
       <svg width="120" height="64" viewBox="0 0 120 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -852,6 +881,20 @@ const previews: Record<string, () => ReactNode> = {
         <rect x="62" y="26" width="26" height="12" rx="4" fill="var(--color-chart-series-3)" />
         <rect x="93" y="29" width="26" height="6" rx="3" fill="var(--color-chart-series-4)" />
       </svg>
+    </>
+  ),
+  "gauge": () => (
+    <>
+      <Gauge
+        value={72}
+        size={84}
+        strokeWidth={8}
+        label="CPU"
+        thresholds={[
+          { value: 70, tone: "warning" },
+          { value: 90, tone: "error" },
+        ]}
+      />
     </>
   ),
   "globe": () => (
@@ -1186,6 +1229,17 @@ const previews: Record<string, () => ReactNode> = {
       <Stat value="~900%" label="Successful generations" trend="up" delta="+clash view" />
     </>
   ),
+  "split-pane": () => (
+    <>
+      <div aria-hidden="true" style={{ display: "flex", width: "150px", height: "70px", borderRadius: "8px", border: "1px solid var(--color-bg-container-border)", overflow: "hidden" }}>
+        <div style={{ width: "40%", background: "var(--color-bg-container-secondary)" }} />
+        <div style={{ width: "8px", display: "flex", alignItems: "center", justifyContent: "center", background: "var(--color-bg-container-primary)" }}>
+          <div style={{ width: "3px", height: "22px", borderRadius: "2px", background: "var(--color-icon-secondary)" }} />
+        </div>
+        <div style={{ flex: 1, background: "var(--color-bg-container-primary)" }} />
+      </div>
+    </>
+  ),
   "stepper": () => (
     <>
       <div aria-hidden="true" className={styles.previewRow} style={{ gap: "0", alignItems: "center" }}>
@@ -1196,6 +1250,13 @@ const previews: Record<string, () => ReactNode> = {
         <div style={{ width: "20px", height: "20px", borderRadius: "50%", background: "var(--color-action-primary-bg)", color: "var(--color-action-primary-text)", fontSize: "11px", fontWeight: 600, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>2</div>
         <div style={{ width: "26px", height: "2px", background: "var(--color-divider)" }} />
         <div style={{ width: "20px", height: "20px", borderRadius: "50%", border: "1.5px solid var(--color-bg-container-border)", color: "var(--color-text-tertiary)", fontSize: "11px", fontWeight: 500, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>3</div>
+      </div>
+    </>
+  ),
+  "streaming-text": () => (
+    <>
+      <div style={{ maxWidth: "170px", fontSize: "13px", lineHeight: 1.5, color: "var(--color-text-primary)", textAlign: "left" }}>
+        <StreamingText text="Tokens landing one chunk at a" streaming />
       </div>
     </>
   ),
