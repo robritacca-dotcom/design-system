@@ -14,6 +14,8 @@ Start the website dev server and screenshot pages in both light and dark mode, a
 
 Use this skill when asked to visually review changes — phrases like "check how this looks", "review light and dark", "does this look right", "screenshot the page", "visual check".
 
+This skill catches what is **broken** — clipped text, invisible elements, layout collapse. For whether something is **good** — craft, consistency, polish, taste — use the `design-qa` skill instead.
+
 ## Instructions
 
 Use the browser/preview tools available in the current environment for every step below — this skill describes *what* to do; map it to whatever tools the harness currently provides. Never launch the dev server through a raw shell command.
