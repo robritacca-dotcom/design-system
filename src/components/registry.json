@@ -148,6 +148,14 @@
       "client": true
     },
     {
+      "name": "AvatarGroup",
+      "label": "Avatar group",
+      "slug": "avatar-group",
+      "description": "Overlapping avatar stack with a +N counter for the overflow.",
+      "category": "data-display",
+      "client": false
+    },
+    {
       "name": "Badge",
       "label": "Badge",
       "slug": "badge",
@@ -470,10 +478,26 @@
       "client": true
     },
     {
+      "name": "FilterBar",
+      "label": "Filter bar",
+      "slug": "filter-bar",
+      "description": "A row of filter chips for narrowing a collection, each opening a popover of options, with per-filter and clear-all resets.",
+      "category": "forms",
+      "client": true
+    },
+    {
       "name": "FunnelChart",
       "label": "Funnel chart",
       "slug": "funnel-chart",
       "description": "Ordered funnel stages as stepped bars with conversion percentages, each sized by its share of the first stage.",
+      "category": "charts",
+      "client": false
+    },
+    {
+      "name": "Gauge",
+      "label": "Gauge",
+      "slug": "gauge",
+      "description": "A radial dial for a single bounded reading, recoloured through the status roles as it crosses thresholds.",
       "category": "charts",
       "client": false
     },
@@ -803,6 +827,14 @@
       "client": false
     },
     {
+      "name": "SplitPane",
+      "label": "Split pane",
+      "slug": "split-pane",
+      "description": "Two resizable regions with a draggable, keyboard-operable divider between them.",
+      "category": "layout",
+      "client": true
+    },
+    {
       "name": "StackedBarChart",
       "label": "Stacked bar chart",
       "slug": "stacked-bar-chart",
@@ -825,6 +857,14 @@
       "slug": "stepper",
       "description": "Step-by-step progress indicator for wizards and multi-stage flows.",
       "category": "navigation",
+      "client": true
+    },
+    {
+      "name": "StreamingText",
+      "label": "Streaming text",
+      "slug": "streaming-text",
+      "description": "Progressive reveal for text arriving in chunks, with a blinking cursor while more is coming.",
+      "category": "ai",
       "client": true
     },
     {

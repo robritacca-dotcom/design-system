@@ -5,9 +5,11 @@
  * CSS variable cannot reach. Components use them as defaults, so a single
  * instance can still be tuned through its component's own props.
  *
- * These are schedule timings (when something starts, stops, or is taken
- * away), not animation durations, so the reduced-motion guard in
- * tokens-motion.css deliberately does not apply to them.
+ * Most are schedule timings (when something starts, stops, or is taken
+ * away), which the reduced-motion guard in tokens-motion.css deliberately
+ * leaves alone. A constant that paces an animation (the streaming-text
+ * reveal step) is the exception: its component checks the preference
+ * itself in JS, because the CSS guard cannot see a JavaScript timer.
  */
 
 /** Delay before a hover-triggered overlay appears, filtering pass-through hovers. */
@@ -27,3 +29,6 @@ export const MOTION_FEEDBACK_RESET_MS = 2000;
 
 /** How long after the last scroll event a scroll surface is considered settled. */
 export const MOTION_SCROLL_SETTLE_MS = 600;
+
+/** Interval between character-reveal steps when streaming text types itself out. An animation pace, not a schedule timing — StreamingText skips the reveal under reduced motion. */
+export const MOTION_STREAM_CHAR_INTERVAL_MS = 15;

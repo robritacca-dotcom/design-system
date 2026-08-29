@@ -1,0 +1,93 @@
+/* ============================================
+   GAUGE COMPONENT
+   Radial dial for a single bounded reading.
+   Colour flows through `color` — the value arc
+   and reading draw with currentColor, so a tone
+   is one custom property swap.
+   ============================================ */
+
+/* Base */
+
+.ds-gauge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--color-action-primary-bg);
+}
+
+.ds-gauge__svg {
+  display: block;
+}
+
+/* Parts */
+
+.ds-gauge__track {
+  fill: none;
+  stroke: var(--color-bg-container-tertiary);
+  stroke-linecap: round;
+}
+
+.ds-gauge__arc {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  transition: stroke-dasharray var(--motion-duration-slow) var(--motion-ease-emphasized);
+}
+
+.ds-gauge__center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-xxs);
+  text-align: center;
+  pointer-events: none;
+}
+
+.ds-gauge__value {
+  font-family: var(--font-heading-3-family);
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  letter-spacing: var(--font-heading-3-letter-spacing);
+  color: var(--color-text-primary);
+}
+
+.ds-gauge__label {
+  font-family: var(--font-caption-family);
+  font-size: var(--font-caption-size);
+  font-weight: var(--font-caption-weight);
+  line-height: var(--font-caption-line-height);
+  letter-spacing: var(--font-caption-letter-spacing);
+  color: var(--color-text-secondary);
+}
+
+/* Tones */
+
+.ds-gauge--accent {
+  color: var(--color-action-primary-bg);
+}
+
+/* The status hues come from the border tokens, not the text tokens: the
+   border set is stable across themes, while the dark-mode text tints are
+   near-white and would wash three tones into one. */
+
+.ds-gauge--positive {
+  color: var(--color-status-positive-border);
+}
+
+.ds-gauge--warning {
+  color: var(--color-status-warning-border);
+}
+
+.ds-gauge--error {
+  color: var(--color-status-error-border);
+}
+
+.ds-gauge--neutral {
+  color: var(--color-text-secondary);
+}
