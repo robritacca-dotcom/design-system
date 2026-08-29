@@ -73,7 +73,9 @@ export default function StreamingTextPage() {
               It inherits the surrounding typography, animates only through
               appended text, and keeps a cursor blinking while more is coming.
               Under reduced motion the typing is skipped and each chunk
-              appears whole.
+              appears whole. The pacing itself ships headless as
+              useStreamReveal, and this site&apos;s own chat runs on it: the
+              same engine, rendering markdown instead of a span.
             </p>
           </div>
 

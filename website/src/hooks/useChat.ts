@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import { createStreamReveal } from "@robr0/design-system/components/StreamingText/useStreamReveal";
 
 /* ============================================
    The chat event contract.
@@ -140,18 +141,14 @@ const makeId = () => `turn-${++nextId}`;
    the arrival times, not the drawing. So hold what has arrived and reveal it
    at a steady rate.
 
-   The rate scales with the backlog rather than being fixed, so the reveal
-   never falls behind a fast response: whatever is waiting drains within
-   REVEAL_DRAIN_MS, and a thin trickle still moves at the floor rate. Both
-   are JS timings, but deliberately local rather than constants from
-   @robr0/design-system/tokens/motion: they are this reveal's rendering-rate
-   policy, not a schedule timing any other surface shares.
+   The engine that does the holding is the library's: createStreamReveal,
+   the pacing inside StreamingText, published headless for exactly this
+   shape of consumer — one that streams markdown and must render it itself.
+   Its policy started here and moved into the library with the engine: the
+   rate scales with the backlog rather than being fixed, so whatever is
+   waiting drains within MOTION_STREAM_DRAIN_MS and a thin trickle still
+   moves at MOTION_STREAM_FLOOR_CPS, both from tokens/motion.
    ============================================ */
-
-/** Slowest the reveal ever runs, in characters per second. */
-const REVEAL_FLOOR_CPS = 70;
-/** However much text is waiting, it is fully on screen within this long. */
-const REVEAL_DRAIN_MS = 250;
 
 /**
  * useChat owns the conversation: the committed turns, the assistant turn in
@@ -266,59 +263,16 @@ export function useChat(transport: ChatTransport) {
         setLive(next);
       };
 
-      /* The reveal buffer: `arrived` is everything the transport has yielded,
-         `revealed` how much of it is on screen. One frame-driven loop moves
-         the second towards the first, which also coalesces renders — a fast
-         stream never re-parses the markdown more than once a frame. */
-      let arrived = "";
-      let revealed = 0;
-      let rafId: number | null = null;
-      let lastFrame = 0;
-      let onDrained: (() => void) | null = null;
-
-      /* Someone who has asked for less motion is asking for less of this. */
-      const paced = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-      const cancelReveal = () => {
-        if (rafId != null) cancelAnimationFrame(rafId);
-        rafId = null;
-        lastFrame = 0;
-      };
-
-      const schedule = () => {
-        if (rafId == null) rafId = requestAnimationFrame(frame);
-      };
-
-      function frame(now: number) {
-        rafId = null;
-        // The first frame has no elapsed time to spend, so it reveals nothing
-        // but starts the clock.
-        const seconds = lastFrame === 0 ? 0 : (now - lastFrame) / 1000;
-        lastFrame = now;
-        const backlog = arrived.length - revealed;
-        if (backlog > 0 && seconds > 0) {
-          const cps = Math.max(REVEAL_FLOOR_CPS, backlog / (REVEAL_DRAIN_MS / 1000));
-          revealed = Math.min(
-            arrived.length,
-            revealed + Math.max(1, Math.round(cps * seconds))
-          );
-          update({ ...current, text: arrived.slice(0, revealed) });
-        }
-        if (revealed < arrived.length) schedule();
-        else {
-          lastFrame = 0;
-          onDrained?.();
-        }
-      }
-
-      /** Everything that has arrived, on screen now — for stop and for errors. */
-      const flush = () => {
-        cancelReveal();
-        if (revealed < arrived.length) {
-          revealed = arrived.length;
-          update({ ...current, text: arrived });
-        }
-      };
+      /* The engine holds what the transport has yielded and moves the
+         on-screen slice towards it once a frame, which also coalesces
+         renders — a fast stream never re-parses the markdown more than
+         once a frame. `onUpdate` merges into `current`, so the phase and
+         duration recorded at arrival ride along with the next slice. */
+      const reveal = createStreamReveal({
+        onUpdate: (visible) => update({ ...current, text: visible }),
+        /* Someone who has asked for less motion is asking for less of this. */
+        paced: !window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+      });
 
       const run = async () => {
         try {
@@ -353,7 +307,6 @@ export function useChat(transport: ChatTransport) {
                 });
                 break;
               case "delta":
-                arrived += event.text;
                 /* The phase and duration are facts about arrival, not about
                    the reveal, so they are recorded here — the reveal loop
                    carries them into the next render along with the text. */
@@ -365,22 +318,18 @@ export function useChat(transport: ChatTransport) {
                     current.durationSeconds ??
                     Math.max(1, Math.round((Date.now() - startedAt) / 1000)),
                 };
-                if (paced) schedule();
-                else flush();
+                reveal.append(event.text);
                 break;
               /* A guardrail line and a failure are not the model speaking, so
                  they are not paced like it — they appear whole. */
               case "notice":
               case "error":
-                cancelReveal();
-                arrived = event.type === "notice" ? event.text : event.message;
-                revealed = arrived.length;
-                update({
+                current = {
                   ...current,
                   phase: "streaming",
                   durationSeconds: current.durationSeconds ?? 1,
-                  text: arrived,
-                });
+                };
+                reveal.showWhole(event.type === "notice" ? event.text : event.message);
                 break;
               case "done":
                 break;
@@ -392,14 +341,11 @@ export function useChat(transport: ChatTransport) {
              at the very end of every response — so let it finish first.
              A stop or a reset does not wait: it shows what arrived and ends. */
           if (controller.signal.aborted || generation !== generationRef.current) {
-            flush();
-          } else if (revealed < arrived.length) {
-            await new Promise<void>((resolve) => {
-              onDrained = resolve;
-              schedule();
-            });
+            reveal.flush();
+          } else {
+            await reveal.drained();
           }
-          cancelReveal();
+          reveal.cancel();
           if (generation !== generationRef.current) return;
           if (current.text === "") {
             // A completion that never produced text is a failure, not a reply.
@@ -412,7 +358,7 @@ export function useChat(transport: ChatTransport) {
             commit(current, startedAt, current.text);
           }
         } catch (err) {
-          flush();
+          reveal.flush();
           if (generation !== generationRef.current) {
             // The conversation was reset out from under this send — drop it.
           } else if (controller.signal.aborted) {
