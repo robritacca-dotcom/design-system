@@ -164,6 +164,14 @@
       "client": false
     },
     {
+      "name": "Banner",
+      "label": "Banner",
+      "slug": "banner",
+      "description": "Full-width status strip for page-level announcements, with an action slot and optional dismissal.",
+      "category": "feedback",
+      "client": false
+    },
+    {
       "name": "BarChart",
       "label": "Bar chart",
       "slug": "bar-chart",
@@ -510,6 +518,22 @@
       "client": true
     },
     {
+      "name": "HoverCard",
+      "label": "Hover card",
+      "slug": "hover-card",
+      "description": "Rich preview panel that opens from hover or focus, with interactive content and position options.",
+      "category": "overlays",
+      "client": true
+    },
+    {
+      "name": "ImageCompare",
+      "label": "Image compare",
+      "slug": "image-compare",
+      "description": "Before-and-after image comparison with a draggable divider, keyboard control, and corner labels.",
+      "category": "data-display",
+      "client": true
+    },
+    {
       "name": "Input",
       "label": "Input",
       "slug": "input",
@@ -596,6 +620,14 @@
       "slug": "message-card",
       "description": "A structured rich-content card embedded in a chat message, with media, title, body, and actions.",
       "category": "ai",
+      "client": false
+    },
+    {
+      "name": "Meter",
+      "label": "Meter",
+      "slug": "meter",
+      "description": "Level indicator for a known quantity, with a status-coloured fill and an optional value readout.",
+      "category": "feedback",
       "client": false
     },
     {
@@ -738,6 +770,14 @@
       "client": true
     },
     {
+      "name": "Rating",
+      "label": "Rating",
+      "slug": "rating",
+      "description": "Star-scale rating control with keyboard selection, a read-only mode, and a configurable icon.",
+      "category": "forms",
+      "client": true
+    },
+    {
       "name": "Reasoning",
       "label": "Reasoning",
       "slug": "reasoning",
@@ -824,6 +864,14 @@
       "slug": "spinner",
       "description": "Animated circular loading indicator in three sizes and primary, neutral, or inherit variants.",
       "category": "feedback",
+      "client": false
+    },
+    {
+      "name": "SplitButton",
+      "label": "Split button",
+      "slug": "split-button",
+      "description": "Primary action with an attached menu of alternatives, composing Button and DropdownMenu in one pill.",
+      "category": "actions",
       "client": false
     },
     {
