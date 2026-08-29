@@ -632,6 +632,7 @@ const previews: Record<string, () => ReactNode> = {
           cells stay small inside the preview card */}
       <div style={{ width: "150px" }}>
         <ContributionGraph
+          bare
           days={contributionPreviewDays}
           showMonthLabels={false}
           showLegend={false}
@@ -886,6 +887,7 @@ const previews: Record<string, () => ReactNode> = {
   "gauge": () => (
     <>
       <Gauge
+        bare
         value={72}
         size={84}
         strokeWidth={8}

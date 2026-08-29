@@ -83,8 +83,13 @@ export default function ContributionGraphPage() {
           {/* Default */}
           <section className={styles.section}>
             <SectionTitle title="Default" />
+            <p className={styles.introBody}>
+              The graph wears the same card, header, and padding as every other chart; bare strips them when a surrounding panel supplies the surface, as the live instance above does.
+            </p>
             <ContributionGraph
               days={demo.days}
+              title="Contribution activity"
+              subtitle="One cell per day, coloured by volume"
               caption={`${demo.total} contributions in the last year`}
             />
           </section>
@@ -96,6 +101,7 @@ export default function ContributionGraphPage() {
               Month labels, caption, and legend are all optional: the bare grid works as a compact activity strip.
             </p>
             <ContributionGraph
+              bare
               days={demo.days}
               showMonthLabels={false}
               showLegend={false}

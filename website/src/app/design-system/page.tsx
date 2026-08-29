@@ -665,7 +665,7 @@ export default function DesignSystemPage() {
               links={[{ label: "Contribution graph", href: "/components/contribution-graph" }]}
             >
               <div className={styles.scrollX}>
-                <ContributionGraph days={tradingDays} showLegend />
+                <ContributionGraph bare days={tradingDays} showLegend />
               </div>
             </DemoCard>
 

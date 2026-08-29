@@ -116,3 +116,8 @@
   .dsLayout { padding-left: 0; min-width: 0; }
   .dsContent { max-width: 100%; min-width: 0; }
 }
+
+/* Card demo — cap the chart card at a sensible dashboard-tile width */
+.cardColumn {
+  max-width: 420px;
+}

@@ -45,6 +45,7 @@ export default function GitHubContributions() {
 
   return (
     <ContributionGraph
+      bare
       days={data.days}
       caption={`${data.total} contributions in the last year`}
     />

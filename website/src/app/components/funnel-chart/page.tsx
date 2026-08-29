@@ -52,8 +52,9 @@ export default function FunnelChartPage() {
               Ordered stages as side-by-side bars, each one&apos;s height its
               share of the first, each carrying a pill with the conversion
               percentage. Pure JSX and CSS computed from props: no recharts,
-              no client JavaScript, so it renders from a Server Component and
-              drops into any dashboard card.
+              no client JavaScript, so it renders from a Server Component. It
+              wears the same card, header, and padding as every other chart,
+              and bare strips them inside a panel that supplies the surface.
             </p>
           </div>
 
@@ -61,9 +62,14 @@ export default function FunnelChartPage() {
             <SectionTitle title="Default" />
             <p className={styles.sectionBody}>
               Four stages from visit to customer. The first stage always fills
-              the height; every later bar reads as a fraction of it.
+              the height; every later bar reads as a fraction of it. Title and
+              subtitle sit in the shared chart header.
             </p>
-            <FunnelChart data={conversionFunnel} />
+            <FunnelChart
+              data={conversionFunnel}
+              title="Acquisition funnel"
+              subtitle="Visits through to paying customers"
+            />
           </section>
 
           <section className={`${styles.section} animate-in animate-delay-3`}>
@@ -71,10 +77,11 @@ export default function FunnelChartPage() {
             <p className={styles.sectionBody}>
               The bars carry percentages, not names, so pair the funnel with a
               row of legend tiles that give each stage its label and formatted
-              count in the same series order.
+              count in the same series order. Composed like this, the funnel
+              goes bare and the surrounding panel supplies the surface.
             </p>
             <div className={styles.funnelWithLegend}>
-              <FunnelChart data={salesFunnel} />
+              <FunnelChart bare data={salesFunnel} />
               <div className={styles.legendRow}>
                 {salesFunnel.map((stage, i) => (
                   <div key={stage.label} className={styles.legendTile}>
