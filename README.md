@@ -71,7 +71,7 @@ import '@robr0/design-system/tokens/tokens.css';
 import { Button, Card, Badge } from '@robr0/design-system';
 ```
 
-Deep imports work too (`@robr0/design-system/components/Button/Button`). The Recharts-backed charts live behind a separate entry so the optional `recharts` peer dependency is only needed if you use them; Sparkline and ContributionGraph are dependency-free and export from the main barrel:
+Deep imports work too (`@robr0/design-system/components/Button/Button`). The Recharts-backed charts live behind a separate entry so the optional `recharts` peer dependency is only needed if you use them; the dependency-free charts export from the main barrel with everything else:
 
 ```tsx
 import { BarChart, LineChart } from '@robr0/design-system/charts';

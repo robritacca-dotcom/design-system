@@ -172,7 +172,7 @@ export default function MotionPage() {
           <section className={`${styles.section} animate-in animate-delay-2`}>
             <SectionTitle title="Durations: core scale" />
             <p className={styles.sectionNote}>
-              Four steps cover day-to-day UI. Base is the workhorse: the standard for
+              {coreDurations.length} steps cover day-to-day UI. Base is the workhorse: the standard for
               colour, opacity, and border transitions. Step down to fast for hover
               feedback, up to slow for structural change, and reserve slower for page
               entrances. Each tile animates at its token&apos;s actual speed.
@@ -204,7 +204,7 @@ export default function MotionPage() {
             <p className={styles.sectionNote}>
               Special-purpose timings that would otherwise live as magic numbers. They are
               named so they stay consistent, but they are not part of the day-to-day scale.
-              Reach for the core four first.
+              Reach for the core scale first.
             </p>
             <div className={styles.swatchRow}>
               {extendedDurations.map((duration) => (
@@ -232,7 +232,7 @@ export default function MotionPage() {
           <section className={styles.section}>
             <SectionTitle title="Easing curves" />
             <p className={styles.sectionNote}>
-              Five named curves, each with a distinct job. Every tile animates over the same
+              {easings.length} named curves, each with a distinct job. Every tile animates over the same
               600ms so the shape of the curve is what you see: standard for everyday
               transitions, emphasized for layout, entrance for anything appearing on screen,
               linear for loops, spring for the one sanctioned overshoot.

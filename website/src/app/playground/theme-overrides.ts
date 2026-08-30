@@ -379,8 +379,8 @@ interface NeutralDef {
 
 /** The shipped neutral scale, including every rgba() variant's alpha. */
 const NEUTRALS: NeutralDef[] = [
-  { step: "00", hex: "#FFFFFF" },
-  { step: "01", hex: "#F1F1F1", alphas: { "-transparent": 0.01, "-semi": 0.6 } },
+  { step: "00", hex: "#FFFFFF", alphas: { "-transparent": 0.01, "-semi": 0.6, "-glass": 0.9 } },
+  { step: "01", hex: "#F1F1F1", alphas: { "-transparent": 0.01, "-semi": 0.6, "-glass": 0.82 } },
   { step: "02", hex: "#D6D6D6", alphas: { "-semi": 0.8 } },
   { step: "03", hex: "#BCBCBC", alphas: { "-semi": 0.8 } },
   { step: "04", hex: "#A2A2A2" },
@@ -391,7 +391,7 @@ const NEUTRALS: NeutralDef[] = [
   {
     step: "09",
     hex: "#0E0E0E",
-    alphas: { "-transparent": 0.01, "-semi": 0.8, "-semi-transparent": 0.6 },
+    alphas: { "-transparent": 0.01, "-semi": 0.8, "-semi-transparent": 0.6, "-glass": 0.66 },
   },
   { step: "10", hex: "#050505", alphas: { "-semi": 0.6, "-subtle": 0.01 } },
   { step: "11", hex: "#000000" },

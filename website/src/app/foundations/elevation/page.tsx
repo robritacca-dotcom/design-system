@@ -154,9 +154,11 @@ export default function ElevationPage() {
           <section className={styles.section}>
             <SectionTitle title="Depth without shadows" />
             <p className={styles.sectionNote}>
-              Everything below the floating layer expresses hierarchy through background steps. A
-              nested surface reads as deeper because it is a shade further along the ramp, not
-              because it is lifted.
+              Everything below the floating layer expresses hierarchy through background steps.
+              Each level takes its own step on the neutral ramp, so a boundary reads from the
+              contrast between adjacent surfaces, not from a lift. In light the containers are
+              the bright side of that contrast, white against a soft grey floor; in dark they
+              step up from a near-black one.
             </p>
             <div className={styles.depthList}>
               {depthLevels.map((level) => (
