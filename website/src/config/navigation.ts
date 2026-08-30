@@ -203,14 +203,11 @@ export function buildWritingSidebarLinks(
 }
 
 /**
- * Sidebar for the Consulting cluster — the landing plus one page per
- * audience. The audience split is the section's whole structure, so the
- * rail doubles as the audience selector.
+ * Consulting is a single page with no sidebar — this array exists so the
+ * sitemap and getNavLabel resolve it like every other section.
  */
 export const consultingSidebarLinks: NavLink[] = [
-  { href: "/consulting", label: "Contents" },
-  { href: "/consulting/teams", label: "For teams" },
-  { href: "/consulting/designers", label: "For designers" },
+  { href: "/consulting", label: "Consulting" },
 ];
 
 export const workSidebarLinks: NavLink[] = [
@@ -404,7 +401,6 @@ const breadcrumbSections: SectionConfig[] = [
   // Other DS sections
   { base: "/foundations", label: "Foundations", parent: "Design system", sidebar: foundationsSidebarLinks },
   { base: "/components", label: "Components", parent: "Design system", sidebar: componentsSidebarLinks },
-  { base: "/consulting", label: "Consulting", parent: null, sidebar: consultingSidebarLinks },
   { base: "/work", label: "Work", parent: null, sidebar: workSidebarLinks },
   // Writing — article sub-labels resolve from the slug (feed is dynamic)
   { base: "/writing", label: "Writing", parent: null, sidebar: null },
@@ -423,7 +419,10 @@ export function getBreadcrumbs(pathname: string): BreadcrumbItem[] {
 
   // Top-level pages with no breadcrumb (/design-system is the DS landing —
   // it opens with a full-bleed hero, not a doc shell)
-  if (path === "/" || path === "/contact" || path === "/about" || path === "/design-system") {
+  if (
+    path === "/" || path === "/contact" || path === "/about" ||
+    path === "/design-system" || path === "/consulting"
+  ) {
     return [];
   }
 

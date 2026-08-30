@@ -1,66 +1,88 @@
 import Link from "next/link";
 import MegaNav from "../../components/MegaNav/MegaNav";
-import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
-import Sidebar from "../../components/Sidebar/Sidebar";
-import TocCard from "../../components/TocCard/TocCard";
-import { getSidebarLinks, consultingSidebarLinks } from "@/config/navigation";
+import { Button } from "@robr0/design-system/components/Button/Button";
+import { BOOKING_URL, EMAIL_ADDRESS, EMAIL_URL } from "./consulting-data";
 import styles from "./page.module.css";
 
-const { sidebarLinks } = getSidebarLinks(consultingSidebarLinks, "/consulting");
+/* The whole section is this one page, on purpose: one headline, the
+   questions people bring, one bookable offer, and an email for the rest.
+   No sub-pages, no tiers, no process diagrams. */
+
+const sessionQuestions = [
+  "Why is my portfolio not getting interviews?",
+  "Is this flow simpler, or just shorter?",
+  "Does this product need AI at all?",
+  "Is our design system earning its upkeep?",
+  "Which of these two offers do I take?",
+  "What would you ship first?",
+];
 
 export default function ConsultingPage() {
   return (
     <>
       <MegaNav />
 
-      <div className={styles.dsLayout}>
-        <Sidebar links={sidebarLinks} />
+      <main className={styles.container} id="main-content">
+        <h1 className={`${styles.title} animate-in`}>
+          Bring me the hard part
+        </h1>
 
-        <main className={styles.dsContent} id="main-content">
-          <PageBreadcrumb />
-          <div className={`${styles.pageHeader} animate-in`}>
-            <h1 className={styles.pageTitle}>Consulting</h1>
-          </div>
+        <div className={`${styles.body} animate-in animate-delay-1`}>
+          <p className={styles.paragraph}>
+            I design products and build them. Everything here is the proof:{" "}
+            <Link href="/design-system" className={styles.inlineLink}>
+              the design system
+            </Link>
+            , the site that runs on it, and{" "}
+            <Link href="/work" className={styles.inlineLink}>
+              the case studies
+            </Link>{" "}
+            behind both.
+          </p>
 
-          <div className={`${styles.introSection} animate-in animate-delay-1`}>
-            <p className={styles.subDisplay}>
-              Builds, health checks, and 1:1 time, booked directly
+          <p className={styles.paragraph}>
+            A session is the simplest way to work with me. Designers book them
+            for portfolios, interviews, and career calls. Teams and founders
+            book them for products, AI features, and design systems.
+          </p>
+
+          <p className={styles.paragraph}>An hour is enough for questions like:</p>
+
+          <ul className={styles.questions}>
+            {sessionQuestions.map((q) => (
+              <li key={q}>{q}</li>
+            ))}
+          </ul>
+        </div>
+
+        <div className={`${styles.offer} animate-in animate-delay-2`}>
+          <div className={styles.offerText}>
+            <h2 className={styles.offerTitle}>1:1 session</h2>
+            <p className={styles.offerTerms}>
+              One hour, one problem, booked and paid through Stripe.
             </p>
-            <p className={styles.introBody}>
-              I&apos;m a design engineer and I consult in two shapes. Teams and
-              small businesses hire me for zero-to-one builds, health checks,
-              and ongoing advisory. Designers book 1:1 time for portfolios,
-              hiring, and mentorship. Either way the proof is this site:{" "}
-              <Link href="/design-system" className={styles.introLink}>
-                one system
-              </Link>{" "}
-              I built and run, and{" "}
-              <Link href="/work" className={styles.introLink}>
-                the case studies
-              </Link>{" "}
-              behind it.
-            </p>
           </div>
+          <Button
+            variant="primary"
+            label="Book a session"
+            href={BOOKING_URL}
+            target="_blank"
+            rel="noreferrer"
+          />
+        </div>
 
-          <div className={`${styles.tocGrid} animate-in animate-delay-2`}>
-            <TocCard href="/consulting/teams" title="For teams">
-              <div className={`${styles.circlePreview} ${styles.circleBlue}`}>
-                <span className="material-symbols-rounded" aria-hidden="true">
-                  groups
-                </span>
-              </div>
-            </TocCard>
-
-            <TocCard href="/consulting/designers" title="For designers">
-              <div className={`${styles.circlePreview} ${styles.circleGreen}`}>
-                <span className="material-symbols-rounded" aria-hidden="true">
-                  draw
-                </span>
-              </div>
-            </TocCard>
-          </div>
-        </main>
-      </div>
+        <div className={`${styles.body} animate-in animate-delay-3`}>
+          <p className={styles.footnote}>
+            Not sure a session fits? Write to{" "}
+            <a href={EMAIL_URL} className={styles.inlineLink}>
+              {EMAIL_ADDRESS}
+            </a>{" "}
+            and ask. Bigger work is its own conversation: teams hire me for
+            whole builds and ongoing advisory, and that starts with an email,
+            not a checkout.
+          </p>
+        </div>
+      </main>
     </>
   );
 }
