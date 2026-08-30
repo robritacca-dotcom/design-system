@@ -51,8 +51,8 @@ export default function SiteUpdatesPage() {
             <p className={styles.subDisplay}>The progression of the build</p>
             <p className={styles.introBody}>
               An evergreen record of the largest updates to robr0 DS and this
-              site. Each entry consolidates the commits behind one theme into
-              what was built, why, and what it changed. Curated from the full
+              site. Each entry consolidates the commits behind one theme into a
+              short record of what was built and when. Curated from the full
               history and extended on a biweekly loop.
             </p>
           </div>

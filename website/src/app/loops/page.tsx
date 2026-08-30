@@ -65,13 +65,13 @@ const loops: LoopInfo[] = [
     name: "site-updates",
     icon: "history",
     description:
-      "Twice a month an agent reads every commit since the last time the Project journal page was curated, clusters them into themes, and writes the story (what was built, why it was needed, and what it changed) in plain English, extending an existing arc when the work continues one. The new entry lands on a branch with the build verified, and I read the story itself as the approval request. Raw commit logs never reach the page.",
+      "Twice a month an agent reads every commit since the last time the Project journal page was curated, clusters them into themes, and writes one short entry per theme (what was built and when, in plain English), extending an existing arc when the work continues one. The new entry lands on a branch with the build verified, and I read the entry itself as the approval request. Raw commit logs never reach the page.",
     cadence: "Biweekly, 1st & 15th",
     trigger: "Scheduled task; also runs on demand",
     stages: [
       "Read history since last bookmark",
       "Cluster into themes",
-      "Write one story entry",
+      "Write one entry per theme",
       "Update data on a branch",
       "Verify the build",
       "Report",

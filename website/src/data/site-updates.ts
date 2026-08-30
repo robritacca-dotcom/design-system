@@ -3,9 +3,9 @@ import data from "./site-updates.json";
 export interface SiteUpdateEntry {
   /** Date or date range the theme landed, e.g. "July 21, 2026" */
   meta: string;
-  /** Theme title — a story name, never a commit message */
+  /** Theme title — plain and descriptive, never a commit message */
   title: string;
-  /** Story paragraphs: what was built, why, and the outcome */
+  /** Short paragraphs: what was built, and when */
   body: string[];
 }
 

@@ -1,14 +1,14 @@
 ---
 name: site-updates
-description: Biweekly loop that keeps the /project-journal build-progression timeline current. Read the git history since the last curated commit, consolidate it into thematic story entries (what/why/outcome, never commit digests), update the data file on a local branch, and report for approval. Use when asked to update the project journal or run the site updates loop. Never pushes, merges, or deploys.
+description: Biweekly loop that keeps the /project-journal build-progression timeline current. Read the git history since the last curated commit, consolidate it into concise thematic entries (what shipped and when, never commit digests), update the data file on a local branch, and report for approval. Use when asked to update the project journal or run the site updates loop. Never pushes, merges, or deploys.
 icon: history
-displayDescription: "Keeps the Project journal timeline evergreen: reads every commit since the last curated bookmark, clusters them into themes, and writes one story entry (what was built, why, and the outcome in plain English), extending an existing arc when the work continues one. Runs biweekly on a schedule, builds on a branch in a temporary worktree, and hands the new entry over for approval. Nothing is pushed without a human merge."
+displayDescription: "Keeps the Project journal timeline evergreen: reads every commit since the last curated bookmark, clusters them into themes, and writes one short entry per theme (what was built and when, in plain English a non-technical reader can follow), extending an existing arc when the work continues one. Runs biweekly on a schedule, builds on a branch in a temporary worktree, and hands the new entry over for approval. Nothing is pushed without a human merge."
 invoke: ["update the project journal","run the site updates loop","/site-updates"]
 ---
 
 # site-updates
 
-Biweekly curation loop for the `/project-journal` page (Project journal) — the evergreen timeline of the build's progression. Each run reads the commits since the last curated bookmark, consolidates them into at most a couple of thematic story entries, updates `website/src/data/site-updates.json` on a local branch, and writes a report for the user to approve. **Never push, merge, or deploy — the user approves every change.**
+Biweekly curation loop for the `/project-journal` page (Project journal) — the evergreen timeline of the build's progression. Each run reads the commits since the last curated bookmark, consolidates them into at most a couple of concise thematic entries, updates `website/src/data/site-updates.json` on a local branch, and writes a report for the user to approve. **Never push, merge, or deploy — the user approves every change.**
 
 ## When invoked
 
@@ -16,15 +16,17 @@ Run when asked to "update the project journal" (`/site-updates`) or by the `site
 
 ## Editorial standard (the whole point — read first)
 
-Entries are **thematic stories, not commit digests**:
+Entries are **concise thematic records, not commit digests and not essays**. The journal exists to be skimmed; an entry a reader has to wade through defeats it.
 
-- **One entry = one theme**, consolidating however many commits belong to it, even non-contiguous ones. A CI workflow commit plus its docs commits is ONE entry ("A real quality gate"), not four bullets.
-- **Every entry answers three things in prose**: *what* was built, *why* it was needed (the problem or motivation — the human context), and *the outcome* (what's now true, guaranteed, or possible). No commit hashes, no conventional-commit prefixes, no "various fixes" — the validator rejects hash-like strings in bodies.
+- **One entry = one theme**, consolidating however many commits belong to it, even non-contiguous ones. A CI workflow commit plus its docs commits is ONE entry, not four bullets.
+- **Titles are plain and descriptive, written for a non-technical reader.** State what happened ("The design system publishes to npm"), never wordplay or a metaphor that needs the body to decode.
+- **Bodies are one short paragraph** — two only for the period's single largest theme. Lead with *what* shipped and *when*. A clause of context is fine; paragraphs of rationale, architecture tours, and justification are not. What and when over why.
+- **Stay high level.** Name the thing and its visible effect; leave the mechanism to the code and the specs. No commit hashes, no conventional-commit prefixes, no "various fixes" — the validator rejects hash-like strings in bodies.
 - **Continue arcs instead of fragmenting them.** If the period's work extends a theme an existing entry already tells (more components in a family, round two of a security scrub), extend that entry's body or write an explicit follow-on that references the arc — don't add a disconnected fragment.
-- **A reader who has never seen the repo** should be able to read the timeline top to bottom and follow the build. Spell out names and stakes; write like the existing entries.
+- **A reader who has never seen the repo** should be able to skim the timeline top to bottom and follow the build. Spell out names; write like the existing entries.
 - **Omit themeless chores.** Typo fixes, dependency bumps, tiny tweaks with no story simply don't appear. The page shows the *largest* updates, not all of them.
-- Point-in-time numbers inside a dated entry ("all 434 stories at the time") are fine; never write a *live* count that will drift — live counts belong to registries (see `CLAUDE.md`).
-- **Sentence-level style follows `content-design.md`** — this section owns the story *shape* (themes, what/why/outcome); the content guide owns voice, banned words, and rhythm. Run its Self-Review Tests on each drafted entry.
+- Point-in-time numbers inside a dated entry ("434 at the time") are fine; never write a *live* count that will drift — live counts belong to registries (see `CLAUDE.md`).
+- **Sentence-level style follows `content-design.md`** — this section owns the entry *shape* (one theme, concise, neutral, what-and-when); the content guide owns voice, banned words, and rhythm. Run its Self-Review Tests on each drafted entry.
 
 ## The loop
 

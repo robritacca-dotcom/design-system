@@ -6,207 +6,177 @@
   "entries": [
     {
       "meta": "August 29, 2026",
-      "title": "A front door for other people's agents",
+      "title": "AI assistants can now query the site directly",
       "body": [
-        "The site has answered questions about itself since the chat shipped in August. What it could not do was answer another machine. That changed today: robertritacca.com now serves a Model Context Protocol endpoint at /api/mcp, and any MCP client can connect with nothing but the URL. Five tools sit behind it: the component list, the full prop API for any one component, the design token registry, install and theming setup, and full-text search over the same corpus the chat reads. No key, no account, and no model anywhere in the path; every tool is a deterministic read over data the build already generates.",
-        "The interesting part is where the prop API comes from. Every component's props are documented in JSDoc, and that JSDoc was already the single source for Storybook's props tables and the type declarations npm ships. The endpoint reads a build-generated file produced from the same source with the same parser settings, so the three surfaces cannot disagree: an agent asking the endpoint for Button's contract reads exactly what a consumer's editor shows. New validators hold the whole thing honest. One regenerates the file in memory on every build and fails on a byte of drift, screens it for anything leak-shaped, and bans email addresses outright, since prop documentation now travels further than the repo. Another counts the tools the route actually registers and fails the build if any prose surface claims a different number.",
-        "The security boundary is the corpus rule, inherited whole: the endpoint may only read what is already published. The worst case of any request is a stranger reading what was always public. That constraint is what let it ship without auth, without rate limits, and without a persona to defend, and it is written into the route itself as a rule for every tool that comes later. The endpoint is advertised in llms.txt beside the specs and the sitemap, which makes the AI layer three surfaces deep: a chat for people, an index for crawlers, and now a typed contract for the agents actually building with the package."
+        "The site now serves a public MCP endpoint at /api/mcp, and any AI client can connect with nothing but the URL. Five tools sit behind it: the component list, the full prop details for any component, the design tokens, install setup, and search over the site's content. Everything it serves is already public, and new build checks keep the data exact."
       ]
     },
     {
       "meta": "August 15–29, 2026",
-      "title": "Seventy-nine parts become a hundred and twenty",
+      "title": "The library grows from 79 to 120 components",
       "body": [
-        "The registry started the fortnight at 79 components and ended it at 120, across five releases. Almost none of that growth came from a checklist. It came from building real things with the system and keeping what was missing: a hidden labs page that rebuilds a reference analytics dashboard from the library alone surfaced Panel, the legend tile, and two chart types; the maps set with the globe came from wanting a working world on the about page; a round of composition gap-fillers (a gauge, a filter bar, a split pane, a streaming-text reveal, an avatar group) came from noticing which arrangements the system still could not make. The last six landed this week: Banner, HoverCard, ImageCompare, Meter, Rating and SplitButton.",
-        "Growth that fast is exactly when quality slips, so the checks grew with it. Every one of the six was audited against the published prop contract before it registered, and the audit caught real things: a hover panel that broke paragraphs mid-parse, a prop named against the library's own convention, a split button whose two segments could disagree about their height by a pixel. That last class of defect, invisible at normal size and glaring at any zoom, now has a named owner: a design-qa skill that renders a component in both themes, magnifies every join and corner, and judges the result against its rendered siblings rather than against memory. It is a gate a new component passes before it can register, not a cleanup that happens later.",
-        "Two full drift audits ran in the same window, because forty-one new parts and a new public endpoint make a lot of sentences elsewhere go stale. Every count, spec section, skill instruction and self-description was checked against what the code now does, and the fixes shipped with the work they describe. The journal entry you are reading was written by the same loop."
+        "Five releases over the fortnight added 41 components. Most were found by building real screens with the system and filling what was missing: a dashboard set, the maps set with the globe, composition pieces like the gauge and split pane, and a final six this week. A new design QA pass now reviews every component in both themes before it joins the library."
       ]
     },
     {
       "meta": "August 10–14, 2026",
-      "title": "Drawn in code, so it can follow the theme",
+      "title": "A new page background and redrawn cover images",
       "body": [
-        "The colour blobs behind every page have now been rebuilt twice. In July the blur filters gave way to pixel-matched radial gradients that cost the GPU almost nothing. They are now a WebGL2 field: eight blobs that compute the true Gaussian falloff those gradients approximated with twelve hand-computed stops, blend in linear space, and dither away the banding wide ramps produce on 8-bit panels. Every colour is read from a semantic token at runtime, so the playground’s colour levers re-theme the background without either side knowing the other exists. The old CSS blobs still render underneath, so a browser without WebGL2, a lost GPU context and a config switch back to CSS all land on the same quiet result. The field mounts once from the root layout, because a per-page mount rebuilt the whole graphics context on every navigation.",
-        "The case-study covers had the opposite problem. A raster hero cannot follow the site between light and dark, so the thirteen screens each study is known by were redrawn as markup inside an SVG viewBox: TurboTax inside Claude and inside ChatGPT, Intuit Agent Chat, three Augmenta screens, two Meta offer frames, and this site’s own home page. They copy their Figma sources at 1:1 and deliberately use none of this system’s tokens or components, because they are pictures of other people’s products. One 16:10 frame holds all thirteen, whose native aspects run from 0.44 to 1.76, each floating on a gradient mixed from its own product’s colours so a row of thumbnails reads as six products rather than one set of stock cards. They now stand in for the raster covers on the work index, the home page and three case-study heroes.",
-        "Then mobile WebKit refused to render the construction. It lays each mock out at its native 1440-pixel width and sizes the text from that, so a phone showed intact geometry with the type blown up several times over. Rather than compromise the drawing, the drawing stopped being what a visitor’s browser is asked to render. A registry records which aspects each study needs, a generator drives Chromium over every study, aspect and theme, and a validator holds the registry, the cover map and the files on disk to each other in both directions. Shooting the renders is a deliberate command, like the essay sync, so the validator checks that they exist rather than that they are fresh. The move to images also dropped the label the vectors carried, so the registry now owns a sentence describing each screen: an empty alt attribute on the most distinctive pictures on the site tells a screen-reader user nothing.",
-        "The robr0 DS case study was rewritten around the same work. A month-by-month chronology that had gone stale became six sections, each a lesson rather than a date, pulled from the three Substack essays and this journal: enterprise design system rules that got politely broken, and what it took to make these ones stick. Every number traces to a source, with component history measured from git and traffic from a GA4 pull."
+        "The colour blobs behind every page were rebuilt as a WebGL field that reads its colours from the design tokens, with the old CSS version kept as a fallback. The thirteen case-study cover screens were redrawn in code so they can follow light and dark mode, then shipped as pre-rendered images so they hold up on phones. The robr0 DS case study was rewritten around six lessons in the same stretch."
       ]
     },
     {
       "meta": "August 9–14, 2026",
-      "title": "The bench retires, and the chat learns to cite",
+      "title": "The playground and the chat come together",
       "body": [
-        "The chat widget had been built on a test bench at its own address, while the site already had a re-theming playground. Two tools, one set of colour and radius and font levers, and no reason for a visitor to know which one to open. The playground is now a single immersive tool with two views over those levers: Components, framed by a white-label site header, and Chat, which inherited the bench’s stage sizes, phone bezel, resize grips and editable starters. The bench was deleted and permanently redirects into the Chat view. The colour levers got honest at the same time. A custom action colour used to repaint the semantic tokens while the teal ramp sat underneath, so the CSS the playground handed you was not what a theme author would write; picking a colour that names a real primitive now repoints the action tokens at that ramp, and a custom hex rebases the nearest ramp family instead.",
-        "The chat panel learned to move, and to point somewhere. Its two geometries, the docked card and the full-screen takeover, now glide between each other instead of swapping in a single frame. The model is asked for internal links and the widget renders them as client-side navigations, so a docked panel keeps the conversation running beside the page it just opened. Every finished answer carries a copy button and thumbs that post to a rate-limited feedback route, keyed by an exchange id the route mints and logs. That is the first way the chat has had of being told it was wrong, and joining the feedback against the exchange log is where the next round of eval questions will come from. Two releases, 0.5.0 and 0.6.0, carried the underlying components out to npm.",
-        "An answer now ends with three follow-up questions, written by a small model from the exchange it has just seen and fetched after the turn commits, because a stream held open for suggestions would hold the copy row and the composer past the last word. A beat of delay costs nothing. They also settled something the written starters had been quietly getting wrong: a chip never wraps, so every suggestion the chat shows is held to one length budget, set to what fits the message column on a small phone. The generator is told the number, the route drops a long candidate rather than clipping it, and a validator fails the build on written copy that exceeds it. Three of the site’s own starters were over the line and are now the short version of the same question.",
-        "The licence split in the same stretch. The repository had been MIT in full, which licensed the case studies, the essays and the page prose along with the software, for anyone to rebrand. The code stays MIT so the package remains free to use. The writing is now all rights reserved, with reading, linking and attributed quotation preserved in the licence itself, because the site publishes an index inviting agents to read it and the two documents should not contradict each other."
+        "The chat's test bench merged into the playground, now one tool with two views over the same theming levers: Components and Chat. The chat itself gained smooth resizing between its docked and full-screen shapes, links into the site's own pages, feedback buttons, and three suggested follow-up questions after each answer. The licence split too: the code stays MIT, the writing is now all rights reserved. Releases 0.5.0 and 0.6.0 carried the chat components to npm."
       ]
     },
     {
       "meta": "August 8–9, 2026",
-      "title": "The site learns to answer for itself",
+      "title": "The site gets an AI chat",
       "body": [
-        "Two days, three builds. First the chat primitives were composed into a widget on a test bench, running on scripted responses so the streaming choreography (the status line, the reasoning trace, the pacing of the reveal) could be judged without a model attached. Then the backend: an API route that streams a real Claude answer from a corpus generated out of the published site, behind layered rate limits and a daily spend breaker. Then the part that turns a demo into a feature: the widget mounted on every page as a floating glass panel, opened by a new AI button whose slowly turning gradient ring is now the design system’s signal that a model answers here.",
-        "The interesting problem was never the widget. It was what the model could see. The first corpus held the specification files and almost none of the site’s own words: asked for Rob’s email, the chat would say the site does not publish one, while the address sat in plain text on the contact page. The fix was structural rather than editorial. Page prose now flows into the corpus straight from the filesystem, so a new page reaches the chat on its next build with no registration step; data a page publishes as structure, like the contact channels and the career timeline, opts in through a directive; the essays embed word for word from a committed registry. The old screen that banned every email address became an allowlist: nothing reaches the model that a page did not deliberately publish, and the build fails on anything that tries another way in.",
-        "Whether any of this made the answers better is measured, not assumed. A golden set of questions, written from the seats of the people who actually visit (a recruiter, a designer, a developer), runs through the real chat route with assertions a machine can check: the facts a question needs must be present in the corpus, every path an answer cites must exist on the site, and the house style must hold. The before-and-after run went from 71 of 78 passes to 77 of 78, and the last failure was its own find: the corpus had been teaching the model a page that does not exist.",
-        "The chat also learned where its knowledge ends. Facts about Rob come only from the site and are never invented; established design craft, the usability heuristics and accessibility standards a visiting designer might ask about, is answered freely and kept visibly separate from what the site says. Conversations are kept for thirty days to improve the answers, disclosed in the widget itself. The whole pipeline is now told on the overview page, with the original test bench linked from it as the place to see the widget exercised."
+        "Built over two days and mounted on every page: a floating chat that answers questions about the site, the design system, and Rob's work. It reads only what the site already publishes, and a set of 78 test questions measures whether the answers are right. Conversations are kept for thirty days, disclosed in the widget itself."
       ]
     },
     {
       "meta": "July 28–August 1, 2026",
-      "title": "A house style, and a new front door",
+      "title": "A style guide for the site's writing",
       "body": [
-        "The prose on this site is written by AI agents, and unedited AI prose has habits: hedged claims, sentences of uniform length, phrases that would sit unchanged in any project’s documentation. content-design.md is now the one place that says how the writing should read. It sits beside its two siblings with a clean split: design.md owns how things look, CLAUDE.md owns where facts live, the new file owns how sentences read. It sets four goals (consistent, human, clear, neutral), bans the em dash outright, and names the words and patterns to cut. Every public surface was rewritten against it, from the foundations pages to the README that ships inside the npm package. References in prose are build-checked now too, so a guide that names a script or a file that no longer exists fails the build.",
-        "The front door changed at the same time. /design-system had been a redirect; it is now a page, a three-column collage of product panels rendered live from the published package rather than captured as screenshots. The home page was rebuilt eight times in a single day and settled on three cards, each with a cover image and a live miniature of the design system drawn from real tokens. The case studies behind those cards come from a registry, so the home page and /work read from one list. The re-theming playground moved to its own top-level address."
+        "content-design.md now sets how every shipped sentence reads, and each public page was rewritten against it. The same week, /design-system became a real landing page with a live component collage, the home page settled on three case-study cards, and the playground moved to its own top-level address."
       ]
     },
     {
       "meta": "July 27–August 1, 2026",
-      "title": "Built for someone else’s application",
+      "title": "The library is reworked for outside users",
       "body": [
-        "Publishing to npm exposed something the library could hide while it had exactly one consumer: it was built for this site. Of the 68 components at the time, four forwarded a ref and none extended their native element’s props, so nobody could attach a ref, pass a data attribute, or register a field with a form library. Eighteen components were rebuilt to do all of it. One breaking change came with the work: onChange on Input, Textarea, Slider and DateInput now carries the native React event instead of a bare value, which is what lets react-hook-form and its peers drive them at all. Everything else was additive.",
-        "Accessibility went from reported to enforced. 49 violations were fixed, nine of them real component bugs: DatePicker claimed a grid role it had never implemented, and icon-only buttons had no accessible name at all. Axe now runs across every story at WCAG 2.1 AA, contrast aside, and a regression fails the build. A new Field component absorbed the label, required marker, and error wiring that six form controls had each been reimplementing and quietly diverging on. Two releases followed, 0.2.0 and 0.3.0, authenticated by npm’s Trusted Publishing rather than a token that can expire. Kbd, ContextMenu, Swatch and ColorPicker joined the library in the same stretch."
+        "Eighteen components were rebuilt so the package behaves like one built for strangers: refs, native attributes, and form-library support throughout. Forty-nine accessibility issues were fixed, and accessibility checks now run on every build. Releases 0.2.0 and 0.3.0 went out, with four new components alongside."
       ]
     },
     {
       "meta": "July 26, 2026",
-      "title": "Customization, made live",
+      "title": "A live theming playground",
       "body": [
-        "Telling people a design system is themeable is easy; showing them is harder. The site now has a Customization section with two pages: a get-started guide covering installation, dark mode, fonts, and token overrides, and a playground where the theming actually happens in front of you.",
-        "The playground exposes a handful of deliberately chosen levers: an action colour that rebuilds an entire colour ramp around your pick, a tint that washes the neutral scale toward a seed colour, a radius scale that can square off every pill, and a dropdown of Google fonts. Moving any of them re-themes the whole page live, header and navigation included, because the overrides are applied exactly the way a real consumer would apply them. Three presets show the range: a warm serif look, a black-and-white theme that flips its button colours between light and dark mode, and a high-contrast blue tuned for accessibility. Whatever you build, the page hands you the exact CSS to paste into your own project, and everything resets when you leave."
+        "A new Customization section shows theming rather than describing it: a get-started guide, and a playground where colour, radius, and font levers restyle the whole page live, then hand over the CSS to paste into your own project."
       ]
     },
     {
       "meta": "July 26, 2026",
-      "title": "The design system ships as a real package",
+      "title": "The design system publishes to npm",
       "body": [
-        "Until now the design system was a folder that only this repository could use. It is now published on npm as @robr0/design-system, installable by anyone, with signed provenance that ties every published file back to the commit and workflow run that built it.",
-        "Getting there meant fixing something the architecture had always claimed but never enforced. Semantic tokens were supposed to reference primitive values, but most of them had raw colour values baked in, which meant overriding a primitive changed nothing. Every one of them now chains to a primitive, verified to render identically, with a build check that fails if a literal ever creeps back. That single change is what makes consumer theming possible at all.",
-        "The site itself became the package’s first consumer. Rather than reaching into the source folder next door, it now installs the design system by name and imports it through the exact same entry points a stranger would, so a packaging mistake breaks the site build instead of shipping quietly. Releases run through a workflow that installs the packed tarball into a throwaway application and builds it before anything reaches the registry. The first release, version 0.1.0, went out that way."
+        "The library is now on npm as @robr0/design-system, installable by anyone, with version 0.1.0 out the same day. The site became the package's first consumer, importing it exactly the way a stranger would."
       ]
     },
     {
       "meta": "July 22–23, 2026",
-      "title": "Reaching outward, part two: machine-readable everything",
+      "title": "Better metadata for search engines and AI",
       "body": [
-        "The earlier push on search and analytics made the site findable. This round made it legible to the machines doing the reading. Every page now declares its own canonical address, case studies emit structured data describing themselves as articles, and the sitemap derives each page’s last-modified date from real commit history instead of stamping everything with the build date.",
-        "Page titles moved to a single source shared with the navigation and breadcrumbs, so a tab title can no longer drift from the label pointing at it, and a build check enforces it. The site also serves an index at /llms.txt for AI agents, and branded preview images for link sharing."
+        "Every page now declares its canonical address, case studies emit structured data, and the sitemap carries real last-modified dates. The site also serves an index at /llms.txt for AI agents, plus branded preview images for link sharing."
       ]
     },
     {
       "meta": "July 22–23, 2026",
-      "title": "Closing the gaps: motion, icons, and the last undocumented components",
+      "title": "Motion and icon tokens, and the spec backlog cleared",
       "body": [
-        "Two dimensions of the token system had never been formalised. Motion was scattered literal timings; it is now twelve duration and easing tokens with a reduced-motion guard, and every hardcoded timing in the library and the site was migrated onto them. Icons had a subtler problem: sizing them by font size alone let the glyph and its box disagree. A four-step icon scale now drives size and box together, and because the scale starts at twenty pixels it stays inside the range where the icon font’s optical sizing actually works. Both got their own foundations pages, alongside a new one for elevation.",
-        "Five components joined the library (Combobox, Drawer, EmptyState, CommandPalette, and FileInput), and a documentation debt got paid off: 27 components had no written specification, and now none do. A build check compares the component registry against the website, so a component can no longer exist without its page, its navigation entry, and its spec."
+        "Motion timings became twelve duration and easing tokens with a reduced-motion guard, and icons moved onto a four-step size scale; both got their own foundations pages. Five components joined the library, and the 27 components with no written spec all got one."
       ]
     },
     {
       "meta": "July 21, 2026",
-      "title": "A real quality gate: CI and story render tests",
+      "title": "Automated testing on every change",
       "body": [
-        "The library had grown to forty-plus components, but nothing was standing guard: a broken story or a stale generated file could land on main and only surface when someone happened to open Storybook. The repo now has a GitHub Actions pipeline that runs lint, the library build, the story tests, the Storybook build, and the website build on every push and pull request, plus a drift guard that fails the build if a registry change lands without its regenerated README, skills, or blueprints content.",
-        "The biggest piece is the test suite: every Storybook story now runs as a render test in headless Chromium (all 434 stories at the time it shipped), so every component variant is smoke-tested on every change, with axe accessibility checks reporting alongside. A single verify script mirrors the whole pipeline locally, so \"it passes verify\" and \"it will pass CI\" finally mean the same thing."
+        "Every push now runs a full pipeline: lint, the builds, and a render test of every Storybook story (434 at the time), so a broken component can no longer land unnoticed. One verify script mirrors the whole pipeline locally."
       ]
     },
     {
       "meta": "July 21, 2026",
-      "title": "Retiring the blur filters",
+      "title": "A faster page background",
       "body": [
-        "The site's signature background, soft colour blobs floating behind every page, was drawn with CSS blur(80px) filters, which forced the GPU to recompute enormous blur regions and caused visible blanking while scrolling on desktop. The blobs were rebuilt as pixel-matched radial gradients that look identical but cost almost nothing to composite. The swap applies at desktop widths, where the problem showed: the visual language of the site didn't change, only the price of drawing it."
+        "The blurred colour blobs behind every page were redrawn as radial gradients that look identical but cost the GPU almost nothing, ending the visible blanking while scrolling on desktop."
       ]
     },
     {
       "meta": "July 20, 2026",
       "title": "Divider, Pagination, and Dialog join the library",
       "body": [
-        "A gap analysis against mature design systems ranked the components this library was still missing, and the three highest-impact ones shipped together: Divider (with a new --color-divider token that also replaced ad-hoc separator borders across the website), Pagination, and a fully accessible modal Dialog. Each arrived the complete way: Storybook stories, a showcase page, registry entry, and a spec section in design.md.",
-        "The same day, the site's \"About\" cluster was renamed to \"Docs\", the outcome of deciding that a full documentation-site rebuild would mostly duplicate what the showcase pages already do. The information architecture stayed; only the naming caught up with what the section had become."
+        "A gap analysis against mature design systems ranked what was missing, and the three highest-impact components shipped together, each with stories, a showcase page, and a spec. The site's About cluster was renamed Docs the same day."
       ]
     },
     {
       "meta": "July 18–20, 2026",
-      "title": "A security scrub for a public repo",
+      "title": "A security review of the public repo",
       "body": [
-        "With the repo public and the site carrying real traffic, everything got audited the way an outside attacker would read it. The scrub removed an analytics property id and local machine paths from published content, added a Content-Security-Policy and security headers to the website, sanitised the Substack feed HTML before rendering it, patched the audited dependency vulnerabilities, retired the obsolete password-gate feature, and published a security policy with a private reporting channel. The audit closed clean, and the hardening now travels with every deploy."
+        "The repo and site were audited end to end: security headers added, feed HTML sanitised, dependency vulnerabilities patched, stray identifiers removed from published content, and a security policy published. The audit closed clean."
       ]
     },
     {
       "meta": "July 17–18, 2026",
-      "title": "Skills, loops, and single-source-of-truth registries",
+      "title": "The first automation loop, and counts that update themselves",
       "body": [
-        "This was the stretch where the system started maintaining itself. The growth loop shipped: a skill that runs every week on a schedule, reads the site's analytics, forms one falsifiable hypothesis about the words on a page, implements the change on a branch, and writes a report for approval. It is the first automation here that runs itself. A new Loops page documents it, and the skills collection got a proper architecture: one folder per skill so Claude Code discovers them, and a /skills page generated from the skill files themselves so the docs can never drift from the code.",
-        "Underneath it, the registry pattern arrived: the component count and the skills list each became a registry file with a build-time validator, so no number displayed on the site can quietly go stale. A batch of content components shipped in support (Chip, Stat, CodeBlock, Quote, Figure, and Timeline, the component this very page is built with), plus a searchable sidebar for the component rail."
+        "The growth loop shipped: a weekly scheduled task that reads the site's analytics, proposes one copy change on a branch, and reports for approval. Underneath it, every count shown on the site started coming from registry files checked at build time, so no number can quietly go stale. Six content components shipped in support, including Timeline, which this page is built with."
       ]
     },
     {
       "meta": "July 1–9, 2026",
-      "title": "Reaching outward: SEO, analytics, and Writing",
+      "title": "SEO, repaired analytics, and a Writing section",
       "body": [
-        "A technical SEO pass hardened how the site presents itself to the outside world: structured data, canonical URLs, redirects, and proper icons. The analytics setup was repaired (the GA4 measurement id had drifted from the active property) and gained a pull script for on-demand reporting, which quietly became the foundation the growth loop would stand on two weeks later.",
-        "The site also learned to syndicate: a Writing section now auto-syncs articles from Substack and renders them in the case-study layout, and a GitHub-style ContributionGraph component landed on the about page. Even the logo got attention: an animated rr monogram variant."
+        "A technical SEO pass hardened how the site presents itself, the analytics setup was repaired and gained an on-demand reporting script, and a new Writing section now syncs articles from Substack. The logo picked up an animated variant."
       ]
     },
     {
       "meta": "June 1–9, 2026",
-      "title": "Polish wave: evocative colours, flicker fixes, and bookings",
+      "title": "Colour names, a flicker fix, and bookings",
       "body": [
-        "A run of refinements that each closed a long-standing irritation. The accent colours were renamed from numbered slots to evocative names, backed by a new orange primitive ramp. The theme-toggle flicker (light mode flashing on navigation, a bug that had been swatted twice before) was finally killed by making the data-theme attribute the single source of truth every toggle instance syncs from.",
-        "The site also grew practical edges: a Stripe consultation-booking section on the contact page, copy-to-clipboard contact cards, a case-study variant of Card powering the Work index, new LinkList and ContactCard components, and the move to the robertritacca.com domain with a proper social share image."
+        "The accent colours took on evocative names, the long-standing theme-toggle flicker was finally fixed, and the contact page gained a Stripe consultation-booking section. The site also moved to the robertritacca.com domain."
       ]
     },
     {
       "meta": "May 21–30, 2026",
-      "title": "From component site to portfolio: rebrand, MegaNav, and six case studies",
+      "title": "The site becomes a portfolio",
       "body": [
-        "The biggest identity shift in the project's history: the site stopped being \"robr0 DS with an about page\" and became Robert Ritacca's portfolio, with the design system as its flagship exhibit. A MegaNav with dropdown clusters was componentised from a prototype, breadcrumbs were wired into every page, a contact page appeared, and the scattered About/Claude MD/Design MD/Skills pages were consolidated into one coherent cluster.",
-        "Then the case studies arrived, six of them in one sustained push: Building robr0 DS, CIBC FirstCaribbean, Meta Career Profile Vision, the AI Construction Platform, Intuit Agent Chat, and Meta Offer Creation. Company logos in the sidebar, YouTube embeds, image lightboxes, cross-links from the resume. The password-gated Work page from April had grown into an open, browsable body of work."
+        "The project's biggest identity shift: the site stopped being a component showcase with an about page and became Robert Ritacca's portfolio, with the design system as its flagship exhibit. A MegaNav, breadcrumbs, a contact page, and six case studies arrived in one push."
       ]
     },
     {
       "meta": "Apr 27 – May 6, 2026",
-      "title": "The system writes itself down: design.md and Blueprints",
+      "title": "The design spec becomes a public page",
       "body": [
-        "The design language had lived in Figma and in the components themselves; now it was written down. design.md, the full spec for tokens, colour, typography, and every component rule, became a first-class document, published on the site as its own page. CLAUDE.md, the instructions that steer the AI agents building this system, joined it under a Blueprints section shortly after. The idea: the documents that govern how the system is built are themselves content worth showing. Table gained a bordered variant along the way, largely so those spec tables would render properly."
+        "design.md, the full spec for tokens, colour, typography, and every component rule, was written down and published on the site, with CLAUDE.md joining it under a Blueprints section soon after. The documents that govern the build became content in their own right."
       ]
     },
     {
       "meta": "April 6–13, 2026",
-      "title": "First Claude skills: the system starts helping build itself",
+      "title": "The first Claude skills",
       "body": [
-        "After a quiet stretch, the project came back with a new idea: packaging repeatable QA work as skills an AI agent can run. The first three (heuristic analysis, accessibility audit, and API consistency review) shipped alongside a Skills page that publishes each one with copyable source. What began here as three checklists grew, over the following months, into the registry-backed, self-documenting skills system that now runs parts of the site on a schedule."
+        "Three repeatable QA checks (heuristic analysis, accessibility audit, and API consistency review) were packaged as skills an AI agent can run, published on a new Skills page with copyable source. They grew into the scheduled skills system that runs parts of the site today."
       ]
     },
     {
       "meta": "February 18–22, 2026",
       "title": "Charts, dashboards, and app shells",
       "body": [
-        "The library took on data visualisation: eight Recharts-based chart components (bar, line, pie, radial, area, radar, scatter, treemap) plus AppSidebar and AppLayout for full application shells. Two dashboard demo pages composed them together: the proof that the system could build real product surfaces, not just isolated widgets.",
-        "The overlay tier filled out in the same push (AlertDialog, Avatar, Carousel, Toast, Tooltip), and a dedicated accessibility sweep added aria labels, roles, and keyboard navigation across the board."
+        "Eight chart components, application shell pieces, and two dashboard demo pages that compose them: proof the system could build real product screens. The overlay tier filled out in the same push, with an accessibility sweep across the board."
       ]
     },
     {
       "meta": "February 16, 2026",
       "title": "The component sprint",
       "body": [
-        "A single day took the library from a handful of components to a real system: text inputs, checkboxes, segmented controls, tabs, tables, badges, progress bars, skeletons, sliders, spinners, toggle groups, breadcrumbs, accordions, dropdown menus, and selection cards all landed, each with stories and a showcase page.",
-        "Just as important were the consistency passes threaded between them: standardised icon sizes, a padding and gap scale renamed to match Figma exactly, focus states and transitions everywhere, compact variants across the input family, and a centralised navigation config. That's what kept the sprint from producing a pile of parts instead of a system. Google Analytics went in the same day, so the site has measured itself almost from the start."
+        "A single day took the library from a handful of components to a real system: inputs, tabs, tables, badges, menus, and a dozen more, each with stories and a showcase page. Consistency passes on icons, spacing, and focus states kept the sprint from producing a pile of parts. Google Analytics went in the same day."
       ]
     },
     {
       "meta": "February 14–15, 2026",
       "title": "The documentation website goes live",
       "body": [
-        "A separate Next.js app went up to show the system, importing the actual library components through a path alias rather than copying them, so every example on the site is the real component, live. Getting it deployed to Vercel took a full evening of build-pipeline wrestling, which is its own kind of milestone.",
-        "The site's shape appeared immediately: Home, About, Components, and Foundations, with foundations pages for semantic and primitive colours, spacing, typography, icons, and logos, the first component showcase pages, and deep links from every page to its Figma frame and Storybook story."
+        "A separate Next.js site went up on Vercel to show the system, importing the real components so every example is live. Home, About, Components, and Foundations appeared immediately, with links from each page to its Figma frame and Storybook story."
       ]
     },
     {
       "meta": "February 13–14, 2026",
       "title": "Day one: tokens, a Button, and Storybook",
       "body": [
-        "The project began with its constraints, not its components. The first commits established the three-tier token architecture (raw primitives, semantic tokens, component CSS) with light and dark values from the very first day, plus self-hosted Material Symbols icons and a Storybook wired to the tokens with a dark-mode toggle. Button arrived from Figma as the first component, followed within a day by the full typography scale and primitive colour ramps.",
-        "The rules that still govern the system were set in these first 48 hours: no hardcoded hex values, dark mode driven by a single data-theme attribute, semantic tokens between every component and every raw value. Everything since has been built inside those lines."
+        "The project began with its rules, not its components: a three-tier token architecture with light and dark values from the first commit, self-hosted icons, and a Storybook wired to the tokens. Button arrived from Figma as the first component. The constraints set in these 48 hours still govern everything since."
       ]
     }
   ]

@@ -50,7 +50,7 @@ Each surface has its own shape. The full standard for a surface lives in one pla
 
 | Surface | Person | Shape | The rule that matters | Full standard |
 |---|---|---|---|---|
-| Journal entries (`website/src/data/site-updates.json`) | None | Story paragraphs: what, why, outcome | Thematic stories, never commit digests; readable by someone who has never seen the repo | `.claude/skills/site-updates/SKILL.md` |
+| Journal entries (`website/src/data/site-updates.json`) | None | One short paragraph per theme: what shipped, and when | Concise and neutral, never commit digests; what and when over why; a plain descriptive title a non-technical reader can follow | `.claude/skills/site-updates/SKILL.md` |
 | Website page copy + metadata | None | Short paragraphs under sentence-case headings | The system is the subject; specifics over adjectives | This file |
 | Case studies and about pages | "I" / "we" | Narrative prose with real numbers | A person tells their own story; claims carry evidence | This file |
 | Case-study registry entries (`website/src/data/case-studies.json`) | None | `title` a name, `dek` one summary line | Shipped copy on /work and the home page; the dek makes one concrete claim | This file + case-studies validator |
