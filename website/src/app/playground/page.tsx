@@ -243,6 +243,9 @@ export default function PlaygroundPage() {
      header toggle writes: the root attribute plus the persisted choice. */
   const applyTheme = (next: string) => {
     document.documentElement.setAttribute("data-theme", next);
+    /* An explicit pick, so the setting moves off "system" too — otherwise the
+       root script's OS-change listener would override the rail's choice. */
+    document.documentElement.setAttribute("data-theme-setting", next);
     window.localStorage.setItem("theme", next);
   };
 

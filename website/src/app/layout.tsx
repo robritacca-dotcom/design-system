@@ -100,15 +100,18 @@ export const viewport: Viewport = {
 
 const themeScript = `
 (function() {
-  var savedTheme = localStorage.getItem('theme');
-  var systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  var isLight = savedTheme === 'light' || (savedTheme === null && !systemPrefersDark);
-  if (isLight) {
-    document.documentElement.setAttribute('data-theme', 'light');
-  } else {
-    document.documentElement.setAttribute('data-theme', 'dark');
-  }
-  document.documentElement.classList.add('theme-ready');
+  var root = document.documentElement;
+  var saved = localStorage.getItem('theme');
+  var setting = saved === 'light' || saved === 'dark' ? saved : 'system';
+  var media = window.matchMedia('(prefers-color-scheme: dark)');
+  root.setAttribute('data-theme-setting', setting);
+  root.setAttribute('data-theme', setting === 'system' ? (media.matches ? 'dark' : 'light') : setting);
+  media.addEventListener('change', function (event) {
+    if (root.getAttribute('data-theme-setting') === 'system') {
+      root.setAttribute('data-theme', event.matches ? 'dark' : 'light');
+    }
+  });
+  root.classList.add('theme-ready');
 })();
 `;
 
@@ -131,7 +134,13 @@ export default async function RootLayout({
   // var() references on the element that declares it — on <body> the variable
   // would be invisible to :root and the token would go invalid.
   return (
-    <html lang="en" data-theme="dark" className={nunitoSans.variable} suppressHydrationWarning>
+    <html
+      lang="en"
+      data-theme="dark"
+      data-theme-setting="system"
+      className={nunitoSans.variable}
+      suppressHydrationWarning
+    >
       <head>
         {/* Material Symbols is served from the design system's own bundled
             @font-face (src/fonts/material-symbols.css, imported above) — the

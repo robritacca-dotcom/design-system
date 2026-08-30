@@ -5,22 +5,30 @@ import { SegmentedControl } from "@robr0/design-system/components/SegmentedContr
 import styles from "./ThemeToggle.module.css";
 
 const themeSegments = [
+  { value: "system", label: "System", icon: "routine" },
   { value: "light", label: "Light", icon: "light_mode" },
   { value: "dark", label: "Dark", icon: "dark_mode" },
 ];
 
 /**
- * The `data-theme` attribute on <html> is the single source of truth for the
- * theme — it's set by the inline script in layout.tsx before first paint and
- * mutated on toggle. Every ThemeToggle instance (in-flow header, sticky header,
- * mobile menu) subscribes to it, so they all stay in sync no matter which one
+ * Two attributes on <html> carry the theme, both set by the inline script in
+ * layout.tsx before first paint and mutated on toggle:
+ *
+ * - `data-theme-setting` is the visitor's choice — system, light or dark.
+ *   System is the default; this control renders it.
+ * - `data-theme` is what that resolves to — light or dark — and is what every
+ *   stylesheet and theme-reading component consumes. While the setting is
+ *   system, the inline script's matchMedia listener keeps it following the OS.
+ *
+ * Every ThemeToggle instance (in-flow header, sticky header, mobile menu)
+ * subscribes to the attribute, so they all stay in sync no matter which one
  * is clicked, and they never drift on client-side navigation.
  */
 function subscribe(callback: () => void) {
   const observer = new MutationObserver(callback);
   observer.observe(document.documentElement, {
     attributes: true,
-    attributeFilter: ["data-theme"],
+    attributeFilter: ["data-theme-setting"],
   });
   // Reflect theme changes made in other tabs.
   window.addEventListener("storage", callback);
@@ -31,19 +39,27 @@ function subscribe(callback: () => void) {
 }
 
 function getSnapshot() {
-  return document.documentElement.getAttribute("data-theme") || "dark";
+  return document.documentElement.getAttribute("data-theme-setting") || "system";
 }
 
-// Matches the SSR value of data-theme on <html> in layout.tsx.
+// Matches the SSR value of data-theme-setting on <html> in layout.tsx.
 function getServerSnapshot() {
-  return "dark";
+  return "system";
 }
 
 export default function ThemeToggle({ className }: { className?: string }) {
-  const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const setting = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   const handleChange = useCallback((value: string) => {
-    document.documentElement.setAttribute("data-theme", value);
+    const root = document.documentElement;
+    root.setAttribute("data-theme-setting", value);
+    const resolved =
+      value === "system"
+        ? window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light"
+        : value;
+    root.setAttribute("data-theme", resolved);
     localStorage.setItem("theme", value);
     // No setState needed — the MutationObserver above notifies every instance.
   }, []);
@@ -52,7 +68,7 @@ export default function ThemeToggle({ className }: { className?: string }) {
     <div className={`${styles.themeToggle} ${className || ""}`}>
       <SegmentedControl
         segments={themeSegments}
-        activeSegment={theme}
+        activeSegment={setting}
         onSegmentChange={handleChange}
         size="compact"
         ariaLabel="Theme"
