@@ -60,7 +60,7 @@ Report a finding as **already-enforced** if `npm run test` would have caught it;
 
    **Focus Styles:**
    - Every interactive element has a `:focus-visible` rule in its CSS
-   - Focus ring uses the teal action token (`--color-action-primary-bg`) — per design.md, teal is reserved for primary CTAs and focus rings. Flag any `outline: none` without a visible replacement
+   - Focus ring uses the teal action token (`--color-action-primary-bg`) — design.md's teal rules are the authoritative list of sanctioned uses. Flag any `outline: none` without a visible replacement
 
    **Motion** (axe evaluates none of this):
    - **[manual]** Anything that animates for more than five seconds, or loops indefinitely, can be paused, stopped, or hidden (WCAG 2.2.2). CSS-token motion satisfies this through the `prefers-reduced-motion` guard in `tokens-motion.css`, which collapses every duration

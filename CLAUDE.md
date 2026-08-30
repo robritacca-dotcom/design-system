@@ -193,7 +193,7 @@ Component CSS               background-color: var(--color-action-primary-bg)
 - **Dark mode** is driven by `data-theme="dark"` on the root element. Every semantic token has a light and dark value — no `prefers-color-scheme` queries in components.
 
 Key invariants:
-- Teal `--color-action-primary-bg` (#0E6E8F light / #3CA5C6 dark — the action family is theme-split by design, see design.md) is **only** for primary CTA buttons and focus rings. Never decorative.
+- Teal `--color-action-primary-bg` (#0E6E8F light / #3CA5C6 dark — the action family is theme-split by design, see design.md) is **only** for primary CTA buttons, focus rings, and the selected item of a mutually exclusive set (design.md's teal selection convention — SegmentedControl's active segment, the header's current-section pill). Never decorative.
 - Never hardcode hex values in component CSS — always a semantic token. (Deliberate off-token values are sanctioned *in place* with a `/* ds-allow(<category>): <reason> */` directive — `ds-allow-file(...)` for file-wide cases like ColorPicker's `hsl()` colour physics. Grep `ds-allow` to enumerate them; `scripts/validate-css-directives.mjs` owns the category set and build-enforces the grammar.)
 - Never hardcode hex values in semantic colour tokens either: every `--color-*` value in `tokens-light/dark.css` must be a `var(--primitive-*)` (or `var(--color-*)`) reference — build-enforced by `scripts/validate-token-references.mjs`. This is what lets a consumer override a primitive and have it cascade through the whole system. (The same script holds the chart palette's SSR fallbacks in `src/components/Chart/palette.ts` to the `--color-chart-series-*` tokens, so the one place a chart colour lives outside CSS cannot drift from them.)
 - Every `var(--…)` a component references must actually resolve: `scripts/validate-token-usage.mjs` fails the build on a reference to a custom property nothing defines (a fallback value marks a deliberate consumer-override hook and is exempt). This is the guard that would have caught Dialog styling its title with a token family that never existed.
@@ -294,7 +294,7 @@ Tokens also have multiple homes — a token that exists only in CSS is incomplet
 These are stated at the level of **token roles**, deliberately: which colour, radius, typeface, or shadow a role resolves to is the theme owner's decision, lives in `design.md` and the token files, and can change without any of these sentences becoming false.
 
 - **One typeface**, with heading hierarchy carried by weight contrast — consecutive heading levels never share a weight.
-- **The primary-action token is reserved for actions**: primary CTAs, focus rings, active input borders. Never decorative, or it stops meaning "click here".
+- **The primary-action token is reserved for actions**: primary CTAs, focus rings, active input borders, and the selected item of a mutually exclusive set. Never decorative, or it stops meaning "click here".
 - **Shape is a per-element-type token, never a per-instance choice**: all buttons share one radius role, all inputs another. Change the token, not the component.
 - **Five status roles** (`info`, `positive`, `warning`, `error`, `neutral`), shared by every status-bearing component through the same `--color-status-*` set.
 - **Depth is token-owned**: surfaces step through the container ramp, and the only shadows are the elevation tokens the system defines. Components never add their own.

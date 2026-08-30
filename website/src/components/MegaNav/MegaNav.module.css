@@ -140,8 +140,23 @@
   outline-offset: 2px;
 }
 
+/* The current section's pill is the action-primary pair — the same
+   selected-segment treatment as SegmentedControl (the theme toggle), so
+   "you are here" survives the glassy header backdrop in both themes. The
+   hover rule below out-specifies .navLink:hover, which would otherwise
+   swap the teal back to the neutral hover fill. Desktop pills only: the
+   mobile drawer is NavList's own styling. */
 .navLinkActive {
-  background: var(--color-bg-container-secondary);
+  background: var(--color-action-primary-bg);
+  color: var(--color-action-primary-text);
+}
+
+.navLinkActive:hover {
+  background: var(--color-action-primary-bg-hover);
+}
+
+.navLinkActive .caret {
+  color: inherit;
 }
 
 /* ============================================
@@ -628,3 +643,4 @@
 :global(html[data-chat-resizing]) .stickyHeader {
   transition: none;
 }
+
