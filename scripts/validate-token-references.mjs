@@ -16,6 +16,13 @@
  * (src/components/Chart/palette.ts) to the --color-chart-series-* tokens:
  * they are the one place a chart colour lives outside CSS, and a re-themed
  * accent must not leave charts SSR-rendering the old colour.
+ *
+ * And holds the playground's NEUTRALS mirror
+ * (website/src/app/playground/theme-overrides.ts) to the neutral primitives,
+ * in both directions: neutralOverrides() regenerates every neutral — solid
+ * and rgba variant — from that table when tinting, so a step, variant, or
+ * alpha it doesn't mirror is a surface the playground silently leaves
+ * un-themed (which is how the glass variants went missing once).
  */
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -127,6 +134,71 @@ if (fallbacks.length === 0) {
   });
 }
 
+// Playground neutral mirror: the NEUTRALS table in theme-overrides.ts must
+// equal the neutral primitives — every solid step's hex, and every rgba
+// variant's suffix and alpha — in both directions.
+const overridesPath = join(
+  repoRoot,
+  'website', 'src', 'app', 'playground', 'theme-overrides.ts'
+);
+const overridesSource = readFileSync(overridesPath, 'utf8');
+const neutralsBlock = overridesSource.match(/const NEUTRALS: NeutralDef\[\] = \[([\s\S]*?)\n\];/);
+if (!neutralsBlock) {
+  errors.push(`playground/theme-overrides.ts: could not parse NEUTRALS — the neutral-mirror guard needs it`);
+} else {
+  const mirrored = new Map();
+  for (const m of neutralsBlock[1].matchAll(
+    /step:\s*"(\d\d)"\s*,\s*hex:\s*"([^"]+)"\s*,?\s*(?:alphas:\s*\{([^}]*)\})?/g
+  )) {
+    const alphas = new Map(
+      [...(m[3] ?? '').matchAll(/"(-[a-z-]+)":\s*([0-9.]+)/g)].map((a) => [a[1], Number(a[2])])
+    );
+    mirrored.set(m[1], { hex: m[2], alphas });
+  }
+
+  const parseRgba = (value) => {
+    const m = value.match(/^rgba\((\d+),\s*(\d+),\s*(\d+),\s*([0-9.]+)\)$/);
+    return m ? { rgb: [Number(m[1]), Number(m[2]), Number(m[3])], alpha: Number(m[4]) } : null;
+  };
+  const hexToRgb = (hex) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+
+  for (const [name, value] of primitiveValues) {
+    const stepMatch = name.match(/^--primitive-neutral-(\d\d)(-[a-z-]+)?$/);
+    if (!stepMatch) continue;
+    const [, step, suffix] = stepMatch;
+    const entry = mirrored.get(step);
+    if (!entry) {
+      errors.push(`theme-overrides.ts: NEUTRALS has no entry for step ${step} (${name}) — the playground cannot tint it`);
+      continue;
+    }
+    if (!suffix) {
+      if (entry.hex.toLowerCase() !== value.toLowerCase()) {
+        errors.push(`theme-overrides.ts: NEUTRALS step ${step} is ${entry.hex} but ${name} is ${value}`);
+      }
+    } else {
+      const rgba = parseRgba(value);
+      const declared = entry.alphas.get(suffix);
+      if (declared === undefined) {
+        errors.push(`theme-overrides.ts: NEUTRALS step ${step} does not mirror the ${suffix} variant (${name}) — a tinted playground theme leaves it un-themed`);
+      } else if (!rgba || rgba.alpha !== declared) {
+        errors.push(`theme-overrides.ts: NEUTRALS step ${step}${suffix} declares alpha ${declared} but ${name} is ${value}`);
+      } else if (rgba.rgb.join() !== hexToRgb(primitiveValues.get(`--primitive-neutral-${step}`) ?? '#000000').join()) {
+        errors.push(`theme-overrides.ts: ${name}'s rgb does not match the step ${step} base hex`);
+      }
+    }
+  }
+  for (const [step, entry] of mirrored) {
+    if (!primitiveValues.has(`--primitive-neutral-${step}`)) {
+      errors.push(`theme-overrides.ts: NEUTRALS lists step ${step}, which has no --primitive-neutral-${step}`);
+    }
+    for (const suffix of entry.alphas.keys()) {
+      if (!primitiveValues.has(`--primitive-neutral-${step}${suffix}`)) {
+        errors.push(`theme-overrides.ts: NEUTRALS step ${step} mirrors ${suffix}, but --primitive-neutral-${step}${suffix} does not exist`);
+      }
+    }
+  }
+}
+
 if (errors.length > 0) {
   console.error(
     `✗ Semantic colour tokens must chain to primitives (see CLAUDE.md — Token Architecture):\n` +
@@ -137,5 +209,6 @@ if (errors.length > 0) {
 
 console.log(
   `✓ Token references valid — every semantic colour token chains to a primitive; ` +
-    `${fallbacks.length} chart palette fallbacks match their tokens.`
+    `${fallbacks.length} chart palette fallbacks match their tokens; ` +
+    `the playground neutral mirror matches the primitives.`
 );

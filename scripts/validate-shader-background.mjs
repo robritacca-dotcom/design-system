@@ -185,7 +185,7 @@ const CLAIM_CHECKS = [
   { pattern: `(?:field |shader )?parameters`, expected: () => shipped?.length, name: 'ShaderField parameters' },
   { pattern: `(?:blob definitions|blurred CSS discs|CSS blobs)`, expected: () => blobCount, name: 'BLOB_COUNT' },
 ];
-for (const doc of ['README.md', 'design.md', 'CLAUDE.md']) {
+for (const doc of ['README.md', 'design.md', 'CLAUDE.md', 'website/src/app/docs/get-started/page.tsx']) {
   let text;
   try {
     text = readFileSync(join(repoRoot, doc), 'utf8').replace(/\r\n/g, '\n');
@@ -196,8 +196,10 @@ for (const doc of ['README.md', 'design.md', 'CLAUDE.md']) {
   for (const { pattern, expected, name } of CLAIM_CHECKS) {
     const target = expected();
     if (target === null || target === undefined) continue;
+    /* JSX prose wraps mid-sentence, so the claim may span a line break —
+       match any whitespace run where the phrasing has a space. */
     const claimPattern = new RegExp(
-      `\\b(${NUMBER_WORDS.join('|')}|\\d+) ${pattern}\\b`, 'gi'
+      `\\b(${NUMBER_WORDS.join('|')}|\\d+)\\s+${pattern.replace(/ /g, '\\s+')}\\b`, 'gi'
     );
     for (const match of text.matchAll(claimPattern)) {
       const claimed = claimNumber(match[1]);
