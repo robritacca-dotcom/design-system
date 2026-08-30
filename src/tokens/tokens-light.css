@@ -25,9 +25,12 @@
   /* Background - Container */
   --color-bg-container-primary: var(--primitive-neutral-00);
   --color-bg-container-primary-transparent: var(--primitive-neutral-00-transparent);
-  --color-bg-container-primary-semi: var(--primitive-neutral-00-semi);
-  --color-bg-container-secondary: var(--primitive-neutral-02);
-  --color-bg-container-tertiary: var(--primitive-neutral-03);
+  /* The semi surface rides the glass-strength white, not the 60% one: light
+     containers should read bright white, with the ambient background only
+     whispering through. */
+  --color-bg-container-primary-semi: var(--primitive-neutral-00-glass);
+  --color-bg-container-secondary: var(--primitive-neutral-01);
+  --color-bg-container-tertiary: var(--primitive-neutral-02);
   --color-bg-container-inverse: var(--primitive-neutral-09);
   --color-bg-container-border: var(--primitive-neutral-02);
 
@@ -125,10 +128,12 @@
   /* AI - The gradient accent reserved for AI entry points and surfaces.
      Red → blue → teal, so the AI affordance is its own signature and the
      flat action teal keeps meaning "click here". Used as gradient stops
-     (AiButton's ring and glow), never as fills for ordinary chrome. */
-  --color-ai-gradient-start: var(--primitive-red-06);
-  --color-ai-gradient-mid: var(--primitive-blue-06);
-  --color-ai-gradient-end: var(--primitive-teal-08);
+     (AiButton's ring and glow), never as fills for ordinary chrome.
+     One luminous set, shared with dark: the deeper inks read as a heavy
+     dark border on white surfaces. */
+  --color-ai-gradient-start: var(--primitive-red-05);
+  --color-ai-gradient-mid: var(--primitive-blue-05);
+  --color-ai-gradient-end: var(--primitive-teal-07);
 
   /* Chart - Contribution heatmap ramp (level 0 = none → level 4 = most) */
   --color-chart-contribution-0: var(--color-bg-container-primary);

@@ -440,10 +440,10 @@
   max-width: calc(100vw - var(--layout-chat-inset) * 2);
   display: flex;
   flex-direction: column;
-  /* Deliberately translucent in both themes (light's container token is
-     opaque), so the page's colours reach the glass; the blur is what keeps
-     the transcript readable over them. */
-  background: color-mix(in srgb, var(--color-bg-container-primary) 82%, transparent);
+  /* The glass token: deliberately translucent in both themes, so the
+     page's colours reach the surface; the blur is what keeps the
+     transcript readable over them. */
+  background: var(--color-bg-glass);
   border: var(--border-xs) solid var(--color-bg-container-border);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-floating);

@@ -39,7 +39,7 @@
 
 .ds-gauge__track {
   fill: none;
-  stroke: var(--color-bg-container-secondary);
+  stroke: var(--color-bg-container-tertiary);
   stroke-linecap: round;
 }
 

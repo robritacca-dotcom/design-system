@@ -149,10 +149,11 @@ const purpleColours: PrimitiveSwatch[] = [
 const neutralAlphaColours: PrimitiveSwatch[] = [
   { label: "Neutral 00 transparent", short: "00 · 1%", cssVar: "--primitive-neutral-00-transparent", hex: "rgba(255,255,255,0.01)", rgb: "255 / 255 / 255" },
   { label: "Neutral 00 semi", short: "00 · 60%", cssVar: "--primitive-neutral-00-semi", hex: "rgba(255,255,255,0.6)", rgb: "255 / 255 / 255" },
-  { label: "Neutral 00 glass", short: "00 · 82%", cssVar: "--primitive-neutral-00-glass", hex: "rgba(255,255,255,0.82)", rgb: "255 / 255 / 255" },
+  { label: "Neutral 00 glass", short: "00 · 90%", cssVar: "--primitive-neutral-00-glass", hex: "rgba(255,255,255,0.9)", rgb: "255 / 255 / 255" },
   { label: "Neutral 01 transparent", short: "01 · 1%", cssVar: "--primitive-neutral-01-transparent", hex: "rgba(241,241,241,0.01)", rgb: "241 / 241 / 241" },
   { label: "Neutral 01 semi", short: "01 · 60%", cssVar: "--primitive-neutral-01-semi", hex: "rgba(241,241,241,0.6)", rgb: "241 / 241 / 241" },
   { label: "Neutral 01 glass", short: "01 · 82%", cssVar: "--primitive-neutral-01-glass", hex: "rgba(241,241,241,0.82)", rgb: "241 / 241 / 241" },
+  { label: "Neutral 09 glass", short: "09 · 66%", cssVar: "--primitive-neutral-09-glass", hex: "rgba(14,14,14,0.66)", rgb: "14 / 14 / 14" },
   { label: "Neutral 02 semi", short: "02 · 80%", cssVar: "--primitive-neutral-02-semi", hex: "rgba(214,214,214,0.8)", rgb: "214 / 214 / 214" },
   { label: "Neutral 03 semi", short: "03 · 80%", cssVar: "--primitive-neutral-03-semi", hex: "rgba(188,188,188,0.8)", rgb: "188 / 188 / 188" },
   { label: "Neutral 07 semi", short: "07 · 80%", cssVar: "--primitive-neutral-07-semi", hex: "rgba(48,48,48,0.8)", rgb: "48 / 48 / 48" },

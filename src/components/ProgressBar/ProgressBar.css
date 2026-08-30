@@ -17,7 +17,7 @@
 .ds-progress-bar__track {
   flex: 1;
   height: 8px;
-  background-color: var(--color-bg-container-secondary);
+  background-color: var(--color-bg-container-tertiary);
   border-radius: var(--radius-full);
   overflow: hidden;
 }

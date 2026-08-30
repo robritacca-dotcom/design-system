@@ -21,7 +21,7 @@
   border-radius: var(--radius-full);
   outline: none;
   cursor: pointer;
-  background: var(--color-bg-container-secondary);
+  background: var(--color-bg-container-tertiary);
 }
 
 .ds-slider--compact .ds-slider__input {

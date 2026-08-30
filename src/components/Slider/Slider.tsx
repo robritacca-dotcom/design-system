@@ -91,7 +91,7 @@ export const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
           onChange={handleChange}
           aria-label={ariaLabel || rest['aria-label']}
           style={{
-            background: `linear-gradient(to right, var(--color-action-primary-bg) ${percentage}%, var(--color-bg-container-secondary) ${percentage}%)`,
+            background: `linear-gradient(to right, var(--color-action-primary-bg) ${percentage}%, var(--color-bg-container-tertiary) ${percentage}%)`,
             ...style,
           }}
         />

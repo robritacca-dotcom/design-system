@@ -100,8 +100,9 @@
   --color-status-neutral-border: var(--primitive-neutral-06);
   --color-status-neutral-text: var(--primitive-neutral-01);
 
-  /* AI - The gradient accent, one step brighter than light mode so the ring
-     stays luminous on dark surfaces. */
+  /* AI - The gradient accent: the same luminous stops as light. One set
+     works on both floors, so the AI signature never shifts hue with the
+     theme. */
   --color-ai-gradient-start: var(--primitive-red-05);
   --color-ai-gradient-mid: var(--primitive-blue-05);
   --color-ai-gradient-end: var(--primitive-teal-07);

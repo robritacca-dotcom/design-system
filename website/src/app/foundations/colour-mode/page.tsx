@@ -106,12 +106,12 @@ const containerColours: SwatchData[] = [
   {
     label: "Secondary", cssVar: "--color-bg-container-secondary",
     dark: { primitive: "--neutral--07--", hex: "#303030", rgb: "48 / 48 / 48" },
-    light: { primitive: "--neutral--02--", hex: "#D6D6D6", rgb: "214 / 214 / 214" },
+    light: { primitive: "--neutral--01--", hex: "#F1F1F1", rgb: "241 / 241 / 241" },
   },
   {
     label: "Tertiary", cssVar: "--color-bg-container-tertiary",
     dark: { primitive: "--neutral--08--", hex: "#232323", rgb: "35 / 35 / 35" },
-    light: { primitive: "--neutral--03--", hex: "#BCBCBC", rgb: "188 / 188 / 188" },
+    light: { primitive: "--neutral--02--", hex: "#D6D6D6", rgb: "214 / 214 / 214" },
   },
   {
     label: "Inverse", cssVar: "--color-bg-container-inverse",
@@ -121,7 +121,7 @@ const containerColours: SwatchData[] = [
   {
     label: "Primary Semi", cssVar: "--color-bg-container-primary-semi",
     dark: { primitive: "--neutral--09-semi-transparent--", hex: "rgba(14,14,14,0.6)", rgb: "14 / 14 / 14" },
-    light: { primitive: "--neutral--00-semi--", hex: "rgba(255,255,255,0.6)", rgb: "255 / 255 / 255" },
+    light: { primitive: "--neutral--00-glass--", hex: "rgba(255,255,255,0.9)", rgb: "255 / 255 / 255" },
   },
   {
     label: "Primary Transparent", cssVar: "--color-bg-container-primary-transparent",
@@ -136,7 +136,7 @@ const containerColours: SwatchData[] = [
   {
     label: "Glass", cssVar: "--color-bg-glass",
     dark: { primitive: "--neutral--09-glass--", hex: "rgba(14,14,14,0.66)", rgb: "14 / 14 / 14" },
-    light: { primitive: "--neutral--00-glass--", hex: "rgba(255,255,255,0.82)", rgb: "255 / 255 / 255" },
+    light: { primitive: "--neutral--00-glass--", hex: "rgba(255,255,255,0.9)", rgb: "255 / 255 / 255" },
   },
 ];
 
@@ -159,7 +159,7 @@ const chatBubbleColours: SwatchData[] = [
   {
     label: "Sent bg", cssVar: "--color-chat-bubble-sent-bg",
     dark: { primitive: "--neutral--07--", hex: "#303030", rgb: "48 / 48 / 48" },
-    light: { primitive: "--neutral--02--", hex: "#D6D6D6", rgb: "214 / 214 / 214" },
+    light: { primitive: "--neutral--01--", hex: "#F1F1F1", rgb: "241 / 241 / 241" },
   },
   {
     label: "Sent text", cssVar: "--color-chat-bubble-sent-text",
@@ -169,7 +169,7 @@ const chatBubbleColours: SwatchData[] = [
   {
     label: "Received bg", cssVar: "--color-chat-bubble-received-bg",
     dark: { primitive: "--neutral--07--", hex: "#303030", rgb: "48 / 48 / 48" },
-    light: { primitive: "--neutral--02--", hex: "#D6D6D6", rgb: "214 / 214 / 214" },
+    light: { primitive: "--neutral--01--", hex: "#F1F1F1", rgb: "241 / 241 / 241" },
   },
   {
     label: "Received text", cssVar: "--color-chat-bubble-received-text",
@@ -445,17 +445,17 @@ const aiGradientColours: SwatchData[] = [
   {
     label: "Start", cssVar: "--color-ai-gradient-start",
     dark: { primitive: "--red--05--", hex: "#F37F9B", rgb: "243 / 127 / 155" },
-    light: { primitive: "--red--06--", hex: "#F16385", rgb: "241 / 99 / 133" },
+    light: { primitive: "--red--05--", hex: "#F37F9B", rgb: "243 / 127 / 155" },
   },
   {
     label: "Mid", cssVar: "--color-ai-gradient-mid",
     dark: { primitive: "--blue--05--", hex: "#5475D4", rgb: "84 / 117 / 212" },
-    light: { primitive: "--blue--06--", hex: "#345AC4", rgb: "52 / 90 / 196" },
+    light: { primitive: "--blue--05--", hex: "#5475D4", rgb: "84 / 117 / 212" },
   },
   {
     label: "End", cssVar: "--color-ai-gradient-end",
     dark: { primitive: "--teal--07--", hex: "#118AB2", rgb: "17 / 138 / 178" },
-    light: { primitive: "--teal--08--", hex: "#0E6E8F", rgb: "14 / 110 / 143" },
+    light: { primitive: "--teal--07--", hex: "#118AB2", rgb: "17 / 138 / 178" },
   },
 ];
 
@@ -464,7 +464,7 @@ const chartContributionColours: SwatchData[] = [
   {
     label: "Level 0", cssVar: "--color-chart-contribution-0",
     dark: { primitive: "--neutral--08--", hex: "#232323", rgb: "35 / 35 / 35" },
-    light: { primitive: "--neutral--01--", hex: "#F1F1F1", rgb: "241 / 241 / 241" },
+    light: { primitive: "--neutral--00--", hex: "#FFFFFF", rgb: "255 / 255 / 255" },
   },
   {
     label: "Level 1", cssVar: "--color-chart-contribution-1",

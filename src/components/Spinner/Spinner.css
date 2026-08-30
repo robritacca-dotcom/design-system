@@ -39,7 +39,7 @@
 }
 
 .ds-spinner__track {
-  stroke: var(--color-bg-container-secondary);
+  stroke: var(--color-bg-container-tertiary);
 }
 
 .ds-spinner__arc {

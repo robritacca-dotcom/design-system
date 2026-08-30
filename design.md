@@ -2,7 +2,7 @@
 
 ## Overview
 
-This design system is a **cool-professional, teal-anchored** component library and documentation website. The base atmosphere is a **soft gray page floor** (`--color-bg-page-primary` — #F1F1F1) carrying **crisp white containers** (`--color-bg-container-primary` — #FFFFFF) that step deeper through the neutral hierarchy (mid gray #D6D6D6 → deep gray #BCBCBC) — clinical, precise, never warm. The brand voltage comes from **signature teal** (`--color-action-primary-bg` — #0E6E8F light / #3CA5C6 dark), a cyan-blue that reads trustworthy and technical without corporate-blue flatness. The action colour is deliberately theme-dependent: no single teal step can clear 3:1 against both a light page and a near-black one while also carrying a 4.5:1 label, so light mode takes a deep fill under a light label and dark mode inverts to a light fill under a dark label.
+This design system is a **cool-professional, teal-anchored** component library and documentation website. The base atmosphere is a **soft gray page floor** (`--color-bg-page-primary` — #F1F1F1) carrying **crisp white containers** (`--color-bg-container-primary` — #FFFFFF) that step deeper through the neutral hierarchy (soft gray #F1F1F1 → mid gray #D6D6D6) — clinical, precise, never warm. The brand voltage comes from **signature teal** (`--color-action-primary-bg` — #0E6E8F light / #3CA5C6 dark), a cyan-blue that reads trustworthy and technical without corporate-blue flatness. The action colour is deliberately theme-dependent: no single teal step can clear 3:1 against both a light page and a near-black one while also carrying a 4.5:1 label, so light mode takes a deep fill under a light label and dark mode inverts to a light fill under a dark label.
 
 The system runs a **single typeface throughout**: **Nunito Sans** at weight 300 (display/hero) → 600 (headings) → 500/400 (body/UI). There is no serif face, and monospace appears only in sanctioned code contexts through `--font-family-code` — the typographic personality is clean, rounded, and approachable rather than editorial.
 
@@ -52,11 +52,11 @@ The action roles are the one token family that splits per theme by design (see O
 ### Surfaces
 - **Page primary** (`--color-bg-page-primary` — #F1F1F1 light / #050505 dark): The floor of every screen.
 - **Container primary** (`--color-bg-container-primary` — #FFFFFF light / rgba(14,14,14,0.8) dark): First elevation above page — sidebars, section bands, card fills. In light mode this is crisp white lifting off the gray page floor.
-- **Container secondary** (`--color-bg-container-secondary` — #D6D6D6 light / #303030 dark): Second elevation — nested containers, divider fills.
-- **Container tertiary** (`--color-bg-container-tertiary` — #BCBCBC light / #232323 dark): Third elevation — pressed states, deepest nesting.
+- **Container secondary** (`--color-bg-container-secondary` — #F1F1F1 light / #303030 dark): Second elevation — nested containers, divider fills.
+- **Container tertiary** (`--color-bg-container-tertiary` — #D6D6D6 light / #232323 dark): Third elevation — pressed states, control tracks (Slider, ProgressBar, Meter, Spinner, Gauge), deepest nesting.
 - **Container border** (`--color-bg-container-border` — #D6D6D6 light / #232323 dark): Hairline borders on containers.
 - **Container inverse** (`--color-bg-container-inverse` — #0E0E0E light / #F1F1F1 dark): High-contrast inverted surface — the tooltip bubble. Always paired with `--color-text-on-inverse`.
-- **Glass** (`--color-bg-glass` — rgba(255,255,255,0.82) light / rgba(14,14,14,0.66) dark): The floating-surface fill — deliberately translucent in both themes so the page's colours reach the surface. Always paired with `backdrop-filter: blur(24px)`, which is what keeps content readable through it; the blur radius is a documented constant, not a token. Used by the site chat panel and AppSidebar's floating variant.
+- **Glass** (`--color-bg-glass` — rgba(255,255,255,0.9) light / rgba(14,14,14,0.66) dark): The floating-surface fill — deliberately translucent in both themes so the page's colours reach the surface. Always paired with `backdrop-filter: blur(24px)`, which is what keeps content readable through it; the blur radius is a documented constant, not a token. Used by the site chat panel and AppSidebar's floating variant.
 - **Divider** (`--color-divider` — rgba(214,214,214,0.8) light / rgba(35,35,35,0.8) dark): Horizontal/vertical rule between sections.
 
 ### Chat bubbles
@@ -111,11 +111,11 @@ The red → blue → teal gradient is the system's "a model answers here" signal
 
 | Stop | Light | Dark |
 |---|---|---|
-| `--color-ai-gradient-start` | `red-06` #F16385 | `red-05` #F37F9B |
-| `--color-ai-gradient-mid` | `blue-06` #345AC4 | `blue-05` #5475D4 |
-| `--color-ai-gradient-end` | `teal-08` #0E6E8F | `teal-07` #118AB2 |
+| `--color-ai-gradient-start` | `red-05` #F37F9B | `red-05` #F37F9B |
+| `--color-ai-gradient-mid` | `blue-05` #5475D4 | `blue-05` #5475D4 |
+| `--color-ai-gradient-end` | `teal-07` #118AB2 | `teal-07` #118AB2 |
 
-Dark mode runs one primitive step brighter so the gradient stays luminous on dark surfaces. The teal stop sits deeper than the red and blue ones so the gradient ends on the same weight the action colour carries.
+One luminous set serves both themes: the stops are bright enough to stay luminous on dark surfaces, while the deeper inks the light theme once used read as a heavy dark border on white. The teal stop sits deeper than the red and blue ones so the gradient ends on the same weight the action colour carries.
 
 ---
 
@@ -516,11 +516,11 @@ Field-level error state is where the system's responsibility ends, by design: fo
 
 ### ToggleSwitch
 
-**`ds-toggle-switch`** — Binary on/off switch: a 42×24px `--radius-full` track filled with `--color-action-primary-bg` when on, holding a 20px `--color-control-thumb` circle that slides with a spring-curve transition and shows a check icon. Rendered as a `<button role="switch" aria-checked>`; the optional inline label uses `--font-paragraph-*`. Sizes: `default`, `compact`. Used for settings like the site's theme toggle. SelectionCard's `toggle` mode reuses this exact anatomy.
+**`ds-toggle-switch`** — Binary on/off switch: a 42×24px `--radius-full` track filled with `--color-action-primary-bg` when on, holding a 20px `--color-control-thumb` circle that slides with a spring-curve transition and shows a check icon. Rendered as a `<button role="switch" aria-checked>`; the optional inline label uses `--font-paragraph-*`. Sizes: `default`, `compact`. Used for binary settings — an on/off preference with immediate effect. (The site's own theme control outgrew it: three states made it a SegmentedControl.) SelectionCard's `toggle` mode reuses this exact anatomy.
 
 ### Slider
 
-**`ds-slider`** — Range input styled with a two-tone track: `--color-action-primary-bg` fill up to the current value, `--color-bg-container-secondary` beyond it, with a `--radius-full` thumb that gains a `--color-action-primary-bg-hover` focus ring. Native `<input type="range">` underneath, so keyboard and screen-reader behaviour come for free (`min`/`max`/`step` props). Sizes: `default`, `compact`. Disabled: `opacity: 0.4`.
+**`ds-slider`** — Range input styled with a two-tone track: `--color-action-primary-bg` fill up to the current value, `--color-bg-container-tertiary` beyond it, with a `--radius-full` thumb that gains a `--color-action-primary-bg-hover` focus ring. Native `<input type="range">` underneath, so keyboard and screen-reader behaviour come for free (`min`/`max`/`step` props). Sizes: `default`, `compact`. Disabled: `opacity: 0.4`.
 
 ### Swatch
 
@@ -594,11 +594,11 @@ Default icons (Material Symbols Rounded): `info`, `check_circle`, `warning`, `er
 
 ### ProgressBar
 
-**`ds-progress-bar`** — Determinate progress as a horizontal `--radius-full` track in `--color-bg-container-secondary` with a `--color-core-accent-mint` fill scaled to the clamped 0–100 value. Optional percentage label (`showLabel`) in `--font-paragraph-sm-em-*`. `role="progressbar"` with `aria-valuenow`/`-valuemin`/`-valuemax` and an `ariaLabel` describing what is loading. Sizes: `default`, `compact` (bar height).
+**`ds-progress-bar`** — Determinate progress as a horizontal `--radius-full` track in `--color-bg-container-tertiary` with a `--color-core-accent-mint` fill scaled to the clamped 0–100 value. Optional percentage label (`showLabel`) in `--font-paragraph-sm-em-*`. `role="progressbar"` with `aria-valuenow`/`-valuemin`/`-valuemax` and an `ariaLabel` describing what is loading. Sizes: `default`, `compact` (bar height).
 
 ### Meter
 
-**`ds-meter`** — Level indicator for a known quantity: storage used, tokens spent, password strength, battery left. The counterpart to ProgressBar — same `--radius-full` track in `--color-bg-container-secondary`, but the number means "how full", not "how far along", and the fill is coloured by the five status roles so the level carries its own judgement. The fill uses the full-strength `--color-status-*-border` weight, not the tinted `-bg` — a tint would vanish in an 8px ribbon. Optional header row: `label` in `--font-paragraph-sm-em-*` on the left, a `showValue` readout in tabular figures on the right (`valueText` replaces the default percentage and is spoken via `aria-valuetext` — "128k of 200k tokens"). Custom `min`/`max` ranges; the fill animates at `--motion-duration-base`. `role="meter"` with the value attributes, named by `label` or `aria-label`. Sizes: `default` (8px track), `compact` (4px). Presentational — no `'use client'`, renders from a Server Component.
+**`ds-meter`** — Level indicator for a known quantity: storage used, tokens spent, password strength, battery left. The counterpart to ProgressBar — same `--radius-full` track in `--color-bg-container-tertiary`, but the number means "how full", not "how far along", and the fill is coloured by the five status roles so the level carries its own judgement. The fill uses the full-strength `--color-status-*-border` weight, not the tinted `-bg` — a tint would vanish in an 8px ribbon. Optional header row: `label` in `--font-paragraph-sm-em-*` on the left, a `showValue` readout in tabular figures on the right (`valueText` replaces the default percentage and is spoken via `aria-valuetext` — "128k of 200k tokens"). Custom `min`/`max` ranges; the fill animates at `--motion-duration-base`. `role="meter"` with the value attributes, named by `label` or `aria-label`. Sizes: `default` (8px track), `compact` (4px). Presentational — no `'use client'`, renders from a Server Component.
 
 ### Skeleton
 
@@ -606,7 +606,7 @@ Default icons (Material Symbols Rounded): `info`, `check_circle`, `warning`, `er
 
 ### Spinner
 
-**`ds-spinner`** — Indeterminate loading indicator: an SVG circle with a `--color-bg-container-secondary` track and a rotating arc in `--color-action-primary-bg` (`variant="primary"`) or `--color-text-secondary` (`variant="neutral"`); `variant="inherit"` draws both circles in `currentColor` (track at 0.25 opacity) so the spinner matches the surrounding control — it's what Button and CircularButton use for their `loading` state. Sizes `sm`/`md`/`lg` (16/24/36px). `role="status"` with a configurable `label`. Use Spinner for indeterminate waits and ProgressBar when the completion fraction is known.
+**`ds-spinner`** — Indeterminate loading indicator: an SVG circle with a `--color-bg-container-tertiary` track and a rotating arc in `--color-action-primary-bg` (`variant="primary"`) or `--color-text-secondary` (`variant="neutral"`); `variant="inherit"` draws both circles in `currentColor` (track at 0.25 opacity) so the spinner matches the surrounding control — it's what Button and CircularButton use for their `loading` state. Sizes `sm`/`md`/`lg` (16/24/36px). `role="status"` with a configurable `label`. Use Spinner for indeterminate waits and ProgressBar when the completion fraction is known.
 
 ### EmptyState
 
@@ -830,7 +830,7 @@ Month labels, caption, and Less→More legend use `--font-paragraph-sm-*` in `--
 
 ### Gauge
 
-**`ds-gauge`** — A radial dial for a single bounded reading: capacity, usage, a score against a target. Like Sparkline, dependency-free SVG with no `'use client'`, so it renders from a Server Component and keeps its own folder rather than joining `Chart/`. It wears the chart family's shared chrome — the `ds-chart` card, header (`title`/`subtitle`), and padding come from `Chart.css`, with `bare` stripping them inside a Panel; unlike the fluid recharts bodies the dial has intrinsic size, so a bare gauge shrink-wraps for Stat rows and tiles. The dial is a three-quarter circle (270° sweep, gap at the bottom) drawn as two `pathLength=100` circles: a quiet `--color-bg-container-secondary` track and a value arc in `currentColor` (default `strokeWidth` 12, round caps like the family's ring ends), animating between readings via a `stroke-dasharray` transition at `--motion-duration-slow` `--motion-ease-emphasized`. Colour flows through `color` per tone — `accent` (default) `--color-chart-series-1`, the family's lead data colour, then the `positive`/`warning`/`error` status **border** tokens (stable across themes, where the dark-mode text tints are near-white and would wash the tones into one) and `neutral` `--color-text-secondary` — and `thresholds` recolour the dial as the reading crosses them (highest threshold at or below the value wins), which is how a capacity dial goes amber at 70 and red at 90. The centre mirrors the family's radial centre label: the reading in `--font-sub-display-*` `--color-text-primary` (formatted via `formatValue`) over an optional caption (`--font-caption-*`, `--color-text-secondary`) that doubles as the accessible name. `size` and `strokeWidth` are SVG geometry in pixels, not tokens. The dial is announced as `role="meter"` with `aria-valuenow/min/max` and the formatted reading as `aria-valuetext`; a degenerate range (`max <= min`) draws an empty dial rather than NaN.
+**`ds-gauge`** — A radial dial for a single bounded reading: capacity, usage, a score against a target. Like Sparkline, dependency-free SVG with no `'use client'`, so it renders from a Server Component and keeps its own folder rather than joining `Chart/`. It wears the chart family's shared chrome — the `ds-chart` card, header (`title`/`subtitle`), and padding come from `Chart.css`, with `bare` stripping them inside a Panel; unlike the fluid recharts bodies the dial has intrinsic size, so a bare gauge shrink-wraps for Stat rows and tiles. The dial is a three-quarter circle (270° sweep, gap at the bottom) drawn as two `pathLength=100` circles: a quiet `--color-bg-container-tertiary` track and a value arc in `currentColor` (default `strokeWidth` 12, round caps like the family's ring ends), animating between readings via a `stroke-dasharray` transition at `--motion-duration-slow` `--motion-ease-emphasized`. Colour flows through `color` per tone — `accent` (default) `--color-chart-series-1`, the family's lead data colour, then the `positive`/`warning`/`error` status **border** tokens (stable across themes, where the dark-mode text tints are near-white and would wash the tones into one) and `neutral` `--color-text-secondary` — and `thresholds` recolour the dial as the reading crosses them (highest threshold at or below the value wins), which is how a capacity dial goes amber at 70 and red at 90. The centre mirrors the family's radial centre label: the reading in `--font-sub-display-*` `--color-text-primary` (formatted via `formatValue`) over an optional caption (`--font-caption-*`, `--color-text-secondary`) that doubles as the accessible name. `size` and `strokeWidth` are SVG geometry in pixels, not tokens. The dial is announced as `role="meter"` with `aria-valuenow/min/max` and the formatted reading as `aria-valuetext`; a degenerate range (`max <= min`) draws an empty dial rather than NaN.
 
 ### FunnelChart
 
