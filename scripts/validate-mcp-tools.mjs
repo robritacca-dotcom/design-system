@@ -36,6 +36,28 @@ if (registered.length === 0) {
   );
 }
 
+// The route's browser landing page renders its own tool list (the TOOLS
+// array in the same file). Hold it to the registrations in both directions.
+const toolsArray = route.match(/const TOOLS[^=]*=\s*\[([\s\S]*?)\];/);
+if (!toolsArray) {
+  errors.push(
+    'the TOOLS array is missing from website/src/app/api/mcp/route.ts — ' +
+      'the landing page needs it; if it was renamed, update this script.'
+  );
+} else {
+  const listed = [...toolsArray[1].matchAll(/name:\s*["']([a-z_]+)["']/g)].map((m) => m[1]);
+  for (const name of registered) {
+    if (!listed.includes(name)) {
+      errors.push(`the landing page's TOOLS array is missing registered tool "${name}".`);
+    }
+  }
+  for (const name of listed) {
+    if (!registered.includes(name)) {
+      errors.push(`the landing page's TOOLS array lists "${name}", which the route never registers.`);
+    }
+  }
+}
+
 /** Files whose prose states the tool count. Add a file here when a new surface does. */
 const COUNTED_SURFACES = ['README.md', 'website/src/app/overview/page.tsx'];
 
