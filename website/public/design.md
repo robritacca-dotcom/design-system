@@ -219,7 +219,7 @@ When a page renders markdown (via `react-markdown` or similar), apply these head
 
 ### Responsive Collapse
 
-The display tier collapses **in the token layer**, once, at 768px (see the Hierarchy table): page titles (`--font-display-2-*`) go 64px → 40px and section heads (`--font-sub-display-*`) go 30px → 24px with no per-page CSS. Pages that reference the tokens are responsive by default — never re-hardcode a mobile font size in a page module.
+The display tier collapses **in the token layer**, once, at 768px (see the Hierarchy table): page titles (`--font-display-2-*`) go 64px → 40px and section heads (`--font-sub-display-*`) go 30px → 24px with no per-page CSS. Pages that reference the tokens are responsive by default — never re-hardcode a mobile font size in a page module. One sanctioned exception, marked with a `ds-allow(typography)` directive at the site: the chat panel's welcome ask line repeats the sub-display step as a *container* query on the panel's own width (`SiteChat.module.css`), because the docked panel is phone-width on desktop windows the viewport media query calls large — the panel wears the phone scale below a 768px container, and only the fullscreen takeover on a wide window keeps the 30px size. It restates the same 24px/36px pair, and the two must move together.
 
 - Headings 1–3 and the body tiers do **not** step; 22–30px headings stay readable on phones.
 - The weight contrast rule still applies; do not change weights at any breakpoint.

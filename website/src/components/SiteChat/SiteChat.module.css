@@ -138,6 +138,24 @@
   color: var(--color-text-secondary);
 }
 
+/* The panel is a viewport of its own. tokens-typography.css collapses
+   sub-display to 24px/36px under a 768px *viewport*, but the docked panel
+   is phone-width on a desktop window, where that media query still serves
+   the 30px desktop size into a 420px card. So the ask line takes the same
+   step on the *container's* width, at the same 768px line: narrower than
+   that, the panel wears the phone scale, and only the takeover on a wide
+   window keeps the full size. The values restate the token layer's own
+   phone step rather than referencing it, because a value inside an
+   unmatched media query is unreachable — tokens-typography.css owns the
+   pair, and the two must move together (design.md, Responsive Collapse). */
+/* ds-allow(typography): the token layer's 768px sub-display step, restated for the panel's container width — tokens-typography.css owns the values */
+@container sitechat (max-width: 768px) {
+  .welcomeAsk {
+    --font-sub-display-size: 24px;
+    --font-sub-display-line-height: 36px;
+  }
+}
+
 /* The bottom region: starters at its top, disclaimer pinned to its
    bottom. Grown while the chat is empty (centring the composer against
    the zero-basis top region), collapsing to the disclaimer's height on

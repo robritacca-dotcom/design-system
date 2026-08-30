@@ -29,7 +29,16 @@ import { fileURLToPath } from 'node:url';
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
 
-export const CATEGORIES = new Set(['icon-size', 'motion', 'color', 'mockup']);
+export const CATEGORIES = new Set([
+  'icon-size',
+  'motion',
+  'color',
+  'mockup',
+  // Type-scale values restated outside the token files — today only the
+  // chat panel's container-width copy of the sub-display 768px step, which
+  // cannot reference the value inside the token layer's media query.
+  'typography',
+]);
 
 // Normalize CRLF so Windows checkouts validate identically to CI.
 const read = (path) => readFileSync(path, 'utf8').replace(/\r\n/g, '\n');
