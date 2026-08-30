@@ -2,7 +2,7 @@
 
 ## Overview
 
-This design system is a **cool-professional, teal-anchored** component library and documentation website. The base atmosphere is a **pure white page floor** (`--color-bg-page-primary` — #FFFFFF) lifted by a **neutral container hierarchy** (light gray #F1F1F1 → mid gray #D6D6D6 → deep gray #BCBCBC) — clinical, precise, never warm. The brand voltage comes from **signature teal** (`--color-action-primary-bg` — #0E6E8F light / #3CA5C6 dark), a cyan-blue that reads trustworthy and technical without corporate-blue flatness. The action colour is deliberately theme-dependent: no single teal step can clear 3:1 against both a white page and a near-black one while also carrying a 4.5:1 label, so light mode takes a deep fill under a light label and dark mode inverts to a light fill under a dark label.
+This design system is a **cool-professional, teal-anchored** component library and documentation website. The base atmosphere is a **soft gray page floor** (`--color-bg-page-primary` — #F1F1F1) carrying **crisp white containers** (`--color-bg-container-primary` — #FFFFFF) that step deeper through the neutral hierarchy (mid gray #D6D6D6 → deep gray #BCBCBC) — clinical, precise, never warm. The brand voltage comes from **signature teal** (`--color-action-primary-bg` — #0E6E8F light / #3CA5C6 dark), a cyan-blue that reads trustworthy and technical without corporate-blue flatness. The action colour is deliberately theme-dependent: no single teal step can clear 3:1 against both a light page and a near-black one while also carrying a 4.5:1 label, so light mode takes a deep fill under a light label and dark mode inverts to a light fill under a dark label.
 
 The system runs a **single typeface throughout**: **Nunito Sans** at weight 300 (display/hero) → 600 (headings) → 500/400 (body/UI). There is no serif face, and monospace appears only in sanctioned code contexts through `--font-family-code` — the typographic personality is clean, rounded, and approachable rather than editorial.
 
@@ -14,7 +14,7 @@ The **three-tier token architecture** is the defining structural rule:
 The system is **light/dark-first**: every semantic color token has a light-theme value and a dark-theme override. The switch is driven by `data-theme="dark"` on the root element. Status colors (positive, warning, error, info) stay perceptually stable across themes; surfaces and text invert.
 
 **Key Characteristics:**
-- White page floor (`--color-bg-page-primary` — #FFFFFF) with near-black primary text (`--color-text-primary` — #050505 light / #F1F1F1 dark).
+- Soft gray page floor (`--color-bg-page-primary` — #F1F1F1) with near-black primary text (`--color-text-primary` — #050505 light / #F1F1F1 dark), and crisp white containers lifting off it.
 - Teal primary action (`--color-action-primary-bg` — #0E6E8F light / #3CA5C6 dark). Used exclusively on primary CTA buttons and focus rings, with one sanctioned data-viz exception: teal leads the default chart series palette. Never decorative elsewhere.
 - Nunito Sans single-family system. Weight 300 for Mega/Display (marketing), 600 for headings, 500/400 for body and UI labels.
 - Container hierarchy as depth signal — standard containers carry no drop shadows. Depth is conveyed by stepping through `--color-bg-container-primary` → `secondary` → `tertiary`; the only shadows are the `--shadow-floating`/`--shadow-modal` tokens on floating surfaces and the interactive-card hover lift.
@@ -50,13 +50,13 @@ The action roles are the one token family that splits per theme by design (see O
 - **Passive text** (`--color-action-passive-text` — #050505 light / #F1F1F1 dark): Ghost button label color.
 
 ### Surfaces
-- **Page primary** (`--color-bg-page-primary` — #FFFFFF light / #050505 dark): The floor of every screen.
-- **Container primary** (`--color-bg-container-primary` — #F1F1F1 light / rgba(14,14,14,0.8) dark): First elevation above page — sidebars, section bands, card fills.
+- **Page primary** (`--color-bg-page-primary` — #F1F1F1 light / #050505 dark): The floor of every screen.
+- **Container primary** (`--color-bg-container-primary` — #FFFFFF light / rgba(14,14,14,0.8) dark): First elevation above page — sidebars, section bands, card fills. In light mode this is crisp white lifting off the gray page floor.
 - **Container secondary** (`--color-bg-container-secondary` — #D6D6D6 light / #303030 dark): Second elevation — nested containers, divider fills.
 - **Container tertiary** (`--color-bg-container-tertiary` — #BCBCBC light / #232323 dark): Third elevation — pressed states, deepest nesting.
 - **Container border** (`--color-bg-container-border` — #D6D6D6 light / #232323 dark): Hairline borders on containers.
 - **Container inverse** (`--color-bg-container-inverse` — #0E0E0E light / #F1F1F1 dark): High-contrast inverted surface — the tooltip bubble. Always paired with `--color-text-on-inverse`.
-- **Glass** (`--color-bg-glass` — rgba(241,241,241,0.82) light / rgba(14,14,14,0.66) dark): The floating-surface fill — deliberately translucent in both themes so the page's colours reach the surface. Always paired with `backdrop-filter: blur(24px)`, which is what keeps content readable through it; the blur radius is a documented constant, not a token. Used by the site chat panel and AppSidebar's floating variant.
+- **Glass** (`--color-bg-glass` — rgba(255,255,255,0.82) light / rgba(14,14,14,0.66) dark): The floating-surface fill — deliberately translucent in both themes so the page's colours reach the surface. Always paired with `backdrop-filter: blur(24px)`, which is what keeps content readable through it; the blur radius is a documented constant, not a token. Used by the site chat panel and AppSidebar's floating variant.
 - **Divider** (`--color-divider` — rgba(214,214,214,0.8) light / rgba(35,35,35,0.8) dark): Horizontal/vertical rule between sections.
 
 ### Chat bubbles
@@ -524,7 +524,7 @@ Field-level error state is where the system's responsibility ends, by design: fo
 
 ### Swatch
 
-**`ds-swatch`** — Clickable colour tile: a 24px `<button>` (20px `compact`) whose background is the `value` colour, passed through the `--ds-swatch-color` custom property so the stylesheet stays data-free. Shapes: `circle` (default, `--radius-full`) and `square` (`--radius-sm`). A hairline `--color-bg-container-border` inset keeps light colours visible on the white floor; `selected` draws the theme-aware ring (`--color-bg-page-primary` gap + `--color-text-primary` outline) and sets `aria-pressed`. Purely presentational — no `'use client'`, so it renders from Server Components. Disabled: `opacity: 0.4`.
+**`ds-swatch`** — Clickable colour tile: a 24px `<button>` (20px `compact`) whose background is the `value` colour, passed through the `--ds-swatch-color` custom property so the stylesheet stays data-free. Shapes: `circle` (default, `--radius-full`) and `square` (`--radius-sm`). A hairline `--color-bg-container-border` inset keeps light colours visible on light surfaces; `selected` draws the theme-aware ring (`--color-bg-page-primary` gap + `--color-text-primary` outline) and sets `aria-pressed`. Purely presentational — no `'use client'`, so it renders from Server Components. Disabled: `opacity: 0.4`.
 
 ### ColorPicker
 
@@ -1021,8 +1021,8 @@ Five groups fit four columns because Site and Design system share the first one 
 The theme is activated by `data-theme="dark"` on the HTML root element. The `tokens-light.css` applies under `[data-theme="light"], :root`. The `tokens-dark.css` applies under `[data-theme="dark"]`.
 
 **Tokens that invert:**
-- `--color-bg-page-primary` #FFFFFF → #050505
-- `--color-bg-container-*` (light grays → dark grays)
+- `--color-bg-page-primary` #F1F1F1 → #050505
+- `--color-bg-container-*` (white and light grays → dark grays)
 - `--color-text-primary` #050505 → #F1F1F1
 - `--color-text-secondary`, `--color-text-tertiary` (dark grays → light grays)
 - `--color-divider` (light semi → dark semi)

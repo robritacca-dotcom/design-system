@@ -147,6 +147,9 @@ const purpleColours: PrimitiveSwatch[] = [
    The compact label is the neutral step plus its alpha, since that is the
    only thing that separates two tokens built on the same step. */
 const neutralAlphaColours: PrimitiveSwatch[] = [
+  { label: "Neutral 00 transparent", short: "00 · 1%", cssVar: "--primitive-neutral-00-transparent", hex: "rgba(255,255,255,0.01)", rgb: "255 / 255 / 255" },
+  { label: "Neutral 00 semi", short: "00 · 60%", cssVar: "--primitive-neutral-00-semi", hex: "rgba(255,255,255,0.6)", rgb: "255 / 255 / 255" },
+  { label: "Neutral 00 glass", short: "00 · 82%", cssVar: "--primitive-neutral-00-glass", hex: "rgba(255,255,255,0.82)", rgb: "255 / 255 / 255" },
   { label: "Neutral 01 transparent", short: "01 · 1%", cssVar: "--primitive-neutral-01-transparent", hex: "rgba(241,241,241,0.01)", rgb: "241 / 241 / 241" },
   { label: "Neutral 01 semi", short: "01 · 60%", cssVar: "--primitive-neutral-01-semi", hex: "rgba(241,241,241,0.6)", rgb: "241 / 241 / 241" },
   { label: "Neutral 01 glass", short: "01 · 82%", cssVar: "--primitive-neutral-01-glass", hex: "rgba(241,241,241,0.82)", rgb: "241 / 241 / 241" },

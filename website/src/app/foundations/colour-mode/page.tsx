@@ -87,7 +87,7 @@ const pageColours: SwatchData[] = [
   {
     label: "Primary", cssVar: "--color-bg-page-primary",
     dark: { primitive: "--neutral--10--", hex: "#050505", rgb: "5 / 5 / 5" },
-    light: { primitive: "--neutral--00--", hex: "#FFFFFF", rgb: "255 / 255 / 255" },
+    light: { primitive: "--neutral--01--", hex: "#F1F1F1", rgb: "241 / 241 / 241" },
   },
   {
     label: "Inverse", cssVar: "--color-bg-page-inverse",
@@ -101,7 +101,7 @@ const containerColours: SwatchData[] = [
   {
     label: "Primary", cssVar: "--color-bg-container-primary",
     dark: { primitive: "--neutral--09-semi--", hex: "rgba(14,14,14,0.8)", rgb: "14 / 14 / 14" },
-    light: { primitive: "--neutral--01--", hex: "#F1F1F1", rgb: "241 / 241 / 241" },
+    light: { primitive: "--neutral--00--", hex: "#FFFFFF", rgb: "255 / 255 / 255" },
   },
   {
     label: "Secondary", cssVar: "--color-bg-container-secondary",
@@ -121,12 +121,12 @@ const containerColours: SwatchData[] = [
   {
     label: "Primary Semi", cssVar: "--color-bg-container-primary-semi",
     dark: { primitive: "--neutral--09-semi-transparent--", hex: "rgba(14,14,14,0.6)", rgb: "14 / 14 / 14" },
-    light: { primitive: "--neutral--01-semi--", hex: "rgba(241,241,241,0.6)", rgb: "241 / 241 / 241" },
+    light: { primitive: "--neutral--00-semi--", hex: "rgba(255,255,255,0.6)", rgb: "255 / 255 / 255" },
   },
   {
     label: "Primary Transparent", cssVar: "--color-bg-container-primary-transparent",
     dark: { primitive: "--neutral--09-transparent--", hex: "rgba(14,14,14,0.01)", rgb: "Transparent" },
-    light: { primitive: "--neutral--01-transparent--", hex: "rgba(241,241,241,0.01)", rgb: "Transparent" },
+    light: { primitive: "--neutral--00-transparent--", hex: "rgba(255,255,255,0.01)", rgb: "Transparent" },
   },
   {
     label: "Border", cssVar: "--color-bg-container-border",
@@ -136,7 +136,7 @@ const containerColours: SwatchData[] = [
   {
     label: "Glass", cssVar: "--color-bg-glass",
     dark: { primitive: "--neutral--09-glass--", hex: "rgba(14,14,14,0.66)", rgb: "14 / 14 / 14" },
-    light: { primitive: "--neutral--01-glass--", hex: "rgba(241,241,241,0.82)", rgb: "241 / 241 / 241" },
+    light: { primitive: "--neutral--00-glass--", hex: "rgba(255,255,255,0.82)", rgb: "255 / 255 / 255" },
   },
 ];
 
