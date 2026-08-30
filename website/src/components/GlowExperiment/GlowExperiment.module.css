@@ -1,0 +1,123 @@
+/* Dev-only experiment chrome. The canvas sits above the SiteChat panel
+   (z 1100) so the pulse can ride the composer border without being clipped
+   by the panel's overflow: hidden; the control panel sits one step higher.
+   Both stay below the toasts (1200). */
+
+.canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1140;
+}
+
+.panel {
+  position: fixed;
+  top: 80px;
+  right: var(--padding-lg);
+  z-index: 1150;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  width: 280px;
+  padding: var(--padding-lg);
+  background: var(--color-bg-container-primary);
+  border: 1px solid var(--color-bg-container-border);
+  border-radius: var(--radius-md);
+}
+
+.panelCollapsed {
+  width: auto;
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-md);
+}
+
+.panelTitle {
+  font-size: var(--font-body-sm-size);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+.collapse {
+  border: none;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: var(--font-body-sm-size);
+  cursor: pointer;
+  padding: 0;
+}
+
+.collapse:focus-visible {
+  outline: var(--border-md) solid var(--color-action-primary-bg);
+  outline-offset: 2px;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  font-size: var(--font-body-sm-size);
+  color: var(--color-text-secondary);
+}
+
+.row > span {
+  width: 68px;
+  flex-shrink: 0;
+}
+
+.row input[type="range"] {
+  flex: 1;
+  min-width: 0;
+  accent-color: var(--color-action-primary-bg);
+}
+
+.row output {
+  width: 44px;
+  text-align: right;
+  color: var(--color-text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.seg {
+  display: inline-flex;
+  gap: var(--gap-xs);
+  flex-wrap: wrap;
+}
+
+.seg button {
+  border: 1px solid var(--color-bg-container-border);
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: var(--font-body-sm-size);
+  border-radius: var(--radius-full);
+  padding: 2px 10px;
+  cursor: pointer;
+}
+
+.seg button[aria-pressed="true"] {
+  background: var(--color-bg-container-secondary);
+  color: var(--color-text-primary);
+}
+
+.seg button:focus-visible {
+  outline: var(--border-md) solid var(--color-action-primary-bg);
+  outline-offset: 2px;
+}
+
+.note {
+  margin: 0;
+  font-size: var(--font-body-xs-size);
+  color: var(--color-text-secondary);
+}

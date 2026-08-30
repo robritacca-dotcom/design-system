@@ -17,6 +17,7 @@ import SiteFooter from "@/components/SiteFooter/SiteFooter";
 import { SiteFooterMount } from "@/components/SiteFooter/SiteFooterMount";
 import { ClientNav } from "@/components/ClientNav/ClientNav";
 import BlurBackground from "@/components/BlurBackground/BlurBackground";
+import GlowExperimentMount from "@/components/GlowExperiment/GlowExperimentMount";
 
 const GA_ID = "G-RCSFYMD51K";
 
@@ -206,6 +207,9 @@ export default async function RootLayout({
           </SiteFooterMount>
           <SiteChatMount />
         </SiteChatProvider>
+        {/* Dev-only shader-glow experiment, active behind ?glow. The mount
+            resolves to null in production builds; see GlowExperimentMount. */}
+        <GlowExperimentMount />
       </body>
     </html>
   );
