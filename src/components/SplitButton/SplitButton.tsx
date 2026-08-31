@@ -93,6 +93,10 @@ export const SplitButton = React.forwardRef<HTMLButtonElement, SplitButtonProps>
             <CircularButton
               className={`${baseClass}__trigger`}
               icon="keyboard_arrow_down"
+              /* No self-labelling tooltip: the trigger must stay a direct flex
+                 child of the split so align-self: stretch can size it to the
+                 main segment — the tooltip wrapper would sit between them. */
+              tooltip={false}
               ariaLabel={menuLabel}
               variant={variant}
               size={size}

@@ -1,7 +1,10 @@
 // No 'use client' directive: CircularButton defines no hooks or handlers of its
 // own — consumers' event props fall through — so Server Components can render it.
+// The default Tooltip wrapper is the client island; like MessageActions, the
+// button itself stays server-renderable.
 import React from 'react';
 import { Spinner } from '../Spinner/Spinner';
+import { Tooltip } from '../Tooltip/Tooltip';
 import './CircularButton.css';
 import '../../fonts/material-symbols.css';
 
@@ -40,6 +43,17 @@ type CircularButtonOwnProps = {
   loading?: boolean;
   /** Accessible label — required, because the button has no visible text */
   ariaLabel: string;
+  /**
+   * The hover/focus tooltip. An icon-only control names itself: by default
+   * the button wears a Tooltip carrying `ariaLabel`. Pass a string to show
+   * different wording, or `false` to opt out — for a host that labels the
+   * control another way, or one that owns the button's box directly
+   * (SplitButton's trigger stretches to its sibling segment, which the
+   * tooltip wrapper would block).
+   */
+  tooltip?: string | false;
+  /** Which side the tooltip opens on. */
+  tooltipPosition?: 'top' | 'bottom' | 'left' | 'right';
   /** Optional href — renders as <a> instead of <button> */
   href?: string;
   /** Optional target attribute for links */
@@ -76,6 +90,8 @@ export const CircularButton = React.forwardRef<
       size = 'default',
       loading,
       ariaLabel,
+      tooltip,
+      tooltipPosition = 'top',
       href,
       target,
       rel,
@@ -116,8 +132,8 @@ export const CircularButton = React.forwardRef<
     );
 
     // A loading link renders the button branch so interaction is truly blocked.
-    if (href && !isDisabled && !isLoading) {
-      return (
+    const control =
+      href && !isDisabled && !isLoading ? (
         <a
           {...(rest as React.ComponentPropsWithoutRef<'a'>)}
           ref={ref as React.Ref<HTMLAnchorElement>}
@@ -129,21 +145,28 @@ export const CircularButton = React.forwardRef<
         >
           {children}
         </a>
+      ) : (
+        <button
+          {...rest}
+          ref={ref as React.Ref<HTMLButtonElement>}
+          type="button"
+          className={classes}
+          disabled={isDisabled || isLoading}
+          aria-busy={isLoading || undefined}
+          aria-label={ariaLabel}
+        >
+          {children}
+        </button>
       );
-    }
 
+    // Self-labelling: the tooltip repeats the accessible name unless the
+    // caller overrides the wording or opts out.
+    const tooltipContent = tooltip === false ? null : (tooltip ?? ariaLabel);
+    if (!tooltipContent) return control;
     return (
-      <button
-        {...rest}
-        ref={ref as React.Ref<HTMLButtonElement>}
-        type="button"
-        className={classes}
-        disabled={isDisabled || isLoading}
-        aria-busy={isLoading || undefined}
-        aria-label={ariaLabel}
-      >
-        {children}
-      </button>
+      <Tooltip content={tooltipContent} position={tooltipPosition}>
+        {control}
+      </Tooltip>
     );
   },
 );

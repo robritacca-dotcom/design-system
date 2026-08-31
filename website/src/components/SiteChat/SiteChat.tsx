@@ -205,11 +205,14 @@ export function SiteChat({
             </span>
           }
           actions={
+            /* The buttons self-label with tooltips; they open downward because
+               the header hugs the panel's clipped top edge. */
             <>
               <CircularButton
                 icon="edit_square"
                 variant="tertiary"
                 ariaLabel="New chat"
+                tooltipPosition="bottom"
                 onClick={() => {
                   reset();
                   setDraft("");
@@ -221,6 +224,7 @@ export function SiteChat({
                   icon={isFull ? "close_fullscreen" : "open_in_full"}
                   variant="tertiary"
                   ariaLabel={isFull ? "Exit full screen" : "Enter full screen"}
+                  tooltipPosition="bottom"
                   onClick={() => setView(isFull ? "panel" : "full")}
                 />
               )}
@@ -228,6 +232,7 @@ export function SiteChat({
                 icon="close"
                 variant="tertiary"
                 ariaLabel="Close chat"
+                tooltipPosition="bottom"
                 onClick={() => setOpen(false)}
               />
             </>

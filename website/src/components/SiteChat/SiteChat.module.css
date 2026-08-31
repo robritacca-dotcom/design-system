@@ -31,6 +31,26 @@
   padding-inline: var(--sitechat-inset);
 }
 
+/* The close button hugs the panel's clipped right edge, so its centred
+   bottom tooltip would lose its right cap to overflow: hidden. End-align
+   the last header tooltip to the button and walk the arrow back to the
+   button's centre (20px in, minus half the 8px arrow). */
+.chat :global(.ds-chat-header__actions .ds-tooltip:last-child .ds-tooltip__panel--bottom) {
+  left: auto;
+  right: 0;
+  transform: translateY(-4px);
+}
+
+.chat :global(.ds-chat-header__actions .ds-tooltip:last-child .ds-tooltip__panel--bottom.ds-tooltip__panel--visible) {
+  transform: translateY(0);
+}
+
+.chat :global(.ds-chat-header__actions .ds-tooltip:last-child .ds-tooltip__panel--bottom .ds-tooltip__arrow) {
+  left: auto;
+  right: 16px;
+  margin-left: 0;
+}
+
 /* The header brand: the RR mark beside the chat name. A node title renders
    as-is, so the name restates the header's title treatment. */
 .brand {

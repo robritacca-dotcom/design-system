@@ -2052,6 +2052,19 @@ export const componentApi: readonly ComponentApiEntry[] = [
             "description": "Accessible label — required, because the button has no visible text"
           },
           {
+            "name": "tooltip",
+            "type": "string | false",
+            "required": false,
+            "description": "The hover/focus tooltip. An icon-only control names itself: by default\nthe button wears a Tooltip carrying `ariaLabel`. Pass a string to show\ndifferent wording, or `false` to opt out — for a host that labels the\ncontrol another way, or one that owns the button's box directly\n(SplitButton's trigger stretches to its sibling segment, which the\ntooltip wrapper would block)."
+          },
+          {
+            "name": "tooltipPosition",
+            "type": "enum",
+            "required": false,
+            "description": "Which side the tooltip opens on.",
+            "defaultValue": "top"
+          },
+          {
             "name": "href",
             "type": "string",
             "required": false,

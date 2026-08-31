@@ -47,7 +47,7 @@ export default function OverlaysSection() {
           <Button label="Popover" variant="tertiary" />
         </Popover>
         <Tooltip content="Tooltips follow the same surfaces">
-          <CircularButton icon="help" variant="tertiary" ariaLabel="Tooltip demo" />
+          <CircularButton icon="help" variant="tertiary" ariaLabel="Tooltip demo" tooltip={false} />
         </Tooltip>
       </div>
 

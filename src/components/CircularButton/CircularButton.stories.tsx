@@ -27,6 +27,11 @@ const meta = {
       control: 'boolean',
     },
     ariaLabel: { control: 'text' },
+    tooltip: { control: 'text' },
+    tooltipPosition: {
+      control: 'select',
+      options: ['top', 'bottom', 'left', 'right'],
+    },
   },
   args: {
     onClick: fn(),
@@ -130,6 +135,20 @@ export const TertiaryLoading: Story = {
 
 export const CompactLoading: Story = {
   args: { variant: 'primary', size: 'compact', icon: 'add', loading: true, ariaLabel: 'Saving' },
+};
+
+// Self-labelling tooltip: every button above already shows its ariaLabel on
+// hover and focus; these cover the overrides.
+export const CustomTooltip: Story = {
+  args: { variant: 'secondary', icon: 'download', ariaLabel: 'Download', tooltip: 'Download the report' },
+};
+
+export const TooltipBelow: Story = {
+  args: { variant: 'tertiary', icon: 'settings', ariaLabel: 'Settings', tooltipPosition: 'bottom' },
+};
+
+export const NoTooltip: Story = {
+  args: { variant: 'tertiary', icon: 'close', ariaLabel: 'Close', tooltip: false },
 };
 
 // Common icon examples

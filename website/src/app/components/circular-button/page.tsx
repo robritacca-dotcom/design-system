@@ -107,6 +107,24 @@ export default function CircularButtonPage() {
             </div>
           </section>
 
+          {/* Tooltip */}
+          <section className={styles.section}>
+            <SectionTitle title="Tooltip" />
+            <p className={styles.introBody}>
+              An icon-only control names itself: every circular button shows a
+              tooltip with its accessible label on hover and focus. Pass{" "}
+              <code>tooltip</code> a string for different wording,{" "}
+              <code>false</code> to opt out when the host labels the control
+              another way, and <code>tooltipPosition</code> to pick the side
+              when an edge would clip the default placement above.
+            </p>
+            <div className={styles.variantRow}>
+              <CircularButton icon="download" variant="secondary" ariaLabel="Download" tooltip="Download the report" />
+              <CircularButton icon="settings" variant="tertiary" ariaLabel="Settings" tooltipPosition="bottom" />
+              <CircularButton icon="close" variant="tertiary" ariaLabel="Close" tooltip={false} />
+            </div>
+          </section>
+
           {/* Loading */}
           <section className={styles.section}>
             <SectionTitle title="Loading" />
