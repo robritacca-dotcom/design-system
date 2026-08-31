@@ -207,6 +207,15 @@
   pointer-events: none;
 }
 
+/* The spinner is a box, not a glyph: left inline, it sits on the text
+   baseline and the strut's descender pushes it ~1px above the button's
+   centre. Flex centres it geometrically. */
+.ds-circular-button--loading .ds-circular-button__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* ============================================
    FOCUS
    ============================================ */
