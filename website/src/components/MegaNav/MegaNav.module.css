@@ -140,6 +140,14 @@
   outline-offset: 2px;
 }
 
+/* An open mega menu holds the hover pill, nothing more: teal is the
+   current-section marker, and opening a menu is not a selection. Declared
+   before .navLinkActive so the teal still wins when the open trigger is
+   also the current section. */
+.navLinkOpen {
+  background: var(--color-bg-container-secondary);
+}
+
 /* The current section's pill is the action-primary pair — the same
    selected-segment treatment as SegmentedControl (the theme toggle), so
    "you are here" survives the glassy header backdrop in both themes. The

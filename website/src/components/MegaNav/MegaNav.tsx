@@ -287,8 +287,8 @@ export default function MegaNav() {
                 ref={triggerRef}
                 href="/design-system"
                 className={`${styles.navLink} ${styles.dsTrigger} ${
-                  open || isDsActive ? styles.navLinkActive : ""
-                }`}
+                  open ? styles.navLinkOpen : ""
+                } ${isDsActive ? styles.navLinkActive : ""}`}
                 aria-expanded={open}
                 aria-haspopup="true"
                 aria-controls="ds-mega"
@@ -424,8 +424,8 @@ export default function MegaNav() {
                   ref={stickyTriggerRef}
                   href="/design-system"
                   className={`${styles.navLink} ${styles.dsTrigger} ${
-                    open || isDsActive ? styles.navLinkActive : ""
-                  }`}
+                    open ? styles.navLinkOpen : ""
+                  } ${isDsActive ? styles.navLinkActive : ""}`}
                   aria-expanded={open}
                   aria-haspopup="true"
                   aria-controls="ds-mega-sticky"
