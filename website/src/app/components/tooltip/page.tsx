@@ -33,7 +33,7 @@ export default function TooltipPage() {
               Contextual labels on hover and focus
             </p>
             <p className={styles.introBody}>
-              Tooltips provide brief, informative text when users hover over or focus on an element. They use inverted colours for contrast and support four placement positions with a directional arrow. Pressing Escape dismisses a visible tooltip from anywhere on the page.
+              Tooltips provide brief, informative text when users hover over or focus on an element. The bubble rides the same floating surface as Popover, staying light in light mode and dark in dark, and supports four placement positions with a directional arrow. Pressing Escape dismisses a visible tooltip from anywhere on the page.
             </p>
           </div>
 
@@ -61,16 +61,16 @@ export default function TooltipPage() {
             <SectionTitle title="On icon buttons" />
             <div className={styles.variantRow} style={{ gap: "20px", padding: "20px 0" }}>
               <Tooltip content="Search" position="bottom">
-                <CircularButton icon="search" ariaLabel="Search" variant="secondary" />
+                <CircularButton icon="search" ariaLabel="Search" variant="secondary" tooltip={false} />
               </Tooltip>
               <Tooltip content="Settings" position="bottom">
-                <CircularButton icon="settings" ariaLabel="Settings" variant="secondary" />
+                <CircularButton icon="settings" ariaLabel="Settings" variant="secondary" tooltip={false} />
               </Tooltip>
               <Tooltip content="Notifications" position="bottom">
-                <CircularButton icon="notifications" ariaLabel="Notifications" variant="secondary" />
+                <CircularButton icon="notifications" ariaLabel="Notifications" variant="secondary" tooltip={false} />
               </Tooltip>
               <Tooltip content="Profile" position="bottom">
-                <CircularButton icon="person" ariaLabel="Profile" variant="secondary" />
+                <CircularButton icon="person" ariaLabel="Profile" variant="secondary" tooltip={false} />
               </Tooltip>
             </div>
           </section>

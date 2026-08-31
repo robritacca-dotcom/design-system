@@ -31,7 +31,8 @@ export interface TooltipProps {
 /**
  * Tooltip component for contextual text labels.
  * Appears on hover or focus with a short delay.
- * Uses inverted colours (dark background in light theme).
+ * Rides the system's floating surface — page background, hairline border,
+ * floating shadow — so the bubble stays light in light theme and dark in dark.
  */
 export const Tooltip = ({
   children,

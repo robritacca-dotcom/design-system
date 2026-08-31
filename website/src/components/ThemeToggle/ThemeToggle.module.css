@@ -17,8 +17,10 @@
   margin-top: var(--gap-xs);
   padding: var(--padding-xs) var(--padding-sm);
   border-radius: var(--radius-xs);
-  background-color: var(--color-bg-container-inverse);
-  color: var(--color-text-on-inverse);
+  border: var(--border-xs) solid var(--color-bg-container-border);
+  background-color: var(--color-bg-page-primary);
+  color: var(--color-text-primary);
+  box-shadow: var(--shadow-floating);
   font-family: var(--font-paragraph-sm-family);
   font-size: var(--font-paragraph-sm-size);
   font-weight: var(--font-paragraph-sm-weight);
