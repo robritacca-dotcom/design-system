@@ -9,6 +9,14 @@ import { SectionTitle } from "@robr0/design-system/components/SectionTitle/Secti
 import PageLinks from "../../../components/PageLinks/PageLinks";
 import styles from "./page.module.css";
 
+/* ============================================
+   SPLIT BUTTON STATES & VARIANTS
+   Mirrors the Button page's grid presentation,
+   scoped to the states a consumer can set —
+   hover and active come from the segments' own
+   pseudo-classes, so they show live.
+   ============================================ */
+
 const saveItems = [
   { label: "Save as draft", icon: "draft" },
   { label: "Save as template", icon: "dashboard_customize" },
@@ -16,11 +24,84 @@ const saveItems = [
   { label: "Discard changes", icon: "delete", destructive: true },
 ];
 
-const exportItems = [
-  { label: "Export as CSV", icon: "csv" },
-  { label: "Export as JSON", icon: "data_object" },
-  { label: "Export as PDF", icon: "picture_as_pdf" },
+const states = [
+  { label: "Disabled", props: { disabled: true } },
+  { label: "Default", props: {} },
+  { label: "Loading", props: { loading: true } },
+] as const;
+
+const variants = ["primary", "secondary"] as const;
+
+const sizes = [
+  { label: "", value: "default" as const },
+  { label: ", compact", value: "compact" as const },
 ];
+
+const iconVariants = [
+  { label: "No icon", iconLeft: undefined },
+  { label: "Icon, left", iconLeft: "save" },
+] as const;
+
+const variantLabels: Record<string, string> = {
+  primary: "Primary",
+  secondary: "Secondary",
+};
+
+/* ============================================
+   SPLIT BUTTON GRID — 3-column layout per variant
+   col 1: state label
+   cols 2–3: icon variants (no icon / left)
+   One grid per variant × size combination, stacked vertically.
+   ============================================ */
+
+function SplitButtonGrid({
+  variant,
+  size,
+  sizeLabel,
+}: {
+  variant: "primary" | "secondary";
+  size: "default" | "compact";
+  sizeLabel: string;
+}) {
+  return (
+    <section className={styles.variantBlock}>
+      <SectionTitle title={`${variantLabels[variant]}${sizeLabel}`} />
+
+      <div className={styles.buttonGrid}>
+        {/* Column headers */}
+        <div className={styles.gridCorner} />
+        {iconVariants.map((iv) => (
+          <span key={iv.label} className={styles.gridColHeader}>
+            {iv.label}
+          </span>
+        ))}
+
+        {/* State rows */}
+        {states.map((st) => (
+          <React.Fragment key={st.label}>
+            <span className={styles.gridRowHeader}>{st.label}</span>
+            {iconVariants.map((iv) => (
+              <div key={`${st.label}-${iv.label}`} className={styles.gridCell}>
+                <SplitButton
+                  label={st.label === "Loading" ? "Saving" : "Save"}
+                  variant={variant}
+                  size={size}
+                  iconLeft={iv.iconLeft}
+                  items={saveItems}
+                  {...st.props}
+                />
+              </div>
+            ))}
+          </React.Fragment>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ============================================
+   PAGE
+   ============================================ */
 
 export default function SplitButtonPage() {
   return (
@@ -44,44 +125,21 @@ export default function SplitButtonPage() {
               One default action, with the alternatives attached
             </p>
             <p className={styles.introBody}>
-              The label fires the primary action directly; the chevron opens a menu of variants. One pill silhouette, two segments, so the common case stays one click away while the rest stays discoverable.
+              The label fires the primary action directly; the chevron opens a menu of variants. One pill silhouette, two segments, so the common case stays one click away while the rest stays discoverable. Both variants come in default and compact sizes; hover and press the segments to see their interactive states, and the loading rows keep full colour while blocking clicks.
             </p>
           </div>
 
-          {/* Variants */}
-          <section className={styles.section}>
-            <SectionTitle title="Variants" />
-            <div className={styles.variantRow}>
-              <SplitButton label="Save" items={saveItems} />
-              <SplitButton label="Export" variant="secondary" items={exportItems} />
-            </div>
-          </section>
-
-          {/* Sizes */}
-          <section className={styles.section}>
-            <SectionTitle title="Sizes" />
-            <div className={styles.variantRow}>
-              <SplitButton label="Save" items={saveItems} />
-              <SplitButton label="Save" size="compact" items={saveItems} />
-            </div>
-          </section>
-
-          {/* With icon */}
-          <section className={styles.section}>
-            <SectionTitle title="With icon" />
-            <div className={styles.variantRow}>
-              <SplitButton label="Save" iconLeft="save" items={saveItems} />
-            </div>
-          </section>
-
-          {/* States */}
-          <section className={styles.section}>
-            <SectionTitle title="States" />
-            <div className={styles.variantRow}>
-              <SplitButton label="Saving" loading items={saveItems} />
-              <SplitButton label="Save" disabled items={saveItems} />
-            </div>
-          </section>
+          {/* Variant grids — one per variant × size, like the Button page */}
+          {sizes.map((sz) =>
+            variants.map((v) => (
+              <SplitButtonGrid
+                key={`${v}-${sz.value}`}
+                variant={v}
+                size={sz.value}
+                sizeLabel={sz.label}
+              />
+            ))
+          )}
         </main>
       </div>
 

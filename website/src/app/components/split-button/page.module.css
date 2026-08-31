@@ -60,36 +60,64 @@
   color: var(--color-text-primary);
 }
 
-.section {
+/* ============================================
+   VARIANT BLOCK — one per variant × size
+   heading + divider + grid, like the Button page
+   ============================================ */
+.variantBlock {
   display: flex;
   flex-direction: column;
   gap: var(--primitive-gap-xl);
+}
+
+/* ============================================
+   SPLIT BUTTON GRID — 3-column table layout
+   col 1: state label
+   cols 2–3: No icon / Icon left
+   ============================================ */
+.buttonGrid {
+  display: grid;
+  grid-template-columns: auto repeat(2, 1fr);
+  gap: var(--primitive-gap-md) var(--primitive-gap-md);
+  align-items: center;
   width: 100%;
 }
 
-.variantRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--primitive-gap-xl);
-  align-items: flex-start;
+/* Empty corner cell (top-left of headers) */
+.gridCorner {
+  /* Intentionally empty */
 }
 
-.variantItem {
-  width: 280px;
-  flex-shrink: 0;
+/* Column headers */
+.gridColHeader {
+  text-align: center;
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  color: var(--color-text-tertiary);
 }
 
-.variantStack {
+/* Row header (state label) */
+.gridRowHeader {
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  color: var(--color-text-tertiary);
+  text-align: right;
+  padding-right: var(--primitive-padding-sm);
+  white-space: nowrap;
+}
+
+/* Split button cell */
+.gridCell {
   display: flex;
-  flex-direction: column;
-  gap: var(--primitive-gap-xl);
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
 }
 
 @media (max-width: 959px) {
-  .variantItem {
-    width: 100%;
-  }
   .pageHeader {
     flex-direction: column;
     align-items: flex-start;
@@ -97,4 +125,17 @@
 
   .dsLayout { padding-left: 0; min-width: 0; }
   .dsContent { max-width: 100%; min-width: 0; }
+}
+
+@media (max-width: 600px) {
+  /* On very small screens the 3-column grid scrolls inside its block:
+     the scrollport is the parent, the min-width is on the grid —
+     putting both on one element would overflow the page instead. */
+  .variantBlock {
+    overflow-x: auto;
+  }
+
+  .buttonGrid {
+    min-width: 420px;
+  }
 }
