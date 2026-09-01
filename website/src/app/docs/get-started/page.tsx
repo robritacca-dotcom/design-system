@@ -32,10 +32,11 @@ import { Button } from '@robr0/design-system/components/Button/Button';
 import '@robr0/design-system/fonts/material-symbols.css';`;
 
 /* The dependency-free chart pieces are a registry fact — charts-category
-   components whose implementation lives outside the shared recharts folder —
-   so the snippet derives the list rather than restating it. */
+   components without the `recharts` flag, which the barrel generator holds
+   to each module's actual imports — so the snippet derives the list rather
+   than restating it. */
 const BARREL_CHARTS = componentMetadata
-  .filter((c) => c.category === "charts" && c.folder !== "Chart")
+  .filter((c) => c.category === "charts" && !c.recharts)
   .map((c) => c.name)
   .join(", ");
 
