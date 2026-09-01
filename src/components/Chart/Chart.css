@@ -149,7 +149,10 @@
 
 .ds-chart__tooltip {
   padding: var(--padding-sm) var(--padding-md);
-  background-color: var(--color-bg-container-primary);
+  background-color: var(--color-bg-glass);
+  /* The glass token is deliberately translucent; this blur is what keeps
+     the chart's marks readable through the overlay. */
+  backdrop-filter: blur(24px);
   border: var(--border-xs) solid var(--color-bg-container-border);
   border-radius: var(--radius-sm); /* 8px */
   box-shadow: var(--shadow-floating);

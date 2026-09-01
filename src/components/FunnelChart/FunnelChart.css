@@ -14,20 +14,83 @@
 
 .ds-funnel-chart__stages {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   gap: var(--gap-xxs);
 }
 
 /* Parts */
 
+/* The stage is a full-height column — the hover target, like the recharts
+   cursor band — with the coloured bar centred inside it. */
+
 .ds-funnel-chart__stage {
   flex: 1;
   min-width: 0;
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+
+/* The cursor band: same recipe as the recharts charts' tooltip cursor
+   (container-secondary at 0.4). */
+
+.ds-funnel-chart__stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-bg-container-secondary);
+  opacity: 0;
+  transition: opacity var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.ds-funnel-chart__stage:hover::before {
+  opacity: 0.4;
+}
+
+.ds-funnel-chart__bar {
+  position: relative; /* stacks the bar above the cursor band */
+  width: 100%;
   height: calc(var(--funnel-stage-size) * 1%);
   border-radius: var(--radius-sm);
   background-color: var(--funnel-stage-color);
   display: grid;
   place-items: center;
+}
+
+/* Hover tooltip — the shared chart tooltip surface (Chart.css owns its look),
+   revealed per stage by CSS alone so the component stays server-renderable.
+   Anchored just above the column's centre — the percentage pill — so it sits
+   in the same spot on every stage and never escapes the card. */
+
+.ds-funnel-chart__tooltip {
+  position: absolute;
+  bottom: calc(50% + var(--gap-lg));
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.ds-funnel-chart__stage:hover .ds-funnel-chart__tooltip {
+  opacity: 1;
+}
+
+/* The end stages pin to their own edge so the overlay never pokes out of
+   the card. */
+
+.ds-funnel-chart__stage:first-child .ds-funnel-chart__tooltip {
+  left: 0;
+  transform: none;
+}
+
+.ds-funnel-chart__stage:last-child .ds-funnel-chart__tooltip {
+  left: auto;
+  right: 0;
+  transform: none;
 }
 
 .ds-funnel-chart__pct {

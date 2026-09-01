@@ -50,9 +50,14 @@ const SERIES_COUNT = 7;
  * hooks, no browser APIs, so it deliberately omits 'use client' and renders
  * from a Server Component. It wears the chart family's card chrome (title,
  * subtitle, padding) and takes `bare` to drop it inside a Panel, like every
- * other chart. Degenerate data stays safe: an empty array renders an empty
- * stage row, and a zero or negative first value draws every stage at the
- * floor height.
+ * other chart. Each stage's hover target is its full-height column, like the
+ * recharts cursor band: hovering anywhere in the column tints the band and
+ * reveals the family's glass tooltip — the stage name and its reading,
+ * anchored above the percentage pill. A pure CSS reveal, so the component
+ * stays server-renderable, and the values are already in the row's
+ * accessible label. Degenerate data stays safe: an
+ * empty array renders an empty stage row, and a zero or negative first
+ * value draws every stage at the floor height.
  */
 export const FunnelChart = React.forwardRef<HTMLDivElement, FunnelChartProps>(
   (
@@ -123,9 +128,26 @@ export const FunnelChart = React.forwardRef<HTMLDivElement, FunnelChartProps>(
                 } as React.CSSProperties
               }
             >
-              <span className={`${baseClass}__pct`}>
-                {Math.round(firstValue > 0 ? (stage.value / firstValue) * 100 : 0)}%
-              </span>
+              <div className={`${baseClass}__bar`}>
+                <span className={`${baseClass}__pct`}>
+                  {Math.round(firstValue > 0 ? (stage.value / firstValue) * 100 : 0)}%
+                </span>
+              </div>
+              <div
+                className={`${chartClass}__tooltip ${baseClass}__tooltip`}
+                aria-hidden="true"
+              >
+                <div className={`${chartClass}__tooltip-label`}>{stage.label}</div>
+                <div className={`${chartClass}__tooltip-row`}>
+                  <span
+                    className={`${chartClass}__tooltip-dot`}
+                    style={{ backgroundColor: stage.color }}
+                  />
+                  <span className={`${chartClass}__tooltip-value`}>
+                    {stage.displayValue ?? stage.value.toLocaleString()}
+                  </span>
+                </div>
+              </div>
             </div>
           ))}
         </div>
