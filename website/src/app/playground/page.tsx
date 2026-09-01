@@ -29,6 +29,7 @@ import {
 } from "./theme-overrides";
 import { THEME_PRESETS, type ThemePreset } from "./presets";
 import PlaygroundControls from "./PlaygroundControls";
+import TunerControls from "./tuner/TunerControls";
 import AdvancedColorsDialog from "./AdvancedColorsDialog";
 import ChatDirector, { STORY_CONTENT } from "./ChatDirector";
 import InspectMode from "@/components/InspectMode/InspectMode";
@@ -169,6 +170,10 @@ export default function PlaygroundPage() {
     () => false
   );
   const [controlsOpen, setControlsOpen] = useState(false);
+  /* POC: the tuner-styled rail, toggled from the toolbar for a live
+     before/after against the classic controls. Desktop only — the compact
+     Drawer keeps the classic set either way. Same state drives both. */
+  const [tunerRail, setTunerRail] = useState(false);
   const [advOpen, setAdvOpen] = useState(false);
   const [cssOpen, setCssOpen] = useState(false);
   const [advColors, setAdvColors] = useState<AdvancedColorState>(DEFAULT_ADVANCED);
@@ -454,45 +459,49 @@ export default function PlaygroundPage() {
     </>
   );
 
+  /* The lever wiring, shared by every host: the classic edge panel, the
+     compact Drawer, and the tuner rail POC — one set of levers, restyled. */
+  const railProps = {
+    preset,
+    brand: effectiveBrand,
+    theme,
+    onTheme: applyTheme,
+    backgroundOn,
+    onBackgroundOn: setBackgroundOn,
+    tintOn,
+    tintSeed,
+    tintStrength,
+    radiusScale,
+    pill,
+    fontLabel,
+    productName,
+    actionModeNote: actionPlan
+      ? Object.keys(actionPlan.primitives).length === 0
+        ? `Pointing the action tokens at the ${actionPlan.ramp} ramp; the primitives stay untouched.`
+        : `Custom hex: rebasing the ${actionPlan.ramp} ramp around it and pointing the action tokens there. Teal stays teal.`
+      : null,
+    isPristine,
+    cssSnippet,
+    onPreset: applyPreset,
+    onBrand: pickBrand,
+    onTintOn: asCustom(setTintOn),
+    onTintSeed: asCustom(setTintSeed),
+    onTintStrength: asCustom(setTintStrength),
+    onRadiusScale: asCustom(setRadiusScale),
+    onPill: asCustom(setPill),
+    onFontLabel: asCustom(setFontLabel),
+    onProductName: setProductName,
+    onReset: reset,
+    onOpenAdvanced: () => setAdvOpen(true),
+    onViewCss: () => setCssOpen(true),
+  };
+
   /* The full lever set, host-agnostic — mounted in the edge panel on
      desktop or handed to the Drawer on compact screens. */
   const controls = (
             <PlaygroundControls
               variant={compact ? "drawer" : "panel"}
-              preset={preset}
-              brand={effectiveBrand}
-              theme={theme}
-              onTheme={applyTheme}
-              backgroundOn={backgroundOn}
-              onBackgroundOn={setBackgroundOn}
-              tintOn={tintOn}
-              tintSeed={tintSeed}
-              tintStrength={tintStrength}
-              radiusScale={radiusScale}
-              pill={pill}
-              fontLabel={fontLabel}
-              productName={productName}
-              actionModeNote={
-                actionPlan
-                  ? Object.keys(actionPlan.primitives).length === 0
-                    ? `Pointing the action tokens at the ${actionPlan.ramp} ramp; the primitives stay untouched.`
-                    : `Custom hex: rebasing the ${actionPlan.ramp} ramp around it and pointing the action tokens there. Teal stays teal.`
-                  : null
-              }
-              isPristine={isPristine}
-              cssSnippet={cssSnippet}
-              onPreset={applyPreset}
-              onBrand={pickBrand}
-              onTintOn={asCustom(setTintOn)}
-              onTintSeed={asCustom(setTintSeed)}
-              onTintStrength={asCustom(setTintStrength)}
-              onRadiusScale={asCustom(setRadiusScale)}
-              onPill={asCustom(setPill)}
-              onFontLabel={asCustom(setFontLabel)}
-              onProductName={setProductName}
-              onReset={reset}
-              onOpenAdvanced={() => setAdvOpen(true)}
-              onViewCss={() => setCssOpen(true)}
+              {...railProps}
               contextual={
                 /* On compact screens the chat director has no rail of its
                    own — its levers and events ride in the Drawer with the
@@ -526,7 +535,20 @@ export default function PlaygroundPage() {
            stage: hover any staged component to see which tokens its
            computed styles resolve from — including the levers' live
            overrides, which the inspector re-reads as they land. */
-        actions={<InspectMode desktopOnly />}
+        actions={
+          <>
+            {/* POC switch: swaps the desktop rail between the classic
+                controls and the tuner-styled panel, live. */}
+            <span className={styles.toolbarSwitch}>
+              <ToggleSwitch
+                label="Tuner rail"
+                checked={tunerRail}
+                onCheckedChange={setTunerRail}
+              />
+            </span>
+            <InspectMode desktopOnly />
+          </>
+        }
       />
 
       {/* One provider around the whole layout: the theme drawer, the chat
@@ -565,6 +587,8 @@ export default function PlaygroundPage() {
               {controls}
             </Drawer>
           </>
+        ) : tunerRail ? (
+          <TunerControls {...railProps} />
         ) : (
           controls
         )}

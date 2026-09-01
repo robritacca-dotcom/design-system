@@ -194,6 +194,19 @@
   gap: var(--gap-sm-md);
 }
 
+/* The toolbar's tuner-rail switch (the rail-style POC). Desktop only,
+   like the rail it swaps — the compact Drawer keeps the classic set. */
+.toolbarSwitch {
+  display: inline-flex;
+  align-items: center;
+}
+
+@media (max-width: 1099px) {
+  .toolbarSwitch {
+    display: none;
+  }
+}
+
 /* The generated-CSS dialog's body: the install note over the code. */
 .cssDialogBody {
   display: flex;

@@ -1,0 +1,318 @@
+/* ============================================
+   TUNER RAIL (POC) — the playground's levers as
+   a compact instrument panel. Same edge-panel
+   shell as the classic rail; inside it, every
+   control is a full-width row: sliders fill the
+   row itself, values read out inline in the code
+   face, groups collapse under chevron headers.
+   ============================================ */
+
+.panel {
+  position: fixed;
+  top: var(--layout-toolbar-height);
+  bottom: 0;
+  left: 0;
+  width: var(--rail-width);
+  z-index: 15;
+  display: flex;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--color-bg-container-primary) 88%, transparent);
+  border-right: var(--border-xs) solid var(--color-bg-container-border);
+  backdrop-filter: blur(24px);
+}
+
+.scroll {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
+  scrollbar-color: var(--color-divider) transparent;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+  padding: var(--padding-md);
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--gap-sm);
+  padding-bottom: var(--gap-xs);
+}
+
+.title {
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  color: var(--color-text-primary);
+}
+
+.tag {
+  font-family: var(--font-family-code);
+  font-size: var(--font-paragraph-sm-size);
+  color: var(--color-text-tertiary);
+}
+
+/* ── Sections ─────────────────────────────── */
+
+.section {
+  display: flex;
+  flex-direction: column;
+  border-top: var(--border-xs) solid var(--color-divider);
+}
+
+.sectionHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--padding-sm) 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: var(--font-paragraph-em-size);
+  font-weight: var(--font-paragraph-em-weight);
+  line-height: var(--font-paragraph-em-line-height);
+  letter-spacing: var(--font-paragraph-em-letter-spacing);
+  color: var(--color-text-primary);
+}
+
+.chevron {
+  font-size: var(--icon-size-sm);
+  color: var(--color-text-tertiary);
+  transition: transform var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+.sectionBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xxs);
+  padding-bottom: var(--gap-sm);
+}
+
+/* ── Rows ─────────────────────────────────── */
+
+.row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  min-height: 40px;
+  padding: 0 var(--padding-sm) 0 var(--padding-md);
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--color-bg-container-secondary) 75%, transparent);
+  overflow: hidden;
+}
+
+.rowLabel {
+  /* The label names the row and never shrinks — a long value truncates
+     before it does. */
+  flex: 1 0 auto;
+  position: relative;
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.rowValue {
+  position: relative;
+  min-width: 0;
+  font-family: var(--font-family-code);
+  font-size: var(--font-paragraph-sm-size);
+  color: var(--color-text-primary);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rowIcon {
+  position: relative;
+  font-size: var(--icon-size-sm);
+  color: var(--color-text-tertiary);
+}
+
+/* ── Slider rows ──────────────────────────── */
+
+.sliderTrack {
+  cursor: ew-resize;
+  touch-action: none;
+  user-select: none;
+  padding-right: var(--padding-md);
+}
+
+.sliderTrack:focus-visible {
+  outline: 2px solid var(--color-action-primary-bg);
+  outline-offset: -2px;
+}
+
+.sliderFill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: color-mix(in srgb, var(--color-text-primary) 10%, transparent);
+  border-right: var(--border-xs) solid
+    color-mix(in srgb, var(--color-text-primary) 22%, transparent);
+}
+
+/* ── Segmented rows (Off / On) ────────────── */
+
+.segGroup {
+  display: flex;
+  gap: var(--gap-xxs);
+}
+
+.segButton {
+  padding: var(--padding-xxs) var(--padding-sm);
+  border: none;
+  border-radius: var(--radius-xs);
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  color: var(--color-text-tertiary);
+}
+
+.segButtonActive {
+  background: color-mix(in srgb, var(--color-text-primary) 12%, transparent);
+  color: var(--color-text-primary);
+}
+
+/* ── Colour rows ──────────────────────────── */
+
+.swatch {
+  position: relative;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-xs);
+  border: var(--border-xs) solid var(--color-bg-container-border);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.swatch input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.dotRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-sm);
+  padding: var(--padding-xxs) var(--padding-xxs) var(--padding-xs);
+}
+
+.dot {
+  width: 18px;
+  height: 18px;
+  border-radius: var(--radius-full);
+  border: var(--border-xs) solid var(--color-bg-container-border);
+  cursor: pointer;
+  padding: 0;
+}
+
+.dotActive {
+  outline: 2px solid var(--color-text-primary);
+  outline-offset: 2px;
+}
+
+/* ── Select and text rows ─────────────────── */
+
+.selectRow {
+  cursor: pointer;
+}
+
+.selectOverlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.textInput {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  text-align: right;
+  font-family: var(--font-family-code);
+  font-size: var(--font-paragraph-sm-size);
+  color: var(--color-text-primary);
+  padding: 0;
+}
+
+.textInput::placeholder {
+  color: var(--color-input-text-placeholder);
+}
+
+.textInput:focus {
+  outline: none;
+}
+
+.row:has(.textInput:focus-visible),
+.row:has(.selectOverlay:focus-visible),
+.row:has(.swatch input:focus-visible) {
+  outline: 2px solid var(--color-action-primary-bg);
+  outline-offset: -2px;
+}
+
+/* ── Buttons ──────────────────────────────── */
+
+.rowButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-xs);
+  min-height: 36px;
+  padding: 0 var(--padding-xs);
+  white-space: nowrap;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--color-bg-container-secondary) 75%, transparent);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-em-weight);
+  color: var(--color-text-primary);
+}
+
+.rowButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.rowButtonPrimary {
+  background: var(--color-action-primary-bg);
+  color: var(--color-action-primary-text);
+}
+
+.rowButtonPrimary .rowIcon {
+  color: var(--color-action-primary-text);
+}
+
+.footer {
+  display: flex;
+  gap: var(--gap-xxs);
+  padding-top: var(--gap-xs);
+  border-top: var(--border-xs) solid var(--color-divider);
+}
+
+.footer .rowButton {
+  flex: 1;
+}
