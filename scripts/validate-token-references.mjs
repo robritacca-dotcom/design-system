@@ -23,6 +23,12 @@
  * and rgba variant — from that table when tinting, so a step, variant, or
  * alpha it doesn't mirror is a surface the playground silently leaves
  * un-themed (which is how the glass variants went missing once).
+ *
+ * And holds the share card's BLOB_HEX mirror (website/src/lib/ogImage.tsx)
+ * to shader-background.json's blob tokens and their per-theme values, in
+ * both directions: the OG card paints the ambient background's blob field,
+ * and Satori resolves no CSS custom properties, so the hexes live there in
+ * the open — the third place a colour value lives outside CSS.
  */
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -199,6 +205,69 @@ if (!neutralsBlock) {
   }
 }
 
+// Share-card blob mirror: BLOB_HEX in ogImage.tsx paints the ambient
+// background's blobs onto the OG card, and Satori has no CSS custom
+// properties, so it restates each blob token's light and dark hex. Held to
+// the tokens in both directions: every blob token in shader-background.json
+// must have an entry whose hexes match the token's per-theme resolution, and
+// every entry must be a token the config actually uses — so a retuned or
+// recoloured background cannot leave share cards painting the old field.
+const darkDecls = new Map(
+  parseDeclarations(readFileSync(join(tokensDir, 'tokens-dark.css'), 'utf8')).map((d) => [
+    d.name,
+    d.value,
+  ])
+);
+const resolveDark = (name, seen = new Set()) => {
+  if (seen.has(name)) return null;
+  seen.add(name);
+  if (name.startsWith('--primitive-')) return primitiveValues.get(name) ?? null;
+  // Dark overrides cascade over the light sheet, so fall through to it.
+  const value = darkDecls.get(name) ?? lightDecls.get(name);
+  const m = value?.match(/^var\((--[a-z0-9-]+)\)$/);
+  return m ? resolveDark(m[1], seen) : (value ?? null);
+};
+
+const ogImagePath = join(repoRoot, 'website', 'src', 'lib', 'ogImage.tsx');
+const ogImageSource = readFileSync(ogImagePath, 'utf8');
+const blobHexBlock = ogImageSource.match(
+  /const BLOB_HEX[^=]*=\s*\{([\s\S]*?)\n\};/
+);
+const shaderConfig = JSON.parse(
+  readFileSync(join(repoRoot, 'website', 'src', 'data', 'shader-background.json'), 'utf8')
+);
+const configTokens = new Set(shaderConfig.blobs.map((b) => b.token));
+if (!blobHexBlock) {
+  errors.push(`lib/ogImage.tsx: could not parse BLOB_HEX — the share-card blob guard needs it`);
+} else {
+  const mirroredBlobs = new Map(
+    [...blobHexBlock[1].matchAll(
+      /"(--color-[a-z0-9-]+)":\s*\{\s*light:\s*"(#[0-9A-Fa-f]{6})",\s*dark:\s*"(#[0-9A-Fa-f]{6})"\s*\}/g
+    )].map((m) => [m[1], { light: m[2], dark: m[3] }])
+  );
+  for (const token of configTokens) {
+    const entry = mirroredBlobs.get(token);
+    if (!entry) {
+      errors.push(`lib/ogImage.tsx: BLOB_HEX has no entry for ${token} — the share card drops that blob`);
+      continue;
+    }
+    for (const [theme, resolve] of [['light', resolveLight], ['dark', resolveDark]]) {
+      const resolved = resolve(token);
+      if (!resolved || resolved.toLowerCase() !== entry[theme].toLowerCase()) {
+        errors.push(
+          `lib/ogImage.tsx: BLOB_HEX ${token} ${theme} is ${entry[theme]} but the token resolves to ` +
+            `${resolved ?? 'nothing'} — keep the share card's blob field equal to the tokens`
+        );
+      }
+    }
+  }
+  for (const token of mirroredBlobs.keys()) {
+    if (!configTokens.has(token)) {
+      errors.push(`lib/ogImage.tsx: BLOB_HEX mirrors ${token}, which shader-background.json no longer uses`);
+    }
+  }
+}
+
 if (errors.length > 0) {
   console.error(
     `✗ Semantic colour tokens must chain to primitives (see CLAUDE.md — Token Architecture):\n` +
@@ -210,5 +279,6 @@ if (errors.length > 0) {
 console.log(
   `✓ Token references valid — every semantic colour token chains to a primitive; ` +
     `${fallbacks.length} chart palette fallbacks match their tokens; ` +
-    `the playground neutral mirror matches the primitives.`
+    `the playground neutral mirror matches the primitives; ` +
+    `the share card's blob mirror matches the tokens.`
 );
