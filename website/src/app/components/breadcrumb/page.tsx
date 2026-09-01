@@ -47,15 +47,18 @@ export default function BreadcrumbPage() {
             />
           </section>
 
-          {/* Long path */}
+          {/* Long path. The demo trails point at "#", not realistic-looking
+              paths: an href is invisible in the rendered breadcrumb, and live
+              anchors to fictional routes hand every crawler (and every
+              curious click) a 404. */}
           <section className={styles.section}>
             <SectionTitle title="Long path" />
             <Breadcrumb
               items={[
                 { label: "Home", href: "/" },
-                { label: "Products", href: "/products" },
-                { label: "Category", href: "/products/category" },
-                { label: "Subcategory", href: "/products/category/sub" },
+                { label: "Products", href: "#" },
+                { label: "Category", href: "#" },
+                { label: "Subcategory", href: "#" },
                 { label: "Item detail" },
               ]}
             />
@@ -67,9 +70,9 @@ export default function BreadcrumbPage() {
             <Breadcrumb
               items={[
                 { label: "Home", href: "/" },
-                { label: "Section", href: "/section" },
-                { label: "Category", href: "/section/category" },
-                { label: "Components", href: "/section/category/components" },
+                { label: "Section", href: "#" },
+                { label: "Category", href: "#" },
+                { label: "Components", href: "#" },
                 { label: "Breadcrumb" },
               ]}
               maxItems={3}

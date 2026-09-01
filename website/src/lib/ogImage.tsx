@@ -9,6 +9,12 @@ const LOGO_MARK_PATH =
 /**
  * Renders a 1200x630 OG image with the logo mark, a title, and a byline of
  * "Robert Ritacca — <kicker>". Used for every dynamic social card on the site.
+ *
+ * White ground, not the site's dark floor: unfurlers shrink this card to a
+ * thumbnail, and a near-black field with mid-size text reads as a solid black
+ * rectangle in a chat bubble. The light card is the same brand (neutral-00
+ * ground, neutral-10 ink, teal-08 byline — the light-theme action teal, which
+ * holds AA on white where teal-07 does not), scaled to survive the shrink.
  */
 export function buildOgImage(title: string, kicker = "Portfolio") {
   return new ImageResponse(
@@ -21,10 +27,10 @@ export function buildOgImage(title: string, kicker = "Portfolio") {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "72px",
-          background: "#050505",
+          background: "#FFFFFF",
         }}
       >
-        <svg width="56" height="56" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="72" height="72" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path fillRule="evenodd" clipRule="evenodd" d={LOGO_MARK_PATH} fill="url(#paint0_linear)" />
           <defs>
             <linearGradient id="paint0_linear" x1="3.83825" y1="15.8618" x2="13.4908" y2="5.78849" gradientUnits="userSpaceOnUse">
@@ -38,17 +44,17 @@ export function buildOgImage(title: string, kicker = "Portfolio") {
         <div
           style={{
             display: "flex",
-            fontSize: 56,
-            fontWeight: 600,
-            color: "#FFFFFF",
-            lineHeight: 1.15,
-            maxWidth: 980,
+            fontSize: title.length > 26 ? 68 : 80,
+            fontWeight: 700,
+            color: "#050505",
+            lineHeight: 1.1,
+            maxWidth: 1000,
           }}
         >
           {title}
         </div>
 
-        <div style={{ display: "flex", fontSize: 28, fontWeight: 400, color: "#118AB2" }}>
+        <div style={{ display: "flex", fontSize: 32, fontWeight: 600, color: "#0E6E8F" }}>
           Robert Ritacca · {kicker}
         </div>
       </div>

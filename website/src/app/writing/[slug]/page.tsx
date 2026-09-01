@@ -47,7 +47,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: article.subtitle,
       type: "article",
       url: article.substackUrl,
-      images: article.coverImage ? [article.coverImage] : undefined,
+      // Declaring `openGraph` replaces the inherited block wholesale (see
+      // pageOpenGraph in navigation.ts), so `undefined` here would ship the
+      // article with no og:image at all — link unfurls lose their card. Fall
+      // back to the branded root card when the feed has no cover image.
+      images: article.coverImage ? [article.coverImage] : "/opengraph-image",
     },
   };
 }

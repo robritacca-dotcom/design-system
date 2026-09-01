@@ -11,10 +11,19 @@ import { getArticles, coverPlaceholder, articleExcerpt } from "@/lib/substack";
 import { caseStudies } from "@/data/case-studies";
 import { EssayCover } from "@/components/covers/EssayCover";
 import { hasEssayCover } from "@/data/essay-covers";
+import type { Metadata } from "next";
 import styles from "./page.module.css";
 
 // Re-fetch the Substack feed at most once an hour, same as /writing.
 export const revalidate = 3600;
+
+/* Title, description and the Open Graph block come from the root layout — this
+   page IS the site default. Only the canonical is declared here, because a
+   page-level canonical does not inherit (unlike one on the root layout, which
+   would canonicalise every page to the homepage — see the layout's comment).
+   An explicit canonical keeps shared-link variants (UTM-tagged and other
+   query-string URLs) consolidating onto the bare homepage. */
+export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 /* Everything below derives from a registry: case studies from
    case-studies.json (newest first — the top entry is the featured cover),
