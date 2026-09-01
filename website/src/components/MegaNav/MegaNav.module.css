@@ -260,14 +260,14 @@
 
 /* ============================================
    MEGA MENU PANEL
-   Inset floating panel with rounded corners.
+   Floating panel with rounded corners, spanning the header's content box.
    ============================================ */
 .mega {
   position: absolute;
   top: 100%;
   left: 50%;
   transform: translateX(-50%);
-  width: calc(100% - 32px);
+  width: 100%;
   max-width: 1440px;
   margin-top: 8px;
   z-index: 9;
