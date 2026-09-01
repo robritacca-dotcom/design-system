@@ -14,13 +14,20 @@
   opacity: 0;
   visibility: hidden; /* also removes the input from the tab order */
   pointer-events: none;
-  transition: opacity var(--motion-duration-fast) var(--motion-ease-standard), visibility var(--motion-duration-fast) var(--motion-ease-standard);
+  /* Visibility waits out the fade only on close (duration token as delay);
+     on open it must flip instantly — the open effect focuses the input a
+     frame later, and focus() on a still-hidden element is a no-op, which
+     left the palette opening without its caret. */
+  transition: opacity var(--motion-duration-fast) var(--motion-ease-standard),
+    visibility 0s linear var(--motion-duration-fast);
 }
 
 .ds-command-palette--open {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+  transition: opacity var(--motion-duration-fast) var(--motion-ease-standard),
+    visibility 0s;
 }
 
 /* ============================================
@@ -70,6 +77,13 @@
   padding: var(--padding-sm-md) var(--padding-md); /* 12px 16px */
   border-bottom: var(--border-xs) solid var(--color-divider);
   flex-shrink: 0;
+  transition: border-color var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+/* The focused field marks the whole row with the active input border, the
+   same signal a focused Input gives its own edge. */
+.ds-command-palette__search:focus-within {
+  border-bottom-color: var(--color-input-border-selected);
 }
 
 .ds-command-palette__search-icon {
