@@ -135,6 +135,14 @@
   min-height: 0;
   overflow-y: auto;
   padding: var(--padding-xxs);
+  /* Quiet scrollbar, ChatThread's recipe: thin and token-coloured instead
+     of the 15px native chrome rail a classic-scrollbar platform would draw
+     inside the panel. The stable gutter matters here because filtering
+     toggles overflow — without it every keystroke that crosses the
+     threshold reflows the rows sideways. */
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
+  scrollbar-color: var(--color-divider) transparent;
 }
 
 .ds-command-palette__status {

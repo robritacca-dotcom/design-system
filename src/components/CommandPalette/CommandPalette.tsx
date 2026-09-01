@@ -177,15 +177,24 @@ export const CommandPalette = ({
     }
   }, [open]);
 
-  // Lock body scroll while open
+  // Lock body scroll while open. Hiding the document scrollbar reclaims its
+  // gutter and shifts the whole page sideways on classic-scrollbar
+  // platforms, so the gutter is repaid as body padding for the lock's
+  // duration (overlay scrollbars measure 0 and nothing is added).
   useEffect(() => {
-    if (open) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
+    if (!open) return;
+    const gutter = window.innerWidth - document.documentElement.clientWidth;
+    const { style } = document.body;
+    const prevOverflow = style.overflow;
+    const prevPaddingRight = style.paddingRight;
+    const basePadding = parseFloat(getComputedStyle(document.body).paddingRight) || 0;
+    style.overflow = 'hidden';
+    if (gutter > 0) {
+      style.paddingRight = `${basePadding + gutter}px`;
     }
     return () => {
-      document.body.style.overflow = '';
+      style.overflow = prevOverflow;
+      style.paddingRight = prevPaddingRight;
     };
   }, [open]);
 
