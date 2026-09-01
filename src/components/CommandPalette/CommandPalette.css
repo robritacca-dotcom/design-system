@@ -157,6 +157,9 @@
   scrollbar-width: thin;
   scrollbar-gutter: stable;
   scrollbar-color: var(--color-divider) transparent;
+  /* The scroll lock lets wheel and touch through only inside this list, so
+     hitting its ends must not chain the leftover delta to the page. */
+  overscroll-behavior: contain;
 }
 
 .ds-command-palette__status {

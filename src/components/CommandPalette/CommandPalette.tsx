@@ -177,26 +177,29 @@ export const CommandPalette = ({
     }
   }, [open]);
 
-  // Lock body scroll while open. Hiding the document scrollbar reclaims its
-  // gutter and shifts the whole page sideways on classic-scrollbar
-  // platforms, so the gutter is repaid as body padding for the lock's
-  // duration (overlay scrollbars measure 0 and nothing is added).
+  // Lock the page behind the palette without touching its scrollbar.
+  // Hiding overflow removes the document scrollbar, and the rail blinking
+  // out reads as a jump on classic-scrollbar platforms even with the
+  // gutter width repaid as padding. So the background keeps its scrollbar
+  // exactly as it was, and scroll *input* is cancelled instead: wheel and
+  // touch gestures work only inside the command list while open. Focus is
+  // already trapped in the dialog, so keyboard scrolling cannot reach the
+  // page. Dragging the document scrollbar's thumb itself remains possible;
+  // the scrim makes that a deliberate act rather than an accident.
   useEffect(() => {
     if (!open) return;
-    const gutter = window.innerWidth - document.documentElement.clientWidth;
-    const { style } = document.body;
-    const prevOverflow = style.overflow;
-    const prevPaddingRight = style.paddingRight;
-    const basePadding = parseFloat(getComputedStyle(document.body).paddingRight) || 0;
-    style.overflow = 'hidden';
-    if (gutter > 0) {
-      style.paddingRight = `${basePadding + gutter}px`;
-    }
-    return () => {
-      style.overflow = prevOverflow;
-      style.paddingRight = prevPaddingRight;
+    const block = (event: Event) => {
+      const target = event.target instanceof Element ? event.target : null;
+      if (target?.closest(`.${baseClass}__list`)) return;
+      event.preventDefault();
     };
-  }, [open]);
+    document.addEventListener('wheel', block, { passive: false });
+    document.addEventListener('touchmove', block, { passive: false });
+    return () => {
+      document.removeEventListener('wheel', block);
+      document.removeEventListener('touchmove', block);
+    };
+  }, [open, baseClass]);
 
   // Focus trap + ESC — document-level, so both work from anywhere in the dialog
   useEffect(() => {
