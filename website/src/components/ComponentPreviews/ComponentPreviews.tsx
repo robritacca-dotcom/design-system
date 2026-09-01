@@ -889,10 +889,10 @@ const previews: Record<string, () => ReactNode> = {
   "funnel-chart": () => (
     <>
       <svg width="120" height="64" viewBox="0 0 120 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="0" y="0" width="26" height="64" rx="4" fill="var(--color-chart-series-1)" />
-        <rect x="31" y="19" width="26" height="26" rx="4" fill="var(--color-chart-series-2)" />
-        <rect x="62" y="26" width="26" height="12" rx="4" fill="var(--color-chart-series-3)" />
-        <rect x="93" y="29" width="26" height="6" rx="3" fill="var(--color-chart-series-4)" />
+        <polygon points="0,0 120,0 97,15 23,15" fill="var(--color-chart-series-1)" />
+        <polygon points="23,16.5 97,16.5 83,31.5 37,31.5" fill="var(--color-chart-series-2)" />
+        <polygon points="37,33 83,33 74,48 46,48" fill="var(--color-chart-series-3)" />
+        <rect x="46" y="49.5" width="28" height="14.5" fill="var(--color-chart-series-4)" />
       </svg>
     </>
   ),

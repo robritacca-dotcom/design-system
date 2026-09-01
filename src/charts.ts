@@ -13,3 +13,4 @@ export * from './components/Chart/RadialChart';
 export * from './components/Chart/ScatterChart';
 export * from './components/Chart/StackedBarChart';
 export * from './components/Chart/Treemap';
+export * from './components/FunnelChart/FunnelChart';

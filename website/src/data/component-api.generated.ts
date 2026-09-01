@@ -4172,10 +4172,10 @@ export const componentApi: readonly ComponentApiEntry[] = [
     "label": "Funnel chart",
     "slug": "funnel-chart",
     "category": "charts",
-    "description": "Ordered funnel stages as stepped bars with conversion percentages, each sized by its share of the first stage.",
+    "description": "Ordered funnel stages as centred trapezoid bands, each sized by its share of the first stage.",
     "client": false,
     "importPath": "@robr0/design-system/components/FunnelChart/FunnelChart",
-    "barrel": "main",
+    "barrel": "charts",
     "exports": [
       {
         "component": "FunnelChart",
@@ -4184,7 +4184,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
             "name": "data",
             "type": "FunnelStage[]",
             "required": true,
-            "description": "Ordered stages, first stage widest. Each later stage's height is its share of the first."
+            "description": "Ordered stages, first stage widest. Each later stage's width is its share of the first."
           },
           {
             "name": "title",
@@ -4213,11 +4213,18 @@ export const componentApi: readonly ComponentApiEntry[] = [
             "defaultValue": "190"
           },
           {
+            "name": "showLabels",
+            "type": "boolean",
+            "required": false,
+            "description": "Shows each stage's name beside its band. Turn off when a legend under the chart already carries the names.",
+            "defaultValue": "true"
+          },
+          {
             "name": "minStageShare",
             "type": "number",
             "required": false,
-            "description": "Floor percentage for a stage's height, so steep drop-offs stay readable.\nShares are clamped to the range from this floor up to 100.",
-            "defaultValue": "16"
+            "description": "Floor percentage from the stepped-bar rendering this chart used to have.",
+            "deprecated": "The funnel now draws true trapezoids sized by value, so a\nheight floor no longer applies; the prop is ignored."
           },
           {
             "name": "className",

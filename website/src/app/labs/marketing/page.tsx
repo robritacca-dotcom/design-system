@@ -634,6 +634,7 @@ export default function MarketingDashboardPage() {
             </header>
             <FunnelChart
               bare
+              showLabels={false}
               data={FUNNEL.map((stage) => ({
                 label: stage.label,
                 value: stage.pct,

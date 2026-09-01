@@ -56,7 +56,6 @@ export * from './components/Field/FieldContext';
 export * from './components/Figure/Figure';
 export * from './components/FileInput/FileInput';
 export * from './components/FilterBar/FilterBar';
-export * from './components/FunnelChart/FunnelChart';
 export * from './components/Gauge/Gauge';
 export * from './components/Globe/Globe';
 export * from './components/HoverCard/HoverCard';

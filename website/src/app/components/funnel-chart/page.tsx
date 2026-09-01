@@ -49,21 +49,24 @@ export default function FunnelChartPage() {
               Where the numbers thin out, stage by stage
             </p>
             <p className={styles.introBody}>
-              Ordered stages as side-by-side bars, each one&apos;s height its
-              share of the first, each carrying a pill with the conversion
-              percentage. Pure JSX and CSS computed from props: no recharts,
-              no client JavaScript, so it renders from a Server Component. It
-              wears the same card, header, and padding as every other chart,
-              and bare strips them inside a panel that supplies the surface.
+              Ordered stages as a centred funnel of trapezoid bands, each
+              one&apos;s width its share of the first: the taper itself is
+              the conversion story. Built on the charting library&apos;s
+              native funnel, so the stages sweep in on load and hovering a
+              band raises the family&apos;s glass tooltip with the
+              stage&apos;s reading and percentage. It wears the same card,
+              header, and padding as every other chart, and bare strips them
+              inside a panel that supplies the surface.
             </p>
           </div>
 
           <section className={`${styles.section} animate-in animate-delay-2`}>
             <SectionTitle title="Default" />
             <p className={styles.sectionBody}>
-              Four stages from visit to customer. The first stage always fills
-              the height; every later bar reads as a fraction of it. Title and
-              subtitle sit in the shared chart header.
+              Four stages from visit to customer. The first stage always spans
+              the full width; every later band reads as a fraction of it, with
+              its name at its side. Title and subtitle sit in the shared chart
+              header.
             </p>
             <FunnelChart
               data={conversionFunnel}
@@ -75,13 +78,14 @@ export default function FunnelChartPage() {
           <section className={`${styles.section} animate-in animate-delay-3`}>
             <SectionTitle title="With legend tiles" />
             <p className={styles.sectionBody}>
-              The bars carry percentages, not names, so pair the funnel with a
-              row of legend tiles that give each stage its label and formatted
-              count in the same series order. Composed like this, the funnel
-              goes bare and the surrounding panel supplies the surface.
+              When a row of legend tiles gives each stage its label and
+              formatted count in the same series order, showLabels turns the
+              in-chart names off so nothing says anything twice. Composed like
+              this, the funnel goes bare and the surrounding panel supplies
+              the surface.
             </p>
             <div className={styles.funnelWithLegend}>
-              <FunnelChart bare data={salesFunnel} />
+              <FunnelChart bare showLabels={false} data={salesFunnel} />
               <div className={styles.legendRow}>
                 {salesFunnel.map((stage, i) => (
                   <div key={stage.label} className={styles.legendTile}>
@@ -103,10 +107,9 @@ export default function FunnelChartPage() {
           <section className={`${styles.section} animate-in animate-delay-4`}>
             <SectionTitle title="Steep drop-off" />
             <p className={styles.sectionBody}>
-              When a stage falls below the floor share, its bar holds at the
-              minimum height so the pill stays readable, while the percentage
-              keeps telling the truth. Tune the floor with{" "}
-              <code>minStageShare</code>.
+              A steep drop-off draws exactly as steep as it is: the late
+              stages narrow to slivers of the first, and the tooltip carries
+              each stage&apos;s true count and percentage.
             </p>
             <FunnelChart data={adsFunnel} />
           </section>

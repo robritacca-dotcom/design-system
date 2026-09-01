@@ -166,7 +166,12 @@ export const ContributionGraph = ({
           aria-label={caption ?? 'Contribution activity'}
         >
           {weeks.map((week, weekIndex) => (
-            <div key={weekIndex} className="ds-contribution-graph__week">
+            <div
+              key={weekIndex}
+              className="ds-contribution-graph__week"
+              // Drives the mount animation's left-to-right column sweep.
+              style={{ '--ds-contribution-week': weekIndex } as React.CSSProperties}
+            >
               {week.map((day, dayIndex) =>
                 day ? (
                   <div
