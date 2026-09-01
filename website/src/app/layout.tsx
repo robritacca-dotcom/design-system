@@ -13,6 +13,7 @@ import { getArticles } from "@/lib/substack";
 import { WritingNavProvider } from "@/components/MegaNav/WritingNavContext";
 import { SiteChatProvider } from "@/components/SiteChat/ChatContext";
 import { SiteChatMount } from "@/components/SiteChat/SiteChatMount";
+import { SitePaletteMount } from "@/components/SitePalette/SitePaletteMount";
 import SiteFooter from "@/components/SiteFooter/SiteFooter";
 import { SiteFooterMount } from "@/components/SiteFooter/SiteFooterMount";
 import { ClientNav } from "@/components/ClientNav/ClientNav";
@@ -124,9 +125,16 @@ export default async function RootLayout({
   // WritingNavContext). Fetched here because the layout is the one server
   // component every page shares; the feed fetch is ISR-cached and returns
   // [] on failure, so it never blocks or breaks a page.
-  const writingNavItems = (await getArticles()).map((a) => ({
+  const articles = await getArticles();
+  const writingNavItems = articles.map((a) => ({
     label: a.title,
     href: `/writing/${a.slug}`,
+  }));
+  // The palette's essay rows also carry the subtitle as a description.
+  const writingPaletteLinks = articles.map((a) => ({
+    label: a.title,
+    href: `/writing/${a.slug}`,
+    description: a.subtitle,
   }));
   // The next/font variable class lives on <html>, not <body>: globals.css
   // feeds var(--font-nunito-sans) into the design system's
@@ -214,6 +222,11 @@ export default async function RootLayout({
             <SiteFooter />
           </SiteFooterMount>
           <SiteChatMount />
+          {/* The global command palette (an experiment): mounted once beside
+              the chat, so Cmd+K and the header's search button work on every
+              chrome-bearing page. Inside the chat provider because one of its
+              actions opens the panel. */}
+          <SitePaletteMount writingLinks={writingPaletteLinks} />
         </SiteChatProvider>
       </body>
     </html>

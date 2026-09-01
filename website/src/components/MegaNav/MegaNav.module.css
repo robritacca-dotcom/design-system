@@ -54,7 +54,9 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  width: 160px;
+  /* Matches .rightSlot, which grew for the search button — equal slots keep
+     navCenter centred on the page. */
+  width: 208px;
 }
 
 .navCenter {
@@ -69,7 +71,9 @@
   align-items: center;
   justify-content: flex-end;
   flex-shrink: 0;
-  width: 160px;
+  /* Was 160px; the search button added a 40px circle plus the gap. Keep in
+     step with .logoSlot. */
+  width: 208px;
   gap: var(--primitive-gap-sm);
 }
 
@@ -229,6 +233,29 @@
    top layer instead. */
 .mobileMenuBtnHidden {
   visibility: hidden;
+}
+
+/* ============================================
+   SEARCH BUTTON (all widths)
+   Opens the global command palette. Same circle
+   as the mobile menu button, but never hidden.
+   ============================================ */
+.searchBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-action-passive-bg);
+  border: none;
+  border-radius: var(--radius-full);
+  padding: var(--primitive-padding-sm);
+  cursor: pointer;
+  color: var(--color-text-primary);
+  width: 40px;
+  height: 40px;
+}
+
+.searchBtn:hover {
+  background: var(--color-action-passive-bg-hover);
 }
 
 /* ============================================
@@ -610,6 +637,12 @@
   }
 
   .rightSlot {
+    width: auto;
+  }
+
+  /* navCenter is hidden here, so the slots no longer balance anything —
+     free the fixed width before it crowds a narrow viewport. */
+  .logoSlot {
     width: auto;
   }
 

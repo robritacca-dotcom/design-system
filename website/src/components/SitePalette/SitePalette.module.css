@@ -1,0 +1,8 @@
+/* The component's own layer sits at z-index 110 (above Dialog and Drawer,
+   which is all a normal host needs), but this instance is site chrome: it
+   must also clear the sticky header and the mobile drawer overlay, both at
+   1000. Lifted here rather than in the library because the stacking order
+   of the site's chrome is the site's business. */
+.palette {
+  z-index: 1200;
+}

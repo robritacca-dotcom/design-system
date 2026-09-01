@@ -162,14 +162,14 @@ export const componentsSidebarGroups: SidebarGroup[] = componentCategoryMetadata
 
 export const foundationsSidebarLinks: NavLink[] = [
   { href: "/foundations", label: "Contents" },
-  { href: "/foundations/elevation", label: "Elevation" },
-  { href: "/foundations/icons", label: "Icons" },
-  { href: "/foundations/logos", label: "Logos" },
-  { href: "/foundations/motion", label: "Motion" },
-  { href: "/foundations/colour-primitives", label: "Primitive colours" },
-  { href: "/foundations/colour-mode", label: "Semantic colours" },
-  { href: "/foundations/spatial", label: "Semantic spacing" },
-  { href: "/foundations/typography", label: "Typography" },
+  { href: "/foundations/elevation", label: "Elevation", description: "The shadow and depth tokens" },
+  { href: "/foundations/icons", label: "Icons", description: "The icon font and its size scale" },
+  { href: "/foundations/logos", label: "Logos", description: "The brand marks and how they are used" },
+  { href: "/foundations/motion", label: "Motion", description: "The duration and easing tokens" },
+  { href: "/foundations/colour-primitives", label: "Primitive colours", description: "The raw values behind the colour tokens" },
+  { href: "/foundations/colour-mode", label: "Semantic colours", description: "Every colour token in both themes" },
+  { href: "/foundations/spatial", label: "Semantic spacing", description: "The spacing, radius, and border tokens" },
+  { href: "/foundations/typography", label: "Typography", description: "The type scale, weights, and faces" },
 ];
 
 /**
@@ -179,14 +179,14 @@ export const foundationsSidebarLinks: NavLink[] = [
  */
 export const docsSidebarLinks: NavLink[] = [
   { href: "/docs", label: "Contents" },
-  { href: "/overview", label: "Overview" },
-  { href: "/docs/get-started", label: "Get started" },
-  { href: "/blueprints/claude", label: "Claude MD" },
-  { href: "/blueprints/design", label: "Design MD" },
-  { href: "/blueprints/content-design", label: "Content MD" },
-  { href: "/skills", label: "Skills" },
-  { href: "/loops", label: "Loops" },
-  { href: "/project-journal", label: "Project journal" },
+  { href: "/overview", label: "Overview", description: "How the system is built, tested, and shipped" },
+  { href: "/docs/get-started", label: "Get started", description: "Install the package and theme it" },
+  { href: "/blueprints/claude", label: "Claude MD", description: "The agent instructions behind this repo" },
+  { href: "/blueprints/design", label: "Design MD", description: "The design spec behind the system" },
+  { href: "/blueprints/content-design", label: "Content MD", description: "The style guide behind the words" },
+  { href: "/skills", label: "Skills", description: "The agent skills that maintain the site" },
+  { href: "/loops", label: "Loops", description: "The recurring loops that keep it current" },
+  { href: "/project-journal", label: "Project journal", description: "What shipped and when, curated" },
 ];
 
 /**

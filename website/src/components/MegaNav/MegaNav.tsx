@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
+import { openSitePalette } from "../SitePalette/palette-bus";
 import { lockBodyScroll, unlockBodyScroll } from "@/lib/scroll-lock";
 import { NavList, type NavListItem } from "@robr0/design-system/components/NavList/NavList";
 import { componentCategoryMetadata } from "@robr0/design-system/components/registry";
@@ -316,6 +317,19 @@ export default function MegaNav() {
         </div>
 
         <div className={styles.rightSlot}>
+          {/* Opens the global palette mounted from the root layout — the
+              two trees never meet, so the click travels via palette-bus. */}
+          <button
+            type="button"
+            className={styles.searchBtn}
+            onClick={openSitePalette}
+            aria-label="Search the site"
+            aria-keyshortcuts="Meta+K"
+          >
+            <span className="material-symbols-rounded" aria-hidden="true">
+              search
+            </span>
+          </button>
           <ThemeToggle className={styles.desktopThemeToggle} />
           <button
             type="button"
@@ -454,6 +468,18 @@ export default function MegaNav() {
           </div>
 
           <div className={styles.rightSlot}>
+            <button
+              type="button"
+              className={styles.searchBtn}
+              onClick={openSitePalette}
+              aria-label="Search the site"
+              aria-keyshortcuts="Meta+K"
+              tabIndex={isStuck ? 0 : -1}
+            >
+              <span className="material-symbols-rounded" aria-hidden="true">
+                search
+              </span>
+            </button>
             <ThemeToggle className={styles.desktopThemeToggle} />
             <button
               type="button"

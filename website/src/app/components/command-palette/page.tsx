@@ -94,7 +94,8 @@ export default function CommandPalettePage() {
           <section className={styles.section}>
             <SectionTitle title="Default" />
             <p className={styles.demoCaption}>
-              Try the hotkey. It is bound globally on this page.
+              Try the hotkey. This demo owns it here; everywhere else it opens
+              the site’s own palette.
             </p>
             <div className={styles.demoRow}>
               <Button
