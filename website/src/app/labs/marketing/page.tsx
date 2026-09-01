@@ -5,6 +5,9 @@
  * tiles, funnel, channel breakdowns, trend charts, and a campaign table)
  * rebuilt from the design system alone. Every colour, radius, space, and
  * type style is a semantic token; every control is a library component.
+ * The one sanctioned departure is content, not chrome: the campaign table's
+ * publisher marks wear their real brand colours, the way the case-study
+ * cover redraws carry the products they depict.
  * The point is fidelity pressure: where the rebuild falls short of the
  * reference, the shortfall is a finding about the system, not this page.
  *
@@ -13,6 +16,7 @@
  */
 
 import React from "react";
+import { AiButton } from "@robr0/design-system/components/AiButton/AiButton";
 import {
   AppSidebar,
   type AppSidebarSection,
@@ -20,6 +24,11 @@ import {
 import { Badge } from "@robr0/design-system/components/Badge/Badge";
 import { Breadcrumb } from "@robr0/design-system/components/Breadcrumb/Breadcrumb";
 import { Button } from "@robr0/design-system/components/Button/Button";
+import { ChatHeader } from "@robr0/design-system/components/ChatHeader/ChatHeader";
+import { ChatMessage } from "@robr0/design-system/components/ChatMessage/ChatMessage";
+import { ChatThread } from "@robr0/design-system/components/ChatThread/ChatThread";
+import { Composer } from "@robr0/design-system/components/Composer/Composer";
+import { PromptSuggestions } from "@robr0/design-system/components/PromptSuggestions/PromptSuggestions";
 import { CircularButton } from "@robr0/design-system/components/CircularButton/CircularButton";
 import {
   DataTable,
@@ -30,14 +39,22 @@ import {
   Dropdown,
   type DropdownOption,
 } from "@robr0/design-system/components/Dropdown/Dropdown";
+import { Divider } from "@robr0/design-system/components/Divider/Divider";
 import { EmptyState } from "@robr0/design-system/components/EmptyState/EmptyState";
 import { FunnelChart } from "@robr0/design-system/components/FunnelChart/FunnelChart";
+import { Input } from "@robr0/design-system/components/Input/Input";
+import { Kbd } from "@robr0/design-system/components/Kbd/Kbd";
 import { LegendTile } from "@robr0/design-system/components/LegendTile/LegendTile";
 import { ProgressBar } from "@robr0/design-system/components/ProgressBar/ProgressBar";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import { Stat } from "@robr0/design-system/components/Stat/Stat";
 import { Tabs } from "@robr0/design-system/components/Tabs/Tabs";
-import { AreaChart, BarChart, RadialChart } from "@robr0/design-system/charts";
+import { AreaChart, ComboChart, RadialChart } from "@robr0/design-system/charts";
+import {
+  readGreeting,
+  serverGreeting,
+  subscribeClock,
+} from "../../../components/SiteChat/greeting";
 import ThemeToggle from "../../../components/ThemeToggle/ThemeToggle";
 import styles from "./page.module.css";
 
@@ -123,10 +140,12 @@ const MONTHS = [
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
 ];
 
-/* Monthly ad spend in $K; sums to the $217.7K total shown in the legend. */
+/* Monthly ad spend in $K; sums to the $217.7K total shown in the legend.
+   ROAS rides the combo chart's second axis and averages the legend's 3.6x. */
+const ROAS = [3.0, 3.1, 3.3, 3.2, 3.4, 3.5, 3.6, 3.7, 3.8, 4.0, 4.1, 4.3];
 const AD_SPEND = [
   10.2, 11.8, 13.1, 12.6, 15.4, 16.9, 17.8, 19.2, 20.7, 22.6, 26.3, 31.1,
-].map((spend, i) => ({ month: MONTHS[i], spend }));
+].map((spend, i) => ({ month: MONTHS[i], spend, roas: ROAS[i] }));
 
 /* Monthly visitors in K; each series sums to its legend total. */
 const ORGANIC = [4.9, 5.2, 5.6, 5.4, 5.9, 6.3, 6.1, 6.6, 7.0, 6.8, 7.3, 7.4];
@@ -147,6 +166,108 @@ const CHANNEL_GLYPH: Record<string, string> = {
   email: "mail",
   web: "language",
 };
+
+/* The ad publishers get their real marks in brand colour (an inherently
+   off-token exception, like the case-study cover redraws); X rides
+   currentColor because its mark is monochrome by design, and non-publisher
+   channels keep system icons. */
+const PUBLISHER_MARKS: Record<
+  string,
+  { viewBox: string; paths: { d: string; fill?: string }[] }
+> = {
+  google: {
+    viewBox: "0 0 48 48",
+    paths: [
+      {
+        fill: "#EA4335",
+        d: "M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z",
+      },
+      {
+        fill: "#4285F4",
+        d: "M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z",
+      },
+      {
+        fill: "#FBBC05",
+        d: "M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z",
+      },
+      {
+        fill: "#34A853",
+        d: "M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z",
+      },
+    ],
+  },
+  meta: {
+    viewBox: "0 0 16 16",
+    paths: [
+      {
+        fill: "#0081FB",
+        d: "M8.217 5.243C9.145 3.988 10.171 3 11.483 3 13.96 3 16 6.153 16.001 9.907c0 2.29-.986 3.725-2.757 3.725-1.543 0-2.395-.866-3.924-3.424l-.667-1.123a123 123 0 0 0-.648-1.074l-1.178 2.08c-1.673 2.925-2.615 3.541-3.923 3.541C1.086 13.632 0 12.217 0 9.973 0 6.388 1.995 3 4.598 3q.477-.001.924.122c.31.086.611.22.913.407.577.359 1.154.915 1.782 1.714m1.516 2.224q.378.61.788 1.316l.523.882c.936 1.587 1.313 1.918 1.9 1.918.586 0 .87-.482.87-1.42 0-2.834-1.253-5.02-2.35-5.02-.579 0-1.09.412-1.731 1.324m-4.855-1.14c-1.204 0-2.24 2.098-2.24 4.288 0 1.101.353 1.735 1.06 1.735.68 0 1.096-.417 2.278-2.4l.943-1.585c-.928-1.417-1.399-2.038-2.041-2.038",
+      },
+    ],
+  },
+  x: {
+    viewBox: "0 0 16 16",
+    paths: [
+      {
+        d: "M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865l8.875 11.633Z",
+      },
+    ],
+  },
+  linkedin: {
+    viewBox: "0 0 16 16",
+    paths: [
+      {
+        fill: "#0A66C2",
+        d: "M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z",
+      },
+    ],
+  },
+};
+
+function ChannelMark({ channel }: { channel: string }) {
+  const mark = PUBLISHER_MARKS[channel];
+  if (!mark) {
+    return (
+      <span className="material-symbols-rounded">
+        {CHANNEL_GLYPH[channel]}
+      </span>
+    );
+  }
+  return (
+    <svg
+      viewBox={mark.viewBox}
+      width="16"
+      height="16"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      {mark.paths.map((p, i) => (
+        <path key={i} d={p.d} fill={p.fill} />
+      ))}
+    </svg>
+  );
+}
+
+/* The middle analytics row is parked while the table carries the page —
+   flip this to bring the funnel, spend ring, and channel tabs back. */
+const SHOW_MID_ROW = false;
+
+/* The workspace assistant is a mock: canned answers over the page's own
+   numbers, the same entry-point-and-docked-panel pattern as the site chat. */
+const CHAT_SUGGESTIONS = [
+  { id: "cpc", label: "Why did cost per click fall?" },
+  { id: "month", label: "Summarise this month" },
+  { id: "channel", label: "Which channel converts best?" },
+];
+
+const CHAT_REPLIES: Record<string, string> = {
+  cpc: "Cost per click fell 3.1% to $1.24 because spend shifted toward Paid search, which is winning cheaper auctions. Google Ads now carries 39% of traffic at the lowest cost per conversion on the account.",
+  month: "Ad spend is $24,380, up 8.4%, and impressions grew 12.6% to 1.94M. Conversions rose 5.2% to 1,286 while cost per click fell 3.1%: more volume for slightly less money per click.",
+  channel: "Paid search converts best: 46% of spend and the largest share of the 1,286 conversions. Meta is second on volume, but its cost per conversion runs about a third higher.",
+};
+
+const CHAT_FALLBACK =
+  "This assistant is a mock — in the real product this answer would come from your campaign data. Try one of the suggested questions for a canned tour.";
 
 const OBJECTIVE_VARIANT: Record<
   string,
@@ -253,6 +374,38 @@ function seriesSwatch(series: number): string {
 export default function MarketingDashboardPage() {
   const [sidebarExpanded, setSidebarExpanded] = React.useState(true);
   const [channelTab, setChannelTab] = React.useState("channels");
+  const [chatOpen, setChatOpen] = React.useState(false);
+  const [chatValue, setChatValue] = React.useState("");
+  const [chatTurns, setChatTurns] = React.useState<
+    { id: number; role: "user" | "assistant"; text: string }[]
+  >([]);
+
+  const greeting = React.useSyncExternalStore(
+    subscribeClock,
+    readGreeting,
+    serverGreeting
+  );
+
+  /* The text field is ready to type into whenever a conversation can start:
+     on open, on new chat, and again after every send (the site chat's
+     focus contract). */
+  const composerRef = React.useRef<HTMLTextAreaElement | null>(null);
+  const focusComposer = () => composerRef.current?.focus();
+  React.useEffect(() => {
+    if (chatOpen) focusComposer();
+  }, [chatOpen]);
+
+  const ask = (text: string, replyId?: string) => {
+    const reply = (replyId && CHAT_REPLIES[replyId]) || CHAT_FALLBACK;
+    setChatTurns((turns) => [
+      ...turns,
+      { id: turns.length, role: "user", text },
+      { id: turns.length + 1, role: "assistant", text: reply },
+    ]);
+    focusComposer();
+  };
+
+  const chatEmpty = chatTurns.length === 0;
   const [delivery, setDelivery] = React.useState<Record<string, string>>(() =>
     Object.fromEntries(CAMPAIGNS.map((c) => [c.id, c.delivery]))
   );
@@ -266,9 +419,7 @@ export default function MarketingDashboardPage() {
       render: (row: DataTableRow) => (
         <span className={styles.campaignCell}>
           <span className={styles.glyphChip} aria-hidden="true">
-            <span className="material-symbols-rounded">
-              {CHANNEL_GLYPH[String(row.values.channel)]}
-            </span>
+            <ChannelMark channel={String(row.values.channel)} />
           </span>
           <span className={styles.campaignText}>
             <span className={styles.campaignName}>{row.values.name}</span>
@@ -373,7 +524,11 @@ export default function MarketingDashboardPage() {
       <div className={styles.sidebar}>
         <AppSidebar
           sections={NAV_SECTIONS}
-          profile={{ name: "Mara Esmer", email: "mara@boardline.app" }}
+          profile={{
+            name: "Mara Esmer",
+            email: "mara@boardline.app",
+            avatarUrl: "/labs/marketing-avatar.png",
+          }}
           activeKey="marketing"
           expanded={sidebarExpanded}
           onExpandedChange={setSidebarExpanded}
@@ -386,9 +541,36 @@ export default function MarketingDashboardPage() {
       <main
         className={`${styles.main} ${
           sidebarExpanded ? styles.mainExpanded : ""
-        }`}
+        } ${chatOpen ? styles.mainChatOpen : ""}`}
       >
         <div className={styles.content}>
+        <div className={styles.topBar}>
+          <div className={styles.search}>
+            <Input
+              placeholder="Search campaigns"
+              iconLeft="search"
+              aria-label="Search campaigns"
+            />
+            <span className={styles.searchKbd} aria-hidden="true">
+              <Kbd size="compact">⌘</Kbd>
+              <Kbd size="compact">K</Kbd>
+            </span>
+          </div>
+          <div className={styles.topBarActions}>
+            <AiButton
+              label="Ask AI"
+              size="compact"
+              onClick={() => setChatOpen(true)}
+            />
+            <CircularButton
+              icon="notifications"
+              variant="secondary"
+              size="compact"
+              ariaLabel="Notifications"
+            />
+          </div>
+        </div>
+        <Divider spacing="none" />
         <header className={styles.pageHead}>
           <div>
             <Breadcrumb
@@ -401,12 +583,6 @@ export default function MarketingDashboardPage() {
             <h1 className={styles.title}>Marketing</h1>
           </div>
           <div className={styles.headActions}>
-            <CircularButton
-              icon="notifications"
-              variant="secondary"
-              size="compact"
-              ariaLabel="Notifications"
-            />
             <Button
               variant="secondary"
               size="compact"
@@ -439,6 +615,7 @@ export default function MarketingDashboardPage() {
           ))}
         </div>
 
+        {SHOW_MID_ROW && (
         <div className={styles.midGrid}>
           <section className={styles.panel} aria-label="Acquisition funnel">
             <header className={styles.panelHead}>
@@ -564,6 +741,7 @@ export default function MarketingDashboardPage() {
             )}
           </section>
         </div>
+        )}
 
         <div className={styles.chartsGrid}>
           <section className={styles.panel} aria-label="Ad spend by month">
@@ -581,17 +759,27 @@ export default function MarketingDashboardPage() {
                 label="Ad spend date range"
               />
             </header>
-            <BarChart
+            <ComboChart
               data={AD_SPEND}
               xKey="month"
-              yKey="spend"
-              dataLabel="Ad spend ($K)"
+              barKey="spend"
+              barLabel="Ad spend ($K)"
+              lineKey="roas"
+              lineLabel="ROAS"
               height={260}
               bare
             />
             <div className={styles.legendRow}>
-              <LegendTile label="Ad spend, total" value="$217.7K" />
-              <LegendTile label="ROAS, average" value="3.6x" />
+              <LegendTile
+                swatch={seriesSwatch(1)}
+                label="Ad spend, total"
+                value="$217.7K"
+              />
+              <LegendTile
+                swatch={seriesSwatch(2)}
+                label="ROAS, average"
+                value="3.6x"
+              />
             </div>
           </section>
 
@@ -644,7 +832,7 @@ export default function MarketingDashboardPage() {
             searchable
             searchPlaceholder="Search campaigns"
             selectable
-            pageSize={8}
+            pageSize={16}
             defaultSort={{ key: "updated", direction: "desc" }}
             toolbar={
               <div className={styles.tableFilters}>
@@ -674,6 +862,109 @@ export default function MarketingDashboardPage() {
         </section>
         </div>
       </main>
+
+      {chatOpen && (
+        <aside className={styles.chatPanel} aria-label="Boardline AI assistant">
+          {/* The site chat's internal anatomy, restated over mock state: a
+              zero-basis top region and a growing bottom region split the
+              height while the thread is empty, centring the composer; the
+              first utterance collapses the bottom region and the transcript
+              takes over. */}
+          <div className={styles.chat}>
+            <div className={styles.chatTopRegion}>
+              <ChatHeader
+                title="Boardline AI"
+                actions={
+                  <>
+                    <CircularButton
+                      icon="edit_square"
+                      variant="tertiary"
+                      ariaLabel="New chat"
+                      tooltipPosition="bottom"
+                      onClick={() => {
+                        setChatTurns([]);
+                        setChatValue("");
+                        focusComposer();
+                      }}
+                    />
+                    <CircularButton
+                      icon="close"
+                      variant="tertiary"
+                      ariaLabel="Close chat"
+                      tooltipPosition="bottom"
+                      onClick={() => setChatOpen(false)}
+                    />
+                  </>
+                }
+              />
+              <div className={styles.chatBody}>
+                <ChatThread className={styles.chatThread}>
+                  {chatTurns.map((turn) => (
+                    <ChatMessage key={turn.id} role={turn.role}>
+                      {turn.text}
+                    </ChatMessage>
+                  ))}
+                </ChatThread>
+                {chatEmpty && (
+                  <div className={styles.chatWelcomeTop}>
+                    <div className={styles.chatWelcomeGreeting}>
+                      <p className={styles.chatWelcomeHello}>{greeting}</p>
+                      <p className={styles.chatWelcomeAsk}>
+                        Ask about campaigns, channels, spend, or performance
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <footer className={styles.chatFooter}>
+              <div className={styles.chatComposerColumn}>
+                <Composer
+                  ref={composerRef}
+                  aiGlow
+                  sendLabel="Send"
+                  placeholder="Ask anything"
+                  value={chatValue}
+                  onValueChange={setChatValue}
+                  onSubmit={(value) => {
+                    ask(value);
+                    setChatValue("");
+                  }}
+                />
+              </div>
+            </footer>
+
+            <div
+              className={`${styles.chatBottomRegion} ${
+                chatEmpty ? styles.chatBottomRegionWelcome : ""
+              }`}
+            >
+              {chatEmpty && (
+                <div className={styles.chatStartersColumn}>
+                  <PromptSuggestions
+                    layout="stack"
+                    ariaLabel="Conversation starters"
+                    suggestions={CHAT_SUGGESTIONS}
+                    onValueChange={(id) => {
+                      const suggestion = CHAT_SUGGESTIONS.find(
+                        (s) => s.id === id
+                      );
+                      if (suggestion) ask(suggestion.label, id);
+                    }}
+                  />
+                </div>
+              )}
+              <div className={styles.chatDisclaimerRow}>
+                <p className={styles.chatDisclaimer}>
+                  A mock assistant with canned answers over this page&apos;s
+                  numbers.
+                </p>
+              </div>
+            </div>
+          </div>
+        </aside>
+      )}
     </div>
   );
 }
