@@ -248,6 +248,7 @@ export function MetaOfferDraftCover(props: CoverProps) {
                   </div>
                 </div>
 
+                {/* Fictional person — name, address and phone are invented (confirmed by Rob, 2026-09-01) */}
                 <div className={styles.metaRow}>
                   reinardus.chain@gmail.com
                   <span className={styles.infoDot} />

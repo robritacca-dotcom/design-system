@@ -124,7 +124,7 @@ const PIPELINE: TimelineCompany[] = [
             <code>robertritacca.com</code> is registered at GoDaddy, whose DNS
             points at the Vercel deployment
           </>,
-          "Nunito Sans is self-hosted via next/font, and Material Symbols ships inside the npm package; the playground's typeface picker is the one place fonts load from Google at runtime",
+          "Nunito Sans is self-hosted via next/font, and Material Symbols ships inside the npm package; only the playground's typeface picker and the MCP endpoint's landing page load fonts from Google at runtime",
           "Google Analytics (GA4) measures traffic via the gtag snippet in the root layout",
         ],
       },

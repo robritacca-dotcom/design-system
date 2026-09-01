@@ -156,6 +156,7 @@ export function MetaOfferSummaryCover(props: CoverProps) {
             <div className={styles.peopleRow}>
               <span className={styles.peopleText}>
                 <p className={styles.peopleEyebrow}>Your Recruiter</p>
+                {/* Fictional person — name and address are invented (confirmed by Rob, 2026-09-01) */}
                 <p className={styles.peopleName}>Ashley Wells</p>
                 <p className={styles.peopleEmail}>ashley.wells@meta.com</p>
               </span>

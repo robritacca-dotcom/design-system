@@ -49,6 +49,10 @@ function blobFieldLayers(theme: OgTheme): string {
     .join(", ");
 }
 
+// Deliberately off-token (Rob, 2026-09-01): the light ground and dark ink stay
+// pure white rather than the page-floor/text tokens' #F1F1F1, for crispness at
+// link-preview thumbnail size. The bylines and the two #050505 values do match
+// their tokens; BLOB_HEX below is the mirror validate-token-references.mjs guards.
 const THEME = {
   light: { ground: "#FFFFFF", ink: "#050505", byline: "#0E6E8F" },
   dark: { ground: "#050505", ink: "#FFFFFF", byline: "#3CA5C6" },
