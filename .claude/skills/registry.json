@@ -10,6 +10,7 @@
     "content-audit",
     "pre-deploy",
     "ship",
+    "super-ship",
     "checkpoint",
     "park",
     "land",
