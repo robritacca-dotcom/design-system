@@ -87,10 +87,11 @@
 }
 
 /* ============================================
-   CONTENT + BUILT-WITH RAIL
+   CONTENT + ON-THIS-PAGE RAIL
    ============================================ */
 .railLayout {
   display: flex;
+  align-items: flex-start;
   gap: var(--layout-column-gap);
   width: 100%;
 }
@@ -103,24 +104,24 @@
   gap: var(--gap-xxxl);
 }
 
-.railSidebar {
+.anchorRail {
   width: var(--layout-rail-width);
   flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-xxxl);
+  position: sticky;
+  /* Matches the Sidebar's sticky top so the two rails sit level */
+  top: calc(78px + var(--primitive-padding-lg) * 2 + var(--primitive-gap-xl));
+  height: fit-content;
+  max-height: calc(100dvh - 78px - var(--primitive-gap-xl) * 2);
+  overflow-y: auto;
 }
 
-.railSection {
-  display: flex;
-  flex-direction: column;
-  gap: var(--primitive-gap-lg);
-}
-
+/* ============================================
+   BUILT WITH
+   ============================================ */
 .toolList {
-  display: flex;
-  flex-direction: column;
-  gap: var(--primitive-gap-lg);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--primitive-gap-lg) var(--layout-column-gap);
 }
 
 .toolItem {
@@ -182,6 +183,9 @@ a.toolItem:hover {
   display: flex;
   flex-direction: column;
   gap: var(--primitive-gap-lg);
+  /* Anchor targets clear the sticky MegaNav overlay (--mn-bar-height, 78px)
+     plus a breathing gap */
+  scroll-margin-top: 94px;
 }
 
 .sectionNote {
@@ -203,12 +207,15 @@ a.toolItem:hover {
 /* ============================================
    RESPONSIVE
    ============================================ */
-@media (max-width: 1151px) {
-  .railLayout {
-    flex-direction: column;
+/* The rail only fits the full-width layout; below it the content keeps the room */
+@media (max-width: 1279px) {
+  .anchorRail {
+    display: none;
   }
+}
 
-  .railSidebar {
-    width: 100%;
+@media (max-width: 767px) {
+  .toolList {
+    grid-template-columns: 1fr;
   }
 }

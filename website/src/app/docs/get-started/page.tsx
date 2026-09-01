@@ -7,6 +7,7 @@ import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import { getSidebarLinks, docsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
+import { AnchorNav } from "@robr0/design-system/components/AnchorNav/AnchorNav";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import { CodeBlock } from "@robr0/design-system/components/CodeBlock/CodeBlock";
 import { Button } from "@robr0/design-system/components/Button/Button";
@@ -15,6 +16,19 @@ import { componentMetadata } from "@robr0/design-system/components/registry";
 import { SITE_URL } from "@/lib/structuredData";
 
 const { sidebarLinks } = getSidebarLinks(docsSidebarLinks, "/docs/get-started");
+
+/** On-this-page rail entries — ids match the section elements below, in document order. */
+const PAGE_SECTIONS = [
+  { id: "install", label: "Install" },
+  { id: "dark-mode", label: "Dark mode" },
+  { id: "fonts", label: "Bring your own font" },
+  { id: "re-theme", label: "Re-theme with primitives" },
+  { id: "chat-agent-ui", label: "Chat and agent UI" },
+  { id: "agent-docs", label: "Docs for your agent" },
+  { id: "ambient-background", label: "Ambient background" },
+  { id: "see-it-live", label: "See it live" },
+  { id: "built-with", label: "Built with" },
+];
 
 const INSTALL_SNIPPET = `npm install @robr0/design-system`;
 
@@ -213,7 +227,7 @@ export default function GetStartedPage() {
           <div className={styles.railLayout}>
             <div className={styles.railMain}>
               {/* Install */}
-              <section className={`${styles.section} animate-in animate-delay-2`}>
+              <section id="install" className={`${styles.section} animate-in animate-delay-2`}>
                 <SectionTitle title="Install" />
                 <p className={styles.sectionNote}>
                   React 19+ (react and react-dom) is the only required peer
@@ -230,7 +244,7 @@ export default function GetStartedPage() {
               </section>
 
               {/* Dark mode */}
-              <section className={`${styles.section} animate-in animate-delay-3`}>
+              <section id="dark-mode" className={`${styles.section} animate-in animate-delay-3`}>
                 <SectionTitle title="Dark mode" />
                 <p className={styles.sectionNote}>
                   Every semantic token has a light and a dark value. Set{" "}
@@ -242,7 +256,7 @@ export default function GetStartedPage() {
               </section>
 
               {/* Fonts */}
-              <section className={`${styles.section} animate-in animate-delay-4`}>
+              <section id="fonts" className={`${styles.section} animate-in animate-delay-4`}>
                 <SectionTitle title="Bring your own font" />
                 <p className={styles.sectionNote}>
                   The system is designed for Nunito Sans but deliberately does not bundle
@@ -254,7 +268,7 @@ export default function GetStartedPage() {
               </section>
 
               {/* Primitives */}
-              <section className={`${styles.section} animate-in animate-delay-5`}>
+              <section id="re-theme" className={`${styles.section} animate-in animate-delay-5`}>
                 <SectionTitle title="Re-theme with primitives" />
                 <p className={styles.sectionNote}>
                   Tokens are three tiers: primitives hold the raw values, semantic tokens
@@ -271,7 +285,7 @@ export default function GetStartedPage() {
               </section>
 
               {/* Chat and agent UI */}
-              <section className={`${styles.section} animate-in animate-delay-6`}>
+              <section id="chat-agent-ui" className={`${styles.section} animate-in animate-delay-6`}>
                 <SectionTitle title="Chat and agent UI" />
                 <p className={styles.sectionNote}>
                   The <code>ai</code> category installs with the rest of the package:
@@ -297,7 +311,7 @@ export default function GetStartedPage() {
               </section>
 
               {/* MCP server */}
-              <section className={`${styles.section} animate-in animate-delay-6`}>
+              <section id="agent-docs" className={`${styles.section} animate-in animate-delay-6`}>
                 <SectionTitle title="Docs for your agent" />
                 <p className={styles.sectionNote}>
                   The documentation also serves machines. The site exposes a
@@ -314,7 +328,7 @@ export default function GetStartedPage() {
               </section>
 
               {/* Ambient background */}
-              <section className={`${styles.section} animate-in animate-delay-6`}>
+              <section id="ambient-background" className={`${styles.section} animate-in animate-delay-6`}>
                 <SectionTitle title="Ambient background" />
                 <p className={styles.sectionNote}>
                   <Link href="/components/shader-field" className={styles.inlineLink}>
@@ -339,7 +353,7 @@ export default function GetStartedPage() {
               </section>
 
               {/* Playground CTA */}
-              <section className={`${styles.section} animate-in animate-delay-6`}>
+              <section id="see-it-live" className={`${styles.section} animate-in animate-delay-6`}>
                 <SectionTitle title="See it live" />
                 <p className={styles.sectionNote}>
                   The playground applies these overrides to a full page in real time
@@ -351,17 +365,20 @@ export default function GetStartedPage() {
                   <Button label="Open the playground" variant="primary" iconRight="arrow_forward" />
                 </Link>
               </section>
-            </div>
 
-            <aside className={`${styles.railSidebar} animate-in animate-delay-2`} aria-label="Built with">
-              <div className={styles.railSection}>
+              {/* Built with */}
+              <section id="built-with" className={`${styles.section} animate-in animate-delay-6`}>
                 <SectionTitle title="Built with" />
                 <div className={styles.toolList}>
                   {STACK_TOOLS.map((tool) => (
                     <ToolItem key={tool.name} tool={tool} />
                   ))}
                 </div>
-              </div>
+              </section>
+            </div>
+
+            <aside className={`${styles.anchorRail} animate-in animate-delay-2`}>
+              <AnchorNav items={PAGE_SECTIONS} />
             </aside>
           </div>
         </main>
