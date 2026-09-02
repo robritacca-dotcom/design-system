@@ -15,7 +15,7 @@ type SplitButtonOwnProps = {
   /** Menu entries for the alternative actions */
   items: DropdownMenuEntry[];
   /** Visual treatment, shared by both segments */
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'neutral';
   /** Component size */
   size?: 'default' | 'compact';
   /** Disables both segments */

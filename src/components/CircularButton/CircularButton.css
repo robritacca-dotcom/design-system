@@ -197,6 +197,43 @@
 }
 
 /* ============================================
+   NEUTRAL VARIANT (SOLID GREY)
+   Filled like primary but in the neutral greys —
+   unlike tertiary, the background is always shown.
+   ============================================ */
+
+.ds-circular-button--neutral {
+  background-color: var(--color-action-neutral-bg);
+  border: none;
+}
+
+.ds-circular-button--neutral .ds-circular-button__icon {
+  color: var(--color-action-neutral-text);
+}
+
+.ds-circular-button--neutral.ds-circular-button--hover {
+  background-color: var(--color-action-neutral-bg-hover);
+}
+
+.ds-circular-button--neutral.ds-circular-button--active {
+  background-color: var(--color-action-neutral-bg-active);
+}
+
+.ds-circular-button--neutral.ds-circular-button--disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Interactive hover/active */
+.ds-circular-button--neutral:not(.ds-circular-button--disabled):hover {
+  background-color: var(--color-action-neutral-bg-hover);
+}
+
+.ds-circular-button--neutral:not(.ds-circular-button--disabled):active {
+  background-color: var(--color-action-neutral-bg-active);
+}
+
+/* ============================================
    LOADING
    Keeps the variant's full-colour appearance (no disabled dim);
    the spinner replaces the icon and inherits its colour.

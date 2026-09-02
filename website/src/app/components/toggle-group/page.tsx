@@ -13,6 +13,7 @@ export default function ToggleGroupPage() {
   const [align, setAlign] = useState<string>("center");
   const [formats, setFormats] = useState<string[]>(["bold"]);
   const [view, setView] = useState<string>("grid");
+  const [density, setDensity] = useState<string>("cozy");
 
   return (
     <>
@@ -35,7 +36,7 @@ export default function ToggleGroupPage() {
               Grouped toggle buttons
             </p>
             <p className={styles.introBody}>
-              A set of two-state buttons that can be toggled on or off. Supports single or multiple selection, text or icon items, and default or compact sizing.
+              A set of two-state buttons that can be toggled on or off. Supports single or multiple selection, text or icon items, default or compact sizing, and a neutral variant that fills active items grey.
             </p>
           </div>
 
@@ -84,6 +85,27 @@ export default function ToggleGroupPage() {
                 value={view}
                 size="compact"
                 onChange={(v) => setView(v as string)}
+              />
+            </div>
+          </section>
+
+          {/* Neutral */}
+          <section className={styles.section}>
+            <SectionTitle title="Neutral" />
+            <p className={styles.introBody}>
+              The neutral variant fills active items with a solid grey instead
+              of the primary colour, for toggles that should read quietly.
+            </p>
+            <div>
+              <ToggleGroup
+                variant="neutral"
+                items={[
+                  { value: "compact", label: "Compact" },
+                  { value: "cozy", label: "Cozy" },
+                  { value: "comfortable", label: "Comfortable" },
+                ]}
+                value={density}
+                onChange={(v) => setDensity(v as string)}
               />
             </div>
           </section>

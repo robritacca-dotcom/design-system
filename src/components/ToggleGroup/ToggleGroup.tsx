@@ -22,6 +22,8 @@ type ToggleGroupOwnProps = {
   multiple?: boolean;
   /** Component size */
   size?: 'default' | 'compact';
+  /** Visual treatment of active items — teal by default, `neutral` fills them grey */
+  variant?: 'primary' | 'neutral';
   /** Whether the whole group is disabled */
   disabled?: boolean;
   /** Called with the next selection — a string when single, an array when `multiple` */
@@ -59,6 +61,7 @@ export const ToggleGroup = React.forwardRef<HTMLDivElement, ToggleGroupProps>(
       value = [],
       multiple = false,
       size = 'default',
+      variant = 'primary',
       disabled = false,
       onValueChange,
       onChange,
@@ -72,6 +75,7 @@ export const ToggleGroup = React.forwardRef<HTMLDivElement, ToggleGroupProps>(
     const classes = [
       baseClass,
       `${baseClass}--${size}`,
+      `${baseClass}--${variant}`,
       disabled ? `${baseClass}--disabled` : '',
       className,
     ]

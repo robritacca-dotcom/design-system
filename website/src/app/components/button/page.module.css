@@ -87,6 +87,11 @@
   width: 100%;
 }
 
+/* Loading grid: one column per variant (five), not the four icon columns */
+.loadingGrid {
+  grid-template-columns: auto repeat(5, 1fr);
+}
+
 /* Empty corner cell (top-left of headers) */
 .gridCorner {
   /* Intentionally empty */
@@ -152,5 +157,9 @@
 
   .buttonGrid {
     min-width: 480px;
+  }
+
+  .loadingGrid {
+    min-width: 600px;
   }
 }

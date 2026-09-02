@@ -31,7 +31,7 @@ export default function SegmentedControlPage() {
               Toggle between a small set of related options
             </p>
             <p className={styles.introBody}>
-              For view modes or filters where the active segment fills with the primary colour. Works well for 2 to 4 choices. Use Tabs instead when the options represent distinct content sections with their own panels.
+              For view modes or filters where the active segment fills with the primary colour, or a quiet grey with the neutral variant. Works well for 2 to 4 choices. Use Tabs instead when the options represent distinct content sections with their own panels.
             </p>
           </div>
 
@@ -70,6 +70,37 @@ export default function SegmentedControlPage() {
                   { label: "Dark", value: "dark", icon: "dark_mode" },
                 ]}
                 activeSegment="dark"
+                onSegmentChange={() => {}}
+              />
+            </div>
+          </section>
+
+          {/* Neutral */}
+          <section className={styles.section}>
+            <SectionTitle title="Neutral" />
+            <p className={styles.introBody}>
+              The neutral variant fills the active segment with a solid grey
+              instead of the primary colour, for sets where the selection
+              should read quietly.
+            </p>
+            <div className={styles.variantStack}>
+              <SegmentedControl
+                variant="neutral"
+                segments={[
+                  { label: "Day", value: "day" },
+                  { label: "Week", value: "week" },
+                  { label: "Month", value: "month" },
+                ]}
+                activeSegment="week"
+                onSegmentChange={() => {}}
+              />
+              <SegmentedControl
+                variant="neutral"
+                segments={[
+                  { label: "Grid", value: "grid", icon: "grid_view" },
+                  { label: "List", value: "list", icon: "view_list" },
+                ]}
+                activeSegment="grid"
                 onSegmentChange={() => {}}
               />
             </div>

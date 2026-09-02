@@ -184,6 +184,61 @@ export const TertiaryDisabled: Story = {
 };
 
 // ============================================
+// Neutral Button States (Solid Grey)
+// ============================================
+
+export const NeutralDefault: Story = {
+  args: {
+    variant: 'neutral',
+    state: 'default',
+    label: 'Button',
+    text: true,
+    iconRight: 'arrow_forward',
+  },
+};
+
+export const NeutralHover: Story = {
+  args: {
+    variant: 'neutral',
+    state: 'hover',
+    label: 'Button',
+    text: true,
+    iconRight: 'arrow_forward',
+  },
+};
+
+export const NeutralActive: Story = {
+  args: {
+    variant: 'neutral',
+    state: 'active',
+    label: 'Button',
+    text: true,
+    iconRight: 'arrow_forward',
+  },
+};
+
+export const NeutralDisabled: Story = {
+  args: {
+    variant: 'neutral',
+    state: 'disabled',
+    label: 'Button',
+    text: true,
+    iconRight: 'arrow_forward',
+  },
+};
+
+export const CompactNeutralDefault: Story = {
+  args: {
+    variant: 'neutral',
+    state: 'default',
+    size: 'compact',
+    label: 'Button',
+    text: true,
+    iconRight: 'arrow_forward',
+  },
+};
+
+// ============================================
 // Loading
 // ============================================
 
@@ -206,6 +261,14 @@ export const SecondaryLoading: Story = {
 export const TertiaryLoading: Story = {
   args: {
     priority: 'tertiary',
+    label: 'Saving…',
+    loading: true,
+  },
+};
+
+export const NeutralLoading: Story = {
+  args: {
+    variant: 'neutral',
     label: 'Saving…',
     loading: true,
   },

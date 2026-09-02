@@ -183,6 +183,35 @@
 }
 
 /* ============================================
+   NEUTRAL BUTTON (SOLID GREY)
+   Filled like primary but in the neutral greys —
+   unlike tertiary, the background is always shown.
+   ============================================ */
+
+.ds-button--neutral {
+  background-color: var(--color-action-neutral-bg);
+  border: none;
+}
+
+.ds-button--neutral .ds-button__text {
+  color: var(--color-action-neutral-text);
+}
+
+.ds-button--neutral.ds-button--hover {
+  background-color: var(--color-action-neutral-bg-hover);
+}
+
+.ds-button--neutral.ds-button--active {
+  background-color: var(--color-action-neutral-bg-active);
+}
+
+.ds-button--neutral.ds-button--disabled {
+  background-color: var(--color-action-neutral-bg);
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ============================================
    DESTRUCTIVE BUTTON
    For dangerous actions: delete, remove, etc.
    Uses accent-coral as the border / fill colour.
@@ -266,6 +295,10 @@
   color: var(--color-icon-primary);
 }
 
+.ds-button--neutral .ds-button__icon {
+  color: var(--color-action-neutral-text);
+}
+
 .ds-button--destructive .ds-button__icon {
   color: var(--color-core-accent-coral);
 }
@@ -315,6 +348,10 @@
   background-color: var(--color-action-passive-bg-hover);
 }
 
+.ds-button--neutral:not(.ds-button--disabled):hover {
+  background-color: var(--color-action-neutral-bg-hover);
+}
+
 .ds-button--destructive:not(.ds-button--disabled):hover {
   background-color: var(--color-core-accent-coral);
 }
@@ -357,6 +394,10 @@
 
 .ds-button--tertiary:not(.ds-button--disabled):active {
   background-color: var(--color-action-passive-bg-active);
+}
+
+.ds-button--neutral:not(.ds-button--disabled):active {
+  background-color: var(--color-action-neutral-bg-active);
 }
 
 .ds-button--destructive:not(.ds-button--disabled):active {

@@ -19,7 +19,7 @@ const states = [
   { label: "Active", value: "active" as const },
 ];
 
-const variants = ["primary", "secondary", "tertiary", "destructive"] as const;
+const variants = ["primary", "secondary", "tertiary", "neutral", "destructive"] as const;
 
 const sizes = [
   { label: "Default", value: "default" as const },
@@ -37,6 +37,7 @@ const variantLabels: Record<string, string> = {
   primary: "Primary",
   secondary: "Secondary",
   tertiary: "Tertiary",
+  neutral: "Neutral",
   destructive: "Destructive",
 };
 
@@ -51,7 +52,7 @@ function ButtonGrid({
   variant,
   size,
 }: {
-  variant: "primary" | "secondary" | "tertiary" | "destructive";
+  variant: "primary" | "secondary" | "tertiary" | "neutral" | "destructive";
   size: "default" | "compact";
 }) {
   const heading = `${variantLabels[variant]}${size === "compact" ? ", compact" : ""}`;
@@ -123,7 +124,7 @@ export default function ButtonPage() {
               The main action element
             </p>
             <p className={styles.introBody}>
-              Primary buttons are solid-filled for the highest-emphasis actions. Secondary buttons have a border and fill on hover. Tertiary buttons are transparent and blend into the surface for lower-priority options. Destructive buttons signal dangerous or irreversible actions like delete and remove. All variants come in default and compact sizes.
+              Primary buttons are solid-filled for the highest-emphasis actions. Secondary buttons have a border and fill on hover. Tertiary buttons are transparent and blend into the surface for lower-priority options. Neutral buttons keep the solid fill in quiet grey, for actions that deserve a button&apos;s full shape without the accent colour. Destructive buttons signal dangerous or irreversible actions like delete and remove. All variants come in default and compact sizes.
             </p>
           </div>
 
@@ -143,7 +144,7 @@ export default function ButtonPage() {
               label stays put, and clicks are blocked, without the dimmed
               look of <code>disabled</code>.
             </p>
-            <div className={styles.buttonGrid}>
+            <div className={`${styles.buttonGrid} ${styles.loadingGrid}`}>
               <div className={styles.gridCorner} />
               {variants.map((p) => (
                 <span key={p} className={styles.gridColHeader}>

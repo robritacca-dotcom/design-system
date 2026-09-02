@@ -30,7 +30,7 @@ const states = [
   { label: "Loading", props: { loading: true } },
 ] as const;
 
-const variants = ["primary", "secondary"] as const;
+const variants = ["primary", "secondary", "neutral"] as const;
 
 const sizes = [
   { label: "", value: "default" as const },
@@ -45,6 +45,7 @@ const iconVariants = [
 const variantLabels: Record<string, string> = {
   primary: "Primary",
   secondary: "Secondary",
+  neutral: "Neutral",
 };
 
 /* ============================================
@@ -59,7 +60,7 @@ function SplitButtonGrid({
   size,
   sizeLabel,
 }: {
-  variant: "primary" | "secondary";
+  variant: "primary" | "secondary" | "neutral";
   size: "default" | "compact";
   sizeLabel: string;
 }) {
@@ -125,7 +126,7 @@ export default function SplitButtonPage() {
               One default action, with the alternatives attached
             </p>
             <p className={styles.introBody}>
-              The label fires the primary action directly; the chevron opens a menu of variants. One pill silhouette, two segments, so the common case stays one click away while the rest stays discoverable. Both variants come in default and compact sizes; hover and press the segments to see their interactive states, and the loading rows keep full colour while blocking clicks.
+              The label fires the primary action directly; the chevron opens a menu of variants. One pill silhouette, two segments, so the common case stays one click away while the rest stays discoverable. All three variants come in default and compact sizes; hover and press the segments to see their interactive states, and the loading rows keep full colour while blocking clicks.
             </p>
           </div>
 

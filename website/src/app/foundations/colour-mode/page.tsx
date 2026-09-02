@@ -328,6 +328,30 @@ const actionPassiveColours: SwatchData[] = [
   },
 ];
 
+/* --- Action / Neutral --- */
+const actionNeutralColours: SwatchData[] = [
+  {
+    label: "Background Default", cssVar: "--color-action-neutral-bg",
+    dark: { primitive: "--neutral--08--", hex: "#232323", rgb: "35 / 35 / 35" },
+    light: { primitive: "--neutral--02--", hex: "#D6D6D6", rgb: "214 / 214 / 214" },
+  },
+  {
+    label: "Background Hover", cssVar: "--color-action-neutral-bg-hover",
+    dark: { primitive: "--neutral--07--", hex: "#303030", rgb: "48 / 48 / 48" },
+    light: { primitive: "--neutral--03--", hex: "#BCBCBC", rgb: "188 / 188 / 188" },
+  },
+  {
+    label: "Background Active", cssVar: "--color-action-neutral-bg-active",
+    dark: { primitive: "--neutral--06--", hex: "#6D6D6D", rgb: "109 / 109 / 109" },
+    light: { primitive: "--neutral--04--", hex: "#A2A2A2", rgb: "162 / 162 / 162" },
+  },
+  {
+    label: "Text Primary", cssVar: "--color-action-neutral-text",
+    dark: { primitive: "--neutral--01--", hex: "#F1F1F1", rgb: "241 / 241 / 241" },
+    light: { primitive: "--neutral--10--", hex: "#050505", rgb: "5 / 5 / 5" },
+  },
+];
+
 /* --- Input --- */
 const inputColours: SwatchData[] = [
   {
@@ -666,6 +690,16 @@ export default function SemanticColoursPage() {
             <SectionTitle title="Action / passive" />
             <div className={styles.colourSwatches}>
               {actionPassiveColours.map((s) => (
+                <ColourSwatch key={s.label} label={s.label} cssVar={s.cssVar} dark={s.dark} light={s.light} theme={theme} />
+              ))}
+            </div>
+          </section>
+
+          {/* Action / Neutral */}
+          <section className={styles.colourGroup}>
+            <SectionTitle title="Action / neutral" />
+            <div className={styles.colourSwatches}>
+              {actionNeutralColours.map((s) => (
                 <ColourSwatch key={s.label} label={s.label} cssVar={s.cssVar} dark={s.dark} light={s.light} theme={theme} />
               ))}
             </div>

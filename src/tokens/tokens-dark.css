@@ -75,6 +75,14 @@
   --color-action-passive-bg-hover: var(--primitive-neutral-08-semi);
   --color-action-passive-bg-active: var(--primitive-neutral-07-semi);
 
+  /* Action - Neutral (grey filled buttons). The fill stays visible at
+     rest, one step above the container greys; hover and active brighten
+     toward the page's opposite, like the primary family. */
+  --color-action-neutral-bg: var(--primitive-neutral-08);
+  --color-action-neutral-bg-hover: var(--primitive-neutral-07);
+  --color-action-neutral-bg-active: var(--primitive-neutral-06);
+  --color-action-neutral-text: var(--primitive-neutral-01);
+
   /* Status - Positive */
   --color-status-positive-bg: var(--primitive-green-10);
   --color-status-positive-border: var(--primitive-green-07);

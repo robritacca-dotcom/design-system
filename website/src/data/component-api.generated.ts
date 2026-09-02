@@ -1112,7 +1112,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
     "label": "Button",
     "slug": "button",
     "category": "actions",
-    "description": "Primary and secondary button variants in default and compact sizes, with icon support and multiple states.",
+    "description": "Primary, secondary, tertiary, neutral and destructive variants in default and compact sizes, with icon support and multiple states.",
     "client": true,
     "importPath": "@robr0/design-system/components/Button/Button",
     "barrel": "main",
@@ -1992,7 +1992,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
     "label": "Circular button",
     "slug": "circular-button",
     "category": "actions",
-    "description": "Round icon button with primary and secondary variants, default and compact sizes.",
+    "description": "Round icon button with primary, secondary, tertiary and neutral variants, default and compact sizes.",
     "client": false,
     "importPath": "@robr0/design-system/components/CircularButton/CircularButton",
     "barrel": "main",
@@ -6930,6 +6930,13 @@ export const componentApi: readonly ComponentApiEntry[] = [
             "defaultValue": "default"
           },
           {
+            "name": "variant",
+            "type": "enum",
+            "required": false,
+            "description": "Visual treatment of the active segment — teal by default, `neutral` fills it grey",
+            "defaultValue": "primary"
+          },
+          {
             "name": "fullWidth",
             "type": "boolean",
             "required": false,
@@ -8430,6 +8437,13 @@ export const componentApi: readonly ComponentApiEntry[] = [
             "required": false,
             "description": "Component size",
             "defaultValue": "default"
+          },
+          {
+            "name": "variant",
+            "type": "enum",
+            "required": false,
+            "description": "Visual treatment of active items — teal by default, `neutral` fills them grey",
+            "defaultValue": "primary"
           },
           {
             "name": "disabled",

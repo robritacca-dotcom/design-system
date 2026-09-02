@@ -63,6 +63,23 @@
 }
 
 /* ============================================
+   NEUTRAL VARIANT
+   Active items fill grey instead of the action
+   teal — for sets where the selection should
+   not carry the action colour's weight.
+   ============================================ */
+
+.ds-toggle-group--neutral .ds-toggle-group__item--active {
+  background-color: var(--color-action-neutral-bg);
+  color: var(--color-action-neutral-text);
+}
+
+.ds-toggle-group--neutral .ds-toggle-group__item--active:hover {
+  background-color: var(--color-action-neutral-bg-hover);
+  color: var(--color-action-neutral-text);
+}
+
+/* ============================================
    COMPACT
    ============================================ */
 

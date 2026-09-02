@@ -10,6 +10,7 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     size: { control: 'select', options: ['default', 'compact'] },
+    variant: { control: 'select', options: ['primary', 'neutral'] },
     multiple: { control: 'boolean' },
     disabled: { control: 'boolean' },
   },
@@ -49,6 +50,18 @@ export const Compact: Story = {
     ],
     value: 'grid',
     size: 'compact',
+  },
+};
+
+export const Neutral: Story = {
+  args: {
+    items: [
+      { value: 'left', label: 'Left' },
+      { value: 'center', label: 'Center' },
+      { value: 'right', label: 'Right' },
+    ],
+    value: 'center',
+    variant: 'neutral',
   },
 };
 

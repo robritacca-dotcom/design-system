@@ -14,7 +14,7 @@ type ButtonOwnProps = {
   /** Icon for right side — Material Symbol name (string) or custom element (ReactNode) */
   iconRight?: string | React.ReactNode;
   /** Visual treatment */
-  variant?: 'primary' | 'secondary' | 'tertiary' | 'destructive';
+  variant?: 'primary' | 'secondary' | 'tertiary' | 'neutral' | 'destructive';
   /** Button size */
   size?: 'default' | 'compact';
   /** Whether the button is disabled */
@@ -72,7 +72,7 @@ export interface ButtonProps
 
 /**
  * Button component from Figma design system.
- * Supports primary, secondary, tertiary and destructive variants.
+ * Supports primary, secondary, tertiary, neutral and destructive variants.
  * Icons can be placed on the left and/or right side of the text.
  *
  * Renders a `<button>`, or an `<a>` when `href` is supplied. Forwards a ref to

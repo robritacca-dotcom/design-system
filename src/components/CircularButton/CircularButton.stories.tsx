@@ -13,7 +13,7 @@ const meta = {
     icon: { control: 'text' },
     variant: {
       control: 'select',
-      options: ['primary', 'secondary', 'tertiary'],
+      options: ['primary', 'secondary', 'tertiary', 'neutral'],
     },
     state: {
       control: 'select',
@@ -95,6 +95,23 @@ export const TertiaryDisabled: Story = {
   args: { variant: 'tertiary', state: 'disabled', icon: 'close', ariaLabel: 'Close' },
 };
 
+// Neutral states (Solid Grey)
+export const NeutralDefault: Story = {
+  args: { variant: 'neutral', state: 'default', icon: 'tune', ariaLabel: 'Filters' },
+};
+
+export const NeutralHover: Story = {
+  args: { variant: 'neutral', state: 'hover', icon: 'tune', ariaLabel: 'Filters' },
+};
+
+export const NeutralActive: Story = {
+  args: { variant: 'neutral', state: 'active', icon: 'tune', ariaLabel: 'Filters' },
+};
+
+export const NeutralDisabled: Story = {
+  args: { variant: 'neutral', state: 'disabled', icon: 'tune', ariaLabel: 'Filters' },
+};
+
 // Compact
 export const CompactPrimaryDefault: Story = {
   args: { variant: 'primary', state: 'default', size: 'compact', icon: 'add', ariaLabel: 'Add' },
@@ -118,6 +135,10 @@ export const CompactTertiaryDefault: Story = {
 
 export const CompactTertiaryHover: Story = {
   args: { variant: 'tertiary', state: 'hover', size: 'compact', icon: 'more_vert', ariaLabel: 'More options' },
+};
+
+export const CompactNeutralDefault: Story = {
+  args: { variant: 'neutral', state: 'default', size: 'compact', icon: 'tune', ariaLabel: 'Filters' },
 };
 
 // Loading
