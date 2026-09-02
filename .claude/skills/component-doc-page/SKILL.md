@@ -42,6 +42,7 @@ This is a more thorough, component-specific version of `new-page`. The Button pa
      - Import the component through the package, never a relative path into `src/`: `import { X } from "@robr0/design-system/components/X/X"` (recharts-backed charts come from `@robr0/design-system/charts`) — the website is an npm-workspace consumer of the published package's exports
      - Include `PageLinks` with whichever Figma/Storybook URLs were provided
    - **Variant showcase grid**: render the component in every meaningful combination of its variants and states. For components with discrete variants × states (like Button), render a proper grid. For simpler components, render one example per meaningful state/variant.
+     - If a demo renders h2 headings of its own (a heading-bearing component like SectionTitle, or Prose sample content), wrap that demo container in `data-anchor-ignore` — the site-wide floating anchor rail reads every page's h2s, and demo headings are the demo's, not sections of the page. The discovery rules live in `SiteAnchorRail.tsx`'s doc block.
 
 5. **Create `website/src/app/components/<component-slug>/page.module.css`:**
    - Standard layout classes: `dsLayout`, `dsContent`, `pageHeader`, `pageTitle`, `subDisplay`, `introSection`, `introBody`
