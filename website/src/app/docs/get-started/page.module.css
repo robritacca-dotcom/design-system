@@ -87,7 +87,10 @@
 }
 
 /* ============================================
-   CONTENT + ON-THIS-PAGE RAIL
+   CONTENT
+   The on-this-page nav floats over the right
+   viewport edge (FloatingAnchorNav) instead
+   of costing a column.
    ============================================ */
 .railLayout {
   display: flex;
@@ -104,16 +107,6 @@
   gap: var(--gap-xxxl);
 }
 
-.anchorRail {
-  width: var(--layout-rail-width);
-  flex-shrink: 0;
-  position: sticky;
-  /* Matches the Sidebar's sticky top so the two rails sit level */
-  top: calc(78px + var(--primitive-padding-lg) * 2 + var(--primitive-gap-xl));
-  height: fit-content;
-  max-height: calc(100dvh - 78px - var(--primitive-gap-xl) * 2);
-  overflow-y: auto;
-}
 
 /* ============================================
    BUILT WITH
@@ -183,9 +176,9 @@ a.toolItem:hover {
   display: flex;
   flex-direction: column;
   gap: var(--primitive-gap-lg);
-  /* Anchor targets clear the sticky MegaNav overlay (--mn-bar-height, 78px)
-     plus a breathing gap */
-  scroll-margin-top: 94px;
+  /* Anchor targets clear the sticky MegaNav overlay and its frosted
+     backdrop — the shared clearance in globals.css owns the geometry */
+  scroll-margin-top: var(--layout-anchor-clearance);
 }
 
 .sectionNote {
@@ -207,13 +200,6 @@ a.toolItem:hover {
 /* ============================================
    RESPONSIVE
    ============================================ */
-/* The rail only fits the full-width layout; below it the content keeps the room */
-@media (max-width: 1279px) {
-  .anchorRail {
-    display: none;
-  }
-}
-
 @media (max-width: 767px) {
   .toolList {
     grid-template-columns: 1fr;

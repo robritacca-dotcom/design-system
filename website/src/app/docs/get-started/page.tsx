@@ -7,7 +7,7 @@ import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import { getSidebarLinks, docsSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
-import { AnchorNav } from "@robr0/design-system/components/AnchorNav/AnchorNav";
+import FloatingAnchorNav from "@/components/FloatingAnchorNav/FloatingAnchorNav";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import { CodeBlock } from "@robr0/design-system/components/CodeBlock/CodeBlock";
 import { Button } from "@robr0/design-system/components/Button/Button";
@@ -376,11 +376,9 @@ export default function GetStartedPage() {
                 </div>
               </section>
             </div>
-
-            <aside className={`${styles.anchorRail} animate-in animate-delay-2`}>
-              <AnchorNav items={PAGE_SECTIONS} />
-            </aside>
           </div>
+
+          <FloatingAnchorNav items={PAGE_SECTIONS} />
         </main>
       </div>
 

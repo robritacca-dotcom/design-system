@@ -65,6 +65,9 @@
   flex-direction: column;
   gap: var(--primitive-gap-xl);
   width: 100%;
+  /* The tracking demo jumps to these sections for real — clear the sticky
+     MegaNav and its frosted backdrop like every other anchor target */
+  scroll-margin-top: var(--layout-anchor-clearance);
 }
 
 .variantRow {
@@ -77,6 +80,34 @@
 .variantItem {
   width: 280px;
   flex-shrink: 0;
+}
+
+/* Floating-variant demo: a stand-in content area with the nav riding its
+   right edge, the way a page mounts it against the viewport */
+.floatingDemo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 320px;
+  width: 100%;
+  border: 1px solid var(--color-bg-container-border);
+  border-radius: var(--primitive-radius-xl);
+  background: var(--color-bg-container-primary);
+}
+
+.floatingDemoHint {
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+}
+
+.floatingDemoNav {
+  position: absolute;
+  right: var(--primitive-gap-md);
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .variantStack {

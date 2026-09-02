@@ -48,7 +48,7 @@ export default function ProsePage() {
               the block slots into a bubble or card with no stray spacing.
             </p>
             <div className={styles.surface}>
-              <Prose>
+              <Prose data-anchor-ignore>
                 <h2>Migrating the Lumen widgets</h2>
                 <p>
                   The <code>lumen-panel</code> package splits its widgets into
@@ -95,7 +95,7 @@ export default function ProsePage() {
               header and a copy button.
             </p>
             <div className={styles.surface}>
-              <Prose>
+              <Prose data-anchor-ignore>
                 <p>
                   The feed context wires up in one place, at the top of the
                   panel tree:
@@ -131,7 +131,7 @@ export function Dashboard() {
               column, which is what lets it scroll when it runs out of room.
             </p>
             <div className={styles.surface}>
-              <Prose>
+              <Prose data-anchor-ignore>
                 <p>The changelog puts the reasoning plainly:</p>
                 <blockquote>
                   <p>
@@ -193,7 +193,7 @@ export function Dashboard() {
               the scroll needs to be reachable by keyboard alone.
             </p>
             <div className={styles.narrowColumn}>
-              <Prose size="sm">
+              <Prose size="sm" data-anchor-ignore>
                 <p>The roles that moved in the reorg:</p>
                 <table tabIndex={0}>
                   <thead>
@@ -240,7 +240,7 @@ export function Dashboard() {
               oversized.
             </p>
             <div className={styles.bubble}>
-              <Prose size="sm">
+              <Prose size="sm" data-anchor-ignore>
                 <p>
                   Done. I renamed the three <code>lumen-panel</code> widgets
                   and updated every import. Two things worth knowing:

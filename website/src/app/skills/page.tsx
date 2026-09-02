@@ -4,7 +4,7 @@ import Link from "next/link";
 import MegaNav from "../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import { AnchorNav } from "@robr0/design-system/components/AnchorNav/AnchorNav";
+import FloatingAnchorNav from "@/components/FloatingAnchorNav/FloatingAnchorNav";
 import { Badge } from "@robr0/design-system/components/Badge/Badge";
 import { CodeBlock } from "@robr0/design-system/components/CodeBlock/CodeBlock";
 import { getSidebarLinks, docsSidebarLinks } from "@/config/navigation";
@@ -14,7 +14,7 @@ import styles from "./page.module.css";
 
 const { sidebarLinks } = getSidebarLinks(docsSidebarLinks, "/skills");
 
-/* On-this-page rail entries — one per skill card, in registry order. */
+/* Floating on-this-page entries — one per skill card, in registry order. */
 const SKILL_ANCHORS = skillsContent.map((skill) => ({
   id: skill.slug,
   label: skill.name,
@@ -58,7 +58,7 @@ export default function SkillsPage() {
             </p>
           </div>
 
-          {/* Skills List + on-this-page rail */}
+          {/* Skills List */}
           <div className={`${styles.railLayout} animate-in animate-delay-2`}>
             <div className={styles.skillsGrid}>
             {skillsContent.map((skill) => (
@@ -92,11 +92,9 @@ export default function SkillsPage() {
               </div>
             ))}
             </div>
-
-            <aside className={styles.anchorRail}>
-              <AnchorNav items={SKILL_ANCHORS} />
-            </aside>
           </div>
+
+          <FloatingAnchorNav items={SKILL_ANCHORS} />
         </main>
       </div>
 

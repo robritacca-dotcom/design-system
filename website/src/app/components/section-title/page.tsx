@@ -37,7 +37,7 @@ export default function SectionTitlePage() {
           {/* Default */}
           <section className={styles.section}>
             <SectionTitle title="Default" />
-            <div className={styles.variantStack}>
+            <div className={styles.variantStack} data-anchor-ignore>
               <SectionTitle title="Navigation icons" />
               <SectionTitle title="Primary, compact" />
               <SectionTitle title="States" />
@@ -47,7 +47,7 @@ export default function SectionTitlePage() {
           {/* With trailing content */}
           <section className={styles.section}>
             <SectionTitle title="With trailing content" />
-            <div className={styles.variantStack}>
+            <div className={styles.variantStack} data-anchor-ignore>
               <SectionTitle title="Navigation icons" trailing="24" />
               <SectionTitle title="Status variants" trailing="6" />
               <SectionTitle title="Primary, compact" trailing="New" />
@@ -60,7 +60,7 @@ export default function SectionTitlePage() {
             <p className={styles.sectionBody}>
               Set divider to false above content that draws its own lines, such as bordered tables or calendars, so the heading separates by whitespace alone instead of doubling up the rules.
             </p>
-            <div className={styles.variantStack}>
+            <div className={styles.variantStack} data-anchor-ignore>
               <SectionTitle title="Upcoming events" divider={false} />
               <SectionTitle title="Team members" trailing="12" divider={false} />
             </div>

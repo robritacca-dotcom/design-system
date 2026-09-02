@@ -38,6 +38,14 @@ html.theme-ready {
      beneath it, so the two can never drift apart. */
   --layout-toolbar-height: 56px;
 
+  /* How far an anchor target rests below the viewport top. The sticky
+     MegaNav bar is 78px (--mn-bar-height), but its frosted backdrop
+     dissolves for another 64px below it (--sticky-backdrop-reach), so a
+     heading parked just under the bar sits inside the blur. 128px lands
+     it where the frost has faded to nothing. Shared by every page with
+     anchor links, so the offset can never differ between them. */
+  --layout-anchor-clearance: 128px;
+
   /* What "one viewport tall" means to a page. Sections that fill the first
      screen size themselves from this rather than from svh directly, so a
      surface that shows a page at a height of its own choosing (the /canvas
@@ -54,8 +62,9 @@ html.theme-ready {
   --layout-chat-width: 420px;
   --layout-chat-inset: 20px;
 
-  /* The site's fixed layers, lowest to highest: sticky header (10), the
-     ambient tuner (20), the library's floating surfaces (tooltip 50,
+  /* The site's fixed layers, lowest to highest: the floating anchor rail
+     (5, under the header so its panel can never sit on the bar), sticky
+     header (10), the ambient tuner (20), the library's floating surfaces (tooltip 50,
      Dialog/Drawer 100, CommandPalette 110), the mega-nav drawer (1000), the
      chat FAB (1080), scrim (1090), panel (1100) and its grip (1101). Toasts
      go last: they are transient feedback and must be seen, so they outrank
@@ -84,6 +93,14 @@ html.theme-ready {
     --layout-rail-width: 280px;
     --layout-column-gap: var(--primitive-gap-xl);
   }
+}
+
+/* Every section heading is an anchor target for the floating anchor nav
+   (SiteAnchorRail assigns ids to the ones without), so every one lands
+   clear of the sticky header the same way — pages that anchor a section
+   element instead set the same clearance on it themselves. */
+main h2 {
+  scroll-margin-top: var(--layout-anchor-clearance);
 }
 
 html[data-theme="dark"] {

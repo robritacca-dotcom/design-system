@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { AnchorNav } from "@robr0/design-system/components/AnchorNav/AnchorNav";
+import FloatingAnchorNav from "@/components/FloatingAnchorNav/FloatingAnchorNav";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
@@ -59,11 +59,9 @@ export default function ClaudeBlueprintPage() {
               {content}
               </ReactMarkdown>
             </div>
-
-            <aside className={styles.anchorRail}>
-              <AnchorNav items={sections} />
-            </aside>
           </div>
+
+          <FloatingAnchorNav items={sections} />
         </main>
       </div>
 
