@@ -34,24 +34,8 @@
   white-space: nowrap;
 }
 
-/* ============================================
-   SEARCHABLE VARIANT
-   ============================================ */
-
-.search {
-  margin-bottom: var(--primitive-gap-md);
-}
-
-/* The native webkit cancel (x) renders dark-on-dark in dark mode —
-   hide it for cross-theme consistency; Escape and the no-results
-   "Clear search" button cover clearing. */
-.search input[type="search"]::-webkit-search-cancel-button {
-  -webkit-appearance: none;
-  appearance: none;
-}
-
-/* Pinned section-landing link ("Components overview") between the
-   search field and the list */
+/* Pinned section-landing link ("Components overview") above the
+   grouped list */
 .pinnedHome {
   margin-bottom: var(--primitive-gap-lg);
 }
@@ -123,60 +107,6 @@
 .groupList {
   padding-left: var(--primitive-gap-sm);
   padding-bottom: var(--primitive-gap-xs);
-}
-
-/* No-results state */
-.noResults {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--primitive-gap-sm);
-  padding: var(--primitive-padding-sm) var(--primitive-padding-md);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .noResults {
-    animation: sidebarFadeIn var(--motion-duration-base) var(--motion-ease-standard);
-  }
-}
-
-@keyframes sidebarFadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.noResultsIcon {
-  --icon-size: var(--icon-size-sm);
-  color: var(--color-icon-secondary);
-}
-
-.noResultsText {
-  margin: 0;
-  font-family: var(--font-paragraph-sm-family);
-  font-size: var(--font-paragraph-sm-size);
-  font-weight: var(--font-paragraph-sm-weight);
-  line-height: var(--font-paragraph-sm-line-height);
-  letter-spacing: var(--font-paragraph-sm-letter-spacing);
-  color: var(--color-text-tertiary);
-  /* Long queries must not blow out the fixed-width rail */
-  overflow-wrap: anywhere;
-}
-
-/* Visually hidden — for the aria-live results announcement */
-.srOnly {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-  border: 0;
 }
 
 /* Hidden on mobile */

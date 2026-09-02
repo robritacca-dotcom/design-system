@@ -40,13 +40,11 @@ export default function ComponentsPage() {
           <div className={`${styles.categorySections} animate-in animate-delay-2`}>
             {componentCategoryMetadata.map((cat) => (
               <section key={cat.id} id={cat.id} className={styles.categorySection}>
-                <div className={styles.categoryHeader}>
-                  <SectionTitle
-                    title={cat.label}
-                    trailing={`${componentMetadata.filter((c) => c.category === cat.id).length}`}
-                  />
-                  <p className={styles.categoryDescription}>{cat.description}</p>
-                </div>
+                <SectionTitle
+                  title={cat.label}
+                  trailing={`${componentMetadata.filter((c) => c.category === cat.id).length}`}
+                  divider={false}
+                />
                 <ComponentCardGrid
                   components={componentMetadata.filter((c) => c.category === cat.id)}
                 />

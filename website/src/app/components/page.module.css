@@ -76,22 +76,9 @@
   display: flex;
   flex-direction: column;
   gap: var(--primitive-gap-lg);
-  /* Anchor targets clear the sticky MegaNav bar (--mn-bar-height, 78px)
-     plus a breathing gap */
-  scroll-margin-top: 94px;
-}
-
-.categoryHeader {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-md);
-}
-
-.categoryDescription {
-  font-size: var(--font-paragraph-sm-size);
-  font-weight: var(--font-paragraph-sm-weight);
-  line-height: var(--font-paragraph-sm-line-height);
-  color: var(--color-text-tertiary);
+  /* Anchor targets clear the sticky MegaNav bar and its frosted
+     backdrop — the shared clearance in globals.css owns the geometry */
+  scroll-margin-top: var(--layout-anchor-clearance);
 }
 
 /* ============================================

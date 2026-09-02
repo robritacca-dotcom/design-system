@@ -7,8 +7,6 @@ import styles from "./Sidebar.module.css";
 
 interface SidebarGroupsProps {
   groups: SidebarLinkGroup[];
-  /** Expand every group regardless of its toggle — used while search results are showing */
-  forceOpen?: boolean;
 }
 
 /**
@@ -16,7 +14,7 @@ interface SidebarGroupsProps {
  * The group holding the current page starts open; the rest stay collapsed
  * until toggled.
  */
-export default function SidebarGroups({ groups, forceOpen = false }: SidebarGroupsProps) {
+export default function SidebarGroups({ groups }: SidebarGroupsProps) {
   const activeGroupId = groups.find((group) =>
     group.links.some((link) => link.active)
   )?.id;
@@ -46,7 +44,7 @@ export default function SidebarGroups({ groups, forceOpen = false }: SidebarGrou
   return (
     <div className={styles.groups}>
       {groups.map((group) => {
-        const open = forceOpen || openIds.has(group.id);
+        const open = openIds.has(group.id);
         return (
           <div key={group.id} className={styles.group}>
             <button
