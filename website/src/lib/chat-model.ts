@@ -9,9 +9,12 @@
  *
  * Which entry serves a given exchange is the server's decision: the visitor's
  * pick is a request, and the route resolves it through the day's budget tier
- * (see guardrails.ts) before calling the model. The route reports what
- * actually served via a `model` event, so the composer's label follows
- * reality rather than the client's assumption.
+ * (see guardrails.ts) before calling the model. The route reports its current
+ * offer via a `models` event (default + locked values), which is what keeps
+ * the picker honest — a clamped pick falls back to the default it will
+ * actually get. A separate `model` event records what served each exchange;
+ * nothing renders it today, but it is the transport contract's ground truth
+ * for any host that wants a per-answer label.
  */
 
 export interface ChatModelOption {
@@ -68,7 +71,7 @@ export function chatModelByValue(value: unknown): ChatModelOption | null {
  * A deliberately smaller one: the job is three short questions from a
  * question-and-answer pair it is handed, with no corpus to read and nothing
  * to reason about, and it runs once per exchange on top of the answer itself.
- * It is never shown in the composer's label — the label names the model that
- * answered.
+ * It is not in CHAT_MODELS on purpose: it is plumbing, never on offer in the
+ * picker.
  */
 export const FOLLOWUP_MODEL = "claude-haiku-4-5-20251001";

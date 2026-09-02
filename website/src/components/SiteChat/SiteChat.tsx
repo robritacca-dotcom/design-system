@@ -66,8 +66,8 @@ export function SiteChat({
   /** Replaces the route-aware conversation starters wholesale — again the
       playground's lever, so its preview isn't robr0-specific. */
   starters?: Starter[];
-  /** Replaces the composer's leading actions (the disabled model label) —
-      the playground slots a working mock picker and attach button here. */
+  /** Replaces the composer's leading actions (the live model picker) —
+      the playground slots its own mock picker and attach button here. */
   composerActions?: ReactNode;
 }) {
   const {

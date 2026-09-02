@@ -48,7 +48,7 @@ Read `website/next.config.ts` for the CSP and headers, then **confirm against wh
 
 ### 4. CI, release & supply chain
 
-Read the workflows in `.github/workflows/`. Check each for a least-privilege `permissions:` block (its absence hands builds the repo-default token scope), whether actions are pinned to SHAs vs movable tags, and whether any dependency-scanning automation exists (Dependabot, CodeQL, an audit step). Credit the release workflow's posture (OIDC Trusted Publishing, provenance, pre-publish consumer smoke test) where it holds.
+Read everything under `.github/` — the workflows *and* `dependabot.yml`, which lives beside the workflows directory, not in it. Check each workflow for a least-privilege `permissions:` block (its absence hands builds the repo-default token scope) and whether actions are pinned to SHAs vs movable tags. For dependency-scanning automation, know that a scanner can exist with no file at all: CodeQL runs via GitHub's default setup here, so confirm with `gh run list --branch main --json workflowName` before concluding anything is absent — a files-only sweep reports a false gap. Credit the release workflow's posture (OIDC Trusted Publishing, provenance, pre-publish consumer smoke test) where it holds.
 
 ### 5. Analytics & privacy
 

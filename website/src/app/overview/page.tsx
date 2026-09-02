@@ -150,7 +150,7 @@ const PIPELINE: TimelineCompany[] = [
         ),
         bullets: [
           "Its context is generated at build time from the site itself: page prose, data registries, root specs, and the essays. Only published, self-authored content can enter, and a validator fails the build on anything else",
-          "A golden-set eval runs through the real route, and spend is held by per-visitor rate limits and a daily budget that steps the default model down to Haiku as it runs low, then pauses the chat",
+          "A golden-set eval runs through the real route, and spend is held by per-visitor rate limits and a daily budget that steps the default model down to Haiku as it runs low, holds everyone there near the cap, then pauses the chat",
           "Conversations are kept for 30 days, tied to no name or address, then deleted",
         ],
       },

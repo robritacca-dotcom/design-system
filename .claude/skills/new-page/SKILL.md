@@ -38,6 +38,7 @@ For a **component documentation page**, use the `component-doc-page` skill inste
   - All copy on the page (tagline, intro, body, metadata description) follows `content-design.md` — voice, register, and the words-to-avoid tables
   - Sidebar links come from `getSidebarLinks(<section>SidebarLinks, "<your path>")`
   - Include `PageLinks` only if Figma/Storybook URLs exist
+  - **The on-this-page rail is conditional, not part of the shell.** The exemplar renders an `AnchorNav` rail (`railLayout` grid + the `anchorRail` aside) because it is a long docs page; a short page omits both wholesale. Blueprints established the rail and get-started and skills adopted it — copy it only when the new page is long enough to need in-page navigation, and let design.md's Breakpoints section own the rail width and its narrowing rules
   - **Do not render a background.** `BlurBackground` is mounted once in the root layout and covers every route; adding it per page would build a second canvas and a second GL context on top of the first. `scripts/validate-single-background-mount.mjs` fails the build if you do
 
 ### File 2: `page.module.css`

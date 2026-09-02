@@ -16,8 +16,9 @@ export type ChatEvent =
   /** A live status step: the AgentStatus label, with an optional reasoning trace point. */
   | { type: "status"; label: string; point?: string }
   /** The model serving this exchange, as a display label ("Sonnet 5").
-      Reported by the server so the composer's model label follows what
-      actually ran, not what the client assumes. */
+      The server's per-answer ground truth; kept in state but not rendered
+      anywhere today — the composer's picker follows the `models` offer
+      event instead. */
   | { type: "model"; label: string }
   /** What the server is offering right now: the wire value it defaults to,
       and any values the day's budget has locked out. The picker follows

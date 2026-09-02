@@ -361,11 +361,13 @@ export async function POST(request: Request): Promise<Response> {
         // label with one that is true.
         send({ type: "status", label: "Reading the site" });
         // Which model is actually serving this exchange — the resolved
-        // choice, not the requested one, so a budget clamp reaches the
-        // composer's label honestly.
+        // choice, not the requested one. Informational today (no client
+        // renders it), but it is the stream's ground truth for a per-answer
+        // label.
         send({ type: "model", label: serving.label });
-        // And what is on offer, so the picker can follow the server's
-        // default and grey out anything the day's budget has locked.
+        // What is on offer is what the picker actually consumes: it follows
+        // this default and greys out anything the day's budget has locked,
+        // which is how a clamp reaches the composer honestly.
         send({ type: "models", default: tierDefault, locked: lockedValues });
 
         const reasoning = createReasoningBuffer((point) =>

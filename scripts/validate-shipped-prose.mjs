@@ -50,8 +50,10 @@
  *   - Non-page `.ts` modules other than `STORY_MODULES` — their string
  *     literals are server logs and internal messages, not copy. The chat's
  *     persona and greeting strings are genuinely shipped prose but live among
- *     those; the em-dash check aside, everything needing judgement (register,
- *     voice, banned words) stays the `content-audit` skill's `chat` scope.
+ *     those, and so are the model picker's names and one-line descriptions
+ *     in `website/src/lib/chat-model.ts`; the em-dash check aside, everything
+ *     needing judgement (register, voice, banned words) stays the
+ *     `content-audit` skill's `chat` scope, which names all of them.
  *
  * Part of the validate-registry chain.
  */
