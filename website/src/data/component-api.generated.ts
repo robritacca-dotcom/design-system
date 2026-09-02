@@ -449,6 +449,13 @@ export const componentApi: readonly ComponentApiEntry[] = [
             "description": "The on-page sections to list, in document order"
           },
           {
+            "name": "variant",
+            "type": "enum",
+            "required": false,
+            "description": "Visual form: `list` renders the inline \"On this page\" rail; `floating` collapses to a stack of short lines that expands into a panel on hover, keyboard focus, or tap, so it can ride a page edge without taking column width",
+            "defaultValue": "list"
+          },
+          {
             "name": "title",
             "type": "string",
             "required": false,

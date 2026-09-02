@@ -16,6 +16,7 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
+    variant: { control: 'radio', options: ['list', 'floating'] },
     title: { control: 'text' },
     icon: { control: 'text' },
     activeId: { control: 'select', options: pageSections.map((s) => s.id) },
@@ -52,6 +53,29 @@ export const CustomHeader: Story = {
     icon: 'format_list_bulleted',
     activeId: 'installation',
   },
+};
+
+export const Floating: Story = {
+  args: {
+    variant: 'floating',
+    activeId: 'filtering',
+  },
+  decorators: [
+    (Story) => (
+      <div style={{ position: 'relative', minHeight: '320px' }}>
+        <div
+          style={{
+            position: 'absolute',
+            right: 0,
+            top: '50%',
+            transform: 'translateY(-50%)',
+          }}
+        >
+          <Story />
+        </div>
+      </div>
+    ),
+  ],
 };
 
 export const LongList: Story = {
