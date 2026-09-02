@@ -7,6 +7,7 @@ import ThemeToggle from "../ThemeToggle/ThemeToggle";
 import { openSitePalette } from "../SitePalette/palette-bus";
 import { lockBodyScroll, unlockBodyScroll } from "@/lib/scroll-lock";
 import { NavList, type NavListItem } from "@robr0/design-system/components/NavList/NavList";
+import { Kbd } from "@robr0/design-system/components/Kbd/Kbd";
 import { componentCategoryMetadata } from "@robr0/design-system/components/registry";
 import {
   docsSidebarLinks,
@@ -329,6 +330,13 @@ export default function MegaNav() {
             <span className="material-symbols-rounded" aria-hidden="true">
               search
             </span>
+            <span className={styles.searchLabel} aria-hidden="true">
+              Search
+            </span>
+            <span className={styles.searchKeys} aria-hidden="true">
+              <Kbd size="compact">⌘</Kbd>
+              <Kbd size="compact">K</Kbd>
+            </span>
           </button>
           <ThemeToggle className={styles.desktopThemeToggle} />
           <button
@@ -478,6 +486,13 @@ export default function MegaNav() {
             >
               <span className="material-symbols-rounded" aria-hidden="true">
                 search
+              </span>
+              <span className={styles.searchLabel} aria-hidden="true">
+                Search
+              </span>
+              <span className={styles.searchKeys} aria-hidden="true">
+                <Kbd size="compact">⌘</Kbd>
+                <Kbd size="compact">K</Kbd>
               </span>
             </button>
             <ThemeToggle className={styles.desktopThemeToggle} />
