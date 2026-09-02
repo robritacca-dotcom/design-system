@@ -140,7 +140,7 @@ export function Dashboard() {
                     widget below it stays in step.
                   </p>
                 </blockquote>
-                <table>
+                <table id="migration-table" className={styles.anchorTarget}>
                   <thead>
                     <tr>
                       <th>Widget</th>

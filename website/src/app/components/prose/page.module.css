@@ -94,6 +94,12 @@
   border-radius: var(--radius-md);
 }
 
+/* The demo copy's in-page link lands here. Anchor targets clear the
+   sticky MegaNav bar (--mn-bar-height, 78px) plus a breathing gap */
+.anchorTarget {
+  scroll-margin-top: 94px;
+}
+
 /* The narrow column a chat panel gives a message. `overflow-wrap: anywhere`
    matches what ChatMessage sets on its content, so the demo shows the table
    holding its width against the same pressure a real message applies. */
