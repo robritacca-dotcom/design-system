@@ -5,6 +5,10 @@
  * mock deliberately uses no design-system tokens and no design-system
  * components, so it can never drift when the system's own theme changes.
  *
+ * ds-allow-file(mockup): every colour, size, type and timing below is a
+ * drawing coordinate copied from the source frame — deliberately token-free
+ * so the picture never drifts with the system's theme.
+ *
  * The only indirection is the local palette below, which exists so the whole
  * drawing can cross-fade between light and dark.
  */

@@ -34,7 +34,7 @@ Never reference `--primitive-*` tokens inside components. Always use the semanti
 
 ### Action / Brand
 
-The action roles are the one token family that splits per theme by design (see Overview): light mode runs a deep fill under a light label, dark mode a light fill under a dark label, and hover/active walk away from the page — deepening in light, brightening in dark.
+The action roles are the one token family that splits per theme by design (see Overview): the primary roles run a deep light-mode fill under a light label and invert for dark (the neutral roles stay grey-on-grey in each theme), and hover/active walk away from the page — deepening in light, brightening in dark.
 
 - **Primary bg** (`--color-action-primary-bg` — #0E6E8F light / #3CA5C6 dark): Teal. Every primary CTA button fill, focus rings, active input borders, and selected-state fills under the teal selection convention. The most-recognized brand color.
 - **Primary bg hover** (`--color-action-primary-bg-hover` — #0A4E66 light / #6DBCD6 dark): Hover shift on primary buttons.
@@ -327,7 +327,7 @@ The recurring mistake this prevents: reaching for the 2px and 4px tokens (`--gap
 | `--radius-lg` | 16px | Large feature cards, hero containers |
 | `--radius-xl` | 24px | Card/EntityCard navigation tiles, Panel, chat bubbles and chat card furniture (MessageCard, ToolCall, AgentPlan, InterruptCard), AppSidebar's floating variant, oversized hero containers, page-level sections |
 | `--radius-xxl` | 48px | Pill containers, oversized decorative elements |
-| `--radius-full` | 999px | All buttons (primary, secondary, tertiary, destructive), toggle thumbs |
+| `--radius-full` | 999px | All buttons, every variant, toggle thumbs |
 | `--radius-composer` | 29px | The Composer shell only — concentric with the 40px send button it wraps (half the button + the padding-sm ring + the border width), held as a resolved constant so consumer re-theming reaches it |
 
 **Key rule:** Buttons are always `--radius-full` (pill shape). Inputs are always `--radius-md` (12px), with one sanctioned departure: the Composer shell uses `--radius-composer` for concentric geometry with its send button (see the Composer spec). Card and EntityCard — the navigational tiles — use the larger `--radius-xl` (24px) to read as destinations rather than form surfaces, and the chat's card furniture (MessageCard, ToolCall, AgentPlan, InterruptCard) shares that 24px shell with the bubbles around it, so a conversation's surfaces read as one family. This contrast — rounded pill CTAs vs softer-cornered inputs vs generously rounded tiles — is intentional and consistent.

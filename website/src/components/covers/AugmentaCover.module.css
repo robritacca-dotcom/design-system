@@ -1,6 +1,10 @@
 /*
  * 1:1 redraws of the Augmenta ACP frames (Figma "ACP 2024", node 4026:67215).
  *
+ * ds-allow-file(mockup): every colour, size, type and timing below is a
+ * drawing coordinate copied from the source frames — deliberately token-free
+ * so the picture never drifts with the system's theme.
+ *
  * Every value here is hard-coded from the Figma file on purpose — these mocks
  * deliberately use no design-system tokens and no design-system components, so
  * they can never drift when the system's own theme changes.

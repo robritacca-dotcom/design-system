@@ -2,6 +2,10 @@
  * 1:1 redraws of two of this site's own screens — the home hero and the
  * playground's Chat view — at 1440 x 900.
  *
+ * ds-allow-file(mockup): every colour, size, type and timing below is a
+ * drawing coordinate read off the rendered pages — deliberately token-free
+ * so the picture records what shipped rather than tracking the theme.
+ *
  * These follow the same rule as every other cover in this folder: hard-coded
  * values, no design-system tokens, no design-system components. That looks
  * odd for the site's own screens, where the real tokens are one import away,

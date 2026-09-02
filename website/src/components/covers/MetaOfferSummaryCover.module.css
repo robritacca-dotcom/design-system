@@ -2,6 +2,10 @@
  * A 1:1 redraw of the Figma source frame "Offer summary" (robr0-ds26,
  * node 931:1839) — the candidate-facing half of the Meta work.
  *
+ * ds-allow-file(mockup): every colour, size, type and timing below is a
+ * drawing coordinate copied from the source frame — deliberately token-free
+ * so the picture never drifts with the system's theme.
+ *
  * Every value here is hard-coded from the Figma file on purpose — this mock
  * deliberately uses no design-system tokens and no design-system components,
  * so it can never drift when the system's own theme changes. Names keep the

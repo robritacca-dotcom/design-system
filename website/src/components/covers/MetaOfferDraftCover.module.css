@@ -2,6 +2,10 @@
  * A 1:1 redraw of the Figma source frame "Custom offer proposal"
  * (robr0-ds26, node 931:2105) — the recruiter-facing half of the Meta work.
  *
+ * ds-allow-file(mockup): every colour, size, type and timing below is a
+ * drawing coordinate copied from the source frame — deliberately token-free
+ * so the picture never drifts with the system's theme.
+ *
  * This is a different product from the offer summary and shares none of its
  * components: Roboto instead of Optimistic and SF Pro, Facebook's internal
  * recruiting chrome instead of the candidate-facing XDS surfaces. The two
