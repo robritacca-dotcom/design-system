@@ -32,20 +32,49 @@ const DAILY_MESSAGE_CAP = Number(process.env.CHAT_DAILY_MESSAGE_CAP ?? 300);
 const DAILY_SPEND_CAP_TENTHS = Number(process.env.CHAT_DAILY_SPEND_CAP_CENTS ?? 500) * 10;
 
 /**
- * claude-sonnet-5 list price in USD per million tokens, with cache writes at
+ * The model-tier thresholds, as fractions of the daily spend cap. Below the
+ * step-down the chat defaults to its best model; past it the default drops to
+ * the budget model (the visitor can still pick the better one); past the lock
+ * only the budget model serves, whatever the request asks for. The breaker at
+ * 100% is unchanged — the tiers exist so the day degrades gracefully instead
+ * of ending early.
+ */
+const MODEL_STEPDOWN_FRACTION = Number(process.env.CHAT_MODEL_STEPDOWN_PCT ?? 50) / 100;
+const MODEL_LOCK_FRACTION = Number(process.env.CHAT_MODEL_LOCK_PCT ?? 85) / 100;
+
+/**
+ * List prices in USD per million tokens, per model id, with cache writes at
  * 2x input (the route caches the corpus with a 1-hour TTL — see the
- * cache_control block in route.ts; this constant must move with it) and
+ * cache_control block in route.ts; these constants must move with it) and
  * cache reads at 0.1x.
  *
- * Deliberately the standard rate rather than the promotional one: over-
- * estimating spend trips the breaker early, which is the safe direction to be
- * wrong in. Real billing comes from the Console, not from this table.
+ * Sonnet is deliberately the standard rate rather than the promotional one:
+ * over-estimating spend trips the breaker early, which is the safe direction
+ * to be wrong in. Real billing comes from the Console, not from this table.
+ * An unknown model id prices at the most expensive row for the same reason.
  */
-const PRICE_PER_MTOK = {
+interface PriceRow {
+  input: number;
+  output: number;
+  cacheWrite: number;
+  cacheRead: number;
+}
+
+const SONNET_PRICE: PriceRow = {
   input: 3.0,
   output: 15.0,
   cacheWrite: 6.0,
   cacheRead: 0.3,
+};
+
+const PRICE_PER_MTOK: Record<string, PriceRow> = {
+  "claude-sonnet-5": SONNET_PRICE,
+  "claude-haiku-4-5-20251001": {
+    input: 1.0,
+    output: 5.0,
+    cacheWrite: 2.0,
+    cacheRead: 0.1,
+  },
 };
 
 /** Anthropic's usage block, narrowed to the fields the estimate needs. */
@@ -124,9 +153,20 @@ const COUNTER_TTL_SECONDS = 60 * 60 * 48;
    Checks
    ============================================ */
 
-export type GuardrailVerdict = { allowed: true } | { allowed: false; notice: string };
+/**
+ * How much of the day's budget remains, as a model policy: `open` means the
+ * best model is the default, `reduced` means the budget model is (the better
+ * one stays selectable), `locked` means only the budget model serves. The
+ * route maps tiers to actual models — this file only knows the money.
+ */
+export type ModelTier = "open" | "reduced" | "locked";
 
-const ALLOWED: GuardrailVerdict = { allowed: true };
+export type GuardrailVerdict =
+  | { allowed: true; tier: ModelTier }
+  | { allowed: false; notice: string };
+
+/** The fail-open verdict: no Redis (or a Redis error) means no tiering either. */
+const ALLOWED: GuardrailVerdict = { allowed: true, tier: "open" };
 
 /**
  * Runs the per-IP limits and the daily breaker, and counts the message when it
@@ -183,7 +223,15 @@ export async function checkGuardrails(request: Request): Promise<GuardrailVerdic
     const count = await redis.incr(messagesKey());
     if (count === 1) await redis.expire(messagesKey(), COUNTER_TTL_SECONDS);
 
-    return ALLOWED;
+    const spentFraction = (spendTenths ?? 0) / DAILY_SPEND_CAP_TENTHS;
+    const tier: ModelTier =
+      spentFraction >= MODEL_LOCK_FRACTION
+        ? "locked"
+        : spentFraction >= MODEL_STEPDOWN_FRACTION
+          ? "reduced"
+          : "open";
+
+    return { allowed: true, tier };
   } catch (error) {
     console.error("[chat] guardrail check failed, allowing the request:", error);
     return ALLOWED;
@@ -191,19 +239,21 @@ export async function checkGuardrails(request: Request): Promise<GuardrailVerdic
 }
 
 /**
- * Adds one exchange's estimated cost to the day's total. Called after the
- * stream finishes, when the real token counts are known. Never throws: a lost
- * increment is worth less than a failed response.
+ * Adds one exchange's estimated cost to the day's total, at the serving
+ * model's rates. Called after the stream finishes, when the real token counts
+ * are known. Never throws: a lost increment is worth less than a failed
+ * response.
  */
-export async function recordSpend(usage: TokenUsage): Promise<void> {
+export async function recordSpend(usage: TokenUsage, modelId: string): Promise<void> {
   const redis = getRedis();
   if (!redis) return;
 
+  const price = PRICE_PER_MTOK[modelId] ?? SONNET_PRICE;
   const usd =
-    ((usage.input_tokens ?? 0) * PRICE_PER_MTOK.input +
-      (usage.output_tokens ?? 0) * PRICE_PER_MTOK.output +
-      (usage.cache_creation_input_tokens ?? 0) * PRICE_PER_MTOK.cacheWrite +
-      (usage.cache_read_input_tokens ?? 0) * PRICE_PER_MTOK.cacheRead) /
+    ((usage.input_tokens ?? 0) * price.input +
+      (usage.output_tokens ?? 0) * price.output +
+      (usage.cache_creation_input_tokens ?? 0) * price.cacheWrite +
+      (usage.cache_read_input_tokens ?? 0) * price.cacheRead) /
     1_000_000;
 
   // Stored as integer tenths of a cent: Redis INCRBY is integer-only, and
@@ -272,6 +322,8 @@ export interface ExchangeLog {
   question: string;
   answer: string;
   path: string | null;
+  /** The Anthropic model id that served, absent on guardrail notices. */
+  model?: string;
   usage?: TokenUsage;
   /** Milliseconds from request to the stream closing. */
   latencyMs: number;

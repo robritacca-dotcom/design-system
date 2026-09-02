@@ -1,12 +1,67 @@
 /**
- * The chat's model, in one place. The API route sends CHAT_MODEL to
- * Anthropic; the composer shows CHAT_MODEL_LABEL before the first
- * exchange. During a conversation the route reports the model that is
- * actually serving via a `model` event, so if the server ever chooses a
- * different model per request (a budget-tier fallback, an A/B), the label
- * follows reality rather than this constant.
+ * The chat's models, in one place.
+ *
+ * CHAT_MODELS is the allowlist: the only models the route will ever call,
+ * whatever a request body asks for. The client sends an entry's `value`, never
+ * an id, so the wire contract survives a model id bump. Labels are authored
+ * here rather than derived from the id, because dated ids ("-20251001") make
+ * poor display names.
+ *
+ * Which entry serves a given exchange is the server's decision: the visitor's
+ * pick is a request, and the route resolves it through the day's budget tier
+ * (see guardrails.ts) before calling the model. The route reports what
+ * actually served via a `model` event, so the composer's label follows
+ * reality rather than the client's assumption.
  */
-export const CHAT_MODEL = "claude-sonnet-5";
+
+export interface ChatModelOption {
+  /** Stable wire value: what the picker holds and the client sends. */
+  value: string;
+  /** The Anthropic model id the route calls. */
+  id: string;
+  /** Display name in the picker and the composer label. */
+  label: string;
+  /** One line under the name in the picker. */
+  description: string;
+  /**
+   * Whether the model takes adaptive thinking and the effort dial. True for
+   * the Claude 4.6+ generation; Haiku 4.5 predates both and rejects them
+   * with a 400, so the route must send it a plain request.
+   */
+  adaptiveThinking: boolean;
+}
+
+export const CHAT_MODELS: ChatModelOption[] = [
+  {
+    value: "sonnet",
+    id: "claude-sonnet-5",
+    label: "Sonnet 5",
+    description: "Fast and capable, the everyday pick.",
+    adaptiveThinking: true,
+  },
+  {
+    value: "haiku",
+    id: "claude-haiku-4-5-20251001",
+    label: "Haiku 4.5",
+    description: "Instant answers for quick lookups.",
+    adaptiveThinking: false,
+  },
+];
+
+/** What serves when the budget has headroom and the visitor has not chosen. */
+export const DEFAULT_CHAT_MODEL = CHAT_MODELS[0];
+
+/**
+ * What serves once the day's spend passes the step-down threshold — and the
+ * only model on offer past the lock threshold (guardrails.ts owns both).
+ */
+export const BUDGET_CHAT_MODEL = CHAT_MODELS[1];
+
+/** Resolves a client-sent wire value to its entry, or null for anything else. */
+export function chatModelByValue(value: unknown): ChatModelOption | null {
+  if (typeof value !== "string") return null;
+  return CHAT_MODELS.find((option) => option.value === value) ?? null;
+}
 
 /**
  * The model that writes the follow-up suggestions under a finished answer.
@@ -17,24 +72,3 @@ export const CHAT_MODEL = "claude-sonnet-5";
  * answered.
  */
 export const FOLLOWUP_MODEL = "claude-haiku-4-5-20251001";
-
-/**
- * "claude-sonnet-5" → "Sonnet 5", "claude-haiku-4-5" → "Haiku 4.5".
- * Word segments are capitalised; trailing numeric segments join with dots.
- */
-export function modelLabel(modelId: string): string {
-  const segments = modelId.replace(/^claude-/, "").split("-");
-  const words: string[] = [];
-  for (const segment of segments) {
-    if (/^\d+$/.test(segment) && words.length > 0 && /\d$/.test(words[words.length - 1])) {
-      words[words.length - 1] += `.${segment}`;
-    } else if (/^\d+$/.test(segment)) {
-      words.push(segment);
-    } else {
-      words.push(segment.charAt(0).toUpperCase() + segment.slice(1));
-    }
-  }
-  return words.join(" ");
-}
-
-export const CHAT_MODEL_LABEL = modelLabel(CHAT_MODEL);

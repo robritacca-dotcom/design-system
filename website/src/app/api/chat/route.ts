@@ -24,19 +24,27 @@ import Anthropic from "@anthropic-ai/sdk";
 
 import { siteCorpus } from "@/data/site-corpus.generated";
 import type { ChatEvent, ChatTransportMessage } from "@/hooks/useChat";
-import { CHAT_MODEL, modelLabel } from "@/lib/chat-model";
+import {
+  BUDGET_CHAT_MODEL,
+  CHAT_MODELS,
+  DEFAULT_CHAT_MODEL,
+  chatModelByValue,
+  type ChatModelOption,
+} from "@/lib/chat-model";
 
 import { EASTER_EGGS } from "./easter-eggs";
-import { checkGuardrails, recordExchange, recordSpend, visitorKey } from "./guardrails";
+import {
+  checkGuardrails,
+  recordExchange,
+  recordSpend,
+  visitorKey,
+  type ModelTier,
+} from "./guardrails";
 import { PERSONA } from "./persona";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
 export const dynamic = "force-dynamic";
-
-// The model constant lives in @/lib/chat-model, shared with the composer's
-// label — one home, so the label can never drift from what actually runs.
-const MODEL = CHAT_MODEL;
 
 /** Caps thinking and response text together, so leave room for both. */
 const MAX_TOKENS = 3000;
@@ -96,7 +104,13 @@ function ndjson(...events: ChatEvent[]): Response {
    ============================================ */
 
 type ParsedBody =
-  | { ok: true; messages: ChatTransportMessage[]; path: string | null }
+  | {
+      ok: true;
+      messages: ChatTransportMessage[];
+      path: string | null;
+      /** The visitor's explicit model pick, or null when following the default. */
+      model: ChatModelOption | null;
+    }
   | { ok: false; status: number; reason: string };
 
 /**
@@ -121,7 +135,11 @@ function parseBody(payload: unknown): ParsedBody {
     return { ok: false, status: 400, reason: "body must be an object" };
   }
 
-  const { messages, path } = payload as { messages?: unknown; path?: unknown };
+  const { messages, path, model } = payload as {
+    messages?: unknown;
+    path?: unknown;
+    model?: unknown;
+  };
   if (!Array.isArray(messages) || messages.length === 0) {
     return { ok: false, status: 400, reason: "messages must be a non-empty array" };
   }
@@ -158,7 +176,26 @@ function parseBody(payload: unknown): ParsedBody {
     return { ok: false, status: 413, reason: "conversation is too large" };
   }
 
-  return { ok: true, messages: trimmed, path: sanitisePath(path) };
+  // The model field is a request, resolved like the path: an allowlisted
+  // value or nothing. A visitor can put any string in the body, so an
+  // unrecognised one falls back to the tier default rather than erroring —
+  // the server owns the choice either way (see resolveServingModel).
+  return { ok: true, messages: trimmed, path: sanitisePath(path), model: chatModelByValue(model) };
+}
+
+/**
+ * The one place client preference meets budget policy. The tier is the
+ * trump: past the lock only the budget model serves. Inside the lock, an
+ * explicit pick is honoured (a reduced-tier visitor may still choose the
+ * better model), and no pick follows the tier's default.
+ */
+function resolveServingModel(
+  requested: ChatModelOption | null,
+  tier: ModelTier
+): ChatModelOption {
+  if (tier === "locked") return BUDGET_CHAT_MODEL;
+  if (requested) return requested;
+  return tier === "reduced" ? BUDGET_CHAT_MODEL : DEFAULT_CHAT_MODEL;
 }
 
 /* ============================================
@@ -281,6 +318,19 @@ export async function POST(request: Request): Promise<Response> {
     return ndjson({ type: "notice", text: verdict.notice }, { type: "done" });
   }
 
+  const serving = resolveServingModel(parsed.model, verdict.tier);
+  /* What the picker should offer right now: the tier's default, and which
+     values are locked out. Everything but the budget model locks together —
+     today that is one model, but the rule survives a third entry. */
+  const tierDefault =
+    verdict.tier === "open" ? DEFAULT_CHAT_MODEL.value : BUDGET_CHAT_MODEL.value;
+  const lockedValues =
+    verdict.tier === "locked"
+      ? CHAT_MODELS.filter((option) => option !== BUDGET_CHAT_MODEL).map(
+          (option) => option.value
+        )
+      : [];
+
   const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
   // Client disconnect and stream cancellation both abort the upstream call, so
@@ -310,11 +360,13 @@ export async function POST(request: Request): Promise<Response> {
         // the client's first-byte watchdog, and it replaces the hook's default
         // label with one that is true.
         send({ type: "status", label: "Reading the site" });
-        // Which model is serving, for the composer's label. Derived from
-        // MODEL (not the shared constant) and sent per exchange, so a
-        // future per-request model choice (a budget tier, an A/B) reaches
-        // the label with no client change.
-        send({ type: "model", label: modelLabel(MODEL) });
+        // Which model is actually serving this exchange — the resolved
+        // choice, not the requested one, so a budget clamp reaches the
+        // composer's label honestly.
+        send({ type: "model", label: serving.label });
+        // And what is on offer, so the picker can follow the server's
+        // default and grey out anything the day's budget has locked.
+        send({ type: "models", default: tierDefault, locked: lockedValues });
 
         const reasoning = createReasoningBuffer((point) =>
           send({ type: "status", label: "Thinking", point })
@@ -322,10 +374,17 @@ export async function POST(request: Request): Promise<Response> {
 
         const stream = client.messages.stream(
           {
-            model: MODEL,
+            model: serving.id,
             max_tokens: MAX_TOKENS,
-            thinking: { type: "adaptive", display: "summarized" },
-            output_config: { effort: EFFORT },
+            // Haiku 4.5 predates adaptive thinking and the effort dial and
+            // rejects both with a 400, so it gets a plain request — which
+            // also means no "Thinking" trace points on its answers, honestly.
+            ...(serving.adaptiveThinking
+              ? {
+                  thinking: { type: "adaptive" as const, display: "summarized" as const },
+                  output_config: { effort: EFFORT },
+                }
+              : {}),
             system: [
               { type: "text", text: PERSONA },
               { type: "text", text: EASTER_EGGS },
@@ -387,14 +446,16 @@ export async function POST(request: Request): Promise<Response> {
           send({ type: "delta", text: "\n\n(Cut off at the length limit.)" });
         }
 
-        // Real token counts, so the daily breaker tracks actual spend.
-        await recordSpend(final.usage);
+        // Real token counts at the serving model's rates, so the daily
+        // breaker tracks actual spend.
+        await recordSpend(final.usage, serving.id);
         // The exchange log: the ground truth the golden set grows from.
         await recordExchange({
           id: exchangeId,
           question,
           answer: noticeText ?? answerText,
           path: parsed.path,
+          model: serving.id,
           usage: final.usage,
           latencyMs: Date.now() - startedAt,
           firstTextMs,

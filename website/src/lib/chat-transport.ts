@@ -37,7 +37,17 @@ function httpErrorMessage(status: number): string {
   return "Something went wrong sending that. Try again.";
 }
 
-export function createFetchTransport(endpoint = "/api/chat"): ChatTransport {
+export function createFetchTransport(
+  endpoint = "/api/chat",
+  /**
+   * The visitor's explicit model pick (a wire value from CHAT_MODELS), read
+   * at send time so a mid-conversation switch applies from the next message.
+   * Null means no pick was made — the server applies its own default, which
+   * is the distinction that lets the budget tier move the default without
+   * fighting a visitor who never touched the picker.
+   */
+  getModel?: () => string | null
+): ChatTransport {
   return async function* fetchTransport(
     messages: ChatTransportMessage[],
     signal: AbortSignal
@@ -46,6 +56,7 @@ export function createFetchTransport(endpoint = "/api/chat"): ChatTransport {
        spans several pages sends each question with the page it was asked
        from. The route treats it as untrusted input and sanitises it. */
     const path = typeof window !== "undefined" ? window.location.pathname : undefined;
+    const model = getModel?.() ?? undefined;
     // One controller for both stop conditions: the caller aborting, and the
     // watchdog firing. The fetch only ever sees this composed signal.
     const controller = new AbortController();
@@ -71,7 +82,7 @@ export function createFetchTransport(endpoint = "/api/chat"): ChatTransport {
         response = await fetch(endpoint, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ messages: messages.slice(-MAX_TURNS), path }),
+          body: JSON.stringify({ messages: messages.slice(-MAX_TURNS), path, model }),
           signal: controller.signal,
         });
       } catch {

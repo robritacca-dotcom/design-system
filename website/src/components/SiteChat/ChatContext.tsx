@@ -56,6 +56,12 @@ interface SiteChatContextValue {
   streaming: boolean;
   /** Display label of the model last reported by the server, null before the first exchange. */
   modelLabel: string | null;
+  /** The server's current model offer (default + locked values), null before the first exchange. */
+  modelPolicy: ReturnType<typeof useChat>["modelPolicy"];
+  /** The visitor's explicit model pick (a CHAT_MODELS wire value), null while following the server's default. */
+  chosenModel: string | null;
+  /** Records an explicit pick; it rides on every send until changed or cleared by a lock. */
+  setChosenModel: (value: string | null) => void;
   send: ReturnType<typeof useChat>["send"];
   stop: () => void;
   reset: () => void;
@@ -93,7 +99,18 @@ export function SiteChatProvider({
   transport?: ChatTransport;
   children: ReactNode;
 }) {
-  const fallbackTransport = useMemo(() => createFetchTransport(), []);
+  /* The visitor's explicit model pick. Null means "follow the server's
+     default", which is a different fact from having picked the model that
+     happens to be the default: the budget tier can move the default under a
+     visitor who never chose, but never under one who did. The transport
+     closes over the current value, so a pick re-creates it and rides on the
+     next send; a stream already in flight keeps the model it started on. */
+  const [chosenModel, setChosenModel] = useState<string | null>(null);
+
+  const fallbackTransport = useMemo(
+    () => createFetchTransport("/api/chat", () => chosenModel),
+    [chosenModel]
+  );
   const chat = useChat(transport ?? fallbackTransport);
 
   /* Follow-up chips for the answer that just landed. Fired here rather than
@@ -128,6 +145,8 @@ export function SiteChatProvider({
   const value = useMemo<SiteChatContextValue>(
     () => ({
       ...chat,
+      chosenModel,
+      setChosenModel,
       open,
       setOpen,
       toggleOpen,
@@ -137,7 +156,7 @@ export function SiteChatProvider({
       setDraft,
       returnFocusRef,
     }),
-    [chat, open, toggleOpen, view, draft]
+    [chat, chosenModel, setChosenModel, open, toggleOpen, view, draft]
   );
 
   return <SiteChatContext.Provider value={value}>{children}</SiteChatContext.Provider>;

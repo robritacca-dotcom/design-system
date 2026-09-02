@@ -140,7 +140,8 @@ const PIPELINE: TimelineCompany[] = [
           <>
             The chat behind the floating button, built from the system&rsquo;s
             own ai components. It answers from the published site through
-            Claude Sonnet; the same widget runs in{" "}
+            Claude, on the Sonnet or Haiku model picked in the composer; the
+            same widget runs in{" "}
             <Link href="/playground?view=chat" className={styles.inlineLink}>
               the playground&rsquo;s Chat view
             </Link>
@@ -149,7 +150,7 @@ const PIPELINE: TimelineCompany[] = [
         ),
         bullets: [
           "Its context is generated at build time from the site itself: page prose, data registries, root specs, and the essays. Only published, self-authored content can enter, and a validator fails the build on anything else",
-          "A golden-set eval runs through the real route, and spend is held by per-visitor rate limits and a daily budget breaker",
+          "A golden-set eval runs through the real route, and spend is held by per-visitor rate limits and a daily budget that steps the default model down to Haiku as it runs low, then pauses the chat",
           "Conversations are kept for 30 days, tied to no name or address, then deleted",
         ],
       },

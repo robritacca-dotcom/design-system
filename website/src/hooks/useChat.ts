@@ -19,6 +19,11 @@ export type ChatEvent =
       Reported by the server so the composer's model label follows what
       actually ran, not what the client assumes. */
   | { type: "model"; label: string }
+  /** What the server is offering right now: the wire value it defaults to,
+      and any values the day's budget has locked out. The picker follows
+      this — the server owns the default and the lock, the client only
+      expresses a preference. */
+  | { type: "models"; default: string; locked: string[] }
   /** A chunk of response text. The first delta ends the thinking phase. */
   | { type: "delta"; text: string }
   /** The server-side log id for this exchange. Feedback references it, so a
@@ -163,6 +168,13 @@ export function useChat(transport: ChatTransport) {
      Survives reset on purpose: the serving model is a fact about the
      backend, not about one conversation. */
   const [modelLabel, setModelLabel] = useState<string | null>(null);
+  /* The server's current model offer (default + locked values), null until
+     it first reports. Survives reset like the label: what is on offer is a
+     fact about the backend's budget, not about one conversation. */
+  const [modelPolicy, setModelPolicy] = useState<{
+    default: string;
+    locked: string[];
+  } | null>(null);
 
   const abortRef = useRef<AbortController | null>(null);
   const busyRef = useRef(false);
@@ -283,6 +295,9 @@ export function useChat(transport: ChatTransport) {
             switch (event.type) {
               case "model":
                 setModelLabel(event.label);
+                break;
+              case "models":
+                setModelPolicy({ default: event.default, locked: event.locked });
                 break;
               case "exchange":
                 /* A fact about the turn, not about what is on screen — no
@@ -455,6 +470,7 @@ export function useChat(transport: ChatTransport) {
     live,
     streaming,
     modelLabel,
+    modelPolicy,
     send,
     stop,
     reset,

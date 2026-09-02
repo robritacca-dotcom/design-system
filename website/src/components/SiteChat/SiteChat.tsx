@@ -2,16 +2,16 @@
 
 import { useEffect, useRef, useSyncExternalStore, type ReactNode } from "react";
 import Image from "next/image";
-import { Button } from "@robr0/design-system/components/Button/Button";
 import { ChatHeader } from "@robr0/design-system/components/ChatHeader/ChatHeader";
 import { ChatMessage } from "@robr0/design-system/components/ChatMessage/ChatMessage";
 import { ChatThread } from "@robr0/design-system/components/ChatThread/ChatThread";
 import { CircularButton } from "@robr0/design-system/components/CircularButton/CircularButton";
 import { Composer } from "@robr0/design-system/components/Composer/Composer";
+import { ModelPicker } from "@robr0/design-system/components/ModelPicker/ModelPicker";
 import { PromptSuggestions } from "@robr0/design-system/components/PromptSuggestions/PromptSuggestions";
 import { usePathname } from "next/navigation";
 import { getNavLabel } from "@/config/navigation";
-import { CHAT_MODEL_LABEL } from "@/lib/chat-model";
+import { CHAT_MODELS, DEFAULT_CHAT_MODEL } from "@/lib/chat-model";
 import { fitsChip } from "@/lib/chat-suggestions";
 import { AssistantTurn } from "./AssistantTurn";
 import { useSiteChat } from "./ChatContext";
@@ -19,32 +19,8 @@ import { readGreeting, serverGreeting, subscribeClock } from "./greeting";
 import { startersForPath, type Starter } from "./starters";
 import styles from "./SiteChat.module.css";
 
-/** Claude-style starburst for the model label — currentColor, so it takes the button's grey. */
-const claudeGlyph = (
-  <svg
-    viewBox="0 0 24 24"
-    width="20"
-    height="20"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2.2"
-    strokeLinecap="round"
-    aria-hidden="true"
-  >
-    <line x1={12} y1={12} x2={12.0} y2={2.0} />
-    <line x1={12} y1={12} x2={16.35} y2={5.05} />
-    <line x1={12} y1={12} x2={20.55} y2={7.64} />
-    <line x1={12} y1={12} x2={19.96} y2={12.84} />
-    <line x1={12} y1={12} x2={19.72} y2={18.03} />
-    <line x1={12} y1={12} x2={15.01} y2={19.84} />
-    <line x1={12} y1={12} x2={10.07} y2={21.1} />
-    <line x1={12} y1={12} x2={6.44} y2={17.75} />
-    <line x1={12} y1={12} x2={2.63} y2={14.51} />
-    <line x1={12} y1={12} x2={4.2} y2={9.47} />
-    <line x1={12} y1={12} x2={5.89} y2={4.72} />
-    <line x1={12} y1={12} x2={10.82} y2={3.58} />
-  </svg>
-);
+/** The one line a locked model shows in place of its description. */
+const LOCKED_MODEL_DESCRIPTION = "Paused for today to stay in budget.";
 
 /**
  * The chat widget's internals: header, thread, composer, starters,
@@ -98,7 +74,9 @@ export function SiteChat({
     turns,
     live,
     streaming,
-    modelLabel,
+    modelPolicy,
+    chosenModel,
+    setChosenModel,
     send,
     stop,
     reset,
@@ -109,6 +87,24 @@ export function SiteChat({
     draft,
     setDraft,
   } = useSiteChat();
+
+  /* The picker shows the visitor's pick, or the server's current default
+     when they have not made one — which is how a budget step-down moves the
+     label without a click. Locked entries stay listed but greyed, with the
+     reason where their description was; a pick the server has since locked
+     counts as no pick (the route clamps it anyway), so the label falls back
+     to the default rather than naming a model that will not serve. */
+  const lockedValues = modelPolicy?.locked ?? [];
+  const pick = chosenModel && !lockedValues.includes(chosenModel) ? chosenModel : null;
+  const pickerValue = pick ?? modelPolicy?.default ?? DEFAULT_CHAT_MODEL.value;
+  const pickerModels = CHAT_MODELS.map((option) => ({
+    value: option.value,
+    label: option.label,
+    description: lockedValues.includes(option.value)
+      ? LOCKED_MODEL_DESCRIPTION
+      : option.description,
+    disabled: lockedValues.includes(option.value),
+  }));
 
   const greeting = useSyncExternalStore(subscribeClock, readGreeting, serverGreeting);
 
@@ -319,18 +315,17 @@ export function SiteChat({
             onStop={stop}
             actions={
               /* A host can slot its own leading actions (the playground's
-                 mock picker). The site's default: the model picker is out of
-                 scope — the label is shown, disabled, so the bar's final
-                 shape reads now. The name is dynamic: the configured model
-                 until the server first reports, then whatever the server
-                 says actually served. */
+                 mock picker). The site's default is the live picker: the
+                 pick rides on the next send, the server clamps it to the
+                 day's budget, and the selection follows the server's
+                 default until the visitor chooses. */
               composerActions ?? (
-                <Button
-                  variant="tertiary"
-                  size="compact"
-                  iconLeft={claudeGlyph}
-                  label={modelLabel ?? CHAT_MODEL_LABEL}
-                  disabled
+                <ModelPicker
+                  models={pickerModels}
+                  value={pickerValue}
+                  onValueChange={setChosenModel}
+                  placement="top"
+                  aria-label="Choose a model"
                 />
               )
             }
