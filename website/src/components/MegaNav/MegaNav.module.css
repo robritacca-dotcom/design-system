@@ -535,12 +535,21 @@
 
 /* Close control on the scrim itself — the one place that can sit above the
    drawer panel. Always light: the scrim stays dark in both themes. It sits
-   exactly where the hidden header button is, as if replacing it: below the
-   body's top padding for the in-flow header, at the viewport top when the
-   drawer was opened from the sticky header (78px bar, matching gutters). */
+   exactly where the menu button was when it was tapped: MegaNav measures
+   that button at open and pins it here as --mn-close-top, frozen for the
+   whole time the drawer is open. A pair of static positions couldn't do
+   this — between a page at rest and a fully stuck header the hamburger sits
+   anywhere, and a live isStuck binding jolted the X when iOS fired scroll
+   events mid-open (the body lock clamping scrollY, the URL bar resizing).
+   The max() floor is the stuck-bar position, so a button tapped while half
+   scrolled off-screen can't drag the X off with it; the fallback is the
+   at-rest header, for an open with no measurement. */
 .mobileMenuClose {
   position: absolute;
-  top: calc(var(--primitive-padding-lg) + (var(--mn-bar-height) - 40px) / 2);
+  top: max(
+    calc((var(--mn-bar-height) - 40px) / 2),
+    var(--mn-close-top, calc(var(--primitive-padding-lg) + (var(--mn-bar-height) - 40px) / 2))
+  );
   right: var(--primitive-padding-lg);
   display: flex;
   align-items: center;
@@ -556,10 +565,6 @@
 
 .mobileMenuClose:hover {
   background: rgba(255, 255, 255, 0.15);
-}
-
-.mobileMenuCloseStuck {
-  top: calc((var(--mn-bar-height) - 40px) / 2);
 }
 
 .mobileMenu {
@@ -604,7 +609,8 @@
 
 /* Opened from the sticky header, the bar it replaced is at the viewport top
    rather than below the body's inset — so the drawer drops its top padding
-   and the logo tracks it, exactly as the close button does. */
+   and the logo tracks it. Applied from state captured at open, like the
+   close button's anchor, so a scroll event mid-open can't reflow it. */
 .mobileMenuStuck {
   padding-top: 0;
 }

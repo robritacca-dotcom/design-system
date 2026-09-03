@@ -1,6 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type MouseEvent as ReactMouseEvent,
+} from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
@@ -72,6 +79,13 @@ export default function MegaNav() {
   // Drawer accordions are closed by default; one open at a time.
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
   const [isStuck, setIsStuck] = useState(false);
+  // The drawer's geometry is frozen at open: the close button pins to where
+  // the tapped menu button actually was, and the stuck layout is whatever
+  // the header was at that moment. isStuck keeps moving underneath (iOS
+  // fires scroll events when the body lock clamps scrollY and when the URL
+  // bar resizes), and a live binding made the X jump mid-open.
+  const [closeTop, setCloseTop] = useState<number | null>(null);
+  const [drawerStuck, setDrawerStuck] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const triggerRef = useRef<HTMLAnchorElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -143,9 +157,16 @@ export default function MegaNav() {
   ];
 
   // Opening the drawer pre-expands the section holding the current page.
-  const toggleMobileMenu = () => {
+  const toggleMobileMenu = (e: ReactMouseEvent<HTMLButtonElement>) => {
     const next = !mobileOpen;
-    if (next) setExpandedSection(sectionForPath(pathname));
+    if (next) {
+      setExpandedSection(sectionForPath(pathname));
+      // The X replaces the button that was tapped, wherever the scroll has
+      // put it — the two static CSS positions only cover a page at rest and
+      // a fully stuck header, and between them the hamburger sits anywhere.
+      setCloseTop(e.currentTarget.getBoundingClientRect().top);
+      setDrawerStuck(isStuck);
+    }
     setMobileOpen(next);
   };
 
@@ -559,10 +580,15 @@ export default function MegaNav() {
           if (e.target === e.currentTarget) setMobileOpen(false);
         }}
         aria-hidden={!mobileOpen}
+        style={
+          closeTop != null
+            ? ({ "--mn-close-top": `${closeTop}px` } as CSSProperties)
+            : undefined
+        }
       >
         <button
           type="button"
-          className={`${styles.mobileMenuClose} ${isStuck ? styles.mobileMenuCloseStuck : ""}`}
+          className={styles.mobileMenuClose}
           onClick={() => setMobileOpen(false)}
           aria-label="Close menu"
         >
@@ -570,7 +596,7 @@ export default function MegaNav() {
             close
           </span>
         </button>
-        <div className={`${styles.mobileMenu} ${isStuck ? styles.mobileMenuStuck : ""}`}>
+        <div className={`${styles.mobileMenu} ${drawerStuck ? styles.mobileMenuStuck : ""}`}>
           <Link
             href="/"
             className={`${styles.logo} ${styles.mobileMenuLogo}`}
