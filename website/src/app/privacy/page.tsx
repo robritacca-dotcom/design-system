@@ -29,8 +29,8 @@ export default function PrivacyPage() {
             The chat answers questions about my work and this design system.
             Messages go to Anthropic, whose model writes the replies. For each
             exchange I keep the question, the answer, the page it was asked
-            from, timing and token counts, and a thumbs verdict if you leave
-            one. Each entry carries a scrambled, one-way stand-in for your
+            from, which model answered, timing and token counts, and a thumbs
+            verdict if you leave one. Each entry carries a scrambled, one-way stand-in for your
             network address so I can spot abuse; it is not your name, and I
             cannot turn it back into an address. Everything is deleted after
             30 days. Do not type anything private into it.

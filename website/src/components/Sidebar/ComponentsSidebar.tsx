@@ -27,5 +27,5 @@ export default function ComponentsSidebar() {
     })),
   }));
 
-  return <Sidebar links={[overview]} groups={groups} searchable />;
+  return <Sidebar links={[overview]} groups={groups} />;
 }

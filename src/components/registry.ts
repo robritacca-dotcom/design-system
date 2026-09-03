@@ -20,8 +20,12 @@ import registry from './registry.json';
  *               deliberately false so consumers can render them from a React
  *               Server Component.
  *   folder      set only when the implementation lives in a shared folder
- *               rather than one named after the component — the nine chart
- *               components all live in Chart/. Omitted everywhere else.
+ *               rather than one named after the component — the recharts
+ *               wrapper set lives in Chart/. Omitted everywhere else.
+ *   recharts    true when the component's module imports recharts, so it
+ *               exports from the charts barrel rather than the main one
+ *               (recharts is an optional peer). Held to the actual imports
+ *               by scripts/generate-library-barrel.mjs on every build.
  *
  * `docOnlyHelpers` names the internal documentation helpers that are
  * deliberately excluded from the public count.
@@ -49,6 +53,8 @@ export interface ComponentMeta {
   client: boolean;
   /** Folder under src/components when it differs from `name` (shared folders like Chart) */
   folder?: string;
+  /** True when the module imports recharts and so exports from the charts barrel, not the main one */
+  recharts?: boolean;
 }
 
 export interface ComponentCategoryMeta {

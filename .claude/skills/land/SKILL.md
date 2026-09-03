@@ -12,7 +12,7 @@ Resolve **all** the pending work in the repo in one pass. Some of it is finished
 
 The end state: a local, unpushed `main` carrying the work that was worth keeping and passing `npm run verify`, with everything discarded archived to a recoverable tag and every branch and worktree that no longer earns its place gone.
 
-Fourth verb in the shipping vocabulary. `ship` makes one line of work live, `checkpoint` saves it, `park` shelves it; `land` is the one that runs when several of them have piled up and it is no longer obvious what is worth shipping.
+One of the shipping verbs (CLAUDE.md's Shipping vocabulary owns the roster). `ship` makes one line of work live, `checkpoint` saves it, `park` shelves it; `land` is the one that runs when several of them have piled up and it is no longer obvious what is worth shipping.
 
 ## When invoked
 

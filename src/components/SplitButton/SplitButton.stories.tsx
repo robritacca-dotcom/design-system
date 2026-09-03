@@ -18,7 +18,7 @@ const meta = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['primary', 'secondary'],
+      options: ['primary', 'secondary', 'neutral'],
     },
     size: {
       control: 'select',
@@ -48,6 +48,17 @@ export const Secondary: Story = {
       { label: 'Export as CSV', icon: 'csv' },
       { label: 'Export as JSON', icon: 'data_object' },
       { label: 'Export as PDF', icon: 'picture_as_pdf' },
+    ],
+  },
+};
+
+export const Neutral: Story = {
+  args: {
+    variant: 'neutral',
+    label: 'Duplicate',
+    items: [
+      { label: 'Duplicate with children', icon: 'account_tree' },
+      { label: 'Duplicate as template', icon: 'content_copy' },
     ],
   },
 };

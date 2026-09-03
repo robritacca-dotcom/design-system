@@ -1,23 +1,31 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import {
+  FunnelChart as RechartsFunnelChart,
+  Funnel,
+  LabelList,
+  Tooltip,
+  ResponsiveContainer,
+} from 'recharts';
+import { getChartSeriesColors } from '../Chart/palette';
 import '../Chart/Chart.css';
 import './FunnelChart.css';
 
 /** One stage of the funnel, ordered widest first. */
 export interface FunnelStage {
-  /** Stage name, read into the chart's accessible label. */
+  /** Stage name, shown beside the stage and read into the chart's accessible label. */
   label: string;
-  /** Raw count for the stage — drives the bar's height as a share of the first stage. */
+  /** Raw count for the stage — drives the stage's width as a share of the first stage. */
   value: number;
   /**
-   * Preformatted value ("96.4K") for the accessible label and any consumer
-   * legend. Falls back to the raw `value`, locale-formatted.
+   * Preformatted value ("96.4K") for the tooltip and the accessible label.
+   * Falls back to the raw `value`, locale-formatted.
    */
   displayValue?: string;
 }
 
 /** Props owned by FunnelChart itself — everything else falls through to the root div. */
 type FunnelChartOwnProps = {
-  /** Ordered stages, first stage widest. Each later stage's height is its share of the first. */
+  /** Ordered stages, first stage widest. Each later stage's width is its share of the first. */
   data: FunnelStage[];
   /** Chart title, in the shared chart header. */
   title?: string;
@@ -27,9 +35,12 @@ type FunnelChartOwnProps = {
   bare?: boolean;
   /** Chart area height in pixels. */
   height?: number;
+  /** Shows each stage's name beside its band. Turn off when a legend under the chart already carries the names. */
+  showLabels?: boolean;
   /**
-   * Floor percentage for a stage's height, so steep drop-offs stay readable.
-   * Shares are clamped to the range from this floor up to 100.
+   * Floor percentage from the stepped-bar rendering this chart used to have.
+   * @deprecated The funnel now draws true trapezoids sized by value, so a
+   * height floor no longer applies; the prop is ignored.
    */
   minStageShare?: number;
   /** Additional CSS classes */
@@ -40,24 +51,58 @@ export interface FunnelChartProps
   extends FunnelChartOwnProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, keyof FunnelChartOwnProps | 'children'> {}
 
-/** The chart palette cycles through --color-chart-series-1 … -7. */
-const SERIES_COUNT = 7;
+interface FunnelTooltipPayloadEntry {
+  value?: number;
+  payload?: { name?: string; fill?: string; displayValue?: string; share?: number };
+  [key: string]: unknown;
+}
+
+interface FunnelTooltipProps {
+  active?: boolean;
+  payload?: FunnelTooltipPayloadEntry[];
+}
+
+function getCSSVar(name: string, fallback: string): string {
+  // A var() reference resolves live in SVG paint, so the chart follows a
+  // theme switch without re-rendering; the fallback covers SSR markup and
+  // token-less consumers.
+  return `var(${name}, ${fallback})`;
+}
+
+function FunnelTooltip({ active, payload }: FunnelTooltipProps) {
+  if (!active || !payload?.length) return null;
+  const entry = payload[0];
+  const stage = entry.payload;
+
+  return (
+    <div className="ds-chart__tooltip">
+      <div className="ds-chart__tooltip-label">{stage?.name}</div>
+      <div className="ds-chart__tooltip-row">
+        <span
+          className="ds-chart__tooltip-dot"
+          style={{ backgroundColor: stage?.fill }}
+        />
+        <span className="ds-chart__tooltip-name">
+          {stage?.share !== undefined ? `${stage.share}%` : ''}
+        </span>
+        <span className="ds-chart__tooltip-value">
+          {stage?.displayValue ?? entry.value?.toLocaleString()}
+        </span>
+      </div>
+    </div>
+  );
+}
 
 /**
- * FunnelChart — ordered stages as side-by-side vertical bars whose heights
- * step down with each stage's share of the first, each carrying a centred
- * percentage pill. Pure JSX and CSS computed from props: no recharts, no
- * hooks, no browser APIs, so it deliberately omits 'use client' and renders
- * from a Server Component. It wears the chart family's card chrome (title,
- * subtitle, padding) and takes `bare` to drop it inside a Panel, like every
- * other chart. Each stage's hover target is its full-height column, like the
- * recharts cursor band: hovering anywhere in the column tints the band and
- * reveals the family's glass tooltip — the stage name and its reading,
- * anchored above the percentage pill. A pure CSS reveal, so the component
- * stays server-renderable, and the values are already in the row's
- * accessible label. Degenerate data stays safe: an
- * empty array renders an empty stage row, and a zero or negative first
- * value draws every stage at the floor height.
+ * FunnelChart — ordered stages as a centred funnel of trapezoid bands, built
+ * on Recharts' native Funnel so the stages sweep in on load and share the
+ * family's tooltip and palette. Each band's width is its stage's share of the
+ * first, the honest recharts geometry: the taper itself is the conversion
+ * story, and the glass tooltip carries each stage's reading and percentage.
+ * It wears the chart family's card chrome (title, subtitle, padding) and
+ * takes `bare` to drop it inside a Panel, like every other chart. The whole
+ * funnel is summarised in one accessible label, stage by stage. Degenerate
+ * data stays safe: an empty array renders an empty chart area.
  */
 export const FunnelChart = React.forwardRef<HTMLDivElement, FunnelChartProps>(
   (
@@ -67,7 +112,8 @@ export const FunnelChart = React.forwardRef<HTMLDivElement, FunnelChartProps>(
       subtitle,
       bare = false,
       height = 190,
-      minStageShare = 16,
+      showLabels = true,
+      minStageShare,
       className = '',
       ...rest
     },
@@ -75,31 +121,35 @@ export const FunnelChart = React.forwardRef<HTMLDivElement, FunnelChartProps>(
   ) => {
     const baseClass = 'ds-funnel-chart';
     const chartClass = 'ds-chart';
-    const classes = [
-      chartClass,
-      bare && `${chartClass}--bare`,
-      baseClass,
-      className,
-    ]
+    const classes = [chartClass, bare && `${chartClass}--bare`, baseClass, className]
       .filter(Boolean)
       .join(' ');
 
-    const firstValue = data.length > 0 ? data[0].value : 0;
-    const clampShare = (share: number) =>
-      Math.min(Math.max(share, minStageShare), 100);
+    const seriesColors = getChartSeriesColors();
+    const textSecondary = getCSSVar('--color-text-secondary', '#A2A2A2');
+    const surfaceColor = getCSSVar('--color-bg-container-primary', '#FFFFFF');
 
+    const firstValue = data.length > 0 ? data[0].value : 0;
     const stages = data.map((stage, i) => ({
-      ...stage,
-      share: clampShare(firstValue > 0 ? (stage.value / firstValue) * 100 : 0),
-      color: `var(--color-chart-series-${(i % SERIES_COUNT) + 1})`,
+      name: stage.label,
+      value: stage.value,
+      displayValue: stage.displayValue,
+      share: firstValue > 0 ? Math.round((stage.value / firstValue) * 100) : 0,
+      fill: seriesColors[i % seriesColors.length],
     }));
 
     const ariaLabel =
       stages.length > 0
         ? `Funnel: ${stages
-            .map((s) => `${s.label} ${s.displayValue ?? s.value.toLocaleString()}`)
+            .map((s) => `${s.name} ${s.displayValue ?? s.value.toLocaleString()}`)
             .join(', ')}`
         : 'Funnel, no data';
+
+    const renderTooltip = useCallback(
+      /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+      (props: any) => <FunnelTooltip {...props} />,
+      [],
+    );
 
     return (
       <div {...rest} ref={ref} className={classes}>
@@ -111,45 +161,33 @@ export const FunnelChart = React.forwardRef<HTMLDivElement, FunnelChartProps>(
             </div>
           </div>
         )}
-        <div
-          className={`${chartClass}__body ${baseClass}__stages`}
-          style={{ height }}
-          role="img"
-          aria-label={ariaLabel}
-        >
-          {stages.map((stage, i) => (
-            <div
-              key={`${stage.label}-${i}`}
-              className={`${baseClass}__stage`}
-              style={
-                {
-                  '--funnel-stage-size': stage.share,
-                  '--funnel-stage-color': stage.color,
-                } as React.CSSProperties
-              }
-            >
-              <div className={`${baseClass}__bar`}>
-                <span className={`${baseClass}__pct`}>
-                  {Math.round(firstValue > 0 ? (stage.value / firstValue) * 100 : 0)}%
-                </span>
-              </div>
-              <div
-                className={`${chartClass}__tooltip ${baseClass}__tooltip`}
-                aria-hidden="true"
+        <div className={`${chartClass}__body`} role="img" aria-label={ariaLabel}>
+          <ResponsiveContainer width="100%" height={height}>
+            <RechartsFunnelChart margin={{ top: 4, right: 4, bottom: 4, left: 4 }}>
+              <Tooltip content={renderTooltip} />
+              {/* Animation stays on the recharts 'auto' default, which already
+                  turns itself off under prefers-reduced-motion and in SSR. The
+                  surface-coloured stroke separates the bands in either theme. */}
+              <Funnel
+                dataKey="value"
+                nameKey="name"
+                data={stages}
+                lastShapeType="rectangle"
+                stroke={surfaceColor}
+                strokeWidth={2}
               >
-                <div className={`${chartClass}__tooltip-label`}>{stage.label}</div>
-                <div className={`${chartClass}__tooltip-row`}>
-                  <span
-                    className={`${chartClass}__tooltip-dot`}
-                    style={{ backgroundColor: stage.color }}
+                {showLabels && (
+                  <LabelList
+                    position="right"
+                    dataKey="name"
+                    fill={textSecondary}
+                    stroke="none"
+                    fontSize={12}
                   />
-                  <span className={`${chartClass}__tooltip-value`}>
-                    {stage.displayValue ?? stage.value.toLocaleString()}
-                  </span>
-                </div>
-              </div>
-            </div>
-          ))}
+                )}
+              </Funnel>
+            </RechartsFunnelChart>
+          </ResponsiveContainer>
         </div>
       </div>
     );

@@ -40,7 +40,7 @@ export default function CircularButtonPage() {
               An icon-only button in a circular shape
             </p>
             <p className={styles.introBody}>
-              For actions where a label is not needed, like close, menu, or navigation arrows. Uses the same primary, secondary, and tertiary styles as Button. Good for toolbars and compact UI where space is tight.
+              For actions where a label is not needed, like close, menu, or navigation arrows. Uses the same primary, secondary, tertiary, and neutral styles as Button. Good for toolbars and compact UI where space is tight.
             </p>
           </div>
 
@@ -107,6 +107,32 @@ export default function CircularButtonPage() {
             </div>
           </section>
 
+          {/* Neutral states (Solid Grey) */}
+          <section className={styles.section}>
+            <SectionTitle title="Neutral" />
+            <p className={styles.introBody}>
+              A solid grey fill that stays visible at rest, unlike the
+              transparent tertiary. For toolbar actions that deserve a
+              button&apos;s full shape without the accent colour.
+            </p>
+            <div className={styles.stateGrid}>
+              <div className={styles.gridCorner} />
+              {states.map((s) => (
+                <span key={s.value} className={styles.gridColHeader}>{s.label}</span>
+              ))}
+              {icons.map((icon) => (
+                <React.Fragment key={icon}>
+                  <span className={styles.gridRowHeader}>{icon}</span>
+                  {states.map((s) => (
+                    <div key={s.value} className={styles.gridCell}>
+                      <CircularButton icon={icon} variant="neutral" state={s.value} ariaLabel={icon} />
+                    </div>
+                  ))}
+                </React.Fragment>
+              ))}
+            </div>
+          </section>
+
           {/* Tooltip */}
           <section className={styles.section}>
             <SectionTitle title="Tooltip" />
@@ -137,6 +163,7 @@ export default function CircularButtonPage() {
               <CircularButton icon="add" variant="primary" loading ariaLabel="Saving" />
               <CircularButton icon="edit" variant="secondary" loading ariaLabel="Saving" />
               <CircularButton icon="refresh" variant="tertiary" loading ariaLabel="Refreshing" />
+              <CircularButton icon="tune" variant="neutral" loading ariaLabel="Applying filters" />
               <CircularButton icon="add" variant="primary" size="compact" loading ariaLabel="Saving" />
               <CircularButton icon="edit" variant="secondary" size="compact" loading ariaLabel="Saving" />
               <CircularButton icon="refresh" variant="tertiary" size="compact" loading ariaLabel="Refreshing" />
@@ -155,6 +182,8 @@ export default function CircularButtonPage() {
               <CircularButton icon="more_vert" variant="tertiary" size="compact" ariaLabel="More" />
               <CircularButton icon="search" variant="tertiary" size="compact" ariaLabel="Search" />
               <CircularButton icon="settings" variant="tertiary" size="compact" ariaLabel="Settings" />
+              <CircularButton icon="tune" variant="neutral" size="compact" ariaLabel="Filters" />
+              <CircularButton icon="sort" variant="neutral" size="compact" ariaLabel="Sort" />
             </div>
           </section>
         </main>

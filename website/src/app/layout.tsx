@@ -16,6 +16,7 @@ import { SiteChatMount } from "@/components/SiteChat/SiteChatMount";
 import { SitePaletteMount } from "@/components/SitePalette/SitePaletteMount";
 import SiteFooter from "@/components/SiteFooter/SiteFooter";
 import { SiteFooterMount } from "@/components/SiteFooter/SiteFooterMount";
+import SiteAnchorRail from "@/components/FloatingAnchorNav/SiteAnchorRail";
 import { ClientNav } from "@/components/ClientNav/ClientNav";
 import BlurBackground from "@/components/BlurBackground/BlurBackground";
 
@@ -221,6 +222,9 @@ export default async function RootLayout({
           <SiteFooterMount>
             <SiteFooter />
           </SiteFooterMount>
+          {/* The floating on-this-page nav: reads each page's h2 headings
+              after navigation, gated by src/config/anchor-nav.ts. */}
+          <SiteAnchorRail />
           <SiteChatMount />
           {/* The global command palette (an experiment): mounted once beside
               the chat, so Cmd+K and the header's search button work on every

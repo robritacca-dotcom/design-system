@@ -137,7 +137,8 @@
       "description": "Filled area chart for showing volume over time, with stacked and single-series variants.",
       "category": "charts",
       "client": false,
-      "folder": "Chart"
+      "folder": "Chart",
+      "recharts": true
     },
     {
       "name": "Avatar",
@@ -178,7 +179,8 @@
       "description": "Vertical bars for comparing values across categories or time, with summary stats and tooltips.",
       "category": "charts",
       "client": false,
-      "folder": "Chart"
+      "folder": "Chart",
+      "recharts": true
     },
     {
       "name": "Breadcrumb",
@@ -192,7 +194,7 @@
       "name": "Button",
       "label": "Button",
       "slug": "button",
-      "description": "Primary and secondary button variants in default and compact sizes, with icon support and multiple states.",
+      "description": "Primary, secondary, tertiary, neutral and destructive variants in default and compact sizes, with icon support and multiple states.",
       "category": "actions",
       "client": true
     },
@@ -280,7 +282,7 @@
       "name": "CircularButton",
       "label": "Circular button",
       "slug": "circular-button",
-      "description": "Round icon button with primary and secondary variants, default and compact sizes.",
+      "description": "Round icon button with primary, secondary, tertiary and neutral variants, default and compact sizes.",
       "category": "actions",
       "client": false
     },
@@ -315,7 +317,8 @@
       "description": "Bar and line series in one chart, with an optional second y-axis for pairs in different units, like spend and ROAS.",
       "category": "charts",
       "client": false,
-      "folder": "Chart"
+      "folder": "Chart",
+      "recharts": true
     },
     {
       "name": "Combobox",
@@ -497,9 +500,10 @@
       "name": "FunnelChart",
       "label": "Funnel chart",
       "slug": "funnel-chart",
-      "description": "Ordered funnel stages as stepped bars with conversion percentages, each sized by its share of the first stage.",
+      "description": "Ordered funnel stages as centred trapezoid bands, each sized by its share of the first stage.",
       "category": "charts",
-      "client": false
+      "client": false,
+      "recharts": true
     },
     {
       "name": "Gauge",
@@ -580,7 +584,8 @@
       "description": "Multi-series line chart for trends over time, with per-series colours and a summary row.",
       "category": "charts",
       "client": false,
-      "folder": "Chart"
+      "folder": "Chart",
+      "recharts": true
     },
     {
       "name": "LinkList",
@@ -693,7 +698,8 @@
       "description": "Proportional share of a whole as a pie or donut, with per-slice colours.",
       "category": "charts",
       "client": false,
-      "folder": "Chart"
+      "folder": "Chart",
+      "recharts": true
     },
     {
       "name": "PinInput",
@@ -750,7 +756,8 @@
       "description": "Multi-axis comparison of series across categories on a radial grid.",
       "category": "charts",
       "client": false,
-      "folder": "Chart"
+      "folder": "Chart",
+      "recharts": true
     },
     {
       "name": "RadialChart",
@@ -759,7 +766,8 @@
       "description": "Concentric progress rings for completion and KPI readouts.",
       "category": "charts",
       "client": false,
-      "folder": "Chart"
+      "folder": "Chart",
+      "recharts": true
     },
     {
       "name": "RadioButton",
@@ -792,7 +800,8 @@
       "description": "Plots point clusters across two axes to show correlation and distribution.",
       "category": "charts",
       "client": false,
-      "folder": "Chart"
+      "folder": "Chart",
+      "recharts": true
     },
     {
       "name": "SectionTitle",
@@ -889,7 +898,8 @@
       "description": "Bars split into stacked segments to compare totals and their composition.",
       "category": "charts",
       "client": false,
-      "folder": "Chart"
+      "folder": "Chart",
+      "recharts": true
     },
     {
       "name": "Stat",
@@ -1026,7 +1036,8 @@
       "description": "Nested rectangles sized by value for part-to-whole breakdowns.",
       "category": "charts",
       "client": false,
-      "folder": "Chart"
+      "folder": "Chart",
+      "recharts": true
     }
   ],
   "docOnlyHelpers": [

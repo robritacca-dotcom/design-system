@@ -27,7 +27,8 @@
 
    To retune: dial a look in with the dev-only
    panel (append ?tune=1 to any page in
-   `npm run dev`), then paste the panel's snippet
+   `npm run dev --workspace website`), then
+   paste the panel's snippet
    values back into shader-background.json.
 
    To roll back to the CSS blobs site-wide: set

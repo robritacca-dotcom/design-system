@@ -63,6 +63,17 @@ borderline, which is worth reading, not averaging away.
   rules.** The corpus itself (CLAUDE.md) contains em dashes, so a failure
   usually means the model quoted rather than wrote; read it before treating
   it as a regression.
+- **The eval only ever scores the default model.** The config sends no
+  `model` field, and the route resolves the model server-side through the
+  day's budget tier — against `dev:eval` the guardrails fail open, so every
+  run serves the tier-open default (Sonnet). The Haiku path a real visitor
+  gets past the step-down threshold is never graded, and two runs are only
+  comparable when the serving model matched — one more reason `dev:eval`,
+  not a KV-backed server, is the only valid target.
+- **The config hardcodes `http://localhost:3000`.** Both dev entries in
+  `.claude/launch.json` carry `autoPort`, so a second server already holding
+  3000 silently points the eval at the wrong app. Confirm which process owns
+  port 3000 before trusting a run.
 
 ## The standing rule
 

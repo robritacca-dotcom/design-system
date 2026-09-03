@@ -70,7 +70,7 @@ export function HiddenBackground() {
  * it has reached.
  *
  * Every tuneable value comes from website/src/data/shader-background.json.
- * Append `?tune=1` to any page in `npm run dev` to adjust them live.
+ * Append `?tune=1` to any page in `npm run dev --workspace website` to adjust them live.
  */
 export default function BlurBackground() {
   const [params, setParams] = useState<ShaderParams>(shaderBackground.params);

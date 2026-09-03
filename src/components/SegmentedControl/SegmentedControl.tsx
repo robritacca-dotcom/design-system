@@ -24,6 +24,8 @@ export interface SegmentedControlProps {
   onSegmentChange?: (value: string) => void;
   /** Component size */
   size?: 'default' | 'compact';
+  /** Visual treatment of the active segment — teal by default, `neutral` fills it grey */
+  variant?: 'primary' | 'neutral';
   /** Full width — segments fill container */
   fullWidth?: boolean;
   /** Accessible label for the tablist */
@@ -42,16 +44,18 @@ export const SegmentedControl = ({
   activeSegment,
   onSegmentChange,
   size = 'default',
+  variant = 'primary',
   fullWidth = false,
   ariaLabel,
   className = '',
 }: SegmentedControlProps) => {
   const baseClass = 'ds-segmented-control';
   const sizeClass = `${baseClass}--${size}`;
+  const variantClass = `${baseClass}--${variant}`;
   const fullWidthClass = fullWidth ? `${baseClass}--full-width` : '';
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const classes = [baseClass, sizeClass, fullWidthClass, className]
+  const classes = [baseClass, sizeClass, variantClass, fullWidthClass, className]
     .filter(Boolean)
     .join(' ');
 

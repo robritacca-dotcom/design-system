@@ -84,6 +84,15 @@
   --color-action-passive-bg-hover: var(--primitive-neutral-02-semi);
   --color-action-passive-bg-active: var(--primitive-neutral-03-semi);
 
+  /* Action - Neutral (grey filled buttons). Unlike passive, the fill is a
+     solid grey step that stays visible at rest — a filled button without
+     the action teal's "click here" weight. Hover and active deepen in
+     light mode and brighten in dark, like the primary family. */
+  --color-action-neutral-bg: var(--primitive-neutral-02);
+  --color-action-neutral-bg-hover: var(--primitive-neutral-03);
+  --color-action-neutral-bg-active: var(--primitive-neutral-04);
+  --color-action-neutral-text: var(--primitive-neutral-10);
+
   /* Core colours */
   --color-core-ui-primary: var(--primitive-teal-08);
   --color-core-ui-secondary: var(--primitive-teal-10);

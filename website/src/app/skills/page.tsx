@@ -4,6 +4,7 @@ import Link from "next/link";
 import MegaNav from "../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../components/Sidebar/Sidebar";
+import FloatingAnchorNav from "@/components/FloatingAnchorNav/FloatingAnchorNav";
 import { Badge } from "@robr0/design-system/components/Badge/Badge";
 import { CodeBlock } from "@robr0/design-system/components/CodeBlock/CodeBlock";
 import { getSidebarLinks, docsSidebarLinks } from "@/config/navigation";
@@ -12,6 +13,12 @@ import { skillsContent } from "@/data/skills-content.generated";
 import styles from "./page.module.css";
 
 const { sidebarLinks } = getSidebarLinks(docsSidebarLinks, "/skills");
+
+/* Floating on-this-page entries — one per skill card, in registry order. */
+const SKILL_ANCHORS = skillsContent.map((skill) => ({
+  id: skill.slug,
+  label: skill.name,
+}));
 
 
 /* ============================================
@@ -52,9 +59,10 @@ export default function SkillsPage() {
           </div>
 
           {/* Skills List */}
-          <div className={`${styles.skillsGrid} animate-in animate-delay-2`}>
+          <div className={`${styles.railLayout} animate-in animate-delay-2`}>
+            <div className={styles.skillsGrid}>
             {skillsContent.map((skill) => (
-              <div key={skill.slug} className={styles.skillCard}>
+              <div key={skill.slug} id={skill.slug} className={styles.skillCard}>
                 <div className={styles.skillCardHeader}>
                   <div className={styles.skillMeta}>
                     <span className={`material-symbols-rounded ${styles.skillIcon}`}>
@@ -83,7 +91,10 @@ export default function SkillsPage() {
                 </div>
               </div>
             ))}
+            </div>
           </div>
+
+          <FloatingAnchorNav items={SKILL_ANCHORS} />
         </main>
       </div>
 

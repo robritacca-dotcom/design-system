@@ -35,8 +35,25 @@ const importsRecharts = (path) =>
 
 const mainLines = [];
 const chartLines = [];
-// Components sharing an implementation folder (`folder` field — the nine
-// charts in Chart/) contribute that folder's modules exactly once.
+
+// The registry's `recharts` flag is how prose surfaces (the get-started
+// snippet) know which charts export from which barrel — hold it to the
+// actual imports, so a chart cannot change sides without the flag moving.
+for (const c of registry.components) {
+  const folder = c.folder ?? c.name;
+  const actual = importsRecharts(join(componentsDir, folder, `${c.name}.tsx`));
+  if (actual !== Boolean(c.recharts)) {
+    console.error(
+      `✗ Barrel generation failed: ${c.name} ${actual ? 'imports' : 'does not import'} recharts ` +
+        `but its registry entry says recharts: ${Boolean(c.recharts)} — update src/components/registry.json`,
+    );
+    process.exit(1);
+  }
+}
+
+// Components sharing an implementation folder (`folder` field — the
+// recharts wrapper set in Chart/) contribute that folder's modules
+// exactly once.
 const componentFolders = [
   ...new Set(registry.components.map((c) => c.folder ?? c.name)),
 ].sort((a, b) => a.localeCompare(b));

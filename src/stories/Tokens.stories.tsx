@@ -496,6 +496,19 @@ export const SemanticColors: Story = {
         />
       </TokenSection>
 
+      <TokenSection title="Action - Neutral">
+        <ColorToken name="Background" value="--color-action-neutral-bg" />
+        <ColorToken
+          name="Background Hover"
+          value="--color-action-neutral-bg-hover"
+        />
+        <ColorToken
+          name="Background Active"
+          value="--color-action-neutral-bg-active"
+        />
+        <ColorToken name="Text" value="--color-action-neutral-text" />
+      </TokenSection>
+
       <TokenSection title="Input">
         <ColorToken name="Text Primary" value="--color-input-text-primary" />
         <ColorToken name="Text Placeholder" value="--color-input-text-placeholder" />

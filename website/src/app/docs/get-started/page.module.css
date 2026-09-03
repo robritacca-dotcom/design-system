@@ -87,10 +87,14 @@
 }
 
 /* ============================================
-   CONTENT + BUILT-WITH RAIL
+   CONTENT
+   The on-this-page nav floats over the right
+   viewport edge (FloatingAnchorNav) instead
+   of costing a column.
    ============================================ */
 .railLayout {
   display: flex;
+  align-items: flex-start;
   gap: var(--layout-column-gap);
   width: 100%;
 }
@@ -103,24 +107,14 @@
   gap: var(--gap-xxxl);
 }
 
-.railSidebar {
-  width: var(--layout-rail-width);
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-xxxl);
-}
 
-.railSection {
-  display: flex;
-  flex-direction: column;
-  gap: var(--primitive-gap-lg);
-}
-
+/* ============================================
+   BUILT WITH
+   ============================================ */
 .toolList {
-  display: flex;
-  flex-direction: column;
-  gap: var(--primitive-gap-lg);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--primitive-gap-lg) var(--layout-column-gap);
 }
 
 .toolItem {
@@ -182,6 +176,9 @@ a.toolItem:hover {
   display: flex;
   flex-direction: column;
   gap: var(--primitive-gap-lg);
+  /* Anchor targets clear the sticky MegaNav overlay and its frosted
+     backdrop — the shared clearance in globals.css owns the geometry */
+  scroll-margin-top: var(--layout-anchor-clearance);
 }
 
 .sectionNote {
@@ -203,12 +200,8 @@ a.toolItem:hover {
 /* ============================================
    RESPONSIVE
    ============================================ */
-@media (max-width: 1151px) {
-  .railLayout {
-    flex-direction: column;
-  }
-
-  .railSidebar {
-    width: 100%;
+@media (max-width: 767px) {
+  .toolList {
+    grid-template-columns: 1fr;
   }
 }

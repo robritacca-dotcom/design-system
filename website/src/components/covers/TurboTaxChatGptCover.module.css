@@ -3,6 +3,10 @@
  * (node 3030:12155, 1440 x 1024) and "ChatGPT ChecklIst Mobile"
  * (node 3030:14557, 440 x 972).
  *
+ * ds-allow-file(mockup): every colour, size, type and timing below is a
+ * drawing coordinate copied from the source frames — deliberately token-free
+ * so the picture never drifts with the system's theme.
+ *
  * Every value here is hard-coded from the Figma file on purpose — these mocks
  * deliberately use no design-system tokens and no design-system components, so
  * they can never drift when the system's own theme changes.

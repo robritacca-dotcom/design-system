@@ -54,9 +54,9 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  /* Matches .rightSlot, which grew for the search button — equal slots keep
+  /* Matches .rightSlot, which grew for the search field — equal slots keep
      navCenter centred on the page. */
-  width: 208px;
+  width: 348px;
 }
 
 .navCenter {
@@ -71,9 +71,9 @@
   align-items: center;
   justify-content: flex-end;
   flex-shrink: 0;
-  /* Was 160px; the search button added a 40px circle plus the gap. Keep in
-     step with .logoSlot. */
-  width: 208px;
+  /* Was 160px before the search control; the input-shaped field is 180px
+     plus the gap. Keep in step with .logoSlot. */
+  width: 348px;
   gap: var(--primitive-gap-sm);
 }
 
@@ -236,38 +236,65 @@
 }
 
 /* ============================================
-   SEARCH BUTTON (all widths)
-   Opens the global command palette. Same circle
-   as the mobile menu button, but never hidden.
+   SEARCH FIELD (all widths)
+   Opens the global command palette. Dressed as an
+   input — icon, placeholder, ⌘K keycaps — but it is
+   a button: typing happens in the palette itself.
+   Below 1280px it collapses back to the icon circle
+   (same footprint as the mobile menu button), and is
+   never hidden.
    ============================================ */
 .searchBtn {
   display: flex;
   align-items: center;
-  justify-content: center;
-  background: var(--color-action-passive-bg);
-  border: none;
+  gap: var(--primitive-gap-sm);
+  /* Same track recipe as the theme toggle beside it (SegmentedControl's
+     container-primary fill and border), so the two pills read as one
+     family — the passive fill is near-invisible on the dark header. */
+  background: var(--color-bg-container-primary);
+  border: var(--border-xs) solid var(--color-bg-container-border);
   border-radius: var(--radius-full);
-  padding: var(--primitive-padding-sm);
+  padding: 0 var(--primitive-padding-sm-md);
   cursor: pointer;
-  color: var(--color-text-primary);
-  width: 40px;
+  color: var(--color-text-secondary);
+  width: 180px;
   height: 40px;
+  --icon-size: var(--icon-size-sm);
+  /* Input's own hover transition, so the border responds at the same pace. */
+  transition:
+    background var(--motion-duration-base) var(--motion-ease-standard),
+    border-color var(--motion-duration-base) var(--motion-ease-standard);
 }
 
+/* Hovers like a real Input: the border darkens, the fill stays put. */
 .searchBtn:hover {
-  background: var(--color-action-passive-bg-hover);
+  border-color: var(--color-input-border-hover);
+}
+
+.searchLabel {
+  font-family: var(--font-title-body-family);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.searchKeys {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--primitive-gap-xxs);
+  margin-left: auto;
 }
 
 /* ============================================
    MEGA MENU PANEL
-   Inset floating panel with rounded corners.
+   Floating panel with rounded corners, spanning the header's content box.
    ============================================ */
 .mega {
   position: absolute;
   top: 100%;
   left: 50%;
   transform: translateX(-50%);
-  width: calc(100% - 32px);
+  width: 100%;
   max-width: 1440px;
   margin-top: 8px;
   z-index: 9;
@@ -615,6 +642,34 @@
 /* ============================================
    RESPONSIVE
    ============================================ */
+@media (max-width: 1279px) {
+  /* Not enough room for the input dressing beside five nav pills — the
+     field folds back to the icon circle and the slots shrink with it. */
+  .searchBtn {
+    justify-content: center;
+    width: 40px;
+    padding: var(--primitive-padding-sm);
+    /* Back to the plain circle — the toggle-track costume belongs to the
+       input form. Same passive fill as the mobile menu button beside it. */
+    border: none;
+    background: var(--color-action-passive-bg);
+  }
+
+  .searchBtn:hover {
+    background: var(--color-action-passive-bg-hover);
+  }
+
+  .searchLabel,
+  .searchKeys {
+    display: none;
+  }
+
+  .logoSlot,
+  .rightSlot {
+    width: 208px;
+  }
+}
+
 @media (max-width: 959px) {
   /* body carries the page's 20px inset on mobile, so the in-flow
      header must not add its own — only the fixed sticky header,

@@ -10,6 +10,21 @@ export function buildPersonJsonLd() {
     name: "Robert Ritacca",
     url: SITE_URL,
     jobTitle: "Principal Product Designer",
+    homeLocation: {
+      "@type": "Place",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Toronto",
+        addressRegion: "ON",
+        addressCountry: "CA",
+      },
+    },
+    knowsAbout: [
+      "AI-native product design",
+      "Design systems",
+      "0-to-1 product design",
+      "Agentic experiences",
+    ],
     /* The same profiles the footer advertises (mailto is not a sameAs). */
     sameAs: SOCIAL_PROFILES.filter((p) => p.href.startsWith("http")).map(
       (p) => p.href

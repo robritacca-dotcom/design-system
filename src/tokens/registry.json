@@ -4,6 +4,10 @@
     "colour": [
       "--color-action-icon-active",
       "--color-action-icon-default",
+      "--color-action-neutral-bg",
+      "--color-action-neutral-bg-active",
+      "--color-action-neutral-bg-hover",
+      "--color-action-neutral-text",
       "--color-action-passive-bg",
       "--color-action-passive-bg-active",
       "--color-action-passive-bg-hover",

@@ -48,6 +48,16 @@
   stroke: currentColor;
   stroke-linecap: round;
   transition: stroke-dasharray var(--motion-duration-slow) var(--motion-ease-emphasized);
+  /* Sweep in from an empty dial on mount — the single keyframe animates to
+     the element's own dasharray, so one rule serves every reading. The
+     duration tokens collapse under reduced motion, guarding this for free. */
+  animation: ds-gauge-sweep var(--motion-duration-slower) var(--motion-ease-emphasized);
+}
+
+@keyframes ds-gauge-sweep {
+  from {
+    stroke-dasharray: 0 100;
+  }
 }
 
 .ds-gauge__center {

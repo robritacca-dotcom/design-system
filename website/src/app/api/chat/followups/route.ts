@@ -172,10 +172,9 @@ export async function POST(request: Request): Promise<Response> {
       { signal: request.signal }
     );
 
-    // The day's breaker counts this call too. It runs through the same price
-    // table as the answer, which prices a bigger model — over-estimating trips
-    // the breaker early, the safe direction to be wrong in.
-    await recordSpend(message.usage);
+    // The day's breaker counts this call too, at this model's own rates now
+    // that the price table knows more than one model.
+    await recordSpend(message.usage, FOLLOWUP_MODEL);
 
     const text = message.content
       .map((block) => (block.type === "text" ? block.text : ""))

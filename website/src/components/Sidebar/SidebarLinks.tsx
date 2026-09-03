@@ -11,7 +11,7 @@ interface SidebarLinksProps {
 }
 
 /**
- * The sidebar's link list, shared by both the default and searchable
+ * The sidebar's link list, shared by both the flat and grouped
  * variants. Maps links onto a vertical tertiary ButtonGroup.
  */
 export default function SidebarLinks({ links, ariaLabel = "Components" }: SidebarLinksProps) {

@@ -93,6 +93,29 @@
 }
 
 /* ============================================
+   NEUTRAL VARIANT
+   The active pill fills grey instead of the
+   action teal — for sets where the selection
+   should not carry the action colour's weight.
+   ============================================ */
+
+.ds-segmented-control--neutral .ds-segmented-control__segment--active {
+  background-color: var(--color-action-neutral-bg);
+}
+
+.ds-segmented-control--neutral .ds-segmented-control__segment--active .ds-segmented-control__label {
+  color: var(--color-action-neutral-text);
+}
+
+.ds-segmented-control--neutral .ds-segmented-control__segment--active .ds-segmented-control__icon {
+  color: var(--color-action-neutral-text);
+}
+
+.ds-segmented-control--neutral .ds-segmented-control__segment--active:hover {
+  background-color: var(--color-action-neutral-bg-hover);
+}
+
+/* ============================================
    DISABLED STATE
    ============================================ */
 

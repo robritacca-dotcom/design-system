@@ -272,7 +272,9 @@ export default function MotionPage() {
               That guard is CSS, so it cannot reach animation driven from JavaScript. The
               background field runs on the GPU through a frame loop, which means it has to
               check the preference itself. It does: with reduced motion set, it draws a
-              single still frame and never starts animating.
+              single still frame and never starts animating. The charts animate their
+              marks in from JavaScript too, and delegate the same check to recharts,
+              whose default animation setting honours the preference on its own.
             </p>
           </section>
 

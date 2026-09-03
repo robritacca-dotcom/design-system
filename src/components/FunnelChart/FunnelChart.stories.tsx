@@ -17,7 +17,7 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     height: { control: 'number' },
-    minStageShare: { control: 'number' },
+    showLabels: { control: 'boolean' },
   },
   args: {
     data: conversionFunnel,
@@ -49,6 +49,13 @@ export const Bare: Story = {
   },
 };
 
+// For when a LegendTile row under the chart already carries the stage names.
+export const WithoutLabels: Story = {
+  args: {
+    showLabels: false,
+  },
+};
+
 export const ThreeStages: Story = {
   args: {
     data: [
@@ -59,8 +66,8 @@ export const ThreeStages: Story = {
   },
 };
 
-// The last stages fall below the floor share, so their bars hold at the
-// minimum height while the pills report the true percentages.
+// The late stages are slivers of the first — the taper tells the drop-off
+// story, and the tooltip carries each stage's true percentage.
 export const SteepDropoff: Story = {
   args: {
     data: [

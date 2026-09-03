@@ -15,6 +15,10 @@ const meta = {
       control: 'select',
       options: ['default', 'compact'],
     },
+    variant: {
+      control: 'select',
+      options: ['primary', 'neutral'],
+    },
     fullWidth: { control: 'boolean' },
   },
   args: {
@@ -45,6 +49,18 @@ export const WithIcons: Story = {
       { label: 'Board', value: 'board', icon: 'view_column' },
     ],
     activeSegment: 'grid',
+  },
+};
+
+export const Neutral: Story = {
+  args: {
+    segments: [
+      { label: 'Day', value: 'day' },
+      { label: 'Week', value: 'week' },
+      { label: 'Month', value: 'month' },
+    ],
+    activeSegment: 'week',
+    variant: 'neutral',
   },
 };
 

@@ -1,105 +1,17 @@
 /* ============================================
    FUNNEL CHART COMPONENT
-   Side-by-side vertical bars stepping down with
-   each stage's share of the first. Geometry and
-   colour arrive per stage as inline custom
-   properties (--funnel-stage-size, a clamped
-   percentage number; --funnel-stage-color, a
-   chart-series token), so the rules here stay
-   token-only.
+   Centred trapezoid funnel built on Recharts'
+   native Funnel. Card chrome, header, padding
+   and the tooltip surface all come from the
+   shared chart styles (Chart.css); colour
+   arrives per stage as a chart-series token
+   resolved live in SVG paint. This file owns
+   only what the shared styles cannot reach.
    ============================================ */
 
-/* Base — card chrome, header, and padding come from the shared chart
-   styles (Chart.css); this file owns the stage row alone. */
+/* The stage-name labels draw as SVG text, which inherits no typography from
+   the shared chart classes — pin them to the family's primary face. */
 
-.ds-funnel-chart__stages {
-  display: flex;
-  align-items: stretch;
-  gap: var(--gap-xxs);
-}
-
-/* Parts */
-
-/* The stage is a full-height column — the hover target, like the recharts
-   cursor band — with the coloured bar centred inside it. */
-
-.ds-funnel-chart__stage {
-  flex: 1;
-  min-width: 0;
-  display: grid;
-  place-items: center;
-  position: relative;
-}
-
-/* The cursor band: same recipe as the recharts charts' tooltip cursor
-   (container-secondary at 0.4). */
-
-.ds-funnel-chart__stage::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: var(--radius-sm);
-  background-color: var(--color-bg-container-secondary);
-  opacity: 0;
-  transition: opacity var(--motion-duration-fast) var(--motion-ease-standard);
-}
-
-.ds-funnel-chart__stage:hover::before {
-  opacity: 0.4;
-}
-
-.ds-funnel-chart__bar {
-  position: relative; /* stacks the bar above the cursor band */
-  width: 100%;
-  height: calc(var(--funnel-stage-size) * 1%);
-  border-radius: var(--radius-sm);
-  background-color: var(--funnel-stage-color);
-  display: grid;
-  place-items: center;
-}
-
-/* Hover tooltip — the shared chart tooltip surface (Chart.css owns its look),
-   revealed per stage by CSS alone so the component stays server-renderable.
-   Anchored just above the column's centre — the percentage pill — so it sits
-   in the same spot on every stage and never escapes the card. */
-
-.ds-funnel-chart__tooltip {
-  position: absolute;
-  bottom: calc(50% + var(--gap-lg));
-  left: 50%;
-  transform: translateX(-50%);
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  z-index: 1;
-  transition: opacity var(--motion-duration-fast) var(--motion-ease-standard);
-}
-
-.ds-funnel-chart__stage:hover .ds-funnel-chart__tooltip {
-  opacity: 1;
-}
-
-/* The end stages pin to their own edge so the overlay never pokes out of
-   the card. */
-
-.ds-funnel-chart__stage:first-child .ds-funnel-chart__tooltip {
-  left: 0;
-  transform: none;
-}
-
-.ds-funnel-chart__stage:last-child .ds-funnel-chart__tooltip {
-  left: auto;
-  right: 0;
-  transform: none;
-}
-
-.ds-funnel-chart__pct {
-  background-color: var(--color-bg-container-primary);
-  color: var(--color-text-primary);
-  border-radius: var(--radius-full);
-  padding: var(--padding-xxxs) var(--padding-xs);
-  font-family: var(--font-caption-family);
-  font-size: var(--font-caption-size);
-  font-weight: var(--font-paragraph-sm-em-weight);
-  line-height: var(--font-caption-line-height);
+.ds-funnel-chart .recharts-label-list text {
+  font-family: var(--font-family-primary);
 }

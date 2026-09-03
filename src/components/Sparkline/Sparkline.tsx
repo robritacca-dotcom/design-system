@@ -173,6 +173,9 @@ export const Sparkline = React.forwardRef<SVGSVGElement, SparklineProps>(
             className={`${baseClass}__line`}
             d={linePath}
             strokeWidth={strokeWidth}
+            // Normalises the path to 100 dash units so the CSS draw-on
+            // animation works at any geometry.
+            pathLength={100}
           />
         )}
         {showDot && lastPoint && (

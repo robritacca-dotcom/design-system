@@ -68,8 +68,8 @@
    Reset all default margins, then set
    per-element vertical rhythm explicitly.
    ============================================ */
-/* Two-column row: the doc on the left, the on-this-page rail beside it,
-   starting level with the doc's first section heading */
+/* The doc takes the full row; the on-this-page nav floats over the right
+   viewport edge (FloatingAnchorNav) instead of costing a column */
 .docLayout {
   display: flex;
   align-items: flex-start;
@@ -289,29 +289,12 @@
 /* ============================================
    ANCHOR RAIL (on-this-page column)
    ============================================ */
-/* Anchor targets clear the sticky MegaNav overlay (--mn-bar-height, 78px)
-   plus a breathing gap */
+/* Anchor targets clear the sticky MegaNav overlay and its frosted
+   backdrop — the shared clearance in globals.css owns the geometry */
 .markdownBody :global(h2) {
-  scroll-margin-top: 94px;
+  scroll-margin-top: var(--layout-anchor-clearance);
 }
 
-.anchorRail {
-  width: var(--layout-rail-width);
-  flex-shrink: 0;
-  position: sticky;
-  /* Matches the Sidebar's sticky top so the two rails sit level */
-  top: calc(78px + var(--primitive-padding-lg) * 2 + var(--primitive-gap-xl));
-  height: fit-content;
-  max-height: calc(100dvh - 78px - var(--primitive-gap-xl) * 2);
-  overflow-y: auto;
-}
-
-/* The rail only fits the full-width layout; below it the doc keeps the room */
-@media (max-width: 1279px) {
-  .anchorRail {
-    display: none;
-  }
-}
 
 /* ============================================
    RESPONSIVE

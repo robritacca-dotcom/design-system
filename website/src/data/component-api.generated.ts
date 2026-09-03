@@ -449,6 +449,13 @@ export const componentApi: readonly ComponentApiEntry[] = [
             "description": "The on-page sections to list, in document order"
           },
           {
+            "name": "variant",
+            "type": "enum",
+            "required": false,
+            "description": "Visual form: `list` renders the inline \"On this page\" rail; `floating` collapses to a stack of short lines that expands into a panel on hover, keyboard focus, or tap, so it can ride a page edge without taking column width",
+            "defaultValue": "list"
+          },
+          {
             "name": "title",
             "type": "string",
             "required": false,
@@ -1112,7 +1119,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
     "label": "Button",
     "slug": "button",
     "category": "actions",
-    "description": "Primary and secondary button variants in default and compact sizes, with icon support and multiple states.",
+    "description": "Primary, secondary, tertiary, neutral and destructive variants in default and compact sizes, with icon support and multiple states.",
     "client": true,
     "importPath": "@robr0/design-system/components/Button/Button",
     "barrel": "main",
@@ -1992,7 +1999,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
     "label": "Circular button",
     "slug": "circular-button",
     "category": "actions",
-    "description": "Round icon button with primary and secondary variants, default and compact sizes.",
+    "description": "Round icon button with primary, secondary, tertiary and neutral variants, default and compact sizes.",
     "client": false,
     "importPath": "@robr0/design-system/components/CircularButton/CircularButton",
     "barrel": "main",
@@ -4172,10 +4179,10 @@ export const componentApi: readonly ComponentApiEntry[] = [
     "label": "Funnel chart",
     "slug": "funnel-chart",
     "category": "charts",
-    "description": "Ordered funnel stages as stepped bars with conversion percentages, each sized by its share of the first stage.",
+    "description": "Ordered funnel stages as centred trapezoid bands, each sized by its share of the first stage.",
     "client": false,
     "importPath": "@robr0/design-system/components/FunnelChart/FunnelChart",
-    "barrel": "main",
+    "barrel": "charts",
     "exports": [
       {
         "component": "FunnelChart",
@@ -4184,7 +4191,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
             "name": "data",
             "type": "FunnelStage[]",
             "required": true,
-            "description": "Ordered stages, first stage widest. Each later stage's height is its share of the first."
+            "description": "Ordered stages, first stage widest. Each later stage's width is its share of the first."
           },
           {
             "name": "title",
@@ -4213,11 +4220,18 @@ export const componentApi: readonly ComponentApiEntry[] = [
             "defaultValue": "190"
           },
           {
+            "name": "showLabels",
+            "type": "boolean",
+            "required": false,
+            "description": "Shows each stage's name beside its band. Turn off when a legend under the chart already carries the names.",
+            "defaultValue": "true"
+          },
+          {
             "name": "minStageShare",
             "type": "number",
             "required": false,
-            "description": "Floor percentage for a stage's height, so steep drop-offs stay readable.\nShares are clamped to the range from this floor up to 100.",
-            "defaultValue": "16"
+            "description": "Floor percentage from the stepped-bar rendering this chart used to have.",
+            "deprecated": "The funnel now draws true trapezoids sized by value, so a\nheight floor no longer applies; the prop is ignored."
           },
           {
             "name": "className",
@@ -6923,6 +6937,13 @@ export const componentApi: readonly ComponentApiEntry[] = [
             "defaultValue": "default"
           },
           {
+            "name": "variant",
+            "type": "enum",
+            "required": false,
+            "description": "Visual treatment of the active segment — teal by default, `neutral` fills it grey",
+            "defaultValue": "primary"
+          },
+          {
             "name": "fullWidth",
             "type": "boolean",
             "required": false,
@@ -8423,6 +8444,13 @@ export const componentApi: readonly ComponentApiEntry[] = [
             "required": false,
             "description": "Component size",
             "defaultValue": "default"
+          },
+          {
+            "name": "variant",
+            "type": "enum",
+            "required": false,
+            "description": "Visual treatment of active items — teal by default, `neutral` fills them grey",
+            "defaultValue": "primary"
           },
           {
             "name": "disabled",

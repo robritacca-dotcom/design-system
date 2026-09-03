@@ -65,8 +65,8 @@ export interface ChatViewProps {
   /** The takeover is a desktop affordance — compact screens are already
       edge-to-edge, so the page withholds it there. */
   allowFullscreen: boolean;
-  /** The Simulated transport is active: the composer swaps its disabled
-      model label for the working mock picker and the attach button. */
+  /** The Simulated transport is active: the composer swaps the site's live
+      model picker for the mock picker and the attach button. */
   simControls: boolean;
 }
 

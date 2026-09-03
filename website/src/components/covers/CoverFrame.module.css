@@ -2,6 +2,10 @@
  * The shared cover frame. Only two things live here: the box itself, and the
  * ground the mock sits on when it does not fill the frame — which is every
  * phone screen, and the wide screens along one axis.
+ *
+ * ds-allow-file(mockup): the grounds and timings here are part of the
+ * pictures they frame — per-mock scenery colours and the mocks' own
+ * cross-fade, deliberately token-free like the drawings themselves.
  */
 
 .cover {

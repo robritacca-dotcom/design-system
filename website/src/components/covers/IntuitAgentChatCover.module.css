@@ -3,6 +3,10 @@
  * desktop panel (node 124823:12866, 1440 x 964) and the SM/MD panel
  * (node 124823:12867, 428 x 964).
  *
+ * ds-allow-file(mockup): every colour, size, type and timing below is a
+ * drawing coordinate copied from the source frames — deliberately token-free
+ * so the picture never drifts with the system's theme.
+ *
  * Every value here is hard-coded from the Figma file on purpose — these mocks
  * deliberately use no design-system tokens and no design-system components, so
  * they can never drift when the system's own theme changes. Names below echo

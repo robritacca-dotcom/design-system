@@ -13,7 +13,7 @@ type CircularButtonOwnProps = {
   /** Material Symbol icon name */
   icon: string;
   /** Visual treatment */
-  variant?: 'primary' | 'secondary' | 'tertiary';
+  variant?: 'primary' | 'secondary' | 'tertiary' | 'neutral';
   /**
    * Legacy alias for `variant`.
    *
@@ -71,7 +71,7 @@ export interface CircularButtonProps
 /**
  * Circular icon button component.
  * A round button containing a single icon, available in
- * primary, secondary and tertiary variants with default and compact sizes.
+ * primary, secondary, tertiary and neutral variants with default and compact sizes.
  *
  * Renders a `<button>`, or an `<a>` when `href` is supplied. Forwards a ref to
  * whichever element it renders, and spreads unrecognised props onto it.
