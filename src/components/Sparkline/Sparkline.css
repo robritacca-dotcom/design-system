@@ -64,11 +64,11 @@
 }
 
 .ds-sparkline--positive {
-  color: var(--color-status-positive-text);
+  color: var(--color-trend-up);
 }
 
 .ds-sparkline--negative {
-  color: var(--color-status-error-text);
+  color: var(--color-trend-down);
 }
 
 .ds-sparkline--neutral {
