@@ -29,7 +29,13 @@ import {
 } from "./theme-overrides";
 import { THEME_PRESETS, type ThemePreset } from "./presets";
 import PlaygroundControls from "./PlaygroundControls";
-import TunerControls from "./tuner/TunerControls";
+import TunerControls, {
+  Section as TunerSection,
+  SegmentedRow,
+  SelectRow,
+  TextRow,
+} from "./tuner/TunerControls";
+import EscalatorStage from "./EscalatorStage";
 import AdvancedColorsDialog from "./AdvancedColorsDialog";
 import ChatDirector, { STORY_CONTENT } from "./ChatDirector";
 import InspectMode from "@/components/InspectMode/InspectMode";
@@ -174,6 +180,10 @@ export default function PlaygroundPage() {
      before/after against the classic controls. Desktop only — the compact
      Drawer keeps the classic set either way. Same state drives both. */
   const [tunerRail, setTunerRail] = useState(false);
+  /* POC: the Components view's sections as the DS landing page's slowly
+     drifting collage instead of one long list. Its own switch, so the two
+     experiments compose or run alone. Desktop only, like the tuner. */
+  const [escalator, setEscalator] = useState(false);
   const [advOpen, setAdvOpen] = useState(false);
   const [cssOpen, setCssOpen] = useState(false);
   const [advColors, setAdvColors] = useState<AdvancedColorState>(DEFAULT_ADVANCED);
@@ -459,6 +469,53 @@ export default function PlaygroundPage() {
     </>
   );
 
+  /* The same chat levers in the tuner's instrument-panel language, for the
+     chat director's tuner mode — one state, restyled, like the theme rail. */
+  const tunerChatLevers = view === "chat" && (
+    <>
+      <TunerSection title="Stage">
+        <SelectRow
+          label="Stage size"
+          value={stageSize}
+          options={Object.entries(STAGE_SIZES).map(([value, s]) => ({
+            value,
+            label: s.label,
+          }))}
+          onChange={(value) => {
+            setStageSize(value as StageSize);
+            setChatManual({});
+          }}
+        />
+        <SegmentedRow
+          label="Transport"
+          value={transportMode}
+          options={[
+            { value: "sim", label: "Sim" },
+            { value: "live", label: "Live" },
+          ]}
+          onChange={(value) => setTransportMode(value as TransportMode)}
+        />
+      </TunerSection>
+      <TunerSection title="Composer">
+        <TextRow
+          label="Placeholder"
+          value={chatPlaceholder}
+          placeholder="Ask anything"
+          onChange={setChatPlaceholder}
+        />
+        <SegmentedRow
+          label="Starters"
+          value={showStarters ? "on" : "off"}
+          options={[
+            { value: "off", label: "Off" },
+            { value: "on", label: "On" },
+          ]}
+          onChange={(v) => setShowStarters(v === "on")}
+        />
+      </TunerSection>
+    </>
+  );
+
   /* The lever wiring, shared by every host: the classic edge panel, the
      compact Drawer, and the tuner rail POC — one set of levers, restyled. */
   const railProps = {
@@ -531,6 +588,9 @@ export default function PlaygroundPage() {
         activeTab={view}
         onTabChange={pickView}
         switchLabel="Switch the playground view"
+        /* Tuner mode floats the rails clear of the edges, so the toolbar
+           gives up its card edge too: the sticky header's dissolve. */
+        fade={tunerRail && !compact}
         /* Inspect mode, as a toolbar switch so nothing floats over the
            stage: hover any staged component to see which tokens its
            computed styles resolve from — including the levers' live
@@ -546,6 +606,17 @@ export default function PlaygroundPage() {
                 onCheckedChange={setTunerRail}
               />
             </span>
+            {/* POC switch: the Components view's sections as the landing
+                page's drifting collage instead of the long list. */}
+            {view === "components" && (
+              <span className={styles.toolbarSwitch}>
+                <ToggleSwitch
+                  label="Escalator"
+                  checked={escalator}
+                  onCheckedChange={setEscalator}
+                />
+              </span>
+            )}
             <InspectMode desktopOnly />
           </>
         }
@@ -560,6 +631,7 @@ export default function PlaygroundPage() {
         className={[
           styles.dsLayout,
           view === "chat" && !compact ? styles.dsLayoutChat : "",
+          tunerRail && !compact ? styles.dsLayoutTuner : "",
         ]
           .filter(Boolean)
           .join(" ")}
@@ -639,15 +711,21 @@ export default function PlaygroundPage() {
                   sections paint over an open Dropdown/Popover in an
                   earlier one. */}
               <MockNav brandName={productName.trim() || "Acme Corp"} />
-              <ActionsSection />
-              <MapsSection />
-              <AiSection />
-              <FormsSection />
-              <NavigationSection />
-              <DataDisplaySection />
-              <ChartsSection brand={effectiveBrand} />
-              <OverlaysSection />
-              <FeedbackSection />
+              {escalator && !compact ? (
+                <EscalatorStage brand={effectiveBrand} />
+              ) : (
+                <>
+                  <ActionsSection />
+                  <MapsSection />
+                  <AiSection />
+                  <FormsSection />
+                  <NavigationSection />
+                  <DataDisplaySection />
+                  <ChartsSection brand={effectiveBrand} />
+                  <OverlaysSection />
+                  <FeedbackSection />
+                </>
+              )}
             </>
           )}
 
@@ -675,8 +753,9 @@ export default function PlaygroundPage() {
         {view === "chat" && !compact && (
           <ChatDirector
             variant="panel"
-            levers={chatLevers}
+            levers={tunerRail ? tunerChatLevers : chatLevers}
             live={transportMode === "live"}
+            tuner={tunerRail}
           />
         )}
       </div>

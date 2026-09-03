@@ -35,6 +35,9 @@ export interface StageToolbarProps {
   /** Extra controls for the right side, rendered before the exit —
       the hosting page's own toolbar furniture (the inspect-mode switch). */
   actions?: React.ReactNode;
+  /** POC: trade the glass strip for the sticky header's progressive-blur
+      dissolve — no card edge, the page fading out under the bar. */
+  fade?: boolean;
 }
 
 /**
@@ -53,6 +56,7 @@ export default function StageToolbar({
   onTabChange,
   switchLabel,
   actions,
+  fade = false,
 }: StageToolbarProps) {
   const pathname = usePathname() ?? "/";
   const items = getBreadcrumbs(pathname);
@@ -66,7 +70,15 @@ export default function StageToolbar({
   };
 
   return (
-    <header className={styles.toolbar}>
+    <header className={`${styles.toolbar} ${fade ? styles.toolbarFade : ""}`}>
+      {fade && (
+        <span className={styles.fadeBackdrop} aria-hidden="true">
+          <span />
+          <span />
+          <span />
+          <span />
+        </span>
+      )}
       <div className={styles.trail}>
         <Link href="/" className={styles.logo} aria-label="Home">
           <Image src="/rr.svg" alt="" width={24} height={24} />

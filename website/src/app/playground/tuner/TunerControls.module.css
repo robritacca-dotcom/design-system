@@ -7,18 +7,32 @@
    face, groups collapse under chevron headers.
    ============================================ */
 
+/* Popped out as a floating glass card, the AppSidebar floating recipe
+   (and the site chat panel's): inset from the edges rather than flush,
+   the glass token, a full border, the floating shadow. Top clears the
+   toolbar, which no longer has a bottom edge of its own in tuner mode. */
 .panel {
   position: fixed;
-  top: var(--layout-toolbar-height);
-  bottom: 0;
-  left: 0;
+  top: calc(var(--layout-toolbar-height) + var(--gap-xs));
+  bottom: var(--padding-md);
+  left: var(--padding-md);
   width: var(--rail-width);
   z-index: 15;
   display: flex;
   overflow: hidden;
-  background: color-mix(in srgb, var(--color-bg-container-primary) 88%, transparent);
-  border-right: var(--border-xs) solid var(--color-bg-container-border);
+  background: var(--color-bg-glass);
+  border: var(--border-xs) solid var(--color-bg-container-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-floating);
+  /* The glass token is deliberately translucent; this blur is what keeps
+     content behind the rail readable through it. */
   backdrop-filter: blur(24px);
+}
+
+/* The chat director's mirror: same card, flush side swapped. */
+.panelRight {
+  left: auto;
+  right: var(--padding-md);
 }
 
 .scroll {
@@ -270,6 +284,47 @@
 .row:has(.swatch input:focus-visible) {
   outline: 2px solid var(--color-action-primary-bg);
   outline-offset: -2px;
+}
+
+/* ── Notes ────────────────────────────────── */
+
+.note {
+  padding: var(--padding-xxs) var(--padding-xxs) 0;
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+}
+
+/* ── Event rows (the chat director's list) ── */
+
+/* An event as a tuner row: the whole row is the button, icon leading,
+   label filling — the same silhouette as the lever rows above it. */
+.eventRow {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  min-height: 40px;
+  width: 100%;
+  padding: 0 var(--padding-sm) 0 var(--padding-md);
+  border: none;
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--color-bg-container-secondary) 75%, transparent);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  color: var(--color-text-primary);
+  text-align: left;
+}
+
+.eventRow:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--color-text-primary) 10%, transparent);
+}
+
+.eventRow:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 /* ── Buttons ──────────────────────────────── */

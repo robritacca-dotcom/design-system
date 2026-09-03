@@ -32,6 +32,19 @@
   --stage-walls: calc(var(--rail-width) * 2);
 }
 
+/* Tuner mode (POC): the rails float inset from the edges rather than
+   sitting flush, so the workspace must clear the inset too. Must match
+   the panel inset in tuner/TunerControls.module.css. */
+.dsLayoutTuner {
+  padding-left: calc(var(--rail-width) + var(--padding-md));
+  --stage-walls: calc(var(--rail-width) + var(--padding-md));
+}
+
+.dsLayoutTuner.dsLayoutChat {
+  padding-right: calc(var(--rail-width) + var(--padding-md));
+  --stage-walls: calc((var(--rail-width) + var(--padding-md)) * 2);
+}
+
 .dsContent {
   flex: 1;
   min-width: 0;

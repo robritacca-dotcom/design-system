@@ -20,6 +20,67 @@
   border-bottom: var(--border-xs) solid var(--color-divider);
 }
 
+/* ---------- fade variant (POC) ----------
+   The glass strip traded for the sticky header's dissolve: no card edge at
+   all — a progressive-blur backdrop that fades the page out under the bar.
+   The recipe is MegaNav's sticky backdrop, copied whole: the tint and blur
+   live on a stack of layers behind the content (a backdrop-filter on the
+   bar itself would make it a backdrop root and kill any glass inside it),
+   and each layer's mask dissolves its own blur band, so there is no hard
+   line where the filtering stops. */
+.toolbarFade {
+  background: none;
+  backdrop-filter: none;
+  border-bottom: none;
+}
+
+.fadeBackdrop {
+  --fade-backdrop-tint: var(--color-bg-page-primary);
+  --fade-backdrop-reach: 64px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: calc(100% + var(--fade-backdrop-reach));
+  z-index: -1;
+  pointer-events: none;
+}
+
+.fadeBackdrop > span {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+/* ds-allow(color): mask alpha keywords (black/transparent), not palette colours */
+
+.fadeBackdrop > span:nth-child(1) {
+  background: linear-gradient(
+    to bottom,
+    var(--fade-backdrop-tint) 0%,
+    color-mix(in srgb, var(--fade-backdrop-tint) 90%, transparent) 30%,
+    color-mix(in srgb, var(--fade-backdrop-tint) 40%, transparent) 65%,
+    transparent 100%
+  );
+  backdrop-filter: blur(2px);
+  mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 100%);
+}
+
+.fadeBackdrop > span:nth-child(2) {
+  backdrop-filter: blur(6px);
+  mask-image: linear-gradient(to bottom, black 0%, black 40%, transparent 80%);
+}
+
+.fadeBackdrop > span:nth-child(3) {
+  backdrop-filter: blur(12px);
+  mask-image: linear-gradient(to bottom, black 0%, black 25%, transparent 60%);
+}
+
+.fadeBackdrop > span:nth-child(4) {
+  backdrop-filter: blur(24px);
+  mask-image: linear-gradient(to bottom, black 0%, black 10%, transparent 40%);
+}
+
 /* The side zones flex equally so the surface switch sits dead centre. */
 .trail {
   flex: 1;

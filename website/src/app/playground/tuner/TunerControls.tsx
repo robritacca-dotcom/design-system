@@ -33,8 +33,10 @@ type TunerProps = Omit<PlaygroundControlsProps, "variant" | "contextual">;
 
 /* ---------- primitives ---------- */
 
-/** Collapsible group: a chevron header over a tight stack of rows. */
-function Section({
+/** Collapsible group: a chevron header over a tight stack of rows.
+    Exported (with the row primitives below) so the chat director's tuner
+    mode composes the same instrument-panel language. */
+export function Section({
   title,
   defaultOpen = true,
   children,
@@ -157,7 +159,7 @@ function SliderRow({
 }
 
 /** Two-way pick rendered as adjoined text chips, the active one lit. */
-function SegmentedRow({
+export function SegmentedRow({
   label,
   value,
   options,
@@ -218,7 +220,7 @@ function ColorRow({
 
 /** Label and current value, with a transparent native select over the row
     so a click anywhere on it opens the picker. */
-function SelectRow({
+export function SelectRow({
   label,
   value,
   options,
@@ -254,7 +256,7 @@ function SelectRow({
 }
 
 /** Label with an inline, right-aligned text field. */
-function TextRow({
+export function TextRow({
   label,
   value,
   placeholder,

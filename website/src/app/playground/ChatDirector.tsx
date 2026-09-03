@@ -3,6 +3,8 @@
 import { useEffect, useState, type ReactNode } from "react";
 import layout from "./page.module.css";
 import styles from "./ChatDirector.module.css";
+import tunerStyles from "./tuner/TunerControls.module.css";
+import { Section } from "./tuner/TunerControls";
 import { AgentPlan, type AgentPlanStep } from "@robr0/design-system/components/AgentPlan/AgentPlan";
 import { Button } from "@robr0/design-system/components/Button/Button";
 import { ChatMarker } from "@robr0/design-system/components/ChatMarker/ChatMarker";
@@ -299,6 +301,10 @@ export interface ChatDirectorProps {
       backend answers in text alone, so a staged tool call or card under a
       real conversation would misrepresent what it can do. */
   live?: boolean;
+  /** POC: restyle the panel in the tuner rail's instrument-panel language —
+      the floating glass card, collapsible sections, events as full-width
+      rows. Panel variant only; the Drawer keeps the classic set. */
+  tuner?: boolean;
 }
 
 /** The Chat view's right-hand rail: the chat levers, then the event list. */
@@ -306,6 +312,7 @@ export default function ChatDirector({
   variant = "panel",
   levers,
   live = false,
+  tuner = false,
 }: ChatDirectorProps) {
   const { injectTurn, send, reset, setDraft, streaming } = useSiteChat();
 
@@ -448,21 +455,21 @@ export default function ChatDirector({
     },
   ];
 
+  const liveNote = live
+    ? "Live answers come from the model as text alone, so the staging " +
+      "events pause here. Switch the transport back to Simulated to " +
+      "direct the thread again."
+    : "Stage a conversation without typing: most events below play a " +
+      "scripted exchange into the thread, and a couple drop content " +
+      "straight in, all built from the library’s chat components.";
+
   const content = (
     <>
       {variant === "panel" && <h3 className={layout.railTitle}>Chat controls</h3>}
 
       {levers}
 
-      <p className={layout.controlNote}>
-        {live
-          ? "Live answers come from the model as text alone, so the staging " +
-            "events pause here. Switch the transport back to Simulated to " +
-            "direct the thread again."
-          : "Stage a conversation without typing: most events below play a " +
-            "scripted exchange into the thread, and a couple drop content " +
-            "straight in, all built from the library’s chat components."}
-      </p>
+      <p className={layout.controlNote}>{liveNote}</p>
 
       {groups.map((group) => (
         <div key={group.heading} className={layout.controlGroup}>
@@ -486,6 +493,50 @@ export default function ChatDirector({
 
   if (variant === "drawer") {
     return <div className={layout.drawerControls}>{content}</div>;
+  }
+
+  if (tuner) {
+    return (
+      /* The tuner rail's mirror: the same floating instrument panel on the
+         right edge, events as full-width rows under collapsible sections. */
+      <aside
+        className={`${tunerStyles.panel} ${tunerStyles.panelRight}`}
+        aria-label="Chat controls"
+      >
+        <div className={tunerStyles.scroll}>
+          <div className={tunerStyles.head}>
+            <h3 className={tunerStyles.title}>Chat controls</h3>
+            <span className={tunerStyles.tag}>tuner</span>
+          </div>
+
+          {levers}
+
+          <p className={tunerStyles.note}>{liveNote}</p>
+
+          {groups.map((group) => (
+            <Section key={group.heading} title={group.heading}>
+              {group.events.map((event) => (
+                <button
+                  key={event.id}
+                  type="button"
+                  className={tunerStyles.eventRow}
+                  disabled={event.disabled || (live && !event.liveSafe)}
+                  onClick={event.run}
+                >
+                  <span
+                    aria-hidden="true"
+                    className={`material-symbols-rounded ${tunerStyles.rowIcon}`}
+                  >
+                    {event.icon}
+                  </span>
+                  {event.label}
+                </button>
+              ))}
+            </Section>
+          ))}
+        </div>
+      </aside>
+    );
   }
 
   return (

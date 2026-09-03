@@ -1,0 +1,93 @@
+/* ============================================
+   ESCALATOR STAGE (POC) — the Components view's
+   sections as the DS landing page's collage: a
+   fixed-height window onto three escalator
+   columns, each column's content rendered twice
+   into a track that translates continuously by
+   one copy's height, so the loop never shows a
+   seam. The outer columns run down, the middle
+   runs up, all slower than a reading pace —
+   ambient motion, not a carousel. The mask fades
+   the content out at the window's edges.
+   A 1:1 copy of design-system/page.module.css's
+   collage rules, pointed at the stage sections.
+   ============================================ */
+
+.collage {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gap-md);
+  align-items: stretch;
+  height: clamp(640px, 130vh, 1400px);
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 9%, black 91%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, black 9%, black 91%, transparent);
+}
+
+.col {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.escalatorTrack {
+  display: flex;
+  flex-direction: column;
+  /* Durations are minutes long by design — the day-to-day motion scale tops
+     out at page reveals, so these stay per-column values, set inline */
+  animation: escalate var(--escalator-duration, 240s) var(--motion-ease-linear) infinite;
+  will-change: transform;
+}
+
+.colDown .escalatorTrack {
+  animation-direction: reverse;
+}
+
+/* A moving target is unusable: freeze the column while the pointer is over
+   it, and for keyboard users whenever focus is inside it */
+.col:hover .escalatorTrack,
+.col:focus-within .escalatorTrack {
+  animation-play-state: paused;
+}
+
+.escalatorStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xxl);
+  padding-bottom: var(--gap-xxl); /* the seam between the two copies = the stack gap */
+}
+
+/* Translating by half the track's own height is exactly one copy (sections +
+   seam padding), which is what makes the loop seamless at any content size */
+@keyframes escalate {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+/* Reduced motion: back to a plain static collage — full height, no mask,
+   one copy per column. The global animation guard would stop the track
+   anyway; this also removes the window so nothing is clipped. */
+@media (prefers-reduced-motion: reduce) {
+  .collage {
+    height: auto;
+    overflow: visible;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .escalatorTrack {
+    animation: none;
+  }
+
+  .escalatorStack {
+    padding-bottom: 0;
+  }
+
+  .escalatorDupe {
+    display: none;
+  }
+}
