@@ -29,24 +29,21 @@ export const Figure = ({
     .filter(Boolean)
     .join(' ');
 
-  const onKeyDown = onClick
-    ? (e: React.KeyboardEvent) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          onClick();
-        }
-      }
-    : undefined;
+  const media = <div className={`${baseClass}__media`}>{children}</div>;
 
   return (
-    <figure
-      className={classes}
-      onClick={onClick}
-      onKeyDown={onKeyDown}
-      role={onClick ? 'button' : undefined}
-      tabIndex={onClick ? 0 : undefined}
-    >
-      <div className={`${baseClass}__media`}>{children}</div>
+    <figure className={classes}>
+      {onClick ? (
+        // A real button rather than role="button" on the figure: ARIA
+        // forbids the button role on <figure>, and the element brings
+        // Enter/Space activation itself. Its accessible name is the
+        // child image's alt text.
+        <button type="button" className={`${baseClass}__zoom`} onClick={onClick}>
+          {media}
+        </button>
+      ) : (
+        media
+      )}
       {caption && (
         <figcaption className={`${baseClass}__caption`}>{caption}</figcaption>
       )}

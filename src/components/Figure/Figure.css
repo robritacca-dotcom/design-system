@@ -47,15 +47,25 @@
    ZOOMABLE (has onClick)
    ============================================ */
 
-.ds-figure--zoomable {
+/* The zoom control is a real <button> wrapping the media (ARIA forbids
+   role="button" on <figure>), stripped back to a bare block. */
+.ds-figure__zoom {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
   cursor: zoom-in;
 }
 
-.ds-figure--zoomable:hover .ds-figure__media img {
+.ds-figure__zoom:hover .ds-figure__media img {
   opacity: 0.88;
 }
 
-.ds-figure--zoomable:focus-visible {
+/* Inset ring: the button sits inside the figure's overflow clip, so an
+   outset outline would be cropped away. */
+.ds-figure__zoom:focus-visible {
   outline: 2px solid var(--color-action-primary-bg);
-  outline-offset: 2px;
+  outline-offset: -2px;
 }

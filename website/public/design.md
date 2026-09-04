@@ -786,7 +786,7 @@ Field deliberately owns **no layout** — the flex column and gap stay on the co
 
 ### Figure
 
-**`ds-figure`** — Image + caption in a `--radius-md` container with `--color-bg-container-secondary` fill. Accepts any image element as children (plain `<img>` or `next/image`); the media slot stretches it full-width. Caption: `--font-paragraph-sm-*` tertiary, `--padding-md`/`--padding-lg`, hairline top border. Passing `onClick` makes it zoomable: `cursor: zoom-in`, hover dims the image to 0.88, `role="button"` + Enter/Space activation, standard teal focus ring.
+**`ds-figure`** — Image + caption in a `--radius-md` container with `--color-bg-container-secondary` fill. Accepts any image element as children (plain `<img>` or `next/image`); the media slot stretches it full-width. Caption: `--font-paragraph-sm-*` tertiary, `--padding-md`/`--padding-lg`, hairline top border. Passing `onClick` makes it zoomable: the media wraps in a bare full-width `<button>` (`ds-figure__zoom` — ARIA forbids `role="button"` on `<figure>` itself, and a real button brings Enter/Space activation for free) with `cursor: zoom-in`, hover dimming the image to 0.88, and the teal focus ring drawn inset so the figure's overflow clip can't crop it.
 
 ### Avatar
 
