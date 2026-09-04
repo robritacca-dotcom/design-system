@@ -7217,6 +7217,68 @@ export const componentApi: readonly ComponentApiEntry[] = [
     ]
   },
   {
+    "name": "SourceTrail",
+    "label": "Source trail",
+    "slug": "source-trail",
+    "category": "ai",
+    "description": "The sources an agent opened while answering, as a collapsible list with per-item status.",
+    "client": true,
+    "importPath": "@robr0/design-system/components/SourceTrail/SourceTrail",
+    "barrel": "main",
+    "exports": [
+      {
+        "component": "SourceTrail",
+        "props": [
+          {
+            "name": "items",
+            "type": "SourceTrailItem[]",
+            "required": true,
+            "description": "The sources, in the order the agent opened them."
+          },
+          {
+            "name": "title",
+            "type": "string",
+            "required": false,
+            "description": "Header text. Left unset, it is computed from the items —\n\"Reading 3 sources\" while any is still pending or active,\n\"Read 3 sources\" once every visit has settled."
+          },
+          {
+            "name": "streaming",
+            "type": "boolean",
+            "required": false,
+            "description": "Still researching: newly appended rows animate in.",
+            "defaultValue": "false"
+          },
+          {
+            "name": "open",
+            "type": "boolean",
+            "required": false,
+            "description": "Open state for controlled use. Pair with `onOpenChange`."
+          },
+          {
+            "name": "defaultOpen",
+            "type": "boolean",
+            "required": false,
+            "description": "Open state for uncontrolled use.",
+            "defaultValue": "true"
+          },
+          {
+            "name": "onOpenChange",
+            "type": "((open: boolean) => void)",
+            "required": false,
+            "description": "Fires whenever the panel opens or closes."
+          },
+          {
+            "name": "className",
+            "type": "string",
+            "required": false,
+            "description": "Additional CSS classes",
+            "defaultValue": ""
+          }
+        ]
+      }
+    ]
+  },
+  {
     "name": "Sparkline",
     "label": "Sparkline",
     "slug": "sparkline",
@@ -8835,6 +8897,61 @@ export const componentApi: readonly ComponentApiEntry[] = [
             "type": "string",
             "required": false,
             "description": "Additional CSS classes on the wrapper",
+            "defaultValue": ""
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "UsageCard",
+    "label": "Usage card",
+    "slug": "usage-card",
+    "category": "ai",
+    "description": "An agent's budgets at a glance: context window and plan limits as meter rows with reset captions.",
+    "client": false,
+    "importPath": "@robr0/design-system/components/UsageCard/UsageCard",
+    "barrel": "main",
+    "exports": [
+      {
+        "component": "UsageCard",
+        "props": [
+          {
+            "name": "items",
+            "type": "UsageItem[]",
+            "required": true,
+            "description": "The budgets to show, one meter row each"
+          },
+          {
+            "name": "title",
+            "type": "string",
+            "required": false,
+            "description": "Card title in the shared chart-chrome header"
+          },
+          {
+            "name": "subtitle",
+            "type": "string",
+            "required": false,
+            "description": "Supporting line under the title"
+          },
+          {
+            "name": "thresholds",
+            "type": "{ warning?: number; error?: number; } | undefined",
+            "required": false,
+            "description": "Fractions of an item's max where its fill recolours to warning and then error"
+          },
+          {
+            "name": "bare",
+            "type": "boolean",
+            "required": false,
+            "description": "Chrome off (no border, padding, or fill) for use inside a panel that supplies the surface",
+            "defaultValue": "false"
+          },
+          {
+            "name": "className",
+            "type": "string",
+            "required": false,
+            "description": "Additional CSS classes",
             "defaultValue": ""
           }
         ]

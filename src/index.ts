@@ -94,6 +94,7 @@ export * from './components/ShaderField/ShaderField';
 export * from './components/Skeleton/Skeleton';
 export * from './components/Slider/Slider';
 export * from './components/SourceChip/SourceChip';
+export * from './components/SourceTrail/SourceTrail';
 export * from './components/Sparkline/Sparkline';
 export * from './components/Spinner/Spinner';
 export * from './components/SplitButton/SplitButton';
@@ -114,6 +115,7 @@ export * from './components/ToggleSwitch/ToggleSwitch';
 export * from './components/ToolCall/ToolCall';
 export * from './components/Tooltip/Tooltip';
 export * from './components/TreeView/TreeView';
+export * from './components/UsageCard/UsageCard';
 
 export {
   componentRegistry,

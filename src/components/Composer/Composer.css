@@ -140,6 +140,24 @@
   }
 }
 
+/* Working: while a response streams, the ring stays lit and keeps turning
+   whether or not the field holds focus — the visible half of the `streaming`
+   contract for glowing composers. The pairing is defined in design.md's
+   Composer section; streaming without aiGlow changes nothing. */
+.ds-composer--ai-glow.ds-composer--streaming {
+  border-color: transparent;
+}
+
+.ds-composer--ai-glow.ds-composer--streaming::before {
+  opacity: 1;
+  animation-play-state: running;
+}
+
+.ds-composer--ai-glow.ds-composer--streaming::after {
+  opacity: 0.3;
+  animation-play-state: running;
+}
+
 /* Reduced motion: the ring and glow stay, the turning stops. */
 @media (prefers-reduced-motion: reduce) {
   .ds-composer--ai-glow::before,

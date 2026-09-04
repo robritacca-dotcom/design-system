@@ -178,6 +178,7 @@ export const Composer = React.forwardRef<HTMLTextAreaElement, ComposerProps>(
     const classes = [
       baseClass,
       aiGlow ? `${baseClass}--ai-glow` : '',
+      streaming ? `${baseClass}--streaming` : '',
       disabled ? `${baseClass}--disabled` : '',
       className,
     ]

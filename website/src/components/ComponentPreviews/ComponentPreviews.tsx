@@ -1265,6 +1265,20 @@ const previews: Record<string, () => ReactNode> = {
       </div>
     </>
   ),
+  "source-trail": () => (
+    <>
+      <div aria-hidden="true" style={{ display: "flex", flexDirection: "column", gap: "6px", alignItems: "flex-start" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+          <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-status-positive-text)" }}>check_circle</span>
+          <SourceChip title="Design tokens quarterly" />
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+          <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-status-info-text)" }}>progress_activity</span>
+          <SourceChip title="Contrast group notes" />
+        </div>
+      </div>
+    </>
+  ),
   "sparkline": () => (
     <>
       <div style={{ display: "flex", flexDirection: "column", gap: "12px", alignItems: "flex-start" }}>
@@ -1446,6 +1460,17 @@ const previews: Record<string, () => ReactNode> = {
           Tooltip
         </span>
         <div style={{ width: "8px", height: "8px", background: "var(--color-bg-page-inverse)", transform: "rotate(45deg)", marginTop: "-5px" }} />
+      </div>
+    </>
+  ),
+  "usage-card": () => (
+    <>
+      <div style={{ display: "flex", flexDirection: "column", gap: "10px", width: "170px" }}>
+        <Meter label="Context" value={63} size="compact" showValue />
+        <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+          <Meter label="Weekly" value={86} variant="warning" size="compact" showValue />
+          <span style={{ alignSelf: "flex-end", fontSize: "10px", color: "var(--color-text-secondary)" }}>Resets Tue 3:00 pm</span>
+        </div>
       </div>
     </>
   ),

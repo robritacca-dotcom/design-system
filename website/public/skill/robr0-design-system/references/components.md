@@ -54,7 +54,7 @@ A set of two-state buttons that can be toggled on or off, supporting text and ic
 - Rendering: client component (declares 'use client')
 - Contract: https://robertritacca.com/components/toggle-group.md
 
-## AI (20)
+## AI (22)
 
 Chat, agent, and model surfaces for building AI products, from the composer to the reasoning trace and the diff an agent proposes.
 
@@ -202,6 +202,14 @@ A numbered citation pill linking a claim to its source.
 - Rendering: server-renderable (no 'use client')
 - Contract: https://robertritacca.com/components/source-chip.md
 
+### Source trail
+
+The sources an agent opened while answering, as a collapsible list with per-item status.
+
+- Import: `import { SourceTrail } from '@robr0/design-system';`
+- Rendering: client component (declares 'use client')
+- Contract: https://robertritacca.com/components/source-trail.md
+
 ### Streaming text
 
 Progressive reveal for text arriving in chunks, with a blinking cursor while more is coming.
@@ -217,6 +225,14 @@ The record of one tool invocation, with its arguments and result behind a disclo
 - Import: `import { ToolCall } from '@robr0/design-system';`
 - Rendering: client component (declares 'use client')
 - Contract: https://robertritacca.com/components/tool-call.md
+
+### Usage card
+
+An agent's budgets at a glance: context window and plan limits as meter rows with reset captions.
+
+- Import: `import { UsageCard } from '@robr0/design-system';`
+- Rendering: server-renderable (no 'use client')
+- Contract: https://robertritacca.com/components/usage-card.md
 
 ## Charts (15)
 

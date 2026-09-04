@@ -54,6 +54,19 @@ export const Streaming: Story = {
   },
 };
 
+/**
+ * `aiGlow` and `streaming` together: the gradient ring stays lit and keeps
+ * turning while the agent works, whether or not the field holds focus.
+ * Either prop alone behaves as before.
+ */
+export const WorkingGlow: Story = {
+  args: {
+    aiGlow: true,
+    streaming: true,
+    onStop: () => {},
+  },
+};
+
 /** The attachments row is fully controlled: the consumer owns the list and handles removal. */
 const AttachmentsDemo = () => {
   const [files, setFiles] = useState([

@@ -45,6 +45,7 @@ function StreamingDemo() {
         onSubmit={start}
         streaming={streaming}
         onStop={stop}
+        aiGlow
       />
       <p className={styles.demoNote} aria-live="polite">
         {streaming
@@ -190,8 +191,10 @@ export default function ComposerPage() {
             <p className={styles.demoText}>
               While a response streams, the send button becomes a stop button
               and submitting is blocked, so a person can never fire a message
-              into a running answer. Try it: send something and the demo
-              streams for a few seconds.
+              into a running answer. On a glowing composer the gradient ring
+              also stays lit and keeps turning while the agent works, focus or
+              not. Try it: send something and the demo streams for a few
+              seconds.
             </p>
             <StreamingDemo />
           </section>

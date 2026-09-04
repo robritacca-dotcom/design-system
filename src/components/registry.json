@@ -860,6 +860,14 @@
       "client": false
     },
     {
+      "name": "SourceTrail",
+      "label": "Source trail",
+      "slug": "source-trail",
+      "description": "The sources an agent opened while answering, as a collapsible list with per-item status.",
+      "category": "ai",
+      "client": true
+    },
+    {
       "name": "Sparkline",
       "label": "Sparkline",
       "slug": "sparkline",
@@ -1038,6 +1046,14 @@
       "client": false,
       "folder": "Chart",
       "recharts": true
+    },
+    {
+      "name": "UsageCard",
+      "label": "Usage card",
+      "slug": "usage-card",
+      "description": "An agent's budgets at a glance: context window and plan limits as meter rows with reset captions.",
+      "category": "ai",
+      "client": false
     }
   ],
   "docOnlyHelpers": [
