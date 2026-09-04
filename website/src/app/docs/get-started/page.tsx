@@ -13,7 +13,8 @@ import { CodeBlock } from "@robr0/design-system/components/CodeBlock/CodeBlock";
 import { Button } from "@robr0/design-system/components/Button/Button";
 import { OpenChatLink } from "./OpenChatLink";
 import { componentMetadata } from "@robr0/design-system/components/registry";
-import { SITE_URL } from "@/lib/structuredData";
+import { MCP_CLIENTS } from "@/lib/mcp-clients";
+import { MCP_TOOLS } from "@/lib/mcp-tools";
 
 const { sidebarLinks } = getSidebarLinks(docsSidebarLinks, "/docs/get-started");
 
@@ -71,9 +72,6 @@ const [status, setStatus] = useState<ShaderFieldStatus>('pending');
   {status === 'unavailable' && <YourCssFallback />}
   <ShaderField params={{ streak: 0.4 }} onStatusChange={setStatus} />
 </div>`;
-
-const MCP_SNIPPET = `# Claude Code shown here; any Streamable HTTP MCP client works the same way.
-claude mcp add --transport http robr0-ds ${SITE_URL}/api/mcp`;
 
 const FONT_SNIPPET = `/* The whole type scale chains to one token.
    Load any font (Google Fonts, next/font, self-hosted), then: */
@@ -324,7 +322,26 @@ export default function GetStartedPage() {
                   matches what npm ships. No key or account is needed;
                   everything it serves is already public.
                 </p>
-                <CodeBlock code={MCP_SNIPPET} language="bash" showCopy />
+                {MCP_CLIENTS.map((client) => (
+                  <CodeBlock
+                    key={client.id}
+                    code={client.snippet}
+                    language={client.language}
+                    filename={client.filename ?? client.label}
+                    showCopy
+                  />
+                ))}
+                <p className={styles.sectionNote}>
+                  Once connected, each of these is answered by one tool:
+                </p>
+                <ul className={styles.promptList}>
+                  {MCP_TOOLS.map((tool) => (
+                    <li key={tool.name} className={styles.promptItem}>
+                      <span>“{tool.prompt}”</span>
+                      <code className={styles.promptTool}>{tool.name}</code>
+                    </li>
+                  ))}
+                </ul>
               </section>
 
               {/* Ambient background */}

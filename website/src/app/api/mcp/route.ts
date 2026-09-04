@@ -38,6 +38,8 @@ import {
 
 import { componentApi } from "@/data/component-api.generated";
 import { siteCorpus } from "@/data/site-corpus.generated";
+import { MCP_CLIENTS } from "@/lib/mcp-clients";
+import { MCP_TOOLS } from "@/lib/mcp-tools";
 import { SITE_URL } from "@/lib/structuredData";
 
 export const runtime = "nodejs";
@@ -301,23 +303,19 @@ const handler = createMcpHandler(
    with their own Accept headers and never see it.
    ============================================ */
 
-/**
- * The tool list the landing page renders. Held to the actual
- * `server.registerTool` calls above by scripts/validate-mcp-tools.mjs,
- * so this copy cannot drift from what the server registers.
- */
-const TOOLS: { name: string; blurb: string }[] = [
-  { name: "list_components", blurb: "every component in the library, with category, description and docs URL" },
-  { name: "get_component", blurb: "one component's full prop contract, generated from the same JSDoc as the published .d.ts" },
-  { name: "list_tokens", blurb: "the semantic design tokens by category" },
-  { name: "search_site", blurb: "full-text search over everything published on this site" },
-  { name: "get_setup", blurb: "install and theming setup for a consumer app" },
-];
+// The tool list and connect snippets the landing page renders live in
+// @/lib/mcp-tools and @/lib/mcp-clients, shared with the get-started page.
+// scripts/validate-mcp-tools.mjs holds the roster to the registrations above.
+const claudeConnect = MCP_CLIENTS.find((client) => client.id === "claude-code")!;
 
 function landingPage(): string {
-  const toolRows = TOOLS.map(
+  const toolRows = MCP_TOOLS.map(
     (tool) =>
       `<li><code>${tool.name}</code><span>${tool.blurb}</span></li>`
+  ).join("\n      ");
+  const promptRows = MCP_TOOLS.map(
+    (tool) =>
+      `<li><span class="ask">“${tool.prompt}”</span><span class="dim">${tool.name}</span></li>`
   ).join("\n      ");
   return `<!doctype html>
 <html lang="en">
@@ -381,6 +379,11 @@ function landingPage(): string {
     flex: none; min-width: 148px;
   }
   li span { color: var(--text-2); }
+  li .ask { color: var(--text-1); flex: 1; }
+  li .dim {
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: 12px; color: var(--text-3); flex: none;
+  }
   .links { margin-top: 30px; font-size: 14.5px; color: var(--text-3); }
   .links a { color: var(--teal); font-weight: 700; text-decoration: none; }
   .links a:hover { text-decoration: underline; }
@@ -391,10 +394,15 @@ function landingPage(): string {
   <div class="kicker">robertritacca.com</div>
   <h1>This URL is an MCP endpoint</h1>
   <p>You have reached the Model Context Protocol server for <b>${pkg.name}</b>, the component library behind this site. It is built for agents rather than browsers: an MCP client connects with nothing but this URL and reads the library's real documentation. No key, no account, and no model behind it; every tool is a deterministic read over published data.</p>
-  <div class="snippet"><span class="dim">$</span> claude mcp add robr0 ${SITE_URL}/api/mcp</div>
+  <div class="snippet"><span class="dim">$</span> ${claudeConnect.snippet}</div>
   <h2>What a connected agent can do</h2>
   <ul>
       ${toolRows}
+  </ul>
+  <h2>Try asking</h2>
+  <p>Once connected, each of these is answered by one tool.</p>
+  <ul>
+      ${promptRows}
   </ul>
   <p class="links">Reading as a person? The docs live at <a href="${SITE_URL}/components">robertritacca.com/components</a>, the install guide at <a href="${SITE_URL}/docs/get-started">get-started</a>, and the agent index at <a href="${SITE_URL}/llms.txt">llms.txt</a>. The package is <a href="https://www.npmjs.com/package/${pkg.name}">${pkg.name}</a> on npm.</p>
 </main>

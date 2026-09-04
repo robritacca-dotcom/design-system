@@ -197,6 +197,36 @@ a.toolItem:hover {
   text-decoration: none;
 }
 
+.promptList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.promptItem {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--gap-md);
+  padding: var(--padding-sm) 0;
+  border-bottom: var(--border-xs) solid var(--color-bg-container-border);
+  font-size: var(--font-paragraph-size);
+  line-height: var(--font-paragraph-line-height);
+  color: var(--color-text-primary);
+}
+
+.promptItem:last-child {
+  border-bottom: none;
+}
+
+.promptTool {
+  flex: none;
+  font-size: var(--font-caption-size);
+  color: var(--color-text-secondary);
+}
+
 /* ============================================
    RESPONSIVE
    ============================================ */

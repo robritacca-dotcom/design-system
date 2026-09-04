@@ -3,12 +3,14 @@
  * validate-mcp-tools.mjs
  *
  * Holds every stated MCP tool count to the tools the route actually
- * registers. The roster lives in one place — the `server.registerTool` calls
- * in website/src/app/api/mcp/route.ts — but its count is restated in prose
- * on surfaces that cannot import it: the README (which ships in the npm
- * tarball, so a wrong count there reaches every consumer) and the overview
- * page. A tool added or removed without those sentences fails here instead
- * of shipping as a lie.
+ * registers. The registrations live in one place — the `server.registerTool`
+ * calls in website/src/app/api/mcp/route.ts — but the roster is restated as
+ * data in website/src/lib/mcp-tools.ts (which the landing page and the
+ * get-started page render), and its count is restated in prose on surfaces
+ * that cannot import it: the README (which ships in the npm tarball, so a
+ * wrong count there reaches every consumer) and the overview page. A tool
+ * added or removed without those sentences fails here instead of shipping
+ * as a lie.
  *
  * The check is deliberately narrow: any "<number> tools" phrase in a listed
  * file must equal the registered count. Surfaces that describe the tools by
@@ -36,24 +38,38 @@ if (registered.length === 0) {
   );
 }
 
-// The route's browser landing page renders its own tool list (the TOOLS
-// array in the same file). Hold it to the registrations in both directions.
-const toolsArray = route.match(/const TOOLS[^=]*=\s*\[([\s\S]*?)\];/);
+// The landing page and the get-started page render the roster from the
+// MCP_TOOLS array in website/src/lib/mcp-tools.ts. Hold it to the
+// registrations in both directions, and require an example prompt per
+// entry: a new tool cannot ship without one.
+const rosterPath = join(repoRoot, 'website/src/lib/mcp-tools.ts');
+const roster = readFileSync(rosterPath, 'utf8');
+const toolsArray = roster.match(/const MCP_TOOLS[^=]*=\s*\[([\s\S]*?)\];/);
 if (!toolsArray) {
   errors.push(
-    'the TOOLS array is missing from website/src/app/api/mcp/route.ts — ' +
-      'the landing page needs it; if it was renamed, update this script.'
+    'the MCP_TOOLS array is missing from website/src/lib/mcp-tools.ts — ' +
+      'the landing and get-started pages need it; if it was renamed, update this script.'
   );
 } else {
-  const listed = [...toolsArray[1].matchAll(/name:\s*["']([a-z_]+)["']/g)].map((m) => m[1]);
+  const entries = [...toolsArray[1].matchAll(/\{[\s\S]*?\}/g)].map((m) => m[0]);
+  const listed = entries
+    .map((entry) => entry.match(/name:\s*["']([a-z_]+)["']/)?.[1])
+    .filter(Boolean);
   for (const name of registered) {
     if (!listed.includes(name)) {
-      errors.push(`the landing page's TOOLS array is missing registered tool "${name}".`);
+      errors.push(`the MCP_TOOLS roster is missing registered tool "${name}".`);
     }
   }
   for (const name of listed) {
     if (!registered.includes(name)) {
-      errors.push(`the landing page's TOOLS array lists "${name}", which the route never registers.`);
+      errors.push(`the MCP_TOOLS roster lists "${name}", which the route never registers.`);
+    }
+  }
+  for (const entry of entries) {
+    const name = entry.match(/name:\s*["']([a-z_]+)["']/)?.[1] ?? '(unnamed)';
+    const prompt = entry.match(/prompt:\s*["'](.*?)["']/)?.[1];
+    if (!prompt || prompt.trim().length === 0) {
+      errors.push(`MCP_TOOLS entry "${name}" has no example prompt — every tool ships with one.`);
     }
   }
 }
