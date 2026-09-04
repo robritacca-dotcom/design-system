@@ -83,7 +83,7 @@
     "@vitest/browser-playwright": "4.1.11",
     "@vitest/coverage-v8": "4.1.11",
     "chromatic": "^18.5.0",
-    "eslint": "^9.39.1",
+    "eslint": "^10.9.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "eslint-plugin-storybook": "^10.6.0",
