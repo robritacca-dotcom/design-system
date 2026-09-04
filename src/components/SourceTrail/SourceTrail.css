@@ -31,6 +31,9 @@
   padding: var(--padding-sm) var(--padding-lg);
   background: none;
   border: none;
+  /* Buttons default to the UA's buttontext, not the inherited colour, so
+     anything in the header that inherits would read black in both themes. */
+  color: var(--color-text-primary);
   text-align: left;
   cursor: pointer;
   transition: background-color var(--motion-duration-fast) var(--motion-ease-standard);
@@ -198,7 +201,9 @@
 }
 
 /* Icons follow the state colour set on their parents, even against a
-   consumer stylesheet that colours .material-symbols-rounded globally */
-.ds-source-trail .material-symbols-rounded {
+   consumer stylesheet that colours .material-symbols-rounded globally.
+   The chevron is excluded — it carries its own colour rule, which this
+   higher-specificity rule would otherwise silently override. */
+.ds-source-trail .material-symbols-rounded:not(.ds-source-trail__chevron) {
   color: inherit;
 }

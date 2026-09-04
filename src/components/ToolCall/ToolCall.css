@@ -40,6 +40,9 @@
   padding: var(--padding-sm) var(--padding-lg);
   background: none;
   border: none;
+  /* Buttons default to the UA's buttontext, not the inherited colour, so
+     anything in the header that inherits would read black in both themes. */
+  color: var(--color-text-primary);
   text-align: left;
   cursor: pointer;
   transition: background-color var(--motion-duration-fast) var(--motion-ease-standard);
@@ -215,7 +218,9 @@
    inherited by default: a consumer stylesheet that sets a colour on
    .material-symbols-rounded itself (a common global default) would
    otherwise override inheritance and detach the icon from the state
-   colours this component sets on its parents. */
-.ds-tool-call .material-symbols-rounded {
+   colours this component sets on its parents. The chevron is excluded —
+   it is the one icon that carries its own colour rule, which this
+   higher-specificity rule would otherwise silently override. */
+.ds-tool-call .material-symbols-rounded:not(.ds-tool-call__chevron) {
   color: inherit;
 }
