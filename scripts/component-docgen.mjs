@@ -39,15 +39,21 @@ export const registry = JSON.parse(
   readFileSync(join(componentsDir, 'registry.json'), 'utf8')
 );
 
-/** The component source files backing one registry entry. */
+/**
+ * The component source files backing one registry entry. Paths come back
+ * with forward slashes on every platform: react-docgen-typescript reports
+ * filePath that way, and consumers match these paths against it, so a
+ * Windows backslash here would silently match nothing.
+ */
 export function sourceFilesFor(name, dir = join(componentsDir, name)) {
+  const posix = (path) => path.replaceAll('\\', '/');
   const canonical = join(dir, `${name}.tsx`);
-  if (existsSync(canonical)) return [canonical];
+  if (existsSync(canonical)) return [posix(canonical)];
   // Folder-of-components entry: every non-story component file.
   return readdirSync(dir)
     .filter((file) => file.endsWith('.tsx') && !file.includes('.stories.'))
     .sort()
-    .map((file) => join(dir, file));
+    .map((file) => posix(join(dir, file)));
 }
 
 /** Every source file behind the public registry, deduplicated, in registry order. */
