@@ -1,5 +1,5 @@
 /**
- * Brand logo icons used as Button iconLeft slots (Figma, Storybook,
+ * Brand logo icons used as Button iconLeft slots (Figma, Storybook, npm,
  * Substack, GitHub). One shared source for the homepage link row and the
  * design-system landing's resources group. The monochrome set at the
  * bottom (LinkedIn, X, Instagram) renders in currentColor for surfaces
@@ -25,6 +25,12 @@ export const StorybookIcon = () => (
     <g mask="url(#sb-brand)">
       <path d="M18.929 4.95l.134-2.768L21.763 2l.116 2.855c.004.1-.087.183-.203.187a.278.278 0 0 1-.137-.039l-1.041-.703-1.233.802a.196.196 0 0 1-.294-.08.197.197 0 0 1-.042-.072Zm-3.453 6.096c0 .47 3.69.244 4.185-.085 0-3.197-2.001-4.877-5.666-4.877s-5.718 1.706-5.718 4.265c0 4.457 7.018 4.542 7.018 6.974 0 .682-.39 1.088-1.248 1.088-1.117 0-1.56-.49-1.507-2.153 0-.36-4.262-.473-4.392 0-.331 4.03 2.599 5.193 5.952 5.193 3.249 0 5.796-1.484 5.796-4.171 0-4.777-7.122-4.65-7.122-7.016 0-.96.832-1.088 1.326-1.088.52 0 1.456.079 1.377 1.87Z" fill="white"/>
     </g>
+  </svg>
+);
+
+export const NpmIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M1.763 0C.786 0 0 .786 0 1.763v20.474C0 23.214.786 24 1.763 24h20.474c.977 0 1.763-.786 1.763-1.763V1.763C24 .786 23.214 0 22.237 0H1.763ZM5.13 5.323l13.837.019-.009 13.836h-3.464l.01-10.382h-3.456l-.01 10.382H5.113L5.13 5.323Z" fill="#CB3837"/>
   </svg>
 );
 

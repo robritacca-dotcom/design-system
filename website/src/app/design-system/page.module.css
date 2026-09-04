@@ -23,7 +23,9 @@
   text-align: center;
   gap: var(--gap-md);
   max-width: 1080px;
-  margin: 0 auto 56px;
+  /* Section-rhythm token rather than a fixed margin: it steps down at
+     768px on its own, so the mobile override below isn't needed. */
+  margin: 0 auto var(--gap-xxl);
 }
 
 .pageTitle {
@@ -42,18 +44,10 @@
   line-height: var(--font-sub-display-line-height);
   letter-spacing: var(--font-sub-display-letter-spacing);
   color: var(--color-text-primary);
-  /* Together with the hero gap, the spacing above (and below, carried by
-     .heroBody) matches the Work page's section gap (--primitive-gap-xxxl) */
+  /* Together with the hero gap, the spacing above matches the
+     title-to-subtitle gap every other page gets from its section rhythm
+     (--primitive-gap-xxxl). */
   margin: calc(var(--primitive-gap-xxxl) - var(--gap-md)) 0 0;
-}
-
-.heroBody {
-  font-size: var(--font-paragraph-size);
-  font-weight: var(--font-paragraph-weight);
-  line-height: var(--font-paragraph-line-height);
-  color: var(--color-text-secondary);
-  max-width: 640px;
-  margin: 0 0 calc(var(--primitive-gap-xxxl) - var(--gap-md));
 }
 
 /* ============================================
@@ -67,14 +61,7 @@
   flex-direction: column;
   align-items: center;
   gap: var(--gap-md);
-  margin-bottom: calc(var(--primitive-gap-xxxl) - var(--gap-md));
-}
-
-.accentNote {
-  font-size: var(--font-caption-size);
-  font-weight: var(--font-caption-weight);
-  line-height: var(--font-caption-line-height);
-  color: var(--color-text-tertiary);
+  margin-top: var(--gap-sm);
 }
 
 .accentRow {
@@ -113,27 +100,57 @@
     0 0 0 4px var(--color-action-primary-bg);
 }
 
-.accentMore {
-  margin-left: var(--gap-sm);
-  font-size: var(--font-caption-size);
-  font-weight: var(--font-caption-weight);
-  line-height: var(--font-caption-line-height);
-  color: var(--color-text-secondary);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
-.accentMore:hover {
-  color: var(--color-text-primary);
-}
-
-/* Both hero link rows wrap and stay centred on narrow screens */
+/* The hero's section-link row wraps and stays centred on narrow screens.
+   The symmetric margin keeps the divider sandwich even: the same air
+   above and below the buttons. */
 .hero :global(.ds-button-group) {
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: var(--gap-sm) 0;
+}
+
+/* ============================================
+   RESOURCES STRIP — below the collage: the
+   external homes of the system, then the stack
+   it is built on
+   ============================================ */
+
+.resourcesStrip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gap-md);
+  margin-top: var(--gap-xl);
+}
+
+.resourcesStrip :global(.ds-button-group) {
   flex-wrap: wrap;
   justify-content: center;
 }
 
-/* The fading hairline is components/FadeDivider now. */
+.techRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--gap-xs) var(--gap-sm);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: var(--font-caption-size);
+  font-weight: var(--font-caption-weight);
+  line-height: var(--font-caption-line-height);
+  color: var(--color-text-tertiary);
+}
+
+.techItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-sm);
+}
+
+.techItem:not(:first-child)::before {
+  content: "·";
+}
 
 /* ---------- collage ---------- */
 
@@ -692,10 +709,6 @@
 @media (max-width: 768px) {
   .page {
     padding: var(--primitive-gap-xl) 20px 64px;
-  }
-
-  .hero {
-    margin-bottom: 40px;
   }
 }
 

@@ -38,6 +38,7 @@ import { ButtonGroup } from "@robr0/design-system/components/ButtonGroup/ButtonG
 import {
   FigmaIcon,
   GitHubIcon,
+  NpmIcon,
   StorybookIcon,
 } from "../../components/BrandIcons/BrandIcons";
 import { Card } from "@robr0/design-system/components/Card/Card";
@@ -147,6 +148,12 @@ const ACTIVITY = [
   { name: "Zahra Ambessa", action: "Updated client details for Acme Ltd", when: "8:20 am" },
   { name: "Jasper Eriksson", action: "Created 4 invoices", when: "Yesterday" },
 ];
+
+/* The stack behind the system, named without versions: the README's Tech
+   section owns the version claims, and the build holds those to
+   package.json — a second surface restating numbers would just be a
+   second place for them to rot. */
+const TECH_STACK = ["React", "TypeScript", "Vite", "Next.js", "Storybook", "Recharts"];
 
 const SAVINGS_GOALS = [
   { label: "Retirement", target: "$420,000 target", value: 72 },
@@ -392,16 +399,8 @@ function AccentSwitcher() {
   }, [effectiveHex, theme]);
   useAppliedOverrides(overrides);
 
-  const playgroundHref = accent
-    ? `/playground?brand=${effectiveHex.replace("#", "")}`
-    : "/playground";
-
   return (
     <div className={styles.accentStrip}>
-      <p className={styles.accentNote}>
-        Pick an accent. Every action colour on this page is live and follows
-        it.
-      </p>
       <div className={styles.accentRow} role="group" aria-label="Accent colour">
         <button
           type="button"
@@ -431,9 +430,6 @@ function AccentSwitcher() {
             />
           );
         })}
-        <Link href={playgroundHref} className={styles.accentMore}>
-          Open in playground
-        </Link>
       </div>
     </div>
   );
@@ -462,19 +458,17 @@ export default function DesignSystemPage() {
       <MegaNav />
 
       <main className={styles.page} id="main-content">
-        {/* ---------- page header (standard treatment: title, tagline, intro) ---------- */}
+        {/* ---------- page header (deliberately light: this is the index of
+             the design-system section, so it carries the tagline, the section
+             links, and the accent swatches — nothing else. Figma, Storybook,
+             GitHub and npm live in the resources strip below the collage,
+             plus the footer and the Install card.) ---------- */}
         <section className={`${styles.hero} animate-in`} aria-label="About the design system">
           <h1 className={styles.pageTitle}>robr0 DS</h1>
           <p className={styles.subDisplay}>
-            An AI-ready design system
+            An AI-ready React design system
           </p>
-          <p className={styles.heroBody}>
-            Every token chains to a primitive you can override, so one change
-            re-themes the whole system in both themes. The docs serve machines
-            too: connect a coding agent over MCP and it reads the component
-            list and exact prop contracts while it builds.
-          </p>
-          <AccentSwitcher />
+          <FadeDivider />
           <ButtonGroup
             ariaLabel="Design system sections"
             buttons={dsMegaItems.map((item) => ({
@@ -487,38 +481,7 @@ export default function DesignSystemPage() {
             }))}
           />
           <FadeDivider />
-          <ButtonGroup
-            ariaLabel="External resources"
-            buttons={[
-              {
-                label: "Figma",
-                variant: "tertiary",
-                iconLeft: <FigmaIcon />,
-                iconRight: "open_in_new",
-                href: "https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26",
-                target: "_blank",
-                rel: "noopener noreferrer",
-              },
-              {
-                label: "Storybook",
-                variant: "tertiary",
-                iconLeft: <StorybookIcon />,
-                iconRight: "open_in_new",
-                href: "https://design-system-iota-one.vercel.app",
-                target: "_blank",
-                rel: "noopener noreferrer",
-              },
-              {
-                label: "GitHub",
-                variant: "tertiary",
-                iconLeft: <GitHubIcon />,
-                iconRight: "open_in_new",
-                href: "https://github.com/robritacca-dotcom/design-system",
-                target: "_blank",
-                rel: "noopener noreferrer",
-              },
-            ]}
-          />
+          <AccentSwitcher />
         </section>
 
         {/* ---------- collage: three curated columns of live demos + nav ---------- */}
@@ -1166,6 +1129,62 @@ export default function DesignSystemPage() {
               />
             </DemoCard>
           </>)} />
+        </section>
+
+        {/* ---------- below the collage: where the system lives, and what
+             it is built on ---------- */}
+        <section
+          className={`${styles.resourcesStrip} animate-in animate-delay-1`}
+          aria-label="Resources and stack"
+        >
+          <ButtonGroup
+            ariaLabel="External resources"
+            buttons={[
+              {
+                label: "Figma",
+                variant: "tertiary" as const,
+                iconLeft: <FigmaIcon />,
+                iconRight: "open_in_new",
+                href: "https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26",
+                target: "_blank",
+                rel: "noopener noreferrer",
+              },
+              {
+                label: "Storybook",
+                variant: "tertiary" as const,
+                iconLeft: <StorybookIcon />,
+                iconRight: "open_in_new",
+                href: "https://design-system-iota-one.vercel.app",
+                target: "_blank",
+                rel: "noopener noreferrer",
+              },
+              {
+                label: "GitHub",
+                variant: "tertiary" as const,
+                iconLeft: <GitHubIcon />,
+                iconRight: "open_in_new",
+                href: "https://github.com/robritacca-dotcom/design-system",
+                target: "_blank",
+                rel: "noopener noreferrer",
+              },
+              {
+                label: "npm",
+                variant: "tertiary" as const,
+                iconLeft: <NpmIcon />,
+                iconRight: "open_in_new",
+                href: "https://www.npmjs.com/package/@robr0/design-system",
+                target: "_blank",
+                rel: "noopener noreferrer",
+              },
+            ]}
+          />
+          <ul className={styles.techRow} aria-label="Built with">
+            {TECH_STACK.map((name) => (
+              <li key={name} className={styles.techItem}>
+                {name}
+              </li>
+            ))}
+          </ul>
         </section>
       </main>
 
