@@ -59,7 +59,10 @@ const CONTEXT = 55;
 
 const files = [];
 for await (const f of glob('**/*.html', { cwd: appDir })) {
-  if (!EXEMPT.test(f)) files.push(f);
+  // glob returns native separators; a Windows backslash path would dodge
+  // the forward-slash EXEMPT pattern and check pages meant to be skipped.
+  const rel = f.replaceAll('\\', '/');
+  if (!EXEMPT.test(rel)) files.push(rel);
 }
 
 if (files.length === 0) {

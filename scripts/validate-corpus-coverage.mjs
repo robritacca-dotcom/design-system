@@ -136,7 +136,10 @@ function pageSentences(html) {
 async function renderedPages() {
   const pages = new Map();
   for await (const file of glob('**/*.html', { cwd: appDir })) {
-    const route = '/' + file.replace(/\.html$/, '').replace(/(^|\/)index$/, '');
+    // glob returns native separators; normalize so a Windows checkout
+    // computes the same /nested/route keys as CI.
+    const rel = file.replaceAll('\\', '/');
+    const route = '/' + rel.replace(/\.html$/, '').replace(/(^|\/)index$/, '');
     pages.set(route === '/' ? '/' : route.replace(/\/$/, ''), join(appDir, file));
   }
   return pages;
