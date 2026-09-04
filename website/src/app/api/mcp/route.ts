@@ -180,6 +180,7 @@ const handler = createMcpHandler(
         return json({
           ...entry,
           docsUrl: `${SITE_URL}/components/${entry.slug}`,
+          markdownUrl: `${SITE_URL}/components/${entry.slug}.md`,
           usage:
             entry.barrel === "charts"
               ? `import { ${entry.name} } from '${pkg.name}/charts'; // needs the optional recharts peer`

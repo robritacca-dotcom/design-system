@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "@robr0/design-system/components/Button/Button";
+import CopyPageMarkdown from "./CopyPageMarkdown";
 import styles from "./PageLinks.module.css";
 
 const STORYBOOK_BASE = "https://design-system-iota-one.vercel.app";
@@ -81,6 +82,10 @@ const InstagramIcon = () => (
 export default function PageLinks({ figmaUrl, storybookPath, githubUrl, substackUrl, linkedinUrl, xUrl, instagramUrl }: PageLinksProps) {
   return (
     <div className={styles.pageLinks}>
+      {/* Self-gated: renders only on /components/<slug> pages, where the
+          generated markdown contract exists to copy. */}
+      <CopyPageMarkdown />
+
       {linkedinUrl && (
         <Button
           label="LinkedIn"

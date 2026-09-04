@@ -72,7 +72,12 @@ export function assembleComponentApi() {
         props: Object.entries(doc.props ?? {}).map(([propName, prop]) => {
           const entry = {
             name: propName,
-            type: prop.type?.name ?? 'unknown',
+            // Docgen collapses a literal union to the name "enum"; the raw
+            // text is the actual contract, so prefer it there.
+            type:
+              (prop.type?.name === 'enum' ? prop.type?.raw : prop.type?.name) ??
+              prop.type?.name ??
+              'unknown',
             required: Boolean(prop.required),
             description: (prop.description ?? '').trim(),
           };

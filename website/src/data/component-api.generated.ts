@@ -155,7 +155,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
         "props": [
           {
             "name": "state",
-            "type": "enum",
+            "type": "AgentStatusState",
             "required": false,
             "description": "What the agent is doing. Drives the colour, the default label, and whether the matrix animates.",
             "defaultValue": "thinking"
@@ -168,7 +168,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "pattern",
-            "type": "enum",
+            "type": "\"braille\" | \"orbit\" | \"breathe\" | \"snake\" | \"fill-sweep\" | \"pulse\" | \"columns\" | \"checkerboard\" | \"scan\" | \"rain\" | \"cascade\" | \"sparkle\" | \"wave-rows\" | \"helix\" | \"diagonal-swipe\"",
             "required": false,
             "description": "Which dot-matrix choreography to run.",
             "defaultValue": "orbit"
@@ -181,14 +181,14 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\" | \"sm\" | \"md\"",
             "required": false,
             "description": "Indicator and text scale, paired with ChatMessage's sizes: `default`\nmatches default message text, `compact` matches compact message text.\n`sm` and `md` are legacy aliases for `compact` and `default`.",
             "defaultValue": "default"
           },
           {
             "name": "variant",
-            "type": "enum",
+            "type": "\"inline\" | \"bar\"",
             "required": false,
             "description": "`inline` sits in a line of content; `bar` is a full-width row for the top of a panel.",
             "defaultValue": "inline"
@@ -239,7 +239,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Button size",
             "defaultValue": "default"
@@ -306,14 +306,14 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "variant",
-            "type": "enum",
+            "type": "\"error\" | \"info\" | \"positive\" | \"warning\" | \"neutral\"",
             "required": false,
             "description": "Alert variant determines colour and icon",
             "defaultValue": "info"
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Component size",
             "defaultValue": "default"
@@ -413,7 +413,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "variant",
-            "type": "enum",
+            "type": "\"default\" | \"destructive\"",
             "required": false,
             "description": "Destructive variant for dangerous actions",
             "defaultValue": "default"
@@ -450,7 +450,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "variant",
-            "type": "enum",
+            "type": "\"list\" | \"floating\"",
             "required": false,
             "description": "Visual form: `list` renders the inline \"On this page\" rail; `floating` collapses to a stack of short lines that expands into a panel on hover, keyboard focus, or tap, so it can ride a page edge without taking column width",
             "defaultValue": "list"
@@ -556,7 +556,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "theme",
-            "type": "enum",
+            "type": "\"inherit\" | \"dark\"",
             "required": false,
             "description": "Colour scheme: 'dark' pins the layout to the dark theme (the historical\nbehaviour and the default); 'inherit' drops the pin so the layout\nfollows the surrounding data-theme like any other component.",
             "defaultValue": "dark"
@@ -799,14 +799,14 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"sm\" | \"md\" | \"lg\"",
             "required": false,
             "description": "Avatar size",
             "defaultValue": "md"
           },
           {
             "name": "status",
-            "type": "enum",
+            "type": "\"online\" | \"away\" | \"offline\" | \"busy\"",
             "required": false,
             "description": "Online status indicator"
           },
@@ -849,7 +849,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"sm\" | \"md\" | \"lg\"",
             "required": false,
             "description": "Size applied to every avatar in the stack and to the overflow counter.\nCloned onto the children so the group cannot render mixed sizes.",
             "defaultValue": "md"
@@ -892,7 +892,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "variant",
-            "type": "enum",
+            "type": "\"error\" | \"info\" | \"positive\" | \"warning\" | \"neutral\"",
             "required": false,
             "description": "Badge variant determines colour",
             "defaultValue": "neutral"
@@ -923,7 +923,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
         "props": [
           {
             "name": "variant",
-            "type": "enum",
+            "type": "\"error\" | \"info\" | \"positive\" | \"warning\" | \"neutral\"",
             "required": false,
             "description": "Status variant determines colour and default icon",
             "defaultValue": "info"
@@ -967,7 +967,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "align",
-            "type": "enum",
+            "type": "\"center\" | \"start\"",
             "required": false,
             "description": "Horizontal alignment of the banner content",
             "defaultValue": "start"
@@ -1148,13 +1148,13 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "variant",
-            "type": "enum",
+            "type": "\"neutral\" | \"destructive\" | \"primary\" | \"secondary\" | \"tertiary\"",
             "required": false,
             "description": "Visual treatment"
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Button size",
             "defaultValue": "default"
@@ -1204,14 +1204,14 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "priority",
-            "type": "enum",
+            "type": "\"destructive\" | \"primary\" | \"secondary\" | \"tertiary\"",
             "required": false,
             "description": "Legacy alias for `variant`.",
             "deprecated": "Use `variant` instead."
           },
           {
             "name": "state",
-            "type": "enum",
+            "type": "\"default\" | \"disabled\" | \"hover\" | \"active\"",
             "required": false,
             "description": "Documentation-only interaction state.",
             "deprecated": "Use `disabled` for the disabled state.\r\n\r\nDocumentation-only affordance for rendering a *static* interaction state in\r\nStorybook and the showcase site. Real hover/active styling comes from CSS\r\npseudo-classes and needs no prop — for docs, prefer `className=\"ds-button--hover\"`."
@@ -1250,7 +1250,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
         "props": [
           {
             "name": "orientation",
-            "type": "enum",
+            "type": "\"horizontal\" | \"vertical\"",
             "required": false,
             "description": "Orientation of the button group",
             "defaultValue": "horizontal"
@@ -1293,7 +1293,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
         "props": [
           {
             "name": "variant",
-            "type": "enum",
+            "type": "\"default\" | \"case-study\"",
             "required": false,
             "description": "Card variant",
             "defaultValue": "default"
@@ -1618,7 +1618,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
         "props": [
           {
             "name": "role",
-            "type": "enum",
+            "type": "\"user\" | \"assistant\"",
             "required": false,
             "description": "Which side of the conversation this turn belongs to. Drives alignment\nand the default surface: user turns are right-aligned bubbles,\nassistant turns are surface-less full-width text. Shadows the ARIA\nrole attribute; the root renders no ARIA role.",
             "defaultValue": "assistant"
@@ -1670,7 +1670,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Compact drops the type one size step and tightens the bubble padding.",
             "defaultValue": "default"
@@ -1818,7 +1818,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Component size",
             "defaultValue": "default"
@@ -1883,14 +1883,14 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "direction",
-            "type": "enum",
+            "type": "\"horizontal\" | \"vertical\"",
             "required": false,
             "description": "Layout direction",
             "defaultValue": "vertical"
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Component size",
             "defaultValue": "default"
@@ -1959,7 +1959,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\" | \"large\"",
             "required": false,
             "description": "Chip size — `large` matches the default Button and paragraph body scale, for pills that are a primary tap target rather than metadata",
             "defaultValue": "default"
@@ -2015,13 +2015,13 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "variant",
-            "type": "enum",
+            "type": "\"neutral\" | \"primary\" | \"secondary\" | \"tertiary\"",
             "required": false,
             "description": "Visual treatment"
           },
           {
             "name": "priority",
-            "type": "enum",
+            "type": "\"primary\" | \"secondary\" | \"tertiary\"",
             "required": false,
             "description": "Legacy alias for `variant`.",
             "deprecated": "Use `variant` instead."
@@ -2034,14 +2034,14 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "state",
-            "type": "enum",
+            "type": "\"default\" | \"disabled\" | \"hover\" | \"active\"",
             "required": false,
             "description": "Documentation-only interaction state.",
             "deprecated": "Use `disabled` for the disabled state.\r\n\r\nDocumentation-only affordance for rendering a *static* interaction state in\r\nStorybook and the showcase site. Real hover/active styling comes from CSS\r\npseudo-classes and needs no prop — for docs, prefer\r\n`className=\"ds-circular-button--hover\"`."
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Button size",
             "defaultValue": "default"
@@ -2066,7 +2066,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "tooltipPosition",
-            "type": "enum",
+            "type": "\"top\" | \"bottom\" | \"left\" | \"right\"",
             "required": false,
             "description": "Which side the tooltip opens on.",
             "defaultValue": "top"
@@ -2270,7 +2270,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Component size",
             "defaultValue": "default"
@@ -2484,7 +2484,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Component size",
             "defaultValue": "default"
@@ -2892,7 +2892,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Component size",
             "defaultValue": "default"
@@ -3085,7 +3085,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Visual size, passed through to the underlying Table.",
             "defaultValue": "default"
@@ -3147,7 +3147,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Component size (not the native character-width `size` attribute)",
             "defaultValue": "default"
@@ -3222,7 +3222,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Component size",
             "defaultValue": "default"
@@ -3314,7 +3314,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"sm\" | \"md\" | \"lg\"",
             "required": false,
             "description": "Panel width",
             "defaultValue": "md"
@@ -3352,7 +3352,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
         "props": [
           {
             "name": "orientation",
-            "type": "enum",
+            "type": "\"horizontal\" | \"vertical\"",
             "required": false,
             "description": "Divider direction",
             "defaultValue": "horizontal"
@@ -3365,14 +3365,14 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "labelPosition",
-            "type": "enum",
+            "type": "\"center\" | \"start\"",
             "required": false,
             "description": "Label placement along the line",
             "defaultValue": "center"
           },
           {
             "name": "spacing",
-            "type": "enum",
+            "type": "\"none\" | \"sm\" | \"md\" | \"lg\"",
             "required": false,
             "description": "Margin around the divider (block for horizontal, inline for vertical)",
             "defaultValue": "md"
@@ -3409,7 +3409,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "fileType",
-            "type": "enum",
+            "type": "DocumentChipFileType",
             "required": false,
             "description": "Document type — picks the leading Material Symbol.",
             "defaultValue": "generic"
@@ -3440,7 +3440,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Tile size. Compact drops the metadata line — name only — for dense composer rows.",
             "defaultValue": "default"
@@ -3526,14 +3526,14 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "side",
-            "type": "enum",
+            "type": "\"top\" | \"bottom\" | \"left\" | \"right\"",
             "required": false,
             "description": "Edge the panel slides in from",
             "defaultValue": "right"
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"sm\" | \"md\" | \"lg\"",
             "required": false,
             "description": "Panel size along the axis it slides on",
             "defaultValue": "md"
@@ -3602,7 +3602,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Component size",
             "defaultValue": "default"
@@ -3698,14 +3698,14 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "align",
-            "type": "enum",
+            "type": "\"start\" | \"end\"",
             "required": false,
             "description": "Horizontal alignment of the panel",
             "defaultValue": "start"
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Component size",
             "defaultValue": "default"
@@ -3760,14 +3760,14 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Component size",
             "defaultValue": "default"
           },
           {
             "name": "variant",
-            "type": "enum",
+            "type": "\"plain\" | \"bordered\"",
             "required": false,
             "description": "Visual treatment. `plain` sits directly on the page; `bordered` draws a\ndashed container, which reads better inside a card, table, or panel.",
             "defaultValue": "plain"
@@ -3965,7 +3965,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Component size",
             "defaultValue": "default"
@@ -4064,7 +4064,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Component size (not the native character-width `size` attribute)",
             "defaultValue": "default"
@@ -4158,7 +4158,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Component size",
             "defaultValue": "default"
@@ -4279,7 +4279,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "tone",
-            "type": "enum",
+            "type": "\"error\" | \"positive\" | \"warning\" | \"neutral\" | \"accent\"",
             "required": false,
             "description": "Colour role for the value arc. `accent` (the default) follows the chart\npalette's lead colour. Ignored while a threshold matches — thresholds\nexist so the dial recolours itself as the reading crosses them.",
             "defaultValue": "accent"
@@ -4496,7 +4496,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "position",
-            "type": "enum",
+            "type": "\"top\" | \"bottom\" | \"left\" | \"right\"",
             "required": false,
             "description": "Preferred position",
             "defaultValue": "bottom"
@@ -4648,14 +4648,14 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "type",
-            "type": "enum",
+            "type": "\"number\" | \"search\" | \"text\" | \"tel\" | \"url\" | \"email\" | \"password\"",
             "required": false,
             "description": "Input type — curated subset; use a dedicated component for checkbox/radio/file",
             "defaultValue": "text"
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Component size (not the native character-width `size` attribute)",
             "defaultValue": "default"
@@ -4736,14 +4736,14 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Component size",
             "defaultValue": "default"
           },
           {
             "name": "direction",
-            "type": "enum",
+            "type": "\"horizontal\" | \"vertical\"",
             "required": false,
             "description": "Layout direction",
             "defaultValue": "vertical"
@@ -4853,7 +4853,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
         "props": [
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Key size",
             "defaultValue": "default"
@@ -5050,7 +5050,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "align",
-            "type": "enum",
+            "type": "\"start\" | \"end\"",
             "required": false,
             "description": "Which way the text ranges. A callout sitting left of its marker ranges\nright so it hangs off the point; `start` is the ordinary reading order.",
             "defaultValue": "start"
@@ -5273,14 +5273,14 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "variant",
-            "type": "enum",
+            "type": "\"error\" | \"info\" | \"positive\" | \"warning\" | \"neutral\"",
             "required": false,
             "description": "Status role colouring the fill",
             "defaultValue": "info"
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Component size (bar height)",
             "defaultValue": "default"
@@ -5360,7 +5360,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "placement",
-            "type": "enum",
+            "type": "\"top\" | \"bottom\"",
             "required": false,
             "description": "Which side of the trigger the panel opens on. In a composer pinned to the bottom of the screen, use `top`.",
             "defaultValue": "bottom"
@@ -5686,7 +5686,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Component size (not the native character-width `size` attribute)",
             "defaultValue": "default"
@@ -5761,7 +5761,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Component size — compact swaps the numbers for a \"Page X of Y\" readout",
             "defaultValue": "default"
@@ -5799,7 +5799,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
         "props": [
           {
             "name": "padding",
-            "type": "enum",
+            "type": "\"none\" | \"default\" | \"compact\"",
             "required": false,
             "description": "Interior padding: 'default' uses --padding-lg, 'compact' uses --padding-md, 'none' removes it",
             "defaultValue": "default"
@@ -5957,7 +5957,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "format",
-            "type": "enum",
+            "type": "\"numeric\" | \"alphanumeric\"",
             "required": false,
             "description": "Accepted characters — `numeric` rejects non-digits and sets a numeric keyboard",
             "defaultValue": "numeric"
@@ -6026,21 +6026,21 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Component size",
             "defaultValue": "default"
           },
           {
             "name": "position",
-            "type": "enum",
+            "type": "\"top\" | \"bottom\" | \"left\" | \"right\"",
             "required": false,
             "description": "Preferred position",
             "defaultValue": "bottom"
           },
           {
             "name": "trigger",
-            "type": "enum",
+            "type": "\"hover\" | \"click\"",
             "required": false,
             "description": "Trigger mode",
             "defaultValue": "click"
@@ -6096,7 +6096,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Size of the bar",
             "defaultValue": "default"
@@ -6152,7 +6152,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "layout",
-            "type": "enum",
+            "type": "\"wrap\" | \"scroll\" | \"stack\"",
             "required": false,
             "description": "How the suggestions are arranged. `scroll` is one line that scrolls\nsideways behind edge fades. `wrap` runs them across as many lines as\nthey need, for empty-state hero placements. `stack` gives each one its\nown line, for narrow columns where a wrapped row breaks unevenly and\nthe ragged right edge reads as an accident."
           },
@@ -6166,7 +6166,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Row scale. `default` sits at the body-paragraph scale, so a suggestion\nreads at the same weight as the messages it will become; `compact` is\nthe quieter row for placements alongside a live conversation.",
             "defaultValue": "default"
@@ -6204,7 +6204,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
         "props": [
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"sm\"",
             "required": false,
             "description": "Body scale. `sm` maps paragraphs, lists and code to the small paragraph tokens for dense chat contexts.",
             "defaultValue": "default"
@@ -6259,7 +6259,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "variant",
-            "type": "enum",
+            "type": "\"default\" | \"pull\"",
             "required": false,
             "description": "`default` is an inline blockquote; `pull` is a large display pull-quote",
             "defaultValue": "default"
@@ -6558,7 +6558,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "direction",
-            "type": "enum",
+            "type": "\"horizontal\" | \"vertical\"",
             "required": false,
             "description": "Layout direction",
             "defaultValue": "vertical"
@@ -6656,7 +6656,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Component size",
             "defaultValue": "default"
@@ -6726,7 +6726,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Text scale, paired with ChatMessage's sizes: `default` matches default\nmessage text, `compact` matches compact message text.",
             "defaultValue": "default"
@@ -6931,14 +6931,14 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Component size",
             "defaultValue": "default"
           },
           {
             "name": "variant",
-            "type": "enum",
+            "type": "\"neutral\" | \"primary\"",
             "required": false,
             "description": "Visual treatment of the active segment — teal by default, `neutral` fills it grey",
             "defaultValue": "primary"
@@ -6982,7 +6982,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
         "props": [
           {
             "name": "mode",
-            "type": "enum",
+            "type": "\"checkbox\" | \"radio\" | \"toggle\"",
             "required": false,
             "description": "Selection mode — radio (single), checkbox (multi), or toggle (each card is an on/off switch)",
             "defaultValue": "radio"
@@ -7060,7 +7060,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
         "props": [
           {
             "name": "variant",
-            "type": "enum",
+            "type": "\"text\" | \"circular\" | \"rectangular\"",
             "required": false,
             "description": "Shape of the skeleton",
             "defaultValue": "text"
@@ -7138,7 +7138,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Component size (not the native character-width `size` attribute)",
             "defaultValue": "default"
@@ -7237,14 +7237,14 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "variant",
-            "type": "enum",
+            "type": "\"area\" | \"line\"",
             "required": false,
             "description": "Rendering treatment — a bare line, or a line with a soft fill underneath.",
             "defaultValue": "line"
           },
           {
             "name": "tone",
-            "type": "enum",
+            "type": "\"positive\" | \"neutral\" | \"accent\" | \"negative\"",
             "required": false,
             "description": "Colour role for the line and end dot. `accent` follows the chart palette's\nlead colour; `positive`/`negative` map to the status text tokens; `neutral`\nrecedes to secondary text.",
             "defaultValue": "accent"
@@ -7309,14 +7309,14 @@ export const componentApi: readonly ComponentApiEntry[] = [
         "props": [
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"sm\" | \"md\" | \"lg\"",
             "required": false,
             "description": "Size of the spinner",
             "defaultValue": "md"
           },
           {
             "name": "variant",
-            "type": "enum",
+            "type": "\"inherit\" | \"neutral\" | \"primary\"",
             "required": false,
             "description": "Visual variant — `inherit` draws the spinner in `currentColor`, for use inside coloured controls",
             "defaultValue": "primary"
@@ -7372,14 +7372,14 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "variant",
-            "type": "enum",
+            "type": "\"neutral\" | \"primary\" | \"secondary\"",
             "required": false,
             "description": "Visual treatment, shared by both segments",
             "defaultValue": "primary"
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Component size",
             "defaultValue": "default"
@@ -7406,7 +7406,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "align",
-            "type": "enum",
+            "type": "\"start\" | \"end\"",
             "required": false,
             "description": "Horizontal alignment of the menu panel relative to the control",
             "defaultValue": "end"
@@ -7450,7 +7450,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "direction",
-            "type": "enum",
+            "type": "\"horizontal\" | \"vertical\"",
             "required": false,
             "description": "Which way the panes sit: side by side, or stacked.",
             "defaultValue": "horizontal"
@@ -7620,21 +7620,21 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "trend",
-            "type": "enum",
+            "type": "\"neutral\" | \"up\" | \"down\"",
             "required": false,
             "description": "Direction of the delta — colours it and adds an arrow",
             "defaultValue": "neutral"
           },
           {
             "name": "deltaPlacement",
-            "type": "enum",
+            "type": "\"inline\" | \"stacked\"",
             "required": false,
             "description": "Where the delta sits: stacked below the label, or inline to the right of the value, bottom-aligned",
             "defaultValue": "stacked"
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"large\"",
             "required": false,
             "description": "Stat size",
             "defaultValue": "default"
@@ -7683,7 +7683,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "orientation",
-            "type": "enum",
+            "type": "\"horizontal\" | \"vertical\"",
             "required": false,
             "description": "Layout direction",
             "defaultValue": "horizontal"
@@ -7835,14 +7835,14 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Swatch size",
             "defaultValue": "default"
           },
           {
             "name": "shape",
-            "type": "enum",
+            "type": "\"circle\" | \"square\"",
             "required": false,
             "description": "Corner treatment — circle matches the site's preset grids; square suits picker triggers",
             "defaultValue": "circle"
@@ -7892,7 +7892,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Visual size",
             "defaultValue": "default"
@@ -7968,7 +7968,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Visual size",
             "defaultValue": "default"
@@ -8043,7 +8043,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Component size (not the native character-width `size` attribute)",
             "defaultValue": "default"
@@ -8100,7 +8100,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Component size",
             "defaultValue": "default"
@@ -8120,7 +8120,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "resize",
-            "type": "enum",
+            "type": "\"none\" | \"both\" | \"horizontal\" | \"vertical\"",
             "required": false,
             "description": "Whether the textarea is resizable",
             "defaultValue": "vertical"
@@ -8216,14 +8216,14 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "hourFormat",
-            "type": "enum",
+            "type": "\"12\" | \"24\"",
             "required": false,
             "description": "Display format for the trigger and options — the value stays a 24-hour \"HH:MM\" string either way",
             "defaultValue": "12"
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Component size",
             "defaultValue": "default"
@@ -8287,7 +8287,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
         "props": [
           {
             "name": "variant",
-            "type": "enum",
+            "type": "\"default\" | \"company\"",
             "required": false,
             "description": "Selects the flat step/event layout — the default when omitted\nSelects the grouped layout: roles nested under a company logo"
           },
@@ -8299,7 +8299,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "orientation",
-            "type": "enum",
+            "type": "\"horizontal\" | \"vertical\"",
             "required": false,
             "description": "`vertical` timeline (default) or `horizontal` stepper"
           },
@@ -8347,7 +8347,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "variant",
-            "type": "enum",
+            "type": "\"error\" | \"info\" | \"positive\" | \"warning\" | \"neutral\"",
             "required": false,
             "description": "Toast variant",
             "defaultValue": "info"
@@ -8385,7 +8385,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "position",
-            "type": "enum",
+            "type": "\"top-right\" | \"top-left\" | \"bottom-right\" | \"bottom-left\" | \"top-center\" | \"bottom-center\"",
             "required": false,
             "description": "Position of the toast stack",
             "defaultValue": "bottom-right"
@@ -8440,14 +8440,14 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Component size",
             "defaultValue": "default"
           },
           {
             "name": "variant",
-            "type": "enum",
+            "type": "\"neutral\" | \"primary\"",
             "required": false,
             "description": "Visual treatment of active items — teal by default, `neutral` fills them grey",
             "defaultValue": "primary"
@@ -8526,7 +8526,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "size",
-            "type": "enum",
+            "type": "\"default\" | \"compact\"",
             "required": false,
             "description": "Component size",
             "defaultValue": "default"
@@ -8583,7 +8583,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "status",
-            "type": "enum",
+            "type": "ToolCallStatus",
             "required": false,
             "description": "Where the call has got to. Drives the colour, the indicator, and the default status text.",
             "defaultValue": "success"
@@ -8675,7 +8675,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
           },
           {
             "name": "position",
-            "type": "enum",
+            "type": "\"top\" | \"bottom\" | \"left\" | \"right\"",
             "required": false,
             "description": "Preferred position",
             "defaultValue": "top"

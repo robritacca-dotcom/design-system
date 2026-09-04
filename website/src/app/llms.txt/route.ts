@@ -52,7 +52,9 @@ export function GET() {
     "",
     section(
       "Components",
-      `React component documentation with live examples. Index at ${SITE_URL}/components.`,
+      `React component documentation with live examples. Index at ${SITE_URL}/components. ` +
+        `Append .md to any component URL for its prop contract as markdown, ` +
+        `generated from the same JSDoc as the published .d.ts.`,
       componentsSidebarLinks
     ),
     "",
