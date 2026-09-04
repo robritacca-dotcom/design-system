@@ -20,7 +20,7 @@
  */
 
 export const PACKAGE_NAME = '@robr0/design-system';
-export const PACKAGE_VERSION = '0.14.0';
+export const PACKAGE_VERSION = '0.15.0';
 export const PACKAGE_DESCRIPTION =
   'An AI-ready React design system: accessible components on composable tokens, light/dark theming, and CSS-variable overrides.';
 export const REPOSITORY_URL = 'https://github.com/robritacca-dotcom/design-system';

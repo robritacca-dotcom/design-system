@@ -50,6 +50,10 @@ name: Release
 #   constant and the amended JS motion contract.
 # 0.14.0 shipped 2026-08-29 — six components to 120: Banner, HoverCard,
 #   ImageCompare, Meter, Rating, SplitButton, plus LinkList's newTab opt-out.
+# 0.15.0 shipped 2026-09-04 — UsageCard and SourceTrail join the ai category,
+#   Composer's working glow (aiGlow + streaming), and the agent-docs surfaces
+#   around the package: per-component markdown contracts, the consumer agent
+#   skill, and the MCP roster with example prompts.
 
 on:
   workflow_dispatch:
