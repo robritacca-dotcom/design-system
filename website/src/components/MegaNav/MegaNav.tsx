@@ -141,7 +141,7 @@ export default function MegaNav() {
           id: "components",
           // Category anchors on the index, not all the components — NavList
           // caps at three levels, so per-component rows would be pruned here
-          // anyway, and ten categories scan better in a drawer than the list.
+          // anyway, and the categories scan better in a drawer than the list.
           items: componentCategoryMetadata.map((cat) => ({
             label: cat.label,
             href: `/components#${cat.id}`,

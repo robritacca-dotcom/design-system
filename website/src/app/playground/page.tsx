@@ -185,9 +185,11 @@ export default function PlaygroundPage() {
     setBrand(value);
   };
 
-  /* The design-system landing's accent switcher hands its pick over as
-     ?brand=<hex> (no leading #), seeding the action-colour lever. Once on
-     mount, same pattern as the ?view= sync above. */
+  /* A deep link can seed the action-colour lever with ?brand=<hex> (no
+     leading #). Nothing on the site emits one today — the design-system
+     landing's accent switcher used to — but the URL contract stays for
+     hand-typed and shared links. Once on mount, same pattern as the
+     ?view= sync above. */
   useEffect(() => {
     const brandQ = new URLSearchParams(window.location.search).get("brand");
     if (brandQ && /^[0-9a-fA-F]{6}$/.test(brandQ)) {

@@ -16,8 +16,8 @@ export interface CanvasSection {
  * site's IA, in nav order, and nothing below. Every frame is a live page,
  * and a live page costs what a browser tab costs, so the board stops at the
  * front doors: the case studies, the essays, the docs, the foundations and
- * the hundred component pages are a click away inside their section's
- * frame, not frames of their own.
+ * the component pages are a click away inside their section's frame, not
+ * frames of their own.
  */
 export function siteSections(): CanvasSection[] {
   return [

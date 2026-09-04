@@ -5,7 +5,7 @@ import { pageOpenGraph } from "@/config/navigation";
 // in no sidebar array, so its metadata is a literal rather than pageMetadata().
 const title = "Design system";
 const description =
-  "The robr0 DS landing: live components rendered from the npm package, the specs Claude Code builds them from, and links to every part of the system.";
+  "The robr0 DS landing: live components rendered from the npm package, an accent switcher that re-themes the page, and links into every part of the system.";
 
 export const metadata: Metadata = {
   title,
