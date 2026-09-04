@@ -71,8 +71,15 @@ let pathCount = 0;
 // runtime artifact (GA credentials, generated output) — those legitimately
 // exist on one machine and not in a fresh checkout or CI, so existence is
 // the wrong test for them. Everything else must exist.
-const isGitignored = (span) =>
-  spawnSync('git', ['check-ignore', '-q', span], { cwd: repoRoot }).status === 0;
+// A trailing-slash span is tested through a probe child instead: a child
+// of an ignored directory is ignored, so the answer is the same — and the
+// slash-less probe dodges a git quirk (observed on Windows) where ANY
+// nonexistent trailing-slash path reports ignored, matching an empty
+// pattern, which silently excused refs here that CI then caught.
+const isGitignored = (span) => {
+  const probe = span.endsWith('/') ? `${span}__doc_refs_probe__` : span;
+  return spawnSync('git', ['check-ignore', '-q', probe], { cwd: repoRoot }).status === 0;
+};
 
 // Check B — every `npm run X` mention resolves to a real script in the root
 // or website workspace package.json. The union is deliberately context-free:

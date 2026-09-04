@@ -143,7 +143,7 @@ The AI layer also serves machines directly. The live site exposes a Model Contex
 claude mcp add --transport http robr0-ds https://robertritacca.com/api/mcp
 ```
 
-The same generated data is served as files too: every component's prop contract lives at `https://robertritacca.com/components/<slug>.md` beside its docs page, and a generated agent skill (a `SKILL.md` plus its `references/components.md` catalogue, under `https://robertritacca.com/skill/robr0-design-system/`) can be saved as a pair into a project's `.claude/skills/robr0-design-system/` so a coding agent carries the library's install, theming and catalogue rules into every session. The [setup guide](https://robertritacca.com/docs/get-started) has the two-command install.
+The same generated data is served as files too: every component's prop contract lives at `https://robertritacca.com/components/<slug>.md` beside its docs page, and a generated agent skill (a `SKILL.md` plus its `references/components.md` catalogue, under `https://robertritacca.com/skill/robr0-design-system/`) can be saved as a pair into a project's own skills folder so a coding agent carries the library's install, theming and catalogue rules into every session. The [setup guide](https://robertritacca.com/docs/get-started) has the two-command install.
 
 ---
 
