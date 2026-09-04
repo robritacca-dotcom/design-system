@@ -18,7 +18,7 @@
  * accent must not leave charts SSR-rendering the old colour.
  *
  * And holds the playground's NEUTRALS mirror
- * (website/src/app/playground/theme-overrides.ts) to the neutral primitives,
+ * (website/src/lib/theme/theme-overrides.ts) to the neutral primitives,
  * in both directions: neutralOverrides() regenerates every neutral — solid
  * and rgba variant — from that table when tinting, so a step, variant, or
  * alpha it doesn't mirror is a surface the playground silently leaves
@@ -145,12 +145,12 @@ if (fallbacks.length === 0) {
 // variant's suffix and alpha — in both directions.
 const overridesPath = join(
   repoRoot,
-  'website', 'src', 'app', 'playground', 'theme-overrides.ts'
+  'website', 'src', 'lib', 'theme', 'theme-overrides.ts'
 );
 const overridesSource = readFileSync(overridesPath, 'utf8');
 const neutralsBlock = overridesSource.match(/const NEUTRALS: NeutralDef\[\] = \[([\s\S]*?)\n\];/);
 if (!neutralsBlock) {
-  errors.push(`playground/theme-overrides.ts: could not parse NEUTRALS — the neutral-mirror guard needs it`);
+  errors.push(`lib/theme/theme-overrides.ts: could not parse NEUTRALS — the neutral-mirror guard needs it`);
 } else {
   const mirrored = new Map();
   for (const m of neutralsBlock[1].matchAll(

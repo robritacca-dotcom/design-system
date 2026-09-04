@@ -56,6 +56,77 @@
   margin: 0 0 calc(var(--primitive-gap-xxxl) - var(--gap-md));
 }
 
+/* ============================================
+   ACCENT SWITCHER — the hero's live re-theming
+   strip; picks apply through the shared theme
+   levers and reset on navigation away
+   ============================================ */
+
+.accentStrip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gap-md);
+  margin-bottom: calc(var(--primitive-gap-xxxl) - var(--gap-md));
+}
+
+.accentNote {
+  font-size: var(--font-caption-size);
+  font-weight: var(--font-caption-weight);
+  line-height: var(--font-caption-line-height);
+  color: var(--color-text-tertiary);
+}
+
+.accentRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap-sm);
+}
+
+.accentSwatch {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: var(--border-xs) solid var(--color-bg-container-border);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: transform var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.accentSwatch:hover {
+  transform: scale(1.15);
+}
+
+.accentSwatch:focus-visible {
+  outline: 2px solid var(--color-action-primary-bg);
+  outline-offset: 2px;
+}
+
+/* The teal selection convention: the chosen swatch of the mutually
+   exclusive set carries the action-colour ring — which follows the pick
+   itself, since the pick re-points the action tokens. */
+.accentSwatchActive {
+  box-shadow:
+    0 0 0 2px var(--color-bg-page-primary),
+    0 0 0 4px var(--color-action-primary-bg);
+}
+
+.accentMore {
+  margin-left: var(--gap-sm);
+  font-size: var(--font-caption-size);
+  font-weight: var(--font-caption-weight);
+  line-height: var(--font-caption-line-height);
+  color: var(--color-text-secondary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.accentMore:hover {
+  color: var(--color-text-primary);
+}
+
 /* Both hero link rows wrap and stay centred on narrow screens */
 .hero :global(.ds-button-group) {
   flex-wrap: wrap;

@@ -1,11 +1,17 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import MegaNav from "../../components/MegaNav/MegaNav";
 import FadeDivider from "../../components/FadeDivider/FadeDivider";
 import styles from "./page.module.css";
 import { dsMegaItems } from "@/config/navigation";
+import {
+  ACTION_COLOR_PRESETS,
+  DEFAULT_BRAND,
+  actionColorPlan,
+} from "@/lib/theme/theme-overrides";
+import { useAppliedOverrides, useSiteTheme } from "@/lib/theme/use-theme-overrides";
 import { AgentPlan } from "@robr0/design-system/components/AgentPlan/AgentPlan";
 import { AgentStatus } from "@robr0/design-system/components/AgentStatus/AgentStatus";
 import { AiButton } from "@robr0/design-system/components/AiButton/AiButton";
@@ -361,6 +367,76 @@ function EscalatorColumn({
 
 /* ---------- page ---------- */
 
+/* The step-07 swatches from the shared theme levers, plus the shipped
+   default. Selecting one re-points the action tokens for the whole page —
+   the same actionColorPlan the playground applies, on the same :root
+   mechanism, so every live demo below re-tints without re-rendering. */
+const ACCENT_CHOICES = ACTION_COLOR_PRESETS.filter((preset) =>
+  preset.label.endsWith(" 07")
+);
+
+function AccentSwitcher() {
+  const theme = useSiteTheme();
+  const [accent, setAccent] = useState<(typeof ACCENT_CHOICES)[number] | null>(null);
+
+  const effectiveHex = accent
+    ? theme === "dark" && accent.hexDark
+      ? accent.hexDark
+      : accent.hex
+    : DEFAULT_BRAND;
+
+  const overrides = useMemo(() => {
+    const plan = actionColorPlan(effectiveHex, theme === "dark" ? "dark" : "light");
+    return plan ? { ...plan.primitives, ...plan.semantics } : {};
+  }, [effectiveHex, theme]);
+  useAppliedOverrides(overrides);
+
+  const playgroundHref = accent
+    ? `/playground?brand=${effectiveHex.replace("#", "")}`
+    : "/playground";
+
+  return (
+    <div className={styles.accentStrip}>
+      <p className={styles.accentNote}>
+        Pick an accent. Everything on this page is live and re-themes with it.
+      </p>
+      <div className={styles.accentRow} role="group" aria-label="Accent colour">
+        <button
+          type="button"
+          className={`${styles.accentSwatch} ${accent === null ? styles.accentSwatchActive : ""}`}
+          style={{ backgroundColor: DEFAULT_BRAND }}
+          aria-pressed={accent === null}
+          aria-label="Shipped teal (default)"
+          title="Shipped teal"
+          onClick={() => setAccent(null)}
+        />
+        {ACCENT_CHOICES.map((choice) => {
+          const active = accent?.label === choice.label;
+          const swatchHex =
+            theme === "dark" && choice.hexDark ? choice.hexDark : choice.hex;
+          const name =
+            theme === "dark" && choice.labelDark ? choice.labelDark : choice.label;
+          return (
+            <button
+              key={choice.label}
+              type="button"
+              className={`${styles.accentSwatch} ${active ? styles.accentSwatchActive : ""}`}
+              style={{ backgroundColor: swatchHex }}
+              aria-pressed={active}
+              aria-label={name}
+              title={name}
+              onClick={() => setAccent(choice)}
+            />
+          );
+        })}
+        <Link href={playgroundHref} className={styles.accentMore}>
+          Open in playground
+        </Link>
+      </div>
+    </div>
+  );
+}
+
 export default function DesignSystemPage() {
   const [alerts, setAlerts] = useState({ transactions: true, security: true, market: false });
   const [currency, setCurrency] = useState("usd");
@@ -396,6 +472,7 @@ export default function DesignSystemPage() {
             too: connect a coding agent over MCP and it reads the component
             list and exact prop contracts while it builds.
           </p>
+          <AccentSwitcher />
           <ButtonGroup
             ariaLabel="Design system sections"
             buttons={dsMegaItems.map((item) => ({

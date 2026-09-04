@@ -10,7 +10,7 @@ import {
   isAdvancedPristine,
   type AdvancedColorState,
   type Overrides,
-} from "./theme-overrides";
+} from "@/lib/theme/theme-overrides";
 
 export interface AdvancedColorsDialogProps {
   open: boolean;

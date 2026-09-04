@@ -10,8 +10,8 @@ import { Input } from "@robr0/design-system/components/Input/Input";
 import { RadioGroup } from "@robr0/design-system/components/RadioButton/RadioButton";
 import { Slider } from "@robr0/design-system/components/Slider/Slider";
 import { ToggleSwitch } from "@robr0/design-system/components/ToggleSwitch/ToggleSwitch";
-import { ACTION_COLOR_PRESETS, FONT_OPTIONS } from "./theme-overrides";
-import { PRESET_OPTIONS } from "./presets";
+import { ACTION_COLOR_PRESETS, FONT_OPTIONS } from "@/lib/theme/theme-overrides";
+import { PRESET_OPTIONS } from "@/lib/theme/presets";
 
 export interface PlaygroundControlsProps {
   preset: string;

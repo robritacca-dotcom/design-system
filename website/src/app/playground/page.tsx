@@ -26,8 +26,9 @@ import {
   isAdvancedPristine,
   neutralOverrides,
   radiusOverrides,
-} from "./theme-overrides";
-import { THEME_PRESETS, type ThemePreset } from "./presets";
+} from "@/lib/theme/theme-overrides";
+import { THEME_PRESETS, type ThemePreset } from "@/lib/theme/presets";
+import { useAppliedOverrides, useSiteTheme } from "@/lib/theme/use-theme-overrides";
 import PlaygroundControls from "./PlaygroundControls";
 import AdvancedColorsDialog from "./AdvancedColorsDialog";
 import ChatDirector, { STORY_CONTENT } from "./ChatDirector";
@@ -61,18 +62,6 @@ const VIEWS = [
   { value: "components", label: "Components", icon: "widgets" },
   { value: "chat", label: "Chat", icon: "chat_bubble" },
 ];
-
-/* Live theme tracking (same pattern as foundations/colour-mode) so
-   theme-dependent presets re-derive their overrides when the site's
-   light/dark toggle flips. */
-function subscribeToTheme(callback: () => void) {
-  const observer = new MutationObserver(callback);
-  observer.observe(document.documentElement, {
-    attributes: true,
-    attributeFilter: ["data-theme"],
-  });
-  return () => observer.disconnect();
-}
 
 /* Below the tool's desktop breakpoint there is no room for the edge
    panel: the controls move into a bottom Drawer summoned by a fixed pill,
@@ -196,6 +185,18 @@ export default function PlaygroundPage() {
     setBrand(value);
   };
 
+  /* The design-system landing's accent switcher hands its pick over as
+     ?brand=<hex> (no leading #), seeding the action-colour lever. Once on
+     mount, same pattern as the ?view= sync above. */
+  useEffect(() => {
+    const brandQ = new URLSearchParams(window.location.search).get("brand");
+    if (brandQ && /^[0-9a-fA-F]{6}$/.test(brandQ)) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setPreset("custom");
+      setBrand(`#${brandQ.toUpperCase()}`);
+    }
+  }, []);
+
   /** Advanced levers flip to Custom like any other lever; explicitly
       rebasing teal also retires an inherited theme-dependent brand, the
       same way picking an action colour does. */
@@ -232,11 +233,7 @@ export default function PlaygroundPage() {
 
   const font = FONT_OPTIONS.find((f) => f.label === fontLabel) ?? FONT_OPTIONS[0];
 
-  const theme = useSyncExternalStore(
-    subscribeToTheme,
-    () => document.documentElement.getAttribute("data-theme") ?? "dark",
-    () => "dark"
-  );
+  const theme = useSiteTheme();
 
   /* The immersive format drops the site header, and the header owned the
      light/dark toggle — so the rail carries one instead. Same store the
@@ -289,30 +286,17 @@ export default function PlaygroundPage() {
   }, [actionPlan, theme, tintOn, tintSeed, tintStrength, radiusScale, pill, presetExtras, advColors]);
 
   /* ---------- apply to the whole page ----------
-     Custom properties substitute var() where they are declared, and the
-     semantic layer is declared on :root — so primitive overrides must land
-     on the root element to cascade. Bonus: the entire site chrome previews
-     the theme live. Everything is removed on unmount. */
-  const appliedKeys = useRef<string[]>([]);
-  useEffect(() => {
-    const root = document.documentElement;
-    for (const key of appliedKeys.current) root.style.removeProperty(key);
-    const keys = Object.keys(overrides);
-    if (font.family) keys.push("--font-family-primary");
-    for (const [name, value] of Object.entries(overrides)) {
-      root.style.setProperty(name, value);
-    }
-    if (font.family) root.style.setProperty("--font-family-primary", font.family);
-    appliedKeys.current = keys;
-  }, [overrides, font]);
-
-  useEffect(() => {
-    const root = document.documentElement;
-    const cleanupRef = appliedKeys;
-    return () => {
-      for (const key of cleanupRef.current) root.style.removeProperty(key);
-    };
-  }, []);
+     The shared hook writes to :root (where the semantic layer is declared,
+     so primitive overrides cascade) and removes everything on unmount.
+     Bonus: the entire site chrome previews the theme live. */
+  const applied = useMemo(
+    () =>
+      font.family
+        ? { ...overrides, "--font-family-primary": font.family }
+        : overrides,
+    [overrides, font]
+  );
+  useAppliedOverrides(applied);
 
   /* Google Fonts stylesheets load on demand; loaded ones stay (cheap, and
      re-selecting is instant). All are removed on unmount. */
