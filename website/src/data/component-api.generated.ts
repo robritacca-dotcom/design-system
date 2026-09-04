@@ -1214,7 +1214,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
             "type": "\"default\" | \"disabled\" | \"hover\" | \"active\"",
             "required": false,
             "description": "Documentation-only interaction state.",
-            "deprecated": "Use `disabled` for the disabled state.\r\n\r\nDocumentation-only affordance for rendering a *static* interaction state in\r\nStorybook and the showcase site. Real hover/active styling comes from CSS\r\npseudo-classes and needs no prop — for docs, prefer `className=\"ds-button--hover\"`."
+            "deprecated": "Use `disabled` for the disabled state.\n\nDocumentation-only affordance for rendering a *static* interaction state in\nStorybook and the showcase site. Real hover/active styling comes from CSS\npseudo-classes and needs no prop — for docs, prefer `className=\"ds-button--hover\"`."
           },
           {
             "name": "icon",
@@ -1229,7 +1229,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
             "required": false,
             "description": "Legacy toggle for showing the text label.",
             "defaultValue": "true",
-            "deprecated": "Will be removed once `label` loses its default in the next major;\r\nan icon-only button will simply omit `label`."
+            "deprecated": "Will be removed once `label` loses its default in the next major;\nan icon-only button will simply omit `label`."
           }
         ]
       }
@@ -1855,7 +1855,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
             "type": "string",
             "required": false,
             "description": "Legacy form-field name.",
-            "deprecated": "No-op. This component renders a `<div role=\"checkbox\">`, not a\r\nnative `<input>`, so it cannot participate in native form submission.\r\nDeclared only so the attribute is not forwarded to an element that rejects it."
+            "deprecated": "No-op. This component renders a `<div role=\"checkbox\">`, not a\nnative `<input>`, so it cannot participate in native form submission.\nDeclared only so the attribute is not forwarded to an element that rejects it."
           }
         ]
       },
@@ -2037,7 +2037,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
             "type": "\"default\" | \"disabled\" | \"hover\" | \"active\"",
             "required": false,
             "description": "Documentation-only interaction state.",
-            "deprecated": "Use `disabled` for the disabled state.\r\n\r\nDocumentation-only affordance for rendering a *static* interaction state in\r\nStorybook and the showcase site. Real hover/active styling comes from CSS\r\npseudo-classes and needs no prop — for docs, prefer\r\n`className=\"ds-circular-button--hover\"`."
+            "deprecated": "Use `disabled` for the disabled state.\n\nDocumentation-only affordance for rendering a *static* interaction state in\nStorybook and the showcase site. Real hover/active styling comes from CSS\npseudo-classes and needs no prop — for docs, prefer\n`className=\"ds-circular-button--hover\"`."
           },
           {
             "name": "size",
@@ -4231,7 +4231,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
             "type": "number",
             "required": false,
             "description": "Floor percentage from the stepped-bar rendering this chart used to have.",
-            "deprecated": "The funnel now draws true trapezoids sized by value, so a\r\nheight floor no longer applies; the prop is ignored."
+            "deprecated": "The funnel now draws true trapezoids sized by value, so a\nheight floor no longer applies; the prop is ignored."
           },
           {
             "name": "className",
@@ -5356,7 +5356,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
             "type": "ModelPickerEffortOption[]",
             "required": false,
             "description": "The effort levels on offer. Defaults to low, medium and high.",
-            "defaultValue": "[\r\n  { label: 'Low', value: 'low' },\r\n  { label: 'Medium', value: 'medium' },\r\n  { label: 'High', value: 'high' },\r\n]"
+            "defaultValue": "[\n  { label: 'Low', value: 'low' },\n  { label: 'Medium', value: 'medium' },\n  { label: 'High', value: 'high' },\n]"
           },
           {
             "name": "placement",
@@ -6524,7 +6524,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
             "type": "string",
             "required": false,
             "description": "Legacy form-field name.",
-            "deprecated": "No-op. This component renders a `<div role=\"radio\">`, not a\r\nnative `<input type=\"radio\">`, so it does not group by name or participate\r\nin native form submission — `RadioGroup` handles grouping in React state.\r\nDeclared only so the attribute is not forwarded to an element that rejects it."
+            "deprecated": "No-op. This component renders a `<div role=\"radio\">`, not a\nnative `<input type=\"radio\">`, so it does not group by name or participate\nin native form submission — `RadioGroup` handles grouping in React state.\nDeclared only so the attribute is not forwarded to an element that rejects it."
           }
         ]
       },
@@ -7804,7 +7804,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
             "type": "number",
             "required": false,
             "description": "The retired interval between reveal steps; when set, its equivalent\nrate becomes the reveal's floor.",
-            "deprecated": "The reveal is frame-driven now — pace it with `floorCps`\r\nand `drainMs` instead."
+            "deprecated": "The reveal is frame-driven now — pace it with `floorCps`\nand `drainMs` instead."
           },
           {
             "name": "cursor",

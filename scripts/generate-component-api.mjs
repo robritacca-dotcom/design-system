@@ -42,6 +42,14 @@ export const outputPath = join(
   repoRoot, 'website', 'src', 'data', 'component-api.generated.ts'
 );
 
+/**
+ * Docgen strings carry the source file's own line endings, so a CRLF
+ * checkout would bake literal \r\n into the generated JSON and diff
+ * against CI's LF regeneration. Normalize every string that can span
+ * lines.
+ */
+const lf = (value) => value.replace(/\r\n/g, '\n');
+
 /** Assemble the data structure — exported so the validator can rebuild it. */
 export function assembleComponentApi() {
   const parsed = parseLibrary();
@@ -74,18 +82,20 @@ export function assembleComponentApi() {
             name: propName,
             // Docgen collapses a literal union to the name "enum"; the raw
             // text is the actual contract, so prefer it there.
-            type:
+            type: lf(
               (prop.type?.name === 'enum' ? prop.type?.raw : prop.type?.name) ??
-              prop.type?.name ??
-              'unknown',
+                prop.type?.name ??
+                'unknown'
+            ),
             required: Boolean(prop.required),
-            description: (prop.description ?? '').trim(),
+            description: lf((prop.description ?? '').trim()),
           };
           if (prop.defaultValue?.value != null) {
-            entry.defaultValue = String(prop.defaultValue.value);
+            entry.defaultValue = lf(String(prop.defaultValue.value));
           }
           if (prop.tags && 'deprecated' in prop.tags) {
-            entry.deprecated = String(prop.tags.deprecated || '').trim() || 'Deprecated.';
+            entry.deprecated =
+              lf(String(prop.tags.deprecated || '').trim()) || 'Deprecated.';
           }
           return entry;
         }),
