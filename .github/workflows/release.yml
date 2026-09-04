@@ -67,7 +67,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       # NOTE: deliberately NO `registry-url:` here. Setting it makes setup-node
       # write an .npmrc containing `_authToken=${NODE_AUTH_TOKEN}` AND export a
       # placeholder NODE_AUTH_TOKEN ("XXXXX-XXXXX-..."). npm then believes it is
@@ -76,7 +76,7 @@ jobs:
       # Without it npm finds no credentials and falls through to Trusted
       # Publishing. npm defaults to registry.npmjs.org anyway, and the package
       # sets no publishConfig, so nothing is lost. (Cost us run 30284784878.)
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: npm
