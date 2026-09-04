@@ -15,6 +15,7 @@ import { OpenChatLink } from "./OpenChatLink";
 import { componentMetadata } from "@robr0/design-system/components/registry";
 import { MCP_CLIENTS } from "@/lib/mcp-clients";
 import { MCP_TOOLS } from "@/lib/mcp-tools";
+import { SITE_URL } from "@/lib/structuredData";
 
 const { sidebarLinks } = getSidebarLinks(docsSidebarLinks, "/docs/get-started");
 
@@ -62,6 +63,9 @@ import { BarChart, LineChart } from '@robr0/design-system/charts';`;
 
 const DARK_MODE_SNIPPET = `<!-- Light is the default; flip the whole system with one attribute -->
 <html data-theme="dark">`;
+
+const SKILL_SNIPPET = `curl --create-dirs -o .claude/skills/robr0-design-system/SKILL.md ${SITE_URL}/skill/robr0-design-system/SKILL.md
+curl --create-dirs -o .claude/skills/robr0-design-system/references/components.md ${SITE_URL}/skill/robr0-design-system/references/components.md`;
 
 const SHADER_SNIPPET = `import { ShaderField, type ShaderFieldStatus } from '@robr0/design-system';
 
@@ -342,6 +346,17 @@ export default function GetStartedPage() {
                     </li>
                   ))}
                 </ul>
+                <p className={styles.sectionNote}>
+                  The MCP tools answer on demand. For knowledge an agent
+                  carries into every session, there is also a generated
+                  agent skill: two markdown files built from the same
+                  registries, covering install, theming and the full
+                  component catalogue. Save them into a project&apos;s{" "}
+                  <code>.claude/skills/</code> and skill-capable agents load
+                  them automatically. They regenerate with every deploy, so
+                  re-run the same two commands to update.
+                </p>
+                <CodeBlock code={SKILL_SNIPPET} language="bash" showCopy />
               </section>
 
               {/* Ambient background */}

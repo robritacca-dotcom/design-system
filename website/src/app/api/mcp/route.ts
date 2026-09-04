@@ -279,6 +279,10 @@ const handler = createMcpHandler(
             "",
             `Full guide: ${SITE_URL}/docs/get-started. Live docs: ${SITE_URL}/components. ` +
               `Design spec: ${SITE_URL}/design.md.`,
+            "",
+            `Agent skill: ${SITE_URL}/skill/robr0-design-system/SKILL.md — save it (and its ` +
+              `references/components.md) into the project's .claude/skills/robr0-design-system/ ` +
+              `to load the library's install, theming and catalogue rules every session.`,
           ].join("\n")
         )
     );
