@@ -2,7 +2,7 @@
 
 The corner block of a map: its name, what it shows, and the key to its markers.
 
-Generated from the @robr0/design-system registry and prop JSDoc, version 0.14.0. The same data ships in the package's .d.ts and is served by the MCP endpoint at https://robertritacca.com/api/mcp.
+Generated from the @robr0/design-system registry and prop JSDoc, version 0.15.0. The same data ships in the package's .d.ts and is served by the MCP endpoint at https://robertritacca.com/api/mcp.
 
 - Category: maps
 - Import: `import { MapLegend } from '@robr0/design-system';`

@@ -5,7 +5,7 @@ description: Build React UI with @robr0/design-system. Use when installing the p
 
 # Using @robr0/design-system
 
-Generated from the library's registries at version 0.14.0, alongside every deploy of https://robertritacca.com. The library is 122 React components across 11 categories, themed by 221 semantic design tokens, published to npm.
+Generated from the library's registries at version 0.15.0, alongside every deploy of https://robertritacca.com. The library is 122 React components across 11 categories, themed by 221 semantic design tokens, published to npm.
 
 ## Install
 

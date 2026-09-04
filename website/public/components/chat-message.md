@@ -2,7 +2,7 @@
 
 A single chat turn with avatar, author, timestamp, and bubble or plain content aligned by role.
 
-Generated from the @robr0/design-system registry and prop JSDoc, version 0.14.0. The same data ships in the package's .d.ts and is served by the MCP endpoint at https://robertritacca.com/api/mcp.
+Generated from the @robr0/design-system registry and prop JSDoc, version 0.15.0. The same data ships in the package's .d.ts and is served by the MCP endpoint at https://robertritacca.com/api/mcp.
 
 - Category: ai
 - Import: `import { ChatMessage } from '@robr0/design-system';`

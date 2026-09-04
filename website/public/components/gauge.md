@@ -2,7 +2,7 @@
 
 A radial dial for a single bounded reading, recoloured through the status roles as it crosses thresholds.
 
-Generated from the @robr0/design-system registry and prop JSDoc, version 0.14.0. The same data ships in the package's .d.ts and is served by the MCP endpoint at https://robertritacca.com/api/mcp.
+Generated from the @robr0/design-system registry and prop JSDoc, version 0.15.0. The same data ships in the package's .d.ts and is served by the MCP endpoint at https://robertritacca.com/api/mcp.
 
 - Category: charts
 - Import: `import { Gauge } from '@robr0/design-system';`

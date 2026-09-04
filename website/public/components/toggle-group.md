@@ -2,7 +2,7 @@
 
 A set of two-state buttons that can be toggled on or off, supporting text and icon items.
 
-Generated from the @robr0/design-system registry and prop JSDoc, version 0.14.0. The same data ships in the package's .d.ts and is served by the MCP endpoint at https://robertritacca.com/api/mcp.
+Generated from the @robr0/design-system registry and prop JSDoc, version 0.15.0. The same data ships in the package's .d.ts and is served by the MCP endpoint at https://robertritacca.com/api/mcp.
 
 - Category: actions
 - Import: `import { ToggleGroup } from '@robr0/design-system';`

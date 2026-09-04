@@ -2,7 +2,7 @@
 
 Multi-series line chart for trends over time, with per-series colours and a summary row.
 
-Generated from the @robr0/design-system registry and prop JSDoc, version 0.14.0. The same data ships in the package's .d.ts and is served by the MCP endpoint at https://robertritacca.com/api/mcp.
+Generated from the @robr0/design-system registry and prop JSDoc, version 0.15.0. The same data ships in the package's .d.ts and is served by the MCP endpoint at https://robertritacca.com/api/mcp.
 
 - Category: charts
 - Import: `import { LineChart } from '@robr0/design-system/charts'; // needs the optional recharts peer`

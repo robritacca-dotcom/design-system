@@ -2,7 +2,7 @@
 
 The labelled value tile under a chart: a series dot, the series name, and its reading, on an inset fill.
 
-Generated from the @robr0/design-system registry and prop JSDoc, version 0.14.0. The same data ships in the package's .d.ts and is served by the MCP endpoint at https://robertritacca.com/api/mcp.
+Generated from the @robr0/design-system registry and prop JSDoc, version 0.15.0. The same data ships in the package's .d.ts and is served by the MCP endpoint at https://robertritacca.com/api/mcp.
 
 - Category: charts
 - Import: `import { LegendTile } from '@robr0/design-system';`

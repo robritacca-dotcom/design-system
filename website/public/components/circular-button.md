@@ -2,7 +2,7 @@
 
 Round icon button with primary, secondary, tertiary and neutral variants, default and compact sizes.
 
-Generated from the @robr0/design-system registry and prop JSDoc, version 0.14.0. The same data ships in the package's .d.ts and is served by the MCP endpoint at https://robertritacca.com/api/mcp.
+Generated from the @robr0/design-system registry and prop JSDoc, version 0.15.0. The same data ships in the package's .d.ts and is served by the MCP endpoint at https://robertritacca.com/api/mcp.
 
 - Category: actions
 - Import: `import { CircularButton } from '@robr0/design-system';`

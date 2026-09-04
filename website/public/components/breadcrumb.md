@@ -2,7 +2,7 @@
 
 Hierarchical navigation trail showing the user's location within the site.
 
-Generated from the @robr0/design-system registry and prop JSDoc, version 0.14.0. The same data ships in the package's .d.ts and is served by the MCP endpoint at https://robertritacca.com/api/mcp.
+Generated from the @robr0/design-system registry and prop JSDoc, version 0.15.0. The same data ships in the package's .d.ts and is served by the MCP endpoint at https://robertritacca.com/api/mcp.
 
 - Category: navigation
 - Import: `import { Breadcrumb } from '@robr0/design-system';`
