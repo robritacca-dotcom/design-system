@@ -21,6 +21,8 @@ import { Button } from '@robr0/design-system';
 import { Input } from '@robr0/design-system/components/Input/Input';
 ```
 
+The package is ESM-only, resolved via exports subpaths: use a bundler that handles CSS and font imports from node_modules (Vite, Next.js, webpack) and set TypeScript's `moduleResolution` to `"bundler"` (or `"nodenext"`). Components are provider-free with one exception: wrap the tree in `ToastProvider` if (and only if) the toast queue is used via `useToast`.
+
 ## Dark mode
 
 Set `data-theme="dark"` on the root element. Every semantic colour token has a light and a dark value; components never query `prefers-color-scheme` themselves.

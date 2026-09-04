@@ -26,7 +26,8 @@ type ComposerOwnProps = {
   onSubmit?: (value: string) => void;
   /**
    * A response is streaming: the send button becomes a stop button, submit
-   * is blocked, and Enter is inert.
+   * is blocked, and Enter is inert. On a glowing composer (`aiGlow`) the
+   * gradient ring also stays lit and keeps turning while this is true.
    */
   streaming?: boolean;
   /** Fires when the stop button is pressed while `streaming`. */
@@ -37,7 +38,8 @@ type ComposerOwnProps = {
    * While focused, the shell wears AiButton's slowly rotating gradient ring
    * and glow in place of the plain selected border — the system's "a model
    * answers here" signal, for composers whose messages are answered by one.
-   * Off by default.
+   * While `streaming`, the ring stays lit and turning whether or not the
+   * field holds focus. Off by default.
    */
   aiGlow?: boolean;
   /**

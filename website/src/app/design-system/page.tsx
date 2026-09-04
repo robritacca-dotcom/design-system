@@ -9,6 +9,7 @@ import { dsMegaItems } from "@/config/navigation";
 import {
   ACTION_COLOR_PRESETS,
   DEFAULT_BRAND,
+  DEFAULT_BRAND_DARK,
   actionColorPlan,
 } from "@/lib/theme/theme-overrides";
 import { useAppliedOverrides, useSiteTheme } from "@/lib/theme/use-theme-overrides";
@@ -398,13 +399,14 @@ function AccentSwitcher() {
   return (
     <div className={styles.accentStrip}>
       <p className={styles.accentNote}>
-        Pick an accent. Everything on this page is live and re-themes with it.
+        Pick an accent. Every action colour on this page is live and follows
+        it.
       </p>
       <div className={styles.accentRow} role="group" aria-label="Accent colour">
         <button
           type="button"
           className={`${styles.accentSwatch} ${accent === null ? styles.accentSwatchActive : ""}`}
-          style={{ backgroundColor: DEFAULT_BRAND }}
+          style={{ backgroundColor: theme === "dark" ? DEFAULT_BRAND_DARK : DEFAULT_BRAND }}
           aria-pressed={accent === null}
           aria-label="Shipped teal (default)"
           title="Shipped teal"

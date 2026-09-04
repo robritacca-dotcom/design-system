@@ -166,6 +166,7 @@ const PIPELINE: TimelineCompany[] = [
         bullets: [
           "Five tools: the component list, per-component prop APIs, the token registry, install setup, and search over the site's published content",
           "The prop data is generated from the same JSDoc that ships in the package's type declarations, so a coding agent reads the exact contract npm ships",
+          "The same data ships as files: every component URL serves its prop contract as markdown at .md, and a generated agent skill installs into a consumer's own .claude/skills",
         ],
       },
     ],

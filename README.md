@@ -143,7 +143,7 @@ The AI layer also serves machines directly. The live site exposes a Model Contex
 claude mcp add --transport http robr0-ds https://robertritacca.com/api/mcp
 ```
 
-The same generated data is served as files too: every component's prop contract lives at `https://robertritacca.com/components/<slug>.md` beside its docs page, and a generated agent skill at `https://robertritacca.com/skill/robr0-design-system/SKILL.md` can be saved into a project's `.claude/skills/` so a coding agent carries the library's install, theming and catalogue rules into every session.
+The same generated data is served as files too: every component's prop contract lives at `https://robertritacca.com/components/<slug>.md` beside its docs page, and a generated agent skill (a `SKILL.md` plus its `references/components.md` catalogue, under `https://robertritacca.com/skill/robr0-design-system/`) can be saved as a pair into a project's `.claude/skills/robr0-design-system/` so a coding agent carries the library's install, theming and catalogue rules into every session. The [setup guide](https://robertritacca.com/docs/get-started) has the two-command install.
 
 ---
 
@@ -166,7 +166,7 @@ Every push and pull request runs a GitHub Actions pipeline ([`ci.yml`](.github/w
 npm run verify   # lint + library type-check + package build + story tests + Storybook build + website lint + build + built-HTML checks
 ```
 
-CI also guards against documentation drift: generated surfaces (this README's component count and list, the website's skills pages, the published blueprint copies of the root markdown specs) are rebuilt from their source registries on every build, and CI fails if the committed copies are stale. The numbers on the site are never hand-written.
+CI also guards against documentation drift: every generated surface (the `validate-registry` entry in the root `package.json` is the authoritative list, from this README's component count to the per-component markdown and the consumer agent skill) is rebuilt from its source registries on every build, and CI fails if the committed copies are stale. The numbers on the site are never hand-written.
 
 ---
 

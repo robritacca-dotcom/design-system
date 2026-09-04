@@ -73,6 +73,11 @@ const BRAND_RAMP_WEIGHTS: ReadonlyArray<[step: string, weight: number]> = [
     either theme short-circuits to the token files (null plan). */
 export const DEFAULT_BRAND = "#0E6E8F";
 
+/** The shipped dark-theme action fill (teal-05) — display only, e.g. a
+    swatch showing what the default looks like in the current theme. The
+    lever itself always takes DEFAULT_BRAND. */
+export const DEFAULT_BRAND_DARK = "#3CA5C6";
+
 /**
  * Preset action colours: steps 07 and 08 of every chromatic primitive ramp
  * (the values in tokens-primitives.css), plus a theme-dependent neutral per

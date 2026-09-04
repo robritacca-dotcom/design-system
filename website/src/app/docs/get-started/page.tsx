@@ -347,6 +347,12 @@ export default function GetStartedPage() {
                   ))}
                 </ul>
                 <p className={styles.sectionNote}>
+                  The same contracts are served as plain files too: append{" "}
+                  <code>.md</code> to any component URL for its prop table as
+                  markdown, or use the copy button in a component page&apos;s
+                  header to put it on the clipboard for your agent.
+                </p>
+                <p className={styles.sectionNote}>
                   The MCP tools answer on demand. For knowledge an agent
                   carries into every session, there is also a generated
                   agent skill: two markdown files built from the same
