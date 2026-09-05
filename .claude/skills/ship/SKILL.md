@@ -32,7 +32,7 @@ Use this skill when asked to make completed work live — phrases like "ship it"
    ```bash
    npm run verify   # the single local mirror of CI — the script entry in the root package.json is the step list
    ```
-   This one script is the single source of truth for local checks and mirrors the CI jobs in `.github/workflows/ci.yml` — if CI gains a check (tests, a11y), it gets added to `verify`, never listed here separately. The registry validators run automatically via the builds' `prebuild` hooks.
+   This one script is the single source of truth for local checks and mirrors the CI jobs in `.github/workflows/ci.yml` — if CI gains a check (tests, a11y), it gets added to `verify`, never listed here separately, except the three CI-only checks CLAUDE.md's **CI & Local Verify** section records as deliberate exceptions (Chromatic, the dependency audit, the drift guard). The registry validators run automatically via the builds' `prebuild` hooks.
 
    **Run it plainly and let its own exit status be the verdict. Never pipe verify through `tail`, `head`, or `grep`** — a pipeline reports the last command's exit code, not verify's, and that exact mistake masked two red builds on 2026-07-26. **If any step fails, stop** — fix the failure if it was caused by this session's work, otherwise report it. Never push red.
 
