@@ -78,6 +78,8 @@ import { Timeline } from "@robr0/design-system/components/Timeline/Timeline";
 import { ToggleSwitch } from "@robr0/design-system/components/ToggleSwitch/ToggleSwitch";
 import { COMPONENT_COUNT } from "@robr0/design-system/components/registry";
 import { TOKEN_COUNT } from "@robr0/design-system/tokens/registry";
+import { SKILL_COUNT } from "@/data/skills-registry";
+import { MCP_TOOLS } from "@/lib/mcp-tools";
 import { BarChart, LineChart, PieChart } from "@robr0/design-system/charts";
 
 /* ---------- fixed demo data (all mock — a small finance product) ---------- */
@@ -459,15 +461,24 @@ export default function DesignSystemPage() {
 
       <main className={styles.page} id="main-content">
         {/* ---------- page header (deliberately light: this is the index of
-             the design-system section, so it carries the tagline, the section
-             links, and the accent swatches — nothing else. Figma, Storybook,
-             GitHub and npm live in the resources strip below the collage,
-             plus the footer and the Install card.) ---------- */}
+             the design-system section, so it carries the tagline, the
+             registry-counted metrics band, the section links, and the accent
+             swatches — nothing else. Figma, Storybook, GitHub and npm live in
+             the resources strip below the collage, plus the footer and the
+             Install card.) ---------- */}
         <section className={`${styles.hero} animate-in`} aria-label="About the design system">
           <h1 className={styles.pageTitle}>robr0 DS</h1>
           <p className={styles.subDisplay}>
             An AI-ready React design system
           </p>
+          {/* Every figure imports from the registry export that owns it,
+              so the band can never overstate. */}
+          <div className={styles.statStrip} role="group" aria-label="What the system counts today">
+            <Stat value={String(COMPONENT_COUNT)} label="Components" />
+            <Stat value={String(TOKEN_COUNT)} label="Semantic tokens" />
+            <Stat value={String(SKILL_COUNT)} label="Agent skills" />
+            <Stat value={String(MCP_TOOLS.length)} label="MCP tools" />
+          </div>
           <FadeDivider />
           <ButtonGroup
             ariaLabel="Design system sections"

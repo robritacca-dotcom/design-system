@@ -51,6 +51,26 @@
 }
 
 /* ============================================
+   STAT STRIP — the metrics band under the
+   tagline: the library's own Stat, centred,
+   one figure per registry count export
+   ============================================ */
+
+.statStrip {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--gap-md) var(--gap-xxl);
+  margin-top: var(--gap-sm);
+}
+
+/* Stat left-aligns for dashboard rows; a centred hero band centres each
+   value over its label. */
+.statStrip :global(.ds-stat) {
+  align-items: center;
+}
+
+/* ============================================
    ACCENT SWITCHER — the hero's live re-theming
    strip; picks apply through the shared theme
    levers and reset on navigation away
