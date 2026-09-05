@@ -54,9 +54,12 @@
   max-height: 60vh;
   margin-top: 10vh;
   border: var(--border-xs) solid var(--color-bg-container-border);
-  border-radius: var(--radius-md); /* 12px */
-  background-color: var(--color-bg-page-primary);
-  box-shadow: var(--shadow-modal);
+  border-radius: var(--radius-xl); /* 24px — the floating-surface shell */
+  background-color: var(--color-bg-glass);
+  box-shadow: var(--shadow-floating);
+  /* The glass token is deliberately translucent; this blur is what keeps
+     the page readable through the panel. */
+  backdrop-filter: blur(24px);
   overflow: hidden;
   transform: scale(0.98);
   transition: transform var(--motion-duration-fast) var(--motion-ease-standard);
@@ -74,7 +77,7 @@
   display: flex;
   align-items: center;
   gap: var(--gap-sm); /* 8px */
-  padding: var(--padding-sm-md) var(--padding-md); /* 12px 16px */
+  padding: var(--padding-md) var(--padding-lg); /* 16px 20px */
   border-bottom: var(--border-xs) solid var(--color-divider);
   flex-shrink: 0;
   transition: border-color var(--motion-duration-fast) var(--motion-ease-standard);
@@ -148,7 +151,7 @@
   flex: 1;
   min-height: 0;
   overflow-y: auto;
-  padding: var(--padding-xxs);
+  padding: var(--padding-sm);
   /* Quiet scrollbar, ChatThread's recipe: thin and token-coloured instead
      of the 15px native chrome rail a classic-scrollbar platform would draw
      inside the panel. The stable gutter matters here because filtering
@@ -202,7 +205,7 @@
   display: flex;
   align-items: center;
   gap: var(--gap-sm-md);
-  padding: var(--padding-sm) var(--padding-sm-md); /* 8px 12px */
+  padding: var(--padding-sm-md); /* 12px — 8px list inset keeps the text edge on the search row's 20px */
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition: background-color var(--motion-duration-fast) var(--motion-ease-standard);
@@ -276,7 +279,7 @@
   display: flex;
   align-items: center;
   gap: var(--gap-md);
-  padding: var(--padding-sm) var(--padding-md);
+  padding: var(--padding-sm-md) var(--padding-lg);
   border-top: var(--border-xs) solid var(--color-divider);
   flex-shrink: 0;
   flex-wrap: wrap;
