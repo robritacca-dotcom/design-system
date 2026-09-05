@@ -2,6 +2,7 @@ import {
   componentsSidebarLinks,
   docsSidebarLinks,
   foundationsSidebarLinks,
+  templatesSidebarLinks,
   workSidebarLinks,
   type NavLink,
 } from "@/config/navigation";
@@ -48,6 +49,12 @@ export function GET() {
       "Foundations",
       `Design tokens and language. Index at ${SITE_URL}/foundations.`,
       foundationsSidebarLinks
+    ),
+    "",
+    section(
+      "Templates",
+      `Complete screens built from the system's components and tokens alone. Index at ${SITE_URL}/templates.`,
+      templatesSidebarLinks
     ),
     "",
     section(
