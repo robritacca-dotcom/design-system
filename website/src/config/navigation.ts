@@ -128,8 +128,9 @@ export const dsMegaItems: MegaItem[] = dsMegaGroups.flatMap(
 
 /**
  * The mega panel's showcase column: one featured page rendered as a card to
- * the right of the link grid. The cover is the robr0-ds case study's render
- * pair, so it swaps with the theme like every other cover on the site.
+ * the right of the link grid. The cover is the overview page's own render
+ * pair (see the cover-renders registry), so it shows the page it links to
+ * and swaps with the theme like every other cover on the site.
  */
 export const dsMegaShowcase = {
   href: "/overview",
@@ -138,8 +139,8 @@ export const dsMegaShowcase = {
   description:
     "How the system is built, tested, and shipped: the registries, validators and agent loops behind every page.",
   cta: "Explore the overview",
-  /** The `/work/<slug>` href whose card render illustrates the showcase. */
-  coverHref: "/work/robr0-ds",
+  /** The cover-registry href whose render illustrates the showcase. */
+  coverHref: "/overview",
 };
 
 /** URL prefixes that should mark the "Design system" mega trigger as active */

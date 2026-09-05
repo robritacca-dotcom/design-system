@@ -85,7 +85,9 @@ if (existsSync(coversMapPath)) {
   const source = readFileSync(coversMapPath, 'utf8');
   const block = source.match(/CASE_STUDY_COVERS[^{]*\{([\s\S]*?)\n\};/);
   if (block) {
-    for (const m of block[1].matchAll(/["'](\/work\/[a-z0-9-]+)["']\s*:/g)) {
+    // Keys are page hrefs: the `/work/<slug>` studies, plus the odd
+    // non-study page whose cover rides the same pipeline (`/overview`).
+    for (const m of block[1].matchAll(/["'](\/[a-z0-9-]+(?:\/[a-z0-9-]+)*)["']\s*:/g)) {
       mapped.add(m[1]);
     }
   } else {
@@ -137,7 +139,7 @@ for (const [href, entry] of Object.entries(studies)) {
     errors.push(`${href} alt text is ${alt.length} chars — keep it under 220.`);
   }
 
-  const slug = href.replace(/^\/work\//, '');
+  const slug = href.replace(/^\/work\//, '').replace(/^\//, '');
   for (const aspect of list) {
     if (!aspects[aspect]) {
       errors.push(`${href} asks for aspect "${aspect}", which is not defined.`);

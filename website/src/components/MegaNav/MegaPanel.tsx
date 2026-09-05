@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { Button } from "@robr0/design-system/components/Button/Button";
 import {
   dsMegaGroups,
   dsMegaShowcase,
@@ -42,34 +41,45 @@ function MegaItemRow({
 }
 
 /**
- * The featured-page card in the right column — overline, cover, copy, and
- * the tertiary button that carries the link.
+ * The featured-page card in the right column — one link wrapping the
+ * overline, cover, copy, and the call-to-action row, so the whole card is
+ * clickable. The cover flexes to absorb the height difference against the
+ * link grid (the shot crops rather than scales), keeping the two columns
+ * bottom-aligned.
  */
 function MegaShowcaseCard({ tabbable }: { tabbable: boolean }) {
   return (
-    <div className={styles.megaShowcase}>
-      <div className={styles.megaGroupLabel}>{dsMegaShowcase.overline}</div>
-      {/* Decorative here — the card's own title and description carry the
-          meaning, so the cover's registry alt would only repeat them. */}
-      <CoverImage
-        href={dsMegaShowcase.coverHref}
-        aspect="card"
-        alt=""
-        className={styles.megaShowcaseCover}
-      />
-      <div className={styles.megaItemText}>
-        <div className={styles.megaLabel}>{dsMegaShowcase.label}</div>
-        <div className={styles.megaDescription}>{dsMegaShowcase.description}</div>
-      </div>
-      <Button
+    <div className={styles.megaShowcaseColumn}>
+      <Link
         href={dsMegaShowcase.href}
-        label={dsMegaShowcase.cta}
-        variant="tertiary"
-        size="compact"
-        iconRight="arrow_forward"
+        className={styles.megaShowcase}
         tabIndex={tabbable ? 0 : -1}
-        className={styles.megaShowcaseBtn}
-      />
+      >
+        <div className={styles.megaGroupLabel}>{dsMegaShowcase.overline}</div>
+        {/* Decorative here — the card's own title and description carry the
+            meaning, so the cover's registry alt would only repeat them. */}
+        <CoverImage
+          href={dsMegaShowcase.coverHref}
+          aspect="mega"
+          alt=""
+          className={styles.megaShowcaseCover}
+        />
+        <div className={styles.megaItemText}>
+          <div className={styles.megaLabel}>{dsMegaShowcase.label}</div>
+          <div className={styles.megaDescription}>
+            {dsMegaShowcase.description}
+          </div>
+        </div>
+        <span className={styles.megaShowcaseCta}>
+          {dsMegaShowcase.cta}
+          <span
+            className={`material-symbols-rounded ${styles.megaShowcaseCtaIcon}`}
+            aria-hidden="true"
+          >
+            arrow_forward
+          </span>
+        </span>
+      </Link>
     </div>
   );
 }

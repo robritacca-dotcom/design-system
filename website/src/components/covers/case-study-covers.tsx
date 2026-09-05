@@ -6,7 +6,7 @@ import { IntuitAgentChatCover } from "./IntuitAgentChatCover";
 import { AugmentaSolutionCover } from "./AugmentaCover";
 import { MetaOfferSummaryCover } from "./MetaOfferSummaryCover";
 import { MetaOfferDraftCover } from "./MetaOfferDraftCover";
-import { SitePlaygroundCover } from "./SiteCovers";
+import { SiteOverviewCover, SitePlaygroundCover } from "./SiteCovers";
 
 /**
  * Which redrawn screen stands for each case study.
@@ -19,6 +19,10 @@ import { SitePlaygroundCover } from "./SiteCovers";
  *
  * A study with no entry keeps its photographic cover — CIBC's is a photo of a
  * phone, which has no screen to redraw.
+ *
+ * One entry is not a case study: `/overview` is the featured page in the mega
+ * panel's showcase card, and its cover rides the same draw-register-render
+ * pipeline as the studies rather than growing a parallel one.
  *
  * This map is the *drawing*, and it is rendered in exactly two places: the
  * `/covers` staging grid, and the `/covers/render` surface the images are shot
@@ -35,6 +39,7 @@ export const CASE_STUDY_COVERS: Record<
   "/work/meta-career-profile": MetaOfferSummaryCover,
   "/work/meta-offers": MetaOfferDraftCover,
   "/work/robr0-ds": SitePlaygroundCover,
+  "/overview": SiteOverviewCover,
 };
 
 /**

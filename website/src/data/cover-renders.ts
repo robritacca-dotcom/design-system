@@ -40,9 +40,13 @@ export function coverAlt(href: string): string {
   return COVER_STUDIES[href]?.alt ?? "";
 }
 
-/** `/work/augmenta-ai` → `augmenta-ai`, the stem every file name is built on. */
+/**
+ * `/work/augmenta-ai` → `augmenta-ai`, `/overview` → `overview`: the stem
+ * every file name is built on. Mirrored by `targets()` in
+ * scripts/generate-cover-rasters.mjs.
+ */
 export function coverSlug(href: string): string {
-  return href.replace(/^\/work\//, "");
+  return href.replace(/^\/work\//, "").replace(/^\//, "");
 }
 
 /** The public path of one render. The single source for these file names. */

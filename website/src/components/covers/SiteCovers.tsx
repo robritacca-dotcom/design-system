@@ -2,8 +2,8 @@ import { CoverFrame, type CoverProps } from "./CoverFrame";
 import styles from "./SiteCovers.module.css";
 
 /*
- * Literal redraws of two of this site's own screens at 1440 x 900: the home
- * hero, and the playground's Chat view.
+ * Literal redraws of this site's own screens at 1440 x 900: the home hero,
+ * the playground's Chat view, and the system overview.
  *
  * Hard-coded like every other cover here, and deliberately so even though the
  * real tokens are one import away — a cover is a picture of what the product
@@ -226,6 +226,255 @@ const SWATCHES = [
     "#63666f",
   ],
 ];
+
+/** The overview page's sidebar, with the current page marked. */
+const OVERVIEW_SIDEBAR = [
+  "Contents",
+  "Overview",
+  "Get started",
+  "Claude MD",
+  "Design MD",
+  "Content MD",
+  "Skills",
+  "Loops",
+  "Project journal",
+];
+
+/** The stats rail, frozen at the counts the page showed when this was drawn. */
+const OVERVIEW_STATS: { value: string; title: string; label: string }[] = [
+  { value: "122", title: "React components", label: "Each with docs and stories" },
+  { value: "221", title: "Semantic tokens", label: "8 categories, light and dark" },
+  { value: "23", title: "Claude Code skills", label: "Building and auditing the system" },
+  { value: "25", title: "Journal entries", label: "The build, tracked in public" },
+];
+
+/** One pipeline entry: the tool's mark, then the role it plays. */
+type OverviewEntry = {
+  name: string;
+  logo: string;
+  title: string;
+  description: React.ReactNode;
+  bullets: React.ReactNode[];
+};
+
+const OVERVIEW_PIPELINE: OverviewEntry[] = [
+  {
+    name: "Figma",
+    logo: "/logos/Figma.svg",
+    title: "Design foundation",
+    description:
+      "Where the foundation was designed: the token architecture, the colour ramps, the component vocabulary.",
+    bullets: [
+      "Tokens designed as variables: the colour ramps plus the spatial scale (gap, padding, radius, border)",
+      <>
+        Still the sketchpad where bigger visual changes get explored before
+        they land in <span className={styles.ovAccentText}>the written spec</span>
+      </>,
+    ],
+  },
+  {
+    name: "Claude Code",
+    logo: "/logos/Claude.svg",
+    title: "AI component generator",
+    description: (
+      <>
+        Builds production React from the written specs in the repo:{" "}
+        <span className={styles.ovAccentText}>design.md</span> for the design
+        language, <span className={styles.ovAccentText}>CLAUDE.md</span> for the
+        rules, and <span className={styles.ovAccentText}>content-design.md</span>{" "}
+        for how every word reads.
+      </>
+    ),
+    bullets: [
+      "Generates the components, the layered token CSS, and the Storybook docs from the spec",
+      "Maintains the system too: skills audit token usage, prose, and accessibility on demand",
+    ],
+  },
+  {
+    name: "Storybook",
+    logo: "/logos/storybook.svg",
+    title: "Live documentation site",
+    description: (
+      <>
+        Every component, variant, and token, live at{" "}
+        <span className={styles.ovAccentText}>design-system-iota-one.vercel.app</span>.
+      </>
+    ),
+    bullets: ["A playground with live controls for every prop and state"],
+  },
+];
+
+/** The overview page — the pipeline beside the stats rail: 1440 x 900. */
+export function SiteOverviewCover(props: CoverProps) {
+  return (
+    <CoverFrame
+      width={1440}
+      height={900}
+      ground="site"
+      tone="site"
+      {...props}
+      label="The system overview page: the pipeline from Figma through Claude Code and Storybook down the left, the registry-fed stats rail beside it."
+    >
+      <div className={`${styles.stage} ${styles.ovStage}`}>
+        <AmbientBlobs />
+
+        <div className={styles.header}>
+          <span className={styles.logoSlot}>
+            <svg
+              width="22"
+              height="16"
+              viewBox="0 0 22 16"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M1 15 L1 4 Q1 1 4 1 L10 1 Q13 1 13 4 Q13 7 10 7 L4 7"
+                stroke="#118ab2"
+                strokeWidth="2"
+                strokeLinecap="round"
+                fill="none"
+              />
+              <path
+                d="M9 7 L14 15"
+                stroke="#118ab2"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+            </svg>
+            <span className={styles.wordmark}>Robert Ritacca</span>
+          </span>
+
+          <nav className={styles.nav}>
+            {NAV_LINKS.map((link) => (
+              <span
+                key={link}
+                className={`${styles.navLink} ${
+                  link === "Design system" ? styles.ovNavActive : ""
+                }`}
+              >
+                {link}
+                {link === "Design system" && (
+                  <svg
+                    width="10"
+                    height="6"
+                    viewBox="0 0 10 6"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M1 1L5 5L9 1"
+                      stroke="currentColor"
+                      strokeWidth="1.4"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                )}
+              </span>
+            ))}
+          </nav>
+
+          <span className={styles.ovSearch}>
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              aria-hidden="true"
+            >
+              <circle
+                cx="6"
+                cy="6"
+                r="4.4"
+                stroke="currentColor"
+                strokeWidth="1.4"
+              />
+              <path
+                d="M9.4 9.4 13 13"
+                stroke="currentColor"
+                strokeWidth="1.4"
+                strokeLinecap="round"
+              />
+            </svg>
+            Search
+            <span className={styles.ovSearchKeys}>⌘ K</span>
+          </span>
+        </div>
+
+        <div className={styles.ovSidebar}>
+          {OVERVIEW_SIDEBAR.map((item) => (
+            <span
+              key={item}
+              className={`${styles.ovSideItem} ${
+                item === "Overview" ? styles.ovSideItemActive : ""
+              }`}
+            >
+              {item}
+            </span>
+          ))}
+        </div>
+
+        <div className={styles.ovMain}>
+          <p className={styles.ovCrumb}>
+            Design system <span>›</span> Docs <span>›</span> Overview
+          </p>
+          <p className={styles.ovTitle}>Overview of robr0 DS</p>
+
+          <p className={styles.ovSub}>
+            An AI-ready design system, built to make this site
+          </p>
+          <p className={styles.ovIntro}>
+            robr0 DS is the system I built, by myself, to make every page you
+            see here. The foundation was designed in{" "}
+            <span className={styles.ovAccentText}>Figma</span>; the system
+            itself lives in <span className={styles.ovAccentText}>the repo</span>{" "}
+            as a <span className={styles.ovAccentText}>written spec</span>,
+            layered CSS tokens, and React components, and Claude Code builds
+            from the spec, so a design change reaches production in under a
+            minute. It ships as the npm package @robr0/design-system, and this
+            site installs that package like any other consumer would.
+          </p>
+
+          <div className={styles.ovColumns}>
+            <div className={styles.ovPipeline}>
+              <p className={styles.ovH2}>Pipeline</p>
+              <div className={styles.ovTimeline}>
+                {OVERVIEW_PIPELINE.map((entry) => (
+                  <div key={entry.name} className={styles.ovEntry}>
+                    <span className={styles.ovMarker}>
+                      {/* eslint-disable-next-line @next/next/no-img-element -- next/image cannot render inside an SVG foreignObject. */}
+                      <img src={entry.logo} alt="" />
+                    </span>
+                    <p className={styles.ovCompany}>{entry.name}</p>
+                    <p className={styles.ovRoleTitle}>{entry.title}</p>
+                    <p className={styles.ovDesc}>{entry.description}</p>
+                    <ul className={styles.ovBullets}>
+                      {entry.bullets.map((bullet, index) => (
+                        <li key={index}>{bullet}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className={styles.ovRail}>
+              <p className={styles.ovH2}>By the numbers</p>
+              <div className={styles.ovStats}>
+                {OVERVIEW_STATS.map((stat) => (
+                  <div key={stat.title} className={styles.ovStat}>
+                    <span className={styles.ovStatValue}>{stat.value}</span>
+                    <span className={styles.ovStatTitle}>{stat.title}</span>
+                    <span className={styles.ovStatLabel}>{stat.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </CoverFrame>
+  );
+}
 
 /** The playground's Chat view: 1440 x 900. */
 export function SitePlaygroundCover(props: CoverProps) {

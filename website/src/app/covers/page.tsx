@@ -12,6 +12,7 @@ import { MetaOfferDraftCover } from "../../components/covers/MetaOfferDraftCover
 import { MetaOfferSummaryCover } from "../../components/covers/MetaOfferSummaryCover";
 import {
   SiteHomeCover,
+  SiteOverviewCover,
   SitePlaygroundCover,
 } from "../../components/covers/SiteCovers";
 import { openSans } from "./fonts";
@@ -51,6 +52,10 @@ const COVERS: { label: string; cover: React.ReactNode }[] = [
   {
     label: "robertritacca.com — playground chat",
     cover: <SitePlaygroundCover />,
+  },
+  {
+    label: "robertritacca.com — system overview",
+    cover: <SiteOverviewCover />,
   },
 ];
 

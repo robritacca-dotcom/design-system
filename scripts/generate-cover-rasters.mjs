@@ -44,7 +44,7 @@ const registry = JSON.parse(readFileSync(registryPath, 'utf8'));
 function targets() {
   const out = [];
   for (const [href, entry] of Object.entries(registry.studies)) {
-    const slug = href.replace(/^\/work\//, '');
+    const slug = href.replace(/^\/work\//, '').replace(/^\//, '');
     for (const aspect of entry.aspects) {
       const spec = registry.aspects[aspect];
       if (!spec) throw new Error(`${href} asks for unknown aspect "${aspect}"`);

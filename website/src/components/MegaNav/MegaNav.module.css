@@ -457,16 +457,34 @@
 
 /* ============================================
    MEGA MENU SHOWCASE
-   The featured-page card in the right column; the tertiary button below
-   the copy is the link.
+   The featured-page card in the right column — one link wrapping the
+   overline, cover, copy and CTA row, so the whole card is clickable. The
+   divider between the halves lives on the column wrapper, not the link.
    ============================================ */
+.megaShowcaseColumn {
+  display: flex;
+  padding-left: var(--primitive-padding-xl);
+  border-left: 1px solid var(--color-bg-container-border);
+  /* Sizes the cover's growth cap below in cqw, i.e. as a share of this
+     column's width. */
+  container-type: inline-size;
+}
+
 .megaShowcase {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: var(--primitive-gap-sm-md);
-  padding-left: var(--primitive-padding-xl);
-  border-left: 1px solid var(--color-bg-container-border);
+  min-width: 0;
+  text-decoration: none;
+  color: inherit;
+  border-radius: var(--radius-md);
+}
+
+.megaShowcase:focus-visible {
+  outline: 2px solid var(--color-action-primary-bg);
+  outline-offset: 4px;
 }
 
 .megaShowcase .megaGroupLabel {
@@ -474,19 +492,67 @@
   padding-inline: 0;
 }
 
+/* The cover absorbs the height difference against the link grid: it grows
+   to bottom-align the two columns and shrinks before pushing them apart.
+   The shot inside is object-fit: cover, so a flexed height crops it rather
+   than distorting it — the !important is needed to beat CoverImage's
+   inline aspect-ratio, which is what normally sizes it. */
 .megaShowcaseCover {
   display: block;
-  width: 100%;
+  align-self: stretch;
+  flex: 1 1 auto;
+  min-height: 0;
+  aspect-ratio: auto !important;
+  /* On a narrow desktop the link grid runs much taller than the card's
+     copy, so unbounded growth would take the cover square and crop the
+     shot's screen. 75cqw holds it at 4:3 or wider — the widest crop that
+     still shows the mock edge to edge — and the CTA's auto margin takes
+     whatever growth this cap declines. */
+  max-height: 75cqw;
   border-radius: var(--radius-md);
   overflow: hidden;
   border: 1px solid var(--color-bg-container-border);
+  transition: border-color var(--motion-duration-fast) var(--motion-ease-standard);
 }
 
-.megaShowcaseBtn {
-  /* Pulls the button back by its own horizontal padding (the compact
-     size's --padding-sm-md) so the label optically left-aligns with the
-     cover and copy above. */
+.megaShowcase:hover .megaShowcaseCover {
+  border-color: var(--color-bg-container-tertiary);
+}
+
+/* Dressed as the compact tertiary button it replaced, minus the padding —
+   the pill fill appears on card hover, so hovering anywhere on the card
+   lights the action up. */
+.megaShowcaseCta {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-xs);
+  /* Bottom-aligns the CTA with the link grid when the cover's growth cap
+     leaves the card shorter than the column. */
+  margin-top: auto;
+  padding: var(--padding-xs) var(--padding-sm-md);
   margin-left: calc(-1 * var(--padding-sm-md));
+  border-radius: var(--radius-full);
+  font-family: var(--font-paragraph-sm-em-family);
+  font-size: var(--font-paragraph-sm-em-size);
+  font-weight: var(--font-paragraph-sm-em-weight);
+  line-height: var(--font-paragraph-sm-em-line-height);
+  letter-spacing: var(--font-paragraph-sm-em-letter-spacing);
+  color: var(--color-action-passive-text);
+  transition: background var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.megaShowcase:hover .megaShowcaseCta {
+  background: var(--color-action-passive-bg-hover);
+}
+
+.megaShowcaseCtaIcon {
+  --icon-size: var(--icon-size-sm);
+  line-height: 1;
+  transition: translate var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.megaShowcase:hover .megaShowcaseCtaIcon {
+  translate: 2px 0;
 }
 
 /* ============================================
