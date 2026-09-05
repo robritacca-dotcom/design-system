@@ -428,7 +428,7 @@ Each blob carries a 14–22s drift period inherited from the CSS blobs it replac
 
 ### Button
 
-**`ds-button`** — The primary interactive element. Always pill-shaped (`--radius-full`). Text uses `--font-paragraph-em-*` (default) or `--font-paragraph-sm-em-*` (compact). Icon size: 24px (default), 20px (compact). Transitions: background-color, border-color, and opacity at `--motion-duration-base` / `--motion-ease-standard`. Disabled state: `opacity: 0.4`, `cursor: not-allowed` — never hidden.
+**`ds-button`** — The primary interactive element. Always pill-shaped (`--radius-full`), and the label never wraps (`white-space: nowrap`, shared with AiButton) — a squeezed layout shortens around the button rather than folding the pill into two lines. Text uses `--font-paragraph-em-*` (default) or `--font-paragraph-sm-em-*` (compact). Icon size: 24px (default), 20px (compact). Transitions: background-color, border-color, and opacity at `--motion-duration-base` / `--motion-ease-standard`. Disabled state: `opacity: 0.4`, `cursor: not-allowed` — never hidden.
 
 | Variant | Fill | Border | Text |
 |---|---|---|---|
@@ -456,7 +456,7 @@ Loading state: `loading` puts a `variant="inherit"` Spinner in the left icon slo
 
 ### SegmentedControl
 
-**`ds-segmented-control`** — Horizontal set of mutually exclusive options on a `--color-bg-container-primary` track with a `--radius-full` pill silhouette. The active segment takes `--color-action-primary-bg` with `--color-action-primary-text`; idle segments use `--font-paragraph-em-*` in `--color-text-secondary` with `--color-action-passive-bg-hover` on hover. `variant="neutral"` swaps the active fill to `--color-action-neutral-bg`/`--color-action-neutral-text`, for sets where the selection should not carry the teal selection convention's weight. Segments accept an optional Material Symbol icon and per-segment `disabled`. The track carries a `--border-xs` `--color-bg-container-border` hairline. Sizes: `default`, `compact`; `fullWidth` stretches segments across the container. Announces as a tablist (`role="tablist"`, segments are `role="tab"` with `aria-selected`). Keyboard: Arrow keys cycle enabled segments, Home/End jump to the ends.
+**`ds-segmented-control`** — Horizontal set of mutually exclusive options on a `--color-bg-container-primary` track with a `--radius-full` pill silhouette. The active segment takes `--color-action-primary-bg` with `--color-action-primary-text`; idle segments use `--font-paragraph-em-*` in `--color-text-secondary` with `--color-action-passive-bg-hover` on hover, and an idle segment's icon shares the label's `--color-text-secondary` — never a dimmer icon tier — so icon-only segments keep label-strength contrast. `variant="neutral"` swaps the active fill to `--color-action-neutral-bg`/`--color-action-neutral-text`, for sets where the selection should not carry the teal selection convention's weight. Segments accept an optional Material Symbol icon and per-segment `disabled`. The track carries a `--border-xs` `--color-bg-container-border` hairline. Sizes: `default`, `compact`; `fullWidth` stretches segments across the container. Announces as a tablist (`role="tablist"`, segments are `role="tab"` with `aria-selected`). Keyboard: Arrow keys cycle enabled segments, Home/End jump to the ends.
 
 ### ToggleGroup
 

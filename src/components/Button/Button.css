@@ -23,6 +23,9 @@
   line-height: var(--font-paragraph-em-line-height);
   letter-spacing: var(--font-paragraph-em-letter-spacing);
   text-align: center;
+  /* A pill's label never wraps — a squeezed layout shortens around the
+     button, it doesn't fold the silhouette into two lines. */
+  white-space: nowrap;
 
   /* Transitions */
   transition: background-color var(--motion-duration-base) var(--motion-ease-standard), border-color var(--motion-duration-base) var(--motion-ease-standard), opacity var(--motion-duration-base) var(--motion-ease-standard);

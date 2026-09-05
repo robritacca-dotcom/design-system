@@ -55,12 +55,14 @@
   transition: color var(--motion-duration-base) var(--motion-ease-standard);
 }
 
-/* Icon */
+/* Icon — same idle tier as the label, so an icon never reads dimmer than
+   the text beside it, and an icon-only segment (the site's theme toggle)
+   holds label-strength contrast in both modes. */
 .ds-segmented-control__icon {
   flex-shrink: 0;
   --icon-size: var(--icon-size-md);
   line-height: 1;
-  color: var(--color-icon-secondary);
+  color: var(--color-text-secondary);
   transition: color var(--motion-duration-base) var(--motion-ease-standard);
 }
 

@@ -38,6 +38,9 @@
   line-height: var(--font-paragraph-em-line-height);
   letter-spacing: var(--font-paragraph-em-letter-spacing);
   text-align: center;
+  /* A pill's label never wraps — a squeezed layout shortens around the
+     button, it doesn't fold the silhouette into two lines. */
+  white-space: nowrap;
 
   /* The field is transparent by design: the ring and glow are the button */
   background: transparent;
