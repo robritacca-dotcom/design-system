@@ -254,6 +254,16 @@ export const templatesSidebarLinks: NavLink[] = [
     label: "Marketing dashboard",
     description: "An analytics app shell built from the system alone",
   },
+  {
+    href: "/templates/relay-console",
+    label: "Relay console",
+    description: "A network operations screen around an interactive globe",
+  },
+  {
+    href: "/templates/treasury-console",
+    label: "Treasury console",
+    description: "A payment release desk with a code-gated workflow",
+  },
 ];
 
 /**

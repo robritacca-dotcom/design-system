@@ -196,7 +196,8 @@ export default function TemplateShowcase() {
             </span>
             <p className={styles.emptyTitle}>The next template lands here</p>
             <p className={styles.emptyBody}>
-              Each one starts as a labs rebuild and moves in once it holds up.
+              Some begin as labs rebuilds, some as original compositions; each
+              moves in once it holds up.
             </p>
           </div>
         </div>

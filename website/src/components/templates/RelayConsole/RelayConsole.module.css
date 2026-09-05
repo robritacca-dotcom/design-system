@@ -1,0 +1,638 @@
+/* Templates: the Meridian relay console. Every colour, space, radius, and
+   type style is a semantic token; the only raw values are structural layout
+   sizes (grid tracks, breakpoints), which pages own everywhere else on the
+   site. The layout is the centre-stage instrument: two rails around one
+   large globe, the headline numbers folded into the top bar, and the
+   dashboard rung set carrying the density (20px gutters and insets, 16px
+   region gaps, 8/12px clusters). */
+
+.shell {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  /* An instrument holds the viewport and scrolls its rails internally;
+     narrow layouts below trade this for normal page flow. */
+  height: calc(var(--layout-viewport-height, 100vh));
+  /* Stretch across the body's own padding (the marketing dashboard's
+     pattern), so the shell runs edge to edge; the primitives mirror the
+     body's inset in globals.css. */
+  width: calc(100% + var(--primitive-padding-xl) * 2);
+  margin: calc(-1 * var(--primitive-padding-lg))
+    calc(-1 * var(--primitive-padding-xl));
+}
+
+/* ------------------------------------------------------------- top bar */
+
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-lg);
+  width: 100%;
+  max-width: 1680px;
+  margin-inline: auto;
+  padding: var(--padding-sm-md) var(--padding-xl);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm-md);
+}
+
+/* The icon tile pattern at brand scale: a filled disc holding a small
+   glyph, the KPI-header treatment the dashboard rung set established. */
+.brandMark {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: var(--radius-full);
+  background-color: var(--color-bg-container-tertiary);
+  color: var(--color-text-primary);
+  --icon-size: var(--icon-size-sm);
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+}
+
+.brandName {
+  font-family: var(--font-title-body-family);
+  font-size: var(--font-title-body-size);
+  font-weight: var(--font-title-body-weight);
+  line-height: var(--font-title-body-line-height);
+  letter-spacing: var(--font-title-body-letter-spacing);
+  color: var(--color-text-primary);
+}
+
+.brandRole {
+  font-family: var(--font-caption-family);
+  font-size: var(--font-caption-size);
+  font-weight: var(--font-caption-weight);
+  line-height: var(--font-caption-line-height);
+  color: var(--color-text-tertiary);
+}
+
+/* The network's headline numbers as a quiet strip: live dot, then four
+   value-over-label pairs in tabular figures. */
+.metricsStrip {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-lg);
+  min-width: 0;
+}
+
+.liveDot {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: var(--radius-full);
+  background-color: var(--color-status-positive-border);
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  white-space: nowrap;
+}
+
+.metricValue {
+  font-family: var(--font-paragraph-sm-em-family);
+  font-size: var(--font-paragraph-sm-em-size);
+  font-weight: var(--font-paragraph-sm-em-weight);
+  line-height: var(--font-paragraph-sm-em-line-height);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-primary);
+}
+
+.metricLabel {
+  font-family: var(--font-caption-family);
+  font-size: var(--font-caption-size);
+  font-weight: var(--font-caption-weight);
+  line-height: var(--font-caption-line-height);
+  color: var(--color-text-tertiary);
+}
+
+.topBarActions {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+}
+
+/* ----------------------------------------------------------- workspace */
+
+.workspace {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr) 340px;
+  grid-template-areas: "list stage detail";
+  gap: var(--gap-lg);
+  width: 100%;
+  max-width: 1680px;
+  margin-inline: auto;
+  padding: var(--padding-lg) var(--padding-xl) var(--padding-lg);
+  transition: padding var(--motion-duration-slow) var(--motion-ease-emphasized);
+}
+
+/* The docked assistant pushes the console over instead of covering it —
+   the site's body-inset pattern, applied here since the shell owns its own
+   layout. The width it takes is more than the stage can spare beside two
+   rails, so the console answers the way it answers a narrow viewport: the
+   same stacked layout as the 1080px collapse below. */
+.shellChatOpen {
+  height: auto;
+  min-height: 100vh;
+}
+
+.workspaceChatOpen {
+  padding-right: calc(var(--layout-chat-width) + var(--layout-chat-inset) * 2);
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "stage" "detail" "list";
+}
+
+.workspaceChatOpen .stationsPanel,
+.workspaceChatOpen .detailPanel {
+  overflow-y: visible;
+}
+
+.workspaceChatOpen .stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gap-md);
+  padding-bottom: 0;
+}
+
+.workspaceChatOpen .globeBox {
+  width: min(100%, 480px);
+}
+
+.workspaceChatOpen .regionControl {
+  position: static;
+  transform: none;
+  order: -1;
+}
+
+.workspaceChatOpen .legendCorner {
+  position: static;
+  align-self: flex-start;
+}
+
+/* -------------------------------------------------------------- panels */
+
+.stationsPanel,
+.detailPanel {
+  background-color: var(--color-bg-container-primary);
+  border-radius: var(--radius-xl);
+  padding: var(--padding-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.stationsPanel {
+  grid-area: list;
+}
+
+.detailPanel {
+  grid-area: detail;
+}
+
+.panelHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--gap-sm);
+}
+
+.panelTitle {
+  margin: 0;
+  font-family: var(--font-title-body-family);
+  font-size: var(--font-title-body-size);
+  font-weight: var(--font-title-body-weight);
+  line-height: var(--font-title-body-line-height);
+  letter-spacing: var(--font-title-body-letter-spacing);
+  color: var(--color-text-primary);
+}
+
+.panelCount {
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-tertiary);
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------- station list */
+
+.stationList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xxs);
+}
+
+/* Selection wears the passive-active treatment (TreeView's selected-row
+   convention); teal stays on the region control, where the set is truly
+   mutually exclusive. */
+.stationRow {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm-md);
+  width: 100%;
+  padding: var(--padding-sm) var(--padding-sm-md);
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.stationRow:hover {
+  background-color: var(--color-action-passive-bg-hover);
+}
+
+.stationRow:focus-visible {
+  outline: 2px solid var(--color-action-primary-bg);
+  outline-offset: -2px;
+}
+
+.stationRowSelected,
+.stationRowSelected:hover {
+  background-color: var(--color-action-passive-bg-active);
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: var(--radius-full);
+}
+
+
+.stationText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.stationName {
+  font-family: var(--font-paragraph-sm-em-family);
+  font-size: var(--font-paragraph-sm-em-size);
+  font-weight: var(--font-paragraph-sm-em-weight);
+  line-height: var(--font-paragraph-sm-em-line-height);
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stationMeta {
+  font-family: var(--font-caption-family);
+  font-size: var(--font-caption-size);
+  font-weight: var(--font-caption-weight);
+  line-height: var(--font-caption-line-height);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-tertiary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+
+
+.stationReading {
+  flex-shrink: 0;
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-secondary);
+}
+
+.blockLabel {
+  margin: 0;
+  font-family: var(--font-paragraph-sm-em-family);
+  font-size: var(--font-paragraph-sm-em-size);
+  font-weight: var(--font-paragraph-sm-em-weight);
+  line-height: var(--font-paragraph-sm-em-line-height);
+  color: var(--color-text-tertiary);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --------------------------------------------------------------- stage */
+
+/* The stage is the globe and nothing else: the sphere centred in the free
+   column, the legend and the region control floating over the box corners
+   the circle leaves empty. The bottom padding reserves the control band so
+   the floating pieces never sit on the sphere itself. */
+.stage {
+  grid-area: stage;
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  min-height: 0;
+  padding-bottom: 64px;
+}
+
+.globeBox {
+  width: min(100%, 82vh, 780px);
+}
+
+.globe {
+  width: 100%;
+}
+
+.legendCorner {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+.regionControl {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* --------------------------------------------------------- detail rail */
+
+.detailHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+}
+
+.detailTitleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-sm);
+}
+
+.detailTitle {
+  margin: 0;
+  font-family: var(--font-heading-3-family);
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  letter-spacing: var(--font-heading-3-letter-spacing);
+  color: var(--color-text-primary);
+}
+
+/* The station's fix, in MapCallout's readout voice: the code face with
+   even digits, so coordinates line up character for character. */
+.detailCode {
+  margin: 0;
+  font-family: var(--font-family-code);
+  font-size: var(--font-caption-size);
+  line-height: var(--font-caption-line-height);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-tertiary);
+}
+
+/* One readings cluster: the dial beside the two headline numbers. */
+.readings {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-lg);
+}
+
+.readingStats {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  min-width: 0;
+}
+
+.sparkBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+}
+
+.sparkHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--gap-sm);
+}
+
+.sparkNow {
+  font-family: var(--font-caption-family);
+  font-size: var(--font-caption-size);
+  font-weight: var(--font-caption-weight);
+  line-height: var(--font-caption-line-height);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-tertiary);
+}
+
+.detailSpark {
+  width: 100%;
+  height: auto;
+}
+
+.eventsBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+}
+
+.eventList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+}
+
+.eventRow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap-sm);
+}
+
+.eventDot {
+  width: 6px;
+  height: 6px;
+  flex-shrink: 0;
+  border-radius: var(--radius-full);
+  /* Optically centres the dot on the first text line. */
+  margin-top: calc((var(--font-paragraph-sm-line-height) - 6px) / 2);
+}
+
+.eventText {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-secondary);
+}
+
+.eventTime {
+  flex-shrink: 0;
+  font-family: var(--font-caption-family);
+  font-size: var(--font-caption-size);
+  line-height: var(--font-paragraph-sm-line-height);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-tertiary);
+}
+
+/* The rail's foot: the actions for whatever is selected. */
+.detailFooter {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  padding-top: var(--gap-sm);
+}
+
+
+
+.detailActions {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+}
+
+.relayRoute {
+  margin: 0;
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-secondary);
+}
+
+.relayHandoff {
+  margin: 0;
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+}
+
+.detailEmpty {
+  margin: 0;
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-tertiary);
+}
+
+/* ---------------------------------------------------------- responsive */
+
+@media (max-width: 1440px) {
+  .metricsStrip {
+    gap: var(--gap-md);
+  }
+}
+
+@media (max-width: 1280px) {
+  .workspace {
+    grid-template-columns: 260px minmax(0, 1fr) 300px;
+  }
+
+  .metricsStrip {
+    display: none;
+  }
+}
+
+/* Below the three-column width the instrument gives up the fixed viewport:
+   the stage leads, the detail follows, the list closes the page. The
+   floating stage pieces return to the flow under the globe. */
+@media (max-width: 1080px) {
+  .shell {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .workspace {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "stage" "detail" "list";
+    padding: var(--padding-md);
+  }
+
+  .stationsPanel,
+  .detailPanel {
+    overflow-y: visible;
+  }
+
+  .stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap-md);
+    padding-bottom: 0;
+  }
+
+  .globeBox {
+    width: min(100%, 480px);
+  }
+
+  .regionControl {
+    position: static;
+    transform: none;
+    order: -1;
+  }
+
+  .legendCorner {
+    position: static;
+    align-self: flex-start;
+  }
+}
+
+/* The shell's negative margins mirror the body's inset in globals.css,
+   which steps down at these same breakpoints. */
+@media (max-width: 959px) {
+  .shell {
+    width: calc(100% + var(--primitive-padding-lg) * 2);
+    margin: calc(-1 * var(--primitive-padding-lg));
+  }
+
+  .topBar {
+    padding-inline: var(--padding-md);
+  }
+}
+
+@media (max-width: 600px) {
+  .shell {
+    width: calc(100% + var(--primitive-padding-md) * 2);
+    margin: calc(-1 * var(--primitive-padding-lg))
+      calc(-1 * var(--primitive-padding-md));
+  }
+}

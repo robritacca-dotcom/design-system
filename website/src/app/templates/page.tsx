@@ -33,12 +33,13 @@ export default function TemplatesPage() {
             <p className={styles.introBody}>
               A template is a complete screen assembled from the library: every
               control is a component, and every colour, space, and type style
-              resolves to a semantic token. Each one begins as a labs rebuild of
-              a reference product, a way to find where the system falls short
-              before the gaps feed new components back into the registry. All
-              data in them is fictional. The preview below is the template
-              itself, live and following the site’s theme; open it to use it
-              full screen.
+              resolves to a semantic token. The first began as a labs rebuild
+              of a reference product, a way to find where the system falls
+              short; the newer ones are original screens composed to stretch
+              the parts a rebuild never reaches, from the globe to a code-gated
+              release. All data in them is fictional. Each preview below is the
+              template itself, live and following the site’s theme; open one to
+              use it full screen.
             </p>
           </div>
 

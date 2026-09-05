@@ -25,4 +25,6 @@ export const CHROMELESS_ROUTES = new Set([
   "/canvas",
   "/labs/marketing",
   "/templates/marketing-dashboard",
+  "/templates/relay-console",
+  "/templates/treasury-console",
 ]);

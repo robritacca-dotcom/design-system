@@ -745,6 +745,10 @@ const EXCLUDED_ROUTES = new Map([
     'a noindex test page rebuilding a reference marketing dashboard entirely from the system\'s tokens and components, to probe how far they stretch — its prose is fictional demo data, not information'],
   ['/templates/marketing-dashboard',
     'the marketing dashboard template rendered full viewport (the same app shell as /labs/marketing, its origin) — its prose is fictional demo data; the template\'s facts live on the /templates index, which is covered'],
+  ['/templates/relay-console',
+    'the relay console template rendered full viewport — its prose is fictional network telemetry; the template\'s facts live on the /templates index, which is covered'],
+  ['/templates/treasury-console',
+    'the treasury console template rendered full viewport — its prose is fictional payment data; the template\'s facts live on the /templates index, which is covered'],
 ]);
 
 /** Component showcase pages: excluded as a class, with one shared reason. */
