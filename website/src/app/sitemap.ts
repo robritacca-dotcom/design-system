@@ -6,6 +6,7 @@ import {
   componentsSidebarLinks,
   docsSidebarLinks,
   foundationsSidebarLinks,
+  templatesSidebarLinks,
   workSidebarLinks,
 } from "@/config/navigation";
 import { SITE_URL } from "@/lib/structuredData";
@@ -83,6 +84,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...workSidebarLinks.map((l) => l.href),
     ...docsSidebarLinks.map((l) => l.href),
     ...foundationsSidebarLinks.map((l) => l.href),
+    ...templatesSidebarLinks.map((l) => l.href),
     ...componentsSidebarLinks.map((l) => l.href),
   ];
 

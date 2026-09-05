@@ -5,26 +5,21 @@ import {
   useEffect,
   useRef,
   useState,
-  type CSSProperties,
   type MouseEvent as ReactMouseEvent,
 } from "react";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
-import ThemeToggle from "../ThemeToggle/ThemeToggle";
-import { openSitePalette } from "../SitePalette/palette-bus";
 import { lockBodyScroll, unlockBodyScroll } from "@/lib/scroll-lock";
-import { NavList, type NavListItem } from "@robr0/design-system/components/NavList/NavList";
-import { Kbd } from "@robr0/design-system/components/Kbd/Kbd";
+import { type NavListItem } from "@robr0/design-system/components/NavList/NavList";
 import { componentCategoryMetadata } from "@robr0/design-system/components/registry";
 import {
   docsSidebarLinks,
-  dsMegaItems,
   foundationsSidebarLinks,
-  isDesignSystemPath,
   workSidebarLinks,
   type NavLink,
 } from "@/config/navigation";
 import { useWritingNav } from "./WritingNavContext";
+import HeaderBar from "./HeaderBar";
+import MobileDrawer from "./MobileDrawer";
 import styles from "./MegaNav.module.css";
 
 /** Strip sidebar-only fields down to NavList's {label, href} shape. */
@@ -41,36 +36,12 @@ const sectionForPath = (path: string): string | null => {
   return null;
 };
 
-/** Inline SVG logo — matches the production Header */
-function LogoIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      aria-hidden="true"
-    >
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M18.0309 14.98C18.6612 14.8653 19.2184 14.6623 19.7208 14.3712C20.214 14.08 20.6343 13.7358 20.9814 13.3211C21.3285 12.9063 21.5934 12.4387 21.776 11.9269C21.9587 11.4062 22.05 10.8592 22.05 10.2856C22.05 9.22672 21.8034 8.35314 21.3011 7.67368C20.8078 6.99423 20.1775 6.45596 19.4103 6.05889C18.6429 5.6618 17.7935 5.37943 16.8618 5.22942C15.9301 5.07059 15.0258 5 14.158 5L0 5C0 5 1.7355 8.8561 6.49444 8.8561C11.2534 8.8561 14.5417 8.8561 14.5417 8.8561C15.3638 8.8561 16.0123 8.99729 16.4691 9.28849C16.9257 9.57968 17.1541 10.0121 17.1541 10.5856C17.1541 11.1062 16.8983 11.5122 16.3959 11.8033C15.8936 12.1033 15.2725 12.2445 14.5417 12.2445C14.5417 12.2445 7.84631 12.2445 4.28395 12.2445C0.876885 12.2445 1.18745 15.5535 1.18745 15.5535L1.18745 19.8244C1.18745 19.8244 5.93725 19.8068 5.93725 15.9065H13.2263C16.9714 21.2627 23 19.8244 23 19.8244L18.0309 14.98Z"
-        fill="url(#mn-grad)"
-      />
-      <defs>
-        <linearGradient id="mn-grad" x1="3.8" y1="15.9" x2="13.5" y2="5.8" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#2980B9" />
-          <stop offset="0.55" stopColor="#2980B9" />
-          <stop offset="1" stopColor="#34495E" />
-        </linearGradient>
-      </defs>
-    </svg>
-  );
-}
-
-
+/**
+ * The site header: the in-flow bar, its sticky twin, the Design system mega
+ * panel, and the mobile drawer. This component owns all the state and window
+ * wiring; the pieces themselves are HeaderBar (one bar, rendered twice),
+ * MegaPanel inside it, SiteLogo, and MobileDrawer.
+ */
 export default function MegaNav() {
   const pathname = usePathname() ?? "/";
   const writingNavItems = useWritingNav();
@@ -93,11 +64,8 @@ export default function MegaNav() {
   const stickyMenuRef = useRef<HTMLDivElement>(null);
   const inFlowHeaderRef = useRef<HTMLElement>(null);
 
-  const isDsActive = isDesignSystemPath(pathname);
-  const isAboutActive = pathname === "/about";
   const isWorkActive = pathname === "/work" || pathname.startsWith("/work/");
   const isWritingActive = pathname === "/writing" || pathname.startsWith("/writing/");
-  const isContactActive = pathname === "/contact";
 
   // The drawer's whole tree, fed to NavList — the same per-section links the
   // desktop sidebar shows, which is otherwise hidden below 960px. Work and
@@ -147,6 +115,9 @@ export default function MegaNav() {
             href: `/components#${cat.id}`,
           })),
         },
+        // One row per template would outgrow the drawer slowly; the index
+        // lists them all, so the row stays a plain link.
+        { label: "Templates", href: "/templates" },
         // Canvas is deliberately absent: the drawer is the mobile IA, and
         // the board is desktopOnly in navigation.ts (needs a pointer and a
         // wide viewport).
@@ -179,6 +150,8 @@ export default function MegaNav() {
     if (closeTimer.current) clearTimeout(closeTimer.current);
     closeTimer.current = setTimeout(() => setOpen(false), 160);
   }, []);
+
+  const closeMenu = useCallback(() => setOpen(false), []);
 
   // Close on click outside
   useEffect(() => {
@@ -267,150 +240,18 @@ export default function MegaNav() {
 
   return (
     <header ref={inFlowHeaderRef} className={styles.header}>
-      <div className={styles.headerInner}>
-        <div className={styles.logoSlot}>
-          <Link href="/" className={styles.logo}>
-            <LogoIcon className={styles.logoMark} />
-            <span className={styles.logoText}>Robert Ritacca</span>
-          </Link>
-        </div>
-
-        <div className={styles.navCenter}>
-          <nav className={styles.nav} aria-label="Primary">
-            <Link
-              href="/about"
-              className={`${styles.navLink} ${isAboutActive ? styles.navLinkActive : ""}`}
-              aria-current={isAboutActive ? "page" : undefined}
-            >
-              About
-            </Link>
-            <Link
-              href="/work"
-              className={`${styles.navLink} ${isWorkActive ? styles.navLinkActive : ""}`}
-              aria-current={isWorkActive ? "page" : undefined}
-            >
-              Work
-            </Link>
-            <Link
-              href="/writing"
-              className={`${styles.navLink} ${isWritingActive ? styles.navLinkActive : ""}`}
-              aria-current={isWritingActive ? "page" : undefined}
-            >
-              Writing
-            </Link>
-
-            <div
-              className={styles.dsWrap}
-              onMouseEnter={openMenu}
-              onMouseLeave={scheduleClose}
-            >
-              {/* The trigger is a link: hover or focus opens the mega panel,
-                  a click lands on the /design-system landing page. */}
-              <Link
-                ref={triggerRef}
-                href="/design-system"
-                className={`${styles.navLink} ${styles.dsTrigger} ${
-                  open ? styles.navLinkOpen : ""
-                } ${isDsActive ? styles.navLinkActive : ""}`}
-                aria-expanded={open}
-                aria-haspopup="true"
-                aria-controls="ds-mega"
-                onFocus={openMenu}
-                onClick={() => setOpen(false)}
-              >
-                <span>Design system</span>
-                <span
-                  className={`${styles.caret} ${open ? styles.caretOpen : ""} material-symbols-rounded`}
-                  aria-hidden="true"
-                >
-                  expand_more
-                </span>
-              </Link>
-            </div>
-
-            <Link
-              href="/contact"
-              className={`${styles.navLink} ${isContactActive ? styles.navLinkActive : ""}`}
-              aria-current={isContactActive ? "page" : undefined}
-            >
-              Contact
-            </Link>
-          </nav>
-        </div>
-
-        <div className={styles.rightSlot}>
-          {/* Opens the global palette mounted from the root layout — the
-              two trees never meet, so the click travels via palette-bus. */}
-          <button
-            type="button"
-            className={styles.searchBtn}
-            onClick={openSitePalette}
-            aria-label="Search the site"
-            aria-keyshortcuts="Meta+K"
-          >
-            <span className="material-symbols-rounded" aria-hidden="true">
-              search
-            </span>
-            <span className={styles.searchLabel} aria-hidden="true">
-              Search
-            </span>
-            <span className={styles.searchKeys} aria-hidden="true">
-              <Kbd size="compact">⌘</Kbd>
-              <Kbd size="compact">K</Kbd>
-            </span>
-          </button>
-          <ThemeToggle className={styles.desktopThemeToggle} />
-          <button
-            type="button"
-            className={`${styles.mobileMenuBtn} ${mobileOpen ? styles.mobileMenuBtnHidden : ""}`}
-            onClick={toggleMobileMenu}
-            aria-label="Open menu"
-            aria-expanded={mobileOpen}
-          >
-            <span className="material-symbols-rounded" aria-hidden="true">
-              menu
-            </span>
-          </button>
-        </div>
-
-        {/* MEGA MENU — Design system dropdown. Inside headerInner so the
-            panel anchors to the content box (see .headerInner in the CSS). */}
-        <div
-          ref={menuRef}
-          id="ds-mega"
-          className={`${styles.mega} ${open ? styles.megaOpen : ""}`}
-          onMouseEnter={openMenu}
-          onMouseLeave={scheduleClose}
-          aria-hidden={!open}
-        >
-          <div className={styles.megaInner}>
-            <div className={styles.megaGrid}>
-              {dsMegaItems.map((item) => {
-                const itemActive = pathname === item.href || pathname.startsWith(item.href + "/");
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`${styles.megaItem} ${itemActive ? styles.megaItemActive : ""}`}
-                    tabIndex={open ? 0 : -1}
-                    aria-current={itemActive ? "page" : undefined}
-                  >
-                    <div className={styles.megaIcon}>
-                      <span className="material-symbols-rounded" aria-hidden="true">
-                        {item.icon}
-                      </span>
-                    </div>
-                    <div className={styles.megaItemText}>
-                      <div className={styles.megaLabel}>{item.label}</div>
-                      <div className={styles.megaDescription}>{item.description}</div>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </div>
+      <HeaderBar
+        pathname={pathname}
+        open={open}
+        tabbable
+        mobileOpen={mobileOpen}
+        triggerRef={triggerRef}
+        menuRef={menuRef}
+        onMegaEnter={openMenu}
+        onMegaLeave={scheduleClose}
+        onMegaClose={closeMenu}
+        onMobileToggle={toggleMobileMenu}
+      />
 
       {/* STICKY OVERLAY HEADER — slides in when the in-flow header scrolls out of view */}
       <div
@@ -424,201 +265,31 @@ export default function MegaNav() {
           <span />
           <span />
         </div>
-        <div className={styles.headerInner}>
-          <div className={styles.logoSlot}>
-            <Link href="/" className={styles.logo} tabIndex={isStuck ? 0 : -1}>
-              <LogoIcon className={styles.logoMark} />
-              <span className={styles.logoText}>Robert Ritacca</span>
-            </Link>
-          </div>
-
-          <div className={styles.navCenter}>
-            <nav className={styles.nav} aria-label="Primary (sticky)">
-              <Link
-                href="/about"
-                className={`${styles.navLink} ${isAboutActive ? styles.navLinkActive : ""}`}
-                tabIndex={isStuck ? 0 : -1}
-                aria-current={isAboutActive ? "page" : undefined}
-              >
-                About
-              </Link>
-              <Link
-                href="/work"
-                className={`${styles.navLink} ${isWorkActive ? styles.navLinkActive : ""}`}
-                tabIndex={isStuck ? 0 : -1}
-                aria-current={isWorkActive ? "page" : undefined}
-              >
-                Work
-              </Link>
-              <Link
-                href="/writing"
-                className={`${styles.navLink} ${isWritingActive ? styles.navLinkActive : ""}`}
-                tabIndex={isStuck ? 0 : -1}
-                aria-current={isWritingActive ? "page" : undefined}
-              >
-                Writing
-              </Link>
-              <div
-                className={styles.dsWrap}
-                onMouseEnter={openMenu}
-                onMouseLeave={scheduleClose}
-              >
-                <Link
-                  ref={stickyTriggerRef}
-                  href="/design-system"
-                  className={`${styles.navLink} ${styles.dsTrigger} ${
-                    open ? styles.navLinkOpen : ""
-                  } ${isDsActive ? styles.navLinkActive : ""}`}
-                  aria-expanded={open}
-                  aria-haspopup="true"
-                  aria-controls="ds-mega-sticky"
-                  onFocus={openMenu}
-                  onClick={() => setOpen(false)}
-                  tabIndex={isStuck ? 0 : -1}
-                >
-                  <span>Design system</span>
-                  <span
-                    className={`${styles.caret} ${open ? styles.caretOpen : ""} material-symbols-rounded`}
-                    aria-hidden="true"
-                  >
-                    expand_more
-                  </span>
-                </Link>
-              </div>
-              <Link
-                href="/contact"
-                className={`${styles.navLink} ${isContactActive ? styles.navLinkActive : ""}`}
-                tabIndex={isStuck ? 0 : -1}
-                aria-current={isContactActive ? "page" : undefined}
-              >
-                Contact
-              </Link>
-            </nav>
-          </div>
-
-          <div className={styles.rightSlot}>
-            <button
-              type="button"
-              className={styles.searchBtn}
-              onClick={openSitePalette}
-              aria-label="Search the site"
-              aria-keyshortcuts="Meta+K"
-              tabIndex={isStuck ? 0 : -1}
-            >
-              <span className="material-symbols-rounded" aria-hidden="true">
-                search
-              </span>
-              <span className={styles.searchLabel} aria-hidden="true">
-                Search
-              </span>
-              <span className={styles.searchKeys} aria-hidden="true">
-                <Kbd size="compact">⌘</Kbd>
-                <Kbd size="compact">K</Kbd>
-              </span>
-            </button>
-            <ThemeToggle className={styles.desktopThemeToggle} />
-            <button
-              type="button"
-              className={`${styles.mobileMenuBtn} ${mobileOpen ? styles.mobileMenuBtnHidden : ""}`}
-              onClick={toggleMobileMenu}
-              aria-label="Open menu"
-              aria-expanded={mobileOpen}
-              tabIndex={isStuck ? 0 : -1}
-            >
-              <span className="material-symbols-rounded" aria-hidden="true">
-                menu
-              </span>
-            </button>
-          </div>
-
-          {/* Sticky mega menu — same content, anchored to the sticky bar's
-              headerInner so it centres on the content box rather than the
-              full-viewport-width fixed bar (see .headerInner in the CSS). */}
-          <div
-            ref={stickyMenuRef}
-            id="ds-mega-sticky"
-            className={`${styles.mega} ${open ? styles.megaOpen : ""}`}
-            style={!isStuck ? { pointerEvents: "none" } : undefined}
-            onMouseEnter={openMenu}
-            onMouseLeave={scheduleClose}
-            aria-hidden={!open}
-          >
-            <div className={styles.megaInner}>
-              <div className={styles.megaGrid}>
-                {dsMegaItems.map((item) => {
-                  const itemActive = pathname === item.href || pathname.startsWith(item.href + "/");
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={`${styles.megaItem} ${itemActive ? styles.megaItemActive : ""}`}
-                      tabIndex={open && isStuck ? 0 : -1}
-                      aria-current={itemActive ? "page" : undefined}
-                    >
-                      <div className={styles.megaIcon}>
-                        <span className="material-symbols-rounded" aria-hidden="true">
-                          {item.icon}
-                        </span>
-                      </div>
-                      <div className={styles.megaItemText}>
-                        <div className={styles.megaLabel}>{item.label}</div>
-                        <div className={styles.megaDescription}>{item.description}</div>
-                      </div>
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </div>
+        <HeaderBar
+          sticky
+          pathname={pathname}
+          open={open}
+          tabbable={isStuck}
+          mobileOpen={mobileOpen}
+          triggerRef={stickyTriggerRef}
+          menuRef={stickyMenuRef}
+          onMegaEnter={openMenu}
+          onMegaLeave={scheduleClose}
+          onMegaClose={closeMenu}
+          onMobileToggle={toggleMobileMenu}
+        />
       </div>
 
-      {/* MOBILE MENU OVERLAY */}
-      <div
-        className={`${styles.mobileMenuOverlay} ${mobileOpen ? styles.mobileMenuOverlayOpen : ""}`}
-        onClick={(e) => {
-          if (e.target === e.currentTarget) setMobileOpen(false);
-        }}
-        aria-hidden={!mobileOpen}
-        style={
-          closeTop != null
-            ? ({ "--mn-close-top": `${closeTop}px` } as CSSProperties)
-            : undefined
-        }
-      >
-        <button
-          type="button"
-          className={styles.mobileMenuClose}
-          onClick={() => setMobileOpen(false)}
-          aria-label="Close menu"
-        >
-          <span className="material-symbols-rounded" aria-hidden="true">
-            close
-          </span>
-        </button>
-        <div className={`${styles.mobileMenu} ${drawerStuck ? styles.mobileMenuStuck : ""}`}>
-          <Link
-            href="/"
-            className={`${styles.logo} ${styles.mobileMenuLogo}`}
-            onClick={() => setMobileOpen(false)}
-          >
-            <LogoIcon className={styles.logoMark} />
-            <span className={styles.logoText}>Robert Ritacca</span>
-          </Link>
-          <nav className={styles.mobileMenuNav} aria-label="Mobile navigation">
-            <NavList
-              items={drawerItems}
-              currentHref={pathname}
-              expandedIds={expandedSection ? [expandedSection] : []}
-              onExpandedChange={(ids) => setExpandedSection(ids[0] ?? null)}
-              onNavigate={() => setMobileOpen(false)}
-            />
-          </nav>
-          <div className={styles.mobileThemeToggle}>
-            <ThemeToggle />
-          </div>
-        </div>
-      </div>
+      <MobileDrawer
+        open={mobileOpen}
+        stuck={drawerStuck}
+        closeTop={closeTop}
+        pathname={pathname}
+        items={drawerItems}
+        expandedSection={expandedSection}
+        onExpandedChange={setExpandedSection}
+        onClose={() => setMobileOpen(false)}
+      />
     </header>
   );
 }

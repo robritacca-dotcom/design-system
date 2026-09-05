@@ -271,6 +271,13 @@
   border-color: var(--color-input-border-hover);
 }
 
+/* The site's global symbol default is --color-text-primary; this icon is an
+   input adornment and must match the placeholder label beside it (and the
+   theme toggle's idle glyphs) at the button's --color-text-secondary. */
+.searchBtn :global(.material-symbols-rounded) {
+  color: inherit;
+}
+
 .searchLabel {
   font-family: var(--font-title-body-family);
   font-size: 14px;
@@ -329,30 +336,54 @@
   padding: var(--primitive-padding-xl);
 }
 
-.megaGrid {
+/* Three columns: the two link groups share the left two thirds, the
+   showcase card takes the right third. The divider between the halves is
+   the showcase's own left border. */
+.megaLayout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--primitive-gap-xl);
+}
+
+.megaGroups {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--primitive-gap-xl);
+  align-content: start;
+}
+
+.megaGroup {
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: var(--primitive-gap-sm);
+  min-width: 0;
+}
+
+.megaGroupLabel {
+  font-family: var(--font-overline-family);
+  font-size: var(--font-overline-size);
+  font-weight: var(--font-overline-weight);
+  line-height: var(--font-overline-line-height);
+  letter-spacing: var(--font-overline-letter-spacing);
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+  /* Aligns the header with the item labels, past the rows' hover padding. */
+  padding-inline: var(--primitive-padding-md);
 }
 
 /* ============================================
    MEGA MENU ITEM
+   One row per index page: icon tile, then label over description.
    ============================================ */
 .megaItem {
   display: flex;
-  flex-direction: column;
-  gap: var(--primitive-gap-md);
-  padding: var(--primitive-padding-md);
+  align-items: flex-start;
+  gap: var(--primitive-gap-sm-md);
+  padding: var(--primitive-padding-sm-md) var(--primitive-padding-md);
   border-radius: var(--radius-md);
   text-decoration: none;
   color: inherit;
   transition: background var(--motion-duration-fast) var(--motion-ease-standard);
-  /* A zero flex-basis keeps every tile on one row however many there are —
-     they share the width equally and shrink together, capped so a short
-     list doesn't produce billboard tiles. */
-  flex: 1 1 0;
-  max-width: 280px;
   min-width: 0;
 }
 
@@ -370,12 +401,22 @@
 }
 
 .megaIcon {
-  width: 24px;
-  height: 24px;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-container-secondary);
   color: var(--color-text-primary);
+  transition: background var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+/* The tile keeps a step of contrast when the row behind it fills in. */
+.megaItem:hover .megaIcon,
+.megaItemActive .megaIcon {
+  background: var(--color-bg-container-tertiary);
 }
 
 .megaIcon :global(.material-symbols-rounded),
@@ -412,6 +453,40 @@
   font-weight: var(--font-paragraph-sm-weight);
   line-height: var(--font-paragraph-sm-line-height);
   color: var(--color-text-tertiary);
+}
+
+/* ============================================
+   MEGA MENU SHOWCASE
+   The featured-page card in the right column; the tertiary button below
+   the copy is the link.
+   ============================================ */
+.megaShowcase {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--primitive-gap-sm-md);
+  padding-left: var(--primitive-padding-xl);
+  border-left: 1px solid var(--color-bg-container-border);
+}
+
+.megaShowcase .megaGroupLabel {
+  /* The overline aligns with the cover here, not with hover-padded rows. */
+  padding-inline: 0;
+}
+
+.megaShowcaseCover {
+  display: block;
+  width: 100%;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--color-bg-container-border);
+}
+
+.megaShowcaseBtn {
+  /* Pulls the button back by its own horizontal padding (the compact
+     size's --padding-sm-md) so the label optically left-aligns with the
+     cover and copy above. */
+  margin-left: calc(-1 * var(--padding-sm-md));
 }
 
 /* ============================================

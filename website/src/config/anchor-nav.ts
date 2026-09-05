@@ -25,6 +25,7 @@ export const ANCHOR_NAV_EXCLUDED_ROUTES = new Set([
   "/design-system",
   "/docs",
   "/foundations",
+  "/templates",
   "/playground",
   "/canvas",
 ]);

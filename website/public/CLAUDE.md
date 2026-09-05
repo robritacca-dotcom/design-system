@@ -152,6 +152,7 @@ The old `merge-and-push` skill is retired because its name didn't say which of t
     ├── src/app/
     │   ├── components/        # One folder per component (page.tsx + page.module.css); the index renders registry-derived category sections over the shared ComponentPreviews map
     │   ├── foundations/       # Design tokens & layout doc pages
+    │   ├── templates/         # Template screens — complete pages built from the system alone; the index lists them, each renders full-viewport and chromeless (the marketing dashboard shares its implementation, in website/src/components/templates/, with its labs origin at /labs/marketing)
     │   ├── design-system/     # DS landing page (hero with section-link buttons, an accent switcher over the shared theme levers, + live component collage, + a resources strip under the collage: Figma/Storybook/GitHub/npm and the tech row)
     │   ├── docs/              # Docs hub: links out to overview/skills/journal; owns get-started (install + theming)
     │   ├── overview/          # How-it's-built pipeline page

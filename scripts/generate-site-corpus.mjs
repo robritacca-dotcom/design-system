@@ -743,6 +743,8 @@ const EXCLUDED_ROUTES = new Map([
     'a noindex alpha (nav-linked, desktop-only) that lays each section\'s landing page out on one board, live in a frame — its only prose is the board\'s controls and its toolbar trail; every page it shows is covered by its own route, and the site map above gives the chat the one line it needs'],
   ['/labs/marketing',
     'a noindex test page rebuilding a reference marketing dashboard entirely from the system\'s tokens and components, to probe how far they stretch — its prose is fictional demo data, not information'],
+  ['/templates/marketing-dashboard',
+    'the marketing dashboard template rendered full viewport (the same app shell as /labs/marketing, its origin) — its prose is fictional demo data; the template\'s facts live on the /templates index, which is covered'],
 ]);
 
 /** Component showcase pages: excluded as a class, with one shared reason. */

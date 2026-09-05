@@ -12,7 +12,8 @@
  * site laid out on one endless board, which fills the viewport under its
  * own stage toolbar; and the labs pages are full-viewport rebuilds of
  * reference products, where the shared chrome would sit inside the app
- * shell being tested.
+ * shell being tested — as are the template screens under /templates, which
+ * render the same full-viewport app shells as their labs origins.
  *
  * Matching is exact, so a nested route needs its own entry.
  */
@@ -23,4 +24,5 @@ export const CHROMELESS_ROUTES = new Set([
   "/covers/render",
   "/canvas",
   "/labs/marketing",
+  "/templates/marketing-dashboard",
 ]);

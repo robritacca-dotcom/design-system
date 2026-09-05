@@ -55,39 +55,92 @@ export interface BreadcrumbItem {
    Add a new item here and it appears in the mega.
    ============================================ */
 
-export const dsMegaItems: MegaItem[] = [
+/** A titled column in the mega panel's link grid. */
+export interface MegaGroup {
+  id: string;
+  /** Column header, set in the overline face. */
+  label: string;
+  items: MegaItem[];
+}
+
+/**
+ * The mega panel's link grid, one column per group. The flat `dsMegaItems`
+ * below derives from this, so the footer, palette, home page and DS landing
+ * keep reading one list.
+ */
+export const dsMegaGroups: MegaGroup[] = [
   {
-    href: "/docs",
-    label: "Docs",
-    description: "How robr0 DS works, and what you can reuse",
-    icon: "menu_book",
+    id: "learn",
+    label: "Learn",
+    items: [
+      {
+        href: "/docs",
+        label: "Docs",
+        description: "How robr0 DS works, what you can reuse, and where to start",
+        icon: "menu_book",
+      },
+      {
+        href: "/foundations",
+        label: "Foundations",
+        description: "Colours, type, spacing, motion, and icons, defined once as tokens",
+        icon: "category",
+      },
+      {
+        href: "/components",
+        label: "Components",
+        description: `${COMPONENT_COUNT} React components, each with live examples and Storybook docs`,
+        icon: "widgets",
+      },
+    ],
   },
   {
-    href: "/foundations",
-    label: "Foundations",
-    description: "Colours, type, spacing, motion, and icons",
-    icon: "category",
-  },
-  {
-    href: "/components",
-    label: "Components",
-    description: `${COMPONENT_COUNT} React components with Storybook docs`,
-    icon: "widgets",
-  },
-  {
-    href: "/playground",
-    label: "Playground",
-    description: "Re-theme the whole system live: components, chat and all",
-    icon: "tune",
-  },
-  {
-    href: "/canvas",
-    label: "Canvas",
-    description: "Every section's landing page live on one endless board",
-    icon: "space_dashboard",
-    desktopOnly: true,
+    id: "explore",
+    label: "Explore",
+    items: [
+      {
+        href: "/templates",
+        label: "Templates",
+        description:
+          "Whole screens assembled from the system's components and tokens",
+        icon: "dashboard_customize",
+      },
+      {
+        href: "/playground",
+        label: "Playground",
+        description: "Re-theme the whole system live: components, chat and all",
+        icon: "tune",
+      },
+      {
+        href: "/canvas",
+        label: "Canvas",
+        description: "Every section's landing page live on one endless board",
+        icon: "space_dashboard",
+        desktopOnly: true,
+      },
+    ],
   },
 ];
+
+/** Every mega item, flat, in grid order — most surfaces read this one. */
+export const dsMegaItems: MegaItem[] = dsMegaGroups.flatMap(
+  (group) => group.items
+);
+
+/**
+ * The mega panel's showcase column: one featured page rendered as a card to
+ * the right of the link grid. The cover is the robr0-ds case study's render
+ * pair, so it swaps with the theme like every other cover on the site.
+ */
+export const dsMegaShowcase = {
+  href: "/overview",
+  overline: "How it's built",
+  label: "The system overview",
+  description:
+    "How the system is built, tested, and shipped: the registries, validators and agent loops behind every page.",
+  cta: "Explore the overview",
+  /** The `/work/<slug>` href whose card render illustrates the showcase. */
+  coverHref: "/work/robr0-ds",
+};
 
 /** URL prefixes that should mark the "Design system" mega trigger as active */
 export const dsActiveMatchers = [
@@ -100,6 +153,7 @@ export const dsActiveMatchers = [
   (path: string) => path.startsWith("/project-journal"),
   (path: string) => path.startsWith("/foundations"),
   (path: string) => path.startsWith("/components"),
+  (path: string) => path.startsWith("/templates"),
   (path: string) => path === "/playground",
   (path: string) => path === "/canvas",
 ];
@@ -190,6 +244,19 @@ export const docsSidebarLinks: NavLink[] = [
 ];
 
 /**
+ * Sidebar for the Templates section — complete screens built from the
+ * library's components and tokens alone. Curated order: strongest first.
+ */
+export const templatesSidebarLinks: NavLink[] = [
+  { href: "/templates", label: "Contents" },
+  {
+    href: "/templates/marketing-dashboard",
+    label: "Marketing dashboard",
+    description: "An analytics app shell built from the system alone",
+  },
+];
+
+/**
  * Sidebar for the Writing cluster. Built dynamically from the articles
  * synced off the Substack feed, so it always reflects what's published.
  */
@@ -239,6 +306,7 @@ const allSidebarLinks: NavLink[] = [
   ...componentsSidebarLinks,
   ...foundationsSidebarLinks,
   ...docsSidebarLinks,
+  ...templatesSidebarLinks,
   ...workSidebarLinks,
 ];
 
@@ -392,6 +460,7 @@ const breadcrumbSections: SectionConfig[] = [
   // Other DS sections
   { base: "/foundations", label: "Foundations", parent: "Design system", sidebar: foundationsSidebarLinks },
   { base: "/components", label: "Components", parent: "Design system", sidebar: componentsSidebarLinks },
+  { base: "/templates", label: "Templates", parent: "Design system", sidebar: templatesSidebarLinks },
   { base: "/work", label: "Work", parent: null, sidebar: workSidebarLinks },
   // Writing — article sub-labels resolve from the slug (feed is dynamic)
   { base: "/writing", label: "Writing", parent: null, sidebar: null },

@@ -451,6 +451,24 @@
 
 /* ---------------------------------------------------------- responsive */
 
+/* The shell's negative margins mirror the body's inset in globals.css,
+   which steps down at these same breakpoints — an unmirrored step leaves
+   the shell pulled past the viewport's left edge on phones. */
+@media (max-width: 959px) {
+  .shell {
+    width: calc(100% + var(--primitive-padding-lg) * 2);
+    margin: calc(-1 * var(--primitive-padding-lg));
+  }
+}
+
+@media (max-width: 600px) {
+  .shell {
+    width: calc(100% + var(--primitive-padding-md) * 2);
+    margin: calc(-1 * var(--primitive-padding-lg))
+      calc(-1 * var(--primitive-padding-md));
+  }
+}
+
 @media (max-width: 1360px) {
   .midGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
