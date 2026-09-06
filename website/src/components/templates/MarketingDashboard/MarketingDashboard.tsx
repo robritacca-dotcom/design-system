@@ -25,11 +25,6 @@ import {
 import { Badge } from "@robr0/design-system/components/Badge/Badge";
 import { Breadcrumb } from "@robr0/design-system/components/Breadcrumb/Breadcrumb";
 import { Button } from "@robr0/design-system/components/Button/Button";
-import { ChatHeader } from "@robr0/design-system/components/ChatHeader/ChatHeader";
-import { ChatMessage } from "@robr0/design-system/components/ChatMessage/ChatMessage";
-import { ChatThread } from "@robr0/design-system/components/ChatThread/ChatThread";
-import { Composer } from "@robr0/design-system/components/Composer/Composer";
-import { PromptSuggestions } from "@robr0/design-system/components/PromptSuggestions/PromptSuggestions";
 import { CircularButton } from "@robr0/design-system/components/CircularButton/CircularButton";
 import {
   DataTable,
@@ -51,12 +46,8 @@ import { SectionTitle } from "@robr0/design-system/components/SectionTitle/Secti
 import { Stat } from "@robr0/design-system/components/Stat/Stat";
 import { Tabs } from "@robr0/design-system/components/Tabs/Tabs";
 import { AreaChart, ComboChart, RadialChart } from "@robr0/design-system/charts";
-import {
-  readGreeting,
-  serverGreeting,
-  subscribeClock,
-} from "../../SiteChat/greeting";
 import ThemeToggle from "../../ThemeToggle/ThemeToggle";
+import TemplateAssistant from "../TemplateAssistant/TemplateAssistant";
 import styles from "./MarketingDashboard.module.css";
 
 /* ---------------------------------------------------------------- data */
@@ -254,7 +245,8 @@ function ChannelMark({ channel }: { channel: string }) {
 const SHOW_MID_ROW = false;
 
 /* The workspace assistant is a mock: canned answers over the page's own
-   numbers, the same entry-point-and-docked-panel pattern as the site chat. */
+   numbers, rendered by the shared TemplateAssistant panel — the same
+   entry-point-and-docked-panel pattern as the site chat. */
 const CHAT_SUGGESTIONS = [
   { id: "cpc", label: "Why did cost per click fall?" },
   { id: "month", label: "Summarise this month" },
@@ -376,37 +368,7 @@ export default function MarketingDashboard() {
   const [sidebarExpanded, setSidebarExpanded] = React.useState(true);
   const [channelTab, setChannelTab] = React.useState("channels");
   const [chatOpen, setChatOpen] = React.useState(false);
-  const [chatValue, setChatValue] = React.useState("");
-  const [chatTurns, setChatTurns] = React.useState<
-    { id: number; role: "user" | "assistant"; text: string }[]
-  >([]);
 
-  const greeting = React.useSyncExternalStore(
-    subscribeClock,
-    readGreeting,
-    serverGreeting
-  );
-
-  /* The text field is ready to type into whenever a conversation can start:
-     on open, on new chat, and again after every send (the site chat's
-     focus contract). */
-  const composerRef = React.useRef<HTMLTextAreaElement | null>(null);
-  const focusComposer = () => composerRef.current?.focus();
-  React.useEffect(() => {
-    if (chatOpen) focusComposer();
-  }, [chatOpen]);
-
-  const ask = (text: string, replyId?: string) => {
-    const reply = (replyId && CHAT_REPLIES[replyId]) || CHAT_FALLBACK;
-    setChatTurns((turns) => [
-      ...turns,
-      { id: turns.length, role: "user", text },
-      { id: turns.length + 1, role: "assistant", text: reply },
-    ]);
-    focusComposer();
-  };
-
-  const chatEmpty = chatTurns.length === 0;
   const [delivery, setDelivery] = React.useState<Record<string, string>>(() =>
     Object.fromEntries(CAMPAIGNS.map((c) => [c.id, c.delivery]))
   );
@@ -865,108 +827,16 @@ export default function MarketingDashboard() {
         </div>
       </main>
 
-      {chatOpen && (
-        <aside className={styles.chatPanel} aria-label="Boardline AI assistant">
-          {/* The site chat's internal anatomy, restated over mock state: a
-              zero-basis top region and a growing bottom region split the
-              height while the thread is empty, centring the composer; the
-              first utterance collapses the bottom region and the transcript
-              takes over. */}
-          <div className={styles.chat}>
-            <div className={styles.chatTopRegion}>
-              <ChatHeader
-                title="Boardline AI"
-                actions={
-                  <>
-                    <CircularButton
-                      icon="edit_square"
-                      variant="tertiary"
-                      ariaLabel="New chat"
-                      tooltipPosition="bottom"
-                      onClick={() => {
-                        setChatTurns([]);
-                        setChatValue("");
-                        focusComposer();
-                      }}
-                    />
-                    <CircularButton
-                      icon="close"
-                      variant="tertiary"
-                      ariaLabel="Close chat"
-                      tooltipPosition="bottom"
-                      onClick={() => setChatOpen(false)}
-                    />
-                  </>
-                }
-              />
-              <div className={styles.chatBody}>
-                <ChatThread className={styles.chatThread}>
-                  {chatTurns.map((turn) => (
-                    <ChatMessage key={turn.id} role={turn.role}>
-                      {turn.text}
-                    </ChatMessage>
-                  ))}
-                </ChatThread>
-                {chatEmpty && (
-                  <div className={styles.chatWelcomeTop}>
-                    <div className={styles.chatWelcomeGreeting}>
-                      <p className={styles.chatWelcomeHello}>{greeting}</p>
-                      <p className={styles.chatWelcomeAsk}>
-                        Ask about campaigns, channels, spend, or performance
-                      </p>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <footer className={styles.chatFooter}>
-              <div className={styles.chatComposerColumn}>
-                <Composer
-                  ref={composerRef}
-                  aiGlow
-                  sendLabel="Send"
-                  placeholder="Ask anything"
-                  value={chatValue}
-                  onValueChange={setChatValue}
-                  onSubmit={(value) => {
-                    ask(value);
-                    setChatValue("");
-                  }}
-                />
-              </div>
-            </footer>
-
-            <div
-              className={`${styles.chatBottomRegion} ${
-                chatEmpty ? styles.chatBottomRegionWelcome : ""
-              }`}
-            >
-              {chatEmpty && (
-                <div className={styles.chatStartersColumn}>
-                  <PromptSuggestions
-                    layout="stack"
-                    ariaLabel="Conversation starters"
-                    suggestions={CHAT_SUGGESTIONS}
-                    onValueChange={(id) => {
-                      const suggestion = CHAT_SUGGESTIONS.find(
-                        (s) => s.id === id
-                      );
-                      if (suggestion) ask(suggestion.label, id);
-                    }}
-                  />
-                </div>
-              )}
-              <div className={styles.chatDisclaimerRow}>
-                <p className={styles.chatDisclaimer}>
-                  A mock assistant with canned answers over this page&apos;s
-                  numbers.
-                </p>
-              </div>
-            </div>
-          </div>
-        </aside>
-      )}
+      <TemplateAssistant
+        open={chatOpen}
+        onClose={() => setChatOpen(false)}
+        title="Boardline AI"
+        askLine="Ask about campaigns, channels, spend, or performance"
+        suggestions={CHAT_SUGGESTIONS}
+        replies={CHAT_REPLIES}
+        fallback={CHAT_FALLBACK}
+        disclaimer="A mock assistant with canned answers over this page's numbers."
+      />
     </div>
   );
 }
