@@ -71,7 +71,7 @@
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.5",
     "@chromatic-com/storybook": "^5.0.1",
-    "@eslint/js": "^9.39.1",
+    "@eslint/js": "^10.0.1",
     "@storybook/addon-a11y": "^10.6.0",
     "@storybook/addon-docs": "^10.6.0",
     "@storybook/addon-themes": "^10.6.0",
