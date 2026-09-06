@@ -102,7 +102,7 @@ export default function TablePage() {
                         </span>
                       ),
                       department: "Design",
-                      status: <span className="material-symbols-rounded" style={{ color: "var(--color-status-positive-text)" }}>check_circle</span>,
+                      status: <span className="material-symbols-rounded" style={{ color: "var(--color-status-positive-icon)" }}>check_circle</span>,
                     },
                   },
                   {
@@ -115,7 +115,7 @@ export default function TablePage() {
                         </span>
                       ),
                       department: "Engineering",
-                      status: <span className="material-symbols-rounded" style={{ color: "var(--color-status-positive-text)" }}>check_circle</span>,
+                      status: <span className="material-symbols-rounded" style={{ color: "var(--color-status-positive-icon)" }}>check_circle</span>,
                     },
                   },
                   {
@@ -128,7 +128,7 @@ export default function TablePage() {
                         </span>
                       ),
                       department: "Product",
-                      status: <span className="material-symbols-rounded" style={{ color: "var(--color-status-error-text)" }}>cancel</span>,
+                      status: <span className="material-symbols-rounded" style={{ color: "var(--color-status-error-icon)" }}>cancel</span>,
                     },
                   },
                 ]}

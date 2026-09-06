@@ -111,15 +111,15 @@ const previews: Record<string, () => ReactNode> = {
     <>
       <div aria-hidden="true" style={{ display: "flex", flexDirection: "column", gap: "6px", width: "150px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-          <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-status-positive-text)" }}>check_circle</span>
+          <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-status-positive-icon)" }}>check_circle</span>
           <span style={{ fontSize: "11px", color: "var(--color-text-tertiary)" }}>Read project files</span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-          <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-status-info-text)" }}>progress_activity</span>
+          <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-status-info-icon)" }}>progress_activity</span>
           <span style={{ fontSize: "11px", fontWeight: 600, color: "var(--color-text-primary)" }}>Update dark tokens</span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-          <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-icon-secondary)" }}>circle</span>
+          <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-status-neutral-icon)" }}>circle</span>
           <span style={{ fontSize: "11px", color: "var(--color-text-primary)" }}>Run the build</span>
         </div>
       </div>
@@ -1269,11 +1269,11 @@ const previews: Record<string, () => ReactNode> = {
     <>
       <div aria-hidden="true" style={{ display: "flex", flexDirection: "column", gap: "6px", alignItems: "flex-start" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-          <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-status-positive-text)" }}>check_circle</span>
+          <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-status-positive-icon)" }}>check_circle</span>
           <SourceChip title="Design tokens quarterly" />
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-          <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-status-info-text)" }}>progress_activity</span>
+          <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-status-info-icon)" }}>progress_activity</span>
           <SourceChip title="Contrast group notes" />
         </div>
       </div>

@@ -161,11 +161,11 @@
 }
 
 .ds-source-trail__row--active .ds-source-trail__row-indicator {
-  color: var(--color-status-info-text);
+  color: var(--color-status-info-icon);
 }
 
 .ds-source-trail__row--done .ds-source-trail__row-indicator {
-  color: var(--color-status-positive-text);
+  color: var(--color-status-positive-icon);
 }
 
 /* A pending source has not been opened yet, so its chip sits quieter */

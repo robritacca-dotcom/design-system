@@ -151,6 +151,11 @@
   align-items: center;
   justify-content: center;
   flex: none;
+  /* Fixed box: the active step's spinner (16px) is smaller than the step
+     icons (20px), so without this the column narrows and the spinner drifts
+     off the connector's centre line. */
+  width: var(--icon-size-sm);
+  height: var(--icon-size-sm);
   color: var(--color-icon-secondary);
 }
 
@@ -188,8 +193,12 @@
    STEP STATES
    ============================================ */
 
+.ds-agent-plan__step--pending .ds-agent-plan__indicator {
+  color: var(--color-status-neutral-icon);
+}
+
 .ds-agent-plan__step--completed .ds-agent-plan__indicator {
-  color: var(--color-status-positive-text);
+  color: var(--color-status-positive-icon);
 }
 
 .ds-agent-plan__step--completed .ds-agent-plan__label {
@@ -197,7 +206,7 @@
 }
 
 .ds-agent-plan__step--active .ds-agent-plan__indicator {
-  color: var(--color-status-info-text);
+  color: var(--color-status-info-icon);
 }
 
 .ds-agent-plan__step--active .ds-agent-plan__label {
@@ -207,7 +216,7 @@
 }
 
 .ds-agent-plan__step--failed .ds-agent-plan__indicator {
-  color: var(--color-status-error-text);
+  color: var(--color-status-error-icon);
 }
 
 .ds-agent-plan__step--failed .ds-agent-plan__label {

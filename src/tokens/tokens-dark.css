@@ -89,26 +89,35 @@
   --color-status-positive-bg: var(--primitive-green-10);
   --color-status-positive-border: var(--primitive-green-07);
   --color-status-positive-text: var(--primitive-green-01);
+  --color-status-positive-icon: var(--primitive-green-07);
 
   /* Status - Warning */
   --color-status-warning-bg: var(--primitive-orange-10);
   --color-status-warning-border: var(--primitive-orange-07);
   --color-status-warning-text: var(--primitive-orange-01);
+  --color-status-warning-icon: var(--primitive-orange-07);
 
   /* Status - Error */
   --color-status-error-bg: var(--primitive-red-10);
   --color-status-error-border: var(--primitive-red-07);
   --color-status-error-text: var(--primitive-red-01);
+  --color-status-error-icon: var(--primitive-red-06);
 
   /* Status - Info */
   --color-status-info-bg: var(--primitive-blue-10);
   --color-status-info-border: var(--primitive-blue-07);
   --color-status-info-text: var(--primitive-blue-01);
+  --color-status-info-icon: var(--primitive-blue-05);
 
   /* Status - Neutral */
   --color-status-neutral-bg: var(--primitive-neutral-08);
   --color-status-neutral-border: var(--primitive-neutral-06);
   --color-status-neutral-text: var(--primitive-neutral-01);
+  --color-status-neutral-icon: var(--primitive-neutral-04);
+
+  /* The -icon step (status glyphs on plain surfaces) runs brighter here
+     than the light-theme inks: mid-ramp hues that hold ≥3:1 on the dark
+     container floor, where the near-white -text tints all read as grey. */
 
   /* AI - The gradient accent: the same luminous stops as light. One set
      works on both floors, so the AI signature never shifts hue with the

@@ -117,26 +117,35 @@
   --color-status-positive-bg: var(--primitive-green-01);
   --color-status-positive-border: var(--primitive-green-07);
   --color-status-positive-text: var(--primitive-green-10);
+  --color-status-positive-icon: var(--primitive-green-08);
 
   /* Status - Warning */
   --color-status-warning-bg: var(--primitive-orange-01);
   --color-status-warning-border: var(--primitive-orange-07);
   --color-status-warning-text: var(--primitive-orange-10);
+  --color-status-warning-icon: var(--primitive-orange-08);
 
   /* Status - Error */
   --color-status-error-bg: var(--primitive-red-01);
   --color-status-error-border: var(--primitive-red-07);
   --color-status-error-text: var(--primitive-red-10);
+  --color-status-error-icon: var(--primitive-red-08);
 
   /* Status - Info */
   --color-status-info-bg: var(--primitive-blue-01);
   --color-status-info-border: var(--primitive-blue-07);
   --color-status-info-text: var(--primitive-blue-10);
+  --color-status-info-icon: var(--primitive-blue-06);
 
   /* Status - Neutral */
   --color-status-neutral-bg: var(--primitive-neutral-02);
   --color-status-neutral-border: var(--primitive-neutral-07);
   --color-status-neutral-text: var(--primitive-neutral-08);
+  --color-status-neutral-icon: var(--primitive-neutral-06);
+
+  /* The -icon step is the status glyph colour for plain surfaces (a step
+     indicator, a tool-call state) — -text is tuned for the tinted status
+     bg and washes out on a bare container, especially in dark mode. */
 
   /* AI - The gradient accent reserved for AI entry points and surfaces.
      Red → blue → teal, so the AI affordance is its own signature and the

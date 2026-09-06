@@ -469,6 +469,35 @@ const statusTextColours: SwatchData[] = [
   },
 ];
 
+/* --- Status icons --- */
+const statusIconColours: SwatchData[] = [
+  {
+    label: "Positive icon", cssVar: "--color-status-positive-icon",
+    dark: { primitive: "--green--07--", hex: "#06D6A0", rgb: "6 / 214 / 160" },
+    light: { primitive: "--green--08--", hex: "#05A67C", rgb: "5 / 166 / 124" },
+  },
+  {
+    label: "Warning icon", cssVar: "--color-status-warning-icon",
+    dark: { primitive: "--orange--07--", hex: "#EF8247", rgb: "239 / 130 / 71" },
+    light: { primitive: "--orange--08--", hex: "#C65E33", rgb: "198 / 94 / 51" },
+  },
+  {
+    label: "Error icon", cssVar: "--color-status-error-icon",
+    dark: { primitive: "--red--06--", hex: "#F16385", rgb: "241 / 99 / 133" },
+    light: { primitive: "--red--08--", hex: "#C93A5C", rgb: "201 / 58 / 92" },
+  },
+  {
+    label: "Info icon", cssVar: "--color-status-info-icon",
+    dark: { primitive: "--blue--05--", hex: "#5475D4", rgb: "84 / 117 / 212" },
+    light: { primitive: "--blue--06--", hex: "#345AC4", rgb: "52 / 90 / 196" },
+  },
+  {
+    label: "Neutral icon", cssVar: "--color-status-neutral-icon",
+    dark: { primitive: "--neutral--04--", hex: "#A2A2A2", rgb: "162 / 162 / 162" },
+    light: { primitive: "--neutral--06--", hex: "#6D6D6D", rgb: "109 / 109 / 109" },
+  },
+];
+
 /* --- AI gradient --- */
 const aiGradientColours: SwatchData[] = [
   {
@@ -738,6 +767,9 @@ export default function SemanticColoursPage() {
                 <ColourSwatch key={s.label} label={s.label} cssVar={s.bgVar} dark={s.dark} light={s.light} theme={theme} status borderVar={s.borderVar} />
               ))}
               {statusTextColours.map((s) => (
+                <ColourSwatch key={s.label} label={s.label} cssVar={s.cssVar} dark={s.dark} light={s.light} theme={theme} />
+              ))}
+              {statusIconColours.map((s) => (
                 <ColourSwatch key={s.label} label={s.label} cssVar={s.cssVar} dark={s.dark} light={s.light} theme={theme} />
               ))}
             </div>
