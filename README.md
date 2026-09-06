@@ -153,14 +153,14 @@ The same generated data is served as files too: every component's prop contract 
 - **Vite 7**: dev server and library build
 - **Next.js 16**: portfolio site and design system documentation
 - **Storybook 10**: component explorer
-- **Vitest + Playwright + axe**: every Storybook story runs as a render test in headless Chromium, with an accessibility audit on each
+- **Vitest + Playwright + axe**: every Storybook story runs as a render test in headless Chromium, with an accessibility audit on each and interaction assertions where a story carries a play function
 - **CSS custom properties**: all theming via semantic tokens, no CSS-in-JS
 
 ---
 
 ## Quality & CI
 
-Every push and pull request runs a GitHub Actions pipeline ([`ci.yml`](.github/workflows/ci.yml)) with four jobs: lint + library build + the package-publish lint, story tests, Storybook build, and website lint + build followed by the built-HTML checks (rendered spacing, chat-corpus coverage, internal links) and the served-site checks: a hydration smoke that loads the built site in a real browser, and a page-level axe pass over the served pages in both themes. The story tests render every Storybook story in headless Chromium via Vitest and run an axe accessibility audit on each, so a violation fails the build exactly like a render error. A scheduled workflow ([`uptime.yml`](.github/workflows/uptime.yml)) re-runs the hydration smoke against production every four hours, because incremental regeneration means the served site can change with no deploy. The same checklist runs locally with one command:
+Every push and pull request runs a GitHub Actions pipeline ([`ci.yml`](.github/workflows/ci.yml)) with four jobs: lint + library build + the package-publish lint, story tests, Storybook build, and website lint + build followed by the built-HTML checks (rendered spacing, chat-corpus coverage, internal links) and the served-site checks: a hydration smoke that loads the built site in a real browser, and a page-level axe pass over the served pages in both themes. The story tests render every Storybook story in headless Chromium via Vitest and run an axe accessibility audit on each, so a violation fails the build exactly like a render error; the overlay stories also assert their keyboard and focus behaviour with play functions, enforced the same way. A scheduled workflow ([`uptime.yml`](.github/workflows/uptime.yml)) re-runs the hydration smoke against production every four hours, because incremental regeneration means the served site can change with no deploy. The same checklist runs locally with one command:
 
 ```bash
 npm run verify   # lint + library type-check + package build + publish lint + story tests + Storybook build + website lint + build + the built-HTML and served-site checks

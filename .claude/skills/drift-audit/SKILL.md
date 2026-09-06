@@ -77,7 +77,7 @@ Read **every** `SKILL.md`, not just the ones that seem related. For each, ask:
 - Does it tell the reader to hand-edit something that has since become generated?
 - Does it describe one-time setup that is now complete, or a future state that has since arrived?
 - Does its section/category list omit anything added since it was written?
-- Does it duplicate a fact that lives in a registry, instead of pointing at the registry?
+- Does it duplicate a fact that lives in a registry — or in a doc that owns it (design.md, CLAUDE.md, content-design.md) — instead of pointing at that home?
 
 Then check for **missing coverage**: is there now a repeated, consequential workflow with no skill? Recent commits are the evidence — a ritual performed manually twice is a skill-shaped hole, especially where mistakes are expensive or irreversible.
 

@@ -68,7 +68,7 @@ export const pipelineMap: ArchMap = {
     /* Stage 3 */
     { id: "z-build", x: 1430, y: 80, w: 430, h: 660, kind: "zone", title: "3 · Build", sub: "three artifacts" },
     { id: "build-pkg", x: 1470, y: 170, w: 350, h: 76, title: "npm package", sub: "vite lib build → dist/", logo: "/logos/vite.svg" },
-    { id: "build-storybook", x: 1470, y: 320, w: 350, h: 76, title: "Storybook", sub: "static build · every story a render test", logo: "/logos/storybook.svg" },
+    { id: "build-storybook", x: 1470, y: 320, w: 350, h: 76, title: "Storybook", sub: "static build · every story a render + interaction test", logo: "/logos/storybook.svg" },
     { id: "build-site", x: 1470, y: 470, w: 350, h: 76, title: "Website", sub: "Next.js · static + ISR pages", ...NEXTJS_LOGO },
     { id: "google-fonts", x: 1470, y: 620, w: 350, h: 64, title: "Google Fonts", sub: "fetched once, then self-hosted", kind: "external", logo: "/logos/google.svg" },
 

@@ -16,7 +16,7 @@ Use this skill when asked to check accessibility, run an a11y audit, or find WCA
 
 ## What is already automated — read this before auditing anything
 
-**Axe runs on every Storybook story and fails the build.** `.storybook/preview.ts` sets `a11y.test: 'error'`, so `npm run test` (and therefore CI and `npm run verify`) already enforces WCAG 2.1 AA across the whole library. Start by running it:
+**Axe runs on every Storybook story and fails the build.** `.storybook/preview.ts` sets `a11y.test: 'error'`, so `npm run test` (and therefore CI and `npm run verify`) already enforces WCAG 2.1 AA across the whole library — and the same run executes any story `play` function, so behavior a story asserts (focus, dismissal, keyboard) is enforced too. Start by running it:
 
 ```bash
 npm run test
@@ -27,7 +27,7 @@ If that is green, every violation axe can detect is already absent — and re-ch
 **This skill exists for the three things that gate does not cover:**
 
 1. **Colour contrast — partly excluded from the automated gate.** `color-contrast` is switched off in `.storybook/preview.ts` by a settled decision of Rob's. **Read that override's comment first**: it is the authoritative record of which pairs it covers and why, and it is the single place those details belong. What it names is out of scope — not a finding, not something to propose restyling, and not a reason to re-enable the rule. Skip them silently rather than restating them in a report. **Contrast everywhere else is the single highest-value thing to audit manually** — nothing else checks it.
-2. **What axe cannot see.** Axe catches roughly a third of WCAG issues. It cannot tell whether alt text is *meaningful*, whether focus order makes sense, whether a Dialog *actually* traps focus, or whether a helper message *should* have been associated with its control. (Two such bugs once shipped undetected until a manual survey found them: Dropdown announced neither its helper text nor its error state. Both were since fixed by moving Dropdown onto `Field`, but it took the manual survey, not axe, to find them.)
+2. **What axe cannot see.** Axe catches roughly a third of WCAG issues. It cannot tell whether alt text is *meaningful*, whether focus order makes sense, or whether a helper message *should* have been associated with its control. (Behavior a story's `play` function asserts *is* covered — `Dialog.stories.tsx` proves the modal focus trap, restore, and stacked Escape in CI — so the manual job is the overlays with no play coverage yet.) (Two such bugs once shipped undetected until a manual survey found them: Dropdown announced neither its helper text nor its error state. Both were since fixed by moving Dropdown onto `Field`, but it took the manual survey, not axe, to find them.)
 3. **Website pages beyond the automated sample.** A page-level axe pass (`scripts/validate-website-a11y.mjs`, in `verify` and CI) now runs against the served site in both themes with the same rule set — but only over the route sample in `scripts/served-site.mjs`, at one desktop viewport. Full-site sweeps, mobile viewports, and any page outside that sample remain this skill's job.
 
 Report a finding as **already-enforced** if `npm run test` or the page-level axe pass would have caught it; that tells the reader the gate is working rather than implying a gap.
@@ -55,7 +55,7 @@ Report a finding as **already-enforced** if `npm run test` or the page-level axe
    **Keyboard Navigation:**
    - **[manual]** All interactive elements are reachable by Tab, in an order that makes sense — axe cannot judge order
    - Custom interactive components handle `onKeyDown` for Enter/Space (buttons) and arrow keys (any component with roving or list focus — radio groups, segmented controls, listboxes, tablists)
-   - **[manual]** Modal/dialog *actually* traps focus while open and restores it to the trigger on close — axe sees the attributes, not the behaviour
+   - **[manual where no `play` function covers it]** Modal/dialog *actually* traps focus while open and restores it to the trigger on close — axe sees the attributes, not the behaviour. The modal overlays share one behavior implementation (design.md's Components intro owns the contract), so a real trap/restore defect there is a finding against all of them, not one
    - Escape key closes dismissible overlays (any floating panel — tooltips, popovers, menus, dialogs, pickers)
 
    **Focus Styles:**
