@@ -101,6 +101,38 @@ export default function AiButtonPage() {
               <AiButton label="Open the chat" icon="forum" href="#" />
             </div>
           </section>
+
+          {/* Summary panel */}
+          <section className={styles.section}>
+            <SectionTitle title="Summary panel" />
+            <p className={styles.demoText}>
+              With a summary, hovering the button summons a frosted glass
+              panel: the gradient sweeps once around its border, skeleton
+              lines think for a beat, and a pre-written summary types itself
+              in, once. Prompt chips launch the conversation mid-answer. The
+              button and panel share one hover zone, so the pointer can
+              travel between them freely; summaryPinned holds it open for
+              callers with their own reveal signal, and summaryPlacement
+              flips it below the button. Hover the button to try it; the
+              site&rsquo;s own chat button does the same on every page that
+              carries the shared chrome.
+            </p>
+            <div className={`${styles.row} ${styles.summaryClearance}`}>
+              <AiButton
+                label="Hover to summarize"
+                icon="notes"
+                summary={{
+                  title: "The Meridian workspace rebuild",
+                  caption: "6 min read",
+                  text: "A fictional walkthrough of rebuilding a workspace product on token-owned foundations, with the decisions that made the difference.",
+                  suggestions: [
+                    { id: "deeper", label: "Go deeper on this page" },
+                    { id: "decisions", label: "What were the key decisions?" },
+                  ],
+                }}
+              />
+            </div>
+          </section>
         </main>
       </div>
 

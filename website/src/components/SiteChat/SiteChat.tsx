@@ -11,6 +11,7 @@ import { ModelPicker } from "@robr0/design-system/components/ModelPicker/ModelPi
 import { PromptSuggestions } from "@robr0/design-system/components/PromptSuggestions/PromptSuggestions";
 import { usePathname } from "next/navigation";
 import { getNavLabel } from "@/config/navigation";
+import { getPageSummary } from "@/data/page-summaries";
 import { CHAT_MODELS, DEFAULT_CHAT_MODEL } from "@/lib/chat-model";
 import { fitsChip } from "@/lib/chat-suggestions";
 import { AssistantTurn } from "./AssistantTurn";
@@ -121,6 +122,15 @@ export function SiteChat({
   const starters = (
     startersOverride ?? startersForPath(pathname, pathname ? getNavLabel(pathname) : null)
   ).filter((starter) => fitsChip(starter.label));
+
+  /* The composer's context chip names the page the visitor is reading —
+     the same reactive pathname the starters follow, resolved through the
+     page-summaries data first (it covers essays, case studies and
+     components) with the nav label as the fallback. A route neither knows
+     (the playground, labs) simply shows no chip. Non-interactive v1. */
+  const pageName = pathname
+    ? getPageSummary(pathname)?.title ?? getNavLabel(pathname)
+    : undefined;
 
   /* The text field is ready to type into whenever a conversation can start:
      on open, on new chat, and again after every send. The host restores
@@ -313,6 +323,8 @@ export function SiteChat({
             onSubmit={handleSubmit}
             streaming={streaming}
             onStop={stop}
+            context={pageName ? <>Looking at “{pageName}”</> : undefined}
+            contextIcon="description"
             actions={
               /* A host can slot its own leading actions (the playground's
                  mock picker). The site's default is the live picker: the

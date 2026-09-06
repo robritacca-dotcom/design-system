@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { AiButton } from "@robr0/design-system/components/AiButton/AiButton";
 import { lockBodyScroll, unlockBodyScroll } from "@/lib/scroll-lock";
 import { CHROMELESS_ROUTES } from "@/config/chromeless";
+import { getPageSummary } from "@/data/page-summaries";
 import { DOCK_QUERY, TAKEOVER_QUERY, useSiteChat } from "./ChatContext";
 import { SiteChat } from "./SiteChat";
 import styles from "./SiteChat.module.css";
@@ -39,8 +40,21 @@ const readTakeover = () => window.matchMedia(TAKEOVER_QUERY).matches;
  * body scroll locked, Escape closes.
  */
 export function SiteChatMount() {
-  const { open, setOpen, view, returnFocusRef } = useSiteChat();
+  const { open, setOpen, view, returnFocusRef, send } = useSiteChat();
   const pathname = usePathname();
+
+  /* The FAB's TLDR panel: per-route content from the page-summaries data,
+     summoned by hovering the button (AiButton owns the hover mechanics).
+     Deliberately not auto-revealed — an uninvited panel is an interruption;
+     the component's summaryPinned prop is there if that call ever changes. */
+  const summary = getPageSummary(pathname);
+
+  const launchSuggestion = (id: string) => {
+    const chipDef = summary?.chips.find((c) => c.id === id);
+    if (!chipDef) return;
+    setOpen(true);
+    send(chipDef.prompt);
+  };
   const docked = useSyncExternalStore(subscribeDock, readDocked, () => false);
   /* Phone widths: the panel fills the viewport, so it is a takeover whatever
      the view says — the expand toggle is hidden there rather than offering a
@@ -159,6 +173,17 @@ export function SiteChatMount() {
           icon="forum"
           aria-expanded={false}
           aria-controls="site-chat-panel"
+          summary={
+            summary
+              ? {
+                  title: summary.title,
+                  caption: summary.caption,
+                  text: summary.text,
+                  suggestions: summary.chips.map(({ id, label }) => ({ id, label })),
+                }
+              : undefined
+          }
+          onSummarySuggestion={launchSuggestion}
           onClick={(event) => {
             returnFocusRef.current = event.currentTarget;
             setOpen(true);

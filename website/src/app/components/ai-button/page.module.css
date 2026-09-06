@@ -113,3 +113,10 @@
     min-width: 0;
   }
 }
+
+/* Clearance for the summary panel demo: the panel opens above the button,
+   and without headroom it would cover the section's own prose. Sized to the
+   panel's tallest state, by eye. */
+.summaryClearance {
+  padding-top: 340px;
+}

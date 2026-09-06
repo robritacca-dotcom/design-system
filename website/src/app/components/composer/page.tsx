@@ -161,8 +161,9 @@ export default function ComposerPage() {
               Where the person talks back
             </p>
             <p className={styles.introBody}>
-              The chat input shell: an attachments row, an auto-growing
-              textarea, a leading actions slot, and a teal send button. Send
+              The chat input shell: a context note, an attachments row, an
+              auto-growing textarea, a leading actions slot, and a teal send
+              button. Send
               is the one primary CTA in the chat set, so it is the one place
               the action colour appears. While a response streams, send
               becomes stop and Enter goes inert.
@@ -210,6 +211,36 @@ export default function ComposerPage() {
             </p>
             <div className={styles.stack}>
               <Composer placeholder="Ask the model something" aiGlow />
+            </div>
+          </section>
+
+          {/* Context */}
+          <section className={styles.section}>
+            <SectionTitle title="Context" />
+            <p className={styles.demoText}>
+              The context prop pins a quiet, non-interactive note to the top
+              of the shell, telling the person what the model can see. The
+              site chat uses it to name the page you are reading. An optional
+              contextIcon puts a Material Symbol at its left. The note is one
+              line: a long one clips with an ellipsis, a short one carries no
+              trailing dots.
+            </p>
+            <div className={styles.stack}>
+              <Composer
+                placeholder="Ask about this page"
+                context={<>Looking at &ldquo;Release notes&rdquo;</>}
+                contextIcon="description"
+              />
+              <Composer
+                placeholder="Ask about this page"
+                context={
+                  <>
+                    Looking at &ldquo;A quarterly planning document with a
+                    title long enough to run out of room&rdquo;
+                  </>
+                }
+                contextIcon="description"
+              />
             </div>
           </section>
 

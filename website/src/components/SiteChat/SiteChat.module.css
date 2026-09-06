@@ -614,8 +614,13 @@
   right: var(--layout-chat-inset);
   bottom: var(--layout-chat-inset);
   z-index: 1080;
-  /* The glassy backing keeps the transparent-field button legible over
-     whatever content scrolls beneath it. */
+}
+
+/* The glassy backing keeps the transparent-field button legible over
+   whatever content scrolls beneath it. It sits on the button element, not
+   the wrapper: an ancestor with backdrop-filter becomes the backdrop root
+   for everything inside it, which would blind the summary panel's frost. */
+.fab :global(.ds-ai-button) {
   border-radius: var(--radius-full);
   background: var(--color-bg-container-primary);
   backdrop-filter: blur(16px);
