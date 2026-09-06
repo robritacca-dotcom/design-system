@@ -191,9 +191,7 @@ export default function AboutDsPage() {
             {/* Stats + Links Rail (Right — 1/3 width) */}
             <aside className={styles.resumeSidebar}>
               <div className={`${styles.resumeSection} animate-in animate-delay-2`}>
-                <div className={styles.resumeSectionHeader}>
-                  <h2 className={styles.resumeSectionTitle}>By the numbers</h2>
-                </div>
+                <SectionTitle title="By the numbers" />
 
                 <div className={styles.statList}>
                   <Link href="/components" className={styles.statItem}>
@@ -220,9 +218,7 @@ export default function AboutDsPage() {
               </div>
 
               <div className={`${styles.resumeSection} animate-in animate-delay-3`}>
-                <div className={styles.resumeSectionHeader}>
-                  <h2 className={styles.resumeSectionTitle}>Links</h2>
-                </div>
+                <SectionTitle title="Links" />
 
                 <a
                   href="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26?node-id=246-5864"

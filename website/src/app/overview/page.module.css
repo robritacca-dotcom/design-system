@@ -141,23 +141,13 @@ a.toolItem:hover {
 /* ============================================
    RESUME SECTION
    ============================================ */
+/* Match the map sections' heading-to-content gap so the left column and
+   the rail line up: both use the library SectionTitle, so the same gap
+   here starts the stat list at the same point the map prose starts. */
 .resumeSection {
   display: flex;
   flex-direction: column;
-  gap: var(--primitive-gap-xl);
-}
-
-.resumeSectionHeader {
-  padding-bottom: var(--primitive-padding-lg);
-  border-bottom: 1px solid var(--color-divider);
-}
-
-.resumeSectionTitle {
-  font-size: var(--font-heading-2-size);
-  font-weight: var(--font-heading-2-weight);
-  line-height: var(--font-heading-2-line-height);
-  letter-spacing: var(--font-heading-2-letter-spacing);
-  color: var(--color-text-secondary);
+  gap: var(--primitive-gap-md);
 }
 
 /* Company / pipeline histories now render via the design-system
