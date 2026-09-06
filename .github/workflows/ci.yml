@@ -25,6 +25,10 @@ jobs:
       - run: npm run lint
       - run: npm run build
       - run: npm run build:lib
+      # publint + arethetypeswrong against dist/: the manifest must match the
+      # tarball and every export subpath must resolve for ESM and bundler
+      # consumers — resolution modes the Vite consumer smoke never exercises.
+      - run: node scripts/validate-package-publish.mjs
       # validate-registry (run by prebuild) regenerates README/skills/barrel
       # content; a dirty tree here means committed generated content is stale.
       - name: Check generated content is committed
@@ -76,9 +80,16 @@ jobs:
       - run: node scripts/validate-rendered-spacing.mjs
       # Same reason: compares the corpus against what the pages actually render.
       - run: node scripts/validate-corpus-coverage.mjs
+      # Every internal href in the prerendered HTML must lead to a page,
+      # route handler, public file, or redirect that exists.
+      - run: node scripts/validate-internal-links.mjs
       # Serves the build and loads it in a real browser: hydration must
       # succeed and the page must be visible with content. HTTP 200 and a
       # green build prove neither — the 2026-09-06 outage served 200 while
       # every JS browser showed a blank page.
       - run: npx playwright install --with-deps chromium
       - run: node scripts/smoke-hydration.mjs
+      # axe over the served pages in both themes: page-level composition
+      # (landmarks, heading order, the mounted chrome) that the per-component
+      # story gate cannot see. Rule set mirrors .storybook/preview.ts.
+      - run: node scripts/validate-website-a11y.mjs
