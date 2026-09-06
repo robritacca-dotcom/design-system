@@ -41,11 +41,11 @@ function MegaItemRow({
 }
 
 /**
- * The featured-page card in the right column — one link wrapping the
- * overline, cover, copy, and the call-to-action row, so the whole card is
- * clickable. The cover flexes to absorb the height difference against the
- * link grid (the shot crops rather than scales), keeping the two columns
- * bottom-aligned.
+ * The featured-page card in the right column — one link that IS the card.
+ * The pipeline vector fills the whole frame and absorbs whatever height the
+ * link grid runs to, and the copy sits inside it over a gradient rising from
+ * the bottom edge. No separate call to action: the title carries the arrow
+ * and the card is the button.
  */
 function MegaShowcaseCard({ tabbable }: { tabbable: boolean }) {
   return (
@@ -55,25 +55,24 @@ function MegaShowcaseCard({ tabbable }: { tabbable: boolean }) {
         className={styles.megaShowcase}
         tabIndex={tabbable ? 0 : -1}
       >
-        <div className={styles.megaGroupLabel}>{dsMegaShowcase.overline}</div>
         {/* The abstract pipeline vector — the card's own title and
             description carry the meaning, so the drawing stays decorative. */}
         <PipelineWireframe className={styles.megaShowcaseCover} />
-        <div className={styles.megaItemText}>
-          <div className={styles.megaLabel}>{dsMegaShowcase.label}</div>
+        <div className={styles.megaShowcaseText}>
+          <div className={styles.megaGroupLabel}>{dsMegaShowcase.overline}</div>
+          <div className={`${styles.megaLabel} ${styles.megaShowcaseTitle}`}>
+            {dsMegaShowcase.label}
+            <span
+              className={`material-symbols-rounded ${styles.megaShowcaseTitleIcon}`}
+              aria-hidden="true"
+            >
+              arrow_forward
+            </span>
+          </div>
           <div className={styles.megaDescription}>
             {dsMegaShowcase.description}
           </div>
         </div>
-        <span className={styles.megaShowcaseCta}>
-          {dsMegaShowcase.cta}
-          <span
-            className={`material-symbols-rounded ${styles.megaShowcaseCtaIcon}`}
-            aria-hidden="true"
-          >
-            arrow_forward
-          </span>
-        </span>
       </Link>
     </div>
   );

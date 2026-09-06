@@ -138,7 +138,6 @@ export const dsMegaShowcase = {
   label: "The system overview",
   description:
     "How the system is built, tested, and shipped: the registries, validators and agent loops behind every page.",
-  cta: "Explore the overview",
 };
 
 /** URL prefixes that should mark the "Design system" mega trigger as active */

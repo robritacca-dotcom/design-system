@@ -457,29 +457,43 @@
 
 /* ============================================
    MEGA MENU SHOWCASE
-   The featured-page card in the right column — one link wrapping the
-   overline, cover, copy and CTA row, so the whole card is clickable. The
-   divider between the halves lives on the column wrapper, not the link.
+   The featured-page card in the right column — one link that IS the card.
+   The pipeline vector fills the frame and absorbs whatever height the
+   link grid runs to, so the columns always bottom-align no matter how
+   many rows the groups hold; the copy sits inside over a gradient rising
+   from the bottom edge. The divider between the halves lives on the
+   column wrapper, not the link.
    ============================================ */
 .megaShowcaseColumn {
   display: flex;
   padding-left: var(--primitive-padding-xl);
   border-left: 1px solid var(--color-bg-container-border);
-  /* Sizes the cover's growth cap below in cqw, i.e. as a share of this
+  /* Sizes the card's height floor below in cqw, i.e. as a share of this
      column's width. */
   container-type: inline-size;
 }
 
 .megaShowcase {
+  position: relative;
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: var(--primitive-gap-sm-md);
+  justify-content: flex-end;
   min-width: 0;
+  /* The floor for a short link grid: holds the card at 4:3 or taller so
+     the drawing keeps room above the copy. Growth is unbounded — a taller
+     grid just gives the vector more ground. */
+  min-height: 75cqw;
   text-decoration: none;
   color: inherit;
   border-radius: var(--radius-md);
+  border: 1px solid var(--color-bg-container-border);
+  overflow: hidden;
+  transition: border-color var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.megaShowcase:hover {
+  border-color: var(--color-bg-container-tertiary);
 }
 
 .megaShowcase:focus-visible {
@@ -487,71 +501,55 @@
   outline-offset: 4px;
 }
 
-.megaShowcase .megaGroupLabel {
-  /* The overline aligns with the cover here, not with hover-padded rows. */
-  padding-inline: 0;
-}
-
-/* The graphic absorbs the height difference against the link grid: it
-   grows to bottom-align the two columns and shrinks before pushing them
-   apart. The 2:1 basis is the size it starts from — the same shape the
-   retired raster shot was — and the wireframe SVG inside crops (slice)
-   rather than distorts when flexing moves the height off it. */
+/* The vector fills the whole card behind the copy; the gentle zoom on
+   hover is the card acknowledging the pointer, clipped by the frame. */
 .megaShowcaseCover {
-  display: block;
-  align-self: stretch;
-  flex: 1 1 auto;
-  min-height: 0;
-  aspect-ratio: 2 / 1;
-  /* On a narrow desktop the link grid runs much taller than the card's
-     copy, so unbounded growth would take the cover square and crop the
-     shot's screen. 75cqw holds it at 4:3 or wider — the widest crop that
-     still shows the mock edge to edge — and the CTA's auto margin takes
-     whatever growth this cap declines. */
-  max-height: 75cqw;
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  border: 1px solid var(--color-bg-container-border);
-  transition: border-color var(--motion-duration-fast) var(--motion-ease-standard);
+  position: absolute;
+  inset: 0;
+  transition: scale var(--motion-duration-fast) var(--motion-ease-standard);
 }
 
 .megaShowcase:hover .megaShowcaseCover {
-  border-color: var(--color-bg-container-tertiary);
+  scale: 1.02;
 }
 
-/* Dressed as the compact tertiary button it replaced, minus the padding —
-   the pill fill appears on card hover, so hovering anywhere on the card
-   lights the action up. */
-.megaShowcaseCta {
+/* The copy block, kept legible on the drawing's ground by a gradient up
+   from the card's bottom edge. The tall top padding is the fade zone —
+   the gradient owns it, the text never reaches it. */
+.megaShowcaseText {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-xs);
+  padding: var(--primitive-padding-lg);
+  padding-top: var(--primitive-padding-xxl);
+  background: linear-gradient(
+    to top,
+    var(--color-bg-page-primary) 55%,
+    transparent
+  );
+}
+
+.megaShowcase .megaGroupLabel {
+  /* The overline aligns with the copy block here, not with hover-padded
+     rows. */
+  padding-inline: 0;
+}
+
+.megaShowcaseTitle {
   display: flex;
   align-items: center;
   gap: var(--gap-xs);
-  /* Bottom-aligns the CTA with the link grid when the cover's growth cap
-     leaves the card shorter than the column. */
-  margin-top: auto;
-  padding: var(--padding-xs) var(--padding-sm-md);
-  margin-left: calc(-1 * var(--padding-sm-md));
-  border-radius: var(--radius-full);
-  font-family: var(--font-paragraph-sm-em-family);
-  font-size: var(--font-paragraph-sm-em-size);
-  font-weight: var(--font-paragraph-sm-em-weight);
-  line-height: var(--font-paragraph-sm-em-line-height);
-  letter-spacing: var(--font-paragraph-sm-em-letter-spacing);
-  color: var(--color-action-passive-text);
-  transition: background var(--motion-duration-fast) var(--motion-ease-standard);
 }
 
-.megaShowcase:hover .megaShowcaseCta {
-  background: var(--color-action-passive-bg-hover);
-}
-
-.megaShowcaseCtaIcon {
+.megaShowcaseTitleIcon {
   --icon-size: var(--icon-size-sm);
   line-height: 1;
+  color: var(--color-action-passive-text);
   transition: translate var(--motion-duration-fast) var(--motion-ease-standard);
 }
 
-.megaShowcase:hover .megaShowcaseCtaIcon {
+.megaShowcase:hover .megaShowcaseTitleIcon {
   translate: 2px 0;
 }
 

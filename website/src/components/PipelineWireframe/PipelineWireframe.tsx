@@ -42,10 +42,13 @@ function Block({
 export default function PipelineWireframe({ className }: { className?: string }) {
   return (
     <div className={`${styles.frame} ${className ?? ""}`}>
+      {/* Top-anchored meet: the drawing keeps its shape at the top of the
+          frame however tall the frame runs, and the dotted ground carries
+          on beneath it. */}
       <svg
         className={styles.drawing}
         viewBox="0 0 760 475"
-        preserveAspectRatio="xMidYMid slice"
+        preserveAspectRatio="xMidYMin meet"
         role="img"
         aria-label="An abstract wireframe of the site's pipeline: source blocks flowing through a validation stage and out to two destinations."
       >
