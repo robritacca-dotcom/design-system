@@ -1,8 +1,8 @@
 ---
 name: ship
-description: Make finished work live on robertritacca.com. Commit, run the full verify, merge branch work into main when needed, push, and watch CI go green. Use when asked to ship it, make it live, push to main, or deploy this. If asked to "merge and push" (a retired skill name), confirm the intended end state — ship, checkpoint, or land — before acting.
+description: Make finished work live on robertritacca.com. Commit, run the full verify, merge branch work into main when needed, push, watch CI go green, then prove the deployed site actually renders with the live hydration smoke. Use when asked to ship it, make it live, push to main, or deploy this. If asked to "merge and push" (a retired skill name), confirm the intended end state — ship, checkpoint, or land — before acting.
 icon: publish
-displayDescription: "Makes finished work live on robertritacca.com. Surveys the tree so unrelated files never get swept into a commit, runs the full local verify (the single script mirroring CI) before anything is committed, merges branch work into main when needed, pushes, confirms the CI run goes green, and reports exactly what deployed."
+displayDescription: "Makes finished work live on robertritacca.com. Surveys the tree so unrelated files never get swept into a commit, runs the full local verify (the single script mirroring CI) before anything is committed, merges branch work into main when needed, pushes, confirms the CI run goes green, then loads the deployed site in a real browser to prove it renders (a deploy is not done at HTTP 200), and reports exactly what deployed."
 invoke: ["ship it","make it live","push to main","deploy this"]
 ---
 
@@ -66,8 +66,18 @@ Use this skill when asked to make completed work live — phrases like "ship it"
 
    **Branch case, after CI is green**: delete the merged branch — `git branch -d <branch>`, and `git push origin --delete <branch>` if it was pushed. Its commits are on `main`; the repo stays main-only by default. Name the deletion in the report.
 
-8. **Report** in the final message:
-   - Each pushed commit (hash + subject), confirmation `npm run verify` passed locally, and the CI run result
+8. **Prove the deployed site renders** — the step the 2026-09-06 outage was missing. A green verify, a green CI run, and an HTTP 200 all held that morning while every JS browser showed a blank page: the failure lived in Vercel's runtime rendering (the root route's ISR regeneration sees an internal pathname no local run can reproduce), so only the live site can prove itself. First confirm the new deployment is what's serving — the `data-dpl-id` in the homepage HTML changes with every deploy:
+   ```bash
+   curl -s https://robertritacca.com/ | grep -o 'data-dpl-id="[^"]*"'
+   ```
+   If it hasn't changed from before the push, wait a moment and re-check — Vercel usually finishes before CI does. Then run the live hydration smoke:
+   ```bash
+   node scripts/smoke-hydration.mjs https://robertritacca.com
+   ```
+   The script's doc block owns what it asserts (hydration succeeded, the theme guard's ready mark landed, the page is visible with content, at desktop and phone viewports). **A red result means the deploy may have taken the site down — treat it as an active outage, not a report line**: diagnose immediately, and if the cause isn't quickly fixable, revert the deploy (`git revert` the pushed commits and push again) rather than leaving the site dark while investigating. Never skip this step because verify and CI were green — they were green during the outage too.
+
+9. **Report** in the final message:
+   - Each pushed commit (hash + subject), confirmation `npm run verify` passed locally, the CI run result, and the live smoke result (step 8)
    - Every file deliberately left out and why
    - Anything the deploy will visibly change on the live site
    - Branch case: the merge and the branch deletion

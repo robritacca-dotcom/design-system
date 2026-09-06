@@ -76,3 +76,9 @@ jobs:
       - run: node scripts/validate-rendered-spacing.mjs
       # Same reason: compares the corpus against what the pages actually render.
       - run: node scripts/validate-corpus-coverage.mjs
+      # Serves the build and loads it in a real browser: hydration must
+      # succeed and the page must be visible with content. HTTP 200 and a
+      # green build prove neither — the 2026-09-06 outage served 200 while
+      # every JS browser showed a blank page.
+      - run: npx playwright install --with-deps chromium
+      - run: node scripts/smoke-hydration.mjs
