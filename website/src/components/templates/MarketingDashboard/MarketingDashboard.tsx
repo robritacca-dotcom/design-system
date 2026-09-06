@@ -481,8 +481,8 @@ export default function MarketingDashboard() {
 
   return (
     // data-bg-hidden is the layout's own switch for the ambient background
-    // (the playground's stage toggle uses it): the dashboard sits on the
-    // flat page colour, no gradient.
+    // (the dotted stages' HiddenBackground marker reads the same way): the
+    // dashboard sits on the flat page colour, no gradient.
     <div className={styles.shell} data-bg-hidden="">
       <div className={styles.sidebar}>
         <AppSidebar

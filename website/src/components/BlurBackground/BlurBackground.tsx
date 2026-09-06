@@ -37,14 +37,16 @@ export function FullBleedBackground() {
 
 /**
  * Marker a page renders to hide the background entirely, leaving the flat page
- * colour — the playground's stage toggle, so a theme can be judged without the
- * ambient field colouring it.
+ * colour — the dotted stages (the playground and the canvas board) render it
+ * beside their DotBackground ground, and the marketing-dashboard template sets
+ * the attribute itself.
  *
  * It hides the layer rather than unmounting it, and that is the point: the
  * mount is hoisted to the root layout precisely so the WebGL context survives
  * navigation, and tearing it down to save a few frames would pay for a fresh
- * context, shader compile, link and reveal fade the moment the toggle came
- * back on. Same marker mechanism as FullBleedBackground, for the same reason.
+ * context, shader compile, link and reveal fade the moment an ambient page
+ * came back. Same marker mechanism as FullBleedBackground, for the same
+ * reason.
  */
 export function HiddenBackground() {
   return <div data-bg-hidden hidden />;
