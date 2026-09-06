@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, screen, waitFor } from 'storybook/test';
 import { Dialog } from './Dialog';
 import { Drawer } from '../Drawer/Drawer';
+import { acquireScrollLock, releaseScrollLock } from '../../behaviors/useScrollLock';
 import { Button } from '../Button/Button';
 import { Input } from '../Input/Input';
 
@@ -220,20 +221,57 @@ export const StackedOnDrawer: Story = {
     const openDialogButton = await screen.findByRole('button', { name: 'Open dialog' });
     await userEvent.click(openDialogButton);
     await screen.findByRole('dialog', { name: 'Confirm changes' });
-    await expect(document.body.style.overflow).toBe('hidden');
+    await expect(document.body.style.position).toBe('fixed');
 
     await userEvent.keyboard('{Escape}');
     await waitFor(() =>
       expect(screen.queryByRole('dialog', { name: 'Confirm changes' })).toBeNull(),
     );
     await expect(screen.getByRole('dialog', { name: 'Filters' })).toBeVisible();
-    await expect(document.body.style.overflow).toBe('hidden');
+    await expect(document.body.style.position).toBe('fixed');
     await expect(openDialogButton).toHaveFocus();
 
     await userEvent.keyboard('{Escape}');
     await waitFor(() => expect(screen.queryByRole('dialog', { name: 'Filters' })).toBeNull());
+    await expect(document.body.style.position).toBe('');
     await expect(document.body.style.overflow).toBe('');
     await expect(canvas.getByRole('button', { name: 'Open drawer' })).toHaveFocus();
+  },
+};
+
+export const SharedLockWithHostChrome: Story = {
+  render: (args) => (
+    <DialogDemo {...args} title="Confirm changes">
+      <p style={{ margin: 0 }}>
+        The page scroll lock is one shared counter: an app&apos;s own overlay
+        (a nav drawer, a chat panel) can hold it through{' '}
+        <code>acquireScrollLock</code> / <code>releaseScrollLock</code>, and
+        closing that overlay under an open dialog must not unlock the page.
+      </p>
+    </DialogDemo>
+  ),
+  // The cross-module contract the imperative pair exists for: host chrome
+  // (imagine a site nav drawer) pins the page, a dialog opens on top, the
+  // chrome closes first — the page stays pinned until the dialog, the last
+  // holder, closes. Two independent locks used to unlock it right here.
+  play: async ({ canvas, userEvent }) => {
+    acquireScrollLock();
+    await expect(document.body.style.position).toBe('fixed');
+    await expect(document.body.style.overflow).toBe('hidden');
+
+    await userEvent.click(await canvas.findByRole('button', { name: 'Open dialog' }));
+    await screen.findByRole('dialog', { name: 'Confirm changes' });
+
+    releaseScrollLock();
+    await expect(document.body.style.position).toBe('fixed');
+    await expect(document.body.style.overflow).toBe('hidden');
+
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() =>
+      expect(screen.queryByRole('dialog', { name: 'Confirm changes' })).toBeNull(),
+    );
+    await expect(document.body.style.position).toBe('');
+    await expect(document.body.style.overflow).toBe('');
   },
 };
 

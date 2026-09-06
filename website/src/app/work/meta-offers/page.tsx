@@ -12,6 +12,7 @@ import { Stat } from "@robr0/design-system/components/Stat/Stat";
 import { Alert } from "@robr0/design-system/components/Alert/Alert";
 import { Figure } from "@robr0/design-system/components/Figure/Figure";
 import { getSidebarLinks, workSidebarLinks } from "@/config/navigation";
+import { lockBodyScroll, unlockBodyScroll } from "@/lib/scroll-lock";
 import styles from "./page.module.css";
 
 const { sidebarLinks } = getSidebarLinks(workSidebarLinks, "/work/meta-offers");
@@ -70,10 +71,10 @@ export default function MetaOffersCaseStudy() {
     if (!lightbox) return;
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") closeLightbox(); };
     document.addEventListener("keydown", onKey);
-    document.body.style.overflow = "hidden";
+    lockBodyScroll("work-meta-offers-lightbox");
     return () => {
       document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
+      unlockBodyScroll("work-meta-offers-lightbox");
     };
   }, [lightbox, closeLightbox]);
 

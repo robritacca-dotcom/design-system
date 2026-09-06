@@ -8,6 +8,7 @@ import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import SampleCaseStudyCard from "../../../components/SampleCaseStudyCard/SampleCaseStudyCard";
 import { getSidebarLinks, workSidebarLinks } from "@/config/navigation";
+import { lockBodyScroll, unlockBodyScroll } from "@/lib/scroll-lock";
 import styles from "./page.module.css";
 
 const { sidebarLinks } = getSidebarLinks(
@@ -59,10 +60,10 @@ export default function MetaImmersiveOffersCaseStudy() {
     if (!lightbox) return;
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") closeLightbox(); };
     document.addEventListener("keydown", onKey);
-    document.body.style.overflow = "hidden";
+    lockBodyScroll("work-meta-immersive-offers-lightbox");
     return () => {
       document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
+      unlockBodyScroll("work-meta-immersive-offers-lightbox");
     };
   }, [lightbox, closeLightbox]);
 

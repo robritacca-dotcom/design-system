@@ -46,6 +46,11 @@ const SUBPATHS = [
   // text needs its own renderer (markdown, a highlighter). A .ts module,
   // so the *.tsx wildcard below can't serve it either.
   { key: './components/StreamingText/useStreamReveal', srcJs: './src/components/StreamingText/useStreamReveal.ts', dist: './components/StreamingText/useStreamReveal' },
+  // The one published behavior: the shared page scroll lock. Host chrome
+  // with its own overlays must join the modal components' counter, or two
+  // locks fight over document.body — the rest of src/behaviors stays
+  // internal (design.md's Components intro owns the contract).
+  { key: './behaviors/useScrollLock', srcJs: './src/behaviors/useScrollLock.ts', dist: './behaviors/useScrollLock' },
   { key: './tokens/registry', srcJs: './src/tokens/registry.ts', dist: './tokens/registry' },
   // The JS-timing constants — the TypeScript side of the motion tokens,
   // for timers a CSS variable cannot reach.

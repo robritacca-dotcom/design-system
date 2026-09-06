@@ -9,6 +9,7 @@ import SampleCaseStudyCard from "../../../components/SampleCaseStudyCard/SampleC
 import { Figure } from "@robr0/design-system/components/Figure/Figure";
 import { Stat } from "@robr0/design-system/components/Stat/Stat";
 import { getSidebarLinks, workSidebarLinks } from "@/config/navigation";
+import { lockBodyScroll, unlockBodyScroll } from "@/lib/scroll-lock";
 import styles from "./page.module.css";
 
 const { sidebarLinks } = getSidebarLinks(
@@ -25,10 +26,10 @@ export default function AugmentaCaseStudy() {
     if (!lightbox) return;
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") closeLightbox(); };
     document.addEventListener("keydown", onKey);
-    document.body.style.overflow = "hidden";
+    lockBodyScroll("work-augmenta-ai-lightbox");
     return () => {
       document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
+      unlockBodyScroll("work-augmenta-ai-lightbox");
     };
   }, [lightbox, closeLightbox]);
 
