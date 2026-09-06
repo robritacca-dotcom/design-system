@@ -1,23 +1,14 @@
 'use client';
 
-import React, {
-  useState,
-  useRef,
-  useEffect,
-  useMemo,
-  useCallback,
-  useId,
-  useSyncExternalStore,
-} from 'react';
+import React, { useState, useRef, useEffect, useMemo, useCallback, useId } from 'react';
 import ReactDOM from 'react-dom';
 import { Kbd } from '../Kbd/Kbd';
 import './CommandPalette.css';
 import '../../fonts/material-symbols.css';
-
-const emptySubscribe = () => () => {};
-
-const FOCUSABLE =
-  'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+import { useMounted } from '../../behaviors/useMounted';
+import { useLayer } from '../../behaviors/useLayer';
+import { useFocusScope } from '../../behaviors/useFocusScope';
+import { useScrollLock } from '../../behaviors/useScrollLock';
 
 export interface CommandPaletteCommand {
   /** Stable identifier */
@@ -100,12 +91,11 @@ export const CommandPalette = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
-  const previousFocusRef = useRef<HTMLElement | null>(null);
   const generatedId = useId();
   const baseClass = 'ds-command-palette';
 
   // SSR guard — only render the portal on the client
-  const mounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
+  const mounted = useMounted();
 
   const matches = useCallback(
     (command: CommandPaletteCommand) => {
@@ -163,78 +153,16 @@ export const CommandPalette = ({
     return () => document.removeEventListener('keydown', handleHotkey);
   }, [hotkey, open, onOpenChange]);
 
-  // Focus the field on open; restore the previous focus on close
-  useEffect(() => {
-    if (open) {
-      previousFocusRef.current = document.activeElement as HTMLElement;
-      const raf = requestAnimationFrame(() => inputRef.current?.focus());
-      return () => cancelAnimationFrame(raf);
-    }
-
-    if (previousFocusRef.current) {
-      previousFocusRef.current.focus();
-      previousFocusRef.current = null;
-    }
-  }, [open]);
-
-  // Lock the page behind the palette without touching its scrollbar.
-  // Hiding overflow removes the document scrollbar, and the rail blinking
-  // out reads as a jump on classic-scrollbar platforms even with the
-  // gutter width repaid as padding. So the background keeps its scrollbar
-  // exactly as it was, and scroll *input* is cancelled instead: wheel and
-  // touch gestures work only inside the command list while open. Focus is
-  // already trapped in the dialog, so keyboard scrolling cannot reach the
-  // page. Dragging the document scrollbar's thumb itself remains possible;
-  // the scrim makes that a deliberate act rather than an accident.
-  useEffect(() => {
-    if (!open) return;
-    const block = (event: Event) => {
-      const target = event.target instanceof Element ? event.target : null;
-      if (target?.closest(`.${baseClass}__list`)) return;
-      event.preventDefault();
-    };
-    document.addEventListener('wheel', block, { passive: false });
-    document.addEventListener('touchmove', block, { passive: false });
-    return () => {
-      document.removeEventListener('wheel', block);
-      document.removeEventListener('touchmove', block);
-    };
-  }, [open, baseClass]);
-
-  // Focus trap + ESC — document-level, so both work from anywhere in the dialog
-  useEffect(() => {
-    if (!open) return;
-
-    const handleTrapKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        e.preventDefault();
-        onOpenChange(false);
-        return;
-      }
-
-      if (e.key === 'Tab') {
-        const panel = panelRef.current;
-        if (!panel) return;
-
-        const focusable = panel.querySelectorAll<HTMLElement>(FOCUSABLE);
-        if (focusable.length === 0) return;
-
-        const first = focusable[0];
-        const last = focusable[focusable.length - 1];
-
-        if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
-      }
-    };
-
-    document.addEventListener('keydown', handleTrapKeyDown);
-    return () => document.removeEventListener('keydown', handleTrapKeyDown);
-  }, [open, onOpenChange]);
+  // Shared overlay behaviors (src/behaviors/) — see Dialog for the contract.
+  // Initial focus goes straight to the search field. The scroll lock uses the
+  // cancel-events strategy: hiding body overflow removes the document
+  // scrollbar, and the rail blinking out reads as a jump on classic-scrollbar
+  // platforms — so the page keeps its scrollbar and scroll *input* is
+  // cancelled outside the command list instead. Dragging the scrollbar thumb
+  // itself remains possible; the scrim makes that a deliberate act.
+  useLayer({ open, onDismiss: () => onOpenChange(false) });
+  useFocusScope(panelRef, { active: open, initialFocus: () => inputRef.current });
+  useScrollLock(open, { strategy: 'cancel-events', allowWithin: listRef });
 
   const runCommand = (command: CommandPaletteCommand) => {
     if (command.disabled) return;

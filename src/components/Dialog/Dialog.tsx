@@ -1,14 +1,13 @@
 'use client';
 
-import React, { useEffect, useRef, useId, useSyncExternalStore } from 'react';
+import React, { useRef, useId } from 'react';
 import ReactDOM from 'react-dom';
 import './Dialog.css';
 import '../../fonts/material-symbols.css';
-
-const emptySubscribe = () => () => {};
-
-const FOCUSABLE =
-  'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+import { useMounted } from '../../behaviors/useMounted';
+import { useLayer } from '../../behaviors/useLayer';
+import { useFocusScope } from '../../behaviors/useFocusScope';
+import { useScrollLock } from '../../behaviors/useScrollLock';
 
 /** Props owned by Dialog itself — everything else falls through to the panel. */
 type DialogOwnProps = {
@@ -66,7 +65,6 @@ export const Dialog = React.forwardRef<HTMLDivElement, DialogProps>(
     ref,
   ) => {
     const panelRef = useRef<HTMLDivElement | null>(null);
-    const previousFocusRef = useRef<HTMLElement | null>(null);
     const titleId = useId();
     const descId = useId();
     const baseClass = 'ds-dialog';
@@ -79,78 +77,16 @@ export const Dialog = React.forwardRef<HTMLDivElement, DialogProps>(
     };
 
     // SSR guard — only render portal on the client
-    const mounted = useSyncExternalStore(
-      emptySubscribe,
-      () => true,
-      () => false,
-    );
+    const mounted = useMounted();
 
-    // Store the previously focused element when opening
-    useEffect(() => {
-      if (open) {
-        previousFocusRef.current = document.activeElement as HTMLElement;
-      }
-    }, [open]);
-
-    // Focus trap and keyboard handling
-    useEffect(() => {
-      if (!open) return;
-
-      const panel = panelRef.current;
-      if (panel) {
-        const first =
-          panel.querySelector<HTMLElement>(
-            'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled])',
-          ) ?? panel.querySelector<HTMLElement>(FOCUSABLE);
-        (first ?? panel).focus();
-      }
-
-      const handleKeyDown = (e: KeyboardEvent) => {
-        if (e.key === 'Escape' && dismissible) {
-          onOpenChange(false);
-          return;
-        }
-
-        if (e.key === 'Tab' && panel) {
-          const focusable = panel.querySelectorAll<HTMLElement>(FOCUSABLE);
-          if (focusable.length === 0) return;
-
-          const first = focusable[0];
-          const last = focusable[focusable.length - 1];
-
-          if (e.shiftKey && document.activeElement === first) {
-            e.preventDefault();
-            last.focus();
-          } else if (!e.shiftKey && document.activeElement === last) {
-            e.preventDefault();
-            first.focus();
-          }
-        }
-      };
-
-      document.addEventListener('keydown', handleKeyDown);
-      return () => document.removeEventListener('keydown', handleKeyDown);
-    }, [open, dismissible, onOpenChange]);
-
-    // Restore focus on close
-    useEffect(() => {
-      if (!open && previousFocusRef.current) {
-        previousFocusRef.current.focus();
-        previousFocusRef.current = null;
-      }
-    }, [open]);
-
-    // Prevent body scroll when open
-    useEffect(() => {
-      if (open) {
-        document.body.style.overflow = 'hidden';
-      } else {
-        document.body.style.overflow = '';
-      }
-      return () => {
-        document.body.style.overflow = '';
-      };
-    }, [open]);
+    // Shared overlay behaviors (src/behaviors/): Escape routes through the
+    // layer stack so only the topmost overlay answers it; focus is trapped
+    // and restored with the page inert behind the panel; the scroll lock is
+    // counted, so closing this dialog over another modal keeps its lock.
+    // Backdrop dismissal stays below — it is this component's own DOM.
+    useLayer({ open, dismissOnEscape: dismissible, onDismiss: () => onOpenChange(false) });
+    useFocusScope(panelRef, { active: open });
+    useScrollLock(open);
 
     const handleBackdropClick = () => {
       if (dismissible) onOpenChange(false);

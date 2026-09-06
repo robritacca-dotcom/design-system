@@ -1,15 +1,14 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useId, useSyncExternalStore } from 'react';
+import { useCallback, useRef, useId } from 'react';
 import ReactDOM from 'react-dom';
 import { Button } from '../Button/Button';
 import './AlertDialog.css';
 import '../../fonts/material-symbols.css';
-
-const emptySubscribe = () => () => {};
-
-const FOCUSABLE =
-  'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+import { useMounted } from '../../behaviors/useMounted';
+import { useLayer } from '../../behaviors/useLayer';
+import { useFocusScope } from '../../behaviors/useFocusScope';
+import { useScrollLock } from '../../behaviors/useScrollLock';
 
 export interface AlertDialogProps {
   /** Whether the dialog is open */
@@ -53,14 +52,13 @@ export const AlertDialog = ({
   className = '',
 }: AlertDialogProps) => {
   const panelRef = useRef<HTMLDivElement>(null);
-  const previousFocusRef = useRef<HTMLElement | null>(null);
   const titleId = useId();
   const descId = useId();
 
   const baseClass = 'ds-alert-dialog';
 
   // SSR guard — only render portal on the client
-  const mounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
+  const mounted = useMounted();
 
   const handleCancel = useCallback(() => {
     onCancel?.();
@@ -72,72 +70,17 @@ export const AlertDialog = ({
     onOpenChange(false);
   }, [onConfirm, onOpenChange]);
 
-  // Store the previously focused element when opening
-  useEffect(() => {
-    if (open) {
-      previousFocusRef.current = document.activeElement as HTMLElement;
-    }
-  }, [open]);
-
-  // Focus trap and keyboard handling
-  useEffect(() => {
-    if (!open) return;
-
-    // Focus the cancel button on open
-    const panel = panelRef.current;
-    if (panel) {
-      const cancelBtn = panel.querySelector<HTMLElement>(
-        `.${baseClass}__actions button:first-child`
-      );
-      cancelBtn?.focus();
-    }
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        handleCancel();
-        return;
-      }
-
-      if (e.key === 'Tab' && panel) {
-        const focusable = panel.querySelectorAll<HTMLElement>(FOCUSABLE);
-        if (focusable.length === 0) return;
-
-        const first = focusable[0];
-        const last = focusable[focusable.length - 1];
-
-        if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
-      }
-    };
-
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [open, handleCancel]);
-
-  // Restore focus on close
-  useEffect(() => {
-    if (!open && previousFocusRef.current) {
-      previousFocusRef.current.focus();
-      previousFocusRef.current = null;
-    }
-  }, [open]);
-
-  // Prevent body scroll when open
-  useEffect(() => {
-    if (open) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [open]);
+  // Shared overlay behaviors (src/behaviors/) — see Dialog. Escape cancels;
+  // initial focus lands on the cancel button, so the safe action is one
+  // keypress away from the destructive one.
+  useLayer({ open, onDismiss: handleCancel });
+  useFocusScope(panelRef, {
+    active: open,
+    initialFocus: () =>
+      panelRef.current?.querySelector<HTMLElement>(`.${baseClass}__actions button:first-child`) ??
+      null,
+  });
+  useScrollLock(open);
 
   const variantClass = variant !== 'default' ? `${baseClass}--${variant}` : '';
   const openClass = open ? `${baseClass}--open` : '';
@@ -157,6 +100,7 @@ export const AlertDialog = ({
         aria-modal="true"
         aria-labelledby={titleId}
         aria-describedby={description ? descId : undefined}
+        tabIndex={-1}
       >
         <div className={`${baseClass}__header`}>
           <span

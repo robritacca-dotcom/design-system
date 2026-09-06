@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect, screen, waitFor } from 'storybook/test';
 import { Dialog } from './Dialog';
+import { Drawer } from '../Drawer/Drawer';
 import { Button } from '../Button/Button';
 import { Input } from '../Input/Input';
 
@@ -56,6 +58,26 @@ export const Default: Story = {
       </p>
     </DialogDemo>
   ),
+  // The modal contract, end to end: open, page inert behind the panel,
+  // Escape closes, focus returns to the trigger. Ends closed, so the
+  // snapshot matches the resting state.
+  play: async ({ canvas, canvasElement, userEvent }) => {
+    const trigger = await canvas.findByRole('button', { name: 'Open dialog' });
+    await userEvent.click(trigger);
+
+    const dialog = await screen.findByRole('dialog', { name: 'Edit profile' });
+    await expect(dialog).toBeVisible();
+
+    // Everything outside the dialog's portal is inert while it is open —
+    // including the story root that holds the trigger.
+    const storyRoot = canvasElement.closest<HTMLElement>('body > *');
+    await expect(storyRoot?.inert).toBe(true);
+
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(screen.queryByRole('dialog', { name: 'Edit profile' })).toBeNull());
+    await expect(storyRoot?.inert).toBe(false);
+    await expect(trigger).toHaveFocus();
+  },
 };
 
 export const WithFooter: Story = {
@@ -83,6 +105,23 @@ export const WithFooter: Story = {
       );
     };
     return <Demo />;
+  },
+  // Tab is fenced inside the panel: Shift+Tab from the first stop wraps to
+  // the last, Tab from the last wraps back to the first.
+  play: async ({ canvas, userEvent }) => {
+    await userEvent.click(await canvas.findByRole('button', { name: 'Open dialog' }));
+
+    const closeButton = await screen.findByRole('button', { name: 'Close dialog' });
+    await expect(closeButton).toHaveFocus();
+
+    await userEvent.tab({ shift: true });
+    await expect(screen.getByRole('button', { name: 'Save' })).toHaveFocus();
+
+    await userEvent.tab();
+    await expect(closeButton).toHaveFocus();
+
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(screen.queryByRole('dialog', { name: 'Rename project' })).toBeNull());
   },
 };
 
@@ -129,6 +168,72 @@ export const NonDismissible: Story = {
       );
     };
     return <Demo />;
+  },
+  // A non-dismissible dialog swallows Escape; only its own action closes it.
+  play: async ({ canvas, userEvent }) => {
+    await userEvent.click(await canvas.findByRole('button', { name: 'Open dialog' }));
+
+    const dialog = await screen.findByRole('dialog', { name: 'Action required' });
+    await userEvent.keyboard('{Escape}');
+    await expect(dialog).toBeVisible();
+
+    await userEvent.click(screen.getByRole('button', { name: 'Acknowledge' }));
+    await waitFor(() =>
+      expect(screen.queryByRole('dialog', { name: 'Action required' })).toBeNull(),
+    );
+  },
+};
+
+export const StackedOnDrawer: Story = {
+  render: (args) => {
+    const Demo = () => {
+      const [drawerOpen, setDrawerOpen] = useState(false);
+      const [dialogOpen, setDialogOpen] = useState(false);
+      return (
+        <>
+          <Button label="Open drawer" variant="secondary" onClick={() => setDrawerOpen(true)} />
+          <Drawer
+            open={drawerOpen}
+            onOpenChange={setDrawerOpen}
+            title="Filters"
+            description="A dialog can stack on top of this drawer."
+          >
+            <Button label="Open dialog" variant="primary" onClick={() => setDialogOpen(true)} />
+          </Drawer>
+          <Dialog {...args} open={dialogOpen} onOpenChange={setDialogOpen} title="Confirm changes">
+            <p style={{ margin: 0 }}>
+              Escape closes this dialog first; the drawer underneath stays open
+              and keeps its scroll lock.
+            </p>
+          </Dialog>
+        </>
+      );
+    };
+    return <Demo />;
+  },
+  // The stacking contract: Escape closes only the topmost overlay, the
+  // drawer's scroll lock survives the dialog's close (the counted lock), and
+  // focus restores through the chain.
+  play: async ({ canvas, userEvent }) => {
+    await userEvent.click(await canvas.findByRole('button', { name: 'Open drawer' }));
+
+    const openDialogButton = await screen.findByRole('button', { name: 'Open dialog' });
+    await userEvent.click(openDialogButton);
+    await screen.findByRole('dialog', { name: 'Confirm changes' });
+    await expect(document.body.style.overflow).toBe('hidden');
+
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() =>
+      expect(screen.queryByRole('dialog', { name: 'Confirm changes' })).toBeNull(),
+    );
+    await expect(screen.getByRole('dialog', { name: 'Filters' })).toBeVisible();
+    await expect(document.body.style.overflow).toBe('hidden');
+    await expect(openDialogButton).toHaveFocus();
+
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(screen.queryByRole('dialog', { name: 'Filters' })).toBeNull());
+    await expect(document.body.style.overflow).toBe('');
+    await expect(canvas.getByRole('button', { name: 'Open drawer' })).toHaveFocus();
   },
 };
 
