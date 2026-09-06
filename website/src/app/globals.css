@@ -11,11 +11,15 @@ html {
   scroll-behavior: smooth;
 }
 
-html:not(.theme-ready) {
+/* An attribute rather than a class on purpose: React owns <html>'s
+   className, and a hydration fallback re-render rewrites it — a ready class
+   would be wiped and the page would stay hidden. See themeScript in
+   layout.tsx, which sets the mark before first paint. */
+html:not([data-theme-ready]) {
   visibility: hidden;
 }
 
-html.theme-ready {
+html[data-theme-ready] {
   visibility: visible;
 }
 

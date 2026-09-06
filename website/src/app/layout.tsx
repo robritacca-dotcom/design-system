@@ -113,7 +113,12 @@ const themeScript = `
       root.setAttribute('data-theme', event.matches ? 'dark' : 'light');
     }
   });
-  root.classList.add('theme-ready');
+  /* An attribute, deliberately not a class: React owns <html>'s className
+     (the next/font variable class), so a hydration failure's client
+     re-render rewrites it — a ready *class* gets wiped and the site stays
+     visibility:hidden forever. React never touches attributes it does not
+     render, so the ready mark survives any hydration fallback. */
+  root.setAttribute('data-theme-ready', '');
 })();
 `;
 
@@ -187,7 +192,7 @@ export default async function RootLayout({
       </head>
       <body>
         {/* Must run before first paint (html stays visibility:hidden until
-            .theme-ready). Emitted as raw HTML in a hidden div, not a React
+            data-theme-ready lands). Emitted as raw HTML in a hidden div, not a React
             <script> element: parser-inserted scripts still execute, while
             React-rendered ones are inert on client render and trigger a dev
             warning ("Encountered a script tag while rendering…"). */}
