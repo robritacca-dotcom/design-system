@@ -16,7 +16,9 @@
    ============================================ */
 .viewport {
   position: fixed;
-  top: var(--layout-toolbar-height);
+  /* Full-bleed: the toolbar is a floating pill now, and the board runs
+     underneath it rather than starting at a bar's lower edge. */
+  top: 0;
   right: 0;
   bottom: 0;
   left: 0;
@@ -162,31 +164,9 @@
   pointer-events: none;
 }
 
-/* ---------- floating controls ---------- */
-.controls {
-  position: fixed;
-  bottom: var(--padding-lg);
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  gap: var(--gap-xs);
-  padding: var(--padding-xxs) var(--padding-xs);
-  border-radius: var(--radius-full);
-  background: color-mix(in srgb, var(--color-bg-container-primary) 85%, transparent);
-  backdrop-filter: blur(16px);
-  border: var(--border-xs) solid var(--color-divider);
-  box-shadow: var(--shadow-floating);
-  z-index: 30;
-}
-
-.separator {
-  width: var(--border-xs);
-  height: var(--gap-lg);
-  margin: 0 var(--gap-xs);
-  background: var(--color-divider);
-}
-
+/* ---------- floating controls ----------
+   The bar shell is the shared StageControlBar; only the board's own
+   zoom-percentage button lives here. */
 .zoomLevel {
   min-width: 4.5em;
   height: var(--gap-xl);
@@ -217,6 +197,9 @@
   left: var(--padding-lg);
   bottom: var(--padding-lg);
   margin: 0;
+  /* Wraps in the corner rather than running under the centred control
+     bar, which grew when the stage controls were normalized into it. */
+  max-width: 240px;
   font-family: var(--font-caption-family);
   font-size: var(--font-caption-size);
   line-height: var(--font-caption-line-height);
@@ -225,8 +208,10 @@
   z-index: 30;
 }
 
-/* Phones: the hint would collide with the controls. */
-@media (max-width: 699px) {
+/* Below this, the corner can't hold the hint clear of the centred control
+   bar (wider since the stage controls were normalized into it) — and the
+   gestures it describes are discoverable without it. */
+@media (max-width: 1399px) {
   .hint {
     display: none;
   }

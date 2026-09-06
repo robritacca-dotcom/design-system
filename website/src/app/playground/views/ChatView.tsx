@@ -38,11 +38,13 @@ export type TransportMode = "live" | "sim";
 type ResizeAxis = "x" | "y" | "both";
 
 /* Review targets, not layout tokens. Two footprints are enough: the
-   desktop card, and the mobile preset — a real phone viewport rendered
-   edge-to-edge in a bezel, the presentation a phone visitor actually gets
-   (the site panel drops its card chrome below 720px). */
+   desktop card, which rests filling the stage's safe zone (its size
+   derives from the available space; w/h here are only the drag baseline
+   the type shares), and the mobile preset — a real phone viewport
+   rendered edge-to-edge in a bezel, the presentation a phone visitor
+   actually gets (the site panel drops its card chrome below 720px). */
 export const STAGE_SIZES = {
-  desktop: { label: "Desktop (880px)", w: 880, h: 956, device: false, notch: false },
+  desktop: { label: "Desktop", w: 880, h: 956, device: false, notch: false },
   mobile: { label: "Mobile (390px)", w: 390, h: 844, device: true, notch: true },
 } as const;
 export type StageSize = keyof typeof STAGE_SIZES;
@@ -268,14 +270,16 @@ export default function ChatView({
         .join(" ")}
       /* Pinned phases hold the card's rect so the glide has somewhere to
          start and land; open lets the class's viewport geometry rule; in
-         device mode the screen wrapper owns the size; otherwise the manual
-         size wins over the preset, with the CSS clamps over both. */
+         device mode the screen wrapper owns the size. Otherwise only a
+         manual drag sizes the card inline — at rest the fit classes derive
+         its size from the stage's available space, with the CSS clamps
+         over both. */
       style={
         takeover
           ? pinnedStyle
           : isDevice
             ? undefined
-            : { width: manual.w ?? preset.w, height: manual.h ?? preset.h }
+            : { width: manual.w, height: manual.h }
       }
     >
       <SiteChat

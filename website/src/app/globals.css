@@ -39,8 +39,17 @@ html[data-theme-ready] {
 
   /* The immersive surfaces' slim toolbar (StageToolbar): one height
      constant shared by the bar itself and the pages that reserve room
-     beneath it, so the two can never drift apart. */
+     beneath it, so the two can never drift apart. The bar floats as a
+     glass pill inset --layout-chat-inset off the top edge, so the room a
+     stage reserves is the clearance below: inset + bar + matching air. */
   --layout-toolbar-height: 56px;
+  --layout-stage-clearance: calc(
+    var(--layout-toolbar-height) + var(--layout-chat-inset) * 2
+  );
+  /* The matching safe area above the bottom control bar (StageControlBar):
+     its inset, its box (restated here because CSS cannot read a sibling's
+     box — same deal as the toast inset above the chat FAB), and air. */
+  --layout-stage-bottom-clearance: calc(var(--layout-chat-inset) * 2 + 48px);
 
   /* How far an anchor target rests below the viewport top. The sticky
      MegaNav bar is 78px (--mn-bar-height), but its frosted backdrop
@@ -214,9 +223,11 @@ body:has([data-bg-full-bleed]) .blur-container::after {
   display: none;
 }
 
-/* Background off — the playground's stage toggle, read the same marker way.
-   Hiding the layer rather than unmounting it keeps the WebGL context alive,
-   so switching back on is instant instead of a fresh compile and fade. */
+/* Background off — the dotted stages (playground, canvas) stand the ambient
+   layer down for their own ground, read the same marker way. Hiding the
+   layer rather than unmounting it keeps the WebGL context alive, so a
+   navigation back to an ambient page is instant instead of a fresh compile
+   and fade. */
 body:has([data-bg-hidden]) .blur-container {
   display: none;
 }

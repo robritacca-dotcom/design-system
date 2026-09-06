@@ -1,23 +1,43 @@
-/* A full-screen view's toolbar: one slim fixed glass strip across the
-   top of an immersive surface. Height comes from --layout-toolbar-height
-   (globals.css), shared with the pages that reserve room beneath it. */
+/* A full-screen view's toolbar: one slim glass pill floating across the
+   top of an immersive surface — an instrument panel over the stage, not a
+   wall at its edge. Height comes from --layout-toolbar-height (globals.css);
+   pages reserve --layout-stage-clearance beneath it, which accounts for the
+   float inset too. */
 .toolbar {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: var(--layout-chat-inset);
+  left: var(--layout-chat-inset);
+  right: var(--layout-chat-inset);
   height: var(--layout-toolbar-height);
   display: flex;
   align-items: center;
   gap: var(--gap-md);
   padding: 0 var(--padding-lg);
   z-index: 30;
-  /* The rails' glass, thinned for a bar this slim: enough backing that
-     content scrolling beneath stays quiet, not so much that it reads as
-     a card. */
-  background: color-mix(in srgb, var(--color-bg-container-primary) 70%, transparent);
-  backdrop-filter: blur(16px);
-  border-bottom: var(--border-xs) solid var(--color-divider);
+  background: var(--color-bg-glass);
+  backdrop-filter: blur(24px);
+  border: var(--border-xs) solid var(--color-bg-container-border);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-floating);
+}
+
+/* The fade behind the pill: the page floor at the viewport's top edge,
+   transparent below — the same treatment the bottom control bar keeps
+   (StageControlBar's fade), so content passing under either floating bar
+   dims out the same way. Above the flow, below the floating panels. */
+.fade {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: calc(var(--layout-stage-clearance) * 1.25);
+  z-index: 10;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    transparent,
+    var(--color-bg-page-primary) 85%
+  );
 }
 
 /* The side zones flex equally so the surface switch sits dead centre. */

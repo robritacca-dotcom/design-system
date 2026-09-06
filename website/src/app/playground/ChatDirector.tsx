@@ -289,7 +289,7 @@ interface DirectorEvent {
 }
 
 export interface ChatDirectorProps {
-  /** How the director is hosted: the desktop edge panel (default), or bare
+  /** How the director is hosted: the desktop floating panel (default), or bare
       content for the compact Drawer, which brings its own shell and title. */
   variant?: "panel" | "drawer";
   /** The Chat view's levers (stage size, transport, composer copy), slotted
@@ -472,7 +472,7 @@ export default function ChatDirector({
               <Button
                 key={event.id}
                 label={event.label}
-                variant="tertiary"
+                variant="neutral"
                 iconLeft={event.icon}
                 disabled={event.disabled || (live && !event.liveSafe)}
                 onClick={event.run}

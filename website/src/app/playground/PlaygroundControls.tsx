@@ -7,7 +7,6 @@ import { ColorPicker } from "@robr0/design-system/components/ColorPicker/ColorPi
 import { Swatch } from "@robr0/design-system/components/Swatch/Swatch";
 import { Dropdown } from "@robr0/design-system/components/Dropdown/Dropdown";
 import { Input } from "@robr0/design-system/components/Input/Input";
-import { RadioGroup } from "@robr0/design-system/components/RadioButton/RadioButton";
 import { Slider } from "@robr0/design-system/components/Slider/Slider";
 import { ToggleSwitch } from "@robr0/design-system/components/ToggleSwitch/ToggleSwitch";
 import { ACTION_COLOR_PRESETS, FONT_OPTIONS } from "@/lib/theme/theme-overrides";
@@ -17,14 +16,9 @@ export interface PlaygroundControlsProps {
   preset: string;
   /** The action colour being previewed (theme-resolved). */
   brand: string;
-  /** Active site theme — resolves the theme-dependent neutral swatches. */
+  /** Active site theme — resolves the theme-dependent neutral swatches
+      (the flip itself lives in the stage's bottom control bar). */
   theme: string;
-  /** Sets the site theme — the rail owns the toggle now that the immersive
-      format drops the header that used to carry it. */
-  onTheme: (value: string) => void;
-  /** Whether the ambient gradient sits behind the stage. */
-  backgroundOn: boolean;
-  onBackgroundOn: (value: boolean) => void;
   tintOn: boolean;
   tintSeed: string;
   tintStrength: number;
@@ -41,7 +35,7 @@ export interface PlaygroundControlsProps {
       the rail stays consistent where the views agree and contextual where
       they differ. */
   contextual?: ReactNode;
-  /** How the controls are hosted: the desktop edge panel (default), or
+  /** How the controls are hosted: the desktop floating panel (default), or
       bare content for the mobile Drawer, which brings its own shell,
       scroll, and title. Render one host at a time — two at once would
       collide on the radio group names. */
@@ -68,9 +62,6 @@ export default function PlaygroundControls({
   preset,
   brand,
   theme,
-  onTheme,
-  backgroundOn,
-  onBackgroundOn,
   tintOn,
   tintSeed,
   tintStrength,
@@ -152,29 +143,6 @@ export default function PlaygroundControls({
           />
         </div>
 
-        <div className={styles.controlGroup}>
-          {/* A site-level toggle, not a theme lever — flipping it must not
-              flip the preset to Custom, so it bypasses asCustom. */}
-          <RadioGroup
-            label="Theme"
-            name="playground-theme"
-            value={theme}
-            options={[
-              { value: "light", label: "Light" },
-              { value: "dark", label: "Dark" },
-            ]}
-            onValueChange={onTheme}
-          />
-          {/* Also a stage setting rather than a theme lever — it changes what
-              the preview sits on, never a token, so it stays out of the
-              generated CSS and never flips the preset to Custom. */}
-          <ToggleSwitch
-            label="Background gradient"
-            checked={backgroundOn}
-            onChange={onBackgroundOn}
-          />
-        </div>
-
         {/* Colour sits high and every shared lever keeps one fixed slot in
             all views — the contextual groups render at the bottom, so
             nothing above them ever shifts. */}
@@ -201,7 +169,7 @@ export default function PlaygroundControls({
           {actionModeNote && <p className={styles.controlNote}>{actionModeNote}</p>}
           <Button
             label="All colour ramps"
-            variant="tertiary"
+            variant="neutral"
             iconLeft="palette"
             onClick={onOpenAdvanced}
           />
@@ -283,7 +251,7 @@ export default function PlaygroundControls({
           />
           <Button
             label="View CSS"
-            variant="tertiary"
+            variant="neutral"
             iconLeft="code"
             onClick={onViewCss}
           />

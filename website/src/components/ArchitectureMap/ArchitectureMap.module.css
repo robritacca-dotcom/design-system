@@ -149,8 +149,7 @@
   z-index: 1200;
   display: flex;
   flex-direction: column;
-  /* The StageToolbar inside is a fixed strip, like the canvas and
-     playground stages; the surface starts below it. */
-  padding-top: var(--layout-toolbar-height);
+  /* The StageToolbar inside is a floating pill, like the canvas and
+     playground stages; the pannable surface runs underneath it. */
   background-color: var(--color-bg-page-primary);
 }

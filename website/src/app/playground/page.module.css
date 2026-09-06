@@ -1,16 +1,20 @@
 /* ============================================
    PLAYGROUND PAGE LAYOUT
    An immersive tool, not the standard page shell:
-   an edge control panel on the left, the workspace
+   floating glass panels over a dotted ground —
+   the control panel on the left, the workspace
    centred in the space between the panel's edge
    and the viewport's right edge.
    ============================================ */
 .dsLayout {
-  /* The edge panel's width — the workspace centres in what remains. */
+  /* The floating panel's width — the workspace centres in what remains. */
   --rail-width: 300px;
-  /* What the stage widget's hard width wall must stay clear of — the Chat
-     view's second rail widens it below. Read by ChatView.module.css. */
-  --stage-walls: var(--rail-width);
+  /* How far the panels float off the viewport edges — the same inset the
+     toolbar pill and the docked site chat keep. */
+  --rail-inset: var(--layout-chat-inset);
+  /* Where the floating panels stand in from each side — the stage
+     widget's hard width wall. Read by ChatView.module.css. */
+  --stage-walls: calc((var(--rail-width) + var(--rail-inset)) * 2);
   display: flex;
   justify-content: center;
   /* Stretch across the body's own side padding so the centring zone is
@@ -18,18 +22,39 @@
      margins come out identical, not skewed by the body inset. */
   width: calc(100% + var(--primitive-padding-xl) * 2);
   margin-inline: calc(-1 * var(--primitive-padding-xl));
-  padding-left: var(--rail-width);
-  /* Clear the fixed toolbar, then the immersive page still starts lower
-     than a doc page would — the title gets air, not a viewport edge. */
-  padding-top: calc(var(--layout-toolbar-height) + var(--primitive-gap-xl));
+  /* Panel, then the same safe ring the chat stage keeps — the column can
+     narrow to the panel's edge on tight viewports, and flush against the
+     glass is a collision, not a fit. */
+  padding-left: calc(var(--rail-width) + var(--rail-inset) * 2);
+  /* The workspace keeps the float inset off the right edge too, so the
+     content column never touches the viewport where no panel floats. */
+  padding-right: var(--rail-inset);
+  /* Clear the floating toolbar pill, then the immersive page still starts
+     lower than a doc page would — the title gets air, not a viewport edge. */
+  padding-top: calc(var(--layout-stage-clearance) + var(--primitive-gap-xl));
+  /* And the safe area above the bottom control bar, so the end of the
+     scroll is never parked behind it. */
+  padding-bottom: var(--layout-stage-bottom-clearance);
 }
 
-/* The Chat view runs a second edge panel on the right (the chat director),
-   so the workspace centres between the two rails. Applied by the page only
-   when that rail is actually rendered. */
+/* The Chat view runs a second floating panel on the right (the chat
+   director), so the workspace centres between the two. Applied by the page
+   only when that panel is actually rendered. */
 .dsLayoutChat {
-  padding-right: var(--rail-width);
-  --stage-walls: calc(var(--rail-width) * 2);
+  /* The chat stage owns its safe ring (ChatView's --stage-safe-pad), so
+     the layout hands it the zone panel-to-panel on both sides. */
+  padding-left: calc(var(--rail-width) + var(--rail-inset));
+  padding-right: calc(var(--rail-width) + var(--rail-inset));
+  /* The chat stage carries no page heading, so the components view's
+     extra title air goes — the widget's top gap matches its bottom one. */
+  padding-top: var(--layout-stage-clearance);
+}
+
+/* The chat stage's safe area is the browser's, not a document's: the
+   review-width cap belongs to the components showcase, so the chat view
+   lets its column run panel to panel at any viewport. */
+.dsLayoutChat .dsContent {
+  max-width: none;
 }
 
 .dsContent {
@@ -43,6 +68,13 @@
   gap: var(--gap-xxxl);
 }
 
+/* The bar's Mobile stage: the components workspace narrows to a
+   phone-width column. The width is a review target, like the Chat view's
+   stage presets — set dressing, not a layout token. */
+.dsContentMobile {
+  max-width: 420px;
+}
+
 .inlineLink {
   color: var(--color-action-primary-text-tertiary);
   text-decoration: underline;
@@ -50,42 +82,46 @@
 }
 
 /* ============================================
-   CONTROL RAIL — an edge panel: flush to the
-   left edge, from the toolbar to the bottom of
-   the viewport, everything scrolling inside
-   (the shell clips, the scroller carries the
-   padding and the thin scrollbar).
+   CONTROL PANEL — a floating glass card: inset
+   off the left edge, from the toolbar pill's
+   clearance to the bottom inset, everything
+   scrolling inside (the shell clips, the
+   scroller carries the padding and the thin
+   scrollbar). Same glass as the toolbar pill.
    ============================================ */
 .controlRail {
   position: fixed;
-  top: var(--layout-toolbar-height);
-  bottom: 0;
-  left: 0;
+  top: var(--layout-stage-clearance);
+  bottom: var(--rail-inset);
+  left: var(--rail-inset);
   width: var(--rail-width);
   /* Above the showcase sections' animate-in stacking contexts, so the
      rail's open Dropdown menu can never be painted over. */
   z-index: 15;
   display: flex;
   overflow: hidden;
-  background: color-mix(in srgb, var(--color-bg-container-primary) 82%, transparent);
-  border-right: var(--border-xs) solid var(--color-bg-container-border);
+  background: var(--color-bg-glass);
+  border: var(--border-xs) solid var(--color-bg-container-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-floating);
   backdrop-filter: blur(24px);
 }
 
-/* The chat director's rail: the control rail mirrored to the right edge.
-   Same shell, same scroll treatment — only the flush edge and the divider
-   side change. */
+/* The chat director's panel: the control panel mirrored to the right edge.
+   Same card, same float, same glass. */
 .eventRail {
   position: fixed;
-  top: var(--layout-toolbar-height);
-  bottom: 0;
-  right: 0;
+  top: var(--layout-stage-clearance);
+  bottom: var(--rail-inset);
+  right: var(--rail-inset);
   width: var(--rail-width);
   z-index: 15;
   display: flex;
   overflow: hidden;
-  background: color-mix(in srgb, var(--color-bg-container-primary) 82%, transparent);
-  border-left: var(--border-xs) solid var(--color-bg-container-border);
+  background: var(--color-bg-glass);
+  border: var(--border-xs) solid var(--color-bg-container-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-floating);
   backdrop-filter: blur(24px);
 }
 
@@ -200,6 +236,18 @@
   flex-direction: column;
   gap: var(--gap-md);
   min-width: 0;
+}
+
+/* The ambient shader, staged as a banner now that the stage ground is the
+   dot pattern: ShaderField fills this positioned, clipped frame, and the
+   levers re-theme it live like everything else on the stage. */
+.shaderBanner {
+  position: relative;
+  overflow: hidden;
+  height: 220px;
+  border-radius: var(--radius-xl);
+  border: var(--border-xs) solid var(--color-bg-container-border);
+  background: var(--color-bg-page-primary);
 }
 
 /* ============================================
@@ -362,17 +410,6 @@
   cursor: not-allowed;
 }
 
-/* The compact controls pill — fixed where a thumb reaches, summoning the
-   Drawer. Rendered only below the breakpoint (the page swaps hosts). */
-.controlsFab {
-  position: fixed;
-  bottom: var(--padding-lg);
-  right: var(--padding-lg);
-  z-index: 25;
-  border-radius: var(--radius-full);
-  box-shadow: var(--shadow-floating);
-}
-
 /* The same control groups, hosted by the Drawer: a plain column — the
    Drawer brings the shell, the scroll, and the title. */
 .drawerControls {
@@ -383,17 +420,18 @@
 
 /* ============================================
    RESPONSIVE — below the tool's breakpoint the
-   edge panel is not rendered at all: the
+   floating panel is not rendered at all: the
    controls live in the Drawer, and the
    workspace owns the whole screen.
    ============================================ */
 @media (max-width: 1099px) {
   .dsLayout {
     padding-left: 0;
+    padding-right: 0;
     /* No panel means no centring zone to correct. */
     width: 100%;
     margin-inline: 0;
-    /* Room for the fixed controls pill below the content's end. */
-    padding-bottom: calc(var(--padding-lg) * 2 + 40px);
+    /* The bottom control bar still floats here — keep its safe area. */
+    padding-bottom: var(--layout-stage-bottom-clearance);
   }
 }

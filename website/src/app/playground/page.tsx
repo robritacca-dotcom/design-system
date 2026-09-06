@@ -3,10 +3,13 @@
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import StageToolbar from "@/components/StageToolbar/StageToolbar";
-import {
-  FullBleedBackground,
-  HiddenBackground,
-} from "@/components/BlurBackground/BlurBackground";
+import { HiddenBackground } from "@/components/BlurBackground/BlurBackground";
+import DotBackground from "@/components/DotBackground/DotBackground";
+import StageControlBar, {
+  StageControlBarEndSlot,
+  StageControlBarSeparator,
+} from "@/components/StageControlBar/StageControlBar";
+import StageThemeFlip from "@/components/StageControlBar/StageThemeFlip";
 import styles from "./page.module.css";
 import { Button } from "@robr0/design-system/components/Button/Button";
 import { CodeBlock } from "@robr0/design-system/components/CodeBlock/CodeBlock";
@@ -34,7 +37,6 @@ import AdvancedColorsDialog from "./AdvancedColorsDialog";
 import ChatDirector, { STORY_CONTENT } from "./ChatDirector";
 import InspectMode from "@/components/InspectMode/InspectMode";
 import ChatView, {
-  STAGE_SIZES,
   type StageSize,
   type TransportMode,
 } from "./views/ChatView";
@@ -44,7 +46,10 @@ import { createFetchTransport } from "@/lib/chat-transport";
 import { SiteChatProvider, useSiteChat } from "@/components/SiteChat/ChatContext";
 import { Input } from "@robr0/design-system/components/Input/Input";
 import { RadioGroup } from "@robr0/design-system/components/RadioButton/RadioButton";
+import { SegmentedControl } from "@robr0/design-system/components/SegmentedControl/SegmentedControl";
+import { ShaderField } from "@robr0/design-system/components/ShaderField/ShaderField";
 import { ToggleSwitch } from "@robr0/design-system/components/ToggleSwitch/ToggleSwitch";
+import { shaderBackground } from "@/data/shader-background";
 import ActionsSection from "./sections/ActionsSection";
 import MapsSection from "./sections/MapsSection";
 import AiSection from "./sections/AiSection";
@@ -136,11 +141,6 @@ export default function PlaygroundPage() {
   const [chatManual, setChatManual] = useState<{ w?: number; h?: number }>({});
   const [chatPlaceholder, setChatPlaceholder] = useState("");
   const [showStarters, setShowStarters] = useState(true);
-  /* A stage setting, not a theme lever: it changes what the preview sits on,
-     never a token. So it sits beside the theme radios, stays out of the
-     generated CSS and out of isPristine, and — like theme and product name —
-     Reset leaves it alone. */
-  const [backgroundOn, setBackgroundOn] = useState(true);
 
   /* ---------- levers ---------- */
   const [preset, setPreset] = useState("default");
@@ -236,17 +236,6 @@ export default function PlaygroundPage() {
   const font = FONT_OPTIONS.find((f) => f.label === fontLabel) ?? FONT_OPTIONS[0];
 
   const theme = useSiteTheme();
-
-  /* The immersive format drops the site header, and the header owned the
-     light/dark toggle — so the rail carries one instead. Same store the
-     header toggle writes: the root attribute plus the persisted choice. */
-  const applyTheme = (next: string) => {
-    document.documentElement.setAttribute("data-theme", next);
-    /* An explicit pick, so the setting moves off "system" too — otherwise the
-       root script's OS-change listener would override the rail's choice. */
-    document.documentElement.setAttribute("data-theme-setting", next);
-    window.localStorage.setItem("theme", next);
-  };
 
   /* A preset can carry a theme-dependent action colour (black & white:
      dark button on light, white button on dark). Read from presetExtras so
@@ -383,30 +372,6 @@ export default function PlaygroundPage() {
      the whole chat toolkit lives on one side of the stage. */
   const chatLevers = view === "chat" && (
     <>
-      {!compact && (
-        <div className={styles.controlGroup}>
-          <RadioGroup
-            label="Stage size"
-            name="playground-chat-stage"
-            value={stageSize}
-            options={Object.entries(STAGE_SIZES).map(([value, s]) => ({
-              value,
-              label: s.label,
-            }))}
-            onValueChange={(value) => {
-              /* A manual drag is a size of its own — switching the stage
-                 size discards it rather than resizing around it. */
-              setStageSize(value as StageSize);
-              setChatManual({});
-            }}
-          />
-          <p className={styles.controlNote}>
-            Mobile renders edge-to-edge in a bezel, the way the site panel
-            ships on phones.
-          </p>
-        </div>
-      )}
-
       <div className={styles.controlGroup}>
         <RadioGroup
           label="Transport"
@@ -440,7 +405,7 @@ export default function PlaygroundPage() {
     </>
   );
 
-  /* The full lever set, host-agnostic — mounted in the edge panel on
+  /* The full lever set, host-agnostic — mounted in the floating panel on
      desktop or handed to the Drawer on compact screens. */
   const controls = (
             <PlaygroundControls
@@ -448,9 +413,6 @@ export default function PlaygroundPage() {
               preset={preset}
               brand={effectiveBrand}
               theme={theme}
-              onTheme={applyTheme}
-              backgroundOn={backgroundOn}
-              onBackgroundOn={setBackgroundOn}
               tintOn={tintOn}
               tintSeed={tintSeed}
               tintStrength={tintStrength}
@@ -495,25 +457,71 @@ export default function PlaygroundPage() {
 
   return (
     <>
-      {/* An immersive stage runs the background edge to edge, with no
-          fade-to-floor mask — unlike the doc pages' 450px band. Switched off,
-          the theme is judged against the flat page colour instead. */}
-      {backgroundOn ? <FullBleedBackground /> : <HiddenBackground />}
+      {/* The stage ground is the dotted working canvas, not the ambient
+          field — the shader stands down here (and is staged as a banner in
+          the components view instead). */}
+      <HiddenBackground />
+      <DotBackground />
 
-      {/* Not the site's full navigation — a full-screen view's slim
-          toolbar: brand mark, breadcrumb trail, the view tabs, and the X
-          out. (Footer and the site chat still skip this route.) */}
+      {/* Not the site's full navigation — a full-screen view's floating
+          toolbar pill: brand mark, breadcrumb trail, the view tabs, and
+          the X out. (Footer and the site chat still skip this route.) */}
       <StageToolbar
         tabs={VIEWS}
         activeTab={view}
         onTabChange={pickView}
         switchLabel="Switch the playground view"
-        /* Inspect mode, as a toolbar switch so nothing floats over the
-           stage: hover any staged component to see which tokens its
-           computed styles resolve from — including the levers' live
-           overrides, which the inspector re-reads as they land. */
-        actions={<InspectMode desktopOnly />}
       />
+
+      {/* The stage's own instruments, in the bottom control bar — the
+          normalized set every immersive surface shares: the theme flip
+          (the immersive format drops the header that carried it) and the
+          desktop/mobile stage switch, then this stage's extras. */}
+      <StageControlBar label="Stage controls">
+        <StageThemeFlip />
+        {/* Desktop rides the stage-size switch and inspect mode beside the
+            flip (a phone IS the mobile preset, and inspection is a hover
+            interaction); compact screens carry the Drawer summons instead,
+            so the bar and the old floating pill can never collide. */}
+        {compact ? (
+          <>
+            <StageControlBarSeparator />
+            <Button
+              label="Theme controls"
+              variant="primary"
+              size="compact"
+              iconLeft="tune"
+              onClick={() => setControlsOpen(true)}
+            />
+          </>
+        ) : (
+          <>
+            <StageControlBarSeparator />
+            <SegmentedControl
+              segments={[
+                { value: "desktop", label: "Desktop", icon: "desktop_windows" },
+                { value: "mobile", label: "Mobile", icon: "smartphone" },
+              ]}
+              activeSegment={stageSize}
+              onSegmentChange={(value) => {
+                /* A manual drag is a size of its own — switching the stage
+                   size discards it rather than resizing around it. */
+                setStageSize(value as StageSize);
+                setChatManual({});
+              }}
+              size="compact"
+              ariaLabel="Stage size"
+            />
+            <StageControlBarSeparator />
+            {/* Inspect mode — hover any staged component to see which
+                tokens its computed styles resolve from, including the
+                levers' live overrides, re-read as they land. */}
+            <StageControlBarEndSlot>
+              <InspectMode desktopOnly />
+            </StageControlBarEndSlot>
+          </>
+        )}
+      </StageControlBar>
 
       {/* One provider around the whole layout: the theme drawer, the chat
           director's rail, and the stage all direct the same conversation,
@@ -528,19 +536,11 @@ export default function PlaygroundPage() {
           .filter(Boolean)
           .join(" ")}
       >
-        {/* The control rail lives where the nav sidebar sits on doc pages */}
+        {/* The control panel floats where the nav sidebar sits on doc pages */}
         {compact ? (
           <>
             {/* The workspace owns the phone screen; the levers are one tap
-                away. The pill sits where a thumb can reach it. */}
-            <div className={styles.controlsFab}>
-              <Button
-                label="Theme controls"
-                variant="primary"
-                iconLeft="tune"
-                onClick={() => setControlsOpen(true)}
-              />
-            </div>
+                away in the bottom control bar's summons. */}
             <Drawer
               open={controlsOpen}
               onOpenChange={setControlsOpen}
@@ -591,7 +591,21 @@ export default function PlaygroundPage() {
           </div>
         </Dialog>
 
-        <main className={styles.dsContent} id="main-content">
+        <main
+          className={[
+            styles.dsContent,
+            /* The stage switch narrows the components workspace to a
+               phone-width column — the same lever the Chat view reads as
+               its widget preset, so the two views agree on what the bar's
+               Desktop/Mobile means. */
+            view === "components" && stageSize === "mobile" && !compact
+              ? styles.dsContentMobile
+              : "",
+          ]
+            .filter(Boolean)
+            .join(" ")}
+          id="main-content"
+        >
           {view === "components" && (
             <>
               {/* A white-label site header opens the view, so the theme
@@ -601,6 +615,15 @@ export default function PlaygroundPage() {
                   sections paint over an open Dropdown/Popover in an
                   earlier one. */}
               <MockNav brandName={productName.trim() || "Acme Corp"} />
+              {/* The ambient shader, demoted from stage backdrop to staged
+                  component: a banner running the site's own field config,
+                  re-theming live with the levers like everything else. */}
+              <div className={styles.shaderBanner} aria-hidden="true">
+                <ShaderField
+                  params={shaderBackground.params}
+                  blobs={shaderBackground.blobs}
+                />
+              </div>
               <ActionsSection />
               <MapsSection />
               <AiSection />
@@ -631,9 +654,10 @@ export default function PlaygroundPage() {
           )}
         </main>
 
-        {/* The chat director: the Chat view's own edge panel, mirroring the
-            theme rail on the right — chat levers above, the event list below.
-            Compact screens get the same content through the Drawer instead. */}
+        {/* The chat director: the Chat view's own floating panel, mirroring
+            the theme panel on the right — chat levers above, the event list
+            below. Compact screens get the same content through the Drawer
+            instead. */}
         {view === "chat" && !compact && (
           <ChatDirector
             variant="panel"

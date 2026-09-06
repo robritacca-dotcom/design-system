@@ -13,11 +13,13 @@ import { CircularButton } from "@robr0/design-system/components/CircularButton/C
 import { SegmentedControl } from "@robr0/design-system/components/SegmentedControl/SegmentedControl";
 import StageToolbar from "@/components/StageToolbar/StageToolbar";
 import InspectMode from "@/components/InspectMode/InspectMode";
-import ThemeToggle from "@/components/ThemeToggle/ThemeToggle";
-import {
-  FullBleedBackground,
-  HiddenBackground,
-} from "@/components/BlurBackground/BlurBackground";
+import StageControlBar, {
+  StageControlBarEndSlot,
+  StageControlBarSeparator,
+} from "@/components/StageControlBar/StageControlBar";
+import StageThemeFlip from "@/components/StageControlBar/StageThemeFlip";
+import { HiddenBackground } from "@/components/BlurBackground/BlurBackground";
+import DotBackground from "@/components/DotBackground/DotBackground";
 import { siteSections, type CanvasSection } from "./ia";
 import styles from "./Canvas.module.css";
 
@@ -295,9 +297,6 @@ export default function Canvas() {
 
   const viewportRef = useRef<HTMLDivElement>(null);
   const [device, setDevice] = useState<DeviceId>("desktop");
-  /* Stage setting, same as the playground's: whether the board sits on the
-     ambient field or the flat page colour. */
-  const [backgroundOn, setBackgroundOn] = useState(true);
   const [view, setViewState] = useState<View>({ x: 0, y: 0, k: 0.2 });
   const [smooth, setSmooth] = useState(false);
   const [heights, setHeights] = useState<Record<string, number>>({});
@@ -715,18 +714,16 @@ export default function Canvas() {
 
   return (
     <>
-      {/* The playground's stage treatment: the ambient field edge to edge,
-          or the flat page colour when the toggle in the controls is off. */}
-      {backgroundOn ? <FullBleedBackground /> : <HiddenBackground />}
+      {/* The playground's stage treatment: the dotted working-canvas
+          ground, with the ambient shader stood down. */}
+      <HiddenBackground />
+      <DotBackground />
 
       {/* The playground's toolbar: brand mark and breadcrumb trail on the
           left (navigation.ts names this route), the X out on the right.
-          The board's own controls stay in the bottom pill, beside the
-          zoom they belong with. The inspect-mode switch rides beside the X;
-          the board has no sections to redline (frames are other pages'
-          documents), so it is the hover inspector for the board's own
-          furniture. */}
-      <StageToolbar actions={<InspectMode desktopOnly />} />
+          The board's own controls live in the bottom bar, beside the zoom
+          they belong with. */}
+      <StageToolbar />
       <div
         ref={viewportRef}
         className={styles.viewport}
@@ -773,7 +770,20 @@ export default function Canvas() {
         </div>
       </div>
 
-      <div className={styles.controls} role="toolbar" aria-label="Canvas">
+      {/* The normalized stage bar: theme flip and device switch first, in
+          the order every immersive surface shares, then the board's own
+          instruments — zoom, fit, and the background toggle. */}
+      <StageControlBar label="Canvas controls">
+        <StageThemeFlip />
+        <StageControlBarSeparator />
+        <SegmentedControl
+          segments={deviceSegments}
+          activeSegment={device}
+          onSegmentChange={(value) => switchDevice(value as DeviceId)}
+          size="compact"
+          ariaLabel="Device"
+        />
+        <StageControlBarSeparator />
         <CircularButton
           icon="remove"
           variant="tertiary"
@@ -796,7 +806,7 @@ export default function Canvas() {
           ariaLabel="Zoom in"
           onClick={() => zoomStep(ZOOM_STEP)}
         />
-        <span className={styles.separator} aria-hidden="true" />
+        <StageControlBarSeparator />
         <CircularButton
           icon="fit_screen"
           variant="tertiary"
@@ -818,25 +828,14 @@ export default function Canvas() {
             fitSelection(true);
           }}
         />
-        <span className={styles.separator} aria-hidden="true" />
-        <SegmentedControl
-          segments={deviceSegments}
-          activeSegment={device}
-          onSegmentChange={(value) => switchDevice(value as DeviceId)}
-          size="compact"
-          ariaLabel="Device"
-        />
-        <span className={styles.separator} aria-hidden="true" />
-        <CircularButton
-          icon={backgroundOn ? "blur_on" : "blur_off"}
-          variant={backgroundOn ? "secondary" : "tertiary"}
-          size="compact"
-          ariaLabel="Background gradient"
-          aria-pressed={backgroundOn}
-          onClick={() => setBackgroundOn((on) => !on)}
-        />
-        <ThemeToggle />
-      </div>
+        <StageControlBarSeparator />
+        {/* The hover inspector for the board's own furniture — the frames
+            are other pages' documents, so there are no sections to
+            redline. */}
+        <StageControlBarEndSlot>
+          <InspectMode desktopOnly />
+        </StageControlBarEndSlot>
+      </StageControlBar>
 
       <p className={styles.hint}>
         Scroll to pan. Hold ⌘ and scroll to zoom. Click a page or its label to

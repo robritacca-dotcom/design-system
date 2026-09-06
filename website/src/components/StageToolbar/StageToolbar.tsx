@@ -45,11 +45,11 @@ export interface StageToolbarProps {
 }
 
 /**
- * The immersive surfaces' header: a slim fixed glass strip carrying the
+ * The immersive surfaces' header: a slim floating glass pill carrying the
  * brand mark and breadcrumb trail, an optional centre switch (the hosting
  * page decides what it toggles — views, surfaces), and the X out — a
  * full-screen view's toolbar, not the site's full navigation. Pages
- * beneath reserve --layout-toolbar-height (globals.css) of room for it.
+ * beneath reserve --layout-stage-clearance (globals.css) of room for it.
  */
 export default function StageToolbar({
   title,
@@ -78,7 +78,12 @@ export default function StageToolbar({
   };
 
   return (
-    <header className={styles.toolbar}>
+    <>
+      {/* The pill's twin of the control bar's fade: content scrolling up
+          under the toolbar dims into the page floor instead of colliding
+          with it. */}
+      <div className={styles.fade} aria-hidden="true" />
+      <header className={styles.toolbar}>
       <div className={styles.trail}>
         <Link href="/" className={styles.logo} aria-label="Home">
           <Image src="/rr.svg" alt="" width={24} height={24} />
@@ -136,5 +141,6 @@ export default function StageToolbar({
         )}
       </div>
     </header>
+    </>
   );
 }
