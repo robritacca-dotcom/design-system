@@ -492,17 +492,17 @@
   padding-inline: 0;
 }
 
-/* The cover absorbs the height difference against the link grid: it grows
-   to bottom-align the two columns and shrinks before pushing them apart.
-   The shot inside is object-fit: cover, so a flexed height crops it rather
-   than distorting it — the !important is needed to beat CoverImage's
-   inline aspect-ratio, which is what normally sizes it. */
+/* The graphic absorbs the height difference against the link grid: it
+   grows to bottom-align the two columns and shrinks before pushing them
+   apart. The 2:1 basis is the size it starts from — the same shape the
+   retired raster shot was — and the wireframe SVG inside crops (slice)
+   rather than distorts when flexing moves the height off it. */
 .megaShowcaseCover {
   display: block;
   align-self: stretch;
   flex: 1 1 auto;
   min-height: 0;
-  aspect-ratio: auto !important;
+  aspect-ratio: 2 / 1;
   /* On a narrow desktop the link grid runs much taller than the card's
      copy, so unbounded growth would take the cover square and crop the
      shot's screen. 75cqw holds it at 4:3 or wider — the widest crop that

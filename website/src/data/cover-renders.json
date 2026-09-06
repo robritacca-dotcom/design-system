@@ -1,5 +1,5 @@
 {
-  "$comment": "Which raster renders exist for each cover (the case studies, plus /overview for the mega panel's showcase card), and what each cover shows. Hand-edited: add an aspect here, run `npm run covers:render`, commit the images. scripts/validate-cover-rasters.mjs holds this file, the cover map in case-study-covers.tsx, and the files on disk to each other.",
+  "$comment": "Which raster renders exist for each cover (the case studies), and what each cover shows. Hand-edited: add an aspect here, run `npm run covers:render`, commit the images. scripts/validate-cover-rasters.mjs holds this file, the cover map in case-study-covers.tsx, and the files on disk to each other.",
   "aspects": {
     "card": {
       "ratio": [940, 480],
@@ -15,11 +15,6 @@
       "ratio": [16, 9],
       "width": 2560,
       "use": "The two Meta case-study heroes, which call for 16:9 rather than the 16:10 the others use."
-    },
-    "mega": {
-      "ratio": [2, 1],
-      "width": 1200,
-      "use": "The mega panel's showcase card, which displays around 400px wide and crops the shot to match the link column's height. The card lands between 1.6 and 2.4 in aspect across viewports, so a 2:1 shot keeps the mock clear of the crop at both ends."
     }
   },
   "studies": {
@@ -46,10 +41,6 @@
     "/work/robr0-ds": {
       "alt": "This site's playground, with theme controls for action colour, corner radius and typeface down the left of a live chat preview.",
       "aspects": ["card", "feature"]
-    },
-    "/overview": {
-      "alt": "The system overview page: the pipeline from Figma through Claude Code and Storybook down the left, with the registry-fed stats rail beside it.",
-      "aspects": ["mega"]
     }
   }
 }

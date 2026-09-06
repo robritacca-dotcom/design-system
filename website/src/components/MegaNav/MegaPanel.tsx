@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import PipelineWireframe from "@/components/PipelineWireframe/PipelineWireframe";
 import {
   dsMegaGroups,
   dsMegaShowcase,
   type MegaItem,
 } from "@/config/navigation";
-import { CoverImage } from "../covers/CoverImage";
 import styles from "./MegaNav.module.css";
 
 /** One index-page row: icon tile, then label over description. */
@@ -56,14 +56,9 @@ function MegaShowcaseCard({ tabbable }: { tabbable: boolean }) {
         tabIndex={tabbable ? 0 : -1}
       >
         <div className={styles.megaGroupLabel}>{dsMegaShowcase.overline}</div>
-        {/* Decorative here — the card's own title and description carry the
-            meaning, so the cover's registry alt would only repeat them. */}
-        <CoverImage
-          href={dsMegaShowcase.coverHref}
-          aspect="mega"
-          alt=""
-          className={styles.megaShowcaseCover}
-        />
+        {/* The abstract pipeline vector — the card's own title and
+            description carry the meaning, so the drawing stays decorative. */}
+        <PipelineWireframe className={styles.megaShowcaseCover} />
         <div className={styles.megaItemText}>
           <div className={styles.megaLabel}>{dsMegaShowcase.label}</div>
           <div className={styles.megaDescription}>

@@ -41,7 +41,7 @@ export function coverAlt(href: string): string {
 }
 
 /**
- * `/work/augmenta-ai` → `augmenta-ai`, `/overview` → `overview`: the stem
+ * `/work/augmenta-ai` → `augmenta-ai`, `/work/robr0-ds` → `robr0-ds`: the stem
  * every file name is built on. Mirrored by `targets()` in
  * scripts/generate-cover-rasters.mjs.
  */
