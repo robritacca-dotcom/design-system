@@ -13,7 +13,11 @@
    ============================================ */
 
 .ds-tool-call {
+  /* Two colour channels per status: -text for the status word (tuned for
+     text contrast) and -icon for the indicator glyph, which needs a hue
+     that survives a plain surface — see the status token comment. */
   --ds-tool-call-color: var(--color-text-secondary);
+  --ds-tool-call-icon-color: var(--color-icon-secondary);
 
   display: flex;
   flex-direction: column;
@@ -71,7 +75,7 @@
   align-items: center;
   justify-content: center;
   flex: none;
-  color: var(--ds-tool-call-color);
+  color: var(--ds-tool-call-icon-color);
 }
 
 .ds-tool-call__indicator .material-symbols-rounded {
@@ -150,18 +154,22 @@
 
 .ds-tool-call--pending {
   --ds-tool-call-color: var(--color-status-warning-text);
+  --ds-tool-call-icon-color: var(--color-status-warning-icon);
 }
 
 .ds-tool-call--running {
   --ds-tool-call-color: var(--color-status-info-text);
+  --ds-tool-call-icon-color: var(--color-status-info-icon);
 }
 
 .ds-tool-call--success {
   --ds-tool-call-color: var(--color-status-positive-text);
+  --ds-tool-call-icon-color: var(--color-status-positive-icon);
 }
 
 .ds-tool-call--error {
   --ds-tool-call-color: var(--color-status-error-text);
+  --ds-tool-call-icon-color: var(--color-status-error-icon);
 }
 
 /* ============================================

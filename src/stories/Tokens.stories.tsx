@@ -577,30 +577,35 @@ export const StatusColors: Story = {
         <ColorToken name="Background" value="--color-status-positive-bg" />
         <ColorToken name="Border" value="--color-status-positive-border" />
         <ColorToken name="Text" value="--color-status-positive-text" />
+        <ColorToken name="Icon" value="--color-status-positive-icon" />
       </TokenSection>
 
       <TokenSection title="Warning">
         <ColorToken name="Background" value="--color-status-warning-bg" />
         <ColorToken name="Border" value="--color-status-warning-border" />
         <ColorToken name="Text" value="--color-status-warning-text" />
+        <ColorToken name="Icon" value="--color-status-warning-icon" />
       </TokenSection>
 
       <TokenSection title="Error">
         <ColorToken name="Background" value="--color-status-error-bg" />
         <ColorToken name="Border" value="--color-status-error-border" />
         <ColorToken name="Text" value="--color-status-error-text" />
+        <ColorToken name="Icon" value="--color-status-error-icon" />
       </TokenSection>
 
       <TokenSection title="Info">
         <ColorToken name="Background" value="--color-status-info-bg" />
         <ColorToken name="Border" value="--color-status-info-border" />
         <ColorToken name="Text" value="--color-status-info-text" />
+        <ColorToken name="Icon" value="--color-status-info-icon" />
       </TokenSection>
 
       <TokenSection title="Neutral">
         <ColorToken name="Background" value="--color-status-neutral-bg" />
         <ColorToken name="Border" value="--color-status-neutral-border" />
         <ColorToken name="Text" value="--color-status-neutral-text" />
+        <ColorToken name="Icon" value="--color-status-neutral-icon" />
       </TokenSection>
     </div>
   ),

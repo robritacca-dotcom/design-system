@@ -114,8 +114,8 @@ export default function AgentPlanPage() {
           <section className={styles.section}>
             <SectionTitle title="Failure" />
             <p className={styles.demoText}>
-              A failed step takes the error colour on both the indicator and
-              the label, and an optional detail line says what went wrong.
+              A failed step colours its indicator and label through the error
+              role, and an optional detail line says what went wrong.
             </p>
             <div className={styles.demoColumn}>
               <AgentPlan
