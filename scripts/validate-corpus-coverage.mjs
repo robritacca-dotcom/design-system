@@ -63,8 +63,8 @@ const CONDENSED_ROUTES = new Map([
     'name and description, which is what a visitor asks about — the procedures ' +
     'themselves are instructions to agents, not facts about Rob or the site'],
   ['/blueprints/design',
-    'design.md\'s 98 per-component spec blocks are condensed out by ' +
-    'condenseDesignSpec: roughly 46,000 tokens, more than a third of the whole ' +
+    'design.md\'s per-component spec blocks (one per registered component) are ' +
+    'condensed out by condenseDesignSpec: well over a third of the whole token ' +
     'budget, to restate what the Component library section already lists and ' +
     'Storybook documents from source'],
   ['/blueprints/claude',

@@ -106,6 +106,7 @@ const PIPELINE: TimelineCompany[] = [
         bullets: [
           "Releases smoke-test the tarball in a scratch Vite app, then publish with provenance through a trust link between GitHub and npm: no stored token to leak",
           "CI renders every Storybook story in headless Chrome with an axe accessibility audit on each, so a render error or a violation fails the build; one contrast rule is deliberately excluded by a settled token decision",
+          "The built site is then served and loaded in a real browser before anything ships: a hydration smoke proves the pages actually render, because a green build once wasn't proof, and a page-level axe pass re-checks the served pages in both themes",
           "A drift guard fails the build the moment registry-backed content goes stale: the numbers in the rail beside this pipeline come from those registries, never typed by hand",
         ],
       },
@@ -124,6 +125,7 @@ const PIPELINE: TimelineCompany[] = [
             <code>robertritacca.com</code> is registered at GoDaddy, whose DNS
             points at the Vercel deployment
           </>,
+          "Production is re-proven every four hours: a scheduled smoke loads the live site in a real browser, because incremental regeneration means the served pages can change with no deploy",
           "Nunito Sans is self-hosted via next/font, and Material Symbols ships inside the npm package; only the playground's typeface picker and the MCP endpoint's landing page load fonts from Google at runtime",
           "Google Analytics (GA4) measures traffic via the gtag snippet in the root layout",
         ],

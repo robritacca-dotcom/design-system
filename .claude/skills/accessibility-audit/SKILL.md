@@ -28,9 +28,9 @@ If that is green, every violation axe can detect is already absent — and re-ch
 
 1. **Colour contrast — partly excluded from the automated gate.** `color-contrast` is switched off in `.storybook/preview.ts` by a settled decision of Rob's. **Read that override's comment first**: it is the authoritative record of which pairs it covers and why, and it is the single place those details belong. What it names is out of scope — not a finding, not something to propose restyling, and not a reason to re-enable the rule. Skip them silently rather than restating them in a report. **Contrast everywhere else is the single highest-value thing to audit manually** — nothing else checks it.
 2. **What axe cannot see.** Axe catches roughly a third of WCAG issues. It cannot tell whether alt text is *meaningful*, whether focus order makes sense, whether a Dialog *actually* traps focus, or whether a helper message *should* have been associated with its control. (Two such bugs once shipped undetected until a manual survey found them: Dropdown announced neither its helper text nor its error state. Both were since fixed by moving Dropdown onto `Field`, but it took the manual survey, not axe, to find them.)
-3. **Anything outside the story suite** — the Next.js website pages, which axe never runs against.
+3. **Website pages beyond the automated sample.** A page-level axe pass (`scripts/validate-website-a11y.mjs`, in `verify` and CI) now runs against the served site in both themes with the same rule set — but only over the route sample in `scripts/served-site.mjs`, at one desktop viewport. Full-site sweeps, mobile viewports, and any page outside that sample remain this skill's job.
 
-Report a finding as **already-enforced** if `npm run test` would have caught it; that tells the reader the gate is working rather than implying a gap.
+Report a finding as **already-enforced** if `npm run test` or the page-level axe pass would have caught it; that tells the reader the gate is working rather than implying a gap.
 
 ## Instructions
 

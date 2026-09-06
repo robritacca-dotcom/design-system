@@ -2,7 +2,7 @@
 name: super-ship
 description: The bulletproof ship for structural work. Run the full drift audit, fix the broken and stale findings, then ship the combined result live via the ship flow. Use when asked to super ship, audit and ship, or ship bulletproof, or when shipping a structural change where the docs and skills may have gone stale. For a small change, plain ship is enough.
 icon: rocket_launch
-displayDescription: "Chains the drift audit into the ship flow for structural work. Runs the full audit first, fixes the broken and stale findings it surfaces, then ships the combined result: full verify, merge into main, push, and CI watched to green. Gap findings and new-validator recommendations are reported as follow-ups, never built mid-ship."
+displayDescription: "Chains the drift audit into the ship flow for structural work. Runs the full audit first, fixes the broken and stale findings it surfaces, then ships the combined result: full verify, merge into main, push, CI watched to green, and the live site proven rendering. Gap findings and new-validator recommendations are reported as follow-ups, never built mid-ship."
 invoke: ["super ship","super ship it","audit and ship","bulletproof ship"]
 ---
 

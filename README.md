@@ -160,10 +160,10 @@ The same generated data is served as files too: every component's prop contract 
 
 ## Quality & CI
 
-Every push and pull request runs a GitHub Actions pipeline ([`ci.yml`](.github/workflows/ci.yml)) with four jobs: lint + library build, story tests, Storybook build, and website lint + build followed by the two built-HTML checks (rendered spacing, chat-corpus coverage). The story tests render every Storybook story in headless Chromium via Vitest and run an axe accessibility audit on each, so a violation fails the build exactly like a render error. The same checklist runs locally with one command:
+Every push and pull request runs a GitHub Actions pipeline ([`ci.yml`](.github/workflows/ci.yml)) with four jobs: lint + library build + the package-publish lint, story tests, Storybook build, and website lint + build followed by the built-HTML checks (rendered spacing, chat-corpus coverage, internal links) and the served-site checks: a hydration smoke that loads the built site in a real browser, and a page-level axe pass over the served pages in both themes. The story tests render every Storybook story in headless Chromium via Vitest and run an axe accessibility audit on each, so a violation fails the build exactly like a render error. A scheduled workflow ([`uptime.yml`](.github/workflows/uptime.yml)) re-runs the hydration smoke against production every four hours, because incremental regeneration means the served site can change with no deploy. The same checklist runs locally with one command:
 
 ```bash
-npm run verify   # lint + library type-check + package build + story tests + Storybook build + website lint + build + built-HTML checks
+npm run verify   # lint + library type-check + package build + publish lint + story tests + Storybook build + website lint + build + the built-HTML and served-site checks
 ```
 
 CI also guards against documentation drift: every generated surface (the `validate-registry` entry in the root `package.json` is the authoritative list, from this README's component count to the per-component markdown and the consumer agent skill) is rebuilt from its source registries on every build, and CI fails if the committed copies are stale. The numbers on the site are never hand-written.
