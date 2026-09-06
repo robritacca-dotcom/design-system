@@ -28,6 +28,19 @@ const readDocked = () => window.matchMedia(DOCK_QUERY).matches;
 const subscribeTakeover = subscribeQuery(TAKEOVER_QUERY);
 const readTakeover = () => window.matchMedia(TAKEOVER_QUERY).matches;
 
+/* The TLDR panel is hover-summoned, so it exists only where hover exists: a
+   touch tap has no dwell to summon it with, and the synthetic mouseenter a
+   tap fires would pop the panel in the way of opening the chat. The server
+   snapshot is false, so the server always renders the plain FAB and the
+   panel mounts after hydration on pointer devices — which is also what
+   keeps the FAB immune to the server's idea of the pathname: the root
+   route's ISR regeneration can see a pathname the client never would, and
+   a summary rendered from it is a hydration mismatch that blanks the whole
+   site (React redoes <html> and drops the theme guard's ready mark). */
+const HOVER_QUERY = "(hover: hover) and (pointer: fine)";
+const subscribeHover = subscribeQuery(HOVER_QUERY);
+const readHover = () => window.matchMedia(HOVER_QUERY).matches;
+
 /**
  * The site-wide panel. Mounted once from the root layout, after {children},
  * so it sits last in the tab order and never remounts on navigation — which
@@ -46,8 +59,11 @@ export function SiteChatMount() {
   /* The FAB's TLDR panel: per-route content from the page-summaries data,
      summoned by hovering the button (AiButton owns the hover mechanics).
      Deliberately not auto-revealed — an uninvited panel is an interruption;
-     the component's summaryPinned prop is there if that call ever changes. */
-  const summary = getPageSummary(pathname);
+     the component's summaryPinned prop is there if that call ever changes.
+     Hover-capable devices only, and never in the server HTML — see
+     HOVER_QUERY above for why both halves are load-bearing. */
+  const canHover = useSyncExternalStore(subscribeHover, readHover, () => false);
+  const summary = canHover ? getPageSummary(pathname) : null;
 
   const launchSuggestion = (id: string) => {
     const chipDef = summary?.chips.find((c) => c.id === id);
