@@ -20,6 +20,9 @@
  * Everything else is a plain string scan of fields that are unambiguously
  * shipped copy: the README (it ships inside the npm tarball), the Storybook
  * landing page, and the data registries whose fields render on the site.
+ * One registry is delegated rather than scanned here: page-summaries.json,
+ * whose own validator (validate-page-summaries.mjs) runs the em-dash check
+ * alongside its structural rules.
  *
  * Two non-page modules are in scope by name: the playground's scripted chat
  * story ships visitor-visible prose from `website/src/lib/chat-sim.ts` (the

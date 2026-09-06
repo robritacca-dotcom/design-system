@@ -283,9 +283,11 @@ export default function MotionPage() {
             <SectionTitle title="Timings in JavaScript" />
             <p className={styles.sectionNote}>
               Some timings live in JavaScript timers rather than CSS: hover show and hide
-              delays, toast auto-dismiss, carousel autoplay, the copied-state reset, the
-              streaming reveal&apos;s floor rate and drain window. Those share one home too, the constants published
-              as <code>@robr0/design-system/tokens/motion</code>. Components read them as
+              delays, toast auto-dismiss, carousel autoplay, the streaming
+              reveal&apos;s pacing, the summary panel&apos;s staging, and a few more. Those
+              share one home too, the constants published
+              as <code>@robr0/design-system/tokens/motion</code>, and the module itself
+              is the full list. Components read them as
               defaults and still expose each one through props. Most are schedule timings
               that decide when something appears or is taken away, not animations, so the
               reduced-motion collapse deliberately leaves them alone: a toast that

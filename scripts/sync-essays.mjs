@@ -13,10 +13,13 @@
  * NOT part of the validate-registry chain — it needs the network. The
  * structure-only check that IS in the chain lives in validate-essays.mjs.
  *
- * A newly synced essay also needs its illustrated cover pair: register the
+ * A newly synced essay also needs its illustrated cover pair (register the
  * slug in website/src/data/essay-covers.json and add the light/dark webp
  * files under website/public/covers/writing, or validate-essay-covers.mjs
- * fails the next build. Until then /writing falls back to the feed cover.
+ * fails the next build — until then /writing falls back to the feed cover)
+ * and a hand-written TLDR entry under the essays map in
+ * website/src/data/page-summaries.json, or validate-page-summaries.mjs
+ * fails the build the same way.
  *
  * Slugs match the site's own derivation (the /p/<slug> segment, the same rule
  * website/src/lib/substack.ts uses), so /writing/<slug> pointers line up.
