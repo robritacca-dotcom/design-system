@@ -59,6 +59,13 @@ export const Tooltip = ({
     hideTimeoutRef.current = setTimeout(() => setVisible(false), hideDelay);
   };
 
+  useEffect(() => {
+    return () => {
+      clearTimeout(showTimeoutRef.current);
+      clearTimeout(hideTimeoutRef.current);
+    };
+  }, []);
+
   // Escape dismisses the tooltip while it is visible (WCAG 1.4.13). A
   // document listener rather than a wrapper handler, so it also works when
   // the tooltip was triggered by hover and focus is elsewhere.

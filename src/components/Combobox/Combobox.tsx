@@ -252,9 +252,10 @@ export const Combobox = React.forwardRef<HTMLDivElement, ComboboxProps>(({
   }, []);
 
   useEffect(() => {
+    if (!isOpen) return;
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [handleClickOutside]);
+  }, [isOpen, handleClickOutside]);
 
   const moveFocus = (direction: 1 | -1) => {
     setFocusedIndex((prev) => {

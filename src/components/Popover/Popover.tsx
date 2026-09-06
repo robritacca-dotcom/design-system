@@ -66,6 +66,10 @@ export const Popover = ({
     onOpenChange?.(next);
   }, [isControlled, onOpenChange]);
 
+  useEffect(() => {
+    return () => clearTimeout(hoverTimeoutRef.current);
+  }, []);
+
   // Click outside to close
   useEffect(() => {
     if (!isOpen || trigger !== 'click') return;

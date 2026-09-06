@@ -181,9 +181,10 @@ export const TimePicker = React.forwardRef<HTMLButtonElement, TimePickerProps>(
     }, []);
 
     useEffect(() => {
+      if (!isOpen) return;
       document.addEventListener('mousedown', handleClickOutside);
       return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, [handleClickOutside]);
+    }, [isOpen, handleClickOutside]);
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
       if (disabled) return;

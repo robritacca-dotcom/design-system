@@ -154,9 +154,10 @@ export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
     }, []);
 
     useEffect(() => {
+      if (!isOpen) return;
       document.addEventListener('mousedown', handleClickOutside);
       return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, [handleClickOutside]);
+    }, [isOpen, handleClickOutside]);
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
       if (disabled) return;

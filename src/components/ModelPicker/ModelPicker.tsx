@@ -137,9 +137,10 @@ export const ModelPicker = React.forwardRef<HTMLDivElement, ModelPickerProps>(
     }, []);
 
     useEffect(() => {
+      if (!isOpen) return;
       document.addEventListener('mousedown', handleClickOutside);
       return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, [handleClickOutside]);
+    }, [isOpen, handleClickOutside]);
 
     const handleTriggerKeyDown = (e: React.KeyboardEvent) => {
       if (disabled) return;

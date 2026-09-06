@@ -313,6 +313,7 @@ export const DropdownMenu = ({
 
   /* Click outside */
   useEffect(() => {
+    if (!isOpen) return;
     const handler = (e: MouseEvent) => {
       if (rootRef.current && !rootRef.current.contains(e.target as Node)) {
         handleClose();
@@ -320,7 +321,7 @@ export const DropdownMenu = ({
     };
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
-  }, [handleClose]);
+  }, [isOpen, handleClose]);
 
   /* Keyboard navigation */
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -486,6 +487,15 @@ export const DropdownMenu = ({
 
   const itemCounter = { count: 0 };
 
+  // A consumer's own handlers on the trigger element must keep firing —
+  // cloneElement replaces props, so compose rather than overwrite.
+  const triggerProps = React.isValidElement(trigger)
+    ? (trigger.props as {
+        onClick?: React.MouseEventHandler;
+        onKeyDown?: React.KeyboardEventHandler;
+      })
+    : undefined;
+
   return (
     <div className={classes} ref={rootRef}>
       {/*
@@ -502,8 +512,14 @@ export const DropdownMenu = ({
             'aria-expanded': isOpen,
             'aria-controls': isOpen ? menuId : undefined,
             'aria-activedescendant': activeDescendantId,
-            onClick: handleToggle,
-            onKeyDown: handleKeyDown,
+            onClick: (e: React.MouseEvent) => {
+              triggerProps?.onClick?.(e);
+              handleToggle();
+            },
+            onKeyDown: (e: React.KeyboardEvent) => {
+              triggerProps?.onKeyDown?.(e);
+              handleKeyDown(e);
+            },
           })
         ) : (
           <button
