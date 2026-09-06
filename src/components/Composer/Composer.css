@@ -167,6 +167,60 @@
 }
 
 /* ============================================
+   CONTEXT CHIP
+   A full-width, non-interactive note at the very top of the shell — what
+   the model is currently looking at. Composer owns the chrome; the caller
+   passes the text.
+   ============================================ */
+
+.ds-composer__context {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--gap-xs);
+  /* The action bar's tight --padding-sm ring, open toward the text below */
+  margin: var(--padding-sm) var(--padding-sm) 0;
+  /* ModelPicker's trigger geometry — the send button's height with the same
+     0/padding-md inset — so the chip and the bar's pills read as one family */
+  height: var(--ds-composer-send-size);
+  padding: 0 var(--padding-md);
+  background-color: var(--color-chat-context-bg);
+  /* A full pill, matching the suggestion chips around the composer */
+  border-radius: var(--radius-full);
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  /* Tertiary, like DocumentChip's metadata line — the note is ambient
+     context, quieter than anything a person typed. The icon inherits it:
+     one tone for the whole note. */
+  color: var(--color-text-tertiary);
+  /* Not editable, not a control — but a click still falls through the shell
+     handler and focuses the textarea */
+  cursor: default;
+}
+
+.ds-composer__context-icon {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.ds-composer__context-icon .material-symbols-rounded {
+  --icon-size: var(--icon-size-sm);
+}
+
+/* The text owns the truncation: one line, ellipsized only when the note
+   actually outgrows the shell — an ellipsis is a truncation mark, not
+   punctuation. The icon beside it never shrinks. */
+.ds-composer__context-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ============================================
    ATTACHMENTS ROW
    ============================================ */
 

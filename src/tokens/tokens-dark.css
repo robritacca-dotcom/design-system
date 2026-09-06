@@ -40,6 +40,8 @@
   --color-chat-bubble-sent-text: var(--color-text-primary);
   --color-chat-bubble-received-bg: var(--color-bg-container-secondary);
   --color-chat-bubble-received-text: var(--color-text-primary);
+  /* The composer's context note — one step off the #050505 shell */
+  --color-chat-context-bg: var(--primitive-neutral-09);
 
   /* Overlay & controls */
   --color-scrim: var(--primitive-true-black-strong);

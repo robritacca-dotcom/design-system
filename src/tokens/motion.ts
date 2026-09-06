@@ -7,10 +7,10 @@
  *
  * Most are schedule timings (when something starts, stops, or is taken
  * away), which the reduced-motion guard in tokens-motion.css deliberately
- * leaves alone. A constant that paces an animation (the streaming reveal's
- * rate floor and drain window) is the exception: its component checks the
- * preference itself in JS, because the CSS guard cannot see a JavaScript
- * timer.
+ * leaves alone. Constants that pace an animation (the streaming reveal's
+ * rate floor and drain window, and the summary panel's reveal budget) are
+ * the exception: their component checks the preference itself in JS,
+ * because the CSS guard cannot see a JavaScript timer.
  */
 
 /** Delay before a hover-triggered overlay appears, filtering pass-through hovers. */
@@ -39,3 +39,12 @@ export const MOTION_STREAM_DRAIN_MS = 250;
 
 /** The retired interval-based reveal step. @deprecated The reveal is frame-driven now — pace it with MOTION_STREAM_FLOOR_CPS and MOTION_STREAM_DRAIN_MS. */
 export const MOTION_STREAM_CHAR_INTERVAL_MS = 15;
+
+/** Grace period before a hover-summoned surface hides once the pointer has left it — long enough to cross the gap between a launcher and its panel without the panel dying under a mouse that is heading for it. */
+export const MOTION_HOVER_EXIT_GRACE_MS = 600;
+
+/** How long AiButton's summary panel "thinks" (skeleton lines) before its pre-written text reveals. */
+export const MOTION_SUMMARY_THINK_MS = 900;
+
+/** The summary panel's full type-out budget: however long the text, the reveal has it on screen within this. A deliberately slower pace than MOTION_STREAM_DRAIN_MS — this reveal is the content arriving, not a stream catching up. */
+export const MOTION_SUMMARY_REVEAL_MS = 1600;

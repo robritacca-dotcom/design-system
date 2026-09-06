@@ -51,6 +51,7 @@
       "--color-chat-bubble-received-text",
       "--color-chat-bubble-sent-bg",
       "--color-chat-bubble-sent-text",
+      "--color-chat-context-bg",
       "--color-control-thumb",
       "--color-core-accent-amber",
       "--color-core-accent-cobalt",

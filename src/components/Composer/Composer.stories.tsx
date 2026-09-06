@@ -67,6 +67,19 @@ export const WorkingGlow: Story = {
   },
 };
 
+/**
+ * The `context` chip: a full-width, non-interactive note at the top of the
+ * shell telling the person what the model is currently looking at. Composer
+ * owns the chrome; the caller passes the text.
+ */
+export const WithContext: Story = {
+  args: {
+    aiGlow: true,
+    context: 'Looking at “Release notes”',
+    contextIcon: 'description',
+  },
+};
+
 /** The attachments row is fully controlled: the consumer owns the list and handles removal. */
 const AttachmentsDemo = () => {
   const [files, setFiles] = useState([

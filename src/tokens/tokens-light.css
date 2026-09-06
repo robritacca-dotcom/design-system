@@ -50,6 +50,10 @@
   --color-chat-bubble-sent-text: var(--color-text-primary);
   --color-chat-bubble-received-bg: var(--color-bg-container-secondary);
   --color-chat-bubble-received-text: var(--color-text-primary);
+  /* The composer's context note — the quietest tint per theme, the nearest
+     neutral to each shell that still separates from it. Its own role, not a
+     container alias, because it deliberately sits off the container ramp. */
+  --color-chat-context-bg: var(--primitive-neutral-01);
 
   /* Overlay & controls */
   --color-scrim: var(--primitive-true-black-semi);

@@ -76,7 +76,7 @@ A dot-matrix indicator and status line reporting what an agent is doing right no
 
 ### AI button
 
-The AI entry point: icon and label on a transparent field, ringed by a slowly turning gradient and a soft glow.
+The AI entry point: icon and label ringed by a turning gradient and glow, with an optional hover-summoned AI-summary panel and prompt chips.
 
 - Import: `import { AiButton } from '@robr0/design-system';`
 - Rendering: client component (declares 'use client')
@@ -124,7 +124,7 @@ Unified diff view for code changes, with added, removed, and context lines.
 
 ### Composer
 
-An auto-growing message input with send and stop states, an attachment slot, and Enter-to-send.
+An auto-growing message input with send and stop states, a page-context note, an attachment slot, and Enter-to-send.
 
 - Import: `import { Composer } from '@robr0/design-system';`
 - Rendering: client component (declares 'use client')

@@ -2,6 +2,7 @@
 
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { CircularButton } from '../CircularButton/CircularButton';
+import '../../fonts/material-symbols.css';
 import './Composer.css';
 
 /** Props owned by Composer itself — everything else falls through to the <textarea>. */
@@ -43,6 +44,22 @@ type ComposerOwnProps = {
    */
   aiGlow?: boolean;
   /**
+   * Contextual note rendered as a full-width, non-interactive chip at the
+   * very top of the shell, above any attachments — the "what the model is
+   * looking at" line a chat host pins over the message ("Looking at
+   * “Page name”"). One line: a note too long for the shell truncates with
+   * an ellipsis. Composer owns the chip's chrome; the caller passes the
+   * text.
+   */
+  context?: React.ReactNode;
+  /**
+   * Material Symbol name rendered at the left of the context chip
+   * (`visibility`, `article`…). Decorative and hidden from assistive
+   * technology — the chip's text carries the meaning. None by default,
+   * matching the ai set's icon-free-unless-asked convention.
+   */
+  contextIcon?: string;
+  /**
    * Attachment row rendered above the textarea (DocumentChips). Fully
    * controlled by the caller — Composer never owns the list.
    */
@@ -67,10 +84,11 @@ export interface ComposerProps
     Omit<React.ComponentPropsWithoutRef<'textarea'>, keyof ComposerOwnProps> {}
 
 /**
- * Composer is the chat input shell: an attachments row, an auto-growing
- * textarea, a leading actions slot, and a trailing send button — the one
- * sanctioned primary-action teal in the chat set, because sending a message
- * is a genuine primary CTA. While `streaming`, send becomes stop and Enter
+ * Composer is the chat input shell: an optional context note ("Looking at
+ * “Page name”"), an attachments row, an auto-growing textarea, a leading
+ * actions slot, and a trailing send button — the one sanctioned
+ * primary-action teal in the chat set, because sending a message is a
+ * genuine primary CTA. While `streaming`, send becomes stop and Enter
  * is inert.
  *
  * The textarea grows with its content up to `maxRows`, then scrolls
@@ -94,6 +112,8 @@ export const Composer = React.forwardRef<HTMLTextAreaElement, ComposerProps>(
       onStop,
       maxRows = 8,
       aiGlow = false,
+      context,
+      contextIcon,
       attachments,
       actions,
       trailingActions,
@@ -198,6 +218,17 @@ export const Composer = React.forwardRef<HTMLTextAreaElement, ComposerProps>(
         style={{ '--ds-composer-max-rows': maxRows } as React.CSSProperties}
         onClick={handleShellClick}
       >
+        {context && (
+          <div className={`${baseClass}__context`}>
+            {contextIcon && (
+              <span className={`${baseClass}__context-icon`} aria-hidden="true">
+                <span className="material-symbols-rounded">{contextIcon}</span>
+              </span>
+            )}
+            <span className={`${baseClass}__context-text`}>{context}</span>
+          </div>
+        )}
+
         {attachments && <div className={`${baseClass}__attachments`}>{attachments}</div>}
 
         <div className={`${baseClass}__content`} ref={contentRef}>

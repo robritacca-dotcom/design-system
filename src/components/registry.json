@@ -86,7 +86,7 @@
       "name": "AiButton",
       "label": "AI button",
       "slug": "ai-button",
-      "description": "The AI entry point: icon and label on a transparent field, ringed by a slowly turning gradient and a soft glow.",
+      "description": "The AI entry point: icon and label ringed by a turning gradient and glow, with an optional hover-summoned AI-summary panel and prompt chips.",
       "category": "ai",
       "client": true
     },
@@ -340,7 +340,7 @@
       "name": "Composer",
       "label": "Composer",
       "slug": "composer",
-      "description": "An auto-growing message input with send and stop states, an attachment slot, and Enter-to-send.",
+      "description": "An auto-growing message input with send and stop states, a page-context note, an attachment slot, and Enter-to-send.",
       "category": "ai",
       "client": true
     },

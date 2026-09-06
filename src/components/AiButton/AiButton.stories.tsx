@@ -33,3 +33,41 @@ export const Disabled: Story = {
 export const AsLink: Story = {
   args: { label: 'Open the chat', href: '#', icon: 'forum' },
 };
+
+const exampleSummary = {
+  title: 'The Meridian workspace rebuild',
+  caption: '6 min read',
+  text: 'A fictional walkthrough of rebuilding a workspace product on token-owned foundations, with the decisions that made the difference.',
+  suggestions: [
+    { id: 'deeper', label: 'Go deeper on this page' },
+    { id: 'decisions', label: 'What were the key decisions?' },
+  ],
+};
+
+export const WithSummary: Story = {
+  args: {
+    label: 'Ask the agent',
+    summary: exampleSummary,
+    summaryPinned: true,
+  },
+  parameters: {
+    // Reserve room for the panel, which opens above the button.
+    layout: 'centered',
+  },
+};
+
+export const SummaryBelow: Story = {
+  args: {
+    label: 'Ask the agent',
+    summary: exampleSummary,
+    summaryPlacement: 'bottom',
+    summaryPinned: true,
+  },
+};
+
+export const SummaryOnHover: Story = {
+  args: {
+    label: 'Hover me',
+    summary: exampleSummary,
+  },
+};

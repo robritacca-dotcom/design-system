@@ -215,7 +215,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
     "label": "AI button",
     "slug": "ai-button",
     "category": "ai",
-    "description": "The AI entry point: icon and label on a transparent field, ringed by a slowly turning gradient and a soft glow.",
+    "description": "The AI entry point: icon and label ringed by a turning gradient and glow, with an optional hover-summoned AI-summary panel and prompt chips.",
     "client": true,
     "importPath": "@robr0/design-system/components/AiButton/AiButton",
     "barrel": "main",
@@ -267,6 +267,38 @@ export const componentApi: readonly ComponentApiEntry[] = [
             "type": "string",
             "required": false,
             "description": "Optional rel attribute for links"
+          },
+          {
+            "name": "summary",
+            "type": "AiButtonSummary",
+            "required": false,
+            "description": "A TLDR panel the button can summon: overline, title, a pre-written\nsummary revealed through a skeleton beat and a typed stream (once per\nmount — later openings show it instantly, as if cached), and optional\nprompt chips. Hovering the button opens it after the standard hover\ndelay; the pointer keeps it alive anywhere over the button or panel,\nand it hides a grace period after leaving both. Omit for the plain\nbutton."
+          },
+          {
+            "name": "summaryPlacement",
+            "type": "\"top\" | \"bottom\"",
+            "required": false,
+            "description": "Which side of the button the summary panel opens on.",
+            "defaultValue": "top"
+          },
+          {
+            "name": "summaryPinned",
+            "type": "boolean",
+            "required": false,
+            "description": "Holds the summary panel open regardless of hover — for callers that\nreveal it on their own signal (scroll depth, dwell). Hover mechanics\nstill run when it flips back off.",
+            "defaultValue": "false"
+          },
+          {
+            "name": "onSummaryDismiss",
+            "type": "(() => void)",
+            "required": false,
+            "description": "Fires when the panel's dismiss button is pressed. The panel closes itself either way; hovering away and back re-summons it."
+          },
+          {
+            "name": "onSummarySuggestion",
+            "type": "((id: string) => void)",
+            "required": false,
+            "description": "Fires with the tapped summary suggestion's `id`."
           },
           {
             "name": "className",
@@ -2688,7 +2720,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
     "label": "Composer",
     "slug": "composer",
     "category": "ai",
-    "description": "An auto-growing message input with send and stop states, an attachment slot, and Enter-to-send.",
+    "description": "An auto-growing message input with send and stop states, a page-context note, an attachment slot, and Enter-to-send.",
     "client": true,
     "importPath": "@robr0/design-system/components/Composer/Composer",
     "barrel": "main",
@@ -2746,6 +2778,18 @@ export const componentApi: readonly ComponentApiEntry[] = [
             "required": false,
             "description": "While focused, the shell wears AiButton's slowly rotating gradient ring\nand glow in place of the plain selected border — the system's \"a model\nanswers here\" signal, for composers whose messages are answered by one.\nWhile `streaming`, the ring stays lit and turning whether or not the\nfield holds focus. Off by default.",
             "defaultValue": "false"
+          },
+          {
+            "name": "context",
+            "type": "ReactNode",
+            "required": false,
+            "description": "Contextual note rendered as a full-width, non-interactive chip at the\nvery top of the shell, above any attachments — the \"what the model is\nlooking at\" line a chat host pins over the message (\"Looking at\n“Page name”\"). One line: a note too long for the shell truncates with\nan ellipsis. Composer owns the chip's chrome; the caller passes the\ntext."
+          },
+          {
+            "name": "contextIcon",
+            "type": "string",
+            "required": false,
+            "description": "Material Symbol name rendered at the left of the context chip\n(`visibility`, `article`…). Decorative and hidden from assistive\ntechnology — the chip's text carries the meaning. None by default,\nmatching the ai set's icon-free-unless-asked convention."
           },
           {
             "name": "attachments",
