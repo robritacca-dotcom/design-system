@@ -314,3 +314,67 @@ a.statItem:hover {
   }
 
 }
+
+/* ============================================
+   MAP SECTIONS (stage-grouped overview)
+   ============================================ */
+.mapSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-md);
+  margin-bottom: var(--gap-xxxl);
+}
+
+.sectionBody {
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  color: var(--color-text-primary);
+}
+
+.sectionBullets {
+  margin: 0;
+  padding-left: var(--primitive-padding-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-xs);
+  font-size: var(--font-paragraph-size);
+  line-height: var(--font-paragraph-line-height);
+  color: var(--color-text-primary);
+}
+
+/* The one-breath section's tool roster, for readers who never expand a map */
+.logoStrip {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--primitive-gap-sm);
+}
+
+.logoChip {
+  display: flex;
+  align-items: center;
+  gap: var(--primitive-gap-sm);
+  padding: var(--primitive-padding-xs) var(--primitive-padding-sm-md);
+  border: var(--border-xs) solid var(--color-divider);
+  border-radius: var(--radius-full);
+  background-color: var(--color-bg-container-primary);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-em-weight);
+  color: var(--color-text-primary);
+}
+
+/* Theme-paired marks (Next.js, Vercel ship as light/dark files) */
+.logoDark {
+  display: none;
+}
+
+[data-theme="dark"] .logoLight {
+  display: none;
+}
+
+[data-theme="dark"] .logoDark {
+  display: block;
+}

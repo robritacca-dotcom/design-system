@@ -35,6 +35,13 @@ export interface StageToolbarProps {
   /** Extra controls for the right side, rendered before the exit —
       the hosting page's own toolbar furniture (the inspect-mode switch). */
   actions?: React.ReactNode;
+  /** An extra unlinked crumb after the trail, for an overlay within the
+      page (an expanded map's name). Left out of the structured data,
+      which describes real pages only. */
+  append?: string;
+  /** Overrides what the X does, for a toolbar heading an in-page overlay
+      rather than a route: called instead of any navigation. */
+  onExit?: () => void;
 }
 
 /**
@@ -53,15 +60,20 @@ export default function StageToolbar({
   onTabChange,
   switchLabel,
   actions,
+  append,
+  onExit,
 }: StageToolbarProps) {
   const pathname = usePathname() ?? "/";
   const items = getBreadcrumbs(pathname);
+  const trail = append ? [...items, { label: append }] : items;
 
   const router = useRouter();
   /* The X is the way back to wherever the visitor came from; opened cold
-     (a shared link), it goes home. */
+     (a shared link), it goes home. An overlay's toolbar closes the
+     overlay instead. */
   const leave = () => {
-    if (window.history.length > 2) router.back();
+    if (onExit) onExit();
+    else if (window.history.length > 2) router.back();
     else router.push("/");
   };
 
@@ -74,19 +86,19 @@ export default function StageToolbar({
         {title && <span className={styles.title}>{title}</span>}
         {badge && <Badge label={badge} variant="info" />}
         {items.length > 0 && (
-          <>
-            <script
-              type="application/ld+json"
-              dangerouslySetInnerHTML={{
-                __html: JSON.stringify(buildBreadcrumbJsonLd(items)),
-              }}
-            />
-            {/* Phones lose the trail (the logo is the way up); the
-                structured data above stays either way. */}
-            <span className={styles.crumb}>
-              <Breadcrumb items={items} />
-            </span>
-          </>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(buildBreadcrumbJsonLd(items)),
+            }}
+          />
+        )}
+        {trail.length > 0 && (
+          /* Phones lose the trail (the logo is the way up); the
+             structured data above stays either way. */
+          <span className={styles.crumb}>
+            <Breadcrumb items={trail} />
+          </span>
         )}
       </div>
 
@@ -115,6 +127,10 @@ export default function StageToolbar({
             icon="close"
             variant="tertiary"
             ariaLabel="Close this view"
+            /* The toolbar hugs the viewport's top right corner: a top
+               tooltip clips above, and the full label clips right. */
+            tooltip="Close"
+            tooltipPosition="bottom"
             onClick={leave}
           />
         )}

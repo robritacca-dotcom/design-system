@@ -2,178 +2,22 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Timeline, type TimelineCompany } from "@robr0/design-system/components/Timeline/Timeline";
+import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import MegaNav from "../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../components/Sidebar/Sidebar";
+import { ArchitectureMap } from "@/components/ArchitectureMap/ArchitectureMap";
 import { getSidebarLinks, docsSidebarLinks } from "@/config/navigation";
 import { COMPONENT_COUNT } from "@robr0/design-system/components/registry";
 import { TOKEN_COUNT, TOKEN_COUNTS } from "@robr0/design-system/tokens/registry";
 import { SKILL_COUNT } from "@/data/skills-registry";
 import { SITE_UPDATE_COUNT } from "@/data/site-updates";
+import { operatorsMap, pipelineMap, runtimeMap, systemOverviewMap } from "./maps";
 import styles from "./page.module.css";
 
 const TOKEN_CATEGORY_COUNT = Object.keys(TOKEN_COUNTS).length;
 
 const { sidebarLinks } = getSidebarLinks(docsSidebarLinks, "/overview");
-
-const pipelineLogo = (src: string, alt: string) => (
-  <Image src={src} alt={alt} width={32} height={32} />
-);
-
-// Same geometry as public/vercel.svg, but filled with a content token so the
-// mark stays visible when the theme flips (the file hardcodes #fff).
-const vercelLogo = (
-  <svg width="32" height="32" viewBox="0 0 1155 1000" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Vercel">
-    <path d="m577.3 0 577.4 1000H0z" fill="var(--color-text-primary)" />
-  </svg>
-);
-
-const PIPELINE: TimelineCompany[] = [
-  {
-    name: "Figma",
-    logo: pipelineLogo("/logos/Figma.svg", "Figma"),
-    roles: [
-      {
-        title: "Design foundation",
-        description:
-          "Where the foundation was designed: the token architecture, the colour ramps, the component vocabulary. The source of truth has since moved into the repo.",
-        bullets: [
-          "Tokens designed as variables: the colour ramps plus the spatial scale (gap, padding, radius, border)",
-          <>
-            Still the sketchpad where bigger visual changes get explored before
-            they land in{" "}
-            <Link href="/blueprints/design" className={styles.inlineLink}>the written spec</Link>
-          </>,
-        ],
-      },
-    ],
-  },
-  {
-    name: "Claude Code",
-    logo: pipelineLogo("/logos/Claude.svg", "Claude"),
-    roles: [
-      {
-        title: "AI component generator",
-        description: (
-          <>
-            Builds production React from the written specs in the repo:{" "}
-            <Link href="/blueprints/design" className={styles.inlineLink}>design.md</Link> for the design language,{" "}
-            <Link href="/blueprints/claude" className={styles.inlineLink}>CLAUDE.md</Link> for the rules, and{" "}
-            <Link href="/blueprints/content-design" className={styles.inlineLink}>content-design.md</Link> for how every word reads.
-          </>
-        ),
-        bullets: [
-          "Generates the components, the layered token CSS, and the Storybook docs from the spec",
-          "Maintains the system too: skills audit token usage, prose, and accessibility on demand, and recurring loops keep the project journal current",
-        ],
-      },
-    ],
-  },
-  {
-    name: "Storybook",
-    logo: pipelineLogo("/logos/storybook.svg", "Storybook"),
-    roles: [
-      {
-        title: "Live documentation site",
-        description: (
-          <>
-            Every component, variant, and token, live at{" "}
-            <a href="https://design-system-iota-one.vercel.app" target="_blank" rel="noopener noreferrer" className={styles.inlineLink}>design-system-iota-one.vercel.app</a>.
-          </>
-        ),
-        bullets: [
-          "A playground with live controls for every prop and state",
-          "Props tables generate from the component source itself, and a build check fails on any missing description, so the docs cannot drift from what ships",
-        ],
-      },
-    ],
-  },
-  {
-    name: "GitHub",
-    logo: pipelineLogo("/logos/Git.svg", "GitHub"),
-    roles: [
-      {
-        title: "Source, releases, and CI",
-        description: (
-          <>
-            <a href="https://github.com/robritacca-dotcom/design-system" target="_blank" rel="noopener noreferrer" className={styles.inlineLink}>A public monorepo</a>
-            : the library publishes to npm as <code>@robr0/design-system</code>,
-            and this site installs that same package, so every page dogfoods the
-            exact import surface a consumer gets.
-          </>
-        ),
-        bullets: [
-          "Releases smoke-test the tarball in a scratch Vite app, then publish with provenance through a trust link between GitHub and npm: no stored token to leak",
-          "CI renders every Storybook story in headless Chrome with an axe accessibility audit on each, so a render error or a violation fails the build; one contrast rule is deliberately excluded by a settled token decision",
-          "The built site is then served and loaded in a real browser before anything ships: a hydration smoke proves the pages actually render, because a green build once wasn't proof, and a page-level axe pass re-checks the served pages in both themes",
-          "A drift guard fails the build the moment registry-backed content goes stale: the numbers in the rail beside this pipeline come from those registries, never typed by hand",
-        ],
-      },
-    ],
-  },
-  {
-    name: "Vercel",
-    logo: vercelLogo,
-    roles: [
-      {
-        title: "Deployment and delivery",
-        description:
-          "Watches GitHub and deploys the website and Storybook on every push to main, live in under a minute.",
-        bullets: [
-          <>
-            <code>robertritacca.com</code> is registered at GoDaddy, whose DNS
-            points at the Vercel deployment
-          </>,
-          "Production is re-proven every four hours: a scheduled smoke loads the live site in a real browser, because incremental regeneration means the served pages can change with no deploy",
-          "Nunito Sans is self-hosted via next/font, and Material Symbols ships inside the npm package; only the playground's typeface picker and the MCP endpoint's landing page load fonts from Google at runtime",
-          "Google Analytics (GA4) measures traffic via the gtag snippet in the root layout",
-        ],
-      },
-    ],
-  },
-  {
-    name: "robr0 GPT",
-    logo: pipelineLogo("/rr.svg", "robr0 GPT"),
-    roles: [
-      {
-        title: "Site-aware chat",
-        description: (
-          <>
-            The chat behind the floating button, built from the system&rsquo;s
-            own ai components. It answers from the published site through
-            Claude, on the Sonnet or Haiku model picked in the composer; the
-            same widget runs in{" "}
-            <Link href="/playground?view=chat" className={styles.inlineLink}>
-              the playground&rsquo;s Chat view
-            </Link>
-            .
-          </>
-        ),
-        bullets: [
-          "Its context is generated at build time from the site itself: page prose, data registries, root specs, and the essays. Only published, self-authored content can enter, and a validator fails the build on anything else",
-          "A golden-set eval runs through the real route, and spend is held by per-visitor rate limits and a daily budget that steps the default model down to Haiku as it runs low, holds everyone there near the cap, then pauses the chat",
-          "Conversations are kept for 30 days, tied to no name or address, then deleted",
-        ],
-      },
-      {
-        title: "MCP endpoint",
-        description: (
-          <>
-            The same public data, served to agents: <code>/api/mcp</code> is a
-            Model Context Protocol server, and any MCP client connects with
-            just the URL. No key, no account, no model behind it.
-          </>
-        ),
-        bullets: [
-          "Five tools: the component list, per-component prop APIs, the token registry, install setup, and search over the site's published content",
-          "The prop data is generated from the same JSDoc that ships in the package's type declarations, so a coding agent reads the exact contract npm ships",
-          "The same data ships as files: every component URL serves its prop contract as markdown at .md, and a generated agent skill installs into a consumer's own .claude/skills",
-        ],
-      },
-    ],
-  },
-];
 
 export default function AboutDsPage() {
   return (
@@ -197,15 +41,15 @@ export default function AboutDsPage() {
               An AI-ready design system, built to make this site
             </p>
             <p className={styles.introBody}>
-              robr0 DS is the system I built, by myself, to make every page you see here. The foundation was designed in{" "}
-              <a href="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26?node-id=246-5864" target="_blank" rel="noopener noreferrer" className={styles.inlineLink}>Figma</a>; the system itself lives in{" "}
+              robr0 DS is the design system behind every page on this site: a solo build, run as a working experiment in how far a written spec and an AI pair can carry a production system. The foundation was designed in{" "}
+              <a href="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26?node-id=246-5864" target="_blank" rel="noopener noreferrer" className={styles.inlineLink}>Figma</a>; the system lives in{" "}
               <a href="https://github.com/robritacca-dotcom/design-system" target="_blank" rel="noopener noreferrer" className={styles.inlineLink}>the repo</a> as a{" "}
               <Link href="/blueprints/design" className={styles.inlineLink}>written spec</Link>, layered CSS tokens, and React components, and Claude Code builds from the spec, so a design change reaches production in under a minute. It ships as the npm package <code>@robr0/design-system</code>, and this site installs that package like any other consumer would. You can{" "}
               <Link href="/docs/get-started" className={styles.inlineLink}>install it yourself</Link> and{" "}
               <Link href="/playground" className={styles.inlineLink}>re-theme it live</Link>.
             </p>
             <p className={styles.introBody}>
-              I&apos;m putting all of it on display because I think the system is the work: the pipeline below shows how the pieces fit, and everything is open to lift.{" "}
+              Everything is on display because the system is the work: the maps below show how the pieces fit, and all of it is open to lift.{" "}
               <Link href="/blueprints/claude" className={styles.inlineLink}>CLAUDE.md</Link>,{" "}
               <Link href="/blueprints/design" className={styles.inlineLink}>design.md</Link>,{" "}
               <Link href="/blueprints/content-design" className={styles.inlineLink}>content-design.md</Link>, the{" "}
@@ -214,17 +58,134 @@ export default function AboutDsPage() {
             </p>
           </div>
 
-          {/* Pipeline + Tools two-column layout */}
+          {/* Maps + rail two-column layout */}
           <div className={styles.resumeLayout}>
-            {/* Pipeline Column (Left — 2/3 width) */}
+            {/* Maps column (left) */}
             <div className={styles.resumeMain}>
-              <div className={`${styles.resumeSection} animate-in animate-delay-2`}>
-                <div className={styles.resumeSectionHeader}>
-                  <h2 className={styles.resumeSectionTitle}>Pipeline</h2>
-                </div>
 
-                <Timeline variant="company" items={PIPELINE} />
-              </div>
+              <section className={`${styles.mapSection} animate-in animate-delay-2`}>
+                <SectionTitle title="The system in one breath" />
+                <p className={styles.sectionBody}>
+                  The short version: one repo becomes one website, one
+                  Storybook, and one npm package, and nothing ships
+                  unchecked. The maps are for anyone who wants the wiring;
+                  each one pans, zooms, and expands to fill the screen.
+                </p>
+                <ul className={styles.logoStrip} aria-label="The tools involved">
+                  {[
+                    { name: "Figma", logo: "/logos/Figma.svg" },
+                    { name: "Claude Code", logo: "/logos/Claude.svg" },
+                    { name: "GitHub", logo: "/logos/Git.svg" },
+                    { name: "Storybook", logo: "/logos/storybook.svg" },
+                    { name: "Vite", logo: "/logos/vite.svg" },
+                    { name: "Next.js", logo: "/logos/nextjs black.svg", logoDark: "/logos/nextjs white.svg" },
+                    { name: "Vercel", logo: "/logos/vercel black.svg", logoDark: "/logos/vercel white.svg" },
+                    { name: "npm", logo: "/logos/npm.svg" },
+                    { name: "Google", logo: "/logos/google.svg" },
+                  ].map((tool) => (
+                    <li key={tool.name} className={styles.logoChip}>
+                      <Image
+                        src={tool.logo}
+                        alt=""
+                        width={20}
+                        height={20}
+                        className={tool.logoDark ? styles.logoLight : undefined}
+                      />
+                      {tool.logoDark ? (
+                        <Image src={tool.logoDark} alt="" width={20} height={20} className={styles.logoDark} />
+                      ) : null}
+                      <span>{tool.name}</span>
+                    </li>
+                  ))}
+                </ul>
+                <ul className={styles.sectionBullets}>
+                  <li>One repo holds everything: components, tokens, data registries, and the written specs.</li>
+                  <li>Generators derive every surface from one source of truth; validators fail the build on drift.</li>
+                  <li>CI gates every push, and a green push to main is live in under a minute.</li>
+                  <li>Two destinations: the site on Vercel, the package on npm.</li>
+                </ul>
+                <ArchitectureMap
+                  map={systemOverviewMap}
+                  caption="One repo, one gate, two destinations. The other three maps magnify the lanes."
+                />
+              </section>
+
+              <section className={`${styles.mapSection} animate-in animate-delay-3`}>
+                <SectionTitle title="The pipeline" />
+                <p className={styles.sectionBody}>
+                  How a change becomes live, in five stages: author, generate
+                  and validate, build, gate, ship. Figma and Substack feed the
+                  authoring stage from outside, Google is touched exactly once
+                  at build time (the typeface is fetched, then self-hosted),
+                  and a push to main deploys to Vercel with{" "}
+                  <code>robertritacca.com</code> pointed at it from GoDaddy.
+                  The package takes its own lane: a manual release publishes
+                  to npm with provenance, no stored token. The map carries the
+                  detail: the drift guard, the hydration smoke, the axe audit
+                  on every story.
+                </p>
+                <ArchitectureMap
+                  map={pipelineMap}
+                  caption="Five stages, then the flow snakes down through the gate. The teal edge is the one Google touch before runtime."
+                />
+              </section>
+
+              <section className={`${styles.mapSection} animate-in animate-delay-3`}>
+                <SectionTitle title="The operator layer" />
+                <p className={styles.sectionBody}>
+                  Claude Code drives the pipeline through{" "}
+                  <Link href="/skills" className={styles.inlineLink}>skills</Link>{" "}
+                  named for their end state. The spine is four states a change
+                  can be in; checkpoint, park, land, and ship are the
+                  transitions between them, and the audit skills above the
+                  spine can read and fix but never deploy. The only two paths
+                  to production are ship and super-ship, which runs a full
+                  drift audit first.
+                </p>
+                <ArchitectureMap
+                  map={operatorsMap}
+                  caption="States, not steps: the spine has no arrows of its own because the skills are the transitions."
+                />
+              </section>
+
+              <section className={`${styles.mapSection} animate-in animate-delay-3`}>
+                <SectionTitle title="The architecture at runtime" />
+                <p className={styles.sectionBody}>
+                  Once the site is live, only the edges matter. Pages come
+                  from Vercel with the fonts and the chat corpus already baked
+                  in, analytics events go from the browser straight to Google
+                  and never touch Vercel, and a scheduled smoke re-proves
+                  production every four hours.
+                </p>
+                <ul className={styles.sectionBullets}>
+                  <li>
+                    The chat answers from the published site through Claude,
+                    held by per-visitor rate limits and a daily budget;
+                    conversations are kept for 30 days, tied to no name, then
+                    deleted. The same widget runs in{" "}
+                    <Link href="/playground?view=chat" className={styles.inlineLink}>
+                      the playground&apos;s Chat view
+                    </Link>
+                    .
+                  </li>
+                  <li>
+                    <code>/api/mcp</code> serves agents five tools with no
+                    key, no account, and no model behind them: the component
+                    list, per-component prop APIs, the token registry, install
+                    setup, and site search.
+                  </li>
+                  <li>
+                    Two pages fetch type from Google at runtime: the
+                    playground&apos;s typeface picker and the MCP
+                    endpoint&apos;s landing page.
+                  </li>
+                </ul>
+                <ArchitectureMap
+                  map={runtimeMap}
+                  caption="A space diagram, no time in it. The teal edge is the one the vendor-grouped version filed wrong."
+                />
+              </section>
+
             </div>
 
             {/* Stats + Links Rail (Right — 1/3 width) */}
