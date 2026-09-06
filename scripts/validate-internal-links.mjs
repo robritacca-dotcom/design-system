@@ -15,6 +15,17 @@
  * /writing/nonexistent-essay fails even though a [slug] pattern would have
  * matched it. Route handlers (route.ts) and public files are matched by
  * path, redirects by their source.
+ *
+ * The one exception is a dynamic [slug] route that renders on demand (ISR)
+ * rather than prerendering: its real pages never land in the .html route
+ * list, so its valid targets come from the registry that owns which slugs
+ * exist. /writing/[slug] builds from the live Substack feed, which is
+ * unreachable from CI's build — so generateStaticParams returns nothing and
+ * NONE of the essays prerender there, even though every one is a live 200 via
+ * ISR. We register the essay slugs from the committed essays.json registry
+ * (the validated source of truth) so a link to a real essay resolves whether
+ * or not it prerendered. This keeps the check's teeth: only registry slugs
+ * are added, never the [slug] pattern, so /writing/<unknown> still fails.
  */
 import { readdirSync, readFileSync, existsSync } from 'node:fs';
 import { dirname, join, relative, sep } from 'node:path';
@@ -92,6 +103,13 @@ const configSource = readFileSync(nextConfig, 'utf8');
 for (const m of configSource.matchAll(/source:\s*["'`]([^"'`]+)["'`]/g)) {
   if (!m[1].includes(':') && !m[1].includes('*')) targets.add(m[1]);
 }
+
+/* Dynamic ISR routes: /writing/[slug] renders on demand (see the doc block),
+   so its essays may not be in the .html list above — on CI they never are.
+   Their valid slugs are the committed essays registry, not the .html files. */
+const essaysPath = join(repoRoot, 'website', 'src', 'data', 'essays.json');
+const { essays } = JSON.parse(readFileSync(essaysPath, 'utf8'));
+for (const essay of essays) targets.add(`/writing/${essay.slug}`);
 
 /* ---- The links the pages actually render ---- */
 
