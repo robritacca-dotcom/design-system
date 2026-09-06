@@ -35,11 +35,10 @@ export default function TemplatesPage() {
               control is a component, and every colour, space, and type style
               resolves to a semantic token. The first began as a labs rebuild
               of a reference product, a way to find where the system falls
-              short; the newer ones are original screens composed to stretch
-              the parts a rebuild never reaches, from the globe to a code-gated
-              release. All data in them is fictional. Each preview below is the
-              template itself, live and following the site’s theme; open one to
-              use it full screen.
+              short; the relay console is an original screen, composed to
+              stretch the parts a rebuild never reaches. All data in them is
+              fictional. Each preview below is the template itself, live and
+              following the site’s theme; open one to use it full screen.
             </p>
           </div>
 
