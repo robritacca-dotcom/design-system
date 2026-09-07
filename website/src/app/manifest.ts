@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "Robert Ritacca · Principal Product Designer",
     short_name: "Robert Ritacca",
     description:
-      "Principal Product Designer crafting AI-native products, systems, and experiences.",
+      "Principal Product Designer in Toronto, crafting AI-native products and agentic experiences.",
     start_url: "/",
     display: "standalone",
     background_color: "#050505",
