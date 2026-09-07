@@ -45,6 +45,15 @@ const HYDRATION_PATTERNS = [
   /did not match/i,
 ];
 
+/** Errors that mean a browser feature was denied, not that the page failed to
+ *  render. A Permissions-Policy violation is the browser refusing an API probe
+ *  — the document is already up and painting when it fires. Seen 2026-09-06:
+ *  the YouTube embed on the first case study probed ComputePressureObserver
+ *  without `compute-pressure` in its allow list, and the violation surfaced
+ *  only when the player's JS got that far inside the settle window — a flake
+ *  that failed one run and passed the identical build on the next. */
+const BENIGN_PATTERNS = [/permissions policy violation/i];
+
 /** Hydration needs a beat after load before its errors surface. */
 const SETTLE_MS = 1500;
 /** The page must show real prose, not a shell — the threshold only has to
@@ -92,7 +101,10 @@ async function checkPage(browser, origin, route, profile) {
     const hydrationErrors = errors.filter((e) => HYDRATION_PATTERNS.some((p) => p.test(e)));
     for (const e of hydrationErrors) failures.push(`hydration error: ${e.slice(0, 200)}`);
     const pageErrors = errors.filter(
-      (e) => !hydrationErrors.includes(e) && !e.startsWith('Failed to load resource'),
+      (e) =>
+        !hydrationErrors.includes(e) &&
+        !e.startsWith('Failed to load resource') &&
+        !BENIGN_PATTERNS.some((p) => p.test(e)),
     );
     for (const e of pageErrors) failures.push(`uncaught page error: ${e.slice(0, 200)}`);
   } catch (err) {
