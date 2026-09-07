@@ -1,8 +1,8 @@
 ---
 name: token-audit
-description: Scan CSS files for hardcoded values that should use design tokens, and report violations. Use when asked to check for hardcoded values, raw colours or pixel values, or audit token usage and design system compliance.
+description: Scan CSS files (and component TS/TSX colour literals) for hardcoded values that should use design tokens, and report violations — including near-twins of existing tokens. Use when asked to check for hardcoded values, raw colours or pixel values, or audit token usage and design system compliance.
 icon: manage_search
-displayDescription: "Scans CSS files for hardcoded hex colours, raw rgb() values, pixel values, and transition timings that should reference design tokens. Reports file, line number, offending value, and recommended token replacement. Accepts a single component, all-components, or website as scope."
+displayDescription: "Scans CSS files for hardcoded hex colours, raw rgb() values, pixel values, and transition timings that should reference design tokens, plus component TS/TSX files for colour-shaped literals. Flags near-twins of existing tokens as their own finding class. Reports file, line number, offending value, and recommended token replacement. Accepts a single component, all-components, or website as scope."
 invoke: ["check for hardcoded values","token audit","audit [component] CSS","are there raw colours"]
 ---
 
@@ -49,6 +49,10 @@ Use this skill when asked to check for hardcoded values, audit token usage, find
    - `1px` border widths — acceptable
    - Values inside `calc()` that are genuine arithmetic, not replaceable with a single token
    - CSS variable declarations themselves (lines starting with `--`)
+
+   **Hunt near-twins, not just strays.** A raw value that is *almost* an existing token is a typo recorded as a decision, and the legality check alone never sees it — it can even sit under a `ds-allow`. Compare every collected raw value against the token registry's resolved values **and against the other raw values in scope**: a colour within a few points per channel of a token (including cross-notation twins — a hex, an `hsl()`, and an `rgb()` of the same colour are one value written three ways), or a spacing value one pixel off a neighbouring scale step. Report a near-twin as its own finding class, distinct from a plain stray, naming what it is a twin of — `path/to/GadgetTile.css:17 — #0E6D8E → near-twin of var(--color-action-primary-bg), probably a mistyped copy`. A twin of a token is repaired by pointing at the token; a twin pair of raw values collapses into whichever one is sanctioned.
+
+   **Component TS/TSX files are in scope for colour-shaped literals.** The CSS glob is not the whole surface: hex, `rgb()`/`rgba()`, and `hsl()` literals also live in component `.ts`/`.tsx` files, where no `ds-allow` mechanism exists. Scan them too, and judge each hit against the mirror checks in `scripts/validate-token-references.mjs` (the authoritative list of sanctioned out-of-CSS token surfaces — it holds the chart palette and every `getCSSVar` fallback to the tokens). A literal outside those mirrors is a finding to judge, not skip — deliberately theme-frozen fixture data can be legitimate, but a near-twin of a token in it is still a typo.
 
 4. **For each violation**, output:
    - File path (relative to repo root)
