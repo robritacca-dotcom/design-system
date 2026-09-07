@@ -74,6 +74,8 @@
   );
   /* Standard properties only — the build pipeline prefixes per its browser
      targets, and hand-written -webkit- duplicates confuse its merging. */
+  /* ds-allow(color): mask luminance keying — the #fff paints alpha coverage
+     for mask-composite, not a theme colour */
   mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
@@ -319,6 +321,8 @@
     var(--color-ai-gradient-mid),
     var(--color-ai-gradient-start)
   );
+  /* ds-allow(color): mask luminance keying — the #fff paints alpha coverage
+     for mask-composite, not a theme colour */
   mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
