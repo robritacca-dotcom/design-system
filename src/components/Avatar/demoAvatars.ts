@@ -7,6 +7,10 @@
  * blocked, every avatar rendered as a broken image with alt text bleeding
  * through the circle. These inline SVG data URIs render the same everywhere with
  * no network request, so the docs stay self-contained.
+ *
+ * The pigments are deliberately theme-frozen — the same face must read as the
+ * same person in light and dark — so they are literals, not tokens. The first
+ * portrait's background snapshots the brand teal primitive.
  */
 
 const portrait = (bg: string, accent: string): string => {
@@ -19,6 +23,6 @@ const portrait = (bg: string, accent: string): string => {
 };
 
 /** Distinct demo portraits so multiple avatars in a row read as different people. */
-export const demoAvatar1 = portrait('#0F6C8C', '#8FD3E8');
+export const demoAvatar1 = portrait('#0E6E8F', '#8FD3E8');
 export const demoAvatar2 = portrait('#C05B8B', '#F3C6DC');
 export const demoAvatar3 = portrait('#4E7A3A', '#C7E6B2');
