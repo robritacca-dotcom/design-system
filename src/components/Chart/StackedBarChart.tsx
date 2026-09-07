@@ -105,9 +105,9 @@ export const StackedBarChart = ({
     .filter(Boolean)
     .join(' ');
 
-  const textSecondary = getCSSVar('--color-text-secondary', '#A2A2A2');
-  const gridColor = getCSSVar('--color-divider', '#232323');
-  const cursorColor = getCSSVar('--color-bg-container-secondary', '#303030');
+  const textSecondary = getCSSVar('--color-text-secondary', '#303030');
+  const gridColor = getCSSVar('--color-divider', 'rgba(214, 214, 214, 0.8)');
+  const cursorColor = getCSSVar('--color-bg-container-secondary', '#F1F1F1');
   const defaultColors = getChartSeriesColors();
 
   const renderTooltip = useCallback(

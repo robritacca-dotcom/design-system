@@ -126,7 +126,7 @@ export const FunnelChart = React.forwardRef<HTMLDivElement, FunnelChartProps>(
       .join(' ');
 
     const seriesColors = getChartSeriesColors();
-    const textSecondary = getCSSVar('--color-text-secondary', '#A2A2A2');
+    const textSecondary = getCSSVar('--color-text-secondary', '#303030');
     const surfaceColor = getCSSVar('--color-bg-container-primary', '#FFFFFF');
 
     const firstValue = data.length > 0 ? data[0].value : 0;

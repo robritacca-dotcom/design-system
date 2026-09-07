@@ -112,8 +112,8 @@ export const RadialChart = ({
     .filter(Boolean)
     .join(' ');
   const defaultColors = getChartSeriesColors();
-  const textSecondary = getCSSVar('--color-text-secondary', '#A2A2A2');
-  const bgColor = getCSSVar('--color-bg-container-primary', '#0E0E0E');
+  const textSecondary = getCSSVar('--color-text-secondary', '#303030');
+  const bgColor = getCSSVar('--color-bg-container-primary', '#FFFFFF');
 
   /* Recharts RadialBarChart needs fill on each data item */
   const chartData = data.map((item, i) => ({

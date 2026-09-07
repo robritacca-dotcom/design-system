@@ -77,7 +77,7 @@ function TreemapContent(props: any) {
         height={height}
         rx={4}
         ry={4}
-        style={{ fill, stroke: getCSSVar('--color-bg-container-primary', '#F1F1F1'), strokeWidth: 2 }}
+        style={{ fill, stroke: getCSSVar('--color-bg-container-primary', '#FFFFFF'), strokeWidth: 2 }}
       />
       {showLabel && (
         <text

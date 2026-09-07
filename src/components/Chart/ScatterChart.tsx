@@ -119,8 +119,8 @@ export const ScatterChart = ({
     .join(' ');
 
   const seriesColors = getChartSeriesColors();
-  const textSecondary = getCSSVar('--color-text-secondary', '#A2A2A2');
-  const gridColor = getCSSVar('--color-divider', '#232323');
+  const textSecondary = getCSSVar('--color-text-secondary', '#303030');
+  const gridColor = getCSSVar('--color-divider', 'rgba(214, 214, 214, 0.8)');
 
   const renderTooltip = useCallback(
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */

@@ -128,9 +128,9 @@ export const ComboChart = ({
   const seriesColors = getChartSeriesColors();
   const resolvedBarColor = barColor || getCSSVar('--color-action-primary-bg', '#0E6E8F');
   const resolvedLineColor = lineColor || seriesColors[1];
-  const textSecondary = getCSSVar('--color-text-secondary', '#A2A2A2');
-  const gridColor = getCSSVar('--color-divider', '#232323');
-  const cursorColor = getCSSVar('--color-bg-container-secondary', '#303030');
+  const textSecondary = getCSSVar('--color-text-secondary', '#303030');
+  const gridColor = getCSSVar('--color-divider', 'rgba(214, 214, 214, 0.8)');
+  const cursorColor = getCSSVar('--color-bg-container-secondary', '#F1F1F1');
 
   const resolvedBarLabel = barLabel || barKey;
   const resolvedLineLabel = lineLabel || lineKey;

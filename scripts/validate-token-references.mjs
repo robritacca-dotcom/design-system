@@ -17,6 +17,13 @@
  * they are the one place a chart colour lives outside CSS, and a re-themed
  * accent must not leave charts SSR-rendering the old colour.
  *
+ * And holds every getCSSVar('--color-…', '<fallback>') literal in the
+ * component sources (src/components) to the light-theme resolution of its
+ * token — the same convention palette.ts documents. These fallbacks only
+ * paint when the token is missing from the cascade (SSR, detached render),
+ * but they are colour values living outside CSS, and before this check they
+ * had already drifted into a mix of light- and dark-theme values.
+ *
  * And holds the playground's NEUTRALS mirror
  * (website/src/lib/theme/theme-overrides.ts) to the neutral primitives,
  * in both directions: neutralOverrides() regenerates every neutral — solid
@@ -30,7 +37,7 @@
  * and Satori resolves no CSS custom properties, so the hexes live there in
  * the open — the third place a colour value lives outside CSS.
  */
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -138,6 +145,40 @@ if (fallbacks.length === 0) {
       );
     }
   });
+}
+
+// getCSSVar fallbacks: every getCSSVar('--color-…', '<literal>') in the
+// component sources must carry the light-theme resolution of its token,
+// per the convention palette.ts documents. A fallback frozen at an old or
+// dark-theme value paints the wrong colour exactly when the cascade is
+// absent — the case fallbacks exist for.
+const normalizeColour = (v) => v.toLowerCase().replace(/\s+/g, ' ').trim();
+const walkFiles = (dir, out = []) => {
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const full = join(dir, entry.name);
+    if (entry.isDirectory()) walkFiles(full, out);
+    else if (/\.(ts|tsx)$/.test(entry.name) && !/\.stories\./.test(entry.name)) out.push(full);
+  }
+  return out;
+};
+let cssVarFallbackCount = 0;
+for (const file of walkFiles(join(repoRoot, 'src', 'components'))) {
+  const source = readFileSync(file, 'utf8');
+  for (const m of source.matchAll(/getCSSVar\(\s*'(--[a-z0-9-]+)'\s*,\s*'([^']+)'\s*\)/g)) {
+    const [, token, fallback] = m;
+    if (!token.startsWith('--color-')) continue;
+    cssVarFallbackCount += 1;
+    const rel = file.slice(repoRoot.length + 1);
+    const resolved = resolveLight(token);
+    if (!resolved) {
+      errors.push(`${rel}: getCSSVar falls back for ${token}, which resolves to nothing in the light theme`);
+    } else if (normalizeColour(resolved) !== normalizeColour(fallback)) {
+      errors.push(
+        `${rel}: getCSSVar fallback for ${token} is ${fallback} but the token resolves to ` +
+          `${resolved} in the light theme — keep SSR fallbacks equal to the tokens`
+      );
+    }
+  }
 }
 
 // Playground neutral mirror: the NEUTRALS table in theme-overrides.ts must
@@ -278,7 +319,7 @@ if (errors.length > 0) {
 
 console.log(
   `✓ Token references valid — every semantic colour token chains to a primitive; ` +
-    `${fallbacks.length} chart palette fallbacks match their tokens; ` +
+    `${fallbacks.length} chart palette fallbacks and ${cssVarFallbackCount} getCSSVar fallbacks match their tokens; ` +
     `the playground neutral mirror matches the primitives; ` +
     `the share card's blob mirror matches the tokens.`
 );

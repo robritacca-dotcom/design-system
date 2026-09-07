@@ -103,7 +103,7 @@ export const PieChart = ({
     .filter(Boolean)
     .join(' ');
   const defaultColors = getChartSeriesColors();
-  const textSecondary = getCSSVar('--color-text-secondary', '#A2A2A2');
+  const textSecondary = getCSSVar('--color-text-secondary', '#303030');
 
   const renderTooltip = useCallback(
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
