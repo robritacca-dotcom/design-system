@@ -31,7 +31,7 @@ export function GET() {
   const body = [
     "# Robert Ritacca",
     "",
-    "> Portfolio of Robert Ritacca, Principal Product Designer: AI product case studies (Intuit, Meta, Augmenta) and robr0 DS, an AI-ready design system built by Claude Code from published specs (CLAUDE.md, design.md, content-design.md) and shipped to npm as an open React component library.",
+    "> Portfolio of Robert Ritacca, Principal Product Designer in Toronto: AI product case studies (Intuit, Meta, Augmenta) and robr0 DS, an AI-ready design system built by Claude Code from published specs (CLAUDE.md, design.md, content-design.md) and shipped to npm as an open React component library.",
     "",
     section(
       "Work",

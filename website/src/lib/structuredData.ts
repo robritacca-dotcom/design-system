@@ -10,6 +10,26 @@ export function buildPersonJsonLd() {
     name: "Robert Ritacca",
     url: SITE_URL,
     jobTitle: "Principal Product Designer",
+    description:
+      "Product designer specialising in AI-native products, agentic experiences, and complex workflows, based in Toronto.",
+    /* Employer and education mirror the /about timeline; update both together. */
+    worksFor: {
+      "@type": "Organization",
+      name: "Gusto",
+      url: "https://gusto.com",
+    },
+    alumniOf: [
+      {
+        "@type": "CollegeOrUniversity",
+        name: "University of Toronto",
+        url: "https://www.utoronto.ca",
+      },
+      {
+        "@type": "CollegeOrUniversity",
+        name: "Sheridan College",
+        url: "https://www.sheridancollege.ca",
+      },
+    ],
     homeLocation: {
       "@type": "Place",
       address: {
