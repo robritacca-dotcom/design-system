@@ -54,6 +54,10 @@ name: Release
 #   Composer's working glow (aiGlow + streaming), and the agent-docs surfaces
 #   around the package: per-component markdown contracts, the consumer agent
 #   skill, and the MCP roster with example prompts.
+# 0.16.0 shipped 2026-09-06 — the shared overlay behavior layer under the
+#   modal components (with useScrollLock published for host chrome),
+#   AiButton's summary panel and Composer's context note, the status icon
+#   step tokens, and overlay listener/timer fixes.
 
 on:
   workflow_dispatch:
