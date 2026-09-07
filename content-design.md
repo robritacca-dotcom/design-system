@@ -58,7 +58,7 @@ Each surface has its own shape. The full standard for a surface lives in one pla
 | README + `src/stories/Configure.mdx` | "You" for instructions | Install and usage copy | Production copy: the README ships in the npm tarball | `CLAUDE.md` (Registries section) |
 | npm package description (`PACKAGE_DESCRIPTION` in `scripts/package-manifest.mjs`, mirrored in root `package.json`) | None | One fragment | Renders on the npmjs.com package page: production copy, same bar as the README | This file |
 | `design.md` spec sections | None | Bold BEM class opener, then prose and tables | Specs state rules, not sales points | `design.md` |
-| Skill `displayDescription` frontmatter | None | 1–3 factual sentences | Renders on the public /skills page; describe what it does, not how clever it is | This file |
+| Skill `displayDescription` + `invoke` frontmatter | None | 1–3 factual sentences; invoke phrases are short imperative fragments | Both render on the public /skills page (descriptions as card copy, invoke phrases as chips); describe what it does, not how clever it is | This file |
 | Release notes | "You" allowed | What's new, what breaks, how to install | Written for a consumer, not a maintainer | `.claude/skills/release/SKILL.md` |
 | Commit bodies | None | 1–3 sentences of why | The diff shows what; the body explains why | `.claude/skills/ship/SKILL.md` |
 | Audit and loop reports | None | Findings in plain English | The reader is a designer, not an analyst | The invoking skill |

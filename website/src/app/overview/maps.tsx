@@ -114,7 +114,7 @@ export const operatorsMap: ArchMap = {
   height: 920,
   nodes: [
     { id: "z-claude", x: 40, y: 60, w: 1820, h: 250, kind: "zone", title: "Claude Code · the operator layer", sub: "skills named for their end state" },
-    { id: "audits", x: 90, y: 160, w: 540, h: 110, title: "Audit skills", sub: "drift · token · content · api · seo · security · a11y · design-qa", logo: "/logos/Claude.svg" },
+    { id: "audits", x: 90, y: 160, w: 540, h: 110, title: "Audit skills", sub: "drift · token · content · api · seo · security · a11y · design-qa · …", logo: "/logos/Claude.svg" },
     { id: "loops", x: 700, y: 160, w: 440, h: 110, title: "Recurring loops", sub: "growth-loop · site-updates · both report for approval", icon: "autorenew", chip: "warning" },
     { id: "pre-deploy", x: 1210, y: 160, w: 380, h: 110, title: "pre-deploy", sub: "the full verify, run locally · pushes nothing", icon: "checklist", chip: "positive" },
 
@@ -159,7 +159,7 @@ export const runtimeMap: ArchMap = {
     { id: "isr", x: 740, y: 716, w: 380, h: 64, title: "ISR", sub: "served pages can change with no deploy", kind: "state", icon: "autorenew" },
 
     { id: "anthropic", x: 1320, y: 250, w: 320, h: 76, title: "Anthropic API", sub: "Claude, with the corpus as context", kind: "external", logo: "/logos/Claude.svg" },
-    { id: "redis", x: 1320, y: 400, w: 320, h: 76, title: "Redis", sub: "spend + rate counters · feedback", kind: "external", icon: "memory" },
+    { id: "redis", x: 1320, y: 400, w: 320, h: 76, title: "Redis", sub: "chat log (30d) · spend + rate counters · feedback", kind: "external", icon: "memory" },
     { id: "github-api", x: 1320, y: 590, w: 320, h: 64, title: "GitHub API", sub: "public commit data", kind: "external", logo: "/logos/Git.svg" },
   ],
   edges: [
@@ -171,7 +171,7 @@ export const runtimeMap: ArchMap = {
     { id: "agents-mcp", from: "agents", to: "api-mcp", label: "MCP tools" },
     { id: "cron-isr", from: "cron", to: "isr", label: "smoke every 4h", kind: "external" },
     { id: "chat-anthropic", from: "api-chat", to: "anthropic", label: "model calls" },
-    { id: "chat-redis", from: "api-chat", to: "redis", label: "budget + rate", bend: 30 },
+    { id: "chat-redis", from: "api-chat", to: "redis", label: "log + budget + rate", bend: 30 },
     { id: "github-github", from: "api-github", to: "github-api", label: "polls" },
   ],
 };
