@@ -715,6 +715,7 @@ function coveredElsewhere() {
     // The essays themselves: full text from the committed registry.
     ['/writing/[slug]', 'Writing'],
     ['/components', 'Components'],
+    ['/loops', 'Loops'],
     ['/blueprints/claude', 'Blueprints'],
     ['/blueprints/design', 'Blueprints'],
     ['/blueprints/content-design', 'Blueprints'],
@@ -939,6 +940,31 @@ Repeatable procedures the agents follow when working on this project. Documented
 ${entries.join('\n')}`;
 }
 
+function sectionLoops() {
+  // The committed loops registry (website/src/data/loops.json) — the same
+  // committed-data pattern as the journal. The page renders this data
+  // verbatim, so carrying it here is what keeps the /loops route covered
+  // once its prose lives in JSON instead of the page source.
+  const { loops } = JSON.parse(
+    read(join(repoRoot, 'website', 'src', 'data', 'loops.json'))
+  );
+
+  const entries = loops
+    .map(
+      (l) =>
+        `### ${l.slug} (${l.cadence.toLowerCase()}, ${l.status})\n\n${l.description}\n\nEach run: ${l.stages.join(', ')}. Guardrails: ${l.guardrails.join('; ')}. Built on the ${l.skills.join(', ')} skill${l.skills.length > 1 ? 's' : ''}.`
+    )
+    .join('\n\n');
+
+  return `## Loops
+
+Recurring agent loops: skills that run on a schedule against real data and end in a branch for Rob to review. Documented at /loops.
+
+${pageProse('loops')}
+
+${entries}`;
+}
+
 function sectionJournal() {
   const data = JSON.parse(read(join(repoRoot, 'website', 'src', 'data', 'site-updates.json')));
   const entries = data.entries
@@ -997,6 +1023,7 @@ const SECTIONS = [
   ['Blueprints', sectionBlueprints],
   ['Components', sectionComponents],
   ['Skills', sectionSkills],
+  ['Loops', sectionLoops],
   ['Journal', sectionJournal],
   ['Writing', sectionWriting],
 ];

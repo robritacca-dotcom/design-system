@@ -1,0 +1,145 @@
+{
+  "$comment": "SINGLE SOURCE OF TRUTH for the recurring agent loops documented on /loops. The page maps over this data via loops.ts; scripts/validate-loops.mjs holds the structure, the skill references, and the prose rules at build time. Every loop's `skills` entries must be registered in .claude/skills/registry.json.",
+  "loops": [
+    {
+      "slug": "growth-loop",
+      "icon": "cycle",
+      "description": "Every Monday morning an agent reads this site's analytics, filters out the bot noise, and looks for one copy-shaped problem: a page people leave too fast, a headline that promises the wrong thing. It forms a falsifiable hypothesis, rewrites the words on a branch, verifies the build, and writes me a plain-English report: the problem, the hypothesis, the change. I approve or reject. The next run scores the result.",
+      "cadence": "Weekly, Monday mornings",
+      "trigger": "Scheduled task; also runs on demand",
+      "stages": [
+        "Pull analytics",
+        "Filter bot noise",
+        "One hypothesis",
+        "Rewrite on a branch",
+        "Verify the build",
+        "Report",
+        "Approval",
+        "Measure next week"
+      ],
+      "guardrails": [
+        "Copy only: no layout, styles, or components",
+        "One small change per run",
+        "Never pushes, merges, or deploys itself",
+        "“Nothing worth changing this week” is a valid outcome",
+        "A human approves every merge"
+      ],
+      "skills": [
+        "ga-report",
+        "growth-loop"
+      ],
+      "status": "active"
+    },
+    {
+      "slug": "site-updates",
+      "icon": "history",
+      "description": "Twice a month an agent reads every commit since the last time the Project journal page was curated, clusters them into themes, and writes one short entry per theme (what was built and when, in plain English), extending an existing arc when the work continues one. The new entry lands on a branch with the build verified, and I read the entry itself as the approval request. Raw commit logs never reach the page.",
+      "cadence": "Biweekly, 1st & 15th",
+      "trigger": "Scheduled task; also runs on demand",
+      "stages": [
+        "Read history since last bookmark",
+        "Cluster into themes",
+        "Write one entry per theme",
+        "Update data on a branch",
+        "Verify the build",
+        "Report",
+        "Approval"
+      ],
+      "guardrails": [
+        "Stories, not commit digests: the validator rejects hash dumps",
+        "At most two entries per run",
+        "Never pushes, merges, or deploys itself",
+        "“Nothing worth recording yet” is a valid outcome",
+        "A human approves every merge"
+      ],
+      "skills": [
+        "site-updates"
+      ],
+      "status": "active"
+    },
+    {
+      "slug": "chat-quality",
+      "icon": "reviews",
+      "description": "Twice a month an agent reads the site chat's own report card: every thumbs verdict a visitor left on an answer, joined back to the logged exchange it rates. Each disliked answer becomes a regression case in the chat eval's golden set, the eval runs against the updated set, and the fixes land on a branch: a new case, a corpus correction, a persona tweak. I read the report and approve or reject. Visitors' questions are paraphrased before anything is committed.",
+      "cadence": "Biweekly, 8th & 22nd",
+      "trigger": "Runs on demand for now",
+      "stages": [
+        "Read the thumbs verdicts",
+        "Join them to the exchange log",
+        "Encode failures as eval cases",
+        "Run the eval",
+        "Fix on a branch",
+        "Verify the build",
+        "Report",
+        "Approval"
+      ],
+      "guardrails": [
+        "Read-only on the live logs: it observes, never rewrites",
+        "Visitor questions are paraphrased before they reach the repo",
+        "One eval run per loop: the eval spends real API budget",
+        "“No failures worth encoding” is a valid outcome",
+        "A human approves every merge"
+      ],
+      "skills": [
+        "chat-quality"
+      ],
+      "status": "active"
+    },
+    {
+      "slug": "link-rot",
+      "icon": "link_off",
+      "description": "Once a month an agent collects every external link the built site renders, from case-study references to footer profiles, and checks each one still resolves. The build already proves internal links can never break; the outside world offers no such guarantee. Every failure is verified by hand before anything is called dead, because bot-blockers fake failures, and real rot is fixed on a branch with a report I approve or reject.",
+      "cadence": "Monthly, 1st",
+      "trigger": "Runs on demand for now",
+      "stages": [
+        "Build the site",
+        "Probe every external link",
+        "Verify failures by hand",
+        "Fix on a branch",
+        "Verify the build",
+        "Report",
+        "Approval"
+      ],
+      "guardrails": [
+        "A failed probe is a lead, not a verdict: bot-blockers fake failures",
+        "Link surgery only: swap or remove the href, never rewrite the prose around it",
+        "Never pushes, merges, or deploys itself",
+        "“Every link resolves” is a valid outcome",
+        "A human approves every merge"
+      ],
+      "skills": [
+        "link-rot"
+      ],
+      "status": "active"
+    },
+    {
+      "slug": "ai-visibility",
+      "icon": "query_stats",
+      "description": "Once a month an agent measures whether this site is becoming more findable, by search engines and by AI assistants. It runs the technical SEO sweep, pulls the search and AI-referral slice from analytics, probes the public agent surfaces from outside (llms.txt and the MCP endpoint), and records where the target queries actually rank. One check is an anecdote; the same check monthly is a direction, and the trend report is the deliverable.",
+      "cadence": "Monthly, 1st",
+      "trigger": "Runs on demand for now",
+      "stages": [
+        "Run the SEO sweep",
+        "Pull search and referral data",
+        "Probe the agent surfaces",
+        "Rank the target queries",
+        "Compare with last run",
+        "Report",
+        "Approval"
+      ],
+      "guardrails": [
+        "Measurement first: recording the numbers is the normal outcome",
+        "On-site fixes go through the SEO audit's own guardrails",
+        "No copy written for rankings: words exist for readers",
+        "Off-property moves (listings, backlinks) are proposals, never performed",
+        "A human approves every merge"
+      ],
+      "skills": [
+        "seo-audit",
+        "ga-report",
+        "ai-visibility"
+      ],
+      "status": "active"
+    }
+  ]
+}

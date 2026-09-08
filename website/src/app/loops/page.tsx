@@ -7,87 +7,10 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import { Badge } from "@robr0/design-system/components/Badge/Badge";
 import { Chip } from "@robr0/design-system/components/Chip/Chip";
 import { getSidebarLinks, docsSidebarLinks } from "@/config/navigation";
+import { loops } from "@/data/loops";
 import styles from "./page.module.css";
 
 const { sidebarLinks } = getSidebarLinks(docsSidebarLinks, "/loops");
-
-/* ============================================
-   LOOP DATA
-   ============================================ */
-
-interface LoopInfo {
-  slug: string;
-  name: string;
-  icon: string;
-  description: string;
-  cadence: string;
-  trigger: string;
-  stages: string[];
-  guardrails: string[];
-  skills: { slug: string; name: string }[];
-  status: "active" | "paused";
-}
-
-const loops: LoopInfo[] = [
-  {
-    slug: "growth-loop",
-    name: "growth-loop",
-    icon: "cycle",
-    description:
-      "Every Monday morning an agent reads this site's analytics, filters out the bot noise, and looks for one copy-shaped problem: a page people leave too fast, a headline that promises the wrong thing. It forms a falsifiable hypothesis, rewrites the words on a branch, verifies the build, and writes me a plain-English report: the problem, the hypothesis, the change. I approve or reject. The next run scores the result.",
-    cadence: "Weekly, Monday mornings",
-    trigger: "Scheduled task; also runs on demand",
-    stages: [
-      "Pull analytics",
-      "Filter bot noise",
-      "One hypothesis",
-      "Rewrite on a branch",
-      "Verify the build",
-      "Report",
-      "Approval",
-      "Measure next week",
-    ],
-    guardrails: [
-      "Copy only: no layout, styles, or components",
-      "One small change per run",
-      "Never pushes, merges, or deploys itself",
-      "“Nothing worth changing this week” is a valid outcome",
-      "A human approves every merge",
-    ],
-    skills: [
-      { slug: "ga-report", name: "ga-report" },
-      { slug: "growth-loop", name: "growth-loop" },
-    ],
-    status: "active",
-  },
-  {
-    slug: "site-updates",
-    name: "site-updates",
-    icon: "history",
-    description:
-      "Twice a month an agent reads every commit since the last time the Project journal page was curated, clusters them into themes, and writes one short entry per theme (what was built and when, in plain English), extending an existing arc when the work continues one. The new entry lands on a branch with the build verified, and I read the entry itself as the approval request. Raw commit logs never reach the page.",
-    cadence: "Biweekly, 1st & 15th",
-    trigger: "Scheduled task; also runs on demand",
-    stages: [
-      "Read history since last bookmark",
-      "Cluster into themes",
-      "Write one entry per theme",
-      "Update data on a branch",
-      "Verify the build",
-      "Report",
-      "Approval",
-    ],
-    guardrails: [
-      "Stories, not commit digests: the validator rejects hash dumps",
-      "At most two entries per run",
-      "Never pushes, merges, or deploys itself",
-      "“Nothing worth recording yet” is a valid outcome",
-      "A human approves every merge",
-    ],
-    skills: [{ slug: "site-updates", name: "site-updates" }],
-    status: "active",
-  },
-];
 
 /* ============================================
    PAGE
@@ -131,7 +54,7 @@ export default function LoopsPage() {
                     <span className={`material-symbols-rounded ${styles.loopIcon}`}>
                       {loop.icon}
                     </span>
-                    <code className={styles.loopName}>{loop.name}</code>
+                    <code className={styles.loopName}>{loop.slug}</code>
                   </div>
                   <div className={styles.loopBadges}>
                     <Badge
@@ -174,11 +97,11 @@ export default function LoopsPage() {
                 <div className={styles.loopFooter}>
                   <span className={styles.loopSectionLabel}>Built on:</span>
                   {loop.skills.map((skill) => (
-                    <Link key={skill.slug} href="/skills" className={styles.loopSkillLink}>
+                    <Link key={skill} href="/skills" className={styles.loopSkillLink}>
                       <span className="material-symbols-rounded" aria-hidden="true">
                         bolt
                       </span>
-                      {skill.name}
+                      {skill}
                     </Link>
                   ))}
                   <span className={styles.loopTrigger}>{loop.trigger}</span>
