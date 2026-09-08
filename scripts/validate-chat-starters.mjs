@@ -18,7 +18,7 @@
  * a name substituted into one can be any length, which is why starters.ts
  * falls back to the unnamed wording when the named one does not fit.
  */
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -53,6 +53,22 @@ const SOURCES = [
     scope: /followups:\s*\[([\s\S]*?)\]/g,
     pattern: BARE,
   },
+  /* The template screens' mock assistants (TemplateAssistant) render their
+     CHAT_SUGGESTIONS through the same non-wrapping chip row, with no runtime
+     filter in front of them — written copy, held here like the playground's.
+     The list derives from the templates directory so a new screen is covered
+     the day it lands; the scope keeps the check off the screens' other
+     label: strings (nav items, buttons), which are not chips, and is
+     optional because a template without a mock assistant has no chips. */
+  ...readdirSync(join(dirname(fileURLToPath(import.meta.url)), '..', 'website', 'src', 'components', 'templates'), {
+    withFileTypes: true,
+  })
+    .filter((entry) => entry.isDirectory() && entry.name !== 'TemplateAssistant')
+    .map((entry) => ({
+      path: join('website', 'src', 'components', 'templates', entry.name, `${entry.name}.tsx`),
+      scope: /const CHAT_SUGGESTIONS = \[([\s\S]*?)\];/g,
+      optional: true,
+    })),
 ];
 
 const errors = [];
@@ -71,7 +87,7 @@ try {
 
 let checked = 0;
 
-for (const { path: relative, scope, pattern = LABELLED } of SOURCES) {
+for (const { path: relative, scope, pattern = LABELLED, optional = false } of SOURCES) {
   let source;
   try {
     source = readFileSync(join(repoRoot, relative), 'utf8');
@@ -83,7 +99,9 @@ for (const { path: relative, scope, pattern = LABELLED } of SOURCES) {
   if (scope) {
     const regions = [...source.matchAll(scope)].map((match) => match[1]);
     if (regions.length === 0) {
-      errors.push(`${relative}: no suggestion region matched — the scope pattern has gone stale.`);
+      if (!optional) {
+        errors.push(`${relative}: no suggestion region matched — the scope pattern has gone stale.`);
+      }
       continue;
     }
     source = regions.join('\n');
