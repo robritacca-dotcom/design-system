@@ -43,6 +43,19 @@
   /* The composer's context note — one step off the #050505 shell */
   --color-chat-context-bg: var(--primitive-neutral-09);
 
+  /* Calendar surfaces — the dark values are the reason this family exists:
+     the container ramp's second step (#303030) glares at calendar density, so
+     cells rest on the semi neutral-08 (≈#1E over the calendar container) and
+     hover one gentle step up to the semi neutral-07 (≈#2C). The pill hover
+     takes the resting cell tint — a step darker than the hovered cell it sits
+     on — and the hover-only border ring is an obvious mid-grey that reads
+     against both cell states. */
+  --color-calendar-cell-bg: var(--primitive-neutral-08-semi);
+  --color-calendar-cell-bg-hover: var(--primitive-neutral-07-semi);
+  --color-calendar-event-bg: var(--color-bg-container-primary);
+  --color-calendar-event-bg-hover: var(--color-calendar-cell-bg);
+  --color-calendar-event-border: var(--primitive-neutral-06);
+
   /* Overlay & controls */
   --color-scrim: var(--primitive-true-black-strong);
   --color-control-thumb: var(--primitive-neutral-01);

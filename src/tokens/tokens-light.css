@@ -55,6 +55,21 @@
      container alias, because it deliberately sits off the container ramp. */
   --color-chat-context-bg: var(--primitive-neutral-01);
 
+  /* Calendar surfaces — EventCalendar's day cells and event pills. Their own
+     roles (the chat-surfaces pattern) because the container ramp's dark steps
+     are too far apart for calendar density: cells rest one quiet step off the
+     calendar container and step one gentle notch away from the pill fill on
+     hover (lighter in dark, darker in light). A hovered cell keeps its hover
+     while the pointer is on a pill, so the pill hover aliases the resting
+     cell tint — always one step off the hovered cell — and the hover-only
+     border ring is an obvious mid-grey, so the pill under the pointer is
+     never in doubt while resting pills stay quiet. */
+  --color-calendar-cell-bg: var(--primitive-neutral-01);
+  --color-calendar-cell-bg-hover: var(--primitive-neutral-02-semi);
+  --color-calendar-event-bg: var(--color-bg-container-primary);
+  --color-calendar-event-bg-hover: var(--color-calendar-cell-bg);
+  --color-calendar-event-border: var(--primitive-neutral-04);
+
   /* Overlay & controls */
   --color-scrim: var(--primitive-true-black-semi);
   --color-control-thumb: var(--primitive-neutral-00);

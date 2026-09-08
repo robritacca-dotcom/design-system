@@ -183,6 +183,35 @@ const chatSurfaceColours: SwatchData[] = [
   },
 ];
 
+/* --- Calendar surfaces --- */
+const calendarSurfaceColours: SwatchData[] = [
+  {
+    label: "Cell bg", cssVar: "--color-calendar-cell-bg",
+    dark: { primitive: "--neutral--08-semi--", hex: "rgba(35,35,35,0.8)", rgb: "35 / 35 / 35" },
+    light: { primitive: "--neutral--01--", hex: "#F1F1F1", rgb: "241 / 241 / 241" },
+  },
+  {
+    label: "Cell bg hover", cssVar: "--color-calendar-cell-bg-hover",
+    dark: { primitive: "--neutral--07-semi--", hex: "rgba(48,48,48,0.8)", rgb: "48 / 48 / 48" },
+    light: { primitive: "--neutral--02-semi--", hex: "rgba(214,214,214,0.8)", rgb: "214 / 214 / 214" },
+  },
+  {
+    label: "Event bg", cssVar: "--color-calendar-event-bg",
+    dark: { primitive: "--neutral--09-semi--", hex: "rgba(14,14,14,0.8)", rgb: "14 / 14 / 14" },
+    light: { primitive: "--neutral--00--", hex: "#FFFFFF", rgb: "255 / 255 / 255" },
+  },
+  {
+    label: "Event bg hover", cssVar: "--color-calendar-event-bg-hover",
+    dark: { primitive: "--neutral--08-semi--", hex: "rgba(35,35,35,0.8)", rgb: "35 / 35 / 35" },
+    light: { primitive: "--neutral--01--", hex: "#F1F1F1", rgb: "241 / 241 / 241" },
+  },
+  {
+    label: "Event border", cssVar: "--color-calendar-event-border",
+    dark: { primitive: "--neutral--06--", hex: "#6D6D6D", rgb: "109 / 109 / 109" },
+    light: { primitive: "--neutral--04--", hex: "#A2A2A2", rgb: "162 / 162 / 162" },
+  },
+];
+
 /* --- Text --- */
 const textColours: SwatchData[] = [
   {
@@ -684,6 +713,16 @@ export default function SemanticColoursPage() {
             <SectionTitle title="Chat surfaces" />
             <div className={styles.colourSwatches}>
               {chatSurfaceColours.map((s) => (
+                <ColourSwatch key={s.label} label={s.label} cssVar={s.cssVar} dark={s.dark} light={s.light} theme={theme} />
+              ))}
+            </div>
+          </section>
+
+          {/* Calendar surfaces */}
+          <section className={styles.colourGroup}>
+            <SectionTitle title="Calendar surfaces" />
+            <div className={styles.colourSwatches}>
+              {calendarSurfaceColours.map((s) => (
                 <ColourSwatch key={s.label} label={s.label} cssVar={s.cssVar} dark={s.dark} light={s.light} theme={theme} />
               ))}
             </div>

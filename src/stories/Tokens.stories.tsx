@@ -447,6 +447,20 @@ export const SemanticColors: Story = {
         <ColorToken name="Context Background" value="--color-chat-context-bg" />
       </TokenSection>
 
+      <TokenSection title="Calendar Surfaces">
+        <ColorToken name="Cell Background" value="--color-calendar-cell-bg" />
+        <ColorToken
+          name="Cell Background Hover"
+          value="--color-calendar-cell-bg-hover"
+        />
+        <ColorToken name="Event Background" value="--color-calendar-event-bg" />
+        <ColorToken
+          name="Event Background Hover"
+          value="--color-calendar-event-bg-hover"
+        />
+        <ColorToken name="Event Border" value="--color-calendar-event-border" />
+      </TokenSection>
+
       <TokenSection title="AI Gradient">
         <ColorToken name="Start" value="--color-ai-gradient-start" />
         <ColorToken name="Mid" value="--color-ai-gradient-mid" />

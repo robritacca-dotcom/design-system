@@ -115,7 +115,7 @@
   gap: var(--gap-xxs);
   min-width: 0;
   padding: var(--padding-xxs);
-  background-color: var(--color-bg-container-secondary);
+  background-color: var(--color-calendar-cell-bg);
   border-radius: var(--radius-sm);
 }
 
@@ -128,16 +128,18 @@
 }
 
 /* With onDateClick the whole cell is a pointer target (the day-number
-   button stays the accessible control), so it takes the container hover
-   step the pills use — cursor and colour together say the day will take
-   the click. */
+   button stays the accessible control) — cursor and colour together say
+   the day will take the click. The cell keeps its hover while the pointer
+   is on an event pill inside it: the pill separates through its hover
+   ring and a fill one step off the hovered cell — darker than that cell
+   in dark, lighter in light. */
 .ds-event-calendar__cell--clickable {
   cursor: pointer;
   transition: background-color var(--motion-duration-fast) var(--motion-ease-standard);
 }
 
 .ds-event-calendar__cell--clickable:hover {
-  background-color: var(--color-bg-container-tertiary);
+  background-color: var(--color-calendar-cell-bg-hover);
 }
 
 /* ============================================
@@ -222,19 +224,24 @@ button.ds-event-calendar__day:focus-visible {
   gap: var(--gap-xxs);
   min-width: 0;
   padding: var(--padding-xxxs) var(--padding-xs);
-  background-color: var(--color-bg-container-primary);
-  border: none;
+  background-color: var(--color-calendar-event-bg);
+  /* Transparent at rest so the hover ring appears without a layout shift —
+     resting pills stay quiet, only the pill under the pointer gets ringed. */
+  border: var(--border-xs) solid transparent;
   border-radius: var(--radius-xs);
   text-align: left;
 }
 
 button.ds-event-calendar__event {
   cursor: pointer;
-  transition: background-color var(--motion-duration-fast) var(--motion-ease-standard);
+  transition:
+    background-color var(--motion-duration-fast) var(--motion-ease-standard),
+    border-color var(--motion-duration-fast) var(--motion-ease-standard);
 }
 
 button.ds-event-calendar__event:hover {
-  background-color: var(--color-bg-container-tertiary);
+  background-color: var(--color-calendar-event-bg-hover);
+  border-color: var(--color-calendar-event-border);
 }
 
 button.ds-event-calendar__event:focus-visible {
@@ -329,7 +336,7 @@ button.ds-event-calendar__more {
 }
 
 button.ds-event-calendar__more:hover {
-  background-color: var(--color-bg-container-tertiary);
+  background-color: var(--color-calendar-event-bg-hover);
   color: var(--color-text-secondary);
 }
 
