@@ -46,6 +46,8 @@ ga-analysis/loop-reports/
 
 # Chat eval transcripts — evidence, not source
 evals/chat/runs/
+# Chat-quality loop local reports (never committed — they quote visitor questions)
+evals/chat/loop-reports/
 
 # Local working notes — not for the public repo
 notes/

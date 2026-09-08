@@ -23,7 +23,10 @@
     "api-consistency",
     "growth-loop",
     "site-updates",
-    "seo-audit"
+    "seo-audit",
+    "chat-quality",
+    "link-rot",
+    "ai-visibility"
   ],
   "external": [
     "ga-report"
