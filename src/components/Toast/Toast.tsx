@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useContext, useCallback, useSyncExternalStore, createContext, type ReactNode } from 'react';
-import { MOTION_AUTO_DISMISS_MS } from '../../tokens/motion';
+import { MOTION_AUTO_DISMISS_MS, MOTION_EXIT_SYNC_MS } from '../../tokens/motion';
 
 const emptySubscribe = () => () => {};
 import ReactDOM from 'react-dom';
@@ -115,7 +115,7 @@ const ToastItem = ({
 
   const handleDismiss = useCallback(() => {
     setExiting(true);
-    setTimeout(() => onDismiss(id), 200);
+    setTimeout(() => onDismiss(id), MOTION_EXIT_SYNC_MS);
   }, [id, onDismiss]);
 
   // Auto-dismiss timer

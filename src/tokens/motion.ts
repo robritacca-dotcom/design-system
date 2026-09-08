@@ -22,6 +22,9 @@ export const MOTION_HOVER_HIDE_DELAY_MS = 150;
 /** How long a transient notification stays before dismissing itself. */
 export const MOTION_AUTO_DISMISS_MS = 5000;
 
+/** How long an exiting element's unmount waits for its CSS exit animation — mirrors --motion-duration-base. */
+export const MOTION_EXIT_SYNC_MS = 200;
+
 /** Interval between automatic slide advances. */
 export const MOTION_AUTOPLAY_INTERVAL_MS = 5000;
 
