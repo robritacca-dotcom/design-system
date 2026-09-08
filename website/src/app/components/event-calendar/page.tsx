@@ -36,17 +36,23 @@ const events: EventCalendarEvent[] = [
 ];
 
 function ScheduleDemo() {
-  const [selected, setSelected] = React.useState<string | null>(null);
+  const [selected, setSelected] = React.useState<string | null>("2026-08-20");
+  const [selectedDate, setSelectedDate] = React.useState("2026-08-20");
 
   return (
     <div className={styles.demoStack}>
       <EventCalendar
         events={events}
         defaultMonth="2026-08"
-        onEventClick={(event) =>
-          setSelected(`${event.title}${event.time ? ` at ${event.time}` : ""}`)
-        }
-        onDateClick={(date) => setSelected(date)}
+        selectedDate={selectedDate}
+        onEventClick={(event) => {
+          setSelectedDate(event.date);
+          setSelected(`${event.title}${event.time ? ` at ${event.time}` : ""}`);
+        }}
+        onDateClick={(date) => {
+          setSelectedDate(date);
+          setSelected(date);
+        }}
         actions={
           <Button variant="secondary" size="compact" label="New event" iconLeft="add" />
         }
@@ -92,7 +98,8 @@ export default function EventCalendarPage() {
               Events carry a date, a title, an optional time, and an accent
               from the core accent roles, never the action teal. Untimed
               events sort first within a day, and rows share the height of
-              the fullest day in their week.
+              the fullest day in their week. Clicking a day, or anywhere on
+              its cell, moves the teal selection chip to its number.
             </p>
             <ScheduleDemo />
           </section>
@@ -101,14 +108,13 @@ export default function EventCalendarPage() {
             <SectionTitle title="Overflow" />
             <p className={styles.demoText}>
               Past maxEventsPerDay, here two, the rest collapse into an
-              overflow row. It becomes a button when onDateClick is set, so
-              a day view is one handler away.
+              overflow row. With onDateClick set it becomes a button, as in
+              the demo above, so a day view is one handler away.
             </p>
             <EventCalendar
               events={events}
               defaultMonth="2026-08"
               maxEventsPerDay={2}
-              onDateClick={() => {}}
             />
           </section>
 

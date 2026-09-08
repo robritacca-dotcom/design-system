@@ -127,6 +127,19 @@
   color: var(--color-text-tertiary);
 }
 
+/* With onDateClick the whole cell is a pointer target (the day-number
+   button stays the accessible control), so it takes the container hover
+   step the pills use — cursor and colour together say the day will take
+   the click. */
+.ds-event-calendar__cell--clickable {
+  cursor: pointer;
+  transition: background-color var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.ds-event-calendar__cell--clickable:hover {
+  background-color: var(--color-bg-container-tertiary);
+}
+
 /* ============================================
    DAY NUMBER
    ============================================ */
@@ -173,6 +186,21 @@ button.ds-event-calendar__day:focus-visible {
   font-family: var(--font-paragraph-sm-em-family);
   font-weight: var(--font-paragraph-sm-em-weight);
   letter-spacing: var(--font-paragraph-sm-em-letter-spacing);
+}
+
+/* Selected — the teal selection chip (the selected item of a mutually
+   exclusive set, DatePicker's convention). Declared after the today block
+   so a selected today reads as selected. */
+.ds-event-calendar__cell--selected .ds-event-calendar__day {
+  background-color: var(--color-action-primary-bg);
+  color: var(--color-action-primary-text);
+  font-family: var(--font-paragraph-sm-em-family);
+  font-weight: var(--font-paragraph-sm-em-weight);
+  letter-spacing: var(--font-paragraph-sm-em-letter-spacing);
+}
+
+.ds-event-calendar__cell--selected button.ds-event-calendar__day:hover {
+  background-color: var(--color-action-primary-bg-hover);
 }
 
 /* ============================================

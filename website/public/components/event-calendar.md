@@ -20,6 +20,7 @@ Generated from the @robr0/design-system registry and prop JSDoc, version 0.16.0.
 | onMonthChange | `((month: string) => void)` | no |  | Fires with the newly shown month (YYYY-MM) after prev/next navigation. |
 | maxEventsPerDay | `number` | no | `3` | Event pills shown per day before the rest collapse into "+N more". |
 | onEventClick | `((event: EventCalendarEvent) => void)` | no |  | Fires with the clicked event. Pills only render as buttons when this is set. |
-| onDateClick | `((date: string) => void)` | no |  | Fires with the clicked day (YYYY-MM-DD) — from the day number, and from the "+N more" overflow row. Both only become buttons when this is set. |
+| onDateClick | `((date: string) => void)` | no |  | Fires with the clicked day (YYYY-MM-DD) — from anywhere on the cell, the day number, and the "+N more" overflow row. The number and overflow row only become buttons when this is set, and cells only take their pointer cursor and hover feedback with it. |
+| selectedDate | `string` | no |  | Marks this day (YYYY-MM-DD) as the selected one — the action-colour chip on its number, taking precedence over the today chip. Controlled by the consumer; pair with `onDateClick` to move it. |
 | actions | `ReactNode` | no |  | Trailing header slot, e.g. a "New event" Button. |
 | className | `string` | no | `` | Additional CSS classes |

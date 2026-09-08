@@ -60,6 +60,14 @@ export const Interactive: Story = {
   },
 };
 
+export const SelectedDay: Story = {
+  args: {
+    selectedDate: '2026-08-20',
+    onDateClick: () => {},
+    onEventClick: () => {},
+  },
+};
+
 export const WithActions: Story = {
   args: {
     actions: <Button variant="secondary" size="compact" label="New event" iconLeft="add" />,

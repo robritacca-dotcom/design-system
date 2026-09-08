@@ -74,10 +74,18 @@ type EventCalendarOwnProps = {
   /** Fires with the clicked event. Pills only render as buttons when this is set. */
   onEventClick?: (event: EventCalendarEvent) => void;
   /**
-   * Fires with the clicked day (YYYY-MM-DD) — from the day number, and from
-   * the "+N more" overflow row. Both only become buttons when this is set.
+   * Fires with the clicked day (YYYY-MM-DD) — from anywhere on the cell, the
+   * day number, and the "+N more" overflow row. The number and overflow row
+   * only become buttons when this is set, and cells only take their pointer
+   * cursor and hover feedback with it.
    */
   onDateClick?: (date: string) => void;
+  /**
+   * Marks this day (YYYY-MM-DD) as the selected one — the action-colour chip
+   * on its number, taking precedence over the today chip. Controlled by the
+   * consumer; pair with `onDateClick` to move it.
+   */
+  selectedDate?: string;
   /** Trailing header slot, e.g. a "New event" Button. */
   actions?: React.ReactNode;
   /** Additional CSS classes */
@@ -107,6 +115,7 @@ export const EventCalendar = React.forwardRef<HTMLDivElement, EventCalendarProps
       maxEventsPerDay = 3,
       onEventClick,
       onDateClick,
+      selectedDate,
       actions,
       className = '',
       ...rest
@@ -221,16 +230,35 @@ export const EventCalendar = React.forwardRef<HTMLDivElement, EventCalendarProps
               day: 'numeric',
             });
 
+            const isSelected = dateStr === selectedDate;
+
             const cellClasses = [
               `${baseClass}__cell`,
               !inMonth ? `${baseClass}__cell--outside` : '',
               isToday ? `${baseClass}__cell--today` : '',
+              isSelected ? `${baseClass}__cell--selected` : '',
+              onDateClick ? `${baseClass}__cell--clickable` : '',
             ]
               .filter(Boolean)
               .join(' ');
 
             return (
-              <div key={dateStr} className={cellClasses}>
+              <div
+                key={dateStr}
+                className={cellClasses}
+                // The whole cell is a pointer target when days are clickable;
+                // the day-number button stays the accessible control, and
+                // clicks that land on any button inside (the number, a pill,
+                // the overflow row) are left to that button's own handler.
+                onClick={
+                  onDateClick
+                    ? (e) => {
+                        if ((e.target as HTMLElement).closest('button')) return;
+                        onDateClick(dateStr);
+                      }
+                    : undefined
+                }
+              >
                 {onDateClick ? (
                   <button
                     type="button"
@@ -238,6 +266,7 @@ export const EventCalendar = React.forwardRef<HTMLDivElement, EventCalendarProps
                     onClick={() => onDateClick(dateStr)}
                     aria-label={dayLabel}
                     aria-current={isToday ? 'date' : undefined}
+                    aria-pressed={selectedDate !== undefined ? isSelected : undefined}
                   >
                     {date.getDate()}
                   </button>

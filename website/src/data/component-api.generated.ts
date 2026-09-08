@@ -3930,7 +3930,13 @@ export const componentApi: readonly ComponentApiEntry[] = [
             "name": "onDateClick",
             "type": "((date: string) => void)",
             "required": false,
-            "description": "Fires with the clicked day (YYYY-MM-DD) — from the day number, and from\nthe \"+N more\" overflow row. Both only become buttons when this is set."
+            "description": "Fires with the clicked day (YYYY-MM-DD) — from anywhere on the cell, the\nday number, and the \"+N more\" overflow row. The number and overflow row\nonly become buttons when this is set, and cells only take their pointer\ncursor and hover feedback with it."
+          },
+          {
+            "name": "selectedDate",
+            "type": "string",
+            "required": false,
+            "description": "Marks this day (YYYY-MM-DD) as the selected one — the action-colour chip\non its number, taking precedence over the today chip. Controlled by the\nconsumer; pair with `onDateClick` to move it."
           },
           {
             "name": "actions",
