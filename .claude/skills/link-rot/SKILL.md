@@ -29,7 +29,7 @@ npm --prefix website run build
 node scripts/check-external-links.mjs
 ```
 
-The script owns extraction and probing — which HTML it reads, timeouts, the HEAD-then-GET fallback, and the `KNOWN_BLOCKERS` list of hosts that reject scripts on principle (its doc block also owns why it is deliberately not part of `verify`). A same-day build can be reused if `website/.next` is fresh.
+The script owns extraction and probing — which HTML it reads, timeouts, the HEAD-then-GET fallback, and the `KNOWN_BLOCKERS` list of hosts that reject scripts on principle (its doc block also owns why it is deliberately not part of `verify`). A same-day build's output can be reused if it is fresh.
 
 ### 2. Verify every failure by hand
 
