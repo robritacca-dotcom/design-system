@@ -9,8 +9,8 @@
  * `validate-website-a11y.mjs` (does it render accessibly) deliberately walk
  * the same pages, so a route added here gains both checks at once.
  */
-import { spawn } from 'node:child_process';
-import { readFileSync } from 'node:fs';
+import { spawn, spawnSync } from 'node:child_process';
+import { existsSync, readFileSync } from 'node:fs';
 import net from 'node:net';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -62,21 +62,45 @@ async function waitForServer(origin) {
   throw new Error(`server at ${origin} not ready within ${SERVER_READY_TIMEOUT_MS}ms`);
 }
 
+// Windows cannot spawn `npm` (a .cmd shim) without a shell, and has no
+// process groups to kill, so there the next bin runs under this node
+// directly and stop() goes through taskkill; POSIX keeps the npm +
+// process-group path CI runs.
+const isWindows = process.platform === 'win32';
+
+const nextBin = () => {
+  for (const base of [join(repoRoot, 'website', 'node_modules'), join(repoRoot, 'node_modules')]) {
+    const bin = join(base, 'next', 'dist', 'bin', 'next');
+    if (existsSync(bin)) return bin;
+  }
+  throw new Error('next bin not found — run npm install first');
+};
+
 /** Boots `next start` on a free port against website/.next. Returns
  *  { origin, stop } — always call stop() (kills the process group). */
 export async function startServer() {
   const port = await freePort();
-  const child = spawn(
-    'npm',
-    ['--prefix', join(repoRoot, 'website'), 'run', 'start', '--', '-p', String(port)],
-    { stdio: ['ignore', 'pipe', 'pipe'], detached: true },
-  );
+  const child = isWindows
+    ? spawn(process.execPath, [nextBin(), 'start', '-p', String(port)], {
+        cwd: join(repoRoot, 'website'),
+        stdio: ['ignore', 'pipe', 'pipe'],
+        windowsHide: true,
+      })
+    : spawn(
+        'npm',
+        ['--prefix', join(repoRoot, 'website'), 'run', 'start', '--', '-p', String(port)],
+        { stdio: ['ignore', 'pipe', 'pipe'], detached: true },
+      );
   let output = '';
   child.stdout.on('data', (d) => (output += d));
   child.stderr.on('data', (d) => (output += d));
   const stop = () => {
     try {
-      process.kill(-child.pid, 'SIGTERM');
+      if (isWindows) {
+        spawnSync('taskkill', ['/pid', String(child.pid), '/T', '/F'], { stdio: 'ignore' });
+      } else {
+        process.kill(-child.pid, 'SIGTERM');
+      }
     } catch {
       /* already gone */
     }

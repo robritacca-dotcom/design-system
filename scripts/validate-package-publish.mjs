@@ -22,7 +22,7 @@
  *   extensioned specifiers.
  */
 import { spawnSync } from 'node:child_process';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -34,10 +34,18 @@ if (!existsSync(join(dist, 'package.json'))) {
   process.exit(1);
 }
 
-const bin = (name) => join(repoRoot, 'node_modules', '.bin', name);
+// Resolve each tool's JS entry and run it with this node binary: the
+// node_modules/.bin shims are shell scripts Windows spawnSync cannot
+// execute (exit null), and Node refuses the .cmd variants without a shell.
+const bin = (pkg) => {
+  const pkgDir = join(repoRoot, 'node_modules', pkg);
+  const manifest = JSON.parse(readFileSync(join(pkgDir, 'package.json'), 'utf8'));
+  const entry = typeof manifest.bin === 'string' ? manifest.bin : Object.values(manifest.bin)[0];
+  return join(pkgDir, entry);
+};
 
-const run = (label, cmd, args, opts = {}) => {
-  const res = spawnSync(cmd, args, { stdio: 'inherit', ...opts });
+const run = (label, script, args, opts = {}) => {
+  const res = spawnSync(process.execPath, [script, ...args], { stdio: 'inherit', ...opts });
   if (res.status !== 0) {
     console.error(`✗ ${label} failed (exit ${res.status})`);
     process.exit(1);
@@ -45,6 +53,6 @@ const run = (label, cmd, args, opts = {}) => {
 };
 
 run('publint', bin('publint'), [dist]);
-run('arethetypeswrong', bin('attw'), ['--pack', '.', '--profile', 'esm-only', '--ignore-rules', 'internal-resolution-error'], { cwd: dist });
+run('arethetypeswrong', bin('@arethetypeswrong/cli'), ['--pack', '.', '--profile', 'esm-only', '--ignore-rules', 'internal-resolution-error'], { cwd: dist });
 
 console.log('✓ Package publish surface valid — publint clean, every subpath resolves for ESM and bundler consumers.');
