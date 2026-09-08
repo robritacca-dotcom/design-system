@@ -12,6 +12,7 @@
  */
 
 import type { ArchMap } from "@/components/ArchitectureMap/types";
+import { LOOP_COUNT } from "@/data/loops";
 
 const VERCEL_LOGO = { logo: "/logos/vercel black.svg", logoDark: "/logos/vercel white.svg" };
 const NEXTJS_LOGO = { logo: "/logos/nextjs black.svg", logoDark: "/logos/nextjs white.svg" };
@@ -115,7 +116,7 @@ export const operatorsMap: ArchMap = {
   nodes: [
     { id: "z-claude", x: 40, y: 60, w: 1820, h: 250, kind: "zone", title: "Claude Code · the operator layer", sub: "skills named for their end state" },
     { id: "audits", x: 90, y: 160, w: 540, h: 110, title: "Audit skills", sub: "drift · token · content · api · seo · security · a11y · design-qa · …", logo: "/logos/Claude.svg" },
-    { id: "loops", x: 700, y: 160, w: 440, h: 110, title: "Recurring loops", sub: "growth-loop · site-updates · both report for approval", icon: "autorenew", chip: "warning" },
+    { id: "loops", x: 700, y: 160, w: 440, h: 110, title: "Recurring loops", sub: `${LOOP_COUNT} loops · every run ends in a report for approval`, icon: "autorenew", chip: "warning" },
     { id: "pre-deploy", x: 1210, y: 160, w: 380, h: 110, title: "pre-deploy", sub: "the full verify, run locally · pushes nothing", icon: "checklist", chip: "positive" },
 
     { id: "working-tree", x: 60, y: 460, w: 300, h: 80, title: "Working tree", sub: "the session's changes", kind: "state", icon: "edit_note" },

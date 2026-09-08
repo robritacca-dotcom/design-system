@@ -132,7 +132,7 @@
     },
     "/loops": {
       "title": "Agent loops",
-      "text": "The recurring automations that keep the site fresh: analytics reviews, journal updates, and content audits.",
+      "text": "The recurring automations on this project: copy experiments, journal updates, chat quality, link checks, and visibility tracking.",
       "chips": [
         {
           "id": "loops",
