@@ -257,6 +257,11 @@ export const templatesSidebarLinks: NavLink[] = [
     label: "Relay console",
     description: "A network operations screen around an interactive globe",
   },
+  {
+    href: "/templates/team-calendar",
+    label: "Team calendar",
+    description: "A month view with the sprint's to-dos on a rail beside it",
+  },
 ];
 
 /**
