@@ -7,13 +7,14 @@
  * threads panel on the left (grouped by repo, with the new-session row and
  * the profile footer), the conversation in the middle — the ask, the
  * agent's reasoning, its tool calls, the plan, and a checkpoint waiting on
- * a decision — and the workspace on the right, where a single rail carries
- * the changed-files tree, the patch stats, the sandbox checks, the spec's
- * duration trend and the session budgets beside the stacked diffs, which
- * take every remaining column. Clicking a file in the tree scrolls the
- * diff pane to it; answering the checkpoint moves the plan, the status
- * line, the suite's check row, and the pull-request button, so the panes
- * stay one screen. Every colour, radius, space, and type style is a
+ * a decision — and the workspace on the right, where the stacked diffs
+ * take the whole window and a details rail — the changed-files tree, the
+ * patch stats, the sandbox checks, the spec's duration trend and the
+ * session budgets — folds in on the diffs' right behind the header's
+ * toggle, closed by default so the code leads. Clicking a file in the
+ * tree scrolls the diff pane to it; answering the checkpoint moves the
+ * plan, the status line, the suite's check row, and the pull-request
+ * button, so the panes stay one screen. Every colour, radius, space, and type style is a
  * semantic token; every control is a library component — the threads panel
  * is the published ThreadPanel, which graduated out of this template.
  *
@@ -347,6 +348,9 @@ export default function AgentWorkbench() {
      closed, the conversation takes the whole stage and its content column
      centres itself the way a chat app's does. */
   const [workspaceOpen, setWorkspaceOpen] = React.useState(true);
+  /* The workspace's details rail folds in on the diffs' right, closed by
+     default so the code leads. */
+  const [railOpen, setRailOpen] = React.useState(false);
   /* ThreadPanel is controlled, so the host owns the collapse state; the
      panel animates its own width and the board's auto track follows. */
   const [threadsExpanded, setThreadsExpanded] = React.useState(true);
@@ -612,9 +616,38 @@ export default function AgentWorkbench() {
               label="Open pull request"
               disabled={!applied}
             />
+            <CircularButton
+              icon={railOpen ? "right_panel_close" : "right_panel_open"}
+              variant={railOpen ? "secondary" : "tertiary"}
+              ariaLabel={
+                railOpen ? "Hide the change details" : "Show the change details"
+              }
+              tooltipPosition="bottom"
+              aria-expanded={railOpen}
+              onClick={() => setRailOpen((open) => !open)}
+            />
           </div>
 
-          <div className={styles.workspaceBody}>
+          <div
+            className={`${styles.workspaceBody} ${
+              railOpen ? styles.workspaceBodyWithRail : ""
+            }`}
+          >
+            <div className={styles.diffPane} ref={diffPaneRef}>
+              {FILES.map((f) => (
+                <div
+                  key={f.path}
+                  ref={(node) => {
+                    fileRefs.current[f.path] = node;
+                  }}
+                  className={styles.diffFile}
+                >
+                  <CodeDiff diff={f.diff} filename={f.path} />
+                </div>
+              ))}
+            </div>
+
+            {railOpen && (
             <div className={styles.filesRail}>
               <span className={styles.railLabel}>Changed files</span>
               <TreeView
@@ -688,20 +721,7 @@ export default function AgentWorkbench() {
                 ]}
               />
             </div>
-
-            <div className={styles.diffPane} ref={diffPaneRef}>
-              {FILES.map((f) => (
-                <div
-                  key={f.path}
-                  ref={(node) => {
-                    fileRefs.current[f.path] = node;
-                  }}
-                  className={styles.diffFile}
-                >
-                  <CodeDiff diff={f.diff} filename={f.path} />
-                </div>
-              ))}
-            </div>
+            )}
           </div>
           </section>
         </div>

@@ -231,17 +231,23 @@
   flex: 1;
 }
 
-/* One rail beside the diffs: the tree, the patch stats, the checks, the
-   duration trend and the budgets stack down the left, and the code takes
-   every remaining column. */
+/* The diffs take the whole window by default; opening the details rail
+   adds its column on their right. */
 .workspaceBody {
   flex: 1;
   min-height: 0;
   display: grid;
-  grid-template-columns: 280px minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--gap-lg);
 }
 
+.workspaceBodyWithRail {
+  grid-template-columns: minmax(0, 1fr) 280px;
+}
+
+/* The details rail: the tree, the patch stats, the checks, the duration
+   trend and the budgets stack down the diffs' right, behind the header's
+   toggle and closed by default. */
 .filesRail {
   display: flex;
   flex-direction: column;
