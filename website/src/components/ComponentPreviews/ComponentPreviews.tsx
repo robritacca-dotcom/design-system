@@ -1392,6 +1392,22 @@ const previews: Record<string, () => ReactNode> = {
       </div>
     </>
   ),
+  "thread-panel": () => (
+    <>
+      <div aria-hidden="true" style={{ display: "flex", flexDirection: "column", gap: "4px", width: "160px" }}>
+        <span style={{ fontSize: "9px", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--color-text-tertiary)", padding: "0 8px" }}>atlas-app</span>
+        {[
+          { title: "Rework the onboarding flow", active: false },
+          { title: "Speed up the search index", active: true },
+          { title: "Untangle billing webhooks", active: false },
+        ].map((thread) => (
+          <div key={thread.title} style={{ display: "flex", alignItems: "center", padding: "5px 8px", borderRadius: "10px", background: thread.active ? "var(--color-bg-container-tertiary)" : "transparent" }}>
+            <span style={{ fontSize: "11px", color: "var(--color-text-primary)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{thread.title}</span>
+          </div>
+        ))}
+      </div>
+    </>
+  ),
   "time-picker": () => (
     <>
       <div aria-hidden="true" style={{ display: "flex", alignItems: "center", gap: "8px", padding: "8px 14px", borderRadius: "12px", border: "1px solid var(--color-input-border-primary)", background: "var(--color-input-bg-primary)", width: "150px" }}>
