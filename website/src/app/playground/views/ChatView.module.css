@@ -375,3 +375,13 @@
     display: none;
   }
 }
+
+/* The staged product's stand-in logo mark on the threads sheet: a neutral
+   disc, deliberately brandless, sized on the icon scale. */
+.threadsLogoDot {
+  display: inline-block;
+  width: var(--icon-size-md);
+  height: var(--icon-size-md);
+  border-radius: var(--radius-full);
+  background-color: var(--color-bg-container-secondary);
+}

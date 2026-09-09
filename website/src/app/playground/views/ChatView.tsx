@@ -8,6 +8,10 @@ import {
   ModelPicker,
   type ModelPickerModel,
 } from "@robr0/design-system/components/ModelPicker/ModelPicker";
+import {
+  ThreadPanel,
+  type ThreadPanelGroup,
+} from "@robr0/design-system/components/ThreadPanel/ThreadPanel";
 import { useSiteChat, useTakeoverViewport } from "@/components/SiteChat/ChatContext";
 import { SiteChat } from "@/components/SiteChat/SiteChat";
 import styles from "./ChatView.module.css";
@@ -36,6 +40,27 @@ const MOCK_MODELS: ModelPickerModel[] = [
 
 export type TransportMode = "live" | "sim";
 type ResizeAxis = "x" | "y" | "both";
+
+/* The staged product's chat history — set dressing like the mock models:
+   selecting a thread moves the pill and closes the sheet, nothing routes. */
+const MOCK_THREAD_GROUPS: ThreadPanelGroup[] = [
+  {
+    label: "This week",
+    threads: [
+      { id: "launch", title: "Plan the launch week" },
+      { id: "onboarding", title: "Rework the onboarding email" },
+      { id: "pricing", title: "Compare the plan limits" },
+    ],
+  },
+  {
+    label: "Earlier",
+    threads: [
+      { id: "import", title: "Import last year's invoices" },
+      { id: "roles", title: "Set up roles for the team" },
+      { id: "notify", title: "Quiet the mention notifications" },
+    ],
+  },
+];
 
 /* Review targets, not layout tokens. Two footprints are enough: the
    desktop card, which rests filling the stage's safe zone (its size
@@ -91,7 +116,13 @@ export default function ChatView({
   allowFullscreen,
   simControls,
 }: ChatViewProps) {
-  const { open, setOpen, view, returnFocusRef, send, streaming } = useSiteChat();
+  const { open, setOpen, view, returnFocusRef, send, streaming, reset } =
+    useSiteChat();
+
+  /* The mock history's own state: which thread wears the pill, and whether
+     the wide-mode rail is expanded. Both die with the playground. */
+  const [activeThread, setActiveThread] = useState("launch");
+  const [railExpanded, setRailExpanded] = useState(true);
   /* A real phone viewport: the stage-size lever is hidden there and the
      widget goes fluid, so the preset alone cannot say it is a phone. */
   const phoneViewport = useTakeoverViewport();
@@ -294,6 +325,40 @@ export default function ChatView({
         /* No site mark on a generic product's chat. */
         logo={null}
         tagline="How can we help you today?"
+        /* The staged product's chat history: ThreadPanel shaped per context
+           by the render prop — the slide-over sheet names the product and
+           skips the collapse (the scrim is its dismissal), while the wide
+           inline rail skips the brand (the chat header already says it)
+           and offers AppSidebar's collapse instead. Simulated-transport set
+           dressing like the mock picker: on Live the threads stand down and
+           the widget reverts to the site's classic look. */
+        threads={simControls ? ({ overlay, close }) => (
+          <ThreadPanel
+            groups={MOCK_THREAD_GROUPS}
+            activeThreadId={activeThread}
+            onThreadSelect={(id) => {
+              setActiveThread(id);
+              close();
+            }}
+            newThreadLabel="New chat"
+            onNewThread={() => {
+              reset();
+              close();
+            }}
+            historyLabel="Chat history"
+            /* The brand row's logo mark, in both modes; the staged
+               product's is a neutral disc (a real host would put its own
+               mark here, the way the workbench template seats the R
+               logo). Collapsed, it doubles as the expand button. */
+            logo={<span className={styles.threadsLogoDot} />}
+            logoText={overlay ? title : undefined}
+            expanded={overlay ? true : railExpanded}
+            onExpandedChange={overlay ? undefined : setRailExpanded}
+            profile={
+              overlay ? undefined : { name: "Jordan Reyes", meta: "Pro" }
+            }
+          />
+        ) : undefined}
         starters={[
           { id: "start", label: "How do I get started?" },
           { id: "pricing", label: "What do the plans include?" },

@@ -1,6 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useSyncExternalStore, type ReactNode } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type ReactNode,
+} from "react";
 import Image from "next/image";
 import { ChatHeader } from "@robr0/design-system/components/ChatHeader/ChatHeader";
 import { ChatMessage } from "@robr0/design-system/components/ChatMessage/ChatMessage";
@@ -40,6 +46,7 @@ export function SiteChat({
   tagline,
   starters: startersOverride,
   composerActions,
+  threads,
 }: {
   /** Show the expand toggle. The bench's mobile stage is always a takeover, so it hides there. */
   fullscreenEnabled?: boolean;
@@ -70,6 +77,14 @@ export function SiteChat({
   /** Replaces the composer's leading actions (the live model picker) —
       the playground slots its own mock picker and attach button here. */
   composerActions?: ReactNode;
+  /** A session-history rail (a ThreadPanel), rendered responsively by the
+      widget's own measured width: wide hosts seat it as an inline left
+      rail, narrow ones summon it from a header hamburger as a slide-over
+      sheet behind a scrim. The render prop hears which mode it is in and
+      how to close the sheet, so the caller can shape the panel per context
+      (brand shown on the sheet, collapse offered on the rail). Playground
+      furniture for now — the site's own chat passes nothing here. */
+  threads?: (ctx: { overlay: boolean; close: () => void }) => ReactNode;
 }) {
   const {
     turns,
@@ -150,6 +165,31 @@ export function SiteChat({
   const isFull = view === "full";
   const isEmpty = turns.length === 0 && !live;
 
+  /* ---------- the threads rail (only when the host passes one) ----------
+     The widget measures its own width, so the mode follows the actual
+     container — the docked panel and a thin playground card get the
+     hamburger and sheet, the takeover and wide cards the inline rail. */
+  const [threadsOpen, setThreadsOpen] = useState(false);
+  const threadsHostRef = useRef<HTMLDivElement | null>(null);
+  const [threadsWide, setThreadsWide] = useState(false);
+  useEffect(() => {
+    if (!threads) return;
+    const host = threadsHostRef.current;
+    if (!host) return;
+    const measure = () => {
+      const wide = host.clientWidth >= 720;
+      setThreadsWide(wide);
+      /* Growing into rail territory retires the sheet, so it cannot pop
+         back open on a later trip below the breakpoint. */
+      if (wide) setThreadsOpen(false);
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(host);
+    return () => observer.disconnect();
+  }, [threads]);
+  const closeThreads = () => setThreadsOpen(false);
+
   /* The starters sit in one of two places: under the centred composer on
      the desktop welcome, directly above the bottom-pinned one on a phone.
      Rendered where they show, not reordered with CSS, so the tab order
@@ -168,14 +208,21 @@ export function SiteChat({
     </div>
   );
 
-  return (
+  const chatColumn = (
     <div
-      className={styles.chat}
+      className={`${styles.chat} ${threads ? styles.chatWithThreads : ""}`}
       data-compact={compact || undefined}
       data-phone={phone || undefined}
       /* Escape steps out of the takeover first; the host's own Escape
          handling (closing the panel) takes over once back in panel view. */
       onKeyDown={(e) => {
+        /* The threads sheet is the topmost layer, so Escape settles it
+           before the takeover or the host panel hear anything. */
+        if (e.key === "Escape" && threadsOpen) {
+          e.stopPropagation();
+          closeThreads();
+          return;
+        }
         if (e.key === "Escape" && isFull) {
           e.stopPropagation();
           setView("panel");
@@ -196,6 +243,15 @@ export function SiteChat({
         <ChatHeader
           title={
             <span className={styles.brand}>
+              {threads && !threadsWide && (
+                <CircularButton
+                  icon="menu"
+                  variant="tertiary"
+                  ariaLabel="Open the chat history"
+                  tooltipPosition="bottom"
+                  onClick={() => setThreadsOpen(true)}
+                />
+              )}
               {logo && (
                 <Image
                   src={logo}
@@ -214,17 +270,22 @@ export function SiteChat({
             /* The buttons self-label with tooltips; they open downward because
                the header hugs the panel's clipped top edge. */
             <>
-              <CircularButton
-                icon="edit_square"
-                variant="tertiary"
-                ariaLabel="New chat"
-                tooltipPosition="bottom"
-                onClick={() => {
-                  reset();
-                  setDraft("");
-                  focusComposer();
-                }}
-              />
+              {/* With the inline threads rail showing, its own new-thread
+                  row is the one New chat — a second pen in the header
+                  would be the same action twice. */}
+              {!(threads && threadsWide) && (
+                <CircularButton
+                  icon="edit_square"
+                  variant="tertiary"
+                  ariaLabel="New chat"
+                  tooltipPosition="bottom"
+                  onClick={() => {
+                    reset();
+                    setDraft("");
+                    focusComposer();
+                  }}
+                />
+              )}
               {fullscreenEnabled && (
                 <CircularButton
                   icon={isFull ? "close_fullscreen" : "open_in_full"}
@@ -364,6 +425,39 @@ export function SiteChat({
           </p>
         </div>
       </div>
+    </div>
+  );
+
+  if (!threads) return chatColumn;
+
+  /* With a threads rail, the widget becomes a row: the rail (or, narrow,
+     the hamburger-summoned sheet and its scrim) beside the chat column. */
+  return (
+    <div ref={threadsHostRef} className={styles.threadsHost}>
+      {threadsWide && (
+        <div className={styles.threadsRail}>
+          {threads({ overlay: false, close: closeThreads })}
+        </div>
+      )}
+      {chatColumn}
+      {!threadsWide && (
+        <div
+          className={`${styles.threadsOverlay} ${
+            threadsOpen ? styles.threadsOverlayOpen : ""
+          }`}
+        >
+          <button
+            type="button"
+            className={styles.threadsScrim}
+            aria-label="Close the chat history"
+            tabIndex={threadsOpen ? 0 : -1}
+            onClick={closeThreads}
+          />
+          <div className={styles.threadsSheet}>
+            {threads({ overlay: true, close: closeThreads })}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

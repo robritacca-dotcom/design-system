@@ -11,6 +11,10 @@
   width: 100%;
   height: 100%;
   min-height: 0;
+  /* A small breath above the header on every host, web and phone alike —
+     it seats the title row on the same line as the threads rail's own
+     header, whose panel carries this inset built in. */
+  padding-top: var(--padding-sm);
   /* The one side inset every row shares — header controls, greeting,
      thread bubbles, composer edge, starter pills, disclaimer — so they sit
      on a single rail. A step tighter on compact hosts. */
@@ -632,4 +636,84 @@
    the menu, so it stands down until the menu closes. */
 :global(html[data-nav-drawer="open"]) .fab {
   display: none;
+}
+
+/* ============================================
+   THREADS RAIL - the optional session-history panel (a ThreadPanel the
+   host passes through the `threads` render prop). Wide widgets seat it as
+   an inline left rail; narrow ones summon it from the header hamburger as
+   a slide-over sheet behind a scrim. The mode follows the widget's own
+   measured width, so every host gets the right one for free.
+   ============================================ */
+
+.threadsHost {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.chatWithThreads {
+  flex: 1;
+  min-width: 0;
+}
+
+.threadsRail {
+  flex: none;
+  display: flex;
+  min-height: 0;
+  border-right: var(--border-xs) solid var(--color-bg-container-border);
+}
+
+/* The sheet layer: hidden entirely (visibility) while closed, so nothing
+   in it can take focus or reach assistive technology. */
+.threadsOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  visibility: hidden;
+  transition: visibility 0s var(--motion-duration-slow);
+}
+
+.threadsOverlayOpen {
+  visibility: visible;
+  transition: visibility 0s;
+}
+
+.threadsScrim {
+  position: absolute;
+  inset: 0;
+  border: none;
+  padding: 0;
+  background-color: var(--color-scrim);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity var(--motion-duration-slow) var(--motion-ease-standard);
+}
+
+.threadsOverlayOpen .threadsScrim {
+  opacity: 1;
+}
+
+/* The glass recipe the floating AppSidebar and the mobile menu wear: the
+   translucent fill over a backdrop blur, so the dimmed chat shows through
+   the sheet the way it does behind the site's own drawers. */
+.threadsSheet {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  background-color: var(--color-bg-glass);
+  backdrop-filter: blur(24px);
+  border-right: var(--border-xs) solid var(--color-bg-container-border);
+  box-shadow: var(--shadow-floating);
+  transform: translateX(-100%);
+  transition: transform var(--motion-duration-slow) var(--motion-ease-emphasized);
+}
+
+.threadsOverlayOpen .threadsSheet {
+  transform: translateX(0);
 }
