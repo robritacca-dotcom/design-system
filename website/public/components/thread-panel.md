@@ -2,7 +2,7 @@
 
 The session-history rail for chat products: brand header, new-thread action, standing controls, grouped threads, and a profile footer.
 
-Generated from the @robr0/design-system registry and prop JSDoc, version 0.16.0. The same data ships in the package's .d.ts and is served by the MCP endpoint at https://robertritacca.com/api/mcp.
+Generated from the @robr0/design-system registry and prop JSDoc, version 0.17.0. The same data ships in the package's .d.ts and is served by the MCP endpoint at https://robertritacca.com/api/mcp.
 
 - Category: ai
 - Import: `import { ThreadPanel } from '@robr0/design-system';`

@@ -58,6 +58,10 @@ name: Release
 #   modal components (with useScrollLock published for host chrome),
 #   AiButton's summary panel and Composer's context note, the status icon
 #   step tokens, and overlay listener/timer fixes.
+# 0.17.0 shipped 2026-09-09 — ThreadPanel, the session-history rail for chat
+#   products (AppSidebar's collapse choreography, server-renderable), plus
+#   EventCalendar's selectedDate and whole-cell interactivity on its own
+#   calendar colour family, and the toast exit timer on the motion constant.
 
 on:
   workflow_dispatch:
