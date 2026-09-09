@@ -31,8 +31,7 @@ const DESIGN_HEIGHT = 900;
 /** The templates themselves — every sidebar entry after "Contents". */
 const TEMPLATES = templatesSidebarLinks.slice(1);
 
-/** Slides in the track: the templates plus the empty next-slot slide. */
-const SLIDE_COUNT = TEMPLATES.length + 1;
+const SLIDE_COUNT = TEMPLATES.length;
 
 function LiveFrame({ href, title }: { href: string; title: string }) {
   const shellRef = useRef<HTMLDivElement>(null);
@@ -184,23 +183,6 @@ export default function TemplateShowcase() {
             </div>
           </div>
         ))}
-
-        {/* The next slot, so the carousel says what this page is becoming. */}
-        <div className={styles.slide}>
-          <div className={`${styles.frameShell} ${styles.frameShellEmpty}`}>
-            <span
-              className={`material-symbols-rounded ${styles.emptyIcon}`}
-              aria-hidden="true"
-            >
-              web_asset
-            </span>
-            <p className={styles.emptyTitle}>The next template lands here</p>
-            <p className={styles.emptyBody}>
-              Some begin as labs rebuilds, some as original compositions; each
-              moves in once it holds up.
-            </p>
-          </div>
-        </div>
       </div>
 
       <div className={styles.controls}>
