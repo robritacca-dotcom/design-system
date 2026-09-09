@@ -974,6 +974,14 @@
       "client": true
     },
     {
+      "name": "ThreadPanel",
+      "label": "Thread panel",
+      "slug": "thread-panel",
+      "description": "The session-history rail for chat products: brand header, new-thread action, standing controls, grouped threads, and a profile footer.",
+      "category": "ai",
+      "client": false
+    },
+    {
       "name": "TimePicker",
       "label": "Time picker",
       "slug": "time-picker",

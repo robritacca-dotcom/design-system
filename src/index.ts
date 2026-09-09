@@ -107,6 +107,7 @@ export * from './components/Table/Table';
 export * from './components/Tabs/Tabs';
 export * from './components/TagInput/TagInput';
 export * from './components/Textarea/Textarea';
+export * from './components/ThreadPanel/ThreadPanel';
 export * from './components/Timeline/Timeline';
 export * from './components/TimePicker/TimePicker';
 export * from './components/Toast/Toast';

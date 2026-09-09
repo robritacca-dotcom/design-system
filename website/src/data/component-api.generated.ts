@@ -8268,6 +8268,161 @@ export const componentApi: readonly ComponentApiEntry[] = [
     ]
   },
   {
+    "name": "ThreadPanel",
+    "label": "Thread panel",
+    "slug": "thread-panel",
+    "category": "ai",
+    "description": "The session-history rail for chat products: brand header, new-thread action, standing controls, grouped threads, and a profile footer.",
+    "client": false,
+    "importPath": "@robr0/design-system/components/ThreadPanel/ThreadPanel",
+    "barrel": "main",
+    "exports": [
+      {
+        "component": "ThreadPanel",
+        "props": [
+          {
+            "name": "groups",
+            "type": "ThreadPanelGroup[]",
+            "required": true,
+            "description": "The history, in display order. A flat list is one group with no label."
+          },
+          {
+            "name": "activeThreadId",
+            "type": "string",
+            "required": false,
+            "description": "Id of the thread on stage. Its row renders filled and carries `aria-current`."
+          },
+          {
+            "name": "onThreadSelect",
+            "type": "((id: string) => void)",
+            "required": false,
+            "description": "Fires with the clicked thread's id. Rows with an `href` navigate as well."
+          },
+          {
+            "name": "logo",
+            "type": "ReactNode",
+            "required": false,
+            "description": "Brand mark slot at the top, e.g. a logo `<img>`. While collapsed it doubles as the expand button, AppSidebar's contract."
+          },
+          {
+            "name": "logoText",
+            "type": "string",
+            "required": false,
+            "description": "Brand name beside the logo. The header row renders only when `logo`, `logoText`, or `onExpandedChange` is given."
+          },
+          {
+            "name": "newThreadLabel",
+            "type": "string",
+            "required": false,
+            "description": "Text for the new-thread row. The row renders when this, `onNewThread`, or `newThreadHref` is given."
+          },
+          {
+            "name": "newThreadIcon",
+            "type": "string",
+            "required": false,
+            "description": "Material Symbol for the new-thread row. Defaults to the pen-in-a-box `edit_square`, the same glyph chat headers use for New chat.",
+            "defaultValue": "edit_square"
+          },
+          {
+            "name": "newThreadShortcut",
+            "type": "string[]",
+            "required": false,
+            "description": "Keyboard hint rendered as compact Kbds at the row's trailing edge, e.g. `[\"Ctrl\", \"N\"]`. Decorative — the host owns the actual binding."
+          },
+          {
+            "name": "onNewThread",
+            "type": "(() => void)",
+            "required": false,
+            "description": "Fires when the new-thread row is clicked."
+          },
+          {
+            "name": "newThreadHref",
+            "type": "string",
+            "required": false,
+            "description": "Optional href — the new-thread row renders as an `<a>`."
+          },
+          {
+            "name": "controls",
+            "type": "ThreadPanelControl[]",
+            "required": false,
+            "description": "Standing rows between the new-thread action and the history, e.g. Projects or Settings."
+          },
+          {
+            "name": "onControlSelect",
+            "type": "((id: string) => void)",
+            "required": false,
+            "description": "Fires with the clicked control's id. Rows with an `href` navigate as well."
+          },
+          {
+            "name": "moreLabel",
+            "type": "string",
+            "required": false,
+            "description": "Text for the quiet trailing row that reveals older threads, e.g. \"Show 20 more\". Renders only when given."
+          },
+          {
+            "name": "onShowMore",
+            "type": "(() => void)",
+            "required": false,
+            "description": "Fires when the more row is clicked."
+          },
+          {
+            "name": "historyLabel",
+            "type": "string",
+            "required": false,
+            "description": "Accessible name for the scrollable history region.",
+            "defaultValue": "Thread history"
+          },
+          {
+            "name": "expanded",
+            "type": "boolean",
+            "required": false,
+            "description": "Whether the panel is expanded (280px, labels and history showing). Collapsed it is AppSidebar's 64px icon rail: circular icon rows, the history faded out, the avatar alone in the footer.",
+            "defaultValue": "true"
+          },
+          {
+            "name": "onExpandedChange",
+            "type": "((expanded: boolean) => void)",
+            "required": false,
+            "description": "Fires with the next state when the toggle (or, collapsed, the logo) is pressed. The toggle renders only when this is given; the panel is controlled, so the host owns the state."
+          },
+          {
+            "name": "collapseLabel",
+            "type": "string",
+            "required": false,
+            "description": "Accessible name for the header toggle while expanded.",
+            "defaultValue": "Collapse the panel"
+          },
+          {
+            "name": "expandLabel",
+            "type": "string",
+            "required": false,
+            "description": "Accessible name for the expand affordance while collapsed.",
+            "defaultValue": "Expand the panel"
+          },
+          {
+            "name": "profile",
+            "type": "ThreadPanelProfile",
+            "required": false,
+            "description": "The signed-in person, rendered as the footer's Avatar row."
+          },
+          {
+            "name": "footerSlot",
+            "type": "ReactNode",
+            "required": false,
+            "description": "Rendered in the footer above the profile row — a theme toggle, a storage meter. Fades out while collapsed, AppSidebar's contract."
+          },
+          {
+            "name": "className",
+            "type": "string",
+            "required": false,
+            "description": "Additional CSS classes",
+            "defaultValue": ""
+          }
+        ]
+      }
+    ]
+  },
+  {
     "name": "TimePicker",
     "label": "Time picker",
     "slug": "time-picker",

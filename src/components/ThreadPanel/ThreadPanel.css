@@ -1,0 +1,509 @@
+/* ============================================
+   THREAD PANEL COMPONENT
+   The session-history rail of a chat or agent product: brand header,
+   new-thread action, standing controls, grouped history, profile footer.
+   Deliberately surface-less — the host paints the band it sits on.
+
+   Expand/collapse is AppSidebar's choreography, restated: the panel owns
+   its width (64px rail, 280px expanded — the same constants), the sweeping
+   clip and the labels' opacity fades carry the whole transition, and inner
+   layout stays constant so nothing snaps mid-glide. Rows keep AppSidebar's
+   geometry: 40px --radius-full pills inset by 12px margins, so a collapsed
+   row is a perfect circle around its icon (12 + 8 + 24 + 8 + 12 = 64).
+   ============================================ */
+
+.ds-thread-panel {
+  /* Width and padding combine on the root and the rows, so the component
+     declares its own sizing model rather than leaning on a host reset —
+     without it the 64px rail renders 88 wide in a bare host. */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  /* AppSidebar's row rhythm: one gap-xs beat between every action row,
+     the new-thread row included; the larger section breaks come from the
+     history's and footer's own top padding. */
+  gap: var(--gap-xs);
+  width: 64px;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  /* The inline inset lives on the panel, not the rows: every row fills
+     the padded column, so the fills all stop at the same 12px breathing
+     room in both states — and the collapsed circle math is unchanged
+     (12 + 8 + 24 + 8 + 12 = the 64px rail). */
+  padding: var(--padding-md) var(--padding-sm-md);
+  transition: width var(--motion-duration-slow) var(--motion-ease-emphasized);
+}
+
+.ds-thread-panel--expanded {
+  width: 280px;
+}
+
+/* Collapsed, the whole rail is an expand target (the markup only wires
+   the click when a collapse handler exists, and rows keep their own
+   jobs); the cursor says so. */
+.ds-thread-panel:not(.ds-thread-panel--expanded) {
+  cursor: pointer;
+}
+
+/* ============================================
+   HEADER — brand row and the collapse toggle
+   ============================================ */
+
+/* Collapsed, --padding-sm centres the 24px mark on the rail's axis
+   (12 + 8 = the rows' icon seat); expanded it deepens to the 28px optical
+   seat with everything else, the padding gliding with the sweep. */
+.ds-thread-panel__header {
+  display: flex;
+  align-items: center;
+  flex: none;
+  min-width: 0;
+  padding: var(--padding-xs) var(--padding-sm);
+  transition: padding var(--motion-duration-slow) var(--motion-ease-emphasized);
+}
+
+.ds-thread-panel--expanded .ds-thread-panel__header {
+  padding: var(--padding-xs) var(--padding-md);
+}
+
+/* A logo-less header collapsed to the rail: the empty brand slot would
+   otherwise push the standing toggle off the rail's axis, so it stands
+   down and the toggle centres like every other mark. */
+.ds-thread-panel:not(.ds-thread-panel--expanded)
+  .ds-thread-panel__header--bare {
+  justify-content: center;
+}
+
+.ds-thread-panel:not(.ds-thread-panel--expanded)
+  .ds-thread-panel__header--bare
+  .ds-thread-panel__header-inner {
+  display: none;
+}
+
+/* Collapsed, the logo doubles as the expand button (role="button" comes
+   from the markup); the pointer affordance is all it needs visually. */
+.ds-thread-panel__header-inner {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: var(--gap-sm);
+  min-width: 0;
+}
+
+.ds-thread-panel__header-inner[role='button'] {
+  cursor: pointer;
+}
+
+.ds-thread-panel__header-inner[role='button']:focus-visible {
+  outline: 2px solid var(--color-action-primary-bg);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+
+.ds-thread-panel__logo {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+}
+
+/* ChatHeader's title face, so a brand here sits at the same size the
+   chat's own header wears it — the two surfaces meet in one product. */
+.ds-thread-panel__brand {
+  min-width: 0;
+  flex-shrink: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-title-body-family);
+  font-size: var(--font-title-body-size);
+  font-weight: var(--font-title-body-weight);
+  line-height: var(--font-title-body-line-height);
+  color: var(--color-text-primary);
+  opacity: 0;
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
+}
+
+.ds-thread-panel--expanded .ds-thread-panel__brand {
+  opacity: 1;
+}
+
+/* The toggle folds to nothing while collapsed — the logo carries the
+   expand gesture — and glides back in with the width (AppSidebar's
+   mechanics: both widths explicit, so the width interpolates). */
+.ds-thread-panel__toggle {
+  --icon-size: var(--icon-size-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 0;
+  height: 24px;
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--color-icon-primary);
+  cursor: pointer;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard),
+    width var(--motion-duration-slow) var(--motion-ease-emphasized);
+}
+
+.ds-thread-panel--expanded .ds-thread-panel__toggle {
+  width: 24px;
+  opacity: 1;
+}
+
+/* With no logo there is nothing to hand the expand gesture to, so the
+   toggle stays present in both states. */
+.ds-thread-panel__toggle--standalone {
+  width: 24px;
+  opacity: 1;
+}
+
+.ds-thread-panel__toggle:focus-visible {
+  outline: 2px solid var(--color-action-primary-bg);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+
+/* ============================================
+   ROWS — AppSidebar's shared pill shape
+   40px --radius-full rows inset by 12px margins with 8px padding: the
+   icon keeps its x-position in both states, and the collapsed hover pill
+   is a circle clear of the rail edges.
+   ============================================ */
+
+.ds-thread-panel__new,
+.ds-thread-panel__control,
+.ds-thread-panel__thread {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  width: 100%;
+  height: 40px;
+  min-width: 0;
+  padding: var(--padding-sm);
+  border: none;
+  border-radius: var(--radius-full);
+  background: transparent;
+  cursor: pointer;
+  overflow: hidden;
+  text-align: left;
+  text-decoration: none;
+  transition: background-color var(--motion-duration-fast)
+      var(--motion-ease-standard),
+    padding var(--motion-duration-slow) var(--motion-ease-emphasized);
+}
+
+/* Expanded, the rows breathe: --padding-md inline sets the 28px optical
+   seat (12 + 16) that everything in the panel aligns to — the pen icon's
+   box is the guide. Collapsed returns to --padding-sm, which is what the
+   40px circle's math needs; the padding glides with the rail's sweep. */
+.ds-thread-panel--expanded .ds-thread-panel__new,
+.ds-thread-panel--expanded .ds-thread-panel__control,
+.ds-thread-panel--expanded .ds-thread-panel__thread {
+  padding: var(--padding-sm) var(--padding-md);
+}
+
+.ds-thread-panel__new:hover,
+.ds-thread-panel__control:hover,
+.ds-thread-panel__thread:hover {
+  background-color: var(--color-action-passive-bg-hover);
+}
+
+.ds-thread-panel__new:focus-visible,
+.ds-thread-panel__control:focus-visible,
+.ds-thread-panel__thread:focus-visible,
+.ds-thread-panel__more:focus-visible {
+  outline: 2px solid var(--color-action-primary-bg);
+  outline-offset: -2px;
+}
+
+/* ============================================
+   NEW THREAD — the one filled action, always in reach
+   ============================================ */
+
+/* Deliberately as quiet as the control rows: the leading position and the
+   add glyph carry the affordance, not a fill. */
+.ds-thread-panel__new {
+  flex: none;
+}
+
+.ds-thread-panel__new-icon {
+  --icon-size: var(--icon-size-md);
+  color: var(--color-icon-primary);
+  flex-shrink: 0;
+}
+
+.ds-thread-panel__new-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  font-family: var(--font-paragraph-sm-em-family);
+  font-size: var(--font-paragraph-sm-em-size);
+  font-weight: var(--font-paragraph-sm-em-weight);
+  line-height: var(--font-paragraph-sm-em-line-height);
+  color: var(--color-text-primary);
+  opacity: 0;
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
+}
+
+.ds-thread-panel--expanded .ds-thread-panel__new-label {
+  opacity: 1;
+}
+
+.ds-thread-panel__new-kbd {
+  display: inline-flex;
+  flex: none;
+  gap: var(--gap-xxs);
+  opacity: 0;
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
+}
+
+.ds-thread-panel--expanded .ds-thread-panel__new-kbd {
+  opacity: 1;
+}
+
+/* ============================================
+   CONTROLS — quiet standing rows
+   ============================================ */
+
+.ds-thread-panel__controls {
+  display: flex;
+  flex-direction: column;
+  flex: none;
+  gap: var(--gap-xs);
+}
+
+.ds-thread-panel__control-icon {
+  --icon-size: var(--icon-size-md);
+  color: var(--color-icon-primary);
+  flex-shrink: 0;
+}
+
+.ds-thread-panel__control-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-primary);
+  opacity: 0;
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
+}
+
+.ds-thread-panel--expanded .ds-thread-panel__control-label {
+  opacity: 1;
+}
+
+/* ============================================
+   HISTORY — the one scrolling region
+   Threads have no icons, so unlike AppSidebar's nav the history has no
+   collapsed form: it fades out and leaves the accessibility tree and tab
+   order (visibility), holding the rail's middle open.
+   ============================================ */
+
+.ds-thread-panel__history {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  padding-top: var(--padding-xs);
+  /* Tucked-away scrollbar (ChatThread's manner, without its JS): thin, no
+     track fill, and invisible until the pointer is over the history. No
+     reserved gutter — it would hold the history's rows 10px narrower than
+     the action rows above on classic-scrollbar platforms, and the row
+     widths matching matters more than a rare reflow when a long history
+     first overflows. */
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard),
+    visibility 0s var(--motion-duration-base);
+}
+
+.ds-thread-panel--expanded .ds-thread-panel__history {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard),
+    visibility 0s;
+}
+
+.ds-thread-panel__history:hover {
+  scrollbar-color: var(--color-divider) transparent;
+}
+
+.ds-thread-panel__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xxs);
+}
+
+/* Aligned with the expanded rows' 28px optical seat. */
+.ds-thread-panel__group-label {
+  padding: 0 var(--padding-md);
+  overflow: hidden;
+  white-space: nowrap;
+  font-family: var(--font-overline-family);
+  font-size: var(--font-overline-size);
+  font-weight: var(--font-overline-weight);
+  line-height: var(--font-overline-line-height);
+  letter-spacing: var(--font-overline-letter-spacing);
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+}
+
+.ds-thread-panel__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  /* A hairline of air between fills, so stacked hover and active pills
+     never read as one slab. */
+  gap: 1px;
+}
+
+/* Thread rows keep the shared 40px shape — no height override, so they
+   match the new-thread and control rows exactly. */
+
+.ds-thread-panel__thread--active {
+  background-color: var(--color-bg-container-tertiary);
+}
+
+.ds-thread-panel__title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-primary);
+}
+
+.ds-thread-panel__meta {
+  flex: none;
+  font-family: var(--font-caption-family);
+  font-size: var(--font-caption-size);
+  font-weight: var(--font-caption-weight);
+  line-height: var(--font-caption-line-height);
+  color: var(--color-text-tertiary);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* ============================================
+   MORE — the quiet trailing reveal
+   ============================================ */
+
+.ds-thread-panel__more {
+  align-self: flex-start;
+  padding: var(--padding-xs) var(--padding-md);
+  border: none;
+  border-radius: var(--radius-full);
+  background: transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: var(--font-caption-family);
+  font-size: var(--font-caption-size);
+  font-weight: var(--font-caption-weight);
+  line-height: var(--font-caption-line-height);
+  color: var(--color-text-tertiary);
+  transition: color var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.ds-thread-panel__more:hover {
+  color: var(--color-text-secondary);
+}
+
+/* ============================================
+   FOOTER — host furniture and the profile row
+   The slot fades out while collapsed (AppSidebar's contract); the profile
+   keeps its avatar, the texts fading with the labels above.
+   ============================================ */
+
+.ds-thread-panel__footer {
+  display: flex;
+  flex-direction: column;
+  flex: none;
+  gap: var(--gap-sm);
+  min-width: 0;
+  /* Enough air that an overflowing history's last row never crowds the
+     profile — the footer is a different region, and the space says so. */
+  padding-top: var(--padding-sm);
+}
+
+.ds-thread-panel__footer-slot {
+  min-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
+}
+
+.ds-thread-panel--expanded .ds-thread-panel__footer-slot {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Same per-state seat as the header: collapsed, --padding-xxs centres the
+   32px avatar on the rail's axis (12 + 4); expanded joins the 28px seat. */
+.ds-thread-panel__profile {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  min-width: 0;
+  padding: var(--padding-xxs);
+  transition: padding var(--motion-duration-slow) var(--motion-ease-emphasized);
+}
+
+.ds-thread-panel--expanded .ds-thread-panel__profile {
+  padding: var(--padding-xxs) var(--padding-md);
+}
+
+.ds-thread-panel__profile-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  font-family: var(--font-paragraph-sm-em-family);
+  font-size: var(--font-paragraph-sm-em-size);
+  font-weight: var(--font-paragraph-sm-em-weight);
+  line-height: var(--font-paragraph-sm-em-line-height);
+  color: var(--color-text-primary);
+  opacity: 0;
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
+}
+
+.ds-thread-panel--expanded .ds-thread-panel__profile-name {
+  opacity: 1;
+}
+
+.ds-thread-panel__profile-meta {
+  flex: none;
+  overflow: hidden;
+  white-space: nowrap;
+  font-family: var(--font-caption-family);
+  font-size: var(--font-caption-size);
+  font-weight: var(--font-caption-weight);
+  line-height: var(--font-caption-line-height);
+  color: var(--color-text-tertiary);
+  opacity: 0;
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
+}
+
+.ds-thread-panel--expanded .ds-thread-panel__profile-meta {
+  opacity: 1;
+}
