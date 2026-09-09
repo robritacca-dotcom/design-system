@@ -262,6 +262,11 @@ export const templatesSidebarLinks: NavLink[] = [
     label: "Team calendar",
     description: "A month view with the sprint's to-dos on a rail beside it",
   },
+  {
+    href: "/templates/agent-workbench",
+    label: "Agent workbench",
+    description: "A coding agent mid-task, its session beside the staged diff",
+  },
 ];
 
 /**
