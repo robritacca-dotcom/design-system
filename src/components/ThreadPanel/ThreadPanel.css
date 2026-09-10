@@ -52,13 +52,17 @@
 
 /* Collapsed, --padding-sm centres the 24px mark on the rail's axis
    (12 + 8 = the rows' icon seat); expanded it deepens to the 28px optical
-   seat with everything else, the padding gliding with the sweep. */
+   seat with everything else, the padding gliding with the sweep. The
+   margin sits the brand row evenly between the panel's top edge and the
+   new-thread row: 6 + 12 + the panel's 4px gap below mirrors the 16px
+   panel padding + 6 above. */
 .ds-thread-panel__header {
   display: flex;
   align-items: center;
   flex: none;
   min-width: 0;
   padding: var(--padding-xs) var(--padding-sm);
+  margin-bottom: var(--gap-sm-md);
   transition: padding var(--motion-duration-slow) var(--motion-ease-emphasized);
 }
 
@@ -348,9 +352,12 @@
   gap: var(--gap-xxs);
 }
 
-/* Aligned with the expanded rows' 28px optical seat. */
+/* Aligned with the expanded rows' 28px optical seat. The vertical padding
+   is the rows' own inset restated — as if the label sat inside a row —
+   so the overline keeps the pills' rhythm instead of hugging the
+   new-thread row above and the first thread below. */
 .ds-thread-panel__group-label {
-  padding: 0 var(--padding-md);
+  padding: var(--padding-sm) var(--padding-md);
   overflow: hidden;
   white-space: nowrap;
   font-family: var(--font-overline-family);
@@ -374,7 +381,15 @@
 }
 
 /* Thread rows keep the shared 40px shape — no height override, so they
-   match the new-thread and control rows exactly. */
+   match the new-thread and control rows exactly. The <li> is the row's
+   frame: relative, so the overflow trigger can sit over the trailing
+   edge without living inside the row button (nested controls are
+   invalid markup). */
+
+.ds-thread-panel__row {
+  position: relative;
+  min-width: 0;
+}
 
 .ds-thread-panel__thread--active {
   background-color: var(--color-bg-container-tertiary);
@@ -384,13 +399,73 @@
   flex: 1;
   min-width: 0;
   overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
   font-family: var(--font-paragraph-sm-family);
   font-size: var(--font-paragraph-sm-size);
   font-weight: var(--font-paragraph-sm-weight);
   line-height: var(--font-paragraph-sm-line-height);
   color: var(--color-text-primary);
+  /* A long title dissolves at the trailing edge instead of clipping to an
+     ellipsis — the fade is where the overflow trigger lands, so revealed
+     text and control never fight. Short titles end before the fade zone
+     and are untouched; the full text stays in the row's tooltip.
+     ds-allow(color): mask alpha keywords (black/transparent), not palette colours */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    black calc(100% - var(--gap-xl)),
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    black calc(100% - var(--gap-xl)),
+    transparent
+  );
+}
+
+/* The naming state: a shimmer bar holds the title's place while the host
+   generates a name (Skeleton's sweep restated on the row's own geometry);
+   the row's accessible name stays on its tooltip. */
+.ds-thread-panel__title--pending {
+  display: flex;
+  align-items: center;
+}
+
+.ds-thread-panel__title-shimmer {
+  display: block;
+  /* Full width of the title's space — the row's inline padding is the
+     only inset; the title mask softens its trailing end. */
+  width: 100%;
+  height: 0.75em;
+  border-radius: var(--radius-full);
+  background-color: var(--color-bg-container-secondary);
+  position: relative;
+  overflow: hidden;
+}
+
+.ds-thread-panel__title-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-bg-container-primary) 50%,
+    transparent 100%
+  );
+  /* ds-allow(motion): Skeleton's shimmer — the sweep needs a symmetric
+     in-out curve no --motion-ease-* token provides; the duration is
+     tokenized. */
+  animation: ds-thread-panel-shimmer var(--motion-duration-loop-shimmer)
+    ease-in-out infinite;
+}
+
+@keyframes ds-thread-panel-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 .ds-thread-panel__meta {
@@ -402,6 +477,95 @@
   color: var(--color-text-tertiary);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
+  transition: opacity var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+/* ============================================
+   THREAD MENU — the hover-revealed overflow trigger
+   A 28px circular trigger over the row's faded trailing edge, opening the
+   compact DropdownMenu. Hidden until the row is hovered or holds keyboard
+   focus, and held while its menu is open — never standing on a resting
+   row. The meta caption steps aside as the trigger arrives, since they
+   share the trailing edge.
+   ============================================ */
+
+.ds-thread-panel__row .ds-thread-panel__menu {
+  position: absolute;
+  top: var(--padding-xs);
+  right: var(--padding-xs);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.ds-thread-panel__row:hover .ds-thread-panel__menu,
+.ds-thread-panel__row:focus-within .ds-thread-panel__menu,
+.ds-thread-panel__row .ds-thread-panel__menu:has([aria-expanded='true']) {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.ds-thread-panel__row--with-menu:hover .ds-thread-panel__meta,
+.ds-thread-panel__row--with-menu:focus-within .ds-thread-panel__meta,
+.ds-thread-panel__row--with-menu:has([aria-expanded='true'])
+  .ds-thread-panel__meta {
+  opacity: 0;
+}
+
+/* While the menu is open the pointer is off in the panel, so the row holds
+   its hover wash — the open menu and its row read as one thing. */
+.ds-thread-panel__row:has(.ds-thread-panel__menu [aria-expanded='true'])
+  .ds-thread-panel__thread {
+  background-color: var(--color-action-passive-bg-hover);
+}
+
+.ds-thread-panel__menu-trigger {
+  --icon-size: var(--icon-size-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--color-icon-primary);
+  cursor: pointer;
+  transition: background-color var(--motion-duration-fast)
+    var(--motion-ease-standard);
+}
+
+.ds-thread-panel__menu-trigger:hover {
+  background-color: var(--color-bg-container-tertiary);
+}
+
+.ds-thread-panel__menu-trigger:focus-visible {
+  outline: 2px solid var(--color-action-primary-bg);
+  outline-offset: -2px;
+}
+
+/* ============================================
+   RENAME — the inline title editor
+   The input wears the row's exact shape and face; the teal border is the
+   active-input treatment, the one sanctioned "you are editing here" mark.
+   ============================================ */
+
+.ds-thread-panel__rename {
+  box-sizing: border-box;
+  width: 100%;
+  height: 40px;
+  min-width: 0;
+  padding: 0 var(--padding-md);
+  border: var(--border-xs) solid var(--color-action-primary-bg);
+  border-radius: var(--radius-full);
+  background-color: var(--color-bg-container-primary);
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-primary);
+  outline: none;
 }
 
 /* ============================================

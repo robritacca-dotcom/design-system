@@ -1,18 +1,34 @@
 import React from 'react';
 import { Avatar } from '../Avatar/Avatar';
+import { DropdownMenu } from '../DropdownMenu/DropdownMenu';
 import { Kbd } from '../Kbd/Kbd';
 import './ThreadPanel.css';
 import '../../fonts/material-symbols.css';
 
+export interface ThreadPanelThreadAction {
+  /** Stable identifier reported through `onThreadAction`. */
+  id: string;
+  /** Menu row text. */
+  label: string;
+  /** Material Symbol name for the row's leading icon. */
+  icon?: string;
+  /** Destructive styling (the error text colour) for delete-like actions. */
+  destructive?: boolean;
+}
+
 export interface ThreadPanelThread {
   /** Stable identifier: `activeThreadId` matches against it and `onThreadSelect` reports it. */
   id: string;
-  /** The thread's one-line title. Overflow truncates with an ellipsis; the full text stays readable in the row's native tooltip. */
+  /** The thread's one-line title. Overflow fades out under a trailing mask rather than clipping; the full text stays readable in the row's native tooltip. */
   title: string;
   /** Optional href — the row renders as an `<a>` for real navigation instead of a `<button>`. */
   href?: string;
   /** Small trailing annotation in the caption face, e.g. a relative timestamp. */
   meta?: string;
+  /** The title is still being generated: the row shows a shimmer bar in the title's place and hides its menu, keeping `title` (e.g. "New chat") as the accessible name. */
+  pending?: boolean;
+  /** This thread's own menu actions, overriding the panel-wide `threadActions`. */
+  actions?: ThreadPanelThreadAction[];
 }
 
 export interface ThreadPanelGroup {
@@ -50,6 +66,20 @@ type ThreadPanelOwnProps = {
   activeThreadId?: string;
   /** Fires with the clicked thread's id. Rows with an `href` navigate as well. */
   onThreadSelect?: (id: string) => void;
+  /** Shared menu actions for every thread row, behind a hover-revealed trailing trigger; a thread's own `actions` overrides the set. The menu renders only when `onThreadAction` is also given, and never on a `pending` row. */
+  threadActions?: ThreadPanelThreadAction[];
+  /** Fires with the thread's id and the chosen action's id. */
+  onThreadAction?: (threadId: string, actionId: string) => void;
+  /** Accessible name for a row's menu trigger; the thread's title is appended after it. */
+  threadMenuLabel?: string;
+  /** Id of the thread being renamed: its row swaps to an inline text field, prefilled with the title and selected. The host owns the state, like everything else. */
+  renamingThreadId?: string;
+  /** Fires with the thread's id and the trimmed new title when a rename commits (Enter, or focus leaving the field). An empty or unchanged value fires `onRenameCancel` instead. */
+  onThreadRename?: (threadId: string, title: string) => void;
+  /** Fires when a rename ends without a change: Escape, an empty value, or an unchanged title. */
+  onRenameCancel?: () => void;
+  /** Accessible name for the inline rename field. */
+  renameLabel?: string;
   /** Brand mark slot at the top, e.g. a logo `<img>`. While collapsed it doubles as the expand button, AppSidebar's contract. */
   logo?: React.ReactNode;
   /** Brand name beside the logo. The header row renders only when `logo`, `logoText`, or `onExpandedChange` is given. */
@@ -138,6 +168,77 @@ function ActionRow({
   );
 }
 
+/** The inline rename field. Uncontrolled: Enter commits, Escape cancels,
+    and focus leaving the field commits too — an empty or unchanged value
+    cancels instead, since half a title is not a title. The keyboard paths
+    hand focus back to the row once the host swaps it in; a blur commit
+    leaves focus where the user sent it. Hook-free on purpose, so the
+    module stays renderable from a Server Component (the field itself only
+    renders when the host wires the rename callbacks, which already means
+    a client host). */
+function RenameField({
+  baseClass,
+  defaultValue,
+  label,
+  onSubmit,
+  onCancel,
+}: {
+  baseClass: string;
+  defaultValue: string;
+  label: string;
+  onSubmit: (value: string) => void;
+  onCancel?: () => void;
+}) {
+  const commit = (el: HTMLInputElement) => {
+    const value = el.value.trim();
+    if (value && value !== defaultValue) onSubmit(value);
+    else onCancel?.();
+  };
+  /* The row's button mounts only after the host clears the rename state,
+     so the hand-back polls a few frames for the swap to land — one frame
+     is a race against the host's re-render. */
+  const refocusRow = (el: HTMLInputElement) => {
+    const row = el.closest('li');
+    const tryFocus = (attempt: number) => {
+      const target = row?.querySelector<HTMLElement>('button, a');
+      if (target) target.focus();
+      else if (attempt < 3) requestAnimationFrame(() => tryFocus(attempt + 1));
+    };
+    requestAnimationFrame(() => tryFocus(0));
+  };
+  return (
+    <input
+      className={`${baseClass}__rename`}
+      type="text"
+      defaultValue={defaultValue}
+      aria-label={label}
+      ref={(el) => {
+        /* Focus and select once on mount; the activeElement guard keeps a
+           parent re-render from re-selecting mid-typing. */
+        if (el && document.activeElement !== el) {
+          el.focus();
+          el.select();
+        }
+      }}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          e.stopPropagation();
+          refocusRow(e.currentTarget);
+          commit(e.currentTarget);
+        } else if (e.key === 'Escape') {
+          /* Stop here so a host dialog (the chat sheet) doesn't close on
+             the same keystroke. */
+          e.stopPropagation();
+          refocusRow(e.currentTarget);
+          onCancel?.();
+        }
+      }}
+      onBlur={(e) => commit(e.currentTarget)}
+    />
+  );
+}
+
 /**
  * ThreadPanel is the session-history rail of a chat or agent product: brand
  * header, a new-thread action with an optional shortcut hint, standing
@@ -147,13 +248,19 @@ function ActionRow({
  * Fully controlled and stateless: the host owns the active thread, the
  * navigation, the expanded state, and what selecting a row means. Every
  * section is optional, so the panel scales from a bare thread list to the
- * full anatomy. Expand and collapse follow AppSidebar's choreography: the
- * panel owns its width (280px expanded, a 64px icon rail collapsed), the
- * sweeping clip and the labels' opacity fades carry the transition, rows
- * collapse to circular icon buttons, and while collapsed the logo doubles
- * as the expand button. Carries no `'use client'` directive — rendered
- * without callbacks (href navigation only) it works from a React Server
- * Component.
+ * full anatomy. Thread rows carry the lifecycle affordances of a real chat
+ * history: a `pending` thread shows a shimmer in its title's place while
+ * the host generates a name, `threadActions` puts a hover-revealed overflow
+ * menu (DropdownMenu, compact) on every row for rename and delete, and
+ * `renamingThreadId` swaps a row to an inline rename field — all still
+ * controlled from outside. Expand and collapse follow AppSidebar's
+ * choreography: the panel owns its width (280px expanded, a 64px icon rail
+ * collapsed), the sweeping clip and the labels' opacity fades carry the
+ * transition, rows collapse to circular icon buttons, and while collapsed
+ * the logo doubles as the expand button. Carries no `'use client'`
+ * directive — rendered without callbacks (href navigation only) it works
+ * from a React Server Component; the menu and rename affordances need
+ * callbacks, so they belong to client hosts by nature.
  *
  * Forwards a ref to the root `<div>` and spreads unrecognised props onto it.
  */
@@ -163,6 +270,13 @@ export const ThreadPanel = React.forwardRef<HTMLDivElement, ThreadPanelProps>(
       groups,
       activeThreadId,
       onThreadSelect,
+      threadActions,
+      onThreadAction,
+      threadMenuLabel = 'Thread options',
+      renamingThreadId,
+      onThreadRename,
+      onRenameCancel,
+      renameLabel = 'Rename thread',
       logo,
       logoText,
       newThreadLabel,
@@ -355,39 +469,113 @@ export const ThreadPanel = React.forwardRef<HTMLDivElement, ThreadPanelProps>(
                   >
                     {group.threads.map((thread) => {
                       const active = thread.id === activeThreadId;
+                      const actions = thread.actions ?? threadActions;
+                      const showMenu = Boolean(
+                        actions &&
+                          actions.length > 0 &&
+                          onThreadAction &&
+                          !thread.pending,
+                      );
+                      const renaming = Boolean(
+                        thread.id === renamingThreadId && onThreadRename,
+                      );
                       return (
-                        <li key={thread.id}>
-                          <ActionRow
-                            className={[
-                              `${baseClass}__thread`,
-                              active && `${baseClass}__thread--active`,
-                            ]
-                              .filter(Boolean)
-                              .join(' ')}
-                            href={thread.href}
-                            onClick={
-                              onThreadSelect
-                                ? () => onThreadSelect(thread.id)
-                                : undefined
-                            }
-                            ariaCurrent={
-                              active
-                                ? thread.href
-                                  ? 'page'
-                                  : 'true'
-                                : undefined
-                            }
-                            title={thread.title}
-                          >
-                            <span className={`${baseClass}__title`}>
-                              {thread.title}
-                            </span>
-                            {thread.meta && (
-                              <span className={`${baseClass}__meta`}>
-                                {thread.meta}
-                              </span>
-                            )}
-                          </ActionRow>
+                        <li
+                          key={thread.id}
+                          className={[
+                            `${baseClass}__row`,
+                            showMenu && `${baseClass}__row--with-menu`,
+                          ]
+                            .filter(Boolean)
+                            .join(' ')}
+                        >
+                          {renaming ? (
+                            <RenameField
+                              baseClass={baseClass}
+                              defaultValue={thread.title}
+                              label={renameLabel}
+                              onSubmit={(value) =>
+                                onThreadRename?.(thread.id, value)
+                              }
+                              onCancel={onRenameCancel}
+                            />
+                          ) : (
+                            <>
+                              <ActionRow
+                                className={[
+                                  `${baseClass}__thread`,
+                                  active && `${baseClass}__thread--active`,
+                                ]
+                                  .filter(Boolean)
+                                  .join(' ')}
+                                href={thread.href}
+                                onClick={
+                                  onThreadSelect
+                                    ? () => onThreadSelect(thread.id)
+                                    : undefined
+                                }
+                                ariaCurrent={
+                                  active
+                                    ? thread.href
+                                      ? 'page'
+                                      : 'true'
+                                    : undefined
+                                }
+                                title={thread.title}
+                              >
+                                {thread.pending ? (
+                                  /* The naming state: the shimmer holds the
+                                     title's place; the row's accessible name
+                                     comes from its tooltip. */
+                                  <span
+                                    className={`${baseClass}__title ${baseClass}__title--pending`}
+                                  >
+                                    <span
+                                      className={`${baseClass}__title-shimmer`}
+                                      aria-hidden="true"
+                                    />
+                                  </span>
+                                ) : (
+                                  <span className={`${baseClass}__title`}>
+                                    {thread.title}
+                                  </span>
+                                )}
+                                {thread.meta && !thread.pending && (
+                                  <span className={`${baseClass}__meta`}>
+                                    {thread.meta}
+                                  </span>
+                                )}
+                              </ActionRow>
+                              {showMenu && actions && (
+                                <DropdownMenu
+                                  className={`${baseClass}__menu`}
+                                  align="end"
+                                  size="compact"
+                                  items={actions.map((action) => ({
+                                    label: action.label,
+                                    icon: action.icon,
+                                    destructive: action.destructive,
+                                    onClick: () =>
+                                      onThreadAction?.(thread.id, action.id),
+                                  }))}
+                                  trigger={
+                                    <button
+                                      type="button"
+                                      className={`${baseClass}__menu-trigger`}
+                                      aria-label={`${threadMenuLabel}: ${thread.title}`}
+                                    >
+                                      <span
+                                        className={iconClass}
+                                        aria-hidden="true"
+                                      >
+                                        more_horiz
+                                      </span>
+                                    </button>
+                                  }
+                                />
+                              )}
+                            </>
+                          )}
                         </li>
                       );
                     })}

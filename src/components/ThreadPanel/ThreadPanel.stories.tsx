@@ -140,8 +140,82 @@ export const AsLinks: Story = {
   },
 };
 
-/** Long titles truncate to one line; the full text stays available in the
- *  native tooltip. */
+/** Every row can carry an overflow menu — the library's DropdownMenu at
+ *  compact size behind a trailing trigger revealed only on hover or
+ *  keyboard focus, and held while its menu is open. `threadActions` is
+ *  the shared set, a thread's own `actions` overrides it, and the
+ *  destructive flag styles delete-like rows. */
+export const ThreadMenu: Story = {
+  args: {
+    activeThreadId: 'search',
+    threadActions: [
+      { id: 'rename', label: 'Rename', icon: 'edit' },
+      { id: 'delete', label: 'Delete', icon: 'delete', destructive: true },
+    ],
+    onThreadAction: fn(),
+  },
+  play: async ({ args, canvas, userEvent }) => {
+    // The trigger rests hidden; keyboard focus reveals it (the hover
+    // reveal is CSS the synthetic pointer cannot exercise).
+    const trigger = canvas.getByRole('button', {
+      name: 'Thread options: Speed up the search index',
+    });
+    trigger.focus();
+    await userEvent.click(trigger);
+    await userEvent.click(canvas.getByRole('menuitem', { name: 'Delete' }));
+    await expect(args.onThreadAction).toHaveBeenCalledWith('search', 'delete');
+
+    // Rest the pointer off the rows so hover styling stays out of snapshots.
+    await userEvent.click(canvas.getByRole('navigation'));
+  },
+};
+
+/** The naming state: a `pending` thread holds its title's place with a
+ *  shimmer bar while the host generates a name; the given title (here
+ *  "New chat") stays as the row's accessible name and tooltip, and the
+ *  row shows no menu until the name lands. */
+export const Naming: Story = {
+  args: {
+    activeThreadId: 'fresh',
+    groups: [
+      {
+        label: 'atlas-app',
+        threads: [
+          { id: 'fresh', title: 'New chat', pending: true },
+          ...GROUPS[0].threads,
+        ],
+      },
+    ],
+    threadActions: [{ id: 'delete', label: 'Delete', destructive: true }],
+    onThreadAction: fn(),
+  },
+};
+
+/** Inline rename, controlled like everything else: `renamingThreadId`
+ *  swaps that row to a prefilled, selected text field. Enter commits the
+ *  trimmed value through `onThreadRename`; Escape, an empty value, or an
+ *  unchanged title fire `onRenameCancel` instead. */
+export const Renaming: Story = {
+  args: {
+    activeThreadId: 'search',
+    renamingThreadId: 'search',
+    onThreadRename: fn(),
+    onRenameCancel: fn(),
+  },
+  play: async ({ args, canvas, userEvent }) => {
+    const input = canvas.getByRole('textbox', { name: 'Rename thread' });
+    await expect(input).toHaveFocus();
+    await userEvent.clear(input);
+    await userEvent.type(input, 'Ship the search rewrite{enter}');
+    await expect(args.onThreadRename).toHaveBeenCalledWith(
+      'search',
+      'Ship the search rewrite',
+    );
+  },
+};
+
+/** Long titles fade out under a trailing mask rather than clipping to an
+ *  ellipsis; the full text stays available in the native tooltip. */
 export const LongTitles: Story = {
   args: {
     activeThreadId: 'long-2',

@@ -8299,6 +8299,50 @@ export const componentApi: readonly ComponentApiEntry[] = [
             "description": "Fires with the clicked thread's id. Rows with an `href` navigate as well."
           },
           {
+            "name": "threadActions",
+            "type": "ThreadPanelThreadAction[]",
+            "required": false,
+            "description": "Shared menu actions for every thread row, behind a hover-revealed trailing trigger; a thread's own `actions` overrides the set. The menu renders only when `onThreadAction` is also given, and never on a `pending` row."
+          },
+          {
+            "name": "onThreadAction",
+            "type": "((threadId: string, actionId: string) => void)",
+            "required": false,
+            "description": "Fires with the thread's id and the chosen action's id."
+          },
+          {
+            "name": "threadMenuLabel",
+            "type": "string",
+            "required": false,
+            "description": "Accessible name for a row's menu trigger; the thread's title is appended after it.",
+            "defaultValue": "Thread options"
+          },
+          {
+            "name": "renamingThreadId",
+            "type": "string",
+            "required": false,
+            "description": "Id of the thread being renamed: its row swaps to an inline text field, prefilled with the title and selected. The host owns the state, like everything else."
+          },
+          {
+            "name": "onThreadRename",
+            "type": "((threadId: string, title: string) => void)",
+            "required": false,
+            "description": "Fires with the thread's id and the trimmed new title when a rename commits (Enter, or focus leaving the field). An empty or unchanged value fires `onRenameCancel` instead."
+          },
+          {
+            "name": "onRenameCancel",
+            "type": "(() => void)",
+            "required": false,
+            "description": "Fires when a rename ends without a change: Escape, an empty value, or an unchanged title."
+          },
+          {
+            "name": "renameLabel",
+            "type": "string",
+            "required": false,
+            "description": "Accessible name for the inline rename field.",
+            "defaultValue": "Rename thread"
+          },
+          {
             "name": "logo",
             "type": "ReactNode",
             "required": false,
