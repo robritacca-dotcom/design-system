@@ -100,12 +100,12 @@ export default function ShaderFieldPage() {
           <section className={styles.section}>
             <SectionTitle title="Parameters" />
             <p className={styles.demoText}>
-              Seven numbers describe the look. They pass through as a partial,
-              merged over the shipped defaults, so changing one thing takes one
-              property. Two stages rather than seven, deliberately: every field
-              on this page is a live GL context, and a documentation page that
-              stands up eight of them is teaching the wrong lesson about what
-              this component costs.
+              Eight parameters describe the look. They pass through as a
+              partial, merged over the shipped defaults, so changing one thing
+              takes one property. Two stages rather than one per parameter,
+              deliberately: every field on this page is a live GL context, and
+              a documentation page that stands up a grid of them is teaching
+              the wrong lesson about what this component costs.
             </p>
             <div className={styles.stageGrid}>
               <Stage caption="streak: 1, stretching every source along a fixed diagonal">

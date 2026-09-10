@@ -19,8 +19,10 @@
  *    that nothing defines (which resolves to empty, i.e. an invisible blob).
  *  - PARAM_RANGES below matches DEFAULT_SHADER_PARAMS in the library, in both
  *    directions, so a new parameter cannot ship without a sanity range
- *  - the "<N> parameters" claims in README.md, design.md and CLAUDE.md match
- *    that count. A parameter count is a countable fact, so it gets the same
+ *  - the "<N> parameters" claims match that count in every doc the CLAIM_CHECKS
+ *    loop enumerates (the list beside the loop is authoritative — it includes
+ *    the ShaderField docs page, which the 2026-09 audit caught still saying
+ *    seven). A parameter count is a countable fact, so it gets the same
  *    treatment as every other one in this repo: build-enforced rather than
  *    remembered. The 2026-08 drift audit is why — `crop` landed, the specs
  *    were updated, and the README kept telling npm consumers there were seven.
@@ -185,7 +187,13 @@ const CLAIM_CHECKS = [
   { pattern: `(?:field |shader )?parameters`, expected: () => shipped?.length, name: 'ShaderField parameters' },
   { pattern: `(?:blob definitions|blurred CSS discs|CSS blobs)`, expected: () => blobCount, name: 'BLOB_COUNT' },
 ];
-for (const doc of ['README.md', 'design.md', 'CLAUDE.md', 'website/src/app/docs/get-started/page.tsx']) {
+for (const doc of [
+  'README.md',
+  'design.md',
+  'CLAUDE.md',
+  'website/src/app/docs/get-started/page.tsx',
+  'website/src/app/components/shader-field/page.tsx',
+]) {
   let text;
   try {
     text = readFileSync(join(repoRoot, doc), 'utf8').replace(/\r\n/g, '\n');

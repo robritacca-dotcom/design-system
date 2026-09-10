@@ -46,7 +46,7 @@ Pull GA with the `ga-report` skill's judgment (it owns the bot list and baseline
 
 ### 3. Probe the agent surfaces from outside
 
-Live requests against production, as a stranger's agent would make them: `https://www.robertritacca.com/llms.txt` returns 200 and every link it advertises resolves; the MCP endpoint answers a standard MCP `tools/list` POST (`MCP_ENDPOINT` in `website/src/lib/mcp-clients.ts` owns the URL). These surfaces are how an AI assistant learns the site exists — a quiet regression here is invisible to every other check, including GA.
+Live requests against production, as a stranger's agent would make them, against the canonical apex host (`SITE_URL` in `website/src/lib/structuredData.ts` — the `www` host is a redirect, and probing it would measure the redirect chain rather than the canonical surface): `https://robertritacca.com/llms.txt` returns 200 and every link it advertises resolves; the MCP endpoint answers a standard MCP `tools/list` POST (`MCP_ENDPOINT` in `website/src/lib/mcp-clients.ts` owns the URL). These surfaces are how an AI assistant learns the site exists — a quiet regression here is invisible to every other check, including GA.
 
 ### 4. Rank the target queries
 

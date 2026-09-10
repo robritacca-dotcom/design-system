@@ -8,9 +8,9 @@ import styles from "./page.module.css";
 /**
  * The templates index deliberately breaks the section-index formula: no
  * sidebar and no card grid. A template's whole point is the full screen, so
- * the page shows one — a live, scaled preview in a carousel that rolls to
- * the templates still to come. The sidebar would only offer links that eject
- * the reader into a chromeless page; the preview is the navigation.
+ * the page shows one — a live, scaled preview in a carousel of the built
+ * templates. The sidebar would only offer links that eject the reader into
+ * a chromeless page; the preview is the navigation.
  */
 export default function TemplatesPage() {
   return (

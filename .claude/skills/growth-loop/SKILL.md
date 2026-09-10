@@ -1,6 +1,6 @@
 ---
 name: growth-loop
-description: Weekly GA-driven copy experiment loop for www.robertritacca.com. Analyze last month's GA data, find one copy problem, implement the fix on a local branch, and write a report for approval. Use when asked to run the growth loop. Never pushes, merges, or deploys.
+description: Weekly GA-driven copy experiment loop for robertritacca.com. Analyze last month's GA data, find one copy problem, implement the fix on a local branch, and write a report for approval. Use when asked to run the growth loop. Never pushes, merges, or deploys.
 icon: cycle
 displayDescription: "Runs one analytics-driven copy experiment end to end: pulls GA4 data, filters bot noise, forms a falsifiable hypothesis about the words on a page, implements the change on a branch in a temporary worktree, verifies the build, and writes a problem / hypothesis / solution report for approval. Runs itself every Monday, as one of the loops described on the Loops page."
 invoke: ["run the growth loop","/growth-loop"]
@@ -8,7 +8,7 @@ invoke: ["run the growth loop","/growth-loop"]
 
 # growth-loop
 
-Weekly GA-driven copy experiment loop for www.robertritacca.com (this repo's `website/` deploys there via Vercel). Each run: analyze last month's GA data, find ONE copy problem, form a hypothesis, implement the fix on a local branch, and write a clear report for the user to approve. **Never push, merge, or deploy — the user approves every change.**
+Weekly GA-driven copy experiment loop for robertritacca.com (this repo's `website/` deploys there via Vercel). Each run: analyze last month's GA data, find ONE copy problem, form a hypothesis, implement the fix on a local branch, and write a clear report for the user to approve. **Never push, merge, or deploy — the user approves every change.**
 
 ## When invoked
 
