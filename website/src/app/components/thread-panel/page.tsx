@@ -4,7 +4,10 @@ import React from "react";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import ComponentsSidebar from "../../../components/Sidebar/ComponentsSidebar";
-import { ThreadPanel } from "@robr0/design-system/components/ThreadPanel/ThreadPanel";
+import {
+  ThreadPanel,
+  type ThreadPanelThread,
+} from "@robr0/design-system/components/ThreadPanel/ThreadPanel";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
 import styles from "./page.module.css";
@@ -78,6 +81,93 @@ function CollapseDemo() {
         newThreadShortcut={["Ctrl", "N"]}
         controls={CONTROLS}
         profile={{ name: "Robin Vale", meta: "Team" }}
+      />
+    </div>
+  );
+}
+
+/* The lifecycle demo simulates a title-generation call: a new thread
+   shimmers as "New chat" until its name arrives a beat later. State lives
+   here and dies with the page. */
+const LIFECYCLE_NAMES = [
+  "Plan the beta invite list",
+  "Summarize the weekly standup",
+  "Draft the pricing FAQ",
+  "Tidy up the workspace roles",
+];
+const NAMING_DELAY_MS = 1600;
+
+function LifecycleDemo() {
+  const seq = React.useRef(0);
+  const cursor = React.useRef(0);
+  const timers = React.useRef(new Map<string, number>());
+  const [threads, setThreads] = React.useState<ThreadPanelThread[]>([
+    { id: "onboarding", title: "Rework the onboarding flow" },
+    { id: "search", title: "Speed up the search index" },
+    { id: "billing", title: "Untangle the billing webhooks" },
+  ]);
+  const [active, setActive] = React.useState("onboarding");
+  const [renaming, setRenaming] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const pending = timers.current;
+    return () => pending.forEach((timer) => clearTimeout(timer));
+  }, []);
+
+  const createThread = () => {
+    seq.current += 1;
+    const id = `new-${seq.current}`;
+    setThreads((list) => [{ id, title: "New chat", pending: true }, ...list]);
+    setActive(id);
+    const timer = window.setTimeout(() => {
+      timers.current.delete(id);
+      const title = LIFECYCLE_NAMES[cursor.current % LIFECYCLE_NAMES.length];
+      cursor.current += 1;
+      setThreads((list) =>
+        list.map((thread) => (thread.id === id ? { id, title } : thread))
+      );
+    }, NAMING_DELAY_MS);
+    timers.current.set(id, timer);
+  };
+
+  const deleteThread = (id: string) => {
+    const timer = timers.current.get(id);
+    if (timer != null) {
+      clearTimeout(timer);
+      timers.current.delete(id);
+    }
+    const next = threads.filter((thread) => thread.id !== id);
+    setThreads(next);
+    if (renaming === id) setRenaming(null);
+    if (active === id) setActive(next[0] ? next[0].id : "");
+  };
+
+  return (
+    <div className={`${styles.railFrame} ${styles.railFrameShort}`}>
+      <ThreadPanel
+        groups={[{ label: "atlas-app", threads }]}
+        activeThreadId={active}
+        onThreadSelect={setActive}
+        newThreadLabel="New chat"
+        onNewThread={createThread}
+        threadActions={[
+          { id: "rename", label: "Rename", icon: "edit" },
+          { id: "delete", label: "Delete", icon: "delete", destructive: true },
+        ]}
+        onThreadAction={(threadId, actionId) => {
+          if (actionId === "rename") setRenaming(threadId);
+          else if (actionId === "delete") deleteThread(threadId);
+        }}
+        renamingThreadId={renaming ?? undefined}
+        onThreadRename={(threadId, title) => {
+          setThreads((list) =>
+            list.map((thread) =>
+              thread.id === threadId ? { ...thread, title } : thread
+            )
+          );
+          setRenaming(null);
+        }}
+        onRenameCancel={() => setRenaming(null)}
       />
     </div>
   );
@@ -170,6 +260,23 @@ export default function ThreadPanelPage() {
                 <ThreadPanel groups={GROUPS} activeThreadId="quickstart" />
               </div>
             </div>
+          </section>
+
+          <section className={styles.section}>
+            <SectionTitle title="The thread lifecycle" />
+            <p className={styles.demoText}>
+              Rows carry a real history&apos;s lifecycle, all controlled from
+              outside. A pending thread holds its title&apos;s place with a
+              shimmer while the host generates a name; threadActions hangs an
+              overflow menu on every row, revealed only on hover or focus
+              and built from the compact Dropdown menu; and
+              renamingThreadId swaps a row to an inline rename field, where
+              Enter commits and Escape cancels. Long titles fade out under a
+              trailing mask rather than clipping, so the revealed trigger
+              never collides with text. Try it: start a new chat, then
+              rename or delete it from the row&apos;s menu.
+            </p>
+            <LifecycleDemo />
           </section>
 
           <section className={styles.section}>

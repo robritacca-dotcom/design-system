@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { AiButton } from "@robr0/design-system/components/AiButton/AiButton";
 import { CircularButton } from "@robr0/design-system/components/CircularButton/CircularButton";
 import { DocumentChip } from "@robr0/design-system/components/DocumentChip/DocumentChip";
@@ -41,9 +41,14 @@ const MOCK_MODELS: ModelPickerModel[] = [
 export type TransportMode = "live" | "sim";
 type ResizeAxis = "x" | "y" | "both";
 
-/* The staged product's chat history — set dressing like the mock models:
-   selecting a thread moves the pill and closes the sheet, nothing routes. */
-const MOCK_THREAD_GROUPS: ThreadPanelGroup[] = [
+/* The staged product's chat history — the seed the simulation starts
+   from. Unlike the mock models it is live state: New chat prepends an
+   unnamed thread, the first utterance sent in it starts the naming
+   shimmer (a title is generated from the conversation, so there is
+   nothing to name before one exists), and the overflow menu renames and
+   deletes. All of it lives in this component's state, so it dies with
+   the playground session — nothing persists. */
+const INITIAL_THREAD_GROUPS: ThreadPanelGroup[] = [
   {
     label: "This week",
     threads: [
@@ -60,6 +65,28 @@ const MOCK_THREAD_GROUPS: ThreadPanelGroup[] = [
       { id: "notify", title: "Quiet the mention notifications" },
     ],
   },
+];
+
+/* The names the simulated "title generation" hands out, in order, when a
+   new chat's shimmer resolves; the pool cycles past the end. */
+const SIM_THREAD_NAMES = [
+  "Plan the beta invite list",
+  "Summarize the weekly standup",
+  "Draft the pricing FAQ",
+  "Tidy up the workspace roles",
+  "Sketch the renewal email",
+];
+
+/* How long the shimmer runs after the first utterance before the name
+   "arrives" — paced like a fast title-generation call, not a UI
+   transition, so it is a simulation schedule rather than a motion token. */
+const THREAD_NAMING_DELAY_MS = 1600;
+
+/* Every thread's overflow menu: rename swaps the row to the panel's
+   inline editor, delete removes it. */
+const THREAD_ACTIONS = [
+  { id: "rename", label: "Rename", icon: "edit" },
+  { id: "delete", label: "Delete", icon: "delete", destructive: true },
 ];
 
 /* Review targets, not layout tokens. Two footprints are enough: the
@@ -116,13 +143,140 @@ export default function ChatView({
   allowFullscreen,
   simControls,
 }: ChatViewProps) {
-  const { open, setOpen, view, returnFocusRef, send, streaming, reset } =
-    useSiteChat();
+  const {
+    open,
+    setOpen,
+    view,
+    returnFocusRef,
+    send,
+    streaming,
+    reset,
+    turns,
+    live,
+  } = useSiteChat();
 
-  /* The mock history's own state: which thread wears the pill, and whether
-     the wide-mode rail is expanded. Both die with the playground. */
-  const [activeThread, setActiveThread] = useState("launch");
+  /* The simulated history's own state: the threads themselves, which one
+     wears the pill, which one is mid-rename, and whether the wide-mode
+     rail is expanded. All of it dies with the playground — the session is
+     the only cache. Nothing starts selected: the stage opens on the
+     greeting screen, and a greeting has no thread to stand for. */
+  const [threadGroups, setThreadGroups] = useState(INITIAL_THREAD_GROUPS);
+  const [activeThread, setActiveThread] = useState("");
+  const [renamingThread, setRenamingThread] = useState<string | null>(null);
   const [railExpanded, setRailExpanded] = useState(true);
+
+  /* The naming simulation's clockwork: a sequence for fresh ids, a cursor
+     into the name pool, and the pending timers so deleting a still-naming
+     thread (or leaving the view) cancels its reveal. */
+  const threadSeq = useRef(0);
+  const nameCursor = useRef(0);
+  const namingTimers = useRef(new Map<string, number>());
+  useEffect(() => {
+    const timers = namingTimers.current;
+    return () => timers.forEach((timer) => clearTimeout(timer));
+  }, []);
+
+  /* A thread is born from the first utterance, not from the New chat
+     button: the row lands at the top already shimmering, and its "AI
+     title" arrives a beat later. */
+  const beginThread = useCallback(() => {
+    threadSeq.current += 1;
+    const id = `new-${threadSeq.current}`;
+    setThreadGroups((groups) =>
+      groups.map((group, index) =>
+        index === 0
+          ? {
+              ...group,
+              threads: [
+                { id, title: "New chat", pending: true },
+                ...group.threads,
+              ],
+            }
+          : group
+      )
+    );
+    setActiveThread(id);
+    const timer = window.setTimeout(() => {
+      namingTimers.current.delete(id);
+      const title =
+        SIM_THREAD_NAMES[nameCursor.current % SIM_THREAD_NAMES.length];
+      nameCursor.current += 1;
+      setThreadGroups((groups) =>
+        groups.map((group) => ({
+          ...group,
+          threads: group.threads.map((thread) =>
+            thread.id === id ? { id, title } : thread
+          ),
+        }))
+      );
+    }, THREAD_NAMING_DELAY_MS);
+    namingTimers.current.set(id, timer);
+  }, []);
+
+  /* One rule keeps every entry point honest: no utterance means no active
+     thread. The greeting screen deselects the rail whether it arrived via
+     the panel's New chat, the header's pen, the director's reset, or a
+     deleted thread — and the first utterance sent with nothing selected
+     is what creates the pending row above. Transition-guarded so merely
+     selecting a thread while the greeting shows keeps its pill. */
+  const hasUtterance = turns.length > 0 || live !== null;
+  const hadUtteranceRef = useRef(hasUtterance);
+  const birthingRef = useRef(false);
+  useEffect(() => {
+    const had = hadUtteranceRef.current;
+    hadUtteranceRef.current = hasUtterance;
+    if (hasUtterance && activeThread === "") {
+      if (!birthingRef.current) {
+        birthingRef.current = true;
+        beginThread();
+      }
+    } else {
+      birthingRef.current = false;
+      if (!hasUtterance && had && activeThread !== "") {
+        setActiveThread("");
+        setRenamingThread(null);
+      }
+    }
+  }, [hasUtterance, activeThread, beginThread]);
+
+  const startNewChat = () => {
+    reset();
+    setActiveThread("");
+    setRenamingThread(null);
+  };
+
+  const deleteThread = (id: string) => {
+    const timer = namingTimers.current.get(id);
+    if (timer != null) {
+      clearTimeout(timer);
+      namingTimers.current.delete(id);
+    }
+    setThreadGroups((groups) =>
+      groups.map((group) => ({
+        ...group,
+        threads: group.threads.filter((thread) => thread.id !== id),
+      }))
+    );
+    if (renamingThread === id) setRenamingThread(null);
+    if (activeThread === id) {
+      /* The open conversation went with its thread: back to the greeting,
+         nothing selected. */
+      setActiveThread("");
+      reset();
+    }
+  };
+
+  const renameThread = (id: string, title: string) => {
+    setThreadGroups((groups) =>
+      groups.map((group) => ({
+        ...group,
+        threads: group.threads.map((thread) =>
+          thread.id === id ? { ...thread, title } : thread
+        ),
+      }))
+    );
+    setRenamingThread(null);
+  };
   /* A real phone viewport: the stage-size lever is hidden there and the
      widget goes fluid, so the preset alone cannot say it is a phone. */
   const phoneViewport = useTakeoverViewport();
@@ -329,20 +483,31 @@ export default function ChatView({
            by the render prop — the slide-over sheet names the product and
            skips the collapse (the scrim is its dismissal), while the wide
            inline rail skips the brand (the chat header already says it)
-           and offers AppSidebar's collapse instead. Simulated-transport set
-           dressing like the mock picker: on Live the threads stand down and
-           the widget reverts to the site's classic look. */
+           and offers AppSidebar's collapse instead. The history itself is
+           the simulated lifecycle above: New chat shimmers until its name
+           arrives, and the overflow menu renames inline and deletes.
+           Simulated-transport set dressing like the mock picker: on Live
+           the threads stand down and the widget reverts to the site's
+           classic look. */
         threads={simControls ? ({ overlay, close }) => (
           <ThreadPanel
-            groups={MOCK_THREAD_GROUPS}
+            groups={threadGroups}
             activeThreadId={activeThread}
             onThreadSelect={(id) => {
               setActiveThread(id);
               close();
             }}
+            threadActions={THREAD_ACTIONS}
+            onThreadAction={(threadId, actionId) => {
+              if (actionId === "rename") setRenamingThread(threadId);
+              else if (actionId === "delete") deleteThread(threadId);
+            }}
+            renamingThreadId={renamingThread ?? undefined}
+            onThreadRename={renameThread}
+            onRenameCancel={() => setRenamingThread(null)}
             newThreadLabel="New chat"
             onNewThread={() => {
-              reset();
+              startNewChat();
               close();
             }}
             historyLabel="Chat history"
