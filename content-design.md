@@ -85,7 +85,7 @@ Each surface has its own shape. The full standard for a surface lives in one pla
 | Nav config copy (the section and link descriptions and the mega showcase card's overline, title and description in `website/src/config/navigation.ts`) | None | Sentence-case fragments; the showcase description one sentence | One string renders in several places at once (the mega panel, the sidebars, the footer's derived columns, the home and DS-landing cards), so a change is a site-wide change; descriptions say what a page holds, never actions or promotion | This file + the `content-audit` skill's `nav` scope |
 | Immersive stage copy (the hint line and control labels on `/playground` and `/canvas`) | Imperative | One line of chained gesture instructions; control labels a few words | Teach the interaction the surface does not otherwise reveal, in the order a visitor tries it; never restate what a visible control already says | This file |
 
-Deliberately out of scope: the essays on `/writing` are authored on Substack and synced in verbatim (`scripts/sync-essays.mjs`) — their register is the essay's own, and no rule in this file applies to or edits them.
+Deliberately out of scope: the essays on `/writing` are authored on Substack and synced in verbatim (`scripts/sync-essays.mjs`) — their register is the essay's own, and no rule in this file applies to or edits them. The hidden `/labs` rebuilds are out of scope the same way as the template screens: their copy is fictional demo data redrawing a reference product, and the `content-audit` skill's exclusion list records it.
 
 ---
 
