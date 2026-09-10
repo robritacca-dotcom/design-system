@@ -11,6 +11,7 @@ import { getArticles, coverPlaceholder, articleExcerpt } from "@/lib/substack";
 import { caseStudies } from "@/data/case-studies";
 import { EssayCover } from "@/components/covers/EssayCover";
 import { hasEssayCover } from "@/data/essay-covers";
+import { HomeHeroComposer } from "@/components/HomeHeroComposer/HomeHeroComposer";
 import type { Metadata } from "next";
 import styles from "./page.module.css";
 
@@ -83,6 +84,10 @@ export default async function HomePage() {
               Principal Product Designer, based in Toronto, Canada
             </p>
           </div>
+
+          {/* Experiment: the site chat's composer as the hero's centrepiece.
+              Submitting opens the chat panel with the answer streaming. */}
+          <HomeHeroComposer className="animate-in animate-delay-1" />
 
           <FadeDivider className="animate-in animate-delay-1" />
 

@@ -1,0 +1,13 @@
+/* The hero centres a column of fixed-rhythm blocks; the composer joins it
+   at the reading column's width so it reads as part of the introduction,
+   not a full-bleed app bar. The disabled treatment while the chat is open
+   comes from the Composer's own disabled state; the transition here just
+   eases the dim in and out. */
+.shell {
+  width: 100%;
+  max-width: 560px;
+}
+
+.shell :global(.ds-composer) {
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
+}
