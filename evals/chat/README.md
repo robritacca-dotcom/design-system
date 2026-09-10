@@ -37,6 +37,13 @@ Each question runs 3 times. Same question, different answers is normal; a
 case that flickers pass/fail across repeats is telling you the answer is
 borderline, which is worth reading, not averaging away.
 
+## Where the rules are written down
+
+`SPEC.md` in this directory maps every behavioural rule the chat is held to
+(from the persona and content-design.md) to the check that enforces it, and
+names the rules that have no tripwire yet. New golden-set cases cite the rule
+ids they cover; a rule change and its spec row move in the same change.
+
 ## What the layers are
 
 - **Layer 0 — coverage, free, in CI.** `scripts/validate-chat-coverage.mjs`

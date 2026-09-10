@@ -47,8 +47,9 @@ const sources = [
     'content-design.md',
     'SECURITY.md',
     // Non-root instruction docs: CLAUDE.md sends readers to the evals README
-    // by name, and all three prescribe commands — so they rot the same way.
+    // by name, and they all prescribe commands — so they rot the same way.
     'evals/chat/README.md',
+    'evals/chat/SPEC.md',
     'website/README.md',
     'ga-analysis/README.md',
   ].map((f) => [f, join(repoRoot, f)]),

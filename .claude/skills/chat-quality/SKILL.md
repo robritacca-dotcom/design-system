@@ -40,7 +40,7 @@ Every **down** verdict is a golden-set candidate: read the question, the answer,
 
 ### 3. Encode the failures
 
-Apply the standing rule from `evals/chat/README.md`: each real failure becomes a golden-set case **before** it is fixed — paraphrased question, its `requiredFacts`, and the cheapest assertion that would have caught it. If a required fact is missing from the corpus, that's the actual bug: fix the source (page prose or a `corpus-facts()` block), and `scripts/validate-chat-coverage.mjs` will hold the new case to the regenerated corpus.
+Apply the standing rule from `evals/chat/README.md`: each real failure becomes a golden-set case **before** it is fixed — paraphrased question, its `requiredFacts`, and the cheapest assertion that would have caught it, with the case's `description` citing the rule ids it covers per `evals/chat/SPEC.md` (a failure no rule covers means the spec gains the rule in the same change). If a required fact is missing from the corpus, that's the actual bug: fix the source (page prose or a `corpus-facts()` block), and `scripts/validate-chat-coverage.mjs` will hold the new case to the regenerated corpus.
 
 ### 4. Run the eval
 
@@ -48,7 +48,7 @@ Follow `evals/chat/README.md` exactly — it owns the procedure (the `website-ev
 
 ### 5. Fix on a branch
 
-Worktree recipe from the growth-loop skill, branch `chat/YYYY-MM-DD-<slug>`. One coherent batch: the new golden-set cases plus the corpus/persona fixes they demanded. Verify the website build in the worktree; commit the regenerated corpus when page prose changed (the commit-scope rule in the growth-loop recipe).
+Worktree recipe from the growth-loop skill, branch `chat/YYYY-MM-DD-<slug>`. One coherent batch: the new golden-set cases plus the corpus/persona fixes they demanded. A persona edit updates its matching rule row in `evals/chat/SPEC.md` in the same commit, and a new persona rule ships with either a tripwire or an explicit unenforced entry there. Verify the website build in the worktree; commit the regenerated corpus when page prose changed (the commit-scope rule in the growth-loop recipe).
 
 ### 6. Report and hand off
 
