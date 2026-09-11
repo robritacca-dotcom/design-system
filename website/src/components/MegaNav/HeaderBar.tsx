@@ -49,7 +49,7 @@ function SearchButton({ tabIndex }: { tabIndex?: number }) {
       type="button"
       className={styles.searchBtn}
       onClick={openSitePalette}
-      aria-label="Search the site"
+      aria-label="Search or ask anything"
       aria-keyshortcuts="Meta+K"
       tabIndex={tabIndex}
     >
@@ -57,7 +57,7 @@ function SearchButton({ tabIndex }: { tabIndex?: number }) {
         search
       </span>
       <span className={styles.searchLabel} aria-hidden="true">
-        Search
+        Search or ask anything
       </span>
       <span className={styles.searchKeys} aria-hidden="true">
         <Kbd size="compact">⌘</Kbd>

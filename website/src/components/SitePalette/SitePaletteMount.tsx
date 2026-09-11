@@ -69,17 +69,20 @@ interface SitePaletteMountProps {
  * The resting view is the doors: top-level pages, the design system
  * cluster, and a few actions. Typing widens the pool to every component,
  * foundation page, case study and essay — all derived from the navigation
- * config and the component registry, never listed by hand here.
+ * config and the component registry, never listed by hand here — plus the
+ * one exception: the ask-chat row, built from the query itself, which
+ * hands the typed question to the site chat.
  */
 export function SitePaletteMount({ writingLinks }: SitePaletteMountProps) {
   const pathname = usePathname() ?? "/";
   const router = useRouter();
-  const { setOpen: setChatOpen } = useSiteChat();
+  const { setOpen: setChatOpen, send: sendChat } = useSiteChat();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const isDesktop = useSyncExternalStore(subscribeDesktop, readDesktop, () => false);
 
-  const hasQuery = query.trim().length > 0;
+  const trimmedQuery = query.trim();
+  const hasQuery = trimmedQuery.length > 0;
 
   // The header's search button lives in a different tree (see palette-bus).
   useEffect(() => {
@@ -222,6 +225,28 @@ export function SitePaletteMount({ writingLinks }: SitePaletteMountProps) {
     // gives the built-in filter something to narrow them with.
     if (!hasQuery) return [navigation, designSystem, actions];
 
+    // The Stripe-style escape hatch: whatever was typed can be handed to the
+    // site chat as a question. The row's label IS the query, which is what
+    // keeps it visible — the built-in filter matches labels against the
+    // query, and a label that contains it always survives. Sits last, below
+    // the concrete matches, and when nothing else matches it is the whole
+    // result set: the dead-end empty state becomes an answer path.
+    const askChat: CommandPaletteGroup = {
+      label: "Ask robr0 GPT",
+      commands: [
+        {
+          id: "ask-chat-query",
+          label: trimmedQuery,
+          description: "Get an answer from the site chat",
+          icon: "forum",
+          onSelect: () => {
+            setChatOpen(true);
+            sendChat(trimmedQuery);
+          },
+        },
+      ],
+    };
+
     const components: CommandPaletteGroup = {
       label: "Components",
       commands: [...componentMetadata]
@@ -274,8 +299,17 @@ export function SitePaletteMount({ writingLinks }: SitePaletteMountProps) {
       })),
     };
 
-    return [navigation, designSystem, components, foundations, caseStudyGroup, essays, actions];
-  }, [hasQuery, isDesktop, writingLinks, router, setChatOpen]);
+    return [
+      navigation,
+      designSystem,
+      components,
+      foundations,
+      caseStudyGroup,
+      essays,
+      actions,
+      askChat,
+    ];
+  }, [hasQuery, trimmedQuery, isDesktop, writingLinks, router, setChatOpen, sendChat]);
 
   if (CHROMELESS_ROUTES.has(pathname)) return null;
 
@@ -285,9 +319,12 @@ export function SitePaletteMount({ writingLinks }: SitePaletteMountProps) {
       open={open}
       onOpenChange={handleOpenChange}
       groups={groups}
-      // Short enough to fit the input on a 375px phone, where the longer
-      // pages-components-actions form clipped mid-word.
-      placeholder="Search the site"
+      // Names both things the field does now that a query can be handed to
+      // the chat. Still short enough for the input on a 375px phone, where
+      // the longer pages-components-actions form clipped mid-word.
+      placeholder="Search or ask anything"
+      // Unreachable while the ask row exists (its label is the query, so it
+      // matches every query) — kept as the fallback should that ever change.
       emptyMessage="No matches. Try another word."
       // The showcase page's demo binds Cmd+K itself; there the header's
       // search button still opens this one, but the hotkey stays the demo's.

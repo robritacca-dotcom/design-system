@@ -54,15 +54,16 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  /* Matches .rightSlot, which grew for the search field — equal slots keep
-     navCenter centred on the page. */
-  width: 348px;
 }
 
 .navCenter {
   display: flex;
   align-items: center;
-  justify-content: center;
+  /* Left-aligned beside the logo rather than centred on the page — the
+     margin plus the first pill's own 16px padding sets the visual gap.
+     With nothing centred, the outer slots need no balancing widths. */
+  justify-content: flex-start;
+  margin-left: var(--primitive-gap-xl);
   flex: 1;
 }
 
@@ -71,9 +72,6 @@
   align-items: center;
   justify-content: flex-end;
   flex-shrink: 0;
-  /* Was 160px before the search control; the input-shaped field is 180px
-     plus the gap. Keep in step with .logoSlot. */
-  width: 348px;
   gap: var(--primitive-gap-sm);
 }
 
@@ -97,7 +95,11 @@
 .logoText {
   font-family: var(--font-title-body-family);
   font-size: var(--font-title-body-size);
-  font-weight: var(--font-title-body-weight);
+  /* ds-allow(typography): the system's one weight-700 setting — the wordmark
+     reads a notch heavier than the nav pills beside it, one step above
+     title-body's 600; no token resolves to 700 (design.md's Site header
+     pattern records the exception), and the face is in the loaded set. */
+  font-weight: 700;
   line-height: var(--font-title-body-line-height);
   letter-spacing: var(--font-title-body-letter-spacing);
   color: var(--color-text-primary);
@@ -257,7 +259,9 @@
   padding: 0 var(--primitive-padding-sm-md);
   cursor: pointer;
   color: var(--color-text-secondary);
-  width: 180px;
+  /* Wide enough for the full "Search or ask anything" placeholder plus the
+     icon and the ⌘K keycaps, with the keys' auto margin absorbing the rest. */
+  width: 264px;
   height: 40px;
   --icon-size: var(--icon-size-sm);
   /* Input's own hover transition, so the border responds at the same pace. */
@@ -789,7 +793,7 @@
    ============================================ */
 @media (max-width: 1279px) {
   /* Not enough room for the input dressing beside five nav pills — the
-     field folds back to the icon circle and the slots shrink with it. */
+     field folds back to the icon circle. */
   .searchBtn {
     justify-content: center;
     width: 40px;
@@ -807,11 +811,6 @@
   .searchLabel,
   .searchKeys {
     display: none;
-  }
-
-  .logoSlot,
-  .rightSlot {
-    width: 208px;
   }
 }
 
@@ -834,16 +833,6 @@
 
   .mobileMenuOverlay {
     display: block;
-  }
-
-  .rightSlot {
-    width: auto;
-  }
-
-  /* navCenter is hidden here, so the slots no longer balance anything —
-     free the fixed width before it crowds a narrow viewport. */
-  .logoSlot {
-    width: auto;
   }
 
   .stickyHeader {
