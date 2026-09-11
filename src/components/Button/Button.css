@@ -108,7 +108,7 @@
    ============================================ */
 
 .ds-button--secondary {
-  /* Figma: --action/primary/border/primary (#0a4e66) - 1px border */
+  /* Figma: --action/primary/border/primary - 1px border */
   border: var(--border-xs) solid var(--color-action-primary-border);
   background-color: transparent;
 }
@@ -134,7 +134,7 @@
 }
 
 .ds-button--secondary.ds-button--active {
-  /* Figma: --action/primary/background/active (#0a4e66) - 1px border */
+  /* Figma: --action/primary/background/active - 1px border */
   background-color: var(--color-action-primary-bg-active);
   border: var(--border-xs) solid var(--color-action-primary-border);
 }
