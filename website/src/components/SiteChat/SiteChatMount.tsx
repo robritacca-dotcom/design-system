@@ -179,7 +179,7 @@ export function SiteChatMount() {
 
   if (denied) return null;
 
-  /* Closed: the FAB is the entry point — bottom right, on every page, never
+  /* Closed: the FAB is the persistent entry point — bottom right, on every page, never
      remounting on navigation (so focus restore works everywhere). */
   if (!showPanel) {
     return (

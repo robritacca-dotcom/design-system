@@ -237,8 +237,9 @@ export default async function RootLayout({
           <SiteChatMount />
           {/* The global command palette (an experiment): mounted once beside
               the chat, so Cmd+K and the header's search button work on every
-              chrome-bearing page. Inside the chat provider because one of its
-              actions opens the panel. */}
+              chrome-bearing page. Inside the chat provider because the
+              palette both opens the panel and can hand it a typed query as
+              a question (the ask row's send). */}
           <SitePaletteMount writingLinks={writingPaletteLinks} />
         </SiteChatProvider>
       </body>

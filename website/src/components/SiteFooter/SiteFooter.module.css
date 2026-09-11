@@ -43,10 +43,11 @@
   gap: var(--gap-lg);
 }
 
-/* The same mark and wordmark the header wears, at the same size — the
-   footer is the quiet end of the page, so it is the opacity that sets it
-   back rather than a smaller or greyer variant of the brand. Full
-   strength on hover, since it is still the link home. */
+/* The same mark and wordmark the header wears, at the same size — though
+   the header's runs a step heavier (700; design.md's footer pattern owns
+   the split). The footer is the quiet end of the page, so it is the
+   opacity that sets it back rather than a smaller or greyer variant of
+   the brand. Full strength on hover, since it is still the link home. */
 .brandMark {
   display: flex;
   align-items: center;
