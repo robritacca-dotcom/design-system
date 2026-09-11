@@ -13,7 +13,7 @@ import {
 } from "react";
 import { MOTION_EXIT_SYNC_MS } from "@robr0/design-system/tokens/motion";
 import { useChat, type ChatTransport } from "@/hooks/useChat";
-import { fetchFollowups, followupTarget } from "@/lib/chat-followups";
+import { fallbackFollowups, fetchFollowups, followupTarget } from "@/lib/chat-followups";
 import { createFetchTransport } from "@/lib/chat-transport";
 
 /** Panel is the docked rail; full is the viewport takeover. */
@@ -143,9 +143,13 @@ export function SiteChatProvider({
     askedRef.current.add(target.id);
     // Never rejects, and a write to a turn that has since been cleared by a
     // new chat is a no-op — so there is nothing here to abort or guard.
+    // An empty result substitutes the written fallbacks: the pending row
+    // promised chips, and a shimmer that resolves to nothing reads as broken.
     void fetchFollowups(target.question, target.answer).then((suggestions) => {
-      setTurnFollowups(target.id, suggestions);
-      if (suggestions.length > 0) setFreshFollowupsId(target.id);
+      const offered =
+        suggestions.length > 0 ? suggestions : fallbackFollowups(target.id, target.question);
+      setTurnFollowups(target.id, offered);
+      setFreshFollowupsId(target.id);
     });
   }, [target, setTurnFollowups]);
 

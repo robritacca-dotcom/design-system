@@ -12,12 +12,48 @@ import { fitsChip } from "@/lib/chat-suggestions";
    (the sim does, from a script) yields a `followups` event instead, and the
    two paths meet at the same field on the turn.
 
-   Every failure is silent. A response with no chips under it is a complete
-   response; an error message where a suggestion should be is not.
+   Every failure is silent, but never empty-handed. The pending row promises
+   chips — a shimmer that resolves to nothing reads as a failure — so a
+   request that comes back with no usable suggestions falls back to the
+   written pool below rather than collapsing. An error message where a
+   suggestion should be is still the one thing this module never shows.
    ============================================ */
 
 /** Chips offered under one answer. */
 const MAX_SUGGESTIONS = 3;
+
+/**
+ * The written fallbacks, offered when the generated set comes back empty —
+ * a slow upstream call, a guardrail pause, or five candidates that all ran
+ * past the chip budget all land here. Generic by design, so any of them
+ * makes sense under any answer; the pick rotates by turn id so back-to-back
+ * misses do not repeat a set. Written copy on the chip row, so
+ * `scripts/validate-chat-starters.mjs` holds every label to the budget.
+ */
+const FALLBACK_FOLLOWUPS = [
+  "What has Rob shipped recently?",
+  "Which case study should I read first?",
+  "How does this design system work?",
+  "What has Rob built with AI?",
+  "Describe Rob's design philosophy",
+  "How do I get in touch with Rob?",
+];
+
+/**
+ * Three questions from the fallback pool, rotated by the turn id (stable
+ * across re-renders) and skipping one identical to what the visitor just
+ * asked — offering their own question back would read as not listening.
+ */
+export function fallbackFollowups(turnId: string, question: string): string[] {
+  const asked = question.trim().toLowerCase();
+  const pool = FALLBACK_FOLLOWUPS.filter((label) => label.toLowerCase() !== asked);
+  let hash = 0;
+  for (const char of turnId) hash = (hash * 31 + char.charCodeAt(0)) >>> 0;
+  return Array.from(
+    { length: Math.min(MAX_SUGGESTIONS, pool.length) },
+    (_, index) => pool[(hash + index) % pool.length]
+  );
+}
 
 /**
  * Suggestions have no value once the visitor has moved on, and the widget

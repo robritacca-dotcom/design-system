@@ -41,6 +41,14 @@ const BARE = /(?:"([^"]*)"|'([^']*)'|`([^`]*)`)/g;
 const SOURCES = [
   { path: join('website', 'src', 'components', 'SiteChat', 'starters.ts') },
   {
+    /* The follow-ups' written fallbacks, offered when the generated set
+       comes back empty. They render on the same chip row with no runtime
+       filter in front of them — written copy, held here. */
+    path: join('website', 'src', 'lib', 'chat-followups.ts'),
+    scope: /FALLBACK_FOLLOWUPS = \[([\s\S]*?)\]/g,
+    pattern: BARE,
+  },
+  {
     path: join('website', 'src', 'app', 'playground', 'views', 'ChatView.tsx'),
     scope: /starters=\{\[([\s\S]*?)\]\}/g,
   },

@@ -16,8 +16,10 @@
  *
  * The response is always `{ suggestions: [...] }`, empty when there is nothing
  * to offer (chat switched off, budget paused, model failure). Suggestions are
- * a nicety: every failure here is silent, and the visitor simply sees an
- * answer with no chips under it.
+ * a nicety: every failure here is silent, and the widget substitutes its
+ * written fallback questions for an empty result (lib/chat-followups.ts), so
+ * the visitor still sees a row of chips rather than a shimmer that resolved
+ * to nothing.
  *
  * Both inputs are untrusted — the question is the visitor's own text, and the
  * answer is model output. Neither can do more than shape the words on three
@@ -61,6 +63,16 @@ const MAX_ANSWER_CHARS = 4000;
 
 /** Enough for three short lines and nothing more. */
 const MAX_TOKENS = 200;
+
+/**
+ * Cap on the upstream call, well inside the widget's own 10s wait
+ * (TIMEOUT_MS in lib/chat-followups.ts): past the widget's window a late
+ * answer is billed and never seen, so a slow call should die here rather
+ * than run on. Retries are off for the same reason — the SDK's default
+ * backoff can stretch one slow upstream moment past every deadline, and
+ * the widget's written fallbacks cover a miss better than a late answer.
+ */
+const UPSTREAM_TIMEOUT_MS = 8_000;
 
 const SYSTEM = `You write the follow-up questions offered under an answer from the chat assistant on robertritacca.com, the portfolio and design system site of Rob Ritacca, a principal product designer.
 
@@ -154,7 +166,11 @@ export async function POST(request: Request): Promise<Response> {
   if (!(await checkFollowupLimit(request))) return empty();
 
   try {
-    const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+    const client = new Anthropic({
+      apiKey: process.env.ANTHROPIC_API_KEY,
+      timeout: UPSTREAM_TIMEOUT_MS,
+      maxRetries: 0,
+    });
     const message = await client.messages.create(
       {
         model: FOLLOWUP_MODEL,
