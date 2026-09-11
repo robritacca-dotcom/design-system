@@ -6181,7 +6181,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
     "slug": "prompt-suggestions",
     "category": "ai",
     "description": "A horizontal row of tappable prompt suggestions to start or steer a conversation.",
-    "client": false,
+    "client": true,
     "importPath": "@robr0/design-system/components/PromptSuggestions/PromptSuggestions",
     "barrel": "main",
     "exports": [
@@ -6198,7 +6198,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
             "name": "onValueChange",
             "type": "((id: string) => void)",
             "required": false,
-            "description": "Fires with the tapped suggestion's `id`."
+            "description": "Fires with the tapped suggestion's `id`, one acknowledgment beat after the tap — the chosen chip pulses and its siblings dim first, so the choice is seen even when selection unmounts the row."
           },
           {
             "name": "layout",
@@ -6213,6 +6213,27 @@ export const componentApi: readonly ComponentApiEntry[] = [
             "description": "Legacy alias for `layout=\"wrap\"`; ignored when `layout` is set.",
             "defaultValue": "false",
             "deprecated": "Use `layout` instead, which also covers `stack`."
+          },
+          {
+            "name": "pending",
+            "type": "boolean",
+            "required": false,
+            "description": "The suggestions are still being generated: shimmer placeholder pills\nhold their place, matching the current size's chip geometry so nothing\nshifts when the real chips land. While pending the given `suggestions`\nare not rendered, the placeholders are hidden from assistive technology,\nand the row reports `aria-busy` instead.",
+            "defaultValue": "false"
+          },
+          {
+            "name": "pendingCount",
+            "type": "number",
+            "required": false,
+            "description": "How many placeholder pills the pending state holds space with.",
+            "defaultValue": "3"
+          },
+          {
+            "name": "entrance",
+            "type": "boolean",
+            "required": false,
+            "description": "Play the staggered pop-in when the items mount. On by default; a host\nre-showing a set that has already landed (reopening a panel over the\nsame suggestions) turns it off, so the chips stand where they were\ninstead of arriving twice.",
+            "defaultValue": "true"
           },
           {
             "name": "size",

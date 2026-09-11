@@ -106,6 +106,26 @@ export const Stacked: Story = {
   ],
 };
 
+/**
+ * The row waiting for its suggestions: shimmer placeholder pills hold the
+ * chips' place while they are generated, at exactly the height the real
+ * chips will land at.
+ */
+export const Pending: Story = {
+  args: {
+    pending: true,
+    layout: 'stack',
+    suggestions: [],
+  },
+  decorators: [
+    (Story) => (
+      <div style={{ maxWidth: '420px' }}>
+        <Story />
+      </div>
+    ),
+  ],
+};
+
 /** The hero variant: wrapped and centred for an empty conversation. */
 export const Wrapped: Story = {
   args: {

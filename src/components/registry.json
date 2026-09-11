@@ -731,7 +731,7 @@
       "slug": "prompt-suggestions",
       "description": "A horizontal row of tappable prompt suggestions to start or steer a conversation.",
       "category": "ai",
-      "client": false
+      "client": true
     },
     {
       "name": "Prose",

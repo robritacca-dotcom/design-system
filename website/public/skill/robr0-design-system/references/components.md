@@ -175,7 +175,7 @@ A model selector for chat surfaces, with per-model descriptions and an optional 
 A horizontal row of tappable prompt suggestions to start or steer a conversation.
 
 - Import: `import { PromptSuggestions } from '@robr0/design-system';`
-- Rendering: server-renderable (no 'use client')
+- Rendering: client component (declares 'use client')
 - Contract: https://robertritacca.com/components/prompt-suggestions.md
 
 ### Prose

@@ -51,3 +51,6 @@ export const MOTION_SUMMARY_THINK_MS = 900;
 
 /** The summary panel's full type-out budget: however long the text, the reveal has it on screen within this. A deliberately slower pace than MOTION_STREAM_DRAIN_MS — this reveal is the content arriving, not a stream catching up. */
 export const MOTION_SUMMARY_REVEAL_MS = 1600;
+
+/** How long a suggestion row stages its "generation" (PromptSuggestions' pending shimmer) before a pre-written set reveals — the summary panel's think beat, shorter because it replays every time the set swaps rather than once per mount. A schedule timing, so the reduced-motion guard leaves it alone; the shimmer itself stills through the tokenized duration. */
+export const MOTION_SUGGESTIONS_THINK_MS = 600;
