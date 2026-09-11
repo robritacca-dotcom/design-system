@@ -163,6 +163,27 @@ export default function PromptSuggestionsPage() {
             </div>
           </section>
 
+          {/* Pending */}
+          <section className={styles.section}>
+            <SectionTitle title="Pending" />
+            <p className={styles.demoText}>
+              While the suggestions are being generated, placeholder pills
+              hold their place: the chip&apos;s real shell, with a shimmer
+              bar where the label is still being written. The shell keeps
+              the row&apos;s exact height, so nothing shifts when the chips
+              land. Screen readers hear a busy list, not a set of empty
+              items.
+            </p>
+            <div className={styles.narrow}>
+              <PromptSuggestions
+                layout="stack"
+                pending
+                suggestions={[]}
+                ariaLabel="Suggestions loading"
+              />
+            </div>
+          </section>
+
           {/* Steering mid-conversation */}
           <section className={styles.section}>
             <SectionTitle title="Steering mid-conversation" />

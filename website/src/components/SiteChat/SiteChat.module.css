@@ -496,6 +496,41 @@
   transition: none;
 }
 
+/* Open: the card fades in with a small rise from its resting spot — quick
+   and quiet, the FAB's corner is where it comes from. Plays on mount, so
+   the view toggle (panel to takeover), which keeps the node, never replays
+   it. */
+.panel {
+  animation: panel-in var(--motion-duration-slow) var(--motion-ease-entrance);
+}
+
+/* Close: the mirror image. The provider keeps the panel mounted for
+   MOTION_EXIT_SYNC_MS (which mirrors --motion-duration-base) while this
+   plays, and pointer-events off so a dying panel swallows no clicks. */
+.panelClosing {
+  animation: panel-out var(--motion-duration-base) var(--motion-ease-standard) forwards;
+  pointer-events: none;
+}
+
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes panel-out {
+  to {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
 /* Fullscreen view: a true viewport takeover. The stronger blur is what
    keeps the transcript readable while the page's colours still shine
    through the translucent surface. The border fades rather than vanishing —

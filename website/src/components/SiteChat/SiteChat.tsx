@@ -15,6 +15,7 @@ import { CircularButton } from "@robr0/design-system/components/CircularButton/C
 import { Composer } from "@robr0/design-system/components/Composer/Composer";
 import { ModelPicker } from "@robr0/design-system/components/ModelPicker/ModelPicker";
 import { PromptSuggestions } from "@robr0/design-system/components/PromptSuggestions/PromptSuggestions";
+import { MOTION_SUGGESTIONS_THINK_MS } from "@robr0/design-system/tokens/motion";
 import { usePathname } from "next/navigation";
 import { getNavLabel } from "@/config/navigation";
 import { getPageSummary } from "@/data/page-summaries";
@@ -165,6 +166,33 @@ export function SiteChat({
   const isFull = view === "full";
   const isEmpty = turns.length === 0 && !live;
 
+  /* The starters stage a short "generation" the first time the welcome
+     screen shows a page's set: shimmer placeholders for a beat, then the
+     chips popping in. The shimmer is theatre — the labels are pre-written —
+     but it is the same beat the follow-ups play for real, and it makes the
+     route-to-route swap legible as the widget noticing where the visitor
+     now stands. A set that has already revealed shows instantly and
+     standing still on the next open, as if cached — AiButton's summary
+     panel stages its think the same way. The reveal memory lives in the
+     provider, so closing the panel (which unmounts this component) does
+     not replay the show; `stagedKey` is mount-local, so only a set that
+     actually staged here plays the chips' entrance. Thinking is derived;
+     only the timer's callback sets state, so the effect schedules rather
+     than renders. */
+  const { starterRevealKey, setStarterRevealKey } = useSiteChat();
+  const [stagedKey, setStagedKey] = useState<string | null>(null);
+  const starterKey = pathname ?? "";
+  const startersThinking = open && isEmpty && starterRevealKey !== starterKey;
+  const startersEntrance = startersThinking || stagedKey === starterKey;
+  useEffect(() => {
+    if (!(open && isEmpty && starterRevealKey !== starterKey)) return;
+    const timer = window.setTimeout(() => {
+      setStagedKey(starterKey);
+      setStarterRevealKey(starterKey);
+    }, MOTION_SUGGESTIONS_THINK_MS);
+    return () => window.clearTimeout(timer);
+  }, [open, isEmpty, starterRevealKey, setStarterRevealKey, starterKey]);
+
   /* ---------- the threads rail (only when the host passes one) ----------
      The widget measures its own width, so the mode follows the actual
      container — the docked panel and a thin playground card get the
@@ -199,6 +227,8 @@ export function SiteChat({
       <PromptSuggestions
         layout="stack"
         ariaLabel="Conversation starters"
+        pending={startersThinking}
+        entrance={startersEntrance}
         suggestions={starters}
         onValueChange={(id) => {
           const starter = starters.find((s) => s.id === id);

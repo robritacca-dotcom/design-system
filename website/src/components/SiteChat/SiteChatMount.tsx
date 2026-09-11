@@ -53,7 +53,7 @@ const readHover = () => window.matchMedia(HOVER_QUERY).matches;
  * body scroll locked, Escape closes.
  */
 export function SiteChatMount() {
-  const { open, setOpen, view, returnFocusRef, send } = useSiteChat();
+  const { open, setOpen, panelPhase, view, returnFocusRef, send } = useSiteChat();
   const pathname = usePathname();
 
   /* The FAB's TLDR panel: per-route content from the page-summaries data,
@@ -81,6 +81,9 @@ export function SiteChatMount() {
   const isFull = view === "full" || takeover;
   const modal = open && !denied && (isFull || !docked);
   const showPanel = open && !denied;
+  /* Presence outlives `open` by the exit beat, so the close animation is
+     seen; every behavior above keys on `open` and lets go immediately. */
+  const renderPanel = (open || panelPhase === "closing") && !denied;
 
   /* The page's relationship to the panel, as an attribute on <html> so the
      styling needs no subscription anywhere else (globals.css owns both
@@ -181,7 +184,7 @@ export function SiteChatMount() {
 
   /* Closed: the FAB is the persistent entry point — bottom right, on every page, never
      remounting on navigation (so focus restore works everywhere). */
-  if (!showPanel) {
+  if (!renderPanel) {
     return (
       <div className={styles.fab}>
         <AiButton
@@ -247,7 +250,9 @@ export function SiteChatMount() {
       <div
         ref={panelRef}
         id="site-chat-panel"
-        className={`${styles.panel} ${isFull ? styles.panelFull : ""}`}
+        className={`${styles.panel} ${isFull ? styles.panelFull : ""} ${
+          panelPhase === "closing" ? styles.panelClosing : ""
+        }`}
         role={modal ? "dialog" : "complementary"}
         aria-modal={modal || undefined}
         aria-label="Site chat"
@@ -267,7 +272,7 @@ export function SiteChatMount() {
       {/* The widen grip — the bench's left handle, docked form only. It
           rides the panel's left edge as a fixed sibling (the panel clips its
           own overflow, so a straddling child would be cut in half). */}
-      {docked && !isFull && (
+      {showPanel && docked && !isFull && (
         <div
           className={`${styles.dockHandle} ${resizing ? styles.dockHandleResizing : ""}`}
           aria-hidden="true"

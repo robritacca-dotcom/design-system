@@ -11,6 +11,7 @@ import {
   useSyncExternalStore,
   type ReactNode,
 } from "react";
+import { MOTION_EXIT_SYNC_MS } from "@robr0/design-system/tokens/motion";
 import { useChat, type ChatTransport } from "@/hooks/useChat";
 import { fetchFollowups, followupTarget } from "@/lib/chat-followups";
 import { createFetchTransport } from "@/lib/chat-transport";
@@ -72,6 +73,13 @@ interface SiteChatContextValue {
   open: boolean;
   setOpen: (open: boolean) => void;
   toggleOpen: () => void;
+  /** Where the panel is in its lifecycle: `closing` is the exit beat after a close, during which the mount keeps the panel rendered so its exit animation is seen. Everything behavioral (modal state, layout attributes, focus) keys on `open`; only presence reads this. */
+  panelPhase: "open" | "closing" | "closed";
+  /** Which page's conversation starters have played their staged reveal — lives here so closing the panel does not forget it, and a reopen on the same page shows the set standing rather than generating again. */
+  starterRevealKey: string | null;
+  setStarterRevealKey: (key: string | null) => void;
+  /** The turn whose follow-ups landed most recently in this open session, or null. Its row plays the entrance; rows remounted by a reopen do not, because closing clears it. */
+  freshFollowupsId: string | null;
   view: ChatView;
   setView: (view: ChatView) => void;
   draft: string;
@@ -125,22 +133,63 @@ export function SiteChatProvider({
   const target = useMemo(() => followupTarget(chat.turns), [chat.turns]);
   const askedRef = useRef<Set<string>>(new Set());
 
+  /* The turn whose follow-ups just landed: its row plays the chips'
+     entrance. Cleared when the panel closes, so a reopen remounts every
+     row with its suggestions standing still — they already arrived once. */
+  const [freshFollowupsId, setFreshFollowupsId] = useState<string | null>(null);
+
   useEffect(() => {
     if (!target || askedRef.current.has(target.id)) return;
     askedRef.current.add(target.id);
     // Never rejects, and a write to a turn that has since been cleared by a
     // new chat is a no-op — so there is nothing here to abort or guard.
-    void fetchFollowups(target.question, target.answer).then((suggestions) =>
-      setTurnFollowups(target.id, suggestions)
-    );
+    void fetchFollowups(target.question, target.answer).then((suggestions) => {
+      setTurnFollowups(target.id, suggestions);
+      if (suggestions.length > 0) setFreshFollowupsId(target.id);
+    });
   }, [target, setTurnFollowups]);
 
-  const [open, setOpen] = useState(false);
+  /* The starters' staged-reveal memory — provider-lifetime by design, see
+     the context field's doc. */
+  const [starterRevealKey, setStarterRevealKey] = useState<string | null>(null);
+
+  const [open, setOpenState] = useState(false);
+  /* The panel's presence, one beat behind `open` on the way out: closing
+     holds the node on screen for MOTION_EXIT_SYNC_MS so the exit animation
+     plays before the unmount. Reopening mid-exit cancels the timer. */
+  const [panelPhase, setPanelPhase] = useState<"open" | "closing" | "closed">("closed");
+  const closeTimer = useRef<number | null>(null);
+  useEffect(
+    () => () => {
+      if (closeTimer.current) window.clearTimeout(closeTimer.current);
+    },
+    []
+  );
+  /* Closing also forgets which follow-ups were "fresh": everything the next
+     open shows has been seen. */
+  const setOpen = useCallback((next: boolean) => {
+    if (next) {
+      if (closeTimer.current) {
+        window.clearTimeout(closeTimer.current);
+        closeTimer.current = null;
+      }
+      setPanelPhase("open");
+      setOpenState(true);
+      return;
+    }
+    setFreshFollowupsId(null);
+    setOpenState(false);
+    setPanelPhase((phase) => (phase === "open" ? "closing" : phase));
+    closeTimer.current = window.setTimeout(() => {
+      closeTimer.current = null;
+      setPanelPhase("closed");
+    }, MOTION_EXIT_SYNC_MS);
+  }, []);
   const [view, setView] = useState<ChatView>("panel");
   const [draft, setDraft] = useState("");
   const returnFocusRef = useRef<HTMLElement | null>(null);
 
-  const toggleOpen = useCallback(() => setOpen((current) => !current), []);
+  const toggleOpen = useCallback(() => setOpen(!open), [open, setOpen]);
 
   const value = useMemo<SiteChatContextValue>(
     () => ({
@@ -150,13 +199,29 @@ export function SiteChatProvider({
       open,
       setOpen,
       toggleOpen,
+      panelPhase,
+      starterRevealKey,
+      setStarterRevealKey,
+      freshFollowupsId,
       view,
       setView,
       draft,
       setDraft,
       returnFocusRef,
     }),
-    [chat, chosenModel, setChosenModel, open, toggleOpen, view, draft]
+    [
+      chat,
+      chosenModel,
+      setChosenModel,
+      open,
+      setOpen,
+      toggleOpen,
+      panelPhase,
+      starterRevealKey,
+      freshFollowupsId,
+      view,
+      draft,
+    ]
   );
 
   return <SiteChatContext.Provider value={value}>{children}</SiteChatContext.Provider>;

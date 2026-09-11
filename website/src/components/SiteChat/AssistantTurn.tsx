@@ -68,6 +68,22 @@ export function AssistantTurn({ turn, live }: { turn?: ChatTurn; live?: LiveResp
   const durationSeconds = live ? live.durationSeconds : turn?.durationSeconds;
   const text = live ? live.text : (turn?.text ?? "");
 
+  /* Whether this turn's follow-up questions are still being generated:
+     the request fires when a backend answer commits (see ChatContext) and
+     lands as the `followups` field — an empty array when there was nothing
+     to offer — so "eligible but unset" is the in-flight window. Shown only
+     while this is the newest turn and nothing new is streaming: once the
+     visitor has moved on, a late resolution just appears, and a shimmer
+     under an old answer would pull the eye backwards. */
+  const { turns, live: liveTurn, freshFollowupsId } = useSiteChat();
+  const followupsPending =
+    !!turn &&
+    turn.text !== "" &&
+    !!turn.exchangeId &&
+    !turn.followups &&
+    !liveTurn &&
+    turns[turns.length - 1]?.id === turn.id;
+
   return (
     <ChatMessage
       role="assistant"
@@ -78,10 +94,20 @@ export function AssistantTurn({ turn, live }: { turn?: ChatTurn; live?: LiveResp
       showActions
       actions={turn && turn.text !== "" ? <ResponseActions turn={turn} /> : undefined}
       /* Where the conversation could go next, under the actions row. They
-         arrive a beat after the answer commits — see lib/chat-followups. */
+         arrive a beat after the answer commits — see lib/chat-followups —
+         and the row shimmers in their place while they are generated. */
       footer={
         turn?.followups?.length ? (
-          <FollowupSuggestions turnId={turn.id} suggestions={turn.followups} />
+          <FollowupSuggestions
+            turnId={turn.id}
+            suggestions={turn.followups}
+            /* Only the row whose suggestions just landed pops its chips in;
+               a row remounted by closing and reopening the panel shows them
+               standing — they already arrived once. */
+            entrance={turn.id === freshFollowupsId}
+          />
+        ) : followupsPending && turn ? (
+          <FollowupSuggestions turnId={turn.id} suggestions={[]} pending />
         ) : undefined
       }
     >
