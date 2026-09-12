@@ -12,7 +12,7 @@ import { COMPONENT_COUNT } from "@robr0/design-system/components/registry";
 import { TOKEN_COUNT, TOKEN_COUNTS } from "@robr0/design-system/tokens/registry";
 import { SKILL_COUNT } from "@/data/skills-registry";
 import { SITE_UPDATE_COUNT } from "@/data/site-updates";
-import { operatorsMap, pipelineMap, runtimeMap, systemOverviewMap } from "./maps";
+import { chatExchangeMap, operatorsMap, pipelineMap, runtimeMap, systemOverviewMap } from "./maps";
 import styles from "./page.module.css";
 
 const TOKEN_CATEGORY_COUNT = Object.keys(TOKEN_COUNTS).length;
@@ -106,12 +106,12 @@ export default function AboutDsPage() {
                 </ul>
                 <ArchitectureMap
                   map={systemOverviewMap}
-                  caption="One repo, one gate, two destinations. The other three maps magnify the lanes."
+                  caption="One repo, one gate, two destinations. The other four maps magnify the lanes."
                 />
               </section>
 
               <section className={`${styles.mapSection} animate-in animate-delay-3`}>
-                <SectionTitle title="The pipeline" />
+                <SectionTitle title="The pipeline" divider={false} />
                 <p className={styles.sectionBody}>
                   How a change becomes live, in five stages: author, generate
                   and validate, build, gate, ship. Figma and Substack feed the
@@ -131,7 +131,7 @@ export default function AboutDsPage() {
               </section>
 
               <section className={`${styles.mapSection} animate-in animate-delay-3`}>
-                <SectionTitle title="The operator layer" />
+                <SectionTitle title="The operator layer" divider={false} />
                 <p className={styles.sectionBody}>
                   Claude Code drives the pipeline through{" "}
                   <Link href="/skills" className={styles.inlineLink}>skills</Link>{" "}
@@ -149,7 +149,7 @@ export default function AboutDsPage() {
               </section>
 
               <section className={`${styles.mapSection} animate-in animate-delay-3`}>
-                <SectionTitle title="The architecture at runtime" />
+                <SectionTitle title="The architecture at runtime" divider={false} />
                 <p className={styles.sectionBody}>
                   Once the site is live, only the edges matter. Pages come
                   from Vercel with the fonts and the chat corpus already baked
@@ -160,9 +160,11 @@ export default function AboutDsPage() {
                 <ul className={styles.sectionBullets}>
                   <li>
                     The chat answers from the published site through Claude,
-                    held by per-visitor rate limits and a daily budget;
-                    conversations are kept for 30 days, tied to no name, then
-                    deleted. The same widget runs in{" "}
+                    reaching for the same generated prop and token contracts
+                    the MCP tools serve when a question needs them, held by
+                    per-visitor rate limits and a daily budget; conversations
+                    are kept for 30 days, tied to no name, then deleted. The
+                    same widget runs in{" "}
                     <Link href="/playground?view=chat" className={styles.inlineLink}>
                       the playground&apos;s Chat view
                     </Link>
@@ -183,6 +185,29 @@ export default function AboutDsPage() {
                 <ArchitectureMap
                   map={runtimeMap}
                   caption="A space diagram, no time in it. The teal edge is the one the vendor-grouped version filed wrong."
+                />
+              </section>
+
+              <section className={`${styles.mapSection} animate-in animate-delay-3`}>
+                <SectionTitle title="How the chat answers" divider={false} />
+                <p className={styles.sectionBody}>
+                  The chat&apos;s context is a two-part answer to one
+                  question: what should the model know? The site corpus
+                  carries everything published as prose, baked in at build
+                  time and cached for an hour, so most questions are answered
+                  from context alone. What it deliberately leaves out is the
+                  generated contracts: the component prop API and the token
+                  registry, thousands of facts most questions never touch.
+                  For those, the model carries two lookup tools. When a
+                  question needs a prop&apos;s type or default, a
+                  deprecation, or a token count, it reads the answer from the
+                  same in-memory data <code>/api/mcp</code> serves to agents,
+                  and the lookup surfaces in the widget as a trace point. The
+                  corpus makes the chat fluent; the tools keep it exact.
+                </p>
+                <ArchitectureMap
+                  map={chatExchangeMap}
+                  caption="One exchange, zoomed in. The teal edge is the moment the model stops answering from prose and reads the contract."
                 />
               </section>
 

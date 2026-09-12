@@ -1,5 +1,5 @@
 /**
- * The four architecture maps rendered on /overview.
+ * The five architecture maps rendered on /overview.
  *
  * Hardcoded map data, deliberately: the drawings are editorial content, like
  * the case-study covers, and the coordinates are drawing geometry. The
@@ -133,6 +133,38 @@ export const operatorsMap: ArchMap = {
     { id: "land", from: "branches", to: "main", label: "land · triage all, merge local, never push", bend: -60 },
     { id: "ship", from: "main", to: "live", label: "ship · push, watch CI, prove it live", bend: -60 },
     { id: "super-ship", from: "working-tree", to: "live", fromSide: "bottom", toSide: "bottom", label: "super-ship · drift-audit first, then ship the lot", kind: "accent", bend: 260 },
+  ],
+};
+
+/** One chat exchange, zoomed in: the corpus answers the prose, the lookup tools answer the contracts. */
+export const chatExchangeMap: ArchMap = {
+  id: "chat-exchange",
+  title: "How the chat answers",
+  label:
+    "A visitor's question passes the guardrails, Claude answers from the cached persona and site corpus, and when the question needs prop or token specifics the model calls two lookup tools that read the generated contracts, the same data the MCP endpoint serves to agents.",
+  width: 1720,
+  height: 820,
+  nodes: [
+    { id: "visitor", x: 60, y: 330, w: 280, h: 90, title: "Visitor", sub: "the chat widget, on any page", icon: "person", chip: "positive" },
+
+    { id: "z-chat", x: 440, y: 70, w: 500, h: 680, kind: "zone", title: "/api/chat · one exchange", sub: "streams the whole way" },
+    { id: "chat-guardrails", x: 480, y: 160, w: 420, h: 76, title: "Guardrails", sub: "per-visitor rate + daily budget · pick the model tier", icon: "verified_user", chip: "warning" },
+    { id: "chat-context", x: 480, y: 300, w: 420, h: 90, title: "System context", sub: "persona + the whole site corpus · cached 1h", icon: "menu_book", chip: "info" },
+    { id: "chat-tools", x: 480, y: 450, w: 420, h: 90, title: "Lookup tools", sub: "get_component · get_design_tokens", icon: "search", chip: "info" },
+    { id: "chat-contracts", x: 480, y: 610, w: 420, h: 76, title: "Generated contracts", sub: "prop API + token registry, read from memory", icon: "storage", chip: "neutral" },
+
+    { id: "chat-anthropic", x: 1220, y: 300, w: 340, h: 100, title: "Anthropic API", sub: "Claude answers from the corpus, and asks for a lookup when contracts matter", kind: "external", logo: "/logos/Claude.svg" },
+    { id: "chat-mcp", x: 1220, y: 600, w: 340, h: 76, title: "/api/mcp", sub: "the same lookups, served to agents", icon: "hub", chip: "info" },
+  ],
+  edges: [
+    { id: "visitor-guardrails", from: "visitor", to: "chat-guardrails", label: "question + the last 10 turns" },
+    { id: "guardrails-context", from: "chat-guardrails", to: "chat-context" },
+    { id: "context-anthropic", from: "chat-context", to: "chat-anthropic", label: "one streamed model call" },
+    { id: "anthropic-tools", from: "chat-anthropic", to: "chat-tools", label: "a prop or token question triggers a lookup", kind: "accent", bend: -50 },
+    { id: "tools-contracts", from: "chat-tools", to: "chat-contracts", label: "in-memory read" },
+    { id: "tools-anthropic", from: "chat-tools", to: "chat-anthropic", label: "tool result, then the answer", bend: -50 },
+    { id: "anthropic-visitor", from: "chat-anthropic", to: "visitor", fromSide: "bottom", toSide: "bottom", label: "the answer streams back · lookups show as trace points", bend: -300 },
+    { id: "contracts-mcp", from: "chat-contracts", to: "chat-mcp", label: "shared implementations" },
   ],
 };
 
