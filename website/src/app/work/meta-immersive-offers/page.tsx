@@ -4,9 +4,12 @@ import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import MegaNav from "../../../components/MegaNav/MegaNav";
+import CaseStudyTldr from "@/components/CaseStudyTldr/CaseStudyTldr";
+import { caseStudyTldrs } from "@/data/case-study-tldrs";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import SampleCaseStudyCard from "../../../components/SampleCaseStudyCard/SampleCaseStudyCard";
+import { Figure } from "@robr0/design-system/components/Figure/Figure";
 import { getSidebarLinks, workSidebarLinks } from "@/config/navigation";
 import { lockBodyScroll, unlockBodyScroll } from "@/lib/scroll-lock";
 import styles from "./page.module.css";
@@ -36,17 +39,9 @@ function Fig({
   onZoom: (src: string, alt: string) => void;
 }) {
   return (
-    <figure className={styles.articleFigure} onClick={() => onZoom(src, alt)}>
-      <Image
-        src={src}
-        alt={alt}
-        width={width}
-        height={height}
-        className={styles.articleImage}
-        style={{ width: "100%", height: "auto" }}
-      />
-      <figcaption className={styles.articleCaption}>{caption}</figcaption>
-    </figure>
+    <Figure caption={caption} onClick={() => onZoom(src, alt)}>
+      <Image src={src} alt={alt} width={width} height={height} />
+    </Figure>
   );
 }
 
@@ -104,7 +99,9 @@ export default function MetaImmersiveOffersCaseStudy() {
           {/* Two-column body */}
           <div className={`${styles.resumeLayout} animate-in animate-delay-3`}>
             <div className={styles.resumeMain}>
-              <section className={styles.resumeSection}>
+              <CaseStudyTldr points={caseStudyTldrs["meta-immersive-offers"]} />
+
+              <section id="full-story" className={`${styles.resumeSection} ${styles.fullStory}`}>
                 <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Case study</h2>
                 </div>

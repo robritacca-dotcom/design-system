@@ -4,6 +4,8 @@ import { createContext, useCallback, useContext, useEffect, useState } from "rea
 import Image from "next/image";
 import Link from "next/link";
 import { CoverImage } from "@/components/covers/CoverImage";
+import CaseStudyTldr from "@/components/CaseStudyTldr/CaseStudyTldr";
+import { caseStudyTldrs } from "@/data/case-study-tldrs";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
@@ -162,7 +164,9 @@ export default function MetaCareerProfileCaseStudy() {
           {/* Two-column body */}
           <div className={`${styles.resumeLayout} animate-in animate-delay-3`}>
             <div className={styles.resumeMain}>
-              <section className={styles.resumeSection}>
+              <CaseStudyTldr points={caseStudyTldrs["meta-career-profile"]} />
+
+              <section id="full-story" className={`${styles.resumeSection} ${styles.fullStory}`}>
                 <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Case study</h2>
                 </div>

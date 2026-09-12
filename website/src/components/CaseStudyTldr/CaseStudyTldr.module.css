@@ -1,0 +1,158 @@
+/* ============================================
+   CASE STUDY TLDR — key claims revealed on
+   scroll, above the article. Items and the
+   closing link share one staggered entrance,
+   triggered once by an IntersectionObserver in
+   the component.
+   ============================================ */
+.tldr {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-xl);
+}
+
+/* Mirrors the case-study pages' resumeSectionHeader/-Title so the TLDR
+   header sits level with the aside's Details header. */
+.header {
+  padding-bottom: var(--primitive-padding-lg);
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.title {
+  font-size: var(--font-heading-2-size);
+  font-weight: var(--font-heading-2-weight);
+  line-height: var(--font-heading-2-line-height);
+  letter-spacing: var(--font-heading-2-letter-spacing);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  display: flex;
+  gap: var(--primitive-gap-lg);
+  padding: var(--primitive-gap-lg) 0;
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity var(--motion-duration-slower) var(--motion-ease-entrance),
+    transform var(--motion-duration-slower) var(--motion-ease-entrance);
+}
+
+.item + .item {
+  border-top: 1px solid var(--color-divider);
+}
+
+/* The list's outer spacing is the section gap's job: without these the
+   first row sat lower under the header rule than any sibling section's
+   content, and the closing link drifted low the same way. */
+.item:first-child {
+  padding-top: 0;
+}
+
+.item:last-child {
+  padding-bottom: 0;
+}
+
+.visible .item {
+  opacity: 1;
+  transform: none;
+}
+
+/* ds-allow(motion): entrance stagger steps — cascade offsets between the
+   TLDR rows, not an interaction duration, so no --motion-* token applies. */
+.visible .item:nth-child(2) { transition-delay: 0.09s; }
+.visible .item:nth-child(3) { transition-delay: 0.18s; }
+.visible .item:nth-child(4) { transition-delay: 0.27s; }
+.visible .item:nth-child(5) { transition-delay: 0.36s; }
+
+.index {
+  font-family: var(--font-overline-family);
+  font-size: var(--font-overline-size);
+  font-weight: var(--font-overline-weight);
+  line-height: var(--font-heading-3-line-height);
+  letter-spacing: var(--font-overline-letter-spacing);
+  color: var(--color-text-tertiary);
+  flex-shrink: 0;
+  min-width: 32px;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--primitive-gap-xs);
+  min-width: 0;
+}
+
+.claim {
+  font-family: var(--font-heading-3-family);
+  font-size: var(--font-heading-3-size);
+  font-weight: var(--font-heading-3-weight);
+  line-height: var(--font-heading-3-line-height);
+  letter-spacing: var(--font-heading-3-letter-spacing);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.detail {
+  font-family: var(--font-paragraph-family);
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  color: var(--color-text-secondary);
+  margin: 0;
+  max-width: 720px;
+}
+
+.more {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--primitive-gap-xs);
+  align-self: flex-start;
+  text-decoration: none;
+  font-family: var(--font-title-body-family);
+  font-size: var(--font-title-body-size);
+  font-weight: var(--font-title-body-weight);
+  line-height: var(--font-title-body-line-height);
+  color: var(--color-text-primary);
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity var(--motion-duration-slower) var(--motion-ease-entrance),
+    transform var(--motion-duration-slower) var(--motion-ease-entrance);
+}
+
+/* ds-allow(motion): the last step of the same entrance stagger. */
+.visible .more {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.45s;
+}
+
+.more:hover {
+  color: var(--color-text-secondary);
+}
+
+.more :global(.material-symbols-rounded) {
+  --icon-size: var(--icon-size-sm);
+  line-height: 1;
+}
+
+/* Mirrors the .animate-in reduced-motion guard in globals.css: the DS-wide
+   guard collapses durations but not delays, so staggered rows would hold at
+   opacity 0 through their offsets before snapping in. */
+@media (prefers-reduced-motion: reduce) {
+  .item,
+  .more {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

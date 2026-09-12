@@ -90,7 +90,14 @@
   flex: 1;
   display: flex;
   flex-direction: column;
+  gap: var(--gap-xxxl);
   min-width: 0;
+}
+
+/* Anchor target for the TLDR's "Read the full story" link — a section
+   element rather than an h2, so it carries the clearance itself. */
+.fullStory {
+  scroll-margin-top: var(--layout-anchor-clearance);
 }
 
 .resumeSidebar {
@@ -149,6 +156,13 @@
   margin: var(--primitive-gap-xl) 0 0;
 }
 
+/* The section header above the article already provides the offset, so an
+   article that opens with a heading starts level with every other section's
+   content instead of sinking by its own top margin. */
+.body > h2:first-child {
+  margin-top: 0;
+}
+
 .body ul {
   list-style: disc;
   padding-left: 24px;
@@ -199,34 +213,6 @@
 .numberedList li::marker {
   color: var(--color-text-tertiary);
   font-weight: var(--font-paragraph-em-weight);
-}
-
-/* ============================================
-   INLINE FIGURE — image + caption
-   ============================================ */
-.figure {
-  margin: var(--primitive-gap-md) 0 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--primitive-gap-sm);
-}
-
-.figureImage {
-  width: 100%;
-  height: auto;
-  display: block;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--color-bg-container-border);
-  background: var(--color-bg-container-secondary);
-}
-
-.figureCaption {
-  font-family: var(--font-paragraph-sm-family);
-  font-size: var(--font-paragraph-sm-size);
-  font-weight: var(--font-paragraph-sm-weight);
-  line-height: var(--font-paragraph-sm-line-height);
-  color: var(--color-text-tertiary);
-  margin: 0;
 }
 
 .footnote {

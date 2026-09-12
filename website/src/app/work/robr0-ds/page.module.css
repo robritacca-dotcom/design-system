@@ -93,7 +93,14 @@
   flex: 1;
   display: flex;
   flex-direction: column;
+  gap: var(--gap-xxxl);
   min-width: 0;
+}
+
+/* Anchor target for the TLDR's "Read the full story" link — a section
+   element rather than an h2, so it carries the clearance itself. */
+.fullStory {
+  scroll-margin-top: var(--layout-anchor-clearance);
 }
 
 .resumeSidebar {
@@ -150,6 +157,13 @@
   letter-spacing: var(--font-heading-2-letter-spacing);
   color: var(--color-text-primary);
   margin: var(--primitive-gap-xl) 0 0;
+}
+
+/* The section header above the article already provides the offset, so an
+   article that opens with a heading starts level with every other section's
+   content instead of sinking by its own top margin. */
+.body > h2:first-child {
+  margin-top: 0;
 }
 
 .body h3 {

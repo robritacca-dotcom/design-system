@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Image from "next/image";
 import { CoverImage } from "@/components/covers/CoverImage";
+import CaseStudyTldr from "@/components/CaseStudyTldr/CaseStudyTldr";
+import { caseStudyTldrs } from "@/data/case-study-tldrs";
 import { COMPONENT_COUNT } from "@robr0/design-system/components/registry";
 import Link from "next/link";
 import MegaNav from "../../../components/MegaNav/MegaNav";
@@ -200,7 +202,9 @@ export default function Robr0DsCaseStudy() {
           <div className={`${styles.resumeLayout} animate-in animate-delay-3`}>
             {/* Main — article body */}
             <div className={styles.resumeMain}>
-              <section className={styles.resumeSection}>
+              <CaseStudyTldr points={caseStudyTldrs["robr0-ds"]} />
+
+              <section id="full-story" className={`${styles.resumeSection} ${styles.fullStory}`}>
                 <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Case study</h2>
                 </div>

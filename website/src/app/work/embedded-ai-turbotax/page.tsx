@@ -3,9 +3,12 @@
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import MegaNav from "../../../components/MegaNav/MegaNav";
+import CaseStudyTldr from "@/components/CaseStudyTldr/CaseStudyTldr";
+import { caseStudyTldrs } from "@/data/case-study-tldrs";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import SampleCaseStudyCard from "../../../components/SampleCaseStudyCard/SampleCaseStudyCard";
+import { Figure } from "@robr0/design-system/components/Figure/Figure";
 import { getSidebarLinks, workSidebarLinks } from "@/config/navigation";
 import { lockBodyScroll, unlockBodyScroll } from "@/lib/scroll-lock";
 import styles from "./page.module.css";
@@ -65,9 +68,12 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
 
           {/* Two-column body — mirrors the About page resumeLayout */}
           <div className={`${styles.resumeLayout} animate-in animate-delay-3`}>
-            {/* Main — article body */}
+            {/* Main — TLDR first, then the article, so the aside starts level
+                with the TLDR */}
             <div className={styles.resumeMain}>
-              <section className={styles.resumeSection}>
+              <CaseStudyTldr points={caseStudyTldrs["embedded-ai-turbotax"]} />
+
+              <section id="full-story" className={`${styles.resumeSection} ${styles.fullStory}`}>
                 <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Case study</h2>
                 </div>
@@ -104,20 +110,14 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                     In practice, it was one product with multiple deployments, multiple orchestration environments, and multiple interaction models depending on where the user entered the experience. The application also had to support bidirectional data synchronisation between systems. Users were authorising secure connections between TurboTax and the AI platforms themselves, allowing conversational workflows to persist information, extract documents, generate preparation states, and synchronise that information back into the primary TurboTax product.
                   </p>
 
-                  <figure
-                    className={styles.articleFigure}
-                    onClick={() => setLightbox({ src: "/images/embedded-ai/ChatGPT.webp", alt: "TurboTax connector listing in ChatGPT" })}
-                  >
+                  <Figure onClick={() => setLightbox({ src: "/images/embedded-ai/ChatGPT.webp", alt: "TurboTax connector listing in ChatGPT" })} caption={<>The TurboTax connector in the ChatGPT app directory: users could connect directly before entering the embedded experience.</>}>
                     <Image
                       src="/images/embedded-ai/ChatGPT.webp"
                       alt="TurboTax connector listing in ChatGPT"
                       width={960}
                       height={480}
-                      className={styles.articleImage}
-                      style={{ width: "100%", height: "auto" }}
                     />
-                    <figcaption className={styles.articleCaption}>The TurboTax connector in the ChatGPT app directory: users could connect directly before entering the embedded experience.</figcaption>
-                  </figure>
+                  </Figure>
 
                   <h2 id="building-at-the-speed-of-the-platforms">Building at the speed of the platforms</h2>
 
@@ -129,20 +129,14 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                     Rather than treating design and engineering as sequential handoffs, we ran them in parallel. The loop was tight: gather sources and context, prompt and iterate to generate and refine, build and publish to live environments, then share and align before cycling again. Every pass through that loop produced something shippable.
                   </p>
 
-                  <figure
-                    className={styles.articleFigure}
-                    onClick={() => setLightbox({ src: "/images/embedded-ai/process-loop.png", alt: "The agentic build loop: Gather, Prompt / iterate, Build / publish, Share / align" })}
-                  >
+                  <Figure onClick={() => setLightbox({ src: "/images/embedded-ai/process-loop.png", alt: "The agentic build loop: Gather, Prompt / iterate, Build / publish, Share / align" })} caption={<>The loop, summarised: Gather, Prompt / iterate, Build / publish, Share / align. The same agentic model we were designing for became the way we worked.</>}>
                     <Image
                       src="/images/embedded-ai/process-loop.png"
                       alt="The agentic build loop: Gather, Prompt / iterate, Build / publish, Share / align"
                       width={1280}
                       height={720}
-                      className={styles.articleImage}
-                      style={{ width: "100%", height: "auto" }}
                     />
-                    <figcaption className={styles.articleCaption}>The loop, summarised: Gather, Prompt / iterate, Build / publish, Share / align. The same agentic model we were designing for became the way we worked.</figcaption>
-                  </figure>
+                  </Figure>
 
                   <p>
                     Figma became more than a design tool: it became the MCP entry point. By connecting the component library directly via Figma MCP, live components and tokens became queryable context. No exporting, no redlining, no translation layer between what was designed and what could be generated. The library was both the source material and the generation scaffold.
@@ -152,35 +146,27 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                     I also contributed front-end components directly to the build. Rather than handing off specs and waiting, I worked alongside the engineering team in code, writing and shipping real widgets for the Claude MCP app, not concepts for someone else to implement. The line between design and engineering stopped being meaningful. What mattered was that the right artifact shipped.
                   </p>
 
-                  <figure
-                    className={styles.articleFigure}
-                    onClick={() => setLightbox({ src: "/images/embedded-ai/process-figma-mcp.png", alt: "TurboTax patterns connected to Claude via Figma MCP: the design library as source material and generation scaffold" })}
-                  >
+                  <Figure onClick={() => setLightbox({ src: "/images/embedded-ai/process-figma-mcp.png", alt: "TurboTax patterns connected to Claude via Figma MCP: the design library as source material and generation scaffold" })} caption={<>TT Patterns → Claude via Figma MCP. Live components and tokens as queryable context, no exporting needed. The library is both the source material and the MCP entry point for generation.</>}>
                     <Image
                       src="/images/embedded-ai/process-figma-mcp.png"
                       alt="TurboTax patterns connected to Claude via Figma MCP: the design library as source material and generation scaffold"
                       width={1280}
                       height={720}
-                      className={styles.articleImage}
-                      style={{ width: "100%", height: "auto" }}
                     />
-                    <figcaption className={styles.articleCaption}>TT Patterns → Claude via Figma MCP. Live components and tokens as queryable context, no exporting needed. The library is both the source material and the MCP entry point for generation.</figcaption>
-                  </figure>
+                  </Figure>
 
                   <p>
                     One structural decision that made this possible was building a single Figma component that combined both the ChatGPT and Claude platform patterns simultaneously. Rather than maintaining two separate design files that would inevitably drift apart, I unified the UI kit into one component set with platform-aware theming baked in, so any change propagated to both deployments at once, and both platforms could be designed for and reviewed side by side.
                   </p>
 
-                  <figure className={styles.articleFigure}>
+                  <Figure caption={<>A single Figma component set covering both ChatGPT and Claude patterns: one change, both platforms updated at once.</>}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src="/images/NVIDIA_Overlay_0lJCFbk46w.gif"
                       alt="Figma component combining ChatGPT and Claude platform patterns: a single component set that adapts to both platforms simultaneously"
-                      className={styles.articleImage}
                       style={{ width: "100%", height: "auto" }}
                     />
-                    <figcaption className={styles.articleCaption}>A single Figma component set covering both ChatGPT and Claude patterns: one change, both platforms updated at once.</figcaption>
-                  </figure>
+                  </Figure>
 
                   <h2 id="when-the-platform-owns-the-orchestrator">When the platform owns the orchestrator</h2>
 
@@ -226,20 +212,14 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                     There are moments where you cannot deterministically control how users answer certain questions or progress through sensitive workflows, even when those workflows are deeply connected to your application logic. Those constraints fundamentally change how you think about product design. A large part of the work becomes designing around platform restrictions, orchestration constraints, and interaction systems you do not entirely own. Instead of fully controlling experiences, you are often designing resilient systems that can adapt to different orchestration behaviours while still maintaining continuity and trust.
                   </p>
 
-                  <figure
-                    className={styles.articleFigure}
-                    onClick={() => setLightbox({ src: "/images/embedded-ai/Claude.png", alt: "TurboTax document upload interface embedded inside Claude" })}
-                  >
+                  <Figure onClick={() => setLightbox({ src: "/images/embedded-ai/Claude.png", alt: "TurboTax document upload interface embedded inside Claude" })} caption={<>Document upload embedded inside Claude: drag-and-drop, document recognition, and live progress within a single artifact the platform controls.</>}>
                     <Image
                       src="/images/embedded-ai/Claude.png"
                       alt="TurboTax document upload interface embedded inside Claude"
                       width={1330}
                       height={888}
-                      className={styles.articleImage}
-                      style={{ width: "100%", height: "auto" }}
                     />
-                    <figcaption className={styles.articleCaption}>Document upload embedded inside Claude: drag-and-drop, document recognition, and live progress within a single artifact the platform controls.</figcaption>
-                  </figure>
+                  </Figure>
 
                   <h2 id="conversation-didnt-replace-interfaces">Conversation didn&apos;t replace interfaces</h2>
 
@@ -259,20 +239,14 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                     <li>Auditability</li>
                   </ul>
 
-                  <figure
-                    className={styles.articleFigure}
-                    onClick={() => setLightbox({ src: "/images/embedded-ai/Checklist.png", alt: "Dynamic filing checklist showing empty and populated states side by side" })}
-                  >
+                  <Figure onClick={() => setLightbox({ src: "/images/embedded-ai/Checklist.png", alt: "Dynamic filing checklist showing empty and populated states side by side" })} caption={<>Dynamic filing checklist: empty state alongside a populated state. Users wanted structured verification, not just conversation.</>}>
                     <Image
                       src="/images/embedded-ai/Checklist.png"
                       alt="Dynamic filing checklist showing empty and populated states side by side"
                       width={1020}
                       height={808}
-                      className={styles.articleImage}
-                      style={{ width: "100%", height: "auto" }}
                     />
-                    <figcaption className={styles.articleCaption}>Dynamic filing checklist: empty state alongside a populated state. Users wanted structured verification, not just conversation.</figcaption>
-                  </figure>
+                  </Figure>
 
                   <p>
                     One of the strongest patterns we observed was that users loved conversational intake but still wanted highly structured verification before committing actions, especially in workflows involving money, legal implications, identity, or irreversible outcomes. The future likely is not &ldquo;everything becomes chat.&rdquo; It feels much more likely that conversational orchestration will coexist with interfaces that dynamically materialise around the conversation itself depending on context and intent.
@@ -333,20 +307,14 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                     After spending the last year working in this space, I genuinely believe embedded AI application design is becoming its own category. It sits somewhere between systems design, conversational UX, orchestration design, platform design, and traditional product design, but it is not fully any one of them. The work increasingly involves orchestrating intelligence, managing probabilistic systems, designing continuity, balancing automation with oversight, shaping trust boundaries, and coordinating dynamic interfaces across platforms you do not fully control.
                   </p>
 
-                  <figure
-                    className={styles.articleFigure}
-                    onClick={() => setLightbox({ src: "/images/embedded-ai/Delivery.png", alt: "Full design delivery: component specifications and screen flows across both AI platforms" })}
-                  >
+                  <Figure onClick={() => setLightbox({ src: "/images/embedded-ai/Delivery.png", alt: "Full design delivery: component specifications and screen flows across both AI platforms" })} caption={<>Design delivery overview: component specifications and screen flows across ChatGPT and Claude. One system, two platform deployments.</>}>
                     <Image
                       src="/images/embedded-ai/Delivery.png"
                       alt="Full design delivery: component specifications and screen flows across both AI platforms"
                       width={700}
                       height={264}
-                      className={styles.articleImage}
-                      style={{ width: "100%", height: "auto" }}
                     />
-                    <figcaption className={styles.articleCaption}>Design delivery overview: component specifications and screen flows across ChatGPT and Claude. One system, two platform deployments.</figcaption>
-                  </figure>
+                  </Figure>
 
                   <p>
                     What makes this moment particularly exciting is that very few established patterns exist yet. Most teams are still discovering these interaction models in real time. It feels far less like optimising mature UX conventions and much more like helping define an entirely new model of computing while it is still forming.

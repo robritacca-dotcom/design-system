@@ -2,9 +2,12 @@
 
 import Image from "next/image";
 import MegaNav from "../../../components/MegaNav/MegaNav";
+import CaseStudyTldr from "@/components/CaseStudyTldr/CaseStudyTldr";
+import { caseStudyTldrs } from "@/data/case-study-tldrs";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import SampleCaseStudyCard from "../../../components/SampleCaseStudyCard/SampleCaseStudyCard";
+import { Figure } from "@robr0/design-system/components/Figure/Figure";
 import { getSidebarLinks, workSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
@@ -50,7 +53,9 @@ export default function IntuitAgentChatCaseStudy() {
           {/* Two-column body */}
           <div className={`${styles.resumeLayout} animate-in animate-delay-3`}>
             <div className={styles.resumeMain}>
-              <section className={styles.resumeSection}>
+              <CaseStudyTldr points={caseStudyTldrs["intuit-agent-chat"]} />
+
+              <section id="full-story" className={`${styles.resumeSection} ${styles.fullStory}`}>
                 <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Case study</h2>
                 </div>
@@ -59,7 +64,7 @@ export default function IntuitAgentChatCaseStudy() {
                   <h2 id="context">Context</h2>
 
                   <p>
-                    Intuit operates four cornerstone brands (QuickBooks, TurboTax, Credit Karma, Mailchimp) serving 100M+ customers, with 600+ designers and 8,000+ developers building on a shared platform. GenUX is Intuit&apos;s AI agent development platform: the layer that gives every Intuit app and agentic experience consistent, performant UX at scale. Intuit Agent Chat is the white-labelled conversational surface that ships on top of it; Intuit Intelligence is the brand customers see.
+                    Intuit operates four cornerstone brands (QuickBooks, TurboTax, Credit Karma, Mailchimp) serving 100M+ customers, with 600+ designers and 10,000+ engineers building on a shared platform. GenUX is Intuit&apos;s AI agent development platform: the layer that gives every Intuit app and agentic experience consistent, performant UX at scale. Intuit Agent Chat is the white-labelled conversational surface that ships on top of it; Intuit Intelligence is the brand customers see.
                   </p>
 
                   <p>
@@ -106,7 +111,7 @@ export default function IntuitAgentChatCaseStudy() {
                   </ul>
 
                   <p>
-                    We didn&apos;t wait for the perfect spec. A working MVP shipped in 4 months, in time for GED (Intuit&apos;s company-wide hackathon), and 40+ teams started experimenting with it immediately. Swapping a quarterly release cadence for a monthly one kept the momentum visible, and grew an organic community of 600+ developers around the platform.
+                    We didn&apos;t wait for the perfect spec. A working MVP shipped in 4 months, in time for GED (Intuit&apos;s company-wide hackathon), and 40+ teams started experimenting with it immediately. Swapping a quarterly release cadence for a monthly one kept the momentum visible, and grew an organic community around the platform: 600+ designers and 10,000+ engineers.
                   </p>
 
                   <h2 id="solution">Solution</h2>
@@ -119,36 +124,28 @@ export default function IntuitAgentChatCaseStudy() {
                     <strong>Themeable across every Intuit brand.</strong> One widget, tokenised for QuickBooks, TurboTax, and beyond.
                   </p>
 
-                  <figure className={styles.figure}>
+                  <Figure caption={<>Themeable: QuickBooks and TurboTax brand examples side by side.</>}>
                     <Image
                       src="/images/intuit-agent-chat/themeable-brands.png"
                       alt="Themeable: QuickBooks and TurboTax brand examples side by side"
                       width={1920}
                       height={1080}
-                      className={styles.figureImage}
                     />
-                    <figcaption className={styles.figureCaption}>
-                      Themeable: QuickBooks and TurboTax brand examples side by side.
-                    </figcaption>
-                  </figure>
+                  </Figure>
 
                   <p>
                     <strong>Flexible layouts and persistent threads.</strong> The chat panel adapts from compact rail to responsive immersive view; threads keep multi-conversation state across sessions.
                   </p>
 
-                  <figure className={styles.figure}>
+                  <Figure caption={<>Threads: persistent multi-conversation state.</>}>
                     <Image
                       src="/images/intuit-agent-chat/threads.gif"
                       alt="Threads: persistent multi-conversation state"
                       width={1080}
                       height={618}
                       unoptimized
-                      className={styles.figureImage}
                     />
-                    <figcaption className={styles.figureCaption}>
-                      Threads: persistent multi-conversation state.
-                    </figcaption>
-                  </figure>
+                  </Figure>
 
                   <p>
                     <strong>Extensible, backend-driven cards.</strong> Domain teams needed to ship new response content without waiting on our release schedule. So cards render from data, not code: teams compose a response at runtime from our base components (inputs, lists, actions) or drop in fully custom content, and it ships the moment their backend sends it.
@@ -162,18 +159,14 @@ export default function IntuitAgentChatCaseStudy() {
                     <strong>Capabilities shipped in v1 and v2</strong>: themeable, flexible layouts, threads, dynamic welcome flows, agent status &amp; reasoning, citations and follow-up suggestions, extensible cards, human-in-the-loop confirmations, responsive panel, response actions, PII-safe doc upload (PCI-compliant), 100% token coverage, and an Agent Typography Kit.
                   </p>
 
-                  <figure className={styles.figure}>
+                  <Figure caption={<>Widget anatomy: the building blocks behind every deployment.</>}>
                     <Image
                       src="/images/intuit-agent-chat/widget-anatomy.png"
                       alt="Intuit Agent Chat widget anatomy"
                       width={1920}
                       height={1080}
-                      className={styles.figureImage}
                     />
-                    <figcaption className={styles.figureCaption}>
-                      Widget anatomy: the building blocks behind every deployment.
-                    </figcaption>
-                  </figure>
+                  </Figure>
 
                   <p>
                     <strong>Handoff without repeating yourself.</strong> When an agent hit its limit, the conversation needed to become a live expert conversation without the customer starting over. We built the handoff to carry full conversation context to the expert side, so the transfer feels like the same conversation continuing, not a new one starting.
@@ -183,31 +176,23 @@ export default function IntuitAgentChatCaseStudy() {
                     <strong>Mobile parity from day one.</strong> Web, iOS, and Android, not an afterthought.
                   </p>
 
-                  <figure className={styles.figure}>
+                  <Figure caption={<>Mobile Web, Native iOS, and Native Android.</>}>
                     <Image
                       src="/images/intuit-agent-chat/mobile-parity.png"
                       alt="Mobile Web, Native iOS & Android"
                       width={1920}
                       height={1080}
-                      className={styles.figureImage}
                     />
-                    <figcaption className={styles.figureCaption}>
-                      Mobile Web, Native iOS, and Native Android.
-                    </figcaption>
-                  </figure>
+                  </Figure>
 
-                  <figure className={styles.figure}>
+                  <Figure caption={<>Every surface, labelled: the parts behind every Agent Chat deployment.</>}>
                     <Image
                       src="/images/intuit-agent-chat/agent-parts.png"
                       alt="Intuit Agent Chat annotated widget parts"
                       width={1920}
                       height={1080}
-                      className={styles.figureImage}
                     />
-                    <figcaption className={styles.figureCaption}>
-                      Every surface, labelled: the parts behind every Agent Chat deployment.
-                    </figcaption>
-                  </figure>
+                  </Figure>
 
                   <p>
                     The next problem is already in motion: giving agents access to what&apos;s actually on a user&apos;s screen and the ability to act within it, not just describe what to do in a text box.
@@ -248,7 +233,7 @@ export default function IntuitAgentChatCaseStudy() {
                     <li><strong>~50M sessions</strong> served in production</li>
                     <li><strong>Company-wide standard</strong>: unanimous executive vote to standardise as the default platform</li>
                     <li><strong>~10 months</strong> from zero to product-market fit</li>
-                    <li><strong>600+ developer community</strong>, organic adoption that converted into committed migration</li>
+                    <li><strong>600+ designers and 10,000+ engineers</strong> in the platform community, organic adoption that converted into committed migration</li>
                     <li><strong>2.8M</strong> Figma component instantiations in the last year</li>
                   </ul>
 
@@ -256,18 +241,14 @@ export default function IntuitAgentChatCaseStudy() {
                     How we got there: focus and betting big on a single shared surface; benchmarking against the industry-best for conversational AI; obsessive iteration with customers and partner teams.
                   </p>
 
-                  <figure className={styles.figure}>
+                  <Figure caption={<>Intuit Agent Chat: the design system at a glance.</>}>
                     <Image
                       src="/images/intuit-agent-chat/design-system.png"
                       alt="Intuit Agent Chat: the design system at a glance"
                       width={1920}
                       height={1080}
-                      className={styles.figureImage}
                     />
-                    <figcaption className={styles.figureCaption}>
-                      Intuit Agent Chat: the design system at a glance.
-                    </figcaption>
-                  </figure>
+                  </Figure>
 
                 </article>
               </section>
@@ -308,7 +289,7 @@ export default function IntuitAgentChatCaseStudy() {
                   </div>
                   <div className={styles.detailItem}>
                     <span className={styles.detailLabel}>Reach</span>
-                    <span className={styles.detailValue}>70+ agents · ~50M sessions · 600+ developers</span>
+                    <span className={styles.detailValue}>70+ agents · ~50M sessions · 600+ designers · 10k+ engineers</span>
                   </div>
                 </div>
               </section>

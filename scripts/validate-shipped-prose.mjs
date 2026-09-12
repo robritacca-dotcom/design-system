@@ -24,15 +24,17 @@
  * whose own validator (validate-page-summaries.mjs) runs the em-dash check
  * alongside its structural rules.
  *
- * Three modules are in scope by name, because their visitor-visible prose
+ * Four modules are in scope by name, because their visitor-visible prose
  * rides in string literals the page scan's prose extraction cannot see:
  * `website/src/lib/chat-sim.ts` (the scripted story and scenario responses
  * and their chips), `website/src/app/playground/ChatDirector.tsx` (the
  * event-rail copy), and `website/src/app/playground/views/ChatView.tsx`
- * (the staged history's thread titles, detail lines and project rows).
- * Their string literals and JSX text are scanned through the AST, so
- * comments — where an em dash is a structural separator, not voice — are
- * never seen. `STORY_MODULES` below is the list.
+ * (the staged history's thread titles, detail lines and project rows), and
+ * `website/src/data/case-study-tldrs.ts` (the TLDR points at the top of the
+ * /work case studies, kept outside the route folders so the corpus does not
+ * carry the articles' facts twice). Their string literals and JSX text are
+ * scanned through the AST, so comments — where an em dash is a structural
+ * separator, not voice — are never seen. `STORY_MODULES` below is the list.
  *
  * WHAT IS DELIBERATELY OUT, AND WHY
  *
@@ -259,6 +261,11 @@ const STORY_MODULES = [
   'website/src/lib/chat-sim.ts',
   'website/src/app/playground/ChatDirector.tsx',
   'website/src/app/playground/views/ChatView.tsx',
+  // Not story copy, but the same shape of problem: the case-study TLDR
+  // points render on every /work page while living outside the route
+  // folders (deliberately out of the corpus — the file's doc block owns
+  // why), so the page scan never sees them and this module scan must.
+  'website/src/data/case-study-tldrs.ts',
 ];
 
 function scanStringLiterals(relPath) {

@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import MegaNav from "../../../components/MegaNav/MegaNav";
+import CaseStudyTldr from "@/components/CaseStudyTldr/CaseStudyTldr";
+import { caseStudyTldrs } from "@/data/case-study-tldrs";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import SampleCaseStudyCard from "../../../components/SampleCaseStudyCard/SampleCaseStudyCard";
@@ -51,7 +53,9 @@ export default function CibcFirstCaribbeanCaseStudy() {
           <div className={`${styles.resumeLayout} animate-in animate-delay-3`}>
             {/* Main — article body */}
             <div className={styles.resumeMain}>
-              <section className={styles.resumeSection}>
+              <CaseStudyTldr points={caseStudyTldrs["cibc-firstcaribbean"]} />
+
+              <section id="full-story" className={`${styles.resumeSection} ${styles.fullStory}`}>
                 <div className={styles.resumeSectionHeader}>
                   <h2 className={styles.resumeSectionTitle}>Case study</h2>
                 </div>

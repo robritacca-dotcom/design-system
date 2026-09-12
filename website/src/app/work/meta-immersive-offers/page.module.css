@@ -92,39 +92,6 @@
 }
 
 /* ============================================
-   ARTICLE FIGURES (inline images)
-   ============================================ */
-.articleFigure {
-  margin: var(--primitive-gap-xl) 0 0;
-  cursor: zoom-in;
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  background: var(--color-bg-container-secondary);
-}
-
-.articleImage {
-  width: 100%;
-  height: auto;
-  display: block;
-  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
-}
-
-.articleFigure:hover .articleImage {
-  opacity: 0.88;
-}
-
-.articleCaption {
-  display: block;
-  padding: var(--primitive-padding-md) var(--primitive-padding-lg);
-  font-family: var(--font-paragraph-sm-family);
-  font-size: var(--font-paragraph-sm-size);
-  font-weight: var(--font-paragraph-sm-weight);
-  line-height: var(--font-paragraph-sm-line-height);
-  color: var(--color-text-tertiary);
-  border-top: 1px solid var(--color-divider);
-}
-
-/* ============================================
    LIGHTBOX
    ============================================ */
 .lightboxOverlay {
@@ -221,7 +188,14 @@
   flex: 1;
   display: flex;
   flex-direction: column;
+  gap: var(--gap-xxxl);
   min-width: 0;
+}
+
+/* Anchor target for the TLDR's "Read the full story" link — a section
+   element rather than an h2, so it carries the clearance itself. */
+.fullStory {
+  scroll-margin-top: var(--layout-anchor-clearance);
 }
 
 .resumeSidebar {
@@ -281,6 +255,13 @@
   letter-spacing: var(--font-heading-2-letter-spacing);
   color: var(--color-text-primary);
   margin: var(--primitive-gap-xl) 0 0;
+}
+
+/* The section header above the article already provides the offset, so an
+   article that opens with a heading starts level with every other section's
+   content instead of sinking by its own top margin. */
+.body > h2:first-child {
+  margin-top: 0;
 }
 
 .body ul {
