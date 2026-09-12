@@ -199,7 +199,9 @@ This section documents how to apply the typographic scale when building new page
 
 ### Section Dividers
 
-`h2` elements carry a `border-bottom: 1px solid var(--color-divider)` by default to visually close the preceding section. Do not insert `<hr>` elements between sections — they duplicate the divider. The border on `h2` is the only section separator needed.
+`h2` elements carry a `border-bottom: var(--border-xs) solid var(--color-divider)` by default to visually close the preceding section. Do not insert `<hr>` elements between sections — they duplicate the divider. The border on `h2` is the only section separator needed.
+
+**The header-divider rhythm is fixed**: heading, then `--padding-lg` (20px) of clearance, then the rule, then `--gap-xl` (40px) before the section's content. The rule belongs to the heading, so the tight side is above it and the generous side is below — inverted spacing (a rule floating far under its heading, or content hugging the rule) reads as the rule labelling the content instead. SectionTitle owns the heading-to-rule half; the page's section layout owns the 40px below, usually as the section container's gap. A page whose sections run a tighter internal gap must make up the difference on the divider itself (margin-bottom on the title — /overview and /docs/get-started are the precedent) rather than letting the rule sit closer to the content than everywhere else. The hand-rolled equivalents (the case-study and journal `resumeSectionHeader`-style headers) follow the same geometry. The one deliberate exception is markdown article bodies (the /blueprints renderers — see Applying to Markdown Pages below): their h2s head running article copy, not page sections, so they run a tighter internal rhythm (8px above the rule, 16px below) that would read as page-section spacing nowhere else.
 
 ### Applying to Markdown Pages
 
@@ -210,8 +212,9 @@ When a page renders markdown (via `react-markdown` or similar), apply these head
 .markdownBody :global(h2) {
   font-size: var(--font-sub-display-size);      /* 30px */
   font-weight: var(--font-sub-display-weight);  /* 300 */
-  border-bottom: 1px solid var(--color-divider);
-  margin-top: var(--primitive-gap-xxl);         /* 60px above */
+  padding-bottom: var(--primitive-padding-sm);  /* 8px above the rule */
+  border-bottom: var(--border-xs) solid var(--color-divider);
+  margin-top: var(--gap-xxl);                   /* 60px above, 40px on mobile — semantic, so the section rhythm collapses with the token */
   margin-bottom: var(--primitive-gap-md);       /* 16px below */
 }
 
@@ -713,7 +716,7 @@ The `floating` variant trades the inline rail for a minimap that costs no column
 
 ### Table
 
-**`ds-table`** — Data table with header row and body rows; presentational only (no sorting, selection, or row expansion). Header: `--font-title-body-*` (weight 600). Body: `--font-paragraph-*`. Row dividers: `--color-divider`. Background: `--color-bg-page-primary` or `--color-bg-container-primary` depending on context. `bordered` wraps the table in a `--color-bg-container-border` container with `--radius-md`.
+**`ds-table`** — Data table with header row and body rows; presentational only (no sorting, selection, or row expansion). Header: `--font-title-body-*` (weight 600). Body: `--font-paragraph-*`. Row dividers: `--border-xs` in `--color-bg-container-border` by default; the `bordered` variant's header and body cells switch to `--color-divider`. Background: `--color-bg-page-primary` or `--color-bg-container-primary` depending on context. `bordered` wraps the table in a `--border-xs` `--color-divider` container with `--radius-md`.
 
 ### DataTable
 
@@ -819,7 +822,7 @@ Field deliberately owns **no layout** — the flex column and gap stay on the co
 
 ### SectionTitle
 
-**`ds-section-title`** — The standard section heading used across the docs site: an `<h2>` in `--font-heading-2-*` `--color-text-secondary` with an optional `trailing` slot (count, badge, metadata) in `--font-paragraph-*` `--color-text-tertiary`, closed by a `--color-divider` bottom border with `--padding-xl` breathing room. This is the h2-carries-the-divider rule from the typography spec, packaged as a component. `divider={false}` (`ds-section-title--no-divider`) drops the border and reduces the clearance to `--padding-md`, for headings above content that draws its own lines (bordered tables, calendars, the /overview map sections' diagram canvases) — where a second rule would double up, the section separates by whitespace alone. A page may keep the divider on its column-top headings while the sub-sections below drop theirs (the /overview arrangement): the top of a column earns the anchoring line, the line-heavy sections underneath do not.
+**`ds-section-title`** — The standard section heading used across the docs site: an `<h2>` in `--font-heading-2-*` `--color-text-secondary` with an optional `trailing` slot (count, badge, metadata) in `--font-paragraph-*` `--color-text-tertiary`, closed by a `--color-divider` bottom border with `--padding-lg` breathing room. This is the h2-carries-the-divider rule from the typography spec, packaged as a component; the component owns only the heading-to-rule half of the header-divider rhythm (see Section Dividers) — the `--gap-xl` below the rule is the consuming page's job. `divider={false}` (`ds-section-title--no-divider`) drops the border and reduces the clearance to `--padding-md`, for headings above content that draws its own lines (bordered tables, calendars, the /overview map sections' diagram canvases) — where a second rule would double up, the section separates by whitespace alone. A page may keep the divider on its column-top headings while the sub-sections below drop theirs (the /overview arrangement): the top of a column earns the anchoring line, the line-heavy sections underneath do not.
 
 ### Instructions
 

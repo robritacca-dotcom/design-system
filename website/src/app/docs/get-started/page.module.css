@@ -181,6 +181,13 @@ a.toolItem:hover {
   scroll-margin-top: var(--layout-anchor-clearance);
 }
 
+/* The divider titles follow the case-study header rhythm — heading,
+   rule, then --gap-xl of clearance before the content. The section's
+   internal gap is tighter, so the title carries the difference. */
+.section > :global(.ds-section-title:not(.ds-section-title--no-divider)) {
+  margin-bottom: calc(var(--gap-xl) - var(--primitive-gap-lg));
+}
+
 .sectionNote {
   font-size: var(--font-paragraph-size);
   font-weight: var(--font-paragraph-weight);

@@ -315,6 +315,15 @@ a.statItem:hover {
   margin-bottom: var(--gap-xxxl);
 }
 
+/* The divider-bearing titles follow the case-study header rhythm —
+   heading, rule, then --gap-xl of clearance before the content. These
+   sections run a tighter internal gap, so the title carries the
+   difference; the divider-less titles keep the plain section gap. */
+.mapSection > :global(.ds-section-title:not(.ds-section-title--no-divider)),
+.resumeSection > :global(.ds-section-title:not(.ds-section-title--no-divider)) {
+  margin-bottom: calc(var(--gap-xl) - var(--primitive-gap-md));
+}
+
 .sectionBody {
   font-size: var(--font-paragraph-size);
   font-weight: var(--font-paragraph-weight);

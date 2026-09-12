@@ -127,7 +127,7 @@
 
 .ds-table__wrapper {
   overflow-x: auto;
-  border: 1px solid var(--color-divider);
+  border: var(--border-xs) solid var(--color-divider);
   border-radius: var(--radius-md); /* 12px */
   background: var(--color-bg-page-primary);
 }
@@ -149,12 +149,12 @@
 
 /* Header cells: bottom divider */
 .ds-table--bordered .ds-table__header-cell {
-  border-bottom: 1px solid var(--color-divider);
+  border-bottom: var(--border-xs) solid var(--color-divider);
 }
 
 /* Body cells: bottom divider */
 .ds-table--bordered .ds-table__cell {
-  border-bottom: 1px solid var(--color-divider);
+  border-bottom: var(--border-xs) solid var(--color-divider);
 }
 
 /* Last body row: no bottom border (the wrapper border handles it) */
