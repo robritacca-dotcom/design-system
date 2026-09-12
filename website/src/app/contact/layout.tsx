@@ -3,7 +3,7 @@ import { pageOpenGraph } from "@/config/navigation";
 
 const title = "Contact";
 const description =
-  "Get in touch: email, LinkedIn, Instagram, X, Substack, or GitHub.";
+  "Get in touch by email or LinkedIn, book a one-hour consultation, or follow on X, Instagram, Substack, and GitHub.";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/contact" },

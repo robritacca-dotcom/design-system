@@ -7,7 +7,7 @@
   align-items: center;
   gap: var(--gap-xxxl);
   width: 100%;
-  max-width: 720px;
+  max-width: 1160px;
   /* Top offset matches the 40px every other page puts above its title,
      so the h1 sits at the same height site-wide */
   padding: var(--primitive-gap-xl) var(--primitive-padding-xl)
@@ -45,6 +45,35 @@
 }
 
 /* ============================================
+   LAYOUT — contact methods left, consulting tile right
+   ============================================ */
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 400px;
+  gap: var(--gap-xxxl) var(--gap-xxl);
+  align-items: start;
+  width: 100%;
+}
+
+/* The tile spans both method sections' rows so it reads as a
+   companion column, not a third stacked section */
+.consulting {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+@media (max-width: 959px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .consulting {
+    grid-column: auto;
+    grid-row: auto;
+  }
+}
+
+/* ============================================
    SECTIONS
    ============================================ */
 .section {
@@ -72,4 +101,54 @@
   flex-direction: column;
   gap: var(--primitive-gap-sm);
   width: 100%;
+}
+
+/* ============================================
+   CONSULTING TILE
+   ============================================ */
+.consultingContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-lg);
+}
+
+.consultingTitle {
+  font-family: var(--font-title-body-family);
+  font-size: var(--font-title-body-size);
+  font-weight: var(--font-title-body-weight);
+  line-height: var(--font-title-body-line-height);
+  letter-spacing: var(--font-title-body-letter-spacing);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.consultingBody {
+  font-family: var(--font-paragraph-family);
+  font-size: var(--font-paragraph-size);
+  font-weight: var(--font-paragraph-weight);
+  line-height: var(--font-paragraph-line-height);
+  letter-spacing: var(--font-paragraph-letter-spacing);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.consultingCta {
+  align-self: flex-start;
+}
+
+.consultingCtaLogo {
+  width: var(--icon-size-md);
+  height: var(--icon-size-md);
+  border-radius: var(--radius-xs);
+  object-fit: contain;
+}
+
+.consultingNote {
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  letter-spacing: var(--font-paragraph-sm-letter-spacing);
+  color: var(--color-text-tertiary);
+  margin: 0;
 }

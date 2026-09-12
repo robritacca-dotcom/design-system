@@ -129,6 +129,22 @@
     }
   },
   {
+    "description": "recruiter: consultation price (not published on the site, deflects to /contact)",
+    "vars": {
+      "question": "How much does a consultation with Rob cost?"
+    },
+    "assert": [
+      {
+        "type": "contains",
+        "value": "/contact"
+      }
+    ],
+    "metadata": {
+      "seat": "recruiter",
+      "requiredFacts": []
+    }
+  },
+  {
     "description": "recruiter: career summary (transcript question)",
     "vars": {
       "question": "Give me a two-minute summary of Rob's career."

@@ -3,7 +3,10 @@
 import MegaNav from "../../components/MegaNav/MegaNav";
 import { ToastProvider, useToast } from "@robr0/design-system/components/Toast/Toast";
 import { ContactCard } from "@robr0/design-system/components/ContactCard/ContactCard";
+import { Button } from "@robr0/design-system/components/Button/Button";
 import styles from "./page.module.css";
+
+const STRIPE_CHECKOUT_URL = "https://buy.stripe.com/28o7vb5NBaSJ3NC5kn";
 
 interface ContactMethod {
   label: string;
@@ -101,57 +104,88 @@ function ContactContent() {
           </p>
         </div>
 
-        {/* Connect with me */}
-        <div className={`${styles.section} animate-in animate-delay-1`}>
-          <h2 className={styles.sectionTitle}>Connect with me</h2>
-          <div className={styles.methods}>
-            {connectMethods.map((m) => (
-              <ContactCard
-                key={m.label}
-                label={m.label}
-                value={m.value}
-                href={m.href}
-                icon={m.icon}
-                logo={m.logo}
-                external={m.external}
-                copyable={m.copyable}
-                copyOnClick={m.copyOnClick}
-                onCopy={copyToClipboard}
-              />
-            ))}
+        <div className={styles.layout}>
+          {/* Connect with me */}
+          <div className={`${styles.section} animate-in animate-delay-1`}>
+            <h2 className={styles.sectionTitle}>Connect with me</h2>
+            <div className={styles.methods}>
+              {connectMethods.map((m) => (
+                <ContactCard
+                  key={m.label}
+                  label={m.label}
+                  value={m.value}
+                  href={m.href}
+                  icon={m.icon}
+                  logo={m.logo}
+                  external={m.external}
+                  copyable={m.copyable}
+                  copyOnClick={m.copyOnClick}
+                  onCopy={copyToClipboard}
+                />
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* Book a consultation */}
-        <div className={`${styles.section} animate-in animate-delay-2`}>
-          <h2 className={styles.sectionTitle}>Book a consultation</h2>
-          <ContactCard
-            label="Stripe"
-            value="Book a design consultation, secure checkout via Stripe"
-            href="https://buy.stripe.com/28o7vb5NBaSJ3NC5kn"
-            logo="/logos/stripe-new.png"
-            external
-          />
-        </div>
-
-        {/* Follow me */}
-        <div className={`${styles.section} animate-in animate-delay-3`}>
-          <h2 className={styles.sectionTitle}>Follow me</h2>
-          <div className={styles.methods}>
-            {followMethods.map((m) => (
-              <ContactCard
-                key={m.label}
-                label={m.label}
-                value={m.value}
-                href={m.href}
-                icon={m.icon}
-                logo={m.logo}
-                external={m.external}
-                copyable={m.copyable}
-                copyOnClick={m.copyOnClick}
-                onCopy={copyToClipboard}
+          {/* Book a consultation — the blurb is published here so the site
+              chat can answer consulting questions from the corpus */}
+          <aside className={`${styles.section} ${styles.consulting} animate-in animate-delay-2`}>
+            <h2 className={styles.sectionTitle}>Book a consultation</h2>
+            <div className={styles.consultingContent}>
+              <p className={styles.consultingTitle}>One-hour call</p>
+              <p className={styles.consultingBody}>
+                A focused 1:1 for designers and teams. Bring whatever&apos;s most
+                useful: sharpening your design craft, building or fixing a design
+                system, shipping product faster, or embedding AI into the things
+                you actually ship.
+              </p>
+              <p className={styles.consultingBody}>
+                I work hands-on with agentic design workflows, so we go deep on
+                the practical stuff, not just theory. Come with a problem, a
+                project, or a career question.
+              </p>
+              <p className={styles.consultingNote}>
+                Secure checkout via Stripe. After payment I&apos;ll email you
+                within 24h to find a time. Refunds available for cancellations
+                24h in advance.
+              </p>
+              <Button
+                label="Book a call"
+                variant="neutral"
+                iconLeft={
+                  <img
+                    src="/logos/stripe-new.png"
+                    alt=""
+                    className={styles.consultingCtaLogo}
+                  />
+                }
+                iconRight="open_in_new"
+                href={STRIPE_CHECKOUT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.consultingCta}
               />
-            ))}
+            </div>
+          </aside>
+
+          {/* Follow me */}
+          <div className={`${styles.section} animate-in animate-delay-3`}>
+            <h2 className={styles.sectionTitle}>Follow me</h2>
+            <div className={styles.methods}>
+              {followMethods.map((m) => (
+                <ContactCard
+                  key={m.label}
+                  label={m.label}
+                  value={m.value}
+                  href={m.href}
+                  icon={m.icon}
+                  logo={m.logo}
+                  external={m.external}
+                  copyable={m.copyable}
+                  copyOnClick={m.copyOnClick}
+                  onCopy={copyToClipboard}
+                />
+              ))}
+            </div>
           </div>
         </div>
 

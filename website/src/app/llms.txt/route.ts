@@ -78,7 +78,7 @@ export function GET() {
     "",
     `- [About](${SITE_URL}/about): background, principles, and career history`,
     `- [Writing](${SITE_URL}/writing): essays on design and AI (mirrored from Substack)`,
-    `- [Contact](${SITE_URL}/contact): ways to get in touch`,
+    `- [Contact](${SITE_URL}/contact): ways to get in touch, and to book a paid one-hour consultation`,
     "",
     "## Optional",
     "",

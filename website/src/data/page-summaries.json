@@ -170,12 +170,17 @@
     },
     "/contact": {
       "title": "Contact",
-      "text": "How to reach Rob for roles, collaborations, or questions about the system.",
+      "text": "How to reach Rob, book a one-hour consultation via Stripe, or follow his work.",
       "chips": [
         {
           "id": "reach",
           "label": "How do I reach Rob?",
           "prompt": "What's the best way to contact Rob?"
+        },
+        {
+          "id": "consult",
+          "label": "Does Rob take consulting work?",
+          "prompt": "Does Rob take consulting work, and how do I book a call with him?"
         }
       ]
     },

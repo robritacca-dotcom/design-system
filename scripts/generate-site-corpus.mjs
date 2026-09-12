@@ -81,8 +81,16 @@ const CHARS_PER_TOKEN = 2.85;
  * were on those pages all along and simply never reached the model. Sized well
  * past the overage on purpose: the budget had drifted to under 2,800 tokens of
  * headroom, which is one case study away from failing on ordinary writing.
+ *
+ * Raised to 140K on 2026-09-12, when the contact page's consulting blurb
+ * (published so the chat can answer consulting questions) landed against
+ * roughly 500 tokens of remaining headroom. No section doubled — the
+ * case-study TLDRs shipped the same day deliberately stay out of the corpus
+ * (their data module's doc block owns why) — so this is the ordinary-growth
+ * case, sized well past the ceiling for the same headroom reason as every
+ * raise above.
  */
-const TOKEN_BUDGET = 130_000;
+const TOKEN_BUDGET = 140_000;
 
 /** Normalize CRLF so Windows checkouts generate byte-identical output to CI. */
 const read = (path) => readFileSync(path, 'utf8').replace(/\r\n/g, '\n');
@@ -647,7 +655,7 @@ Every page on robertritacca.com. Link to these paths when pointing someone at mo
 - About (/about): background, principles, and career history
 - Work (/work): case study index
 - Writing (/writing): essays on design and AI, mirrored from Substack
-- Contact (/contact): ways to get in touch
+- Contact (/contact): ways to get in touch, and to book a paid one-hour consultation
 - Design system (/design-system): the whole system on one page with live demos
 - Playground (/playground): re-theme the design system live and copy the CSS
 - Canvas (/canvas): every section's landing page live on one endless board (alpha, desktop only)
