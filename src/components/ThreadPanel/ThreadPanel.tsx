@@ -29,6 +29,14 @@ export interface ThreadPanelThread {
   pending?: boolean;
   /** This thread's own menu actions, overriding the panel-wide `threadActions`. */
   actions?: ThreadPanelThreadAction[];
+  /** Quiet second line under the title in the caption face — a repo, an environment, a one-line summary. Overflows under the same trailing mask as the title. */
+  description?: string;
+  /** The thread holds unseen activity: a small status dot leads the row. The dot is decorative — put the state in `meta` or `description` when it must be read aloud. */
+  unread?: boolean;
+  /** Trailing Material Symbol before the meta, e.g. `cloud` for a session that lives remotely. */
+  icon?: string;
+  /** Marks the thread pinned with a trailing pin glyph. A marker only: the host groups pinned threads (typically a leading group) and offers pin/unpin through the row menu. */
+  pinned?: boolean;
 }
 
 export interface ThreadPanelGroup {
@@ -45,6 +53,19 @@ export interface ThreadPanelControl {
   icon: string;
   /** Row text. */
   label: string;
+  /** Optional href — the row renders as an `<a>` instead of a `<button>`. */
+  href?: string;
+}
+
+export interface ThreadPanelProject {
+  /** Stable identifier: `activeProjectId` matches against it and `onProjectSelect` reports it. */
+  id: string;
+  /** The project's name. */
+  label: string;
+  /** Material Symbol name for the row's leading icon. Defaults to `folder`. */
+  icon?: string;
+  /** Small trailing annotation in the caption face, e.g. how recently the project was touched. */
+  meta?: string;
   /** Optional href — the row renders as an `<a>` instead of a `<button>`. */
   href?: string;
 }
@@ -94,10 +115,22 @@ type ThreadPanelOwnProps = {
   onNewThread?: () => void;
   /** Optional href — the new-thread row renders as an `<a>`. */
   newThreadHref?: string;
-  /** Standing rows between the new-thread action and the history, e.g. Projects or Settings. */
+  /** Standing rows between the new-thread action and the history, e.g. Automations or Settings. */
   controls?: ThreadPanelControl[];
   /** Fires with the clicked control's id. Rows with an `href` navigate as well. */
   onControlSelect?: (id: string) => void;
+  /** Project rows between the standing controls and the history, under their own overline header. The section renders only when non-empty; collapsed, the rows fold to icon circles like the controls. */
+  projects?: ThreadPanelProject[];
+  /** The projects section's overline header text. */
+  projectsLabel?: string;
+  /** Id of the open project. Its row renders filled and carries `aria-current`. */
+  activeProjectId?: string;
+  /** Fires with the clicked project's id. Rows with an `href` navigate as well. */
+  onProjectSelect?: (id: string) => void;
+  /** Fires when the header's trailing new-project button is pressed. The button renders only when this is given. */
+  onProjectCreate?: () => void;
+  /** Accessible name for the new-project button. */
+  newProjectLabel?: string;
   /** Text for the quiet trailing row that reveals older threads, e.g. "Show 20 more". Renders only when given. */
   moreLabel?: string;
   /** Fires when the more row is clicked. */
@@ -242,8 +275,12 @@ function RenameField({
 /**
  * ThreadPanel is the session-history rail of a chat or agent product: brand
  * header, a new-thread action with an optional shortcut hint, standing
- * control rows, the grouped thread history (the one region that scrolls),
- * and a footer for the profile row and host furniture like a theme toggle.
+ * control rows, an optional projects section with its own new-project
+ * button, the grouped thread history (the one region that scrolls), and a
+ * footer for the profile row and host furniture like a theme toggle.
+ * Thread rows scale from a bare title to the full detail anatomy: an
+ * unread dot, a quiet description line, a trailing glyph, a pin marker,
+ * and the meta caption.
  *
  * Fully controlled and stateless: the host owns the active thread, the
  * navigation, the expanded state, and what selecting a row means. Every
@@ -286,6 +323,12 @@ export const ThreadPanel = React.forwardRef<HTMLDivElement, ThreadPanelProps>(
       newThreadHref,
       controls,
       onControlSelect,
+      projects,
+      projectsLabel = 'Projects',
+      activeProjectId,
+      onProjectSelect,
+      onProjectCreate,
+      newProjectLabel = 'New project',
       moreLabel,
       onShowMore,
       historyLabel = 'Thread history',
@@ -450,6 +493,70 @@ export const ThreadPanel = React.forwardRef<HTMLDivElement, ThreadPanelProps>(
           </div>
         )}
 
+        {projects && projects.length > 0 && (
+          <div className={`${baseClass}__projects`}>
+            <div className={`${baseClass}__projects-header`}>
+              <span className={`${baseClass}__projects-label`}>
+                {projectsLabel}
+              </span>
+              {onProjectCreate && (
+                <button
+                  type="button"
+                  className={`${baseClass}__projects-add`}
+                  aria-label={newProjectLabel}
+                  onClick={onProjectCreate}
+                >
+                  <span className={iconClass} aria-hidden="true">
+                    add
+                  </span>
+                </button>
+              )}
+            </div>
+            <ul className={`${baseClass}__list`} aria-label={projectsLabel}>
+              {projects.map((project) => {
+                const active = project.id === activeProjectId;
+                return (
+                  <li key={project.id} className={`${baseClass}__row`}>
+                    <ActionRow
+                      className={[
+                        `${baseClass}__project`,
+                        active && `${baseClass}__project--active`,
+                      ]
+                        .filter(Boolean)
+                        .join(' ')}
+                      href={project.href}
+                      onClick={
+                        onProjectSelect
+                          ? () => onProjectSelect(project.id)
+                          : undefined
+                      }
+                      ariaCurrent={
+                        active ? (project.href ? 'page' : 'true') : undefined
+                      }
+                      title={project.label}
+                    >
+                      <span
+                        className={`${baseClass}__project-icon ${iconClass}`}
+                        aria-hidden="true"
+                      >
+                        {project.icon ?? 'folder'}
+                      </span>
+                      <span className={`${baseClass}__project-label`}>
+                        {project.label}
+                      </span>
+                      {project.meta && (
+                        <span className={`${baseClass}__meta`}>
+                          {project.meta}
+                        </span>
+                      )}
+                    </ActionRow>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        )}
+
         <nav className={`${baseClass}__history`} aria-label={historyLabel}>
           {groups.map(
             (group, index) =>
@@ -505,6 +612,11 @@ export const ThreadPanel = React.forwardRef<HTMLDivElement, ThreadPanelProps>(
                                 className={[
                                   `${baseClass}__thread`,
                                   active && `${baseClass}__thread--active`,
+                                  thread.description &&
+                                    !thread.pending &&
+                                    `${baseClass}__thread--detailed`,
+                                  thread.unread &&
+                                    `${baseClass}__thread--unread`,
                                 ]
                                   .filter(Boolean)
                                   .join(' ')}
@@ -523,6 +635,12 @@ export const ThreadPanel = React.forwardRef<HTMLDivElement, ThreadPanelProps>(
                                 }
                                 title={thread.title}
                               >
+                                {thread.unread && !thread.pending && (
+                                  <span
+                                    className={`${baseClass}__unread`}
+                                    aria-hidden="true"
+                                  />
+                                )}
                                 {thread.pending ? (
                                   /* The naming state: the shimmer holds the
                                      title's place; the row's accessible name
@@ -540,9 +658,39 @@ export const ThreadPanel = React.forwardRef<HTMLDivElement, ThreadPanelProps>(
                                     {thread.title}
                                   </span>
                                 )}
-                                {thread.meta && !thread.pending && (
-                                  <span className={`${baseClass}__meta`}>
-                                    {thread.meta}
+                                {!thread.pending &&
+                                  (thread.icon ||
+                                    thread.pinned ||
+                                    thread.meta) && (
+                                    <span className={`${baseClass}__trail`}>
+                                      {thread.icon && (
+                                        <span
+                                          className={`${baseClass}__thread-icon ${iconClass}`}
+                                          aria-hidden="true"
+                                        >
+                                          {thread.icon}
+                                        </span>
+                                      )}
+                                      {thread.pinned && (
+                                        <span
+                                          className={`${baseClass}__pin ${iconClass}`}
+                                          aria-hidden="true"
+                                        >
+                                          keep
+                                        </span>
+                                      )}
+                                      {thread.meta && (
+                                        <span className={`${baseClass}__meta`}>
+                                          {thread.meta}
+                                        </span>
+                                      )}
+                                    </span>
+                                  )}
+                                {thread.description && !thread.pending && (
+                                  <span
+                                    className={`${baseClass}__description`}
+                                  >
+                                    {thread.description}
                                   </span>
                                 )}
                               </ActionRow>

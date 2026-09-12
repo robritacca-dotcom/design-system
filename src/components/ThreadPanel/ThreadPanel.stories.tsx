@@ -26,9 +26,14 @@ const GROUPS = [
 ];
 
 const CONTROLS = [
-  { id: 'projects', icon: 'folder', label: 'Projects' },
+  { id: 'runs', icon: 'play_circle', label: 'Runs' },
   { id: 'automations', icon: 'schedule', label: 'Automations' },
   { id: 'settings', icon: 'settings', label: 'Settings' },
+];
+
+const PROJECTS = [
+  { id: 'atlas-app', label: 'Atlas app', icon: 'folder', meta: '1m' },
+  { id: 'atlas-docs', label: 'Atlas docs', icon: 'folder', meta: '2d' },
 ];
 
 const meta = {
@@ -117,6 +122,118 @@ export const WithMeta: Story = {
         ],
       },
     ],
+  },
+};
+
+/** The full detail anatomy on thread rows: an unread dot leads the title,
+ *  a `description` takes a quiet second line under the same trailing fade,
+ *  and the trailing cluster holds a session glyph beside the meta. */
+export const Details: Story = {
+  args: {
+    logoText: 'Skylark',
+    activeThreadId: 'search',
+    groups: [
+      {
+        label: 'Today',
+        threads: [
+          {
+            id: 'onboarding',
+            title: 'Rework the onboarding flow',
+            description: 'atlas-app · main',
+            unread: true,
+            icon: 'cloud',
+            meta: '32m',
+          },
+          {
+            id: 'search',
+            title: 'Speed up the search index',
+            description: 'atlas-app · perf/search-index',
+            icon: 'cloud',
+            meta: '1h',
+          },
+          {
+            id: 'billing',
+            title: 'Untangle the billing webhooks',
+            description: 'atlas-app · fix/webhook-retries',
+            unread: true,
+            meta: '3h',
+          },
+        ],
+      },
+      {
+        label: 'Yesterday',
+        threads: [
+          {
+            id: 'quickstart',
+            title: 'Rewrite the quickstart guide',
+            description: 'atlas-docs · main',
+            meta: '15h',
+          },
+        ],
+      },
+    ],
+  },
+};
+
+/** Pinned threads: `pinned` marks a row with the pin glyph, and the host
+ *  keeps pinned threads in their own leading group — pin and unpin travel
+ *  through the row menu like every other thread action. */
+export const Pinned: Story = {
+  args: {
+    activeThreadId: 'billing',
+    groups: [
+      {
+        label: 'Pinned',
+        threads: [
+          { id: 'billing', title: 'Untangle the billing webhooks', pinned: true },
+          { id: 'quickstart', title: 'Rewrite the quickstart guide', pinned: true },
+        ],
+      },
+      {
+        label: 'atlas-app',
+        threads: [
+          { id: 'onboarding', title: 'Rework the onboarding flow' },
+          { id: 'search', title: 'Speed up the search index' },
+          { id: 'flags', title: 'Retire the stale feature flags' },
+        ],
+      },
+    ],
+    threadActions: [
+      { id: 'pin', label: 'Pin', icon: 'keep' },
+      { id: 'rename', label: 'Rename', icon: 'edit' },
+      { id: 'delete', label: 'Delete', icon: 'delete', destructive: true },
+    ],
+    onThreadAction: fn(),
+  },
+};
+
+/** The projects section: rows under their own overline header between the
+ *  standing controls and the history, with a quiet new-project button. The
+ *  active project renders filled and carries `aria-current`. */
+export const Projects: Story = {
+  args: {
+    logoText: 'Skylark',
+    activeThreadId: 'search',
+    newThreadLabel: 'New thread',
+    projects: PROJECTS,
+    activeProjectId: 'atlas-app',
+    onProjectSelect: fn(),
+    onProjectCreate: fn(),
+    profile: { name: 'Robin Vale', meta: 'Team' },
+  },
+  play: async ({ args, canvas, userEvent }) => {
+    // A project row's accessible name carries its meta caption too.
+    await userEvent.click(canvas.getByRole('button', { name: /Atlas docs/ }));
+    await expect(args.onProjectSelect).toHaveBeenCalledWith('atlas-docs');
+
+    await userEvent.click(canvas.getByRole('button', { name: 'New project' }));
+    await expect(args.onProjectCreate).toHaveBeenCalled();
+
+    const active = canvas.getByRole('button', { name: /Atlas app/ });
+    await expect(active).toHaveAttribute('aria-current', 'true');
+
+    // Rest the pointer off the rows so hover styling stays out of snapshots.
+    await userEvent.click(canvas.getByRole('navigation'));
   },
 };
 

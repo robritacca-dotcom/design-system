@@ -1,8 +1,9 @@
 /* ============================================
    THREAD PANEL COMPONENT
    The session-history rail of a chat or agent product: brand header,
-   new-thread action, standing controls, grouped history, profile footer.
-   Deliberately surface-less — the host paints the band it sits on.
+   new-thread action, standing controls, projects, grouped history,
+   profile footer. Deliberately surface-less — the host paints the band
+   it sits on.
 
    Expand/collapse is AppSidebar's choreography, restated: the panel owns
    its width (64px rail, 280px expanded — the same constants), the sweeping
@@ -180,6 +181,7 @@
 
 .ds-thread-panel__new,
 .ds-thread-panel__control,
+.ds-thread-panel__project,
 .ds-thread-panel__thread {
   box-sizing: border-box;
   display: flex;
@@ -207,18 +209,22 @@
    40px circle's math needs; the padding glides with the rail's sweep. */
 .ds-thread-panel--expanded .ds-thread-panel__new,
 .ds-thread-panel--expanded .ds-thread-panel__control,
+.ds-thread-panel--expanded .ds-thread-panel__project,
 .ds-thread-panel--expanded .ds-thread-panel__thread {
   padding: var(--padding-sm) var(--padding-md);
 }
 
 .ds-thread-panel__new:hover,
 .ds-thread-panel__control:hover,
+.ds-thread-panel__project:hover,
 .ds-thread-panel__thread:hover {
   background-color: var(--color-action-passive-bg-hover);
 }
 
 .ds-thread-panel__new:focus-visible,
 .ds-thread-panel__control:focus-visible,
+.ds-thread-panel__project:focus-visible,
+.ds-thread-panel__projects-add:focus-visible,
 .ds-thread-panel__thread:focus-visible,
 .ds-thread-panel__more:focus-visible {
   outline: 2px solid var(--color-action-primary-bg);
@@ -303,6 +309,119 @@
 }
 
 .ds-thread-panel--expanded .ds-thread-panel__control-label {
+  opacity: 1;
+}
+
+/* ============================================
+   PROJECTS — standing rows under their own overline header
+   Rows share the controls' anatomy (icon circles while collapsed, labels
+   fading with the sweep); the header carries the section's name and the
+   quiet new-project button, and fades out whole while collapsed — the
+   rows' icons keep the section present on the rail.
+   ============================================ */
+
+.ds-thread-panel__projects {
+  display: flex;
+  flex-direction: column;
+  flex: none;
+  gap: var(--gap-xxs);
+}
+
+/* The group-label's seat and rhythm, with the add button balanced on the
+   trailing edge; the vertical inset shrinks to keep the 24px button from
+   growing the header past the label-only group rows below. */
+.ds-thread-panel__projects-header {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  min-width: 0;
+  padding: var(--padding-xs) var(--padding-sm) var(--padding-xs)
+    var(--padding-md);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard),
+    visibility 0s var(--motion-duration-base);
+}
+
+.ds-thread-panel--expanded .ds-thread-panel__projects-header {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard),
+    visibility 0s;
+}
+
+.ds-thread-panel__projects-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  font-family: var(--font-overline-family);
+  font-size: var(--font-overline-size);
+  font-weight: var(--font-overline-weight);
+  line-height: var(--font-overline-line-height);
+  letter-spacing: var(--font-overline-letter-spacing);
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+}
+
+.ds-thread-panel__projects-add {
+  --icon-size: var(--icon-size-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex: none;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--color-icon-primary);
+  cursor: pointer;
+  transition: background-color var(--motion-duration-fast)
+    var(--motion-ease-standard);
+}
+
+.ds-thread-panel__projects-add:hover {
+  background-color: var(--color-bg-container-tertiary);
+}
+
+.ds-thread-panel__project--active {
+  background-color: var(--color-bg-container-tertiary);
+}
+
+.ds-thread-panel__project-icon {
+  --icon-size: var(--icon-size-md);
+  color: var(--color-icon-primary);
+  flex-shrink: 0;
+}
+
+.ds-thread-panel__project-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  font-family: var(--font-paragraph-sm-family);
+  font-size: var(--font-paragraph-sm-size);
+  font-weight: var(--font-paragraph-sm-weight);
+  line-height: var(--font-paragraph-sm-line-height);
+  color: var(--color-text-primary);
+  opacity: 0;
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
+}
+
+.ds-thread-panel--expanded .ds-thread-panel__project-label {
+  opacity: 1;
+}
+
+/* A project's meta fades with the labels — collapsed, the row is only its
+   icon circle. The label fades' pace, not the menu-fade's. */
+.ds-thread-panel__project .ds-thread-panel__meta {
+  opacity: 0;
+  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
+}
+
+.ds-thread-panel--expanded .ds-thread-panel__project .ds-thread-panel__meta {
   opacity: 1;
 }
 
@@ -395,6 +514,28 @@
   background-color: var(--color-bg-container-tertiary);
 }
 
+/* A row with a description wraps to two lines: the title line keeps the
+   shared height's rhythm, the description takes the full second line, and
+   the row's gap becomes column-only so the lines sit close. */
+.ds-thread-panel__thread--detailed {
+  height: auto;
+  min-height: 40px;
+  flex-wrap: wrap;
+  column-gap: var(--gap-sm);
+  row-gap: 0;
+}
+
+/* The unread dot: a small status disc leading the title. Sized on the gap
+   scale — there is no icon token this small, and 8px matches the title's
+   cap height. */
+.ds-thread-panel__unread {
+  flex: none;
+  width: var(--gap-sm);
+  height: var(--gap-sm);
+  border-radius: var(--radius-full);
+  background-color: var(--color-status-info-icon);
+}
+
 .ds-thread-panel__title {
   flex: 1;
   min-width: 0;
@@ -468,6 +609,54 @@
   }
 }
 
+/* The description line: the caption face on the full second line, fading
+   at the trailing edge like the title above it. Indented past the unread
+   dot's column so both lines share a left edge.
+   ds-allow(color): mask alpha keywords (black/transparent), not palette colours */
+.ds-thread-panel__description {
+  flex-basis: 100%;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  font-family: var(--font-caption-family);
+  font-size: var(--font-caption-size);
+  font-weight: var(--font-caption-weight);
+  line-height: var(--font-caption-line-height);
+  color: var(--color-text-tertiary);
+  -webkit-mask-image: linear-gradient(
+    to right,
+    black calc(100% - var(--gap-xl)),
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    black calc(100% - var(--gap-xl)),
+    transparent
+  );
+}
+
+.ds-thread-panel__thread--unread .ds-thread-panel__description {
+  /* The dot's width plus the row's column gap. */
+  margin-left: calc(var(--gap-sm) + var(--gap-sm));
+}
+
+/* The trailing cluster: session glyph, pin marker, and the meta caption,
+   fading together when the overflow trigger needs their edge. */
+.ds-thread-panel__trail {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: var(--gap-xs);
+  transition: opacity var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.ds-thread-panel__thread-icon,
+.ds-thread-panel__pin {
+  --icon-size: var(--icon-size-sm);
+  flex: none;
+  color: var(--color-icon-secondary);
+}
+
 .ds-thread-panel__meta {
   flex: none;
   font-family: var(--font-caption-family);
@@ -505,10 +694,10 @@
   pointer-events: auto;
 }
 
-.ds-thread-panel__row--with-menu:hover .ds-thread-panel__meta,
-.ds-thread-panel__row--with-menu:focus-within .ds-thread-panel__meta,
+.ds-thread-panel__row--with-menu:hover .ds-thread-panel__trail,
+.ds-thread-panel__row--with-menu:focus-within .ds-thread-panel__trail,
 .ds-thread-panel__row--with-menu:has([aria-expanded='true'])
-  .ds-thread-panel__meta {
+  .ds-thread-panel__trail {
   opacity: 0;
 }
 

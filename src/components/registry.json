@@ -977,9 +977,17 @@
       "name": "ThreadPanel",
       "label": "Thread panel",
       "slug": "thread-panel",
-      "description": "The session-history rail for chat products: brand header, new-thread action, standing controls, grouped threads, and a profile footer.",
+      "description": "The session-history rail for chat products: brand header, new-thread action, standing controls, projects, grouped detail-rich threads, and a profile footer.",
       "category": "ai",
       "client": false
+    },
+    {
+      "name": "ThreadTabs",
+      "label": "Thread tabs",
+      "slug": "thread-tabs",
+      "description": "The strip of open chat sessions: pill tabs with unread dots and hover-revealed close buttons, a new-tab action, and animated enter and exit.",
+      "category": "ai",
+      "client": true
     },
     {
       "name": "TimePicker",
