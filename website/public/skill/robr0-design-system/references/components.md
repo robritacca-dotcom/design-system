@@ -54,7 +54,7 @@ A set of two-state buttons that can be toggled on or off, supporting text and ic
 - Rendering: client component (declares 'use client')
 - Contract: https://robertritacca.com/components/toggle-group.md
 
-## AI (23)
+## AI (24)
 
 Chat, agent, and model surfaces for building AI products, from the composer to the reasoning trace and the diff an agent proposes.
 
@@ -220,11 +220,19 @@ Progressive reveal for text arriving in chunks, with a blinking cursor while mor
 
 ### Thread panel
 
-The session-history rail for chat products: brand header, new-thread action, standing controls, grouped threads, and a profile footer.
+The session-history rail for chat products: brand header, new-thread action, standing controls, projects, grouped detail-rich threads, and a profile footer.
 
 - Import: `import { ThreadPanel } from '@robr0/design-system';`
 - Rendering: server-renderable (no 'use client')
 - Contract: https://robertritacca.com/components/thread-panel.md
+
+### Thread tabs
+
+The strip of open chat sessions: pill tabs with unread dots and hover-revealed close buttons, a new-tab action, and animated enter and exit.
+
+- Import: `import { ThreadTabs } from '@robr0/design-system';`
+- Rendering: client component (declares 'use client')
+- Contract: https://robertritacca.com/components/thread-tabs.md
 
 ### Tool call
 

@@ -6,6 +6,7 @@ import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import ComponentsSidebar from "../../../components/Sidebar/ComponentsSidebar";
 import { CommandPalette } from "@robr0/design-system/components/CommandPalette/CommandPalette";
 import type { CommandPaletteGroup } from "@robr0/design-system/components/CommandPalette/CommandPalette";
+import { Badge } from "@robr0/design-system/components/Badge/Badge";
 import { Button } from "@robr0/design-system/components/Button/Button";
 import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
 import PageLinks from "../../../components/PageLinks/PageLinks";
@@ -35,7 +36,13 @@ const groups: CommandPaletteGroup[] = [
   {
     label: "Actions",
     commands: [
-      { id: "new", label: "New component", icon: "add", shortcut: ["⌘", "N"] },
+      {
+        id: "new",
+        label: "New component",
+        icon: "add",
+        shortcut: ["⌘", "N"],
+        trailing: <Badge label="Beta" variant="info" />,
+      },
       { id: "search", label: "Search documentation", icon: "search", shortcut: ["⌘", "F"] },
       {
         id: "theme",
@@ -118,8 +125,12 @@ export default function CommandPalettePage() {
           <section className={styles.section}>
             <SectionTitle title="Anatomy" />
             <p className={styles.introBody}>
-              Commands carry an optional icon, a label, a description line, and
-              a <code>shortcut</code> array rendered as key chips on the right.
+              Commands carry an optional icon, a label, a description line, a{" "}
+              <code>shortcut</code> array rendered as key chips on the right,
+              and an optional <code>trailing</code> node after the keycaps, a
+              non-interactive badge or mark at the row&apos;s right edge (the
+              Beta badge on “New component” in these examples; the site&apos;s
+              own palette wears its AI-ring chip there).
               Disabled commands stay visible for discoverability but are skipped
               by the keyboard highlight (“Export tokens” in these examples).
               Group headings are quiet by design; the labels do the work.

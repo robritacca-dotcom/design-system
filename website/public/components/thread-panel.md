@@ -1,6 +1,6 @@
 # Thread panel
 
-The session-history rail for chat products: brand header, new-thread action, standing controls, grouped threads, and a profile footer.
+The session-history rail for chat products: brand header, new-thread action, standing controls, projects, grouped detail-rich threads, and a profile footer.
 
 Generated from the @robr0/design-system registry and prop JSDoc, version 0.17.0. The same data ships in the package's .d.ts and is served by the MCP endpoint at https://robertritacca.com/api/mcp.
 
@@ -31,8 +31,14 @@ Generated from the @robr0/design-system registry and prop JSDoc, version 0.17.0.
 | newThreadShortcut | `string[]` | no |  | Keyboard hint rendered as compact Kbds at the row's trailing edge, e.g. `["Ctrl", "N"]`. Decorative — the host owns the actual binding. |
 | onNewThread | `(() => void)` | no |  | Fires when the new-thread row is clicked. |
 | newThreadHref | `string` | no |  | Optional href — the new-thread row renders as an `<a>`. |
-| controls | `ThreadPanelControl[]` | no |  | Standing rows between the new-thread action and the history, e.g. Projects or Settings. |
+| controls | `ThreadPanelControl[]` | no |  | Standing rows between the new-thread action and the history, e.g. Automations or Settings. |
 | onControlSelect | `((id: string) => void)` | no |  | Fires with the clicked control's id. Rows with an `href` navigate as well. |
+| projects | `ThreadPanelProject[]` | no |  | Project rows between the standing controls and the history, under their own overline header. The section renders only when non-empty; collapsed, the rows fold to icon circles like the controls. |
+| projectsLabel | `string` | no | `Projects` | The projects section's overline header text. |
+| activeProjectId | `string` | no |  | Id of the open project. Its row renders filled and carries `aria-current`. |
+| onProjectSelect | `((id: string) => void)` | no |  | Fires with the clicked project's id. Rows with an `href` navigate as well. |
+| onProjectCreate | `(() => void)` | no |  | Fires when the header's trailing new-project button is pressed. The button renders only when this is given. |
+| newProjectLabel | `string` | no | `New project` | Accessible name for the new-project button. |
 | moreLabel | `string` | no |  | Text for the quiet trailing row that reveals older threads, e.g. "Show 20 more". Renders only when given. |
 | onShowMore | `(() => void)` | no |  | Fires when the more row is clicked. |
 | historyLabel | `string` | no | `Thread history` | Accessible name for the scrollable history region. |

@@ -5,7 +5,7 @@ description: Build React UI with @robr0/design-system. Use when installing the p
 
 # Using @robr0/design-system
 
-Generated from the library's registries at version 0.17.0, alongside every deploy of https://robertritacca.com. The library is 123 React components across 11 categories, themed by 232 semantic design tokens, published to npm.
+Generated from the library's registries at version 0.17.0, alongside every deploy of https://robertritacca.com. The library is 124 React components across 11 categories, themed by 232 semantic design tokens, published to npm.
 
 ## Install
 
@@ -48,7 +48,7 @@ Timer-driven timings (hover delays, toast auto-dismiss, the streaming reveal's p
 references/components.md lists every component with its import line and description. The categories:
 
 - Actions (6): Buttons, button groups, and toggles for triggering actions and switching modes.
-- AI (23): Chat, agent, and model surfaces for building AI products, from the composer to the reasoning trace and the diff an agent proposes.
+- AI (24): Chat, agent, and model surfaces for building AI products, from the composer to the reasoning trace and the diff an agent proposes.
 - Charts (15): Data visualisation components for plotting series and activity over time.
 - Data display (24): Cards, tables, lists, and badges for presenting structured content.
 - Effects (1): Ambient and decorative surfaces that sit behind or around the interface.

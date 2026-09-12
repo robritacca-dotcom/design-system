@@ -8293,7 +8293,7 @@ export const componentApi: readonly ComponentApiEntry[] = [
     "label": "Thread panel",
     "slug": "thread-panel",
     "category": "ai",
-    "description": "The session-history rail for chat products: brand header, new-thread action, standing controls, grouped threads, and a profile footer.",
+    "description": "The session-history rail for chat products: brand header, new-thread action, standing controls, projects, grouped detail-rich threads, and a profile footer.",
     "client": false,
     "importPath": "@robr0/design-system/components/ThreadPanel/ThreadPanel",
     "barrel": "main",
@@ -8410,13 +8410,51 @@ export const componentApi: readonly ComponentApiEntry[] = [
             "name": "controls",
             "type": "ThreadPanelControl[]",
             "required": false,
-            "description": "Standing rows between the new-thread action and the history, e.g. Projects or Settings."
+            "description": "Standing rows between the new-thread action and the history, e.g. Automations or Settings."
           },
           {
             "name": "onControlSelect",
             "type": "((id: string) => void)",
             "required": false,
             "description": "Fires with the clicked control's id. Rows with an `href` navigate as well."
+          },
+          {
+            "name": "projects",
+            "type": "ThreadPanelProject[]",
+            "required": false,
+            "description": "Project rows between the standing controls and the history, under their own overline header. The section renders only when non-empty; collapsed, the rows fold to icon circles like the controls."
+          },
+          {
+            "name": "projectsLabel",
+            "type": "string",
+            "required": false,
+            "description": "The projects section's overline header text.",
+            "defaultValue": "Projects"
+          },
+          {
+            "name": "activeProjectId",
+            "type": "string",
+            "required": false,
+            "description": "Id of the open project. Its row renders filled and carries `aria-current`."
+          },
+          {
+            "name": "onProjectSelect",
+            "type": "((id: string) => void)",
+            "required": false,
+            "description": "Fires with the clicked project's id. Rows with an `href` navigate as well."
+          },
+          {
+            "name": "onProjectCreate",
+            "type": "(() => void)",
+            "required": false,
+            "description": "Fires when the header's trailing new-project button is pressed. The button renders only when this is given."
+          },
+          {
+            "name": "newProjectLabel",
+            "type": "string",
+            "required": false,
+            "description": "Accessible name for the new-project button.",
+            "defaultValue": "New project"
           },
           {
             "name": "moreLabel",
@@ -8475,6 +8513,81 @@ export const componentApi: readonly ComponentApiEntry[] = [
             "type": "ReactNode",
             "required": false,
             "description": "Rendered in the footer above the profile row — a theme toggle, a storage meter. Fades out while collapsed, AppSidebar's contract."
+          },
+          {
+            "name": "className",
+            "type": "string",
+            "required": false,
+            "description": "Additional CSS classes",
+            "defaultValue": ""
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "ThreadTabs",
+    "label": "Thread tabs",
+    "slug": "thread-tabs",
+    "category": "ai",
+    "description": "The strip of open chat sessions: pill tabs with unread dots and hover-revealed close buttons, a new-tab action, and animated enter and exit.",
+    "client": true,
+    "importPath": "@robr0/design-system/components/ThreadTabs/ThreadTabs",
+    "barrel": "main",
+    "exports": [
+      {
+        "component": "ThreadTabs",
+        "props": [
+          {
+            "name": "tabs",
+            "type": "ThreadTab[]",
+            "required": true,
+            "description": "The open tabs, in display order. A tab added between renders glides open in place; a removed one folds away while its neighbours slide over."
+          },
+          {
+            "name": "activeId",
+            "type": "string",
+            "required": false,
+            "description": "Id of the tab on stage. Its pill renders filled and carries `aria-current`."
+          },
+          {
+            "name": "onTabSelect",
+            "type": "((id: string) => void)",
+            "required": false,
+            "description": "Fires with the clicked tab's id."
+          },
+          {
+            "name": "onTabClose",
+            "type": "((id: string) => void)",
+            "required": false,
+            "description": "Fires with the tab's id when its close button is pressed, or Delete lands on the focused tab. The close affordance renders only when this is given."
+          },
+          {
+            "name": "closeLabel",
+            "type": "string",
+            "required": false,
+            "description": "Accessible name for a tab's close button; the tab's label is appended after it.",
+            "defaultValue": "Close thread"
+          },
+          {
+            "name": "onAdd",
+            "type": "(() => void)",
+            "required": false,
+            "description": "Fires when the trailing new-tab button is pressed. The button renders only when this is given."
+          },
+          {
+            "name": "addLabel",
+            "type": "string",
+            "required": false,
+            "description": "Accessible name for the new-tab button.",
+            "defaultValue": "New thread"
+          },
+          {
+            "name": "ariaLabel",
+            "type": "string",
+            "required": false,
+            "description": "Accessible name for the tab strip.",
+            "defaultValue": "Open threads"
           },
           {
             "name": "className",

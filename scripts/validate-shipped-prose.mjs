@@ -24,10 +24,12 @@
  * whose own validator (validate-page-summaries.mjs) runs the em-dash check
  * alongside its structural rules.
  *
- * Two non-page modules are in scope by name: the playground's scripted chat
- * story ships visitor-visible prose from `website/src/lib/chat-sim.ts` (the
- * story and scenario responses and their chips) and
- * `website/src/app/playground/ChatDirector.tsx` (the event-rail copy).
+ * Three modules are in scope by name, because their visitor-visible prose
+ * rides in string literals the page scan's prose extraction cannot see:
+ * `website/src/lib/chat-sim.ts` (the scripted story and scenario responses
+ * and their chips), `website/src/app/playground/ChatDirector.tsx` (the
+ * event-rail copy), and `website/src/app/playground/views/ChatView.tsx`
+ * (the staged history's thread titles, detail lines and project rows).
  * Their string literals and JSX text are scanned through the AST, so
  * comments — where an em dash is a structural separator, not voice — are
  * never seen. `STORY_MODULES` below is the list.
@@ -248,13 +250,15 @@ if (desc) scan('scripts/package-manifest.mjs (PACKAGE_DESCRIPTION)', desc[2]);
 // --- The playground's scripted chat story ------------------------------------
 
 /**
- * Non-page modules whose string literals are visitor-visible prose: the sim's
- * scripted story and scenario copy, and the director's event rail. Scanned
- * through the AST so comments never register — only what a visitor can read.
+ * Modules whose string literals are visitor-visible prose the page scan
+ * cannot see: the sim's scripted story and scenario copy, the director's
+ * event rail, and the Chat view's staged history. Scanned through the AST
+ * so comments never register — only what a visitor can read.
  */
 const STORY_MODULES = [
   'website/src/lib/chat-sim.ts',
   'website/src/app/playground/ChatDirector.tsx',
+  'website/src/app/playground/views/ChatView.tsx',
 ];
 
 function scanStringLiterals(relPath) {
