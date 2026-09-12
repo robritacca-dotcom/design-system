@@ -41,7 +41,7 @@ Re-run the audit's mechanical checks over whatever the fixes touched (at minimum
 
 ### 4. Ship
 
-Follow the `ship` flow per its SKILL.md, from its step 0, with everything that entails — tree survey, full verify, logical commits, merge if on a branch, push, CI watched to green. Two composition rules on top:
+Follow the `ship` flow per its SKILL.md, from its step 0, with everything that entails — tree survey, full verify, logical commits, merge if on a branch, push, CI watched to green, and the live render proven with the deployed-site smoke. Two composition rules on top:
 
 - **Commit the drift fixes separately** from the session's own work — they are a different concern, and ship's one-commit-per-concern rule already implies it. Something like `docs: repair drift found by pre-ship audit` with the findings named in the body.
 - **Ship the combined result or nothing.** Never push the session work while leaving audit fixes uncommitted, or the reverse — the whole point is that what deploys and what describes it move together. If verify goes red on an audit fix, that fix is in scope to repair, same as session work.

@@ -81,6 +81,8 @@ Report a finding as **already-enforced** if `npm run test` or the page-level axe
    Trigger button has no accessible name. Icon-only button needs aria-label="Open filters".
    ```
 
+   (The example is fictional by design — `FilterMenu` is not a real component; it illustrates the report shape only.)
+
    Severity:
    - **Critical** — blocks keyboard or screen reader users entirely
    - **Moderate** — degrades experience significantly

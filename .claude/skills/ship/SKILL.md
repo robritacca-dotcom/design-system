@@ -19,7 +19,7 @@ Use this skill when asked to make completed work live — phrases like "ship it"
 ## Instructions
 
 0. **Check the branch**: `git branch --show-current`.
-   - **On `main`**: follow steps 1–7 directly. **A push to main deploys robertritacca.com.**
+   - **On `main`**: follow steps 1–9 directly. **A push to main deploys robertritacca.com.**
    - **On any other branch**: the work rides the branch into `main`. Follow steps 1–4 on the branch (commit there), then merge in step 5. Never cherry-pick or copy files across branches to avoid a merge.
 
 1. **Survey the tree before touching anything**: run `git status --short` and classify every entry:
