@@ -618,5 +618,94 @@
       "seat": "conduct",
       "requiredFacts": []
     }
+  },
+  {
+    "description": "developer: deprecated prop on Input (tool-answered: get_component)",
+    "vars": {
+      "question": "Is the ariaLabel prop on the Input component deprecated?"
+    },
+    "assert": [
+      {
+        "type": "icontains",
+        "value": "aria-label"
+      }
+    ],
+    "metadata": {
+      "seat": "developer",
+      "source": "tools",
+      "requiredFacts": []
+    }
+  },
+  {
+    "description": "developer: DataTable prop contract (tool-answered: get_component)",
+    "vars": {
+      "question": "What props does the DataTable component take?"
+    },
+    "assert": [
+      {
+        "type": "icontains",
+        "value": "columns"
+      },
+      {
+        "type": "icontains",
+        "value": "rows"
+      }
+    ],
+    "metadata": {
+      "seat": "developer",
+      "source": "tools",
+      "requiredFacts": []
+    }
+  },
+  {
+    "description": "developer: Button deprecations and replacements (tool-answered: get_component)",
+    "vars": {
+      "question": "Which props of Button are deprecated, and what should I use instead?"
+    },
+    "assert": [
+      {
+        "type": "icontains",
+        "value": "variant"
+      }
+    ],
+    "metadata": {
+      "seat": "developer",
+      "source": "tools",
+      "requiredFacts": []
+    }
+  },
+  {
+    "description": "developer: token counts (tool-answered: get_design_tokens)",
+    "vars": {
+      "question": "How many semantic design tokens does the system define, and how many of those are colour tokens?"
+    },
+    "assert": [
+      {
+        "type": "javascript",
+        "value": "file://assert-token-counts.mjs"
+      }
+    ],
+    "metadata": {
+      "seat": "developer",
+      "source": "tools",
+      "requiredFacts": []
+    }
+  },
+  {
+    "description": "developer: FunnelChart import path (tool-answered: get_component)",
+    "vars": {
+      "question": "How do I import FunnelChart from the package?"
+    },
+    "assert": [
+      {
+        "type": "icontains",
+        "value": "/charts"
+      }
+    ],
+    "metadata": {
+      "seat": "developer",
+      "source": "tools",
+      "requiredFacts": []
+    }
   }
 ]

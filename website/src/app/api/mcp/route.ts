@@ -33,13 +33,12 @@ import {
 import {
   TOKEN_COUNT,
   TOKEN_COUNTS,
-  tokenRegistry,
 } from "@robr0/design-system/tokens/registry";
 
 import { componentApi } from "@/data/component-api.generated";
-import { siteCorpus } from "@/data/site-corpus.generated";
 import { MCP_CLIENTS } from "@/lib/mcp-clients";
 import { MCP_TOOLS } from "@/lib/mcp-tools";
+import { lookupComponent, lookupTokens, searchCorpus } from "@/lib/site-tools";
 import { SITE_URL } from "@/lib/structuredData";
 
 export const runtime = "nodejs";
@@ -49,53 +48,10 @@ export const maxDuration = 30;
 const text = (value: string) => ({ content: [{ type: "text" as const, text: value }] });
 const json = (value: unknown) => text(JSON.stringify(value, null, 2));
 
-/* ============================================
-   search_site: the corpus, sectioned and scored
-   ============================================ */
-
-/** The corpus split at its headings (### and up), computed once per instance. */
-const corpusSections: { heading: string; body: string }[] = siteCorpus
-  .split(/\n(?=#{1,3} )/)
-  .map((section) => {
-    const newline = section.indexOf("\n");
-    return newline === -1
-      ? { heading: section.trim(), body: "" }
-      : { heading: section.slice(0, newline).trim(), body: section.slice(newline + 1).trim() };
-  })
-  .filter((section) => section.body.length > 0);
-
-const SEARCH_RESULTS = 3;
-const SEARCH_SECTION_CHARS = 6000;
-
-function searchCorpus(query: string) {
-  const terms = query.toLowerCase().split(/\s+/).filter((term) => term.length > 1);
-  if (terms.length === 0) return [];
-  const scored = corpusSections
-    .map((section) => {
-      const haystack = `${section.heading}\n${section.body}`.toLowerCase();
-      let score = 0;
-      for (const term of terms) {
-        let hits = 0;
-        let index = haystack.indexOf(term);
-        while (index !== -1) {
-          hits += 1;
-          index = haystack.indexOf(term, index + term.length);
-        }
-        // Every term present beats one term repeated.
-        score += hits + (hits > 0 ? 5 : 0);
-      }
-      return { section, score };
-    })
-    .filter((entry) => entry.score > 0)
-    .sort((a, b) => b.score - a.score);
-  return scored.slice(0, SEARCH_RESULTS).map(({ section }) => {
-    const body =
-      section.body.length > SEARCH_SECTION_CHARS
-        ? `${section.body.slice(0, SEARCH_SECTION_CHARS)}\n[section truncated]`
-        : section.body;
-    return `${section.heading}\n${body}`;
-  });
-}
+// The tool implementations live in @/lib/site-tools, shared with the site
+// chat's Anthropic tools (/api/chat) so the two surfaces cannot drift. The
+// registrations stay here — scripts/validate-mcp-tools.mjs reads them from
+// this file to hold the roster and every stated tool count.
 
 /* ============================================
    The handler
@@ -155,38 +111,7 @@ const handler = createMcpHandler(
             .describe("Component name, label or docs slug, e.g. Button or agent-plan"),
         }),
       },
-      async ({ name }) => {
-        const wanted = name.trim().toLowerCase();
-        const entry = componentApi.find(
-          (candidate) =>
-            candidate.name.toLowerCase() === wanted ||
-            candidate.label.toLowerCase() === wanted ||
-            candidate.slug === wanted
-        );
-        if (!entry) {
-          // A one-character name would "contain" its way to most of the list.
-          const near =
-            wanted.length > 1
-              ? componentApi
-                  .filter((candidate) => candidate.name.toLowerCase().includes(wanted))
-                  .map((candidate) => candidate.name)
-              : [];
-          return json({
-            error: `No component named ${JSON.stringify(name)}.`,
-            didYouMean: near.length > 0 ? near : undefined,
-            hint: "Call list_components for the full list.",
-          });
-        }
-        return json({
-          ...entry,
-          docsUrl: `${SITE_URL}/components/${entry.slug}`,
-          markdownUrl: `${SITE_URL}/components/${entry.slug}.md`,
-          usage:
-            entry.barrel === "charts"
-              ? `import { ${entry.name} } from '${pkg.name}/charts'; // needs the optional recharts peer`
-              : `import { ${entry.name} } from '${pkg.name}';`,
-        });
-      }
+      async ({ name }) => json(lookupComponent(name))
     );
 
     server.registerTool(
@@ -205,18 +130,7 @@ const handler = createMcpHandler(
             .describe("A token category to filter by, e.g. colour or motion"),
         }),
       },
-      async ({ category }) => {
-        if (category && !(category in tokenRegistry)) {
-          return json({
-            error: `No token category named ${JSON.stringify(category)}.`,
-            categories: Object.keys(TOKEN_COUNTS),
-          });
-        }
-        const names = category
-          ? { [category]: tokenRegistry[category as keyof typeof tokenRegistry] }
-          : tokenRegistry;
-        return json({ counts: TOKEN_COUNTS, tokens: names });
-      }
+      async ({ category }) => json(lookupTokens(category))
     );
 
     server.registerTool(

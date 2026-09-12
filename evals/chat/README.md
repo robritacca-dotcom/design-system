@@ -50,6 +50,9 @@ ids they cover; a rule change and its spec row move in the same change.
   proves every `metadata.requiredFacts` string is actually in the generated
   corpus, and every page route is either covered or deliberately excluded. A
   question the corpus cannot answer is a corpus bug, and it fails the build.
+  The one sanctioned exception: cases marked `source: tools` are answered by
+  the chat's lookup tools over the generated prop and token data, not the
+  corpus, so they carry empty `requiredFacts` (SPEC.md's T4 owns this).
 - **Layer 1 — this config.** Deterministic assertions through the real route.
 - **Layer 2 — LLM judge. Not built.** Gated on real logged failures to grade.
   Do not add `llm-rubric` assertions before then.

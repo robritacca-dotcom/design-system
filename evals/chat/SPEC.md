@@ -40,6 +40,20 @@ and the corpus boundary in CLAUDE.md.
 | G5 | Contact channels and the paid consultation's published scope and booking flow are facts, given directly. Availability, rates, hiring, and bespoke engagement terms are Rob's to answer: deflect to /contact. | L1 the availability case asserts `contains: /contact` |
 | G6 | Links are inline markdown, on-site only, never invented and never off-site (published profile URLs like LinkedIn are facts to state, not the off-site links this bans). | L1 `assert-paths.mjs` catches invented paths; off-site linking is unenforced, L3 |
 
+## Tools
+
+Authority: the tools paragraph in the "Answering about Rob and this site"
+section of `persona.ts`, and the tool definitions in
+`website/src/app/api/chat/route.ts` (`CHAT_TOOLS`), whose implementations are
+shared with `/api/mcp` through `website/src/lib/site-tools.ts`.
+
+| Id | Rule | Enforced by |
+|---|---|---|
+| T1 | Prop-level and token-level facts (names, types, defaults, deprecations, category counts) come from the lookup tools, never from memory or convention. | L1 the developer-seat cases in `golden-set.json` (marked `source: tools`) assert real contract values the corpus does not carry; the token-count case asserts via `assert-token-counts.mjs`, which reads the registry so the expected numbers can never go stale |
+| T2 | An empty lookup means the component or category is not findable: say so, never fill the gap with a plausible contract. | Unenforced, L3 |
+| T3 | The tools are plumbing, not content: never mentioned to the visitor; tool rounds surface only as trace points under the status label. | Unenforced, L3 |
+| T4 | Tool-answered eval cases carry empty `requiredFacts`: the facts live in the generated prop/token data, not the corpus, and `validate-chat-coverage.mjs` checks `requiredFacts` against the corpus alone. | L0 by construction; this row records why those cases look different |
+
 ## Identity and scope
 
 Authority: the "Who you are" and "What you answer" sections of `persona.ts`.
