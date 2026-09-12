@@ -78,6 +78,8 @@ interface SiteChatContextValue {
   /** Which page's conversation starters have played their staged reveal — lives here so closing the panel does not forget it, and a reopen on the same page shows the set standing rather than generating again. */
   starterRevealKey: string | null;
   setStarterRevealKey: (key: string | null) => void;
+  /** The draw for the starter pools: rolled once per page load and again by reset(), never in between — so a page's chips hold still until a refresh or a new chat. */
+  starterSeed: number;
   /** The turn whose follow-ups landed most recently in this open session, or null. Its row plays the entrance; rows remounted by a reopen do not, because closing clears it. */
   freshFollowupsId: string | null;
   view: ChatView;
@@ -157,6 +159,23 @@ export function SiteChatProvider({
      the context field's doc. */
   const [starterRevealKey, setStarterRevealKey] = useState<string | null>(null);
 
+  /* The starter pools' draw. Provider-lifetime, so client-side navigation
+     and re-renders never reshuffle chips the visitor is reading; a hard
+     reload rolls it fresh because the provider starts clean by design. The
+     starters only render inside the open panel, which the server never
+     renders, so the random initializer cannot reach the server HTML. */
+  const [starterSeed, setStarterSeed] = useState<number>(() => Math.random());
+
+  /* "New chat" re-rolls the draw and forgets the staged reveal, so the
+     welcome screen replays its short generation beat over a different set —
+     the same pre-written pools, no model involved. */
+  const { reset: resetChat } = chat;
+  const reset = useCallback(() => {
+    resetChat();
+    setStarterSeed(Math.random());
+    setStarterRevealKey(null);
+  }, [resetChat]);
+
   const [open, setOpenState] = useState(false);
   /* The panel's presence, one beat behind `open` on the way out: closing
      holds the node on screen for MOTION_EXIT_SYNC_MS so the exit animation
@@ -198,6 +217,7 @@ export function SiteChatProvider({
   const value = useMemo<SiteChatContextValue>(
     () => ({
       ...chat,
+      reset,
       chosenModel,
       setChosenModel,
       open,
@@ -206,6 +226,7 @@ export function SiteChatProvider({
       panelPhase,
       starterRevealKey,
       setStarterRevealKey,
+      starterSeed,
       freshFollowupsId,
       view,
       setView,
@@ -215,6 +236,7 @@ export function SiteChatProvider({
     }),
     [
       chat,
+      reset,
       chosenModel,
       setChosenModel,
       open,
@@ -222,6 +244,7 @@ export function SiteChatProvider({
       toggleOpen,
       panelPhase,
       starterRevealKey,
+      starterSeed,
       freshFollowupsId,
       view,
       draft,

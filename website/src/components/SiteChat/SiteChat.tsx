@@ -135,14 +135,18 @@ export function SiteChat({
      questions, one on a case-study or component page names the item (the
      nav registry already knows its label, client-side). usePathname is
      reactive, so navigating with the welcome screen showing swaps the
-     suggestions to match where the visitor now stands. */
+     suggestions to match where the visitor now stands. The provider's
+     starterSeed picks this load's three from the page's pool — see
+     starters.ts for the draw's lifecycle. */
   const pathname = usePathname();
+  const { starterSeed } = useSiteChat();
   /* Filtered, not truncated: a chip is a question the visitor is about to
      ask, and half a question is not one. The route's own starters are held
      to the budget by scripts/validate-chat-starters.mjs, so this only ever
      fires on a caller's overrides. */
   const starters = (
-    startersOverride ?? startersForPath(pathname, pathname ? getNavLabel(pathname) : null)
+    startersOverride ??
+    startersForPath(pathname, pathname ? getNavLabel(pathname) : null, starterSeed)
   ).filter((starter) => fitsChip(starter.label));
 
   /* The composer's context chip names the page the visitor is reading —
