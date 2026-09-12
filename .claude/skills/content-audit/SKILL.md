@@ -20,7 +20,7 @@ Use this skill when asked to audit copy, check prose quality, find AI-writing te
    - A specific file path (a page, a data file, a markdown doc)
    - `site-updates` → `website/src/data/site-updates.json` (titles + story bodies)
    - `registry` → the `description` fields in `src/components/registry.json`
-   - `case-studies` → the `title` and `dek` fields in `website/src/data/case-studies.json` (shipped copy on /work and the home page)
+   - `case-studies` → the `title` and `dek` fields in `website/src/data/case-studies.json` (shipped copy on /work and the home page), plus the TLDR points in `website/src/data/case-study-tldrs.ts` (the key-claims block atop each /work study — content-design.md's register row owns its rules; `validate-shipped-prose.mjs` build-covers the em dash, register, voice and banned words stay this scope's)
    - `readme` → `README.md` prose plus `src/stories/Configure.mdx`. README's marked regions (`component-count`, `component-list`, `npm-badge`) are **generated** from `src/components/registry.json` — a rewrite inside them silently reverts on the next build, so fix that copy through the `registry` scope instead; the `/blueprints` page copies under `website/public/` are generated too (synced from the root specs by `scripts/sync-blueprints.mjs` on every build), so edit the root file, never the copy
    - `skills` → the `displayDescription` frontmatter strings and the `invoke` phrase lists across `.claude/skills/` (both render on /skills — the descriptions as card copy, the invoke phrases as visible chips — so both are published copy; skill instruction *bodies* are out of scope)
    - `website` → user-visible strings in `website/src/app/**` page files; a page slug (e.g. `about`) scopes to that page folder
