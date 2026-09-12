@@ -19,7 +19,7 @@ Run when asked to "run the chat quality loop" (`/chat-quality`), or by a schedul
 - **Read-only on the live Redis.** `SCAN`, `GET`, `LRANGE`, `LLEN` against `chat:*` keys only — never `SET`, `DEL`, `EXPIRE`, or anything that writes. The logs are production evidence with a 30-day TTL; this loop observes them.
 - **Visitor privacy.** Logged questions are visitors' own words and may carry personal details. They may appear verbatim in the local report, never in the committed diff: a golden-set case gets a paraphrase that preserves the failure, not the visitor's sentence. Visitor hashes never leave the report.
 - **One eval run per loop.** `npm run eval:chat` spends real API budget (golden set × 3 repeats). Run it once, after the golden-set changes, not iteratively.
-- **Fixes stay inside the chat's answer pipeline**: `evals/chat/golden-set.json`, corpus sources (page prose, `corpus-facts()` blocks, the generator's exclusions), and the persona in `website/src/app/api/chat/persona.ts`. No UI, no components, no guardrail-cap changes (spend caps are the user's call — propose, don't edit).
+- **Fixes stay inside the chat's answer pipeline**: `evals/chat/golden-set.json`, corpus sources (page prose, `corpus-facts()` blocks, the generator's exclusions), the persona in `website/src/app/api/chat/persona.ts`, and the chat's lookup-tool layer — the `CHAT_TOOLS` definitions in `website/src/app/api/chat/route.ts` and their shared implementations in `website/src/lib/site-tools.ts` (a disliked prop or token answer can be a tool-description or lookup bug, and `site-tools.ts` also serves `/api/mcp`, so a fix there changes both surfaces). No UI, no components, no guardrail-cap changes (spend caps are the user's call — propose, don't edit).
 - **Local branch only.** Never push or touch the user's working tree — follow the temporary-worktree recipe in `.claude/skills/growth-loop/SKILL.md` (step 4), branch name `chat/YYYY-MM-DD-<slug>`. Skip the worktree entirely when there is nothing to encode.
 
 ## The loop
@@ -40,7 +40,7 @@ Every **down** verdict is a golden-set candidate: read the question, the answer,
 
 ### 3. Encode the failures
 
-Apply the standing rule from `evals/chat/README.md`: each real failure becomes a golden-set case **before** it is fixed — paraphrased question, its `requiredFacts`, and the cheapest assertion that would have caught it, with the case's `description` citing the rule ids it covers per `evals/chat/SPEC.md` (a failure no rule covers means the spec gains the rule in the same change). If a required fact is missing from the corpus, that's the actual bug: fix the source (page prose or a `corpus-facts()` block), and `scripts/validate-chat-coverage.mjs` will hold the new case to the regenerated corpus.
+Apply the standing rule from `evals/chat/README.md`: each real failure becomes a golden-set case **before** it is fixed — paraphrased question, its `requiredFacts`, and the cheapest assertion that would have caught it, with the case's `description` citing the rule ids it covers per `evals/chat/SPEC.md` (a failure no rule covers means the spec gains the rule in the same change). If a required fact is missing from the corpus, that's the actual bug: fix the source (page prose or a `corpus-facts()` block), and `scripts/validate-chat-coverage.mjs` will hold the new case to the regenerated corpus. The one exception: a failure whose facts live in the generated prop or token data is answered by the chat's lookup tools, not the corpus — its case is marked `source: tools` and carries empty `requiredFacts` (the standing-rule section in `evals/chat/README.md` and rule T4 in `evals/chat/SPEC.md` own the convention); never fix one by stuffing a prop fact into page prose.
 
 ### 4. Run the eval
 
@@ -48,7 +48,7 @@ Follow `evals/chat/README.md` exactly — it owns the procedure (the `website-ev
 
 ### 5. Fix on a branch
 
-Worktree recipe from the growth-loop skill, branch `chat/YYYY-MM-DD-<slug>`. One coherent batch: the new golden-set cases plus the corpus/persona fixes they demanded. A persona edit updates its matching rule row in `evals/chat/SPEC.md` in the same commit, and a new persona rule ships with either a tripwire or an explicit unenforced entry there. Verify the website build in the worktree; commit the regenerated corpus when page prose changed (the commit-scope rule in the growth-loop recipe).
+Worktree recipe from the growth-loop skill, branch `chat/YYYY-MM-DD-<slug>`. One coherent batch: the new golden-set cases plus the corpus/persona fixes they demanded. A persona or tool-definition edit updates its matching rule row in `evals/chat/SPEC.md` in the same commit, and a new rule ships with either a tripwire or an explicit unenforced entry there. Verify the website build in the worktree; commit the regenerated corpus when page prose changed (the commit-scope rule in the growth-loop recipe).
 
 ### 6. Report and hand off
 

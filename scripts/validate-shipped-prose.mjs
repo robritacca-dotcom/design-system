@@ -266,6 +266,13 @@ const STORY_MODULES = [
   // folders (deliberately out of the corpus — the file's doc block owns
   // why), so the page scan never sees them and this module scan must.
   'website/src/data/case-study-tldrs.ts',
+  // The chat route's visitor-visible strings: the tool trace points and
+  // the notice lines render in the widget, and the CHAT_TOOLS descriptions
+  // are authored copy the model reads — a route handler, so the page scan
+  // never sees any of it. The shared lookup module's error and hint
+  // strings can be repeated verbatim to a visitor or an agent.
+  'website/src/app/api/chat/route.ts',
+  'website/src/lib/site-tools.ts',
 ];
 
 function scanStringLiterals(relPath) {
