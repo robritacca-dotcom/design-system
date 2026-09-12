@@ -2,7 +2,7 @@
 
 Custom checkbox with check and indeterminate states, keyboard accessible with animated transitions.
 
-Generated from the @robr0/design-system registry and prop JSDoc, version 0.17.0. The same data ships in the package's .d.ts and is served by the MCP endpoint at https://robertritacca.com/api/mcp.
+Generated from the @robr0/design-system registry and prop JSDoc, version 0.18.0. The same data ships in the package's .d.ts and is served by the MCP endpoint at https://robertritacca.com/api/mcp.
 
 - Category: forms
 - Import: `import { Checkbox } from '@robr0/design-system';`

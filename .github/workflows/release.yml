@@ -62,6 +62,10 @@ name: Release
 #   products (AppSidebar's collapse choreography, server-renderable), plus
 #   EventCalendar's selectedDate and whole-cell interactivity on its own
 #   calendar colour family, and the toast exit timer on the motion constant.
+# 0.18.0 shipped 2026-09-11 — ThreadTabs, the animated strip of open chat
+#   sessions, with ThreadPanel's detail rows, pin marks and projects
+#   section; PromptSuggestions' pending shimmer and entrance stagger; and
+#   CommandPalette's trailing slot for a non-interactive row badge.
 
 on:
   workflow_dispatch:

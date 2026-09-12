@@ -2,7 +2,7 @@
 
 Linked contact method with icon, label, and value.
 
-Generated from the @robr0/design-system registry and prop JSDoc, version 0.17.0. The same data ships in the package's .d.ts and is served by the MCP endpoint at https://robertritacca.com/api/mcp.
+Generated from the @robr0/design-system registry and prop JSDoc, version 0.18.0. The same data ships in the package's .d.ts and is served by the MCP endpoint at https://robertritacca.com/api/mcp.
 
 - Category: data-display
 - Import: `import { ContactCard } from '@robr0/design-system';`
