@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { CommandPalette } from './CommandPalette';
 import type { CommandPaletteGroup } from './CommandPalette';
+import { Badge } from '../Badge/Badge';
 import { Button } from '../Button/Button';
 
 const groups: CommandPaletteGroup[] = [
@@ -121,6 +122,48 @@ export const NoResults: Story = {
 
 export const SingleGroup: Story = {
   render: (args) => <PaletteDemo {...args} groups={[groups[1]]} placeholder="Search actions…" />,
+};
+
+/**
+ * The trailing slot: an arbitrary non-interactive node at the row's right
+ * edge, after any keycaps — a status badge here. Always open so the slot is
+ * visible in docs and snapshots.
+ */
+export const WithTrailing: Story = {
+  render: (args) => {
+    const [open, setOpen] = useState(true);
+    return (
+      <div style={{ minHeight: '420px' }}>
+        <CommandPalette
+          {...args}
+          open={open}
+          onOpenChange={setOpen}
+          hotkey={false}
+          groups={[
+            {
+              label: 'Actions',
+              commands: [
+                {
+                  id: 'summarize',
+                  label: 'Summarize this page',
+                  description: 'A model writes the TLDR',
+                  icon: 'auto_awesome',
+                  trailing: <Badge label="AI" variant="info" />,
+                },
+                {
+                  id: 'export-figma',
+                  label: 'Export to Figma',
+                  icon: 'upload',
+                  trailing: <Badge label="Beta" variant="warning" />,
+                },
+                { id: 'copy-link', label: 'Copy link', icon: 'link', shortcut: ['⌘', 'C'] },
+              ],
+            },
+          ]}
+        />
+      </div>
+    );
+  },
 };
 
 /** Always-open variant so the panel is visible in docs and snapshots. */

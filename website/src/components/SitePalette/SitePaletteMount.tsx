@@ -238,7 +238,23 @@ export function SitePaletteMount({ writingLinks }: SitePaletteMountProps) {
           id: "ask-chat-query",
           label: trimmedQuery,
           description: "Get an answer from the site chat",
-          icon: "forum",
+          // The AI-ring chip — the system's "a model answers here" signal,
+          // worn as a passive badge, wearing the FAB's own face (forum +
+          // "Ask robr0 GPT") so the row points at the surface it opens;
+          // the chip replaces the row's leading icon rather than repeating
+          // it. aria-hidden because the group heading already says it, and
+          // decorative rather than the AiButton component because a real
+          // button inside the option row would nest interactive controls.
+          trailing: (
+            <span className={styles.askChip} aria-hidden="true">
+              <span
+                className={`material-symbols-rounded ${styles.askChipIcon}`}
+              >
+                forum
+              </span>
+              Ask robr0 GPT
+            </span>
+          ),
           onSelect: () => {
             setChatOpen(true);
             sendChat(trimmedQuery);

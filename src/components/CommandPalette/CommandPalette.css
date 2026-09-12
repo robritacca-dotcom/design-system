@@ -271,6 +271,15 @@
 
 /* Keycaps render through the Kbd component (compact size) */
 
+/* The trailing slot: an arbitrary badge or affordance at the row's right
+   edge, after any keycaps. The row's gap spaces it; it never shrinks, so
+   the label and description ellipsize first. */
+.ds-command-palette__trailing {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
 /* ============================================
    FOOTER HINTS
    ============================================ */

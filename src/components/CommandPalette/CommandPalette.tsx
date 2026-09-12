@@ -21,6 +21,8 @@ export interface CommandPaletteCommand {
   icon?: string;
   /** Keyboard shortcut shown on the right, e.g. ['⌘', 'P'] */
   shortcut?: string[];
+  /** Custom node at the row's right edge, after any `shortcut` — a badge or affordance the keycap slot can't express. It renders inside the option row, so keep it non-interactive: a focusable element here would nest controls. */
+  trailing?: React.ReactNode;
   /** Extra terms that should match this command when filtering */
   keywords?: string[];
   /** Whether the command is disabled */
@@ -341,6 +343,10 @@ export const CommandPalette = ({
                             </Kbd>
                           ))}
                         </span>
+                      )}
+
+                      {command.trailing && (
+                        <span className={`${baseClass}__trailing`}>{command.trailing}</span>
                       )}
                     </div>
                   );
