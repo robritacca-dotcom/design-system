@@ -141,6 +141,12 @@ export default function PlaygroundPage() {
   const [chatManual, setChatManual] = useState<{ w?: number; h?: number }>({});
   const [chatPlaceholder, setChatPlaceholder] = useState("");
   const [showStarters, setShowStarters] = useState(true);
+  /* The staged thread furniture, feature by feature — all off is the simple
+     rail the live site ships. Simulated transport only, like the rail. */
+  const [railProjects, setRailProjects] = useState(true);
+  const [railPins, setRailPins] = useState(true);
+  const [railDetails, setRailDetails] = useState(true);
+  const [railTabs, setRailTabs] = useState(true);
 
   /* ---------- levers ---------- */
   const [preset, setPreset] = useState("default");
@@ -402,6 +408,36 @@ export default function PlaygroundPage() {
           onChange={setShowStarters}
         />
       </div>
+
+      {transportMode === "sim" && (
+        <div className={styles.controlGroup}>
+          <h4 className={styles.controlHeading}>Threads</h4>
+          <ToggleSwitch
+            label="Projects"
+            checked={railProjects}
+            onChange={setRailProjects}
+          />
+          <ToggleSwitch
+            label="Pinned threads"
+            checked={railPins}
+            onChange={setRailPins}
+          />
+          <ToggleSwitch
+            label="Thread details"
+            checked={railDetails}
+            onChange={setRailDetails}
+          />
+          <ToggleSwitch
+            label="Session tabs"
+            checked={railTabs}
+            onChange={setRailTabs}
+          />
+          <p className={styles.controlNote}>
+            The staged sidebar, feature by feature. All off is the simple
+            rail the live site ships.
+          </p>
+        </div>
+      )}
     </>
   );
 
@@ -650,6 +686,10 @@ export default function PlaygroundPage() {
               onManual={(next) => setChatManual((m) => ({ ...m, ...next }))}
               allowFullscreen={!compact}
               simControls={transportMode === "sim"}
+              railProjects={railProjects}
+              railPins={railPins}
+              railDetails={railDetails}
+              railTabs={railTabs}
             />
           )}
         </main>

@@ -173,6 +173,132 @@ function LifecycleDemo() {
   );
 }
 
+function DetailsDemo() {
+  const [active, setActive] = React.useState("search");
+  return (
+    <div className={`${styles.railFrame} ${styles.railFrameShort}`}>
+      <ThreadPanel
+        groups={[
+          {
+            label: "Today",
+            threads: [
+              {
+                id: "onboarding",
+                title: "Rework the onboarding flow",
+                description: "atlas-app · main",
+                unread: true,
+                icon: "cloud",
+                meta: "32m",
+              },
+              {
+                id: "search",
+                title: "Speed up the search index",
+                description: "atlas-app · perf/search-index",
+                icon: "cloud",
+                meta: "1h",
+              },
+              {
+                id: "billing",
+                title: "Untangle the billing webhooks",
+                description: "atlas-app · fix/webhook-retries",
+                unread: true,
+                meta: "3h",
+              },
+            ],
+          },
+        ]}
+        activeThreadId={active}
+        onThreadSelect={setActive}
+      />
+    </div>
+  );
+}
+
+/* The pin demo owns the grouping: pinning moves a thread into the leading
+   Pinned group, unpinning returns it home — the panel only marks the rows. */
+type PinnedThread = ThreadPanelThread & { home: string };
+
+const PIN_SEED: PinnedThread[] = [
+  { id: "billing", title: "Untangle the billing webhooks", home: "atlas-app", pinned: true },
+  { id: "onboarding", title: "Rework the onboarding flow", home: "atlas-app" },
+  { id: "search", title: "Speed up the search index", home: "atlas-app" },
+  { id: "quickstart", title: "Rewrite the quickstart guide", home: "atlas-docs", pinned: true },
+  { id: "api-ref", title: "Generate the API reference", home: "atlas-docs" },
+];
+
+function PinnedDemo() {
+  const [threads, setThreads] = React.useState<PinnedThread[]>(PIN_SEED);
+  const [active, setActive] = React.useState("billing");
+  const groups = React.useMemo(() => {
+    const pinned = threads.filter((thread) => thread.pinned);
+    const homes = ["atlas-app", "atlas-docs"].map((home) => ({
+      label: home,
+      threads: threads.filter((thread) => !thread.pinned && thread.home === home),
+    }));
+    return [{ label: "Pinned", threads: pinned }, ...homes];
+  }, [threads]);
+  return (
+    <div className={styles.railFrame}>
+      <ThreadPanel
+        groups={groups}
+        activeThreadId={active}
+        onThreadSelect={setActive}
+        threadActions={[
+          { id: "pin", label: "Pin", icon: "keep" },
+          { id: "delete", label: "Delete", icon: "delete", destructive: true },
+        ]}
+        onThreadAction={(threadId, actionId) => {
+          if (actionId === "pin") {
+            setThreads((list) =>
+              list.map((thread) =>
+                thread.id === threadId
+                  ? { ...thread, pinned: !thread.pinned }
+                  : thread
+              )
+            );
+          } else if (actionId === "delete") {
+            setThreads((list) => list.filter((thread) => thread.id !== threadId));
+          }
+        }}
+      />
+    </div>
+  );
+}
+
+function ProjectsDemo() {
+  const seq = React.useRef(0);
+  const [projects, setProjects] = React.useState([
+    { id: "atlas-app", label: "Atlas app", meta: "1m" },
+    { id: "atlas-docs", label: "Atlas docs", meta: "2d" },
+  ]);
+  const [activeProject, setActiveProject] = React.useState("atlas-app");
+  const [active, setActive] = React.useState("search");
+  return (
+    <div className={styles.railFrame}>
+      <ThreadPanel
+        logoText="Skylark"
+        groups={GROUPS}
+        activeThreadId={active}
+        onThreadSelect={setActive}
+        newThreadLabel="New thread"
+        projects={projects}
+        activeProjectId={activeProject}
+        onProjectSelect={setActiveProject}
+        onProjectCreate={() => {
+          seq.current += 1;
+          const id = `project-${seq.current}`;
+          setProjects((list) => [
+            ...list,
+            { id, label: `New project ${seq.current}`, meta: "now" },
+          ]);
+          setActiveProject(id);
+        }}
+        profile={{ name: "Robin Vale", meta: "Team" }}
+      />
+    </div>
+  );
+}
+
 function MetaDemo() {
   const [active, setActive] = React.useState("onboarding");
   return (
@@ -286,6 +412,41 @@ export default function ThreadPanelPage() {
               a relative time.
             </p>
             <MetaDemo />
+          </section>
+
+          <section className={styles.section}>
+            <SectionTitle title="Detail rows" />
+            <p className={styles.demoText}>
+              A row scales from a bare title to the full detail anatomy: an
+              unread dot leading the title, a quiet description line under
+              the same trailing fade, and a trailing cluster pairing a
+              session glyph with the meta caption.
+            </p>
+            <DetailsDemo />
+          </section>
+
+          <section className={styles.section}>
+            <SectionTitle title="Pinned threads" />
+            <p className={styles.demoText}>
+              Pinning is a grouping the host owns: a pinned thread carries
+              the pin mark and lives in its own leading group, and pin or
+              unpin travel through the row menu like any other thread
+              action. Try it from a row&apos;s overflow menu.
+            </p>
+            <PinnedDemo />
+          </section>
+
+          <section className={styles.section}>
+            <SectionTitle title="Projects" />
+            <p className={styles.demoText}>
+              Between the standing controls and the history, the panel can
+              carry a projects section: rows with the controls&apos; anatomy
+              under their own overline header, with a quiet new-project
+              button. The active project fills like an active thread, and
+              collapsed the rows fold to icon circles while the header steps
+              aside.
+            </p>
+            <ProjectsDemo />
           </section>
 
           <section className={styles.section}>

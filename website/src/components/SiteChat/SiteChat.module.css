@@ -55,6 +55,13 @@
   margin-left: 0;
 }
 
+/* The open-sessions tab strip (playground furniture, like the threads
+   rail): its own row under the header, on the shared side inset. */
+.tabsRow {
+  min-width: 0;
+  padding: var(--padding-xs) var(--sitechat-inset) 0;
+}
+
 /* The header brand: the RR mark beside the chat name. A node title renders
    as-is, so the name restates the header's title treatment. */
 .brand {

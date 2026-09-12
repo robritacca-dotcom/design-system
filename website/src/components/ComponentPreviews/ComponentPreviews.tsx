@@ -1408,6 +1408,24 @@ const previews: Record<string, () => ReactNode> = {
       </div>
     </>
   ),
+  "thread-tabs": () => (
+    <>
+      <div aria-hidden="true" style={{ display: "flex", alignItems: "center", gap: "4px", width: "170px" }}>
+        {[
+          { label: "Speed up search", active: true },
+          { label: "Plan launch", active: false },
+        ].map((tab) => (
+          <div key={tab.label} style={{ display: "flex", alignItems: "center", gap: "4px", padding: "5px 10px", borderRadius: "999px", background: tab.active ? "var(--color-bg-container-tertiary)" : "transparent", minWidth: 0 }}>
+            <span style={{ fontSize: "11px", color: tab.active ? "var(--color-text-primary)" : "var(--color-text-secondary)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{tab.label}</span>
+            {tab.active && (
+              <span className="material-symbols-rounded" style={{ fontSize: "12px", color: "var(--color-icon-primary)" }}>close</span>
+            )}
+          </div>
+        ))}
+        <span className="material-symbols-rounded" style={{ fontSize: "14px", color: "var(--color-icon-primary)", padding: "0 2px" }}>add</span>
+      </div>
+    </>
+  ),
   "time-picker": () => (
     <>
       <div aria-hidden="true" style={{ display: "flex", alignItems: "center", gap: "8px", padding: "8px 14px", borderRadius: "12px", border: "1px solid var(--color-input-border-primary)", background: "var(--color-input-bg-primary)", width: "150px" }}>

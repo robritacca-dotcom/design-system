@@ -48,6 +48,7 @@ export function SiteChat({
   starters: startersOverride,
   composerActions,
   threads,
+  tabs,
 }: {
   /** Show the expand toggle. The bench's mobile stage is always a takeover, so it hides there. */
   fullscreenEnabled?: boolean;
@@ -86,6 +87,11 @@ export function SiteChat({
       (brand shown on the sheet, collapse offered on the rail). Playground
       furniture for now — the site's own chat passes nothing here. */
   threads?: (ctx: { overlay: boolean; close: () => void }) => ReactNode;
+  /** An open-sessions tab strip (a ThreadTabs), rendered as its own row
+      under the header on the widget's shared side inset. Playground
+      furniture like the threads rail — the site's own chat passes nothing
+      here. */
+  tabs?: ReactNode;
 }) {
   const {
     turns,
@@ -335,6 +341,8 @@ export function SiteChat({
             </>
           }
         />
+
+        {tabs && <div className={styles.tabsRow}>{tabs}</div>}
 
         <div className={styles.body}>
           <ChatThread className={styles.thread}>

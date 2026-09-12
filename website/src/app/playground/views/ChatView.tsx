@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { AiButton } from "@robr0/design-system/components/AiButton/AiButton";
 import { CircularButton } from "@robr0/design-system/components/CircularButton/CircularButton";
 import { DocumentChip } from "@robr0/design-system/components/DocumentChip/DocumentChip";
@@ -11,7 +11,10 @@ import {
 import {
   ThreadPanel,
   type ThreadPanelGroup,
+  type ThreadPanelProject,
+  type ThreadPanelThread,
 } from "@robr0/design-system/components/ThreadPanel/ThreadPanel";
+import { ThreadTabs } from "@robr0/design-system/components/ThreadTabs/ThreadTabs";
 import { useSiteChat, useTakeoverViewport } from "@/components/SiteChat/ChatContext";
 import { SiteChat } from "@/components/SiteChat/SiteChat";
 import styles from "./ChatView.module.css";
@@ -48,23 +51,65 @@ type ResizeAxis = "x" | "y" | "both";
    nothing to name before one exists), and the overflow menu renames and
    deletes. All of it lives in this component's state, so it dies with
    the playground session — nothing persists. */
+/* Pinned threads live in their own leading group; a fresh thread is born
+   into the home group, and unpinning returns a thread to its top. The
+   panel only marks the rows — the grouping is this component's job. */
+const PINNED_GROUP = "Pinned";
+const HOME_GROUP = "This week";
+
 const INITIAL_THREAD_GROUPS: ThreadPanelGroup[] = [
   {
-    label: "This week",
+    label: PINNED_GROUP,
     threads: [
-      { id: "launch", title: "Plan the launch week" },
-      { id: "onboarding", title: "Rework the onboarding email" },
-      { id: "pricing", title: "Compare the plan limits" },
+      {
+        id: "pricing",
+        title: "Compare the plan limits",
+        description: "Annual pricing options",
+        pinned: true,
+        meta: "2d",
+      },
+    ],
+  },
+  {
+    label: HOME_GROUP,
+    threads: [
+      {
+        id: "launch",
+        title: "Plan the launch week",
+        description: "Waiting on the beta invite list",
+        unread: true,
+        icon: "cloud",
+        meta: "32m",
+      },
+      {
+        id: "onboarding",
+        title: "Rework the onboarding email",
+        description: "Draft shared with the team",
+        icon: "cloud",
+        meta: "2h",
+      },
     ],
   },
   {
     label: "Earlier",
     threads: [
-      { id: "import", title: "Import last year's invoices" },
-      { id: "roles", title: "Set up roles for the team" },
-      { id: "notify", title: "Quiet the mention notifications" },
+      { id: "import", title: "Import last year's invoices", meta: "4d" },
+      { id: "roles", title: "Set up roles for the team", meta: "5d" },
+      {
+        id: "notify",
+        title: "Quiet the mention notifications",
+        unread: true,
+        meta: "1w",
+      },
     ],
   },
+];
+
+/* The staged product's projects, seeded like the history and just as
+   mortal: selecting moves the pill, the header's plus mints a new row. */
+const INITIAL_PROJECTS: ThreadPanelProject[] = [
+  { id: "workspace-revamp", label: "Workspace revamp", meta: "1m" },
+  { id: "billing-cleanup", label: "Billing cleanup", meta: "3d" },
 ];
 
 /* The names the simulated "title generation" hands out, in order, when a
@@ -83,7 +128,8 @@ const SIM_THREAD_NAMES = [
 const THREAD_NAMING_DELAY_MS = 1600;
 
 /* Every thread's overflow menu: rename swaps the row to the panel's
-   inline editor, delete removes it. */
+   inline editor, delete removes it. Pin/unpin is prepended per thread at
+   render time, since its label flips with the row's pinned flag. */
 const THREAD_ACTIONS = [
   { id: "rename", label: "Rename", icon: "edit" },
   { id: "delete", label: "Delete", icon: "delete", destructive: true },
@@ -122,6 +168,16 @@ export interface ChatViewProps {
   /** The Simulated transport is active: the composer swaps the site's live
       model picker for the mock picker and the attach button. */
   simControls: boolean;
+  /** Stage the projects section in the threads rail. */
+  railProjects: boolean;
+  /** Stage the pinned-threads group and the pin/unpin row action; off, the
+      pinned threads fold back into the home group. */
+  railPins: boolean;
+  /** Stage the rows' detail anatomy (description, unread dot, session
+      glyph, meta); off, the rows are bare titles like the live site's. */
+  railDetails: boolean;
+  /** Stage the open-sessions tab strip across the conversation's top. */
+  railTabs: boolean;
 }
 
 /**
@@ -142,6 +198,10 @@ export default function ChatView({
   onManual,
   allowFullscreen,
   simControls,
+  railProjects,
+  railPins,
+  railDetails,
+  railTabs,
 }: ChatViewProps) {
   const {
     open,
@@ -165,6 +225,16 @@ export default function ChatView({
   const [renamingThread, setRenamingThread] = useState<string | null>(null);
   const [railExpanded, setRailExpanded] = useState(true);
 
+  /* The staged projects and the strip of open sessions. Tabs hold thread
+     ids: selecting a thread opens (or revisits) its tab, a fresh thread
+     arrives with one, and closing the last tab returns to the greeting.
+     Purely visual staging — switching tabs moves the selection, never the
+     transcript, the same contract as selecting a thread in the rail. */
+  const [projects, setProjects] = useState(INITIAL_PROJECTS);
+  const [activeProject, setActiveProject] = useState(INITIAL_PROJECTS[0].id);
+  const projectSeq = useRef(0);
+  const [openTabs, setOpenTabs] = useState<string[]>([]);
+
   /* The naming simulation's clockwork: a sequence for fresh ids, a cursor
      into the name pool, and the pending timers so deleting a still-naming
      thread (or leaving the view) cancels its reveal. */
@@ -183,8 +253,8 @@ export default function ChatView({
     threadSeq.current += 1;
     const id = `new-${threadSeq.current}`;
     setThreadGroups((groups) =>
-      groups.map((group, index) =>
-        index === 0
+      groups.map((group) =>
+        group.label === HOME_GROUP
           ? {
               ...group,
               threads: [
@@ -196,6 +266,7 @@ export default function ChatView({
       )
     );
     setActiveThread(id);
+    setOpenTabs((tabs) => (tabs.includes(id) ? tabs : [...tabs, id]));
     const timer = window.setTimeout(() => {
       namingTimers.current.delete(id);
       const title =
@@ -257,6 +328,7 @@ export default function ChatView({
         threads: group.threads.filter((thread) => thread.id !== id),
       }))
     );
+    setOpenTabs((tabs) => tabs.filter((tab) => tab !== id));
     if (renamingThread === id) setRenamingThread(null);
     if (activeThread === id) {
       /* The open conversation went with its thread: back to the greeting,
@@ -265,6 +337,161 @@ export default function ChatView({
       reset();
     }
   };
+
+  /* Selecting a thread — from the rail or its tab — moves the pill, opens
+     (or revisits) the session's tab, and clears the row's unread dot. */
+  const selectThread = useCallback((id: string) => {
+    setActiveThread(id);
+    setOpenTabs((tabs) => (tabs.includes(id) ? tabs : [...tabs, id]));
+    setThreadGroups((groups) =>
+      groups.map((group) => ({
+        ...group,
+        threads: group.threads.map((thread) =>
+          thread.id === id && thread.unread
+            ? { ...thread, unread: undefined }
+            : thread
+        ),
+      }))
+    );
+  }, []);
+
+  /* Closing a tab closes the session view, never the thread: the history
+     keeps the row. Closing the active tab moves to a neighbour; closing
+     the last one returns to the greeting. */
+  const closeTab = (id: string) => {
+    const index = openTabs.indexOf(id);
+    setOpenTabs((tabs) => tabs.filter((tab) => tab !== id));
+    if (activeThread === id) {
+      const neighbour = openTabs[index + 1] ?? openTabs[index - 1];
+      if (neighbour) setActiveThread(neighbour);
+      else startNewChat();
+    }
+  };
+
+  /* Pinning moves the thread into the leading Pinned group; unpinning
+     returns it to the top of the home group. */
+  const togglePin = (id: string) => {
+    setThreadGroups((groups) => {
+      let moved: ThreadPanelThread | undefined;
+      let wasPinned = false;
+      const stripped = groups.map((group) => ({
+        ...group,
+        threads: group.threads.filter((thread) => {
+          if (thread.id !== id) return true;
+          moved = thread;
+          wasPinned = Boolean(thread.pinned);
+          return false;
+        }),
+      }));
+      const taken = moved as ThreadPanelThread | undefined;
+      if (!taken) return groups;
+      return stripped.map((group) => {
+        if (!wasPinned && group.label === PINNED_GROUP) {
+          return {
+            ...group,
+            threads: [...group.threads, { ...taken, pinned: true }],
+          };
+        }
+        if (wasPinned && group.label === HOME_GROUP) {
+          return {
+            ...group,
+            threads: [{ ...taken, pinned: undefined }, ...group.threads],
+          };
+        }
+        return group;
+      });
+    });
+  };
+
+  const createProject = () => {
+    projectSeq.current += 1;
+    const id = `project-${projectSeq.current}`;
+    setProjects((list) => [
+      ...list,
+      { id, label: `New project ${projectSeq.current}`, meta: "now" },
+    ]);
+    setActiveProject(id);
+  };
+
+  /* The rail's render shape follows the feature levers: pins off folds the
+     Pinned group back into the home group, details off strips the rows to
+     bare titles (the live site's look), and each row's menu leads with pin
+     or unpin — the label following the flag — only while pins are staged. */
+  const groupsForPanel = useMemo(() => {
+    let groups = threadGroups;
+    if (!railPins) {
+      const pinned =
+        groups.find((group) => group.label === PINNED_GROUP)?.threads ?? [];
+      groups = groups
+        .filter((group) => group.label !== PINNED_GROUP)
+        .map((group) =>
+          group.label === HOME_GROUP
+            ? {
+                ...group,
+                threads: [
+                  ...pinned.map((thread) => ({ ...thread, pinned: undefined })),
+                  ...group.threads,
+                ],
+              }
+            : group
+        );
+    }
+    return groups.map((group) => ({
+      ...group,
+      threads: group.threads.map((thread) => {
+        const shaped = railDetails
+          ? thread
+          : {
+              ...thread,
+              description: undefined,
+              unread: undefined,
+              icon: undefined,
+              meta: undefined,
+            };
+        return {
+          ...shaped,
+          actions: railPins
+            ? [
+                {
+                  id: "pin",
+                  label: thread.pinned ? "Unpin" : "Pin",
+                  icon: "keep",
+                },
+                ...THREAD_ACTIONS,
+              ]
+            : THREAD_ACTIONS,
+        };
+      }),
+    }));
+  }, [threadGroups, railPins, railDetails]);
+
+  /* The strip's tabs resolve live from the history, so a rename or the
+     naming shimmer's reveal flows straight into the label. */
+  const threadById = useMemo(() => {
+    const map = new Map<string, ThreadPanelThread>();
+    for (const group of threadGroups) {
+      for (const thread of group.threads) map.set(thread.id, thread);
+    }
+    return map;
+  }, [threadGroups]);
+
+  const tabItems = useMemo(
+    () =>
+      openTabs.flatMap((id) => {
+        const thread = threadById.get(id);
+        return thread
+          ? [
+              {
+                id,
+                label: thread.title,
+                icon: "chat_bubble",
+                unread: railDetails ? thread.unread : undefined,
+              },
+            ]
+          : [];
+      }),
+    [openTabs, threadById, railDetails]
+  );
 
   const renameThread = (id: string, title: string) => {
     setThreadGroups((groups) =>
@@ -491,16 +718,17 @@ export default function ChatView({
            classic look. */
         threads={simControls ? ({ overlay, close }) => (
           <ThreadPanel
-            groups={threadGroups}
+            groups={groupsForPanel}
             activeThreadId={activeThread}
             onThreadSelect={(id) => {
-              setActiveThread(id);
+              selectThread(id);
               close();
             }}
             threadActions={THREAD_ACTIONS}
             onThreadAction={(threadId, actionId) => {
               if (actionId === "rename") setRenamingThread(threadId);
               else if (actionId === "delete") deleteThread(threadId);
+              else if (actionId === "pin") togglePin(threadId);
             }}
             renamingThreadId={renamingThread ?? undefined}
             onThreadRename={renameThread}
@@ -511,6 +739,13 @@ export default function ChatView({
               close();
             }}
             historyLabel="Chat history"
+            projects={railProjects ? projects : undefined}
+            activeProjectId={activeProject}
+            onProjectSelect={(id) => {
+              setActiveProject(id);
+              close();
+            }}
+            onProjectCreate={railProjects ? createProject : undefined}
             /* The brand row's logo mark, in both modes; the staged
                product's is a neutral disc (a real host would put its own
                mark here, the way the workbench template seats the R
@@ -524,6 +759,31 @@ export default function ChatView({
             }
           />
         ) : undefined}
+        tabs={
+          /* The strip of open sessions, staged like the rail: desktop card
+             only (the bezel and a real phone keep the plain header), and
+             tabs hold thread ids — selecting a thread opens its tab, the
+             trailing plus is the same New chat as everywhere else, and
+             closing the last tab lands back on the greeting. The strip
+             stands down while nothing is open: a bare plus over the
+             greeting would be the header's pen restated. */
+          simControls &&
+          railTabs &&
+          !isDevice &&
+          !phoneViewport &&
+          tabItems.length > 0 ? (
+            <ThreadTabs
+              tabs={tabItems}
+              activeId={activeThread || undefined}
+              onTabSelect={selectThread}
+              onTabClose={closeTab}
+              onAdd={startNewChat}
+              addLabel="New chat"
+              closeLabel="Close chat"
+              ariaLabel="Open chats"
+            />
+          ) : undefined
+        }
         starters={[
           { id: "start", label: "How do I get started?" },
           { id: "pricing", label: "What do the plans include?" },
