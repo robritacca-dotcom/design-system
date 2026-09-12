@@ -16,7 +16,18 @@
 /* Left-align sidebar links and truncate long labels (e.g. article titles)
    with an ellipsis so they always fit the fixed-width rail. Using max-width
    (not width) keeps short labels as content-width pills. */
-.sidebar :global(.ds-button-group),
+/* Optical alignment: shift the whole list left by the button's own padding
+   so a row's content (its logo, or its text when it has none) sits on the
+   rail's left edge — the same gutter line as the header's R mark. The shift
+   lives on the group, not the buttons, because the group clips overflow and
+   would square off the hover/active pill; here the pill just hangs into the
+   gutter intact. The max-width grows by the same amount so long labels
+   still truncate at the rail's right edge, not 20px early. */
+.sidebar :global(.ds-button-group) {
+  margin-left: calc(-1 * var(--padding-lg));
+  max-width: calc(100% + var(--padding-lg));
+}
+
 .sidebar :global(.ds-button) {
   max-width: 100%;
 }
@@ -24,6 +35,12 @@
 .sidebar :global(.ds-button) {
   justify-content: flex-start;
   text-align: left;
+}
+
+/* The pinned link sits outside any ButtonGroup, so it carries the optical
+   shift itself (see the .ds-button-group comment above). */
+.pinnedHome :global(.ds-button) {
+  margin-left: calc(-1 * var(--padding-lg));
 }
 
 .sidebar :global(.ds-button__text) {
@@ -43,7 +60,8 @@
 /* Storybook-style section subheader above the link list */
 .listHeader {
   margin: 0 0 var(--primitive-gap-xs);
-  padding-left: var(--primitive-padding-lg); /* aligns with list labels (x=20) */
+  /* No left padding: header text sits on the rail's edge, matching the
+     optically aligned link rows (see the .ds-button margin above). */
   font-family: var(--font-paragraph-sm-family);
   font-size: var(--font-paragraph-sm-size);
   font-weight: var(--font-paragraph-sm-em-weight);
