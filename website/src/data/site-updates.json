@@ -1,9 +1,24 @@
 {
   "asOf": {
-    "commit": "bc6719b0a69b285132213bc64013ea0b790bea03",
-    "date": "2026-08-29"
+    "commit": "aab19d28f36c044d26ff29b6f63913870e411c4f",
+    "date": "2026-09-12"
   },
   "entries": [
+    {
+      "meta": "September 1–12, 2026",
+      "title": "The site chat gets tools, a model choice, and a spending policy",
+      "body": [
+        "The chat's answering machinery grew up over the fortnight. Every page now carries a short pre-written summary behind the chat button, with prompt chips that open the chat mid-answer. The composer's model label became a working picker: visitors choose between two models, and a spending policy steps the default down to the cheaper one as the day's budget runs low. The model also carries two lookup tools for what its reading material deliberately leaves out, the exact prop contract of any component and the token registry, and a written behaviour spec now maps every rule the chat is held to onto the check that enforces it.",
+        "The component library shipped the pieces a chat product needs across four releases, 0.15.0 through 0.18.0: usage and source cards, a session-history rail with pins and projects, a tab strip of open conversations, and suggestion chips that shimmer while their questions generate. Two new template screens, an agent workbench and a team calendar, put the set to work. Component pages also gained a markdown twin for coding agents, and a generated skill file now teaches a consumer's own agent the whole library."
+      ]
+    },
+    {
+      "meta": "September 6–7, 2026",
+      "title": "A blank-site outage leads to round-the-clock checks",
+      "body": [
+        "On September 6 a rendering bug left every page blank while every existing check stayed green: the build passed and the server answered, but a visitor saw nothing. The fix was small. The response was structural: a browser-based smoke test now loads the built site before anything ships and probes the live site every four hours, and the build gained new gates for internal links, an accessibility scan of every page in both themes, and the npm package as a consumer would install it. Three new recurring maintenance loops joined the roster on the loops page: chat quality, link rot, and AI visibility."
+      ]
+    },
     {
       "meta": "August 29, 2026",
       "title": "AI assistants can now query the site directly",
