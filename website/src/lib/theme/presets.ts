@@ -1,5 +1,11 @@
+import type { DropdownOption } from "@robr0/design-system/components/Dropdown/Dropdown";
+import type { RichDropdownOption } from "@robr0/design-system/components/RichDropdown/RichDropdown";
 import {
+  DEFAULT_BRAND,
+  DEFAULT_BRAND_DARK,
   DEFAULT_NEUTRAL_SEED,
+  FONT_OPTIONS,
+  HEADING_FONT_OPTIONS,
   type AdvancedColorState,
   type Overrides,
 } from "./theme-overrides";
@@ -165,6 +171,31 @@ export const THEME_PRESETS: Record<string, ThemePreset> = {
       purple: "#9354E2",
     }),
   },
+  coral: {
+    label: "Coral getaway",
+    // Hospitality-brand look in the Airbnb direction: the coral key lands
+    // in the red family, so the lever rebases red and every other hue is
+    // re-keyed toward the travel palette (a beach teal, a sunset orange).
+    brand: "#FF385C",
+    tintOn: false,
+    tintSeed: DEFAULT_NEUTRAL_SEED,
+    tintStrength: 6,
+    // Rounded but never pill: friendly 8px-feel buttons, like a booking
+    // card's reserve button rather than a chip.
+    radiusScale: 100,
+    pill: false,
+    fontLabel: "DM Sans",
+    headingFontLabel: "Poppins",
+    // Red is the action family, left alone.
+    advanced: bases({
+      orange: "#FC642D",
+      yellow: "#F5B93F",
+      green: "#3FA97C",
+      teal: "#00A699",
+      blue: "#4A7BD0",
+      purple: "#A6527F",
+    }),
+  },
   terminal: {
     label: "Terminal green",
     brand: "#05A67C",
@@ -187,8 +218,125 @@ export const THEME_PRESETS: Record<string, ThemePreset> = {
   },
 };
 
-export const PRESET_OPTIONS = [
-  { label: "robr0 DS default", value: "default" },
-  { label: "Custom", value: "custom" },
-  ...Object.entries(THEME_PRESETS).map(([value, p]) => ({ label: p.label, value })),
-];
+/* ---------- rich picker cells ----------
+   The preset selector renders each option as a self-portrait (RichDropdown):
+   name in the preset's heading face, the pairing's names in its body face,
+   and its key colour as the swatch. Everything below turns a ThemePreset
+   into that cell. */
+
+/** The shipped face, written out because the cells must stay truthful while
+    the live levers override the theme's own family roles. */
+const SHIPPED_FONT_STACK = "'Nunito Sans', sans-serif";
+
+/** Strip a label's parenthetical qualifier for display: "Lora (serif)" → "Lora". */
+const fontName = (label: string) => label.replace(/\s*\(.+\)$/, "");
+
+const bodyStack = (label: string) =>
+  FONT_OPTIONS.find((f) => f.label === label)?.family || SHIPPED_FONT_STACK;
+
+const headingStack = (label: string | undefined, bodyLabel: string) => {
+  if (!label) return bodyStack(bodyLabel);
+  const face = HEADING_FONT_OPTIONS.find((f) => f.label === label);
+  return face?.family || bodyStack(bodyLabel);
+};
+
+/** The swatch carries the preset's corner language: pill looks keep the
+    full circle, sharp looks square off. Hard values by design — this is
+    drawing geometry scaled to the 24px dot, not theme; even the circle is
+    pinned, because the live levers override --radius-full itself and a
+    preset's portrait must not bend to whatever theme is applied. */
+const swatchRadius = (radiusScale: number, pill: boolean) =>
+  pill ? "999px" : `${Math.round(radiusScale * 0.08)}px`;
+
+const pairingLine = (bodyLabel: string, headingLabel?: string) => {
+  const body = fontName(bodyLabel);
+  if (!headingLabel || !HEADING_FONT_OPTIONS.find((f) => f.label === headingLabel)?.family) {
+    return body;
+  }
+  const heading = fontName(headingLabel);
+  return heading === body ? body : `${heading} over ${body}`;
+};
+
+/**
+ * The preset selector's options, one rich cell per look. `theme` resolves the
+ * theme-dependent key colours (black & white flips its dot with the mode);
+ * `custom` is the live levers, so the Custom row is always a portrait of the
+ * current state rather than a bare word.
+ */
+export function presetPickerOptions(args: {
+  theme: "light" | "dark";
+  custom: {
+    brand: string;
+    fontLabel: string;
+    headingFontLabel: string;
+    radiusScale: number;
+    pill: boolean;
+  };
+}): RichDropdownOption[] {
+  const dark = args.theme === "dark";
+  return [
+    {
+      label: "robr0 DS default",
+      value: "default",
+      color: dark ? DEFAULT_BRAND_DARK : DEFAULT_BRAND,
+      swatchRadius: swatchRadius(100, true),
+      headingFont: SHIPPED_FONT_STACK,
+      bodyFont: SHIPPED_FONT_STACK,
+      description: pairingLine(FONT_OPTIONS[0].label),
+    },
+    {
+      label: "Custom",
+      value: "custom",
+      color: args.custom.brand,
+      swatchRadius: swatchRadius(args.custom.radiusScale, args.custom.pill),
+      headingFont: headingStack(args.custom.headingFontLabel, args.custom.fontLabel),
+      bodyFont: bodyStack(args.custom.fontLabel),
+      description: pairingLine(args.custom.fontLabel, args.custom.headingFontLabel),
+    },
+    /* classic stays defined above as the revert handle for the accessible
+       teal split, but is deliberately not offered in the menu. */
+    ...Object.entries(THEME_PRESETS)
+      .filter(([value]) => value !== "classic")
+      .map(([value, p]) => ({
+        label: p.label,
+        value,
+        color: dark && p.brandDark ? p.brandDark : p.brand,
+        swatchRadius: swatchRadius(p.radiusScale, p.pill),
+        headingFont: headingStack(p.headingFontLabel, p.fontLabel),
+        bodyFont: bodyStack(p.fontLabel),
+        description: pairingLine(p.fontLabel, p.headingFontLabel),
+      })),
+  ];
+}
+
+/**
+ * The typeface levers as plain Dropdown options, each font's name set in the
+ * font itself via the option-level `font` field. The default body face pins
+ * the shipped stack (the theme's family roles are being overridden live, so
+ * inheriting would lie), and the heading list's "match body" row previews
+ * whatever the body lever holds.
+ */
+export function fontPickerOptions(
+  kind: "body" | "heading",
+  currentBodyLabel: string,
+): DropdownOption[] {
+  const list = kind === "body" ? FONT_OPTIONS : HEADING_FONT_OPTIONS;
+  return list.map((f) => ({
+    label: f.label,
+    value: f.label,
+    font:
+      f.family ||
+      (kind === "heading" ? bodyStack(currentBodyLabel) : SHIPPED_FONT_STACK),
+  }));
+}
+
+/** Every Google Fonts param a picker cell can need — the font levers preview
+    all of them, so the playground loads the lot once on mount (the CSS is
+    tiny; woff2s only download when a face actually renders). */
+export const PICKER_FONT_PARAMS = Array.from(
+  new Set(
+    [...FONT_OPTIONS, ...HEADING_FONT_OPTIONS]
+      .map((f) => f.googleParam)
+      .filter((param): param is string => Boolean(param)),
+  ),
+);

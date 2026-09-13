@@ -149,13 +149,6 @@
   border-bottom: var(--border-xs) solid var(--color-divider);
 }
 
-.railTitle {
-  font-size: var(--font-heading-3-size);
-  font-weight: var(--font-heading-3-weight);
-  line-height: var(--font-heading-3-line-height);
-  color: var(--color-text-primary);
-}
-
 /* Standalone group headings match the Field label the DS inputs render,
    so hand-built controls (swatches, sliders) read as the same form */
 .controlHeading {
@@ -216,7 +209,8 @@
    overflow-y scroll container — a downward menu gets clipped at the rail's
    edge. Opening it upward keeps the menu inside the scrollable content,
    where the controls above give it plenty of room. */
-.dropUp :global(.ds-dropdown__menu) {
+.dropUp :global(.ds-dropdown__menu),
+.dropUp :global(.ds-rich-dropdown__menu) {
   top: auto;
   bottom: 100%;
   margin-top: 0;

@@ -31,7 +31,7 @@ import {
   neutralOverrides,
   radiusOverrides,
 } from "@/lib/theme/theme-overrides";
-import { THEME_PRESETS, type ThemePreset } from "@/lib/theme/presets";
+import { PICKER_FONT_PARAMS, THEME_PRESETS, type ThemePreset } from "@/lib/theme/presets";
 import { useAppliedOverrides, useSiteTheme } from "@/lib/theme/use-theme-overrides";
 import PlaygroundControls from "./PlaygroundControls";
 import AdvancedColorsDialog from "./AdvancedColorsDialog";
@@ -42,6 +42,7 @@ import ChatView, {
   type TransportMode,
 } from "./views/ChatView";
 import MockNav from "./views/MockNav";
+import TypeView from "./views/TypeView";
 import { createSimTransport } from "@/lib/chat-sim";
 import { createFetchTransport } from "@/lib/chat-transport";
 import { SiteChatProvider, useSiteChat } from "@/components/SiteChat/ChatContext";
@@ -61,11 +62,12 @@ import ChartsSection from "./sections/ChartsSection";
 import OverlaysSection from "./sections/OverlaysSection";
 import FeedbackSection from "./sections/FeedbackSection";
 
-/* The tool's two lenses on the same theme state. One page, one set of
+/* The tool's three lenses on the same theme state. One page, one set of
    levers — switching views never resets what you've styled. */
-type View = "components" | "chat";
+type View = "components" | "type" | "chat";
 const VIEWS = [
   { value: "components", label: "Components", icon: "widgets" },
+  { value: "type", label: "Type", icon: "text_fields" },
   { value: "chat", label: "Chat", icon: "chat_bubble" },
 ];
 
@@ -112,7 +114,7 @@ export default function PlaygroundPage() {
     // MegaNav's navigation effect).
     const q = new URLSearchParams(window.location.search).get("view");
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    if (q === "chat") setView(q);
+    if (q === "chat" || q === "type") setView(q);
   }, []);
   const pickView = (value: string) => {
     setView(value as View);
@@ -305,11 +307,13 @@ export default function PlaygroundPage() {
   }, [overrides, font, headingFont]);
   useAppliedOverrides(applied);
 
-  /* Google Fonts stylesheets load on demand; loaded ones stay (cheap, and
-     re-selecting is instant). All are removed on unmount. */
+  /* Google Fonts stylesheets for every face the pickers preview, loaded
+     once on mount — the rich picker cells render each option in its own
+     font, so on-demand loading would show fallbacks mid-menu. The CSS is
+     tiny; woff2s only download when a face actually renders. All are
+     removed on unmount. */
   useEffect(() => {
-    for (const param of [font.googleParam, headingFont.googleParam]) {
-      if (!param) continue;
+    for (const param of PICKER_FONT_PARAMS) {
       const id = `playground-font-${param}`;
       if (!document.getElementById(id)) {
         const link = document.createElement("link");
@@ -319,7 +323,7 @@ export default function PlaygroundPage() {
         document.head.appendChild(link);
       }
     }
-  }, [font, headingFont]);
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -403,10 +407,6 @@ export default function PlaygroundPage() {
           ]}
           onValueChange={(value) => setTransportMode(value as TransportMode)}
         />
-        <p className={styles.controlNote}>
-          Simulated replays a scripted exchange without calling the model.
-          Live answers through the site&rsquo;s API route.
-        </p>
       </div>
 
       <div className={styles.controlGroup}>
@@ -446,10 +446,6 @@ export default function PlaygroundPage() {
             checked={railTabs}
             onChange={setRailTabs}
           />
-          <p className={styles.controlNote}>
-            The staged sidebar, feature by feature. All off is the simple
-            rail the live site ships.
-          </p>
         </div>
       )}
     </>
@@ -471,13 +467,6 @@ export default function PlaygroundPage() {
               fontLabel={fontLabel}
               headingFontLabel={headingFontLabel}
               productName={productName}
-              actionModeNote={
-                actionPlan
-                  ? Object.keys(actionPlan.primitives).length === 0
-                    ? `Pointing the action tokens at the ${actionPlan.ramp} ramp; the primitives stay untouched.`
-                    : `Custom hex: rebasing the ${actionPlan.ramp} ramp around it and pointing the action tokens there. Teal stays teal.`
-                  : null
-              }
               isPristine={isPristine}
               cssSnippet={cssSnippet}
               onPreset={applyPreset}
@@ -646,11 +635,11 @@ export default function PlaygroundPage() {
         <main
           className={[
             styles.dsContent,
-            /* The stage switch narrows the components workspace to a
-               phone-width column — the same lever the Chat view reads as
-               its widget preset, so the two views agree on what the bar's
+            /* The stage switch narrows the components and type workspaces
+               to a phone-width column — the same lever the Chat view reads
+               as its widget preset, so the views agree on what the bar's
                Desktop/Mobile means. */
-            view === "components" && stageSize === "mobile" && !compact
+            view !== "chat" && stageSize === "mobile" && !compact
               ? styles.dsContentMobile
               : "",
           ]
@@ -687,6 +676,10 @@ export default function PlaygroundPage() {
               <FeedbackSection />
             </>
           )}
+
+          {/* The Type view: the full ramp as a live specimen sheet, with
+              the heading and body family roles resolved per step. */}
+          {view === "type" && <TypeView />}
 
           {/* The Chat view: the widget on its stage, same levers, plus the
               chat director's rail on the right. */}

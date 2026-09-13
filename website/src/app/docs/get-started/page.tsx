@@ -407,7 +407,8 @@ export default function GetStartedPage() {
                 <SectionTitle title="See it live" />
                 <p className={styles.sectionNote}>
                   The playground applies these overrides to a full page in real time
-                  (navigation, components, and the chat widget): pick a brand colour,
+                  (navigation, components, the type specimen, and the chat
+                  widget): pick a brand colour,
                   tint the neutrals, reshape the radii, swap the font, then copy the
                   generated CSS.
                 </p>

@@ -5,16 +5,13 @@ import styles from "./page.module.css";
 import { Button } from "@robr0/design-system/components/Button/Button";
 import { ColorPicker } from "@robr0/design-system/components/ColorPicker/ColorPicker";
 import { Swatch } from "@robr0/design-system/components/Swatch/Swatch";
-import { Dropdown } from "@robr0/design-system/components/Dropdown/Dropdown";
 import { Input } from "@robr0/design-system/components/Input/Input";
 import { Slider } from "@robr0/design-system/components/Slider/Slider";
 import { ToggleSwitch } from "@robr0/design-system/components/ToggleSwitch/ToggleSwitch";
-import {
-  ACTION_COLOR_PRESETS,
-  FONT_OPTIONS,
-  HEADING_FONT_OPTIONS,
-} from "@/lib/theme/theme-overrides";
-import { PRESET_OPTIONS } from "@/lib/theme/presets";
+import { ACTION_COLOR_PRESETS } from "@/lib/theme/theme-overrides";
+import { Dropdown } from "@robr0/design-system/components/Dropdown/Dropdown";
+import { RichDropdown } from "@robr0/design-system/components/RichDropdown/RichDropdown";
+import { fontPickerOptions, presetPickerOptions } from "@/lib/theme/presets";
 
 export interface PlaygroundControlsProps {
   preset: string;
@@ -31,8 +28,6 @@ export interface PlaygroundControlsProps {
   fontLabel: string;
   headingFontLabel: string;
   productName: string;
-  /** One-line explanation of how the current action colour is applied. */
-  actionModeNote: string | null;
   isPristine: boolean;
   cssSnippet: string;
   /** View-specific control groups (e.g. the chat view's transport picker),
@@ -76,7 +71,6 @@ export default function PlaygroundControls({
   fontLabel,
   headingFontLabel,
   productName,
-  actionModeNote,
   isPristine,
   cssSnippet,
   contextual,
@@ -107,12 +101,18 @@ export default function PlaygroundControls({
     (p) => presetHex(p) === brand.toUpperCase()
   );
 
-  /* "Custom" is a state you land in by touching a lever, not a look you
-     pick — it only appears in the list while it is the active value. */
+  /* Every option is a self-portrait: the preset's own faces and key colour,
+     resolved for the active theme. "Custom" is a state you land in by
+     touching a lever, not a look you pick — it only appears in the list
+     while it is the active value, drawn from the live levers. */
+  const allPresetOptions = presetPickerOptions({
+    theme: dark ? "dark" : "light",
+    custom: { brand, fontLabel, headingFontLabel, radiusScale, pill },
+  });
   const presetOptions =
     preset === "custom"
-      ? PRESET_OPTIONS
-      : PRESET_OPTIONS.filter((o) => o.value !== "custom");
+      ? allPresetOptions
+      : allPresetOptions.filter((o) => o.value !== "custom");
 
   const [copied, setCopied] = useState(false);
   const copiedTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -137,13 +137,8 @@ export default function PlaygroundControls({
 
   const content = (
     <>
-        {/* In the drawer the Drawer's own title does this job. */}
-        {variant === "panel" && (
-          <h3 className={styles.railTitle}>Theme controls</h3>
-        )}
-
         <div className={styles.controlGroup}>
-          <Dropdown
+          <RichDropdown
             label="Theme preset"
             value={preset}
             options={presetOptions}
@@ -174,7 +169,6 @@ export default function PlaygroundControls({
             aria-label="Custom brand colour"
             className={isCustomBrand ? styles.customPickerActive : ""}
           />
-          {actionModeNote && <p className={styles.controlNote}>{actionModeNote}</p>}
           <Button
             label="All colour ramps"
             variant="neutral"
@@ -239,26 +233,18 @@ export default function PlaygroundControls({
         </div>
 
         <div className={`${styles.controlGroup} ${styles.dropUp}`}>
-          <h4 className={styles.controlHeading}>Typefaces</h4>
           <Dropdown
             label="Headings"
             value={headingFontLabel}
-            options={HEADING_FONT_OPTIONS.map((f) => ({
-              label: f.label,
-              value: f.label,
-            }))}
+            options={fontPickerOptions("heading", fontLabel)}
             onValueChange={onHeadingFontLabel}
           />
           <Dropdown
             label="Body"
             value={fontLabel}
-            options={FONT_OPTIONS.map((f) => ({ label: f.label, value: f.label }))}
+            options={fontPickerOptions("body", fontLabel)}
             onValueChange={onFontLabel}
           />
-          <p className={styles.controlNote}>
-            Headings follow the body face until you split them; the system
-            itself runs one face for both.
-          </p>
         </div>
 
         {contextual}

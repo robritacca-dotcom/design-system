@@ -107,7 +107,7 @@ export const dsMegaGroups: MegaGroup[] = [
       {
         href: "/playground",
         label: "Playground",
-        description: "Re-theme the whole system live: components, chat and all",
+        description: "Re-theme the whole system live: components, type and chat",
         icon: "tune",
       },
       {

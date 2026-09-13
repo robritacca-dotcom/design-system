@@ -450,19 +450,7 @@ export default function ChatDirector({
 
   const content = (
     <>
-      {variant === "panel" && <h3 className={layout.railTitle}>Chat controls</h3>}
-
       {levers}
-
-      <p className={layout.controlNote}>
-        {live
-          ? "Live answers come from the model as text alone, so the staging " +
-            "events pause here. Switch the transport back to Simulated to " +
-            "direct the thread again."
-          : "Stage a conversation without typing: most events below play a " +
-            "scripted exchange into the thread, and a couple drop content " +
-            "straight in, all built from the library’s chat components."}
-      </p>
 
       {groups.map((group) => (
         <div key={group.heading} className={layout.controlGroup}>
