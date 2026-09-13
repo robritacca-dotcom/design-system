@@ -29,6 +29,10 @@
   gap: var(--gap-xs);
   padding: var(--padding-xs) var(--padding-sm-md);
   border-radius: var(--radius-full);
+  /* AiButton's solid field, worn with the ring: opaque, so the row's hover
+     highlight never shows through the pill, and the glow stays an edge halo
+     (the ::after escapes behind — negative z-index, no stacking context). */
+  background: var(--color-ai-button-bg);
   font-family: var(--font-paragraph-sm-em-family);
   font-size: var(--font-paragraph-sm-em-size);
   font-weight: var(--font-paragraph-sm-em-weight);
@@ -64,8 +68,9 @@
   pointer-events: none;
   transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
   /* ds-allow(motion): AiButton's ambient signature rotation, kept at its
-     pace — deliberately far slower than the interaction-scale motion tokens */
-  animation: askChipTurn 7s linear infinite;
+     pace — deliberately far slower than the interaction-scale motion
+     tokens; the 21s loop is AiButton's three-uneven-turns cadence */
+  animation: askChipTurn 21s var(--motion-ease-emphasized) infinite;
 }
 
 .askChip {
@@ -117,12 +122,33 @@
   mask-composite: exclude;
   pointer-events: none;
   /* ds-allow(motion): same ambient rotation as the glow, kept in phase */
-  animation: askChipTurn 7s linear infinite;
+  animation: askChipTurn 21s var(--motion-ease-emphasized) infinite;
 }
 
+/* AiButton's cadence, restated on the chip-scoped angle: three uneven
+   turns eased per segment, ending on a whole turn so the wrap is seamless
+   and the average pace stays one turn per 7s. */
 @keyframes askChipTurn {
-  to {
-    --site-ask-chip-angle: 360deg;
+  0% {
+    --site-ask-chip-angle: 0deg;
+  }
+  14% {
+    --site-ask-chip-angle: 168deg;
+  }
+  31% {
+    --site-ask-chip-angle: 306deg;
+  }
+  46% {
+    --site-ask-chip-angle: 570deg;
+  }
+  62% {
+    --site-ask-chip-angle: 690deg;
+  }
+  79% {
+    --site-ask-chip-angle: 936deg;
+  }
+  100% {
+    --site-ask-chip-angle: 1080deg;
   }
 }
 

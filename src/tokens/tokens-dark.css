@@ -138,6 +138,9 @@
   --color-ai-gradient-start: var(--primitive-red-05);
   --color-ai-gradient-mid: var(--primitive-blue-05);
   --color-ai-gradient-end: var(--primitive-teal-07);
+  /* The AI button's solid field: deeper than the neutral-10 page floor, so
+     the pill reads as a cut-out of true darkness under the luminous ring. */
+  --color-ai-button-bg: var(--primitive-true-black);
 
   /* Chart - Contribution heatmap ramp (level 0 = none → level 4 = most) */
   --color-chart-contribution-0: var(--primitive-neutral-08);

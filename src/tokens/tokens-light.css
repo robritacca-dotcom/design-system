@@ -171,6 +171,10 @@
   --color-ai-gradient-start: var(--primitive-red-05);
   --color-ai-gradient-mid: var(--primitive-blue-05);
   --color-ai-gradient-end: var(--primitive-teal-07);
+  /* The AI button's solid field: pushed past the page floor in the theme's
+     own direction — bright white here, true black in dark — so the entry
+     point punches out of any surface instead of frosting into it. */
+  --color-ai-button-bg: var(--primitive-neutral-00);
 
   /* Chart - Contribution heatmap ramp (level 0 = none → level 4 = most) */
   --color-chart-contribution-0: var(--color-bg-container-primary);

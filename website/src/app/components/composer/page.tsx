@@ -204,10 +204,12 @@ export default function ComposerPage() {
           <section className={styles.section}>
             <SectionTitle title="AI glow" />
             <p className={styles.demoText}>
-              With aiGlow, focusing the composer swaps the plain selected
-              border for AiButton&apos;s rotating gradient ring and glow, the
-              system&apos;s signal that a model answers here. Off by default;
-              the site chat turns it on. Click into the field to see it.
+              With aiGlow, focusing the composer replaces the plain selected
+              border with AiButton&apos;s signature: the glow blooms out of
+              the send corner and the ring fades up a beat behind it, the
+              system&apos;s signal that a model answers here. Blur collapses
+              it back. Off by default; the site chat turns it on. Click into
+              the field to see it.
             </p>
             <div className={styles.stack}>
               <Composer placeholder="Ask the model something" aiGlow />

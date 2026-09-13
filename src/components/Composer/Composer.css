@@ -95,8 +95,9 @@
   opacity: 0;
   transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
   /* ds-allow(motion): ambient signature rotation, matched to AiButton's —
-     deliberately far slower than the interaction-scale motion tokens */
-  animation: ds-composer-glow-turn 7s linear infinite paused;
+     deliberately far slower than the interaction-scale motion tokens; the
+     21s loop is AiButton's three-uneven-turns cadence */
+  animation: ds-composer-glow-turn 21s var(--motion-ease-emphasized) infinite paused;
 }
 
 /* The glow: the same gradient, blurred behind the opaque shell at low
@@ -119,26 +120,64 @@
   --ds-composer-glow: 14px;
   filter: blur(var(--ds-composer-glow));
   opacity: 0;
+  /* Resting, the glow waits collapsed at the send-button corner (fractions
+     chosen by eye, matching AiButton's entry) — waking is a bloom out of
+     that corner, not a flat fade. This rest-state transition is the way
+     back: losing focus collapses the halo quickly on the base pace. */
+  transform-origin: 95% 85%;
+  transform: scale(0.35);
   z-index: -1;
   pointer-events: none;
-  transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
+  transition:
+    opacity var(--motion-duration-base) var(--motion-ease-standard),
+    transform var(--motion-duration-base) var(--motion-ease-standard);
   /* ds-allow(motion): same ambient rotation as the ring, kept in phase */
-  animation: ds-composer-glow-turn 7s linear infinite paused;
+  animation: ds-composer-glow-turn 21s var(--motion-ease-emphasized) infinite paused;
 }
 
+/* Waking: the entry. The glow blooms out of the send-button corner over
+   the entrance pace and the ring fades up a --motion-duration-fast beat
+   behind it — the transition here (the destination state's) governs the
+   way in; the resting rules above govern the quick way back. */
 .ds-composer--ai-glow:focus-within::before {
   opacity: 1;
+  transition: opacity var(--motion-duration-slower) var(--motion-ease-entrance) var(--motion-duration-fast);
   animation-play-state: running;
 }
 
 .ds-composer--ai-glow:focus-within::after {
   opacity: 0.3;
+  transform: none;
+  transition:
+    opacity var(--motion-duration-slower) var(--motion-ease-entrance),
+    transform var(--motion-duration-slower) var(--motion-ease-entrance);
   animation-play-state: running;
 }
 
+/* AiButton's cadence, restated on the Composer-scoped angle: three uneven
+   turns eased per segment, ending on a whole turn so the wrap is seamless
+   and the average pace stays one turn per 7s. */
 @keyframes ds-composer-glow-turn {
-  to {
-    --ds-composer-glow-angle: 360deg;
+  0% {
+    --ds-composer-glow-angle: 0deg;
+  }
+  14% {
+    --ds-composer-glow-angle: 168deg;
+  }
+  31% {
+    --ds-composer-glow-angle: 306deg;
+  }
+  46% {
+    --ds-composer-glow-angle: 570deg;
+  }
+  62% {
+    --ds-composer-glow-angle: 690deg;
+  }
+  79% {
+    --ds-composer-glow-angle: 936deg;
+  }
+  100% {
+    --ds-composer-glow-angle: 1080deg;
   }
 }
 
@@ -152,11 +191,16 @@
 
 .ds-composer--ai-glow.ds-composer--streaming::before {
   opacity: 1;
+  transition: opacity var(--motion-duration-slower) var(--motion-ease-entrance) var(--motion-duration-fast);
   animation-play-state: running;
 }
 
 .ds-composer--ai-glow.ds-composer--streaming::after {
   opacity: 0.3;
+  transform: none;
+  transition:
+    opacity var(--motion-duration-slower) var(--motion-ease-entrance),
+    transform var(--motion-duration-slower) var(--motion-ease-entrance);
   animation-play-state: running;
 }
 

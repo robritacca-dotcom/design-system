@@ -37,8 +37,10 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 
 /**
- * With `aiGlow`, focusing the composer swaps the plain selected border for
- * AiButton's rotating gradient ring and glow. Click into the field to see it.
+ * With `aiGlow`, focusing the composer replaces the plain selected border
+ * with AiButton's signature: the glow blooms out of the send corner and the
+ * ring fades up a beat behind it; blur collapses it back. Click into the
+ * field to see it.
  */
 export const AiGlow: Story = {
   args: {

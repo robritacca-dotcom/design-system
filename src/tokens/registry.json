@@ -22,6 +22,7 @@
       "--color-action-primary-text-active",
       "--color-action-primary-text-secondary",
       "--color-action-primary-text-tertiary",
+      "--color-ai-button-bg",
       "--color-ai-gradient-end",
       "--color-ai-gradient-mid",
       "--color-ai-gradient-start",

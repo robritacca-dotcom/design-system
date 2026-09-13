@@ -74,9 +74,10 @@ export interface AiButtonProps
     Omit<React.ComponentPropsWithoutRef<'button'>, keyof AiButtonOwnProps | 'type'> {}
 
 /**
- * The AI entry point. Icon and label on a transparent field, ringed by the
- * AI gradient (`--color-ai-gradient-*`) rotating slowly, with a soft glow of
- * the same gradient behind it. The treatment is the design system's signal
+ * The AI entry point. Icon and label on a solid field pushed past the page
+ * floor (`--color-ai-button-bg` — bright white in light, true black in dark),
+ * ringed by the AI gradient (`--color-ai-gradient-*`) rotating slowly, with a
+ * soft glow of the same gradient haloing the edge. The treatment is the design system's signal
  * for "a model answers here": ordinary actions keep the flat action teal,
  * and this ring is reserved for AI surfaces so neither affordance dilutes
  * the other.

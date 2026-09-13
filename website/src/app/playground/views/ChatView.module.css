@@ -340,13 +340,13 @@
   transform: rotate(-45deg);
 }
 
-/* The closed widget's entry point, centred where the widget was, on the
-   site FAB's glassy pill backing so the transparent-field button stays
-   legible over the blur field. */
+/* The closed widget's entry point, centred where the widget was. The
+   button's own solid field (--color-ai-button-bg) keeps it legible over
+   the blur field; the wrapper adds only the floating elevation — no
+   backdrop-filter, since the fill is opaque and an ancestor backdrop
+   root is the trap design.md's FAB note warns about. */
 .launcher {
   border-radius: var(--radius-full);
-  background: var(--color-bg-container-primary);
-  backdrop-filter: blur(16px);
   box-shadow: var(--shadow-floating);
 }
 

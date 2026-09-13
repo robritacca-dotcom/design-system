@@ -662,14 +662,12 @@
   z-index: 1080;
 }
 
-/* The glassy backing keeps the transparent-field button legible over
-   whatever content scrolls beneath it. It sits on the button element, not
-   the wrapper: an ancestor with backdrop-filter becomes the backdrop root
-   for everything inside it, which would blind the summary panel's frost. */
+/* The button's own solid field (--color-ai-button-bg) keeps it legible over
+   whatever content scrolls beneath it; the FAB only adds the floating
+   elevation. No backdrop-filter here — the fill is opaque, and an ancestor
+   backdrop root would blind the summary panel's frost. */
 .fab :global(.ds-ai-button) {
   border-radius: var(--radius-full);
-  background: var(--color-bg-container-primary);
-  backdrop-filter: blur(16px);
   box-shadow: var(--shadow-floating);
 }
 

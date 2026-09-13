@@ -461,10 +461,11 @@ export const SemanticColors: Story = {
         <ColorToken name="Event Border" value="--color-calendar-event-border" />
       </TokenSection>
 
-      <TokenSection title="AI Gradient">
-        <ColorToken name="Start" value="--color-ai-gradient-start" />
-        <ColorToken name="Mid" value="--color-ai-gradient-mid" />
-        <ColorToken name="End" value="--color-ai-gradient-end" />
+      <TokenSection title="AI">
+        <ColorToken name="Gradient Start" value="--color-ai-gradient-start" />
+        <ColorToken name="Gradient Mid" value="--color-ai-gradient-mid" />
+        <ColorToken name="Gradient End" value="--color-ai-gradient-end" />
+        <ColorToken name="Button Field" value="--color-ai-button-bg" />
       </TokenSection>
 
       <TokenSection title="Action - Primary">

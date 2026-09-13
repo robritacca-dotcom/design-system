@@ -30,8 +30,10 @@ export default function AiButtonPage() {
               The entry point that says a model answers here
             </p>
             <p className={styles.introBody}>
-              Icon and label on a transparent field, ringed by the AI gradient
-              turning slowly, with a soft glow of the same gradient behind it.
+              Icon and label on a solid field pushed past the page floor,
+              bright white in light and true black in dark, ringed by the AI
+              gradient turning slowly, with a soft glow of the same gradient
+              haloing the edge.
               The treatment is reserved: ordinary actions keep the flat action
               teal, and this ring marks the surfaces where an AI responds, so
               neither affordance dilutes the other. This site&rsquo;s own chat
@@ -44,7 +46,10 @@ export default function AiButtonPage() {
             <SectionTitle title="Default" />
             <p className={styles.demoText}>
               The resting state is quiet: a thin gradient ring and a low glow.
-              Hover raises the glow; the rotation never changes pace.
+              Hover raises the glow; the ring turns on its own uneven cadence,
+              drifting and settling rather than ticking round at one rate. On
+              mount it lights rather than arriving: the glow blooms out of the
+              corner and the ring fades up a beat behind it.
             </p>
             <div className={styles.row}>
               <AiButton />

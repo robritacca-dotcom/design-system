@@ -527,22 +527,27 @@ const statusIconColours: SwatchData[] = [
   },
 ];
 
-/* --- AI gradient --- */
-const aiGradientColours: SwatchData[] = [
+/* --- AI --- */
+const aiColours: SwatchData[] = [
   {
-    label: "Start", cssVar: "--color-ai-gradient-start",
+    label: "Gradient start", cssVar: "--color-ai-gradient-start",
     dark: { primitive: "--red--05--", hex: "#F37F9B", rgb: "243 / 127 / 155" },
     light: { primitive: "--red--05--", hex: "#F37F9B", rgb: "243 / 127 / 155" },
   },
   {
-    label: "Mid", cssVar: "--color-ai-gradient-mid",
+    label: "Gradient mid", cssVar: "--color-ai-gradient-mid",
     dark: { primitive: "--blue--05--", hex: "#5475D4", rgb: "84 / 117 / 212" },
     light: { primitive: "--blue--05--", hex: "#5475D4", rgb: "84 / 117 / 212" },
   },
   {
-    label: "End", cssVar: "--color-ai-gradient-end",
+    label: "Gradient end", cssVar: "--color-ai-gradient-end",
     dark: { primitive: "--teal--07--", hex: "#118AB2", rgb: "17 / 138 / 178" },
     light: { primitive: "--teal--07--", hex: "#118AB2", rgb: "17 / 138 / 178" },
+  },
+  {
+    label: "Button field", cssVar: "--color-ai-button-bg",
+    dark: { primitive: "--true-black--", hex: "#000000", rgb: "0 / 0 / 0" },
+    light: { primitive: "--neutral--00--", hex: "#FFFFFF", rgb: "255 / 255 / 255" },
   },
 ];
 
@@ -824,11 +829,11 @@ export default function SemanticColoursPage() {
             </div>
           </section>
 
-          {/* AI gradient */}
+          {/* AI */}
           <section className={styles.colourGroup}>
-            <SectionTitle title="AI gradient" />
+            <SectionTitle title="AI" />
             <div className={styles.colourSwatches}>
-              {aiGradientColours.map((s) => (
+              {aiColours.map((s) => (
                 <ColourSwatch key={s.label} label={s.label} cssVar={s.cssVar} dark={s.dark} light={s.light} theme={theme} />
               ))}
             </div>
