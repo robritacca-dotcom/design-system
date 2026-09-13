@@ -261,6 +261,7 @@ const STORY_MODULES = [
   'website/src/lib/chat-sim.ts',
   'website/src/app/playground/ChatDirector.tsx',
   'website/src/app/playground/views/ChatView.tsx',
+  'website/src/app/playground/views/TypeView.tsx',
   // Not story copy, but the same shape of problem: the case-study TLDR
   // points render on every /work page while living outside the route
   // folders (deliberately out of the corpus — the file's doc block owns
