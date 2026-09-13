@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import './SegmentedControl.css';
 import '../../fonts/material-symbols.css';
 
@@ -54,10 +54,114 @@ export const SegmentedControl = ({
   const variantClass = `${baseClass}--${variant}`;
   const fullWidthClass = fullWidth ? `${baseClass}--full-width` : '';
   const containerRef = useRef<HTMLDivElement>(null);
+  const pillRef = useRef<HTMLSpanElement>(null);
+  // False until the pill has been measured onto the active segment; before
+  // that (SSR and the first client frame) the active segment paints its own
+  // background so the control never renders selection-less.
+  const [pillReady, setPillReady] = useState(false);
+  const hasPositionedRef = useRef(false);
+  // Pending double-rAF that arms animated moves — see positionPill.
+  const armFrameRef = useRef(0);
 
-  const classes = [baseClass, sizeClass, variantClass, fullWidthClass, className]
+  const classes = [
+    baseClass,
+    sizeClass,
+    variantClass,
+    fullWidthClass,
+    pillReady ? `${baseClass}--pill-ready` : '',
+    className,
+  ]
     .filter(Boolean)
     .join(' ');
+
+  // Writes the active segment's measured box onto the pill. Animated moves
+  // tween transform/width via the CSS transition; un-animated ones (first
+  // paint, resize, font swap) suspend it so the pill snaps into place.
+  const positionPill = useCallback(
+    (animate: boolean) => {
+      const container = containerRef.current;
+      const pill = pillRef.current;
+      if (!container || !pill) return;
+      const active = container.querySelector<HTMLButtonElement>(
+        `[data-segment-value="${CSS.escape(activeSegment)}"]`
+      );
+      // A zero-width measurement means the control is hidden (or not laid
+      // out yet) — keep the per-segment fallback and try again when the
+      // resize observer reports a real size.
+      if (!active || active.offsetWidth === 0) {
+        if (armFrameRef.current) {
+          cancelAnimationFrame(armFrameRef.current);
+          armFrameRef.current = 0;
+        }
+        hasPositionedRef.current = false;
+        setPillReady(false);
+        return;
+      }
+      if (!animate) pill.style.transition = 'none';
+      pill.style.width = `${active.offsetWidth}px`;
+      pill.style.height = `${active.offsetHeight}px`;
+      pill.style.transform = `translate(${active.offsetLeft}px, ${active.offsetTop}px)`;
+      if (!animate) {
+        // Flush the suspended write before restoring the transition.
+        void pill.offsetWidth;
+        pill.style.transition = '';
+      }
+      // Arm animated moves only once the browser has painted this box. A
+      // position written before first paint must snap — hydration renders
+      // with the server's segment, and the store correction that follows
+      // re-positions before anything is painted; animating that correction
+      // would slide the pill across the control on every page load (the
+      // header theme toggle was the visible case). Two frames, because the
+      // first rAF fires before the pending frame paints.
+      if (!hasPositionedRef.current && armFrameRef.current === 0) {
+        armFrameRef.current = requestAnimationFrame(() => {
+          armFrameRef.current = requestAnimationFrame(() => {
+            armFrameRef.current = 0;
+            hasPositionedRef.current = true;
+          });
+        });
+      }
+      setPillReady(true);
+    },
+    [activeSegment]
+  );
+
+  // Keep the resize observer's callback pointed at the latest measurement
+  // closure without recreating the observer per segment change.
+  const latestPositionPill = useRef(positionPill);
+  useLayoutEffect(() => {
+    latestPositionPill.current = positionPill;
+  }, [positionPill]);
+
+  useLayoutEffect(() => {
+    positionPill(hasPositionedRef.current);
+  }, [positionPill, segments, size, fullWidth]);
+
+  useLayoutEffect(() => {
+    const container = containerRef.current;
+    if (!container || typeof ResizeObserver === 'undefined') return;
+    // The observer fires once on observe(); when the layout effect above
+    // already positioned the pill for that frame, skip it — otherwise the
+    // initial callback would cut an in-flight slide short. When it didn't
+    // (the control mounted hidden or unsized), the fire is a real chance
+    // to measure. Later fires are real resizes and always reposition.
+    let initialFire = true;
+    const observer = new ResizeObserver(() => {
+      if (initialFire) {
+        initialFire = false;
+        if (hasPositionedRef.current) return;
+      }
+      latestPositionPill.current(false);
+    });
+    observer.observe(container);
+    return () => {
+      observer.disconnect();
+      if (armFrameRef.current) {
+        cancelAnimationFrame(armFrameRef.current);
+        armFrameRef.current = 0;
+      }
+    };
+  }, []);
 
   const handleKeyDown = (e: React.KeyboardEvent, idx: number) => {
     const enabledSegments = segments.filter((s) => !s.disabled);
@@ -97,6 +201,7 @@ export const SegmentedControl = ({
 
   return (
     <div className={classes} role="tablist" aria-label={ariaLabel} ref={containerRef}>
+      <span className={`${baseClass}__pill`} aria-hidden="true" ref={pillRef} />
       {segments.map((segment, idx) => {
         const isActive = segment.value === activeSegment;
         const btnClasses = [

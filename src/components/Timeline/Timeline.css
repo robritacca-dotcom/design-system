@@ -333,11 +333,13 @@
 .ds-timeline__role-bullets a {
   color: var(--color-action-primary-bg);
   font-weight: var(--font-paragraph-em-weight);
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  transition: text-decoration-color var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 .ds-timeline__role-bullets a:hover {
-  text-decoration: underline;
+  text-decoration-color: currentColor;
 }
 
 /* Connector — centred under the 32px logo, with an even 8px break above and

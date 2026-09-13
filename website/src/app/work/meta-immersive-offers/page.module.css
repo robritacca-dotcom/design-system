@@ -312,12 +312,14 @@
 
 .inlineLink {
   color: var(--color-action-primary-bg);
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-color: transparent;
   font-weight: var(--font-paragraph-em-weight);
+  transition: text-decoration-color var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 .inlineLink:hover {
-  text-decoration: underline;
+  text-decoration-color: currentColor;
 }
 
 /* ============================================

@@ -73,3 +73,15 @@
   letter-spacing: var(--font-paragraph-letter-spacing);
   color: var(--color-text-secondary);
 }
+
+.body a {
+  color: var(--color-action-primary-bg);
+  font-weight: var(--font-paragraph-em-weight);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  transition: text-decoration-color var(--motion-duration-base) var(--motion-ease-standard);
+}
+
+.body a:hover {
+  text-decoration-color: currentColor;
+}

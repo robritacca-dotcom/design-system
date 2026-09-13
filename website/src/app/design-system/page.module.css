@@ -323,9 +323,11 @@
   font-size: var(--font-paragraph-sm-size);
   line-height: var(--font-paragraph-sm-line-height);
   color: var(--color-text-tertiary);
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-color: transparent;
   padding: 2px var(--padding-xxs);
   border-radius: var(--radius-sm);
+  transition: color var(--motion-duration-base) var(--motion-ease-standard), background-color var(--motion-duration-base) var(--motion-ease-standard), text-decoration-color var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 /* Keep the first footer tag's text flush with the card's left edge */
@@ -336,7 +338,7 @@
 .cardLink:hover {
   color: var(--color-text-primary);
   background: var(--color-bg-container-secondary);
-  text-decoration: underline;
+  text-decoration-color: currentColor;
 }
 
 .cardHint {

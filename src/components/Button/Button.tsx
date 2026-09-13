@@ -136,16 +136,17 @@ export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, Bu
     );
 
     /** Render an icon slot — string → Material Symbol, ReactNode → custom element */
-    const renderIcon = (iconProp: string | React.ReactNode) => {
+    const renderIcon = (iconProp: string | React.ReactNode, position?: 'right') => {
+      const positionClass = position === 'right' ? ` ${baseClass}__icon--right` : '';
       if (typeof iconProp === 'string') {
         return (
-          <span className={`${baseClass}__icon ${iconClass}`} aria-hidden="true">
+          <span className={`${baseClass}__icon${positionClass} ${iconClass}`} aria-hidden="true">
             {iconProp}
           </span>
         );
       }
       return (
-        <span className={`${baseClass}__icon`} aria-hidden="true">
+        <span className={`${baseClass}__icon${positionClass}`} aria-hidden="true">
           {iconProp}
         </span>
       );
@@ -162,7 +163,7 @@ export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, Bu
       <>
         {leftIcon && renderIcon(leftIcon)}
         {text && <span className={`${baseClass}__text`}>{label}</span>}
-        {iconRight && renderIcon(iconRight)}
+        {iconRight && renderIcon(iconRight, 'right')}
       </>
     );
 

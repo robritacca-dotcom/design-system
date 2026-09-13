@@ -276,6 +276,18 @@
   height: 24px;
 }
 
+/* A trailing icon nudges right on hover — a small confirmation that the
+   button leads somewhere. Never on disabled or loading buttons (loading
+   disables the element without the disabled class); the reduced-motion
+   guard collapses the transition with every other duration. */
+.ds-button__icon--right {
+  transition: transform var(--motion-duration-fast) var(--motion-ease-entrance);
+}
+
+.ds-button:not(.ds-button--disabled):not(.ds-button--loading):hover .ds-button__icon--right {
+  transform: translateX(2px);
+}
+
 .ds-button--primary .ds-button__icon {
   color: var(--color-action-primary-text);
 }

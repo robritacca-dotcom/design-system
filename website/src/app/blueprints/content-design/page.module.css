@@ -282,6 +282,10 @@
   border-bottom: none;
 }
 
+.tableWrapper :global(tbody tr) {
+  transition: background-color var(--motion-duration-base) var(--motion-ease-standard);
+}
+
 .tableWrapper :global(tbody tr:hover) {
   background: var(--color-bg-container-primary);
 }

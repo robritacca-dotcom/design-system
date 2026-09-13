@@ -4,6 +4,7 @@
    ============================================ */
 
 .ds-segmented-control {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: var(--gap-xxs); /* 2px */
@@ -11,6 +12,61 @@
   border-radius: var(--radius-full); /* pill shape */
   background-color: var(--color-bg-container-primary);
   border: var(--border-xs) solid var(--color-bg-container-border);
+}
+
+/* ============================================
+   SLIDING PILL
+   The active indicator is a single element that
+   slides and resizes between segments. Its box is
+   written inline by the component from the active
+   segment's measurements; until that first
+   measurement lands (SSR, first client frame) it
+   stays hidden and the active segment paints its
+   own background instead.
+   ============================================ */
+
+.ds-segmented-control__pill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-radius: var(--radius-full);
+  background-color: var(--color-action-primary-bg);
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, width;
+  transition:
+    transform var(--motion-duration-base) var(--motion-ease-entrance),
+    width var(--motion-duration-base) var(--motion-ease-entrance),
+    background-color var(--motion-duration-base) var(--motion-ease-standard);
+}
+
+.ds-segmented-control--pill-ready .ds-segmented-control__pill {
+  opacity: 1;
+}
+
+/* Once the pill owns the selection, the active segment's own fill retires —
+   labels and icons keep their active colours and read above the pill. */
+.ds-segmented-control--pill-ready .ds-segmented-control__segment--active,
+.ds-segmented-control--pill-ready .ds-segmented-control__segment--active:hover,
+.ds-segmented-control--pill-ready.ds-segmented-control--neutral .ds-segmented-control__segment--active,
+.ds-segmented-control--pill-ready.ds-segmented-control--neutral .ds-segmented-control__segment--active:hover {
+  background-color: transparent;
+}
+
+/* Hovering the active segment darkens the pill, mirroring the retired
+   per-segment hover fill. */
+.ds-segmented-control--pill-ready:has(.ds-segmented-control__segment--active:hover) .ds-segmented-control__pill {
+  background-color: var(--color-action-primary-bg-hover);
+}
+
+.ds-segmented-control--neutral .ds-segmented-control__pill {
+  background-color: var(--color-action-neutral-bg);
+}
+
+.ds-segmented-control--pill-ready.ds-segmented-control--neutral:has(.ds-segmented-control__segment--active:hover) .ds-segmented-control__pill {
+  background-color: var(--color-action-neutral-bg-hover);
 }
 
 /* ============================================
@@ -42,6 +98,7 @@
   transition: background-color var(--motion-duration-base) var(--motion-ease-standard), color var(--motion-duration-base) var(--motion-ease-standard);
   white-space: nowrap;
   position: relative;
+  z-index: 1; /* labels and icons read above the sliding pill */
 }
 
 /* Typography — paragraph em (medium weight) for clickable controls */
