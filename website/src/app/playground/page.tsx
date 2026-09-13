@@ -43,6 +43,7 @@ import ChatView, {
 } from "./views/ChatView";
 import MockNav from "./views/MockNav";
 import TypeView from "./views/TypeView";
+import { stageMobileCss } from "./stage-mobile-css";
 import { createSimTransport } from "@/lib/chat-sim";
 import { createFetchTransport } from "@/lib/chat-transport";
 import { SiteChatProvider, useSiteChat } from "@/components/SiteChat/ChatContext";
@@ -169,6 +170,15 @@ export default function PlaygroundPage() {
     () => window.matchMedia(COMPACT_QUERY).matches,
     () => false
   );
+  /* The Mobile stage: a phone-width column on a desktop viewport, where
+     no viewport media query can fire. The `data-stage` marker plus the
+     stylesheet derived in stage-mobile-css.ts swap in the phone
+     variants — the token step-down, the `.ds-` small-screen blocks, the
+     stage-aware grids — so Mobile shows what a phone actually renders.
+     On a compact screen the real queries fire and the stage stands
+     down; the Chat view reads the lever as its widget preset instead. */
+  const stageMobile = view !== "chat" && stageSize === "mobile" && !compact;
+  const stageCss = stageMobile ? stageMobileCss() : "";
   const [controlsOpen, setControlsOpen] = useState(false);
   const [advOpen, setAdvOpen] = useState(false);
   const [cssOpen, setCssOpen] = useState(false);
@@ -639,14 +649,16 @@ export default function PlaygroundPage() {
                to a phone-width column — the same lever the Chat view reads
                as its widget preset, so the views agree on what the bar's
                Desktop/Mobile means. */
-            view !== "chat" && stageSize === "mobile" && !compact
-              ? styles.dsContentMobile
-              : "",
+            stageMobile ? styles.dsContentMobile : "",
           ]
             .filter(Boolean)
             .join(" ")}
+          data-stage={stageMobile ? "mobile" : undefined}
           id="main-content"
         >
+          {/* The phone rules the narrowed column can't trigger, derived
+              from the loaded stylesheets and scoped to the stage. */}
+          {stageCss && <style>{stageCss}</style>}
           {view === "components" && (
             <>
               {/* A white-label site header opens the view, so the theme
@@ -678,8 +690,10 @@ export default function PlaygroundPage() {
           )}
 
           {/* The Type view: the full ramp as a live specimen sheet, with
-              the heading and body family roles resolved per step. */}
-          {view === "type" && <TypeView />}
+              the heading and body family roles resolved per step. The
+              stage flag re-reads the labels when the phone step-down
+              lands, since no root mutation or resize announces it. */}
+          {view === "type" && <TypeView stageMobile={stageMobile} />}
 
           {/* The Chat view: the widget on its stage, same levers, plus the
               chat director's rail on the right. */}

@@ -286,6 +286,12 @@
   }
 }
 
+/* The Mobile stage is a phone-width column on a desktop viewport, so
+   the collapse above can't fire — the stage marker forces it. */
+[data-stage="mobile"] .demoColumns {
+  grid-template-columns: 1fr;
+}
+
 /* The globe takes the wider column; the legend rides beside it, centred
    on the sphere. Collapses with the rest of the two-up grids. */
 .mapsColumns {
@@ -300,6 +306,11 @@
     grid-template-columns: 1fr;
     justify-items: center;
   }
+}
+
+[data-stage="mobile"] .mapsColumns {
+  grid-template-columns: 1fr;
+  justify-items: center;
 }
 
 /* ============================================

@@ -109,7 +109,14 @@ const roundPx = (value: string): string => {
   return Number.isFinite(px) ? `${Math.round(px)}px` : value;
 };
 
-export default function TypeView() {
+export default function TypeView({
+  stageMobile = false,
+}: {
+  /** Whether the stage is emulating a phone — flipping it restyles the
+      samples without any root mutation or resize, so it must re-trigger
+      the read below. */
+  stageMobile?: boolean;
+}) {
   const sampleRefs = useRef(new Map<string, HTMLElement>());
   const [meta, setMeta] = useState<Record<string, StepMeta>>({});
   const [faces, setFaces] = useState<{ heading: string; body: string } | null>(
@@ -117,10 +124,11 @@ export default function TypeView() {
   );
 
   /* Read once on mount, then again whenever the levers or the theme write
-     to the root element (fonts land instantly, no settle wait needed) and
-     on resize, where the display tier's responsive collapse moves the
-     sizes. All values come off the rendered samples, so the labels can
-     never disagree with the pixels. */
+     to the root element (fonts land instantly, no settle wait needed), on
+     resize, where the display tier's responsive collapse moves the sizes,
+     and when the mobile stage flips, which moves them the same way with
+     no resize to hear. All values come off the rendered samples, so the
+     labels can never disagree with the pixels. */
   useEffect(() => {
     let frame = 0;
     const read = () => {
@@ -168,7 +176,7 @@ export default function TypeView() {
       observer.disconnect();
       window.removeEventListener("resize", read);
     };
-  }, []);
+  }, [stageMobile]);
 
   return (
     <>

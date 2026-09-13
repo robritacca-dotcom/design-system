@@ -69,9 +69,14 @@
 }
 
 /* Narrow column: the centre links give way first, the way the real
-   header's do below its own breakpoint. */
+   header's do below its own breakpoint. The stage's Mobile preset can't
+   move the real viewport, so its marker hides them the same way. */
 @media (max-width: 899px) {
   .links {
     display: none;
   }
+}
+
+[data-stage="mobile"] .links {
+  display: none;
 }
