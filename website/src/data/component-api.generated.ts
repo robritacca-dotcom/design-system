@@ -6838,6 +6838,100 @@ export const componentApi: readonly ComponentApiEntry[] = [
     ]
   },
   {
+    "name": "RichDropdown",
+    "label": "Rich dropdown",
+    "slug": "rich-dropdown",
+    "category": "forms",
+    "description": "Dropdown's rich sibling: options preview their own heading face, body face, and key colour.",
+    "client": true,
+    "importPath": "@robr0/design-system/components/RichDropdown/RichDropdown",
+    "barrel": "main",
+    "exports": [
+      {
+        "component": "RichDropdown",
+        "props": [
+          {
+            "name": "label",
+            "type": "string",
+            "required": false,
+            "description": "Field label text"
+          },
+          {
+            "name": "placeholder",
+            "type": "string",
+            "required": false,
+            "description": "Placeholder when no value selected",
+            "defaultValue": "Select an option"
+          },
+          {
+            "name": "value",
+            "type": "string",
+            "required": false,
+            "description": "Selected option value for controlled use. Pair with `onValueChange`."
+          },
+          {
+            "name": "defaultValue",
+            "type": "string",
+            "required": false,
+            "description": "Initially selected option value for uncontrolled use."
+          },
+          {
+            "name": "options",
+            "type": "RichDropdownOption[]",
+            "required": true,
+            "description": "The options on offer, in display order."
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "required": false,
+            "description": "Whether the picker is disabled",
+            "defaultValue": "false"
+          },
+          {
+            "name": "required",
+            "type": "boolean",
+            "required": false,
+            "description": "Whether the picker is required",
+            "defaultValue": "false"
+          },
+          {
+            "name": "error",
+            "type": "boolean",
+            "required": false,
+            "description": "Error state",
+            "defaultValue": "false"
+          },
+          {
+            "name": "helperText",
+            "type": "string",
+            "required": false,
+            "description": "Helper or error message"
+          },
+          {
+            "name": "onValueChange",
+            "type": "((value: string) => void)",
+            "required": false,
+            "description": "Fires with the newly selected option's value."
+          },
+          {
+            "name": "className",
+            "type": "string",
+            "required": false,
+            "description": "Additional CSS classes",
+            "defaultValue": ""
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "required": false,
+            "description": "Used only as a fallback for deriving the element id (`id || name || label`).\n\nNote: RichDropdown renders a `<div role=\"combobox\">`, not a native\n`<select>`, so `name` does **not** make it participate in native form\nsubmission."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "name": "ScatterChart",
     "label": "Scatter chart",
     "slug": "scatter-chart",

@@ -166,3 +166,22 @@ export const Grouped: Story = {
     ],
   },
 };
+
+/* Each option carries its own `font`, so the typeface previews itself —
+   system-available faces, no webfonts needed in the sandbox. */
+export const FontPreview: Story = {
+  args: {
+    label: 'Typeface',
+    value: 'georgia',
+    options: [
+      { label: 'Georgia', value: 'georgia', font: "Georgia, 'Times New Roman', serif" },
+      { label: 'Verdana', value: 'verdana', font: 'Verdana, sans-serif' },
+      { label: 'Courier New', value: 'courier', font: "'Courier New', monospace" },
+      { label: 'Arial', value: 'arial', font: 'Arial, sans-serif' },
+    ],
+  },
+  play: async ({ canvasElement }) => {
+    const trigger = canvasElement.querySelector<HTMLElement>('.ds-dropdown__trigger');
+    trigger?.click();
+  },
+};

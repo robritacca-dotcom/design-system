@@ -658,7 +658,7 @@ Temporary notification with status variants, auto-dismiss, and stacking via Toas
 - Rendering: client component (declares 'use client')
 - Contract: https://robertritacca.com/components/toast.md
 
-## Forms (20)
+## Forms (21)
 
 Inputs, pickers, and selection controls for collecting and editing values.
 
@@ -773,6 +773,14 @@ Star-scale rating control with keyboard selection, a read-only mode, and a confi
 - Import: `import { Rating } from '@robr0/design-system';`
 - Rendering: client component (declares 'use client')
 - Contract: https://robertritacca.com/components/rating.md
+
+### Rich dropdown
+
+Dropdown's rich sibling: options preview their own heading face, body face, and key colour.
+
+- Import: `import { RichDropdown } from '@robr0/design-system';`
+- Rendering: client component (declares 'use client')
+- Contract: https://robertritacca.com/components/rich-dropdown.md
 
 ### Slider
 

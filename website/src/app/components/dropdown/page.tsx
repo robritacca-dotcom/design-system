@@ -114,6 +114,26 @@ export default function DropdownPage() {
             </div>
           </section>
 
+          {/* Font preview */}
+          <section className={styles.section}>
+            <SectionTitle title="Typeface preview" />
+            <div className={styles.variantRow}>
+              <div className={styles.variantItem}>
+                <Dropdown
+                  label="Typeface"
+                  value="georgia"
+                  options={[
+                    { label: "Georgia", value: "georgia", font: "Georgia, 'Times New Roman', serif" },
+                    { label: "Verdana", value: "verdana", font: "Verdana, sans-serif" },
+                    { label: "Courier New", value: "courier", font: "'Courier New', monospace" },
+                    { label: "Arial", value: "arial", font: "Arial, sans-serif" },
+                  ]}
+                  onChange={() => {}}
+                />
+              </div>
+            </div>
+          </section>
+
           {/* States */}
           <section className={styles.section}>
             <SectionTitle title="States" />

@@ -1196,6 +1196,21 @@ const previews: Record<string, () => ReactNode> = {
       </div>
     </>
   ),
+  "rich-dropdown": () => (
+    <>
+      <div aria-hidden="true" style={{ display: "flex", flexDirection: "column", gap: "2px", width: "150px", padding: "4px", borderRadius: "10px", border: "1px solid var(--color-bg-container-border)", background: "var(--color-bg-page-primary)" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "8px", padding: "5px 8px", borderRadius: "6px" }}>
+          <span style={{ width: "14px", height: "14px", borderRadius: "999px", background: "#D97757", flexShrink: 0 }} />
+          <span style={{ fontSize: "11px", fontWeight: 600, fontFamily: "Georgia, serif", color: "var(--color-text-primary)" }}>Editorial</span>
+          <span className="material-symbols-rounded" style={{ fontSize: "13px", color: "var(--color-action-primary-bg)", marginLeft: "auto" }}>check</span>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: "8px", padding: "5px 8px", borderRadius: "6px", background: "var(--color-action-passive-bg-hover)" }}>
+          <span style={{ width: "14px", height: "14px", borderRadius: "999px", background: "#05A67C", flexShrink: 0 }} />
+          <span style={{ fontSize: "11px", fontWeight: 600, fontFamily: "'Courier New', monospace", color: "var(--color-text-primary)" }}>Terminal</span>
+        </div>
+      </div>
+    </>
+  ),
   "section-title": () => (
     <>
       <div className={styles.sectionTitlePreview}>

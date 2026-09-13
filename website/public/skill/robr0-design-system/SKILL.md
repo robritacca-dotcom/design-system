@@ -5,7 +5,7 @@ description: Build React UI with @robr0/design-system. Use when installing the p
 
 # Using @robr0/design-system
 
-Generated from the library's registries at version 0.18.1, alongside every deploy of https://robertritacca.com. The library is 124 React components across 11 categories, themed by 234 semantic design tokens, published to npm.
+Generated from the library's registries at version 0.18.1, alongside every deploy of https://robertritacca.com. The library is 125 React components across 11 categories, themed by 234 semantic design tokens, published to npm.
 
 ## Install
 
@@ -53,7 +53,7 @@ references/components.md lists every component with its import line and descript
 - Data display (24): Cards, tables, lists, and badges for presenting structured content.
 - Effects (1): Ambient and decorative surfaces that sit behind or around the interface.
 - Feedback (9): Alerts, toasts, progress, and empty states that tell people what is happening.
-- Forms (20): Inputs, pickers, and selection controls for collecting and editing values.
+- Forms (21): Inputs, pickers, and selection controls for collecting and editing values.
 - Layout (6): Page scaffolding: app shells, sidebars, dividers, and section headings.
 - Maps (3): Geographic surfaces for showing where things are and what connects them, from the globe to its legend.
 - Navigation (7): Top bars, breadcrumbs, tabs, steppers, and pagination for moving through a product.

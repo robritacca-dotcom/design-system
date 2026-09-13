@@ -49,8 +49,10 @@
    VALUE / PLACEHOLDER
    ============================================ */
 
+/* The selected option's preview face (--ds-dropdown-font, set per option
+   from the `font` option field) wins over the theme face when present. */
 .ds-dropdown__value {
-  font-family: var(--font-paragraph-em-family);
+  font-family: var(--ds-dropdown-font, var(--font-paragraph-em-family));
   font-size: var(--font-paragraph-em-size);
   font-weight: var(--font-paragraph-em-weight);
   line-height: var(--font-paragraph-em-line-height);
@@ -126,7 +128,7 @@
   justify-content: space-between;
   padding: var(--padding-sm) var(--padding-sm-md); /* 8px 12px */
   border-radius: var(--radius-sm);
-  font-family: var(--font-paragraph-em-family);
+  font-family: var(--ds-dropdown-font, var(--font-paragraph-em-family));
   font-size: var(--font-paragraph-em-size);
   font-weight: var(--font-paragraph-em-weight);
   line-height: var(--font-paragraph-em-line-height);

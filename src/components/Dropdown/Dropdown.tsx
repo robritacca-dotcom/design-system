@@ -10,6 +10,13 @@ export interface DropdownOption {
   label: string;
   /** Option value */
   value: string;
+  /**
+   * CSS font-family stack to render this option's label in, so a typeface
+   * can preview itself in a font picker. Applies to the option row and to
+   * the closed trigger while the option is selected; omitted, the label
+   * keeps the theme's own face.
+   */
+  font?: string;
   /** Whether this option is disabled */
   disabled?: boolean;
 }
@@ -71,6 +78,11 @@ type DropdownOwnProps = {
 export interface DropdownProps
   extends DropdownOwnProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, keyof DropdownOwnProps> {}
+
+/** An option's preview face is runtime data, not theme — it reaches the
+    stylesheet through a custom property, never an inline declaration. */
+const fontStyle = (font?: string) =>
+  font ? ({ '--ds-dropdown-font': font } as React.CSSProperties) : undefined;
 
 /**
  * Static single-select dropdown. Renders a `<div role="combobox">` paired with a
@@ -266,6 +278,7 @@ export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
         >
           <span
             className={`${baseClass}__value ${!selectedOption ? `${baseClass}__value--placeholder` : ''}`}
+            style={fontStyle(selectedOption?.font)}
           >
             {selectedOption ? selectedOption.label : placeholder}
           </span>
@@ -310,6 +323,7 @@ export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
                               ]
                                 .filter(Boolean)
                                 .join(' ')}
+                              style={fontStyle(option.font)}
                               role="option"
                               aria-selected={option.value === value}
                               aria-disabled={option.disabled}
@@ -346,6 +360,7 @@ export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
                     ]
                       .filter(Boolean)
                       .join(' ')}
+                    style={fontStyle(option.font)}
                     role="option"
                     aria-selected={option.value === value}
                     aria-disabled={option.disabled}

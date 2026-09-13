@@ -87,6 +87,7 @@ export * from './components/Quote/Quote';
 export * from './components/RadioButton/RadioButton';
 export * from './components/Rating/Rating';
 export * from './components/Reasoning/Reasoning';
+export * from './components/RichDropdown/RichDropdown';
 export * from './components/SectionTitle/SectionTitle';
 export * from './components/SegmentedControl/SegmentedControl';
 export * from './components/SelectionCard/SelectionCard';
