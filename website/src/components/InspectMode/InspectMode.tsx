@@ -6,6 +6,11 @@ import { tokenRegistry } from "@robr0/design-system/tokens/registry";
 import { MOTION_SCROLL_SETTLE_MS } from "@robr0/design-system/tokens/motion";
 import { ToggleSwitch } from "@robr0/design-system/components/ToggleSwitch/ToggleSwitch";
 import { componentMetadata } from "@robr0/design-system/components/registry";
+import {
+  collectDeclaredTokens,
+  primitiveOf,
+  type DeclaredTokens,
+} from "@/lib/token-source";
 import styles from "./InspectMode.module.css";
 
 /**
@@ -21,7 +26,10 @@ import styles from "./InspectMode.module.css";
  * (so the mapping follows the theme toggle and the playground's levers), and
  * component names come from the component registry via the `ds-*` class
  * convention. If a hovered value maps to no token, the popover says so —
- * inspect mode doubles as a live token audit.
+ * inspect mode doubles as a live token audit. Each matched token also shows
+ * the primitive it chains to (via the declared `var()` references in the
+ * CSSOM — see lib/token-source), so a hover walks the full tier chain:
+ * computed value, semantic token, primitive.
  *
  * The control is the system's ToggleSwitch, rendered in place for a
  * StageToolbar actions slot; only the inspection layers portal into <body>.
@@ -29,12 +37,14 @@ import styles from "./InspectMode.module.css";
  * Escape unpins, then exits.
  */
 
-/* One matched style property: the resolved value, and the semantic tokens
-   whose current value equals it (empty = off-token). */
+/* One matched style property: the resolved value, the semantic tokens
+   whose current value equals it (empty = off-token), and the primitive the
+   lead token's declared var() chain lands on. */
 type TokenRow = {
   property: string;
   value: string;
   tokens: string[];
+  primitive?: string | null;
   swatch?: string;
 };
 
@@ -57,6 +67,11 @@ type TokenMaps = {
   fontSize: Map<string, string[]>;
   shadow: Map<string, string[]>;
   duration: Map<string, string[]>;
+  /* Semantic token name → the primitive its declared var() chain resolves
+     to, for every registry token whose value is a reference (colour and
+     radius chain by build-enforced invariant; a literal-valued token is
+     simply absent). */
+  primitive: Map<string, string>;
 };
 
 function addTo(map: Map<string, string[]>, key: string, name: string) {
@@ -85,7 +100,18 @@ function buildTokenMaps(): TokenMaps {
     fontSize: new Map(),
     shadow: new Map(),
     duration: new Map(),
+    primitive: new Map(),
   };
+
+  /* The declared var() references, per scope — collected alongside the
+     computed values so both follow the same theme flip or lever change. */
+  const declared: DeclaredTokens = collectDeclaredTokens();
+  for (const names of Object.values(tokenRegistry)) {
+    for (const name of names) {
+      const target = primitiveOf(name, declared);
+      if (target) maps.primitive.set(name, target);
+    }
+  }
 
   for (const name of tokenRegistry.colour) {
     const raw = rootStyle.getPropertyValue(name).trim();
@@ -174,7 +200,13 @@ function inspectElement(el: Element, maps: TokenMaps): Inspection {
     const rank = (name: string) =>
       name.startsWith(`--color-${family}`) ? 0 : name.includes(family) ? 1 : 2;
     const tokens = [...(maps.color.get(value) ?? [])].sort((a, b) => rank(a) - rank(b));
-    rows.push({ property, value, tokens, swatch: value });
+    rows.push({
+      property,
+      value,
+      tokens,
+      primitive: tokens.length ? maps.primitive.get(tokens[0]) : null,
+      swatch: value,
+    });
   };
 
   /* A length can legitimately match across families (a gap set from a padding
@@ -182,7 +214,13 @@ function inspectElement(el: Element, maps: TokenMaps): Inspection {
   const pushLength = (property: string, value: string, prefix: string) => {
     const all = maps.length.get(value) ?? [];
     const family = all.filter((name) => name.startsWith(prefix));
-    rows.push({ property, value, tokens: family.length ? family : all });
+    const tokens = family.length ? family : all;
+    rows.push({
+      property,
+      value,
+      tokens,
+      primitive: tokens.length ? maps.primitive.get(tokens[0]) : null,
+    });
   };
 
   pushColor("background", cs.backgroundColor, "bg");
@@ -480,6 +518,11 @@ export default function InspectMode({ desktopOnly = false }: InspectModeProps) {
                     row.tokens.slice(0, 3).join(", ")
                   ) : (
                     <span className={styles.rowOffToken}>no token</span>
+                  )}
+                  {row.primitive && (
+                    <span className={styles.rowPrimitive}>
+                      {"↳"} {row.primitive}
+                    </span>
                   )}
                   <span className={styles.rowValue}>{row.value}</span>
                 </span>

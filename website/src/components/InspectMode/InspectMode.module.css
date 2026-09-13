@@ -155,11 +155,13 @@
   color: var(--color-text-secondary);
 }
 
+/* The colour circle beside a colour row — round on purpose, so it reads
+   as a paint chip rather than a checkbox. */
 .swatch {
   flex: none;
-  width: 12px;
-  height: 12px;
-  border-radius: var(--radius-xxs);
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
   border: var(--border-xs) solid var(--color-divider);
 }
 
@@ -168,6 +170,13 @@
   font-size: var(--font-paragraph-sm-size);
   color: var(--color-text-primary);
   word-break: break-all;
+}
+
+/* The lead token's chain into the primitive layer — the tier the semantic
+   name resolves from, so a hover reads value → token → primitive. */
+.rowPrimitive {
+  display: block;
+  color: var(--color-action-primary-text-tertiary);
 }
 
 .rowValue {
