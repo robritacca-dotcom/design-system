@@ -66,6 +66,10 @@ name: Release
 #   sessions, with ThreadPanel's detail rows, pin marks and projects
 #   section; PromptSuggestions' pending shimmer and entrance stagger; and
 #   CommandPalette's trailing slot for a non-interactive row badge.
+# 0.18.1 shipped 2026-09-12 — the section-divider rhythm fix: SectionTitle's
+#   rule clearance drops to --padding-lg (heading, 20px, rule, 40px, content
+#   everywhere), and the rule width and Table's hairlines move onto the
+#   border tokens.
 
 on:
   workflow_dispatch:
