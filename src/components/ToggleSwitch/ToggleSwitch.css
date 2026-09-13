@@ -76,7 +76,10 @@
   font-size: var(--font-paragraph-size);
   font-weight: var(--font-paragraph-weight);
   line-height: var(--font-paragraph-line-height);
-  min-width: 95px;
+  /* The root is a <button>, whose UA style centres text — without this,
+     a label short enough to undershoot any width the layout gives it
+     floats away from the track instead of hugging the gap. */
+  text-align: left;
 }
 
 /* ============================================
@@ -136,7 +139,6 @@
   font-size: var(--font-paragraph-sm-size);
   line-height: var(--font-paragraph-sm-line-height);
   letter-spacing: var(--font-paragraph-sm-letter-spacing);
-  min-width: 80px;
 }
 
 .ds-toggle-switch--compact.ds-toggle-switch--off .ds-toggle-switch__thumb {
