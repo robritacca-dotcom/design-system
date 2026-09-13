@@ -9,7 +9,11 @@ import { Dropdown } from "@robr0/design-system/components/Dropdown/Dropdown";
 import { Input } from "@robr0/design-system/components/Input/Input";
 import { Slider } from "@robr0/design-system/components/Slider/Slider";
 import { ToggleSwitch } from "@robr0/design-system/components/ToggleSwitch/ToggleSwitch";
-import { ACTION_COLOR_PRESETS, FONT_OPTIONS } from "@/lib/theme/theme-overrides";
+import {
+  ACTION_COLOR_PRESETS,
+  FONT_OPTIONS,
+  HEADING_FONT_OPTIONS,
+} from "@/lib/theme/theme-overrides";
 import { PRESET_OPTIONS } from "@/lib/theme/presets";
 
 export interface PlaygroundControlsProps {
@@ -25,6 +29,7 @@ export interface PlaygroundControlsProps {
   radiusScale: number;
   pill: boolean;
   fontLabel: string;
+  headingFontLabel: string;
   productName: string;
   /** One-line explanation of how the current action colour is applied. */
   actionModeNote: string | null;
@@ -49,6 +54,7 @@ export interface PlaygroundControlsProps {
   onRadiusScale: (value: number) => void;
   onPill: (value: boolean) => void;
   onFontLabel: (value: string) => void;
+  onHeadingFontLabel: (value: string) => void;
   onProductName: (value: string) => void;
   onReset: () => void;
   /** Opens the advanced-mode dialog (every primitive ramp). */
@@ -68,6 +74,7 @@ export default function PlaygroundControls({
   radiusScale,
   pill,
   fontLabel,
+  headingFontLabel,
   productName,
   actionModeNote,
   isPristine,
@@ -82,6 +89,7 @@ export default function PlaygroundControls({
   onRadiusScale,
   onPill,
   onFontLabel,
+  onHeadingFontLabel,
   onProductName,
   onReset,
   onOpenAdvanced,
@@ -231,12 +239,26 @@ export default function PlaygroundControls({
         </div>
 
         <div className={`${styles.controlGroup} ${styles.dropUp}`}>
+          <h4 className={styles.controlHeading}>Typefaces</h4>
           <Dropdown
-            label="Typeface"
+            label="Headings"
+            value={headingFontLabel}
+            options={HEADING_FONT_OPTIONS.map((f) => ({
+              label: f.label,
+              value: f.label,
+            }))}
+            onValueChange={onHeadingFontLabel}
+          />
+          <Dropdown
+            label="Body"
             value={fontLabel}
             options={FONT_OPTIONS.map((f) => ({ label: f.label, value: f.label }))}
             onValueChange={onFontLabel}
           />
+          <p className={styles.controlNote}>
+            Headings follow the body face until you split them; the system
+            itself runs one face for both.
+          </p>
         </div>
 
         {contextual}

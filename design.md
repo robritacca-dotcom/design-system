@@ -4,7 +4,7 @@
 
 This design system is a **cool-professional, teal-anchored** component library and documentation website. The base atmosphere is a **soft gray page floor** (`--color-bg-page-primary` — #F1F1F1) carrying **crisp white containers** (`--color-bg-container-primary` — #FFFFFF) that step deeper through the neutral hierarchy (soft gray #F1F1F1 → mid gray #D6D6D6) — clinical, precise, never warm. The brand voltage comes from **signature teal** (`--color-action-primary-bg` — #0E6E8F light / #3CA5C6 dark), a cyan-blue that reads trustworthy and technical without corporate-blue flatness. The action colour is deliberately theme-dependent: no single teal step can clear 3:1 against both a light page and a near-black one while also carrying a 4.5:1 label, so light mode takes a deep fill under a light label and dark mode inverts to a light fill under a dark label.
 
-The system runs a **single typeface throughout**: **Nunito Sans** at weight 300 (display/hero) → 600 (headings) → 500/400 (body/UI), with one site-chrome exception — the header wordmark sits at 700, one step above title-body's 600, so the name reads heavier than the nav pills beside it (the Site header pattern owns the detail). There is no serif face, and monospace appears only in sanctioned code contexts through `--font-family-code` — the typographic personality is clean, rounded, and approachable rather than editorial.
+The system runs a **single typeface throughout**: **Nunito Sans** at weight 300 (display/hero) → 600 (headings) → 500/400 (body/UI), with one site-chrome exception — the header wordmark sits at 700, one step above title-body's 600, so the name reads heavier than the nav pills beside it (the Site header pattern owns the detail). There is no serif face, and monospace appears only in sanctioned code contexts through `--font-family-code` — the typographic personality is clean, rounded, and approachable rather than editorial. The single face is this theme's choice, not a structural limit: the scale chains through two family roles (`--font-family-heading` for the display and heading tiers, `--font-family-body` for the body tiers), both resolving to `--font-family-primary` here, so a consumer can split heading and body faces by overriding the roles (see Font Family below).
 
 The **three-tier token architecture** is the defining structural rule:
 1. **Primitives** (`--primitive-*`) — raw hex/px values. Source of truth. Never used directly in components.
@@ -141,7 +141,16 @@ The system uses **Nunito Sans** exclusively. No serif face, and no bundled monos
 
 Nunito Sans is a rounded humanist sans-serif. The rounded terminals give UI elements a friendly, approachable quality without sacrificing technical clarity. Inter is an acceptable substitute for prototyping; avoid Helvetica or Arial, which strip the rounded character.
 
-**Sourcing.** The typeface is deliberately not bundled with the npm package. The website self-hosts it via `next/font/google` (fetched from Google Fonts at build time and served first-party), Storybook loads it with a Google Fonts `<link>`, and package consumers load it however their stack prefers — or swap the whole system to another face by overriding `--font-family-primary`, the single token every type-scale step chains to. Material Symbols Rounded, by contrast, ships inside the package as a self-hosted woff2, so icons need no external setup.
+**Family roles.** No type-scale step references `--font-family-primary` directly. The scale chains through two role aliases in `tokens-typography.css`, split along the tier boundary the Hierarchy table below draws:
+
+| Role token | Resolves to | Feeds |
+|---|---|---|
+| `--font-family-heading` | `var(--font-family-primary)` | The display and heading tiers — Mega 1/2, Display 1/2, Sub Display, Heading 1–3 |
+| `--font-family-body` | `var(--font-family-primary)` | The body tiers — Title Body, Paragraph Em, Paragraph, Paragraph SM (+ Em), Overline, Caption |
+
+Both roles default to the primary family, which is what keeps the three levers coherent: override `--font-family-primary` and the whole system re-fonts as one face (this site's position); override `--font-family-heading` alone and headings take a display face while running text keeps the primary; override both roles and the primary token stops mattering. Title Body sits on the body role deliberately — it is a bold label inside working UI (card titles, table column heads), and a consumer pairing a serif display face with a sans text face wants that label in the text face, not the serif.
+
+**Sourcing.** The typeface is deliberately not bundled with the npm package. The website self-hosts it via `next/font/google` (fetched from Google Fonts at build time and served first-party), Storybook loads it with a Google Fonts `<link>`, and package consumers load it however their stack prefers — then swap the whole system to another face by overriding `--font-family-primary`, or split faces through the family roles above. Material Symbols Rounded, by contrast, ships inside the package as a self-hosted woff2, so icons need no external setup.
 
 ### Hierarchy
 

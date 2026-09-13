@@ -5,8 +5,9 @@
  * token invariant (every semantic colour token references a primitive)
  * means overriding primitives re-themes both light and dark modes at
  * once. Two deliberate exceptions ride the same pipeline: the typeface
- * lever sets `--font-family-primary`, and the mono preset's
- * extraOverrides set semantic `--color-core-accent-*` values.
+ * levers set `--font-family-primary` (body) and `--font-family-heading`
+ * (the heading role, when split from the body face), and the mono
+ * preset's extraOverrides set semantic `--color-core-accent-*` values.
  */
 
 export interface Overrides {
@@ -681,6 +682,22 @@ export const FONT_OPTIONS: FontOption[] = [
   { label: "IBM Plex Mono", family: "'IBM Plex Mono', monospace", googleParam: "IBM+Plex+Mono:wght@300;400;500;600;700" },
 ];
 
+/**
+ * The heading lever's list. "Match body" is the shipped single-face
+ * system (the heading role keeps chaining to the primary token, so the
+ * body lever drives everything); a real Nunito Sans entry follows because
+ * the body default is Nunito only by way of the site's own next/font
+ * face — splitting the other way (Nunito headings over another body face)
+ * needs it loadable by name.
+ */
+export const HEADING_MATCH_LABEL = "Match body";
+
+export const HEADING_FONT_OPTIONS: FontOption[] = [
+  { label: HEADING_MATCH_LABEL, family: "", googleParam: null },
+  { label: "Nunito Sans", family: "'Nunito Sans', sans-serif", googleParam: "Nunito+Sans:opsz,wght@6..12,300..700" },
+  ...FONT_OPTIONS.slice(1),
+];
+
 export function googleFontHref(googleParam: string): string {
   return `https://fonts.googleapis.com/css2?family=${googleParam}&display=swap`;
 }
@@ -689,22 +706,33 @@ export function googleFontHref(googleParam: string): string {
 
 /** The consumer-ready snippet reproducing the current playground state.
     `darkOverrides` adds a theme-scoped block for presets whose action
-    colour differs between themes. */
+    colour differs between themes; `headingFont` adds the heading role
+    when it is split from the body face. */
 export function buildCssSnippet(
   overrides: Overrides,
   font: FontOption,
-  darkOverrides?: Overrides
+  darkOverrides?: Overrides,
+  headingFont?: FontOption
 ): string {
   const lines: string[] = [];
-  if (font.googleParam) {
+  const googleParams = [font.googleParam, headingFont?.googleParam].filter(
+    (p, i, all): p is string => Boolean(p) && all.indexOf(p) === i
+  );
+  if (googleParams.length > 0) {
     lines.push(
-      `/* Load the font first, e.g.:`,
-      `   <link rel="stylesheet" href="${googleFontHref(font.googleParam)}"> */`
+      `/* Load the font${googleParams.length > 1 ? "s" : ""} first, e.g.:`,
+      ...googleParams.map(
+        (p) => `   <link rel="stylesheet" href="${googleFontHref(p)}">`
+      ),
+      `*/`
     );
   }
   lines.push(":root {");
   if (font.family) {
     lines.push(`  --font-family-primary: ${font.family};`);
+  }
+  if (headingFont?.family) {
+    lines.push(`  --font-family-heading: ${headingFont.family};`);
   }
   for (const [name, value] of Object.entries(overrides)) {
     lines.push(`  ${name}: ${value};`);

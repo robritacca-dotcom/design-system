@@ -305,7 +305,7 @@ Tokens also have multiple homes — a token that exists only in CSS is incomplet
 
 These are stated at the level of **token roles**, deliberately: which colour, radius, typeface, or shadow a role resolves to is the theme owner's decision, lives in `design.md` and the token files, and can change without any of these sentences becoming false.
 
-- **One typeface**, with heading hierarchy carried by weight contrast — consecutive heading levels never share a weight.
+- **One typeface**, with heading hierarchy carried by weight contrast — consecutive heading levels never share a weight. The type scale chains through two family roles (`--font-family-heading` / `--font-family-body`), both resolving to `--font-family-primary` in this theme, so a consumer can split heading and body faces without touching the principle (design.md's Font Family section owns the split).
 - **The primary-action token is reserved for actions**: primary CTAs, focus rings, active input borders, and the selected item of a mutually exclusive set. Never decorative, or it stops meaning "click here".
 - **Shape is a per-element-type token, never a per-instance choice**: all buttons share one radius role, all inputs another. Change the token, not the component.
 - **Five status roles** (`info`, `positive`, `warning`, `error`, `neutral`), shared by every status-bearing component through the same `--color-status-*` set.

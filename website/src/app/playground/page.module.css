@@ -398,6 +398,7 @@
   color: var(--color-text-secondary);
   cursor: pointer;
   --icon-size: var(--icon-size-sm);
+  transition: background-color var(--motion-duration-base) var(--motion-ease-standard), color var(--motion-duration-base) var(--motion-ease-standard);
 }
 
 .advRampReset:hover:not(:disabled) {

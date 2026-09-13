@@ -20,6 +20,7 @@ import {
   DEFAULT_BRAND,
   DEFAULT_NEUTRAL_SEED,
   FONT_OPTIONS,
+  HEADING_FONT_OPTIONS,
   type AdvancedColorState,
   type Overrides,
   actionColorPlan,
@@ -157,6 +158,9 @@ export default function PlaygroundPage() {
   const [radiusScale, setRadiusScale] = useState(100); // percent
   const [pill, setPill] = useState(true);
   const [fontLabel, setFontLabel] = useState(FONT_OPTIONS[0].label);
+  const [headingFontLabel, setHeadingFontLabel] = useState(
+    HEADING_FONT_OPTIONS[0].label
+  );
   const [productName, setProductName] = useState("");
   const compact = useSyncExternalStore(
     subscribeCompact,
@@ -237,9 +241,13 @@ export default function PlaygroundPage() {
     setRadiusScale(p.radiusScale);
     setPill(p.pill);
     setFontLabel(p.fontLabel);
+    setHeadingFontLabel(p.headingFontLabel ?? HEADING_FONT_OPTIONS[0].label);
   };
 
   const font = FONT_OPTIONS.find((f) => f.label === fontLabel) ?? FONT_OPTIONS[0];
+  const headingFont =
+    HEADING_FONT_OPTIONS.find((f) => f.label === headingFontLabel) ??
+    HEADING_FONT_OPTIONS[0];
 
   const theme = useSiteTheme();
 
@@ -286,28 +294,32 @@ export default function PlaygroundPage() {
      The shared hook writes to :root (where the semantic layer is declared,
      so primitive overrides cascade) and removes everything on unmount.
      Bonus: the entire site chrome previews the theme live. */
-  const applied = useMemo(
-    () =>
-      font.family
-        ? { ...overrides, "--font-family-primary": font.family }
-        : overrides,
-    [overrides, font]
-  );
+  const applied = useMemo(() => {
+    if (!font.family && !headingFont.family) return overrides;
+    const merged = { ...overrides };
+    /* The body lever writes the primary token, so an unsplit heading role
+       follows it; the heading lever overrides the role alias alone. */
+    if (font.family) merged["--font-family-primary"] = font.family;
+    if (headingFont.family) merged["--font-family-heading"] = headingFont.family;
+    return merged;
+  }, [overrides, font, headingFont]);
   useAppliedOverrides(applied);
 
   /* Google Fonts stylesheets load on demand; loaded ones stay (cheap, and
      re-selecting is instant). All are removed on unmount. */
   useEffect(() => {
-    if (!font.googleParam) return;
-    const id = `playground-font-${font.googleParam}`;
-    if (!document.getElementById(id)) {
-      const link = document.createElement("link");
-      link.id = id;
-      link.rel = "stylesheet";
-      link.href = googleFontHref(font.googleParam);
-      document.head.appendChild(link);
+    for (const param of [font.googleParam, headingFont.googleParam]) {
+      if (!param) continue;
+      const id = `playground-font-${param}`;
+      if (!document.getElementById(id)) {
+        const link = document.createElement("link");
+        link.id = id;
+        link.rel = "stylesheet";
+        link.href = googleFontHref(param);
+        document.head.appendChild(link);
+      }
     }
-  }, [font]);
+  }, [font, headingFont]);
 
   useEffect(() => {
     return () => {
@@ -317,7 +329,8 @@ export default function PlaygroundPage() {
     };
   }, []);
 
-  const isPristine = Object.keys(overrides).length === 0 && !font.family;
+  const isPristine =
+    Object.keys(overrides).length === 0 && !font.family && !headingFont.family;
 
   const reset = () => {
     setPreset("default");
@@ -330,6 +343,7 @@ export default function PlaygroundPage() {
     setRadiusScale(100);
     setPill(true);
     setFontLabel(FONT_OPTIONS[0].label);
+    setHeadingFontLabel(HEADING_FONT_OPTIONS[0].label);
   };
 
   /* The copied CSS always puts the light-mode values in :root, whatever
@@ -371,7 +385,7 @@ export default function PlaygroundPage() {
   }
   const cssSnippet = isPristine
     ? "/* Everything is at its shipped default. Move a lever to generate CSS. */"
-    : buildCssSnippet(snippetOverrides, font, snippetDarkBlock);
+    : buildCssSnippet(snippetOverrides, font, snippetDarkBlock, headingFont);
 
   /* The Chat view's levers — hosted by the chat director's rail on desktop,
      or slotted into the Drawer above the event list on compact screens, so
@@ -455,6 +469,7 @@ export default function PlaygroundPage() {
               radiusScale={radiusScale}
               pill={pill}
               fontLabel={fontLabel}
+              headingFontLabel={headingFontLabel}
               productName={productName}
               actionModeNote={
                 actionPlan
@@ -473,6 +488,7 @@ export default function PlaygroundPage() {
               onRadiusScale={asCustom(setRadiusScale)}
               onPill={asCustom(setPill)}
               onFontLabel={asCustom(setFontLabel)}
+              onHeadingFontLabel={asCustom(setHeadingFontLabel)}
               onProductName={setProductName}
               onReset={reset}
               onOpenAdvanced={() => setAdvOpen(true)}

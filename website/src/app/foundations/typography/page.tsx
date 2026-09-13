@@ -361,6 +361,15 @@ export default function TypographyPage() {
             <p className={styles.introBody}>
               Mega and Display styles are for hero moments and landing pages. Headings structure sections. Title is for bold labels. Paragraph Em is the default for buttons and interactive controls. Paragraph is body copy. The SM variants scale each of those down for compact components and secondary text. Overline is the uppercase label face, always paired with an uppercase transform at the use site. Caption is the floor, for footnotes and disclaimers only.
             </p>
+            <p className={styles.introBody}>
+              Every style chains its family through one of two role tokens: the
+              display and heading styles read <code>--font-family-heading</code>,
+              the body styles read <code>--font-family-body</code>, and both
+              resolve to <code>--font-family-primary</code>. This site keeps the
+              roles on one face by design. Consumers of the package can point
+              them at different faces to pair a heading font with a body font,
+              and preview pairings in the playground.
+            </p>
           </div>
 
           {/* Viewport toggle — Mega/Display/Sub-display step down below

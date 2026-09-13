@@ -81,6 +81,14 @@ const FONT_SNIPPET = `/* The whole type scale chains to one token.
    Load any font (Google Fonts, next/font, self-hosted), then: */
 :root {
   --font-family-primary: 'Inter', sans-serif;
+}
+
+/* Or mix faces: display and heading styles read one family role,
+   body styles read the other. Both default to the primary family,
+   so overriding either role alone leaves the rest untouched. */
+:root {
+  --font-family-heading: 'Fraunces', serif;
+  --font-family-body: 'Inter', sans-serif;
 }`;
 
 const PRIMITIVE_SNIPPET = `/* Every semantic token references a primitive, so overriding a
@@ -264,7 +272,10 @@ export default function GetStartedPage() {
                   The system is designed for Nunito Sans but deliberately does not bundle
                   it. Load it (or any font) however your stack prefers and point one token
                   at it. This site loads Nunito Sans with <code>next/font</code> and does
-                  exactly this override in its global CSS.
+                  exactly this override in its global CSS. Want headings in one face and
+                  body copy in another? The scale chains through two family roles, both
+                  defaulting to the primary token, so you can split them instead. Try
+                  pairings live in the playground.
                 </p>
                 <CodeBlock code={FONT_SNIPPET} language="css" showCopy />
               </section>

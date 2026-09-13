@@ -4,8 +4,9 @@ import {
   type Overrides,
 } from "./theme-overrides";
 
-/** A preset is just a saved position for every lever. Font labels must
-    match FONT_OPTIONS entries. */
+/** A preset is just a saved position for every lever. `fontLabel` must
+    match a FONT_OPTIONS entry, `headingFontLabel` a HEADING_FONT_OPTIONS
+    entry. */
 export interface ThemePreset {
   label: string;
   brand: string;
@@ -18,6 +19,9 @@ export interface ThemePreset {
   radiusScale: number;
   pill: boolean;
   fontLabel: string;
+  /** Heading face when split from the body face; absent means the heading
+      role follows the body typeface (the shipped single-face system). */
+  headingFontLabel?: string;
   /** Hand-tuned adjacent ramp keys: every chromatic ramp re-keyed to sit
       in the theme (the action colour's own family is left to the action
       lever). Loads into the Advanced colours state. */
@@ -90,7 +94,11 @@ export const THEME_PRESETS: Record<string, ThemePreset> = {
     tintStrength: 8,
     radiusScale: 100,
     pill: true,
-    fontLabel: "Lora (serif)",
+    // The editorial pairing, and the split-face demonstration: Lora
+    // carries the display personality while running text stays in a
+    // humanist sans.
+    fontLabel: "Source Sans 3",
+    headingFontLabel: "Lora (serif)",
     // Earthy neighbours: every hue muted and pulled a few degrees toward
     // the terracotta key. Orange is the action family, left alone.
     advanced: bases({

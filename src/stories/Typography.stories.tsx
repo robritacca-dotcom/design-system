@@ -418,6 +418,12 @@ export const AllStyles: Story = {
         }}
       >
         All typography styles from the Figma design system. Font: Nunito Sans.
+        Every style chains its family through one of two role tokens — the
+        display and heading tiers read <code>--font-family-heading</code>, the
+        body tiers read <code>--font-family-body</code> — and both resolve to{' '}
+        <code>--font-family-primary</code>, so this system stays a single face
+        while consumers can split heading and body faces by overriding the
+        roles.
       </p>
 
       <div style={{ marginBottom: '64px' }}>
