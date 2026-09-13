@@ -84,6 +84,13 @@ import { BarChart, LineChart } from '@robr0/design-system/charts';
   ```css
   :root { --font-family-primary: 'Inter', sans-serif; }
   ```
+  To pair a heading face with a body face, override the two family roles instead: display and heading styles read one, body styles the other, and both default to the primary token.
+  ```css
+  :root {
+    --font-family-heading: 'Fraunces', serif;
+    --font-family-body: 'Inter', sans-serif;
+  }
+  ```
 - **Colours, radius, spacing**: every semantic token chains to a primitive, so overriding a primitive re-themes everything built on it. The action colour is theme-split by design (light fills run teal-08/09/10, dark inverts to teal-05/04/03), and the six fill steps below are the core of a rebrand:
   ```css
   :root {
