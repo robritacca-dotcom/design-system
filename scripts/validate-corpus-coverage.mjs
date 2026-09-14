@@ -77,6 +77,11 @@ const CONDENSED_ROUTES = new Map([
   ['/docs/get-started',
     'the shortfall is the install and import code samples, which the page shows ' +
     'as code blocks — the chat links the page rather than reciting snippets'],
+  ['/templates',
+    'the shortfall is the template cards\' one-line descriptions, which live in ' +
+    'templatesSidebarLinks (navigation.ts) outside the route folder the prose ' +
+    'extractor reads — the index\'s own prose is carried, and the site map ' +
+    'names every template route'],
 ]);
 
 /** A route fails above this share of its sentences missing… */

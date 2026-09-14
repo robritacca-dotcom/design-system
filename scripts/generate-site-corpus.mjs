@@ -760,6 +760,8 @@ const EXCLUDED_ROUTES = new Map([
     'the team calendar template rendered full viewport — its prose is fictional schedule data; the template\'s facts live on the /templates index, which is covered'],
   ['/templates/agent-workbench',
     'the agent workbench template rendered full viewport — its prose is a fictional coding session; the template\'s facts live on the /templates index, which is covered'],
+  ['/templates/roadmap-planner',
+    'the roadmap planner template rendered full viewport — its prose is a fictional product plan; the template\'s facts live on the /templates index, which is covered'],
 ]);
 
 /** Component showcase pages: excluded as a class, with one shared reason. */

@@ -28,4 +28,5 @@ export const CHROMELESS_ROUTES = new Set([
   "/templates/relay-console",
   "/templates/team-calendar",
   "/templates/agent-workbench",
+  "/templates/roadmap-planner",
 ]);

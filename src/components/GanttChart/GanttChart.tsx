@@ -58,6 +58,8 @@ type GanttChartOwnProps = {
   range?: { start: string; end: string };
   /** Draws the vertical today rule when today falls inside the range. */
   showToday?: boolean;
+  /** Pins the today rule to a given day (YYYY-MM-DD) instead of the render-time clock, so a statically built page and its hydrating client can never disagree about where the rule sits. */
+  today?: string;
   /** Draws the faint vertical gridline at each month boundary behind the bars. */
   showGrid?: boolean;
   /** Id of the highlighted item. Selection is controlled; pair it with `onItemClick`. */
@@ -127,6 +129,7 @@ export const GanttChart = React.forwardRef<HTMLDivElement, GanttChartProps>(
       milestones = [],
       range,
       showToday = true,
+      today,
       showGrid = true,
       selectedId,
       onItemClick,
@@ -194,9 +197,11 @@ export const GanttChart = React.forwardRef<HTMLDivElement, GanttChartProps>(
       }
     }
 
-    const today = new Date();
-    const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-    const todayPercent = drawable ? percentOf(todayStart) : -1;
+    const now = today ? parseDay(today) : new Date();
+    const todayStart = isValidDay(now)
+      ? new Date(now.getFullYear(), now.getMonth(), now.getDate())
+      : null;
+    const todayPercent = drawable && todayStart ? percentOf(todayStart) : -1;
     const todayVisible = showToday && drawable && todayPercent >= 0 && todayPercent <= 100;
 
     const blocks = buildBlocks(items, milestones);

@@ -18,6 +18,7 @@ Generated from the @robr0/design-system registry and prop JSDoc, version 0.18.1.
 | milestones | `GanttChartMilestone[]` | no | `[]` | Point-in-time markers, each rendered as its own diamond row at the end of its group. |
 | range | `{ start: string; end: string; }` | no |  | Explicit timeline window (YYYY-MM-DD both ends). Without it the range fits the data, snapped outward to whole months. |
 | showToday | `boolean` | no | `true` | Draws the vertical today rule when today falls inside the range. |
+| today | `string` | no |  | Pins the today rule to a given day (YYYY-MM-DD) instead of the render-time clock, so a statically built page and its hydrating client can never disagree about where the rule sits. |
 | showGrid | `boolean` | no | `true` | Draws the faint vertical gridline at each month boundary behind the bars. |
 | selectedId | `string` | no |  | Id of the highlighted item. Selection is controlled; pair it with `onItemClick`. |
 | onItemClick | `((item: GanttChartItem) => void)` | no |  | Called with the item when a bar is clicked. Bars render as buttons only when this is set; without it the chart is inert and renders from a Server Component. |

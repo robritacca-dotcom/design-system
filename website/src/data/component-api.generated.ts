@@ -4334,6 +4334,12 @@ export const componentApi: readonly ComponentApiEntry[] = [
             "defaultValue": "true"
           },
           {
+            "name": "today",
+            "type": "string",
+            "required": false,
+            "description": "Pins the today rule to a given day (YYYY-MM-DD) instead of the render-time clock, so a statically built page and its hydrating client can never disagree about where the rule sits."
+          },
+          {
             "name": "showGrid",
             "type": "boolean",
             "required": false,
