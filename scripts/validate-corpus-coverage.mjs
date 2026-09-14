@@ -77,6 +77,12 @@ const CONDENSED_ROUTES = new Map([
   ['/docs/get-started',
     'the shortfall is the install and import code samples, which the page shows ' +
     'as code blocks — the chat links the page rather than reciting snippets'],
+  ['/design-system/roadmap',
+    'the shortfall is the GanttChart bars\' screen-reader text, which restates ' +
+    'each registry item\'s title and window with display-formatted dates (and, ' +
+    'for the in-flight bar, a percent-elapsed reading computed from the build ' +
+    'date, which no static corpus can match) — the Roadmap section carries the ' +
+    'same items, windows, and milestones from roadmap.json'],
 ]);
 
 /** A route fails above this share of its sentences missing… */

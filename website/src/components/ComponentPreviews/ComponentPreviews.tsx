@@ -896,6 +896,17 @@ const previews: Record<string, () => ReactNode> = {
       </svg>
     </>
   ),
+  "gantt-chart": () => (
+    <>
+      <div aria-hidden="true" style={{ position: "relative", display: "flex", flexDirection: "column", gap: "8px", width: "140px", padding: "6px 0" }}>
+        <span style={{ position: "absolute", top: 0, bottom: 0, left: "62%", width: "2px", background: "var(--color-bg-page-inverse)", opacity: 0.7 }} />
+        <span style={{ height: "8px", borderRadius: "999px", background: "var(--color-core-accent-cobalt)", width: "42%" }} />
+        <span style={{ height: "8px", borderRadius: "999px", background: "var(--color-core-accent-mint)", width: "48%", marginLeft: "28%" }} />
+        <span style={{ height: "8px", borderRadius: "999px", background: "var(--color-core-accent-violet)", width: "34%", marginLeft: "52%" }} />
+        <span style={{ width: "8px", height: "8px", borderRadius: "2px", transform: "rotate(45deg)", background: "var(--color-core-accent-coral)", marginLeft: "78%" }} />
+      </div>
+    </>
+  ),
   "gauge": () => (
     <>
       <Gauge

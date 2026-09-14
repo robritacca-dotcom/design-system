@@ -86,6 +86,22 @@
         }
       ]
     },
+    "/design-system/roadmap": {
+      "title": "Roadmap",
+      "text": "The public plan on the library’s own GanttChart: what shipped, what is in flight, and what is targeted next.",
+      "chips": [
+        {
+          "id": "next",
+          "label": "What ships next?",
+          "prompt": "What is planned next on the design system roadmap?"
+        },
+        {
+          "id": "gantt",
+          "label": "What draws this page?",
+          "prompt": "What component renders the roadmap timeline, and what can it do?"
+        }
+      ]
+    },
     "/docs": {
       "title": "Docs",
       "text": "The hub for using the system: getting started, the skills, and the build journal.",

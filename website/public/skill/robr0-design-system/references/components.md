@@ -250,7 +250,7 @@ An agent's budgets at a glance: context window and plan limits as meter rows wit
 - Rendering: server-renderable (no 'use client')
 - Contract: https://robertritacca.com/components/usage-card.md
 
-## Charts (15)
+## Charts (16)
 
 Data visualisation components for plotting series and activity over time.
 
@@ -293,6 +293,14 @@ Ordered funnel stages as centred trapezoid bands, each sized by its share of the
 - Import: `import { FunnelChart } from '@robr0/design-system/charts';` (needs the optional recharts peer)
 - Rendering: server-renderable (no 'use client')
 - Contract: https://robertritacca.com/components/funnel-chart.md
+
+### Gantt chart
+
+Phases and tasks as bars on a shared timeline, with milestones, progress, and a today rule.
+
+- Import: `import { GanttChart } from '@robr0/design-system';`
+- Rendering: server-renderable (no 'use client')
+- Contract: https://robertritacca.com/components/gantt-chart.md
 
 ### Gauge
 

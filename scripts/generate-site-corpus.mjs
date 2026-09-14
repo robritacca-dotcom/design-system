@@ -724,6 +724,7 @@ function coveredElsewhere() {
     ['/writing/[slug]', 'Writing'],
     ['/components', 'Components'],
     ['/loops', 'Loops'],
+    ['/design-system/roadmap', 'Roadmap'],
     ['/blueprints/claude', 'Blueprints'],
     ['/blueprints/design', 'Blueprints'],
     ['/blueprints/content-design', 'Blueprints'],
@@ -977,6 +978,39 @@ ${pageProse('loops')}
 ${entries}`;
 }
 
+function sectionRoadmap() {
+  // The committed roadmap registry (website/src/data/roadmap.json) — the same
+  // committed-data pattern as the loops. The page renders this data verbatim
+  // on the library's GanttChart, so carrying it here is what keeps the
+  // /design-system/roadmap route covered with its prose in JSON.
+  const { tracks, items, milestones } = JSON.parse(
+    read(join(repoRoot, 'website', 'src', 'data', 'roadmap.json'))
+  );
+
+  const trackLabel = (id) => tracks.find((t) => t.id === id)?.label ?? id;
+  const entries = items
+    .map(
+      (i) =>
+        `### ${i.title} (${i.status}, ${trackLabel(i.track)})\n\n${i.summary} Window: ${i.dateLabel ?? `${i.start} to ${i.end}`}.${i.link ? ` Linked page: ${i.link}.` : ''}`
+    )
+    .join('\n\n');
+  const milestoneList = milestones
+    .map((m) => `- ${m.title} (${m.date}, ${trackLabel(m.track)})`)
+    .join('\n');
+
+  return `## Roadmap
+
+The public plan for the design system, rendered on the library's own GanttChart at /design-system/roadmap: shipped work from the release history, work in flight, and planned targets. Planned windows are targets, not commitments.
+
+${pageProse('design-system', 'roadmap')}
+
+${entries}
+
+Milestones:
+
+${milestoneList}`;
+}
+
 function sectionJournal() {
   const data = JSON.parse(read(join(repoRoot, 'website', 'src', 'data', 'site-updates.json')));
   const entries = data.entries
@@ -1036,6 +1070,7 @@ const SECTIONS = [
   ['Components', sectionComponents],
   ['Skills', sectionSkills],
   ['Loops', sectionLoops],
+  ['Roadmap', sectionRoadmap],
   ['Journal', sectionJournal],
   ['Writing', sectionWriting],
 ];

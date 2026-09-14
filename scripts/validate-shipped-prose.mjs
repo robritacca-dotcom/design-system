@@ -228,6 +228,21 @@ for (const l of loopsRegistry.loops ?? []) {
   );
 }
 
+const roadmapRegistry = json('website/src/data/roadmap.json');
+surfacesChecked += 1;
+for (const t of roadmapRegistry.tracks ?? []) {
+  scan(`website/src/data/roadmap.json (track ${t.id ?? '?'})`, t.label);
+}
+for (const i of roadmapRegistry.items ?? []) {
+  scan(
+    `website/src/data/roadmap.json (${i.id ?? '?'})`,
+    [i.title, i.summary, i.dateLabel].filter(Boolean).join('\n'),
+  );
+}
+for (const m of roadmapRegistry.milestones ?? []) {
+  scan(`website/src/data/roadmap.json (milestone ${m.id ?? '?'})`, m.title);
+}
+
 // --- Skill display descriptions (they render on /skills) --------------------
 
 const skillsDir = join(repoRoot, '.claude', 'skills');

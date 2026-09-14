@@ -506,6 +506,14 @@
       "recharts": true
     },
     {
+      "name": "GanttChart",
+      "label": "Gantt chart",
+      "slug": "gantt-chart",
+      "description": "Phases and tasks as bars on a shared timeline, with milestones, progress, and a today rule.",
+      "category": "charts",
+      "client": false
+    },
+    {
       "name": "Gauge",
       "label": "Gauge",
       "slug": "gauge",

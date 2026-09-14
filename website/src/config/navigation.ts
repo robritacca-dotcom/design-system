@@ -111,6 +111,12 @@ export const dsMegaGroups: MegaGroup[] = [
         icon: "tune",
       },
       {
+        href: "/design-system/roadmap",
+        label: "Roadmap",
+        description: "What shipped, what's in flight, and what's next",
+        icon: "route",
+      },
+      {
         href: "/canvas",
         label: "Canvas",
         description: "Every section's landing page live on one endless board",
@@ -142,7 +148,7 @@ export const dsMegaShowcase = {
 
 /** URL prefixes that should mark the "Design system" mega trigger as active */
 export const dsActiveMatchers = [
-  (path: string) => path === "/design-system", // the DS landing the mega trigger links to
+  (path: string) => path.startsWith("/design-system"), // the DS landing the mega trigger links to, and its sub-pages (/design-system/roadmap)
   (path: string) => path.startsWith("/docs"),
   (path: string) => path === "/overview", // the DS overview; /about (personal bio) is NOT under Design system
   (path: string) => path.startsWith("/blueprints"),
@@ -507,6 +513,12 @@ export function getBreadcrumbs(pathname: string): BreadcrumbItem[] {
   // toolbar rendering the trail.
   if (path === "/canvas") {
     return [DS_CRUMB, { label: "Canvas" }];
+  }
+
+  // The roadmap is the DS landing's one sub-page; it lives in no sidebar
+  // array, so the generic section loop can't resolve it.
+  if (path === "/design-system/roadmap") {
+    return [DS_CRUMB, { label: "Roadmap" }];
   }
 
   // Docs cluster — the landing lives at /docs but sub-pages keep their

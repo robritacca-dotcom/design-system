@@ -4295,6 +4295,94 @@ export const componentApi: readonly ComponentApiEntry[] = [
     ]
   },
   {
+    "name": "GanttChart",
+    "label": "Gantt chart",
+    "slug": "gantt-chart",
+    "category": "charts",
+    "description": "Phases and tasks as bars on a shared timeline, with milestones, progress, and a today rule.",
+    "client": false,
+    "importPath": "@robr0/design-system/components/GanttChart/GanttChart",
+    "barrel": "main",
+    "exports": [
+      {
+        "component": "GanttChart",
+        "props": [
+          {
+            "name": "items",
+            "type": "GanttChartItem[]",
+            "required": true,
+            "description": "Task bars, in display order."
+          },
+          {
+            "name": "milestones",
+            "type": "GanttChartMilestone[]",
+            "required": false,
+            "description": "Point-in-time markers, each rendered as its own diamond row at the end of its group.",
+            "defaultValue": "[]"
+          },
+          {
+            "name": "range",
+            "type": "{ start: string; end: string; }",
+            "required": false,
+            "description": "Explicit timeline window (YYYY-MM-DD both ends). Without it the range fits the data, snapped outward to whole months."
+          },
+          {
+            "name": "showToday",
+            "type": "boolean",
+            "required": false,
+            "description": "Draws the vertical today rule when today falls inside the range.",
+            "defaultValue": "true"
+          },
+          {
+            "name": "showGrid",
+            "type": "boolean",
+            "required": false,
+            "description": "Draws the faint vertical gridline at each month boundary behind the bars.",
+            "defaultValue": "true"
+          },
+          {
+            "name": "selectedId",
+            "type": "string",
+            "required": false,
+            "description": "Id of the highlighted item. Selection is controlled; pair it with `onItemClick`."
+          },
+          {
+            "name": "onItemClick",
+            "type": "((item: GanttChartItem) => void)",
+            "required": false,
+            "description": "Called with the item when a bar is clicked. Bars render as buttons only when this is set; without it the chart is inert and renders from a Server Component."
+          },
+          {
+            "name": "title",
+            "type": "string",
+            "required": false,
+            "description": "Chart title, in the shared chart header."
+          },
+          {
+            "name": "subtitle",
+            "type": "string",
+            "required": false,
+            "description": "Description text below the title."
+          },
+          {
+            "name": "bare",
+            "type": "boolean",
+            "required": false,
+            "description": "Strip the card chrome (border, padding, fill) when the chart sits inside another panel that supplies the surface",
+            "defaultValue": "false"
+          },
+          {
+            "name": "className",
+            "type": "string",
+            "required": false,
+            "description": "Additional CSS classes",
+            "defaultValue": ""
+          }
+        ]
+      }
+    ]
+  },
+  {
     "name": "Gauge",
     "label": "Gauge",
     "slug": "gauge",
