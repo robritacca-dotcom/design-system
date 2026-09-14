@@ -62,6 +62,7 @@ function SelectionDemo() {
     <div className={styles.demoStack}>
       <GanttChart
         items={deliveryPlan}
+        today="2026-03-16"
         selectedId={selected?.id}
         onItemClick={(item) =>
           setSelected((current) => (current?.id === item.id ? null : item))
@@ -114,11 +115,14 @@ export default function GanttChartPage() {
               A flat plan over one quarter. The window fits the data, snapped
               outward to whole months, and each bar takes an accent from the
               core accent roles. Hovering a bar raises its full reading:
-              label, dates, and progress when there is one.
+              label, dates, and progress when there is one. The rule marks
+              today, and the today prop pins it to a given day, so a
+              statically built page and its hydrating client can never
+              disagree about where it sits; this demo pins it mid March.
             </p>
             <GanttChart
               items={deliveryPlan}
-              showToday={false}
+              today="2026-03-16"
               title="Delivery plan"
               subtitle="February through April"
             />
