@@ -28,7 +28,9 @@ const root = join(here, '..');
 
 export const outputPath = join(root, 'website', 'src', 'data', 'dependency-graph.generated.ts');
 
-const read = (p) => readFileSync(p, 'utf8');
+// Normalised read: a CRLF checkout must produce byte-identical output to a
+// LF one, or the drift guard fires on whichever platform did not commit.
+const read = (p) => readFileSync(p, 'utf8').replace(/\r\n/g, '\n');
 const isDir = (p) => existsSync(p) && statSync(p).isDirectory();
 const ls = (dir) => readdirSync(dir).sort(); // sorted so output is identical across platforms
 
@@ -84,7 +86,9 @@ export function buildGraph() {
     for (const m of read(join(root, rel)).matchAll(/(--[a-z0-9-]+)\s*:\s*([^;]+);/g)) {
       const [, name, rawValue] = m;
       if (name.startsWith('--primitive-') || !tokenCategory.has(name)) continue;
-      const value = rawValue.trim();
+      // A declaration can wrap across source lines (the font stacks do);
+      // collapse the run so the captured value is single-line.
+      const value = rawValue.trim().replace(/\s+/g, ' ');
       const def = tokenDefs.get(name) || { refs: new Set() };
       if (which === 'dark') def.dark = value;
       else def.light = def.light ?? value;
