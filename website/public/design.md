@@ -332,12 +332,21 @@ The recurring mistake this prevents: reaching for the 2px and 4px tokens (`--gap
 ### Composition rules
 
 1. **Parent owns spacing.** Siblings are spaced by their container's `gap`, never by margins on the children. A child that carries its own outer margin breaks in every context except the one it was tuned for.
-2. **One level of chrome.** Components that carry their own container (charts, tables, calendars) sit bare under a heading — never wrapped in a card. A card wrapper is only for content with no chrome of its own. Two levels of container on one element is always a bug.
+2. **One level of chrome.** Components that carry their own container (charts, tables, calendars) sit bare under a heading — never wrapped in a card. A card wrapper is only for content with no chrome of its own. Two levels of container on one element is always a bug — and so is the over-correction: bare means without a wrapper, never with the component's own borders and background stripped to fake flatness. The component keeps exactly the chrome it ships with.
 3. **Dividers are the last resort.** Separation comes from whitespace (the ladder) and containers first; a divider is only for where spacing contrast cannot do the job — long uniform lists, table rows. A divider under a heading that whitespace already separates is decoration, and decoration is not a divider's job. Next to content that draws its own lines (bordered tables, calendars), a section heading always separates by whitespace alone — on a line-heavy page, every added line is noise.
 4. **Constrain the column, not the content.** A page has one content max-width; anything wider than its column (tables, diagrams, code) scrolls inside its own container. Never cap the width of a paragraph — cap the column it sits in.
 5. **A header is one region.** A page title and its tagline bind at the heading tier (40px), never separated by a section break. The first section break on a page sits *below* the complete header group.
 6. **Page rhythm stops at a component's edge.** The ladder governs the space *between* components and headings; a component's internal spacing is its own spec's business. Composing a page never involves reaching into a component to adjust its insides.
 7. **Sections stack.** A page is one column of full-width sections; side-by-side placement is for the items *inside* a band (a metrics row of Stats), not for sections themselves. Tiling sections into a grid is a template's decision to make, never a page-by-page one — tested both ways on a dense dashboard, the stack reads calmer and the grid reads cramped.
+
+### Template screens
+
+A template rebuilds a whole product screen from the system alone, and the family has conventions beyond the page rules above — worked out across the marketing dashboard, sales pipeline, and roadmap planner rounds of review, and stated here so the next screen lands right without re-learning them:
+
+1. **A reference product is direction, never a blueprint.** A template may start from another product's screen, but it is composed from this system's idioms, and the standard for every choice is the rendered siblings, not the reference. Furniture the reference has and the family lacks — a status badge beside the title, an avatar cluster in the header, drawn imitation browser chrome, a bespoke rollup strip — does not come along: a piece with no sibling precedent is left out by default, not invented.
+2. **One control species per toolbar, one size per row.** A data view's filter row is matching compact `Dropdown` selects (160px, the marketing dashboard's convention) beside the component's own search — never a mix of segmented controls, filter chips, and inputs doing the same job in one row. This is Repetition at control scale: controls sharing a row share one size, and a default-size control among compact ones reads as a mistake, not emphasis.
+3. **The stage earns the viewport.** The screen's point — the table, the board, the chart — takes the room. A KPI band is a choice, not template furniture: both the sales pipeline and the roadmap planner shipped without one, because the stage deserved the screen. When metric tiles do appear, they follow the dashboard rung set above.
+4. **People are initials.** Demo humans render through the Avatar's initials fallback — never generated portrait imagery or photographs. The fiction stays legible as fiction, and the rows stay quiet.
 
 ---
 
