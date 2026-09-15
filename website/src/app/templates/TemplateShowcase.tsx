@@ -10,10 +10,10 @@
  * Each built template renders live in a scaled same-origin iframe (the
  * canvas board's trick — BlurBackground detects the frame and drops its GL
  * context, and --layout-viewport-height is pinned so viewport-tall shells
- * get a fixed size), under a drawn browser bar so the preview reads as its
- * own window. The frame is inert; a link overlay opens the template full
- * screen. The slide list derives from templatesSidebarLinks, so the nav
- * config stays the one authoritative list of templates.
+ * get a fixed size) inside a bordered shell. The frame is inert; a link
+ * overlay opens the template full screen. The slide list derives from
+ * templatesSidebarLinks, so the nav config stays the one authoritative
+ * list of templates.
  */
 
 import Link from "next/link";
@@ -78,22 +78,6 @@ function LiveFrame({ href, title }: { href: string; title: string }) {
 
   return (
     <div ref={shellRef} className={styles.frameShell}>
-      {/* A browser's chrome, drawn: the preview reads as its own window,
-          not a region of this page. */}
-      <div className={styles.browserBar} aria-hidden="true">
-        <div className={styles.trafficDots}>
-          <span className={`${styles.trafficDot} ${styles.trafficDotClose}`} />
-          <span className={`${styles.trafficDot} ${styles.trafficDotMin}`} />
-          <span className={`${styles.trafficDot} ${styles.trafficDotMax}`} />
-        </div>
-        <div className={styles.addressPill}>
-          <span className={`material-symbols-rounded ${styles.addressLock}`}>
-            lock
-          </span>
-          <span className={styles.addressText}>robertritacca.com{href}</span>
-        </div>
-        <div />
-      </div>
       <div className={styles.frameViewport}>
         <iframe
           ref={frameRef}
