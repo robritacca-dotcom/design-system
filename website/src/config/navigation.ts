@@ -272,6 +272,11 @@ export const templatesSidebarLinks: NavLink[] = [
     label: "Roadmap planner",
     description: "A planning tool around the Gantt timeline and its detail rail",
   },
+  {
+    href: "/templates/sales-pipeline",
+    label: "Sales pipeline",
+    description: "A CRM companies view built around the wired data table",
+  },
 ];
 
 /**
