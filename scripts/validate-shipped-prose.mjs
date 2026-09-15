@@ -267,6 +267,11 @@ const STORY_MODULES = [
   // folders (deliberately out of the corpus — the file's doc block owns
   // why), so the page scan never sees them and this module scan must.
   'website/src/data/case-study-tldrs.ts',
+  // The graph instrument's panel copy and the overview miniature's caption
+  // render on indexed pages (/graph, /overview) while living in component
+  // files outside those route folders, so the page scan never sees them.
+  'website/src/components/SystemGraph/SystemGraph.tsx',
+  'website/src/components/SystemGraph/GraphMiniature.tsx',
   // The chat route's visitor-visible strings: the tool trace points and
   // the notice lines render in the widget, and the CHAT_TOOLS descriptions
   // are authored copy the model reads — a route handler, so the page scan

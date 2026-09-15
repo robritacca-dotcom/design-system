@@ -45,7 +45,7 @@ CLAUDE.md's **Registries** section is the philosophy: every displayed fact has o
 
 8. **Wire it in.**
    - Add it to the `validate-registry` entry in the root `package.json` — generators run first, validators after, so keep a generator ahead of everything that imports it.
-   - If it is website-relevant, add it to the website's own `predev`/`prebuild` in `website/package.json` (that file is authoritative for the subset — a library-only check stays out).
+   - If it is website-relevant, add it to the website's own chains in `website/package.json` (that file is authoritative for the subset — a library-only check stays out), split by kind: a generator goes in both `predev` and `prebuild`, a validator in `prebuild` only. `predev` exists to start dev from fresh data, and a validator there would fail `next dev` on exactly the stale state the generators are about to fix.
    - A post-build check goes at the end of `verify` in the root `package.json` **and** into CI's website job in the same change — CLAUDE.md's CI & Local Verify section owns the keep-in-sync rule.
 
 9. **Close the loop in the docs.** A script guarding a new countable collection gets a row in CLAUDE.md's Registries table (registry, count export, validator — follow the existing rows); a script extending an existing surface amends that surface's row; a standalone invariant gets a sentence in the CLAUDE.md section that owns its subject. `scripts/validate-doc-refs.mjs` will hold every path and npm script the new prose names to reality.
