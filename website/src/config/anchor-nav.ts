@@ -28,6 +28,7 @@ export const ANCHOR_NAV_EXCLUDED_ROUTES = new Set([
   "/templates",
   "/playground",
   "/canvas",
+  "/graph",
 ]);
 
 export const ANCHOR_NAV_SELF_MANAGED_ROUTES = new Set([

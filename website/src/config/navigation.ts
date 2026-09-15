@@ -519,6 +519,12 @@ export function getBreadcrumbs(pathname: string): BreadcrumbItem[] {
     return [DS_CRUMB, { label: "Canvas" }];
   }
 
+  // The graph is the same kind of immersive surface, with the same slim
+  // toolbar rendering the trail.
+  if (path === "/graph") {
+    return [DS_CRUMB, { label: "System graph" }];
+  }
+
   // Docs cluster — the landing lives at /docs but sub-pages keep their
   // original URLs, so match against the sidebar links (no shared prefix).
   if (path === "/docs") {

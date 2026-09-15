@@ -13,12 +13,18 @@
  * own stage toolbar; and the labs pages are full-viewport rebuilds of
  * reference products, where the shared chrome would sit inside the app
  * shell being tested — as are the template screens under /templates, which
- * render the same full-viewport app shells as their labs origins.
+ * render the same full-viewport app shells as their labs origins; and the
+ * talk page is a hidden slide-deck draft, full-viewport panels where the
+ * shared chrome would sit on top of the slides being iterated; and the graph
+ * page is the dependency-graph instrument, a full-width tracing surface with
+ * its own top bar, where the shared chrome would crowd the columns it exists
+ * to show.
  *
  * Matching is exact, so a nested route needs its own entry.
  */
 export const CHROMELESS_ROUTES = new Set([
   "/playground",
+  "/graph",
   "/rr-animated",
   "/covers",
   "/covers/render",
@@ -30,4 +36,5 @@ export const CHROMELESS_ROUTES = new Set([
   "/templates/agent-workbench",
   "/templates/roadmap-planner",
   "/templates/sales-pipeline",
+  "/talk",
 ]);
