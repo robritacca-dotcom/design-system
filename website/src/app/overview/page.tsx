@@ -7,6 +7,7 @@ import MegaNav from "../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import { ArchitectureMap } from "@/components/ArchitectureMap/ArchitectureMap";
+import GraphMiniature from "@/components/SystemGraph/GraphMiniature";
 import { getSidebarLinks, docsSidebarLinks } from "@/config/navigation";
 import { COMPONENT_COUNT } from "@robr0/design-system/components/registry";
 import { TOKEN_COUNT, TOKEN_COUNTS } from "@robr0/design-system/tokens/registry";
@@ -49,7 +50,7 @@ export default function AboutDsPage() {
               <Link href="/playground" className={styles.inlineLink}>re-theme it live</Link>.
             </p>
             <p className={styles.introBody}>
-              Everything is on display because the system is the work: the maps below show how the pieces fit, and all of it is open to lift.{" "}
+              Everything is on display because the system is the work: the maps and the graph below show how the pieces fit, and all of it is open to lift.{" "}
               <Link href="/blueprints/claude" className={styles.inlineLink}>CLAUDE.md</Link>,{" "}
               <Link href="/blueprints/design" className={styles.inlineLink}>design.md</Link>,{" "}
               <Link href="/blueprints/content-design" className={styles.inlineLink}>content-design.md</Link>, the{" "}
@@ -66,10 +67,16 @@ export default function AboutDsPage() {
               <section className={`${styles.mapSection} animate-in animate-delay-2`}>
                 <SectionTitle title="The system in one breath" />
                 <p className={styles.sectionBody}>
-                  The short version: one repo becomes one website, one
-                  Storybook, and one npm package, and nothing ships
-                  unchecked. The maps are for anyone who wants the wiring;
-                  each one pans, zooms, and expands to fill the screen.
+                  One repo becomes one website, one Storybook, and one npm
+                  package. Between the repo and its two destinations sits a
+                  single gate: generators derive every surface from one
+                  source of truth, validators fail the build when anything
+                  drifts, and CI runs the whole chain on every push. The
+                  rest of this page magnifies that picture one lane at a
+                  time: what the repo holds, how a change moves through it,
+                  what drives the moves, and what runs once the site is
+                  live. Each map pans, zooms, and expands to fill the
+                  screen.
                 </p>
                 <ul className={styles.logoStrip} aria-label="The tools involved">
                   {[
@@ -98,12 +105,6 @@ export default function AboutDsPage() {
                     </li>
                   ))}
                 </ul>
-                <ul className={styles.sectionBullets}>
-                  <li>One repo holds everything: components, tokens, data registries, and the written specs.</li>
-                  <li>Generators derive every surface from one source of truth; validators fail the build on drift.</li>
-                  <li>CI gates every push, and a green push to main is live in under a minute.</li>
-                  <li>Two destinations: the site on Vercel, the package on npm.</li>
-                </ul>
                 <ArchitectureMap
                   map={systemOverviewMap}
                   caption="One repo, one gate, two destinations. The other four maps magnify the lanes."
@@ -111,10 +112,29 @@ export default function AboutDsPage() {
               </section>
 
               <section className={`${styles.mapSection} animate-in animate-delay-3`}>
+                <SectionTitle title="The system as one graph" divider={false} />
+                <p className={styles.sectionBody}>
+                  Start with what the repo holds. Laid out as one graph, the
+                  system is five layers deep: primitives feed the semantic
+                  tokens, tokens feed the components, and the components
+                  compose the site UI and every page. The{" "}
+                  <Link href="/graph" className={styles.inlineLink}>
+                    graph page
+                  </Link>{" "}
+                  reads every edge out of the CSS and the import statements
+                  at build time. Pick any token or component and it traces
+                  both directions: everything it depends on, and everything
+                  that would feel a change to it.
+                </p>
+                <GraphMiniature />
+              </section>
+
+              <section className={`${styles.mapSection} animate-in animate-delay-3`}>
                 <SectionTitle title="The pipeline" divider={false} />
                 <p className={styles.sectionBody}>
-                  How a change becomes live, in five stages: author, generate
-                  and validate, build, gate, ship. Figma and Substack feed the
+                  A change to any of those layers becomes live the same way,
+                  in five stages: author, generate and validate, build,
+                  gate, ship. Figma and Substack feed the
                   authoring stage from outside, Google is touched exactly once
                   at build time (the typeface is fetched, then self-hosted),
                   and a push to main deploys to Vercel with{" "}
@@ -177,9 +197,10 @@ export default function AboutDsPage() {
                     setup, and site search.
                   </li>
                   <li>
-                    Two pages fetch type from Google at runtime: the
-                    playground&apos;s typeface picker and the MCP
-                    endpoint&apos;s landing page.
+                    The pipeline&apos;s single Google touch has two runtime
+                    exceptions, both fonts: the playground&apos;s typeface
+                    picker and the MCP endpoint&apos;s landing page fetch
+                    type from Google when opened.
                   </li>
                 </ul>
                 <ArchitectureMap
@@ -191,8 +212,9 @@ export default function AboutDsPage() {
               <section className={`${styles.mapSection} animate-in animate-delay-3`}>
                 <SectionTitle title="How the chat answers" divider={false} />
                 <p className={styles.sectionBody}>
-                  The chat&apos;s context is a two-part answer to one
-                  question: what should the model know? The site corpus
+                  One of those edges gets its own map. The chat&apos;s
+                  context is a two-part answer to one question: what should
+                  the model know? The site corpus
                   carries everything published as prose, baked in at build
                   time and cached for an hour, so most questions are answered
                   from context alone. What it deliberately leaves out is the
