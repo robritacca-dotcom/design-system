@@ -752,8 +752,6 @@ const EXCLUDED_ROUTES = new Map([
     'a noindex surface that renders one cover mock alone at an exact size, so the cover images can be shot from it — it carries no prose at all'],
   ['/canvas',
     'a noindex alpha (nav-linked, desktop-only) that lays each section\'s landing page out on one board, live in a frame — its only prose is the board\'s controls and its toolbar trail; every page it shows is covered by its own route, and the site map above gives the chat the one line it needs'],
-  ['/talk',
-    'a noindex slide-deck draft for a conference talk, iterated in place — its prose is working material for a presentation, not site information, and its facts all live in the /work case studies, which are covered'],
   ['/labs/marketing',
     'a noindex test page rebuilding a reference marketing dashboard entirely from the system\'s tokens and components, to probe how far they stretch — its prose is fictional demo data, not information'],
   ['/templates/marketing-dashboard',
