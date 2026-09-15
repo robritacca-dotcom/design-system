@@ -4,14 +4,15 @@
  * The roadmap planner template: the planning screen for Waypoint, a fictional
  * product roadmap tool, built from the design system alone. The shell is the
  * template family's (floating AppSidebar, slim top bar, docked mock
- * assistant); the page is a metrics band, a controls row, and a two-pane
- * board. The GanttChart holds the stage, and a rail beside it carries the
- * selected initiative: owner, window, progress, and the dependency chain,
- * with clicks on a bar or a dependency moving the rail, so the two panes stay
- * one screen rather than two widgets. The window switcher redraws the
- * timeline over a quarter or the half, and the filter bar thins the board by
- * team and status. Every colour, radius, space, and type style is a semantic
- * token; every control is a library component.
+ * assistant); the page is a controls row and a two-pane board. The
+ * GanttChart holds the stage, and a rail beside it carries the selected
+ * initiative: owner, window, progress, and the dependency chain, with
+ * clicks on a bar or a dependency moving the rail, so the two panes stay
+ * one screen rather than two widgets. The controls row is three matching
+ * compact selects, the sales pipeline's toolbar convention: the window
+ * select redraws the timeline over a quarter or the half, and the team and
+ * status selects thin the board. Every colour, radius, space, and type
+ * style is a semantic token; every control is a library component.
  *
  * "Today" is pinned (the GanttChart's `today` prop), so the statically built
  * HTML and the hydrating client can never disagree about where the rule
@@ -32,9 +33,9 @@ import { Button } from "@robr0/design-system/components/Button/Button";
 import { CircularButton } from "@robr0/design-system/components/CircularButton/CircularButton";
 import { Divider } from "@robr0/design-system/components/Divider/Divider";
 import {
-  FilterBar,
-  type FilterBarFilter,
-} from "@robr0/design-system/components/FilterBar/FilterBar";
+  Dropdown,
+  type DropdownOption,
+} from "@robr0/design-system/components/Dropdown/Dropdown";
 import {
   GanttChart,
   type GanttChartColor,
@@ -45,8 +46,6 @@ import { Input } from "@robr0/design-system/components/Input/Input";
 import { Kbd } from "@robr0/design-system/components/Kbd/Kbd";
 import { Panel } from "@robr0/design-system/components/Panel/Panel";
 import { ProgressBar } from "@robr0/design-system/components/ProgressBar/ProgressBar";
-import { SegmentedControl } from "@robr0/design-system/components/SegmentedControl/SegmentedControl";
-import { Stat } from "@robr0/design-system/components/Stat/Stat";
 import ThemeToggle from "../../ThemeToggle/ThemeToggle";
 import TemplateAssistant from "../TemplateAssistant/TemplateAssistant";
 import styles from "./RoadmapPlanner.module.css";
@@ -279,32 +278,32 @@ const MILESTONES: Milestone[] = [
   { id: "year-end", title: "Year-end release", team: "platform", date: "2026-12-18" },
 ];
 
-/* The window switcher's views. H2 is the default: the whole plan on one
+/* The window select's views. H2 is the default: the whole plan on one
    screen, with the quarters as the zoomed readings. */
 const VIEWS = [
   { value: "h2", label: "H2 2026", start: "2026-07-01", end: "2026-12-31" },
-  { value: "q3", label: "Q3", start: "2026-07-01", end: "2026-09-30" },
-  { value: "q4", label: "Q4", start: "2026-10-01", end: "2026-12-31" },
+  { value: "q3", label: "Q3 2026", start: "2026-07-01", end: "2026-09-30" },
+  { value: "q4", label: "Q4 2026", start: "2026-10-01", end: "2026-12-31" },
 ];
 
-const FILTERS: FilterBarFilter[] = [
-  {
-    id: "team",
-    label: "Team",
-    icon: "group",
-    multiple: true,
-    options: TEAMS.map((t) => ({ value: t.id, label: t.label })),
-  },
-  {
-    id: "status",
-    label: "Status",
-    icon: "flag",
-    multiple: true,
-    options: (Object.keys(STATUS_META) as Status[]).map((s) => ({
-      value: s,
-      label: STATUS_META[s].label,
-    })),
-  },
+/* The controls row's three selects share one option shape, the sales
+   pipeline's toolbar convention. */
+const VIEW_OPTIONS: DropdownOption[] = VIEWS.map(({ value, label }) => ({
+  value,
+  label,
+}));
+
+const TEAM_OPTIONS: DropdownOption[] = [
+  { value: "all", label: "All teams" },
+  ...TEAMS.map((t) => ({ value: t.id, label: t.label })),
+];
+
+const STATUS_OPTIONS: DropdownOption[] = [
+  { value: "all", label: "All statuses" },
+  ...(Object.keys(STATUS_META) as Status[]).map((s) => ({
+    value: s,
+    label: STATUS_META[s].label,
+  })),
 ];
 
 const CHAT_SUGGESTIONS = [
@@ -356,22 +355,21 @@ export default function RoadmapPlanner() {
   const [sidebarExpanded, setSidebarExpanded] = React.useState(true);
   const [chatOpen, setChatOpen] = React.useState(false);
   const [view, setView] = React.useState("h2");
-  const [filters, setFilters] = React.useState<Record<string, string[]>>({});
+  const [teamFilter, setTeamFilter] = React.useState("all");
+  const [statusFilter, setStatusFilter] = React.useState("all");
   const [selectedId, setSelectedId] = React.useState<string | null>("p2");
 
   const activeView = VIEWS.find((v) => v.value === view) ?? VIEWS[0];
 
-  const teamFilter = filters.team ?? [];
-  const statusFilter = filters.status ?? [];
   const visible = INITIATIVES.filter(
     (i) =>
-      (teamFilter.length === 0 || teamFilter.includes(i.team)) &&
-      (statusFilter.length === 0 || statusFilter.includes(i.status)) &&
+      (teamFilter === "all" || i.team === teamFilter) &&
+      (statusFilter === "all" || i.status === statusFilter) &&
       overlaps(i, activeView),
   );
   const visibleMilestones = MILESTONES.filter(
     (m) =>
-      (teamFilter.length === 0 || teamFilter.includes(m.team)) &&
+      (teamFilter === "all" || m.team === teamFilter) &&
       m.date >= activeView.start &&
       m.date <= activeView.end,
   );
@@ -396,15 +394,6 @@ export default function RoadmapPlanner() {
     color: teamOf(m.team).color,
     group: teamOf(m.team).label,
   }));
-
-  /* The metrics band derives from the plan, so filtering moves it too. */
-  const inFlight = visible.filter((i) => i.status === "on-track" || i.status === "at-risk");
-  const atRisk = visible.filter((i) => i.status === "at-risk");
-  const shipped = visible.filter((i) => i.status === "shipped");
-  const avgProgress =
-    inFlight.length > 0
-      ? Math.round(inFlight.reduce((sum, i) => sum + (i.progress ?? 0), 0) / inFlight.length)
-      : 0;
 
   const selected = INITIATIVES.find((i) => i.id === selectedId) ?? null;
   const selectedDeps = (selected?.dependsOn ?? [])
@@ -464,72 +453,40 @@ export default function RoadmapPlanner() {
             </div>
           </div>
 
-          {/* -------------------------------------------- KPI tiles */}
-          <div className={styles.kpiGrid}>
-            {[
-              {
-                icon: "rocket_launch",
-                value: String(inFlight.length),
-                label: "In flight",
-              },
-              {
-                icon: "warning",
-                value: String(atRisk.length),
-                label: "At risk",
-                delta: atRisk.length > 0 ? "needs attention" : "all clear",
-                trend: (atRisk.length > 0 ? "down" : "up") as "down" | "up",
-              },
-              {
-                icon: "rocket",
-                value: String(shipped.length),
-                label: "Shipped in window",
-                delta: "on the release train",
-                trend: "up" as const,
-              },
-              {
-                icon: "speed",
-                value: `${avgProgress}%`,
-                label: "Avg completion in flight",
-              },
-            ].map((kpi) => (
-              <Panel key={kpi.label} className={styles.kpi}>
-                <span className={styles.kpiIcon} aria-hidden="true">
-                  <span className="material-symbols-rounded">{kpi.icon}</span>
-                </span>
-                <Stat
-                  value={kpi.value}
-                  label={kpi.label}
-                  delta={kpi.delta}
-                  trend={kpi.trend}
-                  deltaPlacement="inline"
-                />
-              </Panel>
-            ))}
-          </div>
-
           {/* ------------------------------------------- controls row */}
           <div className={styles.controls}>
-            <SegmentedControl
-              segments={VIEWS.map(({ value, label }) => ({ value, label }))}
-              activeSegment={view}
-              onSegmentChange={setView}
-              ariaLabel="Timeline window"
-            />
-            <div className={styles.controlsRight}>
-              <FilterBar
+            <div className={styles.controlsFilters}>
+              <Dropdown
                 size="compact"
-                filters={FILTERS}
-                values={filters}
-                onValuesChange={setFilters}
-                clearLabel="Clear"
+                options={VIEW_OPTIONS}
+                value={view}
+                onValueChange={setView}
+                aria-label="Timeline window"
+                className={styles.filterSelect}
               />
-              <Button
-                variant="primary"
+              <Dropdown
                 size="compact"
-                label="New initiative"
-                iconLeft="add"
+                options={TEAM_OPTIONS}
+                value={teamFilter}
+                onValueChange={setTeamFilter}
+                aria-label="Filter by team"
+                className={styles.filterSelect}
+              />
+              <Dropdown
+                size="compact"
+                options={STATUS_OPTIONS}
+                value={statusFilter}
+                onValueChange={setStatusFilter}
+                aria-label="Filter by status"
+                className={styles.filterSelect}
               />
             </div>
+            <Button
+              variant="primary"
+              size="compact"
+              label="New initiative"
+              iconLeft="add"
+            />
           </div>
 
           {/* ------------------------------------------------- board */}
