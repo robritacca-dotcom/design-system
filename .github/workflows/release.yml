@@ -70,6 +70,11 @@ name: Release
 #   rule clearance drops to --padding-lg (heading, 20px, rule, 40px, content
 #   everywhere), and the rule width and Table's hairlines move onto the
 #   border tokens.
+# 0.19.0 shipped 2026-09-16 — GanttChart and RichDropdown, the heading and
+#   body font family roles for split-face theming, AiButton's signature
+#   refresh, Dropdown's typeface preview, the micro-animation pass
+#   (SegmentedControl's sliding pill, Button's trailing-icon nudge), and
+#   ToggleSwitch labels hugging the track.
 
 on:
   workflow_dispatch:
