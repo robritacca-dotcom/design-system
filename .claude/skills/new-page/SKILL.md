@@ -14,7 +14,7 @@ Add a new page to the website with the standard layout shell and correct navigat
 
 Use this skill when asked to add or create a new page on the website — phrases like "add a page for [X]", "create a [section] page", "add [X] to the site".
 
-For a **component documentation page**, use the `component-doc-page` skill instead — it covers the variant showcase and component-specific registrations.
+For a **component documentation page**, use the `component-doc-page` skill instead — it covers the variant showcase and component-specific registrations. For a **template screen**, use the `new-template` skill — it owns the family's composition conventions and the full registration checklist.
 
 ## Instructions
 
