@@ -5,7 +5,7 @@ description: Build React UI with @robr0/design-system. Use when installing the p
 
 # Using @robr0/design-system
 
-Generated from the library's registries at version 0.19.0, alongside every deploy of https://robertritacca.com. The library is 127 React components across 11 categories, themed by 235 semantic design tokens, published to npm.
+Generated from the library's registries at version 0.19.0, alongside every deploy of https://robertritacca.com. The library is 132 React components across 11 categories, themed by 235 semantic design tokens, published to npm.
 
 ## Install
 
@@ -48,16 +48,16 @@ Timer-driven timings (hover delays, toast auto-dismiss, the streaming reveal's p
 references/components.md lists every component with its import line and description. The categories:
 
 - Actions (6): Buttons, button groups, and toggles for triggering actions and switching modes.
-- AI (24): Chat, agent, and model surfaces for building AI products, from the composer to the reasoning trace and the diff an agent proposes.
+- AI (25): Chat, agent, and model surfaces for building AI products, from the composer to the reasoning trace and the diff an agent proposes.
 - Charts (16): Data visualisation components for plotting series and activity over time.
-- Data display (24): Cards, tables, lists, and badges for presenting structured content.
+- Data display (25): Cards, tables, lists, and badges for presenting structured content.
 - Effects (1): Ambient and decorative surfaces that sit behind or around the interface.
-- Feedback (9): Alerts, toasts, progress, and empty states that tell people what is happening.
+- Feedback (10): Alerts, toasts, progress, and empty states that tell people what is happening.
 - Forms (21): Inputs, pickers, and selection controls for collecting and editing values.
-- Layout (6): Page scaffolding: app shells, sidebars, dividers, and section headings.
+- Layout (7): Page scaffolding: app shells, sidebars, dividers, and section headings.
 - Maps (4): Geographic surfaces for showing where things are and what connects them: a globe, a flat world map, and the callout and key that explain them.
 - Navigation (7): Top bars, breadcrumbs, tabs, steppers, and pagination for moving through a product.
-- Overlays (9): Dialogs, drawers, menus, and tooltips that float above the page.
+- Overlays (10): Dialogs, drawers, menus, and tooltips that float above the page.
 
 ## Exact prop contracts
 

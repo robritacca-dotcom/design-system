@@ -525,6 +525,63 @@ export const componentApi: readonly ComponentApiEntry[] = [
     ]
   },
   {
+    "name": "AnimatedNumber",
+    "label": "Animated number",
+    "slug": "animated-number",
+    "category": "data-display",
+    "description": "A number that counts to its value: count-up on mount, eased tweens on change, tabular digits that never jitter.",
+    "client": true,
+    "importPath": "@robr0/design-system/components/AnimatedNumber/AnimatedNumber",
+    "barrel": "main",
+    "exports": [
+      {
+        "component": "AnimatedNumber",
+        "props": [
+          {
+            "name": "value",
+            "type": "number",
+            "required": true,
+            "description": "The number to display. Changing it tweens the display from the previous value."
+          },
+          {
+            "name": "decimals",
+            "type": "number",
+            "required": false,
+            "description": "Decimal places shown throughout the tween and at rest. Ignored when `format` is set.",
+            "defaultValue": "0"
+          },
+          {
+            "name": "format",
+            "type": "((value: number) => string)",
+            "required": false,
+            "description": "Formats the displayed number — currency, units, compact notation. Called\non every animation frame, so keep it pure and cheap."
+          },
+          {
+            "name": "duration",
+            "type": "number",
+            "required": false,
+            "description": "Tween length in ms. Defaults to the shared `MOTION_COUNT_UP_MS` constant;\nan animation pace, so the tween is skipped entirely under reduced motion.",
+            "defaultValue": "800"
+          },
+          {
+            "name": "animateOnMount",
+            "type": "boolean",
+            "required": false,
+            "description": "Counts up from zero on first render. Turn off to arrive settled and animate only on later changes.",
+            "defaultValue": "true"
+          },
+          {
+            "name": "className",
+            "type": "string",
+            "required": false,
+            "description": "Additional CSS classes",
+            "defaultValue": ""
+          }
+        ]
+      }
+    ]
+  },
+  {
     "name": "AppLayout",
     "label": "App layout",
     "slug": "app-layout",
@@ -5062,6 +5119,85 @@ export const componentApi: readonly ComponentApiEntry[] = [
     ]
   },
   {
+    "name": "Lightbox",
+    "label": "Lightbox",
+    "slug": "lightbox",
+    "category": "overlays",
+    "description": "Fullscreen media viewer on the shared overlay stack: deep scrim, caption chip, gallery stepping, trapped and restored focus.",
+    "client": true,
+    "importPath": "@robr0/design-system/components/Lightbox/Lightbox",
+    "barrel": "main",
+    "exports": [
+      {
+        "component": "Lightbox",
+        "props": [
+          {
+            "name": "open",
+            "type": "boolean",
+            "required": true,
+            "description": "Whether the lightbox is open"
+          },
+          {
+            "name": "onOpenChange",
+            "type": "(open: boolean) => void",
+            "required": true,
+            "description": "Callback when the lightbox requests to close"
+          },
+          {
+            "name": "src",
+            "type": "string",
+            "required": false,
+            "description": "The image to show. Omit it when `children` supplies the media."
+          },
+          {
+            "name": "alt",
+            "type": "string",
+            "required": false,
+            "description": "Image alt text — also the panel's accessible name. Required whenever `src` is set."
+          },
+          {
+            "name": "caption",
+            "type": "string",
+            "required": false,
+            "description": "Optional caption shown in a chip under the media"
+          },
+          {
+            "name": "children",
+            "type": "ReactNode",
+            "required": false,
+            "description": "Custom media instead of `src` — a framework image component, a video, a\nlive embed. Sized by the same viewport bounds the plain image gets."
+          },
+          {
+            "name": "dismissible",
+            "type": "boolean",
+            "required": false,
+            "description": "Whether ESC, backdrop click, and the close button can dismiss",
+            "defaultValue": "true"
+          },
+          {
+            "name": "onPrev",
+            "type": "(() => void)",
+            "required": false,
+            "description": "Steps to the previous item. Providing it renders the previous chevron and\narms the Left arrow key — the consumer owns the collection and the index."
+          },
+          {
+            "name": "onNext",
+            "type": "(() => void)",
+            "required": false,
+            "description": "Steps to the next item — the next chevron and the Right arrow key."
+          },
+          {
+            "name": "className",
+            "type": "string",
+            "required": false,
+            "description": "Additional CSS classes — applied to the portal container, not the panel",
+            "defaultValue": ""
+          }
+        ]
+      }
+    ]
+  },
+  {
     "name": "LineChart",
     "label": "Line chart",
     "slug": "line-chart",
@@ -7972,6 +8108,57 @@ export const componentApi: readonly ComponentApiEntry[] = [
     ]
   },
   {
+    "name": "StatusDot",
+    "label": "Status dot",
+    "slug": "status-dot",
+    "category": "feedback",
+    "description": "The bare status mark: a dot in the five status roles, with an optional label and a live pulse for recording and online-now states.",
+    "client": false,
+    "importPath": "@robr0/design-system/components/StatusDot/StatusDot",
+    "barrel": "main",
+    "exports": [
+      {
+        "component": "StatusDot",
+        "props": [
+          {
+            "name": "variant",
+            "type": "\"error\" | \"info\" | \"positive\" | \"warning\" | \"neutral\"",
+            "required": false,
+            "description": "Status role the dot carries — coloured through the plain-surface `--color-status-*-icon` steps.",
+            "defaultValue": "neutral"
+          },
+          {
+            "name": "size",
+            "type": "\"sm\" | \"md\" | \"lg\"",
+            "required": false,
+            "description": "Dot diameter, derived from the icon scale (half of `--icon-size-sm/md/lg`).",
+            "defaultValue": "md"
+          },
+          {
+            "name": "pulse",
+            "type": "boolean",
+            "required": false,
+            "description": "Radiates a repeating ring from the dot for a live state — recording,\nonline now, deploy in flight. The ring stills under reduced motion.",
+            "defaultValue": "false"
+          },
+          {
+            "name": "label",
+            "type": "string",
+            "required": false,
+            "description": "Visible text beside the dot. Omit it for a bare dot only when the meaning\nhas another home — a row label, or an `aria-label` passed through — since\na colour alone announces nothing."
+          },
+          {
+            "name": "className",
+            "type": "string",
+            "required": false,
+            "description": "Additional CSS classes",
+            "defaultValue": ""
+          }
+        ]
+      }
+    ]
+  },
+  {
     "name": "Stepper",
     "label": "Stepper",
     "slug": "stepper",
@@ -9282,6 +9469,60 @@ export const componentApi: readonly ComponentApiEntry[] = [
     ]
   },
   {
+    "name": "Toolbar",
+    "label": "Toolbar",
+    "slug": "toolbar",
+    "category": "layout",
+    "description": "A grouped strip of controls in one pill shell: clusters, separators, arrow-key focus, and a glass floating variant.",
+    "client": true,
+    "importPath": "@robr0/design-system/components/Toolbar/Toolbar",
+    "barrel": "main",
+    "exports": [
+      {
+        "component": "Toolbar",
+        "props": [
+          {
+            "name": "label",
+            "type": "string",
+            "required": true,
+            "description": "Accessible name for the toolbar — what a screen reader calls the group."
+          },
+          {
+            "name": "orientation",
+            "type": "\"horizontal\" | \"vertical\"",
+            "required": false,
+            "description": "Which way the controls run.",
+            "defaultValue": "horizontal"
+          },
+          {
+            "name": "variant",
+            "type": "\"default\" | \"floating\"",
+            "required": false,
+            "description": "`default` is an attached bar on the container fill; `floating` is the\nglass pill for controls hovering over content — position it with your own\nlayout (the component never fixes itself to the viewport).",
+            "defaultValue": "default"
+          },
+          {
+            "name": "children",
+            "type": "ReactNode",
+            "required": false,
+            "description": "The toolbar's controls — group unrelated clusters with `ToolbarSeparator`."
+          },
+          {
+            "name": "className",
+            "type": "string",
+            "required": false,
+            "description": "Additional CSS classes",
+            "defaultValue": ""
+          }
+        ]
+      },
+      {
+        "component": "ToolbarSeparator",
+        "props": []
+      }
+    ]
+  },
+  {
     "name": "Tooltip",
     "label": "Tooltip",
     "slug": "tooltip",
@@ -9517,6 +9758,63 @@ export const componentApi: readonly ComponentApiEntry[] = [
             "required": false,
             "description": "Chrome off (no border, padding, or fill) for use inside a panel that supplies the surface",
             "defaultValue": "false"
+          },
+          {
+            "name": "className",
+            "type": "string",
+            "required": false,
+            "description": "Additional CSS classes",
+            "defaultValue": ""
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Waveform",
+    "label": "Waveform",
+    "slug": "waveform",
+    "category": "ai",
+    "description": "Voice made visible: a row of bars dancing on the shared twelve-slot cycle, or tracking a live analyser level by level.",
+    "client": false,
+    "importPath": "@robr0/design-system/components/Waveform/Waveform",
+    "barrel": "main",
+    "exports": [
+      {
+        "component": "Waveform",
+        "props": [
+          {
+            "name": "state",
+            "type": "\"idle\" | \"listening\" | \"speaking\"",
+            "required": false,
+            "description": "What the audio channel is doing: `idle` parks the bars low and still,\n`listening` runs a gentle half-height wave, `speaking` runs the full one.\nIgnored while `levels` drives the bars.",
+            "defaultValue": "idle"
+          },
+          {
+            "name": "bars",
+            "type": "number",
+            "required": false,
+            "description": "How many bars the wave has.",
+            "defaultValue": "5"
+          },
+          {
+            "name": "levels",
+            "type": "number[]",
+            "required": false,
+            "description": "Live amplitudes from a real audio analyser, one 0–1 value per bar.\nProviding them switches the component to controlled mode: the CSS wave\nstops and each bar tracks its level, easing between updates."
+          },
+          {
+            "name": "size",
+            "type": "\"default\" | \"compact\"",
+            "required": false,
+            "description": "Bar height scale — `default` sits on the md icon size, `compact` on sm.",
+            "defaultValue": "default"
+          },
+          {
+            "name": "label",
+            "type": "string",
+            "required": false,
+            "description": "What a screen reader hears the indicator say. Defaults per state\n(\"Listening\", \"Speaking\", \"Microphone idle\")."
           },
           {
             "name": "className",

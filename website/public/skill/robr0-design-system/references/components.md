@@ -54,7 +54,7 @@ A set of two-state buttons that can be toggled on or off, supporting text and ic
 - Rendering: client component (declares 'use client')
 - Contract: https://robertritacca.com/components/toggle-group.md
 
-## AI (24)
+## AI (25)
 
 Chat, agent, and model surfaces for building AI products, from the composer to the reasoning trace and the diff an agent proposes.
 
@@ -250,6 +250,14 @@ An agent's budgets at a glance: context window and plan limits as meter rows wit
 - Rendering: server-renderable (no 'use client')
 - Contract: https://robertritacca.com/components/usage-card.md
 
+### Waveform
+
+Voice made visible: a row of bars dancing on the shared twelve-slot cycle, or tracking a live analyser level by level.
+
+- Import: `import { Waveform } from '@robr0/design-system';`
+- Rendering: server-renderable (no 'use client')
+- Contract: https://robertritacca.com/components/waveform.md
+
 ## Charts (16)
 
 Data visualisation components for plotting series and activity over time.
@@ -382,7 +390,7 @@ Nested rectangles sized by value for part-to-whole breakdowns.
 - Rendering: server-renderable (no 'use client')
 - Contract: https://robertritacca.com/components/treemap.md
 
-## Data display (24)
+## Data display (25)
 
 Cards, tables, lists, and badges for presenting structured content.
 
@@ -393,6 +401,14 @@ Collapsible content sections for organising related information.
 - Import: `import { Accordion } from '@robr0/design-system';`
 - Rendering: client component (declares 'use client')
 - Contract: https://robertritacca.com/components/accordion.md
+
+### Animated number
+
+A number that counts to its value: count-up on mount, eased tweens on change, tabular digits that never jitter.
+
+- Import: `import { AnimatedNumber } from '@robr0/design-system';`
+- Rendering: client component (declares 'use client')
+- Contract: https://robertritacca.com/components/animated-number.md
 
 ### Avatar
 
@@ -590,7 +606,7 @@ An ambient WebGL2 field of soft light sources that sample colour tokens, with a 
 - Rendering: client component (declares 'use client')
 - Contract: https://robertritacca.com/components/shader-field.md
 
-## Feedback (9)
+## Feedback (10)
 
 Alerts, toasts, progress, and empty states that tell people what is happening.
 
@@ -657,6 +673,14 @@ Animated circular loading indicator in three sizes and primary, neutral, or inhe
 - Import: `import { Spinner } from '@robr0/design-system';`
 - Rendering: server-renderable (no 'use client')
 - Contract: https://robertritacca.com/components/spinner.md
+
+### Status dot
+
+The bare status mark: a dot in the five status roles, with an optional label and a live pulse for recording and online-now states.
+
+- Import: `import { StatusDot } from '@robr0/design-system';`
+- Rendering: server-renderable (no 'use client')
+- Contract: https://robertritacca.com/components/status-dot.md
 
 ### Toast
 
@@ -838,7 +862,7 @@ Binary on/off toggle control with sliding thumb and check indicator, used for se
 - Rendering: client component (declares 'use client')
 - Contract: https://robertritacca.com/components/toggle-switch.md
 
-## Layout (6)
+## Layout (7)
 
 Page scaffolding: app shells, sidebars, dividers, and section headings.
 
@@ -889,6 +913,14 @@ Two resizable regions with a draggable, keyboard-operable divider between them.
 - Import: `import { SplitPane } from '@robr0/design-system';`
 - Rendering: client component (declares 'use client')
 - Contract: https://robertritacca.com/components/split-pane.md
+
+### Toolbar
+
+A grouped strip of controls in one pill shell: clusters, separators, arrow-key focus, and a glass floating variant.
+
+- Import: `import { Toolbar } from '@robr0/design-system';`
+- Rendering: client component (declares 'use client')
+- Contract: https://robertritacca.com/components/toolbar.md
 
 ## Maps (4)
 
@@ -986,7 +1018,7 @@ Tab navigation with underline indicator, icon support, compact size, and full-wi
 - Rendering: client component (declares 'use client')
 - Contract: https://robertritacca.com/components/tabs.md
 
-## Overlays (9)
+## Overlays (10)
 
 Dialogs, drawers, menus, and tooltips that float above the page.
 
@@ -1045,6 +1077,14 @@ Rich preview panel that opens from hover or focus, with interactive content and 
 - Import: `import { HoverCard } from '@robr0/design-system';`
 - Rendering: client component (declares 'use client')
 - Contract: https://robertritacca.com/components/hover-card.md
+
+### Lightbox
+
+Fullscreen media viewer on the shared overlay stack: deep scrim, caption chip, gallery stepping, trapped and restored focus.
+
+- Import: `import { Lightbox } from '@robr0/design-system';`
+- Rendering: client component (declares 'use client')
+- Contract: https://robertritacca.com/components/lightbox.md
 
 ### Popover
 
