@@ -1086,6 +1086,14 @@
       "description": "An agent's budgets at a glance: context window and plan limits as meter rows with reset captions.",
       "category": "ai",
       "client": false
+    },
+    {
+      "name": "WorldMap",
+      "label": "World map",
+      "slug": "world-map",
+      "description": "A flat world map from Natural Earth land shapes: token-coloured continents, framed bounds, and colour-carrying markers.",
+      "category": "maps",
+      "client": true
     }
   ],
   "docOnlyHelpers": [

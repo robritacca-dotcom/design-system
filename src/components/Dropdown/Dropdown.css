@@ -68,6 +68,15 @@
   color: var(--color-input-text-placeholder);
 }
 
+/* An option's icon, on the closed trigger — inline with the text so the
+   value keeps its single-line ellipsis. */
+.ds-dropdown__value-icon {
+  --icon-size: var(--icon-size-sm);
+  color: var(--color-icon-primary);
+  vertical-align: text-bottom;
+  margin-right: var(--gap-xs);
+}
+
 /* ============================================
    CHEVRON
    ============================================ */
@@ -199,6 +208,21 @@
 .ds-dropdown__check {
   --icon-size: var(--icon-size-md);
   color: var(--color-action-primary-bg);
+}
+
+/* The option row's icon-and-label cluster, so the selected check keeps its
+   own end of the space-between row. */
+.ds-dropdown__option-content {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-xs);
+  min-width: 0;
+}
+
+.ds-dropdown__option-icon {
+  --icon-size: var(--icon-size-sm);
+  color: var(--color-icon-primary);
+  flex-shrink: 0;
 }
 
 /* ============================================

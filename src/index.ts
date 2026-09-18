@@ -120,6 +120,7 @@ export * from './components/ToolCall/ToolCall';
 export * from './components/Tooltip/Tooltip';
 export * from './components/TreeView/TreeView';
 export * from './components/UsageCard/UsageCard';
+export * from './components/WorldMap/WorldMap';
 
 export {
   componentRegistry,

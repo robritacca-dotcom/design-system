@@ -50,6 +50,7 @@ import { Kbd } from "@robr0/design-system/components/Kbd/Kbd";
 import { Globe } from "@robr0/design-system/components/Globe/Globe";
 import { MapCallout } from "@robr0/design-system/components/MapCallout/MapCallout";
 import { MapLegend } from "@robr0/design-system/components/MapLegend/MapLegend";
+import { WorldMap } from "@robr0/design-system/components/WorldMap/WorldMap";
 import { ProgressBar } from "@robr0/design-system/components/ProgressBar/ProgressBar";
 import { PromptSuggestions } from "@robr0/design-system/components/PromptSuggestions/PromptSuggestions";
 import { Prose } from "@robr0/design-system/components/Prose/Prose";
@@ -1531,6 +1532,23 @@ const previews: Record<string, () => ReactNode> = {
           <Meter label="Weekly" value={86} variant="warning" size="compact" showValue />
           <span style={{ alignSelf: "flex-end", fontSize: "10px", color: "var(--color-text-secondary)" }}>Resets Tue 3:00 pm</span>
         </div>
+      </div>
+    </>
+  ),
+  "world-map": () => (
+    <>
+      <div style={{ width: "170px", height: "110px" }}>
+        <WorldMap
+          points={[
+            { id: "a", lat: 43.65, lng: -79.38, kind: "anchor" },
+            { id: "b", lat: 51.5, lng: -0.12, color: "var(--color-chart-series-1)" },
+            { id: "c", lat: -33.45, lng: -70.66, color: "var(--color-chart-series-2)" },
+            { id: "d", lat: 35.68, lng: 139.69, color: "var(--color-chart-series-3)" },
+          ]}
+          interactive={false}
+          graticuleStep={0}
+          label="Miniature world map"
+        />
       </div>
     </>
   ),

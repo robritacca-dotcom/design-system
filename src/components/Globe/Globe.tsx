@@ -25,6 +25,13 @@ export interface GlobePoint {
    * `anchor` is a square (something fixed). The glyph is the only difference.
    */
   kind?: 'point' | 'anchor';
+  /**
+   * Marker colour, any CSS colour (`var(--color-status-warning-border)`
+   * works) — the same per-point channel WorldMap carries, so one dataset
+   * keys identically on both projections. Omit for the text-ramp default;
+   * a coloured marker keeps its colour on hover instead of brightening.
+   */
+  color?: string;
 }
 
 /** A great-circle arc between two points. */
@@ -548,6 +555,7 @@ export const Globe = React.forwardRef<HTMLDivElement, GlobeProps>(
                 <g
                   key={point.id}
                   className={markerClasses}
+                  style={point.color ? { color: point.color } : undefined}
                   transform={`translate(${x} ${y})`}
                   onPointerEnter={() => {
                     setHoveredId(point.id);
