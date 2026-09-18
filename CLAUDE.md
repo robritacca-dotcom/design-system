@@ -227,7 +227,7 @@ src/components/Button/
 └── Button.stories.ts     # Storybook stories (Meta + named Story exports)
 ```
 
-One sanctioned exception to self-containment: the modal overlays (Dialog, AlertDialog, Drawer, CommandPalette) import the shared behavior hooks from `src/behaviors/` (dismissal stack, focus scope, scroll lock — see **Project Structure**) rather than hand-rolling their own document listeners; the non-modal overlays still own theirs, gated on open state, until they migrate onto the stack (design.md's Components intro owns the contract). New overlay work should use the hooks from the start.
+One sanctioned exception to self-containment: the modal overlays (Dialog, AlertDialog, Drawer, CommandPalette, Lightbox) import the shared behavior hooks from `src/behaviors/` (dismissal stack, focus scope, scroll lock — see **Project Structure**) rather than hand-rolling their own document listeners; the non-modal overlays still own theirs, gated on open state, until they migrate onto the stack (design.md's Components intro owns the contract). New overlay work should use the hooks from the start.
 
 Components are imported in the website through the package's public exports (deep subpaths; the barrel `import { Button } from '@robr0/design-system'` also works):
 ```tsx
