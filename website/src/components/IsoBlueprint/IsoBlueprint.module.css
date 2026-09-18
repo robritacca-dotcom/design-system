@@ -1,0 +1,198 @@
+/* ============================================
+   ISO BLUEPRINT — decorative isometric line work
+   tucked into the hero's upper right. Every
+   colour resolves from a semantic token; the
+   green route uses the status-positive family
+   (same decorative-token precedent as the home
+   mini-bento).
+   ============================================ */
+/* Breaks out of the centred container to the true viewport edges: the top
+   offset swallows the chrome above the hero (nav bar, body top padding,
+   nav-to-main gap — the same terms as the hero's min-height calc), and the
+   horizontal offsets centre a full-viewport-width box regardless of the
+   container's max-width, so the drawing meets the corner with no gutter. */
+.frame {
+  position: absolute;
+  top: calc(-1 * (78px + var(--primitive-padding-lg) + var(--primitive-gap-xxxl)));
+  bottom: 0;
+  left: calc((100% - 100vw) / 2);
+  right: calc((100% - 100vw) / 2);
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Reference-density line work needs room; below the nav's drawer
+   breakpoint it would only be noise behind the stacked hero. */
+@media (max-width: 959px) {
+  .frame {
+    display: none;
+  }
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Line work ── */
+.grid line {
+  stroke: var(--color-bg-container-border);
+  stroke-width: 1;
+}
+
+.rail line {
+  stroke: var(--color-icon-secondary);
+  stroke-width: 1;
+  opacity: 0.6;
+}
+
+.tick line {
+  stroke: var(--color-icon-secondary);
+  stroke-width: 1;
+  opacity: 0.45;
+}
+
+.hatchLine {
+  stroke: var(--color-icon-secondary);
+  stroke-width: 1;
+  opacity: 0.55;
+  fill: none;
+}
+
+.hatchLineAccent {
+  stroke: var(--color-status-positive-border);
+  stroke-width: 1;
+  opacity: 0.5;
+  fill: none;
+}
+
+/* ── Plates ── */
+.plateOuter {
+  fill: var(--color-bg-container-primary);
+  stroke: var(--color-icon-secondary);
+  stroke-width: 1.25;
+}
+
+.plateOuterAccent {
+  fill: var(--color-status-positive-bg);
+  stroke: var(--color-status-positive-border);
+  stroke-width: 1.25;
+}
+
+.plateInner {
+  stroke: var(--color-icon-secondary);
+  stroke-width: 1;
+  opacity: 0.9;
+}
+
+.plateInnerAccent {
+  stroke: var(--color-status-positive-border);
+  stroke-width: 1;
+}
+
+/* ── The glowing route ── */
+.bandStop {
+  stop-color: var(--color-status-positive-border);
+}
+
+.glowRect {
+  fill: var(--color-status-positive-border);
+  opacity: 0.2;
+  /* ds-allow(motion): ambient breathing on a decorative backdrop, far
+     slower than any UI motion token — same precedent as the home
+     mini-bento's bar animation. */
+  animation: iso-glow-pulse 7s var(--motion-ease-standard) infinite;
+}
+
+@keyframes iso-glow-pulse {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.32;
+  }
+}
+
+.flowLine {
+  stroke: var(--color-status-positive-border);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 14;
+  opacity: 0.8;
+  /* ds-allow(motion): same ambient-backdrop precedent as the glow. */
+  animation: iso-flow 8s linear infinite;
+}
+
+@keyframes iso-flow {
+  to {
+    stroke-dashoffset: -180;
+  }
+}
+
+/* ── Leaders, nodes, chains ── */
+.leader,
+.leaderAccent {
+  fill: none;
+  stroke-width: 1;
+  stroke-dasharray: 3 5;
+}
+
+.leader {
+  stroke: var(--color-icon-secondary);
+}
+
+.leaderAccent {
+  stroke: var(--color-status-positive-border);
+}
+
+.chainLine {
+  stroke: var(--color-status-positive-border);
+  stroke-width: 1;
+  stroke-dasharray: 5 9;
+  opacity: 0.6;
+}
+
+.trackNode circle {
+  fill: var(--color-bg-container-primary);
+  stroke: var(--color-icon-secondary);
+  stroke-width: 1;
+}
+
+.trackNode line {
+  stroke: var(--color-icon-secondary);
+  stroke-width: 1.25;
+}
+
+.chainDotOuter {
+  fill: var(--color-bg-container-primary);
+  stroke: var(--color-status-positive-border);
+  stroke-width: 1.25;
+}
+
+.chainDotInner {
+  fill: var(--color-status-positive-border);
+}
+
+.numCircle,
+.numCircleAccent {
+  stroke-width: 1.25;
+}
+
+.numCircle {
+  fill: var(--color-bg-container-primary);
+  stroke: var(--color-icon-secondary);
+}
+
+.numCircleAccent {
+  fill: var(--color-status-positive-bg);
+  stroke: var(--color-status-positive-border);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glowRect,
+  .flowLine {
+    animation: none;
+  }
+}

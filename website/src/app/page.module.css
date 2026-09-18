@@ -25,11 +25,10 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  /* Figma: 40px rhythm between every hero block (name, hairlines,
-     text group, employer strip). */
-  gap: var(--gap-xl);
+  /* POC: text block tucked into the bottom-left corner, mirroring the
+     blueprint graphic tucked upper right. */
+  align-items: flex-start;
+  justify-content: flex-end;
   width: 100%;
   /* Fill what remains of the first viewport after the in-flow chrome
      above this element: the body's top padding, the 78px MegaNav bar
@@ -37,9 +36,20 @@
      scroll cue above mobile browser bars; vh is the fallback. */
   min-height: calc(100vh - 78px - var(--primitive-padding-lg) - var(--primitive-gap-xxxl));
   min-height: calc(var(--layout-viewport-height) - 78px - var(--primitive-padding-lg) - var(--primitive-gap-xxxl));
-  /* Optical centring: pad the bottom so the block sits a touch above true
-     centre and the first screen reads centre-weighted, not bottom-heavy. */
-  padding-bottom: calc(var(--layout-viewport-height) * 0.1);
+  /* Clear the scroll cue pinned at the fold's bottom centre. */
+  padding-bottom: var(--padding-xl);
+}
+
+/* The text stack: its own column so the fading hairlines span the text,
+   not the whole hero (the graphic owns the rest of the width). */
+.heroContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* Figma: 40px rhythm between every hero block (name, hairlines,
+     text group, employer strip). */
+  gap: var(--gap-xl);
+  max-width: 640px;
 }
 
 /* The scroll cue itself lives in components/ScrollCue — it positions
@@ -53,9 +63,9 @@
 .homeHeading {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--primitive-gap-lg);
-  text-align: center;
+  text-align: left;
 }
 
 .homeTitle {
@@ -65,11 +75,7 @@
   line-height: var(--font-mega-1-line-height);
   letter-spacing: var(--font-mega-1-letter-spacing);
   color: var(--color-text-primary);
-  /* The title sits outside .homeHeading, so it centres its own text. The
-     hero's align-items only centres the box, which is shrink-to-fit right up
-     until the name wraps — at which point the box fills the width and
-     left-aligned lines fall off the axis the rest of the hero sits on. */
-  text-align: center;
+  text-align: left;
 }
 
 .homeSubtitle {
@@ -89,7 +95,7 @@
   line-height: var(--font-title-body-line-height);
   letter-spacing: var(--font-title-body-letter-spacing);
   color: var(--color-text-primary);
-  text-align: center;
+  text-align: left;
 }
 
 /* ============================================
@@ -536,9 +542,12 @@
 .homeCompanies {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
   gap: var(--gap-md) var(--gap-xl);
+  /* The pills keep their internal padding for hover geometry; pull the
+     first one back so its logo sits on the text alignment line. */
+  margin-left: calc(-1 * var(--padding-md));
 }
 
 /* Figma: the strip items keep the link buttons' geometry — pill padding,

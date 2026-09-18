@@ -4,6 +4,7 @@ import { Button } from "@robr0/design-system/components/Button/Button";
 import MegaNav from "../components/MegaNav/MegaNav";
 import { FullBleedBackground } from "../components/BlurBackground/BlurBackground";
 import ScrollCue from "../components/ScrollCue/ScrollCue";
+import IsoBlueprint from "../components/IsoBlueprint/IsoBlueprint";
 import FadeDivider from "../components/FadeDivider/FadeDivider";
 import { caseStudyCover } from "@/components/covers/case-study-covers";
 import { dsMegaItems } from "@/config/navigation";
@@ -71,34 +72,40 @@ export default async function HomePage() {
             against the browser height (figma: Index - Desktop, 860:2831).
             Everything else lives below the fold, reached by the scroll cue. */}
         <section className={styles.hero} aria-label="Introduction">
-          <h1 className={`${styles.homeTitle} animate-in`}>Robert Ritacca</h1>
+          {/* POC: isometric blueprint line work tucked into the upper
+              right, hero text tucked bottom left. */}
+          <IsoBlueprint />
 
-          <FadeDivider className="animate-in animate-delay-1" />
+          <div className={styles.heroContent}>
+            <h1 className={`${styles.homeTitle} animate-in`}>Robert Ritacca</h1>
 
-          <div className={`${styles.homeHeading} animate-in`}>
-            <p className={styles.homeSubtitle}>
-              Designing and building AI-native products, systems, and experiences.
-            </p>
-            <p className={styles.homeByline}>
-              Principal Product Designer, based in Toronto, Canada
-            </p>
-          </div>
+            <FadeDivider className="animate-in animate-delay-1" />
 
-          <FadeDivider className="animate-in animate-delay-1" />
+            <div className={`${styles.homeHeading} animate-in`}>
+              <p className={styles.homeSubtitle}>
+                Designing and building AI-native products, systems, and experiences.
+              </p>
+              <p className={styles.homeByline}>
+                Principal Product Designer, based in Toronto, Canada
+              </p>
+            </div>
 
-          <div className={`${styles.homeCompanies} animate-in animate-delay-1`}>
-            {companies.map((company) => (
-              <span key={company.name} className={styles.company}>
-                <Image
-                  src={company.logo}
-                  alt=""
-                  width={24}
-                  height={24}
-                  className={styles.companyLogo}
-                />
-                {company.name}
-              </span>
-            ))}
+            <FadeDivider className="animate-in animate-delay-1" />
+
+            <div className={`${styles.homeCompanies} animate-in animate-delay-1`}>
+              {companies.map((company) => (
+                <span key={company.name} className={styles.company}>
+                  <Image
+                    src={company.logo}
+                    alt=""
+                    width={24}
+                    height={24}
+                    className={styles.companyLogo}
+                  />
+                  {company.name}
+                </span>
+              ))}
+            </div>
           </div>
 
           <ScrollCue

@@ -129,6 +129,10 @@ body {
   color: var(--color-text-primary);
   background: var(--color-bg-page-primary);
   min-height: 100vh;
+  /* clip, not hidden: truncates the scrollable overflow from full-bleed
+     100vw breakouts (the home hero's blueprint graphic) without creating
+     a scroll container, so position: sticky keeps working. */
+  overflow-x: clip;
   padding: var(--primitive-padding-lg) var(--primitive-padding-xl);
   display: flex;
   flex-direction: column;
