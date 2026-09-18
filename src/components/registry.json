@@ -115,6 +115,14 @@
       "client": true
     },
     {
+      "name": "AnimatedNumber",
+      "label": "Animated number",
+      "slug": "animated-number",
+      "description": "A number that counts to its value: count-up on mount, eased tweens on change, tabular digits that never jitter.",
+      "category": "data-display",
+      "client": true
+    },
+    {
       "name": "AppLayout",
       "label": "App layout",
       "slug": "app-layout",
@@ -586,6 +594,14 @@
       "client": false
     },
     {
+      "name": "Lightbox",
+      "label": "Lightbox",
+      "slug": "lightbox",
+      "description": "Fullscreen media viewer on the shared overlay stack: deep scrim, caption chip, gallery stepping, trapped and restored focus.",
+      "category": "overlays",
+      "client": true
+    },
+    {
       "name": "LineChart",
       "label": "Line chart",
       "slug": "line-chart",
@@ -934,6 +950,14 @@
       "client": false
     },
     {
+      "name": "StatusDot",
+      "label": "Status dot",
+      "slug": "status-dot",
+      "description": "The bare status mark: a dot in the five status roles, with an optional label and a live pulse for recording and online-now states.",
+      "category": "feedback",
+      "client": false
+    },
+    {
       "name": "Stepper",
       "label": "Stepper",
       "slug": "stepper",
@@ -1054,6 +1078,14 @@
       "client": true
     },
     {
+      "name": "Toolbar",
+      "label": "Toolbar",
+      "slug": "toolbar",
+      "description": "A grouped strip of controls in one pill shell: clusters, separators, arrow-key focus, and a glass floating variant.",
+      "category": "layout",
+      "client": true
+    },
+    {
       "name": "Tooltip",
       "label": "Tooltip",
       "slug": "tooltip",
@@ -1084,6 +1116,14 @@
       "label": "Usage card",
       "slug": "usage-card",
       "description": "An agent's budgets at a glance: context window and plan limits as meter rows with reset captions.",
+      "category": "ai",
+      "client": false
+    },
+    {
+      "name": "Waveform",
+      "label": "Waveform",
+      "slug": "waveform",
+      "description": "Voice made visible: a row of bars dancing on the shared twelve-slot cycle, or tracking a live analyser level by level.",
       "category": "ai",
       "client": false
     },

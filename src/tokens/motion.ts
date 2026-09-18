@@ -43,6 +43,9 @@ export const MOTION_STREAM_DRAIN_MS = 250;
 /** The retired interval-based reveal step. @deprecated The reveal is frame-driven now — pace it with MOTION_STREAM_FLOOR_CPS and MOTION_STREAM_DRAIN_MS. */
 export const MOTION_STREAM_CHAR_INTERVAL_MS = 15;
 
+/** The count-up tween's full budget: however far the number travels, AnimatedNumber has it settled within this. An animation pace, not a schedule timing: the tween is skipped under reduced motion. */
+export const MOTION_COUNT_UP_MS = 800;
+
 /** Grace period before a hover-summoned surface hides once the pointer has left it — long enough to cross the gap between a launcher and its panel without the panel dying under a mouse that is heading for it. */
 export const MOTION_HOVER_EXIT_GRACE_MS = 600;
 
