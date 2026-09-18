@@ -9528,5 +9528,122 @@ export const componentApi: readonly ComponentApiEntry[] = [
         ]
       }
     ]
+  },
+  {
+    "name": "WorldMap",
+    "label": "World map",
+    "slug": "world-map",
+    "category": "maps",
+    "description": "A flat world map from Natural Earth land shapes: token-coloured continents, framed bounds, and colour-carrying markers.",
+    "client": true,
+    "importPath": "@robr0/design-system/components/WorldMap/WorldMap",
+    "barrel": "main",
+    "exports": [
+      {
+        "component": "WorldMap",
+        "props": [
+          {
+            "name": "points",
+            "type": "WorldMapPoint[]",
+            "required": false,
+            "description": "The places to mark. A point outside the framed view is simply not drawn.",
+            "defaultValue": "[]"
+          },
+          {
+            "name": "bounds",
+            "type": "WorldMapBounds",
+            "required": false,
+            "description": "The window the map frames: `[west, south, east, north]` in degrees.\nIt must not cross the antimeridian. Defaults to the whole world\n(Antarctica is not in the land data). Changing it resets any zoom.",
+            "defaultValue": "[-180, -58, 180, 84]"
+          },
+          {
+            "name": "fit",
+            "type": "\"cover\" | \"contain\"",
+            "required": false,
+            "description": "How the framed window meets the container: `contain` letterboxes so the\nwhole window is visible, `cover` fills the container and crops the\nwindow's edges — the full-bleed stage look.",
+            "defaultValue": "contain"
+          },
+          {
+            "name": "showZoomControls",
+            "type": "boolean",
+            "required": false,
+            "description": "Renders the zoom pill (zoom out, a percent readout that resets the\nview, zoom in). Zoom steps into `bounds` and out past them — down to\nthe whole world with air around it, the graticule carrying on into\nthe space. Ctrl or ⌘ with the scroll wheel (a trackpad pinch) zooms at\nthe pointer; a plain scroll keeps scrolling the page. Dragging, or the\narrow keys with the map focused, moves the view anywhere on the world\nat any zoom; a finger only drags while zoomed in, so the page keeps\nits touch scroll too. Needs `interactive`.",
+            "defaultValue": "false"
+          },
+          {
+            "name": "maxZoom",
+            "type": "number",
+            "required": false,
+            "description": "How far the zoom controls can step in, as a multiple of `bounds`.",
+            "defaultValue": "8"
+          },
+          {
+            "name": "graticuleStep",
+            "type": "number",
+            "required": false,
+            "description": "Degrees between graticule lines. `0` removes the graticule.",
+            "defaultValue": "15"
+          },
+          {
+            "name": "showLabels",
+            "type": "boolean",
+            "required": false,
+            "description": "Draw each point's `label` beside its marker.",
+            "defaultValue": "false"
+          },
+          {
+            "name": "activePointId",
+            "type": "string",
+            "required": false,
+            "description": "The point to single out: its marker enlarges and its callout renders."
+          },
+          {
+            "name": "interactive",
+            "type": "boolean",
+            "required": false,
+            "description": "Markers are real buttons: hoverable, focusable, clickable. Off, they become inert glyphs and the map is one image.",
+            "defaultValue": "true"
+          },
+          {
+            "name": "onPointHover",
+            "type": "((point: WorldMapPoint | null) => void)",
+            "required": false,
+            "description": "Fires as the pointer enters a marker (or it takes focus), and with `null` as it leaves."
+          },
+          {
+            "name": "onPointClick",
+            "type": "((point: WorldMapPoint) => void)",
+            "required": false,
+            "description": "Fires when a marker is clicked."
+          },
+          {
+            "name": "renderCallout",
+            "type": "((point: WorldMapPoint) => ReactNode)",
+            "required": false,
+            "description": "Renders the annotation for the active (or hovered) point, placed beside\nits marker in an HTML overlay; MapCallout is the intended filling. The\noverlay carries `data-side=\"left\"|\"right\"` for which side of the marker\nit opens on — toward the map's centre, where the room is."
+          },
+          {
+            "name": "renderHoverCard",
+            "type": "((point: WorldMapPoint) => ReactNode)",
+            "required": false,
+            "description": "Wraps each marker in the library's HoverCard, with this as the card's\ncontent — the floating-panel alternative to `renderCallout`'s bare\nreadout, opening on hover or focus with the system's delays and Escape\ndismissal. Content must be phrasing-level (spans), the panel's own\nrule. Opens upward, or downward for a marker near the frame's top.\nNeeds `interactive`; when both renderers are given, this one wins."
+          },
+          {
+            "name": "label",
+            "type": "string",
+            "required": false,
+            "description": "Accessible name for the map, e.g. \"Offices across the network\". The\npoint count is appended for screen readers.",
+            "defaultValue": "World map"
+          },
+          {
+            "name": "className",
+            "type": "string",
+            "required": false,
+            "description": "Additional CSS classes",
+            "defaultValue": ""
+          }
+        ]
+      }
+    ]
   }
 ];

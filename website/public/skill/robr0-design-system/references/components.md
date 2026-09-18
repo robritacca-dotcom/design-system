@@ -890,7 +890,7 @@ Two resizable regions with a draggable, keyboard-operable divider between them.
 - Rendering: client component (declares 'use client')
 - Contract: https://robertritacca.com/components/split-pane.md
 
-## Maps (3)
+## Maps (4)
 
 Geographic surfaces for showing where things are and what connects them, from the globe to its legend.
 
@@ -917,6 +917,14 @@ The corner block of a map: its name, what it shows, and the key to its markers.
 - Import: `import { MapLegend } from '@robr0/design-system';`
 - Rendering: server-renderable (no 'use client')
 - Contract: https://robertritacca.com/components/map-legend.md
+
+### World map
+
+A flat world map from Natural Earth land shapes: token-coloured continents, framed bounds, and colour-carrying markers.
+
+- Import: `import { WorldMap } from '@robr0/design-system';`
+- Rendering: client component (declares 'use client')
+- Contract: https://robertritacca.com/components/world-map.md
 
 ## Navigation (7)
 
