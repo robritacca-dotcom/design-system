@@ -10,6 +10,10 @@
  */
 import Image from "next/image";
 import { AgentStatus } from "@robr0/design-system/components/AgentStatus/AgentStatus";
+import { AnimatedNumber } from "@robr0/design-system/components/AnimatedNumber/AnimatedNumber";
+import { StatusDot } from "@robr0/design-system/components/StatusDot/StatusDot";
+import { Toolbar, ToolbarSeparator } from "@robr0/design-system/components/Toolbar/Toolbar";
+import { Waveform } from "@robr0/design-system/components/Waveform/Waveform";
 import { AiButton } from "@robr0/design-system/components/AiButton/AiButton";
 import { ChatHeader } from "@robr0/design-system/components/ChatHeader/ChatHeader";
 import { ChatMarker } from "@robr0/design-system/components/ChatMarker/ChatMarker";
@@ -152,6 +156,13 @@ const previews: Record<string, () => ReactNode> = {
           </div>
         </div>
       </div>
+    </>
+  ),
+  "animated-number": () => (
+    <>
+      <span style={{ fontSize: "28px", fontWeight: 700, color: "var(--color-text-primary)" }}>
+        <AnimatedNumber value={48210} />
+      </span>
     </>
   ),
   "app-layout": () => (
@@ -329,6 +340,17 @@ const previews: Record<string, () => ReactNode> = {
       <div style={{ display: "flex", gap: "8px" }}>
         <LegendTile label="Organic" value="74,500" swatch="var(--color-chart-series-1)" />
         <LegendTile label="Paid" value="38,500" swatch="var(--color-chart-series-2)" />
+      </div>
+    </>
+  ),
+  "lightbox": () => (
+    <>
+      {/* Static miniature of the viewer: media over a deep scrim with chevrons. */}
+      <div style={{ position: "relative", width: "140px", height: "84px", borderRadius: "8px", background: "rgba(0,0,0,0.82)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div style={{ width: "84px", height: "52px", borderRadius: "4px", background: "linear-gradient(135deg, var(--color-action-primary-bg), var(--color-core-accent-cobalt))" }} />
+        <span className="material-symbols-rounded" style={{ position: "absolute", left: "8px", fontSize: "14px", color: "#fff" }}>chevron_left</span>
+        <span className="material-symbols-rounded" style={{ position: "absolute", right: "8px", fontSize: "14px", color: "#fff" }}>chevron_right</span>
+        <span className="material-symbols-rounded" style={{ position: "absolute", top: "6px", right: "8px", fontSize: "12px", color: "#fff" }}>close</span>
       </div>
     </>
   ),
@@ -1344,6 +1366,15 @@ const previews: Record<string, () => ReactNode> = {
       </div>
     </>
   ),
+  "status-dot": () => (
+    <>
+      <div style={{ display: "flex", flexDirection: "column", gap: "10px", alignItems: "flex-start" }}>
+        <StatusDot variant="positive" label="Operational" />
+        <StatusDot variant="error" pulse label="Recording" />
+        <StatusDot variant="neutral" label="Offline" />
+      </div>
+    </>
+  ),
   "stepper": () => (
     <>
       <div aria-hidden="true" className={styles.previewRow} style={{ gap: "0", alignItems: "center" }}>
@@ -1514,6 +1545,17 @@ const previews: Record<string, () => ReactNode> = {
       </div>
     </>
   ),
+  "toolbar": () => (
+    <>
+      <Toolbar label="Zoom controls preview">
+        <CircularButton icon="remove" variant="tertiary" size="compact" ariaLabel="Zoom out" tooltip={false} />
+        <span style={{ fontSize: "12px", fontWeight: 600, color: "var(--color-text-primary)" }}>100%</span>
+        <CircularButton icon="add" variant="tertiary" size="compact" ariaLabel="Zoom in" tooltip={false} />
+        <ToolbarSeparator />
+        <CircularButton icon="fit_screen" variant="tertiary" size="compact" ariaLabel="Fit to screen" tooltip={false} />
+      </Toolbar>
+    </>
+  ),
   "tooltip": () => (
     <>
       <div className={styles.popoverPreview}>
@@ -1533,6 +1575,11 @@ const previews: Record<string, () => ReactNode> = {
           <span style={{ alignSelf: "flex-end", fontSize: "10px", color: "var(--color-text-secondary)" }}>Resets Tue 3:00 pm</span>
         </div>
       </div>
+    </>
+  ),
+  "waveform": () => (
+    <>
+      <Waveform state="speaking" bars={9} />
     </>
   ),
   "world-map": () => (
