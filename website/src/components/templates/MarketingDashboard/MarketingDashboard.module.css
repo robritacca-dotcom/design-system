@@ -6,7 +6,9 @@
   position: relative;
   z-index: 1;
   display: flex;
-  min-height: 100vh;
+  /* From the pinned viewport variable, never bare 100vh — the templates
+     carousel and the canvas board size viewport-tall shells through it. */
+  min-height: calc(var(--layout-viewport-height, 100vh));
   /* Stretch across the body's own padding (the playground's pattern), so
      the app shell runs edge to edge instead of sitting in the doc-page
      column; the primitives here mirror the body's inset in globals.css. */
