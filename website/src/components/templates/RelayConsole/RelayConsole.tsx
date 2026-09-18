@@ -4,12 +4,24 @@
  * The relay console template: the network screen for Meridian, a fictional
  * relay network, built from the design system alone. The shell is the
  * marketing dashboard's (floating AppSidebar, slim top bar, docked mock
- * assistant); the page itself is one instrument. The Globe holds the whole
- * stage, and the screen's furniture lives on the stage's bottom corners the
- * way a map's does: the name, key, and legend on the left, the network's
- * headline numbers and the steering hint on the right. Every colour,
- * radius, space, and type style is a semantic token; every control is a
- * library component.
+ * assistant); the page is one instrument with two projections of the same
+ * network, flipped by the SegmentedControl floating on the stage's top-left:
+ * the Globe for the geometry (stations, relays, and the links between them)
+ * and the flat WorldMap for status at a glance (stations coloured through
+ * the status roles, covering the stage full-bleed with the library's
+ * HoverCard carrying each marker's readings and the zoom pill for moving
+ * around). The stage carries its own toolbar along its top edge: the flip
+ * on the left, and three matching compact selects on the right (design.md's
+ * one-species rule) — the region steer drives both projections, the globe's
+ * rotation and the map's framing, and the status and marker filters thin
+ * both at once, with the headline numbers deriving from the filtered set so
+ * the figures and the markers can never disagree. The stage's other furniture
+ * rides its bottom corners — the name, key, and per-view legend on the
+ * left, the numbers and the steering hint on the right — and the content
+ * column runs the full viewport width, because a map earns it (the
+ * convergence that retired the standalone portfolio-map template). Every
+ * colour, radius, space, and type style is a semantic token; every control
+ * is a library component.
  *
  * All data is fictional, so the route is excluded from the chat corpus (see
  * EXCLUDED_ROUTES in generate-site-corpus.mjs). The assistant is the shared
@@ -24,14 +36,25 @@ import {
 } from "@robr0/design-system/components/AppSidebar/AppSidebar";
 import { CircularButton } from "@robr0/design-system/components/CircularButton/CircularButton";
 import {
+  Dropdown,
+  type DropdownOption,
+} from "@robr0/design-system/components/Dropdown/Dropdown";
+import {
   Globe,
   type GlobeArc,
   type GlobePoint,
+  type GlobeRotation,
 } from "@robr0/design-system/components/Globe/Globe";
 import { Input } from "@robr0/design-system/components/Input/Input";
 import { Kbd } from "@robr0/design-system/components/Kbd/Kbd";
 import { MapCallout } from "@robr0/design-system/components/MapCallout/MapCallout";
 import { MapLegend } from "@robr0/design-system/components/MapLegend/MapLegend";
+import { SegmentedControl } from "@robr0/design-system/components/SegmentedControl/SegmentedControl";
+import {
+  WorldMap,
+  type WorldMapBounds,
+  type WorldMapPoint,
+} from "@robr0/design-system/components/WorldMap/WorldMap";
 import ThemeToggle from "../../ThemeToggle/ThemeToggle";
 import TemplateAssistant from "../TemplateAssistant/TemplateAssistant";
 import styles from "./RelayConsole.module.css";
@@ -77,6 +100,23 @@ const STATIONS: Station[] = [
   { id: "fra", name: "Frankfurt", code: "FRA-3", lat: 50.11, lng: 8.68, status: "operational", latencyMs: 61, throughput: 8.2 },
   { id: "sin", name: "Singapore", code: "SIN-1", lat: 1.35, lng: 103.82, status: "degraded", latencyMs: 143, throughput: 9.6 },
   { id: "syd", name: "Sydney", code: "SYD-1", lat: -33.87, lng: 151.21, status: "operational", latencyMs: 88, throughput: 4.4 },
+  { id: "lax", name: "Los Angeles", code: "LAX-1", lat: 34.05, lng: -118.24, status: "operational", latencyMs: 66, throughput: 7.1 },
+  { id: "mex", name: "Mexico City", code: "MEX-2", lat: 19.43, lng: -99.13, status: "operational", latencyMs: 79, throughput: 4.9 },
+  { id: "scl", name: "Santiago", code: "SCL-1", lat: -33.45, lng: -70.66, status: "operational", latencyMs: 96, throughput: 3.8 },
+  { id: "bog", name: "Bogotá", code: "BOG-1", lat: 4.71, lng: -74.07, status: "maintenance", latencyMs: 121, throughput: 0.7 },
+  { id: "lis", name: "Lisbon", code: "LIS-2", lat: 38.72, lng: -9.14, status: "operational", latencyMs: 63, throughput: 5.2 },
+  { id: "lon", name: "London", code: "LON-4", lat: 51.5, lng: -0.12, status: "operational", latencyMs: 58, throughput: 8.9 },
+  { id: "sto", name: "Stockholm", code: "STO-2", lat: 59.33, lng: 18.07, status: "operational", latencyMs: 62, throughput: 6.3 },
+  { id: "ath", name: "Athens", code: "ATH-1", lat: 37.98, lng: 23.73, status: "degraded", latencyMs: 131, throughput: 2.4 },
+  { id: "cai", name: "Cairo", code: "CAI-1", lat: 30.04, lng: 31.24, status: "operational", latencyMs: 92, throughput: 3.5 },
+  { id: "lag", name: "Lagos", code: "LOS-1", lat: 6.52, lng: 3.37, status: "operational", latencyMs: 98, throughput: 4.1 },
+  { id: "nbo", name: "Nairobi", code: "NBO-2", lat: -1.29, lng: 36.82, status: "operational", latencyMs: 104, throughput: 2.9 },
+  { id: "cpt", name: "Cape Town", code: "CPT-1", lat: -33.92, lng: 18.42, status: "operational", latencyMs: 109, throughput: 2.6 },
+  { id: "dxb", name: "Dubai", code: "DXB-3", lat: 25.2, lng: 55.27, status: "operational", latencyMs: 84, throughput: 7.6 },
+  { id: "bom", name: "Mumbai", code: "BOM-2", lat: 19.08, lng: 72.88, status: "degraded", latencyMs: 137, throughput: 5.4 },
+  { id: "hkg", name: "Hong Kong", code: "HKG-1", lat: 22.32, lng: 114.17, status: "operational", latencyMs: 81, throughput: 8.4 },
+  { id: "tyo", name: "Tokyo", code: "TYO-2", lat: 35.68, lng: 139.69, status: "operational", latencyMs: 76, throughput: 7.9 },
+  { id: "akl", name: "Auckland", code: "AKL-1", lat: -36.85, lng: 174.76, status: "operational", latencyMs: 101, throughput: 3.2 },
 ];
 
 type Relay = {
@@ -93,27 +133,13 @@ const RELAYS: Relay[] = [
   { id: "k7", name: "Relay K-7", lat: 45, lng: -35, route: "YYZ-1 to KEF-1", loadPct: 58, handoff: "Handoff to KEF-1 in 22 min" },
   { id: "k9", name: "Relay K-9", lat: 38, lng: -165, route: "SEA-2 to SYD-1", loadPct: 41, handoff: "Handoff to SYD-1 in 54 min" },
   { id: "k4", name: "Relay K-4", lat: -8, lng: 78, route: "FRA-3 to SIN-1", loadPct: 83, handoff: "Handoff to SIN-1 in 9 min" },
+  { id: "k2", name: "Relay K-2", lat: 15, lng: -40, route: "LIS-2 to SCL-1", loadPct: 47, handoff: "Handoff to SCL-1 in 38 min" },
+  { id: "k5", name: "Relay K-5", lat: -25, lng: 68, route: "CPT-1 to BOM-2", loadPct: 61, handoff: "Handoff to BOM-2 in 17 min" },
+  { id: "k11", name: "Relay K-11", lat: 8, lng: 140, route: "HKG-1 to AKL-1", loadPct: 36, handoff: "Handoff to AKL-1 in 41 min" },
 ];
 
-const POINTS: GlobePoint[] = [
-  ...STATIONS.map((s) => ({
-    id: s.id,
-    lat: s.lat,
-    lng: s.lng,
-    label: s.code,
-    kind: "anchor" as const,
-  })),
-  ...RELAYS.map((r) => ({
-    id: r.id,
-    lat: r.lat,
-    lng: r.lng,
-    label: r.name.replace("Relay ", ""),
-    kind: "point" as const,
-  })),
-];
-
-/* The two links feeding the degraded station carry the warning colour; the
-   backbone keeps the default gradient. GRU-1 has no links while drained,
+/* Links feeding a degraded station carry the warning colour; the backbone
+   keeps the default gradient. GRU-1 and BOG-1 have no links while drained,
    which is the point: the missing lines are the maintenance story. */
 const DEGRADED_LINK = "var(--color-status-warning-border)";
 const ARCS: GlobeArc[] = [
@@ -126,6 +152,27 @@ const ARCS: GlobeArc[] = [
   { from: "fra", to: "k4", altitude: 0.2 },
   { from: "k4", to: "sin", altitude: 0.14, color: DEGRADED_LINK },
   { from: "sin", to: "syd", altitude: 0.16, color: DEGRADED_LINK },
+  { from: "sea", to: "lax", altitude: 0.08 },
+  { from: "lax", to: "mex", altitude: 0.08 },
+  { from: "mex", to: "scl", altitude: 0.16 },
+  { from: "lis", to: "k2", altitude: 0.2 },
+  { from: "k2", to: "scl", altitude: 0.2 },
+  { from: "lon", to: "kef", altitude: 0.1 },
+  { from: "lon", to: "fra", altitude: 0.06 },
+  { from: "lis", to: "lon", altitude: 0.08 },
+  { from: "fra", to: "sto", altitude: 0.08 },
+  { from: "fra", to: "ath", altitude: 0.1, color: DEGRADED_LINK },
+  { from: "cai", to: "dxb", altitude: 0.1 },
+  { from: "lag", to: "lis", altitude: 0.14 },
+  { from: "nbo", to: "cai", altitude: 0.1 },
+  { from: "cpt", to: "k5", altitude: 0.18 },
+  { from: "k5", to: "bom", altitude: 0.18, color: DEGRADED_LINK },
+  { from: "hkg", to: "sin", altitude: 0.08 },
+  { from: "hkg", to: "tyo", altitude: 0.1 },
+  { from: "tyo", to: "sea", altitude: 0.22 },
+  { from: "hkg", to: "k11", altitude: 0.16 },
+  { from: "k11", to: "akl", altitude: 0.16 },
+  { from: "syd", to: "akl", altitude: 0.08 },
 ];
 
 const STATUS_LABEL: Record<StationStatus, string> = {
@@ -134,20 +181,56 @@ const STATUS_LABEL: Record<StationStatus, string> = {
   maintenance: "Maintenance",
 };
 
-/* The console's headline numbers, derived from the station table so the
-   figures and the markers can never disagree. */
-const MEDIAN_LATENCY = (() => {
-  const sorted = STATIONS.map((s) => s.latencyMs).sort((a, b) => a - b);
-  return sorted[Math.floor(sorted.length / 2)];
-})();
-const TOTAL_THROUGHPUT = STATIONS.reduce((sum, s) => sum + s.throughput, 0);
-const ONLINE_COUNT = STATIONS.filter((s) => s.status !== "maintenance").length;
+/* On the flat map, station status is the colour channel — the status roles
+   doing their day job, where the globe puts the warning on its links. */
+const STATUS_COLOR: Record<StationStatus, string> = {
+  operational: "var(--color-status-positive-border)",
+  degraded: "var(--color-status-warning-border)",
+  maintenance: "var(--color-status-neutral-border)",
+};
 
-const NETWORK_METRICS = [
-  { label: "Stations online", value: `${ONLINE_COUNT} of ${STATIONS.length}` },
-  { label: "Active links", value: `${ARCS.length}` },
-  { label: "Median latency", value: `${MEDIAN_LATENCY} ms` },
-  { label: "Throughput", value: `${TOTAL_THROUGHPUT.toFixed(1)} Gb/s` },
+/* The region steer drives both projections: the globe turns to `rotation`,
+   the map reframes to `bounds` — the roadmap planner's window-select
+   convention applied to a camera. Every frame covers the stage edge to
+   edge (no letterbox bands: the map holds the full height), and whatever
+   the crop hides is a grab away, since panning roams the whole world. */
+const REGIONS: {
+  value: string;
+  label: string;
+  rotation: GlobeRotation;
+  bounds: WorldMapBounds;
+}[] = [
+  { value: "global", label: "Global view", rotation: [-30, 25], bounds: [-180, -56, 180, 78] },
+  { value: "americas", label: "Americas", rotation: [-90, 15], bounds: [-135, -56, -30, 62] },
+  { value: "emea", label: "Europe & Africa", rotation: [15, 15], bounds: [-27, -38, 56, 66] },
+  { value: "apac", label: "Asia-Pacific", rotation: [120, 5], bounds: [60, -48, 179, 62] },
+];
+
+const REGION_OPTIONS: DropdownOption[] = REGIONS.map(({ value, label }) => ({
+  value,
+  label,
+  icon: value === "global" ? "public" : "travel_explore",
+}));
+
+const STATUS_ICON: Record<StationStatus, string> = {
+  operational: "check_circle",
+  degraded: "warning",
+  maintenance: "build",
+};
+
+const STATUS_OPTIONS: DropdownOption[] = [
+  { value: "all", label: "All statuses", icon: "filter_alt" },
+  ...(Object.keys(STATUS_LABEL) as StationStatus[]).map((s) => ({
+    value: s,
+    label: STATUS_LABEL[s],
+    icon: STATUS_ICON[s],
+  })),
+];
+
+const KIND_OPTIONS: DropdownOption[] = [
+  { value: "all", label: "Stations & relays", icon: "hub" },
+  { value: "stations", label: "Stations only", icon: "cell_tower" },
+  { value: "relays", label: "Relays only", icon: "satellite_alt" },
 ];
 
 const CHAT_SUGGESTIONS = [
@@ -158,8 +241,8 @@ const CHAT_SUGGESTIONS = [
 
 const CHAT_REPLIES: Record<string, string> = {
   sin: "SIN-1 is running at 91% capacity, and its latency is up 38 ms since the 09:12 queue-depth alert. The console has already rerouted 18% of its traffic to SYD-1; if the queue keeps growing, the next step is draining the K-4 link.",
-  health: "Six of seven stations are online: five operational, SIN-1 degraded at 91% capacity, and GRU-1 drained for antenna replacement. The nine active links carry 43.2 Gb/s at a median latency of 71 ms, and thirty-day uptime holds at 99.982%.",
-  relay: "A relay is the moving half of the network: K-7, K-9 and K-4 carry traffic between ground stations across ocean segments no cable serves. Each one shows on the globe as a cross, with its current route and the next handoff in its callout.",
+  health: "Twenty-two of twenty-four stations are online: nineteen operational, and three degraded, with SIN-1 at 91% capacity and ATH-1 and BOM-2 on reduced service. GRU-1 and BOG-1 are drained for maintenance. The thirty active links carry 128.1 Gb/s at a median latency of 88 ms, and thirty-day uptime holds at 99.982%.",
+  relay: "A relay is the moving half of the network: the six relays in transit carry traffic between ground stations across ocean segments no cable serves. Each one carries its current route and the next handoff in its callout, drawn as a cross on the globe and a dot on the map.",
 };
 
 const CHAT_FALLBACK =
@@ -181,14 +264,104 @@ export default function RelayConsole() {
   const [selectedId, setSelectedId] = React.useState<string | null>(null);
   const [hoverId, setHoverId] = React.useState<string | null>(null);
   const [chatOpen, setChatOpen] = React.useState(false);
+  const [view, setView] = React.useState("globe");
+  const [region, setRegion] = React.useState(REGIONS[0].value);
+  const [rotation, setRotation] = React.useState<GlobeRotation>(
+    REGIONS[0].rotation,
+  );
+  const [statusFilter, setStatusFilter] = React.useState("all");
+  const [kindFilter, setKindFilter] = React.useState("all");
 
-  /* Clicking a marker pins its callout; clicking it again lets it go. The
-     globe owns its own rotation, drifting until something is pinned. */
+  const activeRegion = REGIONS.find((r) => r.value === region) ?? REGIONS[0];
+
+  const steerToRegion = (value: string) => {
+    setRegion(value);
+    const target = REGIONS.find((r) => r.value === value);
+    if (target) setRotation(target.rotation);
+  };
+
+  /* The filters thin both projections at once; an arc whose endpoint is
+     filtered out disappears with it (both drawings skip unknown ids). */
+  const visibleStations = STATIONS.filter(
+    (s) =>
+      kindFilter !== "relays" &&
+      (statusFilter === "all" || s.status === statusFilter),
+  );
+  const visibleRelays = kindFilter === "stations" ? [] : RELAYS;
+
+  const points: GlobePoint[] = [
+    ...visibleStations.map((s) => ({
+      id: s.id,
+      lat: s.lat,
+      lng: s.lng,
+      label: s.code,
+      kind: "anchor" as const,
+      color: STATUS_COLOR[s.status],
+    })),
+    ...visibleRelays.map((r) => ({
+      id: r.id,
+      lat: r.lat,
+      lng: r.lng,
+      label: r.name.replace("Relay ", ""),
+      kind: "point" as const,
+    })),
+  ];
+
+  const mapPoints: WorldMapPoint[] = [
+    ...visibleStations.map((s) => ({
+      id: s.id,
+      lat: s.lat,
+      lng: s.lng,
+      label: s.code,
+      kind: "anchor" as const,
+      color: STATUS_COLOR[s.status],
+    })),
+    ...visibleRelays.map((r) => ({
+      id: r.id,
+      lat: r.lat,
+      lng: r.lng,
+      label: r.name,
+    })),
+  ];
+
+  /* The console's headline numbers, derived from the filtered set so the
+     figures and the markers can never disagree. */
+  const visibleIds = new Set(points.map((p) => p.id));
+  const activeLinks = ARCS.filter(
+    (a) => visibleIds.has(a.from) && visibleIds.has(a.to),
+  ).length;
+  const onlineCount = visibleStations.filter(
+    (s) => s.status !== "maintenance",
+  ).length;
+  const sortedLatencies = visibleStations
+    .map((s) => s.latencyMs)
+    .sort((a, b) => a - b);
+  const medianLatency =
+    sortedLatencies.length > 0
+      ? sortedLatencies[Math.floor(sortedLatencies.length / 2)]
+      : null;
+  const totalThroughput = visibleStations.reduce(
+    (sum, s) => sum + s.throughput,
+    0,
+  );
+
+  const metrics = [
+    { label: "Stations online", value: `${onlineCount} of ${visibleStations.length}` },
+    { label: "Active links", value: `${activeLinks}` },
+    { label: "Median latency", value: medianLatency === null ? "—" : `${medianLatency} ms` },
+    { label: "Throughput", value: `${totalThroughput.toFixed(1)} Gb/s` },
+  ];
+
+  /* Clicking a globe marker pins its callout; clicking it again lets it go.
+     The globe drifts on its own until something is pinned; a filter that
+     removes the pinned marker clears the pin with it. */
   const handlePointClick = (point: GlobePoint) => {
     setSelectedId((current) => (current === point.id ? null : point.id));
   };
 
-  const activePointId = hoverId ?? selectedId ?? undefined;
+  const activeCandidate = hoverId ?? selectedId ?? undefined;
+  const activePointId =
+    activeCandidate && visibleIds.has(activeCandidate) ? activeCandidate : undefined;
 
   const renderCallout = (point: GlobePoint) => {
     const station = STATIONS.find((s) => s.id === point.id);
@@ -215,6 +388,42 @@ export default function RelayConsole() {
           coordinates(relay.lat, relay.lng),
         ]}
       />
+    );
+  };
+
+  /* The flat map's hover cards, through the library's HoverCard (the map
+     composes it around the marker). Spans only — the panel is a <span>. */
+  const renderHoverCard = (point: WorldMapPoint) => {
+    const station = STATIONS.find((s) => s.id === point.id);
+    if (station) {
+      return (
+        <span className={styles.card}>
+          <span className={styles.cardName}>{station.code}</span>
+          <span className={styles.cardCity}>{station.name}</span>
+          <span className={styles.cardMeta}>
+            <span
+              className={styles.legendDot}
+              style={{ color: STATUS_COLOR[station.status] }}
+              aria-hidden="true"
+            />
+            {STATUS_LABEL[station.status]}
+          </span>
+          <span className={styles.cardBook}>
+            {station.latencyMs} ms · {station.throughput.toFixed(1)} Gb/s
+          </span>
+        </span>
+      );
+    }
+    const relay = RELAYS.find((r) => r.id === point.id);
+    if (!relay) return null;
+    return (
+      <span className={styles.card}>
+        <span className={styles.cardName}>{relay.name}</span>
+        <span className={styles.cardCity}>{relay.route}</span>
+        <span className={styles.cardBook}>
+          {relay.loadPct}% load · {relay.handoff.toLowerCase()}
+        </span>
+      </span>
     );
   };
 
@@ -270,22 +479,78 @@ export default function RelayConsole() {
 
           {/* ------------------------------------------------- the stage */}
           <section className={styles.stage} aria-label="Network view">
-            <div className={styles.globeBox}>
-              <Globe
-                points={POINTS}
-                arcs={ARCS}
-                defaultRotation={[-45, 30]}
-                autoRotate={selectedId ? 0 : 0.4}
-                interactive
-                showLabels
-                activePointId={activePointId}
-                onPointHover={(point) => setHoverId(point ? point.id : null)}
-                onPointClick={handlePointClick}
-                renderCallout={renderCallout}
-                label="Meridian relay network: stations, relays, and links"
-                className={styles.globe}
-              />
+            {/* The stage's own toolbar, floating along its top edge: the
+                projection flip on the left, and the three matching compact
+                selects on the right — the region steer drives both
+                projections, the two filters thin them. */}
+            <div className={styles.stageBar}>
+              {/* Default-size controls across the bar — one size per row. */}
+              <div className={styles.viewToggle}>
+                <SegmentedControl
+                  segments={[
+                    { value: "globe", label: "Globe", icon: "public" },
+                    { value: "map", label: "Map", icon: "map" },
+                  ]}
+                  activeSegment={view}
+                  onSegmentChange={setView}
+                  ariaLabel="Network projection"
+                />
+              </div>
+              <div className={styles.filters}>
+                <Dropdown
+                  options={REGION_OPTIONS}
+                  value={region}
+                  onValueChange={steerToRegion}
+                  aria-label="Steer the view to a region"
+                  className={styles.filterSelect}
+                />
+                <Dropdown
+                  options={STATUS_OPTIONS}
+                  value={statusFilter}
+                  onValueChange={setStatusFilter}
+                  aria-label="Filter stations by status"
+                  className={styles.filterSelect}
+                />
+                <Dropdown
+                  options={KIND_OPTIONS}
+                  value={kindFilter}
+                  onValueChange={setKindFilter}
+                  aria-label="Filter by marker kind"
+                  className={styles.filterSelect}
+                />
+              </div>
             </div>
+
+            {view === "globe" ? (
+              <div className={styles.globeBox}>
+                <Globe
+                  points={points}
+                  arcs={ARCS}
+                  rotation={rotation}
+                  onRotationChange={setRotation}
+                  autoRotate={selectedId ? 0 : 0.4}
+                  interactive
+                  showLabels
+                  activePointId={activePointId}
+                  onPointHover={(point) => setHoverId(point ? point.id : null)}
+                  onPointClick={handlePointClick}
+                  renderCallout={renderCallout}
+                  label="Meridian relay network: stations, relays, and links"
+                  className={styles.globe}
+                />
+              </div>
+            ) : (
+              <div className={styles.mapBox}>
+                <WorldMap
+                  points={mapPoints}
+                  bounds={activeRegion.bounds}
+                  fit="cover"
+                  showZoomControls
+                  renderHoverCard={renderHoverCard}
+                  label="Meridian relay network: stations and relays by status"
+                />
+              </div>
+            )}
 
             {/* The screen's identity and key, in the readout voice, on the
                 corner the sphere leaves empty. */}
@@ -295,13 +560,34 @@ export default function RelayConsole() {
                 Ground stations, relays in transit, and the links carrying
                 tonight&apos;s traffic.
               </p>
+              {/* One key for one dataset: stations carry their status colour
+                  on both projections, so the legend never changes with the
+                  view — the globe simply adds the links the flat map does
+                  not draw. */}
               <MapLegend
                 className={styles.legend}
                 items={[
-                  { glyph: "anchor", label: "Ground station" },
-                  { glyph: "point", label: "Relay in transit" },
-                  { glyph: "arc", label: "Backbone link" },
-                  { glyph: "line", color: DEGRADED_LINK, label: "Degraded link" },
+                  ...(Object.keys(STATUS_LABEL) as StationStatus[]).map(
+                    (status) => ({
+                      glyph: (
+                        <span
+                          className={styles.legendAnchor}
+                          style={{ color: STATUS_COLOR[status] }}
+                        />
+                      ),
+                      label: `Station ${STATUS_LABEL[status].toLowerCase()}`,
+                    }),
+                  ),
+                  {
+                    glyph: <span className={styles.legendDot} />,
+                    label: "Relay in transit",
+                  },
+                  { glyph: "arc" as const, label: "Backbone link" },
+                  {
+                    glyph: "line" as const,
+                    color: DEGRADED_LINK,
+                    label: "Degraded link",
+                  },
                 ]}
               />
             </div>
@@ -311,22 +597,34 @@ export default function RelayConsole() {
             <div className={styles.metaRight}>
               <div className={styles.metricsRow} aria-label="Network summary">
                 <span className={styles.liveDot} aria-hidden="true" />
-                {NETWORK_METRICS.map((metric) => (
+                {metrics.map((metric) => (
                   <div key={metric.label} className={styles.metric}>
                     <span className={styles.metricValue}>{metric.value}</span>
                     <span className={styles.metricLabel}>{metric.label}</span>
                   </div>
                 ))}
               </div>
-              <p className={styles.kbdHint}>
-                <span className={styles.kbdRow} aria-hidden="true">
-                  <Kbd size="compact">W</Kbd>
-                  <Kbd size="compact">A</Kbd>
-                  <Kbd size="compact">S</Kbd>
-                  <Kbd size="compact">D</Kbd>
-                </span>
-                Drag the globe, or steer with the keys
-              </p>
+              {view === "globe" ? (
+                <p className={styles.kbdHint}>
+                  <span className={styles.kbdRow} aria-hidden="true">
+                    <Kbd size="compact">W</Kbd>
+                    <Kbd size="compact">A</Kbd>
+                    <Kbd size="compact">S</Kbd>
+                    <Kbd size="compact">D</Kbd>
+                  </span>
+                  Drag the globe, or steer with the keys
+                </p>
+              ) : (
+                <p className={styles.kbdHint}>
+                  <span className={styles.kbdRow} aria-hidden="true">
+                    <Kbd size="compact">←</Kbd>
+                    <Kbd size="compact">↑</Kbd>
+                    <Kbd size="compact">↓</Kbd>
+                    <Kbd size="compact">→</Kbd>
+                  </span>
+                  Drag the map, or pan with the keys
+                </p>
+              )}
             </div>
           </section>
         </div>

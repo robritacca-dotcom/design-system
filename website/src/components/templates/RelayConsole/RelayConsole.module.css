@@ -52,9 +52,11 @@
   }
 }
 
+/* The family's content column, minus its 1680px max-width — the map view
+   earns the full viewport width, and the globe holds the wider stage just
+   as well (the structural pick from the retired portfolio-map screen). */
 .content {
   width: 100%;
-  max-width: 1680px;
   min-width: 0;
   min-height: 0;
   display: flex;
@@ -121,6 +123,51 @@
   width: 100%;
 }
 
+/* The flat projection fills the stage; WorldMap letterboxes the world
+   inside it and brings its own zoom pill. */
+.mapBox {
+  position: absolute;
+  inset: 0;
+}
+
+/* The stage's own toolbar, floating along its top edge: the projection
+   flip ranged left, the filter selects ranged right. The bar itself lets
+   the pointer through, so the gap between clusters still grabs the map. */
+.stageBar {
+  position: absolute;
+  top: var(--padding-lg);
+  left: var(--padding-lg);
+  right: var(--padding-lg);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--gap-sm);
+  flex-wrap: wrap;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.viewToggle,
+.filters {
+  pointer-events: auto;
+}
+
+/* Three matching selects at the default size, with icons on the choices —
+   the stage bar reads at arm's length where a data view's compact row
+   would not. */
+.filters {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.filterSelect {
+  width: 232px;
+  flex-shrink: 0;
+}
+
 /* ---------------------------------------------------- corner metadata */
 
 .metaLeft,
@@ -171,6 +218,63 @@
 
 .legend {
   margin-top: var(--gap-xs);
+}
+
+/* Legend swatches for the flat view — the map's own 10px marker geometry
+   in miniature, coloured through currentColor so one inline `color` tints
+   a square's ring or a dot's fill. */
+.legendDot {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  background-color: currentColor;
+  color: var(--color-text-secondary);
+}
+
+.legendAnchor {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-xxs);
+  background-color: var(--color-bg-container-primary);
+  box-shadow: inset 0 0 0 2px currentColor;
+  color: var(--color-text-secondary);
+}
+
+/* ------------------------------------------------------ marker cards */
+
+/* The flat view's hover-card content — spans only, because HoverCard's
+   panel is a <span> (its own contract); display comes from CSS. */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xxs);
+}
+
+.cardName {
+  font-weight: var(--font-paragraph-sm-em-weight);
+  color: var(--color-text-primary);
+}
+
+.cardCity {
+  font-size: var(--font-caption-size);
+  line-height: var(--font-caption-line-height);
+  color: var(--color-text-tertiary);
+}
+
+.cardMeta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-xs);
+  color: var(--color-text-secondary);
+}
+
+.cardBook {
+  font-size: var(--font-caption-size);
+  line-height: var(--font-caption-line-height);
+  color: var(--color-text-secondary);
+  font-variant-numeric: tabular-nums;
 }
 
 /* The headline numbers as a quiet strip: live dot, then value-over-label
@@ -254,8 +358,22 @@
     gap: var(--gap-lg);
   }
 
+  /* The stage's toolbar leaves the floating layer and stacks first in
+     normal flow, so it never overlaps the drawing below it. */
+  .stageBar {
+    position: static;
+  }
+
   .globeBox {
     width: min(100%, 480px);
+  }
+
+  /* The flat view keeps the viewport's height in normal flow. */
+  .mapBox {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: max(420px, calc(var(--layout-viewport-height, 100vh) - 320px));
   }
 
   .metaLeft,

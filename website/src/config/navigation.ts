@@ -255,7 +255,7 @@ export const templatesSidebarLinks: NavLink[] = [
   {
     href: "/templates/relay-console",
     label: "Relay console",
-    description: "A network operations screen around an interactive globe",
+    description: "A network operations screen flipping between globe and map",
   },
   {
     href: "/templates/team-calendar",
