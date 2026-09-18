@@ -174,6 +174,9 @@ type View = { key: string; zoom: number; cx: number; cy: number };
  * than turn — still no map library and no tile server: the land ships as
  * one baked path, so the whole map themes with the tokens.
  *
+ * The root fills its container: give the wrapper the size, never the root
+ * a height through `className` — that would tie with the component's own
+ * fill rule at equal specificity and lose in some stylesheet orders.
  * Frame it with `bounds` (a lng/lat window that becomes the viewBox) and
  * `fit` (`cover` fills a stage edge to edge); `showZoomControls` adds zoom
  * into the window, with drag and arrow-key panning while zoomed. Markers

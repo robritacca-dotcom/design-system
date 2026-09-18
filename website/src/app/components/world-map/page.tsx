@@ -80,23 +80,27 @@ export default function WorldMapPage() {
               (every marker is a real button), and drag to pan while zoomed.
             </p>
             <div className={styles.mapSurface}>
-              <WorldMap
-                points={points}
-                bounds={[-30, 35, 32, 66]}
-                fit="cover"
-                showZoomControls
-                label="Sites across Europe"
-                renderCallout={(point) => (
-                  <MapCallout
-                    title={point.label ?? point.id}
-                    lines={[
-                      point.kind === "anchor" ? "Hub" : "Site",
-                      `${point.lat.toFixed(2)} / ${point.lng.toFixed(2)}`,
-                    ]}
-                  />
-                )}
-                className={styles.mapStage}
-              />
+              {/* The map fills its container — the wrapper owns the height,
+                  never a class on the component root (its own fill rule
+                  would tie with it at equal specificity). */}
+              <div className={styles.mapStage}>
+                <WorldMap
+                  points={points}
+                  bounds={[-30, 35, 32, 66]}
+                  fit="cover"
+                  showZoomControls
+                  label="Sites across Europe"
+                  renderCallout={(point) => (
+                    <MapCallout
+                      title={point.label ?? point.id}
+                      lines={[
+                        point.kind === "anchor" ? "Hub" : "Site",
+                        `${point.lat.toFixed(2)} / ${point.lng.toFixed(2)}`,
+                      ]}
+                    />
+                  )}
+                />
+              </div>
               <div className={styles.mapLegendSlot}>
                 <MapLegend
                   title="Meridian"
@@ -122,12 +126,13 @@ export default function WorldMapPage() {
             <div className={styles.exampleRow}>
               <div className={styles.exampleCell}>
                 <span className={styles.exampleLabel}>The whole world</span>
-                <WorldMap
-                  points={worldPoints}
-                  interactive={false}
-                  label="Sites worldwide"
-                  className={styles.worldFrame}
-                />
+                <div className={styles.worldFrame}>
+                  <WorldMap
+                    points={worldPoints}
+                    interactive={false}
+                    label="Sites worldwide"
+                  />
+                </div>
               </div>
             </div>
           </section>
@@ -145,15 +150,16 @@ export default function WorldMapPage() {
             <div className={styles.exampleRow}>
               <div className={styles.exampleCell}>
                 <span className={styles.exampleLabel}>Labelled, by series</span>
-                <WorldMap
-                  points={points}
-                  bounds={[-32, 34, 36, 68]}
-                  showLabels
-                  interactive={false}
-                  graticuleStep={0}
-                  label="Labelled sites by series"
-                  className={styles.regionFrame}
-                />
+                <div className={styles.regionFrame}>
+                  <WorldMap
+                    points={points}
+                    bounds={[-32, 34, 36, 68]}
+                    showLabels
+                    interactive={false}
+                    graticuleStep={0}
+                    label="Labelled sites by series"
+                  />
+                </div>
               </div>
             </div>
           </section>

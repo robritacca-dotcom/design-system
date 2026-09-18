@@ -118,7 +118,10 @@
   background: var(--color-bg-container-primary-semi);
 }
 
+/* The map fills its container, so these wrappers own the size — a height
+   on the component root itself would tie with its own fill rule. */
 .mapStage {
+  width: 100%;
   height: 440px;
 }
 
@@ -151,10 +154,12 @@
    FRAMED EXAMPLES
    ============================================ */
 .worldFrame {
+  width: 100%;
   height: 380px;
 }
 
 .regionFrame {
+  width: 100%;
   height: 420px;
 }
 
