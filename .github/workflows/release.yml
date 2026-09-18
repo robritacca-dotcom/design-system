@@ -75,6 +75,10 @@ name: Release
 #   refresh, Dropdown's typeface preview, the micro-animation pass
 #   (SegmentedControl's sliding pill, Button's trailing-icon nudge), and
 #   ToggleSwitch labels hugging the track.
+# 0.20.0 shipped 2026-09-18 — six components to 132: WorldMap, the flat
+#   companion to Globe, plus Toolbar, Lightbox, Waveform, AnimatedNumber
+#   and StatusDot; Lightbox is the first overlay born on the shared
+#   behavior layer, and the count-up budget joins the motion constants.
 
 on:
   workflow_dispatch:

@@ -2,7 +2,7 @@
 
 A flat world map from Natural Earth land shapes: token-coloured continents, framed bounds, and colour-carrying markers.
 
-Generated from the @robr0/design-system registry and prop JSDoc, version 0.19.0. The same data ships in the package's .d.ts and is served by the MCP endpoint at https://robertritacca.com/api/mcp.
+Generated from the @robr0/design-system registry and prop JSDoc, version 0.20.0. The same data ships in the package's .d.ts and is served by the MCP endpoint at https://robertritacca.com/api/mcp.
 
 - Category: maps
 - Import: `import { WorldMap } from '@robr0/design-system';`

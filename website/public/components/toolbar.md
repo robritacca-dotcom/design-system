@@ -2,7 +2,7 @@
 
 A grouped strip of controls in one pill shell: clusters, separators, arrow-key focus, and a glass floating variant.
 
-Generated from the @robr0/design-system registry and prop JSDoc, version 0.19.0. The same data ships in the package's .d.ts and is served by the MCP endpoint at https://robertritacca.com/api/mcp.
+Generated from the @robr0/design-system registry and prop JSDoc, version 0.20.0. The same data ships in the package's .d.ts and is served by the MCP endpoint at https://robertritacca.com/api/mcp.
 
 - Category: layout
 - Import: `import { Toolbar } from '@robr0/design-system';`

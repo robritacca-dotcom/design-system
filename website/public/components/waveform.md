@@ -2,7 +2,7 @@
 
 Voice made visible: a row of bars dancing on the shared twelve-slot cycle, or tracking a live analyser level by level.
 
-Generated from the @robr0/design-system registry and prop JSDoc, version 0.19.0. The same data ships in the package's .d.ts and is served by the MCP endpoint at https://robertritacca.com/api/mcp.
+Generated from the @robr0/design-system registry and prop JSDoc, version 0.20.0. The same data ships in the package's .d.ts and is served by the MCP endpoint at https://robertritacca.com/api/mcp.
 
 - Category: ai
 - Import: `import { Waveform } from '@robr0/design-system';`

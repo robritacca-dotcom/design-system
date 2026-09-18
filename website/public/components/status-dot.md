@@ -2,7 +2,7 @@
 
 The bare status mark: a dot in the five status roles, with an optional label and a live pulse for recording and online-now states.
 
-Generated from the @robr0/design-system registry and prop JSDoc, version 0.19.0. The same data ships in the package's .d.ts and is served by the MCP endpoint at https://robertritacca.com/api/mcp.
+Generated from the @robr0/design-system registry and prop JSDoc, version 0.20.0. The same data ships in the package's .d.ts and is served by the MCP endpoint at https://robertritacca.com/api/mcp.
 
 - Category: feedback
 - Import: `import { StatusDot } from '@robr0/design-system';`
