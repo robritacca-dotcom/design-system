@@ -3,7 +3,7 @@
  *
  * Run deliberately — `node scripts/sync-worldmap-land.mjs` — never in the
  * build: like the essay sync, the build never touches the network, and the
- * generated module is committed. It fetches the 110m land polygons
+ * generated module is committed. It fetches the 50m land polygons
  * (Natural Earth is public domain, so the shapes ship in the npm package
  * with no licence burden), projects every ring into the component's Web
  * Mercator drawing space, and writes `src/components/WorldMap/land.ts`.
@@ -123,7 +123,7 @@ const path = rings.join('');
 const module_ = `/**
  * GENERATED-ONCE DATA — the WorldMap component's land shapes.
  *
- * Source: Natural Earth 110m land polygons (public domain), projected into
+ * Source: Natural Earth 50m land polygons (public domain), projected into
  * the component's Web Mercator drawing space (x 0..360 in longitude,
  * y 0..360 in projected latitude, ±85.05° clamp) with Antarctica and
  * sub-hairline islands dropped. Regenerate with

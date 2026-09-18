@@ -20,7 +20,7 @@ A template is a **website surface, not a library component**: it lives in `websi
 
 ### 1. Read the conventions before composing anything
 
-- **design.md's Template screens section owns the family's composition rules** — reference-as-direction, one control species per toolbar, the stage earning the viewport, people as initials. Read it in full; it exists so the next screen lands right without re-learning the review rounds that produced it.
+- **design.md's Template screens section owns the family's composition rules** — read it in full; it exists so the next screen lands right without re-learning the review rounds that produced it.
 - design.md's **Composition** section owns the page-assembly rules the family sits on (parent owns spacing, one level of chrome, a component that brings its own bordered chrome sits directly on the page).
 - All demo data is **fictional** — an invented product with an invented name, never a real company's screen with the serial numbers filed off. content-design.md's template-screens register row owns the copy rules.
 
@@ -32,6 +32,7 @@ The live implementations under `website/src/components/templates/` are the sourc
 - A timeline or scheduling stage — the roadmap planner or team calendar
 - An analytics shell — the marketing dashboard
 - A conversation-centred screen — the agent workbench
+- An instrument with one subject in two projections (a map or globe stage, a stage-mounted toolbar, full-width content) — the relay console
 
 Each implementation's doc comment records its own composition decisions; read the chosen exemplar's before writing.
 
@@ -40,7 +41,7 @@ Each implementation's doc comment records its own composition decisions; read th
 Create `website/src/components/templates/<Name>/` with `<Name>.tsx` + `<Name>.module.css`:
 
 - Open the `.tsx` with a doc comment in the exemplars' shape: what the screen is, the fictional product, the composition calls made and which design.md rules they follow, and the corpus-exclusion pointer.
-- **Size the shell from `--layout-viewport-height`** (`min-height: calc(var(--layout-viewport-height, 100vh))` — the exemplars' pattern), never bare `100vh`: the templates index carousel and the canvas board render pages in scaled same-origin iframes and pin that variable to give viewport-tall shells a fixed size.
+- **Size the shell from `--layout-viewport-height`** (`height:` or `min-height: calc(var(--layout-viewport-height, 100vh))`, whichever the screen's flow needs), never bare `100vh`: the templates index carousel and the canvas board render pages in scaled same-origin iframes and pin that variable to give viewport-tall shells a fixed size.
 - **The assistant panel**: a screen that wants a docked mock chat uses the shared `TemplateAssistant` (`website/src/components/templates/TemplateAssistant/`); a screen that is *itself* a chat surface builds its conversation pane inline instead — the agent workbench is the precedent.
 - Every control is a library component, every value a semantic token — the standard component and token rules apply unchanged. Demo humans render through Avatar's initials fallback, never portrait imagery.
 - Dates and times in demo data are pinned strings formatted by hand, so the statically built HTML and the hydrating client can never disagree over a locale or a clock (the exemplars' convention).
@@ -54,7 +55,7 @@ Create `website/src/app/templates/<slug>/` with two files, mirroring a live temp
 
 ### 5. Register the screen — three lists, in one change
 
-- **`templatesSidebarLinks` in `website/src/config/navigation.ts`** — add `{ href, label, description }` after the existing screens (the index link stays first). This is the one authoritative list of templates: the index carousel, the sidebar, the sitemap, and llms.txt all derive from it. **No validator holds it**, so a skipped entry fails silently — the screen simply never appears anywhere.
+- **`templatesSidebarLinks` in `website/src/config/navigation.ts`** — add `{ href, label, description }`: the index link stays first, then one entry per screen in the family's curated order. This is the one authoritative list of templates: the index carousel, the sidebar, the sitemap, and llms.txt all derive from it. **No validator holds it**, so a skipped entry fails silently — the screen simply never appears anywhere.
 - **`CHROMELESS_ROUTES` in `website/src/config/chromeless.ts`** — the shared footer, chat panel, and palette would otherwise render inside the app shell being shown. Also unvalidated; skipping it is a visible bug, not a build failure.
 - **`EXCLUDED_ROUTES` in `scripts/generate-site-corpus.mjs`** — with a written reason in the existing entries' shape (fictional demo data; the template's facts live on the /templates index, which is covered). This one **is a gate**: `validate-chat-coverage.mjs` fails the build for an uncovered route.
 

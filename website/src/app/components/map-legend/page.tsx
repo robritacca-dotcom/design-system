@@ -31,9 +31,10 @@ export default function MapLegendPage() {
             <p className={styles.introBody}>
               A name, a line on what the map shows, and the key to its
               markers. The built-in glyphs are drawn on the same geometry
-              Globe draws its markers with, so the key never shows a shape
-              the map does not. Pure markup, no client JavaScript, and the
-              key itself is a definition list.
+              Globe draws its markers with; WorldMap&apos;s dot and outlined
+              square are its own, so a flat-map key passes its glyphs as
+              nodes. Pure markup, no client JavaScript, and the key itself
+              is a definition list.
             </p>
           </div>
 

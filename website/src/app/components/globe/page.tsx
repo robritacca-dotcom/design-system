@@ -151,8 +151,12 @@ export default function GlobePage() {
             <p className={styles.sectionBody}>
               Two kinds, one difference: <code>point</code> is a cross, for
               something that listens or moves; <code>anchor</code> is a
-              square, for something fixed. Points on the far side dim rather
-              than disappear, so the network keeps its size while it turns.
+              square, for something fixed. Each can carry its own{" "}
+              <code>color</code> (a chart series or status token), the same
+              per-point channel WorldMap uses, so one dataset keys
+              identically on both projections. Points on the far side dim
+              rather than disappear, so the network keeps its size while it
+              turns.
             </p>
             <div className={styles.exampleRow}>
               <div className={styles.exampleCell}>

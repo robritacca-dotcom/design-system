@@ -72,9 +72,10 @@ const isBuiltIn = (glyph: MapLegendItem['glyph']) =>
 /**
  * MapLegend — the block in the corner of a map: its name, a line on what it
  * shows, and the key to its markers. The built-in glyphs are drawn on the
- * same geometry Globe draws its markers with, so the key never shows a shape
- * the map does not. Pure markup, no hooks, so it renders from a Server
- * Component; the key is a `<dl>`, glyph as term and meaning as description.
+ * same geometry Globe draws its markers with; WorldMap's dot and outlined
+ * square are its own, so a flat-map key passes its glyphs as React nodes.
+ * Pure markup, no hooks, so it renders from a Server Component; the key is
+ * a `<dl>`, glyph as term and meaning as description.
  */
 export const MapLegend = React.forwardRef<HTMLDivElement, MapLegendProps>(
   ({ title, description, items = [], className = '', ...rest }, ref) => {

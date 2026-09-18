@@ -11,11 +11,12 @@
  * the status roles, covering the stage full-bleed with the library's
  * HoverCard carrying each marker's readings and the zoom pill for moving
  * around). The stage carries its own toolbar along its top edge: the flip
- * on the left, and three matching compact selects on the right (design.md's
- * one-species rule) — the region steer drives both projections, the globe's
- * rotation and the map's framing, and the status and marker filters thin
- * both at once, with the headline numbers deriving from the filtered set so
- * the figures and the markers can never disagree. The stage's other furniture
+ * on the left, and three matching default-size selects on the right (the
+ * stage-toolbar carve-out in design.md's Template screens rule 2) — the
+ * region steer drives both projections, the globe's rotation and the map's
+ * framing, and the status and marker filters thin both at once, with the
+ * headline numbers deriving from the filtered set so the figures and the
+ * markers can never disagree. The stage's other furniture
  * rides its bottom corners — the name, key, and per-view legend on the
  * left, the numbers and the steering hint on the right — and the content
  * column runs the full viewport width, because a map earns it (the
@@ -480,8 +481,9 @@ export default function RelayConsole() {
           {/* ------------------------------------------------- the stage */}
           <section className={styles.stage} aria-label="Network view">
             {/* The stage's own toolbar, floating along its top edge: the
-                projection flip on the left, and the three matching compact
-                selects on the right — the region steer drives both
+                projection flip on the left, and the three matching selects
+                on the right (the stage-toolbar carve-out in design.md's
+                Template screens rule 2) — the region steer drives both
                 projections, the two filters thin them. */}
             <div className={styles.stageBar}>
               {/* Default-size controls across the bar — one size per row. */}

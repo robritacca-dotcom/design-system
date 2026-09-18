@@ -77,7 +77,10 @@ export default function WorldMapPage() {
               corner, MapCallout beside the active marker, and the zoom pill
               floating at the bottom centre, where every diagram on this
               site keeps it. Hover or focus a marker to raise its callout
-              (every marker is a real button), and drag to pan while zoomed.
+              (every marker is a real button), drag the map anywhere on the
+              world at any zoom, and hold ctrl or ⌘ with the scroll wheel (a
+              trackpad pinch) to zoom at the pointer. On a touchscreen a
+              finger only pans once zoomed in, so the page keeps its scroll.
             </p>
             <div className={styles.mapSurface}>
               {/* The map fills its container — the wrapper owns the height,
@@ -143,8 +146,9 @@ export default function WorldMapPage() {
               Two kinds, the family&apos;s vocabulary: a filled dot for
               something plotted, an outlined square for something fixed. Each
               point can carry its own <code>color</code> (typically a chart
-              series token), the flat map&apos;s channel for colour-coding a
-              category, where Globe puts colour on its arcs.
+              series token), the channel for colour-coding a category; Globe
+              carries the same <code>color</code> on its points, so one
+              dataset keys identically on both projections.
               <code>showLabels</code> names the markers in the code face.
             </p>
             <div className={styles.exampleRow}>

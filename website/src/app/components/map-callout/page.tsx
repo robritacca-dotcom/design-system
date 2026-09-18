@@ -32,8 +32,8 @@ export default function MapCalloutPage() {
               A place&apos;s name in capitals, then its readouts underneath in the
               code face, tabular, so a coordinate and a reading line up digit
               for digit. Pure markup with no client JavaScript. Its intended
-              home is Globe&apos;s <code>renderCallout</code>, where it annotates
-              the active point.
+              home is <code>renderCallout</code> on Globe or WorldMap, where
+              it annotates the active point.
             </p>
           </div>
 
@@ -59,8 +59,8 @@ export default function MapCalloutPage() {
             <p className={styles.sectionBody}>
               A callout sitting left of its marker ranges <code>end</code> so
               the text hangs off the point; one sitting right ranges{" "}
-              <code>start</code>. Globe reports which side its overlay chose
-              through <code>data-side</code>.
+              <code>start</code>. Globe and WorldMap both report which side
+              the overlay chose through <code>data-side</code>.
             </p>
             <div className={styles.alignmentDemo}>
               <MapCallout

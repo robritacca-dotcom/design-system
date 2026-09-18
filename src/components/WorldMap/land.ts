@@ -1,7 +1,7 @@
 /**
  * GENERATED-ONCE DATA — the WorldMap component's land shapes.
  *
- * Source: Natural Earth 110m land polygons (public domain), projected into
+ * Source: Natural Earth 50m land polygons (public domain), projected into
  * the component's Web Mercator drawing space (x 0..360 in longitude,
  * y 0..360 in projected latitude, ±85.05° clamp) with Antarctica and
  * sub-hairline islands dropped. Regenerate with

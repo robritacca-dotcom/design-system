@@ -892,7 +892,7 @@ Two resizable regions with a draggable, keyboard-operable divider between them.
 
 ## Maps (4)
 
-Geographic surfaces for showing where things are and what connects them, from the globe to its legend.
+Geographic surfaces for showing where things are and what connects them: a globe, a flat world map, and the callout and key that explain them.
 
 ### Globe
 
