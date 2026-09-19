@@ -2,7 +2,7 @@
 
 Phases and tasks as bars on a shared timeline, with milestones, progress, and a today rule.
 
-Generated from the @robr0/design-system registry and prop JSDoc, version 0.20.0. The same data ships in the package's .d.ts and is served by the MCP endpoint at https://robertritacca.com/api/mcp.
+Generated from the @robr0/design-system registry and prop JSDoc, version 0.21.0. The same data ships in the package's .d.ts and is served by the MCP endpoint at https://robertritacca.com/api/mcp.
 
 - Category: charts
 - Import: `import { GanttChart } from '@robr0/design-system';`

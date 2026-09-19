@@ -79,6 +79,9 @@ name: Release
 #   companion to Globe, plus Toolbar, Lightbox, Waveform, AnimatedNumber
 #   and StatusDot; Lightbox is the first overlay born on the shared
 #   behavior layer, and the count-up budget joins the motion constants.
+# 0.21.0 shipped 2026-09-19 — the package's first bin: npx
+#   @robr0/design-system init fetches the consumer agent skill from the
+#   live site into .claude/skills/ and prints the MCP connect line.
 
 on:
   workflow_dispatch:
