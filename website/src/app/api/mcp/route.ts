@@ -191,12 +191,16 @@ const handler = createMcpHandler(
             "",
             `Charts: components from '${pkg.name}/charts' need the optional recharts peer dependency; nothing else does.`,
             "",
+            `Providers: none required — no theme provider, no configuration API. The one provider in the ` +
+              `library is ToastProvider, needed only for the toast queue via useToast.`,
+            "",
             `Full guide: ${SITE_URL}/docs/get-started. Live docs: ${SITE_URL}/components. ` +
               `Design spec: ${SITE_URL}/design.md.`,
             "",
-            `Agent skill: ${SITE_URL}/skill/robr0-design-system/SKILL.md — save it (and its ` +
-              `references/components.md) into the project's .claude/skills/robr0-design-system/ ` +
-              `to load the library's install, theming and catalogue rules every session.`,
+            `Agent skill: ${SITE_URL}/skill/robr0-design-system/SKILL.md — run \`npx ${pkg.name} init\` ` +
+              `to fetch it (with its references/components.md) into the project's ` +
+              `.claude/skills/robr0-design-system/, or save the pair by hand. It carries the library's ` +
+              `install, theming and catalogue rules into every session.`,
           ].join("\n")
         )
     );

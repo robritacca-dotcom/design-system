@@ -63,7 +63,7 @@ Post copy is shipped prose in spirit — `content-design.md` governs it. Additio
 
 - **Fit the standard character limit** (280). Count it. Offer one primary version that fits, and optionally a longer alternate.
 - Lead with the package and version, or with the hero feature — either works; hype never does.
-- Name real things: components, exports, subpaths. "The four modal components now share one behavior layer" beats "big improvements to overlays".
+- Name real things: components, exports, subpaths. "FilterMenu joins the shared overlay behavior layer" beats "big improvements to overlays" (FilterMenu is fictional — pull the real names and counts from the release's own diff and registries, never from this file).
 - No emoji, no exclamation marks, no hashtag stuffing.
 
 The copy and the card must tell the same story: the hero feature on the card is the hero feature in the copy.

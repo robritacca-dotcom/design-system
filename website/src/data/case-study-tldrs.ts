@@ -225,7 +225,7 @@ export const caseStudyTldrs = {
     {
       claim: "The site answers for itself",
       detail:
-        "A built-in chat reads a corpus generated from the published pages, scoring 77 of 78 on its answer-quality eval, and an MCP endpoint serves exact prop contracts to any coding agent. Traffic grew about fifteenfold from the April floor to July.",
+        "A built-in chat reads a corpus generated from the published pages and scored 77 of 78 on its first answer-quality eval, and an MCP endpoint serves exact prop contracts to any coding agent. Traffic grew about fifteenfold from the April floor to July.",
     },
   ],
 } satisfies Record<string, CaseStudyTldrPoint[]>;

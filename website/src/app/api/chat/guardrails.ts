@@ -98,7 +98,7 @@ function getRedis(): Redis | null {
   const url = process.env.KV_REST_API_URL;
   const token = process.env.KV_REST_API_TOKEN;
   if (!url || !token) {
-    console.warn("[chat] KV_REST_API_URL/TOKEN unset — rate limits and the daily breaker are inactive.");
+    console.warn("[chat] KV_REST_API_URL/TOKEN unset: rate limits and the daily breaker are inactive.");
     cachedRedis = null;
     return null;
   }

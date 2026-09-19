@@ -476,7 +476,7 @@ export default function DesignSystemPage() {
           <div className={styles.statStrip} role="group" aria-label="What the system counts today">
             <Stat value={String(COMPONENT_COUNT)} label="Components" />
             <Stat value={String(TOKEN_COUNT)} label="Semantic tokens" />
-            <Stat value={String(SKILL_COUNT)} label="Agent skills" />
+            <Stat value={String(SKILL_COUNT)} label="Claude Code skills" />
             <Stat value={String(MCP_TOOLS.length)} label="MCP tools" />
           </div>
           <FadeDivider />

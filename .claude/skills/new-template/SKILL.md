@@ -56,7 +56,7 @@ Create `website/src/app/templates/<slug>/` with two files, mirroring a live temp
 ### 5. Register the screen — three lists, in one change
 
 - **`templatesSidebarLinks` in `website/src/config/navigation.ts`** — add `{ href, label, description }`: the index link stays first, then one entry per screen in the family's curated order. This is the one authoritative list of templates: the index carousel, the sidebar, the sitemap, and llms.txt all derive from it. **No validator holds it**, so a skipped entry fails silently — the screen simply never appears anywhere.
-- **`CHROMELESS_ROUTES` in `website/src/config/chromeless.ts`** — the shared footer, chat panel, and palette would otherwise render inside the app shell being shown. Also unvalidated; skipping it is a visible bug, not a build failure.
+- **`CHROMELESS_ROUTES` in `website/src/config/chromeless.ts`** — the shared footer, chat panel, and palette would otherwise render inside the app shell being shown. Build-enforced indirectly: `validate-page-summaries.mjs` reads this list as its coverage exemption, so a template route left out fails the build demanding a page summary the screen should not have.
 - **`EXCLUDED_ROUTES` in `scripts/generate-site-corpus.mjs`** — with a written reason in the existing entries' shape (fictional demo data; the template's facts live on the /templates index, which is covered). This one **is a gate**: `validate-chat-coverage.mjs` fails the build for an uncovered route.
 
 Nothing else needs registering. Chromeless routes are automatically exempt from the AI-summary panel (`validate-page-summaries.mjs`) and the anchor rail; breadcrumbs and page title derive from the sidebar entry; the canvas board shows only section landing pages, so an individual template never joins it.
