@@ -64,8 +64,22 @@ import { BarChart, LineChart } from '@robr0/design-system/charts';`;
 const DARK_MODE_SNIPPET = `<!-- Light is the default; flip the whole system with one attribute -->
 <html data-theme="dark">`;
 
+const INIT_SNIPPET = `npx @robr0/design-system init`;
+
 const SKILL_SNIPPET = `curl --create-dirs -o .claude/skills/robr0-design-system/SKILL.md ${SITE_URL}/skill/robr0-design-system/SKILL.md
 curl --create-dirs -o .claude/skills/robr0-design-system/references/components.md ${SITE_URL}/skill/robr0-design-system/references/components.md`;
+
+/* Three questions a model answers wrong without the docs above — each one
+   is a fact the agent skill and one MCP tool both hold, and each has a
+   generic-React guess that misses. */
+const SELF_CHECK_SNIPPET = `Before writing any @robr0/design-system code, answer these:
+
+1. Which import path serves the recharts-backed charts?
+2. Which attribute switches the system to dark mode?
+3. Which provider, if any, does the library need, and for what?
+
+If any answer is a guess, run \`npx @robr0/design-system init\` to install
+the agent docs, or connect the MCP endpoint, then check again.`;
 
 const SHADER_SNIPPET = `import { ShaderField, type ShaderFieldStatus } from '@robr0/design-system';
 
@@ -369,12 +383,25 @@ export default function GetStartedPage() {
                   carries into every session, there is also a generated
                   agent skill: two markdown files built from the same
                   registries, covering install, theming and the full
-                  component catalogue. Save them into a project&apos;s{" "}
-                  <code>.claude/skills/</code> and skill-capable agents load
-                  them automatically. They regenerate with every deploy, so
-                  re-run the same two commands to update.
+                  component catalogue. One command fetches the current pair
+                  from this site into a project&apos;s{" "}
+                  <code>.claude/skills/</code>, where skill-capable agents
+                  load them automatically:
+                </p>
+                <CodeBlock code={INIT_SNIPPET} language="bash" showCopy />
+                <p className={styles.sectionNote}>
+                  The files regenerate with every deploy, so re-run the
+                  command to refresh them. No npm nearby? The same pair is
+                  one curl each:
                 </p>
                 <CodeBlock code={SKILL_SNIPPET} language="bash" showCopy />
+                <p className={styles.sectionNote}>
+                  Not sure your agent needs any of this? Paste this check
+                  into it before it writes code with the package. Every
+                  answer is in the skill and one MCP call away; a model
+                  working from generic React patterns misses all three.
+                </p>
+                <CodeBlock code={SELF_CHECK_SNIPPET} language="text" showCopy />
               </section>
 
               {/* Ambient background */}
