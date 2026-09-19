@@ -33,14 +33,14 @@ A word on the origin of this document. The prose in this project is written by A
 
 **No emoji in shipped copy.** Icons are Material Symbols Rounded, chosen deliberately; emoji are neither.
 
-Four sentence-level moves recur in the strongest existing copy. They are encouraged, in moderation:
+Four sentence-level moves recur in the strongest existing copy. They are rationed, not encouraged (demoted 2026-09-19: a reply built on move 1 was identified as machine-written on sight — the shapes themselves have become recognisable AI rhetoric). The budget is one use per page across all four combined:
 
 1. **Concession, then correction.** "Telling people a design system is themeable is easy. Showing them is harder."
 2. **Mechanism, then consequence.** "Semantic tokens reference primitives, so overriding one primitive re-themes every component at once."
 3. **Stakes as what breaks.** "The validator fails the build, so a stale count never reaches the site."
 4. **Negative definition.** "Motion here is functional, not decorative."
 
-Each earns its keep by carrying information. Used more than about once per page, any of them becomes a tic.
+Each earns its keep by carrying information, and a page that uses none of them loses nothing.
 
 ---
 
@@ -93,9 +93,9 @@ Deliberately out of scope: the essays on `/writing` are authored on Substack and
 
 ## Writing Principles
 
-Five principles. Strong copy visibly demonstrates at least three of them; no copy may violate any of them.
+Six principles. Strong copy visibly demonstrates at least three of them; no copy may violate any of them.
 
-1. **Specific beats general.** The test for every paragraph: could this have been written by someone who knows nothing about this project? If yes, it says nothing. The fix is always the same: add something only this project knows. A token name, a real count from a registry, the actual failure a validator prevents, the date something shipped.
+1. **Specific beats general.** The test for every paragraph: could this have been written by someone who knows nothing about this project? If yes, it says nothing. The fix is always the same: add something only this project knows. A token name, a real count from a registry, the actual failure a validator prevents, the date something shipped. The strongest form is the incident: when a real failure exists, lead with the story ("two modal titles shipped in body text for weeks because CSS does not error on a missing variable") rather than the principle it proves. The story convinces where the abstraction merely claims.
 
 2. **Commit.** Say the thing. No both-sidesing, no hedging a claim until nothing is asserted. "The build fails when the registry drifts" is a sentence; "the build should generally fail in most cases where the registry may have drifted" is fog. If a claim is genuinely uncertain, state the uncertainty as a fact ("Figma-to-code sync is still a manual process") rather than diluting the verb.
 
@@ -103,7 +103,9 @@ Five principles. Strong copy visibly demonstrates at least three of them; no cop
 
 4. **Plain words, one idea per sentence.** Used, not utilized. Has, not boasts. Is, not serves as. Every sentence advances exactly one idea; every paragraph does one job. If a sentence needs two commas and a semicolon to hold together, it is two sentences.
 
-5. **Vary the rhythm.** Human prose is uneven. Mix sentences under ten words with sentences over twenty. Never write three sentences of similar length in a row. Let a short sentence land. Uniform 15-to-20-word sentences in a steady drumbeat are the single most reliable machine tell, and no word list fixes them.
+5. **Explain before you name.** Shorthand is compression, and compression is a tell: "making drift impossible" and "the machine-readable surface" are accurate, but only to a reader who already holds the concepts. Describe the thing in plain narration first ("you write a count into the README, add more components, forget to update it"); the short name is earned once the reader has seen what it means. If a term saves a sentence of explanation, that sentence was probably the useful part.
+
+6. **Vary the rhythm.** Human prose is uneven. Mix sentences under ten words with sentences over twenty. Never write three sentences of similar length in a row. Let a short sentence land. Uniform 15-to-20-word sentences in a steady drumbeat are the single most reliable machine tell, and no word list fixes them.
 
 ---
 
@@ -166,6 +168,8 @@ Sentence- and structure-level tells. Each entry pairs the pattern with its repai
 
 **Bolded-label bullets.** "**Performance:** the site is fast" is a table row pretending to be prose. Use a real table for enumerable facts, or write sentences.
 
+**Over-organised short prose.** Problem/solution headings, parallel bullet openers, and "The fix:" colon scaffolds draped over a few paragraphs of content are structure tells: the content is being arranged rather than said. If prose shorter than a page needs internal scaffolding to hold together, remove the scaffold and write the sentences in order.
+
 **Boldface as seasoning.** Bold marks the one load-bearing term in a section, not every noun that felt important while writing. More than two bolded phrases per paragraph means none of them stand out.
 
 **Title Case Headings.** Shipped copy uses sentence case; see Voice.
@@ -225,11 +229,12 @@ The consequence for this project: passing a detector is a lagging indicator of f
 
 ## Self-Review Tests
 
-Three tests before any prose ships. They take a minute and catch most failures.
+Four tests before any prose ships. They take a minute and catch most failures.
 
 1. **The stranger test.** Could this paragraph have been written by someone who knows nothing about this project? If yes, it fails. Fix: add a specific only this project knows.
 2. **The pub test.** Read it aloud. Would you say this sentence to a colleague across a table? "This showcases our commitment to robust theming" fails the moment it leaves your mouth. Rewrite until it survives being spoken.
 3. **The rhythm test.** Scan sentence lengths in the paragraph. Three similar lengths in a row fails. Fix: cut one sentence to under ten words, or merge two.
+4. **The again test.** Simplify the paragraph one more time than feels necessary. If no fact fell out, ship the simpler version. Most prose survives at least one more pass than its author expects, and the pass that removes the cleverness is usually the one that makes it read human.
 
 The on-demand audit for all of this is the `content-audit` skill (`.claude/skills/content-audit/SKILL.md`): it scans a page, a data file, or a whole surface against this document and reports violations with suggested rewrites.
 

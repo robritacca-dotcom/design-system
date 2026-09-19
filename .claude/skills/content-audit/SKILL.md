@@ -74,4 +74,4 @@ Use this skill when asked to audit copy, check prose quality, find AI-writing te
 6. **Summarise** at the end:
    - Counts per severity, then the strongest single finding
    - If nothing is found: "No content violations found. Prose follows content-design.md."
-   - Run the guide's three Self-Review Tests over the longest passage in scope and report the result, pass or fail
+   - Run the guide's Self-Review Tests over the longest passage in scope and report the result, pass or fail
