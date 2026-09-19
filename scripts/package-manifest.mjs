@@ -105,6 +105,10 @@ export function distManifest(rootPkg) {
     ],
     type: 'module',
     sideEffects: ['**/*.css'],
+    // The one command: `npx @robr0/design-system init` (a single bin, so
+    // bare npx resolves it). Source lives at src/cli/init.mjs;
+    // build-package.mjs stamps the site origin and sets the executable bit.
+    bin: { 'robr0-design-system': './bin/robr0-design-system.mjs' },
     exports: distExports(),
     peerDependencies: rootPkg.peerDependencies,
     peerDependenciesMeta: rootPkg.peerDependenciesMeta,

@@ -6,7 +6,10 @@
  *   2. copies the runtime assets the emitted JS references verbatim:
  *      every non-story .css under src/, the icon font, and the
  *      registry JSON files
- *   3. writes dist/package.json — the manifest that actually ships to
+ *   3. writes dist/bin/robr0-design-system.mjs — the init bin, with the
+ *      site origin stamped in from the website's SITE_URL constant and
+ *      the executable bit set (publint checks both)
+ *   4. writes dist/package.json — the manifest that actually ships to
  *      npm (dist-form exports, no `private`, no scripts) — plus
  *      LICENSE and README.md
  *
@@ -14,6 +17,7 @@
  */
 import { execSync } from 'node:child_process';
 import {
+  chmodSync,
   copyFileSync,
   mkdirSync,
   readdirSync,
@@ -22,6 +26,7 @@ import {
 } from 'node:fs';
 import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { siteUrl } from './generate-component-md.mjs';
 import { distManifest } from './package-manifest.mjs';
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -81,6 +86,17 @@ if (unmarked.length > 0) {
   process.exit(1);
 }
 console.log(`▸ Restored "use client" on ${clientDistFiles.length} dist modules.`);
+
+// The init bin. The site origin is stamped in from the website's own
+// SITE_URL constant — the same helper every generator uses — so the CLI
+// can never fetch from a domain the site no longer lives at. Executable
+// bit and shebang are what publint checks a bin for.
+const binSource = readFileSync(join(srcDir, 'cli', 'init.mjs'), 'utf8');
+const binTarget = join(distDir, 'bin', 'robr0-design-system.mjs');
+mkdirSync(dirname(binTarget), { recursive: true });
+writeFileSync(binTarget, binSource.replaceAll('__SITE_URL__', siteUrl()));
+chmodSync(binTarget, 0o755);
+console.log('▸ Wrote bin/robr0-design-system.mjs (site origin stamped).');
 
 const rootPkg = JSON.parse(readFileSync(join(repoRoot, 'package.json'), 'utf8'));
 writeFileSync(join(distDir, 'package.json'), JSON.stringify(distManifest(rootPkg), null, 2) + '\n');
