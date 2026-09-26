@@ -18,7 +18,7 @@
  * a name substituted into one can be any length, which is why starters.ts
  * falls back to the unnamed wording when the named one does not fit.
  */
-import { readFileSync, readdirSync } from 'node:fs';
+import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -48,35 +48,12 @@ const SOURCES = [
     scope: /FALLBACK_FOLLOWUPS = \[([\s\S]*?)\]/g,
     pattern: BARE,
   },
-  {
-    path: join('website', 'src', 'app', 'playground', 'views', 'ChatView.tsx'),
-    scope: /starters=\{\[([\s\S]*?)\]\}/g,
-  },
-  {
-    /* The sim transport's scripted follow-ups. These reach the playground's
-       Chat view through the same chip row as everything else, and no runtime
-       filter stands between them and it: the route's own check only guards
-       suggestions a model wrote. Written copy, so this is where they are held. */
-    path: join('website', 'src', 'lib', 'chat-sim.ts'),
-    scope: /followups:\s*\[([\s\S]*?)\]/g,
-    pattern: BARE,
-  },
-  /* The template screens' mock assistants (TemplateAssistant) render their
-     CHAT_SUGGESTIONS through the same non-wrapping chip row, with no runtime
-     filter in front of them — written copy, held here like the playground's.
-     The list derives from the templates directory so a new screen is covered
-     the day it lands; the scope keeps the check off the screens' other
-     label: strings (nav items, buttons), which are not chips, and is
-     optional because a template without a mock assistant has no chips. */
-  ...readdirSync(join(dirname(fileURLToPath(import.meta.url)), '..', 'website', 'src', 'components', 'templates'), {
-    withFileTypes: true,
-  })
-    .filter((entry) => entry.isDirectory() && entry.name !== 'TemplateAssistant')
-    .map((entry) => ({
-      path: join('website', 'src', 'components', 'templates', entry.name, `${entry.name}.tsx`),
-      scope: /const CHAT_SUGGESTIONS = \[([\s\S]*?)\];/g,
-      optional: true,
-    })),
+  /* Two more sources sat here: the playground's Chat view, which wrote a
+     fictional product's starters inline, and the sim transport's scripted
+     follow-ups behind it. Both belonged to the design system's playground. */
+  /* The template screens' mock assistants were a source too, rendering their
+     own chips through the same non-wrapping row. They went the same way, so
+     what remains is the site's own chat. */
 ];
 
 const errors = [];

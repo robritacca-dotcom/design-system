@@ -51,9 +51,6 @@ const errors = [];
 const summaries = JSON.parse(
   read(join(repoRoot, 'website', 'src', 'data', 'page-summaries.json'))
 );
-const componentRegistry = JSON.parse(
-  read(join(repoRoot, 'src', 'components', 'registry.json'))
-);
 const studies = JSON.parse(
   read(join(repoRoot, 'website', 'src', 'data', 'case-studies.json'))
 ).caseStudies;
@@ -135,18 +132,14 @@ for (const [slug, entry] of Object.entries(summaries.essays)) {
 /* ---- Coverage: every route has a summary or a reason not to ---- */
 
 const routes = siteRoutes();
-const componentSlugs = new Set(componentRegistry.components.map((c) => c.slug));
 const studyHrefs = new Set(studies.map((s) => s.href));
 
 for (const route of routes) {
   if (chromeless.has(route)) continue; // no FAB, no panel
   if (route === '/writing/[slug]') continue; // instances checked via essays below
-  if (/^\/components\/[^/]+$/.test(route)) {
-    const slug = route.split('/')[2];
-    if (!componentSlugs.has(slug))
-      errors.push(`${route}: component page not in src/components/registry.json — its summary cannot derive`);
-    continue;
-  }
+  // Component pages derived their summaries from the registry's descriptions.
+  // They moved to the design system's own site, so case studies are the only
+  // route class that still derives rather than being written.
   if (/^\/work\/[^/]+$/.test(route)) {
     if (!studyHrefs.has(route))
       errors.push(`${route}: case-study page not in case-studies.json — its summary cannot derive`);
@@ -175,14 +168,9 @@ for (const slug of Object.keys(summaries.essays)) {
     errors.push(`essays["${slug}"]: not in essays.json — remove or rename the entry`);
 }
 
-/* The derived component chip label must fit the budget for every label. */
-for (const c of componentRegistry.components) {
-  const label = `How do I use ${c.label}?`;
-  if (label.length > maxChipChars)
-    errors.push(
-      `component "${c.name}": derived chip label "${label}" is ${label.length} chars (budget ${maxChipChars})`
-    );
-}
+/* The component pages derived a chip label per component ("How do I use X?"),
+   which was checked against the budget here. Those pages are on the design
+   system's own site now. */
 
 /* ---- Report ---- */
 
@@ -195,8 +183,7 @@ if (errors.length > 0) {
 const covered =
   Object.keys(summaries.routes).length +
   Object.keys(summaries.essays).length +
-  componentSlugs.size +
   studyHrefs.size;
 console.log(
-  `✓ Page summaries in sync — ${Object.keys(summaries.routes).length} written routes, ${Object.keys(summaries.essays).length} essays, ${componentSlugs.size} component and ${studyHrefs.size} case-study pages derived (${covered} pages with a TLDR panel).`
+  `✓ Page summaries in sync — ${Object.keys(summaries.routes).length} written routes, ${Object.keys(summaries.essays).length} essays and ${studyHrefs.size} case-study pages derived (${covered} pages with a TLDR panel).`
 );

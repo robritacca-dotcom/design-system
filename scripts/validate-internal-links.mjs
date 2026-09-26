@@ -100,9 +100,29 @@ for (const file of walk(publicDir, () => true)) {
 
 /* Redirect sources: a URL that moved is still a valid link target. */
 const configSource = readFileSync(nextConfig, 'utf8');
+const delegatedPrefixes = [];
 for (const m of configSource.matchAll(/source:\s*["'`]([^"'`]+)["'`]/g)) {
-  if (!m[1].includes(':') && !m[1].includes('*')) targets.add(m[1]);
+  const source = m[1];
+  if (!source.includes(':') && !source.includes('*')) {
+    targets.add(source);
+    continue;
+  }
+  /* A wildcard source delegates a whole namespace. The design system's
+     documentation moved to its own domain, and the essays mirrored from
+     Substack still link to the old paths in their published bodies, which
+     are not ours to edit. Those links do resolve, through the redirect.
+
+     What this cannot check is the far side: /blueprints/<anything> is
+     accepted here even though only the real pages answer 200 over there.
+     That gets verified when the redirects change rather than on every build
+     (every one was probed against the live site before it shipped), so treat
+     a new wildcard redirect as a promise you have just made off-site. */
+  const prefix = source.replace(/\/:[^/]*$/, '');
+  if (prefix && prefix !== '/') delegatedPrefixes.push(prefix + '/');
 }
+
+/** True when a link falls inside a namespace a wildcard redirect delegates. */
+const isDelegated = (href) => delegatedPrefixes.some((p) => href.startsWith(p));
 
 /* Dynamic ISR routes: /writing/[slug] renders on demand (see the doc block),
    so its essays may not be in the .html list above — on CI they never are.
@@ -132,7 +152,7 @@ for (const file of walk(appHtmlDir, (n) => n.endsWith('.html'))) {
   const html = readFileSync(file, 'utf8');
   for (const m of html.matchAll(/href="([^"]+)"/g)) {
     const path = normalize(m[1]);
-    if (path === null || targets.has(path)) continue;
+    if (path === null || targets.has(path) || isDelegated(path)) continue;
     if (!broken.has(path)) broken.set(path, new Set());
     broken.get(path).add(page === '/index' ? '/' : page);
   }

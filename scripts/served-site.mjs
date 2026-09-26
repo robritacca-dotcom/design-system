@@ -17,22 +17,19 @@ import { fileURLToPath } from 'node:url';
 
 export const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
 
-const componentRegistry = JSON.parse(
-  readFileSync(join(repoRoot, 'src', 'components', 'registry.json'), 'utf8'),
-);
 const caseStudies = JSON.parse(
   readFileSync(join(repoRoot, 'website', 'src', 'data', 'case-studies.json'), 'utf8'),
 ).caseStudies;
 
 /** The shared route sample: the page that broke on 2026-09-06 (/ is the one
- *  route Vercel regenerates under an internal pathname), one hand-written
- *  summary page, one page from each derived-summary collection, and one
- *  index. Derived from the registries so the list cannot rot. */
+ *  route Vercel regenerates under an internal pathname), the hand-written
+ *  summary pages, one case study from the registry, and one index. The
+ *  component page that used to sit here went with the design system. */
 export const SMOKE_ROUTES = [
   '/',
   '/about',
   '/writing',
-  `/components/${componentRegistry.components[0].slug}`,
+  '/design-system',
   caseStudies[0].href,
 ];
 

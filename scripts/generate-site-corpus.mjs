@@ -764,21 +764,6 @@ ${summaries}
 ${full}`;
 }
 
-/**
- * CLAUDE.md, minus the procedural body. A visitor asks *why* the system works
- * the way it does — the registry principle, the token tiers, the shipping
- * vocabulary — never how to run the seventh validator. The step-by-step
- * checklists and file tables are dead weight in a conversation.
- * Throws when an expected heading disappears, so a doc restructure fails
- * loudly instead of silently shipping a mangled corpus.
- */
-const CLAUDE_MD_DROPPED_SECTIONS = [
-  'Quick Start',
-  'Project Structure',
-  'How to Add a New Component',
-  'How to Add a New Token',
-  'Key Files',
-];
 
 function sectionWriting() {
   // The committed essays registry (website/src/data/essays.json), refreshed

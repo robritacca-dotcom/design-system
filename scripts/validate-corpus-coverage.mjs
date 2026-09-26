@@ -58,30 +58,6 @@ const corpusPath = join(repoRoot, 'website', 'src', 'data', 'site-corpus.generat
  * than the answers are worth.
  */
 const CONDENSED_ROUTES = new Map([
-  ['/skills',
-    'the page publishes every SKILL.md in full; the corpus carries each skill\'s ' +
-    'name and description, which is what a visitor asks about — the procedures ' +
-    'themselves are instructions to agents, not facts about Rob or the site'],
-  ['/blueprints/design',
-    'design.md\'s per-component spec blocks (one per registered component) are ' +
-    'condensed out by condenseDesignSpec: well over a third of the whole token ' +
-    'budget, to restate what the Component library section already lists and ' +
-    'Storybook documents from source'],
-  ['/blueprints/claude',
-    'condenseClaudeMd drops the step-by-step contributor checklists — they tell ' +
-    'an agent how to add a component, which no visitor is asking the chat'],
-  ['/blueprints/content-design',
-    'content-design.md is carried in full; the shortfall is its worked ' +
-    'before/after examples, which read as sentence fragments once the markdown ' +
-    'table around them is stripped'],
-  ['/docs/get-started',
-    'the shortfall is the install and import code samples, which the page shows ' +
-    'as code blocks — the chat links the page rather than reciting snippets'],
-  ['/templates',
-    'the shortfall is the template cards\' one-line descriptions, which live in ' +
-    'templatesSidebarLinks (navigation.ts) outside the route folder the prose ' +
-    'extractor reads — the index\'s own prose is carried, and the site map ' +
-    'names every template route'],
 ]);
 
 /** A route fails above this share of its sentences missing… */

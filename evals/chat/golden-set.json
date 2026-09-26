@@ -159,17 +159,6 @@
     }
   },
   {
-    "description": "designer: system in a nutshell (transcript question)",
-    "vars": {
-      "question": "What is this design system, in a nutshell? What makes it different?"
-    },
-    "assert": [],
-    "metadata": {
-      "seat": "designer",
-      "requiredFacts": []
-    }
-  },
-  {
     "description": "designer: how the docs stay honest",
     "vars": {
       "question": "How does this site keep its documentation from drifting out of date?"
@@ -192,9 +181,9 @@
     }
   },
   {
-    "description": "designer: general knowledge — Nielsen, stitched to the site",
+    "description": "designer: general knowledge — Nielsen, stitched to the work",
     "vars": {
-      "question": "What are Nielsen's usability heuristics, and does Rob apply any of them in this design system?"
+      "question": "What are Nielsen's usability heuristics, and does Rob apply any of them in his work?"
     },
     "assert": [
       {
@@ -218,197 +207,6 @@
       "seat": "designer",
       "requiredFacts": [],
       "lane": "general"
-    }
-  },
-  {
-    "description": "designer: primitive vs semantic tokens",
-    "vars": {
-      "question": "What's the difference between primitive and semantic tokens in this system?"
-    },
-    "assert": [
-      {
-        "type": "icontains",
-        "value": "primitive"
-      }
-    ],
-    "metadata": {
-      "seat": "designer",
-      "requiredFacts": [
-        "semantic token"
-      ]
-    }
-  },
-  {
-    "description": "designer: why teal is reserved",
-    "vars": {
-      "question": "Why is the teal colour only used for primary actions on this site?"
-    },
-    "assert": [
-      {
-        "type": "icontains",
-        "value": "action"
-      }
-    ],
-    "metadata": {
-      "seat": "designer",
-      "requiredFacts": [
-        "teal"
-      ]
-    }
-  },
-  {
-    "description": "designer: WCAG AA, general + site nuance",
-    "vars": {
-      "question": "What does WCAG AA actually require, and does this design system meet it?"
-    },
-    "assert": [
-      {
-        "type": "icontains",
-        "value": "contrast"
-      }
-    ],
-    "metadata": {
-      "seat": "designer",
-      "requiredFacts": [
-        "contrast"
-      ],
-      "lane": "general"
-    }
-  },
-  {
-    "description": "designer: the loops",
-    "vars": {
-      "question": "What are the recurring agent loops on this site and what do they do?"
-    },
-    "assert": [
-      {
-        "type": "contains-any",
-        "value": [
-          "Monday",
-          "analytics",
-          "journal"
-        ]
-      }
-    ],
-    "metadata": {
-      "seat": "designer",
-      "requiredFacts": [
-        "Every Monday morning"
-      ]
-    }
-  },
-  {
-    "description": "designer: the playground",
-    "vars": {
-      "question": "What can I do on the playground page?"
-    },
-    "assert": [
-      {
-        "type": "contains-any",
-        "value": [
-          "re-theme",
-          "theme",
-          "CSS"
-        ]
-      }
-    ],
-    "metadata": {
-      "seat": "designer",
-      "requiredFacts": [
-        "/playground"
-      ]
-    }
-  },
-  {
-    "description": "developer: install",
-    "vars": {
-      "question": "How do I install and start using this design system in my own project?"
-    },
-    "assert": [
-      {
-        "type": "contains",
-        "value": "rift-ds"
-      }
-    ],
-    "metadata": {
-      "seat": "developer",
-      "requiredFacts": [
-        "rift-ds"
-      ]
-    }
-  },
-  {
-    "description": "developer: components and categories (a stated count must match the registry)",
-    "vars": {
-      "question": "Roughly how many components are there, and how are they organised?"
-    },
-    "assert": [
-      {
-        "type": "icontains",
-        "value": "categor"
-      },
-      {
-        "type": "javascript",
-        "value": "file://assert-component-count.mjs"
-      }
-    ],
-    "metadata": {
-      "seat": "developer",
-      "requiredFacts": []
-    }
-  },
-  {
-    "description": "developer: dark mode mechanism",
-    "vars": {
-      "question": "Does dark mode here use prefers-color-scheme?"
-    },
-    "assert": [
-      {
-        "type": "contains",
-        "value": "data-theme"
-      }
-    ],
-    "metadata": {
-      "seat": "developer",
-      "requiredFacts": [
-        "data-theme"
-      ]
-    }
-  },
-  {
-    "description": "developer: toast component pointer",
-    "vars": {
-      "question": "Which component should I use for toast notifications, and where are its docs?"
-    },
-    "assert": [
-      {
-        "type": "contains",
-        "value": "/components/toast"
-      }
-    ],
-    "metadata": {
-      "seat": "developer",
-      "requiredFacts": [
-        "/components/toast"
-      ]
-    }
-  },
-  {
-    "description": "developer: Figma source",
-    "vars": {
-      "question": "Is there a Figma file for this design system?"
-    },
-    "assert": [
-      {
-        "type": "icontains",
-        "value": "figma"
-      }
-    ],
-    "metadata": {
-      "seat": "developer",
-      "requiredFacts": [
-        "Figma"
-      ]
     }
   },
   {
@@ -466,24 +264,6 @@
     }
   },
   {
-    "description": "designer: production grade (log 2026-08-10; the answer should cite the real quality gates)",
-    "vars": {
-      "question": "Is this design system production grade?"
-    },
-    "assert": [
-      {
-        "type": "icontains",
-        "value": "test"
-      }
-    ],
-    "metadata": {
-      "seat": "designer",
-      "requiredFacts": [
-        "headless Chromium"
-      ]
-    }
-  },
-  {
     "description": "designer: who made this site, is it a template (log 2026-08-23)",
     "vars": {
       "question": "Who made this site? Is it a template?"
@@ -501,25 +281,6 @@
     "metadata": {
       "seat": "designer",
       "requiredFacts": []
-    }
-  },
-  {
-    "description": "designer: the ambient background (log 2026-08-13)",
-    "vars": {
-      "question": "How did Rob make the animated background on this site?"
-    },
-    "assert": [
-      {
-        "type": "icontains",
-        "value": "webgl"
-      }
-    ],
-    "metadata": {
-      "seat": "designer",
-      "requiredFacts": [
-        "WebGL2",
-        "ShaderField"
-      ]
     }
   },
   {
@@ -620,91 +381,44 @@
     }
   },
   {
-    "description": "developer: deprecated prop on Input (tool-answered: get_component)",
+    "description": "designer: did Rob build a design system (points off-site for detail)",
     "vars": {
-      "question": "Is the ariaLabel prop on the Input component deprecated?"
+      "question": "Did Rob build his own design system?"
     },
     "assert": [
       {
         "type": "icontains",
-        "value": "aria-label"
-      }
-    ],
-    "metadata": {
-      "seat": "developer",
-      "source": "tools",
-      "requiredFacts": []
-    }
-  },
-  {
-    "description": "developer: DataTable prop contract (tool-answered: get_component)",
-    "vars": {
-      "question": "What props does the DataTable component take?"
-    },
-    "assert": [
-      {
-        "type": "icontains",
-        "value": "columns"
+        "value": "Rift DS"
       },
       {
         "type": "icontains",
-        "value": "rows"
+        "value": "rift-ds.com"
       }
     ],
     "metadata": {
-      "seat": "developer",
-      "source": "tools",
-      "requiredFacts": []
+      "seat": "designer",
+      "requiredFacts": [
+        "Rift DS"
+      ]
     }
   },
   {
-    "description": "developer: Button deprecations and replacements (tool-answered: get_component)",
+    "description": "developer: design-system detail belongs to its own site, not this chat",
     "vars": {
-      "question": "Which props of Button are deprecated, and what should I use instead?"
+      "question": "What props does the Button component take?"
     },
     "assert": [
       {
         "type": "icontains",
-        "value": "variant"
-      }
-    ],
-    "metadata": {
-      "seat": "developer",
-      "source": "tools",
-      "requiredFacts": []
-    }
-  },
-  {
-    "description": "developer: token counts (tool-answered: get_design_tokens)",
-    "vars": {
-      "question": "How many semantic design tokens does the system define, and how many of those are colour tokens?"
-    },
-    "assert": [
+        "value": "rift-ds.com"
+      },
       {
-        "type": "javascript",
-        "value": "file://assert-token-counts.mjs"
+        "type": "llm-rubric",
+        "value": "Does NOT invent or list specific prop names, types or defaults. Points the reader at the design system's own documentation instead of answering from memory."
       }
     ],
     "metadata": {
       "seat": "developer",
-      "source": "tools",
-      "requiredFacts": []
-    }
-  },
-  {
-    "description": "developer: FunnelChart import path (tool-answered: get_component)",
-    "vars": {
-      "question": "How do I import FunnelChart from the package?"
-    },
-    "assert": [
-      {
-        "type": "icontains",
-        "value": "/charts"
-      }
-    ],
-    "metadata": {
-      "seat": "developer",
-      "source": "tools",
       "requiredFacts": []
     }
   }

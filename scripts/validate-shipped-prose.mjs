@@ -180,7 +180,7 @@ for (const file of pageFiles.sort()) {
 // --- Markdown that ships ----------------------------------------------------
 
 let surfacesChecked = 0;
-for (const doc of ['README.md', 'src/stories/Configure.mdx']) {
+for (const doc of ['README.md']) {
   surfacesChecked += 1;
   scan(doc, read(join(repoRoot, doc)));
 }
@@ -189,17 +189,9 @@ for (const doc of ['README.md', 'src/stories/Configure.mdx']) {
 
 const json = (p) => JSON.parse(read(join(repoRoot, p)));
 
-const registry = json('src/components/registry.json');
-surfacesChecked += 1;
-for (const c of registry.components) {
-  scan(`src/components/registry.json (${c.name})`, c.description);
-}
-
-const updates = json('website/src/data/site-updates.json');
-surfacesChecked += 1;
-for (const e of updates.entries ?? []) {
-  scan(`website/src/data/site-updates.json (${e.title ?? '?'})`, `${e.title ?? ''}\n${e.body ?? e.story ?? ''}`);
-}
+// The component registry and the project journal were scanned here too. Both
+// belonged to the design system and left with it; Storybook's landing page
+// (the other install surface) went the same way.
 
 const studies = json('website/src/data/case-studies.json');
 surfacesChecked += 1;
@@ -219,14 +211,7 @@ for (const [slug, entry] of Object.entries(essayCovers.covers ?? essayCovers)) {
   scan(`website/src/data/essay-covers.json (${slug})`, entry?.alt);
 }
 
-const loopsRegistry = json('website/src/data/loops.json');
-surfacesChecked += 1;
-for (const l of loopsRegistry.loops ?? []) {
-  scan(
-    `website/src/data/loops.json (${l.slug ?? '?'})`,
-    [l.description, l.cadence, l.trigger, ...(l.stages ?? []), ...(l.guardrails ?? [])].join('\n'),
-  );
-}
+// The loops registry was scanned here; /loops was a design-system page.
 
 // --- Skill display descriptions (they render on /skills) --------------------
 
@@ -243,50 +228,33 @@ for (const entry of readdirSync(skillsDir, { withFileTypes: true })) {
 }
 
 // --- The npm package description (renders on npmjs.com) ---------------------
-
-surfacesChecked += 1;
-const manifest = read(join(repoRoot, 'scripts', 'package-manifest.mjs'));
-const desc = manifest.match(/PACKAGE_DESCRIPTION\s*=\s*(['"`])([\s\S]*?)\1/);
-if (desc) scan('scripts/package-manifest.mjs (PACKAGE_DESCRIPTION)', desc[2]);
+// The npm package description was scanned here. This repo no longer
+// publishes a package, so there is no manifest to read.
 
 // --- The playground's scripted chat story ------------------------------------
 
 /**
  * Modules whose string literals are visitor-visible prose the page scan
- * cannot see: the sim's scripted story and scenario copy, the director's
- * event rail, and the Chat view's staged history. Scanned through the AST
- * so comments never register — only what a visitor can read.
+ * cannot see. This list used to be led by the playground's scripted chat
+ * story and the graph instrument's panel copy; both were design-system
+ * surfaces and left with it.
  */
 const STORY_MODULES = [
-  'website/src/lib/chat-sim.ts',
-  'website/src/app/playground/ChatDirector.tsx',
-  'website/src/app/playground/views/ChatView.tsx',
-  'website/src/app/playground/views/TypeView.tsx',
-  // Not story copy, but the same shape of problem: the case-study TLDR
+  // The case-study TLDR
   // points render on every /work page while living outside the route
   // folders (deliberately out of the corpus — the file's doc block owns
   // why), so the page scan never sees them and this module scan must.
   'website/src/data/case-study-tldrs.ts',
-  // The graph instrument's panel copy and the overview miniature's caption
-  // render on indexed pages (/graph, /overview) while living in component
-  // files outside those route folders, so the page scan never sees them.
-  'website/src/components/SystemGraph/SystemGraph.tsx',
-  'website/src/components/SystemGraph/GraphMiniature.tsx',
-  // The chat route's visitor-visible strings: the tool trace points and
-  // the notice lines render in the widget, and the CHAT_TOOLS descriptions
-  // are authored copy the model reads — a route handler, so the page scan
-  // never sees any of it. The shared lookup module's error and hint
-  // strings can be repeated verbatim to a visitor or an agent.
+  // The chat route's visitor-visible strings: the notice lines render in
+  // the widget, and a route handler is somewhere the page scan never
+  // reaches. The shared lookup module's error and hint strings can be
+  // repeated verbatim to a visitor.
   'website/src/app/api/chat/route.ts',
   'website/src/lib/site-tools.ts',
   // The guardrail notices (burst limit, daily limit, budget breaker) render
   // in the chat widget when a limit trips — visitor-visible strings in a
   // module the page scan never sees.
   'website/src/app/api/chat/guardrails.ts',
-  // The package's init bin prints usage, error and success lines to a
-  // consumer's terminal — shipped copy per content-design.md's register
-  // table, living where no page scan reaches.
-  'src/cli/init.mjs',
 ];
 
 function scanStringLiterals(relPath) {

@@ -48,11 +48,11 @@ Use this skill when asked to check if changes are ready to push, deploy, or ship
    If everything passes:
    > Verify passed (lint + story tests + library, package, Storybook, and website builds, plus the publish lint, the built-HTML validators, and the served-site checks). Safe to push.
 
-   **If the change touched component CSS, `src/tokens/`, or `.storybook/`, also dispatch the Chromatic workflow** (`gh workflow run chromatic.yml`) and check the diff before or right after pushing — visual regressions are the one thing `verify` cannot see, and Chromatic is deliberately not part of it because every run bills cloud snapshots against a monthly budget. Text-only, script-only, or website-prose changes don't need a run.
+   **Visual regressions are the one thing `verify` cannot see.** There is no automated visual gate in this repo: Chromatic snapshotted Storybook, and Storybook went to the design system's repo with the library. If the change touched layout or styling, offer a `visual-review` pass instead.
 
    If any step fails, show:
    - Which step failed (lint, component library, story tests, Storybook, website lint, website build, or one of the checks that run after it — the built-HTML validators or the served-site checks; the tail of the `verify` entry in the root `package.json` is the authoritative list)
-   - If **story tests** failed, say whether it was a render error, an **a11y violation**, or a **play-function assertion** — they surface identically but are fixed differently. An axe failure names the rule (e.g. `button-name`, `nested-interactive`) and the offending markup; contrast is deliberately excluded from the gate, so a contrast complaint means someone re-enabled `color-contrast` in `.storybook/preview.ts`. A play-function failure (e.g. `expect(element).toHaveFocus()`) means a behavior regression — for an overlay, look at the shared hooks in `src/behaviors/` before the component itself
+   - If the **served-site axe pass** failed, say which rule and on which page. An axe failure names the rule (e.g. `button-name`, `nested-interactive`) and the offending markup; contrast is deliberately excluded from the gate.
    - The exact error message(s)
    - File path and line number if available
    - A brief diagnosis of likely cause

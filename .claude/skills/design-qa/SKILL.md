@@ -20,7 +20,6 @@ Use this skill when asked to design-QA, polish, or judge something visual — ph
 
 Accept any of:
 
-- **A component** → every one of its Storybook stories, plus its website showcase page if it has one (the page is where composition problems show)
 - **A page** → a URL path on the website. Page reviews inherit the `visual-review` skill's viewport matrix — both themes at desktop *and* mobile widths — since an arrangement that only holds at one width isn't holding
 - **A sweep** → several components or pages at once ("the form controls", "every page under /foundations"), each judged individually *and* against the others — cross-target inconsistency is the sweep's whole point
 
@@ -28,7 +27,7 @@ If no target is given, default to what this session built or changed. Ask only w
 
 ## Ground rules — why this pass doesn't go stale
 
-- The rubric below is principles, deliberately free of facts about real components. **Facts come fresh each run**: the spec is `design.md` read now, the component list is `src/components/registry.json` read now, and the standard for consistency is siblings **rendered** now — never a remembered lineup or a list written here.
+- The rubric below is principles, deliberately free of facts about real components. **Facts come fresh each run**: the design system's spec and component list live in its own repo and are read there when needed, and the standard for consistency is siblings **rendered** now — never a remembered lineup or a list written here.
 - Judge the render first, the source second. A seam defect lives in pixels; the CSS that caused it comes after the finding, as the fix's address.
 - Component names in this skill's examples are fictional by design — a factual claim about a real component inside an example rots silently.
 
@@ -36,12 +35,12 @@ If no target is given, default to what this session built or changed. Ask only w
 
 Use the browser/preview tools the harness provides for every step below; never launch a dev server through a raw shell command.
 
-1. **Render the real thing.** Components: the `storybook` configuration in `.claude/launch.json`. Pages: the `website` configuration (theme is `data-theme` on the root element; the `visual-review` skill's step 3 and Key context document how to switch it — verify the attribute actually changed before capturing — and what page chrome to expect).
+1. **Render the real thing.** The `website` configuration in `.claude/launch.json` (theme is `data-theme` on the root element; the `visual-review` skill's step 3 and Key context document how to switch it — verify the attribute actually changed before capturing — and what page chrome to expect).
 2. **Capture the matrix.** Every variant and state, in light **and** dark. Then **magnify the details**: zoomed crops of every join, corner, divider, icon seat, and focus ring. Seam defects — a doubled border where two segments meet, a divider a pixel taller than its track, a radius that doesn't flow through a join — are invisible at 1x and glaring at 3x. If the harness offers a zoom or region capture, use it on every joint the component has; if not, scaling the render up (a transform on the story root works) is a fine substitute. One capture-environment trap: after a programmatic theme flip in a hidden browser pane, CSS transitions can freeze mid-flight (paused rendering never advances them), so a token can screenshot at neither theme's value and read as a broken palette. Before judging any colour, let the page settle in a fronted tab or force-finish the page's animations — and when a colour still looks wrong, confirm it with computed styles before writing the finding.
 3. **Drive the states for real.** Hover, focus-visible (reached by keyboard, not click), active, disabled, loading, empty, error. Capture each. A state you didn't render is a state you didn't review. On a page review, the layout-mounted chat button's hover-summoned summary panel counts as one of the page's states — summon it and let the reveal settle. The chat panel and its suggestion chips animate on open, close, and reveal (design.md's Site chat pattern owns the choreography): capture after they settle, and read a mid-flight frame — a part-transparent panel, shimmer pills where chips belong — as animation, not defect.
 4. **Stress the content.** Longest plausible label, most items, zero items, a narrow container, wrapping text. Use story controls or a scratch story; don't ship the scratch.
 5. **Line up the siblings.** Pick the two or three nearest relatives by role — same registry category, or same pattern family (everything pill-shaped, everything with a chevron, every card) — and capture the same crops of them. Consistency findings come from this lineup, not from memory. For a page: one or two established pages of the same type.
-6. **Read the spec and the source.** The target's `design.md` component section, `design.md`'s **Composition** section — the authoritative page-level arrangement rules the principles below are the vocabulary for — the token rules, and the component or page source. After the visual pass, to name causes and to check behaviour pixels can't show.
+6. **Read the source.** The page's own `page.tsx` and `page.module.css`, and the design system's Composition rules (in its repo) if a layout question turns on them — the token rules, and the component or page source. After the visual pass, to name causes and to check behaviour pixels can't show.
 
 ## The eye — the design principles
 
@@ -49,7 +48,7 @@ These describe the arrangement, not the parts. The design system already governs
 
 ### Proximity
 
-Space encodes relationship, and it is read before anything else on the screen. Uniform spacing claims nothing is related to anything. The authoritative rule — and the rhythm ladder that makes it actionable — is `design.md`'s Composition section; this heading is the name the finding gets.
+Space encodes relationship, and it is read before anything else on the screen. Uniform spacing claims nothing is related to anything. The authoritative rule — and the rhythm ladder that makes it actionable — is the design system's own spec, in its repo. Read the rendered result here. This heading is the name the finding gets.
 
 ### Alignment
 
@@ -65,7 +64,7 @@ Differences must be unmistakable. Anything not the same must be clearly differen
 
 ### Spacing
 
-Padding belongs to the component; margin belongs to the layout. The rule itself is `design.md`'s Composition rule 1 (parent owns spacing) — cite it there; the finding to watch for is a component asserting a relationship it cannot see by carrying its own outer margin.
+Padding belongs to the component; margin belongs to the layout. The rule itself is the design system's Composition rule 1 (parent owns spacing) — cite it there; the finding to watch for is a component asserting a relationship it cannot see by carrying its own outer margin.
 
 ### After assembly
 
@@ -83,7 +82,7 @@ Inside and between a component's own parts, judged at magnification, per theme:
 **Geometry and joins**
 
 - **Optical beats mathematical.** Icons, chevrons, punctuation, and round shapes carry uneven visual weight, so a mathematically centred glyph often looks off-centre. Judge centring by eye at 3x, never by the box model.
-- **Concentric corners.** A nested radius relates to its parent's through the padding between them; equal radii on nested boxes look wrong at the corner. (`design.md` records the system's worked example in the Composer geometry.)
+- **Concentric corners.** A nested radius relates to its parent's through the padding between them; equal radii on nested boxes look wrong at the corner. (the design system's spec records its worked example in the Composer geometry.)
 - **Joins render once.** Where two segments share an edge — a split control, an attached input-and-button, a segmented anything — the shared border must not double, the group's outer radius must flow through as if it were one shape, and any divider spans exactly the height it should. The two halves must look designed together in *every* state: capture the compound in each state and ask whether the treatment of the inactive half was chosen or inherited.
 - **Hairlines are crisp.** 1px lines land on the pixel grid; a soft, blurry border means a half-pixel offset somewhere.
 
@@ -146,10 +145,10 @@ Reference the exact element and file, e.g. "the divider in Gadget's split varian
 
 ## Guardrails
 
-- **Contrast findings:** the `color-contrast` axe rule is deliberately switched off — rule-wide, every pair — by a settled decision, and the comment beside the override in `.storybook/preview.ts` is its authoritative record (the shipped action pairings it discusses clear AA). Read it before raising any contrast finding, and never re-raise the decision itself as a finding without asking Rob first.
+- **Contrast findings:** the `color-contrast` axe rule is deliberately switched off — rule-wide, every pair — by a settled decision, and the comment beside the override in `scripts/validate-website-a11y.mjs` is its authoritative record (the shipped action pairings it discusses clear AA). Read it before raising any contrast finding, and never re-raise the decision itself as a finding without asking Rob first.
 - **Page reviews** inherit the false-finding caveats in the `visual-review` skill's Key context — the ambient background's two renderers, the layout-mounted chrome, `desktopOnly` nav — read that section before judging a page screenshot.
 - **A clean pass is a valid outcome.** Don't invent findings to justify the run; state what was covered and stop.
 
-## Inside new-component
+## As a gate
 
-The `new-component` skill invokes this pass as soon as the component renders in Storybook, before registration. There it is a gate, not a report: loop until no defect or polish findings remain, fold any open direction calls into the hand-off summary, and treat "renders correctly" as necessary but nowhere near sufficient. Before registration `npm run storybook` cannot cold-start (its `prestorybook` hook runs the `validate-registry` chain, which fails on the unregistered folder) — use a running Storybook or the `storybook-raw` entry in `.claude/launch.json` (port 6016, no lifecycle hook), per new-component's step 4.
+When invoked on work in progress rather than as a review, this is a gate, not a report: loop until no defect or polish findings remain, fold any open direction calls into the hand-off summary, and treat "renders correctly" as necessary but nowhere near sufficient. Before registration the build gate is `npm run verify`, which runs the generators and validators before it builds.

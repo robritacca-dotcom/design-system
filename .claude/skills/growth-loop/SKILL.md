@@ -59,14 +59,14 @@ BRANCH=growth/$(date +%F)-<short-slug>
 git -C "$REPO" worktree add "$WT" -b "$BRANCH" main
 ```
 
-Make the copy edits in `$WT/website/src/...` — new copy follows `content-design.md` (voice, register, banned words) — then verify the build (the repo is an npm workspace — one install at the worktree root wires everything, including the `@robr0/design-system` link back to the worktree's own `src/`; it's seconds thanks to the npm cache. Do **not** symlink `node_modules` from the main checkout — Turbopack rejects symlinks that point outside the project root):
+Make the copy edits in `$WT/website/src/...` — new copy follows `content-design.md` (voice, register, banned words) — then verify the build (the repo is an npm workspace — one install at the worktree root wires everything, including the `@robr0/design-system` link back to the worktree's own the site source; it's seconds thanks to the npm cache. Do **not** symlink `node_modules` from the main checkout — Turbopack rejects symlinks that point outside the project root):
 
 ```bash
 cd "$WT" && npm install --no-fund --no-audit
 cd "$WT/website" && npm run build
 ```
 
-If the build fails because of your edit, fix it. Then commit in the worktree (conventional message, e.g. `experiment(growth): reword /work CTA — hypothesis in loop report 2026-07-20`). Commit scope: the website `prebuild` regenerates tracked files, and they stay out of the commit **unless your edit is what changed them** — with one standing exception that always qualifies: the site chat's corpus (`website/src/data/site-corpus.generated.ts`) is built from page prose, so a copy edit changes it by construction. Commit the regenerated corpus alongside your copy edits every time (a branch without it fails CI's drift guard, and `git worktree remove` refuses a dirty worktree); leave the other regenerated files (everything else the website `prebuild`'s generators write — mostly under `website/src/data/` and `website/public/`, though the chain also touches root surfaces like `README.md` and `src/tokens/registry.json`) out unless they actually changed. Then clean up:
+If the build fails because of your edit, fix it. Then commit in the worktree (conventional message, e.g. `experiment(growth): reword /work CTA — hypothesis in loop report 2026-07-20`). Commit scope: the website `prebuild` regenerates tracked files, and they stay out of the commit **unless your edit is what changed them** — with one standing exception that always qualifies: the site chat's corpus (`website/src/data/site-corpus.generated.ts`) is built from page prose, so a copy edit changes it by construction. Commit the regenerated corpus alongside your copy edits every time (a branch without it fails CI's drift guard, and `git worktree remove` refuses a dirty worktree); leave the other regenerated files (everything else the website `prebuild`'s generators write — mostly under `website/src/data/` and `website/public/`, though the chain also touches root surfaces like `README.md` and the design system's token registry) out unless they actually changed. Then clean up:
 
 ```bash
 rm -rf "$WT/node_modules" "$WT/website/node_modules"

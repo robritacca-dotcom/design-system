@@ -130,12 +130,12 @@ function EnforcementChain() {
    own LinkList, in-site rows via newTab: false.
    ============================================ */
 const foundationLinks = [
-  { href: "/foundations/colour-primitives", icon: "palette", label: "Primitive colours", sub: "Every raw hue: the bottom of the token stack", newTab: false },
-  { href: "/foundations/colour-mode", icon: "contrast", label: "Semantic colours", sub: "Primitives wrapped in intent, with light + dark", newTab: false },
-  { href: "/foundations/typography", icon: "text_fields", label: "Typography", sub: "One Nunito Sans scale, weight as hierarchy", newTab: false },
-  { href: "/foundations/spatial", icon: "straighten", label: "Spacing & radius", sub: "The spatial tokens every component shares", newTab: false },
-  { href: "/foundations/icons", icon: "interests", label: "Icons", sub: "Material Symbols Rounded, sized to the system", newTab: false },
-  { href: "/foundations/motion", icon: "animation", label: "Motion", sub: "Duration and easing, with a reduced-motion guard", newTab: false },
+  { href: "https://rift-ds.com/foundations/colour-primitives", icon: "palette", label: "Primitive colours", sub: "Every raw hue: the bottom of the token stack", newTab: true },
+  { href: "https://rift-ds.com/foundations/colour-mode", icon: "contrast", label: "Semantic colours", sub: "Primitives wrapped in intent, with light + dark", newTab: true },
+  { href: "https://rift-ds.com/foundations/typography", icon: "text_fields", label: "Typography", sub: "One Nunito Sans scale, weight as hierarchy", newTab: true },
+  { href: "https://rift-ds.com/foundations/spatial", icon: "straighten", label: "Spacing & radius", sub: "The spatial tokens every component shares", newTab: true },
+  { href: "https://rift-ds.com/foundations/icons", icon: "interests", label: "Icons", sub: "Material Symbols Rounded, sized to the system", newTab: true },
+  { href: "https://rift-ds.com/foundations/motion", icon: "animation", label: "Motion", sub: "Duration and easing, with a reduced-motion guard", newTab: true },
 ];
 
 /** The mini catalog — the foundations list + the components index. */
@@ -151,7 +151,7 @@ function MiniCatalog() {
         <LinkList
           items={[
             {
-              href: "/components",
+              href: "https://rift-ds.com/components",
               icon: "widgets",
               label: `${COMPONENT_COUNT} components`,
               sub: "Every component with live examples + Storybook docs",
@@ -216,7 +216,7 @@ export default function Robr0DsCaseStudy() {
 
                   <p>
                     robr0 DS started in February 2026 as a way to fix that from the inside, on a project where the boundary did not exist. It is now{" "}
-                    <Link href="/components" className={styles.inlineLink}>{COMPONENT_COUNT} React components</Link>, a package on npm, and the site you are reading. The components turned out to be the easy part.
+                    <Link href="https://rift-ds.com/components" className={styles.inlineLink}>{COMPONENT_COUNT} React components</Link>, a package on npm, and the site you are reading. The components turned out to be the easy part.
                   </p>
 
                   <h2 id="the-foundation">The one part I would not delegate</h2>
@@ -257,11 +257,11 @@ export default function Robr0DsCaseStudy() {
 
                   <p>
                     What I was building was the layer that tells an agent how to use the foundation.{" "}
-                    <Link href="/blueprints/design" className={styles.inlineLink}>design.md</Link>{" "}
+                    <Link href="https://rift-ds.com/blueprints/design" className={styles.inlineLink}>design.md</Link>{" "}
                     owns how things look. content-design.md owns how sentences read, including the AI writing habits I kept catching in my own shipped copy.{" "}
-                    <Link href="/blueprints/claude" className={styles.inlineLink}>CLAUDE.md</Link>{" "}
+                    <Link href="https://rift-ds.com/blueprints/claude" className={styles.inlineLink}>CLAUDE.md</Link>{" "}
                     sits above both as the operating manual: where facts live, what to generate, what never to do. Alongside them came the first{" "}
-                    <Link href="/skills" className={styles.inlineLink}>skills</Link>, written procedures for recurring work like scaffolding a component or auditing a page.
+                    <Link href="https://rift-ds.com/skills" className={styles.inlineLink}>skills</Link>, written procedures for recurring work like scaffolding a component or auditing a page.
                   </p>
 
                   <p>
@@ -425,7 +425,7 @@ export default function Robr0DsCaseStudy() {
 
                   <p>
                     The{" "}
-                    <Link href="/project-journal" className={styles.inlineLink}>project journal</Link>{" "}
+                    <Link href="https://rift-ds.com/releases" className={styles.inlineLink}>project journal</Link>{" "}
                     keeps its own timeline current: a scheduled loop reads the git history every two weeks and consolidates it into entries. I have written up the parts that generalise beyond my repo in three pieces:{" "}
                     <Link href="/writing/design-still-derisks-dev" className={styles.inlineLink}>Design still derisks dev</Link>,{" "}
                     <Link href="/writing/youre-not-building-what-you-think" className={styles.inlineLink}>You’re not building what you think you’re building</Link>, and{" "}
@@ -525,7 +525,7 @@ export default function Robr0DsCaseStudy() {
                     </div>
                   </a>
 
-                  <Link href="/playground" className={styles.linkItem}>
+                  <Link href="https://rift-ds.com/playground" className={styles.linkItem}>
                     <Image src="/logos/rr.svg" alt="" width={28} height={28} className={styles.linkLogo} />
                     <div className={styles.linkContent}>
                       <div className={styles.linkTitle}>
@@ -552,7 +552,7 @@ export default function Robr0DsCaseStudy() {
                     </div>
                   </a>
 
-                  <Link href="/docs/get-started" className={styles.linkItem}>
+                  <Link href="https://rift-ds.com/docs/get-started" className={styles.linkItem}>
                     <Image src="/logos/rr.svg" alt="" width={28} height={28} className={styles.linkLogo} />
                     <div className={styles.linkContent}>
                       <div className={styles.linkTitle}>

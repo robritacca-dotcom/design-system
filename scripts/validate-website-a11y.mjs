@@ -10,11 +10,13 @@
  * and the same registry-derived routes (SMOKE_ROUTES in served-site.mjs),
  * so the two checks describe the same sample of the site.
  *
- * The rule set deliberately mirrors `.storybook/preview.ts`: WCAG 2.1 AA
- * with `color-contrast` off. That exclusion is a settled decision of Rob's
- * and the comment in preview.ts is its authoritative record — do not
- * re-enable it here without asking him, and a contrast failure appearing
- * from this script means someone turned it back on.
+ * The rule set is WCAG 2.1 AA with `color-contrast` off. That exclusion is a
+ * settled decision of the owner's, and THIS COMMENT is now its authoritative
+ * record: it used to live beside the same override in the design system's
+ * Storybook config, which left with the library. Do not re-enable the rule,
+ * restyle what it covers, or raise it as a finding without asking him first.
+ * A contrast failure appearing from this script means someone turned it back
+ * on.
  */
 /* global window, document -- page.evaluate() callbacks execute in the browser */
 import { createRequire } from 'node:module';
@@ -26,7 +28,7 @@ const axePath = require.resolve('axe-core/axe.min.js');
 
 const THEMES = ['light', 'dark'];
 
-/** Mirrors the gate in .storybook/preview.ts — AA tags, contrast off. */
+/** AA tags, contrast off — see the note above before changing either. */
 const AXE_OPTIONS = {
   runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'] },
   rules: { 'color-contrast': { enabled: false } },
@@ -93,7 +95,7 @@ async function main() {
     process.exit(1);
   }
   console.log(
-    `validate-website-a11y: ${SMOKE_ROUTES.length} routes clean in both themes (AA, contrast excluded per .storybook/preview.ts).`,
+    `validate-website-a11y: ${SMOKE_ROUTES.length} routes clean in both themes (AA, contrast excluded by the settled decision recorded in this script).`,
   );
 }
 
