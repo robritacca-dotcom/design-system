@@ -2,13 +2,7 @@ import type { MetadataRoute } from "next";
 import { execFileSync } from "node:child_process";
 import path from "node:path";
 import { getArticles } from "@/lib/substack";
-import {
-  componentsSidebarLinks,
-  docsSidebarLinks,
-  foundationsSidebarLinks,
-  templatesSidebarLinks,
-  workSidebarLinks,
-} from "@/config/navigation";
+import { workSidebarLinks } from "@/config/navigation";
 import { SITE_URL } from "@/lib/structuredData";
 
 const baseUrl = SITE_URL;
@@ -73,20 +67,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Section clusters derive from the shared sidebar configs in navigation.ts —
   // the single source of truth for these routes — so the sitemap can't drift
   // when a page is added there.
+  //
+  // The design-system clusters (components, foundations, templates, docs,
+  // blueprints, overview, playground, graph, skills, loops, project-journal) are
+  // deliberately absent: they are permanent redirects to rift-ds.com as of
+  // 2026-09-26. A sitemap should list pages that answer 200, not redirects —
+  // otherwise Search Console reports every one of them as "page with redirect".
+  //
+  // /design-system stays. It is no longer the documentation landing page; it is
+  // the page about having built the thing, and it still lives here.
   const staticRoutes = [
     "",
     "/about",
     "/writing",
     "/contact",
     "/privacy",
-    "/playground",
-    "/graph",
     "/design-system",
     ...workSidebarLinks.map((l) => l.href),
-    ...docsSidebarLinks.map((l) => l.href),
-    ...foundationsSidebarLinks.map((l) => l.href),
-    ...templatesSidebarLinks.map((l) => l.href),
-    ...componentsSidebarLinks.map((l) => l.href),
   ];
 
   const staticEntries: MetadataRoute.Sitemap = staticRoutes.map((route) => ({

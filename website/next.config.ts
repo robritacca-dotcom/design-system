@@ -3,6 +3,15 @@ import path from "path";
 
 const worktreeRoot = path.resolve(__dirname, '..');
 
+// Where the design system lives now. It was published from this repo until
+// 2026-09-26; it is now Rift DS, a separate repo, package and domain, and the
+// documentation URLs that used to be served here redirect there permanently.
+// One constant so a future domain change is a single edit, not a sweep of 26
+// redirect rules. (/canvas is deliberately absent from those rules: it was an
+// internal, noindexed board with 5 views in 90 days and Rift DS has no
+// equivalent, so inventing a destination for it would be worse than a 404.)
+const DESIGN_SYSTEM_URL = "https://rift-ds.com";
+
 // The GA tag and the inline theme-bootstrap script in layout.tsx require
 // 'unsafe-inline'; tighten to nonces only if those become external scripts.
 // React dev mode needs eval() for its debugging features; never allowed in prod.
@@ -51,23 +60,61 @@ const nextConfig: NextConfig = {
   // /design-system used to redirect to /foundations after its stub was retired;
   // that redirect is gone because the path is a real page again (the DS landing).
   async redirects() {
+    // The design system left this site on 2026-09-26. It is now Rift DS, with its
+    // own repo, package and domain, so ~160 documentation URLs that used to live
+    // here are permanent redirects to their exact counterparts there. Every
+    // destination below was probed and returns 200 before this shipped.
+    //
+    // Bare index paths are listed before their wildcards deliberately: ":path*"
+    // matches zero segments too, so the wildcard alone would send /components to
+    // ".../components/" with a trailing slash and an extra hop.
+    const ds = (p: string) => `${DESIGN_SYSTEM_URL}${p}`;
     return [
       { source: "/about/me", destination: "/about", permanent: true },
-      { source: "/design-md", destination: "/blueprints/design", permanent: true },
-      { source: "/blueprints", destination: "/docs", permanent: true },
-      // The porting guide was unpublished from /blueprints in August 2026 and
-      // its source deleted from the repo soon after. The URL was public, so
-      // the redirect outlives the page: straight to /docs, matching the bare
-      // /blueprints redirect above, so no chain.
-      { source: "/blueprints/porting-guide", destination: "/docs", permanent: true },
-      // The Customization section became the top-level /playground, and its
-      // install guide moved into the Docs cluster.
-      { source: "/customization", destination: "/playground", permanent: true },
-      { source: "/customization/playground", destination: "/playground", permanent: true },
-      { source: "/customization/get-started", destination: "/docs/get-started", permanent: true },
-      // The chat bench merged into the playground as its Chat view
-      // (August 2026) — one tool, one link; the old QA URL lands there.
-      { source: "/robr0-gpt", destination: "/playground?view=chat", permanent: true },
+
+      // --- The design system's documentation, now at Rift DS ---
+      { source: "/components", destination: ds("/components"), permanent: true },
+      { source: "/components/:path*", destination: ds("/components/:path*"), permanent: true },
+      { source: "/foundations", destination: ds("/foundations"), permanent: true },
+      { source: "/foundations/:path*", destination: ds("/foundations/:path*"), permanent: true },
+      { source: "/templates", destination: ds("/templates"), permanent: true },
+      { source: "/templates/:path*", destination: ds("/templates/:path*"), permanent: true },
+      { source: "/docs", destination: ds("/docs"), permanent: true },
+      { source: "/docs/:path*", destination: ds("/docs/:path*"), permanent: true },
+      { source: "/overview", destination: ds("/overview"), permanent: true },
+      { source: "/playground", destination: ds("/playground"), permanent: true },
+      { source: "/graph", destination: ds("/graph"), permanent: true },
+      { source: "/skills", destination: ds("/skills"), permanent: true },
+      { source: "/loops", destination: ds("/loops"), permanent: true },
+      { source: "/labs/:path*", destination: ds("/labs/:path*"), permanent: true },
+
+      // The build journal was a design-system record. Rift DS keeps a release log
+      // rather than a journal, which is the nearest thing a reader is looking for.
+      // The journal's full text is archived in that repo's HISTORY.md.
+      { source: "/project-journal", destination: ds("/releases"), permanent: true },
+
+      // The porting guide was unpublished from /blueprints in August 2026 and its
+      // source deleted from the repo soon after. The URL was public, so the
+      // redirect outlives the page. Both bare-/blueprints rules land on Rift DS's
+      // docs hub, matching where they used to land here, so nothing chains.
+      { source: "/blueprints", destination: ds("/docs"), permanent: true },
+      { source: "/blueprints/porting-guide", destination: ds("/docs"), permanent: true },
+      { source: "/blueprints/:path*", destination: ds("/blueprints/:path*"), permanent: true },
+      { source: "/design-md", destination: ds("/blueprints/design"), permanent: true },
+
+      // The Customization section became the top-level playground, and its install
+      // guide moved into the Docs cluster. Both now point at Rift DS directly
+      // rather than hopping through a local URL that is itself a redirect.
+      { source: "/customization", destination: ds("/playground"), permanent: true },
+      { source: "/customization/playground", destination: ds("/playground"), permanent: true },
+      { source: "/customization/get-started", destination: ds("/docs/get-started"), permanent: true },
+
+      // The chat bench merged into the playground as its Chat view (August 2026).
+      // /chat-widget-test is older still and has been returning 404 for some time,
+      // yet it drew 72 views in the 90 days to 2026-09-26, so it earns a target
+      // rather than staying broken.
+      { source: "/robr0-gpt", destination: ds("/playground?view=chat"), permanent: true },
+      { source: "/chat-widget-test", destination: ds("/playground?view=chat"), permanent: true },
     ];
   },
   // The design system arrives as a real (workspace-linked) package whose
