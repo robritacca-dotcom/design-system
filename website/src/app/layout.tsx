@@ -1,6 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import "rift-ds/tokens/tokens.css";
+// The theme preset, if any. This line and BRAND in @/config/brand move
+// together; validate-brand-preset.mjs fails the build when they disagree.
+// BRAND is 'default', so no preset stylesheet is imported.
+// import "rift-ds/tokens/presets/<brand>.css";
 // Single source of the Material Symbols base styles and icon-size scale.
 // Imported explicitly rather than relying on it arriving incidentally through
 // a component import, so pages that use raw .material-symbols-rounded spans
@@ -8,6 +12,7 @@ import "rift-ds/tokens/tokens.css";
 import "rift-ds/fonts/material-symbols.css";
 import { Nunito_Sans } from "next/font/google";
 import "./globals.css";
+import { BRAND_ATTRIBUTE } from "@/config/brand";
 import { buildPersonJsonLd, buildWebsiteJsonLd, SITE_URL } from "@/lib/structuredData";
 import { getArticles } from "@/lib/substack";
 import { WritingNavProvider } from "@/components/MegaNav/WritingNavContext";
@@ -156,6 +161,7 @@ export default async function RootLayout({
       lang="en"
       data-theme="dark"
       data-theme-setting="system"
+      data-brand={BRAND_ATTRIBUTE}
       className={nunitoSans.variable}
       suppressHydrationWarning
     >

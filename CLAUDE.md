@@ -184,6 +184,24 @@ site CSS              background: var(--color-action-primary-bg)
 - **Never hardcode a hex value** in site CSS. The one sanctioned exception is the case-study cover redraws in `website/src/components/covers/`, which are deliberately token-free: every value is a drawing coordinate from the source frame, sanctioned per module with a `ds-allow-file(mockup)` header, so a theme change can never alter a picture of what shipped.
 - **Every `var(--…)` must resolve** — see `validate-token-usage.mjs` above.
 
+## Theming
+
+The site wears one of the design system's shipped looks, chosen by `BRAND` in
+`website/src/config/brand.ts`. A preset is a complete look, not a palette:
+colour, radius, density, motion, elevation and typeface, in both themes,
+applied by one attribute on `<html>` with no runtime JavaScript. `'default'`
+means none of them, which is the system's own look.
+
+**Changing it moves two lines**: `BRAND`, and the preset stylesheet import in
+`website/src/app/layout.tsx`. They cannot be linked in code, because a static
+import cannot be interpolated from a constant and importing the whole bundle
+would ship ten stylesheets to use one, so `scripts/validate-brand-preset.mjs`
+holds them together and fails the build when they disagree.
+
+Moving off `'default'` also changes the typeface: every preset brings its own,
+self-hosted inside the package, which makes the `next/font` Nunito Sans
+pipeline in the layout dead weight. Remove it in the same change.
+
 Upgrading the package is where token names can change. Read its release notes,
 then let `validate-token-usage.mjs` enumerate the call sites rather than
 grepping by hand.

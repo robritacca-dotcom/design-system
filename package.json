@@ -23,7 +23,7 @@
     "sharp": "^0.35.3"
   },
   "scripts": {
-    "validate-registry": "node scripts/generate-site-corpus.mjs && node scripts/validate-shader-background.mjs && node scripts/validate-single-background-mount.mjs && node scripts/validate-copy-conventions.mjs && node scripts/validate-case-studies.mjs && node scripts/validate-cover-rasters.mjs && node scripts/validate-essays.mjs && node scripts/validate-essay-covers.mjs && node scripts/validate-site-corpus.mjs && node scripts/validate-token-usage.mjs && node scripts/validate-doc-refs.mjs && node scripts/validate-chat-coverage.mjs && node scripts/validate-chat-starters.mjs && node scripts/validate-page-summaries.mjs && node scripts/validate-shipped-prose.mjs",
+    "validate-registry": "node scripts/generate-site-corpus.mjs && node scripts/validate-shader-background.mjs && node scripts/validate-single-background-mount.mjs && node scripts/validate-brand-preset.mjs && node scripts/validate-copy-conventions.mjs && node scripts/validate-case-studies.mjs && node scripts/validate-cover-rasters.mjs && node scripts/validate-essays.mjs && node scripts/validate-essay-covers.mjs && node scripts/validate-site-corpus.mjs && node scripts/validate-token-usage.mjs && node scripts/validate-doc-refs.mjs && node scripts/validate-chat-coverage.mjs && node scripts/validate-chat-starters.mjs && node scripts/validate-page-summaries.mjs && node scripts/validate-shipped-prose.mjs",
     "dev": "npm --workspace website run dev",
     "build": "npm --workspace website run build",
     "start": "npm --workspace website run start",
