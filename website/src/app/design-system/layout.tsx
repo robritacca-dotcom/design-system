@@ -5,7 +5,7 @@ import { pageOpenGraph } from "@/config/navigation";
 // in no sidebar array, so its metadata is a literal rather than pageMetadata().
 const title = "Design system";
 const description =
-  "The robr0 DS landing: live components rendered from the npm package, an accent switcher that re-themes the page, and links into every part of the system.";
+  "Rift DS, the open React design system Robert Ritacca designed and built: what it is, how its rules hold, and where to find it.";
 
 export const metadata: Metadata = {
   title,

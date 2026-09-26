@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  useCallback,
   useEffect,
   useRef,
   useState,
@@ -10,10 +9,7 @@ import {
 import { usePathname } from "next/navigation";
 import { lockBodyScroll, unlockBodyScroll } from "@/lib/scroll-lock";
 import { type NavListItem } from "@robr0/design-system/components/NavList/NavList";
-import { componentCategoryMetadata } from "@robr0/design-system/components/registry";
 import {
-  docsSidebarLinks,
-  foundationsSidebarLinks,
   workSidebarLinks,
   type NavLink,
 } from "@/config/navigation";
@@ -37,7 +33,7 @@ const sectionForPath = (path: string): string | null => {
 };
 
 /**
- * The site header: the in-flow bar, its sticky twin, the Design system mega
+ * The site header: the in-flow bar, its sticky twin,
  * panel, and the mobile drawer. This component owns all the state and window
  * wiring; the pieces themselves are HeaderBar (one bar, rendered twice),
  * MegaPanel inside it, SiteLogo, and MobileDrawer.
@@ -45,7 +41,6 @@ const sectionForPath = (path: string): string | null => {
 export default function MegaNav() {
   const pathname = usePathname() ?? "/";
   const writingNavItems = useWritingNav();
-  const [open, setOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   // Drawer accordions are closed by default; one open at a time.
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
@@ -57,11 +52,6 @@ export default function MegaNav() {
   // bar resizes), and a live binding made the X jump mid-open.
   const [closeTop, setCloseTop] = useState<number | null>(null);
   const [drawerStuck, setDrawerStuck] = useState(false);
-  const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-  const triggerRef = useRef<HTMLAnchorElement>(null);
-  const menuRef = useRef<HTMLDivElement>(null);
-  const stickyTriggerRef = useRef<HTMLAnchorElement>(null);
-  const stickyMenuRef = useRef<HTMLDivElement>(null);
   const inFlowHeaderRef = useRef<HTMLElement>(null);
 
   const isWorkActive = pathname === "/work" || pathname.startsWith("/work/");
@@ -91,39 +81,10 @@ export default function MegaNav() {
       // then renders as a plain link, matching its old behaviour.
       items: writingNavItems,
     },
-    {
-      label: "Design system",
-      href: "/design-system",
-      collapsible: false,
-      items: [
-        { label: "Docs", href: "/docs", id: "docs", items: toNavItems(docsSidebarLinks.slice(1)) },
-        {
-          label: "Foundations",
-          href: "/foundations",
-          id: "foundations",
-          items: toNavItems(foundationsSidebarLinks.slice(1)),
-        },
-        {
-          label: "Components",
-          href: "/components",
-          id: "components",
-          // Category anchors on the index, not all the components — NavList
-          // caps at three levels, so per-component rows would be pruned here
-          // anyway, and the categories scan better in a drawer than the list.
-          items: componentCategoryMetadata.map((cat) => ({
-            label: cat.label,
-            href: `/components#${cat.id}`,
-          })),
-        },
-        // One row per template would outgrow the drawer slowly; the index
-        // lists them all, so the row stays a plain link.
-        { label: "Templates", href: "/templates" },
-        // Canvas is deliberately absent: the drawer is the mobile IA, and
-        // the board is desktopOnly in navigation.ts (needs a pointer and a
-        // wide viewport).
-        { label: "Playground", href: "/playground" },
-      ],
-    },
+    // A plain link now. The drawer used to nest the whole documentation IA
+    // under this row; those pages live at rift-ds.com, and what remains here
+    // is the single page about having built it.
+    { label: "Design system", href: "/design-system" },
     { label: "Contact", href: "/contact" },
   ];
 
@@ -141,54 +102,21 @@ export default function MegaNav() {
     setMobileOpen(next);
   };
 
-  const openMenu = useCallback(() => {
-    if (closeTimer.current) clearTimeout(closeTimer.current);
-    setOpen(true);
-  }, []);
-
-  const scheduleClose = useCallback(() => {
-    if (closeTimer.current) clearTimeout(closeTimer.current);
-    closeTimer.current = setTimeout(() => setOpen(false), 160);
-  }, []);
-
-  const closeMenu = useCallback(() => setOpen(false), []);
-
-  // Close on click outside
-  useEffect(() => {
-    if (!open) return;
-    const onClick = (e: MouseEvent) => {
-      const t = e.target as Node;
-      if (
-        triggerRef.current?.contains(t) || menuRef.current?.contains(t) ||
-        stickyTriggerRef.current?.contains(t) || stickyMenuRef.current?.contains(t)
-      ) return;
-      setOpen(false);
-    };
-    document.addEventListener("mousedown", onClick);
-    return () => document.removeEventListener("mousedown", onClick);
-  }, [open]);
-
-  // Close on Escape
+  // Close on Escape. Only the mobile drawer is dismissible now: the nav's
+  // "Design system" mega panel went with the documentation it indexed.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        if (open) {
-          setOpen(false);
-          triggerRef.current?.focus();
-        }
-        if (mobileOpen) setMobileOpen(false);
-      }
+      if (e.key === "Escape" && mobileOpen) setMobileOpen(false);
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, [open, mobileOpen]);
+  }, [mobileOpen]);
 
-  // Close mega when pathname changes (user navigated via a link).
+  // Close the drawer when pathname changes (user navigated via a link).
   // The setState here is intentional — we react to external navigation,
   // which is exactly what Effects are for.
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setOpen(false);
     setMobileOpen(false);
     setExpandedSection(null);
   }, [pathname]);
@@ -242,14 +170,8 @@ export default function MegaNav() {
     <header ref={inFlowHeaderRef} className={styles.header}>
       <HeaderBar
         pathname={pathname}
-        open={open}
         tabbable
         mobileOpen={mobileOpen}
-        triggerRef={triggerRef}
-        menuRef={menuRef}
-        onMegaEnter={openMenu}
-        onMegaLeave={scheduleClose}
-        onMegaClose={closeMenu}
         onMobileToggle={toggleMobileMenu}
       />
 
@@ -268,14 +190,8 @@ export default function MegaNav() {
         <HeaderBar
           sticky
           pathname={pathname}
-          open={open}
           tabbable={isStuck}
           mobileOpen={mobileOpen}
-          triggerRef={stickyTriggerRef}
-          menuRef={stickyMenuRef}
-          onMegaEnter={openMenu}
-          onMegaLeave={scheduleClose}
-          onMegaClose={closeMenu}
           onMobileToggle={toggleMobileMenu}
         />
       </div>

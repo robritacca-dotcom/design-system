@@ -1,20 +1,21 @@
-import {
-  componentsSidebarLinks,
-  docsSidebarLinks,
-  foundationsSidebarLinks,
-  templatesSidebarLinks,
-  workSidebarLinks,
-  type NavLink,
-} from "@/config/navigation";
+import { workSidebarLinks, type NavLink } from "@/config/navigation";
 import { SITE_URL } from "@/lib/structuredData";
 
 /**
  * /llms.txt — a markdown index of the site for AI agents, per llmstxt.org.
  * Link lists are derived from the shared navigation config so they can never
  * drift from what the site actually serves.
+ *
+ * This index covers the portfolio only. The design system used to be
+ * documented here and is now its own site, so it gets a pointer rather than a
+ * section: an agent that wants component or token detail should read
+ * rift-ds.com/llms.txt, which indexes it properly and stays current with it.
  */
 
 export const dynamic = "force-static";
+
+/** Where the design system lives now. Also stated in next.config.ts. */
+const DESIGN_SYSTEM_URL = "https://rift-ds.com";
 
 function section(title: string, intro: string, links: NavLink[]): string {
   const items = links
@@ -31,47 +32,13 @@ export function GET() {
   const body = [
     "# Robert Ritacca",
     "",
-    "> Portfolio of Robert Ritacca, Principal Product Designer in Toronto: AI product case studies (Intuit, Meta, Augmenta) and robr0 DS, an AI-ready design system built by Claude Code from published specs (CLAUDE.md, design.md, content-design.md) and shipped to npm as an open React component library.",
+    "> Portfolio of Robert Ritacca, Principal Product Designer in Toronto: AI product case studies from Intuit, Meta and Augmenta, essays on design and AI, and Rift DS, an open React design system he designed and built.",
     "",
     section(
       "Work",
       `Case studies. Index at ${SITE_URL}/work.`,
       workSidebarLinks
     ),
-    "",
-    section(
-      "Design system docs",
-      `How robr0 DS works and the artifacts you can reuse. Index at ${SITE_URL}/docs.`,
-      docsSidebarLinks
-    ),
-    "",
-    section(
-      "Foundations",
-      `Design tokens and language. Index at ${SITE_URL}/foundations.`,
-      foundationsSidebarLinks
-    ),
-    "",
-    section(
-      "Templates",
-      `Complete screens built from the system's components and tokens alone. Index at ${SITE_URL}/templates.`,
-      templatesSidebarLinks
-    ),
-    "",
-    section(
-      "Components",
-      `React component documentation with live examples. Index at ${SITE_URL}/components. ` +
-        `Append .md to any component URL for its prop contract as markdown, ` +
-        `generated from the same JSDoc as the published .d.ts.`,
-      componentsSidebarLinks
-    ),
-    "",
-    "## Interactive surfaces",
-    "",
-    "Live tools for exploring and re-theming the design system.",
-    "",
-    `- [Playground](${SITE_URL}/playground): re-theme the design system live (components, type and chat) and copy the generated CSS`,
-    `- [System graph](${SITE_URL}/graph): every token, component and page as one dependency graph, traceable in both directions`,
-    `- [Design system landing](${SITE_URL}/design-system): the whole system working on one page, with live component demos`,
     "",
     "## About & writing",
     "",
@@ -81,18 +48,18 @@ export function GET() {
     `- [Writing](${SITE_URL}/writing): essays on design and AI (mirrored from Substack)`,
     `- [Contact](${SITE_URL}/contact): ways to get in touch, and to book a paid one-hour consultation`,
     "",
+    "## Rift DS",
+    "",
+    "The design system this site is built on. Designed and built by Robert Ritacca, published as an open npm package with its own documentation site.",
+    "",
+    `- [About Rift DS](${SITE_URL}/design-system): what it is and what building it involved`,
+    `- [Building Rift DS](${SITE_URL}/work/robr0-ds): the case study, on what makes a design system rule actually hold`,
+    `- [Documentation](${DESIGN_SYSTEM_URL}): components, tokens, templates and the playground`,
+    `- [llms.txt](${DESIGN_SYSTEM_URL}/llms.txt): the agent index for the system itself, including its MCP endpoint and per-component prop contracts`,
+    `- [npm package](https://www.npmjs.com/package/rift-ds): \`npm install rift-ds\``,
+    "",
     "## Optional",
     "",
-    "Raw markdown sources and machine-readable indexes.",
-    "",
-    `- [MCP server](${SITE_URL}/api/mcp): a Model Context Protocol endpoint (Streamable HTTP, no auth). Tools cover the component list, per-component prop APIs, the design token registry, install setup, and full-text site search. Point any MCP client at this URL`,
-    `- [Agent skill](${SITE_URL}/skill/robr0-design-system/SKILL.md): a SKILL.md for consumers of the package, generated from the registries. Save it (with its references/components.md catalogue) into a project's .claude/skills/robr0-design-system/ and a coding agent loads the library's install, theming and catalogue rules every session. \`npx @robr0/design-system init\` fetches the pair and prints the MCP connect line`,
-    `- [Storybook](https://design-system-iota-one.vercel.app): the rendered API reference. Every component has a props table with types, defaults, and deprecations`,
-    `- [npm package](https://www.npmjs.com/package/@robr0/design-system): \`npm install @robr0/design-system\` ships complete .d.ts type declarations for every component`,
-    `- [CLAUDE.md](${SITE_URL}/CLAUDE.md): how this repository is *maintained* (architecture, registries, workflows). Written for contributors to the system itself, not for people using the package: for that, read design.md below and the README`,
-    `- [GitHub source](https://github.com/robritacca-dotcom/design-system): the full source, if you want to read the implementation`,
-    `- [design.md](${SITE_URL}/design.md): the full design specification (tokens, colours, typography, component rules)`,
-    `- [content-design.md](${SITE_URL}/content-design.md): the writing rules (voice, register by surface, words and patterns the project never ships)`,
     `- [Sitemap](${SITE_URL}/sitemap.xml)`,
     "",
   ].join("\n");

@@ -82,7 +82,7 @@
 .columns {
   flex: 1;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   column-gap: var(--gap-lg);
   row-gap: var(--gap-xxl);
 }
@@ -96,12 +96,6 @@
 /* Two groups sharing one column (Site over Design system), so five groups
    fit four columns. The gap is the row gap between groups, wider than the
    gap between a group's own links. */
-.columnStack {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-xxl);
-}
-
 .columnTitle {
   font-family: var(--font-title-body-family);
   font-size: var(--font-paragraph-sm-size);
@@ -216,16 +210,8 @@
 
   .columns {
     width: 100%;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  /* Unstack the pair: with the brand block out of the row there is no
-     four-column grid to fit five groups into, so all five become grid
-     items of their own and land 3 + 2 rather than stranding "Elsewhere"
-     under a double-height first column. */
-  .columnStack {
-    display: contents;
-  }
 }
 
 @media (max-width: 600px) {

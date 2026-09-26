@@ -1,31 +1,16 @@
 "use client";
 
-import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { CommandPalette } from "@robr0/design-system/components/CommandPalette/CommandPalette";
 import type { CommandPaletteGroup } from "@robr0/design-system/components/CommandPalette/CommandPalette";
-import { componentMetadata } from "@robr0/design-system/components/registry";
 import {
-  docsSidebarLinks,
-  dsMegaItems,
-  foundationsSidebarLinks,
 } from "@/config/navigation";
 import { caseStudies } from "@/data/case-studies";
 import { CHROMELESS_ROUTES } from "@/config/chromeless";
 import { useSiteChat } from "@/components/SiteChat/ChatContext";
 import { SITE_PALETTE_OPEN_EVENT } from "./palette-bus";
 import styles from "./SitePalette.module.css";
-
-/* Mirrors the nav's 959px breakpoint: desktopOnly pages (the canvas) stay
-   out of the mobile IA, so the palette hides their rows below it too. */
-const DESKTOP_QUERY = "(min-width: 960px)";
-
-const subscribeDesktop = (onChange: () => void) => {
-  const media = window.matchMedia(DESKTOP_QUERY);
-  media.addEventListener("change", onChange);
-  return () => media.removeEventListener("change", onChange);
-};
-const readDesktop = () => window.matchMedia(DESKTOP_QUERY).matches;
 
 /* Same attribute dance as ThemeToggle's handleChange — the MutationObserver
    every toggle instance holds picks the change up, so the header control
@@ -41,19 +26,6 @@ const setTheme = (value: "light" | "dark" | "system") => {
       : value;
   root.setAttribute("data-theme", resolved);
   localStorage.setItem("theme", value);
-};
-
-/* Icons for the docs cluster rows, keyed by href so the rows themselves
-   stay derived from docsSidebarLinks. */
-const DOC_ICONS: Record<string, string> = {
-  "/overview": "account_tree",
-  "/docs/get-started": "rocket_launch",
-  "/blueprints/claude": "description",
-  "/blueprints/design": "description",
-  "/blueprints/content-design": "description",
-  "/skills": "construction",
-  "/loops": "all_inclusive",
-  "/project-journal": "timeline",
 };
 
 interface SitePaletteMountProps {
@@ -79,7 +51,6 @@ export function SitePaletteMount({ writingLinks }: SitePaletteMountProps) {
   const { setOpen: setChatOpen, send: sendChat } = useSiteChat();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const isDesktop = useSyncExternalStore(subscribeDesktop, readDesktop, () => false);
 
   const trimmedQuery = query.trim();
   const hasQuery = trimmedQuery.length > 0;
@@ -161,28 +132,9 @@ export function SitePaletteMount({ writingLinks }: SitePaletteMountProps) {
       ],
     };
 
-    const designSystem: CommandPaletteGroup = {
-      label: "Design system",
-      commands: [
-        ...dsMegaItems
-          .filter((item) => isDesktop || !item.desktopOnly)
-          .map((item) => ({
-            id: `ds-${item.href}`,
-            label: item.label,
-            description: item.description,
-            icon: item.icon,
-            onSelect: go(item.href),
-          })),
-        ...docsSidebarLinks.slice(1).map((link) => ({
-          id: `ds-${link.href}`,
-          label: link.label,
-          description: link.description,
-          icon: DOC_ICONS[link.href] ?? "description",
-          onSelect: go(link.href),
-        })),
-      ],
-    };
-
+    // The palette used to list the whole documentation IA under this group.
+    // Those pages are at rift-ds.com now, so the one page that remains joins
+    // Navigation instead of heading a group of its own.
     const actions: CommandPaletteGroup = {
       label: "Actions",
       commands: [
@@ -223,7 +175,7 @@ export function SitePaletteMount({ writingLinks }: SitePaletteMountProps) {
 
     // The resting view stays short; the deep collections join once a query
     // gives the built-in filter something to narrow them with.
-    if (!hasQuery) return [navigation, designSystem, actions];
+    if (!hasQuery) return [navigation, actions];
 
     // The Stripe-style escape hatch: whatever was typed can be handed to the
     // site chat as a question. The row's label IS the query, which is what
@@ -263,32 +215,6 @@ export function SitePaletteMount({ writingLinks }: SitePaletteMountProps) {
       ],
     };
 
-    const components: CommandPaletteGroup = {
-      label: "Components",
-      commands: [...componentMetadata]
-        .sort((a, b) => a.label.localeCompare(b.label))
-        .map((c) => ({
-          id: `component-${c.slug}`,
-          label: c.label,
-          description: c.description,
-          icon: "widgets",
-          keywords: ["component", c.category],
-          onSelect: go(`/components/${c.slug}`),
-        })),
-    };
-
-    const foundations: CommandPaletteGroup = {
-      label: "Foundations",
-      commands: foundationsSidebarLinks.slice(1).map((link) => ({
-        id: `foundation-${link.href}`,
-        label: link.label,
-        description: link.description,
-        icon: "category",
-        keywords: ["foundations", "tokens"],
-        onSelect: go(link.href),
-      })),
-    };
-
     const caseStudyGroup: CommandPaletteGroup = {
       label: "Case studies",
       // The case-study registry rather than the sidebar links: it carries
@@ -317,15 +243,12 @@ export function SitePaletteMount({ writingLinks }: SitePaletteMountProps) {
 
     return [
       navigation,
-      designSystem,
-      components,
-      foundations,
       caseStudyGroup,
       essays,
       actions,
       askChat,
     ];
-  }, [hasQuery, trimmedQuery, isDesktop, writingLinks, router, setChatOpen, sendChat]);
+  }, [hasQuery, trimmedQuery, writingLinks, router, setChatOpen, sendChat]);
 
   if (CHROMELESS_ROUTES.has(pathname)) return null;
 

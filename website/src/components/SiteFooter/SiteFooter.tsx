@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { dsMegaItems, docsSidebarLinks, workSidebarLinks } from "@/config/navigation";
+import { workSidebarLinks } from "@/config/navigation";
 import { SOCIAL_PROFILES, PROJECT_LINKS } from "@/config/social";
 import { InstagramIcon, LinkedInIcon, XIcon } from "../BrandIcons/BrandIcons";
 import FadeDivider from "../FadeDivider/FadeDivider";
@@ -9,9 +9,8 @@ import styles from "./SiteFooter.module.css";
 
 /**
  * SiteFooter — the sitemap footer: a brand block (mark, name, social
- * icons) beside four columns holding five link groups (Site hand-curated
- * below, three from the nav config, Elsewhere from social.ts), then a
- * quiet copyright row.
+ * icons) beside three columns (Site hand-curated below, Work from the nav
+ * config, Elsewhere from social.ts), then a quiet copyright row.
  * Server component; column data resolves once at module scope.
  */
 
@@ -20,21 +19,10 @@ const siteLinks = [
   { href: "/about", label: "About" },
   { href: "/work", label: "Work" },
   { href: "/writing", label: "Writing" },
+  { href: "/design-system", label: "Design system" },
   { href: "/contact", label: "Contact" },
   { href: "/privacy", label: "Privacy" },
 ];
-
-// The /design-system landing stays out: its own column would just repeat
-// the title, and the mega nav trigger already links it.
-const designSystemLinks = dsMegaItems.map(({ href, label, desktopOnly }) => ({
-  href,
-  label,
-  desktopOnly,
-}));
-
-const docsLinks = docsSidebarLinks
-  .filter((link) => link.label !== "Contents")
-  .map(({ href, label }) => ({ href, label }));
 
 // Skip the "Contents" entry; /work already sits in the Site column.
 const workLinks = workSidebarLinks
@@ -112,14 +100,10 @@ export default function SiteFooter() {
         </div>
 
         <nav className={styles.columns} aria-label="Footer">
-          {/* The two shortest groups share the first column, so four
-              columns cover five groups — the same trick that keeps the
-              column heights from running away from each other. */}
-          <div className={styles.columnStack}>
-            <LinkColumn title="Site" links={siteLinks} />
-            <LinkColumn title="Design system" links={designSystemLinks} />
-          </div>
-          <LinkColumn title="Docs" links={docsLinks} />
+          {/* Three groups, three columns. The Design system and Docs columns
+              indexed documentation that now lives at rift-ds.com; the single
+              page that remains sits in Site with the other top-level pages. */}
+          <LinkColumn title="Site" links={siteLinks} />
           <LinkColumn title="Work" links={workLinks} />
           <div className={styles.column}>
             <h2 className={styles.columnTitle}>Elsewhere</h2>

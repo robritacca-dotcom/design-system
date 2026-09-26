@@ -5,11 +5,6 @@
    ============================================ */
 
 import type { Metadata } from "next";
-import {
-  COMPONENT_COUNT,
-  componentMetadata,
-  componentCategoryMetadata,
-} from "@robr0/design-system/components/registry";
 
 export interface NavLink {
   href: string;
@@ -22,23 +17,6 @@ export interface NavLink {
   description?: string;
 }
 
-/** A row in a mega menu — provide either an `icon` (Material Symbol) or a `logo` (image path) */
-export interface MegaItem {
-  href: string;
-  label: string;
-  description: string;
-  icon?: string; // Material Symbols name
-  logo?: string; // Path to logo SVG/image — rendered in the icon slot when set
-  /**
-   * The page needs a pointer and a wide viewport, so it stays out of the
-   * mobile IA: the drawer never lists it, and the surfaces that render on
-   * every viewport (footer, DS landing hero, home DS card) hide its link
-   * below the nav's 959px breakpoint. The mega panels need no guard — they
-   * only exist above it.
-   */
-  desktopOnly?: boolean;
-}
-
 /** One step in a breadcrumb trail; omit href for the current page (last item) */
 export interface BreadcrumbItem {
   label: string;
@@ -46,243 +24,9 @@ export interface BreadcrumbItem {
 }
 
 /* ============================================
-   TOP NAV — shared across every page
+   SECTIONS
    ============================================ */
 
-/* ============================================
-   DESIGN SYSTEM MEGA MENU
-   Drives the dropdown panel on the "Design system" trigger.
-   Add a new item here and it appears in the mega.
-   ============================================ */
-
-/** A titled column in the mega panel's link grid. */
-export interface MegaGroup {
-  id: string;
-  /** Column header, set in the overline face. */
-  label: string;
-  items: MegaItem[];
-}
-
-/**
- * The mega panel's link grid, one column per group. The flat `dsMegaItems`
- * below derives from this, so the footer, palette, home page and DS landing
- * keep reading one list.
- */
-export const dsMegaGroups: MegaGroup[] = [
-  {
-    id: "learn",
-    label: "Learn",
-    items: [
-      {
-        href: "/docs",
-        label: "Docs",
-        description: "How robr0 DS works, what you can reuse, and where to start",
-        icon: "menu_book",
-      },
-      {
-        href: "/foundations",
-        label: "Foundations",
-        description: "Colours, type, spacing, motion, and icons, defined once as tokens",
-        icon: "category",
-      },
-      {
-        href: "/components",
-        label: "Components",
-        description: `${COMPONENT_COUNT} React components, each with live examples and Storybook docs`,
-        icon: "widgets",
-      },
-    ],
-  },
-  {
-    id: "explore",
-    label: "Explore",
-    items: [
-      {
-        href: "/templates",
-        label: "Templates",
-        description:
-          "Whole screens assembled from the system's components and tokens",
-        icon: "dashboard_customize",
-      },
-      {
-        href: "/playground",
-        label: "Playground",
-        description: "Re-theme the whole system live: components, type and chat",
-        icon: "tune",
-      },
-      {
-        href: "/canvas",
-        label: "Canvas",
-        description: "Every section's landing page live on one endless board",
-        icon: "space_dashboard",
-        desktopOnly: true,
-      },
-    ],
-  },
-];
-
-/** Every mega item, flat, in grid order — most surfaces read this one. */
-export const dsMegaItems: MegaItem[] = dsMegaGroups.flatMap(
-  (group) => group.items
-);
-
-/**
- * The mega panel's showcase column: one featured page rendered as a card to
- * the right of the link grid. The graphic is PipelineWireframe, an abstract
- * token-drawn vector of the pipeline, so it re-themes with the site and
- * never goes stale against the page it links to.
- */
-export const dsMegaShowcase = {
-  href: "/overview",
-  overline: "How it's built",
-  label: "The system overview",
-  description:
-    "How the system is built, tested, and shipped: the registries, validators and agent loops behind every page.",
-};
-
-/** URL prefixes that should mark the "Design system" mega trigger as active */
-export const dsActiveMatchers = [
-  (path: string) => path === "/design-system", // the DS landing the mega trigger links to
-  (path: string) => path.startsWith("/docs"),
-  (path: string) => path === "/overview", // the DS overview; /about (personal bio) is NOT under Design system
-  (path: string) => path.startsWith("/blueprints"),
-  (path: string) => path.startsWith("/skills"),
-  (path: string) => path.startsWith("/loops"),
-  (path: string) => path.startsWith("/project-journal"),
-  (path: string) => path.startsWith("/foundations"),
-  (path: string) => path.startsWith("/components"),
-  (path: string) => path.startsWith("/templates"),
-  (path: string) => path === "/playground",
-  (path: string) => path === "/canvas",
-];
-
-export function isDesignSystemPath(pathname: string): boolean {
-  return dsActiveMatchers.some((match) => match(pathname));
-}
-
-/* ============================================
-   SECTION SIDEBAR LINKS
-   ============================================ */
-
-/**
- * Derived from the component registry — never hand-maintained.
- *
- * Every entry's label, slug and description live in
- * src/components/registry.json, so adding a component to the registry puts it
- * in the sidebar, the sitemap, the mega-nav and the breadcrumbs at once. The
- * alphabetical order and the nav entry itself used to be checked by
- * validate-website-surfaces.mjs; both are now structurally guaranteed.
- */
-export const componentsSidebarLinks: NavLink[] = [
-  { href: "/components", label: "Components overview" },
-  ...[...componentMetadata]
-    .sort((a, b) => a.label.localeCompare(b.label))
-    .map((c) => ({
-      href: `/components/${c.slug}`,
-      label: c.label,
-      description: c.description,
-    })),
-];
-
-/** A titled group of sidebar links; the header toggles the group's accordion. */
-export interface SidebarGroup {
-  id: string;
-  label: string;
-  links: NavLink[];
-}
-
-/**
- * The components sidebar, grouped by category — one accordion per registry
- * category, components alphabetical by label within each. Categories have no
- * page of their own; they are sections of the /components index (`#<id>`
- * anchors) and these sidebar groups.
- */
-export const componentsSidebarGroups: SidebarGroup[] = componentCategoryMetadata.map(
-  (cat) => ({
-    id: cat.id,
-    label: cat.label,
-    links: [...componentMetadata]
-      .filter((c) => c.category === cat.id)
-      .sort((a, b) => a.label.localeCompare(b.label))
-      .map((c) => ({
-        href: `/components/${c.slug}`,
-        label: c.label,
-        description: c.description,
-      })),
-  })
-);
-
-export const foundationsSidebarLinks: NavLink[] = [
-  { href: "/foundations", label: "Contents" },
-  { href: "/foundations/elevation", label: "Elevation", description: "The shadow and depth tokens" },
-  { href: "/foundations/icons", label: "Icons", description: "The icon font and its size scale" },
-  { href: "/foundations/logos", label: "Logos", description: "The brand marks and how they are used" },
-  { href: "/foundations/motion", label: "Motion", description: "The duration and easing tokens" },
-  { href: "/foundations/colour-primitives", label: "Primitive colours", description: "The raw values behind the colour tokens" },
-  { href: "/foundations/colour-mode", label: "Semantic colours", description: "Every colour token in both themes" },
-  { href: "/foundations/spatial", label: "Semantic spacing", description: "The spacing, radius, and border tokens" },
-  { href: "/foundations/typography", label: "Typography", description: "The type scale, weights, and faces" },
-];
-
-/**
- * Sidebar for the Docs cluster — the /docs index page, the system overview,
- * and the artifacts visitors can take and reuse (the links array below is
- * the list). (Sub-pages keep their original URLs; /docs is the landing.)
- */
-export const docsSidebarLinks: NavLink[] = [
-  { href: "/docs", label: "Contents" },
-  { href: "/overview", label: "Overview", description: "How the system is built, tested, and shipped" },
-  { href: "/docs/get-started", label: "Get started", description: "Install the package and theme it" },
-  { href: "/blueprints/claude", label: "Claude MD", description: "The agent instructions behind this repo" },
-  { href: "/blueprints/design", label: "Design MD", description: "The design spec behind the system" },
-  { href: "/blueprints/content-design", label: "Content MD", description: "The style guide behind the words" },
-  { href: "/skills", label: "Skills", description: "The agent skills that maintain the site" },
-  { href: "/loops", label: "Loops", description: "The recurring loops that keep it current" },
-  { href: "/project-journal", label: "Project journal", description: "What shipped and when, curated" },
-];
-
-/**
- * Sidebar for the Templates section — complete screens built from the
- * library's components and tokens alone. Curated order: strongest first.
- */
-export const templatesSidebarLinks: NavLink[] = [
-  { href: "/templates", label: "Contents" },
-  {
-    href: "/templates/marketing-dashboard",
-    label: "Marketing dashboard",
-    description: "An analytics app shell built from the system alone",
-  },
-  {
-    href: "/templates/relay-console",
-    label: "Relay console",
-    description: "A network operations screen flipping between globe and map",
-  },
-  {
-    href: "/templates/team-calendar",
-    label: "Team calendar",
-    description: "A month view with the sprint's to-dos on a rail beside it",
-  },
-  {
-    href: "/templates/agent-workbench",
-    label: "Agent workbench",
-    description: "A coding agent mid-task, its session beside the staged diff",
-  },
-  {
-    href: "/templates/roadmap-planner",
-    label: "Roadmap planner",
-    description: "A planning tool around the Gantt timeline and its detail rail",
-  },
-  {
-    href: "/templates/sales-pipeline",
-    label: "Sales pipeline",
-    description: "A CRM companies view built around the wired data table",
-  },
-];
-
-/**
- * Sidebar for the Writing cluster. Built dynamically from the articles
- * synced off the Substack feed, so it always reflects what's published.
- */
 export function buildWritingSidebarLinks(
   articles: { slug: string; title: string }[]
 ): NavLink[] {
@@ -325,13 +69,7 @@ export function getSidebarLinks(links: NavLink[], activeHref: string) {
  * up from its href. This is the single source of truth for page titles — the
  * nav label, the breadcrumb, and the browser-tab title all resolve from here.
  */
-const allSidebarLinks: NavLink[] = [
-  ...componentsSidebarLinks,
-  ...foundationsSidebarLinks,
-  ...docsSidebarLinks,
-  ...templatesSidebarLinks,
-  ...workSidebarLinks,
-];
+const allSidebarLinks: NavLink[] = [...workSidebarLinks];
 
 /** The canonical label for a route, taken from the nav config (or undefined). */
 export function getNavLabel(href: string): string | undefined {
@@ -351,8 +89,12 @@ export const TITLE_TEMPLATE = `%s · ${TITLE_SUFFIX}`;
  * than inherited. Checked against the filesystem by
  * scripts/validate-website-surfaces.mjs, so an added or removed section image
  * can't leave this list stale.
+ *
+ * Empty since the design system moved to rift-ds.com: /components and
+ * /foundations were the only sections with their own cards, and both are gone.
+ * Case studies keep per-page cards of their own, which outrank this anyway.
  */
-export const SECTION_OG_IMAGE_SEGMENTS = ["/components", "/foundations"];
+export const SECTION_OG_IMAGE_SEGMENTS: string[] = [];
 
 /** The og:image for a page: its section's own card when one exists, else the root card. */
 function ogImageForPath(path?: string): string {
@@ -392,11 +134,11 @@ export function pageOpenGraph(
 }
 
 /**
- * Metadata for a section landing layout (Components, Foundations, Work). Sets
- * the section's own suffixed title AND re-declares the title template so the
- * suffix cascades to the section's sub-pages — Next only applies a template to
- * direct children, so intermediate layouts must carry it or grandchildren would
- * render bare, unsuffixed titles.
+ * Metadata for a section landing layout (Work). Sets the section's own
+ * suffixed title AND re-declares the title template so the suffix cascades to
+ * the section's sub-pages — Next only applies a template to direct children,
+ * so intermediate layouts must carry it or grandchildren would render bare,
+ * unsuffixed titles.
  *
  * Deliberately sets NO canonical: this layout wraps the section's sub-pages, and
  * `alternates` inherits, so a canonical here would make every sub-page that
@@ -437,56 +179,24 @@ export function pageMetadata(href: string, description?: string): Metadata {
     : { title, alternates, openGraph };
 }
 
-/**
- * Metadata for a component showcase page, resolved entirely from the registry.
- *
- * Replaces hand-writing the same one-line description in both registry.json and
- * the page's layout.tsx — the registry is the only place it lives now.
- */
-export function componentPageMetadata(slug: string): Metadata {
-  const meta = componentMetadata.find((c) => c.slug === slug);
-  if (!meta) {
-    throw new Error(
-      `componentPageMetadata: no component registered with slug "${slug}". ` +
-        `Add it to src/components/registry.json.`
-    );
-  }
-  return pageMetadata(`/components/${slug}`, meta.description);
-}
-
 /* ============================================
    BREADCRUMBS
-   Builds a trail based on pathname, walking the
-   IA: Design system > <Section> > <Page>, or
-   Work > <Case study>. Returns [] for top-level
-   landing pages that don't need a breadcrumb.
+   Builds a trail based on pathname: Work >
+   <Case study>, or Writing > <Article>. Returns
+   [] for top-level landing pages that don't need
+   a breadcrumb.
    ============================================ */
 
 interface SectionConfig {
   base: string;
   label: string;
-  parent: string | null;
   sidebar: NavLink[] | null;
 }
 
-/** The "Design system" crumb links to the /design-system landing page. */
-const DS_CRUMB: BreadcrumbItem = { label: "Design system", href: "/design-system" };
-
-/** Parent crumbs resolve to a linked crumb when a landing page exists. */
-function parentCrumb(parent: string): BreadcrumbItem {
-  return parent === "Design system" ? DS_CRUMB : { label: parent };
-}
-
 const breadcrumbSections: SectionConfig[] = [
-  // Docs cluster pages are handled directly in getBreadcrumbs (driven by
-  // docsSidebarLinks) since their URLs don't share a /docs prefix.
-  // Other DS sections
-  { base: "/foundations", label: "Foundations", parent: "Design system", sidebar: foundationsSidebarLinks },
-  { base: "/components", label: "Components", parent: "Design system", sidebar: componentsSidebarLinks },
-  { base: "/templates", label: "Templates", parent: "Design system", sidebar: templatesSidebarLinks },
-  { base: "/work", label: "Work", parent: null, sidebar: workSidebarLinks },
+  { base: "/work", label: "Work", sidebar: workSidebarLinks },
   // Writing — article sub-labels resolve from the slug (feed is dynamic)
-  { base: "/writing", label: "Writing", parent: null, sidebar: null },
+  { base: "/writing", label: "Writing", sidebar: null },
 ];
 
 function slugToTitle(slug: string): string {
@@ -500,65 +210,22 @@ export function getBreadcrumbs(pathname: string): BreadcrumbItem[] {
   // Strip trailing slash (but keep "/")
   const path = pathname.length > 1 ? pathname.replace(/\/$/, "") : pathname;
 
-  // Top-level pages with no breadcrumb (/design-system is the DS landing —
-  // it opens with a full-bleed hero, not a doc shell)
+  // Top-level pages with no breadcrumb. /design-system is the page about having
+  // built Rift DS — a standalone page with a full-bleed hero, not a doc shell.
   if (path === "/" || path === "/contact" || path === "/about" || path === "/design-system") {
     return [];
   }
 
-  // The playground is an immersive surface: its slim StageToolbar renders
-  // this trail (it lives in no sidebar array, so the generic section loop
-  // can't resolve it).
-  if (path === "/playground") {
-    return [DS_CRUMB, { label: "Playground" }];
-  }
-
-  // The canvas is the same kind of immersive surface, with the same slim
-  // toolbar rendering the trail.
-  if (path === "/canvas") {
-    return [DS_CRUMB, { label: "Canvas" }];
-  }
-
-  // The graph is the same kind of immersive surface, with the same slim
-  // toolbar rendering the trail.
-  if (path === "/graph") {
-    return [DS_CRUMB, { label: "System graph" }];
-  }
-
-  // Docs cluster — the landing lives at /docs but sub-pages keep their
-  // original URLs, so match against the sidebar links (no shared prefix).
-  if (path === "/docs") {
-    return [DS_CRUMB, { label: "Docs" }];
-  }
-  const docsLink = docsSidebarLinks.find((l) => l.href === path && l.href !== "/docs");
-  if (docsLink) {
-    return [
-      DS_CRUMB,
-      { label: "Docs", href: "/docs" },
-      { label: docsLink.label },
-    ];
-  }
-
   for (const section of breadcrumbSections) {
-    // Exact match → section landing (e.g. /components, /about)
-    if (path === section.base) {
-      const items: BreadcrumbItem[] = [];
-      if (section.parent) items.push(parentCrumb(section.parent));
-      items.push({ label: section.label });
-      // Skip if only one item — no real hierarchy
-      return items.length >= 2 ? items : [];
-    }
+    // Exact match → section landing. A single crumb is no hierarchy, so the
+    // trail is omitted entirely rather than rendering one dead label.
+    if (path === section.base) return [];
 
-    // Sub-page within a section (e.g. /components/button)
+    // Sub-page within a section (e.g. /work/augmenta-ai)
     if (path.startsWith(section.base + "/")) {
-      const items: BreadcrumbItem[] = [];
-      if (section.parent) items.push(parentCrumb(section.parent));
-      items.push({ label: section.label, href: section.base });
-
       const subLink = section.sidebar?.find((l) => l.href === path);
       const subLabel = subLink?.label ?? slugToTitle(path.slice(section.base.length + 1));
-      items.push({ label: subLabel });
-      return items;
+      return [{ label: section.label, href: section.base }, { label: subLabel }];
     }
   }
 

@@ -6,7 +6,6 @@ import { FullBleedBackground } from "../components/BlurBackground/BlurBackground
 import ScrollCue from "../components/ScrollCue/ScrollCue";
 import FadeDivider from "../components/FadeDivider/FadeDivider";
 import { caseStudyCover } from "@/components/covers/case-study-covers";
-import { dsMegaItems } from "@/config/navigation";
 import { getArticles, coverPlaceholder, articleExcerpt } from "@/lib/substack";
 import { caseStudies } from "@/data/case-studies";
 import { EssayCover } from "@/components/covers/EssayCover";
@@ -276,36 +275,18 @@ export default async function HomePage() {
                 </span>
               </span>
               <span className={styles.featuredTitle}>
-                robr0 DS, the AI-ready design system this website is built on
+                Rift DS, the AI-ready design system this site is built on
               </span>
               <span className={styles.featuredDek}>
                 Every colour, radius, and motion value here resolves from one
-                token layer, and the build fails when a rule breaks. The
-                playground re-themes it all live, then hands over the CSS.
+                token layer, and the build fails when a rule breaks. It is a
+                published package with a home of its own now, and this site is
+                just another consumer of it.
               </span>
             </Link>
 
-            <ul className={styles.rowList}>
-              {dsMegaItems.map((item) => (
-                <li
-                  key={item.href}
-                  className={item.desktopOnly ? styles.desktopOnly : undefined}
-                >
-                  <Link href={item.href} className={styles.row}>
-                    <span className={`material-symbols-rounded ${styles.rowIcon}`} aria-hidden="true">
-                      {item.icon}
-                    </span>
-                    <span className={styles.rowTitle}>{item.label}</span>
-                    <span className={`material-symbols-rounded ${styles.rowArrow}`} aria-hidden="true">
-                      arrow_forward
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-
             <div className={styles.cardFooter}>
-              <Button href="/design-system" label="Overview" variant="secondary" size="compact" iconRight="arrow_forward" />
+              <Button href="/design-system" label="About Rift DS" variant="secondary" size="compact" iconRight="arrow_forward" />
             </div>
           </section>
           </div>
