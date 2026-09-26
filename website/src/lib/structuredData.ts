@@ -1,7 +1,10 @@
 import type { BreadcrumbItem } from "@/config/navigation";
 import { SOCIAL_PROFILES } from "@/config/social";
 
-export const SITE_URL = "https://robertritacca.com";
+/** Re-exported so existing importers keep one path to it; the value
+    lives in @/config/site. */
+export { SITE_URL } from "@/config/site";
+import { SITE_URL } from "@/config/site";
 
 export function buildPersonJsonLd() {
   return {
@@ -128,20 +131,6 @@ export function buildArticleJsonLd({
  * as a developer-facing piece of software. No component count here: counts are
  * never hardcoded (see CLAUDE.md), and it would drift.
  */
-export function buildDesignSystemJsonLd() {
-  return {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: "robr0 DS",
-    description:
-      "An AI-ready React design system: Claude Code builds the components from written specs, generated registries keep the docs from drifting, and every token chains to a primitive you can override.",
-    applicationCategory: "DeveloperApplication",
-    operatingSystem: "Web",
-    url: `${SITE_URL}/overview`,
-    codeRepository: "https://github.com/robritacca-dotcom/design-system",
-    author: { "@type": "Person", name: "Robert Ritacca", url: SITE_URL },
-  };
-}
 
 /** Builds a BreadcrumbList schema from the same trail PageBreadcrumb renders. */
 export function buildBreadcrumbJsonLd(items: BreadcrumbItem[]) {

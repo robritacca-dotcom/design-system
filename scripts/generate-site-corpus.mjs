@@ -33,6 +33,10 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import ts from 'typescript';
 import { siteRoutes, isDynamicSegment } from './site-routes.mjs';
+import { SITE_URL } from './site-config.mjs';
+
+/** The bare host, for the prose that names the site. */
+const SITE_HOST = SITE_URL.replace(/^https?:\/\//, '');
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
 const websiteApp = join(repoRoot, 'website', 'src', 'app');
@@ -597,7 +601,7 @@ function sectionSiteMap() {
   const nav = read(join(repoRoot, 'website', 'src', 'config', 'navigation.ts'));
   return `## Site map
 
-Every page on robertritacca.com. Link to these paths when pointing someone at more detail.
+Every page on ${SITE_HOST}. Link to these paths when pointing someone at more detail.
 
 ### Main pages
 
@@ -815,9 +819,9 @@ const SECTIONS = [
   ['Writing', sectionWriting],
 ];
 
-const PREAMBLE = `# robertritacca.com: full site content
+const PREAMBLE = `# ${SITE_HOST}: full site content
 
-Everything below is published on robertritacca.com or in its public repository. It is the complete set of facts available for answering questions about Rob Ritacca and his work.
+Everything below is published on ${SITE_HOST} or in its public repository. It is the complete set of facts available for answering questions about Rob Ritacca and his work.
 `;
 
 /** The corpus text itself, ungated so --dump still works when over budget. */

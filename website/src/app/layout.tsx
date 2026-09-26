@@ -36,7 +36,7 @@ const nunitoSans = Nunito_Sans({
 // Kept under 160 characters so search results render it whole; "in Toronto"
 // and "AI-native" are deliberate: they are the query the site should answer.
 const SITE_DESCRIPTION =
-  "Principal Product Designer in Toronto, crafting AI-native products and agentic experiences. Case studies, the robr0 DS design system, and writing on AI.";
+  "Principal Product Designer in Toronto, crafting AI-native products and agentic experiences. Case studies, essays on AI, and the design system behind it all.";
 
 export const metadata: Metadata = {
   title: {
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     "AI design",
     "Toronto",
     "design system",
-    "robr0 DS",
+    "Rift DS",
     "case studies",
     "design tokens",
     "React components",
