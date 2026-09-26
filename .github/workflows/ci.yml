@@ -11,8 +11,11 @@ permissions:
   contents: read
 
 jobs:
-  library:
-    name: Lint + build library
+  # One job. This used to be four: the library build, the package-publish
+  # lint, the story tests and the Storybook build all belonged to the design
+  # system, which is published from its own repository now.
+  site:
+    name: Build and check the site
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -21,60 +24,18 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      # Judges the dependency tree against the registry's advisory feed rather
+      # than the code, so a failure here is news from outside rather than
+      # something a local run could have caught earlier.
       - run: npm audit --audit-level=high
       - run: npm run lint
+      # The site's own prebuild runs the generators and the validator chain.
       - run: npm run build
-      - run: npm run build:lib
-      # publint + arethetypeswrong against dist/: the manifest must match the
-      # tarball and every export subpath must resolve for ESM and bundler
-      # consumers — resolution modes the Vite consumer smoke never exercises.
-      - run: node scripts/validate-package-publish.mjs
-      # validate-registry (run by prebuild) regenerates README/skills/barrel
-      # content; a dirty tree here means committed generated content is stale.
+      # A dirty tree here means committed generated content is stale: the
+      # build regenerates the corpus, and `verify` cannot check this locally
+      # because a working tree is dirty with the change in progress.
       - name: Check generated content is committed
         run: git diff --exit-code
-
-  test:
-    name: Story tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
-        with:
-          node-version: 24
-          cache: npm
-      - run: npm ci
-      - run: npx playwright install --with-deps chromium
-      - run: npm run test
-
-  storybook:
-    name: Build Storybook
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
-        with:
-          node-version: 24
-          cache: npm
-      - run: npm ci
-      - run: npm run build-storybook
-
-  website:
-    name: Build website
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
-        with:
-          node-version: 24
-          cache: npm
-      # npm workspaces: the root install covers the website (and links
-      # @robr0/design-system into its node_modules).
-      - run: npm ci
-      - run: npm run lint
-        working-directory: website
-      - run: npm run build
-        working-directory: website
       # Reads the prerendered HTML, so it has to follow the build rather than
       # ride the prebuild validator chain.
       - run: node scripts/validate-rendered-spacing.mjs
@@ -83,6 +44,9 @@ jobs:
       # Every internal href in the prerendered HTML must lead to a page,
       # route handler, public file, or redirect that exists.
       - run: node scripts/validate-internal-links.mjs
+      # Canonicals, Open Graph, JSON-LD and the sitemap, read from the same
+      # built output.
+      - run: node scripts/validate-seo.mjs
       # Serves the build and loads it in a real browser: hydration must
       # succeed and the page must be visible with content. HTTP 200 and a
       # green build prove neither — the 2026-09-06 outage served 200 while
@@ -90,6 +54,6 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: node scripts/smoke-hydration.mjs
       # axe over the served pages in both themes: page-level composition
-      # (landmarks, heading order, the mounted chrome) that the per-component
-      # story gate cannot see. Rule set mirrors .storybook/preview.ts.
+      # (landmarks, heading order, the mounted chrome). The rule set and its
+      # one settled exclusion are recorded in the script itself.
       - run: node scripts/validate-website-a11y.mjs

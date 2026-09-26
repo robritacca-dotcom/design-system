@@ -1,10 +1,10 @@
 # Security Policy
 
-This repo powers [robertritacca.com](https://robertritacca.com/) and publishes the design system to npm as [`rift-ds`](https://www.npmjs.com/package/rift-ds). If you find a security issue in the site, the components, or the dependency chain, I'd like to hear about it.
+This repo powers [robertritacca.com](https://robertritacca.com/). It publishes no package: the design system it used to ship now lives at [rift-ds](https://github.com/robritacca-dotcom/rift-ds), which has its own policy. If you find a security issue in this site or its dependency chain, I'd like to hear about it.
 
 ## Reporting a vulnerability
 
 - **Preferred:** [open a private vulnerability report](https://github.com/robritacca-dotcom/design-system/security/advisories/new). It stays between us until a fix ships.
 - Please don't open a public issue for security problems.
 
-You can expect a response within a few days. There is no supported-version table: only the latest published version is supported. Fixes land on `main`, which is what runs live, and ship in the next release of the package.
+You can expect a response within a few days. There is no supported-version table: only the latest published version is supported. Fixes land on `main`, which is what runs live.

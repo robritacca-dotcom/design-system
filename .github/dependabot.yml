@@ -6,6 +6,12 @@ updates:
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 5
+    # One PR for the dev tooling rather than one each. The five-PR cap kept
+    # filling with lint and types bumps, which queues a real security fix
+    # behind them.
+    groups:
+      dev-dependencies:
+        dependency-type: "development"
   # Keep GitHub Actions current, and nudge tag pins toward pinned commits.
   - package-ecosystem: "github-actions"
     directory: "/"
