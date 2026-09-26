@@ -28,7 +28,6 @@ import { fileURLToPath } from 'node:url';
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
 const skillsDir = join(repoRoot, '.claude', 'skills');
-const externalDir = join(repoRoot, 'website', 'src', 'data', 'external-skills');
 
 // Normalize CRLF so Windows checkouts validate identically to CI.
 const read = (path) => readFileSync(path, 'utf8').replace(/\r\n/g, '\n');
@@ -37,13 +36,9 @@ const sources = [
   ...readdirSync(skillsDir, { withFileTypes: true })
     .filter((e) => e.isDirectory() && existsSync(join(skillsDir, e.name, 'SKILL.md')))
     .map((e) => [`.claude/skills/${e.name}/SKILL.md`, join(skillsDir, e.name, 'SKILL.md')]),
-  ...readdirSync(externalDir)
-    .filter((f) => f.endsWith('.md'))
-    .map((f) => [`website/src/data/external-skills/${f}`, join(externalDir, f)]),
   ...[
     'CLAUDE.md',
     'README.md',
-    'design.md',
     'content-design.md',
     'SECURITY.md',
     // Non-root instruction docs: CLAUDE.md sends readers to the evals README

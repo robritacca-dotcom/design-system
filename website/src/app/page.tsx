@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "@robr0/design-system/components/Button/Button";
+import { Button } from "rift-ds/components/Button/Button";
 import MegaNav from "../components/MegaNav/MegaNav";
 import { FullBleedBackground } from "../components/BlurBackground/BlurBackground";
 import ScrollCue from "../components/ScrollCue/ScrollCue";
@@ -51,6 +51,18 @@ const companies = [
   { name: "Intuit", logo: "/logos/Intuit.svg" },
   { name: "Meta", logo: "/logos/meta.svg" },
   { name: "Augmenta.ai", logo: "/logos/Augmenta-2026.svg" },
+];
+
+/** The design system's own site. Also stated in next.config.ts, which
+    redirects the documentation URLs this site used to serve. */
+const DESIGN_SYSTEM_URL = "https://rift-ds.com";
+
+const DESIGN_SYSTEM_LINKS = [
+  { href: `${DESIGN_SYSTEM_URL}/docs`, label: "Docs", icon: "menu_book" },
+  { href: `${DESIGN_SYSTEM_URL}/foundations`, label: "Foundations", icon: "category" },
+  { href: `${DESIGN_SYSTEM_URL}/components`, label: "Components", icon: "widgets" },
+  { href: `${DESIGN_SYSTEM_URL}/templates`, label: "Templates", icon: "dashboard_customize" },
+  { href: `${DESIGN_SYSTEM_URL}/playground`, label: "Playground", icon: "tune" },
 ];
 
 export default async function HomePage() {
@@ -284,6 +296,26 @@ export default async function HomePage() {
                 just another consumer of it.
               </span>
             </Link>
+
+            {/* Straight to rift-ds.com. Plain anchors rather than next/link:
+                these leave the site, so there is no route to prefetch and the
+                open_in_new glyph says where the row goes. Canvas is absent
+                deliberately, having no counterpart over there. */}
+            <ul className={styles.rowList}>
+              {DESIGN_SYSTEM_LINKS.map((item) => (
+                <li key={item.href}>
+                  <a href={item.href} className={styles.row}>
+                    <span className={`material-symbols-rounded ${styles.rowIcon}`} aria-hidden="true">
+                      {item.icon}
+                    </span>
+                    <span className={styles.rowTitle}>{item.label}</span>
+                    <span className={`material-symbols-rounded ${styles.rowArrow}`} aria-hidden="true">
+                      open_in_new
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
 
             <div className={styles.cardFooter}>
               <Button href="/design-system" label="About Rift DS" variant="secondary" size="compact" iconRight="arrow_forward" />

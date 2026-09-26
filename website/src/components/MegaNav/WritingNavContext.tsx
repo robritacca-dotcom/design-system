@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext } from "react";
-import type { NavListItem } from "@robr0/design-system/components/NavList/NavList";
+import type { NavListItem } from "rift-ds/components/NavList/NavList";
 
 /**
  * Article links for the mobile drawer's Writing accordion.

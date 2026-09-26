@@ -13,7 +13,7 @@
  *    they should fail a build rather than reach a deploy
  *  - the blob count matches BLOB_COUNT in the shader source, whose uniform
  *    arrays are fixed-size — a mismatch would silently drop or starve a blob
- *  - every blob's colour token exists in src/tokens/registry.json. This is
+ *  - every blob's colour token exists in rift-ds's token registry. This is
  *    what makes the background a real consumer of the token registry: a
  *    renamed or deleted token can never leave it sampling a custom property
  *    that nothing defines (which resolves to empty, i.e. an invisible blob).
@@ -35,10 +35,14 @@ const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
 const dataPath = join(
   repoRoot, 'website', 'src', 'data', 'shader-background.json'
 );
-const tokenRegistryPath = join(repoRoot, 'src', 'tokens', 'registry.json');
-const shaderPath = join(
-  repoRoot, 'src', 'components', 'ShaderField', 'field.glsl.ts'
-);
+/* The renderer and its tokens now arrive as an installed package rather than
+   sibling source, so the checks read rift-ds where they used to read src/.
+   This is a stronger check than before: the site is held to the build it
+   actually consumes, not to a workspace copy it happened to share a tree
+   with. The shipped JS keeps both constants as plain exports. */
+const packageRoot = join(repoRoot, 'node_modules', 'rift-ds');
+const tokenRegistryPath = join(packageRoot, 'tokens', 'registry.json');
+const shaderPath = join(packageRoot, 'components', 'ShaderField', 'field.glsl.js');
 
 const errors = [];
 
@@ -52,7 +56,7 @@ const readJson = (path, label) => {
 };
 
 const config = readJson(dataPath, 'shader-background.json');
-const tokenRegistry = readJson(tokenRegistryPath, 'src/tokens/registry.json');
+const tokenRegistry = readJson(tokenRegistryPath, 'rift-ds/tokens/registry.json');
 
 /* Every semantic token the system defines, flattened across categories. */
 const knownTokens = new Set(
@@ -64,14 +68,14 @@ const knownTokens = new Set(
 let blobCount = null;
 try {
   const source = readFileSync(shaderPath, 'utf8').replace(/\r\n/g, '\n');
-  const match = source.match(/export const BLOB_COUNT = (\d+)/);
+  const match = source.match(/(?:export )?const BLOB_COUNT = (\d+)/);
   if (match) blobCount = Number(match[1]);
 } catch {
   /* reported below */
 }
 if (blobCount === null) {
   errors.push(
-    'could not read BLOB_COUNT from src/components/ShaderField/field.glsl.ts' +
+    'could not read BLOB_COUNT from rift-ds/components/ShaderField/field.glsl.js' +
       ' — the shader owns that number and this validator reads it'
   );
 }
@@ -119,7 +123,7 @@ for (const name of Object.keys(params)) {
     errors.push(
       `params.${name} is not a shader parameter — remove it, or add it to ` +
         'PARAM_RANGES in scripts/validate-shader-background.mjs and to ' +
-        'ShaderParams in src/components/ShaderField/useShaderField.ts'
+        'ShaderParams in rift-ds/components/ShaderField/useShaderField.js'
     );
   }
 }
@@ -130,13 +134,13 @@ for (const name of Object.keys(params)) {
    DEFAULT_SHADER_PARAMS is the authority: read the keys from it rather than
    trusting the two lists to stay in step by hand. */
 const hookPath = join(
-  repoRoot, 'src', 'components', 'ShaderField', 'useShaderField.ts'
+  packageRoot, 'components', 'ShaderField', 'useShaderField.js'
 );
 let shipped = null;
 try {
   const source = readFileSync(hookPath, 'utf8').replace(/\r\n/g, '\n');
   const block = source.match(
-    /export const DEFAULT_SHADER_PARAMS: ShaderParams = \{([\s\S]*?)\n\};/
+    /(?:export )?const DEFAULT_SHADER_PARAMS(?:: ShaderParams)? = \{([\s\S]*?)\n\};/
   );
   if (block) {
     shipped = [...block[1].matchAll(/^\s*([a-zA-Z]\w*):/gm)].map((m) => m[1]);
@@ -148,7 +152,7 @@ try {
 if (!shipped || shipped.length === 0) {
   errors.push(
     'could not read DEFAULT_SHADER_PARAMS from ' +
-      'src/components/ShaderField/useShaderField.ts — that object is the ' +
+      'rift-ds/components/ShaderField/useShaderField.js — that object is the ' +
       'authoritative parameter set and this validator reads it'
   );
 } else {
@@ -187,13 +191,10 @@ const CLAIM_CHECKS = [
   { pattern: `(?:field |shader )?parameters`, expected: () => shipped?.length, name: 'ShaderField parameters' },
   { pattern: `(?:blob definitions|blurred CSS discs|CSS blobs)`, expected: () => blobCount, name: 'BLOB_COUNT' },
 ];
-for (const doc of [
-  'README.md',
-  'design.md',
-  'CLAUDE.md',
-  'website/src/app/docs/get-started/page.tsx',
-  'website/src/app/components/shader-field/page.tsx',
-]) {
+/* Only this repo's own docs. design.md, the get-started guide and the
+   ShaderField component page moved to the design system's repo, which states
+   and checks these counts itself now. */
+for (const doc of ['README.md', 'CLAUDE.md']) {
   let text;
   try {
     text = readFileSync(join(repoRoot, doc), 'utf8').replace(/\r\n/g, '\n');

@@ -1,9 +1,9 @@
 "use client";
 
 import MegaNav from "../../components/MegaNav/MegaNav";
-import { ToastProvider, useToast } from "@robr0/design-system/components/Toast/Toast";
-import { ContactCard } from "@robr0/design-system/components/ContactCard/ContactCard";
-import { Button } from "@robr0/design-system/components/Button/Button";
+import { ToastProvider, useToast } from "rift-ds/components/Toast/Toast";
+import { ContactCard } from "rift-ds/components/ContactCard/ContactCard";
+import { Button } from "rift-ds/components/Button/Button";
 import styles from "./page.module.css";
 
 const STRIPE_CHECKOUT_URL = "https://buy.stripe.com/28o7vb5NBaSJ3NC5kn";

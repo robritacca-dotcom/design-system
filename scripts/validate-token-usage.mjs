@@ -1,18 +1,24 @@
 #!/usr/bin/env node
 /**
- * Fails the build when component CSS references a custom property that is
+ * Fails the build when this site's CSS references a custom property that is
  * never defined anywhere — a typo'd or phantom token.
  *
- * Why this exists: Dialog and AlertDialog shipped styling their titles with
- * --font-heading-6-* (a token family that never existed — the type scale
- * stops at heading-3), so both modal titles silently fell back to inherited
- * body type. validate-token-references.mjs guards the semantic→primitive
- * chain inside the token files; nothing guarded the component→token edge.
+ * Why this exists: the design system once shipped modal titles styled with
+ * --font-heading-6-*, a family that never existed, so they silently fell back
+ * to inherited body type. This site had the same bug for longer: four case
+ * studies drew a border with var(--color-border-secondary), which nothing
+ * defines, so the borders never rendered.
  *
- * Scope: src/ CSS only (the published library). A reference counts as
- * defined if ANY of these declare it:
- *   - a declaration (--name: …) in any scanned CSS file (tokens included)
- *   - a string occurrence of the property name in src/**&#47;*.tsx / *.ts
+ * It matters more since the token rename. rift-ds renumbered its spacing,
+ * radius, border and icon scales (--gap-md became --gap-400, and so on), and
+ * a missed call site is not a crash, it is a silently absent value. This is
+ * the check that turns one into a build error.
+ *
+ * Scope: website CSS, resolved against the tokens the installed package
+ * actually ships. A reference counts as defined if ANY of these declare it:
+ *   - a declaration (--name: …) in the site's own CSS, or in rift-ds's
+ *     token and component stylesheets
+ *   - a string occurrence of the property name in the site's TSX/TS
  *     (components set custom properties like --ds-swatch-color from JS)
  */
 import { readFileSync, readdirSync, statSync } from 'node:fs';
@@ -31,14 +37,20 @@ function walk(dir, exts, out = []) {
   return out;
 }
 
-const srcDir = join(repoRoot, 'src');
-const cssFiles = walk(srcDir, ['.css']);
-const tsFiles = walk(srcDir, ['.tsx', '.ts']);
+const siteDir = join(repoRoot, 'website', 'src');
+const packageDir = join(repoRoot, 'node_modules', 'rift-ds');
+
+// Only the site's CSS is checked. The package's stylesheets are read for the
+// definitions they carry, never audited: they are someone else's build output
+// from this repo's point of view.
+const cssFiles = walk(siteDir, ['.css']);
+const tsFiles = walk(siteDir, ['.tsx', '.ts']);
+const packageCss = walk(packageDir, ['.css']);
 
 const defined = new Set();
 // Declarations in CSS: `--name:` (also catches fallback-less custom-prop
 // definitions inside component files, e.g. Swatch's --ds-swatch-color).
-for (const file of cssFiles) {
+for (const file of [...cssFiles, ...packageCss]) {
   for (const m of readFileSync(file, 'utf8').matchAll(/(--[\w-]+)\s*:/g)) {
     defined.add(m[1]);
   }
@@ -78,5 +90,5 @@ if (problems.length) {
 }
 
 console.log(
-  `✓ Token usage valid — every var(--…) reference in ${cssFiles.length} library CSS files resolves to a defined property.`
+  `✓ Token usage valid — every var(--…) reference in ${cssFiles.length} site CSS files resolves to a defined property.`
 );

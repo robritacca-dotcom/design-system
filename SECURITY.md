@@ -1,6 +1,6 @@
 # Security Policy
 
-This repo powers [robertritacca.com](https://robertritacca.com/) and publishes the design system to npm as [`@robr0/design-system`](https://www.npmjs.com/package/@robr0/design-system). If you find a security issue in the site, the components, or the dependency chain, I'd like to hear about it.
+This repo powers [robertritacca.com](https://robertritacca.com/) and publishes the design system to npm as [`rift-ds`](https://www.npmjs.com/package/rift-ds). If you find a security issue in the site, the components, or the dependency chain, I'd like to hear about it.
 
 ## Reporting a vulnerability
 

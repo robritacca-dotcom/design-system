@@ -77,7 +77,7 @@
         {
           "id": "start",
           "label": "How do I install it?",
-          "prompt": "How do I install and set up the @robr0/design-system package?"
+          "prompt": "How do I install and set up the rift-ds package?"
         },
         {
           "id": "count",

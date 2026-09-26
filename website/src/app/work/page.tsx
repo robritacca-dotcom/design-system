@@ -3,7 +3,7 @@
 import MegaNav from "../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import { Card } from "@robr0/design-system/components/Card/Card";
+import { Card } from "rift-ds/components/Card/Card";
 import { caseStudyCover } from "@/components/covers/case-study-covers";
 import { getSidebarLinks, workSidebarLinks } from "@/config/navigation";
 import { caseStudies } from "@/data/case-studies";

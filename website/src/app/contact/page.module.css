@@ -5,20 +5,20 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--gap-xxxl);
+  gap: var(--gap-2000);
   width: 100%;
   max-width: 1160px;
   /* Top offset matches the 40px every other page puts above its title,
      so the h1 sits at the same height site-wide */
-  padding: var(--primitive-gap-xl) var(--primitive-padding-xl)
-    var(--gap-xxxl);
+  padding: var(--primitive-gap-1000) var(--primitive-padding-1000)
+    var(--gap-2000);
 }
 
 .heading {
   display: flex;
   flex-direction: column;
   /* Title-to-subtitle spacing matches the Work page's section gap */
-  gap: var(--primitive-gap-xxxl);
+  gap: var(--primitive-gap-2000);
   align-items: center;
   text-align: center;
 }
@@ -50,7 +50,7 @@
 .layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 400px;
-  gap: var(--gap-xxxl) var(--gap-xxl);
+  gap: var(--gap-2000) var(--gap-1500);
   align-items: start;
   width: 100%;
 }
@@ -79,7 +79,7 @@
 .section {
   display: flex;
   flex-direction: column;
-  gap: var(--primitive-gap-md);
+  gap: var(--primitive-gap-400);
   width: 100%;
 }
 
@@ -99,7 +99,7 @@
 .methods {
   display: flex;
   flex-direction: column;
-  gap: var(--primitive-gap-sm);
+  gap: var(--primitive-gap-200);
   width: 100%;
 }
 
@@ -109,7 +109,7 @@
 .consultingContent {
   display: flex;
   flex-direction: column;
-  gap: var(--gap-lg);
+  gap: var(--gap-500);
 }
 
 .consultingTitle {
@@ -137,9 +137,9 @@
 }
 
 .consultingCtaLogo {
-  width: var(--icon-size-md);
-  height: var(--icon-size-md);
-  border-radius: var(--radius-xs);
+  width: var(--icon-size-600);
+  height: var(--icon-size-600);
+  border-radius: var(--radius-100);
   object-fit: contain;
 }
 

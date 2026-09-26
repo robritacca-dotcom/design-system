@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/robritacca-dotcom/design-system/actions/workflows/ci.yml/badge.svg)](https://github.com/robritacca-dotcom/design-system/actions/workflows/ci.yml)
 <!-- npm-badge:start -->
-[![npm](https://img.shields.io/npm/v/@robr0%2Fdesign-system?logo=npm&color=CB3837)](https://www.npmjs.com/package/@robr0/design-system)
+[![npm](https://img.shields.io/npm/v/@robr0%2Fdesign-system?logo=npm&color=CB3837)](https://www.npmjs.com/package/rift-ds)
 <!-- npm-badge:end -->
 
 A personal portfolio site, the AI-ready React design system behind it, and the AI layer that lets the site answer questions about itself. Claude Code builds all of it from the written specs in this repo (`CLAUDE.md` for the rules, `design.md` for the design language, `content-design.md` for how every word reads), and generated registries keep this README and the docs site from drifting. The design system is the backbone every portfolio page is built on, so the work is presented consistently and to the same craft standards throughout.
@@ -36,7 +36,7 @@ Accordion · Agent plan · Agent status · AI button · Alert · Alert dialog ·
 The package ships more than components. **Shader field** is a WebGL2 canvas that sums soft Gaussian light sources into an ambient field of colour, and every source reads a semantic colour token at runtime. Override a primitive and the background re-themes with the rest of the system, in both themes, with nothing wired up:
 
 ```tsx
-import { ShaderField, type ShaderFieldStatus } from '@robr0/design-system';
+import { ShaderField, type ShaderFieldStatus } from 'rift-ds';
 
 const [status, setStatus] = useState<ShaderFieldStatus>('pending');
 
@@ -56,10 +56,10 @@ The background behind this site is that component, with eight blurred CSS discs 
 
 ### Using the package
 
-The design system is published as [`@robr0/design-system`](https://www.npmjs.com/package/@robr0/design-system) (React 19+ is a peer dependency). The **[full setup guide](https://robertritacca.com/docs/get-started)** expands on everything in this section:
+The design system is published as [`rift-ds`](https://www.npmjs.com/package/rift-ds) (React 19+ is a peer dependency). The **[full setup guide](https://robertritacca.com/docs/get-started)** expands on everything in this section:
 
 ```bash
-npm install @robr0/design-system
+npm install rift-ds
 ```
 
 The package is ESM-only and resolved via `exports` subpaths: use a bundler that handles CSS and font imports from `node_modules` (Vite, Next.js, webpack), and set TypeScript's `moduleResolution` to `"bundler"` (or `"nodenext"`).
@@ -67,14 +67,14 @@ The package is ESM-only and resolved via `exports` subpaths: use a bundler that 
 Import the token stylesheet once (it carries the primitives, semantic tokens, and both themes), then use components:
 
 ```tsx
-import '@robr0/design-system/tokens/tokens.css';
-import { Button, Card, Badge } from '@robr0/design-system';
+import 'rift-ds/tokens/tokens.css';
+import { Button, Card, Badge } from 'rift-ds';
 ```
 
-Deep imports work too (`@robr0/design-system/components/Button/Button`). The Recharts-backed charts live behind a separate entry so the optional `recharts` peer dependency is only needed if you use them; the dependency-free charts export from the main barrel with everything else:
+Deep imports work too (`rift-ds/components/Button/Button`). The Recharts-backed charts live behind a separate entry so the optional `recharts` peer dependency is only needed if you use them; the dependency-free charts export from the main barrel with everything else:
 
 ```tsx
-import { BarChart, LineChart } from '@robr0/design-system/charts';
+import { BarChart, LineChart } from 'rift-ds/charts';
 ```
 
 **Theming and customisation** happen through CSS variables; there is no configuration API. Components are provider-free, with one exception: wrap your tree in `ToastProvider` if (and only if) you use the toast queue via `useToast`.
@@ -105,7 +105,7 @@ import { BarChart, LineChart } from '@robr0/design-system/charts';
   ```
   A complete rebrand re-keys the whole teal ramp (01-10): the remaining steps carry the primary label, active icons, hover/selected input borders, and the AI gradient, so stopping at the six fills leaves those teal. The easiest way to get all of it right is the [playground](https://robertritacca.com/playground): restyle the system live and copy out a complete, paste-ready override.
 
-Icons use a bundled Material Symbols Rounded variable font (woff2): components import it themselves, so they need no extra setup. If you render raw `.material-symbols-rounded` spans of your own, import `@robr0/design-system/fonts/material-symbols.css` once. Nunito Sans, the system's default typeface, is intentionally *not* bundled: load it yourself (e.g. Google Fonts or `next/font`) or override `--font-family-primary`.
+Icons use a bundled Material Symbols Rounded variable font (woff2): components import it themselves, so they need no extra setup. If you render raw `.material-symbols-rounded` spans of your own, import `rift-ds/fonts/material-symbols.css` once. Nunito Sans, the system's default typeface, is intentionally *not* bundled: load it yourself (e.g. Google Fonts or `next/font`) or override `--font-family-primary`.
 
 ### Token architecture
 
@@ -153,7 +153,7 @@ claude mcp add --transport http robr0-ds https://robertritacca.com/api/mcp
 The same generated data is served as files too: every component's prop contract lives at `https://robertritacca.com/components/<slug>.md` beside its docs page, and a generated agent skill (a `SKILL.md` plus its `references/components.md` catalogue, under `https://robertritacca.com/skill/robr0-design-system/`) can be saved as a pair into a project's own skills folder so a coding agent carries the library's install, theming and catalogue rules into every session. One command does it, fetching the current pair from the live site and printing the MCP connect line:
 
 ```bash
-npx @robr0/design-system init
+npx rift-ds init
 ```
 
 The [setup guide](https://robertritacca.com/docs/get-started) has the details and a curl fallback.

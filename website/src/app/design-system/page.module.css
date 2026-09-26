@@ -12,7 +12,7 @@
   margin: 0 auto;
   /* Same token every other page puts above its title, so the h1 sits at
      the same height site-wide */
-  padding: var(--primitive-gap-xl) 32px 96px;
+  padding: var(--primitive-gap-1000) 32px 96px;
 }
 
 /* ---------- page header (site-standard treatment) ---------- */
@@ -22,10 +22,10 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: var(--gap-md);
+  gap: var(--gap-400);
   /* Section-rhythm token rather than a fixed margin: it steps down at
      768px on its own, so no mobile override is needed. */
-  margin: 0 auto var(--gap-xxl);
+  margin: 0 auto var(--gap-1500);
 }
 
 .pageTitle {
@@ -46,7 +46,7 @@
   color: var(--color-text-primary);
   /* Together with the hero gap, this matches the title-to-subtitle spacing
      every other page gets from its section rhythm. */
-  margin: calc(var(--primitive-gap-xxxl) - var(--gap-md)) 0 0;
+  margin: calc(var(--primitive-gap-2000) - var(--gap-400)) 0 0;
 }
 
 /* ---------- stat strip ---------- */
@@ -55,8 +55,8 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: var(--gap-md) var(--gap-xxl);
-  margin-top: var(--gap-sm);
+  gap: var(--gap-400) var(--gap-1500);
+  margin-top: var(--gap-200);
 }
 
 /* Stat left-aligns for dashboard rows; a centred hero band centres each
@@ -69,20 +69,21 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: var(--gap-sm);
+  gap: var(--gap-200);
 }
 
 /* ---------- body ---------- */
 
 .section {
-  margin-top: var(--gap-xxl);
+  margin-top: var(--gap-1500);
 }
 
+/* No measure cap here: the column is constrained by .page, which is the
+   site's convention. A ch cap on the paragraph wraps text early. */
 .prose {
   display: flex;
   flex-direction: column;
-  gap: var(--gap-md);
-  max-width: 68ch;
+  gap: var(--gap-400);
 }
 
 .prose p {

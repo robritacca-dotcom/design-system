@@ -117,10 +117,10 @@ const nextConfig: NextConfig = {
       { source: "/chat-widget-test", destination: ds("/playground?view=chat"), permanent: true },
     ];
   },
-  // The design system arrives as a real (workspace-linked) package whose
-  // exports point at TypeScript source — Next compiles it like first-party
-  // code. This keeps the website on the exact import surface consumers get.
-  transpilePackages: ['@robr0/design-system'],
+  // No transpilePackages entry for rift-ds. It used to be a workspace link
+  // whose exports pointed at TypeScript source, so Next had to compile it as
+  // first-party code. It now installs from npm as built JavaScript with its
+  // own type declarations, which is what every other consumer gets.
   turbopack: {
     root: worktreeRoot,
   },

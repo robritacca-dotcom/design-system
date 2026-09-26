@@ -9,11 +9,11 @@
   max-width: 1440px;
   flex: 1;
   position: relative;
-  gap: var(--gap-xxl);
+  gap: var(--gap-1500);
   /* No horizontal padding: the body's gutter is the alignment line the
      header sits on, so content here lines up with the logo and the theme
      toggle instead of indenting past them. */
-  padding: 0 0 var(--padding-xl);
+  padding: 0 0 var(--padding-1000);
 }
 
 /* ============================================
@@ -29,14 +29,14 @@
   justify-content: center;
   /* Figma: 40px rhythm between every hero block (name, hairlines,
      text group, employer strip). */
-  gap: var(--gap-xl);
+  gap: var(--gap-1000);
   width: 100%;
   /* Fill what remains of the first viewport after the in-flow chrome
      above this element: the body's top padding, the 78px MegaNav bar
      (MegaNav.module.css), and the body's nav→main gap. svh keeps the
      scroll cue above mobile browser bars; vh is the fallback. */
-  min-height: calc(100vh - 78px - var(--primitive-padding-lg) - var(--primitive-gap-xxxl));
-  min-height: calc(var(--layout-viewport-height) - 78px - var(--primitive-padding-lg) - var(--primitive-gap-xxxl));
+  min-height: calc(100vh - 78px - var(--primitive-padding-500) - var(--primitive-gap-2000));
+  min-height: calc(var(--layout-viewport-height) - 78px - var(--primitive-padding-500) - var(--primitive-gap-2000));
   /* Optical centring: pad the bottom so the block sits a touch above true
      centre and the first screen reads centre-weighted, not bottom-heavy. */
   padding-bottom: calc(var(--layout-viewport-height) * 0.1);
@@ -54,7 +54,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--primitive-gap-lg);
+  gap: var(--primitive-gap-500);
   text-align: center;
 }
 
@@ -103,7 +103,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--primitive-gap-xxl);
+  gap: var(--primitive-gap-1500);
   width: 100%;
   /* Same vertical balance as the hero: the section is its own full
      viewport and centres the cards in it, so the smooth-scroll from
@@ -118,7 +118,7 @@
 .cardGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--gap-lg);
+  gap: var(--gap-500);
   width: 100%;
 }
 
@@ -128,9 +128,9 @@
   flex-direction: column;
   /* A step up from the old md gap: the cards carry deks and buttons now,
      so the blocks need more vertical air between them. */
-  gap: var(--gap-lg);
-  padding: var(--padding-lg);
-  border-radius: var(--radius-xl);
+  gap: var(--gap-500);
+  padding: var(--padding-500);
+  border-radius: var(--radius-600);
   border: 1px solid var(--color-bg-container-border);
   background: var(--color-bg-container-primary-semi);
 }
@@ -148,7 +148,7 @@
    land on the same line however tall the content above runs. */
 .cardFooter {
   margin-top: auto;
-  padding-top: var(--padding-xs);
+  padding-top: var(--padding-150);
   display: flex;
 }
 
@@ -166,7 +166,7 @@
 .featured {
   display: flex;
   flex-direction: column;
-  gap: var(--gap-sm);
+  gap: var(--gap-200);
   text-decoration: none;
 }
 
@@ -175,7 +175,7 @@
   display: block;
   width: 100%;
   aspect-ratio: 16 / 10;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-400);
   overflow: hidden;
   border: 1px solid var(--color-bg-container-border);
 }
@@ -183,14 +183,14 @@
 /* Company logo pinned to the cover's top-left corner */
 .coverBadge {
   position: absolute;
-  top: var(--padding-sm);
-  left: var(--padding-sm);
+  top: var(--padding-200);
+  left: var(--padding-200);
   display: inline-flex;
 }
 
 .coverLogo {
-  width: var(--icon-size-md);
-  height: var(--icon-size-md);
+  width: var(--icon-size-600);
+  height: var(--icon-size-600);
   object-fit: contain;
   flex-shrink: 0;
   display: block;
@@ -260,8 +260,8 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   grid-template-rows: repeat(2, minmax(0, 1fr));
-  gap: var(--gap-xs);
-  padding: var(--padding-sm);
+  gap: var(--gap-100);
+  padding: var(--padding-200);
   background: var(--color-bg-container-secondary);
   transition: transform var(--motion-duration-slow) var(--motion-ease-standard);
 }
@@ -275,11 +275,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--gap-xs);
+  gap: var(--gap-100);
   min-height: 0;
   background: var(--color-bg-container-primary);
   border: 1px solid var(--color-bg-container-border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-300);
 }
 
 .dsType {
@@ -290,14 +290,14 @@
 
 .dsSwatchRow {
   display: flex;
-  gap: var(--gap-xxs);
+  gap: var(--gap-050);
 }
 
 /* ds-allow(mockup): miniature palette chips */
 .dsSwatch {
   width: 14px;
   height: 14px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-200);
 }
 
 .dsSwatchInfo {
@@ -319,7 +319,7 @@
 .dsBars {
   display: flex;
   align-items: flex-end;
-  gap: var(--gap-xxs);
+  gap: var(--gap-050);
 }
 
 /* ds-allow(mockup): miniature chart bars */
@@ -328,7 +328,7 @@
 .dsBar3,
 .dsBar4 {
   width: 8px;
-  border-radius: var(--radius-xs);
+  border-radius: var(--radius-100);
   transform-origin: bottom;
   /* ds-allow(motion): ambient breathing on the depiction bars — far
      slower than any UI motion token, same precedent as the
@@ -382,14 +382,14 @@
 .dsButton {
   width: 40px;
   height: 14px;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-pill);
   background: var(--color-action-primary-bg);
 }
 
 .dsButtonSecondary {
   width: 24px;
   height: 14px;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-pill);
   border: 1px solid var(--color-divider);
   background: var(--color-bg-container-primary);
 }
@@ -398,7 +398,7 @@
 .dsToggle {
   width: 32px;
   height: 18px;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-pill);
   background: var(--color-action-primary-bg);
   display: flex;
   align-items: center;
@@ -409,7 +409,7 @@
 .dsToggleThumb {
   width: 14px;
   height: 14px;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-pill);
   background: var(--color-bg-container-primary);
   /* ds-allow(mockup): travel distance of the miniature switch thumb.
      ds-allow(motion): it flips at an ambient interval, mostly at rest —
@@ -433,7 +433,7 @@
 }
 
 .dsGlyph {
-  --icon-size: var(--icon-size-md);
+  --icon-size: var(--icon-size-600);
   color: var(--color-icon-primary);
 }
 
@@ -453,7 +453,7 @@
 .rowList {
   list-style: none;
   margin: 0;
-  padding: var(--padding-xs) 0 0;
+  padding: var(--padding-150) 0 0;
   display: flex;
   flex-direction: column;
   /* Divider between the featured story above and the link rows, matching
@@ -478,10 +478,10 @@
 .row {
   display: flex;
   align-items: center;
-  gap: var(--gap-sm);
-  padding: var(--padding-xs) var(--padding-sm);
-  margin: 0 calc(-1 * var(--padding-sm));
-  border-radius: var(--radius-md);
+  gap: var(--gap-200);
+  padding: var(--padding-150) var(--padding-200);
+  margin: 0 calc(-1 * var(--padding-200));
+  border-radius: var(--radius-300);
   text-decoration: none;
   transition: background-color var(--motion-duration-fast) var(--motion-ease-standard);
 }
@@ -496,14 +496,14 @@
 }
 
 .rowIcon {
-  --icon-size: var(--icon-size-sm);
+  --icon-size: var(--icon-size-500);
   color: var(--color-icon-primary);
   flex-shrink: 0;
 }
 
 .rowLogo {
-  width: var(--icon-size-sm);
-  height: var(--icon-size-sm);
+  width: var(--icon-size-500);
+  height: var(--icon-size-500);
   object-fit: contain;
   flex-shrink: 0;
 }
@@ -511,9 +511,9 @@
 .rowTitle {
   flex: 1;
   min-width: 0;
-  font-size: var(--font-paragraph-sm-em-size);
-  font-weight: var(--font-paragraph-sm-em-weight);
-  line-height: var(--font-paragraph-sm-em-line-height);
+  font-size: var(--font-paragraph-sm-emphasis-size);
+  font-weight: var(--font-paragraph-sm-emphasis-weight);
+  line-height: var(--font-paragraph-sm-emphasis-line-height);
   color: var(--color-text-primary);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -521,7 +521,7 @@
 }
 
 .rowArrow {
-  --icon-size: var(--icon-size-sm);
+  --icon-size: var(--icon-size-500);
   color: var(--color-icon-secondary);
   flex-shrink: 0;
   opacity: 0;
@@ -538,7 +538,7 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: var(--gap-md) var(--gap-xl);
+  gap: var(--gap-400) var(--gap-1000);
 }
 
 /* Figma: the strip items keep the link buttons' geometry — pill padding,
@@ -546,8 +546,8 @@
 .company {
   display: inline-flex;
   align-items: center;
-  gap: var(--gap-sm);
-  padding: var(--padding-sm) var(--padding-md);
+  gap: var(--gap-200);
+  padding: var(--padding-200) var(--padding-400);
   font-size: var(--font-paragraph-size);
   font-weight: var(--font-paragraph-weight);
   line-height: var(--font-paragraph-line-height);
@@ -556,8 +556,8 @@
 }
 
 .companyLogo {
-  width: var(--icon-size-md);
-  height: var(--icon-size-md);
+  width: var(--icon-size-600);
+  height: var(--icon-size-600);
   object-fit: contain;
   flex-shrink: 0;
 }
@@ -587,8 +587,8 @@
 
 @media (max-width: 600px) {
   .homeContainer {
-    gap: var(--gap-xxl);
-    padding: 0 0 var(--padding-xl);
+    gap: var(--gap-1500);
+    padding: 0 0 var(--padding-1000);
   }
 
   .homeTitle {
@@ -607,6 +607,6 @@
   }
 
   .homeCompanies {
-    gap: var(--gap-sm) var(--gap-xl);
+    gap: var(--gap-200) var(--gap-1000);
   }
 }

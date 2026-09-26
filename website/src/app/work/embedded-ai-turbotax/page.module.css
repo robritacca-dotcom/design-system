@@ -8,14 +8,14 @@
   gap: var(--layout-column-gap);
   width: 100%;
   max-width: 1440px;
-  padding-top: var(--primitive-gap-xl);
+  padding-top: var(--primitive-gap-1000);
 }
 
 .dsContent {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: var(--primitive-gap-xl);
+  gap: var(--primitive-gap-1000);
   min-width: 0;
 }
 
@@ -26,7 +26,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: var(--primitive-gap-lg);
+  gap: var(--primitive-gap-500);
   width: 100%;
 }
 
@@ -42,9 +42,9 @@
 
 .pageActions {
   display: flex;
-  gap: var(--primitive-gap-sm);
+  gap: var(--primitive-gap-200);
   flex-shrink: 0;
-  padding-top: var(--primitive-gap-md);
+  padding-top: var(--primitive-gap-400);
 }
 
 /* ============================================
@@ -66,7 +66,7 @@
 .cover {
   margin: 0;
   width: 100%;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-300);
   overflow: hidden;
 }
 
@@ -102,7 +102,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--primitive-gap-xl);
+  padding: var(--primitive-gap-1000);
   cursor: zoom-out;
   animation: lightboxFadeIn var(--motion-duration-fast) var(--motion-ease-standard);
 }
@@ -117,7 +117,7 @@
   max-height: 90vh;
   width: auto;
   height: auto;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-300);
   display: block;
   cursor: default;
   box-shadow: 0 24px 64px rgba(5, 5, 5, 0.5);
@@ -125,11 +125,11 @@
 
 .lightboxClose {
   position: fixed;
-  top: var(--primitive-gap-lg);
-  right: var(--primitive-gap-lg);
+  top: var(--primitive-gap-500);
+  right: var(--primitive-gap-500);
   width: 40px;
   height: 40px;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-pill);
   border: none;
   background: rgba(255, 255, 255, 0.12);
   color: #fff;
@@ -146,7 +146,7 @@
 }
 
 .lightboxClose :global(.material-symbols-rounded) {
-  --icon-size: var(--icon-size-sm);
+  --icon-size: var(--icon-size-500);
   line-height: 1;
 }
 
@@ -156,17 +156,17 @@
 .meta {
   display: flex;
   align-items: center;
-  gap: var(--primitive-gap-sm);
+  gap: var(--primitive-gap-200);
   font-family: var(--font-paragraph-sm-family);
   font-size: var(--font-paragraph-sm-size);
-  font-weight: var(--font-paragraph-sm-em-weight);
+  font-weight: var(--font-paragraph-sm-emphasis-weight);
   line-height: var(--font-paragraph-sm-line-height);
   color: var(--color-text-tertiary);
 }
 
 .metaAuthor {
   color: var(--color-text-primary);
-  font-weight: var(--font-paragraph-em-weight);
+  font-weight: var(--font-paragraph-emphasis-weight);
 }
 
 .metaDot {
@@ -181,14 +181,14 @@
   display: flex;
   gap: var(--layout-column-gap);
   width: 100%;
-  padding-top: var(--primitive-gap-xl);
+  padding-top: var(--primitive-gap-1000);
 }
 
 .resumeMain {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: var(--gap-xxxl);
+  gap: var(--gap-2000);
   min-width: 0;
 }
 
@@ -203,7 +203,7 @@
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--gap-xxxl);
+  gap: var(--gap-2000);
 }
 
 /* ============================================
@@ -212,11 +212,11 @@
 .resumeSection {
   display: flex;
   flex-direction: column;
-  gap: var(--primitive-gap-xl);
+  gap: var(--primitive-gap-1000);
 }
 
 .resumeSectionHeader {
-  padding-bottom: var(--primitive-padding-lg);
+  padding-bottom: var(--primitive-padding-500);
   border-bottom: 1px solid var(--color-divider);
 }
 
@@ -235,7 +235,7 @@
 .body {
   display: flex;
   flex-direction: column;
-  gap: var(--primitive-gap-lg);
+  gap: var(--primitive-gap-500);
 }
 
 .body p {
@@ -254,7 +254,7 @@
   line-height: var(--font-heading-2-line-height);
   letter-spacing: var(--font-heading-2-letter-spacing);
   color: var(--color-text-primary);
-  margin: var(--primitive-gap-xl) 0 0;
+  margin: var(--primitive-gap-1000) 0 0;
 }
 
 /* The section header above the article already provides the offset, so an
@@ -269,7 +269,7 @@
   padding-left: 24px;
   display: flex;
   flex-direction: column;
-  gap: var(--primitive-gap-sm);
+  gap: var(--primitive-gap-200);
   margin: 0;
 }
 
@@ -292,20 +292,20 @@
   line-height: var(--font-sub-display-line-height);
   letter-spacing: var(--font-sub-display-letter-spacing);
   color: var(--color-text-primary);
-  border-left: 2px solid var(--color-border-secondary);
-  padding: var(--primitive-gap-sm) 0 var(--primitive-gap-sm) var(--primitive-gap-lg);
-  margin: var(--primitive-gap-xl) 0;
+  border-left: 2px solid var(--color-divider);
+  padding: var(--primitive-gap-200) 0 var(--primitive-gap-200) var(--primitive-gap-500);
+  margin: var(--primitive-gap-1000) 0;
 }
 
 .body strong {
-  font-weight: var(--font-paragraph-em-weight);
+  font-weight: var(--font-paragraph-emphasis-weight);
   color: var(--color-text-primary);
 }
 
 .lede {
-  font-family: var(--font-paragraph-em-family);
+  font-family: var(--font-paragraph-emphasis-family);
   font-size: 18px !important;
-  font-weight: var(--font-paragraph-em-weight) !important;
+  font-weight: var(--font-paragraph-emphasis-weight) !important;
   line-height: 28px !important;
   color: var(--color-text-primary) !important;
 }
@@ -316,13 +316,13 @@
 .toolList {
   display: flex;
   flex-direction: column;
-  gap: var(--primitive-gap-lg);
+  gap: var(--primitive-gap-500);
 }
 
 .toolItem {
   display: flex;
   align-items: center;
-  gap: var(--primitive-gap-md);
+  gap: var(--primitive-gap-400);
 }
 
 .toolLogo {
@@ -346,13 +346,13 @@
 .linkList {
   display: flex;
   flex-direction: column;
-  gap: var(--primitive-gap-lg);
+  gap: var(--primitive-gap-500);
 }
 
 .linkItem {
   display: flex;
   align-items: flex-start;
-  gap: var(--primitive-gap-md);
+  gap: var(--primitive-gap-400);
   text-decoration: none;
   color: inherit;
   transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
@@ -389,7 +389,7 @@
 .linkTitle {
   display: flex;
   align-items: center;
-  gap: var(--primitive-gap-xs);
+  gap: var(--primitive-gap-100);
   font-family: var(--font-title-body-family);
   font-size: var(--font-title-body-size);
   font-weight: var(--font-title-body-weight);
@@ -398,7 +398,7 @@
 }
 
 .linkTitle :global(.material-symbols-rounded) {
-  --icon-size: var(--icon-size-sm);
+  --icon-size: var(--icon-size-500);
   color: var(--color-text-tertiary);
 }
 
@@ -442,7 +442,7 @@
 .detailList {
   display: flex;
   flex-direction: column;
-  gap: var(--primitive-gap-md);
+  gap: var(--primitive-gap-400);
 }
 
 .detailItem {

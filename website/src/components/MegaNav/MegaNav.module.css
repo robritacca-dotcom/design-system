@@ -47,7 +47,7 @@
      inner's 1440px max-width is border-box — gutters inside it would shrink
      and re-centre the content against the full viewport instead. The
      gradient is unaffected: backgrounds paint across the padding box. */
-  padding: 0 var(--primitive-padding-xl);
+  padding: 0 var(--primitive-padding-1000);
 }
 
 .logoSlot {
@@ -63,7 +63,7 @@
      margin plus the first pill's own 16px padding sets the visual gap.
      With nothing centred, the outer slots need no balancing widths. */
   justify-content: flex-start;
-  margin-left: var(--primitive-gap-xl);
+  margin-left: var(--primitive-gap-1000);
   flex: 1;
 }
 
@@ -72,7 +72,7 @@
   align-items: center;
   justify-content: flex-end;
   flex-shrink: 0;
-  gap: var(--primitive-gap-md);
+  gap: var(--primitive-gap-400);
 }
 
 /* ============================================
@@ -81,7 +81,7 @@
 .logo {
   display: flex;
   align-items: center;
-  gap: var(--primitive-gap-sm);
+  gap: var(--primitive-gap-200);
   text-decoration: none;
   color: var(--color-text-primary);
 }
@@ -111,7 +111,7 @@
 .nav {
   display: flex;
   align-items: center;
-  gap: var(--primitive-gap-xs);
+  gap: var(--primitive-gap-100);
 }
 
 .navLink {
@@ -125,7 +125,7 @@
   height: 30px;
   padding: 0 16px;
   border: none;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-pill);
   background: transparent;
   color: var(--color-text-primary);
   font-family: var(--font-title-body-family);
@@ -191,7 +191,7 @@
 .caret {
   flex-shrink: 0;
   margin-left: 2px;
-  --icon-size: var(--icon-size-sm);
+  --icon-size: var(--icon-size-500);
   line-height: 1;
   color: var(--color-text-secondary);
   transition: transform var(--motion-duration-base) var(--motion-ease-standard);
@@ -217,8 +217,8 @@
   justify-content: center;
   background: var(--color-action-passive-bg);
   border: none;
-  border-radius: var(--radius-full);
-  padding: var(--primitive-padding-sm);
+  border-radius: var(--radius-pill);
+  padding: var(--primitive-padding-200);
   cursor: pointer;
   color: var(--color-text-primary);
   width: 40px;
@@ -249,21 +249,21 @@
 .searchBtn {
   display: flex;
   align-items: center;
-  gap: var(--primitive-gap-sm);
+  gap: var(--primitive-gap-200);
   /* Same track recipe as the theme toggle beside it (SegmentedControl's
      container-primary fill and border), so the two pills read as one
      family — the passive fill is near-invisible on the dark header. */
   background: var(--color-bg-container-primary);
-  border: var(--border-xs) solid var(--color-bg-container-border);
-  border-radius: var(--radius-full);
-  padding: 0 var(--primitive-padding-sm-md);
+  border: var(--border-025) solid var(--color-bg-container-border);
+  border-radius: var(--radius-pill);
+  padding: 0 var(--primitive-padding-300);
   cursor: pointer;
   color: var(--color-text-secondary);
   /* Wide enough for the full "Search or ask anything" placeholder plus the
      icon and the ⌘K keycaps, with the keys' auto margin absorbing the rest. */
   width: 264px;
   height: 40px;
-  --icon-size: var(--icon-size-sm);
+  --icon-size: var(--icon-size-500);
   /* Input's own hover transition, so the border responds at the same pace. */
   transition:
     background var(--motion-duration-base) var(--motion-ease-standard),
@@ -292,7 +292,7 @@
 .searchKeys {
   display: inline-flex;
   align-items: center;
-  gap: var(--primitive-gap-xxs);
+  gap: var(--primitive-gap-050);
   margin-left: auto;
 }
 
@@ -320,7 +320,7 @@
   background: color-mix(in srgb, var(--color-bg-container-primary) 88%, transparent);
   backdrop-filter: blur(32px);
   border: 1px solid var(--color-bg-container-border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-400);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
 
   /* Hidden state */
@@ -337,7 +337,7 @@
 }
 
 .megaInner {
-  padding: var(--primitive-padding-xl);
+  padding: var(--primitive-padding-1000);
 }
 
 /* Three columns: the two link groups share the left two thirds, the
@@ -346,20 +346,20 @@
 .megaLayout {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  gap: var(--primitive-gap-xl);
+  gap: var(--primitive-gap-1000);
 }
 
 .megaGroups {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--primitive-gap-xl);
+  gap: var(--primitive-gap-1000);
   align-content: start;
 }
 
 .megaGroup {
   display: flex;
   flex-direction: column;
-  gap: var(--primitive-gap-sm);
+  gap: var(--primitive-gap-200);
   min-width: 0;
 }
 
@@ -372,7 +372,7 @@
   text-transform: uppercase;
   color: var(--color-text-tertiary);
   /* Aligns the header with the item labels, past the rows' hover padding. */
-  padding-inline: var(--primitive-padding-md);
+  padding-inline: var(--primitive-padding-400);
 }
 
 /* ============================================
@@ -382,9 +382,9 @@
 .megaItem {
   display: flex;
   align-items: flex-start;
-  gap: var(--primitive-gap-sm-md);
-  padding: var(--primitive-padding-sm-md) var(--primitive-padding-md);
-  border-radius: var(--radius-md);
+  gap: var(--primitive-gap-300);
+  padding: var(--primitive-padding-300) var(--primitive-padding-400);
+  border-radius: var(--radius-300);
   text-decoration: none;
   color: inherit;
   transition: background var(--motion-duration-fast) var(--motion-ease-standard);
@@ -411,7 +411,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-300);
   background: var(--color-bg-container-secondary);
   color: var(--color-text-primary);
   transition: background var(--motion-duration-fast) var(--motion-ease-standard);
@@ -425,7 +425,7 @@
 
 .megaIcon :global(.material-symbols-rounded),
 .megaIcon span {
-  --icon-size: var(--icon-size-md);
+  --icon-size: var(--icon-size-600);
   line-height: 1;
 }
 
@@ -470,7 +470,7 @@
    ============================================ */
 .megaShowcaseColumn {
   display: flex;
-  padding-left: var(--primitive-padding-xl);
+  padding-left: var(--primitive-padding-1000);
   border-left: 1px solid var(--color-bg-container-border);
   /* Sizes the card's height floor below in cqw, i.e. as a share of this
      column's width. */
@@ -490,7 +490,7 @@
   min-height: 75cqw;
   text-decoration: none;
   color: inherit;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-300);
   border: 1px solid var(--color-bg-container-border);
   overflow: hidden;
   transition: border-color var(--motion-duration-fast) var(--motion-ease-standard);
@@ -524,9 +524,9 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: var(--primitive-gap-xs);
-  padding: var(--primitive-padding-lg);
-  padding-top: var(--primitive-padding-xxl);
+  gap: var(--primitive-gap-100);
+  padding: var(--primitive-padding-500);
+  padding-top: var(--primitive-padding-1500);
   background: linear-gradient(
     to top,
     var(--color-bg-page-primary) 55%,
@@ -543,11 +543,11 @@
 .megaShowcaseTitle {
   display: flex;
   align-items: center;
-  gap: var(--gap-xs);
+  gap: var(--gap-100);
 }
 
 .megaShowcaseTitleIcon {
-  --icon-size: var(--icon-size-sm);
+  --icon-size: var(--icon-size-500);
   line-height: 1;
   color: var(--color-action-passive-text);
   transition: translate var(--motion-duration-fast) var(--motion-ease-standard);
@@ -691,9 +691,9 @@
   position: absolute;
   top: max(
     calc((var(--mn-bar-height) - 40px) / 2),
-    var(--mn-close-top, calc(var(--primitive-padding-lg) + (var(--mn-bar-height) - 40px) / 2))
+    var(--mn-close-top, calc(var(--primitive-padding-500) + (var(--mn-bar-height) - 40px) / 2))
   );
-  right: var(--primitive-padding-lg);
+  right: var(--primitive-padding-500);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -701,7 +701,7 @@
   height: 40px;
   background: none;
   border: none;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-pill);
   color: var(--primitive-neutral-01);
   cursor: pointer;
 }
@@ -727,11 +727,11 @@
   /* Top and side padding mirror the body gutters (globals.css) so the
      drawer's logo row lands on the page's own logo; the bottom keeps the
      wider inset for the theme toggle. */
-  padding: var(--primitive-padding-lg) var(--primitive-padding-lg) var(--primitive-padding-xl);
+  padding: var(--primitive-padding-500) var(--primitive-padding-500) var(--primitive-padding-1000);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--primitive-gap-lg);
+  gap: var(--primitive-gap-500);
   /* The section accordions (Components alone is ~60 links) can exceed the
      viewport, so the drawer scrolls its own content. */
   overflow-y: auto;
@@ -765,22 +765,22 @@
    far edge. */
 .mobileMenuNav {
   width: 100%;
-  padding-inline: calc(var(--mn-logo-mark) + var(--primitive-gap-sm) - var(--padding-lg));
+  padding-inline: calc(var(--mn-logo-mark) + var(--primitive-gap-200) - var(--padding-500));
 }
 
-/* The drawer's rows are a NavList (@robr0/design-system) — no row styling
+/* The drawer's rows are a NavList (rift-ds) — no row styling
    lives here, only a roomier rhythm than the library default: on a phone
    the list is the whole screen, so the rows get space the sidebar's
    denser default doesn't need. Both places NavList separates siblings —
    the list itself and any open sub-list — take the same step. */
 .mobileMenu :global(.ds-nav-list),
 .mobileMenu :global(.ds-nav-list__sublist) {
-  gap: var(--primitive-gap-md);
+  gap: var(--primitive-gap-400);
 }
 
 .mobileMenu :global(.ds-nav-list__panel--open),
 .mobileMenu :global(.ds-nav-list__item) > :global(.ds-nav-list__sublist) {
-  margin-top: var(--primitive-gap-md);
+  margin-top: var(--primitive-gap-400);
 }
 
 .mobileThemeToggle {
@@ -797,7 +797,7 @@
   .searchBtn {
     justify-content: center;
     width: 40px;
-    padding: var(--primitive-padding-sm);
+    padding: var(--primitive-padding-200);
     /* Back to the plain circle — the toggle-track costume belongs to the
        input form. Same passive fill as the mobile menu button beside it. */
     border: none;
@@ -836,23 +836,23 @@
   }
 
   .stickyHeader {
-    padding: 0 var(--primitive-padding-lg);
+    padding: 0 var(--primitive-padding-500);
   }
 }
 
 @media (max-width: 600px) {
   .stickyHeader {
-    padding: 0 var(--primitive-padding-md);
+    padding: 0 var(--primitive-padding-400);
   }
 
   .mobileMenuClose {
-    right: var(--primitive-padding-md);
+    right: var(--primitive-padding-400);
   }
 
   /* Phone gutters, so the drawer's logo keeps sitting on the page's. */
   .mobileMenu {
-    padding-left: var(--primitive-padding-md);
-    padding-right: var(--primitive-padding-md);
+    padding-left: var(--primitive-padding-400);
+    padding-right: var(--primitive-padding-400);
   }
 }
 
@@ -866,7 +866,7 @@
    globals.css does for the body. */
 :global(html[data-chat="docked"]) .stickyHeader {
   padding-right: calc(
-    var(--primitive-padding-xl) + var(--layout-chat-width) + var(--layout-chat-inset)
+    var(--primitive-padding-1000) + var(--layout-chat-width) + var(--layout-chat-inset)
   );
 }
 

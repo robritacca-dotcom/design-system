@@ -589,56 +589,6 @@ const linkLines = (links) =>
     .map((l) => `- ${l.label} (${l.href})${l.description ? `: ${l.description}` : ''}`)
     .join('\n');
 
-/**
- * Component doc paths come from the registry, not from navigation.ts:
- * componentsSidebarLinks is *derived* from the registry in code, so the
- * textual parse above sees only its hardcoded overview entry — which once
- * left the model a "complete" site map with one component path in it.
- */
-function componentDocLines() {
-  const registry = JSON.parse(read(join(repoRoot, 'src', 'components', 'registry.json')));
-  return registry.components
-    .map((c) => `- ${c.label} (/components/${c.slug})`)
-    .sort((a, b) => a.localeCompare(b))
-    .join('\n');
-}
-
-/* ============================================================
-   design.md
-
-   The full spec is ~110KB, and its "## Components" section is ~73KB of
-   token-level detail that a visitor conversation never needs at that depth.
-   Condense it to each component's opening paragraph and keep every other
-   section whole: the design language, theme contract, and known gaps are
-   what people actually ask about.
-   ============================================================ */
-
-function condenseDesignSpec(source) {
-  const componentsStart = source.indexOf('\n## Components\n');
-  if (componentsStart === -1) {
-    throw new Error('design.md: no "## Components" section — the trim needs updating');
-  }
-  const after = source.indexOf('\n## ', componentsStart + 1);
-  if (after === -1) {
-    throw new Error('design.md: "## Components" is the final section — the trim needs updating');
-  }
-
-  // The per-component blocks are dropped entirely: the Component library
-  // section already carries every component's registry description and doc
-  // path, and each page goes deeper than a spec paragraph could. The freed
-  // budget is what pays for the essays.
-  return [
-    source.slice(0, componentsStart),
-    '\n## Components\n',
-    '\nComponent-level specs are deliberately not repeated here. The Component ',
-    'library section of this document lists every component with its ',
-    'description and documentation path (/components/<slug>); the full ',
-    'token-level specs live in the design.md download at /blueprints/design ',
-    'and in Storybook.\n',
-    source.slice(after),
-  ].join('');
-}
-
 /* ============================================================
    Sections
    ============================================================ */
@@ -656,32 +606,25 @@ Every page on robertritacca.com. Link to these paths when pointing someone at mo
 - Work (/work): case study index
 - Writing (/writing): essays on design and AI, mirrored from Substack
 - Contact (/contact): ways to get in touch, and to book a paid one-hour consultation
-- Design system (/design-system): the whole system on one page with live demos
-- Playground (/playground): re-theme the design system live and copy the CSS
-- Canvas (/canvas): every section's landing page live on one endless board (alpha, desktop only)
+- Design system (/design-system): about Rift DS, the design system Rob designed and built
 
 ### Case studies
 
 ${linkLines(navLinks(nav, 'workSidebarLinks'))}
 
-### Design system docs
+### The design system
 
-${linkLines(navLinks(nav, 'docsSidebarLinks'))}
+Rift DS is documented on its own site, not here. Point people at rift-ds.com
+rather than describing components or tokens from memory: this corpus carries
+the story of building it, not its API.
 
-### Foundations
-
-${linkLines(navLinks(nav, 'foundationsSidebarLinks'))}
-
-### Component documentation
-
-- Components overview (/components)
-${componentDocLines()}
+- Documentation: https://rift-ds.com
+- npm: https://www.npmjs.com/package/rift-ds (\`npm install rift-ds\`)
+- Source: https://github.com/robritacca-dotcom/rift-ds
 
 ### Elsewhere
 
-- Storybook: https://design-system-iota-one.vercel.app (rendered API reference with props tables)
-- npm: https://www.npmjs.com/package/@robr0/design-system (\`npm install @robr0/design-system\`)
-- GitHub: https://github.com/robritacca-dotcom/design-system (full source)`;
+- GitHub: https://github.com/robritacca-dotcom`;
 }
 
 function sectionAbout() {
@@ -742,36 +685,11 @@ function coveredElsewhere() {
 const EXCLUDED_ROUTES = new Map([
   ['/rr-animated',
     'a standalone animated-logo page with no informational prose'],
-  ['/design-system',
-    'the landing collage — its prose is demo filler for the live components, not information; the sections it links to are all covered'],
-  ['/graph',
-    'the dependency-graph instrument — its prose is the instrument\'s own controls and panel labels; the graph\'s data is the registries the corpus already carries, and the /overview section that links to it is covered'],
   ['/covers',
     'a noindex staging page for the vector cover mocks — its only prose is a size caption under each frame'],
   ['/covers/render',
     'a noindex surface that renders one cover mock alone at an exact size, so the cover images can be shot from it — it carries no prose at all'],
-  ['/canvas',
-    'a noindex alpha (nav-linked, desktop-only) that lays each section\'s landing page out on one board, live in a frame — its only prose is the board\'s controls and its toolbar trail; every page it shows is covered by its own route, and the site map above gives the chat the one line it needs'],
-  ['/labs/marketing',
-    'a noindex test page rebuilding a reference marketing dashboard entirely from the system\'s tokens and components, to probe how far they stretch — its prose is fictional demo data, not information'],
-  ['/templates/marketing-dashboard',
-    'the marketing dashboard template rendered full viewport (the same app shell as /labs/marketing, its origin) — its prose is fictional demo data; the template\'s facts live on the /templates index, which is covered'],
-  ['/templates/relay-console',
-    'the relay console template rendered full viewport — its prose is fictional network telemetry; the template\'s facts live on the /templates index, which is covered'],
-  ['/templates/team-calendar',
-    'the team calendar template rendered full viewport — its prose is fictional schedule data; the template\'s facts live on the /templates index, which is covered'],
-  ['/templates/agent-workbench',
-    'the agent workbench template rendered full viewport — its prose is a fictional coding session; the template\'s facts live on the /templates index, which is covered'],
-  ['/templates/roadmap-planner',
-    'the roadmap planner template rendered full viewport — its prose is a fictional product plan; the template\'s facts live on the /templates index, which is covered'],
-  ['/templates/sales-pipeline',
-    'the sales pipeline template rendered full viewport — its prose is a fictional CRM book of business; the template\'s facts live on the /templates index, which is covered'],
 ]);
-
-/** Component showcase pages: excluded as a class, with one shared reason. */
-const COMPONENT_PAGE_EXCLUSION =
-  'component showcase pages are demo shells; each component’s facts are carried by the ' +
-  'Component library section (registry description + path) and the design.md spec paragraph';
 
 
 /** The routes whose prose the Site pages section includes, in sorted order. */
@@ -781,7 +699,6 @@ function sitePageRoutes() {
     if (route.split('/').some(isDynamicSegment)) return false;
     if (covered.has(route)) return false;
     if (EXCLUDED_ROUTES.has(route)) return false;
-    if (/^\/components\//.test(route)) return false;
     return true;
   });
 }
@@ -793,10 +710,9 @@ function sitePageRoutes() {
 export function routeCoverage() {
   const covered = new Map(coveredElsewhere());
   for (const route of sitePageRoutes()) covered.set(route, 'Site pages');
+  // No per-component exclusion class any more: the showcase pages left with
+  // the design system, so every route on disk is a portfolio route.
   const excluded = new Map(EXCLUDED_ROUTES);
-  for (const route of siteRoutes()) {
-    if (/^\/components\//.test(route)) excluded.set(route, COMPONENT_PAGE_EXCLUSION);
-  }
   return { covered, excluded };
 }
 
@@ -864,138 +780,6 @@ const CLAUDE_MD_DROPPED_SECTIONS = [
   'Key Files',
 ];
 
-function condenseClaudeMd(source) {
-  let condensed = source;
-  for (const heading of CLAUDE_MD_DROPPED_SECTIONS) {
-    const start = condensed.indexOf(`\n## ${heading}\n`);
-    if (start === -1) {
-      throw new Error(`CLAUDE.md: no "## ${heading}" section — the corpus trim needs updating`);
-    }
-    const after = condensed.indexOf('\n## ', start + 1);
-    condensed =
-      after === -1
-        ? condensed.slice(0, start)
-        : condensed.slice(0, start) + condensed.slice(after);
-  }
-  return condensed;
-}
-
-function sectionBlueprints() {
-  const claude = condenseClaudeMd(read(join(repoRoot, 'CLAUDE.md')));
-  const design = condenseDesignSpec(read(join(repoRoot, 'design.md')));
-  const content = read(join(repoRoot, 'content-design.md'));
-
-  return `## Blueprints: the specs this project is built from
-
-These published markdown documents are how the site and design system get built. Each is readable on its own page: /blueprints/claude, /blueprints/design, and /blueprints/content-design. There is no /blueprints index page, so always link the specific document.
-
-### CLAUDE.md: how the repository is maintained
-
-Condensed to the architecture: the step-by-step contributor checklists live in the full document at /blueprints/claude.
-
-${claude}
-
-### design.md: the design specification
-
-${design}
-
-### content-design.md: the writing rules
-
-${content}`;
-}
-
-function sectionComponents() {
-  const registry = JSON.parse(read(join(repoRoot, 'src', 'components', 'registry.json')));
-  const byCategory = new Map();
-  for (const c of registry.components) {
-    if (!byCategory.has(c.category)) byCategory.set(c.category, []);
-    byCategory.get(c.category).push(c);
-  }
-
-  const groups = registry.categories
-    .map((cat) => {
-      const items = byCategory.get(cat.id) ?? [];
-      const lines = items
-        .map((c) => `- ${c.label} (/components/${c.slug}): ${c.description}`)
-        .join('\n');
-      return `### ${cat.label}\n\n${cat.description}\n\n${lines}`;
-    })
-    .join('\n\n');
-
-  return `## Component library
-
-${pageProse('components')}
-
-${registry.components.length} components published as @robr0/design-system, grouped by category. Each has documentation at the path shown.
-
-${groups}`;
-}
-
-function sectionSkills() {
-  const skillsDir = join(repoRoot, '.claude', 'skills');
-  const registry = JSON.parse(read(join(skillsDir, 'registry.json')));
-
-  const entries = registry.displayed.map((slug) => {
-    const source = read(join(skillsDir, slug, 'SKILL.md'));
-    const fm = source.match(/^---\n([\s\S]*?)\n---\n/);
-    const line = (key) => {
-      const m = fm ? fm[1].match(new RegExp(`^${key}:[ \\t]*(.+)$`, 'm')) : null;
-      return m ? m[1].trim() : null;
-    };
-    let description = line('displayDescription') ?? line('description') ?? '';
-    try {
-      description = JSON.parse(description);
-    } catch {
-      /* already a bare string */
-    }
-    return `- ${line('name') ?? slug}: ${description}`;
-  });
-
-  return `## Agent skills
-
-Repeatable procedures the agents follow when working on this project. Documented at /skills.
-
-${entries.join('\n')}`;
-}
-
-function sectionLoops() {
-  // The committed loops registry (website/src/data/loops.json) — the same
-  // committed-data pattern as the journal. The page renders this data
-  // verbatim, so carrying it here is what keeps the /loops route covered
-  // once its prose lives in JSON instead of the page source.
-  const { loops } = JSON.parse(
-    read(join(repoRoot, 'website', 'src', 'data', 'loops.json'))
-  );
-
-  const entries = loops
-    .map(
-      (l) =>
-        `### ${l.slug} (${l.cadence.toLowerCase()}, ${l.status})\n\n${l.description}\n\nEach run: ${l.stages.join(', ')}. Guardrails: ${l.guardrails.join('; ')}. Built on the ${l.skills.join(', ')} skill${l.skills.length > 1 ? 's' : ''}.`
-    )
-    .join('\n\n');
-
-  return `## Loops
-
-Recurring agent loops: skills that run on a schedule against real data and end in a branch for Rob to review. Documented at /loops.
-
-${pageProse('loops')}
-
-${entries}`;
-}
-
-function sectionJournal() {
-  const data = JSON.parse(read(join(repoRoot, 'website', 'src', 'data', 'site-updates.json')));
-  const entries = data.entries
-    .map((e) => `### ${e.title} (${e.meta})\n\n${e.body.join('\n\n')}`)
-    .join('\n\n');
-
-  return `## Project journal
-
-How this site and design system got built, newest first. Published at /project-journal.
-
-${entries}`;
-}
-
 function sectionWriting() {
   // The committed essays registry (website/src/data/essays.json), refreshed
   // by scripts/sync-essays.mjs — the same committed-data pattern as the
@@ -1033,22 +817,22 @@ ${full}`;
    Assembly
    ============================================================ */
 
+// The Blueprints, Components, Skills, Loops and Journal sections went with the
+// design system: their sources were design.md, the component registry, the
+// skills registry, loops.json and site-updates.json, none of which this repo
+// holds any more. What is left is the portfolio, which is what this chat
+// answers for.
 const SECTIONS = [
   ['Site map', sectionSiteMap],
   ['About', sectionAbout],
   ['Site pages', sectionSitePages],
   ['Case studies', sectionCaseStudies],
-  ['Blueprints', sectionBlueprints],
-  ['Components', sectionComponents],
-  ['Skills', sectionSkills],
-  ['Loops', sectionLoops],
-  ['Journal', sectionJournal],
   ['Writing', sectionWriting],
 ];
 
 const PREAMBLE = `# robertritacca.com: full site content
 
-Everything below is published on robertritacca.com or in its public repository. It is the complete set of facts available for answering questions about Rob Ritacca, his work, and the robr0 design system.
+Everything below is published on robertritacca.com or in its public repository. It is the complete set of facts available for answering questions about Rob Ritacca and his work.
 `;
 
 /** The corpus text itself, ungated so --dump still works when over budget. */
@@ -1072,8 +856,7 @@ export function buildSiteCorpus() {
   }
 
   return `// AUTO-GENERATED — do not edit by hand.
-// Source of truth: the published site (navigation, page prose, data registries)
-// and the root specs CLAUDE.md, design.md, content-design.md.
+// Source of truth: the published site (navigation, page prose, data registries).
 // Regenerate: node scripts/generate-site-corpus.mjs (runs via predev/prebuild).
 
 /** Every public fact about the site, sent to the model as a cached system block. */

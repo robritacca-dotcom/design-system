@@ -2,8 +2,8 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { CommandPalette } from "@robr0/design-system/components/CommandPalette/CommandPalette";
-import type { CommandPaletteGroup } from "@robr0/design-system/components/CommandPalette/CommandPalette";
+import { CommandPalette } from "rift-ds/components/CommandPalette/CommandPalette";
+import type { CommandPaletteGroup } from "rift-ds/components/CommandPalette/CommandPalette";
 import {
 } from "@/config/navigation";
 import { caseStudies } from "@/data/case-studies";

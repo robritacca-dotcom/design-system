@@ -1,4 +1,4 @@
-import { componentMetadata } from "@robr0/design-system/components/registry";
+import { componentMetadata } from "rift-ds/components/registry";
 import { caseStudies } from "@/data/case-studies";
 import registry from "./page-summaries.json";
 

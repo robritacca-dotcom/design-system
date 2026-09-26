@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Globe } from "@robr0/design-system/components/Globe/Globe";
-import { LinkList } from "@robr0/design-system/components/LinkList/LinkList";
-import { Timeline, type TimelineCompany } from "@robr0/design-system/components/Timeline/Timeline";
+import { Globe } from "rift-ds/components/Globe/Globe";
+import { LinkList } from "rift-ds/components/LinkList/LinkList";
+import { Timeline, type TimelineCompany } from "rift-ds/components/Timeline/Timeline";
 import MegaNav from "../../components/MegaNav/MegaNav";
 import styles from "./page.module.css";
 

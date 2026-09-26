@@ -5,18 +5,18 @@ import Image from "next/image";
 import { CoverImage } from "@/components/covers/CoverImage";
 import CaseStudyTldr from "@/components/CaseStudyTldr/CaseStudyTldr";
 import { caseStudyTldrs } from "@/data/case-study-tldrs";
-import { COMPONENT_COUNT } from "@robr0/design-system/components/registry";
+import { COMPONENT_COUNT } from "rift-ds/components/registry";
 import Link from "next/link";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
-import { Button } from "@robr0/design-system/components/Button/Button";
-import { Badge } from "@robr0/design-system/components/Badge/Badge";
-import { Alert } from "@robr0/design-system/components/Alert/Alert";
-import { SegmentedControl } from "@robr0/design-system/components/SegmentedControl/SegmentedControl";
-import { LinkList } from "@robr0/design-system/components/LinkList/LinkList";
-import { LineChart } from "@robr0/design-system/components/Chart/LineChart";
-import { BarChart } from "@robr0/design-system/components/Chart/BarChart";
+import { Button } from "rift-ds/components/Button/Button";
+import { Badge } from "rift-ds/components/Badge/Badge";
+import { Alert } from "rift-ds/components/Alert/Alert";
+import { SegmentedControl } from "rift-ds/components/SegmentedControl/SegmentedControl";
+import { LinkList } from "rift-ds/components/LinkList/LinkList";
+import { LineChart } from "rift-ds/components/Chart/LineChart";
+import { BarChart } from "rift-ds/components/Chart/BarChart";
 import { getSidebarLinks, workSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
@@ -308,7 +308,7 @@ export default function Robr0DsCaseStudy() {
 
                   <p>
                     Late July I published the library to npm as{" "}
-                    <a href="https://www.npmjs.com/package/@robr0/design-system" target="_blank" rel="noopener noreferrer" className={styles.inlineLink}>@robr0/design-system</a>, and it immediately exposed something being my own consumer had hidden. The whole thing was built for this site.
+                    <a href="https://www.npmjs.com/package/rift-ds" target="_blank" rel="noopener noreferrer" className={styles.inlineLink}>rift-ds</a>, and it immediately exposed something being my own consumer had hidden. The whole thing was built for this site.
                   </p>
 
                   <p>

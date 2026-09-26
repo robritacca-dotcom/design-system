@@ -8,7 +8,7 @@ import {
 } from "react";
 import { usePathname } from "next/navigation";
 import { lockBodyScroll, unlockBodyScroll } from "@/lib/scroll-lock";
-import { type NavListItem } from "@robr0/design-system/components/NavList/NavList";
+import { type NavListItem } from "rift-ds/components/NavList/NavList";
 import {
   workSidebarLinks,
   type NavLink,

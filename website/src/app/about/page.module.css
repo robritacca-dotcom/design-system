@@ -6,14 +6,14 @@
   gap: var(--layout-column-gap);
   width: 100%;
   max-width: 1440px;
-  padding-top: var(--primitive-gap-xl);
+  padding-top: var(--primitive-gap-1000);
 }
 
 .dsContent {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: var(--gap-xxxl);
+  gap: var(--gap-2000);
   min-width: 0;
 }
 
@@ -45,7 +45,7 @@
 .introSection {
   display: flex;
   flex-direction: column;
-  gap: var(--primitive-gap-lg);
+  gap: var(--primitive-gap-500);
 }
 
 .introBody {
@@ -75,7 +75,7 @@
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--gap-xxxl);
+  gap: var(--gap-2000);
 }
 
 /* ============================================
@@ -84,11 +84,11 @@
 .resumeSection {
   display: flex;
   flex-direction: column;
-  gap: var(--primitive-gap-xl);
+  gap: var(--primitive-gap-1000);
 }
 
 .resumeSectionHeader {
-  padding-bottom: var(--primitive-padding-lg);
+  padding-bottom: var(--primitive-padding-500);
   border-bottom: 1px solid var(--color-divider);
 }
 
@@ -109,7 +109,7 @@
 .skillsGroup {
   display: flex;
   flex-direction: column;
-  gap: var(--primitive-gap-sm);
+  gap: var(--primitive-gap-200);
 }
 
 .skillsCategory {
@@ -126,7 +126,7 @@
   flex-direction: column;
   /* Wide enough that an entry wrapping to a second line still reads as
      one entry rather than two. */
-  gap: var(--gap-sm);
+  gap: var(--gap-200);
 }
 
 .skillsList li {

@@ -1,8 +1,8 @@
-import { Button } from "@robr0/design-system/components/Button/Button";
-import { SectionTitle } from "@robr0/design-system/components/SectionTitle/SectionTitle";
-import { Stat } from "@robr0/design-system/components/Stat/Stat";
-import { COMPONENT_COUNT } from "@robr0/design-system/components/registry";
-import { TOKEN_COUNT } from "@robr0/design-system/tokens/registry";
+import { Button } from "rift-ds/components/Button/Button";
+import { SectionTitle } from "rift-ds/components/SectionTitle/SectionTitle";
+import { Stat } from "rift-ds/components/Stat/Stat";
+import { COMPONENT_COUNT } from "rift-ds/components/registry";
+import { TOKEN_COUNT } from "rift-ds/tokens/registry";
 import FadeDivider from "@/components/FadeDivider/FadeDivider";
 import styles from "./page.module.css";
 

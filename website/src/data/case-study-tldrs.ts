@@ -1,5 +1,5 @@
 import type { CaseStudyTldrPoint } from "@/components/CaseStudyTldr/CaseStudyTldr";
-import { COMPONENT_COUNT } from "@robr0/design-system/components/registry";
+import { COMPONENT_COUNT } from "rift-ds/components/registry";
 
 /**
  * The TLDR points rendered at the top of each case study, keyed by the
