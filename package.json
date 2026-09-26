@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "description": "Robert Ritacca's portfolio site: case studies, essays, and the page about building Rift DS.",
-  "license": "MIT",
+  "license": "UNLICENSED",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/robritacca-dotcom/design-system.git"

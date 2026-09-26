@@ -85,4 +85,8 @@ answers for itself at [rift-ds.com](https://rift-ds.com).
 
 ## Licence
 
-MIT. See [LICENSE](LICENSE).
+All rights reserved. This repository is source-available, not open source:
+published so the work can be read, not reused. See [LICENSE](LICENSE).
+
+The design system it is built on, [rift-ds](https://github.com/robritacca-dotcom/rift-ds),
+is MIT licensed and available separately.
