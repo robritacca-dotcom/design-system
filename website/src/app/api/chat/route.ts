@@ -20,12 +20,10 @@
  * The stream always terminates. An unterminated stream leaves the widget
  * spinning with no way back.
  *
- * The model carries two deterministic tools (get_component and
- * get_design_tokens — see CHAT_TOOLS below), because the corpus deliberately
- * omits the generated prop API and token registry. Tool rounds run locally
- * as in-memory reads and surface to the visitor only as trace points; the
- * loop is bounded by MAX_MODEL_CALLS and the final pass withholds tool
- * choice so an exchange always ends in text.
+ * The model answers from the corpus alone, in a single pass. It used to
+ * carry two deterministic tools over the design system's prop API and token
+ * registry; that system moved to its own site, which documents and answers
+ * for itself.
  */
 import Anthropic from "@anthropic-ai/sdk";
 
@@ -38,7 +36,6 @@ import {
   chatModelByValue,
   type ChatModelOption,
 } from "@/lib/chat-model";
-import { lookupComponent, lookupTokens } from "@/lib/site-tools";
 
 import { EASTER_EGGS } from "./easter-eggs";
 import {
@@ -100,83 +97,6 @@ const MAX_TRACE_POINTS = 8;
    plausible convention rather than the published contract. Same security
    boundary as the corpus: generated, already-published data only.
    ============================================ */
-
-/** Model calls per exchange: the first pass plus at most two tool rounds. */
-const MAX_MODEL_CALLS = 3;
-
-const CHAT_TOOLS: Anthropic.Messages.Tool[] = [
-  {
-    name: "get_component",
-    description:
-      "The exact prop contract for one design-system component: every own prop " +
-      "with its type, default, requiredness, deprecation status and description, " +
-      "plus import paths, generated from the same source as the published .d.ts. " +
-      "Use it whenever the answer needs prop-level specifics (names, types, " +
-      "defaults, what is deprecated and what replaces it). Never state a prop " +
-      "fact from memory when this can confirm it.",
-    input_schema: {
-      type: "object",
-      properties: {
-        name: {
-          type: "string",
-          description: "Component name, label or docs slug, e.g. Button or agent-plan",
-        },
-      },
-      required: ["name"],
-    },
-  },
-  {
-    name: "get_design_tokens",
-    description:
-      "The semantic design-token registry: every token name grouped by category, " +
-      "with per-category counts. Use it to enumerate or count tokens, or to check " +
-      "whether a token exists. Values and usage guidance stay on the foundations " +
-      "pages; link those for the numbers behind a token.",
-    input_schema: {
-      type: "object",
-      properties: {
-        category: {
-          type: "string",
-          description: "A token category to filter by, e.g. colour or motion",
-        },
-      },
-    },
-  },
-];
-
-/** Runs one tool call locally. Unknown names and bad input come back as an
-    error string for the model to recover from, never a thrown error. */
-function runChatTool(name: string, input: unknown): string {
-  const args = (typeof input === "object" && input !== null ? input : {}) as Record<
-    string,
-    unknown
-  >;
-  if (name === "get_component") {
-    return JSON.stringify(lookupComponent(String(args.name ?? "")));
-  }
-  if (name === "get_design_tokens") {
-    const category = typeof args.category === "string" ? args.category : undefined;
-    return JSON.stringify(lookupTokens(category));
-  }
-  return JSON.stringify({ error: `Unknown tool ${JSON.stringify(name)}.` });
-}
-
-/** The trace point shown while a tool round runs. */
-function toolTracePoint(name: string, input: unknown): string {
-  const args = (typeof input === "object" && input !== null ? input : {}) as Record<
-    string,
-    unknown
-  >;
-  if (name === "get_component" && typeof args.name === "string" && args.name.trim()) {
-    return `Checked the ${args.name.trim()} prop contract`;
-  }
-  if (name === "get_design_tokens") {
-    return typeof args.category === "string" && args.category.trim()
-      ? `Read the ${args.category.trim()} token registry`
-      : "Read the token registry";
-  }
-  return "Checked the component API";
-}
 
 const NDJSON_HEADERS = {
   "Content-Type": "application/x-ndjson; charset=utf-8",
@@ -503,91 +423,53 @@ export async function POST(request: Request): Promise<Response> {
             : []),
         ];
 
-        // The tool loop: stream a pass, and when it ends in tool_use, run
-        // the requested lookups locally (synchronous in-memory reads) and
-        // stream again with the results appended. Bounded so a pathological
-        // exchange cannot spend more than MAX_MODEL_CALLS calls; the last
-        // allowed pass has the tools withheld, so it must answer in text.
-        const working: Anthropic.Messages.MessageParam[] = [...parsed.messages];
-        let final: Anthropic.Messages.Message;
+        // One pass. The chat used to carry two deterministic tools over the
+        // design system's prop API and token registry, because the corpus
+        // deliberately omitted both. That system has its own site and its own
+        // chat now, and what is left here is prose this site already
+        // publishes, so there is nothing to look up that the corpus lacks.
+        const stream = client.messages.stream(
+          {
+            model: serving.id,
+            max_tokens: MAX_TOKENS,
+            // Haiku 4.5 predates adaptive thinking and the effort dial and
+            // rejects both with a 400, so it gets a plain request — which
+            // also means no "Thinking" trace points on its answers, honestly.
+            ...(serving.adaptiveThinking
+              ? {
+                  thinking: { type: "adaptive" as const, display: "summarized" as const },
+                  output_config: { effort: EFFORT },
+                }
+              : {}),
+            system,
+            messages: parsed.messages,
+          },
+          { signal: upstream.signal }
+        );
 
-        for (let call = 0; ; call += 1) {
-          const lastCall = call === MAX_MODEL_CALLS - 1;
-          const stream = client.messages.stream(
-            {
-              model: serving.id,
-              max_tokens: MAX_TOKENS,
-              // Haiku 4.5 predates adaptive thinking and the effort dial and
-              // rejects both with a 400, so it gets a plain request — which
-              // also means no "Thinking" trace points on its answers, honestly.
-              ...(serving.adaptiveThinking
-                ? {
-                    thinking: { type: "adaptive" as const, display: "summarized" as const },
-                    output_config: { effort: EFFORT },
-                  }
-                : {}),
-              tools: CHAT_TOOLS,
-              ...(lastCall ? { tool_choice: { type: "none" as const } } : {}),
-              system,
-              messages: working,
-            },
-            { signal: upstream.signal }
-          );
+        for await (const event of stream) {
+          if (upstream.signal.aborted) break;
+          if (event.type !== "content_block_delta") continue;
 
-          for await (const event of stream) {
-            if (upstream.signal.aborted) break;
-            if (event.type !== "content_block_delta") continue;
-
-            if (event.delta.type === "text_delta") {
-              if (!streamedText) {
-                reasoning.close();
-                streamedText = true;
-                firstTextMs = Date.now() - startedAt;
-              }
-              answerText += event.delta.text;
-              send({ type: "delta", text: event.delta.text });
-            } else if (event.delta.type === "thinking_delta") {
-              reasoning.push(event.delta.thinking);
+          if (event.delta.type === "text_delta") {
+            if (!streamedText) {
+              reasoning.close();
+              streamedText = true;
+              firstTextMs = Date.now() - startedAt;
             }
+            answerText += event.delta.text;
+            send({ type: "delta", text: event.delta.text });
+          } else if (event.delta.type === "thinking_delta") {
+            reasoning.push(event.delta.thinking);
           }
-
-          final = await stream.finalMessage();
-          // Real token counts per call, so the daily breaker tracks the
-          // whole exchange, tool rounds included.
-          await recordSpend(final.usage, serving.id);
-
-          if (final.stop_reason !== "tool_use" || lastCall || upstream.signal.aborted) {
-            break;
-          }
-
-          const toolUses = final.content.filter(
-            (block): block is Anthropic.Messages.ToolUseBlock => block.type === "tool_use"
-          );
-          for (const block of toolUses) {
-            send({
-              type: "status",
-              label: "Looking it up",
-              point: toolTracePoint(block.name, block.input),
-            });
-          }
-          working.push(
-            // The full content blocks go back, thinking included — the API
-            // requires the thinking blocks intact on a tool-using turn.
-            { role: "assistant", content: final.content as Anthropic.Messages.ContentBlockParam[] },
-            {
-              role: "user",
-              content: toolUses.map((block) => ({
-                type: "tool_result" as const,
-                tool_use_id: block.id,
-                content: runChatTool(block.name, block.input),
-              })),
-            }
-          );
         }
+
+        const final = await stream.finalMessage();
+        await recordSpend(final.usage, serving.id);
 
         if (final.stop_reason === "refusal" && !streamedText) {
           noticeText =
-            "That one is outside what this chat covers. Ask about Rob's work, the case studies, or the design system and it can help.";
+            "That one is outside what this chat covers. Ask about Rob's work, the case studies, or his writing and it can help.";
           send({ type: "notice", text: noticeText });
         } else if (final.stop_reason === "max_tokens") {
           send({ type: "delta", text: "\n\n(Cut off at the length limit.)" });
