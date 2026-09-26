@@ -1,15 +1,10 @@
 import React from "react";
 import { Button } from "rift-ds/components/Button/Button";
-import CopyPageMarkdown from "./CopyPageMarkdown";
 import styles from "./PageLinks.module.css";
-
-const STORYBOOK_BASE = "https://design-system-iota-one.vercel.app";
 
 interface PageLinksProps {
   /** Figma file URL — omit to hide the Figma button */
   figmaUrl?: string;
-  /** Storybook story path (e.g. "/?path=/docs/components-button--docs") — omit to hide the Storybook button */
-  storybookPath?: string;
   /** Full GitHub URL (repo, file, etc.) — omit to hide the GitHub button */
   githubUrl?: string;
   /** Substack publication/post URL — omit to hide the Substack button */
@@ -75,17 +70,13 @@ const InstagramIcon = () => (
 );
 
 /**
- * PageLinks — external link buttons (Figma, Storybook, GitHub, Substack, social)
+ * PageLinks — external link buttons (Figma, GitHub, Substack, social)
  * Uses the DS Button component (tertiary, compact) with custom SVG icons.
  * Positioned inline with the page title.
  */
-export default function PageLinks({ figmaUrl, storybookPath, githubUrl, substackUrl, linkedinUrl, xUrl, instagramUrl }: PageLinksProps) {
+export default function PageLinks({ figmaUrl, githubUrl, substackUrl, linkedinUrl, xUrl, instagramUrl }: PageLinksProps) {
   return (
     <div className={styles.pageLinks}>
-      {/* Self-gated: renders only on /components/<slug> pages, where the
-          generated markdown contract exists to copy. */}
-      <CopyPageMarkdown />
-
       {linkedinUrl && (
         <Button
           label="LinkedIn"
@@ -151,18 +142,6 @@ export default function PageLinks({ figmaUrl, storybookPath, githubUrl, substack
         />
       )}
 
-      {storybookPath && (
-        <Button
-          label="Storybook"
-          variant="tertiary"
-          size="compact"
-          iconLeft={<StorybookIcon />}
-          iconRight="open_in_new"
-          href={`${STORYBOOK_BASE}${storybookPath}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        />
-      )}
 
       {githubUrl && (
         <Button

@@ -49,12 +49,12 @@
       "coverSrc": "/images/heroes/meta-vision.png"
     },
     {
-      "href": "/work/robr0-ds",
-      "title": "Building robr0 DS: the rules that hold",
-      "dek": "Six months building a design system where breaking a rule fails the build",
+      "href": "/work/rift-ds",
+      "title": "Building Rift DS: the rules that hold",
+      "dek": "Seven months building a design system where breaking a rule fails the build",
       "companyName": "Personal",
       "companyLogo": "/logos/rr.svg",
-      "coverSrc": "/images/heroes/robr0-ds.png"
+      "coverSrc": "/images/heroes/rift-ds.png"
     },
     {
       "href": "/work/cibc-firstcaribbean",

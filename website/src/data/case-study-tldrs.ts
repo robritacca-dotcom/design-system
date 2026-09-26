@@ -202,10 +202,10 @@ export const caseStudyTldrs = {
         "The lasting lesson: good design is often not simplifying complexity away, it is helping users move through it with confidence.",
     },
   ],
-  "robr0-ds": [
+  "rift-ds": [
     {
       claim: "A design system where the rules cannot soften",
-      detail: `Every system I shipped inside large companies drifted once it crossed the design-engineering boundary. robr0 DS started in February 2026 to fix that from the inside: now ${COMPONENT_COUNT} components, a published npm package, and the site you are reading.`,
+      detail: `Every system I shipped inside large companies drifted once it crossed the design-engineering boundary. Rift DS started in February 2026 to fix that from the inside: now ${COMPONENT_COUNT} components, a published npm package, and a documentation site of its own.`,
     },
     {
       claim: "Every fact has exactly one home",
@@ -213,14 +213,14 @@ export const caseStudyTldrs = {
         "Registries hold the authoritative lists, and validators check every other surface against them on each build. Forget to register a component and the build fails and names the folder. There is nowhere to type a component count by hand, including in this TLDR.",
     },
     {
-      claim: "Cutting a corner leaves a signed note",
-      detail:
-        "A validator reads every line of component CSS for raw values. The only ways past it: use the right token, or write a comment above the line stating the category and the reason. No override flag.",
-    },
-    {
       claim: "Publishing found what dogfooding could not",
       detail:
         "Going on npm exposed contract problems self-use never hits: 18 components rebuilt, 49 accessibility violations fixed. Your own system catches taste problems; only a second consumer catches contracts.",
+    },
+    {
+      claim: "The move proved the rules held",
+      detail:
+        "Leaving for its own repo and domain meant renaming the package everywhere and renumbering the whole token scale at once: 650 replacements, swept by script and gated by a validator. Six of them turned out to reference tokens that had never existed, so four case studies had been drawing an invisible border for months. The check found what nobody had reported.",
     },
     {
       claim: "The site answers for itself",

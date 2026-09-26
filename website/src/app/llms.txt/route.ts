@@ -53,7 +53,7 @@ export function GET() {
     "The design system this site is built on. Designed and built by Robert Ritacca, published as an open npm package with its own documentation site.",
     "",
     `- [About Rift DS](${SITE_URL}/design-system): what it is and what building it involved`,
-    `- [Building Rift DS](${SITE_URL}/work/robr0-ds): the case study, on what makes a design system rule actually hold`,
+    `- [Building Rift DS](${SITE_URL}/work/rift-ds): the case study, on what makes a design system rule actually hold`,
     `- [Documentation](${DESIGN_SYSTEM_URL}): components, tokens, templates and the playground`,
     `- [llms.txt](${DESIGN_SYSTEM_URL}/llms.txt): the agent index for the system itself, including its MCP endpoint and per-component prop contracts`,
     `- [npm package](https://www.npmjs.com/package/rift-ds): \`npm install rift-ds\``,

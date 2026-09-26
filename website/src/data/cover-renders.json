@@ -9,7 +9,7 @@
     "feature": {
       "ratio": [16, 10],
       "width": 2560,
-      "use": "The home page's featured card and the robr0-ds hero. Every study is listed here, not just today's featured one, because the home page features caseStudies[0] — reordering the registry must not leave a study without its render."
+      "use": "The home page's featured card and the rift-ds hero. Every study is listed here, not just today's featured one, because the home page features caseStudies[0] — reordering the registry must not leave a study without its render."
     },
     "wide": {
       "ratio": [16, 9],
@@ -38,7 +38,7 @@
       "alt": "Meta's recruiter offer draft, with a candidate's profile and engagement history beside a calculator comparing standard, maximum and proposed compensation.",
       "aspects": ["card", "feature", "wide"]
     },
-    "/work/robr0-ds": {
+    "/work/rift-ds": {
       "alt": "This site's playground, with theme controls for action colour, corner radius and typeface down the left of a live chat preview.",
       "aspects": ["card", "feature"]
     }

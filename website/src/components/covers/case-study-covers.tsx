@@ -34,7 +34,7 @@ export const CASE_STUDY_COVERS: Record<
   "/work/augmenta-ai": AugmentaSolutionCover,
   "/work/meta-career-profile": MetaOfferSummaryCover,
   "/work/meta-offers": MetaOfferDraftCover,
-  "/work/robr0-ds": SitePlaygroundCover,
+  "/work/rift-ds": SitePlaygroundCover,
 };
 
 /**

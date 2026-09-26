@@ -22,9 +22,9 @@ export const SOCIAL_PROFILES: ExternalLink[] = [
 
 /** Where the design system lives off-site. */
 export const PROJECT_LINKS: ExternalLink[] = [
-  { label: "GitHub", href: "https://github.com/robritacca-dotcom/design-system" },
+  { label: "GitHub", href: "https://github.com/robritacca-dotcom" },
   { label: "npm", href: "https://www.npmjs.com/package/rift-ds" },
-  { label: "Storybook", href: "https://design-system-iota-one.vercel.app" },
+  { label: "Rift DS", href: "https://rift-ds.com" },
   { label: "Figma", href: "https://www.figma.com/@robr0" },
   { label: "Substack", href: "https://robertritacca1.substack.com/" },
 ];

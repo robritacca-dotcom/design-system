@@ -16,7 +16,6 @@ import { Alert } from "rift-ds/components/Alert/Alert";
 import { SegmentedControl } from "rift-ds/components/SegmentedControl/SegmentedControl";
 import { LinkList } from "rift-ds/components/LinkList/LinkList";
 import { LineChart } from "rift-ds/components/Chart/LineChart";
-import { BarChart } from "rift-ds/components/Chart/BarChart";
 import { getSidebarLinks, workSidebarLinks } from "@/config/navigation";
 import styles from "./page.module.css";
 
@@ -34,28 +33,15 @@ const componentGrowth = [
   { month: "May", components: 39 },
   { month: "Jun", components: 41 },
   { month: "Jul", components: 61 },
-  { month: "Aug", components: COMPONENT_COUNT },
+  { month: "Aug", components: 120 },
+  /* Not a month: the live figure from the package registry. The last column
+     used to be labelled with a month while rendering this count, so it drifted
+     further from its own label with every release. A column that says "Now"
+     cannot. */
+  { month: "Now", components: COMPONENT_COUNT },
 ];
 
-/* ============================================
-   Real traffic shape — monthly page views for
-   robertritacca.com indexed to the April floor
-   (April = 1), from GA4, pulled 2026-08-14
-   and re-indexed from the absolute counts.
-   Complete months only. Absolute counts stay
-   out of the case study on purpose; the index
-   keeps the shape without publishing them.
-   ============================================ */
-const monthlyViews = [
-  { label: "Feb", value: 5.5 },
-  { label: "Mar", value: 1.3 },
-  { label: "Apr", value: 1 },
-  { label: "May", value: 7.9 },
-  { label: "Jun", value: 6.7 },
-  { label: "Jul", value: 15.4 },
-];
-
-const { sidebarLinks } = getSidebarLinks(workSidebarLinks, "/work/robr0-ds");
+const { sidebarLinks } = getSidebarLinks(workSidebarLinks, "/work/rift-ds");
 
 /** The three-tier token stack, with a real value at each level. */
 function TokenTiers() {
@@ -179,19 +165,19 @@ export default function Robr0DsCaseStudy() {
           {/* Page header */}
           <div className={`${styles.pageHeader} animate-in`}>
             <h1 className={styles.pageTitle}>
-              Building robr0 DS: the rules that hold
+              Building Rift DS: the rules that hold
             </h1>
           </div>
 
           {/* Subtitle / dek */}
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Six months, {COMPONENT_COUNT} components and a published package, spent finding out what makes a design system rule actually stick. The answer was not better documentation.
+            Seven months, {COMPONENT_COUNT} components and a package on npm, spent finding out what makes a design system rule actually stick. The answer was not better documentation.
           </p>
 
           {/* Hero image */}
           <figure className={`${styles.cover} animate-in animate-delay-2`}>
             <CoverImage
-              href="/work/robr0-ds"
+              href="/work/rift-ds"
               aspect="feature"
               className={styles.coverImage}
               priority
@@ -202,7 +188,7 @@ export default function Robr0DsCaseStudy() {
           <div className={`${styles.resumeLayout} animate-in animate-delay-3`}>
             {/* Main — article body */}
             <div className={styles.resumeMain}>
-              <CaseStudyTldr points={caseStudyTldrs["robr0-ds"]} />
+              <CaseStudyTldr points={caseStudyTldrs["rift-ds"]} />
 
               <section id="full-story" className={`${styles.resumeSection} ${styles.fullStory}`}>
                 <div className={styles.resumeSectionHeader}>
@@ -215,8 +201,8 @@ export default function Robr0DsCaseStudy() {
                   </p>
 
                   <p>
-                    robr0 DS started in February 2026 as a way to fix that from the inside, on a project where the boundary did not exist. It is now{" "}
-                    <Link href="https://rift-ds.com/components" className={styles.inlineLink}>{COMPONENT_COUNT} React components</Link>, a package on npm, and the site you are reading. The components turned out to be the easy part.
+                    Rift DS started in February 2026 as a way to fix that from the inside, on a project where the boundary did not exist. It is now{" "}
+                    <Link href="https://rift-ds.com/components" className={styles.inlineLink}>{COMPONENT_COUNT} React components</Link>, a package on npm, and a documentation site of its own. This site is built on it, which is how it got tested. The components turned out to be the easy part.
                   </p>
 
                   <h2 id="the-foundation">The one part I would not delegate</h2>
@@ -246,7 +232,7 @@ export default function Robr0DsCaseStudy() {
                     xKey="month"
                     series={[{ dataKey: "components", label: "Components", color: "#118AB2" }]}
                     title="Components in the library"
-                    subtitle="Counted from git at each month-end, February to August 2026. The flat stretch is the interesting part"
+                    subtitle="Counted at each month-end from February 2026, with the last column live from the package registry. The flat stretch is the interesting part"
                     summaryItems={[{ label: "Today", value: COMPONENT_COUNT }]}
                     height={220}
                   />
@@ -348,24 +334,12 @@ export default function Robr0DsCaseStudy() {
 
                   <h2 id="impact">What it added up to</h2>
 
-                  <BarChart
-                    data={monthlyViews}
-                    title="Traffic by month"
-                    subtitle="Monthly page views as a multiple of the April floor, February to July 2026, from Google Analytics"
-                    dataLabel="Multiple of April"
-                    summaryItems={[
-                      { label: "April floor", value: "1×" },
-                      { label: "July", value: "15×" },
-                    ]}
-                    height={220}
-                  />
-
                   <p>
-                    Traffic bottomed in April and grew about fifteenfold by July. LinkedIn is the largest referrer, ahead of Google search and my own Substack. The two flat months in that chart are the same two flat months in the component chart above, which is not a coincidence: I was writing documents nobody could see yet.
+                    Traffic followed the same shape as the component chart above, and the two flat months are the same two flat months, which is not a coincidence: I was writing documents nobody could see yet. It bottomed in April and grew roughly fifteenfold by July. LinkedIn is the largest referrer, ahead of Google search and my own Substack.
                   </p>
 
                   <p>
-                    The package has shipped thirteen versions since 26 July, 0.1.0 through 0.13.0, each published with provenance. The recent ones carry whole categories at a time: the charts, the maps set with the globe, the dashboard pieces, the streaming reveal the chat runs on. This site installs it by name like any other consumer, so a packaging mistake breaks my own build before it reaches anyone else’s.
+                    The package shipped twenty-two versions before the rename, each published with provenance. The later ones carry whole categories at a time: the charts, the maps set with the globe, the dashboard pieces, the streaming reveal the chat runs on. This site installs it by name like any other consumer, so a packaging mistake breaks my own build before it reaches anyone else’s.
                   </p>
 
                   <p>
@@ -376,7 +350,7 @@ export default function Robr0DsCaseStudy() {
                     Everything below is a real component from the library, rendered from the same token layer as the rest of this page:
                   </p>
 
-                  <div className={styles.liveDemo} aria-label="Live components from robr0 DS">
+                  <div className={styles.liveDemo} aria-label="Live components from Rift DS">
                     <div className={styles.demoRow}>
                       <Button label="Primary" variant="primary" size="compact" />
                       <Button label="Secondary" variant="secondary" size="compact" />
@@ -400,10 +374,33 @@ export default function Robr0DsCaseStudy() {
                     </div>
                     <Alert
                       variant="positive"
-                      title="Both charts above are components too."
+                      title="The chart above is a component too."
                       description="Same library, same tokens, installed from npm exactly the way a stranger would install it."
                     />
                   </div>
+
+                  <h2 id="outgrew">The system outgrew the portfolio</h2>
+
+                  <p>
+                    In September it stopped making sense as a section of this site. The documentation had grown past the portfolio that hosted it, and every visitor arriving for a component was landing on a personal site that happened to have one. So it left: its own repository, its own domain at{" "}
+                    <Link href="https://rift-ds.com" className={styles.inlineLink}>rift-ds.com</Link>, its own name. Rift DS 1.0.0 went to npm on 26 September.
+                  </p>
+
+                  <p>
+                    Moving it was the closest thing to a test this whole argument has had. Two things had to happen at once, and both are the kind of change that usually leaves wreckage. The package had to be renamed everywhere it was referenced. And the token scale had to be renumbered, every t-shirt size becoming a rank, so <code>--gap-md</code> became <code>--gap-400</code> across a library and a site that consumed it.
+                  </p>
+
+                  <p>
+                    Neither was careful work, and that is the point. The rename swept by a script, because one module owned the package name and everything else derived from it. The renumbering ran family by family against a validator that fails the build on any <code>var()</code> nothing defines, so a missed call site was a build error rather than a layout that quietly shifted by two pixels. Six hundred and fifty replacements, and the build told me when I was done.
+                  </p>
+
+                  <p>
+                    It also told me something I had not asked. Six of those six hundred and fifty were not renames at all: they referenced tokens that had never existed, in either version. Four case studies had been drawing a left border in a colour that resolves to nothing, so the border had never rendered, on the live site, for months. Nobody had reported it. Nobody would have. The check that caught it was the one written for a different problem entirely.
+                  </p>
+
+                  <p>
+                    That is the whole thesis, tested on the largest change the system has been through. Rules that live in a document soften the first time someone is in a hurry. Rules a build enforces do not care how much of a hurry you are in, and they find the mistakes you were never going to look for.
+                  </p>
 
                   <h2 id="what-changed">What changed in how I work</h2>
 
@@ -510,7 +507,7 @@ export default function Robr0DsCaseStudy() {
                   </a>
 
                   <a
-                    href="https://design-system-iota-one.vercel.app"
+                    href="https://storybook.rift-ds.com"
                     target="_blank"
                     rel="noopener noreferrer"
                     className={styles.linkItem}
@@ -537,7 +534,7 @@ export default function Robr0DsCaseStudy() {
                   </Link>
 
                   <a
-                    href="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/robr0-ds26?node-id=113-7533"
+                    href="https://www.figma.com/design/8NzqDS8iRsBTFPbNGj3Woj/rift-ds26?node-id=113-7533"
                     target="_blank"
                     rel="noopener noreferrer"
                     className={styles.linkItem}

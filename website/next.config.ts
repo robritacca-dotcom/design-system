@@ -72,6 +72,10 @@ const nextConfig: NextConfig = {
     return [
       { source: "/about/me", destination: "/about", permanent: true },
 
+      // The design system's case study was published under the system's old
+      // name. The article stays; only its slug moved.
+      { source: "/work/robr0-ds", destination: "/work/rift-ds", permanent: true },
+
       // --- The design system's documentation, now at Rift DS ---
       { source: "/components", destination: ds("/components"), permanent: true },
       { source: "/components/:path*", destination: ds("/components/:path*"), permanent: true },

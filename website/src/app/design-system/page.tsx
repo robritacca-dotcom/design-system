@@ -15,7 +15,7 @@ import styles from "./page.module.css";
  * demos went with it and what remains is the authorship claim and a pointer.
  * Deliberately no first person: content-design.md keeps "I" to the case
  * studies and /about, so the system stays the subject here and the case study
- * at /work/robr0-ds is where the story gets told.
+ * at /work/rift-ds is where the story gets told.
  *
  * It sits in the normal IA, not beside it: the header renders here as it does
  * on every other page, <main> carries the skip link's target, and the nav
@@ -55,7 +55,7 @@ export default function DesignSystemPage() {
               rel="noreferrer"
             />
             <Button
-              href="/work/robr0-ds"
+              href="/work/rift-ds"
               label="Read the case study"
               variant="secondary"
               iconRight="arrow_forward"
