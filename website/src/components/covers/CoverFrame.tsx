@@ -37,7 +37,7 @@ const CARD = { radius: 18, shadowY: 26, shadowBlur: 44 } as const;
 
 /** The mock's own page colour, for the bleed treatment's letterbox. */
 export type Ground =
-  "warm" | "white" | "plain" | "paper" | "mist" | "haze" | "site";
+  "warm" | "white" | "plain" | "paper" | "mist" | "haze" | "site" | "rift";
 
 /** The product the gradient is drawn from. */
 export type Tone =
@@ -51,6 +51,7 @@ const GROUND_CLASS: Record<Ground, string> = {
   mist: styles.groundMist,
   haze: styles.groundHaze,
   site: styles.groundSite,
+  rift: styles.groundRift,
 };
 
 const TONE_CLASS: Record<Tone, string> = {

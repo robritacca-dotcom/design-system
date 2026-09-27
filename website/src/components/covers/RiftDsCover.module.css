@@ -1,0 +1,380 @@
+/*
+ * A 1:1 redraw of rift-ds.com's home page at 1440 x 900.
+ *
+ * ds-allow-file(mockup): every colour, size and type below is a drawing
+ * coordinate read off the rendered page, deliberately token-free. This is a
+ * picture of another site; if it were wired to this site's tokens it would
+ * silently change every time this theme did, which is exactly what a redraw
+ * must not do.
+ */
+
+.stage {
+  position: relative;
+  width: 1440px;
+  height: 900px;
+  overflow: hidden;
+  background: #0a0a0b;
+  font-family: "Nunito Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #f4f4f5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stage,
+.stage * {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+/* The soft key light behind the headline. */
+.glow {
+  position: absolute;
+  top: -180px;
+  left: 50%;
+  width: 1100px;
+  height: 700px;
+  transform: translateX(-50%);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.09) 0%,
+    rgba(255, 255, 255, 0.03) 42%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  pointer-events: none;
+}
+
+/* ---------- header ---------- */
+
+.header {
+  position: relative;
+  width: 100%;
+  height: 74px;
+  padding: 0 44px;
+  display: flex;
+  align-items: center;
+  gap: 34px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.wordmark {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #f4f4f5;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+
+.navLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #c9c9ce;
+}
+
+.headerRight {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  height: 38px;
+  padding: 0 10px 0 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.searchLabel {
+  font-size: 14px;
+  color: #8a8a92;
+}
+
+.keys {
+  display: flex;
+  gap: 4px;
+}
+
+.key {
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.09);
+  font-size: 11px;
+  line-height: 20px;
+  text-align: center;
+  color: #c9c9ce;
+}
+
+.themeRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+}
+
+.themeChip {
+  width: 24px;
+  height: 24px;
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.themeChipActive {
+  background: #f4f4f5;
+}
+
+/* ---------- hero ---------- */
+
+.hero {
+  position: relative;
+  margin-top: 96px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 18px;
+}
+
+.title {
+  font-size: 68px;
+  font-weight: 300;
+  line-height: 1.04;
+  letter-spacing: -0.028em;
+  color: #fafafa;
+}
+
+.subtitle {
+  font-size: 23px;
+  font-weight: 400;
+  color: #a9a9b1;
+}
+
+.actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 12px;
+}
+
+.button {
+  height: 44px;
+  padding: 0 22px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 9px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #f4f4f5;
+}
+
+.buttonPrimary {
+  background: #f4f4f5;
+  border-color: #f4f4f5;
+  color: #0a0a0b;
+}
+
+/* ---------- stats ---------- */
+
+.statRule {
+  position: relative;
+  width: 760px;
+  height: 1px;
+  margin-top: 54px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.14) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+.stats {
+  position: relative;
+  margin-top: 30px;
+  display: flex;
+  gap: 62px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.statValue {
+  font-size: 30px;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  color: #fafafa;
+}
+
+.statLabel {
+  font-size: 13px;
+  color: #8a8a92;
+}
+
+/* ---------- preset swatches ---------- */
+
+.swatches {
+  position: relative;
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.swatch {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+}
+
+.swatchActive {
+  box-shadow: 0 0 0 2px #0a0a0b, 0 0 0 3.5px #f4f4f5;
+}
+
+.swatchAdd {
+  width: 22px;
+  height: 22px;
+  border: 1px dashed rgba(255, 255, 255, 0.28);
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 20px;
+  text-align: center;
+  color: #8a8a92;
+}
+
+/* ---------- the collage the frame crops ---------- */
+
+.collage {
+  position: relative;
+  margin-top: 52px;
+  width: 1290px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+.card {
+  height: 250px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 14px;
+  background: #111113;
+}
+
+.cardTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: #ededf0;
+}
+
+.cardDek {
+  font-size: 13px;
+  color: #8a8a92;
+}
+
+.donut {
+  align-self: center;
+  margin-top: 18px;
+  width: 132px;
+  height: 132px;
+  border-radius: 50%;
+  background: conic-gradient(
+    #f4f4f5 0deg 208deg,
+    #6e6e76 208deg 262deg,
+    #4a4a51 262deg 300deg,
+    #35353b 300deg 332deg,
+    #26262b 332deg 360deg
+  );
+  mask: radial-gradient(circle, transparent 54%, #000 55%);
+  -webkit-mask: radial-gradient(circle, transparent 54%, #000 55%);
+}
+
+.codeBar {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: #6e6e76;
+}
+
+.code {
+  margin-top: 10px;
+  padding: 14px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 14px;
+  color: #ededf0;
+}
+
+.cardActions {
+  margin-top: 16px;
+  display: flex;
+  gap: 10px;
+}
+
+.miniButton {
+  height: 34px;
+  padding: 0 14px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #ededf0;
+}
+
+.miniButtonPrimary {
+  background: #f4f4f5;
+  border-color: #f4f4f5;
+  color: #0a0a0b;
+}
+
+.globe {
+  align-self: center;
+  margin-top: 14px;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.11) 0 1px,
+      transparent 1px 22px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.11) 0 1px,
+      transparent 1px 22px
+    );
+}

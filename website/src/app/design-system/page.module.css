@@ -1,31 +1,30 @@
 /* ============================================
    RIFT DS — the authorship page
    Was the design system's landing collage; the
-   demos moved to rift-ds.com with the system.
+   demos moved to rift-ds.com with the system,
+   and what remains leads with a picture of it.
    ============================================ */
 
 .page {
   position: relative;
   z-index: 1;
-  max-width: 880px;
+  max-width: 960px;
   min-width: 0;
   margin: 0 auto;
   /* Same token every other page puts above its title, so the h1 sits at
      the same height site-wide */
   padding: var(--primitive-gap-1000) 32px 96px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
-
-/* ---------- page header (site-standard treatment) ---------- */
 
 .hero {
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
   gap: var(--gap-400);
-  /* Section-rhythm token rather than a fixed margin: it steps down at
-     768px on its own, so no mobile override is needed. */
-  margin: 0 auto var(--gap-1500);
 }
 
 .pageTitle {
@@ -49,60 +48,64 @@
   margin: calc(var(--primitive-gap-2000) - var(--gap-400)) 0 0;
 }
 
-/* ---------- stat strip ---------- */
+/* ---------- the banner ---------- */
+
+.banner {
+  display: block;
+  width: 100%;
+  margin-top: var(--gap-1500);
+  border-radius: var(--radius-600);
+  overflow: hidden;
+  border: var(--border-025) solid var(--color-bg-container-border);
+  box-shadow: var(--shadow-floating);
+  transition: transform var(--motion-duration-base) var(--motion-ease-standard),
+    box-shadow var(--motion-duration-base) var(--motion-ease-standard);
+}
+
+.banner:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-modal);
+}
+
+/* The cover draws itself at its own scale inside an SVG; the frame just
+   needs to fill the width and keep the 16:10 the redraw was composed at. */
+.bannerArt {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ---------- body ---------- */
 
 .statStrip {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: var(--gap-400) var(--gap-1500);
-  margin-top: var(--gap-200);
+  margin-top: var(--gap-1500);
 }
 
-/* Stat left-aligns for dashboard rows; a centred hero band centres each
-   value over its label. */
+/* Stat left-aligns for dashboard rows; a centred band centres each value
+   over its label. */
 .statStrip :global(.ds-stat) {
   align-items: center;
 }
 
-.heroActions {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--gap-200);
-}
-
-/* ---------- body ---------- */
-
-.section {
-  margin-top: var(--gap-1500);
-}
-
-/* No measure cap here: the column is constrained by .page, which is the
-   site's convention. A ch cap on the paragraph wraps text early. */
-.prose {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-400);
-}
-
-.prose p {
+.lede {
   font-family: var(--font-paragraph-family);
   font-size: var(--font-paragraph-size);
   font-weight: var(--font-paragraph-weight);
   line-height: var(--font-paragraph-line-height);
   color: var(--color-text-secondary);
-  margin: 0;
+  margin: var(--gap-1000) 0 0;
 }
 
-.inlineLink {
-  color: var(--color-action-primary-bg);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
-.inlineLink:hover {
-  text-decoration-thickness: 2px;
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--gap-200);
+  margin-top: var(--gap-1000);
 }
 
 @media (max-width: 768px) {
