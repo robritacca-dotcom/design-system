@@ -209,37 +209,15 @@
   );
 }
 
-.stats {
-  position: relative;
-  margin-top: 30px;
-  display: flex;
-  gap: 62px;
-}
 
-.stat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
-}
 
-.statValue {
-  font-size: 30px;
-  font-weight: 300;
-  letter-spacing: -0.02em;
-  color: #fafafa;
-}
 
-.statLabel {
-  font-size: 13px;
-  color: #8a8a92;
-}
 
 /* ---------- preset swatches ---------- */
 
 .swatches {
   position: relative;
-  margin-top: 30px;
+  margin-top: 34px;
   display: flex;
   align-items: center;
   gap: 8px;

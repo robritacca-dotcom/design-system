@@ -8,7 +8,11 @@
 .page {
   position: relative;
   z-index: 1;
-  max-width: 960px;
+  /* width AND max-width: <body> is a flex row, so a container with only a
+     max-width shrinks to its content and never reaches it. Every other page
+     container on the site pairs the two for the same reason. */
+  width: 100%;
+  max-width: 1440px;
   min-width: 0;
   margin: 0 auto;
   /* Same token every other page puts above its title, so the h1 sits at
@@ -25,6 +29,9 @@
   flex-direction: column;
   align-items: center;
   gap: var(--gap-400);
+  /* The container is the site's full 1440 so the banner can use it. Text
+     does not want that measure, so the copy keeps its own. */
+  max-width: 760px;
 }
 
 .pageTitle {
@@ -36,27 +43,16 @@
   margin: 0;
 }
 
-.subDisplay {
-  font-family: var(--font-sub-display-family);
-  font-size: var(--font-sub-display-size);
-  font-weight: var(--font-sub-display-weight);
-  line-height: var(--font-sub-display-line-height);
-  letter-spacing: var(--font-sub-display-letter-spacing);
-  color: var(--color-text-primary);
-  /* Together with the hero gap, this matches the title-to-subtitle spacing
-     every other page gets from its section rhythm. */
-  margin: calc(var(--primitive-gap-2000) - var(--gap-400)) 0 0;
-}
-
 /* ---------- the banner ---------- */
 
 .banner {
   display: block;
+  /* The full container width: this is the page, not an illustration
+     beside it. */
   width: 100%;
   margin-top: var(--gap-1500);
   border-radius: var(--radius-600);
   overflow: hidden;
-  border: var(--border-025) solid var(--color-bg-container-border);
   box-shadow: var(--shadow-floating);
   transition: transform var(--motion-duration-base) var(--motion-ease-standard),
     box-shadow var(--motion-duration-base) var(--motion-ease-standard);
@@ -77,20 +73,6 @@
 
 /* ---------- body ---------- */
 
-.statStrip {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--gap-400) var(--gap-1500);
-  margin-top: var(--gap-1500);
-}
-
-/* Stat left-aligns for dashboard rows; a centred band centres each value
-   over its label. */
-.statStrip :global(.ds-stat) {
-  align-items: center;
-}
-
 .lede {
   font-family: var(--font-paragraph-family);
   font-size: var(--font-paragraph-size);
@@ -98,6 +80,7 @@
   line-height: var(--font-paragraph-line-height);
   color: var(--color-text-secondary);
   margin: var(--gap-1000) 0 0;
+  max-width: 760px;
 }
 
 .actions {

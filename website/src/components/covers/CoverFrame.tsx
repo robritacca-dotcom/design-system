@@ -30,14 +30,14 @@ import styles from "./CoverFrame.module.css";
 export const FRAME = { w: 1600, h: 1000 } as const;
 
 /** How much of the frame the mock may occupy, per treatment. */
-const INSET = { thumb: 0.78, bleed: 0.94 } as const;
+const INSET = { thumb: 0.78, bleed: 0.94, full: 1 } as const;
 
 /** The corner radius and shadow the floating mock gets, in frame units. */
 const CARD = { radius: 18, shadowY: 26, shadowBlur: 44 } as const;
 
 /** The mock's own page colour, for the bleed treatment's letterbox. */
 export type Ground =
-  "warm" | "white" | "plain" | "paper" | "mist" | "haze" | "site" | "rift";
+  "warm" | "white" | "plain" | "paper" | "mist" | "haze" | "site";
 
 /** The product the gradient is drawn from. */
 export type Tone =
@@ -51,7 +51,6 @@ const GROUND_CLASS: Record<Ground, string> = {
   mist: styles.groundMist,
   haze: styles.groundHaze,
   site: styles.groundSite,
-  rift: styles.groundRift,
 };
 
 const TONE_CLASS: Record<Tone, string> = {
@@ -76,7 +75,7 @@ export type CoverProps = {
    * the container instead of letterboxing inside it.
    */
   aspect?: number;
-  variant?: "thumb" | "bleed";
+  variant?: "thumb" | "bleed" | "full";
 };
 
 export function CoverFrame({
@@ -102,7 +101,8 @@ export function CoverFrame({
   children: React.ReactNode;
 }) {
   const thumb = variant === "thumb";
-  const inset = thumb ? INSET.thumb : INSET.bleed;
+  const full = variant === "full";
+  const inset = INSET[variant];
 
   const frameH = FRAME.h;
   const frameW = frameH * aspect;
@@ -116,8 +116,10 @@ export function CoverFrame({
   const y = (frameH - h) / 2;
 
   /* The card's radius is specified in frame units, so it has to be divided
-     back out for the mock, which lives in its own scaled coordinates. */
-  const mockRadius = CARD.radius / scale;
+     back out for the mock, which lives in its own scaled coordinates. The
+     full treatment has no card: the mock is the frame, so it needs neither a
+     radius of its own nor a shadow to lift it off a ground it fills. */
+  const mockRadius = full ? 0 : CARD.radius / scale;
 
   return (
     <svg

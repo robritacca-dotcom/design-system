@@ -17,14 +17,6 @@ import styles from "./RiftDsCover.module.css";
 
 const NAV = ["Components", "Foundations", "Templates", "Playground", "Docs"];
 
-const STATS = [
-  { value: "133", label: "Components" },
-  { value: "255", label: "Semantic tokens" },
-  { value: "11", label: "Themes" },
-  { value: "5", label: "MCP tools" },
-  { value: "$0.00", label: "Cost" },
-];
-
 /* The preset swatch row under the stats. The first is the shipped mono look,
    drawn as an outlined chip because it is the selected one. */
 const SWATCHES = [
@@ -48,10 +40,9 @@ export function RiftDsHomeCover(props: CoverProps) {
     <CoverFrame
       width={1440}
       height={900}
-      ground="rift"
       tone="site"
       {...props}
-      label="The home page of rift-ds.com: the headline over a dark ground, with the component and token counts beneath it and a row of the shipped theme presets."
+      label="The home page of rift-ds.com: the headline over a dark ground, a row of the shipped theme presets, and the component cards below it."
     >
       <div className={styles.stage}>
         <div className={styles.glow} aria-hidden="true" />
@@ -103,15 +94,6 @@ export function RiftDsHomeCover(props: CoverProps) {
         </div>
 
         <div className={styles.statRule} aria-hidden="true" />
-
-        <div className={styles.stats}>
-          {STATS.map((stat) => (
-            <span key={stat.label} className={styles.stat}>
-              <span className={styles.statValue}>{stat.value}</span>
-              <span className={styles.statLabel}>{stat.label}</span>
-            </span>
-          ))}
-        </div>
 
         <div className={styles.swatches}>
           {SWATCHES.map((hex, i) => (

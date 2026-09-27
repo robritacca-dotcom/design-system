@@ -1,7 +1,4 @@
 import { Button } from "rift-ds/components/Button/Button";
-import { Stat } from "rift-ds/components/Stat/Stat";
-import { COMPONENT_COUNT } from "rift-ds/components/registry";
-import { TOKEN_COUNT } from "rift-ds/tokens/registry";
 import MegaNav from "../../components/MegaNav/MegaNav";
 import { RiftDsHomeCover } from "@/components/covers/RiftDsCover";
 import { DESIGN_SYSTEM_URL } from "@/config/site";
@@ -20,8 +17,9 @@ import styles from "./page.module.css";
  * /about, so the system stays the subject here and /work/rift-ds is where the
  * story gets told.
  *
- * Both figures come from the package's own registries, so neither can drift
- * from what actually ships.
+ * No counts here. A component total dates the claim and invites a comparison
+ * the page is not making; the system states its own figures on its own site,
+ * where they are generated rather than retyped.
  */
 export default function DesignSystemPage() {
   return (
@@ -30,9 +28,6 @@ export default function DesignSystemPage() {
       <main className={styles.page} id="main-content">
         <header className={styles.hero}>
           <h1 className={styles.pageTitle}>Rift DS</h1>
-          <p className={styles.subDisplay}>
-            An AI-ready React design system, designed and built by Robert Ritacca
-          </p>
         </header>
 
         <a
@@ -40,20 +35,16 @@ export default function DesignSystemPage() {
           href={DESIGN_SYSTEM_URL}
           aria-label="Open rift-ds.com"
         >
-          <RiftDsHomeCover variant="bleed" className={styles.bannerArt} />
+          <RiftDsHomeCover variant="full" className={styles.bannerArt} />
         </a>
 
-        <div className={styles.statStrip}>
-          <Stat value={String(COMPONENT_COUNT)} label="Components" />
-          <Stat value={String(TOKEN_COUNT)} label="Semantic tokens" />
-        </div>
-
         <p className={styles.lede}>
-          Every colour, radius, type step and motion value resolves through one
-          token layer, and the build fails when a rule breaks. It ships as an
-          open npm package with a documentation site of its own. This site is
-          built on it, installed from npm like any other consumer, which is how
-          it gets tested.
+          Rift DS is an AI-ready React design system, designed and built by
+          Robert Ritacca. Every colour, radius, type step and motion value
+          resolves through one token layer, and the build fails when a rule
+          breaks. It ships as an open npm package with a documentation site of
+          its own, and this site is built on it, installed from npm like any
+          other consumer, which is how it gets tested.
         </p>
 
         <div className={styles.actions}>

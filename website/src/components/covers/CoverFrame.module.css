@@ -48,13 +48,6 @@
  * rather than taking the default.
  */
 
-/* The one ground that does not flip with the theme: the Rift DS redraw is a
-   picture of a dark page, so a light letterbox would frame it rather than
-   continue it. */
-.groundRift {
-  fill: #0a0a0b;
-}
-
 .groundWarm {
   fill: #faf9f5;
 }
