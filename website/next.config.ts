@@ -29,19 +29,22 @@ const contentSecurityPolicy = [
   // surfaced on /writing from the Substack RSS feed.
   "img-src 'self' data: https://substackcdn.com https://www.googletagmanager.com https://*.google-analytics.com",
   "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com",
-  // The /work case-study pages embed YouTube videos in iframes, and /canvas
-  // frames the site's own pages.
-  "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com",
-  // Same-origin only: /canvas shows every page live inside a frame, so the
-  // site must be allowed to frame itself. No other origin may, which is all
-  // the clickjacking protection was ever for.
-  "frame-ancestors 'self'",
+  // The /work case-study pages embed YouTube videos. Nothing else is framed:
+  // 'self' used to be here for /canvas, which showed the site's own pages
+  // inside frames and went to rift-ds.com with the design system.
+  "frame-src https://www.youtube.com https://www.youtube-nocookie.com",
+  // Nothing may frame this site, including the site itself. This was 'self'
+  // while /canvas existed; with that page gone there is no same-origin
+  // framing left to allow, and 'none' is what the clickjacking protection
+  // was always reaching for.
+  "frame-ancestors 'none'",
 ].join("; ");
 
 const securityHeaders = [
   { key: "Content-Security-Policy", value: contentSecurityPolicy },
-  // The legacy form of frame-ancestors 'self' above, for the same reason.
-  { key: "X-Frame-Options", value: "SAMEORIGIN" },
+  // The legacy form of frame-ancestors 'none' above, for the browsers that
+  // still read it in preference.
+  { key: "X-Frame-Options", value: "DENY" },
   { key: "X-Content-Type-Options", value: "nosniff" },
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
   // No page uses the camera, microphone, or geolocation; deny them outright.
