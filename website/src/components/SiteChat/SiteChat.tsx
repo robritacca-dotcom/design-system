@@ -24,7 +24,7 @@ import { fitsChip } from "@/lib/chat-suggestions";
 import { AssistantTurn } from "./AssistantTurn";
 import { useSiteChat } from "./ChatContext";
 import { readGreeting, serverGreeting, subscribeClock } from "./greeting";
-import { startersForPath, type Starter } from "./starters";
+import { startersForPath } from "./starters";
 import styles from "./SiteChat.module.css";
 
 /** The one line a locked model shows in place of its description. */
