@@ -32,7 +32,7 @@ const LOCKED_MODEL_DESCRIPTION = "Paused for today to stay in budget.";
 
 /**
  * The chat widget's internals: header, thread, composer, starters,
- * disclaimer. It fills whatever container hosts it — the bench's resizable
+ * disclaimer. It fills whatever container hosts it — the docked panel's
  * stage widget, or the site's docked panel — and reads all of its state from
  * SiteChatProvider, so the conversation is the same object wherever it shows.
  */
@@ -44,13 +44,11 @@ export function SiteChat({
   placeholder = "Ask anything",
   showStarters = true,
   logo = "/rr.svg",
-  tagline,
-  starters: startersOverride,
   composerActions,
   threads,
   tabs,
 }: {
-  /** Show the expand toggle. The bench's mobile stage is always a takeover, so it hides there. */
+  /** Show the expand toggle. */
   fullscreenEnabled?: boolean;
   /** Narrow insets for phone-width hosts. */
   compact?: boolean;
@@ -61,36 +59,29 @@ export function SiteChat({
       composer pinned to the bottom
       from the first paint — no centred state, and no glide out of one. */
   phone?: boolean;
-  /** The header brand name. The bench overrides it to preview a consumer's own product name. */
+  /** The header brand name. */
   title?: string;
   /** The composer's placeholder text. */
   placeholder?: string;
   /** Show the conversation starters on the welcome screen. */
   showStarters?: boolean;
-  /** The header mark's image src; null hides it. The bench feeds it
-      session-only blob URLs for throwaway logo previews. */
+  /** The header mark's image src; null hides it. */
   logo?: string | null;
-  /** The welcome screen's line under the greeting. The playground overrides
-      it to preview a consumer's own copy; the site default stays. */
-  tagline?: string;
-  /** Replaces the route-aware conversation starters wholesale — again the
-      playground's lever, so its preview isn't robr0-specific. */
-  starters?: Starter[];
-  /** Replaces the composer's leading actions (the live model picker) —
-      the playground slots its own mock picker and attach button here. */
+  /** Replaces the composer's leading actions (the live model picker).
+      Unused: the playground that slotted a mock picker here has moved to
+      the design system's own site. */
   composerActions?: ReactNode;
   /** A session-history rail (a ThreadPanel), rendered responsively by the
       widget's own measured width: wide hosts seat it as an inline left
       rail, narrow ones summon it from a header hamburger as a slide-over
       sheet behind a scrim. The render prop hears which mode it is in and
       how to close the sheet, so the caller can shape the panel per context
-      (brand shown on the sheet, collapse offered on the rail). Playground
-      furniture for now — the site's own chat passes nothing here. */
+      (brand shown on the sheet, collapse offered on the rail). Unused: this
+      was the playground's, and the site's own chat passes nothing here. */
   threads?: (ctx: { overlay: boolean; close: () => void }) => ReactNode;
   /** An open-sessions tab strip (a ThreadTabs), rendered as its own row
-      under the header on the widget's shared side inset. Playground
-      furniture like the threads rail — the site's own chat passes nothing
-      here. */
+      under the header on the widget's shared side inset. Unused, like the
+      threads rail above it. */
   tabs?: ReactNode;
 }) {
   const {
@@ -145,7 +136,6 @@ export function SiteChat({
      to the budget by scripts/validate-chat-starters.mjs, so this only ever
      fires on a caller's overrides. */
   const starters = (
-    startersOverride ??
     startersForPath(pathname, pathname ? getNavLabel(pathname) : null, starterSeed)
   ).filter((starter) => fitsChip(starter.label));
 
@@ -153,7 +143,7 @@ export function SiteChat({
      the same reactive pathname the starters follow, resolved through the
      page-summaries data first (it covers essays, case studies and
      components) with the nav label as the fallback. A route neither knows
-     (the playground, labs) simply shows no chip. Non-interactive v1. */
+     (a chromeless route) simply shows no chip. Non-interactive v1. */
   const pageName = pathname
     ? getPageSummary(pathname)?.title ?? getNavLabel(pathname)
     : undefined;
@@ -205,7 +195,7 @@ export function SiteChat({
 
   /* ---------- the threads rail (only when the host passes one) ----------
      The widget measures its own width, so the mode follows the actual
-     container — the docked panel and a thin playground card get the
+     container — the docked panel and any narrow host get the
      hamburger and sheet, the takeover and wide cards the inline rail. */
   const [threadsOpen, setThreadsOpen] = useState(false);
   const threadsHostRef = useRef<HTMLDivElement | null>(null);
@@ -398,7 +388,7 @@ export function SiteChat({
                 <p className={styles.welcomeAsk}>
                   {/* The last pair is tied: "AI" alone on a line is a widow
                       at the docked panel's width. */}
-                  {tagline ?? "Ask about the case studies, the system, design, or\u00a0AI"}
+                  {"Ask about the case studies, the writing, design, or\u00a0AI"}
                 </p>
                 {/* The placeholder below stays a plain action ("Ask anything")
                     so this line and the composer don't say the same sentence
@@ -429,7 +419,7 @@ export function SiteChat({
             context={pageName ? <>Looking at “{pageName}”</> : undefined}
             contextIcon="description"
             actions={
-              /* A host can slot its own leading actions (the playground's
+              /* A host can slot its own leading actions (the design system's playground did this;
                  mock picker). The site's default is the live picker: the
                  pick rides on the next send, the server clamps it to the
                  day's budget, and the selection follows the server's

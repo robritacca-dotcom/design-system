@@ -285,7 +285,7 @@ export function SitePlaygroundCover(props: CoverProps) {
           <span className={styles.railField}>
             <span className={styles.railLabel}>Theme preset</span>
             <span className={styles.select}>
-              robr0 DS default
+              Rift DS default
               <span>⌄</span>
             </span>
           </span>

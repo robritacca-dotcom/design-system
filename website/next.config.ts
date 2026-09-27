@@ -76,6 +76,18 @@ const nextConfig: NextConfig = {
       // name. The article stays; only its slug moved.
       { source: "/work/robr0-ds", destination: "/work/rift-ds", permanent: true },
 
+      // The design system's agent-facing files were served from this site's
+      // public folder: the specs, one markdown prop contract per component,
+      // and the consumer agent skill. Nothing linked to them, which is why
+      // they outlived the pages, but agents fetch them by path and /design.md
+      // was being served from both domains at once. They live at rift-ds.com
+      // now, under the same paths (the skill folder renamed with the package).
+      { source: "/CLAUDE.md", destination: ds("/CLAUDE.md"), permanent: true },
+      { source: "/design.md", destination: ds("/design.md"), permanent: true },
+      { source: "/content-design.md", destination: ds("/content-design.md"), permanent: true },
+      { source: "/components/:slug.md", destination: ds("/components/:slug.md"), permanent: true },
+      { source: "/skill/robr0-design-system/:path*", destination: ds("/skill/rift-design-system/:path*"), permanent: true },
+
       // --- The design system's documentation, now at Rift DS ---
       { source: "/components", destination: ds("/components"), permanent: true },
       { source: "/components/:path*", destination: ds("/components/:path*"), permanent: true },
