@@ -1,37 +1,22 @@
 /**
  * Routes that render none of the shared site chrome (footer, chat panel,
  * command palette):
- * the playground is an immersive tool — a floating toolbar pill and glass
- * panels over a dotted stage — whose Chat view hosts its own copy of the widget
- * (two live widgets would double-bill and confuse QA); and the
- * animated-logo page is a full-viewport piece with no room for chrome; and
- * the covers page is a blank staging surface for vector mocks, where any
+ * the animated-logo page is a full-viewport piece with no room for chrome;
+ * and the covers page is a blank staging surface for vector mocks, where any
  * shared chrome would sit on top of the frames being reviewed — as is
  * /covers/render, the surface the cover images are shot from, where a footer
- * or chat panel would land inside the screenshot; and the canvas is the
- * site laid out on one endless board, which fills the viewport under its
- * own stage toolbar; and the labs pages are full-viewport rebuilds of
- * reference products, where the shared chrome would sit inside the app
- * shell being tested — as are the template screens under /templates, which
- * render the same full-viewport app shells as their labs origins; and the graph
- * page is the dependency-graph instrument, a full-width tracing surface with
- * its own top bar, where the shared chrome would crowd the columns it exists
- * to show.
+ * or chat panel would land inside the screenshot.
+ *
+ * This list was long when the design system lived here: the playground, the
+ * dependency graph, the canvas board, the labs rebuilds and the template
+ * screens were all immersive full-viewport surfaces. They went to rift-ds.com
+ * with the system, and scripts/validate-route-config.mjs now holds every
+ * entry to a route that exists.
  *
  * Matching is exact, so a nested route needs its own entry.
  */
 export const CHROMELESS_ROUTES = new Set([
-  "/playground",
-  "/graph",
   "/rr-animated",
   "/covers",
   "/covers/render",
-  "/canvas",
-  "/labs/marketing",
-  "/templates/marketing-dashboard",
-  "/templates/relay-console",
-  "/templates/team-calendar",
-  "/templates/agent-workbench",
-  "/templates/roadmap-planner",
-  "/templates/sales-pipeline",
 ]);

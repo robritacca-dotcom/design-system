@@ -6,7 +6,7 @@
     "predev": "node ../scripts/generate-site-corpus.mjs",
     "dev": "next dev",
     "dev:eval": "KV_REST_API_URL= KV_REST_API_TOKEN= next dev",
-    "prebuild": "node ../scripts/generate-site-corpus.mjs && node ../scripts/validate-shader-background.mjs && node ../scripts/validate-single-background-mount.mjs && node ../scripts/validate-brand-preset.mjs && node ../scripts/validate-copy-conventions.mjs && node ../scripts/validate-case-studies.mjs && node ../scripts/validate-cover-rasters.mjs && node ../scripts/validate-essays.mjs && node ../scripts/validate-essay-covers.mjs && node ../scripts/validate-site-corpus.mjs && node ../scripts/validate-token-usage.mjs && node ../scripts/validate-doc-refs.mjs && node ../scripts/validate-chat-coverage.mjs && node ../scripts/validate-chat-starters.mjs && node ../scripts/validate-page-summaries.mjs && node ../scripts/validate-shipped-prose.mjs",
+    "prebuild": "node ../scripts/generate-site-corpus.mjs && node ../scripts/validate-shader-background.mjs && node ../scripts/validate-single-background-mount.mjs && node ../scripts/validate-brand-preset.mjs && node ../scripts/validate-copy-conventions.mjs && node ../scripts/validate-case-studies.mjs && node ../scripts/validate-cover-rasters.mjs && node ../scripts/validate-essays.mjs && node ../scripts/validate-essay-covers.mjs && node ../scripts/validate-site-corpus.mjs && node ../scripts/validate-token-usage.mjs && node ../scripts/validate-doc-refs.mjs && node ../scripts/validate-chat-coverage.mjs && node ../scripts/validate-chat-starters.mjs && node ../scripts/validate-route-config.mjs && node ../scripts/validate-page-summaries.mjs && node ../scripts/validate-shipped-prose.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"

@@ -4,18 +4,20 @@
  * headings after render, so a new page needs no wiring — except:
  *
  * - ANCHOR_NAV_EXCLUDED_ROUTES: pages that should not carry one. The index
- *   and landing pages are doors, not documents — a reader is choosing a
- *   destination, not scanning sections — and the immersive surfaces
- *   (playground, canvas) are chromeless anyway, listed here so the intent
- *   survives if their chrome status ever changes.
+ *   and landing pages are doors, not documents: a reader is choosing a
+ *   destination, not scanning sections.
  * - ANCHOR_NAV_SELF_MANAGED_ROUTES: pages that mount FloatingAnchorNav
  *   themselves with server-derived items (markdown-extracted sections, or
  *   anchors whose labels are not headings). The global rail must skip them
- *   or the page would carry two.
+ *   or the page would carry two. No page does this any more — the three that
+ *   did were the design system's blueprint, skills and get-started pages —
+ *   but the mechanism stays, because the next page with server-derived
+ *   anchors needs it and the rail already branches on it.
  *
  * Chromeless routes (src/config/chromeless.ts) are skipped as well.
  * Matching is exact, so a nested route needs its own entry — which is what
  * lets an index be excluded while its children keep the rail.
+ * scripts/validate-route-config.mjs holds every entry to a route that exists.
  */
 export const ANCHOR_NAV_EXCLUDED_ROUTES = new Set([
   "/",
@@ -23,18 +25,6 @@ export const ANCHOR_NAV_EXCLUDED_ROUTES = new Set([
   "/work",
   "/writing",
   "/design-system",
-  "/docs",
-  "/foundations",
-  "/templates",
-  "/playground",
-  "/canvas",
-  "/graph",
 ]);
 
-export const ANCHOR_NAV_SELF_MANAGED_ROUTES = new Set([
-  "/skills",
-  "/docs/get-started",
-  "/blueprints/claude",
-  "/blueprints/design",
-  "/blueprints/content-design",
-]);
+export const ANCHOR_NAV_SELF_MANAGED_ROUTES = new Set<string>([]);

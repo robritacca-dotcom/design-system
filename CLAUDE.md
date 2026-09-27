@@ -77,6 +77,7 @@ home; all other mentions derive from it, are checked against it, or point at it.
 - **The one mechanically checkable content rule is build-checked too**: `scripts/validate-shipped-prose.mjs` fails on an em dash in shipped copy, which `content-design.md` bans. It reads page prose through the same `extractProse` the corpus generator uses, so "what counts as page prose" has one definition. Everything else in `content-design.md` needs a reader, and stays the `content-audit` skill's job.
 - **A space that vanishes between source and render is build-checked**: `scripts/validate-rendered-spacing.mjs` fails on a closing inline tag butted against a word in the prerendered HTML. A space after `</strong>` is dropped when the following text node holds an HTML entity. The fix is always to use the literal character (’ “ ”) instead of the entity.
 - **Every `var(--…)` must resolve**: `scripts/validate-token-usage.mjs` fails the build on a reference to a custom property nothing defines, checking the site's CSS against the tokens the installed package ships. This is what catches a token the package renamed, and what found four case studies drawing a border in a colour that never existed.
+- **A route named in config must exist**: `scripts/validate-route-config.mjs` fails the build when `CHROMELESS_ROUTES` or either anchor-nav set names a path with no page behind it. These sets match `pathname` as plain strings, so a stale entry is silent — which is how eleven routes stayed listed through the design system's departure, a green build and CI. Opt-in only, so a page absent from all three is just a page with normal chrome.
 
 ---
 
@@ -155,7 +156,7 @@ guessing: `ship`, `checkpoint`, or `land`.
     │   ├── rr-animated/       # Standalone animated-logo page (noindex)
     │   ├── llms.txt/          # The public agent index for the portfolio
     │   └── api/chat/          # The chat backend: route, guardrails, persona, followups, feedback
-    ├── src/config/            # navigation.ts (nav/sidebar/breadcrumb source of truth), chromeless.ts, anchor-nav.ts, social.ts
+    ├── src/config/            # navigation.ts (nav/sidebar/breadcrumb source of truth), chromeless.ts, anchor-nav.ts (both held to real routes by validate-route-config.mjs), site.ts (the apex URL's one home), brand.ts, social.ts
     ├── src/data/              # The registries above, plus case-study-tldrs.ts (prose kept out of the route folders so the corpus never carries the same facts twice)
     ├── src/hooks/             # useChat — the chat widget's transport-agnostic state machine
     ├── src/lib/               # Chat transport, model allowlist, follow-ups, suggestion budget; site-tools.ts (corpus search); Substack feed; OG image; structured data; scroll lock
