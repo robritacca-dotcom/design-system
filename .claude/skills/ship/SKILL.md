@@ -67,11 +67,11 @@ Use this skill when asked to make completed work live — phrases like "ship it"
 
 8. **Prove the deployed site renders** — the step the 2026-09-06 outage was missing. A green verify, a green CI run, and an HTTP 200 all held that morning while every JS browser showed a blank page: the failure lived in Vercel's runtime rendering (the root route's ISR regeneration sees an internal pathname no local run can reproduce), so only the live site can prove itself. First confirm the new deployment is what's serving — the `data-dpl-id` in the homepage HTML changes with every deploy:
    ```bash
-   curl -s https://robertritacca.com/ | grep -o 'data-dpl-id="[^"]*"'
+   curl -s "$(node scripts/site-config.mjs)/" | grep -o 'data-dpl-id="[^"]*"'
    ```
    If it hasn't changed from before the push, wait a moment and re-check — Vercel usually finishes before CI does. Then run the live hydration smoke:
    ```bash
-   node scripts/smoke-hydration.mjs https://robertritacca.com
+   node scripts/smoke-hydration.mjs --live
    ```
    The script's doc block owns what it asserts (hydration succeeded, the theme guard's ready mark landed, the page is visible with content, at desktop and phone viewports). **A red result means the deploy may have taken the site down — treat it as an active outage, not a report line**: diagnose immediately, and if the cause isn't quickly fixable, revert the deploy (`git revert` the pushed commits and push again) rather than leaving the site dark while investigating. Never skip this step because verify and CI were green — they were green during the outage too.
 

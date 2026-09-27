@@ -31,3 +31,9 @@ const constant = (name) => {
 export const SITE_URL = constant('SITE_URL');
 export const SITE_NAME = constant('SITE_NAME');
 export const DESIGN_SYSTEM_URL = constant('DESIGN_SYSTEM_URL');
+
+// Run directly, this prints the site URL, so a shell caller (a skill's curl,
+// a workflow step) derives it rather than repeating the literal.
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  console.log(SITE_URL);
+}

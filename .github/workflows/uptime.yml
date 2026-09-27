@@ -31,4 +31,4 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps chromium
-      - run: node scripts/smoke-hydration.mjs https://robertritacca.com
+      - run: node scripts/smoke-hydration.mjs --live

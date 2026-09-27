@@ -16,7 +16,7 @@
  *     website job, after the build — it catches the reproducible class of
  *     mismatch (time-, random-, and environment-dependent renders).
  *
- *   node scripts/smoke-hydration.mjs https://robertritacca.com
+ *   node scripts/smoke-hydration.mjs --live
  *     Checks a live origin. The `ship` skill runs this against production
  *     after every deploy, because the outage's trigger (Vercel's internal
  *     pathname during the root route's ISR regeneration) exists only there —
@@ -31,6 +31,7 @@
 /* global document, window -- page.evaluate() callbacks execute in the browser */
 import { chromium } from 'playwright';
 import { SMOKE_ROUTES as ROUTES, startServer } from './served-site.mjs';
+import { SITE_URL } from './site-config.mjs';
 
 const VIEWPORTS = [
   { name: 'desktop', viewport: { width: 1440, height: 900 }, isMobile: false, hasTouch: false },
@@ -116,7 +117,11 @@ async function checkPage(browser, origin, route, profile) {
 }
 
 async function main() {
-  const liveOrigin = process.argv[2] ?? null;
+  // No argument serves the local build. `--live` smokes production, reading
+  // the origin from website/src/config/site.ts rather than repeating it in a
+  // workflow and a skill; an explicit origin still wins, for a preview URL.
+  const arg = process.argv[2] ?? null;
+  const liveOrigin = arg === '--live' ? SITE_URL : arg;
   let server = null;
   let origin = liveOrigin;
   if (!origin) {

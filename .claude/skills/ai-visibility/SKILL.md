@@ -1,6 +1,6 @@
 ---
 name: ai-visibility
-description: "Monthly loop that measures how findable robertritacca.com is to search engines and AI assistants, and trends it run over run. Runs the SEO sweep, pulls the search and AI-referral slice from GA, probes llms.txt and the MCP endpoint from outside, ranks the target queries, and writes the trend report. Use when asked to run the AI visibility loop. Off-property actions are proposals only; never pushes, merges, or deploys."
+description: "Monthly loop that measures how findable robertritacca.com is to search engines and AI assistants, and trends it run over run. Runs the SEO sweep, pulls the search and AI-referral slice from GA, probes llms.txt from outside, ranks the target queries, and writes the trend report. Use when asked to run the AI visibility loop. Off-property actions are proposals only; never pushes, merges, or deploys."
 icon: query_stats
 displayDescription: "Measures whether the site is getting more findable, by search engines and by AI assistants, and turns one-off checks into a trend. Each run sweeps the technical SEO surface, pulls the search and AI-referral traffic slice, probes the public agent surfaces from outside, records where the target queries actually rank, and compares it all with the last run. The deliverable is the trend report; anything off-property is a proposal. One of the loops described on the Loops page."
 invoke: ["run the ai visibility loop","/ai-visibility"]
@@ -42,11 +42,11 @@ Run the `seo-audit` skill (`.claude/skills/seo-audit/SKILL.md`). It owns the met
 
 ### 2. Pull the discovery traffic
 
-Pull GA with the `ga-report` skill's judgment (it owns the bot list and baselines; it and the GA venv live on Rob's Mac). The slice this loop cares about: organic search sessions and their landing pages, plus referrals from AI surfaces — chatgpt.com, perplexity.ai, gemini.google.com, claude.ai and kin. Note the blind spot in the report: agents fetching `llms.txt` or calling MCP never execute the analytics snippet, so GA structurally undercounts agent traffic. Absence of AI referrals is weak evidence of absence.
+Pull GA with the `ga-report` skill's judgment (it owns the bot list and baselines; it and the GA venv live on Rob's Mac). The slice this loop cares about: organic search sessions and their landing pages, plus referrals from AI surfaces — chatgpt.com, perplexity.ai, gemini.google.com, claude.ai and kin. Note the blind spot in the report: agents fetching `llms.txt` never execute the analytics snippet, so GA structurally undercounts agent traffic. Absence of AI referrals is weak evidence of absence.
 
 ### 3. Probe the agent surfaces from outside
 
-Live requests against production, as a stranger's agent would make them, against the canonical apex host (`SITE_URL` in `website/src/lib/structuredData.ts` — the `www` host is a redirect, and probing it would measure the redirect chain rather than the canonical surface): `https://robertritacca.com/llms.txt` returns 200 and every link it advertises resolves; the MCP endpoint answers a standard MCP `tools/list` POST (`MCP_ENDPOINT` in the design system's own site owns the URL). These surfaces are how an AI assistant learns the site exists — a quiet regression here is invisible to every other check, including GA.
+Live requests against production, as a stranger's agent would make them, against the canonical apex host (`SITE_URL` in `website/src/config/site.ts`, which `node scripts/site-config.mjs` prints — the `www` host is a redirect, and probing it would measure the redirect chain rather than the canonical surface): `/llms.txt` returns 200 and every link it advertises resolves. There is no MCP endpoint to probe here any more; it went to rift-ds.com with the design system, and that site owns its own visibility. This surface is how an AI assistant learns the site exists — a quiet regression here is invisible to every other check, including GA.
 
 ### 4. Rank the target queries
 
