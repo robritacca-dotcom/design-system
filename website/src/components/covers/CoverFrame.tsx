@@ -15,10 +15,13 @@ import styles from "./CoverFrame.module.css";
  * own native pixel geometry inside — nothing is re-laid-out to fit, which is
  * what keeps the redraws 1:1 with their sources.
  *
- * Two treatments. "thumb" floats the mock on a gradient drawn from the
- * product's own colours, for a card or a listing. "bleed" fills the frame and
- * letterboxes against the mock's own page colour, for use inside a case study
- * where the screen should read as the subject rather than as an object.
+ * Three treatments. "thumb" floats the mock on a gradient drawn from the
+ * product's own colours, for a card or a listing. "bleed" fills most of the
+ * frame and letterboxes against the ground, for use inside a case study where
+ * the screen should read as the subject rather than as an object. "full"
+ * leaves no margin at all: the mock is the frame, square-cornered, with the
+ * ground never visible. That is what a banner wants, where the picture is the
+ * page rather than an illustration beside it.
  */
 
 /**
