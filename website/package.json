@@ -27,12 +27,12 @@
     "zod": "^4.5.4"
   },
   "devDependencies": {
-    "@types/node": "^24",
+    "@types/node": "^26",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/sanitize-html": "^2.16.1",
-    "eslint": "^9",
-    "eslint-config-next": "16.2.11",
-    "typescript": "^5"
+    "eslint": "^10",
+    "eslint-config-next": "16.3.6",
+    "typescript": "^7"
   }
 }
