@@ -63,13 +63,9 @@
   box-shadow: var(--shadow-modal);
 }
 
-/* The cover draws itself at its own scale inside an SVG; the frame just
-   needs to fill the width and keep the 16:10 the redraw was composed at. */
-.bannerArt {
-  display: block;
-  width: 100%;
-  height: auto;
-}
+/* The drawing inside lays itself out against this box's width (it is a size
+   container), so there is no ratio to hold here: the banner is as tall as
+   the redraw is at that width. */
 
 /* ---------- body ---------- */
 

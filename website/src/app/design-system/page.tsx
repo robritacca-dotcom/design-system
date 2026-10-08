@@ -35,7 +35,7 @@ export default function DesignSystemPage() {
           href={DESIGN_SYSTEM_URL}
           aria-label="Open rift-ds.com"
         >
-          <RiftDsHomeCover variant="full" className={styles.bannerArt} />
+          <RiftDsHomeCover />
         </a>
 
         <p className={styles.lede}>

@@ -1,7 +1,8 @@
 import styles from "./CoverFrame.module.css";
 
 /**
- * The shared outer frame every cover renders into.
+ * The shared outer frame every framed cover renders into. (`RiftDsCover` is
+ * the exception: live responsive HTML with no frame.)
  *
  * The source screens are all different shapes — 1440x972, 1440x1024,
  * 440x972, 1638x1064, and so on, from 0.44 to 1.76 in aspect. Dropped
@@ -15,13 +16,10 @@ import styles from "./CoverFrame.module.css";
  * own native pixel geometry inside — nothing is re-laid-out to fit, which is
  * what keeps the redraws 1:1 with their sources.
  *
- * Three treatments. "thumb" floats the mock on a gradient drawn from the
+ * Two treatments. "thumb" floats the mock on a gradient drawn from the
  * product's own colours, for a card or a listing. "bleed" fills most of the
  * frame and letterboxes against the ground, for use inside a case study where
- * the screen should read as the subject rather than as an object. "full"
- * leaves no margin at all: the mock is the frame, square-cornered, with the
- * ground never visible. That is what a banner wants, where the picture is the
- * page rather than an illustration beside it.
+ * the screen should read as the subject rather than as an object.
  */
 
 /**
@@ -33,7 +31,7 @@ import styles from "./CoverFrame.module.css";
 export const FRAME = { w: 1600, h: 1000 } as const;
 
 /** How much of the frame the mock may occupy, per treatment. */
-const INSET = { thumb: 0.78, bleed: 0.94, full: 1 } as const;
+const INSET = { thumb: 0.78, bleed: 0.94 } as const;
 
 /** The corner radius and shadow the floating mock gets, in frame units. */
 const CARD = { radius: 18, shadowY: 26, shadowBlur: 44 } as const;
@@ -66,7 +64,7 @@ const TONE_CLASS: Record<Tone, string> = {
 };
 
 /**
- * What every cover accepts and hands straight to its frame. A cover's own
+ * What every framed cover accepts and hands straight to its frame. Its own
  * signature is this and nothing else — the drawing is fixed, only the box
  * around it moves.
  */
@@ -78,7 +76,7 @@ export type CoverProps = {
    * the container instead of letterboxing inside it.
    */
   aspect?: number;
-  variant?: "thumb" | "bleed" | "full";
+  variant?: "thumb" | "bleed";
 };
 
 export function CoverFrame({
@@ -104,7 +102,6 @@ export function CoverFrame({
   children: React.ReactNode;
 }) {
   const thumb = variant === "thumb";
-  const full = variant === "full";
   const inset = INSET[variant];
 
   const frameH = FRAME.h;
@@ -119,10 +116,8 @@ export function CoverFrame({
   const y = (frameH - h) / 2;
 
   /* The card's radius is specified in frame units, so it has to be divided
-     back out for the mock, which lives in its own scaled coordinates. The
-     full treatment has no card: the mock is the frame, so it needs neither a
-     radius of its own nor a shadow to lift it off a ground it fills. */
-  const mockRadius = full ? 0 : CARD.radius / scale;
+     back out for the mock, which lives in its own scaled coordinates. */
+  const mockRadius = CARD.radius / scale;
 
   return (
     <svg

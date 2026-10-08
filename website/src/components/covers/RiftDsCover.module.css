@@ -1,21 +1,32 @@
 /*
- * A 1:1 redraw of rift-ds.com's home page at 1440 x 900.
+ * A responsive redraw of rift-ds.com's home page.
  *
  * ds-allow-file(mockup): every colour, size and type below is a drawing
  * coordinate read off the rendered page, deliberately token-free. This is a
  * picture of another site; if it were wired to this site's tokens it would
  * silently change every time this theme did, which is exactly what a redraw
  * must not do.
+ *
+ * The frame is a size container and everything inside is sized against it:
+ * fluid steps in cqi between a readable floor and the 1440 design size, and
+ * two layout breaks (@container) where the depicted page has its own. Nothing
+ * is scaled, so the narrowest frame still sets real type.
  */
+
+.frame {
+  container-type: inline-size;
+  display: block;
+  width: 100%;
+  background: #0a0a0b;
+}
 
 .stage {
   position: relative;
-  width: 1440px;
-  height: 900px;
   overflow: hidden;
   background: #0a0a0b;
   font-family: "Nunito Sans", -apple-system, BlinkMacSystemFont, sans-serif;
   color: #f4f4f5;
+  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -30,10 +41,10 @@
 /* The soft key light behind the headline. */
 .glow {
   position: absolute;
-  top: -180px;
+  top: -20cqi;
   left: 50%;
-  width: 1100px;
-  height: 700px;
+  width: max(76cqi, 420px);
+  height: max(48cqi, 300px);
   transform: translateX(-50%);
   background: radial-gradient(
     ellipse at center,
@@ -49,11 +60,11 @@
 .header {
   position: relative;
   width: 100%;
-  height: 74px;
-  padding: 0 44px;
+  height: clamp(56px, 5.2cqi, 74px);
+  padding: 0 clamp(18px, 3cqi, 44px);
   display: flex;
   align-items: center;
-  gap: 34px;
+  gap: clamp(20px, 2.4cqi, 34px);
 }
 
 .brand {
@@ -63,24 +74,26 @@
 }
 
 .wordmark {
-  font-size: 19px;
+  font-size: clamp(17px, 1.4cqi, 19px);
   font-weight: 700;
   letter-spacing: -0.01em;
+  white-space: nowrap;
   color: #f4f4f5;
 }
 
 .nav {
   display: flex;
   align-items: center;
-  gap: 26px;
+  gap: clamp(16px, 1.8cqi, 26px);
 }
 
 .navLink {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  font-size: 15px;
+  font-size: clamp(13px, 1.05cqi, 15px);
   font-weight: 600;
+  white-space: nowrap;
   color: #c9c9ce;
 }
 
@@ -94,7 +107,7 @@
 .search {
   display: flex;
   align-items: center;
-  gap: 40px;
+  gap: clamp(16px, 2.8cqi, 40px);
   height: 38px;
   padding: 0 10px 0 14px;
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -104,6 +117,7 @@
 
 .searchLabel {
   font-size: 14px;
+  white-space: nowrap;
   color: #8a8a92;
 }
 
@@ -144,47 +158,76 @@
   background: #f4f4f5;
 }
 
+/* The phone layout's menu button. Hidden until the nav gives way to it. */
+.menu {
+  display: none;
+  width: 38px;
+  height: 38px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+}
+
+.menu span {
+  width: 16px;
+  height: 1.5px;
+  border-radius: 1px;
+  background: #c9c9ce;
+}
+
 /* ---------- hero ---------- */
 
 .hero {
   position: relative;
-  margin-top: 96px;
+  width: 100%;
+  margin-top: clamp(36px, 6.6cqi, 96px);
+  padding: 0 clamp(20px, 4cqi, 56px);
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
-  gap: 18px;
+  gap: clamp(12px, 1.3cqi, 18px);
 }
 
 .title {
-  font-size: 68px;
+  max-width: 16em;
+  font-size: clamp(32px, 4.7cqi, 68px);
   font-weight: 300;
-  line-height: 1.04;
+  line-height: 1.06;
   letter-spacing: -0.028em;
+  text-wrap: balance;
   color: #fafafa;
 }
 
 .subtitle {
-  font-size: 23px;
+  max-width: 40em;
+  font-size: clamp(15px, 1.6cqi, 23px);
   font-weight: 400;
+  line-height: 1.4;
+  text-wrap: balance;
   color: #a9a9b1;
 }
 
 .actions {
-  margin-top: 12px;
+  margin-top: clamp(8px, 0.9cqi, 12px);
   display: flex;
-  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(8px, 0.9cqi, 12px);
 }
 
 .button {
   height: 44px;
-  padding: 0 22px;
+  padding: 0 clamp(16px, 1.6cqi, 22px);
   display: inline-flex;
   align-items: center;
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 9px;
   font-size: 15px;
   font-weight: 600;
+  white-space: nowrap;
   color: #f4f4f5;
 }
 
@@ -194,13 +237,13 @@
   color: #0a0a0b;
 }
 
-/* ---------- stats ---------- */
+/* ---------- rule ---------- */
 
 .statRule {
   position: relative;
-  width: 760px;
+  width: min(760px, 80%);
   height: 1px;
-  margin-top: 54px;
+  margin-top: clamp(32px, 3.75cqi, 54px);
   background: linear-gradient(
     90deg,
     rgba(255, 255, 255, 0) 0%,
@@ -209,23 +252,21 @@
   );
 }
 
-
-
-
-
 /* ---------- preset swatches ---------- */
 
 .swatches {
+  --swatch: clamp(16px, 1.55cqi, 22px);
   position: relative;
-  margin-top: 34px;
+  margin-top: clamp(24px, 2.4cqi, 34px);
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: clamp(5px, 0.6cqi, 8px);
 }
 
 .swatch {
-  width: 22px;
-  height: 22px;
+  flex: none;
+  width: var(--swatch);
+  height: var(--swatch);
   border-radius: 6px;
 }
 
@@ -234,29 +275,36 @@
 }
 
 .swatchAdd {
-  width: 22px;
-  height: 22px;
+  flex: none;
+  width: var(--swatch);
+  height: var(--swatch);
   border: 1px dashed rgba(255, 255, 255, 0.28);
   border-radius: 6px;
   font-size: 13px;
-  line-height: 20px;
+  line-height: calc(var(--swatch) - 2px);
   text-align: center;
   color: #8a8a92;
 }
 
-/* ---------- the collage the frame crops ---------- */
+/* ---------- the collage the frame fades out ---------- */
 
 .collage {
   position: relative;
-  margin-top: 52px;
-  width: 1290px;
+  margin-top: clamp(32px, 3.6cqi, 52px);
+  width: calc(100% - 2 * clamp(16px, 5.2cqi, 75px));
+  /* Shorter than the cards, so they run off the bottom of the frame. */
+  height: clamp(190px, 15.5cqi, 224px);
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(12px, 1.5cqi, 22px);
+  text-align: left;
+  -webkit-mask-image: linear-gradient(#000 45%, transparent 100%);
+  mask-image: linear-gradient(#000 45%, transparent 100%);
 }
 
 .card {
   height: 250px;
+  min-width: 0;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -278,6 +326,7 @@
 }
 
 .donut {
+  flex: none;
   align-self: center;
   margin-top: 18px;
   width: 132px;
@@ -290,8 +339,8 @@
     #35353b 300deg 332deg,
     #26262b 332deg 360deg
   );
-  mask: radial-gradient(circle, transparent 54%, #000 55%);
   -webkit-mask: radial-gradient(circle, transparent 54%, #000 55%);
+  mask: radial-gradient(circle, transparent 54%, #000 55%);
 }
 
 .codeBar {
@@ -299,7 +348,7 @@
   justify-content: space-between;
   font-size: 11px;
   letter-spacing: 0.06em;
-  color: #6e6e76;
+  color: #8a8a92;
 }
 
 .code {
@@ -310,12 +359,15 @@
   background: rgba(255, 255, 255, 0.03);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
   color: #ededf0;
 }
 
 .cardActions {
   margin-top: 16px;
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
 }
 
@@ -328,6 +380,7 @@
   border-radius: 8px;
   font-size: 13px;
   font-weight: 600;
+  white-space: nowrap;
   color: #ededf0;
 }
 
@@ -338,6 +391,7 @@
 }
 
 .globe {
+  flex: none;
   align-self: center;
   margin-top: 14px;
   width: 150px;
@@ -355,4 +409,51 @@
       rgba(255, 255, 255, 0.11) 0 1px,
       transparent 1px 22px
     );
+}
+
+/* ---------- tablet: the header sheds, the collage drops a card ---------- */
+
+/* The search field goes first: the nav is the page's identity, the field is
+   a control. */
+@container (max-width: 1040px) {
+  .search {
+    display: none;
+  }
+}
+
+@container (max-width: 780px) {
+  .nav,
+  .themeRow {
+    display: none;
+  }
+
+  .menu {
+    display: flex;
+  }
+
+  .collage {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cardGlobe {
+    display: none;
+  }
+}
+
+/* ---------- phone: one column, the install card leading ---------- */
+
+@container (max-width: 520px) {
+  .collage {
+    grid-template-columns: minmax(0, 1fr);
+    height: 236px;
+    -webkit-mask-image: linear-gradient(#000 62%, transparent 100%);
+    mask-image: linear-gradient(#000 62%, transparent 100%);
+  }
+
+  /* The install line is the one card that still reads at a glance, so it
+     leads and the chart becomes the thing running off the fold. */
+  .cardInstall {
+    order: -1;
+    height: auto;
+  }
 }
