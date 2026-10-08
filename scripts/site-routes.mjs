@@ -10,7 +10,7 @@
  * section or listed in the corpus generator's exclusion map with a reason.
  *
  * Consumers: scripts/validate-chat-coverage.mjs (build gate) and
- * evals/chat/assert-paths.js (every path the model cites must resolve).
+ * evals/chat/assert-paths.mjs (every path the model cites must resolve).
  */
 import { readdirSync, statSync } from 'node:fs';
 import { dirname, join } from 'node:path';

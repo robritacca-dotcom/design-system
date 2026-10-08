@@ -1,9 +1,10 @@
 /**
  * generate-cover-rasters.mjs
  *
- * Shoots each vector cover into a flat image, one per study, aspect and theme.
+ * Shoots each registered case-study cover into a flat image, one per study,
+ * aspect and theme.
  *
- * Why this exists: a cover is an HTML mock inside an SVG `foreignObject`,
+ * Why this exists: a registered cover is an HTML mock inside an SVG `foreignObject`,
  * shrunk to fit by a scale transform. Mobile WebKit does not render that
  * construction reliably — it lays the mock out at its native width and sizes
  * the text from that, so a phone shows intact geometry with the type blown up

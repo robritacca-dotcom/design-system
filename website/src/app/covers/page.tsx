@@ -31,7 +31,7 @@ export const metadata = {
   robots: { index: false, follow: false },
 };
 
-/** Every cover, in the order the case studies run. */
+/** Every framed cover, in the order the case studies run. */
 const COVERS: { label: string; cover: React.ReactNode }[] = [
   { label: "TurboTax in Claude — desktop", cover: <TurboTaxClaudeCover /> },
   { label: "TurboTax in Claude — mobile", cover: <TurboTaxClaudeCoverMobile /> },
@@ -56,7 +56,7 @@ const COVERS: { label: string; cover: React.ReactNode }[] = [
 
 /**
  * A blank staging page for the vector cover mocks. No site chrome, no layout
- * opinions — every cover renders into the same 16:10 frame, so the grid shows
+ * opinions — every framed cover renders into the same 16:10 frame, so the grid shows
  * them at the size and shape they would take in a card. The theme toggle
  * floats over the top so the light/dark cross-fade is one click away.
  */
@@ -68,7 +68,7 @@ export default function CoverMocksPage() {
       </div>
 
       <p className={styles.note}>
-        Every cover shares one 16:10 frame, so they read as a set at any size.
+        Every framed cover shares one 16:10 frame, so they read as a set at any size.
         Toggle the theme to see them cross-fade.
       </p>
 

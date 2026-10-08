@@ -3,7 +3,8 @@
  * Validates website/src/data/cover-renders.json against the covers that exist
  * and the images on disk.
  *
- * The covers are drawn as vectors but displayed as flat images, because the
+ * The registered case-study covers are drawn as vectors but displayed as flat
+ * images, because the
  * drawing — an HTML mock inside an SVG foreignObject, shrunk by a scale
  * transform — is not something mobile WebKit renders reliably. That split only
  * holds while every registered render actually has a file behind it: a missing

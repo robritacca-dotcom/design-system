@@ -29,9 +29,9 @@
  * more letters is not. Block tags are excluded, because `</div>Text` is a
  * layout choice.
  *
- * The generated blueprint mirrors under /blueprints are exempt: they render
- * markdown docs in which inline code and backticks legitimately interleave,
- * and their source is the root specs rather than page prose.
+ * The EXEMPT pattern below still names /blueprints, the generated mirrors of
+ * the root specs this site used to render. Those pages left with the design
+ * system, so the pattern matches nothing today.
  *
  * FIXING A FINDING
  *

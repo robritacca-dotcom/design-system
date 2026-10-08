@@ -24,7 +24,7 @@ Use this skill when asked to set the current work aside — phrases like "park t
 
 2. **Survey the tree**: run `git status --short` and classify every entry as in scope (this session's work) or out of scope. **Never run `git add -A`, `git add .`, or `git add` on a directory** — always add explicit file paths. Note that out-of-scope untracked files are untouched by branch switches — they will still be sitting in the tree after the return to `main`; name them in the report.
 
-3. **Quick check, not the full verify**: run `npm run lint`; if the session touched `website/`, also run `npm --prefix website run lint` (root ESLint ignores the website workspace). A failure does not block the park — a shelved experiment is allowed to be mid-mess — but it goes in the report so resuming starts with eyes open.
+3. **Quick check, not the full verify**: run `npm run lint` (the root script covers the website workspace too). A failure does not block the park — a shelved experiment is allowed to be mid-mess — but it goes in the report so resuming starts with eyes open.
 
 4. **Commit in the repo's conventional style** (`feat(scope):`, `fix(scope):`, with a short why) — a parked branch may later merge to `main` via `ship`, so its commits are real history.
 

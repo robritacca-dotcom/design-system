@@ -4,14 +4,14 @@
 
 Every word this project ships should be **consistent, human, clear, and neutral**.
 
-- **Consistent**: the same voice, spelling, and register rules on every surface, so a reader moving from the homepage to a component page to the journal never feels the author change.
+- **Consistent**: the same voice, spelling, and register rules on every surface, so a reader moving from the homepage to a case study to an essay page never feels the author change.
 - **Human**: specific, committed, rhythmically uneven prose. Text that could only have been written by someone who knows this project.
 - **Clear**: plain verbs, one idea per sentence. A reader who has never seen the repo can follow it.
 - **Neutral**: matter-of-fact, never promotional. State what a thing is and does, and let the specifics carry the weight. Nothing here needs selling.
 
 This document governs all shipped prose: website page copy and metadata, case studies, README copy, commit bodies, and UI microcopy. It sits beside `CLAUDE.md`, which owns where facts live (one authoritative home per fact, point instead of enumerating, no counts outside registries), while this file owns how sentences read. How things look is the design system's business, and its spec lives in its own repo.
 
-Deliberately out of scope: the agent-facing markdown references. `CLAUDE.md`, `SECURITY.md`, skill instruction bodies, and this file itself are written for AI agents to parse, and their format optimises for that job: dense sections, bold markers, tables, and em dashes as structural separators. Those are formatting tools there, not voice, and this guide does not restyle them. The published ones appear on /blueprints as artefacts, shown deliberately as they are. What IS in scope on those pages is the shell copy around them (titles, taglines, intros, metadata), which is shipped prose like any other.
+Deliberately out of scope: the agent-facing markdown references. `CLAUDE.md`, `SECURITY.md`, skill instruction bodies, and this file itself are written for AI agents to parse, and their format optimises for that job: dense sections, bold markers, tables, and em dashes as structural separators. Those are formatting tools there, not voice, and this guide does not restyle them.
 
 One deliberate irony to note up front: the `##` headings in this file are Title Case because that is the markdown-spec convention, while the rule for shipped copy is sentence case. The convention applies to the spec file; the rule applies to what users read on the site.
 
@@ -21,13 +21,13 @@ A word on the origin of this document. The prose in this project is written by A
 
 ## Voice
 
-**The system is the subject.** System documentation, the journal, and component pages use no first person. Write "The registry drives the sidebar", never "we built the registry to drive the sidebar". The exceptions are the case-study and about pages, where "I" and "we" are correct because a person is telling their own story, and genuine instructions, where "you" is correct because the reader is doing something ("Install the package, then import the stylesheet once").
+**The system is the subject.** Page copy outside the case studies and /about uses no first person. Write "The registry drives the sidebar", never "we built the registry to drive the sidebar". The exceptions are the case-study and about pages, where "I" and "we" are correct because a person is telling their own story, and genuine instructions, where "you" is correct because the reader is doing something ("Install the package, then import the stylesheet once").
 
 **British spelling in prose, American in code.** Colour, behaviour, organising, centred. Code identifiers and tokens keep their American spellings (`--color-action-primary-bg`, the `color` CSS property), and prose never respells them. When a sentence names a token, the token wins.
 
 **Sentence case everywhere.** Headings, buttons, nav labels, card titles: "Work experience", not "Work Experience". Title Case is reserved for proper nouns (Storybook, Material Symbols Rounded, Nunito Sans).
 
-**No em dashes.** The character ( — ) is banned in shipped copy (the agent-facing markdown references are exempt; see Overview). The turns it used to carry survive by other means: a colon for "and here is the point", a comma or parentheses for an aside, or a full stop and a second sentence. Two short sentences are almost always stronger than one spliced long one. This is the one rule in this guide a script can settle, so a script does: `scripts/validate-shipped-prose.mjs` fails the build on one, and its doc block is authoritative for which surfaces it reads. A lone dash standing in for an absent value (the disabled Input's placeholder) is a glyph, not a spliced sentence, and is not a violation.
+**No em dashes.** The character ( — ) is banned in shipped copy (the agent-facing markdown references are exempt; see Overview). The turns it used to carry survive by other means: a colon for "and here is the point", a comma or parentheses for an aside, or a full stop and a second sentence. Two short sentences are almost always stronger than one spliced long one. This is the one rule in this guide a script can settle, so a script does: `scripts/validate-shipped-prose.mjs` fails the build on one, and its doc block is authoritative for which surfaces it reads. A lone dash standing in for an absent value is a glyph, not a spliced sentence, and is not a violation.
 
 **Concrete numbers over adjectives.** "Both themes resolve from one token layer" beats "a powerful theming system". If a claim deserves emphasis, give it a number, a name, or a mechanism. If it has none of those, it is probably decoration; cut it.
 
@@ -55,7 +55,7 @@ Each surface has its own shape. The full standard for a surface lives in one pla
 | Case-study registry entries (`website/src/data/case-studies.json`) | None | `title` a name, `dek` one summary line | Shipped copy on /work and the home page; the dek makes one concrete claim | This file + case-studies validator |
 | Case-study TLDR points (`website/src/data/case-study-tldrs.ts` — the key-claims block at the top of each /work study) | "I" / "we" | 4–5 points per study: a short claim, then one or two supporting sentences | The case-study register in miniature: plain words over jargon, and a metric wherever the article states one — no number appears here that the full story does not carry. Kept outside the route folders so the corpus never pays for the articles' facts twice (the file's doc block owns that decision) | This file + the shipped-prose validator's module list |
 | README | "You" for instructions | What the repo is and how to run it | The repo is public, so the README is the first thing a stranger reads | `CLAUDE.md` |
-| Skill `displayDescription` + `invoke` frontmatter | None | 1–3 factual sentences; invoke phrases are short imperative fragments | Both render on the public /skills page (descriptions as card copy, invoke phrases as chips); describe what it does, not how clever it is | This file |
+| Skill `displayDescription` + `invoke` frontmatter | None | 1–3 factual sentences; invoke phrases are short imperative fragments | No longer rendered on this site (the /skills page left with the design system), but `displayDescription` is still held to the em-dash rule by `scripts/validate-shipped-prose.mjs`; describe what it does, not how clever it is | This file |
 | Commit bodies | None | 1–3 sentences of why | The diff shows what; the body explains why | `.claude/skills/ship/SKILL.md` |
 | Audit and loop reports | None | Findings in plain English | The reader is a designer, not an analyst | The invoking skill |
 | UI microcopy (labels, empty states, errors) | Imperative | A few words | Describe the next action, not the current state | Microcopy section below |
@@ -70,12 +70,12 @@ Each surface has its own shape. The full standard for a surface lives in one pla
 | Chat model names and descriptions (`website/src/lib/chat-model.ts`) | None | A display name plus one fragment per model, ending in a full stop | Rendered in the composer's picker; each line says what the model is for, never a performance claim or a superlative | This file + the `content-audit` skill's `chat` scope |
 | Chat easter-egg answers (`website/src/app/api/chat/easter-eggs.ts`) | Third person about Rob | Hand-written answers the model repeats verbatim on an exact trigger | The one sanctioned departure from Stay neutral: an egg may be enthusiastic, because Rob wrote it and approved the facts. The em-dash ban still holds | `easter-eggs.ts` (its preamble states the carve-out) |
 | Chat guardrail notices (`website/src/app/api/chat/guardrails.ts`) | The assistant | One or two plain sentences | They render as ordinary assistant messages, so they say what happened and what to do next, never blame the visitor | This file (Microcopy: errors) |
-| Chat notice lines (`website/src/app/api/chat/route.ts`, and the corpus-search strings in `website/src/lib/site-tools.ts`) | None | One short fragment each | These render in the widget, or can be repeated verbatim to a visitor: say what happened and where to go next, never promote | This file + `validate-shipped-prose.mjs`'s module scan + the `content-audit` skill's `chat` scope |
+| Chat notice lines (`website/src/app/api/chat/route.ts`; the corpus-search helper in `website/src/lib/site-tools.ts` is scanned too, though nothing imports it today) | None | One short fragment each | These render in the widget, or can be repeated verbatim to a visitor: say what happened and where to go next, never promote | This file + `validate-shipped-prose.mjs`'s module scan + the `content-audit` skill's `chat` scope |
 | Footer copy (column titles in `website/src/components/SiteFooter/SiteFooter.tsx`, link labels in `website/src/config/social.ts`) | None | Sentence-case fragments | Identical on every page, so a change is a site-wide change; labels name destinations, never actions | This file + the `content-audit` skill's `footer` scope |
 | Command palette copy (group labels, item descriptions, the ask row's trailing chip label and the placeholder in `website/src/components/SitePalette/`) | None | Group labels and one-line fragments; the placeholder as microcopy; the trailing chip a two-to-three word destination name, dropping to icon-only below 480px | Navigation rows' descriptions name destinations; action rows (the Actions group, the ask-chat row) name what selecting them does. The ask row's own label is the visitor's typed query — deliberately unauthored, never restyled; its trailing chip is authored copy naming the surface it opens. The empty state is unreachable by construction (the ask row matches every query), so the palette ships none | This file + the `content-audit` skill's `palette` scope |
-| Nav config copy (the section and link descriptions and the mega showcase card's overline, title and description in `website/src/config/navigation.ts`) | None | Sentence-case fragments; the showcase description one sentence | One string renders in several places at once (the mega panel, the sidebars, the footer's derived columns, the home and DS-landing cards), so a change is a site-wide change; descriptions say what a page holds, never actions or promotion | This file + the `content-audit` skill's `nav` scope |
+| Nav config copy (the case-study link labels in `website/src/config/navigation.ts`) | None | Short sentence-case names | One label renders in several places at once (the sidebar, the breadcrumb, the browser-tab title and `/llms.txt`), so a change is a site-wide change; a label names the study, never an action or a promotion | This file + the `content-audit` skill's `nav` scope |
 
-Deliberately out of scope: the essays on `/writing` are authored on Substack and synced in verbatim (`scripts/sync-essays.mjs`) — their register is the essay's own, and no rule in this file applies to or edits them. The hidden `/labs` rebuilds are out of scope the same way as the template screens: their copy is fictional demo data redrawing a reference product, and the `content-audit` skill's exclusion list records it.
+Deliberately out of scope: the essays on `/writing` are authored on Substack and synced in verbatim (`scripts/sync-essays.mjs`) — their register is the essay's own, and no rule in this file applies to or edits them.
 
 ---
 
@@ -198,7 +198,7 @@ Rules for text inside the UI: labels, buttons, empty states, errors, tooltips. C
 
 - **Describe the next action, not the current state.** "Add your first component", not "No components yet". An empty state is an invitation, not a shrug.
 - **Buttons are verbs.** "Save changes", "Copy token", "View source". A button labelled with a noun ("Settings") is navigation, not action; keep the distinction.
-- **Taglines are not the section name.** The breadcrumb already says where the reader is. A component tagline says what the thing is for: "The main action element", not "Components".
+- **Taglines are not the section name.** The breadcrumb already says where the reader is. A page tagline says what the page holds: "Essays on design and AI", not "Writing".
 - **Errors say what happened and what to do.** "The token name is already taken. Choose another." Never blame the user, never just state failure.
 - **Sentence case, no terminal full stop on labels.** Fragments under about five words take no full stop; complete sentences (empty-state bodies, error explanations) do.
 - **No exclamation marks.** The UI does not get excited.
@@ -240,7 +240,7 @@ The on-demand audit for all of this is the `content-audit` skill (`.claude/skill
 
 ## Known Gaps
 
-- **Alt text and accessibility copy**: the two cover registries have their rows in Register by Surface; every other image alt, `aria-label` wording, and screen-reader-only text has no rules here yet. The a11y test suite enforces presence, not quality.
+- **Alt text and accessibility copy**: the two cover registries have their rows in Register by Surface; every other image alt, `aria-label` wording, and screen-reader-only text has no rules here yet. The page-level axe pass enforces presence, not quality.
 - **The word lists are seeded, not exhaustive**: they cover the tells observed in AI prose as of mid-2026. Model habits shift; the Iteration Guide covers additions.
 - **No localisation stance**: the project ships in English only; nothing here addresses translation.
 - **Enforcement is mostly by audit, not build**: the em dash is the one rule a script can settle, and `scripts/validate-shipped-prose.mjs` settles it. Every other rule here belongs to the on-demand `content-audit` skill, deliberately: most style calls need a reader, and a regex that mangles good writing to appease itself would be worse than drift.

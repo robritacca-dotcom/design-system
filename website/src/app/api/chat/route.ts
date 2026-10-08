@@ -87,15 +87,9 @@ const MAX_BODY_BYTES = 64 * 1024;
 const MAX_TRACE_POINTS = 8;
 
 /* ============================================
-   Tools
+   Response plumbing
 
-   Two deterministic lookups over generated registry data, shared with the
-   public MCP endpoint through @/lib/site-tools. The corpus carries the site's
-   prose but deliberately not the prop API or the token registry (they would
-   cost tens of thousands of tokens for data most questions never touch), so
-   without these the model answers prop- and token-level questions from
-   plausible convention rather than the published contract. Same security
-   boundary as the corpus: generated, already-published data only.
+   No tools: the model answers from the corpus alone (see the file header).
    ============================================ */
 
 const NDJSON_HEADERS = {
@@ -396,8 +390,7 @@ export async function POST(request: Request): Promise<Response> {
           { type: "text", text: EASTER_EGGS },
           // The cache breakpoint sits on this block, so the persona and
           // easter eggs cache together with the corpus. Nothing volatile
-          // may precede it (the tools array serialises ahead of the system
-          // blocks, which is fine — it is as stable as the persona). The
+          // may precede it. The
           // 1-hour TTL matches how visitors actually arrive: most gaps
           // between exchanges are 10-50 minutes, which the default 5-minute
           // cache never survives — so nearly every visitor was paying a

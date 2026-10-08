@@ -2,7 +2,7 @@
 name: growth-loop
 description: Weekly GA-driven copy experiment loop for robertritacca.com. Analyze last month's GA data, find one copy problem, implement the fix on a local branch, and write a report for approval. Use when asked to run the growth loop. Never pushes, merges, or deploys.
 icon: cycle
-displayDescription: "Runs one analytics-driven copy experiment end to end: pulls GA4 data, filters bot noise, forms a falsifiable hypothesis about the words on a page, implements the change on a branch in a temporary worktree, verifies the build, and writes a problem / hypothesis / solution report for approval. Runs itself every Monday, as one of the loops described on the Loops page."
+displayDescription: "Runs one analytics-driven copy experiment end to end: pulls GA4 data, filters bot noise, forms a falsifiable hypothesis about the words on a page, implements the change on a branch in a temporary worktree, verifies the build, and writes a problem / hypothesis / solution report for approval. Runs itself every Monday."
 invoke: ["run the growth loop","/growth-loop"]
 ---
 
@@ -59,14 +59,14 @@ BRANCH=growth/$(date +%F)-<short-slug>
 git -C "$REPO" worktree add "$WT" -b "$BRANCH" main
 ```
 
-Make the copy edits in `$WT/website/src/...` — new copy follows `content-design.md` (voice, register, banned words) — then verify the build (the repo is an npm workspace — one install at the worktree root wires everything, including the `@robr0/design-system` link back to the worktree's own the site source; it's seconds thanks to the npm cache. Do **not** symlink `node_modules` from the main checkout — Turbopack rejects symlinks that point outside the project root):
+Make the copy edits in `$WT/website/src/...` — new copy follows `content-design.md` (voice, register, banned words) — then verify the build (the repo is an npm workspace — one install at the worktree root covers the website, and `rift-ds` comes from the registry like any dependency; it's seconds thanks to the npm cache. Do **not** symlink `node_modules` from the main checkout — Turbopack rejects symlinks that point outside the project root):
 
 ```bash
 cd "$WT" && npm install --no-fund --no-audit
 cd "$WT/website" && npm run build
 ```
 
-If the build fails because of your edit, fix it. Then commit in the worktree (conventional message, e.g. `experiment(growth): reword /work CTA — hypothesis in loop report 2026-07-20`). Commit scope: the website `prebuild` regenerates tracked files, and they stay out of the commit **unless your edit is what changed them** — with one standing exception that always qualifies: the site chat's corpus (`website/src/data/site-corpus.generated.ts`) is built from page prose, so a copy edit changes it by construction. Commit the regenerated corpus alongside your copy edits every time (a branch without it fails CI's drift guard, and `git worktree remove` refuses a dirty worktree); leave the other regenerated files (everything else the website `prebuild`'s generators write — mostly under `website/src/data/` and `website/public/`, though the chain also touches root surfaces like `README.md` and the design system's token registry) out unless they actually changed. Then clean up:
+If the build fails because of your edit, fix it. Then commit in the worktree (conventional message, e.g. `experiment(growth): reword /work CTA — hypothesis in loop report 2026-07-20`). Commit scope: the website `prebuild` regenerates tracked files, and they stay out of the commit **unless your edit is what changed them** — with one standing exception that always qualifies: the site chat's corpus (`website/src/data/site-corpus.generated.ts`) is built from page prose, so a copy edit changes it by construction. Commit the regenerated corpus alongside your copy edits every time (a branch without it fails CI's drift guard, and `git worktree remove` refuses a dirty worktree); the corpus is the only tracked file the website `prebuild` regenerates today (the generator at the front of that script entry in `website/package.json` is the authoritative list), so anything else that comes out modified is not yours to commit. Then clean up:
 
 ```bash
 rm -rf "$WT/node_modules" "$WT/website/node_modules"

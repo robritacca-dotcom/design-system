@@ -17,8 +17,8 @@ Use this skill when asked to run a UX or usability review — phrases like "heur
 ## Instructions
 
 1. **Determine scope.** Accept one of:
-   - A website URL path (e.g. `/components/button`) → review the live page
-   - A component name (e.g. `AlertDialog`) → review the component source and its rendered output
+   - A website URL path (e.g. `/work/<slug>`) → review the live page
+   - A site component name (one under `website/src/components`) → review the component source and its rendered output
 
 2. **Gather visual evidence.** Start the preview server and screenshot the target in both light and dark mode (follow the `visual-review` skill pattern). Stop the server when done.
 
@@ -33,7 +33,7 @@ Use this skill when asked to run a UX or usability review — phrases like "heur
    **The 10 Heuristics:**
    1. **Visibility of system status** — Does the UI communicate what's happening? (loading states, active states, progress indicators, feedback on interaction)
    2. **Match between system and real world** — Do labels, icons, and concepts match the user's mental model? (plain language, familiar metaphors, no jargon)
-   3. **User control and freedom** — Can users undo, cancel, go back, or exit? (close buttons, undo actions, Escape key support on overlays — for modal overlays, check against the shared contract in design.md's Components intro before raising a finding: a non-dismissible top layer swallowing Escape, and a lower overlay not closing through a blocking modal, are both by design)
+   3. **User control and freedom** — Can users undo, cancel, go back, or exit? (close buttons, undo actions, Escape key support on overlays — for modal overlays, check against the design system's overlay contract in the rift-ds repo before raising a finding: a non-dismissible top layer swallowing Escape, and a lower overlay not closing through a blocking modal, are both by design)
    4. **Consistency and standards** — Are patterns applied uniformly? (same component behaves the same way everywhere, no contradictory conventions)
    5. **Error prevention** — Does the UI prevent mistakes before they happen? (confirmation dialogs for destructive actions, disabled states, validation hints before submission)
    6. **Recognition rather than recall** — Are options visible rather than requiring memory? (labels on icon-only buttons, visible choices, no hidden commands)

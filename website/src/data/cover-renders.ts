@@ -8,8 +8,9 @@ import data from "./cover-renders.json";
  * SVG `foreignObject`, shrunk by a scale transform, is not something mobile
  * WebKit renders reliably, so the places a cover is *displayed* read a flat
  * image instead. `/covers` keeps rendering the vectors: it is the staging
- * surface the images are shot from, and the only place the drawing itself is
- * on screen.
+ * surface, and with `/covers/render` the only place a registered cover's
+ * drawing is on screen. `RiftDsCover` is not registered here: it is responsive
+ * HTML drawn straight onto /design-system and has no raster.
  *
  * One render per study, aspect and theme. Regenerate with
  * `npm run covers:render` after changing a cover.

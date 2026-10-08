@@ -5,10 +5,10 @@
  * Fetches the Substack feed and writes website/src/data/essays.json — the
  * committed essays registry the site-chat corpus reads. The corpus generator
  * must be deterministic (no network — the validator byte-compares), so the
- * essays reach it the same way the project journal does: a committed data
+ * essays reach it as a committed data
  * file, refreshed deliberately by running this script and committing the
  * result. Freshness is a curation job, not the build's: run this after
- * publishing an essay (the biweekly site-updates loop is a natural moment).
+ * publishing an essay.
  *
  * NOT part of the validate-registry chain — it needs the network. The
  * structure-only check that IS in the chain lives in validate-essays.mjs.

@@ -2,7 +2,7 @@
 name: drift-audit
 description: Comprehensive self-consistency audit after a structural or architectural change. Verifies every skill, doc, and website surface still describes the repo as it actually is. Use after big changes, or when asked whether the docs and skills are up to date.
 icon: fact_check
-displayDescription: "Sweeps every place the repo describes itself (skills, CLAUDE.md, design.md, the README that ships to npm, and the website's own explanations of how it is built) and flags anything that no longer matches reality. Executes the commands and recipes the docs prescribe rather than just reading them, so a skill that would break on the next run is caught before someone runs it. Reports findings grouped by severity."
+displayDescription: "Sweeps every place the repo describes itself (skills, CLAUDE.md, content-design.md, the README, and the website's own explanations of how it is built) and flags anything that no longer matches reality. Executes the commands and recipes the docs prescribe rather than just reading them, so a skill that would break on the next run is caught before someone runs it. Reports findings grouped by severity."
 invoke: ["run a drift audit","are the docs and skills up to date","audit for gaps","check for structural drift"]
 ---
 
@@ -18,7 +18,7 @@ Use this skill after any structural or architectural change (a new build step, a
 
 Build validators already catch everything *mechanically checkable*. This audit exists for the layer beneath them: **prose that asserts something about the system, and instructions that only fail when someone follows them.** A skill telling you to run a deleted npm script passes every validator and every build — it fails silently, months later, for whoever runs it.
 
-**Do not trust this file's own description of the architecture.** It deliberately contains no *inventory* facts — no counts, paths, component lists, or versions, only the command entry points needed to derive them — because inventory facts would rot too. Derive the current shape from the sources of truth (package.json scripts, registries, the validator chain, the exports map) every time.
+**Do not trust this file's own description of the architecture.** It deliberately contains no *inventory* facts — no counts, paths, component lists, or versions, only the command entry points needed to derive them — because inventory facts would rot too. Derive the current shape from the sources of truth (package.json scripts, registries, the validator chain) every time.
 
 **Verify by executing, not by reading.** The most valuable findings come from actually running what a doc prescribes. Reading a worktree recipe looks fine; running it surfaces that the bundler now rejects it.
 
@@ -34,7 +34,6 @@ npm run validate-registry          # what the automated chain enforces, and what
 # package.json ends with the validators that need built HTML and so run after
 # the website build (in `verify` and CI), outside this chain.
 node -e "console.log(Object.keys(require('./package.json').scripts).join('\n'))"
-node -e "console.log(JSON.stringify(require('./package.json').exports, null, 2))"
 git log --oneline -20
 ```
 
@@ -49,9 +48,9 @@ If `validate-registry` fails, stop and report that first — the automated layer
 These are checkable by grep and should be exhaustive. For each, the question is "does the thing this text references still exist?"
 
 - **Every command referenced in prose exists.** Collect `npm run <script>` mentions across `*.md`, `.claude/skills/**`, and `website/src/**`, and diff against the real script list. A referenced-but-missing script is a broken instruction. **Check every workspace's scripts, not just the root** — a mention may be workspace-scoped (`--workspace <name>`, or preceded by a `cd`), which a naive grep reports as missing when it is perfectly valid.
-- **Every file path referenced in prose exists.** Extract path-looking strings from README.md, every root spec (the doc list in `scripts/validate-doc-refs.mjs` is the authoritative set — it includes tracked specs that are not published to /blueprints; `FILES` in `scripts/generate-site-corpus.mjs` is only the published subset), and every SKILL.md, and test each one. Moved or deleted files leave dangling references. Expect noise and filter it before reporting: bare filenames used conversationally (`globals.css`), scaffolding placeholders (`ComponentName.tsx`, `my-component/page.tsx`), date placeholders (`YYYY-MM-DD.md`), and shorthand for a pair (`tokens-light/dark.css`) are all fine. Only a path that *claims* to point at something real and doesn't is a finding.
-- **Every import specifier in docs matches the real exports map.** Any `import … from "…"` in documentation or example code should resolve against the package's current `exports` (or be an obvious third-party import). Renamed aliases and scopes hide here.
-- **Internal links resolve.** Route strings in website prose (`/foundations/...`, `/playground`) should correspond to real app directories, and the nav config should agree.
+- **Every file path referenced in prose exists.** Extract path-looking strings from README.md, every root spec (the doc list in `scripts/validate-doc-refs.mjs` is the authoritative set), and every SKILL.md, and test each one. Moved or deleted files leave dangling references. Expect noise and filter it before reporting: bare filenames used conversationally (`globals.css`), scaffolding placeholders (`<slug>/page.tsx`) and date placeholders (`YYYY-MM-DD.md`) are fine. Only a path that *claims* to point at something real and doesn't is a finding.
+- **Every import specifier in docs matches the installed package's exports.** Any `import … from "…"` in documentation or example code should resolve against the installed `rift-ds` package's `exports` (or be an obvious third-party import). Renamed aliases and scopes hide here.
+- **Internal links resolve.** Route strings in website prose (`/work/...`, `/about`) should correspond to real app directories or to a deliberate redirect in `website/next.config.ts`, and the nav config should agree.
 - **Counts come from registries, never literals.** Grep displayed numbers near countable nouns; each should be an imported constant.
 - **Config still applies where it is declared.** A restructure can leave a config block sitting somewhere the tool no longer reads, and nothing warns you — it just silently stops taking effect. Check that declared intent matches installed reality: dependency `overrides`/`resolutions` (npm honours these **only** in the workspace root), engine constraints, lint and TS config inheritance, and bundler aliases. For dependency pins specifically, compare the declared range against what is actually installed (`npm ls <pkg>`) and run `npm audit` — pins are usually security fixes, so one that stops applying is a silent regression, not a style issue.
 
@@ -59,14 +58,12 @@ These are checkable by grep and should be exhaustive. For each, the question is 
 
 For each surface, the test is: *if a stranger followed this exactly, would it work, and would what they believe afterwards be true?*
 
-- **README.md** — highest stakes: it ships inside the npm tarball, so its install and usage instructions reach every consumer. Verify the install command, import examples, customization recipes, and local-dev steps against the real package.
+- **README.md** — the public repo's front door, and the first thing a stranger reads. Verify the quick start, the command table, and the local-dev steps against the real `package.json` scripts.
 - **CLAUDE.md** — the project's operating manual: structure diagram, quick start, command list, registries/generated surfaces, architecture invariants, infrastructure facts. Every generated surface must be listed with its markers and its generator.
-- **design.md** — design language claims and per-component specs. Check that stated invariants are still enforced and that specs match the components.
 - **content-design.md** — the content style guide. Check that its Register by Surface table still lists every prose surface that exists, that its pointers at skill-owned standards still land, and that no rule in it duplicates one CLAUDE.md owns (fact-architecture rules live in CLAUDE.md, style rules here — a rule restated in both is drift).
-- **Website self-descriptions** — any page that explains how the system is built (the overview/pipeline, get-started and docs pages, foundations pages). These are public claims; treat inaccuracy as a bug.
-- **Other root specs** — any tracked root spec beyond the three above, published or not (the doc list in `scripts/validate-doc-refs.mjs` is the authoritative set; `FILES` in `scripts/generate-site-corpus.mjs` lists only the ones published to /blueprints). Each makes claims about code it describes; spot-check its heavily-referenced facts the same way, and check that its published-vs-repo-only status is stated where readers would assume otherwise.
-- **Blueprint copies** — if the repo publishes copies of its own docs, confirm they are generated rather than hand-maintained, and that they regenerated.
-- **Statistical drift — the code outvotes the docs.** An agent (or a new contributor) learns the system from what is most *common* in the codebase, not from what the prose asserts: the most-used stray pattern outvotes the documented one, because prevalence reads as canon. For a few core conventions the docs state — tokens over raw values, the canonical component over ad-hoc rewrites, the published import paths — census actual usage and check that the dominant pattern is the sanctioned one. A convention can be drift even when every individual instance is legal, if an unsanctioned variant outnumbers the documented form; and when the census is mechanically repeatable, the fix to recommend is a validator (see Guardrails), not a docs edit. The same lens covers adoption: a surface the repo publishes but nothing consumes — a component no page or story renders, an export subpath nothing imports — is a public claim the numbers contradict; judge whether it is merely early or actually dead, and say which.
+- **Website self-descriptions** — any page that explains how the system is built (today the `/design-system` page and the case study about building the system). These are public claims; treat inaccuracy as a bug.
+- **Other root specs** — any tracked spec beyond the ones above (the doc list in `scripts/validate-doc-refs.mjs` is the authoritative set). Each makes claims about code it describes; spot-check its heavily-referenced facts the same way.
+- **Statistical drift — the code outvotes the docs.** An agent (or a new contributor) learns the system from what is most *common* in the codebase, not from what the prose asserts: the most-used stray pattern outvotes the documented one, because prevalence reads as canon. For a few core conventions the docs state — tokens over raw values, the `rift-ds` component over a local re-implementation, the package's published import paths — census actual usage and check that the dominant pattern is the sanctioned one. A convention can be drift even when every individual instance is legal, if an unsanctioned variant outnumbers the documented form; and when the census is mechanically repeatable, the fix to recommend is a validator (see Guardrails), not a docs edit. The same lens covers adoption: a surface the repo publishes but nothing consumes — a site component no page renders, a dependency nothing imports — is a public claim the numbers contradict; judge whether it is merely early or actually dead, and say which.
 
 ### 4. Skills self-audit — the highest-yield section
 
@@ -78,7 +75,7 @@ Read **every** `SKILL.md`, not just the ones that seem related. For each, ask:
 - Does it tell the reader to hand-edit something that has since become generated?
 - Does it describe one-time setup that is now complete, or a future state that has since arrived?
 - Does its section/category list omit anything added since it was written?
-- Does it duplicate a fact that lives in a registry — or in a doc that owns it (design.md, CLAUDE.md, content-design.md) — instead of pointing at that home?
+- Does it duplicate a fact that lives in a registry — or in a doc that owns it (CLAUDE.md, content-design.md) — instead of pointing at that home?
 
 Then check for **missing coverage**: is there now a repeated, consequential workflow with no skill? Recent commits are the evidence — a ritual performed manually twice is a skill-shaped hole, especially where mistakes are expensive or irreversible.
 

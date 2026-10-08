@@ -2,7 +2,7 @@
 name: ai-visibility
 description: "Monthly loop that measures how findable robertritacca.com is to search engines and AI assistants, and trends it run over run. Runs the SEO sweep, pulls the search and AI-referral slice from GA, probes llms.txt from outside, ranks the target queries, and writes the trend report. Use when asked to run the AI visibility loop. Off-property actions are proposals only; never pushes, merges, or deploys."
 icon: query_stats
-displayDescription: "Measures whether the site is getting more findable, by search engines and by AI assistants, and turns one-off checks into a trend. Each run sweeps the technical SEO surface, pulls the search and AI-referral traffic slice, probes the public agent surfaces from outside, records where the target queries actually rank, and compares it all with the last run. The deliverable is the trend report; anything off-property is a proposal. One of the loops described on the Loops page."
+displayDescription: "Measures whether the site is getting more findable, by search engines and by AI assistants, and turns one-off checks into a trend. Each run sweeps the technical SEO surface, pulls the search and AI-referral traffic slice, probes the public agent surfaces from outside, records where the target queries actually rank, and compares it all with the last run. The deliverable is the trend report; anything off-property is a proposal."
 invoke: ["run the ai visibility loop","/ai-visibility"]
 ---
 

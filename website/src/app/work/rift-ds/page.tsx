@@ -329,7 +329,7 @@ export default function Robr0DsCaseStudy() {
                   </p>
 
                   <p>
-                    The chat was built for people reading the site. The newest door is for agents: the site now serves a Model Context Protocol endpoint at <code>/api/mcp</code>, and any MCP client that connects can read the component list, every component&rsquo;s exact prop contract, and the token registry. The prop data is generated from the same JSDoc that ships in the package&rsquo;s type declarations, so a coding agent building with the system reads the contract npm ships instead of guessing at props. Same public-only boundary as the corpus, no key, no model behind it.
+                    The chat was built for people reading the site. The newest door is for agents: the system’s own site now serves a Model Context Protocol endpoint, and any MCP client that connects can read the component list, every component’s exact prop contract, and the token registry. The prop data is generated from the same JSDoc that ships in the package&rsquo;s type declarations, so a coding agent building with the system reads the contract npm ships instead of guessing at props. Same public-only boundary as the corpus, no key, no model behind it.
                   </p>
 
                   <h2 id="impact">What it added up to</h2>
@@ -491,7 +491,7 @@ export default function Robr0DsCaseStudy() {
                 </div>
                 <div className={styles.linkList}>
                   <a
-                    href="https://github.com/robritacca-dotcom/design-system"
+                    href="https://github.com/robritacca-dotcom/rift-ds"
                     target="_blank"
                     rel="noopener noreferrer"
                     className={styles.linkItem}

@@ -26,8 +26,8 @@ If that is green, every violation axe can detect is already absent — and re-ch
 
 **This skill exists for the three things that gate does not cover:**
 
-1. **Colour contrast — excluded from the automated gate entirely.** `color-contrast` is switched off in `scripts/validate-website-a11y.mjs` by a settled decision of Rob's. **Read that override's comment first**: it is the authoritative record of why, and the single place the details belong. Since the 2026-08-20 accessible-teal split the shipped pairs the rule used to fail all clear AA; the rule stays off because the action colour is a token consumers re-point to their own palettes, so the gate would be judging a value the system does not own. That makes contrast — every pair, everywhere — the manual auditor's job, and **the single highest-value thing to audit**: nothing else checks it. Never propose re-enabling the rule without asking Rob first.
-2. **What axe cannot see.** Axe catches roughly a third of WCAG issues. It cannot tell whether alt text is *meaningful*, whether focus order makes sense, or whether a helper message *should* have been associated with its control. (Behavior a story's `play` function asserts *is* covered — `Dialog.stories.tsx` proves the modal focus trap, restore, and stacked Escape in CI — so the manual job is the overlays with no play coverage yet.) (Two such bugs once shipped undetected until a manual survey found them: Dropdown announced neither its helper text nor its error state. Both were since fixed by moving Dropdown onto `Field`, but it took the manual survey, not axe, to find them.)
+1. **Colour contrast — excluded from the automated gate entirely.** `color-contrast` is switched off in `scripts/validate-website-a11y.mjs` by a settled decision of Rob's. **Read that override's comment first**: it is the authoritative record of why, and the single place the details belong. Since the 2026-08-20 accessible-teal split the shipped pairs the rule used to fail all clear AA; the rule stays off by that settled decision. That makes contrast — every pair, everywhere — the manual auditor's job, and **the single highest-value thing to audit**: nothing else checks it. Never propose re-enabling the rule without asking Rob first.
+2. **What axe cannot see.** Axe catches roughly a third of WCAG issues. It cannot tell whether alt text is *meaningful*, whether focus order makes sense, or whether a helper message *should* have been associated with its control. (Overlay behaviour such as the focus trap, restore, and Escape is tested in the rift-ds repo, not here; on this site, check that the composed page still behaves.)
 3. **Website pages beyond the automated sample.** A page-level axe pass (`scripts/validate-website-a11y.mjs`, in `verify` and CI) now runs against the served site in both themes with the same rule set — but only over the route sample in `scripts/served-site.mjs`, at one desktop viewport. Full-site sweeps, mobile viewports, and any page outside that sample remain this skill's job.
 
 Report a finding as **already-enforced** if the page-level axe pass would have caught it; that tells the reader the gate is working rather than implying a gap.
@@ -35,7 +35,7 @@ Report a finding as **already-enforced** if the page-level axe pass would have c
 ## Instructions
 
 1. **Determine scope.** Accept one of:
-   - A website page URL (e.g. `/components/button`) → audits the live rendered page
+   - A website page URL (e.g. `/work/<slug>`) → audits the live rendered page
 
 2. **Read the source files.** For each page in scope, read its `page.tsx` and `page.module.css` before taking screenshots.
 
@@ -53,20 +53,20 @@ Report a finding as **already-enforced** if the page-level axe pass would have c
    **Keyboard Navigation:**
    - **[manual]** All interactive elements are reachable by Tab, in an order that makes sense — axe cannot judge order
    - Custom interactive components handle `onKeyDown` for Enter/Space (buttons) and arrow keys (any component with roving or list focus — radio groups, segmented controls, listboxes, tablists)
-   - **[manual where no `play` function covers it]** Modal/dialog *actually* traps focus while open and restores it to the trigger on close — axe sees the attributes, not the behaviour. The modal overlays share one behavior implementation (design.md's Components intro owns the contract), so a real trap/restore defect there is a finding against all of them, not one
+   - **[manual]** Modal/dialog *actually* traps focus while open and restores it to the trigger on close — axe sees the attributes, not the behaviour. The modal overlays come from `rift-ds` and share one behavior implementation there, so a real trap/restore defect is a finding against the package, to report rather than patch here
    - Escape key closes dismissible overlays (any floating panel — tooltips, popovers, menus, dialogs, pickers)
 
    **Focus Styles:**
    - Every interactive element has a `:focus-visible` rule in its CSS
-   - Focus ring uses the teal action token (`--color-action-primary-bg`) — design.md's teal rules are the authoritative list of sanctioned uses. Flag any `outline: none` without a visible replacement
+   - Focus ring uses the teal action token (`--color-action-primary-bg`) — the design system's spec in the rift-ds repo owns the sanctioned uses. Flag any `outline: none` without a visible replacement
 
    **Motion** (axe evaluates none of this):
-   - **[manual]** Anything that animates for more than five seconds, or loops indefinitely, can be paused, stopped, or hidden (WCAG 2.2.2). CSS motion satisfies this through the reduced-motion block in `tokens-motion.css`, which carries two mechanisms and whose own header comment owns the contract: token collapse for token-consuming CSS, and a universal `*` guard that also covers hardcoded and `ds-allow(motion)`-sanctioned literal timings (an infinite loop on an off-scale duration is still guarded). Read it there rather than assuming which half applies
-   - **[manual]** Animation driven from JavaScript is **outside that guard** — a `requestAnimationFrame` loop cannot be seen by CSS, so each one has to check `prefers-reduced-motion` itself. Enumerate the JS-side checks with a grep for `prefers-reduced-motion` across `website/src` — the grep is the inventory, not any list written here (the site's ambient background, which renders a single static frame under the preference, is one illustration; more exist and new ones keep arriving) — and confirm each still honours the preference rather than assuming the token layer covers it. That grep has one known blind spot: the recharts-backed charts animate their marks in from JavaScript but never contain the string — their guard is recharts' own `isAnimationActive: 'auto'` default, and design.md's chart-set spec owns the contract (a literal `true` would override the guard). Run a second grep for `isAnimationActive` across `website/src` — a clean result means the default guard holds everywhere; any explicit override is a finding to check against that spec
+   - **[manual]** Anything that animates for more than five seconds, or loops indefinitely, can be paused, stopped, or hidden (WCAG 2.2.2). CSS motion satisfies this through the reduced-motion block in the `rift-ds` package's `tokens-motion.css`, which carries two mechanisms and whose own header comment owns the contract: token collapse for token-consuming CSS, and a universal `*` guard that also covers hardcoded and `ds-allow(motion)`-sanctioned literal timings (an infinite loop on an off-scale duration is still guarded). Read it there rather than assuming which half applies
+   - **[manual]** Animation driven from JavaScript is **outside that guard** — a `requestAnimationFrame` loop cannot be seen by CSS, so each one has to check `prefers-reduced-motion` itself. Enumerate the JS-side checks with a grep for `prefers-reduced-motion` across `website/src` — the grep is the inventory, not any list written here (the site's ambient background, which renders a single static frame under the preference, is one illustration; more exist and new ones keep arriving) — and confirm each still honours the preference rather than assuming the token layer covers it.
    - **[manual]** Motion triggered by interaction (parallax, cursor-reactive effects) is disabled under reduced motion, or is not essential (WCAG 2.3.3)
 
 4. **Visual audit (from screenshots).** Start the preview server and screenshot the target in both light and dark mode (follow the `visual-review` skill pattern). Check:
-   - **Colour contrast (the priority — nothing automated covers this):** compute the ratio for every foreground/background pair actually rendered, not just body text. Flag anything below 4.5:1 for normal text or 3:1 for large text and UI components (WCAG 1.4.3 / 1.4.11). Note which token is used. Nothing is pre-exempt: the `color-contrast` axe rule is off for every pair (see Key context point 1), so every rendered pair is this audit's job; the shipped action pairings' AA clearance is recorded in that override's comment, so cross-check against it before flagging one of them.
+   - **Colour contrast (the priority — nothing automated covers this):** compute the ratio for every foreground/background pair actually rendered, not just body text. Flag anything below 4.5:1 for normal text or 3:1 for large text and UI components (WCAG 1.4.3 / 1.4.11). Note which token is used. Nothing is pre-exempt: the `color-contrast` axe rule is off for every pair (see point 1 under What is already automated), so every rendered pair is this audit's job; the shipped action pairings' AA clearance is recorded in that override's comment, so cross-check against it before flagging one of them.
    - **Text sizing:** No text visually below ~12px (WCAG 1.4.4)
    - **Focus visibility:** Confirm focus rings are clearly visible in both light and dark themes
 
@@ -88,4 +88,4 @@ Report a finding as **already-enforced** if the page-level axe pass would have c
 
 6. **Summarise:**
    - `X critical · Y moderate · Z minor`
-   - If clean: "No accessibility violations found. Component meets WCAG 2.1 AA."
+   - If clean: "No accessibility violations found. Page meets WCAG 2.1 AA."

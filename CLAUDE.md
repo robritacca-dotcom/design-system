@@ -12,7 +12,8 @@ That system used to live in this repo. It does not any more: it has its own
 repository, package and documentation site at **rift-ds.com**, and this site
 consumes the published contract rather than reaching past it. Nothing here
 defines a token, a component or a theme. If a question is about components,
-tokens, templates or theming, the answer lives at rift-ds.com, not here.
+tokens, templates or theming, the answer lives at rift-ds.com, not here. The
+predecessor releases and the build journal are archived in the rift-ds repo.
 
 The site answers questions about itself through a chat: `SiteChat` mounted from
 the root layout, the `useChat` hook, and a Claude-backed `/api/chat` route with
@@ -60,7 +61,10 @@ off-brand prose rather than a leak. The second half guards the other direction:
 third-party words in the corpus would be an injection surface *into* the chat.
 Every word on the site is the owner's, which is what makes automatic page-prose
 extraction safe; the day a page carries someone else's text, that content needs
-an explicit decision before the next build ships it to the model.
+an explicit decision before the next build ships it to the model. The boundary
+is enforced as an allowlist: a contact-shaped detail (an email address) may
+enter the corpus only through a page's `corpus-facts()` directive, and
+`scripts/validate-site-corpus.mjs` fails the build on any other route in.
 
 **Self-descriptions stay in sync.** When a change makes a statement in this
 file, `README.md`, `content-design.md` or a skill false, update it in the same
@@ -103,11 +107,20 @@ npm run eval:chat       # chat answer-quality eval against a running dev server 
 ## CI & Local Verify
 
 `npm run verify` is the **single local mirror of CI**: lint, build, then the
-checks that need the finished build — the three validators that read built HTML
-(rendered spacing, corpus coverage, internal links) and the two served-site
-checks (the hydration smoke, then the page-level axe pass), in that order. The
+checks that need the finished build: the validators that read built HTML
+(rendered spacing, corpus coverage, internal links, SEO metadata) and the
+served-site checks (the hydration smoke, then the page-level axe pass), in that
+order. The tail of the `verify` entry in the root `package.json` is the
+authoritative list. The
 rule that keeps them in sync: **when CI gains a check, add it to `verify` in the
 same change** — skills and docs reference `verify`, never individual commands.
+
+CI also runs steps that are deliberately not in `verify`: the dependency audit
+(`npm audit --audit-level=high`), which judges the tree against the registry's
+advisory feed rather than the code, so a failure there is news from outside;
+and the generated-content drift guard (`git diff --exit-code` after the build),
+which a local run cannot do because a working tree is dirty with the change in
+progress.
 
 The generators and validators run in the site's own `prebuild`, so a plain
 `npm run build` already covers them; `validate-registry` at the root runs the
@@ -142,7 +155,8 @@ guessing: `ship`, `checkpoint`, or `land`.
 ```
 /
 ├── content-design.md          # Content style guide — voice, register, prose rules
-├── HISTORY.md                 # (in the rift-ds repo) the predecessor releases and build journal
+├── .claude/skills/            # Agent skills: the shipping vocabulary, the audits and the loops
+├── .github/workflows/         # CI (ci.yml) and the scheduled production smoke (uptime.yml)
 ├── scripts/                   # Generators + validators, the sync scripts, the served-site checks
 ├── evals/chat/                # Chat answer-quality eval: golden set, promptfoo config, SPEC.md
 ├── ga-analysis/               # GA pull tooling (tracked, secret-free; credentials are gitignored)
@@ -152,14 +166,14 @@ guessing: `ship`, `checkpoint`, or `land`.
     │   ├── writing/           # Essay pages, mirrored from the Substack feed
     │   ├── about/ contact/ privacy/
     │   ├── design-system/     # The page about having built Rift DS; points at rift-ds.com
-    │   ├── covers/            # Hidden staging grid for the vector cover mocks (noindex, chromeless)
+    │   ├── covers/            # Hidden staging grid for the framed case-study cover mocks (noindex, chromeless)
     │   ├── rr-animated/       # Standalone animated-logo page (noindex)
     │   ├── llms.txt/          # The public agent index for the portfolio
     │   └── api/chat/          # The chat backend: route, guardrails, persona, followups, feedback
     ├── src/config/            # navigation.ts (nav/sidebar/breadcrumb source of truth), chromeless.ts, anchor-nav.ts (both held to real routes by validate-route-config.mjs), site.ts (the apex URL's one home), brand.ts, social.ts
     ├── src/data/              # The registries above, plus case-study-tldrs.ts (prose kept out of the route folders so the corpus never carries the same facts twice)
     ├── src/hooks/             # useChat — the chat widget's transport-agnostic state machine
-    ├── src/lib/               # Chat transport, model allowlist, follow-ups, suggestion budget; site-tools.ts (corpus search); Substack feed; OG image; structured data; scroll lock
+    ├── src/lib/               # Chat transport, model allowlist, follow-ups, suggestion budget; site-tools.ts (a corpus-search helper nothing currently imports); Substack feed; OG image; structured data; scroll lock
     └── src/components/        # Shared site UI: MegaNav, Sidebar, SiteFooter, SiteChat, SitePalette, BlurBackground, FloatingAnchorNav, covers/
 ```
 
@@ -182,7 +196,7 @@ site CSS              background: var(--color-action-primary-bg)
 
 - **Dark mode** is driven by `data-theme="dark"` on the root element. Every semantic colour token has a light and a dark value, so no `prefers-color-scheme` queries belong in site CSS.
 - **Spatial tokens are a numeric scale**, not t-shirt sizes: `--gap-400`, `--padding-500`, `--radius-300`, `--icon-size-600`. The rank is `px / 4 * 100`. The families are not parallel, so never infer one from another: `--gap-xs` was 4px and `--padding-xs` was 6px, which is why a suffix-based rename would have shifted every padding on this site by 2px.
-- **Never hardcode a hex value** in site CSS. The one sanctioned exception is the case-study cover redraws in `website/src/components/covers/`, which are deliberately token-free: every value is a drawing coordinate from the source frame, sanctioned per module with a `ds-allow-file(mockup)` header, so a theme change can never alter a picture of what shipped.
+- **Never hardcode a hex value** in site CSS. The one sanctioned exception is the cover redraws in `website/src/components/covers/`, which are deliberately token-free: every value is a drawing coordinate from the source, sanctioned per module with a `ds-allow-file(mockup)` header, so a theme change can never alter a picture of what shipped. The case-study covers ship as flat images via `CoverImage`; `RiftDsCover`, the /design-system hero, is live container-query HTML, token-free under the same rule.
 - **Every `var(--…)` must resolve** — see `validate-token-usage.mjs` above.
 
 ## Theming

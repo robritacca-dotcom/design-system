@@ -1,9 +1,9 @@
 /**
  * validate-website-a11y.mjs
  *
- * Runs axe against the served website, in both themes. The story tests
- * already hold every component to WCAG 2.1 AA, but they see components in
- * isolation: page-level composition — landmark structure, heading order,
+ * Runs axe against the served website, in both themes. The design system's
+ * own story tests hold every component to WCAG 2.1 AA in its repo, but they
+ * see components in isolation: page-level composition — landmark structure, heading order,
  * duplicate ids across sections, the chrome the layout mounts around every
  * page — is exactly what a per-component gate cannot see, and it never got
  * scanned before this check. Same served-build slot as the hydration smoke,

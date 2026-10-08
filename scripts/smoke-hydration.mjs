@@ -13,7 +13,7 @@
  *   node scripts/smoke-hydration.mjs
  *     Self-serving: boots `next start` on a free port against the existing
  *     website build and checks it. Runs at the end of `verify` and in CI's
- *     website job, after the build — it catches the reproducible class of
+ *     site job, after the build — it catches the reproducible class of
  *     mismatch (time-, random-, and environment-dependent renders).
  *
  *   node scripts/smoke-hydration.mjs --live
@@ -22,7 +22,7 @@
  *     pathname during the root route's ISR regeneration) exists only there —
  *     no local run can reproduce it, so the live site must be looked at.
  *
- * Routes come from the registries (first case study, first component) plus
+ * Routes come from the case-study registry (the first study) plus
  * the fixed pages, so the list cannot rot as content moves. Each route is
  * checked at a desktop and a phone viewport: the FAB summary panel and the
  * chat takeover render differently per pointer capability, and a mismatch

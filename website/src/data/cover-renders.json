@@ -4,12 +4,12 @@
     "card": {
       "ratio": [940, 480],
       "width": 1600,
-      "use": "The card cover slot — the /work grid and the Card showcase. Cards sit in a multi-column grid, so 1600px is roughly 3x a typical card and 2x the widest one."
+      "use": "The card cover slot on the /work grid. Cards sit in a multi-column grid, so 1600px is roughly 3x a typical card and 2x the widest one."
     },
     "feature": {
       "ratio": [16, 10],
       "width": 2560,
-      "use": "The home page's featured card and the rift-ds hero. Every study is listed here, not just today's featured one, because the home page features caseStudies[0] — reordering the registry must not leave a study without its render."
+      "use": "The home page's featured card and the /work/rift-ds case-study hero. Every study is listed here, not just today's featured one, because the home page features caseStudies[0] — reordering the registry must not leave a study without its render."
     },
     "wide": {
       "ratio": [16, 9],

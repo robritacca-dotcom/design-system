@@ -8,16 +8,12 @@
  * (the release skill's stale verify block and component-doc-page's dead
  * pageMetadata() reference were the motivating incidents).
  *
- * Scans an EXPLICIT file list, never a glob:
+ * Scans an EXPLICIT file list, never a glob (the `sources` array below is
+ * the authoritative list):
  *   - .claude/skills/<name>/SKILL.md          (repo skills)
- *   - website/src/data/external-skills/*.md   (published external copies)
- *   - CLAUDE.md, README.md, design.md, content-design.md, SECURITY.md
- *   - evals/chat/README.md, website/README.md, ga-analysis/README.md
- *
- * Deliberately excluded:
- *   - website/src/data/skills-content.generated.ts and the website/public
- *     blueprint copies — generated mirrors of the files above; scanning
- *     them would double-report every finding.
+ *   - CLAUDE.md, README.md, content-design.md, SECURITY.md
+ *   - evals/chat/README.md, evals/chat/SPEC.md, website/README.md,
+ *     ga-analysis/README.md
  *
  * Runs in the validate-registry chain before every build.
  */

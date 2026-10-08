@@ -7,7 +7,7 @@
  * essays). Structure only: complete fields, unique site-matching slugs,
  * non-trivial text, no leaked HTML. Freshness is deliberately not checked —
  * the registry is refreshed by running scripts/sync-essays.mjs after
- * publishing (a curation job, like the project journal), never by the build,
+ * publishing (a curation job), never by the build,
  * which must stay off the network.
  */
 import { readFileSync } from 'node:fs';

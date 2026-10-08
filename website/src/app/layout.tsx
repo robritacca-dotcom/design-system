@@ -8,7 +8,7 @@ import "rift-ds/tokens/tokens.css";
 // Single source of the Material Symbols base styles and icon-size scale.
 // Imported explicitly rather than relying on it arriving incidentally through
 // a component import, so pages that use raw .material-symbols-rounded spans
-// (e.g. /foundations/icons) are styled deterministically.
+// (the case studies do) are styled deterministically.
 import "rift-ds/fonts/material-symbols.css";
 import { Nunito_Sans } from "next/font/google";
 import "./globals.css";
@@ -167,7 +167,7 @@ export default async function RootLayout({
     >
       <head>
         {/* Material Symbols is served from the design system's own bundled
-            @font-face (src/fonts/material-symbols.css, imported above) — the
+            @font-face (rift-ds/fonts/material-symbols.css, imported above) — the
             woff2 is emitted into the build, so the font was being shipped twice.
 
             The Google Fonts <link> that used to sit here is deliberately gone.

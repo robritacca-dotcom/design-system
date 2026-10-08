@@ -7,4 +7,4 @@ This repo powers [robertritacca.com](https://robertritacca.com/). It publishes n
 - **Preferred:** [open a private vulnerability report](https://github.com/robritacca-dotcom/design-system/security/advisories/new). It stays between us until a fix ships.
 - Please don't open a public issue for security problems.
 
-You can expect a response within a few days. There is no supported-version table: only the latest published version is supported. Fixes land on `main`, which is what runs live.
+You can expect a response within a few days. There are no versions to support: fixes land on `main`, which is what runs live.

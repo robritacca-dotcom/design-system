@@ -4,8 +4,7 @@
  * highest-yield programmatic check in the eval. Routes come from
  * scripts/site-routes.mjs — the filesystem, the same authority the coverage
  * validator uses — plus the route handlers (route.ts files), because a
- * handler like /api/mcp is a real URL the chat may legitimately cite (it
- * has a human landing page and is advertised in llms.txt).
+ * handler like /llms.txt is a real URL the chat may legitimately cite.
  */
 import { readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';

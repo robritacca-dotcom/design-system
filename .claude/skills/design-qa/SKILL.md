@@ -14,14 +14,14 @@ This skill judges **rendered pixels**, not source code. Code review can confirm 
 
 ## When invoked
 
-Use this skill when asked to design-QA, polish, or judge something visual — phrases like "design QA [Name]", "polish the [Name] component", "is [Name] good enough", "look at these buttons", "review the [category] components together". It also runs as the mandatory quality gate inside the `new-component` skill (see the last section).
+Use this skill when asked to design-QA, polish, or judge something visual — phrases like "design QA [Name]", "polish the [Name] component", "is [Name] good enough", "look at these buttons", "review the [category] components together".
 
 ## Scope
 
 Accept any of:
 
 - **A page** → a URL path on the website. Page reviews inherit the `visual-review` skill's viewport matrix — both themes at desktop *and* mobile widths — since an arrangement that only holds at one width isn't holding
-- **A sweep** → several components or pages at once ("the form controls", "every page under /foundations"), each judged individually *and* against the others — cross-target inconsistency is the sweep's whole point
+- **A sweep** → several components or pages at once ("the form controls", "every case study under /work"), each judged individually *and* against the others — cross-target inconsistency is the sweep's whole point
 
 If no target is given, default to what this session built or changed. Ask only when genuinely ambiguous.
 
@@ -36,10 +36,10 @@ If no target is given, default to what this session built or changed. Ask only w
 Use the browser/preview tools the harness provides for every step below; never launch a dev server through a raw shell command.
 
 1. **Render the real thing.** The `website` configuration in `.claude/launch.json` (theme is `data-theme` on the root element; the `visual-review` skill's step 3 and Key context document how to switch it — verify the attribute actually changed before capturing — and what page chrome to expect).
-2. **Capture the matrix.** Every variant and state, in light **and** dark. Then **magnify the details**: zoomed crops of every join, corner, divider, icon seat, and focus ring. Seam defects — a doubled border where two segments meet, a divider a pixel taller than its track, a radius that doesn't flow through a join — are invisible at 1x and glaring at 3x. If the harness offers a zoom or region capture, use it on every joint the component has; if not, scaling the render up (a transform on the story root works) is a fine substitute. One capture-environment trap: after a programmatic theme flip in a hidden browser pane, CSS transitions can freeze mid-flight (paused rendering never advances them), so a token can screenshot at neither theme's value and read as a broken palette. Before judging any colour, let the page settle in a fronted tab or force-finish the page's animations — and when a colour still looks wrong, confirm it with computed styles before writing the finding.
-3. **Drive the states for real.** Hover, focus-visible (reached by keyboard, not click), active, disabled, loading, empty, error. Capture each. A state you didn't render is a state you didn't review. On a page review, the layout-mounted chat button's hover-summoned summary panel counts as one of the page's states — summon it and let the reveal settle. The chat panel and its suggestion chips animate on open, close, and reveal (design.md's Site chat pattern owns the choreography): capture after they settle, and read a mid-flight frame — a part-transparent panel, shimmer pills where chips belong — as animation, not defect.
-4. **Stress the content.** Longest plausible label, most items, zero items, a narrow container, wrapping text. Use story controls or a scratch story; don't ship the scratch.
-5. **Line up the siblings.** Pick the two or three nearest relatives by role — same registry category, or same pattern family (everything pill-shaped, everything with a chevron, every card) — and capture the same crops of them. Consistency findings come from this lineup, not from memory. For a page: one or two established pages of the same type.
+2. **Capture the matrix.** Every variant and state, in light **and** dark. Then **magnify the details**: zoomed crops of every join, corner, divider, icon seat, and focus ring. Seam defects — a doubled border where two segments meet, a divider a pixel taller than its track, a radius that doesn't flow through a join — are invisible at 1x and glaring at 3x. If the harness offers a zoom or region capture, use it on every joint the component has; if not, scaling the render up (a temporary transform on the page root works) is a fine substitute. One capture-environment trap: after a programmatic theme flip in a hidden browser pane, CSS transitions can freeze mid-flight (paused rendering never advances them), so a token can screenshot at neither theme's value and read as a broken palette. Before judging any colour, let the page settle in a fronted tab or force-finish the page's animations — and when a colour still looks wrong, confirm it with computed styles before writing the finding.
+3. **Drive the states for real.** Hover, focus-visible (reached by keyboard, not click), active, disabled, loading, empty, error. Capture each. A state you didn't render is a state you didn't review. On a page review, the layout-mounted chat button's hover-summoned summary panel counts as one of the page's states — summon it and let the reveal settle. The chat panel and its suggestion chips animate on open, close, and reveal (the choreography is the design system's, specified in the rift-ds repo): capture after they settle, and read a mid-flight frame — a part-transparent panel, shimmer pills where chips belong — as animation, not defect.
+4. **Stress the content.** Longest plausible label, most items, zero items, a narrow container, wrapping text. Edit the content in devtools or on a scratch page; don't ship the scratch.
+5. **Line up the siblings.** Pick the two or three nearest relatives by role — same pattern family (everything pill-shaped, everything with a chevron, every card) — and capture the same crops of them. Consistency findings come from this lineup, not from memory. For a page: one or two established pages of the same type.
 6. **Read the source.** The page's own `page.tsx` and `page.module.css`, and the design system's Composition rules (in its repo) if a layout question turns on them — the token rules, and the component or page source. After the visual pass, to name causes and to check behaviour pixels can't show.
 
 ## The eye — the design principles
@@ -100,7 +100,7 @@ Inside and between a component's own parts, judged at magnification, per theme:
 
 - The right component is used — a page re-implementing an existing library pattern in local CSS is a Repetition finding even when it looks fine today.
 - Icons match the type: an icon's stroke weight sits with the font weight beside it; a heavy icon next to light text reads as borrowed from another system.
-- The action colour means action, status roles carry status, and visible copy follows `content-design.md`. Token *compliance* has its own skill (`token-audit`); here, judge what the token **choices** look like — a legal token in the wrong role is exactly the kind of thing this pass exists to catch.
+- The action colour means action, status roles carry status, and visible copy follows `content-design.md`. Token *resolution* is build-checked (`scripts/validate-token-usage.mjs`); here, judge what the token **choices** look like — a legal token in the wrong role is exactly the kind of thing this pass exists to catch.
 
 ## Judging
 
@@ -116,7 +116,7 @@ Every finding names the principle or craft check it violates, and each is classi
 
 For every defect and polish finding:
 
-1. Fix at the source — component CSS/TSX or the page module. The fix itself obeys all the library's token and motion rules (the `new-component` skill's `ComponentName.css` section is the reference).
+1. Fix at the source — component CSS/TSX or the page module. The fix itself obeys CLAUDE.md's Tokens section. A defect inside a `rift-ds` component is fixed in that repo, so report it instead of patching around it here.
 2. Re-render and re-capture **the same crops**. Keep the before/after pairs.
 3. Re-run the eye over the changed area — fixes cause regressions too.
 4. Loop until a full pass yields no new defect or polish findings.
@@ -146,9 +146,9 @@ Reference the exact element and file, e.g. "the divider in Gadget's split varian
 ## Guardrails
 
 - **Contrast findings:** the `color-contrast` axe rule is deliberately switched off — rule-wide, every pair — by a settled decision, and the comment beside the override in `scripts/validate-website-a11y.mjs` is its authoritative record (the shipped action pairings it discusses clear AA). Read it before raising any contrast finding, and never re-raise the decision itself as a finding without asking Rob first.
-- **Page reviews** inherit the false-finding caveats in the `visual-review` skill's Key context — the ambient background's two renderers, the layout-mounted chrome, `desktopOnly` nav — read that section before judging a page screenshot.
+- **Page reviews** inherit the false-finding caveats in the `visual-review` skill's Key context — the ambient background's two renderers, the layout-mounted chrome — read that section before judging a page screenshot.
 - **A clean pass is a valid outcome.** Don't invent findings to justify the run; state what was covered and stop.
 
 ## As a gate
 
-When invoked on work in progress rather than as a review, this is a gate, not a report: loop until no defect or polish findings remain, fold any open direction calls into the hand-off summary, and treat "renders correctly" as necessary but nowhere near sufficient. Before registration the build gate is `npm run verify`, which runs the generators and validators before it builds.
+When invoked on work in progress rather than as a review, this is a gate, not a report: loop until no defect or polish findings remain, fold any open direction calls into the hand-off summary, and treat "renders correctly" as necessary but nowhere near sufficient. The build gate is `npm run verify`, which runs the generators and validators before it builds.

@@ -24,7 +24,7 @@ Use this skill when asked to save unfinished work — phrases like "checkpoint",
 
 2. **Survey the tree**: run `git status --short` and classify every entry as in scope (this session's work) or out of scope (predates the session or wasn't part of the requested work). **Never run `git add -A`, `git add .`, or `git add` on a directory** — always add explicit file paths. Out-of-scope files stay out and are named in the report.
 
-3. **Quick check, not the full verify**: run `npm run lint`; if the session touched `website/`, also run `npm --prefix website run lint` (root ESLint ignores the website workspace, so the root lint alone carries no signal about website work). This is a backup, not a release — the full `verify` (several minutes) is `ship`'s job. **A lint failure does not block the push**: the whole point is that the work is saved even mid-mess. But flag any failure loudly in the report so it isn't a surprise at ship time.
+3. **Quick check, not the full verify**: run `npm run lint` (the root script lints the scripts and then the website workspace, so one command covers both). This is a backup, not a release — the full `verify` (several minutes) is `ship`'s job. **A lint failure does not block the push**: the whole point is that the work is saved even mid-mess. But flag any failure loudly in the report so it isn't a surprise at ship time.
 
 4. **Commit in the repo's conventional style** (`feat(scope):`, `fix(scope):`, `chore(scope):`, with a short why in the body) — checkpoint commits eventually reach `main` through a merge, so they are real history, not throwaways. One commit is fine if the work is one concern; split if it's clearly several.
 

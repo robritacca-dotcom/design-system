@@ -20,9 +20,9 @@
  *  - PARAM_RANGES below matches DEFAULT_SHADER_PARAMS in the library, in both
  *    directions, so a new parameter cannot ship without a sanity range
  *  - the "<N> parameters" claims match that count in every doc the CLAIM_CHECKS
- *    loop enumerates (the list beside the loop is authoritative — it includes
- *    the ShaderField docs page, which the 2026-09 audit caught still saying
- *    seven). A parameter count is a countable fact, so it gets the same
+ *    loop enumerates (the list beside the loop is authoritative; it holds this
+ *    repo's own docs only, since the ShaderField docs page moved with the
+ *    library). A parameter count is a countable fact, so it gets the same
  *    treatment as every other one in this repo: build-enforced rather than
  *    remembered. The 2026-08 drift audit is why — `crop` landed, the specs
  *    were updated, and the README kept telling npm consumers there were seven.
@@ -244,7 +244,7 @@ if (!Array.isArray(blobs) || blobs.length === 0) {
       errors.push(`${label} — "token" must be a custom-property name`);
     } else if (!knownTokens.has(blob.token)) {
       errors.push(
-        `${label} — token is not in src/tokens/registry.json; the background ` +
+        `${label} — token is not in rift-ds/tokens/registry.json; the background ` +
           'would sample a property nothing defines and render an invisible blob'
       );
     }

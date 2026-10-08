@@ -50,9 +50,6 @@ ids they cover; a rule change and its spec row move in the same change.
   proves every `metadata.requiredFacts` string is actually in the generated
   corpus, and every page route is either covered or deliberately excluded. A
   question the corpus cannot answer is a corpus bug, and it fails the build.
-  The one sanctioned exception: cases marked `source: tools` are answered by
-  the chat's lookup tools over the generated prop and token data, not the
-  corpus, so they carry empty `requiredFacts` (SPEC.md's T4 owns this).
 - **Layer 1 — this config.** Deterministic assertions through the real route.
 - **Layer 2 — LLM judge. Not built.** Gated on real logged failures to grade.
   Do not add `llm-rubric` assertions before then.
@@ -70,7 +67,8 @@ ids they cover; a rule change and its spec row move in the same change.
   own exchange log (`latencyMs` and `firstTextMs` per exchange), and the
   browser for what a visitor actually feels.
 - **The em-dash and exclamation-mark assertions police the persona's style
-  rules.** The corpus itself (CLAUDE.md) contains em dashes, so a failure
+  rules.** The corpus itself contains em dashes (the Writing section's date
+  lines), so a failure
   usually means the model quoted rather than wrote; read it before treating
   it as a regression.
 - **The eval only ever scores the default model.** The config sends no

@@ -86,9 +86,9 @@ export const TITLE_TEMPLATE = `%s · ${TITLE_SUFFIX}`;
  * of these sections use the section's card, not the root one — a segment that
  * declares `openGraph` replaces the inherited block wholesale (images
  * included), so the nearest ancestor card has to be re-stated per page rather
- * than inherited. Checked against the filesystem by
- * scripts/validate-website-surfaces.mjs, so an added or removed section image
- * can't leave this list stale.
+ * than inherited. Nothing checks this list against the filesystem now (the
+ * validator that did left with the design system), so a new section image
+ * needs its entry added here by hand.
  *
  * Empty since the design system moved to rift-ds.com: /components and
  * /foundations were the only sections with their own cards, and both are gone.
