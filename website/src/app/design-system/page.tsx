@@ -9,7 +9,8 @@ import styles from "./page.module.css";
  *
  * This was the design system's landing page, a live collage of every
  * component in the library. The system has a site of its own now, so this is
- * deliberately short: the claim, a picture of where it lives, and the way in.
+ * deliberately short: the claim and the way in, then a picture of where it
+ * lives. The copy sits above the picture because below it, it went unread.
  * Anything that wants to describe components or tokens belongs at rift-ds.com,
  * which documents itself and stays current with itself.
  *
@@ -28,40 +29,37 @@ export default function DesignSystemPage() {
       <main className={styles.page} id="main-content">
         <header className={styles.hero}>
           <h1 className={styles.pageTitle}>Rift DS</h1>
+          <p className={styles.lede}>
+            An AI-ready React design system, designed and built by Robert
+            Ritacca. It’s open source on npm, and this site is built with it:
+            the components, tokens and theme here all come from the package.
+          </p>
+          <div className={styles.actions}>
+            <Button
+              href={DESIGN_SYSTEM_URL}
+              label="Open rift-ds.com"
+              iconRight="open_in_new"
+              target="_blank"
+              rel="noreferrer"
+            />
+            <Button
+              href="/work/rift-ds"
+              label="Read the case study"
+              variant="secondary"
+              iconRight="arrow_forward"
+            />
+          </div>
         </header>
 
         <a
           className={styles.banner}
           href={DESIGN_SYSTEM_URL}
-          aria-label="Open rift-ds.com"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Open rift-ds.com in a new tab"
         >
           <RiftDsHomeCover />
         </a>
-
-        <p className={styles.lede}>
-          Rift DS is an AI-ready React design system, designed and built by
-          Robert Ritacca. Every colour, radius, type step and motion value
-          resolves through one token layer, and the build fails when a rule
-          breaks. It ships as an open npm package with a documentation site of
-          its own, and this site is built on it, installed from npm like any
-          other consumer, which is how it gets tested.
-        </p>
-
-        <div className={styles.actions}>
-          <Button
-            href={DESIGN_SYSTEM_URL}
-            label="Open rift-ds.com"
-            iconRight="open_in_new"
-            target="_blank"
-            rel="noreferrer"
-          />
-          <Button
-            href="/work/rift-ds"
-            label="Read the case study"
-            variant="secondary"
-            iconRight="arrow_forward"
-          />
-        </div>
       </main>
     </>
   );

@@ -30,8 +30,9 @@
   align-items: center;
   gap: var(--gap-400);
   /* The container is the site's full 1440 so the banner can use it. Text
-     does not want that measure, so the copy keeps its own. */
-  max-width: 760px;
+     does not want that measure, so the copy keeps its own: the width the
+     intro paragraph on /about runs to at the same viewport. */
+  max-width: 1000px;
 }
 
 .pageTitle {
@@ -67,7 +68,7 @@
    container), so there is no ratio to hold here: the banner is as tall as
    the redraw is at that width. */
 
-/* ---------- body ---------- */
+/* ---------- the claim and the way in, above the banner ---------- */
 
 .lede {
   font-family: var(--font-paragraph-family);
@@ -75,8 +76,11 @@
   font-weight: var(--font-paragraph-weight);
   line-height: var(--font-paragraph-line-height);
   color: var(--color-text-secondary);
-  margin: var(--gap-1000) 0 0;
-  max-width: 760px;
+  margin: 0;
+  /* `pretty`, not `balance`: balance would even the lines out and give the
+     width straight back, where pretty fills the measure and only avoids a
+     one-word last line. */
+  text-wrap: pretty;
 }
 
 .actions {
@@ -84,7 +88,7 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: var(--gap-200);
-  margin-top: var(--gap-1000);
+  margin-top: var(--gap-400);
 }
 
 @media (max-width: 768px) {
