@@ -201,6 +201,10 @@
   color: #fafafa;
 }
 
+.nowrap {
+  white-space: nowrap;
+}
+
 .subtitle {
   max-width: 40em;
   font-size: clamp(15px, 1.6cqi, 23px);

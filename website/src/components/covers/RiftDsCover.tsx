@@ -1,3 +1,4 @@
+import { useId } from "react";
 import styles from "./RiftDsCover.module.css";
 
 /**
@@ -32,13 +33,33 @@ const SWATCHES = [
   "#12a594", "#0e8fa8", "#1a56db", "#8e4ec6", "#d6409f",
 ];
 
-/** The mark: two strokes leaning apart, the rift. */
+/**
+ * The mark: a tall centre stroke with a shorter one either side, each kinking
+ * outward at its foot. The three paths are the ones rift-ds.com's own header
+ * draws, on the same 24-unit grid. There the strokes take a gradient between
+ * two action tokens; here the stops are fixed, like every other value in this
+ * drawing.
+ */
 function RiftMark() {
+  const gradient = useId();
+  const stroke = {
+    stroke: `url(#${gradient})`,
+    strokeWidth: 2.4,
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+  } as const;
+
   return (
-    <svg width="20" height="18" viewBox="0 0 20 18" fill="none" aria-hidden="true">
-      <path d="M7 1 L2 17" stroke="#f4f4f5" strokeWidth="1.8" strokeLinecap="round" />
-      <path d="M11 1 L8 17" stroke="#9b9ba1" strokeWidth="1.8" strokeLinecap="round" />
-      <path d="M15 4 L18 17" stroke="#6e6e76" strokeWidth="1.8" strokeLinecap="round" />
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M12 1.5 V22.5" {...stroke} />
+      <path d="M6.5 7 V12 L2 16.5" {...stroke} />
+      <path d="M17.5 7 V12 L22 16.5" {...stroke} />
+      <defs>
+        <linearGradient id={gradient} x1="12" y1="4" x2="12" y2="20" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#f4f4f5" />
+          <stop offset="1" stopColor="#9ed4e5" />
+        </linearGradient>
+      </defs>
     </svg>
   );
 }
@@ -98,7 +119,10 @@ export function RiftDsHomeCover({ className }: { className?: string }) {
         </div>
 
         <div className={styles.hero}>
-          <p className={styles.title}>The AI-ready React design system</p>
+          {/* Held together so a narrow frame never breaks the line at the hyphen. */}
+          <p className={styles.title}>
+            The <span className={styles.nowrap}>AI-ready</span> React design system
+          </p>
           <p className={styles.subtitle}>
             Open source and fully themeable, built for AI products and coding agents.
           </p>
