@@ -59,9 +59,11 @@ generator's own output, so it catches prose the chat cannot see.
 
 ## The chat
 
-The site answers questions about itself. `SiteChat` mounts from the root layout,
-`useChat` holds the conversation state, and a Claude-backed `/api/chat` route
-streams the answer with its own guardrails, persona and rate limiting.
+The site answers questions about itself. The panel and the conversation state
+are the rift-ds chat widget (`rift-ds/chat`), mounted once from the root layout
+and configured in `website/src/components/SiteChat/`, and a Claude-backed
+`/api/chat` route streams the answer with its own guardrails, persona and rate
+limiting.
 
 The model reads a corpus generated at build time from the site's own published
 prose, and answers from it in a single pass. The corpus is **public-only and

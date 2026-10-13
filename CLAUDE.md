@@ -15,9 +15,15 @@ defines a token, a component or a theme. If a question is about components,
 tokens, templates or theming, the answer lives at rift-ds.com, not here. The
 predecessor releases and the build journal are archived in the rift-ds repo.
 
-The site answers questions about itself through a chat: `SiteChat` mounted from
-the root layout, the `useChat` hook, and a Claude-backed `/api/chat` route with
-its own guardrails, persona and rate limiting. The model answers from a
+The site answers questions about itself through a chat. The UI and the
+conversation state are the rift-ds chat widget (`rift-ds/chat`): `ChatProvider`
+and `ChatLauncher`, mounted once from the root layout through two thin wrappers
+in `website/src/components/SiteChat/` that carry this site's configuration. The
+backend is this site's own: a Claude-backed `/api/chat` route with its own
+guardrails, persona and rate limiting, which the widget talks to over its
+published event protocol. The launcher says how the panel sits on `<html>`
+(`data-chat`: `docked`, `docked-left` or `takeover`) and never touches the
+page's layout, so `globals.css` makes the room for it. The model answers from a
 build-generated corpus of the site's own published prose, in a single pass. It
 carries no tools: it used to have two, over the component prop API and the token
 registry, and both went to rift-ds.com with the system they described.
@@ -49,7 +55,9 @@ starters, follow-ups and the FAB panel's chips share one row component and one
 length budget: `SUGGESTION_MAX_CHARS` in `website/src/lib/chat-suggestions.ts`.
 It is enforced wherever a suggestion enters the UI, and
 `validate-chat-starters.mjs` and `validate-page-summaries.mjs` between them fail
-the build on written copy that exceeds it. A suggestion that will not fit is
+the build on written copy that exceeds it. The chat widget that draws the chips
+ships its own copy of the number, and `validate-chat-starters.mjs` fails the
+build when the two disagree. A suggestion that will not fit is
 dropped, never truncated: half a question is not a question.
 
 **The site chat corpus is public-only and owner-authored-only, and both halves
@@ -172,9 +180,8 @@ guessing: `ship`, `checkpoint`, or `land`.
     │   └── api/chat/          # The chat backend: route, guardrails, persona, followups, feedback
     ├── src/config/            # navigation.ts (nav/sidebar/breadcrumb source of truth), chromeless.ts, anchor-nav.ts (both held to real routes by validate-route-config.mjs), site.ts (the apex URL's one home), brand.ts, social.ts
     ├── src/data/              # The registries above, plus case-study-tldrs.ts (prose kept out of the route folders so the corpus never carries the same facts twice)
-    ├── src/hooks/             # useChat — the chat widget's transport-agnostic state machine
-    ├── src/lib/               # Chat transport, model allowlist, follow-ups, suggestion budget; site-tools.ts (a corpus-search helper nothing currently imports); Substack feed; OG image; structured data; scroll lock
-    └── src/components/        # Shared site UI: MegaNav, Sidebar, SiteFooter, SiteChat, SitePalette, BlurBackground, FloatingAnchorNav, covers/
+    ├── src/lib/               # Chat model allowlist, the written follow-up fallbacks, suggestion budget; site-tools.ts (a corpus-search helper nothing currently imports); Substack feed; OG image; structured data; scroll lock
+    └── src/components/        # Shared site UI: MegaNav, Sidebar, SiteFooter, SiteChat (the rift-ds chat widget's mount, provider wrapper and starter pools), SitePalette, BlurBackground, FloatingAnchorNav, covers/
 ```
 
 ---
