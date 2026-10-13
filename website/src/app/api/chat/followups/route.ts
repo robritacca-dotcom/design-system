@@ -66,7 +66,7 @@ const MAX_TOKENS = 200;
 
 /**
  * Cap on the upstream call, well inside the widget's own 10s wait
- * (TIMEOUT_MS in lib/chat-followups.ts): past the widget's window a late
+ * (FOLLOWUPS_TIMEOUT_MS in rift-ds/chat): past the widget's window a late
  * answer is billed and never seen, so a slow call should die here rather
  * than run on. Retries are off for the same reason — the SDK's default
  * backoff can stretch one slow upstream moment past every deadline, and

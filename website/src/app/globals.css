@@ -66,14 +66,13 @@ html[data-theme-ready] {
      a page with a natural height instead of one that grows with its frame. */
   --layout-viewport-height: 100svh;
 
-  /* The docked site-chat panel: its width, and the gap it floats off the
-     viewport edges (top, right, bottom — and the FAB's corner offset).
-     Only applied above 1440px, where a fourth column fits beside
-     sidebar + content + rail. The width is the resting minimum: the panel's
-     widen grip (SiteChatMount) rewrites it inline on <html>, capped at
-     655px — keep its PANEL_MIN/MAX constants in step with this value. */
-  --layout-chat-width: 420px;
-  --layout-chat-inset: 20px;
+  /* The gap the site's floating chrome keeps off the viewport edges. It is
+     the chat panel's own inset, which the rift-ds chat stylesheet defines
+     on :root as --ds-chat-inset beside --ds-chat-width (the docked panel's
+     width, rewritten inline on <html> by the launcher's widen grip). The
+     package owns both values; this alias only keeps the stage toolbar and
+     the toast offset below reading one name. */
+  --layout-chat-inset: var(--ds-chat-inset);
 
   /* The site's fixed layers, lowest to highest: the floating anchor rail
      (5, under the header so its panel can never sit on the bar), sticky
@@ -134,37 +133,51 @@ body {
   flex-direction: column;
   gap: var(--gap-2000);
   align-items: center;
-  transition: background-color var(--motion-duration-slow) var(--motion-ease-standard), color var(--motion-duration-slow) var(--motion-ease-standard), padding-right var(--motion-duration-base) var(--motion-ease-standard);
+  transition: background-color var(--motion-duration-slow) var(--motion-ease-standard), color var(--motion-duration-slow) var(--motion-ease-standard), padding-right var(--motion-duration-base) var(--motion-ease-standard), padding-left var(--motion-duration-base) var(--motion-ease-standard);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* The docked chat panel: SiteChatMount sets data-chat="docked" on <html>
-   while the panel is docked (open, wide viewport, panel view). The body is
-   itself the page container (a centred flex column), so right padding
-   slides every page's content over instead of letting the fixed panel
-   cover it — zero per-page layout changes. The fixed sticky header is not
-   inset by body padding; MegaNav.module.css offsets it under the same
-   attribute. Reduced motion zeroes the glide via the motion tokens. */
+/* The docked chat panel: the rift-ds ChatLauncher sets data-chat on <html>
+   while the panel is docked (open, wide viewport, panel view): "docked" on
+   the right edge, "docked-left" on the left. The package never touches the
+   page's layout, so making room is this stylesheet's job. The body is
+   itself the page container (a centred flex column), so padding on the
+   panel's side slides every page's content over instead of letting the
+   fixed panel cover it — zero per-page layout changes. The fixed sticky
+   header is not inset by body padding; MegaNav.module.css offsets it under
+   the same attribute. A floating panel sets no attribute and needs no room.
+   Reduced motion zeroes the glide via the motion tokens. */
 html[data-chat="docked"] body {
   padding-right: calc(
-    var(--primitive-padding-1000) + var(--layout-chat-width) + var(--layout-chat-inset)
+    var(--primitive-padding-1000) + var(--ds-chat-width) + var(--ds-chat-inset)
   );
 }
 
-/* Docked, the panel owns the right column and the FAB is gone. A fixed
-   toast ignores the body padding, so right-placed toasts move left of the
-   panel (they glide with the widen grip, since this reads the same width)
+html[data-chat="docked-left"] body {
+  padding-left: calc(
+    var(--primitive-padding-1000) + var(--ds-chat-width) + var(--ds-chat-inset)
+  );
+}
+
+/* Docked, the panel owns its column and the FAB is gone. A fixed toast
+   ignores the body padding, so toasts placed on the panel's side move clear
+   of it (they glide with the widen grip, since this reads the same width)
    and bottom-placed ones drop to the panel's own inset, aligned with its
    bottom edge. */
 html[data-chat="docked"] {
-  --ds-toast-inset-right: calc(var(--layout-chat-width) + var(--layout-chat-inset));
-  --ds-toast-inset-bottom: var(--layout-chat-inset);
+  --ds-toast-inset-right: calc(var(--ds-chat-width) + var(--ds-chat-inset));
+  --ds-toast-inset-bottom: var(--ds-chat-inset);
 }
 
-/* The phone takeover: SiteChatMount sets data-chat="takeover" on <html>
+html[data-chat="docked-left"] {
+  --ds-toast-inset-left: calc(var(--ds-chat-width) + var(--ds-chat-inset));
+  --ds-toast-inset-bottom: var(--ds-chat-inset);
+}
+
+/* The phone takeover: the launcher sets data-chat="takeover" on <html>
    while the chat is open at phone width. The chat is the document there —
-   the panel sits in normal flow at 100dvh (SiteChat.module.css) and the
+   the panel sits in normal flow at 100dvh (the package's stylesheet) and the
    page around it is hidden, not covered, so Safari handles the soft
    keyboard as it does for any page with a field at the bottom, by scrolling
    the document. The ambient background stays: it is what the panel's glass
@@ -181,15 +194,25 @@ html[data-chat="takeover"] body > :not(#site-chat-panel):not(.blur-container) {
   display: none;
 }
 
-/* While the panel's widen grip is being dragged (SiteChatMount sets the
-   attribute): the pointer drives --layout-chat-width frame by frame, so the
-   body inset must follow instantly rather than glide after it, and the drag
-   crossing page text must not select it. */
+/* While the panel's widen grip is being dragged, or a floating panel is
+   being moved or sized (the launcher sets the attribute for all three): the
+   pointer drives --ds-chat-width frame by frame, so the body inset must
+   follow instantly rather than glide after it, and the drag crossing page
+   text must not select it. */
 html[data-chat-resizing] {
   user-select: none;
 }
 html[data-chat-resizing] body {
   transition: none;
+}
+
+/* MegaNav's mobile drawer is open (it sets the attribute on <html>). The
+   chat FAB sits above the drawer's scrim, where it reads as a stray button
+   laid over the menu, so it stands down until the menu closes. The FAB is
+   the package's; the drawer attribute is this site's, so the rule lives
+   here. */
+html[data-nav-drawer="open"] .ds-chat-launcher__fab {
+  display: none;
 }
 
 a {

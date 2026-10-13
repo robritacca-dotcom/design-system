@@ -70,6 +70,29 @@ try {
   process.exit(1);
 }
 
+/* The widget's own copy of the budget. The chips are drawn by the rift-ds
+   chat widget, which filters every suggestion against the constant it ships;
+   the written copy, the follow-ups route and the page-summaries validator are
+   held to this site's. Two numbers that must be one: if a package upgrade
+   moves the widget's, a label this script passes would be silently dropped
+   at runtime (or one it fails would have fitted), so the disagreement is a
+   build error rather than a missing chip. */
+const widgetBudgetPath = join(repoRoot, 'node_modules', 'rift-ds', 'chat', 'suggestions.js');
+try {
+  const source = readFileSync(widgetBudgetPath, 'utf8');
+  const match = source.match(/const SUGGESTION_MAX_CHARS\s*=\s*(\d+)/);
+  if (!match) throw new Error('SUGGESTION_MAX_CHARS not found');
+  const widgetMaxChars = Number(match[1]);
+  if (widgetMaxChars !== maxChars) {
+    errors.push(
+      `The chip budget disagrees: chat-suggestions.ts says ${maxChars}, the installed rift-ds chat widget says ${widgetMaxChars}. ` +
+        'Move SUGGESTION_MAX_CHARS in website/src/lib/chat-suggestions.ts to the value the widget ships and fix any label that no longer fits.'
+    );
+  }
+} catch (err) {
+  errors.push(`Could not read the widget's chip budget from rift-ds/chat/suggestions.js: ${err.message}`);
+}
+
 let checked = 0;
 
 for (const { path: relative, scope, pattern = LABELLED, optional = false } of SOURCES) {

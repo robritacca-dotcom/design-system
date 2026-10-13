@@ -8,7 +8,7 @@ import {
 } from "@/config/navigation";
 import { caseStudies } from "@/data/case-studies";
 import { CHROMELESS_ROUTES } from "@/config/chromeless";
-import { useSiteChat } from "@/components/SiteChat/ChatContext";
+import { useChatWidget } from "rift-ds/chat";
 import { SITE_PALETTE_OPEN_EVENT } from "./palette-bus";
 import styles from "./SitePalette.module.css";
 
@@ -48,7 +48,7 @@ interface SitePaletteMountProps {
 export function SitePaletteMount({ writingLinks }: SitePaletteMountProps) {
   const pathname = usePathname() ?? "/";
   const router = useRouter();
-  const { setOpen: setChatOpen, send: sendChat } = useSiteChat();
+  const { setOpen: setChatOpen, send: sendChat } = useChatWidget();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
 

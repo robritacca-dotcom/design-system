@@ -10,13 +10,17 @@ import "rift-ds/tokens/tokens.css";
 // a component import, so pages that use raw .material-symbols-rounded spans
 // (the case studies do) are styled deterministically.
 import "rift-ds/fonts/material-symbols.css";
+// The chat widget's stylesheet, once. It also defines --ds-chat-width and
+// --ds-chat-inset on :root, which globals.css reads to make room for a
+// docked panel, so it comes before globals.css.
+import "rift-ds/chat/chat.css";
 import { Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import { BRAND_ATTRIBUTE } from "@/config/brand";
 import { buildPersonJsonLd, buildWebsiteJsonLd, SITE_URL } from "@/lib/structuredData";
 import { getArticles } from "@/lib/substack";
 import { WritingNavProvider } from "@/components/MegaNav/WritingNavContext";
-import { SiteChatProvider } from "@/components/SiteChat/ChatContext";
+import { SiteChatProvider } from "@/components/SiteChat/SiteChatProvider";
 import { SiteChatMount } from "@/components/SiteChat/SiteChatMount";
 import { SitePaletteMount } from "@/components/SitePalette/SitePaletteMount";
 import SiteFooter from "@/components/SiteFooter/SiteFooter";
@@ -100,7 +104,8 @@ export const viewport: Viewport = {
   // The software keyboard shrinks the layout viewport rather than covering
   // it, so 100dvh surfaces (the phone chat takeover) end above the keys.
   // Android Chrome honours this; Safari ignores it, and the phone takeover
-  // is built not to need it (SiteChat.module.css).
+  // is built not to need it (the rift-ds chat stylesheet puts the panel in
+  // normal flow there).
   interactiveWidget: "resizes-content",
   // Matches the white-floor UI: pure white in light, near-black in dark.
   themeColor: [

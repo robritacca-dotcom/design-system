@@ -15,15 +15,16 @@
   transition: right var(--motion-duration-base) var(--motion-ease-standard);
 }
 
-/* Docked, the chat owns the right column: slide off its edge the way the
-   toasts do (globals.css owns the geometry) */
+/* Docked right, the chat owns the right column: slide off its edge the way
+   the toasts do (globals.css owns the geometry). Docked left it is on the
+   other side of the page, so the rail stays put. */
 :global(html[data-chat="docked"]) .rail {
   right: calc(
-    var(--layout-chat-width) + var(--layout-chat-inset) + var(--primitive-gap-400)
+    var(--ds-chat-width) + var(--ds-chat-inset) + var(--primitive-gap-400)
   );
 }
 
-/* The widen grip rewrites --layout-chat-width frame by frame; gliding
+/* The widen grip rewrites --ds-chat-width frame by frame; gliding
    would lag the dragged edge */
 :global(html[data-chat-resizing]) .rail {
   transition: none;

@@ -1,11 +1,13 @@
 /**
  * POST /api/chat — the chat widget's backend.
  *
- * Streams newline-delimited JSON, one `ChatEvent` per line, in the same shape
- * the sim transport produces. The event type is imported from useChat so the
- * server is type-checked against the contract the client consumes.
+ * Streams newline-delimited JSON, one `ChatEvent` per line. The event type is
+ * imported from rift-ds/chat, whose widget is the client, so the server is
+ * type-checked against the contract the client consumes. A type-only import:
+ * it is erased at compile time and pulls none of the widget into this route.
  *
- * Two rules shape the error handling, both from how useChat renders events:
+ * Two rules shape the error handling, both from how the widget's useChat
+ * renders events:
  *
  *   - Guardrail outcomes are 200 plus a `notice`, never a non-2xx. A notice
  *     renders as an ordinary assistant message, which is what makes a rate
@@ -28,7 +30,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 
 import { siteCorpus } from "@/data/site-corpus.generated";
-import type { ChatEvent, ChatTransportMessage } from "@/hooks/useChat";
+import type { ChatEvent, ChatTransportMessage } from "rift-ds/chat";
 import {
   BUDGET_CHAT_MODEL,
   CHAT_MODELS,
