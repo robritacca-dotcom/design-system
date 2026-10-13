@@ -124,8 +124,11 @@ rule that keeps them in sync: **when CI gains a check, add it to `verify` in the
 same change** — skills and docs reference `verify`, never individual commands.
 
 CI also runs steps that are deliberately not in `verify`: the dependency audit
-(`npm audit --audit-level=high`), which judges the tree against the registry's
-advisory feed rather than the code, so a failure there is news from outside;
+(`npm audit --audit-level=high --omit=dev`), which judges the production
+dependency tree against the registry's advisory feed rather than the code, so a
+failure there is news from outside (dev-only advisories are left to the
+`security-audit` skill, because the step runs first and a red one skips every
+check after it);
 and the generated-content drift guard (`git diff --exit-code` after the build),
 which a local run cannot do because a working tree is dirty with the change in
 progress.

@@ -27,7 +27,14 @@ jobs:
       # Judges the dependency tree against the registry's advisory feed rather
       # than the code, so a failure here is news from outside rather than
       # something a local run could have caught earlier.
-      - run: npm audit --audit-level=high
+      #
+      # Production dependencies only. This is the first step, so a failure
+      # here skips lint, the build and every check after it. An advisory with
+      # no patched release in a dev-only tool (braces, under the ESLint config,
+      # from 2026-10-08) kept the whole job red for days while nothing that
+      # ships was affected. What deploys is still held to the gate; dev-only
+      # advisories are the security-audit skill's to report.
+      - run: npm audit --audit-level=high --omit=dev
       - run: npm run lint
       # The site's own prebuild runs the generators and the validator chain.
       - run: npm run build
