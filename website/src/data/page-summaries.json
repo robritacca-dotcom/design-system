@@ -101,12 +101,12 @@
   "essays": {
     "how-to-add-a-chat-to-your-own-site": {
       "title": "How to add a chat to your own site",
-      "text": "The recipe behind robr0 GPT: a corpus built from the site itself, guardrails, and a weekend of wiring.",
+      "text": "The recipe behind robr0 AI: a corpus built from the site itself, guardrails, and a weekend of wiring.",
       "chips": [
         {
           "id": "build",
           "label": "How was this chat built?",
-          "prompt": "How was the robr0 GPT chat on this site built?"
+          "prompt": "How was the robr0 AI chat on this site built?"
         },
         {
           "id": "recipe",

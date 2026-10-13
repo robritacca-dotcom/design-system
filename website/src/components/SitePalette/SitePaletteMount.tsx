@@ -184,7 +184,7 @@ export function SitePaletteMount({ writingLinks }: SitePaletteMountProps) {
     // the concrete matches, and when nothing else matches it is the whole
     // result set: the dead-end empty state becomes an answer path.
     const askChat: CommandPaletteGroup = {
-      label: "Ask robr0 GPT",
+      label: "Ask robr0 AI",
       commands: [
         {
           id: "ask-chat-query",
@@ -192,7 +192,7 @@ export function SitePaletteMount({ writingLinks }: SitePaletteMountProps) {
           description: "Get an answer from the site chat",
           // The AI-ring chip — the system's "a model answers here" signal,
           // worn as a passive badge, wearing the FAB's own face (forum +
-          // "Ask robr0 GPT") so the row points at the surface it opens;
+          // "Ask robr0 AI") so the row points at the surface it opens;
           // the chip replaces the row's leading icon rather than repeating
           // it. aria-hidden because the group heading already says it, and
           // decorative rather than the AiButton component because a real
@@ -204,7 +204,7 @@ export function SitePaletteMount({ writingLinks }: SitePaletteMountProps) {
               >
                 forum
               </span>
-              Ask robr0 GPT
+              Ask robr0 AI
             </span>
           ),
           onSelect: () => {

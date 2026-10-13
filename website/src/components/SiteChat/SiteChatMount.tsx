@@ -96,7 +96,7 @@ export function SiteChatMount() {
 
   return (
     <ChatLauncher
-      label="Ask robr0 GPT"
+      label="Ask robr0 AI"
       icon="forum"
       /* Chromeless routes render no chat at all. */
       hidden={CHROMELESS_ROUTES.has(pathname)}
@@ -113,7 +113,7 @@ export function SiteChatMount() {
           : undefined
       }
       widget={{
-        title: "robr0 GPT",
+        title: "robr0 AI",
         logo: "/rr.svg",
         placeholder: "Ask anything",
         /* The subjects, not the author: the chat is about the work and the
