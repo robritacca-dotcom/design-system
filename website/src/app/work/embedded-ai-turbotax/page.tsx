@@ -119,6 +119,52 @@ export default function EmbeddedAiTurbotaxCaseStudy() {
                     />
                   </Figure>
 
+                  <h2 id="an-mcp-app-with-a-growing-set-of-tools">An MCP app with a growing set of tools</h2>
+
+                  <p>
+                    Under the hood, TurboTax was an MCP app: a server exposing a set of tools that any AI-native client speaking the Model Context Protocol could call. That is how the same product reached ChatGPT and then Claude without being rebuilt for either. The host model reads each tool&apos;s description, decides when a request calls for it, and renders the interface the tool sends back.
+                  </p>
+
+                  <p>
+                    The tool set grew with every release. By April there were four: a tax estimate, tax information, booking a consultation with an expert, and starting your tax return. The last was the largest by some distance. Connecting accounts, the conversational interview, document upload and extraction, the filing checklist and the sync back into TurboTax all sat behind it.
+                  </p>
+
+                  <Figure onClick={() => setLightbox({ src: "/images/embedded-ai/tax-estimate.png", alt: "Tax estimate result at wide and narrow widths: an estimated federal refund, then a checklist card and four filing options" })} caption={<>The tax estimate tool&apos;s result, wide and narrow. The figure comes first, then a way into the checklist, an offer of a live expert, and each filing option.</>}>
+                    <Image
+                      src="/images/embedded-ai/tax-estimate.png"
+                      alt="Tax estimate result at wide and narrow widths: an estimated federal refund, then a checklist card and four filing options"
+                      width={1697}
+                      height={1216}
+                    />
+                  </Figure>
+
+                  <p>
+                    No tool was allowed to be a dead end. Every one returned with a prompt pointing at the next sensible step, so the estimate offered to build a checklist or put you in touch with an expert, and a finished checklist handed you to TurboTax to file. Because the platform decides which tool runs, those bridging prompts were the main lever we had over the order things happened in. They gave both the user and the model an obvious next move instead of an empty prompt box.
+                  </p>
+
+                  <Figure onClick={() => setLightbox({ src: "/images/embedded-ai/start-return.png", alt: "Entry card for building a tax checklist: chat about your situation, review the checklist and gather documents, then start filing in TurboTax" })} caption={<>The way into the return tool. Three steps set out before sign-in, ending in TurboTax.</>}>
+                    <Image
+                      src="/images/embedded-ai/start-return.png"
+                      alt="Entry card for building a tax checklist: chat about your situation, review the checklist and gather documents, then start filing in TurboTax"
+                      width={1106}
+                      height={556}
+                    />
+                  </Figure>
+
+                  <h2 id="how-we-knew-it-worked">How we knew it worked</h2>
+
+                  <p>
+                    A tool that returns the right answer is no use if the model never calls it. Inside someone else&apos;s orchestrator that is a real failure, and an easy one to miss: the estimate fires when the user asked to start a return, or the model answers a tax question from its own general knowledge instead of reaching for ours. So the evals tested the whole path, not each tool on its own.
+                  </p>
+
+                  <p>
+                    We kept a set of realistic requests, written the way people actually talk about their taxes, and checked three things for each one. Did the right tool fire? Was what it returned correct? And did the bridging prompt lead somewhere useful? A one-word change to a tool description could shift when the model reached for it, so the set ran again whenever a description or a prompt changed, on both platforms.
+                  </p>
+
+                  <p>
+                    Success had a shape we could describe before we could count it. The model reached for the right tool when someone asked in their own words. People followed the bridges from one tool to the next instead of stalling after a single answer. And the person who started in ChatGPT or Claude arrived in TurboTax with their work already waiting for them. Every tool and every bridge existed to get someone to that last moment, so that was the one we watched hardest.
+                  </p>
+
                   <h2 id="building-at-the-speed-of-the-platforms">Building at the speed of the platforms</h2>
 
                   <p>

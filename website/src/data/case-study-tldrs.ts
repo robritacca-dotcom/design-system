@@ -22,7 +22,7 @@ export const caseStudyTldrs = {
     {
       claim: "TurboTax shipped natively inside ChatGPT and Claude",
       detail:
-        "I led design across three releases in one tax season: an MVP in December, V2 in January, and the Claude Connector expansion in April. The work won a Webby Award.",
+        "One MCP app, four tools, two hosts. I led design across three releases in one tax season: an MVP in December, V2 in January, and the Claude Connector expansion in April. The work won a Webby Award.",
     },
     {
       claim: "The platform owns the orchestrator",
