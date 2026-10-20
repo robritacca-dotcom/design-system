@@ -23,7 +23,7 @@
     "recharts": "^3.7.0",
     "remark-gfm": "^4.0.1",
     "rift-ds": "^1.8.0",
-    "sanitize-html": "^2.17.6",
+    "sanitize-html": "^2.18.0",
     "zod": "^4.5.4"
   },
   "devDependencies": {
