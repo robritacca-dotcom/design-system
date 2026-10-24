@@ -210,6 +210,15 @@
   background: linear-gradient(135deg, #08141f 0%, #0e3253 46%, #1a6cae 100%);
 }
 
+/* Rift DS's Blueprint theme: its #003DFF action blue, the colour the
+   dashboard on the Rift DS cover is wearing. */
+.toneBlueprint {
+  background: linear-gradient(135deg, #eef2ff 0%, #a9bbff 46%, #1f4dff 100%);
+}
+:global([data-theme="dark"]) .toneBlueprint {
+  background: linear-gradient(135deg, #04071a 0%, #0b1d5c 46%, #1a44e0 100%);
+}
+
 /* This site's own teal action colour. */
 .toneSite {
   background: linear-gradient(135deg, #edf8fb 0%, #aadbeb 46%, #1e91b4 100%);

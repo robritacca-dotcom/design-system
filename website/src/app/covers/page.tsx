@@ -10,6 +10,7 @@ import {
 } from "../../components/covers/IntuitAgentChatCover";
 import { MetaOfferDraftCover } from "../../components/covers/MetaOfferDraftCover";
 import { MetaOfferSummaryCover } from "../../components/covers/MetaOfferSummaryCover";
+import { RiftDsDashboardCover } from "../../components/covers/RiftDsDashboardCover";
 import {
   SiteHomeCover,
   SitePlaygroundCover,
@@ -47,6 +48,10 @@ const COVERS: { label: string; cover: React.ReactNode }[] = [
   { label: "Augmenta — solution viewer", cover: <AugmentaSolutionCover /> },
   { label: "Meta — offer summary", cover: <MetaOfferSummaryCover /> },
   { label: "Meta — offer draft", cover: <MetaOfferDraftCover /> },
+  {
+    label: "Rift DS — marketing dashboard, Blueprint dark",
+    cover: <RiftDsDashboardCover />,
+  },
   { label: "robertritacca.com — home", cover: <SiteHomeCover /> },
   {
     label: "robertritacca.com — playground chat",
