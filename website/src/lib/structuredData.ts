@@ -126,12 +126,6 @@ export function buildArticleJsonLd({
   };
 }
 
-/**
- * Builds a SoftwareApplication schema for robr0 DS — the design system itself,
- * as a developer-facing piece of software. No component count here: counts are
- * never hardcoded (see CLAUDE.md), and it would drift.
- */
-
 /** Builds a BreadcrumbList schema from the same trail PageBreadcrumb renders. */
 export function buildBreadcrumbJsonLd(items: BreadcrumbItem[]) {
   return {

@@ -23,10 +23,11 @@ const PANEL_ID = "site-chat-panel";
    a summary rendered from it is a hydration mismatch that blanks the whole
    site (React redoes <html> and drops the theme guard's ready mark).
 
-   ChatLauncher's docs say it applies this gate itself. As of rift-ds 1.8.0
-   it does not: it hands `summary` straight to AiButton, which renders the
-   panel whenever one is passed. So the gate stays here, and it is load-
-   bearing — do not remove it on the strength of the prop's description. */
+   ChatLauncher does no device or hydration gating of its own: it hands
+   `summary` straight to AiButton, which renders the panel whenever one is
+   passed, and its prop docs now say a host that wants the gate passes
+   `summary` only where it applies. So the gate stays here, and it is load-
+   bearing. */
 const HOVER_QUERY = "(hover: hover) and (pointer: fine)";
 const subscribeHover = (onChange: () => void) => {
   const media = window.matchMedia(HOVER_QUERY);
