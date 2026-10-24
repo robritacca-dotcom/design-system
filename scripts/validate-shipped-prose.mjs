@@ -204,6 +204,12 @@ for (const [slug, entry] of Object.entries(essayCovers.covers ?? essayCovers)) {
   scan(`website/src/data/essay-covers.json (${slug})`, entry?.alt);
 }
 
+const riftDsThemes = json('website/src/data/rift-ds-themes.json');
+surfacesChecked += 1;
+for (const theme of riftDsThemes.themes ?? []) {
+  scan(`website/src/data/rift-ds-themes.json (${theme.id ?? '?'})`, `${theme.label ?? ''}\n${theme.alt ?? ''}`);
+}
+
 // The loops registry was scanned here; /loops was a design-system page.
 
 // --- Skill display descriptions (once card copy on /skills, still scanned) --

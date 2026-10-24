@@ -1,0 +1,43 @@
+/*
+ * The Rift DS cover's two captures, cross-faded with the site theme the same
+ * way the Augmenta viewer's renders are.
+ *
+ * ds-allow-file(mockup): the timing is part of the picture it frames.
+ */
+
+.screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.render {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: opacity 320ms ease;
+}
+
+.renderLight {
+  opacity: 1;
+}
+
+.renderDark {
+  opacity: 0;
+}
+
+:global([data-theme="dark"]) .renderLight {
+  opacity: 0;
+}
+
+:global([data-theme="dark"]) .renderDark {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .render {
+    transition-duration: 1ms;
+  }
+}

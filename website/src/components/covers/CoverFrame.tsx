@@ -42,7 +42,7 @@ export type Ground =
 
 /** The product the gradient is drawn from. */
 export type Tone =
-  "claude" | "openai" | "intuit" | "augmenta" | "meta" | "site";
+  "claude" | "openai" | "intuit" | "augmenta" | "meta" | "site" | "blueprint";
 
 const GROUND_CLASS: Record<Ground, string> = {
   warm: styles.groundWarm,
@@ -61,6 +61,7 @@ const TONE_CLASS: Record<Tone, string> = {
   augmenta: styles.toneAugmenta,
   meta: styles.toneMeta,
   site: styles.toneSite,
+  blueprint: styles.toneBlueprint,
 };
 
 /**

@@ -50,8 +50,8 @@
     },
     {
       "href": "/work/rift-ds",
-      "title": "Building Rift DS: the rules that hold",
-      "dek": "Seven months building a design system where breaking a rule fails the build",
+      "title": "Rift DS: a design system that can look like anything",
+      "dek": "An open-source design system, built by one designer, that ships fast because the rules come first",
       "companyName": "Personal",
       "companyLogo": "/logos/rr.svg",
       "coverSrc": "/images/heroes/rift-ds.png"

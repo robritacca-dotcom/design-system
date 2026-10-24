@@ -39,7 +39,7 @@
       "aspects": ["card", "feature", "wide"]
     },
     "/work/rift-ds": {
-      "alt": "This site's playground, with theme controls for action colour, corner radius and typeface down the left of a live chat preview.",
+      "alt": "Rift DS's marketing dashboard template in its Blueprint theme: ad spend, impressions, conversions and cost per click over a monthly ad spend chart and a visitors chart split by channel.",
       "aspects": ["card", "feature"]
     }
   }
