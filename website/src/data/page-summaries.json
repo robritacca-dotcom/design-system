@@ -99,6 +99,22 @@
     }
   },
   "essays": {
+    "a-designmd-is-not-a-design-system": {
+      "title": "A DESIGN.md is not a design system",
+      "text": "A DESIGN.md describes a look; a system keeps it consistent. How a TurboTax shortcut became Rift's theme importer.",
+      "chips": [
+        {
+          "id": "importer",
+          "label": "How does the importer work?",
+          "prompt": "How does Rift's theme importer turn a DESIGN.md into a theme?"
+        },
+        {
+          "id": "difference",
+          "label": "DESIGN.md vs a design system?",
+          "prompt": "What is the difference between a DESIGN.md and a design system, according to the essay 'A DESIGN.md is not a design system'?"
+        }
+      ]
+    },
     "how-to-add-a-chat-to-your-own-site": {
       "title": "How to add a chat to your own site",
       "text": "The recipe behind robr0 AI: a corpus built from the site itself, guardrails, and a weekend of wiring.",
