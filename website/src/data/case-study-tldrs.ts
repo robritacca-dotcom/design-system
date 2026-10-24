@@ -1,5 +1,6 @@
 import type { CaseStudyTldrPoint } from "@/components/CaseStudyTldr/CaseStudyTldr";
 import { COMPONENT_COUNT } from "rift-ds/components/registry";
+import riftDsThemes from "@/data/rift-ds-themes.json";
 
 /**
  * The TLDR points rendered at the top of each case study, keyed by the
@@ -204,28 +205,28 @@ export const caseStudyTldrs = {
   ],
   "rift-ds": [
     {
-      claim: "A design system where the rules cannot soften",
-      detail: `Every system I shipped inside large companies drifted once it crossed the design-engineering boundary. Rift DS started in February 2026 to fix that from the inside: now ${COMPONENT_COUNT} components, a published npm package, and a documentation site of its own.`,
+      claim: "Design systems do not have to be slow",
+      detail: `Rift DS is ${COMPONENT_COUNT} React components, ${riftDsThemes.themes.length} complete themes and an AI chat widget, built by one designer. 1.0.0 went to npm on 26 September 2026, and 1.13.0 on 23 October.`,
     },
     {
-      claim: "Every fact has exactly one home",
+      claim: "The guardrails come before the work",
       detail:
-        "Registries hold the authoritative lists, and validators check every other surface against them on each build. Forget to register a component and the build fails and names the folder. There is nowhere to type a component count by hand, including in this TLDR.",
+        "A skill scaffolds each component, and validators fail the build on a raw colour, a broken props contract or a control drawn twice. Every story renders in a real browser with accessibility checks, so the newest component meets the same bar as the first.",
     },
     {
-      claim: "Publishing found what dogfooding could not",
+      claim: "A real system that can wear any look",
       detail:
-        "Going on npm exposed contract problems self-use never hits: 18 components rebuilt, 49 accessibility violations fixed. Your own system catches taste problems; only a second consumer catches contracts.",
+        "Components read only semantic tokens, so a theme re-points the tokens and nothing else. Drop a DESIGN.md or an image on the playground and it fits a theme to the system, then exports one AGENTS.md a coding agent can build on.",
     },
     {
-      claim: "The move proved the rules held",
+      claim: "The AI chat comes in the box",
       detail:
-        "Leaving for its own repo and domain meant renaming the package everywhere and renumbering the whole token scale at once: 650 replacements, swept by script and gated by a validator. Six of them turned out to reference tokens that had never existed, so four case studies had been drawing an invisible border for months. The check found what nobody had reported.",
+        "One command writes a streaming chat into a product: steps, questions with answers to pick, and dashboards that open beside the conversation. The chat on this site is that widget on my own backend.",
     },
     {
-      claim: "The site answers for itself",
+      claim: "Free and open source",
       detail:
-        "A built-in chat reads a corpus generated from the published pages and scored 77 of 78 on its first answer-quality eval, and an MCP endpoint serves exact prop contracts to any coding agent. Traffic grew about fifteenfold from the April floor to July.",
+        "Everything, from the tokens to the chat’s server handler, is MIT licensed on GitHub and npm.",
     },
   ],
 } satisfies Record<string, CaseStudyTldrPoint[]>;

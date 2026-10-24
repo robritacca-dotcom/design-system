@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { pageOpenGraph } from "@/config/navigation";
 import { buildCaseStudyJsonLd } from "@/lib/structuredData";
 
-const title = "Building Rift DS: the rules that hold";
+const title = "Rift DS: a design system that can look like anything";
 const description =
-  "Seven months building a design system where breaking a rule fails the build: tokens by hand, documents an agent executes, and validators that make the rules stick.";
+  "An open-source design system built by one designer: React components, complete themes, a playground that turns a DESIGN.md into a theme, and an AI chat widget.";
 
 export const metadata: Metadata = {
   title,

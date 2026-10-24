@@ -1,0 +1,61 @@
+{
+  "$comment": "The theme gallery on /work/rift-ds: one entry per look the installed rift-ds package ships, in the order the gallery shows them. Each entry is the marketing dashboard template captured on rift-ds.com in that theme, light and dark, at website/public/images/rift-ds/themes/<id>-<light|dark>.webp. `id` is the package's own preset id (its data-brand value); `base` marks the one look with no preset stylesheet. scripts/validate-rift-ds-themes.mjs holds this file to the package's preset stylesheets and to the images on disk, both directions, so the count the page prints cannot drift from what the package ships. Re-shooting after a package upgrade restyles a template is the author's job, like the cover renders.",
+  "themes": [
+    {
+      "id": "tide",
+      "label": "Tide",
+      "base": true,
+      "alt": "The marketing dashboard in Tide, Rift DS's own look: teal bars and a teal primary button, set in Nunito Sans."
+    },
+    {
+      "id": "contrast",
+      "label": "Blueprint",
+      "alt": "The marketing dashboard in Blueprint: electric blue bars and buttons, set in IBM Plex Sans."
+    },
+    {
+      "id": "warm",
+      "label": "Ember",
+      "alt": "The marketing dashboard in Ember: terracotta bars over warm neutrals, with Lora serif headings."
+    },
+    {
+      "id": "terminal",
+      "label": "Terminal",
+      "alt": "The marketing dashboard in Terminal: mint green on near-black, square corners and every word in IBM Plex Mono."
+    },
+    {
+      "id": "violet",
+      "label": "Velvet",
+      "alt": "The marketing dashboard in Velvet: purple bars, very round corners and Playfair Display serif headings."
+    },
+    {
+      "id": "zest",
+      "label": "Zest",
+      "alt": "The marketing dashboard in Zest: lime green bars and pill-shaped controls, with Inter Tight headings."
+    },
+    {
+      "id": "coral",
+      "label": "Getaway",
+      "alt": "The marketing dashboard in Getaway: crimson bars and buttons, with Poppins headings over DM Sans."
+    },
+    {
+      "id": "gold",
+      "label": "Volt",
+      "alt": "The marketing dashboard in Volt: yellow on dark and near-black on light, with heavy Space Grotesk headings and tight corners."
+    },
+    {
+      "id": "forest",
+      "label": "Forest",
+      "alt": "The marketing dashboard in Forest: deep green bars and buttons, with Montserrat headings over DM Sans."
+    },
+    {
+      "id": "pink",
+      "label": "Bubblegum",
+      "alt": "The marketing dashboard in Bubblegum: magenta bars, rounded corners and Fredoka headings over Nunito."
+    },
+    {
+      "id": "mono",
+      "label": "Smoke",
+      "alt": "The marketing dashboard in Smoke: black and white with no accent colour, with Montserrat headings over Inter."
+    }
+  ]
+}

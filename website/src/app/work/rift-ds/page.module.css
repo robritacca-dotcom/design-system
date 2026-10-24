@@ -359,88 +359,108 @@
   line-height: 1;
 }
 
-/* Four-step variant: rows share the width evenly so the wrap lands
-   as a tidy 2x2 inside the article column instead of a ragged edge. */
-.chain .pipelineRow {
-  flex: 1 1 44%;
+/* ============================================
+   NUMBERED FLOW
+   The five-step variant of the pipeline: an even
+   grid that reflows by column count rather than
+   wrapping raggedly, numbered by a counter so the
+   order survives the reflow without the arrows.
+   ============================================ */
+.flow {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-items: stretch;
+  counter-reset: flow-step;
 }
 
-.chain .pipelineStep {
+.flow .pipelineRow {
+  counter-increment: flow-step;
+}
+
+.flow .pipelineStep {
   flex: 1;
+  height: 100%;
   min-width: 0;
 }
 
+.flow .pipelineLabel::before {
+  content: counter(flow-step) ". ";
+  color: var(--color-text-tertiary);
+}
+
+.flow .pipelineArrow {
+  display: none;
+}
+
 /* ============================================
-   MINI CATALOG
-   Grid of tiles linking out to every foundation
-   page + the components index. Shows the breadth
-   of the system inline in the case study.
+   FIGURES
+   The theme gallery, the playground recording
+   and the inline chat share one frame and one
+   caption style.
    ============================================ */
-.catalog {
+.gallery,
+.media {
   display: flex;
   flex-direction: column;
-  gap: var(--primitive-gap-500);
+  gap: var(--primitive-gap-300);
   margin: var(--primitive-gap-400) 0;
 }
 
-.catalogGroup {
+.galleryChips {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: var(--primitive-gap-200);
 }
 
-.catalogGroupLabel {
+/* Both modes render; the site theme shows one. */
+.galleryDark {
+  display: none;
+}
+
+:global([data-theme="dark"]) .galleryLight {
+  display: none;
+}
+
+:global([data-theme="dark"]) .galleryDark {
+  display: block;
+}
+
+.video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--color-bg-container-border);
+  border-radius: var(--radius-300);
+  background: var(--color-bg-container-secondary);
+}
+
+.chatStage {
+  height: 640px;
+  overflow: hidden;
+  border: 1px solid var(--color-bg-container-border);
+  border-radius: var(--radius-300);
+  background: var(--color-bg-container-primary);
+}
+
+.caption {
   font-family: var(--font-paragraph-sm-family);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-size: var(--font-paragraph-sm-size);
+  line-height: var(--font-paragraph-sm-line-height);
   color: var(--color-text-tertiary);
   margin: 0;
 }
 
-/* ============================================
-   LIVE COMPONENT DEMO
-   Inline mini-grid showing real components.
-   ============================================ */
-.liveDemo {
-  display: flex;
-  flex-direction: column;
-  gap: var(--primitive-gap-400);
-  padding: var(--primitive-padding-500);
-  background: var(--color-bg-container-primary-semi);
-  border: 1px solid var(--color-bg-container-border);
-  border-radius: var(--radius-300);
-  margin: var(--primitive-gap-400) 0;
+@media (max-width: 900px) {
+  .flow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
-.demoRow {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--primitive-gap-200);
-}
-
-.demoCardInner {
-  display: flex;
-  flex-direction: column;
-  gap: var(--primitive-gap-100);
-  padding: var(--primitive-padding-400);
-}
-
-.demoCardTitle {
-  font-family: var(--font-title-body-family);
-  font-size: var(--font-title-body-size);
-  font-weight: var(--font-title-body-weight);
-  color: var(--color-text-primary);
-  margin: 0;
-}
-
-.demoCardBody {
-  font-family: var(--font-paragraph-sm-family);
-  font-size: var(--font-paragraph-sm-size);
-  color: var(--color-text-secondary);
-  margin: 0;
+@media (max-width: 640px) {
+  .chatStage {
+    height: 560px;
+  }
 }
 
 /* ============================================

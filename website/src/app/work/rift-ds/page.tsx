@@ -1,47 +1,28 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { CoverImage } from "@/components/covers/CoverImage";
 import CaseStudyTldr from "@/components/CaseStudyTldr/CaseStudyTldr";
 import { caseStudyTldrs } from "@/data/case-study-tldrs";
 import { COMPONENT_COUNT } from "rift-ds/components/registry";
-import Link from "next/link";
 import MegaNav from "../../../components/MegaNav/MegaNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
-import { Button } from "rift-ds/components/Button/Button";
-import { Badge } from "rift-ds/components/Badge/Badge";
-import { Alert } from "rift-ds/components/Alert/Alert";
-import { SegmentedControl } from "rift-ds/components/SegmentedControl/SegmentedControl";
-import { LinkList } from "rift-ds/components/LinkList/LinkList";
-import { LineChart } from "rift-ds/components/Chart/LineChart";
 import { getSidebarLinks, workSidebarLinks } from "@/config/navigation";
+import {
+  ChatStage,
+  ComponentPipeline,
+  PlaygroundVideo,
+  RIFT_DS_THEMES,
+  ThemeGallery,
+} from "./visuals";
 import styles from "./page.module.css";
 
-/* ============================================
-   Real history — registered components counted
-   from git at each month-end (folders under
-   src/components minus the doc-only helpers
-   present at that commit); today comes live
-   from the registry.
-   ============================================ */
-const componentGrowth = [
-  { month: "Feb", components: 39 },
-  { month: "Mar", components: 39 },
-  { month: "Apr", components: 39 },
-  { month: "May", components: 39 },
-  { month: "Jun", components: 41 },
-  { month: "Jul", components: 61 },
-  { month: "Aug", components: 120 },
-  /* Not a month: the live figure from the package registry. The last column
-     used to be labelled with a month while rendering this count, so it drifted
-     further from its own label with every release. A column that says "Now"
-     cannot. */
-  { month: "Now", components: COMPONENT_COUNT },
-];
-
 const { sidebarLinks } = getSidebarLinks(workSidebarLinks, "/work/rift-ds");
+
+/** How many complete looks the package ships, from the gallery's registry. */
+const THEME_COUNT = RIFT_DS_THEMES.length;
 
 /** The three-tier token stack, with a real value at each level. */
 function TokenTiers() {
@@ -53,7 +34,7 @@ function TokenTiers() {
     },
     {
       name: "Semantic tokens",
-      rule: "Intent, not appearance. Light and dark value on every one.",
+      rule: "Roles, not appearance. A light and a dark value on every one.",
       code: "--color-action-primary-bg: var(--primitive-teal-08)",
     },
     {
@@ -82,76 +63,7 @@ function TokenTiers() {
   );
 }
 
-/** What happens when a rule gets broken. */
-function EnforcementChain() {
-  const steps = [
-    { label: "A raw value lands", note: "A hex or a pixel in component CSS" },
-    { label: "Validators run", note: "Before anything builds" },
-    { label: "The build fails", note: "Named file, named line" },
-    { label: "Two ways out", note: "Use the token, or sign the exception" },
-  ];
-  return (
-    <div className={`${styles.pipeline} ${styles.chain}`} role="figure" aria-label="What happens when a rule is broken">
-      {steps.map((s, i) => (
-        <div key={s.label} className={styles.pipelineRow}>
-          <div className={styles.pipelineStep}>
-            <span className={styles.pipelineLabel}>{s.label}</span>
-            <span className={styles.pipelineNote}>{s.note}</span>
-          </div>
-          {i < steps.length - 1 && (
-            <span className={`material-symbols-rounded ${styles.pipelineArrow}`} aria-hidden="true">
-              chevron_right
-            </span>
-          )}
-        </div>
-      ))}
-    </div>
-  );
-}
-
-/* ============================================
-   Mini catalog — every documented layer of the
-   system, linked inline so the case study shows
-   its own breadth. Rendered with the library's
-   own LinkList, in-site rows via newTab: false.
-   ============================================ */
-const foundationLinks = [
-  { href: "https://rift-ds.com/foundations/colour-primitives", icon: "palette", label: "Primitive colours", sub: "Every raw hue: the bottom of the token stack", newTab: true },
-  { href: "https://rift-ds.com/foundations/colour-mode", icon: "contrast", label: "Semantic colours", sub: "Primitives wrapped in intent, with light + dark", newTab: true },
-  { href: "https://rift-ds.com/foundations/typography", icon: "text_fields", label: "Typography", sub: "One Nunito Sans scale, weight as hierarchy", newTab: true },
-  { href: "https://rift-ds.com/foundations/spatial", icon: "straighten", label: "Spacing & radius", sub: "The spatial tokens every component shares", newTab: true },
-  { href: "https://rift-ds.com/foundations/icons", icon: "interests", label: "Icons", sub: "Material Symbols Rounded, sized to the system", newTab: true },
-  { href: "https://rift-ds.com/foundations/motion", icon: "animation", label: "Motion", sub: "Duration and easing, with a reduced-motion guard", newTab: true },
-];
-
-/** The mini catalog — the foundations list + the components index. */
-function MiniCatalog() {
-  return (
-    <div className={styles.catalog} aria-label="Browse the design system">
-      <div className={styles.catalogGroup}>
-        <p className={styles.catalogGroupLabel}>Foundations</p>
-        <LinkList items={foundationLinks} />
-      </div>
-      <div className={styles.catalogGroup}>
-        <p className={styles.catalogGroupLabel}>Components</p>
-        <LinkList
-          items={[
-            {
-              href: "https://rift-ds.com/components",
-              icon: "widgets",
-              label: `${COMPONENT_COUNT} components`,
-              sub: "Every component with live examples + Storybook docs",
-              newTab: false,
-            },
-          ]}
-        />
-      </div>
-    </div>
-  );
-}
-
-export default function Robr0DsCaseStudy() {
-  const [viewSegment, setViewSegment] = useState("week");
+export default function RiftDsCaseStudy() {
   return (
     <>
       <MegaNav />
@@ -165,13 +77,13 @@ export default function Robr0DsCaseStudy() {
           {/* Page header */}
           <div className={`${styles.pageHeader} animate-in`}>
             <h1 className={styles.pageTitle}>
-              Building Rift DS: the rules that hold
+              Rift DS: a design system that can look like anything
             </h1>
           </div>
 
           {/* Subtitle / dek */}
           <p className={`${styles.subDisplay} animate-in animate-delay-1`}>
-            Seven months, {COMPONENT_COUNT} components and a package on npm, spent finding out what makes a design system rule actually stick. The answer was not better documentation.
+            {COMPONENT_COUNT} components, {THEME_COUNT} complete themes and an AI chat, built by one designer and free on npm. It ships fast because the rules come first.
           </p>
 
           {/* Hero image */}
@@ -197,89 +109,41 @@ export default function Robr0DsCaseStudy() {
 
                 <article className={styles.body}>
                   <p className={styles.lede}>
-                    Most of my career has been design systems inside large companies, and they ended the same way every time. I would set the rules, document them properly, hand them across the boundary to engineering, and then watch them soften. A hardcoded hex here, a one-off radius there. Nobody was a villain about it. The rules simply had nothing holding them in place, and I usually found out months later with no idea why.
+                    Product teams have a stubborn belief that design systems are slow: a quarter to stand one up, a committee to add a button. I believed it too, after years of building them inside large companies. Rift DS is my argument against it. It is {COMPONENT_COUNT} React components, {THEME_COUNT} complete themes and a full AI chat widget, built by one designer and free to use under the MIT licence.
                   </p>
 
                   <p>
-                    Rift DS started in February 2026 as a way to fix that from the inside, on a project where the boundary did not exist. It is now{" "}
-                    <Link href="https://rift-ds.com/components" className={styles.inlineLink}>{COMPONENT_COUNT} React components</Link>, a package on npm, and a documentation site of its own. This site is built on it, which is how it got tested. The components turned out to be the easy part.
+                    It started in February 2026 as the component library behind this portfolio, with one theme picked for me. I ended up caring more about the system than the site. It grew tests, accessibility checks and validators, then outgrew the portfolio altogether. In September it moved to its own repository, its own domain at{" "}
+                    <Link href="https://rift-ds.com" className={styles.inlineLink}>rift-ds.com</Link>{" "}
+                    and its own package on npm, and 1.0.0 shipped on 26 September. This site now installs it like any other consumer would.
                   </p>
 
-                  <h2 id="the-foundation">The one part I would not delegate</h2>
+                  <h2 id="how-its-built">Speed comes from the rules</h2>
 
                   <p>
-                    Day one was not a button. It was a palette. I hand-picked every colour, built the ramps, wrote the semantic names, and mapped all of it myself in Figma variables. Then three tiers, and nothing skips a tier.
+                    A system stays quick to work on when nobody has to remember its rules. In Rift they are written down once and then checked by the build, so they hold on a Friday afternoon exactly as well as on a Monday morning.
                   </p>
 
                   <TokenTiers />
 
                   <p>
-                    Because every colour token carries a light and a dark value, dark mode is one attribute flipping rather than a second set of components. And colour is only one category: the same treatment runs through type, spacing, radius, elevation, motion and icons. A component in this system does not invent anything. It assembles.
+                    The foundation is three tiers of tokens. Primitives hold raw values, semantic tokens give them roles like the action colour, and component CSS reads only the roles. Every colour role carries a light and a dark value. That one constraint is what makes the rest of this page possible: re-point the roles and every component follows.
                   </p>
 
                   <p>
-                    That foundation took weeks and it was supposed to. What I had underestimated is how much more it matters once an agent is doing the typing. Sloppy tokens do not just slow down a human developer any more. They slow the model down too, and it will cheerfully invent a value to fill the gap. Design debt became AI debt.
-                  </p>
-
-                  <p>
-                    Then the payoff arrived faster than I expected. Once the token layer held, I stopped drawing components in Figma and started describing them in words, and five components became thirty-nine in about two weeks. I gave up strict Figma-to-code parity in the same stretch, which felt like heresy at the time and turned out to be scaffolding: useful while the structure was going up, a bottleneck once it was proven.
-                  </p>
-
-                  <h2 id="the-plateau">Then nothing happened for three months</h2>
-
-                  <LineChart
-                    data={componentGrowth}
-                    xKey="month"
-                    series={[{ dataKey: "components", label: "Components", color: "#118AB2" }]}
-                    title="Components in the library"
-                    subtitle="Counted at each month-end from February 2026, with the last column live from the package registry. The flat stretch is the interesting part"
-                    summaryItems={[{ label: "Today", value: COMPONENT_COUNT }]}
-                    height={220}
-                  />
-
-                  <p>
-                    {componentGrowth[0].components} in February. The same number in March, April and May. From outside, that flat line looks like a project stalling. It is the stretch that made everything after it possible.
-                  </p>
-
-                  <p>
-                    What I was building was the layer that tells an agent how to use the foundation.{" "}
+                    Above the tokens sits the layer a coding agent reads first.{" "}
                     <Link href="https://rift-ds.com/blueprints/design" className={styles.inlineLink}>design.md</Link>{" "}
-                    owns how things look. content-design.md owns how sentences read, including the AI writing habits I kept catching in my own shipped copy.{" "}
+                    says how things look, content-design.md says how sentences read, and{" "}
                     <Link href="https://rift-ds.com/blueprints/claude" className={styles.inlineLink}>CLAUDE.md</Link>{" "}
-                    sits above both as the operating manual: where facts live, what to generate, what never to do. Alongside them came the first{" "}
-                    <Link href="https://rift-ds.com/skills" className={styles.inlineLink}>skills</Link>, written procedures for recurring work like scaffolding a component or auditing a page.
+                    says where every fact lives and what never to do.{" "}
+                    <Link href="https://rift-ds.com/skills" className={styles.inlineLink}>Skills</Link>{" "}
+                    turn recurring work into written procedures. One scaffolds a component; others audit a page for accessibility or check the docs for drift.
                   </p>
 
-                  <p>
-                    What makes those documents different from every design doc I had written before is the audience. Most design documentation is written to be agreed with. These get read and executed before a line of CSS exists, so vagueness that would sail through a review meeting produces garbage immediately. Writing for a machine turned out to be the hardest editing pass my own thinking has ever had.
-                  </p>
+                  <ComponentPipeline />
 
                   <p>
-                    In May the site changed shape too. It stopped being a component library with an about page and became my portfolio, with the system as the main exhibit. Six case studies went up in one push. Building pages was no longer the bottleneck. Having something to say was.
-                  </p>
-
-                  <h2 id="enforcement">A document nothing enforces is a preference</h2>
-
-                  <p>
-                    By June I could see the hole in my own plan. I had written the rules down beautifully, and there was still nothing stopping me, or an agent working from my instructions, from quietly ignoring them. Drift is not a discipline problem. It is the default whenever the same fact lives in more than one place.
-                  </p>
-
-                  <p>
-                    So every fact in the repo got exactly one home, and the home has a name: a registry. A small structured file holding the authoritative list for one collection. Components, tokens, skills, case studies. Nothing else in the project states those facts on its own authority, and every other surface is either generated from the registry or checked against it when the build runs.
-                  </p>
-
-                  <p>
-                    The component registry is the clearest case. One file lists every component with its name, category and description. The navigation, the sidebar, the sitemap, the page titles, the card grid and the README count are all built from it. Register a new component and every surface updates itself. Forget to register one and the build fails and names the folder. There is nowhere in this project I can type a component count by hand, including on this page.
-                  </p>
-
-                  <p>
-                    The same idea, pointed at CSS, is what finally made the rules bite:
-                  </p>
-
-                  <EnforcementChain />
-
-                  <p>
-                    A chain of validators runs before anything builds. One of them reads every line of component CSS looking for raw values: a hex code, a pixel number, anything that should have come from a token. There are exactly two ways past it. Replace the value with the right token, or write a comment directly above the line declaring the category and the reason for the exception. No override flag. No just this once.
+                    Here is what happens when I add a component. I describe it in a sentence, and the new-component skill writes the component, its stylesheet and its stories, and adds it to the registry. Then the build takes over. One validator reads every line of the CSS and fails on a raw hex or pixel value, with one way past: a comment at that line naming the category and the reason. Another holds the props contract, so every component forwards its ref, passes native attributes through and documents every prop. Another fails if a component draws its own checkbox instead of the shared one. Finally CI renders every Storybook story in headless Chromium and fails on an accessibility violation.
                   </p>
 
                   <blockquote>
@@ -287,146 +151,71 @@ export default function Robr0DsCaseStudy() {
                   </blockquote>
 
                   <p>
-                    CI closed the loop in July. Every Storybook story now runs as a render test in headless Chromium, with accessibility checks that fail the build on a violation. This is the thing I never had in any system I shipped before. It is not mandated in a deck. It is mandated in the machinery.
+                    So the pace is not heroics. The artifact panel, where the chat opens a dashboard or a page it made, shipped in 1.9.0 on 14 October. QuestionCard, which lets the chat ask with answers to pick, followed in 1.10.0 four days later. On 23 October, 1.13.0 replaced every checkbox, radio and switch mark in the library with one shared drawing, across every component that shows one, and nobody upgrading had to change a line. In the teams I have worked in, that last one alone would have been a quarter on the roadmap.
                   </p>
 
-                  <h2 id="publishing">Publishing it broke my assumptions</h2>
+                  <h2 id="themes">One system, every look</h2>
 
                   <p>
-                    Late July I published the library to npm as{" "}
-                    <a href="https://www.npmjs.com/package/rift-ds" target="_blank" rel="noopener noreferrer" className={styles.inlineLink}>rift-ds</a>, and it immediately exposed something being my own consumer had hidden. The whole thing was built for this site.
+                    Because components only read roles, a theme is a new set of answers to the same questions. Each look is complete: colour, typeface, corner radius, density, motion and elevation, in light and dark. One <code>data-brand</code> attribute switches it on, with no JavaScript at runtime. Rift ships {THEME_COUNT} of them, and the dashboard below wears each one without knowing which.
                   </p>
 
+                  <ThemeGallery />
+
                   <p>
-                    Of the 68 components at the time, four forwarded a ref and none extended their native element’s props. Nobody could attach a ref, pass a data attribute, or register a field with a form library. Perfectly good components that were unusable inside anyone else’s application. Eighteen were rebuilt. An accessibility pass in the same stretch fixed 49 violations, nine of which were real component bugs rather than markup slips: DatePicker claimed a grid role it had never implemented, and icon-only buttons had no accessible name at all.
+                    That marketing dashboard is one of the{" "}
+                    <Link href="https://rift-ds.com/templates" className={styles.inlineLink}>templates on rift-ds.com</Link>, built from the library alone. The cover of this case study is the same screen in Blueprint.
                   </p>
 
+                  <h2 id="playground">A description becomes a system</h2>
+
                   <p>
-                    That is the lesson I would hand to anyone building a system for a single product. Using your own system catches taste problems. It does not catch contract problems. Only a second consumer finds those, and publishing is the cheapest way to invent one.
+                    This is the part I most want other designers to see. A DESIGN.md is a markdown file that describes a product’s look: colours, type and corners up top, prose underneath. At TurboTax we used one to get an MCP app close to Claude’s look quickly. It worked, but it was an approximation. Every value went straight into component code, and changing the accent meant hunting down every place it lived.
                   </p>
 
-                  <h2 id="the-chat">Teaching the site to answer for itself</h2>
+                  <PlaygroundVideo />
 
                   <p>
-                    August’s project was a chat that answers questions about my work and this system, on the page it is describing. I had already led design on{" "}
-                    <Link href="/work/intuit-agent-chat" className={styles.inlineLink}>an agent chat platform at Intuit</Link>, so I had a build order I trusted: build the parts first, compose them on a scripted fake transport that emits the same events a real model will, and only then wire up a backend.
-                  </p>
-
-                  <p>
-                    Designing against a fake model is the move I would repeat on any project. It let me judge streaming pace and scroll behaviour as pure design work, with no API cost and no latency variance muddying the read. Most of two days went into scrolling alone. My first attempt pushed the conversation up from the bottom as each turn landed, and it read as jumpy the moment a real answer streamed in at an uneven pace. What worked was inverting it: let a new turn float to the top of the viewport with a spacer sized to the exact shortfall, handed back as the answer fills it in. Nothing jumps, because the scroll range never moves.
-                  </p>
-
-                  <p>
-                    That reveal work has since flowed back into the package. It shipped in 0.13.0 as Streaming text with a headless hook, so the chat on this page now runs on the same engine a consumer installs, which is the direction things keep moving here: the site invents a part, and the library absorbs it.
+                    Drop the same kind of file, or just an image, on the{" "}
+                    <Link href="https://rift-ds.com/playground" className={styles.inlineLink}>playground</Link>{" "}
+                    and the values go somewhere else. The importer fits each one to a lever the built-in themes already use, bends anything that would break a contract, like a button label falling under 4.5:1 contrast, and reports every choice it made. The components never see the file. What comes out is the real system wearing that look, exported as one AGENTS.md a coding agent can build on.
                   </p>
 
                   <p>
-                    The hard part turned out to be the corpus. I found that out by asking my own chat for my email address, and being told the site does not publish one while the address sat in plain text on the contact page. Page prose now flows into the corpus straight off the filesystem, so a new page reaches the chat on its next build with nothing to remember. Structured facts opt in explicitly. Nothing reaches the model that a page did not deliberately publish, and the build fails on anything that tries another way in.
+                    I wrote up how the importer reads a file in{" "}
+                    <Link href="/writing/a-designmd-is-not-a-design-system" className={styles.inlineLink}>A DESIGN.md is not a design system</Link>. The short version: the file describes the look, and the system keeps it consistent.
+                  </p>
+
+                  <h2 id="chat">An AI chat in the box</h2>
+
+                  <p>
+                    The largest single piece of Rift is its chat widget. One command, <code>npx rift-ds init chat</code>, writes it into a product: a provider that holds the conversation, a launcher that docks the panel beside the page or takes over the screen, and a server handler for any web-standard route. Rate limits and a daily budget come as an optional add-on over Upstash Redis.
                   </p>
 
                   <p>
-                    Then I tested it like a product rather than a feature. A golden set of questions written from the seats of the people who actually visit, a recruiter, a designer, a developer, plus a few hostile ones, run end to end through the real route. The first pass scored 71 of 78. After the fixes, 77. The one still failing was its own best find: the corpus had been teaching the model about a page that no longer existed.
+                    It is easier to show than to list. A reply streams in without the thread jumping, because each new turn rises to the top of the panel and the answer fills the space beneath it. The chat can show its work as steps, ask a question with answers to pick, and open a dashboard it built in a panel beside the conversation. Every word it writes is a prop, so a product in another language can translate all of it.
                   </p>
 
-                  <p>
-                    The chat was built for people reading the site. The newest door is for agents: the system’s own site now serves a Model Context Protocol endpoint, and any MCP client that connects can read the component list, every component’s exact prop contract, and the token registry. The prop data is generated from the same JSDoc that ships in the package&rsquo;s type declarations, so a coding agent building with the system reads the contract npm ships instead of guessing at props. Same public-only boundary as the corpus, no key, no model behind it.
-                  </p>
-
-                  <h2 id="impact">What it added up to</h2>
+                  <ChatStage />
 
                   <p>
-                    Traffic followed the same shape as the component chart above, and the two flat months are the same two flat months, which is not a coincidence: I was writing documents nobody could see yet. It bottomed in April and grew roughly fifteenfold by July. LinkedIn is the largest referrer, ahead of Google search and my own Substack.
-                  </p>
-
-                  <p>
-                    The package shipped twenty-two versions before the rename, each published with provenance. The later ones carry whole categories at a time: the charts, the maps set with the globe, the dashboard pieces, the streaming reveal the chat runs on. This site installs it by name like any other consumer, so a packaging mistake breaks my own build before it reaches anyone else’s.
-                  </p>
-
-                  <p>
-                    And the outcome I actually care about. This site is the portfolio I put in front of people, and when it leads to a conversation, the system is what the conversation ends up being about. It has done the job a portfolio exists to do. That is not a number I can put in a chart, but it is the one that mattered.
-                  </p>
-
-                  <p>
-                    Everything below is a real component from the library, rendered from the same token layer as the rest of this page:
-                  </p>
-
-                  <div className={styles.liveDemo} aria-label="Live components from Rift DS">
-                    <div className={styles.demoRow}>
-                      <Button label="Primary" variant="primary" size="compact" />
-                      <Button label="Secondary" variant="secondary" size="compact" />
-                      <Button label="Tertiary" variant="tertiary" size="compact" />
-                    </div>
-                    <div className={styles.demoRow}>
-                      <Badge variant="info" label="Info" />
-                      <Badge variant="positive" label="Positive" />
-                      <Badge variant="warning" label="Warning" />
-                      <Badge variant="error" label="Error" />
-                      <Badge variant="neutral" label="Neutral" />
-                      <SegmentedControl
-                        segments={[
-                          { label: "Day", value: "day" },
-                          { label: "Week", value: "week" },
-                          { label: "Month", value: "month" },
-                        ]}
-                        activeSegment={viewSegment}
-                        onSegmentChange={setViewSegment}
-                      />
-                    </div>
-                    <Alert
-                      variant="positive"
-                      title="The chart above is a component too."
-                      description="Same library, same tokens, installed from npm exactly the way a stranger would install it."
-                    />
-                  </div>
-
-                  <h2 id="outgrew">The system outgrew the portfolio</h2>
-
-                  <p>
-                    In September it stopped making sense as a section of this site. The documentation had grown past the portfolio that hosted it, and every visitor arriving for a component was landing on a personal site that happened to have one. So it left: its own repository, its own domain at{" "}
-                    <Link href="https://rift-ds.com" className={styles.inlineLink}>rift-ds.com</Link>, its own name. Rift DS 1.0.0 went to npm on 26 September.
-                  </p>
-
-                  <p>
-                    Moving it was the closest thing to a test this whole argument has had. Two things had to happen at once, and both are the kind of change that usually leaves wreckage. The package had to be renamed everywhere it was referenced. And the token scale had to be renumbered, every t-shirt size becoming a rank, so <code>--gap-md</code> became <code>--gap-400</code> across a library and a site that consumed it.
-                  </p>
-
-                  <p>
-                    Neither was careful work, and that is the point. The rename swept by a script, because one module owned the package name and everything else derived from it. The renumbering ran family by family against a validator that fails the build on any <code>var()</code> nothing defines, so a missed call site was a build error rather than a layout that quietly shifted by two pixels. Six hundred and fifty replacements, and the build told me when I was done.
-                  </p>
-
-                  <p>
-                    It also told me something I had not asked. Six of those six hundred and fifty were not renames at all: they referenced tokens that had never existed, in either version. Four case studies had been drawing a left border in a colour that resolves to nothing, so the border had never rendered, on the live site, for months. Nobody had reported it. Nobody would have. The check that caught it was the one written for a different problem entirely.
-                  </p>
-
-                  <p>
-                    That is the whole thesis, tested on the largest change the system has been through. Rules that live in a document soften the first time someone is in a hurry. Rules a build enforces do not care how much of a hurry you are in, and they find the mistakes you were never going to look for.
-                  </p>
-
-                  <h2 id="what-changed">What changed in how I work</h2>
-
-                  <p>
-                    The outcome that surprised me was where my judgment moved. The hours that used to go into pushing pixels now go into writing specifications precise enough for an agent to execute. The thinking is the deliverable. I can try three directions in an afternoon and keep one. The handoff between design and engineering is not shortened, it is gone: the design language lives in one written spec, in version control, next to the code it governs.
-                  </p>
-
-                  <p>
-                    None of that replaces design judgment. It moves where judgment gets applied, earlier, at the spec, before any code or visuals exist. And the rules hold now, which was the whole test. One rule nobody can break is worth more than fifty everybody agrees with.
-                  </p>
-
-                  <h2 id="browse">Browse the system</h2>
-
-                  <p>
-                    Every layer described above has its own documented page. Each tile is the real reference I work from:
-                  </p>
-
-                  <MiniCatalog />
-
-                  <p>
-                    The{" "}
-                    <Link href="https://rift-ds.com/releases" className={styles.inlineLink}>project journal</Link>{" "}
-                    keeps its own timeline current: a scheduled loop reads the git history every two weeks and consolidates it into entries. I have written up the parts that generalise beyond my repo in three pieces:{" "}
-                    <Link href="/writing/design-still-derisks-dev" className={styles.inlineLink}>Design still derisks dev</Link>,{" "}
-                    <Link href="/writing/youre-not-building-what-you-think" className={styles.inlineLink}>You’re not building what you think you’re building</Link>, and{" "}
+                    The Ask button in the corner of this page is the same widget. Only the backend is mine: a Claude-backed route with its own persona and guardrails, answering from a corpus generated from the pages on this site. I wrote that half up in{" "}
                     <Link href="/writing/how-to-add-a-chat-to-your-own-site" className={styles.inlineLink}>How to add a chat to your own site</Link>.
+                  </p>
+
+                  <h2 id="what-changes">What it changes</h2>
+
+                  <p>
+                    Building this changed how I think about systems work. The slow part was never the components. It was the coordination: people agreeing on rules, then people remembering them. Put the rules in the build and most of that cost disappears, which means a small, focused team, or one person, can hold a system to the standard a large team would.
+                  </p>
+
+                  <p>
+                    My judgment did not go away. It moved earlier, into the specs, the validators and the skills, and it pays out on every component after.
+                  </p>
+
+                  <p>
+                    And because it is MIT licensed, the whole thing is anyone’s to use: the tokens, the components, the themes, the playground’s export and the chat. Start with the{" "}
+                    <Link href="https://rift-ds.com/docs/get-started" className={styles.inlineLink}>getting started guide</Link>, or open the playground and drop in a file of your own.
                   </p>
                 </article>
               </section>
@@ -443,7 +232,7 @@ export default function Robr0DsCaseStudy() {
                     <span className={styles.detailLabel}>Company</span>
                     <span className={styles.detailValue} style={{ display: "flex", alignItems: "center", gap: 8 }}>
                       <Image src="/logos/rr.svg" alt="" width={20} height={20} style={{ objectFit: "contain", flexShrink: 0 }} />
-                      <span>Personal site</span>
+                      <span>Personal, open source</span>
                     </span>
                   </div>
                   <div className={styles.detailItem}>
