@@ -56,6 +56,11 @@
       "id": "mono",
       "label": "Smoke",
       "alt": "The marketing dashboard in Smoke: black and white with no accent colour, with Montserrat headings over Inter."
+    },
+    {
+      "id": "marquee",
+      "label": "Marquee",
+      "alt": "The marketing dashboard in Marquee: chartreuse bars and buttons, square corners, and tall condensed Anton headings over Work Sans."
     }
   ]
 }
