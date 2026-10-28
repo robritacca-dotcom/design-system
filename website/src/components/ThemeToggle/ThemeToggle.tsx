@@ -47,7 +47,18 @@ function getServerSnapshot() {
   return "system";
 }
 
-export default function ThemeToggle({ className }: { className?: string }) {
+export default function ThemeToggle({
+  className,
+  size = "compact",
+}: {
+  className?: string;
+  /**
+   * The control's row height. SegmentedControl sizes its track to exactly
+   * --control-height-<size>, so a toggle beside 40px controls (the header's
+   * search button) takes "default" to sit level with them.
+   */
+  size?: "default" | "compact";
+}) {
   const setting = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   const handleChange = useCallback((value: string) => {
@@ -70,7 +81,7 @@ export default function ThemeToggle({ className }: { className?: string }) {
         segments={themeSegments}
         activeSegment={setting}
         onSegmentChange={handleChange}
-        size="compact"
+        size={size}
         ariaLabel="Theme"
       />
     </div>

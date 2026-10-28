@@ -50,3 +50,10 @@
 .themeToggle :global(.ds-segmented-control__segment) {
   padding: var(--padding-150) var(--padding-200);
 }
+
+/* The glyphs stay at the compact size whatever the row height, so a
+   "default" toggle beside the header's search button matches its 20px
+   search glyph rather than growing to 24px. */
+.themeToggle :global(.ds-segmented-control__icon) {
+  --icon-size: var(--icon-size-500);
+}

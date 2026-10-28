@@ -72,7 +72,7 @@ export default function SiteNav() {
       currentHref={pathname}
       linkComponent={Link}
       actions={<SearchButton />}
-      wideActions={<ThemeToggle />}
+      wideActions={<ThemeToggle size="default" />}
       drawerFooter={<ThemeToggle />}
       drawerOpen={drawerOpen}
       onDrawerOpenChange={setDrawerOpen}
