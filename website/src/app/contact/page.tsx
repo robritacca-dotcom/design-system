@@ -1,6 +1,6 @@
 "use client";
 
-import MegaNav from "../../components/MegaNav/MegaNav";
+import SiteNav from "@/components/SiteNav";
 import { ToastProvider, useToast } from "rift-ds/components/Toast/Toast";
 import { ContactCard } from "rift-ds/components/ContactCard/ContactCard";
 import { Button } from "rift-ds/components/Button/Button";
@@ -94,7 +94,7 @@ function ContactContent() {
 
   return (
     <>
-      <MegaNav />
+      <SiteNav />
 
       <main className={styles.contactContainer} id="main-content">
         <div className={`${styles.heading} animate-in`}>

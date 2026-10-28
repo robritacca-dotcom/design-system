@@ -32,11 +32,11 @@
   gap: var(--gap-1000);
   width: 100%;
   /* Fill what remains of the first viewport after the in-flow chrome
-     above this element: the body's top padding, the 78px MegaNav bar
-     (MegaNav.module.css), and the body's nav→main gap. svh keeps the
+     above this element: the body's top padding, the header bar
+     (--layout-header-height), and the body's nav→main gap. svh keeps the
      scroll cue above mobile browser bars; vh is the fallback. */
-  min-height: calc(100vh - 78px - var(--primitive-padding-500) - var(--primitive-gap-2000));
-  min-height: calc(var(--layout-viewport-height) - 78px - var(--primitive-padding-500) - var(--primitive-gap-2000));
+  min-height: calc(100vh - var(--layout-header-height) - var(--primitive-padding-500) - var(--primitive-gap-2000));
+  min-height: calc(var(--layout-viewport-height) - var(--layout-header-height) - var(--primitive-padding-500) - var(--primitive-gap-2000));
   /* Optical centring: pad the bottom so the block sits a touch above true
      centre and the first screen reads centre-weighted, not bottom-heavy. */
   padding-bottom: calc(var(--layout-viewport-height) * 0.1);
@@ -466,7 +466,8 @@
 }
 
 /* Rows whose page needs a desktop (the canvas board) leave the mobile IA.
-   Breakpoint matches the nav's drawer switch in MegaNav.module.css. */
+   Breakpoint is the tablet step: where the sidebar hides and the header
+   starts folded before it measures itself (SiteHeader's initialFold). */
 @media (max-width: 959px) {
   .rowList > li.desktopOnly {
     display: none;

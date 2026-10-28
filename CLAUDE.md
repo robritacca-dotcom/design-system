@@ -185,7 +185,7 @@ guessing: `ship`, `checkpoint`, or `land`.
     ├── src/config/            # navigation.ts (nav/sidebar/breadcrumb source of truth), chromeless.ts, anchor-nav.ts (both held to real routes by validate-route-config.mjs), site.ts (the apex URL's one home), brand.ts, social.ts
     ├── src/data/              # The registries above, plus case-study-tldrs.ts (prose kept out of the route folders so the corpus never carries the same facts twice)
     ├── src/lib/               # Chat model allowlist, the written follow-up fallbacks, suggestion budget; site-tools.ts (a corpus-search helper nothing currently imports); Substack feed; OG image; structured data; scroll lock
-    └── src/components/        # Shared site UI: MegaNav, Sidebar, SiteFooter, SiteChat (the rift-ds chat widget's mount, provider wrapper and starter pools), SitePalette, BlurBackground, FloatingAnchorNav, covers/
+    └── src/components/        # Shared site UI: SiteNav (the header: rift-ds `SiteHeader` with this site's links, mounted per page through `SiteNav/index.ts`; the retired hand-built `MegaNav` stays beside it until the swap is approved, and still supplies the logo, search button and Writing-feed context), Sidebar, SiteFooter, SiteChat (the rift-ds chat widget's mount, provider wrapper and starter pools), SitePalette, BlurBackground, FloatingAnchorNav, covers/
 ```
 
 ---
@@ -237,7 +237,7 @@ grepping by hand.
 ## Adding a Page
 
 Use the `new-page` skill. In short: create the route folder with
-`page.tsx` + `page.module.css` + `layout.tsx`, render `<MegaNav />` and give
+`page.tsx` + `page.module.css` + `layout.tsx`, render `<SiteNav />` and give
 `<main>` `id="main-content"` (the root layout's skip link targets it), wire the
 nav entry in `website/src/config/navigation.ts`, and add a
 `website/src/data/page-summaries.json` entry or mark the route chromeless. The

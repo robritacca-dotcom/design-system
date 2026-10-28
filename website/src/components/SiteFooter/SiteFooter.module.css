@@ -1,5 +1,5 @@
 /* SiteFooter — sitemap footer: a hairline, a brand block beside four
-   columns of links, then a quiet copyright row. Matches the MegaNav
+   columns of links, then a quiet copyright row. Matches the header's
    1440px shell width; body owns the outer gutters and the docked-chat
    inset, so the footer never goes full-bleed. Identical on every page —
    nothing here reacts to which shell a page uses. */
@@ -227,7 +227,8 @@
 }
 
 /* Links to desktop-only pages (the canvas board) leave the mobile IA.
-   Breakpoint matches the nav's drawer switch in MegaNav.module.css. */
+   Breakpoint is the tablet step: where the sidebar hides and the header
+   starts folded before it measures itself (SiteHeader's initialFold). */
 @media (max-width: 959px) {
   .columnList > li.desktopOnly {
     display: none;

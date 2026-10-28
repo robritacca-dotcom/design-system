@@ -1,5 +1,5 @@
 import { Button } from "rift-ds/components/Button/Button";
-import MegaNav from "../../components/MegaNav/MegaNav";
+import SiteNav from "@/components/SiteNav";
 import { RiftDsHomeCover } from "@/components/covers/RiftDsCover";
 import { DESIGN_SYSTEM_URL } from "@/config/site";
 import styles from "./page.module.css";
@@ -25,7 +25,7 @@ import styles from "./page.module.css";
 export default function DesignSystemPage() {
   return (
     <>
-      <MegaNav />
+      <SiteNav />
       <main className={styles.page} id="main-content">
         <header className={styles.hero}>
           <h1 className={styles.pageTitle}>Rift DS</h1>

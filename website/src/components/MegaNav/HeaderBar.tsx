@@ -39,7 +39,7 @@ function HeaderNavLink({
 }
 
 /** The input-dressed button that opens the global command palette. */
-function SearchButton({ tabIndex }: { tabIndex?: number }) {
+export function SearchButton({ tabIndex }: { tabIndex?: number }) {
   return (
     // Opens the global palette mounted from the root layout — the two trees
     // never meet, so the click travels via palette-bus.

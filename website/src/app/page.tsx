@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "rift-ds/components/Button/Button";
-import MegaNav from "../components/MegaNav/MegaNav";
+import SiteNav from "@/components/SiteNav";
 import { FullBleedBackground } from "../components/BlurBackground/BlurBackground";
 import ScrollCue from "../components/ScrollCue/ScrollCue";
 import FadeDivider from "../components/FadeDivider/FadeDivider";
@@ -74,7 +74,7 @@ export default async function HomePage() {
     <>
       <FullBleedBackground />
 
-      <MegaNav />
+      <SiteNav />
 
       <main className={styles.homeContainer} id="main-content">
         {/* First viewport: the name over a hairline, the one-liner and

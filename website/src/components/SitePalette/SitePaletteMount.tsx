@@ -63,7 +63,7 @@ export function SitePaletteMount({ writingLinks }: SitePaletteMountProps) {
   }, []);
 
   // Close on any navigation the palette didn't drive (back button, a link
-  // clicked under the docked panel) — same pattern as MegaNav.
+  // clicked under the docked panel) — same pattern as SiteNav.
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setOpen(false);

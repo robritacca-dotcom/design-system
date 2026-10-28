@@ -1,0 +1,6 @@
+/* The bar keeps the page's content width, so the logo and the search
+   button line up with the column below them as the old header's did. The
+   blur behind it is viewport-fixed and still spans the full width. */
+.header {
+  max-width: 1440px;
+}

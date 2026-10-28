@@ -51,12 +51,18 @@ html[data-theme-ready] {
      box — same deal as the toast inset above the chat FAB), and air. */
   --layout-stage-bottom-clearance: calc(var(--layout-chat-inset) * 2 + 48px);
 
+  /* The site header's bar height: the rift-ds SiteHeader's own
+     --ds-site-header-height, restated here because that property lives on
+     the header and a page laid out beside it cannot read it (same deal as
+     the toast inset below). */
+  --layout-header-height: calc(var(--control-height-default) + var(--padding-1000));
+
   /* How far an anchor target rests below the viewport top. The sticky
-     MegaNav bar is 78px (--mn-bar-height), but its frosted backdrop
-     dissolves for another 64px below it (--sticky-backdrop-reach), so a
-     heading parked just under the bar sits inside the blur. 128px lands
-     it where the frost has faded to nothing. Shared by every page with
-     anchor links, so the offset can never differ between them. */
+     header bar is 80px (--layout-header-height), but its progressive blur
+     dissolves for another --gap-1500 below it, so a heading parked just
+     under the bar sits inside the blur. 128px lands it where the frost has
+     mostly faded. Shared by every page with anchor links, so the offset
+     can never differ between them. */
   --layout-anchor-clearance: 128px;
 
   /* What "one viewport tall" means to a page. Sections that fill the first
@@ -144,9 +150,9 @@ body {
    page's layout, so making room is this stylesheet's job. The body is
    itself the page container (a centred flex column), so padding on the
    panel's side slides every page's content over instead of letting the
-   fixed panel cover it — zero per-page layout changes. The fixed sticky
-   header is not inset by body padding; MegaNav.module.css offsets it under
-   the same attribute. A floating panel sets no attribute and needs no room.
+   fixed panel cover it — zero per-page layout changes. The sticky header
+   sits inside the body, so the same padding insets it; only its blur is
+   viewport-fixed, and that runs on behind the panel. A floating panel sets no attribute and needs no room.
    Reduced motion zeroes the glide via the motion tokens. */
 html[data-chat="docked"] body {
   padding-right: calc(
@@ -206,7 +212,7 @@ html[data-chat-resizing] body {
   transition: none;
 }
 
-/* MegaNav's mobile drawer is open (it sets the attribute on <html>). The
+/* The header's drawer is open (SiteNav sets the attribute on <html>). The
    chat FAB sits above the drawer's scrim, where it reads as a stray button
    laid over the menu, so it stands down until the menu closes. The FAB is
    the package's; the drawer attribute is this site's, so the rule lives

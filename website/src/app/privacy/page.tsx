@@ -1,11 +1,11 @@
 import Link from "next/link";
-import MegaNav from "../../components/MegaNav/MegaNav";
+import SiteNav from "@/components/SiteNav";
 import styles from "./page.module.css";
 
 export default function PrivacyPage() {
   return (
     <>
-      <MegaNav />
+      <SiteNav />
 
       <main className={styles.privacyContainer} id="main-content">
         <div className={`${styles.heading} animate-in`}>

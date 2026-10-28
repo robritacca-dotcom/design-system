@@ -6,7 +6,7 @@ import { CoverImage } from "@/components/covers/CoverImage";
 import CaseStudyTldr from "@/components/CaseStudyTldr/CaseStudyTldr";
 import { caseStudyTldrs } from "@/data/case-study-tldrs";
 import { COMPONENT_COUNT } from "rift-ds/components/registry";
-import MegaNav from "../../../components/MegaNav/MegaNav";
+import SiteNav from "@/components/SiteNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import { getSidebarLinks, workSidebarLinks } from "@/config/navigation";
@@ -66,7 +66,7 @@ function TokenTiers() {
 export default function RiftDsCaseStudy() {
   return (
     <>
-      <MegaNav />
+      <SiteNav />
 
       <div className={styles.dsLayout}>
         <Sidebar links={sidebarLinks} />

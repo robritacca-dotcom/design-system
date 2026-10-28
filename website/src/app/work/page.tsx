@@ -1,6 +1,6 @@
 "use client";
 
-import MegaNav from "../../components/MegaNav/MegaNav";
+import SiteNav from "@/components/SiteNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import { Card } from "rift-ds/components/Card/Card";
@@ -18,7 +18,7 @@ const { sidebarLinks } = getSidebarLinks(workSidebarLinks, "/work");
 export default function WorkPage() {
   return (
     <>
-      <MegaNav />
+      <SiteNav />
 
       <div className={styles.dsLayout}>
         <Sidebar links={sidebarLinks} />

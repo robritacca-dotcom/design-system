@@ -6,7 +6,7 @@ import Link from "next/link";
 import { CoverImage } from "@/components/covers/CoverImage";
 import CaseStudyTldr from "@/components/CaseStudyTldr/CaseStudyTldr";
 import { caseStudyTldrs } from "@/data/case-study-tldrs";
-import MegaNav from "../../../components/MegaNav/MegaNav";
+import SiteNav from "@/components/SiteNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import SampleCaseStudyCard from "../../../components/SampleCaseStudyCard/SampleCaseStudyCard";
@@ -82,7 +82,7 @@ export default function MetaOffersCaseStudy() {
 
   return (
     <ZoomContext.Provider value={zoom}>
-      <MegaNav />
+      <SiteNav />
 
       <div className={styles.dsLayout}>
         <Sidebar links={sidebarLinks} />

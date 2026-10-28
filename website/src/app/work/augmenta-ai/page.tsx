@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
-import MegaNav from "../../../components/MegaNav/MegaNav";
+import SiteNav from "@/components/SiteNav";
 import CaseStudyTldr from "@/components/CaseStudyTldr/CaseStudyTldr";
 import { caseStudyTldrs } from "@/data/case-study-tldrs";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
@@ -37,7 +37,7 @@ export default function AugmentaCaseStudy() {
 
   return (
     <>
-      <MegaNav />
+      <SiteNav />
 
       <div className={styles.dsLayout}>
         <Sidebar links={sidebarLinks} />

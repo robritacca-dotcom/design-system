@@ -1,6 +1,6 @@
 "use client";
 
-import MegaNav from "../components/MegaNav/MegaNav";
+import SiteNav from "@/components/SiteNav";
 import { FullBleedBackground } from "../components/BlurBackground/BlurBackground";
 import { Button } from "rift-ds/components/Button/Button";
 import styles from "./not-found.module.css";
@@ -10,7 +10,7 @@ export default function NotFound() {
     <>
       <FullBleedBackground />
 
-      <MegaNav />
+      <SiteNav />
 
       <main className={styles.container} id="main-content">
         <div className={`${styles.content} animate-in`}>

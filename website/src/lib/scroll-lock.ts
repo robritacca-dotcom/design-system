@@ -12,7 +12,8 @@
  * closed last.
  *
  * This wrapper adds the owner keys the site chrome needs: several overlays
- * can be open at once (the chat panel and MegaNav's mobile drawer), callers
+ * can be open at once (the chat panel, and the header's drawer through the
+ * library Drawer's own hold), callers
  * release on cleanup whether or not they locked, and locking a held key
  * again is a no-op — each key maps to at most one hold on the counter.
  */

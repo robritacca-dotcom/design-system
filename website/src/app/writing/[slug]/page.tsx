@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import MegaNav from "../../../components/MegaNav/MegaNav";
+import SiteNav from "@/components/SiteNav";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import { getSidebarLinks, buildWritingSidebarLinks } from "@/config/navigation";
@@ -84,7 +84,7 @@ export default async function ArticlePage({ params }: PageProps) {
         }}
       />
 
-      <MegaNav />
+      <SiteNav />
 
       <div className={styles.dsLayout}>
         <Sidebar links={sidebarLinks} />

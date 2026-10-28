@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import MegaNav from "../../../components/MegaNav/MegaNav";
+import SiteNav from "@/components/SiteNav";
 import CaseStudyTldr from "@/components/CaseStudyTldr/CaseStudyTldr";
 import { caseStudyTldrs } from "@/data/case-study-tldrs";
 import PageBreadcrumb from "@/components/PageBreadcrumb/PageBreadcrumb";
@@ -19,7 +19,7 @@ const { sidebarLinks } = getSidebarLinks(
 export default function IntuitAgentChatCaseStudy() {
   return (
     <>
-      <MegaNav />
+      <SiteNav />
 
       <div className={styles.dsLayout}>
         <Sidebar links={sidebarLinks} />
