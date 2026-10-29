@@ -14,18 +14,52 @@
  */
 
 .frame {
+  --rift-bg: #ffffff;
+  --rift-ink: #18181b;
+  --rift-title: #09090b;
+  --rift-text: #18181b;
+  --rift-nav: #3f3f46;
+  --rift-sub: #52525b;
+  --rift-muted: #71717a;
+  --rift-card: #fafafa;
+  --rift-donut-2: #a1a1aa;
+  --rift-donut-3: #c4c4cc;
+  --rift-donut-4: #d4d4d8;
+  --rift-donut-5: #e4e4e7;
+  --rift-tint: 9, 9, 11;
   container-type: inline-size;
   display: block;
   width: 100%;
-  background: #0a0a0b;
+  background: var(--rift-bg);
+}
+
+/* The page it depicts has a light and a dark mode, and the drawing shows the
+   one this site is in. The dark set is read off rift-ds.com, the light set
+   is its zinc counterpart; the tint is
+   the channel every hairline and wash is mixed from, white on dark and ink
+   on light. */
+:global([data-theme="dark"]) .frame {
+  --rift-bg: #0a0a0b;
+  --rift-ink: #f4f4f5;
+  --rift-title: #fafafa;
+  --rift-text: #ededf0;
+  --rift-nav: #c9c9ce;
+  --rift-sub: #a9a9b1;
+  --rift-muted: #8a8a92;
+  --rift-card: #111113;
+  --rift-donut-2: #6e6e76;
+  --rift-donut-3: #4a4a51;
+  --rift-donut-4: #35353b;
+  --rift-donut-5: #26262b;
+  --rift-tint: 255, 255, 255;
 }
 
 .stage {
   position: relative;
   overflow: hidden;
-  background: #0a0a0b;
+  background: var(--rift-bg);
   font-family: "Nunito Sans", -apple-system, BlinkMacSystemFont, sans-serif;
-  color: #f4f4f5;
+  color: var(--rift-ink);
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -48,9 +82,9 @@
   transform: translateX(-50%);
   background: radial-gradient(
     ellipse at center,
-    rgba(255, 255, 255, 0.09) 0%,
-    rgba(255, 255, 255, 0.03) 42%,
-    rgba(255, 255, 255, 0) 70%
+    rgba(var(--rift-tint), 0.09) 0%,
+    rgba(var(--rift-tint), 0.03) 42%,
+    rgba(var(--rift-tint), 0) 70%
   );
   pointer-events: none;
 }
@@ -78,7 +112,7 @@
   font-weight: 700;
   letter-spacing: -0.01em;
   white-space: nowrap;
-  color: #f4f4f5;
+  color: var(--rift-ink);
 }
 
 .nav {
@@ -94,7 +128,7 @@
   font-size: clamp(13px, 1.05cqi, 15px);
   font-weight: 600;
   white-space: nowrap;
-  color: #c9c9ce;
+  color: var(--rift-nav);
 }
 
 .headerRight {
@@ -110,15 +144,15 @@
   gap: clamp(16px, 2.8cqi, 40px);
   height: 38px;
   padding: 0 10px 0 14px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(var(--rift-tint), 0.12);
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(var(--rift-tint), 0.04);
 }
 
 .searchLabel {
   font-size: 14px;
   white-space: nowrap;
-  color: #8a8a92;
+  color: var(--rift-muted);
 }
 
 .keys {
@@ -131,11 +165,11 @@
   height: 20px;
   padding: 0 5px;
   border-radius: 5px;
-  background: rgba(255, 255, 255, 0.09);
+  background: rgba(var(--rift-tint), 0.09);
   font-size: 11px;
   line-height: 20px;
   text-align: center;
-  color: #c9c9ce;
+  color: var(--rift-nav);
 }
 
 .themeRow {
@@ -143,7 +177,7 @@
   align-items: center;
   gap: 6px;
   padding: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(var(--rift-tint), 0.12);
   border-radius: 10px;
 }
 
@@ -151,11 +185,11 @@
   width: 24px;
   height: 24px;
   border-radius: 7px;
-  background: rgba(255, 255, 255, 0.07);
+  background: rgba(var(--rift-tint), 0.07);
 }
 
 .themeChipActive {
-  background: #f4f4f5;
+  background: var(--rift-ink);
 }
 
 /* The phone layout's menu button. Hidden until the nav gives way to it. */
@@ -167,7 +201,7 @@
   align-items: center;
   justify-content: center;
   gap: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(var(--rift-tint), 0.12);
   border-radius: 10px;
 }
 
@@ -175,7 +209,7 @@
   width: 16px;
   height: 1.5px;
   border-radius: 1px;
-  background: #c9c9ce;
+  background: var(--rift-nav);
 }
 
 /* ---------- hero ---------- */
@@ -198,7 +232,7 @@
   line-height: 1.06;
   letter-spacing: -0.028em;
   text-wrap: balance;
-  color: #fafafa;
+  color: var(--rift-title);
 }
 
 .nowrap {
@@ -211,7 +245,7 @@
   font-weight: 400;
   line-height: 1.4;
   text-wrap: balance;
-  color: #a9a9b1;
+  color: var(--rift-sub);
 }
 
 .actions {
@@ -227,18 +261,18 @@
   padding: 0 clamp(16px, 1.6cqi, 22px);
   display: inline-flex;
   align-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(var(--rift-tint), 0.16);
   border-radius: 9px;
   font-size: 15px;
   font-weight: 600;
   white-space: nowrap;
-  color: #f4f4f5;
+  color: var(--rift-ink);
 }
 
 .buttonPrimary {
-  background: #f4f4f5;
-  border-color: #f4f4f5;
-  color: #0a0a0b;
+  background: var(--rift-ink);
+  border-color: var(--rift-ink);
+  color: var(--rift-bg);
 }
 
 /* ---------- rule ---------- */
@@ -250,9 +284,9 @@
   margin-top: clamp(32px, 3.75cqi, 54px);
   background: linear-gradient(
     90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.14) 50%,
-    rgba(255, 255, 255, 0) 100%
+    rgba(var(--rift-tint), 0) 0%,
+    rgba(var(--rift-tint), 0.14) 50%,
+    rgba(var(--rift-tint), 0) 100%
   );
 }
 
@@ -275,19 +309,19 @@
 }
 
 .swatchActive {
-  box-shadow: 0 0 0 2px #0a0a0b, 0 0 0 3.5px #f4f4f5;
+  box-shadow: 0 0 0 2px var(--rift-bg), 0 0 0 3.5px var(--rift-ink);
 }
 
 .swatchAdd {
   flex: none;
   width: var(--swatch);
   height: var(--swatch);
-  border: 1px dashed rgba(255, 255, 255, 0.28);
+  border: 1px dashed rgba(var(--rift-tint), 0.28);
   border-radius: 6px;
   font-size: 13px;
   line-height: calc(var(--swatch) - 2px);
   text-align: center;
-  color: #8a8a92;
+  color: var(--rift-muted);
 }
 
 /* ---------- the collage the frame fades out ---------- */
@@ -313,20 +347,20 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(var(--rift-tint), 0.09);
   border-radius: 14px;
-  background: #111113;
+  background: var(--rift-card);
 }
 
 .cardTitle {
   font-size: 15px;
   font-weight: 700;
-  color: #ededf0;
+  color: var(--rift-text);
 }
 
 .cardDek {
   font-size: 13px;
-  color: #8a8a92;
+  color: var(--rift-muted);
 }
 
 .donut {
@@ -337,11 +371,11 @@
   height: 132px;
   border-radius: 50%;
   background: conic-gradient(
-    #f4f4f5 0deg 208deg,
-    #6e6e76 208deg 262deg,
-    #4a4a51 262deg 300deg,
-    #35353b 300deg 332deg,
-    #26262b 332deg 360deg
+    var(--rift-ink) 0deg 208deg,
+    var(--rift-donut-2) 208deg 262deg,
+    var(--rift-donut-3) 262deg 300deg,
+    var(--rift-donut-4) 300deg 332deg,
+    var(--rift-donut-5) 332deg 360deg
   );
   -webkit-mask: radial-gradient(circle, transparent 54%, #000 55%);
   mask: radial-gradient(circle, transparent 54%, #000 55%);
@@ -352,20 +386,20 @@
   justify-content: space-between;
   font-size: 11px;
   letter-spacing: 0.06em;
-  color: #8a8a92;
+  color: var(--rift-muted);
 }
 
 .code {
   margin-top: 10px;
   padding: 14px 16px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(var(--rift-tint), 0.08);
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(var(--rift-tint), 0.03);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 14px;
   white-space: nowrap;
   overflow: hidden;
-  color: #ededf0;
+  color: var(--rift-text);
 }
 
 .cardActions {
@@ -380,18 +414,18 @@
   padding: 0 14px;
   display: inline-flex;
   align-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(var(--rift-tint), 0.14);
   border-radius: 8px;
   font-size: 13px;
   font-weight: 600;
   white-space: nowrap;
-  color: #ededf0;
+  color: var(--rift-text);
 }
 
 .miniButtonPrimary {
-  background: #f4f4f5;
-  border-color: #f4f4f5;
-  color: #0a0a0b;
+  background: var(--rift-ink);
+  border-color: var(--rift-ink);
+  color: var(--rift-bg);
 }
 
 .globe {
@@ -401,16 +435,16 @@
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(var(--rift-tint), 0.18);
   background:
     repeating-linear-gradient(
       0deg,
-      rgba(255, 255, 255, 0.11) 0 1px,
+      rgba(var(--rift-tint), 0.11) 0 1px,
       transparent 1px 22px
     ),
     repeating-linear-gradient(
       90deg,
-      rgba(255, 255, 255, 0.11) 0 1px,
+      rgba(var(--rift-tint), 0.11) 0 1px,
       transparent 1px 22px
     );
 }

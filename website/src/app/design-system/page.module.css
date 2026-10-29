@@ -46,12 +46,16 @@
 
 /* ---------- the banner ---------- */
 
-.banner {
-  display: block;
+.bannerWrap {
   /* The full container width: this is the page, not an illustration
      beside it. */
   width: 100%;
   margin-top: var(--gap-1500);
+}
+
+.banner {
+  display: block;
+  width: 100%;
   border-radius: var(--radius-600);
   overflow: hidden;
   box-shadow: var(--shadow-floating);

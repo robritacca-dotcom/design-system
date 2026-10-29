@@ -37,8 +37,8 @@ const SWATCHES = [
  * The mark: a tall centre stroke with a shorter one either side, each kinking
  * outward at its foot. The three paths are the ones rift-ds.com's own header
  * draws, on the same 24-unit grid. There the strokes take a gradient between
- * two action tokens; here the stops are fixed, like every other value in this
- * drawing.
+ * two action tokens; here the top stop is the drawing's own ink, so it reads
+ * in both modes, and the foot is fixed.
  */
 function RiftMark() {
   const gradient = useId();
@@ -56,7 +56,7 @@ function RiftMark() {
       <path d="M17.5 7 V12 L22 16.5" {...stroke} />
       <defs>
         <linearGradient id={gradient} x1="12" y1="4" x2="12" y2="20" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#f4f4f5" />
+          <stop style={{ stopColor: "var(--rift-ink)" }} />
           <stop offset="1" stopColor="#9ed4e5" />
         </linearGradient>
       </defs>

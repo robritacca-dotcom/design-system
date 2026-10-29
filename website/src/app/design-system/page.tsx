@@ -7,12 +7,11 @@ import styles from "./page.module.css";
 /**
  * /design-system — the page about having built Rift DS.
  *
- * This was the design system's landing page, a live collage of every
- * component in the library. The system has a site of its own now, so this is
- * deliberately short: the claim and the way in, then a picture of where it
- * lives. The copy sits above the picture because below it, it went unread.
- * Anything that wants to describe components or tokens belongs at rift-ds.com,
- * which documents itself and stays current with itself.
+ * The system has a site of its own, so this is deliberately short: the claim
+ * and the way in, then a picture of where it lives, drawn in this site's
+ * colour mode. The copy sits above the picture because below it, it went
+ * unread. Anything that wants to describe components or tokens belongs at
+ * rift-ds.com, which documents itself and stays current with itself.
  *
  * No first person: content-design.md keeps "I" to the case studies and
  * /about, so the system stays the subject here and /work/rift-ds is where the
@@ -28,13 +27,13 @@ export default function DesignSystemPage() {
       <SiteNav />
       <main className={styles.page} id="main-content">
         <header className={styles.hero}>
-          <h1 className={styles.pageTitle}>Rift DS</h1>
-          <p className={styles.lede}>
+          <h1 className={`${styles.pageTitle} animate-in`}>Rift DS</h1>
+          <p className={`${styles.lede} animate-in animate-delay-1`}>
             An AI-ready React design system, designed and built by Robert
             Ritacca. It’s open source on npm, and this site is built with it:
             the components, tokens and theme here all come from the package.
           </p>
-          <div className={styles.actions}>
+          <div className={`${styles.actions} animate-in animate-delay-2`}>
             <Button
               href={DESIGN_SYSTEM_URL}
               label="Open rift-ds.com"
@@ -51,15 +50,19 @@ export default function DesignSystemPage() {
           </div>
         </header>
 
-        <a
-          className={styles.banner}
-          href={DESIGN_SYSTEM_URL}
-          target="_blank"
-          rel="noreferrer"
-          aria-label="Open rift-ds.com in a new tab"
-        >
-          <RiftDsHomeCover />
-        </a>
+        {/* The entrance rides a wrapper: its held transform would otherwise
+            override the banner's hover lift. */}
+        <div className={`${styles.bannerWrap} animate-in animate-delay-3`}>
+          <a
+            className={styles.banner}
+            href={DESIGN_SYSTEM_URL}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Open rift-ds.com in a new tab"
+          >
+            <RiftDsHomeCover />
+          </a>
+        </div>
       </main>
     </>
   );
