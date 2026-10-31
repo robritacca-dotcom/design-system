@@ -105,7 +105,7 @@ export default function AugmentaCaseStudy() {
                   </Figure>
 
                   <p>
-                    I was the sole product designer on a small, deeply engineering-led team, owning product design strategy, research, and execution. When I joined: a single design partner, a handful of pilot firms testing, a growing waitlist, and pre-revenue, funded entirely by investors. Critically, the product had been built around that one design partner&apos;s highly specific workflow, the reference point for nearly every decision.
+                    I was the sole product designer on a small, engineering-led team, owning product design strategy, research, and execution. When I joined, there was a single design partner, a handful of pilot firms testing, a growing waitlist, and the company was pre-revenue and investor-funded. The product had grown up alongside that first design partner, so their specific workflow had shaped most of its decisions.
                   </p>
 
                   <h2 id="why-it-matters">Why it matters</h2>
@@ -119,7 +119,7 @@ export default function AugmentaCaseStudy() {
                   </p>
 
                   <p>
-                    But BIM is hard. Skilled modellers are scarce, coordination across siloed trades is fragile, and a single sync error or philosophical disagreement can burn enormous design effort and still leave problems to solve on site. Augmenta set out to automate this technical design work with AI, starting with electrical, ultimately translating an AI-generated, human-supervised model into real, fabricated components any installer can pick up and install.
+                    BIM also asks a lot. Skilled modellers are in short supply, coordinating across separate trades takes real care, and a single sync error or difference of approach can cost significant design effort and still leave problems to solve on site. Augmenta set out to automate this technical design work with AI, starting with electrical, ultimately translating an AI-generated, human-supervised model into real, fabricated components any installer can pick up and install.
                   </p>
 
                   <h2 id="the-opportunity">The opportunity</h2>
@@ -129,33 +129,33 @@ export default function AugmentaCaseStudy() {
                   </p>
 
                   <p>
-                    Reality, when I joined, fell far short. It took many generation cycles (often weeks) to reach a single useful output, before any coordination or edits. The time savings were marginal, and the way generations worked introduced risk and eroded trust, so pilot firms were reluctant to put it on real projects.
+                    When I joined, the product had not reached that point yet. It took many generation cycles (often weeks) to reach a useful output, before any coordination or edits. The time savings were still modest, and the way generations worked made firms cautious, so pilot firms were hesitant to use it on live projects.
                   </p>
 
                   <p>
-                    That set our North Star. Pilot firms told us they would walk away after about a week of iterating (a handful of cycles) if they hadn&apos;t seen a useful result. Not because a week is ideal, but because it was the threshold they would not cross. Getting a trustworthy, useful output inside that window became the goal everything pointed at.
+                    That set our North Star. Pilot firms told us that about a week of iterating (a handful of cycles) was how long they could give it to produce a useful result. A week isn&apos;t ideal, but it was the window they were willing to work within. Getting a trustworthy, useful output inside that window became the goal everything pointed at.
                   </p>
 
-                  <h2 id="the-problem">The problem</h2>
+                  <h2 id="the-problem">The challenge</h2>
 
-                  <p>The product was hard to use. Three symptoms, one root cause:</p>
+                  <p>The product had more to give than people could easily reach. Three themes, one underlying cause:</p>
 
                   <ul>
-                    <li><strong>Too feature-heavy</strong>: trying to serve every persona at once</li>
-                    <li><strong>Inconsistent, confusing UX</strong>: patterns and components drifted across the app, with poor information architecture</li>
-                    <li><strong>Slow value delivery</strong>: too many cycles to a useful output, driving abandonment</li>
+                    <li><strong>Broad feature set</strong>: built to serve every persona at once</li>
+                    <li><strong>Room for more consistency</strong>: patterns and components varied across the app, and the information architecture could be clearer</li>
+                    <li><strong>Time to value</strong>: it took several cycles to reach a useful output, which tested firms&apos; patience</li>
                   </ul>
 
                   <p>
-                    Implications stretched across the business: customers got unconstructable, slow-to-generate solutions that needed intensive support; the company carried high churn risk and unsustainable compute and support costs; design had to balance complex firm-specific needs against scalability and low-touch usability.
+                    These touched the whole business: customers often needed hands-on support to get from a generation to a constructable design; the company wanted to keep pilot firms engaged and bring compute and support costs down as it grew; and design had to balance firm-specific needs against scalability and low-touch usability.
                   </p>
 
                   <p>
-                    What made this uniquely hard is that the output is ruthlessly objective. A design is &ldquo;constructable&rdquo; only if it satisfies several dimensions at once: correct electrical load and capacity for the building, the right materials, and clash-free coordination against the mechanical and plumbing trades. The stakes are high: a wrong calculation can waste material, cost money in the field, or (in the case of electrical load) cause catastrophic real-world damage.
+                    What made this especially interesting is that the output is objectively measurable. A design is &ldquo;constructable&rdquo; only if it satisfies several dimensions at once: correct electrical load and capacity for the building, the right materials, and clash-free coordination against the mechanical and plumbing trades. The stakes are high: a wrong calculation can waste material, cost money in the field, or (in the case of electrical load) cause serious real-world damage.
                   </p>
 
                   <p>
-                    So Augmenta&apos;s engineers held a deliberately high bar for correctness and completeness, only surfacing solutions that met strict mathematical standards. The byproduct was unforgiving: a minor input error (a mislabelled roof material) could mean zero solutions at all, which eroded trust and usability.
+                    So Augmenta&apos;s engineers held a deliberately high bar for correctness and completeness, only surfacing solutions that met strict mathematical standards. The trade-off was that a minor input error (a mislabelled roof material) could mean no solutions at all, which left customers unsure what to change.
                   </p>
 
                   <h2 id="approach">Approach</h2>
@@ -164,7 +164,7 @@ export default function AugmentaCaseStudy() {
                     To get inside the customer&apos;s head, I designed a workshop I ran on repeat with each of our pilot electrical design firms. The goal was to map their real workflows, test product fit, and prioritise what to build or deprecate. The format was a journey-mapping and service-blueprinting exercise: we mapped their key functions and deliverables over time, walked through which Augmenta capabilities fit each phase, and captured their feedback.
                   </p>
 
-                  <Figure onClick={() => setLightbox({ src: "/images/augmenta/slide30-img01.png", alt: "Service blueprint extracted from a lighthouse customer workshop" })} caption={<>Service blueprint extracted from a lighthouse customer workshop: mapping the real workflow to identify where the product fit and where it fell short.</>}>
+                  <Figure onClick={() => setLightbox({ src: "/images/augmenta/slide30-img01.png", alt: "Service blueprint extracted from a lighthouse customer workshop" })} caption={<>Service blueprint extracted from a lighthouse customer workshop: mapping the real workflow to identify where the product fit and where it could fit better.</>}>
                     <Image
                       src="/images/augmenta/slide30-img01.png"
                       alt="Service blueprint extracted from a lighthouse customer workshop"
@@ -178,7 +178,7 @@ export default function AugmentaCaseStudy() {
                   </p>
 
                   <p>
-                    That changed everything. Our software didn&apos;t just route: it also calculated electrical load and chose materials, a far more complex job. But most designers at these firms never did those calculations, and wouldn&apos;t have had the authority to anyway. The feature that defined the product was overkill for the market. It existed because the whole product had been built around our single design partner&apos;s workflow, which turned out to be far less common than we had assumed.
+                    That reframed the product. Our software didn&apos;t just route: it also calculated electrical load and chose materials, a far more complex job. But most designers at these firms didn&apos;t do those calculations, as that responsibility sat elsewhere. The capability that defined the product went beyond what most of the market needed. It reflected our first design partner&apos;s workflow, which turned out to be less common than we had expected.
                   </p>
 
                   <p>
@@ -191,7 +191,7 @@ export default function AugmentaCaseStudy() {
 
                   <h2 id="solution">Solution</h2>
 
-                  <p>Three problems, three answers.</p>
+                  <p>Three challenges, three answers.</p>
 
                   <h3 id="right-surface-for-the-right-user">1. Right surface for the right user</h3>
 
@@ -202,11 +202,11 @@ export default function AugmentaCaseStudy() {
                   <h3 id="consistency-through-a-design-system-overhaul">2. Consistency through a design-system overhaul</h3>
 
                   <p>
-                    The product had been hand-built in close partnership with an electrical design firm (not a designer) and heavily shaped by engineering preference. A heuristic audit surfaced the rest: poor information architecture, poor use of screen space, missing system status, and incoherent errors that made troubleshooting painful.
+                    The product had been built in close partnership with an electrical design firm, before there was a designer on the team, and engineering preferences had shaped much of it. A heuristic audit pointed to the next opportunities: clearer information architecture, better use of screen space, more visible system status, and errors that helped people troubleshoot.
                   </p>
 
                   <p>
-                    So I brought in <a href="https://ant.design/" target="_blank" rel="noopener noreferrer">Ant Design</a> as a foundation and worked with engineering to rip and replace every component: redesigning each screen, writing specs and stories, and handing off a master prototype we used for team alignment and testing with pilot firms. The wins were immediate: clearer IA, far higher screen density (several times more studies visible at once), and a dark mode the pilot firms loved.
+                    So I brought in <a href="https://ant.design/" target="_blank" rel="noopener noreferrer">Ant Design</a> as a foundation and worked with engineering to replace every component: redesigning each screen, writing specs and stories, and handing off a master prototype we used for team alignment and testing with pilot firms. The wins were immediate: clearer IA, far higher screen density (several times more studies visible at once), and a dark mode the pilot firms loved.
                   </p>
 
                   <Figure onClick={() => setLightbox({ src: "/images/augmenta/screen-density.png", alt: "Screen density: low to high" })} caption={<>Screen density: low to high.</>}>
@@ -228,23 +228,23 @@ export default function AugmentaCaseStudy() {
                   </Figure>
 
                   <p>
-                    <strong>Framing mattered too.</strong> We replaced engineering-speak with intent-aligned language: “Placement considerations” instead of “Unhandled error”. Daunting, catastrophic-sounding failures became calm, actionable guidance.
+                    <strong>Framing mattered too.</strong> We replaced engineering-speak with intent-aligned language: “Placement considerations” instead of “Unhandled error”. Alarming-sounding failures became calm, actionable guidance.
                   </p>
 
                   <h3 id="faster-value-through-better-inputs-and-signal">3. Faster value through better inputs and signal</h3>
 
-                  <p>Two changes attacked time-to-value head-on.</p>
+                  <p>Two changes went straight at time-to-value.</p>
 
                   <p>
-                    <strong>Better inputs.</strong> Unlike a chat assistant, these prompts are 100% mathematical. The first generation was rarely useful because the input wasn’t granular enough, so we reorganised the prompt structure and roughly doubled the number of fields for fine-grained control. That alone doubled the usability of the very first generation, right out of the gate.
+                    <strong>Better inputs.</strong> Unlike a chat assistant, these prompts are 100% mathematical. The first generation often needed more rounds because the input wasn’t granular enough, so we reorganised the prompt structure and roughly doubled the number of fields for fine-grained control. That alone doubled the usability of the very first generation, right out of the gate.
                   </p>
 
                   <p>
-                    <strong>Better signal.</strong> Because of the high mathematical bar, the system would detect an error (a clash, say) and silently stop, producing zero output even after a customer had spent time prompting. We did it to save compute and to avoid handing over obviously unconstructable designs. The byproduct was no signal: the customer had no idea why it failed, even when the cause was a small, fixable input error on their end.
+                    <strong>Better signal.</strong> Because of the high mathematical bar, the system would detect an error (a clash, say) and silently stop, producing zero output even after a customer had spent time prompting. We did it to save compute and to avoid handing over obviously unconstructable designs. The trade-off was less signal: the customer couldn’t see why a run had stopped, even when the cause was a small, fixable input error on their end.
                   </p>
 
                   <p>
-                    After analysing hundreds of failed generations, we found the common culprits (clashing chief among them) and made a bet: instead of stopping, let the generation complete and visualise each problem in 3D, as a big red box right where the issue was. It was a breakthrough. Customers could see the full solution, tie each red box to specific parts or routes, fix the problem themselves, and lean on Augmenta far less. Surfacing this previously hidden signal sent successful generations up <strong>~900%</strong> and user analysis of solutions up <strong>~400%</strong>.
+                    After analysing hundreds of failed generations, we found the common culprits (clashing chief among them) and made a bet: instead of stopping, let the generation complete and visualise each problem in 3D, as a red box right where the issue was. It worked. Customers could see the full solution, tie each red box to specific parts or routes, fix the problem themselves, and lean on Augmenta far less. Surfacing this previously hidden signal sent successful generations up <strong>~900%</strong> and user analysis of solutions up <strong>~400%</strong>.
                   </p>
 
                   <Figure onClick={() => setLightbox({ src: "/images/augmenta/slide43-img01.png", alt: "The team reviewing AI output together: flagging anomalies and aligning on engineering and UX fixes" })} caption={<>The team reviewing AI output together: identifying anomalies and aligning on fixes from both an engineering and UX perspective.</>}>
@@ -265,10 +265,10 @@ export default function AugmentaCaseStudy() {
                     />
                   </Figure>
 
-                  <Figure onClick={() => setLightbox({ src: "/images/augmenta/error-handling.gif", alt: "Error handling: from unintelligible text to errors visualised in space" })} caption={<>Error handling: from unintelligible text to errors visualised in space.</>}>
+                  <Figure onClick={() => setLightbox({ src: "/images/augmenta/error-handling.gif", alt: "Error handling: from text messages to errors visualised in space" })} caption={<>Error handling: from text messages to errors visualised in space.</>}>
                     <Image
                       src="/images/augmenta/error-handling.gif"
-                      alt="Error handling: from unintelligible text to errors visualised in space"
+                      alt="Error handling: from text messages to errors visualised in space"
                       width={891}
                       height={481}
                       unoptimized
@@ -312,7 +312,7 @@ export default function AugmentaCaseStudy() {
                   </div>
 
                   <p>
-                    The downstream result: detailed 3D schematics flow into pre-fabrication and field installation in days instead of weeks. Engineering interventions (the single biggest indicator of an unscalable product) dropped by a third, closing in on the North Star of a useful output before pilot firms would otherwise have walked.
+                    The downstream result: detailed 3D schematics flow into pre-fabrication and field installation in days instead of weeks. Engineering interventions (the clearest measure of how well the product could scale) dropped by a third, closing in on the North Star of a useful output inside the window pilot firms had given us.
                   </p>
 
                 </article>

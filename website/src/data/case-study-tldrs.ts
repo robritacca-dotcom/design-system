@@ -80,19 +80,19 @@ export const caseStudyTldrs = {
         "Augmenta generates the conduit and cable tray designs that construction teams model by hand in Revit. I was the sole product designer on a small, engineering-led, pre-revenue team.",
     },
     {
-      claim: "The product was built around one customer",
+      claim: "The product grew up around one customer",
       detail:
-        "Every pilot firm had its own workflow, but the product mirrored the first design partner's. Workshops with each firm showed the one step they all shared was routing, so we cut the rest and did that one thing well.",
+        "Every pilot firm had its own workflow, but the product mirrored the first design partner's. Workshops with each firm showed the one step they all shared was routing, so we focused there and did that one thing well.",
     },
     {
-      claim: "A ground-up redesign made it usable",
+      claim: "A ground-up redesign made it easier to use",
       detail:
         "I rebuilt every screen on an Ant Design foundation: clearer structure, several times more studies visible at once, calmer error language, and a dark mode the pilot firms loved.",
     },
     {
       claim: "Showing errors beat hiding them",
       detail:
-        "Failed generations used to stop silently with nothing to show. Letting them finish and drawing each problem as a red box in 3D sent successful generations up about 900%.",
+        "Generations that hit a problem used to stop quietly with nothing to show. Letting them finish and drawing each problem as a red box in 3D sent successful generations up about 900%.",
     },
     {
       claim: "42% faster to a useful result",
