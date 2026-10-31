@@ -265,10 +265,10 @@ export default function AugmentaCaseStudy() {
                     />
                   </Figure>
 
-                  <Figure onClick={() => setLightbox({ src: "/images/augmenta/error-handling.gif", alt: "Error handling: from text messages to errors visualised in space" })} caption={<>Error handling: from text messages to errors visualised in space.</>}>
+                  <Figure onClick={() => setLightbox({ src: "/images/augmenta/error-handling.gif", alt: "Error handling: from engineer-only error codes to errors visualised in space" })} caption={<>Error handling: from engineer-only error codes to errors visualised in space.</>}>
                     <Image
                       src="/images/augmenta/error-handling.gif"
-                      alt="Error handling: from text messages to errors visualised in space"
+                      alt="Error handling: from engineer-only error codes to errors visualised in space"
                       width={891}
                       height={481}
                       unoptimized
